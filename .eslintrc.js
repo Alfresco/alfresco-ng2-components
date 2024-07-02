@@ -1,5 +1,6 @@
 module.exports = {
     root: true,
+
     ignorePatterns: [
         'projects/**/*',
         '**/node_modules/**/*',
@@ -10,7 +11,9 @@ module.exports = {
         '**/scripts',
         '**/docs'
     ],
+
     plugins: ['@nrwl/nx'],
+
     overrides: [
         {
             files: ['*.ts'],
@@ -196,5 +199,7 @@ module.exports = {
             extends: ['plugin:@angular-eslint/template/process-inline-templates'],
             excludedFiles: ['*.spec.ts']
         }
-    ]
+    ],
+
+    extends: ['plugin:storybook/recommended']
 };

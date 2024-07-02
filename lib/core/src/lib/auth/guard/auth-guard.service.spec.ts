@@ -20,10 +20,15 @@ import { Router, RouterStateSnapshot } from '@angular/router';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from '../services/authentication.service';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { StorageService } from '../../common/services/storage.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
+import { EMPTY, of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AuthGuardService', () => {
     let state;
@@ -37,8 +42,11 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule, RouterTestingModule],
             providers: [
+                AppConfigService,
+                StorageService,
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
                 {
                     provide: OidcAuthenticationService,
                     useValue: {

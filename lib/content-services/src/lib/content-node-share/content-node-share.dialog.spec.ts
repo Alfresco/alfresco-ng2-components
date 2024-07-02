@@ -297,7 +297,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-expiration-field"]')).componentInstance.floatLabel).toBe(
-            'never'
+            'auto'
         );
     });
 
@@ -309,7 +309,7 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css('[data-automation-id="adf-content-share-public-link-field"]')).componentInstance.floatLabel).toBe(
-            'never'
+            'always'
         );
     });
 

@@ -17,13 +17,13 @@
 
 import { FormFields } from '../form-fields';
 import { BrowserActions } from '../../../utils/public-api';
-import { $$, $ } from 'protractor';
+import { $ } from 'protractor';
 import { materialLocators } from '../../public-api';
 
 export class CheckboxWidgetPage {
 
     formFields = new FormFields();
-    checkboxLabel = $(`span[class*="${materialLocators.Checkbox.label.root}"]`);
+    checkboxLabel = $(`${materialLocators.Checkbox.root} label`);
     checkboxLocator = materialLocators.Checkbox.root;
 
     getCheckboxLabel(): Promise<string> {
@@ -31,7 +31,7 @@ export class CheckboxWidgetPage {
     }
 
     async clickCheckboxInput(fieldId: string): Promise<void> {
-        const checkboxInput = $$(`${this.checkboxLocator}[id="${fieldId}"] span`).first();
+        const checkboxInput = $(`${this.checkboxLocator}[id="${fieldId}"] input`);
         await BrowserActions.click(checkboxInput);
     }
 

@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, StoryFn, moduleMetadata } from '@storybook/angular';
 import { DataColumnComponent } from './data-column.component';
 import { DataTableModule } from '../datatable.module';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import * as mockData from '../../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataRow } from '../index';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: DataColumnComponent,
     title: 'Core/Data Column/Data Column',
     decorators: [
         moduleMetadata({
-            imports: [
-                CoreStoryModule,
-                DataTableModule,
-                RouterTestingModule
-            ]
+            imports: [DataTableModule, RouterTestingModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
@@ -40,7 +40,6 @@ export default {
             description:
                 'Enables/disables a Clipboard directive to allow copying of cell contents.',
             control: { type: 'boolean' },
-            defaultValue: false,
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -52,7 +51,6 @@ export default {
             description:
                 'Additional CSS class to be applied to column (header and cells).',
             control: { type: 'text' },
-            defaultValue: '',
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -74,42 +72,39 @@ export default {
         draggable: {
             description: 'Toggles drag and drop for header column.',
             control: { type: 'boolean' },
-            defaultValue: false,
             table: {
                 category: 'Component Inputs',
                 type: {
                     summary: 'boolean'
                 },
                 defaultValue: {
-                    summary: false
+                    summary: 'false'
                 }
             }
         },
         resizable: {
             description: 'Toggles resize for column.',
             control: { type: 'boolean' },
-            defaultValue: true,
             table: {
                 category: 'Component Inputs',
                 type: {
                     summary: 'boolean'
                 },
                 defaultValue: {
-                    summary: true
+                    summary: 'true'
                 }
             }
         },
         editable: {
             description: 'Toggles the editing support of the column data.',
             control: { type: 'boolean', disable: true },
-            defaultValue: false,
             table: {
                 category: 'Component Inputs',
                 type: {
                     summary: 'boolean'
                 },
                 defaultValue: {
-                    summary: false
+                    summary: 'false'
                 }
             }
         },
@@ -122,7 +117,7 @@ export default {
                     summary: 'boolean'
                 },
                 defaultValue: {
-                    summary: true
+                    summary: 'true'
                 }
             }
         },
@@ -163,7 +158,6 @@ export default {
         isHidden: {
             description: 'Hides columns',
             control: { type: 'boolean' },
-            defaultValue: false,
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -189,14 +183,13 @@ export default {
             description:
                 'Toggles ability to sort by this column, for example by clicking the column header.',
             control: { type: 'boolean' },
-            defaultValue: true,
             table: {
                 category: 'Component Inputs',
                 type: {
                     summary: 'boolean'
                 },
                 defaultValue: {
-                    summary: true
+                    summary: 'true'
                 }
             }
         },
@@ -214,11 +207,13 @@ export default {
         srTitle: {
             description: 'Title to be used for screen readers.',
             control: { type: 'text' },
-            defaultValue: '',
             table: {
                 category: 'Component Inputs',
                 type: {
                     summary: 'string'
+                },
+                defaultValue: {
+                    summary: ''
                 }
             }
         },
@@ -226,7 +221,6 @@ export default {
             description:
                 'Display title of the column, typically used for column headers. You can use the i18n resource key to get it translated automatically.',
             control: { type: 'text' },
-            defaultValue: '',
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -261,8 +255,7 @@ export default {
                 defaultValue: {
                     summary: 'text'
                 }
-            },
-            defaultValue: 'text'
+            }
         },
         currencyConfig: {
             description:
@@ -276,12 +269,6 @@ export default {
                 defaultValue: {
                     summary: `{ code: 'USD', display: 'symbol' }`
                 }
-            },
-            defaultValue: {
-                code: 'USD',
-                display: 'symbol',
-                digitsInfo: undefined,
-                locale: undefined
             }
         },
         decimalConfig: {
@@ -296,10 +283,6 @@ export default {
                 defaultValue: {
                     summary: `{}`
                 }
-            },
-            defaultValue: {
-                digitsInfo: '2.4-5',
-                locale: undefined
             }
         },
         dateConfig: {
@@ -314,11 +297,6 @@ export default {
                 defaultValue: {
                     summary: `{ format: 'medium', tooltipFormat: 'medium' }`
                 }
-            },
-            defaultValue: {
-                format: 'medium',
-                tooltipFormat: 'medium',
-                locale: undefined
             }
         },
         rows: {
@@ -331,13 +309,46 @@ export default {
                 }
             }
         }
+    },
+    args: {
+        copyContent: false,
+        cssClass: '',
+        customData: {},
+        draggable: false,
+        editable: false,
+        focus: true,
+        format: '',
+        formatTooltip: null,
+        id: '',
+        isHidden: false,
+        key: '',
+        sortable: true,
+        sortingKey: '',
+        srTitle: '',
+        title: '',
+        type: 'text',
+        currencyConfig: {
+            code: 'USD',
+            display: 'symbol',
+            digitsInfo: undefined,
+            locale: undefined
+        },
+        decimalConfig: {
+            digitsInfo: '2.4-5',
+            locale: undefined
+        },
+        dateConfig: {
+            format: 'medium',
+            tooltipFormat: 'medium',
+            locale: undefined
+        }
     }
-} as Meta;
+} as Meta<DataColumnComponent>;
 
 const formatCustomTooltip = (row: DataRow): string =>
     row ? 'This is ' + row.getValue('firstname') : null;
 
-const template: Story<DataColumnComponent> = (args: DataColumnComponent & { rows: DataRow[] }) => ({
+const template: StoryFn<DataColumnComponent> = (args: DataColumnComponent & { rows: DataRow[] }) => ({
     props: args,
     template: `
         <adf-datatable [rows]="rows">
@@ -365,8 +376,8 @@ const template: Story<DataColumnComponent> = (args: DataColumnComponent & { rows
 });
 
 // Text Column
-export const textColumn: Story = template.bind({});
-textColumn.args = {
+export const TextColumn: StoryFn = template.bind({});
+TextColumn.args = {
     rows: mockData.textColumnRows,
     key: 'firstname',
     type: 'text',
@@ -374,11 +385,11 @@ textColumn.args = {
 };
 
 // Text Column With Custom Tooltip
-export const textColumnWithCustomTooltip: Story = template.bind({});
-textColumnWithCustomTooltip.argTypes = {
+export const TextColumnWithCustomTooltip: StoryFn = template.bind({});
+TextColumnWithCustomTooltip.argTypes = {
     formatTooltip: { control: { disable: false } }
 };
-textColumnWithCustomTooltip.args = {
+TextColumnWithCustomTooltip.args = {
     rows: mockData.textColumnRows,
     key: 'firstname',
     type: 'text',
@@ -387,11 +398,11 @@ textColumnWithCustomTooltip.args = {
 };
 
 // Icon Column
-export const iconColumn: Story = template.bind({});
-iconColumn.argTypes = {
+export const IconColumn: StoryFn = template.bind({});
+IconColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-iconColumn.args = {
+IconColumn.args = {
     rows: mockData.iconColumnRows,
     key: 'icon',
     type: 'icon',
@@ -399,11 +410,11 @@ iconColumn.args = {
 };
 
 // Image Column
-export const imageColumn: Story = template.bind({});
-imageColumn.argTypes = {
+export const ImageColumn: StoryFn = template.bind({});
+ImageColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-imageColumn.args = {
+ImageColumn.args = {
     rows: mockData.imageColumnRows,
     key: 'image',
     type: 'image',
@@ -411,12 +422,12 @@ imageColumn.args = {
 };
 
 // Date Column
-export const dateColumn: Story = template.bind({});
-dateColumn.argTypes = {
+export const DateColumn: StoryFn = template.bind({});
+DateColumn.argTypes = {
     copyContent: { control: { disable: true } },
     dateConfig: { control: { disable: false } }
 };
-dateColumn.args = {
+DateColumn.args = {
     rows: mockData.dateColumnRows,
     key: 'createdOn',
     type: 'date',
@@ -424,12 +435,12 @@ dateColumn.args = {
 };
 
 // Date Column Time Ago
-export const dateColumnTimeAgo: Story = template.bind({});
-dateColumnTimeAgo.argTypes = {
+export const DateColumnTimeAgo: StoryFn = template.bind({});
+DateColumnTimeAgo.argTypes = {
     copyContent: { control: { disable: true } },
     dateConfig: { control: { disable: false } }
 };
-dateColumnTimeAgo.args = {
+DateColumnTimeAgo.args = {
     rows: mockData.dateColumnTimeAgoRows,
     key: 'modifiedOn',
     type: 'date',
@@ -438,11 +449,11 @@ dateColumnTimeAgo.args = {
 };
 
 // File Size Column
-export const fileSizeColumn: Story = template.bind({});
-fileSizeColumn.argTypes = {
+export const FileSizeColumn: StoryFn = template.bind({});
+FileSizeColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-fileSizeColumn.args = {
+FileSizeColumn.args = {
     rows: mockData.fileSizeColumnRows,
     key: 'size',
     type: 'fileSize',
@@ -450,13 +461,13 @@ fileSizeColumn.args = {
 };
 
 // Location Column
-export const locationColumn: Story = template.bind({});
-locationColumn.argTypes = {
+export const LocationColumn: StoryFn = template.bind({});
+LocationColumn.argTypes = {
     copyContent: { control: { disable: true } },
     format: { control: { disable: false }},
     sortable: { control: { disable: true }}
 };
-locationColumn.args = {
+LocationColumn.args = {
     rows: mockData.locationColumnRows,
     format: '/files',
     key: 'path',
@@ -465,11 +476,11 @@ locationColumn.args = {
 };
 
 // Boolean Column
-export const booleanColumn: Story = template.bind({});
-booleanColumn.argTypes = {
+export const BooleanColumn: StoryFn = template.bind({});
+BooleanColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
-booleanColumn.args = {
+BooleanColumn.args = {
     rows: mockData.booleanColumnRows,
     key: 'bool',
     type: 'boolean',
@@ -477,12 +488,12 @@ booleanColumn.args = {
 };
 
 // Json Column
-export const jsonColumn: Story = template.bind({});
-jsonColumn.argTypes = {
+export const JsonColumn: StoryFn = template.bind({});
+JsonColumn.argTypes = {
     editable: { control: { disable: false } },
     copyContent: { control: { disable: true } }
 };
-jsonColumn.args = {
+JsonColumn.args = {
     rows: mockData.jsonColumnRows,
     key: 'rowInfo',
     type: 'json',
@@ -490,12 +501,12 @@ jsonColumn.args = {
 };
 
 // Amount Column
-export const amountColumn: Story = template.bind({});
-amountColumn.argTypes = {
+export const AmountColumn: StoryFn = template.bind({});
+AmountColumn.argTypes = {
     copyContent: { control: { disable: true } },
     currencyConfig: { control: { disable: false } }
 };
-amountColumn.args = {
+AmountColumn.args = {
     rows: mockData.amountColumnRows,
     key: 'price',
     type: 'amount',
@@ -503,12 +514,12 @@ amountColumn.args = {
 };
 
 // Number Column
-export const numberColumn: Story = template.bind({});
-numberColumn.argTypes = {
+export const NumberColumn: StoryFn = template.bind({});
+NumberColumn.argTypes = {
     decimalConfig: { control: { disable: false } },
     copyContent: { control: { disable: true } }
 };
-numberColumn.args = {
+NumberColumn.args = {
     rows: mockData.amountColumnRows,
     key: 'price',
     type: 'number',

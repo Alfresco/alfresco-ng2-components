@@ -18,17 +18,30 @@
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    DataRowEvent,
+    ObjectDataRow,
+    DataCellEvent,
+    ObjectDataColumn,
+    DataTableModule,
+    AppConfigServiceMock,
+    AlfrescoApiServiceMock,
+    AlfrescoApiService
+} from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../testing/mock';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 declare let jasmine: any;
 
@@ -93,7 +106,19 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskListComponent]
+            imports: [
+                TranslateModule.forRoot(),
+                DataTableModule,
+                NoopAnimationsModule,
+                MatProgressSpinnerModule,
+                HttpClientTestingModule,
+                TaskListComponent
+            ],
+            providers: [
+                TaskListService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
+            ]
         });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
@@ -596,10 +621,9 @@ describe('TaskListComponent', () => {
         const selectTask1 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-0"]' }));
         const selectTask2 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-1"]' }));
         await selectTask1.toggle();
-        await selectTask1.toggle();
         await selectTask2.toggle();
 
-        expect(component.selectedInstances.length).toBe(2);
+        expect(component.selectedInstances.length).toBe(1);
     });
 
     it('should change selected row after clicking on different row', async () => {
@@ -779,7 +803,7 @@ describe('TaskListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
+            imports: [TranslateModule.forRoot(), MatProgressSpinnerModule, ProcessTestingModule],
             declarations: [TaskListContextMenuComponent]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);

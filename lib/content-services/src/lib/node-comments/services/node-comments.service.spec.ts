@@ -16,9 +16,11 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CommentModel, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, CommentModel, RedirectAuthService } from '@alfresco/adf-core';
 import { fakeContentComment, fakeContentComments } from '../mocks/node-comments.mock';
 import { NodeCommentsService } from './node-comments.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EMPTY, of } from 'rxjs';
 
 declare let jasmine: any;
 
@@ -27,7 +29,11 @@ describe('NodeCommentsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [HttpClientTestingModule],
+            providers: [
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+            ]
         });
         service = TestBed.inject(NodeCommentsService);
 

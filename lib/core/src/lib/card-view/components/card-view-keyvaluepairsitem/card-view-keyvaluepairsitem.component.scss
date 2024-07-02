@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-card-view-key-value-pairs-item {
     .adf-property-col-key {
         width: 50%;
@@ -26,23 +28,22 @@
                 justify-content: center;
             }
 
-            &__add-btn.mat-button {
+            &__add-btn#{$mat-button} {
                 margin-bottom: 20px;
             }
 
             &__read-only {
                 padding-bottom: 20px;
 
-                .mat-table {
+                #{$mat-table} {
                     box-shadow: none;
                 }
 
-                .mat-header-row,
-                .mat-row {
+                #{$mat-header-row},
+                #{$mat-row} {
                     padding: 0;
                 }
             }
         }
     }
-
 }

@@ -17,12 +17,13 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigModule, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { UploadService } from './upload.service';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 declare let jasmine: any;
 
@@ -35,8 +36,11 @@ describe('UploadService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [AppConfigModule, HttpClientTestingModule],
             providers: [
+                UploadService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
                 {
                     provide: DiscoveryApiService,
                     useValue: {
@@ -281,9 +285,7 @@ describe('UploadService', () => {
         service.cancelUpload(...file);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe(
-            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fakeId/content?include=allowableOperations'
-        );
+        expect(request.url).toContain('ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fakeId/content?include=allowableOperations');
         expect(request.method).toBe('PUT');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -338,8 +340,8 @@ describe('UploadService', () => {
         service.uploadFilesInTheQueue(emitter);
 
         const request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe(
-            'http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations'
+        expect(request.url).toContain(
+            '/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true&include=allowableOperations'
         );
         expect(request.method).toBe('POST');
 

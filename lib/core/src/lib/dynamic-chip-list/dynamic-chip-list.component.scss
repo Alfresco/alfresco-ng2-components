@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-dynamic-chip-list-container {
     display: flex;
     flex-direction: row;
@@ -8,6 +10,8 @@
     .adf-dynamic-chip-list-view-more-button {
         margin-left: 5px;
         position: absolute;
+        width: auto;
+        padding: 0 16px;
 
         &[hidden] {
             visibility: hidden;
@@ -23,6 +27,7 @@
     }
 
     &.adf-dynamic-chip-list-paginated {
+        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
         mat-chip-list {
             width: 100%;
 
@@ -50,7 +55,8 @@
 
         &:not(.adf-dynamic-chip-list-flex-column) {
             .adf-dynamic-chip-list-view-more-button {
-                margin-top: 10px;
+                margin-top: 18px;
+                margin-left: 4px;
             }
         }
     }
@@ -66,6 +72,26 @@
     .adf-dynamic-chip-list-chip {
         height: auto;
         word-break: break-word;
+        margin-top: 0;
+        margin-bottom: 0;
         padding: 6px 11px;
+
+        #{$mat-evolution-chip-action} {
+            padding: 2px 12px;
+
+            #{$mat-evolution-chip-text-label} {
+                color: var(--adf-theme-foreground-text-color-054);
+            }
+        }
+    }
+
+    .adf-dynamic-chip-list-delete-icon {
+        font-size: var(--theme-title-font-size);
+        background-repeat: no-repeat;
+        display: inline-block;
+        fill: currentcolor;
+        height: 20px;
+        width: 20px;
+        color: var(--theme-primary-color-default-contrast);
     }
 }

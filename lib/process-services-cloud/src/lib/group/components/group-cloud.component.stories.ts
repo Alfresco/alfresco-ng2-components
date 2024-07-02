@@ -15,29 +15,25 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { IdentityGroupService } from '../services/identity-group.service';
-import {
-    IdentityGroupServiceMock,
-    mockFoodGroups,
-    mockMeatChicken,
-    mockVegetableAubergine
-} from '../mock/group-cloud.mock';
-import { FormControl } from '@angular/forms';
-
-const defaultFormControl = new FormControl({ value: '', disabled: false });
+import { IdentityGroupServiceMock, mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: GroupCloudComponent,
     title: 'Process Services Cloud/Group Cloud/Group Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, GroupCloudModule],
+            imports: [GroupCloudModule]
+        }),
+        applicationConfig({
             providers: [
-                { provide: IdentityGroupService, useClass: IdentityGroupServiceMock }
+                { provide: IdentityGroupService, useClass: IdentityGroupServiceMock },
+                importProvidersFrom(ProcessServicesCloudStoryModule)
             ]
         })
     ],
@@ -45,7 +41,6 @@ export default {
         appName: {
             control: 'text',
             description: 'Name of the application. If specified this shows the groups who have access to the app.',
-            defaultValue: 'app',
             table: {
                 type: { summary: 'string' }
             }
@@ -53,7 +48,6 @@ export default {
         title: {
             control: 'text',
             description: 'Title of the field.',
-            defaultValue: 'Groups',
             table: {
                 type: { summary: 'string' }
             }
@@ -62,7 +56,6 @@ export default {
             control: 'radio',
             options: ['single', 'multiple'],
             description: 'Group selection mode.',
-            defaultValue: 'single',
             table: {
                 type: { summary: 'ComponentSelectionMode' },
                 defaultValue: { summary: 'single' }
@@ -70,8 +63,8 @@ export default {
         },
         preSelectGroups: {
             control: 'object',
-            description: 'Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode.',
-            defaultValue: [],
+            description:
+                'Array of groups to be pre-selected. This pre-selects all groups in multi selection mode and only the first group of the array in single selection mode.',
             table: {
                 type: { summary: 'IdentityGroupModel[]' },
                 defaultValue: { summary: '[]' }
@@ -79,10 +72,10 @@ export default {
         },
         validate: {
             control: 'boolean',
-            description: 'This flag enables the validation on the preSelectGroups passed as input.\n\n'+
-            'In case the flag is true the components call the identity service to verify the validity of the information passed as input.\n\n'+
-            'Otherwise, no check will be done.',
-            defaultValue: false,
+            description:
+                'This flag enables the validation on the preSelectGroups passed as input.\n\n' +
+                'In case the flag is true the components call the identity service to verify the validity of the information passed as input.\n\n' +
+                'Otherwise, no check will be done.',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -91,7 +84,6 @@ export default {
         readOnly: {
             control: 'boolean',
             description: 'Show the info in readonly mode.',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -100,7 +92,6 @@ export default {
         required: {
             control: 'boolean',
             description: 'Mark this field as required.',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -109,7 +100,6 @@ export default {
         groupChipsCtrl: {
             control: 'object',
             description: 'FormControl to list of group.',
-            mapping: { default: defaultFormControl },
             table: {
                 type: { summary: 'FormControl' },
                 defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
@@ -119,7 +109,6 @@ export default {
         searchGroupsControl: {
             control: 'object',
             description: 'FormControl to search the group.',
-            mapping: { default: defaultFormControl },
             table: {
                 type: { summary: 'FormControl' },
                 defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
@@ -129,7 +118,6 @@ export default {
         roles: {
             control: 'object',
             description: 'Role names of the groups to be listed.',
-            defaultValue: [],
             table: {
                 type: { summary: 'string[]' },
                 defaultValue: { summary: '[]' }
@@ -155,38 +143,41 @@ export default {
             description: 'Emitted when an warning occurs.',
             table: { category: 'Actions' }
         }
+    },
+    args: {
+        appName: 'app',
+        title: 'Groups',
+        mode: 'single',
+        preSelectGroups: [],
+        validate: false,
+        readOnly: false,
+        required: false,
+        roles: []
     }
-} as Meta;
+} as Meta<GroupCloudComponent>;
 
-const template: Story<GroupCloudComponent> = (args: GroupCloudComponent) => ({
+const template: StoryFn<GroupCloudComponent> = (args) => ({
     props: args
 });
 
-export const defaultGroupCloud = template.bind({});
-defaultGroupCloud.args = {
-    groupChipsCtrl: 'default',
-    searchGroupsControl: 'default'
-};
+export const DefaultGroupCloud = template.bind({});
 
-export const validPreselectedGroups = template.bind({});
-validPreselectedGroups.args = {
-    ...defaultGroupCloud.args,
+export const ValidPreselectedGroups = template.bind({});
+ValidPreselectedGroups.args = {
     validate: true,
     mode: 'multiple',
     preSelectGroups: mockFoodGroups
 };
 
-export const mandatoryPreselectedGroups = template.bind({});
-mandatoryPreselectedGroups.args = {
-    ...defaultGroupCloud.args,
+export const MandatoryPreselectedGroups = template.bind({});
+MandatoryPreselectedGroups.args = {
     validate: true,
     mode: 'multiple',
     preSelectGroups: [mockVegetableAubergine, { ...mockMeatChicken, readonly: true }]
 };
 
-export const invalidPreselectedGroups = template.bind({});
-invalidPreselectedGroups.args = {
-    ...defaultGroupCloud.args,
+export const InvalidPreselectedGroups = template.bind({});
+InvalidPreselectedGroups.args = {
     validate: true,
     mode: 'multiple',
     preSelectGroups: [{ id: 'invalid-group', name: 'Invalid Group' }]

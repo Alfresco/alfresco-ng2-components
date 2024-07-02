@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { BreadcrumbItemComponent } from '../components/breadcrumb-item/breadcrumb-item.component';
 import { DemoBreadcrumbComponent } from './demo-breadcrumb.component';
-import { CoreStoryModule } from '../../../src/lib/testing/core.story.module';
+import { importProvidersFrom } from '@angular/core';
+import { CoreStoryModule } from '../../..';
 
 // https://stackoverflow.com/a/58210459/8820824
-type NonFunctionPropertyNames<T> = {[K in keyof T]: T[K] extends () => any ? never : K}[keyof T];
+type NonFunctionPropertyNames<T> = { [K in keyof T]: T[K] extends () => any ? never : K }[keyof T];
 type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
-type StoryWithoutFunction<T> = NonFunctionProperties<Story<T>>;
+type StoryWithoutFunction<T> = NonFunctionProperties<StoryFn<T>>;
 
 /**
  * Copy storybook story
@@ -36,47 +37,49 @@ type StoryWithoutFunction<T> = NonFunctionProperties<Story<T>>;
  * @param annotations annotations
  * @returns a copy of the story
  */
-function storybookCopyStory<T>( story: Story<T>, annotations?: StoryWithoutFunction<T> ): Story<T> {
-  const cloned = story.bind({});
-  return Object.assign(cloned, annotations);
+function storybookCopyStory<T>(story: StoryFn<T>, annotations?: StoryWithoutFunction<T>): StoryFn<T> {
+    const cloned = story.bind({});
+    return Object.assign(cloned, annotations);
 }
 
 const meta: Meta = {
-  title: 'Core/Breadcrumb',
-  decorators: [
-    moduleMetadata({
-      imports: [
-        CoreStoryModule,
-        BreadcrumbComponent,
-        BreadcrumbItemComponent,
-        MatButtonModule,
-        MatMenuModule,
-        MatIconModule
-      ]
-    })
-  ],
-  args: {
-    compact: false,
-    showBreadcrumbItemWithMenu: false
-  },
-  argTypes: {
-    compact: {control: 'boolean'},
-    showBreadcrumbItemWithMenu: {control: 'boolean'}
-  }
+    title: 'Core/Breadcrumb',
+    component: DemoBreadcrumbComponent,
+    decorators: [
+        moduleMetadata({
+            imports: [
+                BreadcrumbComponent,
+                BreadcrumbItemComponent,
+                MatButtonModule,
+                MatMenuModule,
+                MatIconModule
+            ]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
+        })
+    ],
+    args: {
+        compact: false,
+        showBreadcrumbItemWithMenu: false
+    },
+    argTypes: {
+        compact: { control: 'boolean' },
+        showBreadcrumbItemWithMenu: { control: 'boolean' }
+    }
 };
 export default meta;
 
-export const breadcrumb: Story = args => ({
-  component: DemoBreadcrumbComponent,
-  props: args
+export const Breadcrumb: StoryFn = (args) => ({
+    props: args
 });
 
-export const compact = storybookCopyStory(breadcrumb);
-compact.args = {
-  compact: true
+export const Compact = storybookCopyStory(Breadcrumb);
+Compact.args = {
+    compact: true
 };
 
-export const withMenu = storybookCopyStory(breadcrumb);
-withMenu.args = {
-  showBreadcrumbItemWithMenu: true
+export const WithMenu = storybookCopyStory(Breadcrumb);
+WithMenu.args = {
+    showBreadcrumbItemWithMenu: true
 };

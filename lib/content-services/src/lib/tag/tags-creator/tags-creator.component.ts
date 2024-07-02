@@ -263,11 +263,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * @param selectedTag changes
      */
     addExistingTagToTagsToAssign(selectedTag: TagEntry): void {
-        this.tags.push(selectedTag.entry.tag);
-        this.removeTagFromArray(this.existingTags, selectedTag);
-        this.tagNameControl.updateValueAndValidity();
-        this.exactTagSet$.next();
-        this.tagsChange.emit(this.tags);
+        if (!this.isOnlyCreateMode()) {
+            this.tags.push(selectedTag.entry.tag);
+            this.removeTagFromArray(this.existingTags, selectedTag);
+            this.tagNameControl.updateValueAndValidity();
+            this.exactTagSet$.next();
+            this.tagsChange.emit(this.tags);
+        }
     }
 
     /**

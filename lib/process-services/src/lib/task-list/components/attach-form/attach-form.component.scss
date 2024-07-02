@@ -1,5 +1,7 @@
+@import 'styles/mat-selectors';
+
 .adf-attach-form {
-    .mat-form-field {
+    #{$mat-form-field} {
         width: 100%;
     }
 

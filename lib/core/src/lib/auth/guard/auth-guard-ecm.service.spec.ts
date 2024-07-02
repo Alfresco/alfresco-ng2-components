@@ -20,10 +20,14 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { MatDialog } from '@angular/material/dialog';
-import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RedirectAuthService } from '../oidc/redirect-auth.service';
+import { EMPTY, of } from 'rxjs';
+import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 describe('AuthGuardService ECM', () => {
     let authGuard: AuthGuardEcm;
@@ -35,8 +39,10 @@ describe('AuthGuardService ECM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, RouterTestingModule, MatDialogModule],
             providers: [
+                BasicAlfrescoAuthService,
+                AppConfigService,
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
@@ -45,7 +51,8 @@ describe('AuthGuardService ECM', () => {
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
                     }
-                }
+                },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
         localStorage.clear();

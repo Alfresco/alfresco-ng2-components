@@ -18,7 +18,7 @@
             [disabled]="!isRunning()"
             (click)="onShowProcessDiagram()">{{ 'ADF_PROCESS_LIST.DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
 
-        <mat-card>
+        <mat-card appearance="outlined">
             <mat-card-content>
                 <adf-process-instance-tasks
                     #processInstanceTasks
@@ -32,7 +32,7 @@
             <button mat-button type="button" (click)="cancelProcess()">{{ 'ADF_PROCESS_LIST.DETAILS.BUTTON.CANCEL' | translate }}</button>
         </div>
 
-        <mat-card>
+        <mat-card appearance="outlined">
             <mat-card-content>
                 <adf-process-instance-comments
                     [readOnly]="false"

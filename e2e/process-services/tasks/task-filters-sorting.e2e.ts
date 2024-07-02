@@ -95,6 +95,7 @@ describe('Task Filters Sorting', () => {
         await userFiltersUtil.createUserTaskFilter(newFilter);
 
         await browser.refresh();
+        await tasksListPage.selectTaskTab();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
 
         expect(await tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);

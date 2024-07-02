@@ -32,7 +32,7 @@
         (showAttachForm)="onShowAttachForm()">
     </adf-task-standalone>
       <ng-template #emptyFormMessage>
-        <mat-card class="adf-task-form-container">
+        <mat-card appearance="outlined" class="adf-task-form-container">
             <mat-card-header>
                 <mat-card-title>
                     <h4>
@@ -59,7 +59,7 @@
                     </adf-empty-content>
                 </ng-template>
             </mat-card-content>
-            <mat-card-actions>
+            <mat-card-actions align="end">
                 <div class="adf-task-form-actions">
                     <ng-template [ngTemplateOutlet]="taskFormButtons"></ng-template>
                     <button mat-button
@@ -101,5 +101,7 @@
   </ng-template>
 </ng-container>
 <ng-template #loadingTemplate>
-  <mat-spinner class="adf-task-form-spinner"></mat-spinner>
+    <div class="adf-task-form-spinner-container">
+        <mat-spinner></mat-spinner>
+    </div>
 </ng-template>

@@ -15,30 +15,25 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { PeopleCloudModule } from '../people-cloud.module';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { IdentityUserService } from '../services/identity-user.service';
-import {
-    IdentityUserServiceMock,
-    mockFoodUsers,
-    mockKielbasaSausage,
-    mockShepherdsPie,
-    mockYorkshirePudding
-} from '../mock/people-cloud.mock';
-import { FormControl } from '@angular/forms';
-
-const defaultFormControl = new FormControl({ value: '', disabled: false });
+import { IdentityUserServiceMock, mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding } from '../mock/people-cloud.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: PeopleCloudComponent,
     title: 'Process Services Cloud/People Cloud/People Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, PeopleCloudModule],
+            imports: [PeopleCloudModule]
+        }),
+        applicationConfig({
             providers: [
-                { provide: IdentityUserService, useClass: IdentityUserServiceMock }
+                { provide: IdentityUserService, useClass: IdentityUserServiceMock },
+                importProvidersFrom(ProcessServicesCloudStoryModule)
             ]
         })
     ],
@@ -46,7 +41,6 @@ export default {
         appName: {
             control: 'text',
             description: 'Name of the application. If specified, this shows the users who have access to the app.',
-            defaultValue: 'app',
             table: {
                 type: { summary: 'string' }
             }
@@ -55,7 +49,6 @@ export default {
             control: 'radio',
             options: ['single', 'multiple'],
             description: 'User selection mode.',
-            defaultValue: 'single',
             table: {
                 type: { summary: 'ComponentSelectionMode' },
                 defaultValue: { summary: 'single' }
@@ -64,7 +57,6 @@ export default {
         roles: {
             control: 'object',
             description: 'Role names of the users to be listed.',
-            defaultValue: [],
             table: {
                 type: { summary: 'string[]' },
                 defaultValue: { summary: '[]' }
@@ -72,10 +64,10 @@ export default {
         },
         validate: {
             control: 'boolean',
-            description: 'This flag enables the validation on the preSelectUsers passed as input.\n\n'+
-            'In case the flag is true the components call the identity service to verify the validity of the information passed as input.\n\n'+
-            'Otherwise, no check will be done.',
-            defaultValue: false,
+            description:
+                'This flag enables the validation on the preSelectUsers passed as input.\n\n' +
+                'In case the flag is true the components call the identity service to verify the validity of the information passed as input.\n\n' +
+                'Otherwise, no check will be done.',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -84,7 +76,6 @@ export default {
         readOnly: {
             control: 'boolean',
             description: 'Show the info in readonly mode.',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -93,7 +84,6 @@ export default {
         required: {
             control: 'boolean',
             description: 'Mark this field as required.',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -101,8 +91,8 @@ export default {
         },
         preSelectUsers: {
             control: 'object',
-            description: 'Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username',
-            defaultValue: [],
+            description:
+                'Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username',
             table: {
                 type: { summary: 'IdentityUserModel[]' },
                 defaultValue: { summary: '[]' }
@@ -111,7 +101,6 @@ export default {
         excludedUsers: {
             control: 'object',
             description: 'Array of users to be excluded. Mandatory properties are: id, email, username',
-            defaultValue: [],
             table: {
                 type: { summary: 'IdentityUserModel[]' },
                 defaultValue: { summary: '[]' }
@@ -120,7 +109,6 @@ export default {
         groupsRestriction: {
             control: 'object',
             description: 'Array of groups to restrict user searches. Mandatory property is group name',
-            defaultValue: [],
             table: {
                 type: { summary: 'string[]' },
                 defaultValue: { summary: '[]' }
@@ -129,7 +117,6 @@ export default {
         userChipsCtrl: {
             control: 'object',
             description: 'FormControl to list of users.',
-            mapping: { default: defaultFormControl },
             table: {
                 type: { summary: 'FormControl' },
                 defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
@@ -139,7 +126,6 @@ export default {
         searchUserCtrl: {
             control: 'object',
             description: 'FormControl to search the user.',
-            mapping: { default: defaultFormControl },
             table: {
                 type: { summary: 'FormControl' },
                 defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
@@ -173,60 +159,58 @@ export default {
             description: 'Emitted when an warning occurs.',
             table: { category: 'Actions' }
         }
+    },
+    args: {
+        appName: 'app',
+        mode: 'single',
+        roles: [],
+        validate: false,
+        readOnly: false,
+        required: false,
+        preSelectUsers: [],
+        excludedUsers: [],
+        groupsRestriction: []
     }
-} as Meta;
+} as Meta<PeopleCloudComponent>;
 
-const template: Story<PeopleCloudComponent> = (args: PeopleCloudComponent) => ({
+const template: StoryFn<PeopleCloudComponent> = args => ({
     props: args
 });
 
-export const defaultPeopleCloud = template.bind({});
-defaultPeopleCloud.args = {
-    userChipsCtrl: 'default',
-    searchUserCtrl: 'default'
-};
+export const DefaultPeopleCloud = template.bind({});
 
-export const validPreselectedUsers = template.bind({});
-validPreselectedUsers.args = {
-    ...defaultPeopleCloud.args,
+export const ValidPreselectedUsers = template.bind({});
+ValidPreselectedUsers.args = {
     validate: true,
     mode: 'multiple',
     preSelectUsers: mockFoodUsers
 };
 
-export const mandatoryPreselectedUsers = template.bind({});
-mandatoryPreselectedUsers.args = {
-    ...defaultPeopleCloud.args,
+export const MandatoryPreselectedUsers = template.bind({});
+MandatoryPreselectedUsers.args = {
     validate: true,
     mode: 'multiple',
     preSelectUsers: [{ ...mockKielbasaSausage, readonly: true }, mockShepherdsPie]
 };
 
-export const invalidPreselectedUsers = template.bind({});
-invalidPreselectedUsers.args = {
-    ...defaultPeopleCloud.args,
+export const InvalidPreselectedUsers = template.bind({});
+InvalidPreselectedUsers.args = {
     validate: true,
     mode: 'multiple',
     preSelectUsers: [{ id: 'invalid-user', username: 'Invalid User', firstName: 'Invalid', lastName: 'User', email: 'invalid@xyz.com' }]
 };
 
-export const excludedUsers = template.bind({});
-excludedUsers.args = {
-    ...defaultPeopleCloud.args,
-    excludedUsers: [
-        mockKielbasaSausage,
-        mockYorkshirePudding
-    ]
+export const ExcludedUsers = template.bind({});
+ExcludedUsers.args = {
+    excludedUsers: [mockKielbasaSausage, mockYorkshirePudding]
 };
 
-export const noUsers = template.bind({});
-noUsers.args = {
-    ...defaultPeopleCloud.args,
+export const NoUsers = template.bind({});
+NoUsers.args = {
     excludedUsers: mockFoodUsers
 };
 
-export const invalidOrEmptyAppName = template.bind({});
-invalidOrEmptyAppName.args = {
-    ...defaultPeopleCloud.args,
+export const InvalidOrEmptyAppName = template.bind({});
+InvalidOrEmptyAppName.args = {
     appName: null
 };

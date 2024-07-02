@@ -622,7 +622,7 @@
             "unit": "Byte",
             "field": "cm:content.size",
             "min": 0,
-            "max": 18,
+            "max": 4000,
             "step": 1,
             "thumbLabel": true
           }

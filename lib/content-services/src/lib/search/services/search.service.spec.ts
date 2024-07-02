@@ -18,15 +18,16 @@
 import { TestBed } from '@angular/core/testing';
 import { mockError, fakeSearch } from '../mocks/search.service.mock';
 import { SearchService } from './search.service';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { NodePaging } from '@alfresco/js-api';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SearchService', () => {
     let service: SearchService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [HttpClientTestingModule],
+            providers: [SearchService]
         });
         service = TestBed.inject(SearchService);
     });

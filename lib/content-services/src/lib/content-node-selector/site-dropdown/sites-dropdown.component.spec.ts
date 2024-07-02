@@ -66,6 +66,10 @@ describe('DropdownSitesComponent', () => {
         });
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     describe('Rendering tests', () => {
         describe('Infinite Loading', () => {
             beforeEach(() => {

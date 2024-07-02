@@ -1,5 +1,14 @@
 .adf {
-    &-upload-button-file-container input {
-        display: none;
+    &-upload-button-file-container {
+        .adf-upload-button-icon {
+            margin: 0;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+        }
+
+        input {
+            display: none;
+        }
     }
 }

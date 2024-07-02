@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { FormCloudService } from '../../../form/public-api';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskFormModule } from '../task-form.module';
@@ -23,16 +23,22 @@ import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../form/mocks/form-cloud.service.mock';
 import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: TaskFormCloudComponent,
     title: 'Process Services Cloud/Task Cloud/Task Form/Task Form Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, TaskFormModule],
+            imports: [TaskFormModule],
             providers: [
                 { provide: TaskCloudService, useClass: TaskCloudServiceMock },
                 { provide: FormCloudService, useClass: FormCloudServiceMock }
+            ]
+        }),
+        applicationConfig({
+            providers: [
+                importProvidersFrom(ProcessServicesCloudStoryModule)
             ]
         })
     ],
@@ -148,26 +154,26 @@ export default {
             table: { category: 'Actions' }
         }
     }
-} as Meta;
+} as Meta<TaskFormCloudComponent>;
 
-const template: Story<TaskFormCloudComponent> = (args: TaskFormCloudComponent) => ({
+const template: StoryFn<TaskFormCloudComponent> = (args) => ({
     props: args
 });
 
-export const defaultTaskFormCloud = template.bind({});
-defaultTaskFormCloud.args = {
+export const DefaultTaskFormCloud = template.bind({});
+DefaultTaskFormCloud.args = {
     appName: 'app',
     taskId: 'mock-task-with-form'
 };
 
-export const invalidOrMissingApp = template.bind({});
-invalidOrMissingApp.args = {
-    ...defaultTaskFormCloud.args,
+export const InvalidOrMissingApp = template.bind({});
+InvalidOrMissingApp.args = {
+    ...DefaultTaskFormCloud.args,
     appName: undefined
 };
 
-export const invalidOrMissingTaskId = template.bind({});
-invalidOrMissingTaskId.args = {
-    ...defaultTaskFormCloud.args,
+export const InvalidOrMissingTaskId = template.bind({});
+InvalidOrMissingTaskId.args = {
+    ...DefaultTaskFormCloud.args,
     taskId: undefined
 };

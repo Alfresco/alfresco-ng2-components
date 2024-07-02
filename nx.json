@@ -1,18 +1,5 @@
 {
   "npmScope": "adf",
-  "implicitDependencies": {
-    "angular.json": "*",
-    "package.json": {
-      "dependencies": {
-        "@alfresco/*": "*",
-        "@angular/*": "*",
-        "rxjs": "*"
-      }
-    },
-    "demo-shell/src/index.html": "*",
-    "e2e/protractor.excludes.json": "*",
-    "e2e/protractor.conf.js": "*"
-  },
   "cli": {
     "defaultCollection": "@nrwl/angular"
   },
@@ -31,12 +18,17 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "lint": {
-      "dependsOn": [
-            "stylelint"
-      ]
+      "dependsOn": ["stylelint"]
+    },
+    "build-storybook": {
+      "inputs": ["default", "^production", "{workspaceRoot}/.storybook/**/*"]
+    },
+    "test": {
+      "inputs": ["default", "^production"]
     }
   },
   "tasksRunnerOptions": {
@@ -48,6 +40,22 @@
         "runtimeCacheInputs": ["node -v"]
       }
     }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "sharedGlobals": [
+      "{workspaceRoot}/angular.json",
+      "{workspaceRoot}/demo-shell/src/index.html",
+      "{workspaceRoot}/e2e/protractor.excludes.json",
+      "{workspaceRoot}/e2e/protractor.conf.js"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/**/*.spec.[jt]s",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/karma.conf.js"
+    ]
   }
 }
-

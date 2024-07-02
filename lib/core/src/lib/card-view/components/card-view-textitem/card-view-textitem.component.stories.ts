@@ -15,62 +15,60 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewModule, CardViewTextItemModel } from '../../public-api';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CardViewTextItemComponent,
     title: 'Core/Card View/Card View Text Item',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CardViewModule]
+            imports: [CardViewModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         editable: {
             control: 'boolean',
             description: 'Defines if CardView item is editable',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         },
         displayEmpty: {
             control: 'boolean',
             description:
                 'Defines if it should display CardView item when data is empty',
-            defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         copyToClipboardAction: {
             control: 'boolean',
-            description:
-                'Copy to clipboard action - default template in editable mode',
-            defaultValue: true,
+            description: 'Copy to clipboard action - default template in editable mode',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         useChipsForMultiValueProperty: {
             control: 'boolean',
             description: 'Split text for chips using defined separator',
-            defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         multiValueSeparator: {
             control: 'text',
             description: 'Separator used for text splitting',
-            defaultValue: ', ',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: ', ' }
@@ -79,23 +77,29 @@ export default {
         displayLabelForChips: {
             control: 'boolean',
             description: 'Display label for chips property',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         }
-    }
-} as Meta;
+    },
+    args: {
+        editable: false,
+        displayEmpty: true,
+        copyToClipboardAction: true,
+        useChipsForMultiValueProperty: true,
+        multiValueSeparator: ', ',
+        displayLabelForChips: false
 
-const template: Story<CardViewTextItemComponent> = (
-    args: CardViewTextItemComponent
-) => ({
+    }
+} as Meta<CardViewTextItemComponent>;
+
+const template: StoryFn<CardViewTextItemComponent> = (args) => ({
     props: args
 });
 
-export const clickableCardViewTextItem = template.bind({});
-clickableCardViewTextItem.args = {
+export const ClickableCardViewTextItem = template.bind({});
+ClickableCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Clickable template',
         value: 'click here',
@@ -106,10 +110,10 @@ clickableCardViewTextItem.args = {
         icon: 'close'
     })
 };
-clickableCardViewTextItem.parameters = { layout: 'centered' };
+ClickableCardViewTextItem.parameters = { layout: 'centered' };
 
-export const chipsCardViewTextItem = template.bind({});
-chipsCardViewTextItem.args = {
+export const ChipsCardViewTextItem = template.bind({});
+ChipsCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Chips template',
         value: [1, 2, 3, 4],
@@ -122,10 +126,10 @@ chipsCardViewTextItem.args = {
     }),
     displayLabelForChips: false
 };
-chipsCardViewTextItem.parameters = { layout: 'centered' };
+ChipsCardViewTextItem.parameters = { layout: 'centered' };
 
-export const emptyCardViewTextItem = template.bind({});
-emptyCardViewTextItem.args = {
+export const EmptyCardViewTextItem = template.bind({});
+EmptyCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Empty template',
         value: undefined,
@@ -137,10 +141,10 @@ emptyCardViewTextItem.args = {
     editable: false,
     displayEmpty: false
 };
-emptyCardViewTextItem.parameters = { layout: 'centered' };
+EmptyCardViewTextItem.parameters = { layout: 'centered' };
 
-export const defaultCardViewTextItem = template.bind({});
-defaultCardViewTextItem.args = {
+export const DefaultCardViewTextItem = template.bind({});
+DefaultCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Default template',
         value: 'input here',
@@ -152,10 +156,10 @@ defaultCardViewTextItem.args = {
         multiline: false
     })
 };
-defaultCardViewTextItem.parameters = { layout: 'centered' };
+DefaultCardViewTextItem.parameters = { layout: 'centered' };
 
-export const displayLabelForChipsCardTextItem = template.bind({});
-displayLabelForChipsCardTextItem.args = {
+export const DisplayLabelForChipsCardTextItem = template.bind({});
+DisplayLabelForChipsCardTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Multi-Valued Chips template',
         value: ['Chip 1', 'Chip 2', 'Chip 3'],
@@ -168,4 +172,4 @@ displayLabelForChipsCardTextItem.args = {
     }),
     displayLabelForChips: false
 };
-displayLabelForChipsCardTextItem.parameters = { layout: 'centered' };
+DisplayLabelForChipsCardTextItem.parameters = { layout: 'centered' };

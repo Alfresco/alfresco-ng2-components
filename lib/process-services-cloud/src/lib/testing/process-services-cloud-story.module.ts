@@ -17,20 +17,20 @@
 
 import { NgModule } from '@angular/core';
 import { AuthModule, CoreModule, provideTranslations } from '@alfresco/adf-core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServicesCloudModule } from '../process-services-cloud.module';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
         AuthModule.forRoot(),
-        BrowserAnimationsModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ProcessServicesCloudModule.forRoot()
     ],
     providers: [
-        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
+        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
+        provideAnimations()
     ]
 })
 export class ProcessServicesCloudStoryModule { }

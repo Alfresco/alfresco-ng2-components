@@ -7,7 +7,7 @@
             [disabled]="isButtonDisabled()"
             mat-raised-button
             (click)="uploadSingleFile.click()">
-            <mat-icon>file_upload</mat-icon>
+            <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
             <span id="upload-single-file-label"
                 *ngIf="!staticTitle">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
             <span id="upload-single-file-label-static"

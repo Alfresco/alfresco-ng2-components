@@ -21,7 +21,7 @@ import { ProcessServicesPage } from '../pages/process-services.page';
 import { ChecklistDialog } from '../pages/dialog/create-checklist-dialog.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
-import CONSTANTS = require('../../util/constants');
+import * as CONSTANTS from '../../util/constants';
 
 describe('Checklist component', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -75,7 +75,8 @@ describe('Checklist component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);
 
-        await (await taskPage.clickOnAddChecklistButton()).clickCreateChecklistButton();
+        await taskPage.clickOnAddChecklistButton();
+        await checklistDialog.clickCreateChecklistButton();
         await taskPage.checkChecklistDialogIsNotDisplayed();
         await taskPage.checkNoChecklistIsDisplayed();
         expect(await taskPage.getNumberOfChecklists()).toEqual('0');

@@ -17,20 +17,13 @@
 
 import { NgModule } from '@angular/core';
 import { CoreModule } from '../core.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideTranslations } from '../translation/translation.service';
-import { AuthModule } from '../../../src/lib/auth/oidc/auth.module';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { AuthModule } from '../auth/oidc/auth.module';
 
 @NgModule({
-    imports: [
-        AuthModule.forRoot(),
-        TranslateModule.forRoot(),
-        CoreModule.forRoot(),
-        BrowserAnimationsModule
-    ],
-    providers: [
-        provideTranslations('adf-core', 'assets/adf-core')
-    ]
+    imports: [AuthModule.forRoot(), TranslateModule.forRoot(), CoreModule.forRoot()],
+    providers: [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations()]
 })
-export class CoreStoryModule { }
+export class CoreStoryModule {}

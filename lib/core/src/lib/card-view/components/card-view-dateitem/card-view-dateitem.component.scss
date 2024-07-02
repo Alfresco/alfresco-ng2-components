@@ -1,17 +1,25 @@
+@import 'styles/mat-selectors';
+
 .adf-card-view-dateitem {
     .adf-property-value {
-        padding: 6px 0;
+        padding-top: 6px;
+        padding-bottom: 6px;
         line-height: 20px;
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
         color: var(--adf-metadata-property-panel-title-color);
+        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
+        margin-top: 10px;
 
         &.adf-property-value-editable {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
             border-radius: 6px;
             border-bottom: inherit;
+            margin-bottom: 18px;
         }
 
         &.adf-property-readonly-value {
-            padding-left: 12px;
+            padding: 0 0 0 12px;
         }
     }
 
@@ -34,24 +42,16 @@
 
     .adf-dateitem-editable {
         cursor: pointer;
-        padding: 0 12px;
+        width: 100%;
+        padding: 0 5px;
 
         /* stylelint-disable-next-line no-descending-specificity */
         &-controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 6px;
 
-            .mat-icon-button {
-                line-height: 20px;
-                height: 20px;
-                width: 20px;
-            }
-
-            mat-icon {
-                width: 16px;
-                height: 16px;
+            #{$mat-icon} {
                 opacity: 0.5;
 
                 &:hover {
@@ -59,15 +59,17 @@
                 }
             }
 
+            mat-datetimepicker-toggle {
+                transform: scale(0.8);
+            }
+
             .adf-datepicker-toggle {
                 flex: 1 0 auto;
+                font-size: 14px;
             }
 
             .adf-date-reset-icon {
-                line-height: 10px;
                 position: relative;
-                top: 4px;
-                padding: 0 8px;
             }
         }
     }

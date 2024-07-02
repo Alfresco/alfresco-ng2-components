@@ -1,9 +1,10 @@
 @use '@angular/material' as mat;
+@import 'styles/mat-selectors';
 
 .adf-search-filter-chip,
 .adf-search-filter-chip-tabbed {
-    border: 2px solid transparent;
     transition: border 500ms ease-in-out;
+    height: 32px;
     max-width: 320px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -37,7 +38,6 @@
     }
 
     .adf-search-filter-chip-icon {
-        padding-top: 5px;
         padding-left: 5px;
     }
 
@@ -45,6 +45,23 @@
         min-width: 320px;
         border-radius: 12px;
 
+        &:has(.adf-search-properties-file-size-operator) {
+            min-width: 365px;
+        }
+
         @include mat.elevation(2);
     }
+}
+
+.adf-search-filter-chip#{$mat-evolution-chip}#{$mat-standard-chip} {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#{$mat-standard-chip} {
+    -webkit-font-smoothing: unset;
+}
+
+#{$mat-evolution-chip-set} {
+    margin-top: -4px;
 }

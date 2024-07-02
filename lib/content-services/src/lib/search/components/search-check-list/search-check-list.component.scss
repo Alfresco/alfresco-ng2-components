@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-search-check-list > div {
     display: flex;
     flex-direction: column;
@@ -9,12 +11,24 @@
             text-overflow: ellipsis;
             overflow: hidden;
             width: 100%;
+            -webkit-font-smoothing: subpixel-antialiased;
+            margin-top: 1px;
         }
 
         .adf-facet-name {
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
+        }
+
+        #{$mat-checkbox-box} {
+            margin-left: 4px;
+            margin-top: 5px;
+            margin-bottom: 4px;
+        }
+
+        label {
+            padding-left: 0;
         }
     }
 }

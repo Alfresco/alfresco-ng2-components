@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { EditJsonDialogModule } from './edit-json.dialog.module';
 import { EditJsonDialogStorybookComponent } from './edit-json.dialog.stories.component';
 import { MatButtonModule } from '@angular/material/button';
+import { importProvidersFrom } from '@angular/core';
 
 const jsonData = {
     maxValue: 50,
@@ -34,7 +35,10 @@ export default {
     title: 'Core/Dialog/Edit JSON Dialog',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, EditJsonDialogModule, MatButtonModule]
+            imports: [EditJsonDialogModule, MatButtonModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
@@ -43,14 +47,10 @@ export default {
             control: {
                 type: 'object'
             },
-            defaultValue: jsonData,
             table: {
                 category: 'Provider settings',
                 type: {
-                    summary: 'string'
-                },
-                defaultValue: {
-                    summary: ''
+                    summary: 'object'
                 }
             }
         },
@@ -59,14 +59,13 @@ export default {
             control: {
                 type: 'boolean'
             },
-            defaultValue: false,
             table: {
                 category: 'Provider settings',
                 type: {
                     summary: 'boolean'
                 },
                 defaultValue: {
-                    summary: false
+                    summary: 'false'
                 }
             }
         },
@@ -74,7 +73,6 @@ export default {
             control: {
                 type: 'text'
             },
-            defaultValue: 'JSON Dialog Title',
             table: {
                 category: 'Provider settings',
                 type: {
@@ -85,12 +83,17 @@ export default {
                 }
             }
         }
+    },
+    args: {
+        value: jsonData as unknown as string,
+        editable: false,
+        title: 'JSON Dialog Title'
     }
-} as Meta;
+} as Meta<EditJsonDialogStorybookComponent>;
 
-const template: Story<EditJsonDialogStorybookComponent> = (args: EditJsonDialogStorybookComponent) => ({
+const template: StoryFn<EditJsonDialogStorybookComponent> = (args) => ({
     props: args
 });
 
-export const editJSONDialog = template.bind({});
-editJSONDialog.parameters = { layout: 'centered' };
+export const EditJSONDialog = template.bind({});
+EditJSONDialog.parameters = { layout: 'centered' };

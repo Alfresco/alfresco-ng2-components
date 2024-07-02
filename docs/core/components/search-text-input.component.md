@@ -26,22 +26,23 @@ Displays a input text that supports autocompletion
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| autocomplete | `boolean` | false | Toggles auto-completion of the search input field. |
-| collapseOnBlur | `boolean` | true | Toggles whether to collapse the search on blur. |
-| collapseOnSubmit | `boolean` | true | Collapse search bar on submit. |
-| debounceTime | `number` | 0 | Debounce time in milliseconds. |
-| defaultState | `SearchTextStateEnum` |  | Default state expanded or Collapsed. |
-| expandable | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
-| focusListener | [`Observable`](http://reactivex.io/documentation/observable.html)`<FocusEvent>` |  | Listener for results-list events (focus, blur and focusout). |
-| hintLabel | `string` | "" | Hint label |
-| inputType | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default). |
-| liveSearchEnabled | `boolean` | true | Toggles "find-as-you-type" suggestions for possible matches. |
-| placeholder | `string` | "" | Placeholder text to show in the input field |
-| searchAutocomplete | `any` | false | Trigger autocomplete results on input change. |
-| searchTerm | `string` | "" | Search term preselected |
-| showClearButton | `boolean` | false | Toggles whether to show a clear button that closes the search |
+| Name               | Type | Default value | Description                                                                                |
+|--------------------| ---- | ------------- |--------------------------------------------------------------------------------------------|
+| autocomplete       | `boolean` | false | Toggles auto-completion of the search input field.                                         |
+| collapseOnBlur     | `boolean` | true | Toggles whether to collapse the search on blur.                                            |
+| collapseOnSubmit   | `boolean` | true | Collapse search bar on submit.                                                             |
+| debounceTime       | `number` | 0 | Debounce time in milliseconds.                                                             |
+| defaultState       | `SearchTextStateEnum` |  | Default state expanded or Collapsed.                                                       |
+| expandable         | `boolean` | true | Toggles whether to use an expanding search control. If false then a regular input is used. |
+| focusListener      | [`Observable`](http://reactivex.io/documentation/observable.html)`<FocusEvent>` |  | Listener for results-list events (focus, blur and focusout).                               |
+| hintLabel          | `string` | "" | Hint label                                                                                 |
+| inputType          | `string` | "text" | Type of the input field to render, e.g. "search" or "text" (default).                      |
+| liveSearchEnabled  | `boolean` | true | Toggles "find-as-you-type" suggestions for possible matches.                               |
+| placeholder        | `string` | "" | Placeholder text to show in the input field                                                |
+| label              | `string` | "" | Label text to show over the input field                                                    |
+| searchAutocomplete | `any` | false | Trigger autocomplete results on input change.                                              |
+| searchTerm         | `string` | "" | Search term preselected                                                                    |
+| showClearButton    | `boolean` | false | Toggles whether to show a clear button that closes the search                              |
 
 ### Events
 

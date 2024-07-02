@@ -442,7 +442,7 @@ backend services have been tested with each released version of ADF.
 <!--v230 start-->
 
 -   [Comment content service](core/services/comment-content.service.md)
--   [Confirm dialog](content-services/dialogs/confirm.dialog.md)
+-   [Confirm dialog](core/dialogs/confirm.dialog.md)
 -   [Content node share directive](content-services/directives/content-node-share.directive.md)
 -   [Custom resources service](content-services/services/custom-resources.service.md)
 -   [Inherited button directive](content-services/directives/inherited-button.directive.md)

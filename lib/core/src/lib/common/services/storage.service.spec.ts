@@ -18,26 +18,23 @@
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
+import { CoreTestingModule } from '../../testing';
+import { RedirectAuthService } from '../../auth';
+import { EMPTY } from 'rxjs';
 
 describe('StorageService', () => {
     let storage: StorageService;
-    let appConfig: AppConfigServiceMock;
+    let appConfig: AppConfigService;
     const key = 'test_key';
     const value = 'test_value';
 
-    describe('StorageService', () => {
+    describe('with prefix', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule]
+                imports: [CoreTestingModule],
+                providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => [] } }]
             });
             appConfig = TestBed.inject(AppConfigService);
-            appConfig.config = {
-                application: {
-                    storagePrefix: 'ADF_APP'
-                }
-            };
             storage = TestBed.inject(StorageService);
         });
 
@@ -71,10 +68,11 @@ describe('StorageService', () => {
         });
     });
 
-    describe('StorageService', () => {
+    describe('without prefix', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule]
+                imports: [CoreTestingModule],
+                providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => [] } }]
             });
             appConfig = TestBed.inject(AppConfigService);
 

@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 :host {
     display: flex;
     align-items: center;
@@ -15,17 +17,33 @@
 
     .adf-snackbar-message-content-action {
         margin-left: 24px;
+        display: flex;
+        flex-direction: row;
 
-        .mat-button {
+        #{$mat-button} {
             min-width: 0;
             margin: -8px;
+            height: unset;
 
             &.adf-snackbar-message-content-action-button {
                 margin-right: 8px;
+                padding-left: 16px;
+                padding-right: 16px;
+                width: auto;
+                -webkit-font-smoothing: subpixel-antialiased;
             }
 
             &.adf-snackbar-message-content-action-icon {
                 padding: 0;
+                width: auto;
+
+                mat-icon {
+                    height: 24px;
+                    width: 24px;
+                    font-size: 24px;
+                    margin-right: 0;
+                    margin-top: 4px;
+                }
             }
         }
     }

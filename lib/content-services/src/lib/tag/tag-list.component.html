@@ -1,10 +1,10 @@
-<mat-chip-list class="adf-tag-chips-list">
+<mat-chip-listbox class="adf-tag-chips-list">
     <div class="adf-list-tag" *ngFor="let currentEntry of tagsEntries; let idx = index">
-        <mat-chip class="adf-tag-list-chip">
+        <mat-chip-option class="adf-tag-list-chip">
             <span id="tag_name_{{idx}}">{{currentEntry.entry.tag}}</span>
-        </mat-chip>
+        </mat-chip-option>
     </div>
-</mat-chip-list>
+</mat-chip-listbox>
 
 <div class="adf-tag-list-controls">
     <button

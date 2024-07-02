@@ -43,7 +43,7 @@ export class TaskFiltersDemoPage {
         return new TaskFiltersPage(this.involvedTask);
     }
 
-    customTaskFilter(filterName: string): TaskFiltersPage {
+      customTaskFilter(filterName: string): TaskFiltersPage {
         return new TaskFiltersPage($(`button[data-automation-id="${filterName}_filter"]`));
     }
 

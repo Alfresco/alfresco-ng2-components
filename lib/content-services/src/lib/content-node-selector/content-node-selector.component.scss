@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 adf-content-node-selector {
     .adf-upload-dialog {
         box-shadow: none;
@@ -40,6 +42,23 @@ adf-content-node-selector {
 }
 
 .adf-content-node-selector-dialog {
+    #{$mat-form-field} {
+        width: 100%;
+    }
+
+    .adf-dropdown-breadcrumb-icon {
+        color: var(--adf-theme-foreground-base-color-045);
+    }
+
+    #{$mat-dialog-title} {
+        margin-bottom: 0;
+        padding: 0;
+
+        &::before {
+            display: none;
+        }
+    }
+
     .adf-content-node-selector-dialog-title {
         font-size: var(--theme-title-font-size);
         font-weight: 600;
@@ -48,6 +67,7 @@ adf-content-node-selector {
         line-height: 1.6;
         letter-spacing: -0.5px;
         color: var(--adf-theme-foreground-text-color-087);
+        margin-bottom: 20px;
 
         h2 {
             margin: unset;
@@ -57,7 +77,8 @@ adf-content-node-selector {
 
     .adf-content-node-selector-dialog-actions {
         padding: 8px;
-        height: 61px;
+        height: 77px;
+        background-color: var(--theme-background-color);
         display: flex;
         flex-direction: row;
         justify-content: space-between;

@@ -58,7 +58,7 @@ export class StartTaskDialogPage {
     }
 
     async getAssignee(): Promise<string> {
-        return BrowserActions.getAttribute(this.assignee, 'data-placeholder');
+        return BrowserActions.getAttribute(this.assignee, 'placeholder');
     }
 
     async selectForm(form): Promise<void> {

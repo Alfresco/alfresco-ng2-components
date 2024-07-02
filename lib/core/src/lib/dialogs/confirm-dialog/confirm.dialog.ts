@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation, SecurityContext } from '@angular/core';
+import { Component, Inject, SecurityContext, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -36,7 +36,6 @@ export interface ConfirmDialogComponentProps {
     encapsulation: ViewEncapsulation.None
 })
 export class ConfirmDialogComponent {
-
     title: string;
     message: string;
     yesLabel: string;
@@ -57,5 +56,4 @@ export class ConfirmDialogComponent {
     sanitizedHtmlContent(): string {
         return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
     }
-
 }

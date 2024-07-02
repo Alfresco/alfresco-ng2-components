@@ -15,24 +15,28 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { CommentsComponent } from './comments.component';
 import { CommentsModule } from './comments.module';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { commentsStoriesData } from './mocks/comments.stories.mock';
 import { CommentsServiceStoriesMock } from './mocks/comments.service.stories.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CommentsComponent,
     title: 'Core/Comments/Comment',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, CommentsModule],
+            imports: [CommentsModule],
             providers: [
                 { provide: CommentsServiceStoriesMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
                 { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
             ]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -74,33 +78,32 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<CommentsComponent>;
 
-const template: Story<CommentsComponent> = (args: CommentsComponent) => ({
+const template: StoryFn<CommentsComponent> = (args) => ({
     props: args
 });
 
-export const singleCommentWithAvatar = template.bind({});
-singleCommentWithAvatar.args = {
+export const SingleCommentWithAvatar = template.bind({});
+SingleCommentWithAvatar.args = {
     comments: [commentsStoriesData[0]],
     readOnly: true
 };
 
-export const singleCommentWithoutAvatar = template.bind({});
-singleCommentWithoutAvatar.args = {
+export const SingleCommentWithoutAvatar = template.bind({});
+SingleCommentWithoutAvatar.args = {
     comments: [commentsStoriesData[1]],
     readOnly: true
 };
 
-export const noComments = template.bind({});
-noComments.args = {
+export const NoComments = template.bind({});
+NoComments.args = {
     comments: [],
     readOnly: true
 };
 
-export const comments = template.bind({});
-comments.args = {
+export const Comments = template.bind({});
+Comments.args = {
     comments: commentsStoriesData,
     id: '-fake-'
 };
-

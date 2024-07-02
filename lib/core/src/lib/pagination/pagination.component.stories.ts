@@ -15,17 +15,21 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { PaginationModule } from './pagination.module';
 import { PaginationComponent } from './pagination.component';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: PaginationComponent,
     title: 'Core/Pagination/Pagination',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, PaginationModule]
+            imports: [PaginationModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
@@ -36,19 +40,18 @@ export default {
         },
         supportedPageSizes: {
             control: 'object',
-            defaultValue: [5, 10, 15, 20],
             description: 'An array of page sizes.',
             table: { type: { summary: 'number[]' } }
         },
         pagination: {
             control: 'object',
             description: 'Pagination object.',
-            defaultValue: { skipCount: 0, maxItems: 25, totalItems: 100, count: 100, hasMoreItems: false },
             table: {
                 type: { summary: 'PaginationModel' },
                 defaultValue: {
                     summary: 'PaginationModel',
-                    detail: '{\n skipCount: 0 /* How many entities exist in the collection before those included in this list? */,' +
+                    detail:
+                        '{\n skipCount: 0 /* How many entities exist in the collection before those included in this list? */,' +
                         '\n maxItems: 25 /* The value of the maxItems parameter used to generate this list. The default value is 100. */,' +
                         '\n totalItems: 0 /* An integer describing the total number of entities in the collection. */,' +
                         '\n count: 0, /* The number of objects in the entries array. */' +
@@ -81,12 +84,16 @@ export default {
             description: 'Emitted when the previous page is requested.',
             table: { category: 'Actions' }
         }
+    },
+    args: {
+        supportedPageSizes: [5, 10, 15, 20],
+        pagination: { skipCount: 0, maxItems: 25, totalItems: 100, count: 100, hasMoreItems: false }
     }
-} as Meta;
+} as Meta<PaginationComponent>;
 
-const template: Story<PaginationComponent> = (args: PaginationComponent) => ({
+const template: StoryFn<PaginationComponent> = (args) => ({
     props: args
 });
 
-export const pagination = template.bind({});
-pagination.parameters = { layout: 'centered' };
+export const Pagination = template.bind({});
+Pagination.parameters = { layout: 'centered' };

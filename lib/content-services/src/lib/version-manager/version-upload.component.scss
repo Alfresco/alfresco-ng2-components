@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf-new-version-radio-group {
     display: inline-flex;
     flex-direction: column;
@@ -5,20 +7,36 @@
 
 .adf-new-version-radio-button {
     margin: 5px;
+    margin-top: 2px;
+    margin-left: 5px;
 }
 
 .adf-version-upload-buttons {
+    padding-top: 18px;
+    padding-bottom: 5px;
     display: flex;
     float: right;
     justify-content: space-between;
     width: 100%;
 }
 
-.adf-new-version-max-width {
-    width: 100%;
-    float: right;
+.adf-version-upload {
+    .adf-new-version-max-width {
+        padding-top: 2px;
+        width: 100%;
+        float: right;
 
-    .adf-new-version-text-area {
-        resize: none;
+        #{$mat-floating-label} {
+            padding-bottom: 10px;
+        }
+
+        #{$mat-form-field-infix} {
+            padding-top: 12px;
+            padding-bottom: 0;
+        }
+
+        .adf-new-version-text-area {
+            resize: none;
+        }
     }
 }

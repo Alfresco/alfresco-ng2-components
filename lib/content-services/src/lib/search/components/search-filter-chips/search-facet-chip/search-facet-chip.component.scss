@@ -1,4 +1,10 @@
+@import 'styles/mat-selectors';
+
 .adf-search-filter-chip {
+    #{$mat-evolution-chip-graphic} {
+        display: none;
+    }
+
     &[disabled] {
         pointer-events: none;
     }

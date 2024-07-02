@@ -37,7 +37,7 @@ describe('FolderDialogComponent', () => {
     let createFolderSpy: jasmine.Spy;
 
     const updateNode$ = new BehaviorSubject(null);
-    const createFolderNode$ = new BehaviorSubject(null);
+    let createFolderNode$ = null;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -48,6 +48,7 @@ describe('FolderDialogComponent', () => {
         fixture = TestBed.createComponent(FolderDialogComponent);
         component = fixture.componentInstance;
         nodesApi = TestBed.inject(NodesApiService);
+        createFolderNode$ = new BehaviorSubject(null);
 
         createFolderSpy = spyOn(nodesApi, 'createFolder').and.returnValue(createFolderNode$);
         updateNodeSpy = spyOn(nodesApi, 'updateNode').and.returnValue(updateNode$);
@@ -273,8 +274,13 @@ describe('FolderDialogComponent', () => {
         });
 
         describe('Error events', () => {
+            let errorSubscriber = null;
+
             afterEach(() => {
                 createFolderNode$.next(null);
+                if (errorSubscriber) {
+                    errorSubscriber.complete();
+                }
             });
 
             it('should raise error for 409', (done) => {
@@ -283,7 +289,7 @@ describe('FolderDialogComponent', () => {
                 };
                 createFolderNode$.error(error);
 
-                component.error.subscribe((message) => {
+                errorSubscriber = component.error.subscribe((message) => {
                     expect(message).toBe('CORE.MESSAGES.ERRORS.EXISTENT_FOLDER');
                     done();
                 });
@@ -300,7 +306,7 @@ describe('FolderDialogComponent', () => {
                 };
                 createFolderNode$.error(error);
 
-                component.error.subscribe((message) => {
+                errorSubscriber = component.error.subscribe((message) => {
                     expect(message).toBe('CORE.MESSAGES.ERRORS.GENERIC');
                     done();
                 });

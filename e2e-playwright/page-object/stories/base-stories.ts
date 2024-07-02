@@ -24,7 +24,7 @@ interface NavigationParameters {
     moduleNames: string[];
     componentName: string;
     story: string;
-};
+}
 
 export class BaseStories extends PlaywrightBase {
     private libraryName: string;
@@ -34,15 +34,13 @@ export class BaseStories extends PlaywrightBase {
         this.libraryName = libraryName;
     }
 
-    private buildStoryId({ moduleNames, componentName, story }: NavigationParameters): string{
+    private buildStoryId({ moduleNames, componentName, story }: NavigationParameters): string {
         const moduleNamesConcatenated = moduleNames.reduce((module, submodule) => module + '-' + submodule);
         return this.libraryName + '-' + moduleNamesConcatenated + '-' + componentName + '--' + story;
     }
 
     async navigateTo(navigationParameters: NavigationParameters): Promise<void> {
-        await this.page.goto(`/iframe.html?args=&viewMode=story&id=${this.buildStoryId(navigationParameters)}`, {
-            waitUntil: 'networkidle',
-            timeout: timeouts.large
-        });
+        await this.page.goto(`/iframe.html?viewMode=story&id=${this.buildStoryId(navigationParameters)}`);
+        await this.page.waitForSelector('storybook-root', { timeout: timeouts.large });
     }
 }

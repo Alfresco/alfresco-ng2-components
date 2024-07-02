@@ -32,9 +32,10 @@ import { IdentityUserService } from './identity-user.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
-import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { AdfHttpClient } from '../../../../api/src';
 import { StorageService } from '../../common/services/storage.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('IdentityUserService', () => {
     const mockRoles = [
@@ -52,7 +53,8 @@ describe('IdentityUserService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            providers: [StorageService, AdfHttpClient]
         });
         storageService = TestBed.inject(StorageService);
         service = TestBed.inject(IdentityUserService);

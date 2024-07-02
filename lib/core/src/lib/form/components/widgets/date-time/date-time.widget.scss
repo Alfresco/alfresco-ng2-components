@@ -1,21 +1,23 @@
 /* stylelint-disable selector-class-pattern */
+@import 'styles/mat-selectors';
+
 .adf {
     &-date-time-widget {
-        .mat-form-field-suffix {
+        #{$mat-form-field-suffix} {
             top: 26px;
         }
 
-        .mat-form-field-label-wrapper {
+        #{$mat-form-field-label} {
             top: 20px;
         }
     }
 
     &-left-label-input-datepicker {
-        .mat-form-field-suffix {
+        #{$mat-form-field-suffix} {
             top: 0;
-        }
 
-        .mat-form-field-infix {
+        }
+        #{$mat-form--text-field-infix} {
             width: 100%;
         }
     }

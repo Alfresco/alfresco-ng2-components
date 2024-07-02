@@ -15,20 +15,23 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProcessHeaderCloudModule } from '../process-header-cloud.module';
 import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessCloudServiceMock } from '../../mock/process-cloud.service.mock';
 import { ProcessCloudService } from '../../services/process-cloud.service';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: ProcessHeaderCloudComponent,
     title: 'Process Services Cloud/Process Cloud/Process Header Cloud/Process Header Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessServicesCloudStoryModule, ProcessHeaderCloudModule],
-            providers: [{ provide: ProcessCloudService, useClass: ProcessCloudServiceMock }]
+            imports: [ProcessHeaderCloudModule]
+        }),
+        applicationConfig({
+            providers: [{ provide: ProcessCloudService, useClass: ProcessCloudServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
@@ -49,32 +52,32 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<ProcessHeaderCloudComponent>;
 
-const template: Story<ProcessHeaderCloudComponent> = (args: ProcessHeaderCloudComponent) => ({
+const template: StoryFn<ProcessHeaderCloudComponent> = (args) => ({
     props: args
 });
 
-export const defaultProcessHeaderCloud = template.bind({});
-defaultProcessHeaderCloud.args = {
+export const DefaultProcessHeaderCloud = template.bind({});
+DefaultProcessHeaderCloud.args = {
     appName: 'app',
     processInstanceId: 'mock-process-id'
 };
 
-export const noParentAndBusinessAndName = template.bind({});
-noParentAndBusinessAndName.args = {
+export const NoParentAndBusinessAndName = template.bind({});
+NoParentAndBusinessAndName.args = {
     appName: 'app-placeholders',
     processInstanceId: 'mock-process-id'
 };
 
-export const invalidOrMissingAppName = template.bind({});
-invalidOrMissingAppName.args = {
+export const InvalidOrMissingAppName = template.bind({});
+InvalidOrMissingAppName.args = {
     appName: undefined,
     processInstanceId: 'mock-process-id'
 };
 
-export const invalidOrMissingProcessInstanceID = template.bind({});
-invalidOrMissingProcessInstanceID.args = {
+export const InvalidOrMissingProcessInstanceID = template.bind({});
+InvalidOrMissingProcessInstanceID.args = {
     appName: 'app',
     processInstanceId: undefined
 };

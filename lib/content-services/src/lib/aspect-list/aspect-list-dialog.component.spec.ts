@@ -27,6 +27,7 @@ import { AspectEntry, Node } from '@alfresco/js-api';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { By } from '@angular/platform-browser';
 import { AspectListComponent } from './aspect-list.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 const aspectListMock: AspectEntry[] = [
     {
@@ -113,7 +114,7 @@ describe('AspectListDialogComponent', () => {
             excludedAspects: []
         };
         await TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule],
+            imports: [HttpClientTestingModule, ContentTestingModule, MatDialogModule],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {

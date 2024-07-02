@@ -46,12 +46,6 @@
       "ARROW_ICON": "右箭头图标"
     }
   },
-  "ADF_CONFIRM_DIALOG": {
-    "TITLE": "确认",
-    "ACTION": "是否要继续？",
-    "YES_LABEL": "是",
-    "NO_LABEL": "否"
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "此文件夹为空"

@@ -31,5 +31,6 @@
     "postcss",
     "scss"
   ],
-  "editor.guides.indentation": true
+  "editor.guides.indentation": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -30,20 +30,20 @@
                     (keyup.enter)="elementClicked(item)"
                     (touchend)="elementClicked(item)">
                     <!-- This is a comment -->
-                    <mat-icon mat-list-icon>
+                    <mat-icon matListItemLine>
                         <img [alt]="getMimeType(item)" [src]="getMimeTypeIcon(item)"/>
                     </mat-icon>
-                    <h4 mat-line id="result_name_{{idx}}"
+                    <h4 matListItemTitle id="result_name_{{idx}}"
                         *ngIf="highlight; else elseBlock"
                         class="adf-search-fixed-text"
                         [innerHtml]="item.entry.name | highlight: searchTerm">
                         {{ item?.entry.name }}
                     </h4>
                     <ng-template #elseBlock>
-                        <h4 class="adf-search-fixed-text" mat-line id="result_name_{{idx}}"
+                        <h4 class="adf-search-fixed-text" matListItemTitle id="result_name_{{idx}}"
                             [innerHtml]="item.entry.name"></h4>
                     </ng-template>
-                    <p mat-line class="adf-search-fixed-text"> {{item?.entry.createdByUser.displayName}} </p>
+                    <p matListItemLine class="adf-search-fixed-text"> {{item?.entry.createdByUser.displayName}} </p>
                 </mat-list-item>
                 <mat-list-item id="search_no_result"
                             data-automation-id="search_no_result_found"
@@ -53,7 +53,7 @@
                         *ngIf="isNoSearchTemplatePresent() else defaultNoResult">
                     </ng-content>
                     <ng-template #defaultNoResult>
-                        <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm:
+                        <p matListItemLine class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm:
                             searchTerm} }}</p>
                     </ng-template>
                 </mat-list-item>

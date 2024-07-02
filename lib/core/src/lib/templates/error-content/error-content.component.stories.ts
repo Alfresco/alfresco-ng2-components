@@ -15,22 +15,23 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ErrorContentComponent } from './error-content.component';
 import { CoreStoryModule } from '../../testing/core.story.module';
-import { TemplateModule } from '../template.module';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: ErrorContentComponent,
     title: 'Core/Template/Error Content',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, TemplateModule],
-            providers: [
-                { provide: ActivatedRoute, useValue: { params: of({}) } }
-            ]
+            imports: [ErrorContentComponent],
+            providers: [{ provide: ActivatedRoute, useValue: { params: of({}) } }]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -44,7 +45,6 @@ export default {
         errorCode: {
             control: 'text',
             description: 'Error code associated with this error.',
-            defaultValue: 'UNKNOWN',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'UNKNOWN' }
@@ -54,20 +54,23 @@ export default {
             name: 'with adf-error-content-actions selector',
             control: 'boolean',
             description: 'Showcase content projection with <span style="color:red">adf-error-content-actions</span> selector',
-            defaultValue: false,
             table: {
                 category: 'Content Projection',
                 type: {
                     summary: 'code',
                     detail: '<div adf-error-content-actions>\n  <button>MyAction</button>\n</div>'
                 },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         }
+    },
+    args: {
+        errorCode: 'UNKNOWN',
+        errorContentActions: false
     }
-} as Meta;
+} as Meta<ErrorContentComponent>;
 
-const template: Story<ErrorContentComponent> = (args: ErrorContentComponent & { errorContentActions: boolean }) => ({
+const template: StoryFn<ErrorContentComponent> = (args: ErrorContentComponent & { errorContentActions: boolean }) => ({
     props: args,
     template: `
     <adf-error-content errorCode="${args.errorCode}">
@@ -77,5 +80,5 @@ const template: Story<ErrorContentComponent> = (args: ErrorContentComponent & { 
     </adf-error-content>`
 });
 
-export const errorContent = template.bind({});
-errorContent.parameters = { layout: 'centered' };
+export const ErrorContent = template.bind({});
+ErrorContent.parameters = { layout: 'centered' };

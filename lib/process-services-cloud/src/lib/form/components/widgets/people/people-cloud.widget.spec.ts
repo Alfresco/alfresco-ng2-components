@@ -110,12 +110,12 @@ describe('PeopleCloudWidgetComponent', () => {
         it('should hide tooltip', async () => {
             const cloudPeopleInput = element.querySelector('adf-cloud-people');
             cloudPeopleInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             cloudPeopleInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const tooltipElement = await loader.getHarness(MatTooltipHarness);
             expect(await tooltipElement.isOpen()).toBeFalsy();

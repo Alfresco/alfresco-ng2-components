@@ -43,11 +43,11 @@
         <button mat-raised-button (click)="addAction()">Add</button>
     </form>
     <div *ngIf="actions.length > 0">
-        <mat-chip-list>
-            <mat-chip *ngFor="let action of actions" [removable]="true">
+        <mat-chip-listbox>
+            <mat-chip-option *ngFor="let action of actions" [removable]="true">
                 {{action.title}}
                 <mat-icon matChipRemove (click)="removeAction(action)">cancel</mat-icon>
-            </mat-chip>
-        </mat-chip-list>
+            </mat-chip-option>
+        </mat-chip-listbox>
     </div>
 </div>

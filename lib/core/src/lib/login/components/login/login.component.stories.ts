@@ -16,21 +16,25 @@
  */
 
 import { RouterModule } from '@angular/router';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { AuthenticationService } from '../../../auth';
 import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
-import { CoreStoryModule } from '../../../testing/core.story.module';
-import { LoginModule } from '../../login.module';
 import { LoginComponent } from './login.component';
+import { importProvidersFrom } from '@angular/core';
+import { CoreStoryModule } from '../../../../..';
 
 export default {
     component: LoginComponent,
     title: 'Core/Login/Login',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LoginModule, RouterModule.forRoot([], { useHash: true })],
+            imports: [LoginComponent],
+            providers: [{ provide: AuthenticationService, useClass: AuthenticationMock }]
+        }),
+        applicationConfig({
             providers: [
-                { provide: AuthenticationService, useClass: AuthenticationMock }
+                importProvidersFrom(CoreStoryModule),
+                importProvidersFrom(RouterModule.forRoot([], { useHash: true }))
             ]
         })
     ],
@@ -43,33 +47,29 @@ export default {
     },
     argTypes: {
         correct: {
-            control: 'none',
             name: 'To test correct functionality:',
             description: 'Use `fake-username` and `fake-password`.',
             table: { category: 'Storybook Info' }
         },
         corsError: {
-            control: 'none',
             name: 'To test CORS error:',
             description: 'Use `fake-username-CORS-error` and `fake-password`.',
             table: { category: 'Storybook Info' }
         },
         csrfError: {
-            control: 'none',
             name: 'To test CSRF error:',
             description: 'Use `fake-username-CSRF-error` and `fake-password`.',
             table: { category: 'Storybook Info' }
         },
         ecmAccessError: {
-            control: 'none',
             name: 'To test ECM access error:',
             description: 'Use `fake-username-ECM-access-error` and `fake-password`.',
             table: { category: 'Storybook Info' }
         },
         showRememberMe: {
             control: 'boolean',
-            description: 'Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly.',
-            defaultValue: true,
+            description:
+                'Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly.',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'true' }
@@ -90,7 +90,7 @@ export default {
             defaultValue: '/?path=/story/core-login-login--login',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '' }
+                defaultValue: { summary: '/?path=/story/core-login-login--login' }
             }
         },
         registerLink: {
@@ -99,7 +99,7 @@ export default {
             defaultValue: '/?path=/story/core-login-login--login',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '' }
+                defaultValue: { summary: '/?path=/story/core-login-login--login' }
             }
         },
         logoImageUrl: {
@@ -143,7 +143,7 @@ export default {
             defaultValue: '.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: 'null' }
+                defaultValue: { summary: '.' }
             }
         },
         success: {
@@ -171,10 +171,10 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<LoginComponent>;
 
-const template: Story<LoginComponent> = (args: LoginComponent) => ({
+const template: StoryFn<LoginComponent> = (args) => ({
     props: args
 });
 
-export const login = template.bind({});
+export const Login = template.bind({});

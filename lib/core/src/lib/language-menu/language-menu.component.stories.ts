@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { componentWrapperDecorator, Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, componentWrapperDecorator, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 
 import { LanguageMenuModule } from './language-menu.module';
@@ -23,16 +23,18 @@ import { LanguageMenuComponent } from './language-menu.component';
 
 import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: LanguageMenuComponent,
     title: 'Core/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LanguageMenuModule],
-            providers: [
-                { provide: LanguageService, useClass: LanguageServiceMock }
-            ]
+            imports: [LanguageMenuModule],
+            providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -52,16 +54,17 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<LanguageMenuComponent>;
 
-const languageMenuComponentTemplate: Story<LanguageMenuComponent> = (args: LanguageMenuComponent) => ({
+const LanguageMenuComponentTemplate: StoryFn<LanguageMenuComponent> = (args) => ({
     props: args
 });
-languageMenuComponentTemplate.parameters = { layout: 'centered' };
+LanguageMenuComponentTemplate.parameters = { layout: 'centered' };
 
-export const asMainMenu = languageMenuComponentTemplate.bind({});
-asMainMenu.decorators = [
-    componentWrapperDecorator(story => `
+export const AsMainMenu = LanguageMenuComponentTemplate.bind({});
+AsMainMenu.decorators = [
+    componentWrapperDecorator(
+        (story) => `
       <button mat-icon-button [matMenuTriggerFor]="langMenu">
         <mat-icon>
           language
@@ -70,13 +73,15 @@ asMainMenu.decorators = [
       <mat-menu #langMenu="matMenu">
         ${story}
       </mat-menu>
-    `)
+    `
+    )
 ];
-asMainMenu.parameters = { layout: 'centered' };
+AsMainMenu.parameters = { layout: 'centered' };
 
-export const asNestedMenu = languageMenuComponentTemplate.bind({});
-asNestedMenu.decorators = [
-    componentWrapperDecorator(story => `
+export const AsNestedMenu = LanguageMenuComponentTemplate.bind({});
+AsNestedMenu.decorators = [
+    componentWrapperDecorator(
+        (story) => `
       <button mat-icon-button [matMenuTriggerFor]="profileMenu">
         <mat-icon>
           more_vert
@@ -93,6 +98,7 @@ asNestedMenu.decorators = [
       <mat-menu #langMenu="matMenu">
         ${story}
       </mat-menu>
-    `)
+    `
+    )
 ];
-asNestedMenu.parameters = { layout: 'centered' };
+AsNestedMenu.parameters = { layout: 'centered' };

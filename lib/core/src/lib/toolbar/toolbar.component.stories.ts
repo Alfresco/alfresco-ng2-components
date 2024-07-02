@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { ToolbarComponent } from './toolbar.component';
 import { ToolbarModule } from './toolbar.module';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: ToolbarComponent,
@@ -26,6 +27,9 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, ToolbarModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
@@ -33,7 +37,6 @@ export default {
             control: 'radio',
             options: ['primary', 'accent', 'warn', undefined],
             description: 'Toolbar color.',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'ThemePalette' },
                 defaultValue: { summary: 'undefined' }
@@ -42,7 +45,6 @@ export default {
         title: {
             control: 'text',
             description: 'Toolbar title.',
-            defaultValue: '',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: '' }
@@ -52,48 +54,53 @@ export default {
             name: 'with adf-toolbar-title component',
             control: 'boolean',
             description: 'Showcase content projection with <span style="color:red">adf-toolbar-title</span> component',
-            defaultValue: false,
             table: {
                 category: 'Content Projection',
                 type: {
                     summary: 'code',
                     detail: '<adf-toolbar-title>Projected Title</adf-toolbar-title>'
                 },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         },
         toolbarDivider: {
             name: 'with adf-toolbar-divider component',
             control: 'boolean',
             description: 'Showcase content projection with <span style="color:red">adf-toolbar-divider</span> component',
-            defaultValue: false,
             table: {
                 category: 'Content Projection',
                 type: {
                     summary: 'code',
                     detail: 'left<adf-toolbar-divider></adf-toolbar-divider>right'
                 },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         },
         anyContentProjection: {
             name: 'with any component / selector',
             control: 'boolean',
             description: 'Showcase content projection with any component / selector',
-            defaultValue: false,
             table: {
                 category: 'Content Projection',
                 type: {
                     summary: 'code',
                     detail: '<span style="color:red">projected content</span>'
                 },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         }
+    },
+    args: {
+        title: '',
+        toolbarTitle: false,
+        toolbarDivider: false,
+        anyContentProjection: false
     }
-} as Meta;
+} as Meta<ToolbarComponent>;
 
-const template: Story<ToolbarComponent> = (args: ToolbarComponent & { anyContentProjection: boolean } & { toolbarDivider: boolean } & { toolbarTitle: boolean } ) => ({
+const template: StoryFn<ToolbarComponent> = (
+    args: ToolbarComponent & { anyContentProjection: boolean } & { toolbarDivider: boolean } & { toolbarTitle: boolean }
+) => ({
     props: args,
     template: `
     <adf-toolbar color="${args.color}" title="${args.title}">
@@ -105,4 +112,4 @@ const template: Story<ToolbarComponent> = (args: ToolbarComponent & { anyContent
     </adf-toolbar>`
 });
 
-export const toolbar = template.bind({});
+export const Toolbar = template.bind({});

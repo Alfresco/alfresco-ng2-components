@@ -1,4 +1,5 @@
 @import 'styles/flex';
+@import 'styles/mat-selectors';
 
 .adf {
     &-userinfo-container {
@@ -49,7 +50,7 @@
         display: inline-block;
     }
 
-    &-userinfo-menu_button.mat-button {
+    &-userinfo-menu_button#{$mat-button} {
         margin-right: 0;
         border-radius: 90%;
         padding: 0;
@@ -57,13 +58,13 @@
         height: 40px;
     }
 
-    &-userinfo-tab .mat-tab-header {
+    &-userinfo-tab #{$mat-tab-header} {
         align-self: center;
         width: 100%;
         min-width: 250px;
     }
 
-    &-userinfo-tab .mat-tab-label {
+    &-userinfo-tab #{$mat-tab-label-text} {
         flex: auto;
         font-weight: 500;
         font-size: var(--theme-body-1-font-size);
@@ -81,7 +82,7 @@
         box-sizing: border-box;
     }
 
-    &-userinfo-card.mat-card {
+    &-userinfo-card#{$mat-card} {
         padding: 0;
     }
 
@@ -160,7 +161,7 @@
 }
 
 @media only screen and (min-device-width: 480px) {
-    .mat-menu-panel.adf-userinfo-menu {
+    #{$mat-menu-panel}.adf-userinfo-menu {
         max-height: 450px;
         min-width: 450px;
         overflow: auto;
@@ -168,6 +169,6 @@
     }
 }
 
-.mat-menu-panel.adf-userinfo-menu .mat-menu-content {
+#{$mat-menu-panel}.adf-userinfo-menu #{$mat-menu-content} {
     padding: 0;
 }

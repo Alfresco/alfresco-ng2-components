@@ -13,7 +13,9 @@
       "@alfresco/adf-core/feature-flags": ["../feature-flags/src/index.ts"],
       "@alfresco/js-api": ["../../../dist/libs/js-api"],
       "@alfresco/js-api/*": ["../../../dist/libs/js-api/*"]
-    }
+    },
+    "target": "ES2022",
+    "useDefineForClassFields": false
   },
   "exclude": ["./test.ts", "**/*.spec.ts", "**/*.test.ts"],
   "include": ["**/*.ts"]

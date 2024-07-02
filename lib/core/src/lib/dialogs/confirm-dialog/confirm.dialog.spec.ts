@@ -16,10 +16,11 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
-import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Confirm Dialog Component', () => {
     let fixture: ComponentFixture<ConfirmDialogComponent>;
@@ -38,7 +39,7 @@ describe('Confirm Dialog Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [MatDialogModule, NoopAnimationsModule, TranslateModule.forRoot()],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: data }

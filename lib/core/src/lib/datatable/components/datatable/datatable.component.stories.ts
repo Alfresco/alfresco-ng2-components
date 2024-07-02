@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, StoryFn, moduleMetadata } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
 import { DataTableComponent } from './datatable.component';
 import { DataTableModule } from '../../datatable.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mockPathInfos } from '../mocks/datatable.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: DataTableComponent,
     title: 'Core/Datatable/Datatable',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, DataTableModule, MatProgressSpinnerModule, BrowserAnimationsModule, RouterTestingModule]
+            imports: [DataTableModule, MatProgressSpinnerModule, RouterTestingModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
@@ -44,7 +47,6 @@ export default {
         display: {
             control: 'inline-radio',
             options: ['list', 'gallery'],
-            defaultValue: 'list',
             description: 'The display mode of the table.',
             table: {
                 type: { summary: 'string' },
@@ -54,73 +56,6 @@ export default {
         rows: {
             control: 'object',
             description: 'The rows that the datatable will show.',
-            defaultValue: [
-                {
-                    id: 1,
-                    textCol: 'This is a very long text inside the text column to check if the hidden text will be displayed on hover.',
-                    imageCol: 'material-icons://folder_open',
-                    iconCol: 'folder_open',
-                    dateCol: new Date(),
-                    fileSizeCol: '536870912',
-                    locationCol: mockPathInfos[0],
-                    booleanCol: true,
-                    amountCol: 100.55,
-                    numberCol: 10000.31,
-                    jsonCol: mockPathInfos[0]
-                },
-                {
-                    id: 2,
-                    textCol: 'Text 2',
-                    imageCol: 'material-icons://cloud_outline',
-                    iconCol: 'cloud_outline',
-                    dateCol: new Date().setDate(new Date().getDate() - 1),
-                    fileSizeCol: '524288',
-                    locationCol: mockPathInfos[1],
-                    booleanCol: false,
-                    amountCol: 1020.123,
-                    numberCol: 240.3,
-                    jsonCol: mockPathInfos[1]
-                },
-                {
-                    id: 3,
-                    textCol: 'Text 3',
-                    imageCol: 'material-icons://save',
-                    iconCol: 'save',
-                    dateCol: new Date().setDate(new Date().getDate() - 5),
-                    fileSizeCol: '10737418240B',
-                    locationCol: mockPathInfos[1],
-                    booleanCol: 'true',
-                    amountCol: -2020,
-                    numberCol: 120,
-                    jsonCol: mockPathInfos[1]
-                },
-                {
-                    id: 4,
-                    textCol: 'Text 4',
-                    imageCol: 'material-icons://delete',
-                    iconCol: 'delete',
-                    dateCol: new Date().setDate(new Date().getDate() - 6),
-                    fileSizeCol: '512B',
-                    locationCol: mockPathInfos[2],
-                    booleanCol: 'false',
-                    amountCol: 230.76,
-                    numberCol: 3.032,
-                    jsonCol: mockPathInfos[2]
-                },
-                {
-                    id: 5,
-                    textCol: 'Text 5',
-                    imageCol: 'material-icons://person_outline',
-                    iconCol: 'person_outline',
-                    dateCol: new Date().setDate(new Date().getDate() - 7),
-                    fileSizeCol: '1073741824B',
-                    locationCol: mockPathInfos[0],
-                    booleanCol: 'false',
-                    amountCol: 0.444,
-                    numberCol: 2000,
-                    jsonCol: mockPathInfos[0]
-                }
-            ],
             table: {
                 category: 'Data',
                 type: { summary: 'any[]' },
@@ -129,7 +64,6 @@ export default {
         },
         sorting: {
             control: 'object',
-            defaultValue: ['id', 'asc'],
             description: 'A string array.\n\n' + 'First element describes the key to sort by.\n\n' + 'Second element describes the sorting order.',
             table: {
                 type: { summary: 'any[]' },
@@ -139,36 +73,6 @@ export default {
         columns: {
             control: 'object',
             description: 'The columns that the datatable will show.',
-            defaultValue: [
-                { type: 'text', key: 'id', title: 'Id', sortable: true },
-                {
-                    type: 'text',
-                    key: 'textCol',
-                    title: 'Text Column',
-                    sortable: true,
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell',
-                    copyContent: true
-                },
-                { type: 'image', key: 'imageCol', title: 'Image Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'icon', key: 'iconCol', title: 'Icon Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'date', key: 'dateCol', title: 'Date Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
-                {
-                    type: 'date',
-                    key: 'dateCol',
-                    title: 'Date Time Ago Column',
-                    sortable: true,
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell',
-                    dateConfig: { format: 'timeAgo' }
-                },
-                { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'amount', key: 'amountCol', title: 'Amount Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'number', key: 'numberCol', title: 'Number Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
-                { type: 'json', key: 'jsonCol', title: 'JSON Column', draggable: true, cssClass: 'adf-ellipsis-cell' }
-            ],
             table: {
                 category: 'Data',
                 type: { summary: 'any[]' },
@@ -179,7 +83,6 @@ export default {
             control: 'inline-radio',
             description: 'Row selection mode.',
             options: ['none', 'single', 'multiple'],
-            defaultValue: 'single',
             table: {
                 category: 'Selection',
                 type: { summary: 'string' },
@@ -189,7 +92,6 @@ export default {
         multiselect: {
             control: 'boolean',
             description: 'Toggles multiple row selection, which renders checkboxes at the beginning of each row.',
-            defaultValue: false,
             table: {
                 category: 'Selection',
                 type: { summary: 'boolean' },
@@ -199,7 +101,6 @@ export default {
         mainTableAction: {
             control: 'boolean',
             description: 'Toggles main data table action column.',
-            defaultValue: true,
             table: {
                 category: 'Data Actions Column',
                 type: { summary: 'boolean' },
@@ -209,7 +110,6 @@ export default {
         actions: {
             control: 'boolean',
             description: 'Toggles the data actions column.',
-            defaultValue: false,
             table: {
                 category: 'Data Actions Column',
                 type: { summary: 'boolean' },
@@ -219,7 +119,6 @@ export default {
         showMainDatatableActions: {
             control: 'boolean',
             description: 'Toggles the main datatable action.',
-            defaultValue: false,
             table: {
                 category: 'Data Actions Column',
                 type: { summary: 'boolean' },
@@ -230,7 +129,6 @@ export default {
             control: 'inline-radio',
             description: 'Position of the actions dropdown menu.',
             options: ['right', 'left'],
-            defaultValue: 'right',
             table: {
                 category: 'Data Actions Column',
                 type: { summary: 'string' },
@@ -240,7 +138,6 @@ export default {
         actionsVisibleOnHover: {
             control: 'boolean',
             description: 'Toggles whether the actions dropdown should only be visible if the row is hovered over or the dropdown menu is open.',
-            defaultValue: false,
             table: {
                 category: 'Data Actions Column',
                 type: { summary: 'boolean' },
@@ -257,7 +154,6 @@ export default {
         contextMenu: {
             control: 'boolean',
             description: 'Toggles custom context menu for the component.',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -275,7 +171,6 @@ export default {
         rowStyleClass: {
             control: 'text',
             description: 'The CSS class to apply to every row.',
-            defaultValue: '',
             table: {
                 category: 'Custom Row Styles',
                 type: { summary: 'string' },
@@ -286,7 +181,6 @@ export default {
             control: 'inline-radio',
             description: 'Toggles the header visibility mode.',
             options: ['never', 'always', 'data'],
-            defaultValue: 'data',
             table: {
                 category: 'Header',
                 type: { summary: 'string' },
@@ -296,7 +190,6 @@ export default {
         stickyHeader: {
             control: 'boolean',
             description: 'Toggles the sticky header mode.',
-            defaultValue: false,
             table: {
                 category: 'Header',
                 type: { summary: 'boolean' },
@@ -305,7 +198,6 @@ export default {
         },
         loading: {
             control: 'boolean',
-            defaultValue: false,
             table: {
                 category: 'Table Template',
                 type: { summary: 'boolean' },
@@ -314,7 +206,6 @@ export default {
         },
         noPermission: {
             control: 'boolean',
-            defaultValue: false,
             table: {
                 category: 'Table Template',
                 type: { summary: 'boolean' },
@@ -324,7 +215,6 @@ export default {
         rowMenuCacheEnabled: {
             control: 'boolean',
             description: 'Should the items for the row actions menu be cached for reuse after they are loaded the first time?',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -333,7 +223,6 @@ export default {
         allowFiltering: {
             control: 'boolean',
             description: 'Flag that indicate if the datatable allow the use facet widget search for filtering.',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' }
@@ -371,6 +260,123 @@ export default {
             description: 'Emitted when the order of columns changed.',
             table: { category: 'Actions' }
         }
+    },
+    args: {
+        display: 'list',
+        rows: [
+            {
+                id: 1,
+                textCol: 'This is a very long text inside the text column to check if the hidden text will be displayed on hover.',
+                imageCol: 'material-icons://folder_open',
+                iconCol: 'folder_open',
+                dateCol: new Date(),
+                fileSizeCol: '536870912',
+                locationCol: mockPathInfos[0],
+                booleanCol: true,
+                amountCol: 100.55,
+                numberCol: 10000.31,
+                jsonCol: mockPathInfos[0]
+            },
+            {
+                id: 2,
+                textCol: 'Text 2',
+                imageCol: 'material-icons://cloud_outline',
+                iconCol: 'cloud_outline',
+                dateCol: new Date().setDate(new Date().getDate() - 1),
+                fileSizeCol: '524288',
+                locationCol: mockPathInfos[1],
+                booleanCol: false,
+                amountCol: 1020.123,
+                numberCol: 240.3,
+                jsonCol: mockPathInfos[1]
+            },
+            {
+                id: 3,
+                textCol: 'Text 3',
+                imageCol: 'material-icons://save',
+                iconCol: 'save',
+                dateCol: new Date().setDate(new Date().getDate() - 5),
+                fileSizeCol: '10737418240B',
+                locationCol: mockPathInfos[1],
+                booleanCol: 'true',
+                amountCol: -2020,
+                numberCol: 120,
+                jsonCol: mockPathInfos[1]
+            },
+            {
+                id: 4,
+                textCol: 'Text 4',
+                imageCol: 'material-icons://delete',
+                iconCol: 'delete',
+                dateCol: new Date().setDate(new Date().getDate() - 6),
+                fileSizeCol: '512B',
+                locationCol: mockPathInfos[2],
+                booleanCol: 'false',
+                amountCol: 230.76,
+                numberCol: 3.032,
+                jsonCol: mockPathInfos[2]
+            },
+            {
+                id: 5,
+                textCol: 'Text 5',
+                imageCol: 'material-icons://person_outline',
+                iconCol: 'person_outline',
+                dateCol: new Date().setDate(new Date().getDate() - 7),
+                fileSizeCol: '1073741824B',
+                locationCol: mockPathInfos[0],
+                booleanCol: 'false',
+                amountCol: 0.444,
+                numberCol: 2000,
+                jsonCol: mockPathInfos[0]
+            }
+        ],
+        sorting: ['id', 'asc'],
+        columns: [
+            { type: 'text', key: 'id', title: 'Id', sortable: true },
+            {
+                type: 'text',
+                key: 'textCol',
+                title: 'Text Column',
+                sortable: true,
+                draggable: true,
+                cssClass: 'adf-ellipsis-cell',
+                copyContent: true
+            },
+            { type: 'image', key: 'imageCol', title: 'Image Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+            { type: 'icon', key: 'iconCol', title: 'Icon Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+            { type: 'date', key: 'dateCol', title: 'Date Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
+            {
+                type: 'date',
+                key: 'dateCol',
+                title: 'Date Time Ago Column',
+                sortable: true,
+                draggable: true,
+                cssClass: 'adf-ellipsis-cell',
+                dateConfig: { format: 'timeAgo' }
+            },
+            { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
+            { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+            { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+            { type: 'amount', key: 'amountCol', title: 'Amount Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+            { type: 'number', key: 'numberCol', title: 'Number Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+            { type: 'json', key: 'jsonCol', title: 'JSON Column', draggable: true, cssClass: 'adf-ellipsis-cell' }
+        ],
+        selectionMode: 'single',
+        multiselect: false,
+        mainTableAction: true,
+        actions: false,
+        showMainDatatableActions: false,
+        actionsPosition: 'right',
+        actionsVisibleOnHover: false,
+        contextMenu: false,
+        rowStyleClass: '',
+        showHeader: 'data',
+        stickyHeader: false,
+        loading: false,
+        noPermission: false,
+        rowMenuCacheEnabled: false,
+        allowFiltering: false
+
     }
 } as Meta<DataTableComponent>;
 
@@ -402,12 +408,12 @@ const insertContentToTemplate = (content: string): string =>
     ${content}
   </adf-datatable>`;
 
-export const defaultDatatable: Story<DataTableComponent> = (args: DataTableComponent) => ({
+export const DefaultDatatable: StoryFn<DataTableComponent> = (args) => ({
     props: args,
     template: insertContentToTemplate('')
 });
 
-export const emptyWithList: Story<DataTableComponent> = (args: DataTableComponent) => ({
+export const EmptyWithList: StoryFn<DataTableComponent> = (args) => ({
     props: {
         ...args,
         rows: []
@@ -421,7 +427,7 @@ export const emptyWithList: Story<DataTableComponent> = (args: DataTableComponen
   `)
 });
 
-export const emptyWithTemplate: Story<DataTableComponent> = (args: DataTableComponent) => ({
+export const EmptyWithTemplate: StoryFn<DataTableComponent> = (args) => ({
     props: {
         ...args,
         rows: []
@@ -433,7 +439,7 @@ export const emptyWithTemplate: Story<DataTableComponent> = (args: DataTableComp
   `)
 });
 
-export const loadingWithTemplate: Story<DataTableComponent> = (args: DataTableComponent) => ({
+export const LoadingWithTemplate: StoryFn<DataTableComponent> = (args) => ({
     props: {
         ...args,
         loading: true
@@ -448,7 +454,7 @@ export const loadingWithTemplate: Story<DataTableComponent> = (args: DataTableCo
   `)
 });
 
-export const noPermissionWithTemplate: Story<DataTableComponent> = (args: DataTableComponent) => ({
+export const NoPermissionWithTemplate: StoryFn<DataTableComponent> = (args) => ({
     props: {
         ...args,
         noPermission: true
@@ -462,7 +468,7 @@ export const noPermissionWithTemplate: Story<DataTableComponent> = (args: DataTa
   `)
 });
 
-export const mainMenuWithTemplate: Story<DataTableComponent> = (args: DataTableComponent) => ({
+export const MainMenuWithTemplate: StoryFn<DataTableComponent> = (args) => ({
     props: {
         ...args,
         mainTableAction: true,
@@ -478,7 +484,7 @@ export const mainMenuWithTemplate: Story<DataTableComponent> = (args: DataTableC
   `)
 });
 
-export const stickyHeader: Story<DataTableComponent> = (args: DataTableComponent) => ({
+export const StickyHeader: StoryFn<DataTableComponent> = (args) => ({
     props: {
         ...args,
         stickyHeader: true

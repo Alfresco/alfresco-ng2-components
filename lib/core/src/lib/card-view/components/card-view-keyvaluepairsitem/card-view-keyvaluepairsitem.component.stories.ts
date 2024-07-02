@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewModule, CardViewKeyValuePairsItemModel } from '../../public-api';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CardViewKeyValuePairsItemComponent,
@@ -26,16 +27,18 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, CardViewModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         editable: {
             control: 'boolean',
             description: 'Defines if CardView item is editable',
-            defaultValue: false,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         },
         property: {
@@ -44,14 +47,16 @@ export default {
                 type: { summary: 'CardViewKeyValuePairsItemModel' }
             }
         }
+    },
+    args: {
+        editable: true
     }
-} as Meta;
+} as Meta<CardViewKeyValuePairsItemComponent>;
 
-export const cardViewKeyValuePairsItem: Story<CardViewKeyValuePairsItemComponent> =
-    (args: CardViewKeyValuePairsItemComponent) => ({
-        props: args
-    });
-cardViewKeyValuePairsItem.args = {
+export const CardViewKeyValuePairsItem: StoryFn<CardViewKeyValuePairsItemComponent> = (args) => ({
+    props: args
+});
+CardViewKeyValuePairsItem.args = {
     property: new CardViewKeyValuePairsItemModel({
         label: 'CardView Key-Value Pairs Item',
         value: [

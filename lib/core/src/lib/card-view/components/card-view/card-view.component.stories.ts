@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewComponent } from './card-view.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
 import { CardViewModule } from '../../public-api';
 import { cardViewDataSource, cardViewUndefinedValues } from '../../mock/card-view-content.mock';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: CardViewComponent,
@@ -27,57 +28,94 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, CardViewModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         editable: {
             control: 'boolean',
-            defaultValue: true
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
         },
         displayEmpty: {
             control: 'boolean',
-            defaultValue: true
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
         },
         displayNoneOption: {
             control: 'boolean',
-            defaultValue: true
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
         },
         displayClearAction: {
             control: 'boolean',
-            defaultValue: true
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
         },
         copyToClipboardAction: {
             control: 'boolean',
-            defaultValue: true
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
         },
         useChipsForMultiValueProperty: {
             control: 'boolean',
-            defaultValue: true
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'true' }
+            }
         },
         multiValueSeparator: {
             control: 'text',
-            defaultValue: ', '
+            table: {
+                type: { summary: 'string' },
+                defaultValue: { summary: ', ' }
+            }
         },
         displayLabelForChips: {
             control: 'boolean',
-            defaultValue: false
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: 'false' }
+            }
         }
+    },
+    args: {
+        editable: true,
+        displayEmpty: true,
+        displayNoneOption: true,
+        displayClearAction: true,
+        copyToClipboardAction: true,
+        useChipsForMultiValueProperty: true,
+        multiValueSeparator: ', ',
+        displayLabelForChips: false
     }
-} as Meta;
+} as Meta<CardViewComponent>;
 
-const template: Story<CardViewComponent> = (args: CardViewComponent) => ({
+const template: StoryFn<CardViewComponent> = (args) => ({
     props: args
 });
 
-export const defaultCardView = template.bind({});
-defaultCardView.args = {
+export const DefaultCardView = template.bind({});
+DefaultCardView.args = {
     properties: cardViewDataSource
 };
-defaultCardView.parameters = { layout: 'centered' };
+DefaultCardView.parameters = { layout: 'centered' };
 
-export const emptyCardView = template.bind({});
-emptyCardView.args = {
+export const EmptyCardView = template.bind({});
+EmptyCardView.args = {
     properties: cardViewUndefinedValues,
     editable: false
 };
-emptyCardView.parameters = { layout: 'centered' };
+EmptyCardView.parameters = { layout: 'centered' };
