@@ -48,13 +48,12 @@ describe('OidcAuthGuard', () => {
         }
     };
 
-    const handleObservableResult = (result: Observable<boolean | UrlTree>): Promise<boolean | UrlTree> => {
-        return new Promise<boolean | UrlTree>((resolve) => {
+    const handleObservableResult = (result: Observable<boolean | UrlTree>): Promise<boolean | UrlTree> =>
+        new Promise<boolean | UrlTree>((resolve) => {
             result.subscribe((value) => {
                 resolve(value);
             });
         });
-    };
 
     describe('canActivate', () => {
         it('should return true if is authenticated', async () => {
