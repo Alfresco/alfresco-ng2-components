@@ -215,6 +215,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     nodeEntry: NodeEntry;
     tracks: Track[] = [];
     readOnly: boolean = true;
+    allowedEditActions: { [key: string]: boolean } = {
+        rotate: true,
+        crop: true
+    };
 
     sidebarRightTemplateContext: { node: Node } = { node: null };
     sidebarLeftTemplateContext: { node: Node } = { node: null };
