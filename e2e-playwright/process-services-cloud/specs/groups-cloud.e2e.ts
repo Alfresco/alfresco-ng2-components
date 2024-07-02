@@ -39,9 +39,6 @@ test.describe('Groups component stories tests', () => {
 
         await processServicesCloud.navigateTo({ moduleNames: ['group-cloud'], componentName: 'group-cloud', story: 'mandatory-preselected-groups' });
         await expect.soft(groupComponent.groupNaming).toContainText(expectedUsersName);
-
-        await groupComponent.getUserLocator('Meat Chicken').hover();
-        await expect(groupComponent.tooltip.content).toContainText('Mandatory');
     });
 
     test('Invalid Preselected Groups', async ({ processServicesCloud, groupComponent }) => {
@@ -52,5 +49,4 @@ test.describe('Groups component stories tests', () => {
 
         await expect(groupComponent.error.content).toContainText(expectedWarningIcon + expectedWarningMessage);
     });
-
 });

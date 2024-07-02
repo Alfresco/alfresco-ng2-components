@@ -22,7 +22,6 @@ import { ProcessServiceCloudTestingModule } from '../../../../testing/process-se
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
@@ -74,23 +73,8 @@ describe('GroupCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltipElement.isOpen()).toBeTruthy();
-            expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');
-        });
-
-        it('should hide tooltip', async () => {
-            const cloudGroupInput = element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
-            cloudGroupInput.dispatchEvent(new Event('mouseenter'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            cloudGroupInput.dispatchEvent(new Event('mouseleave'));
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            const tooltipElement = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltipElement.isOpen()).toBeFalsy();
+            const tooltip = cloudGroupInput.getAttribute('title');
+            expect(tooltip).toEqual('my custom tooltip');
         });
     });
 
@@ -167,8 +151,8 @@ describe('GroupCloudWidgetComponent', () => {
             const formField = await loader.getHarness(MatFormFieldHarness);
             expect(await formField.isDisabled()).toBeTrue();
 
-            const gtoupChip = await loader.getHarness(MatChipHarness);
-            expect(await gtoupChip.isDisabled()).toBeTrue();
+            const groupChip = await loader.getHarness(MatChipHarness);
+            expect(await groupChip.isDisabled()).toBeTrue();
         });
 
         it('should multi chips be disabled', async () => {

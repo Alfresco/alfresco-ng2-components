@@ -334,12 +334,12 @@ describe('ContentNodeSelectorComponent', () => {
 
             fixture.detectChanges();
             const infoMatIcon = getTabInfoButton();
-            const iconTooltipMessage = infoMatIcon.attributes['ng-reflect-message'];
+            const iconTooltipMessage = infoMatIcon.attributes['title'];
 
             const expectedMessage = 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE';
 
             expect(component.getWarningMessage()).toEqual(expectedMessage);
-            expect(iconTooltipMessage).toEqual(expectedMessage.substring(0, 30));
+            expect(iconTooltipMessage).toEqual(expectedMessage);
         });
 
         it('should not be able to show warning message if it is not in search mode', () => {
@@ -394,11 +394,11 @@ describe('ContentNodeSelectorComponent', () => {
 
             fixture.detectChanges();
             const infoMatIcon = getTabInfoButton();
-            const iconTooltipMessage = infoMatIcon.attributes['ng-reflect-message'];
+            const iconTooltipMessage = infoMatIcon.attributes['title'];
             const expectedMessage = 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE';
 
             expect(component.getWarningMessage()).toEqual(expectedMessage);
-            expect(iconTooltipMessage).toEqual(expectedMessage.substring(0, 30));
+            expect(iconTooltipMessage).toEqual(expectedMessage);
         });
 
         it('should not be able to show warning message while loading documents', () => {

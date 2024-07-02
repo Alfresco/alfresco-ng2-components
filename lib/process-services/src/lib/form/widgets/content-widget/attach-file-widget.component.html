@@ -72,7 +72,7 @@
                 matLine
                 id="{{ 'file-' + file.id }}"
                 (click)="onAttachFileClicked(file)"
-                [matTooltip]="file.name"
+                [title]="file.name"
                 (keyup.enter)="onAttachFileClicked(file)"
                 tabindex="0"
                 role="button"

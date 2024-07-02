@@ -10,7 +10,7 @@
                         <ng-container *ngIf="toggleFilterActions">
                             <button *ngFor="let filterAction of taskFilterActions"
                                     mat-icon-button
-                                    matTooltip="{{ filterAction.tooltip | translate}}"
+                                    title="{{ filterAction.tooltip | translate}}"
                                     [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
                                     [disabled]="isDisabledAction(filterAction)"
                                     (click)="executeFilterActions(filterAction)">

@@ -21,7 +21,6 @@ import { Chart } from '../../diagram/models/chart/chart.model';
 import { AnalyticsService } from '../services/analytics.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { NgChartsModule } from 'ng2-charts';
 import { TranslateModule } from '@ngx-translate/core';
@@ -35,7 +34,6 @@ import { AnalyticsReportHeatMapComponent } from './analytics-report-heat-map.com
     imports: [
         CommonModule,
         MatButtonModule,
-        MatTooltipModule,
         MatIconModule,
         NgChartsModule,
         TranslateModule,
