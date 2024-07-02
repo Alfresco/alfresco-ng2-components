@@ -142,7 +142,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
-    private fullNamePipe = new FullNamePipe();
     private searchUsers: IdentityUserModel[] = [];
     private onDestroy$ = new Subject<boolean>();
 
@@ -412,7 +411,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getDisplayName(user: UserLike): string {
-        return this.fullNamePipe.transform(user);
+        return new FullNamePipe().transform(user);
     }
 
     private isMultipleMode(): boolean {
