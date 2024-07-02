@@ -153,6 +153,13 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
         this.optionsChanged.emit(this.selectedOptions);
     }
 
+    isOptionSelected(option: AutocompleteOption): boolean {
+        const compare = this.compareOption;
+        const array = this.selectedOptions;
+
+        return compare ? array.some((arrayValue) => compare(option, arrayValue)) : array.includes(option);
+    }
+
     private isAdded(value: string): boolean {
         const valueLowerCase = value.toLowerCase();
         return this.selectedOptions.some((option) => option.value.toLowerCase() === valueLowerCase);
