@@ -16,26 +16,18 @@
  */
 
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { isLoginFragmentPresent, redirectSSOSuccessURL, redirectToUrl, withCredentials } from './auth-guard-functions';
 import { Observable } from 'rxjs';
 
-const authenticationService = inject(AuthenticationService);
-
-const checkLogin = async (_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> => {
-    if (authenticationService.isEcmLoggedIn() || withCredentials()) {
-        return true;
-    }
-    return redirectToUrl(redirectUrl);
-};
-
-export const AuthGuardEcm = (
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+export const AuthGuardEcm = (state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    const authenticationService = inject(AuthenticationService);
     if (authenticationService.isLoggedIn() && authenticationService.isOauth() && isLoginFragmentPresent()) {
         return redirectSSOSuccessURL();
     }
-    return checkLogin(route, state.url);
+    if (authenticationService.isEcmLoggedIn() || withCredentials()) {
+        return true;
+    }
+    return redirectToUrl(state.url);
 };
