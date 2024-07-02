@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { AuthenticationService } from '../services/authentication.service';
-import { RouterStateSnapshot, Router } from '@angular/router';
+import { RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
@@ -29,7 +29,6 @@ import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 describe('AuthGuardService BPM', () => {
-    let authGuard: AuthGuardBpm;
     let authService: AuthenticationService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let oidcAuthenticationService: OidcAuthenticationService;
@@ -57,7 +56,6 @@ describe('AuthGuardService BPM', () => {
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
         oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);
         authService = TestBed.inject(AuthenticationService);
-        authGuard = TestBed.inject(AuthGuardBpm);
         router = TestBed.inject(Router);
         appConfigService = TestBed.inject(AppConfigService);
 
@@ -65,6 +63,22 @@ describe('AuthGuardService BPM', () => {
         appConfigService.config.auth = {};
         appConfigService.config.oauth2 = {};
     });
+
+    const runAuthGuardWithContext = async (state: RouterStateSnapshot): Promise<boolean | UrlTree> => {
+        const result = TestBed.runInInjectionContext(() => AuthGuardBpm(state));
+        if (result instanceof Observable) {
+            return handleObservableResult(result);
+        } else {
+            return result;
+        }
+    };
+
+    const handleObservableResult = (result: Observable<boolean | UrlTree>): Promise<boolean | UrlTree> =>
+        new Promise<boolean | UrlTree>((resolve) => {
+            result.subscribe((value) => {
+                resolve(value);
+            });
+        });
 
     it('should redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async () => {
         spyOn(router, 'navigateByUrl').and.stub();
@@ -85,7 +99,7 @@ describe('AuthGuardService BPM', () => {
 
         const route = { url: 'abc' } as RouterStateSnapshot;
 
-        expect(await authGuard.canActivate(null, route)).toBeFalsy();
+        expect(await runAuthGuardWithContext(route)).toBeFalsy();
         expect(oidcAuthenticationService.ssoLogin).toHaveBeenCalledTimes(1);
     });
 
@@ -93,7 +107,7 @@ describe('AuthGuardService BPM', () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        expect(await authGuard.canActivate(null, route)).toBeTruthy();
+        expect(await runAuthGuardWithContext(route)).toBeTruthy();
     });
 
     it('if the alfresco js api is configured with withCredentials true should canActivate be true', async () => {
@@ -102,7 +116,7 @@ describe('AuthGuardService BPM', () => {
 
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        expect(await authGuard.canActivate(null, route)).toBeTruthy();
+        expect(await runAuthGuardWithContext(route)).toBeTruthy();
     });
 
     it('if the alfresco js api is NOT logged in should canActivate be false', async () => {
@@ -110,7 +124,7 @@ describe('AuthGuardService BPM', () => {
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        expect(await authGuard.canActivate(null, route)).toBeFalsy();
+        expect(await runAuthGuardWithContext(route)).toBeFalsy();
     });
 
     it('if the alfresco js api is NOT logged in should trigger a redirect event', async () => {
@@ -120,7 +134,7 @@ describe('AuthGuardService BPM', () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        expect(await authGuard.canActivate(null, route)).toBeFalsy();
+        expect(await runAuthGuardWithContext(route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
     });
 
@@ -131,7 +145,7 @@ describe('AuthGuardService BPM', () => {
         appConfigService.config.oauth2.silentLogin = false;
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        expect(await authGuard.canActivate(null, route)).toBeFalsy();
+        expect(await runAuthGuardWithContext(route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     });
 
@@ -142,16 +156,16 @@ describe('AuthGuardService BPM', () => {
         appConfigService.config.oauth2.silentLogin = undefined;
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        expect(await authGuard.canActivate(null, route)).toBeFalsy();
+        expect(await runAuthGuardWithContext(route)).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     });
 
-    it('should set redirect url', () => {
+    it('should set redirect url', async () => {
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        authGuard.canActivate(null, route);
+        await runAuthGuardWithContext(route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM',
@@ -160,12 +174,12 @@ describe('AuthGuardService BPM', () => {
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
     });
 
-    it('should set redirect navigation commands with query params', () => {
+    it('should set redirect navigation commands with query params', async () => {
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url;q=123' } as RouterStateSnapshot;
 
-        authGuard.canActivate(null, route);
+        await runAuthGuardWithContext(route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM',
@@ -174,12 +188,12 @@ describe('AuthGuardService BPM', () => {
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url;q=123');
     });
 
-    it('should set redirect navigation commands with query params', () => {
+    it('should set redirect navigation commands with query params', async () => {
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: '/' } as RouterStateSnapshot;
 
-        authGuard.canActivate(null, route);
+        await runAuthGuardWithContext(route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM',
@@ -188,13 +202,13 @@ describe('AuthGuardService BPM', () => {
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('/');
     });
 
-    it('should get redirect url from config if there is one configured', () => {
+    it('should get redirect url from config if there is one configured', async () => {
         appConfigService.config.loginRoute = 'fakeLoginRoute';
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        authGuard.canActivate(null, route);
+        await runAuthGuardWithContext(route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM',
@@ -203,7 +217,7 @@ describe('AuthGuardService BPM', () => {
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     });
 
-    it('should to close the material dialog if is redirect to the login', () => {
+    it('should to close the material dialog if is redirect to the login', async () => {
         const materialDialog = TestBed.inject(MatDialog);
 
         spyOn(materialDialog, 'closeAll');
@@ -212,7 +226,7 @@ describe('AuthGuardService BPM', () => {
         spyOn(router, 'navigateByUrl').and.stub();
         const route = { url: 'some-url' } as RouterStateSnapshot;
 
-        authGuard.canActivate(null, route);
+        await runAuthGuardWithContext(route);
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'BPM',
