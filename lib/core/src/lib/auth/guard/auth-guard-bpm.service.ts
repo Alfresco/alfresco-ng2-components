@@ -26,7 +26,7 @@ export const AuthGuardBpm = (state: RouterStateSnapshot): Observable<boolean | U
     if (authenticationService.isLoggedIn() && authenticationService.isOauth() && isLoginFragmentPresent()) {
         return redirectSSOSuccessURL();
     }
-    if (authenticationService.isBpmLoggedIn() || withCredentials) {
+    if (authenticationService.isBpmLoggedIn() || withCredentials()) {
         return true;
     }
 
