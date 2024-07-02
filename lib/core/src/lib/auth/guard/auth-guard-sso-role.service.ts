@@ -20,9 +20,7 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UserAccessService } from '../services/user-access.service';
 
-const userAccessService = inject(UserAccessService);
-const router = inject(Router);
-const dialog = inject(MatDialog);
+let userAccessService: UserAccessService;
 
 /**
  * Function to validate if the current user has/does not have the provided set of roles
@@ -48,6 +46,7 @@ function hasRoles(roles: string[] = []): boolean {
 }
 
 export const AuthGuardSsoRoleService = (route: ActivatedRouteSnapshot): boolean => {
+    userAccessService = inject(UserAccessService);
     userAccessService.fetchUserAccess();
     let hasRealmRole = false;
     let hasClientRole = true;
@@ -71,11 +70,11 @@ export const AuthGuardSsoRoleService = (route: ActivatedRouteSnapshot): boolean 
     const hasRole = hasRealmRole && hasClientRole;
 
     if (!hasRole && route?.data && route.data['redirectUrl']) {
-        router.navigate(['/' + route.data['redirectUrl']]);
+        inject(Router).navigate(['/' + route.data['redirectUrl']]);
     }
 
     if (!hasRole) {
-        dialog.closeAll();
+        inject(MatDialog).closeAll();
     }
 
     return hasRole;

@@ -16,13 +16,11 @@
  */
 
 import { inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { isLoginFragmentPresent, navigate, redirectSSOSuccessURL, redirectToUrl, withCredentials } from './auth-guard-functions';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { Observable } from 'rxjs';
-
-const authenticationService = inject(AuthenticationService);
 
 @Injectable({
     providedIn: 'root'
@@ -30,10 +28,7 @@ const authenticationService = inject(AuthenticationService);
 class TicketChangeRedirectService {
     ticketChangeBind: any;
 
-    constructor(
-        private jwtHelperService: JwtHelperService,
-        private router: Router
-    ) {
+    constructor(private jwtHelperService: JwtHelperService, private router: Router) {
         this.ticketChangeBind = this.ticketChange.bind(this);
         window.addEventListener('storage', this.ticketChangeBind);
     }
@@ -65,20 +60,14 @@ class TicketChangeRedirectService {
     }
 }
 
-const checkLogin = async (_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> => {
-    if (authenticationService.isLoggedIn() || withCredentials()) {
-        return true;
-    }
-    return redirectToUrl(redirectUrl);
-};
-
-export const AuthGuard = (
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+export const AuthGuard = (state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
     inject(TicketChangeRedirectService);
+    const authenticationService = inject(AuthenticationService);
     if (authenticationService.isLoggedIn() && authenticationService.isOauth() && isLoginFragmentPresent()) {
         return redirectSSOSuccessURL();
     }
-    return checkLogin(route, state.url);
+    if (authenticationService.isLoggedIn() || withCredentials()) {
+        return true;
+    }
+    return redirectToUrl(state.url);
 };

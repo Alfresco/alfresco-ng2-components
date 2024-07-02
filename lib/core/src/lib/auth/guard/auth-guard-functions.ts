@@ -25,35 +25,29 @@ import { StorageService } from '../../common/services/storage.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
-const authenticationService = inject(AuthenticationService);
-const basicAlfrescoAuthService = inject(BasicAlfrescoAuthService);
-const oidcAuthenticationService = inject(OidcAuthenticationService);
-const router = inject(Router);
-const appConfigService = inject(AppConfigService);
-const dialog = inject(MatDialog);
-const storageService = inject(StorageService);
+const getOauthConfig = (): OauthConfigModel => inject(AppConfigService)?.get(AppConfigValues.OAUTHCONFIG, null);
 
-const getOauthConfig = (): OauthConfigModel => appConfigService?.get(AppConfigValues.OAUTHCONFIG, null);
+const getLoginRoute = (): string => inject(AppConfigService).get<string>(AppConfigValues.LOGIN_ROUTE, 'login');
 
-const getLoginRoute = (): string => appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE, 'login');
+const getProvider = (): string => inject(AppConfigService).get<string>(AppConfigValues.PROVIDERS, 'ALL');
 
-const getProvider = (): string => appConfigService.get<string>(AppConfigValues.PROVIDERS, 'ALL');
+export const isLoginFragmentPresent = (): boolean => !!inject(StorageService).getItem('loginFragment');
 
-export const isLoginFragmentPresent = (): boolean => !!storageService.getItem('loginFragment');
-
-export const withCredentials = (): boolean => appConfigService.get<boolean>('auth.withCredentials', false);
+export const withCredentials = (): boolean => inject(AppConfigService).get<boolean>('auth.withCredentials', false);
 
 export const navigate = async (url: string): Promise<boolean> => {
-    dialog.closeAll();
+    inject(MatDialog).closeAll();
+    const router = inject(Router);
     await router.navigateByUrl(router.parseUrl(url));
     return false;
 };
 
 export const redirectToUrl = async (url: string): Promise<boolean | UrlTree> => {
     let urlToRedirect = `/${getLoginRoute()}`;
+    const oidcAuthenticationService = inject(OidcAuthenticationService);
 
-    if (!authenticationService.isOauth()) {
-        basicAlfrescoAuthService.setRedirect({
+    if (!inject(AuthenticationService).isOauth()) {
+        inject(BasicAlfrescoAuthService).setRedirect({
             provider: getProvider(),
             url
         });
@@ -72,6 +66,7 @@ export const redirectToUrl = async (url: string): Promise<boolean | UrlTree> => 
 };
 
 export const redirectSSOSuccessURL = async (): Promise<boolean | UrlTree> => {
+    const storageService = inject(StorageService);
     const redirectFragment = storageService.getItem('loginFragment');
     if (redirectFragment && getLoginRoute() !== redirectFragment) {
         await navigate(redirectFragment);

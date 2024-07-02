@@ -21,10 +21,11 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 const ROUTE_DEFAULT = '/';
-const auth = inject(AuthService);
-const router = inject(Router);
 
 export const OidcAuthGuard = (): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    const auth = inject(AuthService);
+    const router = inject(Router);
+
     if (auth.authenticated) {
         return true;
     }
