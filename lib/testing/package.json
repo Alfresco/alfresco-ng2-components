@@ -10,9 +10,6 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
-  "peerDependencies": {
-    "@alfresco/js-api": ">=7.9.0-0"
-  },
   "keywords": [
     "testing",
     "alfresco-component",

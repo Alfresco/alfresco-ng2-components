@@ -20,6 +20,7 @@
     "baseUrl": ".",
     "typeRoots": ["node_modules/@types"],
     "types": ["node"],
+    "rootDir": ".",
     "paths": {
       "@alfresco/js-api": ["../../dist/libs/js-api"],
       "@alfresco/js-api/*": ["../../dist/libs/js-api/*"]
