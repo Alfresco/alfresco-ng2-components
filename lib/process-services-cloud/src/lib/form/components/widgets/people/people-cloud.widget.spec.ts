@@ -24,6 +24,7 @@ import { IdentityUserService } from '../../../../people/services/identity-user.s
 import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatChipHarness } from '@angular/material/chips/testing';
 
@@ -101,8 +102,23 @@ describe('PeopleCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tooltip = cloudPeopleInput.getAttribute('title');
-            expect(tooltip).toEqual('my custom tooltip');
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeTruthy();
+            expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');
+        });
+
+        it('should hide tooltip', async () => {
+            const cloudPeopleInput = element.querySelector('adf-cloud-people');
+            cloudPeopleInput.dispatchEvent(new Event('mouseenter'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            cloudPeopleInput.dispatchEvent(new Event('mouseleave'));
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeFalsy();
         });
     });
 

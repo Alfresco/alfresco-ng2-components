@@ -13,7 +13,8 @@
             *ngIf="showProperty"
             [attr.data-automation-id]="'card-dateitem-' + property.key"
             (dblclick)="copyToClipboard(property.displayValue)"
-            [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+            matTooltipShowDelay="1000"
+            [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >{{ property.displayValue }}</span
         >
     </span>

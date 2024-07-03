@@ -20,6 +20,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { TranslateLoader } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateLoaderService } from '../../../../translation';
@@ -34,7 +36,7 @@ describe('CheckboxWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatCheckboxModule],
+            imports: [CoreTestingModule, MatCheckboxModule, MatTooltipModule],
             providers: [{ provide: TranslateLoader, useClass: TranslateLoaderService }]
         });
         fixture = TestBed.createComponent(CheckboxWidgetComponent);
@@ -108,8 +110,17 @@ describe('CheckboxWidgetComponent', () => {
                 const checkbox = await loader.getHarness(MatCheckboxHarness);
                 await (await checkbox.host()).hover();
 
-                const tooltip = await (await checkbox.host()).getAttribute('title');
-                expect(tooltip).toBe('my custom tooltip');
+                const tooltip = await loader.getHarness(MatTooltipHarness);
+                expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+            });
+
+            it('should hide tooltip', async () => {
+                const checkbox = await loader.getHarness(MatCheckboxHarness);
+                await (await checkbox.host()).hover();
+                await (await checkbox.host()).mouseAway();
+
+                const tooltip = await loader.getHarness(MatTooltipHarness);
+                expect(await tooltip.isOpen()).toBe(false);
             });
         });
     });

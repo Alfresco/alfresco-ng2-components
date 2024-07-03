@@ -20,6 +20,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { ADF_AMOUNT_SETTINGS, AmountWidgetComponent } from './amount.widget';
@@ -89,8 +90,17 @@ describe('AmountWidgetComponent', () => {
             const input = await loader.getHarness(MatInputHarness);
             await (await input.host()).hover();
 
-            const tooltip = await (await input.host()).getAttribute('title');
-            expect(tooltip).toBe('my custom tooltip');
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+        });
+
+        it('should hide tooltip', async () => {
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
+            await (await input.host()).mouseAway();
+
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.isOpen()).toBe(false);
         });
     });
 

@@ -24,6 +24,7 @@ import { of, throwError } from 'rxjs';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('RadioButtonsCloudWidgetComponent', () => {
     let fixture: ComponentFixture<RadioButtonsCloudWidgetComponent>;
@@ -218,8 +219,19 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         it('should show tooltip', async () => {
             const radioButton = await loader.getHarness(MatRadioButtonHarness);
             await (await radioButton.host()).hover();
-            const tooltip = await (await radioButton.host()).getAttribute('title');
-            expect(tooltip).toBe('my custom tooltip');
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+        });
+
+        it('should hide tooltip', async () => {
+            const radioButton = await loader.getHarness(MatRadioButtonHarness);
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+
+            await (await radioButton.host()).hover();
+            expect(await tooltipElement.isOpen()).toBeTrue();
+
+            await (await radioButton.host()).mouseAway();
+            expect(await tooltipElement.isOpen()).toBeFalse();
         });
     });
 });

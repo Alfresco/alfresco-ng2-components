@@ -21,6 +21,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { NumberWidgetComponent } from './number.widget';
@@ -54,8 +55,17 @@ describe('NumberWidgetComponent', () => {
             const input = await loader.getHarness(MatInputHarness);
             await (await input.host()).hover();
 
-            const tooltip = await (await input.host()).getAttribute('title');
-            expect(tooltip).toBe('my custom tooltip');
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
+        });
+
+        it('should hide tooltip', async () => {
+            const input = await loader.getHarness(MatInputHarness);
+            await (await input.host()).hover();
+            await (await input.host()).mouseAway();
+
+            const tooltip = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltip.isOpen()).toBe(false);
         });
     });
 

@@ -29,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'people-widget',
@@ -40,6 +41,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         MatInputModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
+        MatTooltipModule,
         InitialUsernamePipe,
         ErrorWidgetComponent
     ],

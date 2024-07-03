@@ -26,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ContentDirectiveModule } from '../directives/content-directive.module';
 
@@ -39,10 +40,17 @@ import { ContentDirectiveModule } from '../directives/content-directive.module';
         TranslateModule,
         MatDialogModule,
         MatButtonModule,
+        MatTooltipModule,
         MatProgressSpinnerModule,
         ContentDirectiveModule
     ],
-    exports: [AspectListComponent, AspectListDialogComponent],
-    declarations: [AspectListComponent, AspectListDialogComponent]
+    exports: [
+        AspectListComponent,
+        AspectListDialogComponent
+    ],
+    declarations: [
+        AspectListComponent,
+        AspectListDialogComponent
+    ]
 })
-export class AspectListModule {}
+export class AspectListModule { }

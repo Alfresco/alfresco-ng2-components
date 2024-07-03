@@ -16,8 +16,10 @@
                   (ngModelChange)="onFieldChanged(field)"
                   [disabled]="field.readOnly || readOnly"
                   [placeholder]="field.placeholder"
-                  [title]="field.tooltip"
-                  (blur)="markAsTouched()">
+                  [matTooltip]="field.tooltip"
+                  (blur)="markAsTouched()"
+                  matTooltipPosition="above"
+                  [matTooltipShowDelay]="1000">
         </textarea>
     </mat-form-field>
     <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">

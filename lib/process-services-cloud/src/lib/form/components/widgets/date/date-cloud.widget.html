@@ -15,7 +15,9 @@
                 [min]="minDate"
                 [max]="maxDate"
                 [disabled]="field.readOnly"
-                [title]="field.tooltip"
+                [matTooltip]="field.tooltip"
+                matTooltipPosition="above"
+                matTooltipShowDelay="1000"
                 (dateChange)="onDateChanged($event)"
                 (blur)="markAsTouched()">
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly"></mat-datepicker-toggle>

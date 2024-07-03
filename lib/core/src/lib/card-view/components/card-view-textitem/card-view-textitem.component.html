@@ -34,7 +34,9 @@
                 [attr.aria-label]="property.label | translate"
                 [formControl]="textInput"
                 (dblclick)="copyToClipboard(property.displayValue)"
-                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                matTooltipShowDelay="1000"
+                [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                [matTooltipDisabled]="isEditable"
                 [attr.data-automation-id]="'card-textitem-value-' + property.key"
                 (keydown)="undoText($event)"
             />
@@ -43,6 +45,7 @@
                 *ngIf="property.multiline"
                 title="{{ property.label | translate }}"
                 [cdkTextareaAutosize]="true"
+                [cdkAutosizeMaxRows]="1"
                 [cdkAutosizeMaxRows]="5"
                 class="adf-property-value"
                 [ngClass]="{
