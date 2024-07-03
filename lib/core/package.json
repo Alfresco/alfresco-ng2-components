@@ -32,7 +32,7 @@
     "@angular/forms": "16.2.9",
     "@angular/material": "16.2.9",
     "@angular/router": "16.2.9",
-    "@mat-datetimepicker/core": ">=10.1.1",
+    "@mat-datetimepicker/core": "12.0.1",
     "@alfresco/js-api": ">=7.9.0",
     "@alfresco/adf-extensions": ">=6.9.0",
     "@ngx-translate/core": ">=14.0.0",
