@@ -16,11 +16,14 @@
  */
 
 import { inject } from '@angular/core';
-
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
 import { tap } from 'rxjs/operators';
+
+export const unsavedChangesGuardProperties = {
+    unsaved: false
+};
 
 /**
  * Guard responsible for protecting leaving page with unsaved changes.
@@ -28,14 +31,13 @@ import { tap } from 'rxjs/operators';
  * @returns boolean | Observable<boolean> flag indicating whether user has unsaved changes or not
  */
 export const UnsavedChangesGuard = (): boolean | Observable<boolean> => {
-    let unsaved = false;
     const dialog = inject(MatDialog);
-    return unsaved
+    return unsavedChangesGuardProperties.unsaved
         ? dialog
               .open<UnsavedChangesDialogComponent, undefined, boolean>(UnsavedChangesDialogComponent, {
                   maxWidth: 346
               })
               .afterClosed()
-              .pipe(tap((confirmed) => (unsaved = !confirmed)))
+              .pipe(tap((confirmed) => (unsavedChangesGuardProperties.unsaved = !confirmed)))
         : true;
 };

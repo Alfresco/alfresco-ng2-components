@@ -16,18 +16,15 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule, UnsavedChangesDialogComponent, UnsavedChangesGuard } from '@alfresco/adf-core';
+import { CoreTestingModule, UnsavedChangesDialogComponent, UnsavedChangesGuard, unsavedChangesGuardProperties } from '@alfresco/adf-core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 
 describe('UnsavedChangesGuard', () => {
-    let guard: UnsavedChangesGuard;
-
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [CoreTestingModule]
         });
-        guard = TestBed.inject(UnsavedChangesGuard);
     });
 
     describe('canDeactivate', () => {
@@ -42,53 +39,34 @@ describe('UnsavedChangesGuard', () => {
             } as MatDialogRef<UnsavedChangesDialogComponent>);
         });
 
-        it('should return true if unsaved is set to false', () => {
-            guard.unsaved = false;
-            expect(guard.canDeactivate()).toBeTrue();
+        it('should return true if unsaved is set to false', async () => {
+            unsavedChangesGuardProperties.unsaved = false;
+            expect(TestBed.runInInjectionContext(UnsavedChangesGuard)).toBeTrue();
         });
 
-        it('should return true if unsaved was not set', () => {
-            expect(guard.canDeactivate()).toBeTrue();
+        it('should return true if unsaved was not set', async () => {
+            expect(TestBed.runInInjectionContext(UnsavedChangesGuard)).toBeTrue();
         });
 
-        it('should return true when unsaved is set to true and result of dialog is true', (done) => {
-            guard.unsaved = true;
+        it('should return true and set unsaved to false when unsaved is set to true and result of dialog is true', (done) => {
+            unsavedChangesGuardProperties.unsaved = true;
 
-            (guard.canDeactivate() as Observable<boolean>).subscribe((allowed) => {
+            (TestBed.runInInjectionContext(UnsavedChangesGuard) as Observable<boolean>).subscribe((allowed) => {
                 expect(allowed).toBeTrue();
+                expect(unsavedChangesGuardProperties.unsaved).toBeFalse();
                 done();
             });
             afterClosed$.next(true);
         });
 
-        it('should return false when unsaved is set to true and result of dialog is false', (done) => {
-            guard.unsaved = true;
-
-            (guard.canDeactivate() as Observable<boolean>).subscribe((allowed) => {
+        it('should return false and set unsaved to true when unsaved is set to true and result of dialog is false', (done) => {
+            unsavedChangesGuardProperties.unsaved = true;
+            (TestBed.runInInjectionContext(UnsavedChangesGuard) as Observable<boolean>).subscribe((allowed) => {
                 expect(allowed).toBeFalse();
+                expect(unsavedChangesGuardProperties.unsaved).toBeTrue();
                 done();
             });
             afterClosed$.next(false);
-        });
-
-        it('should keep unsaved set to true when unsaved was to true and result of dialog is false', (done) => {
-            guard.unsaved = true;
-
-            (guard.canDeactivate() as Observable<boolean>).subscribe(() => {
-                expect(guard.unsaved).toBeTrue();
-                done();
-            });
-            afterClosed$.next(false);
-        });
-
-        it('should set unsaved to false when unsaved is set to true and result of dialog is true', (done) => {
-            guard.unsaved = true;
-
-            (guard.canDeactivate() as Observable<boolean>).subscribe(() => {
-                expect(guard.unsaved).toBeFalse();
-                done();
-            });
-            afterClosed$.next(true);
         });
     });
 });
