@@ -75,9 +75,11 @@ export class GroupIdentityService {
 
                 Logger.log(`Data ${JSON.stringify(data)}`);
 
-                return data[0];                Logger.error('Group not found');
+                return data[0]; Logger.error('Group not found');
 
             } catch (error) {
+                Logger.error('Group not found');
+                return null;
             }
         };
 

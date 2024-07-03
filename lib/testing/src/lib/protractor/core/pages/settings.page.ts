@@ -38,11 +38,7 @@ export class SettingsPage {
     providerDropdown = new DropdownPage($(`${materialLocators.Select.root}[id="adf-provider-selector"]`));
 
     async goToSettingsPage(): Promise<void> {
-        let currentUrl;
-
-        try {
-            currentUrl = await browser.getCurrentUrl();
-        } catch (e) {}
+        const currentUrl = await browser.getCurrentUrl();
 
         if (!currentUrl || currentUrl.indexOf(this.settingsURL) === -1) {
             await browser.get(this.settingsURL);

@@ -53,8 +53,7 @@ export default createESLintRule<unknown[], MessageIds>({
     meta: {
         type: 'suggestion',
         docs: {
-            description: `Disallows using other encapsulation than \`${viewEncapsulationNone}\``,
-            recommended: false
+            description: `Disallows using other encapsulation than \`${viewEncapsulationNone}\``
         },
         hasSuggestions: true,
         schema: [],

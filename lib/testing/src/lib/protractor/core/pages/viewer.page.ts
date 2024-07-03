@@ -75,7 +75,9 @@ export class ViewerPage {
                 Logger.log('wait spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName(materialLocators.Progress.spinner.root)));
                 await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName(materialLocators.Progress.spinner.root)), MAX_LOADING_TIME);
-            } catch (error) {}
+            } catch (error) {
+                Logger.error(error);
+            }
         }
     }
 

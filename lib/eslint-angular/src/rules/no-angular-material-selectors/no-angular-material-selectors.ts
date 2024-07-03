@@ -52,8 +52,7 @@ export default createESLintRule<unknown[], MessageIds>({
     meta: {
         type: 'suggestion',
         docs: {
-            description: 'Disallows using Angular Material internal selectors',
-            recommended: 'error'
+            description: 'Disallows using Angular Material internal selectors'
         },
         hasSuggestions: true,
         schema: [],
