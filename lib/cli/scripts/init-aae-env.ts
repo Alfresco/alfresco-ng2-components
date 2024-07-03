@@ -755,7 +755,7 @@ export default async function main() {
         return;
     }
 
-    const options = initializeDefaultToken(program.opts());
+    const options: ConfigArgs = initializeDefaultToken(program.opts() as ConfigArgs);
 
     args = {
         host: options.host,

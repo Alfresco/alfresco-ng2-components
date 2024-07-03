@@ -27,11 +27,6 @@ import { Command } from 'commander';
 
 const program = new Command();
 
-interface LicensesCommandArgs {
-    package?: string;
-    outDir?: string;
-}
-
 interface PackageInfo {
     name: string;
     description: string;
@@ -115,7 +110,7 @@ export default function main(_args: string[], workingDir: string) {
         exit(0);
     }
 
-    const options = program.opts<LicensesCommandArgs>();
+    const options = program.opts();
     let packagePath = path.resolve(workingDir, 'package.json');
 
     if (options.package) {
