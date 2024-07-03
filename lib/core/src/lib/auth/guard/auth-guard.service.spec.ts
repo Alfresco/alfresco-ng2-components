@@ -25,7 +25,7 @@ import { StorageService } from '../../common/services/storage.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';

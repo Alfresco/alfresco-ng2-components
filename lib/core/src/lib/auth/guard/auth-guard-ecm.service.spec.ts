@@ -26,7 +26,7 @@ import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.serv
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
 describe('AuthGuardService ECM', () => {
