@@ -32,5 +32,14 @@
     "scss"
   ],
   "editor.guides.indentation": true,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "i18n-ally.localesPaths": [
+    "scripts/i18n",
+    "demo-shell/resources/i18n",
+    "lib/content-services/src/lib/i18n",
+    "lib/insights/src/lib/i18n",
+    "lib/process-services/src/lib/i18n",
+    "lib/core/src/lib/i18n",
+    "lib/process-services-cloud/src/lib/i18n"
+  ]
 }

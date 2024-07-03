@@ -262,26 +262,7 @@
                 "command": "echo cli bundle created"
               }
             ]
-          },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
-        },
-        "copyToNodeModules": {
-          "executor": "nx:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "rm -rf ./node_modules/@alfresco/js-api/ && mkdir -p ./node_modules/@alfresco/js-api/ && cp -R ./dist/libs/js-api/* ./node_modules/@alfresco/js-api/"
-              }
-            ]
-          },
-          "dependsOn": [
-            {
-              "projects": "self",
-              "target": "build"
-            }
-          ]
+          }
         },
         "test": {
           "builder": "nx:run-commands",
@@ -873,7 +854,6 @@
     },
     "extensions": {
       "root": "lib/extensions",
-      "sourceRoot": "lib/extensions/src",
       "projectType": "library",
       "prefix": "adf",
       "architect": {

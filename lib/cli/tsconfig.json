@@ -13,7 +13,6 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "outDir": "../../dist/libs/cli",
-    "rootDir": ".",
     "skipLibCheck": true,
     "strictNullChecks": false,
     "target": "es2018",

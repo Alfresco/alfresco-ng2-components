@@ -353,7 +353,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
     redirectLogin(): void {
         if (this.config.oauth2.implicitFlow && typeof window !== 'undefined') {
             const href = this.composeImplicitLoginUrl();
-            window.location.href = href;
+            window.location.assign(href);
             this.emit('implicit_redirect', href);
         }
     }

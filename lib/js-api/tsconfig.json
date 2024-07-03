@@ -1,4 +1,13 @@
 {
+  "extends": "../../tsconfig.json",
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ],
   "compilerOptions": {
     "importHelpers": true,
     "removeComments": true,
@@ -14,7 +23,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "stripInternal": false,
-    "target": "es2015",
+    "target": "es2020",
     "outDir": "./.out",
     "lib": ["es2018", "dom"],
     "typeRoots": ["node_modules/@types"],

@@ -9,6 +9,6 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "types": ["mocha"]
+    "types": ["jest"]
   }
 }
