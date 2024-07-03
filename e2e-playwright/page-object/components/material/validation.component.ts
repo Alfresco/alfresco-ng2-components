@@ -15,5 +15,15 @@
  * limitations under the License.
  */
 
-export * from './error.component';
-export * from './validation.component';
+import { Page } from '@playwright/test';
+import { BaseComponent } from '../base.component';
+import { materialLocators } from './material-locators';
+
+export class TooltipComponent extends BaseComponent {
+    private static rootElement = materialLocators.Tooltip.root;
+    public content = this.getChild('div');
+
+    constructor(page: Page) {
+        super(page, TooltipComponent.rootElement);
+    }
+}

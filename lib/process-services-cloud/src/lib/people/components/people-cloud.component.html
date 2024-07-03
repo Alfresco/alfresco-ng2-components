@@ -8,7 +8,7 @@
                 [removable]="!(user.readonly)"
                 [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
                 (removed)="onRemove(user)"
-                title="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
+                matTooltip="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
                 {{user | fullName}}
                 <mat-icon
                     matChipRemove

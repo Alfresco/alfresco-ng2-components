@@ -3,7 +3,8 @@
     <button *ngIf="displayResetButton && facetFiltersService.responseFacets"
             mat-button
             color="primary"
-            title="{{ 'SEARCH.FILTER.BUTTONS.RESET-ALL.TOOLTIP' | translate }}"
+            matTooltip="{{ 'SEARCH.FILTER.BUTTONS.RESET-ALL.TOOLTIP' | translate }}"
+            matTooltipPosition="right"
             adf-reset-search>
         {{ 'SEARCH.FILTER.BUTTONS.RESET-ALL.LABEL' | translate }}
     </button>
@@ -16,7 +17,7 @@
                 {{ category.name | translate }}
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <adf-search-filter-card
+        <adf-search-filter-card 
             [category]="category">
         </adf-search-filter-card>
     </mat-expansion-panel>

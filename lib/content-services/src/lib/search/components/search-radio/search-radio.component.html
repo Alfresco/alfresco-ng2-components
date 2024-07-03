@@ -6,7 +6,10 @@
         *ngFor="let option of options"
         [value]="option.value"
         class="adf-facet-filter">
-        <div title="{{ option.name | translate }}" class="adf-filter-label">
+        <div
+            matTooltip="{{ option.name | translate }}"
+            matTooltipPosition="right"
+            class="adf-filter-label">
             {{ option.name | translate }}
         </div>
     </mat-radio-button>

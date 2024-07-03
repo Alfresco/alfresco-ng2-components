@@ -4,7 +4,9 @@
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
         <mat-radio-group [ngClass]="(field.alignmentType === 'vertical') ? 'adf-radio-group': 'adf-radio-group-horizontal'" class="adf-radio-group" [(ngModel)]="field.value" [disabled]="field.readOnly">
             <mat-radio-button
-                [title]="field.tooltip"
+                [matTooltip]="field.tooltip"
+                matTooltipPosition="above"
+                matTooltipShowDelay="1000"
                 [id]="field.id + '-' + opt.id"
                 [name]="field.id"
                 [value]="opt.id"

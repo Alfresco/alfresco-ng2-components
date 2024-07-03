@@ -293,7 +293,7 @@ describe('PeopleWidgetComponent', () => {
             await fixture.whenStable();
 
             const radioButtonsElement: any = element.querySelector('#people-id');
-            const tooltip = radioButtonsElement.getAttribute('title');
+            const tooltip = radioButtonsElement.getAttribute('ng-reflect-message');
 
             expect(tooltip).toEqual(widget.field.tooltip);
         });

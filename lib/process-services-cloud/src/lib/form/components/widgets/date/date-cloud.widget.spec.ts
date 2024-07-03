@@ -21,6 +21,10 @@ import { FormFieldModel, FormModel, FormFieldTypes, DateFieldValidator, MinDateF
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { DateAdapter } from '@angular/material/core';
 import { isEqual, subDays, addDays } from 'date-fns';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatTooltipHarness } from '@angular/material/tooltip/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
 
 describe('DateWidgetComponent', () => {
     let widget: DateCloudWidgetComponent;
@@ -28,6 +32,7 @@ describe('DateWidgetComponent', () => {
     let element: HTMLElement;
     let adapter: DateAdapter<Date>;
     let form: FormModel;
+    let loader: HarnessLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -42,6 +47,7 @@ describe('DateWidgetComponent', () => {
 
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
+        loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should setup min value for date picker', () => {
@@ -424,6 +430,34 @@ describe('DateWidgetComponent', () => {
                 expect(adapter.compareDate(widget.maxDate, expectedMaxDate)).toEqual(0);
                 expect(widget.field.maxValue).toBe('24-02-2022');
             });
+        });
+    });
+
+    describe('when tooltip is set', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                type: FormFieldTypes.DATE,
+                tooltip: 'my custom tooltip'
+            });
+            fixture.detectChanges();
+        });
+
+        it('should show tooltip', async () => {
+            const dateCloudInput = await loader.getHarness(MatInputHarness);
+            await (await dateCloudInput.host()).dispatchEvent('mouseenter');
+
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeTruthy();
+            expect(await tooltipElement.getTooltipText()).toEqual('my custom tooltip');
+        });
+
+        it('should hide tooltip', async () => {
+            const dateCloudInput = await loader.getHarness(MatInputHarness);
+            await (await dateCloudInput.host()).dispatchEvent('mouseenter');
+            await (await dateCloudInput.host()).dispatchEvent('mouseleave');
+
+            const tooltipElement = await loader.getHarness(MatTooltipHarness);
+            expect(await tooltipElement.isOpen()).toBeFalsy();
         });
     });
 

@@ -30,6 +30,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -63,7 +64,8 @@ import { SelectFilterInputComponent } from './components/card-view-selectitem/se
         MatCardModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatTooltipModule
     ],
     declarations: [
         CardViewComponent,

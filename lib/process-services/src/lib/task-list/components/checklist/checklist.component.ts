@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -36,6 +37,7 @@ import { FormsModule } from '@angular/forms';
         TranslateModule,
         MatChipsModule,
         MatButtonModule,
+        MatTooltipModule,
         MatIconModule,
         MatDialogModule,
         MatFormFieldModule,

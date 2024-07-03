@@ -12,7 +12,8 @@
             mat-icon-button
             (click)="toggleCompact()"
             color="primary"
-            [title]="'CORE.BREADCRUMBS.SHOWALL' | translate"
+            [matTooltip]="'CORE.BREADCRUMBS.SHOWALL' | translate"
+            matTooltipClass="adf-tooltip"
             [attr.aria-label]="'CORE.BREADCRUMBS.SHOWALL' | translate"
           >
             <mat-icon class="adf-breadcrumb__show-all-button-icon--rotate">more_vert</mat-icon >

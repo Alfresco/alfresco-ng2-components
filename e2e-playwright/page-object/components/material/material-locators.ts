@@ -16,7 +16,10 @@
  */
 
 export const materialLocators = {
-    Error: {
-        root: 'mat-error'
-    }
+  Error: {
+    root: 'mat-error'
+  },
+  Tooltip: {
+    root: 'mat-tooltip-component'
+  }
 };

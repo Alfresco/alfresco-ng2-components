@@ -34,7 +34,8 @@
             class="adf-search-filter-facet-checkbox"
         >
             <div
-                title="{{ bucket.display || bucket.label | translate }} {{ getBucketCountDisplay(bucket) }}"
+                matTooltip="{{ bucket.display || bucket.label | translate }} {{ getBucketCountDisplay(bucket) }}"
+                matTooltipPosition="right"
                 class="adf-facet-label"
                 [class.adf-search-filter-facet-checkbox-checked]="bucket.checked"
             >

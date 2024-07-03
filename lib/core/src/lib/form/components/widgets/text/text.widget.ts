@@ -22,6 +22,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -44,7 +45,7 @@ import { InputMaskDirective } from './text-mask.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, InputMaskDirective],
+    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatTooltipModule, ErrorWidgetComponent, InputMaskDirective],
     encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
