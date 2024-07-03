@@ -1,0 +1,26 @@
+{
+  "name": "@alfresco/js-api-old",
+  "version": "7.8.0",
+  "license": "Apache-2.0",
+  "description": "JavaScript client library for the Alfresco REST API",
+  "author": "Hyland Software, Inc. and its affiliates",
+  "keywords": [
+    "alfresco"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "dependencies": {
+    "event-emitter": "^0.3.5",
+    "superagent": "^9.0.1",
+    "tslib": "^2.6.1"
+  },
+  "main": "./index.js",
+  "typings": "./typings/index.d.ts",
+  "module": "./esm5/index.js",
+  "es2015": "./esm2015/index.js"
+}
