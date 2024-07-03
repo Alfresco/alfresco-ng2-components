@@ -11,6 +11,7 @@
     }
   ],
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "es2020"
   },
   "angularCompilerOptions": {

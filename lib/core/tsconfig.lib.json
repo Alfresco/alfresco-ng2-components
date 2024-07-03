@@ -5,7 +5,12 @@
     "declaration": true,
     "declarationMap": true,
     "target": "ES2022",
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {
+      "@alfresco/js-api": ["../../dist/libs/js-api"],
+      "@alfresco/js-api/*": ["../../dist/libs/js-api/*"],
+      "@alfresco/adf-extensions": ["../../dist/libs/extensions"]
+    }
   },
   "exclude": ["./test.ts", "**/*.spec.ts", "**/*.test.ts"],
   "include": ["**/*.ts"]
