@@ -23,7 +23,6 @@ import { FacetField } from '../../../models/facet-field.interface';
 import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
-import { of } from 'rxjs';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
@@ -59,9 +58,6 @@ describe('SearchFacetTabbedContentComponent', () => {
                 field2: facet2
             }
         };
-
-        component.onReset$ = of(void 0);
-        component.onApply$ = of(void 0);
 
         fixture.detectChanges();
     });
@@ -203,8 +199,7 @@ describe('SearchFacetTabbedContentComponent', () => {
     });
 
     it('should not call queryBuilder.update on options change', () => {
-        expect(queryBuilderUpdateSpy.calls.count()).toBe(2);
         component.onOptionsChange([{ value: 'test' }], 'field');
-        expect(queryBuilderUpdateSpy.calls.count()).toBe(2);
+        expect(queryBuilderUpdateSpy).not.toHaveBeenCalled();
     });
 });
