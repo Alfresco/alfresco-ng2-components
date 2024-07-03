@@ -340,6 +340,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Input()
     blurOnResize = true;
 
+    /** Display checkboxes in datatable rows on hover only */
+    @Input()
+    displayCheckboxesOnHover = false;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick = new EventEmitter<NodeEntityEvent>();
