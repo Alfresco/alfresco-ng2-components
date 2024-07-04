@@ -102,9 +102,9 @@ jobs:
       - name: install
         run: |
           npm ci
-          npx nx run js-api:bundle
-          npx nx run cli:bundle
-          npx nx run testing:bundle
+          npx nx run js-api:build
+          npx nx run cli:build
+          npx nx run testing:build
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   release-demoshell:
