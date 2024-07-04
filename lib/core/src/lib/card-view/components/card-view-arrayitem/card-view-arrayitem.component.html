@@ -8,8 +8,10 @@
                     (keyup.enter)="clicked()"
                     (click)="clicked()"
                     [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
-                    <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
-                    <span>{{item?.value}}</span>
+                    <div class="adf-card-view-array-chip-content">
+                        <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
+                        <span>{{item?.value}}</span>
+                    </div>
                 </mat-chip-option>
                 <mat-chip-option
                     *ngIf="items.length > displayCount"
@@ -24,8 +26,10 @@
                     (keyup.enter)="clicked()"
                     (click)="clicked()"
                     [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
-                    <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
-                    <span>{{item?.value}}</span>
+                    <div class="adf-card-view-array-chip-content">
+                        <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
+                        <span>{{item?.value}}</span>
+                    </div>
                 </mat-chip-option>
             </ng-template>
         </mat-chip-listbox>
@@ -36,8 +40,10 @@
                         <mat-chip-option (click)="clicked()" (keyup.enter)="clicked()"
                             *ngFor="let item of items.slice(displayCount, items.length)"
                             [attr.data-automation-id]="'card-arrayitem-chip-' + item.value">
-                        <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
-                        <span>{{item?.value}}</span>
+                            <div class="adf-card-view-array-chip-content">
+                                <mat-icon *ngIf="item?.icon" class="adf-array-item-icon">{{item.icon}}</mat-icon>
+                                <span>{{item?.value}}</span>
+                            </div>
                         </mat-chip-option>
                     </mat-chip-listbox>
                 </mat-card-content>
@@ -54,6 +60,6 @@
         [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
         [attr.data-automation-id]="'card-array-item-clickable-icon-' + property.key">
-        <mat-icon class="adf-array-item-icon">{{property.icon}}</mat-icon>
+        <mat-icon class="adf-array-item-button-icon">{{property.icon}}</mat-icon>
     </button>
 </div>
