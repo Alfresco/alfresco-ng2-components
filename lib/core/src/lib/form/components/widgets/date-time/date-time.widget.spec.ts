@@ -188,9 +188,9 @@ describe('DateTimeWidgetComponent', () => {
         await fixture.whenStable();
 
         expect(widget.datetimeInputControl.invalid).toBeTrue();
-        // expect(field.value).toBe('123abc');
-        // expect(field.isValid).toBeFalse();
-        // expect(field.validationSummary.message).toBe('D-M-YYYY hh:mm A');
+        expect(field.value).toBe('123abc');
+        expect(field.isValid).toBeFalse();
+        expect(field.validationSummary.message).toBe('D-M-YYYY hh:mm A');
     });
     // eslint-disable-next-line
     xit('should process direct keyboard input', async () => {
@@ -226,11 +226,16 @@ describe('DateTimeWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const input = await loader.getHarness(MatInputHarness);
-        await input.setValue('123abc');
+        // const input = await loader.getHarness(MatInputHarness);
+        // await input.setValue('123abc');
+        const dateTimeInput = fixture.nativeElement.querySelector('input');
+        dateTimeInput.value = '123abc';
+        dateTimeInput.dispatchEvent(new Event('input'));
 
         expect(widget.datetimeInputControl.invalid).toBeTrue();
-        // expect(field.validationSummary.message).toBe('D-M-YYYY hh:mm A');
+        expect(field.value).toBe(null);
+        expect(field.isValid).toBeFalse();
+        expect(field.validationSummary.message).toBe('D-M-YYYY hh:mm A');
     });
 
     it('should allow empty dates when not required', async () => {
@@ -246,14 +251,13 @@ describe('DateTimeWidgetComponent', () => {
         fixture.whenStable();
         await fixture.whenStable();
 
-        // widget.onDateChanged({ value: null, targetElement: { value: '' } } as any);
         const input = await loader.getHarness(MatInputHarness);
-        await input.setValue('');
+        await input.setValue(null);
 
         expect(widget.datetimeInputControl.value).toBe(null);
         expect(widget.datetimeInputControl.valid).toBeTrue();
-        // expect(field.value).toBe('');
-        // expect(field.isValid).toBeTrue();
+        expect(field.value).toBe(null);
+        expect(field.isValid).toBeTrue();
     });
 
     describe('when tooltip is set', () => {

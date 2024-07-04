@@ -22,6 +22,7 @@ import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
 import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
 import { isValid as isDateValid, isBefore, isAfter } from 'date-fns';
+import { ErrorMessageModel } from './error-message.model';
 
 export interface FormFieldValidator {
     isSupported(field: FormFieldModel): boolean;
@@ -128,51 +129,82 @@ export class NumberFieldValidator implements FormFieldValidator {
 }
 
 export class DateFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATE];
+    private supportedTypes = new Set([FormFieldTypes.DATE]);
 
-    // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
     static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
-        // debugger;
         return DateFnsUtils.isValidDate(inputDate, dateFormat);
     }
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1;
+        return field && this.supportedTypes.has(field.type);
+    }
+
+    skipValidation(field: FormFieldModel): boolean {
+        return !this.isSupported(field) || !field.isVisible;
+    }
+
+    isInvalid(field: FormFieldModel): boolean {
+        const isValidDate = DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat);
+        return !field.isValid || !isValidDate;
+    }
+
+    isValid(field: FormFieldModel): boolean {
+        if (field.isValid && (!field.value || DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat))) {
+            return true;
+        }
+
+        return false;
     }
 
     validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
-            if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
-                return true;
-            }
-            field.validationSummary.message = field.dateDisplayFormat;
-            return false;
+        if (this.skipValidation(field)) {
+            return true;
         }
-        return true;
+
+        if (this.isValid(field)) {
+            return true;
+        }
+
+        field.validationSummary = new ErrorMessageModel({ message: field.dateDisplayFormat || field.defaultDateFormat });
+        return false;
     }
 }
 
 export class DateTimeFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATETIME];
-
-    isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1;
-    }
+    private supportedTypes = new Set([FormFieldTypes.DATETIME]);
 
     static isValidDateTime(input: string): boolean {
         const date = DateFnsUtils.getDate(input);
         return isDateValid(date);
     }
 
-    validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
-            if (DateTimeFieldValidator.isValidDateTime(field.value)) {
-                return true;
-            }
-            field.validationSummary.message = field.dateDisplayFormat;
-            return false;
+    isSupported(field: FormFieldModel): boolean {
+        return field && this.supportedTypes.has(field.type);
+    }
+
+    skipValidation(field: FormFieldModel): boolean {
+        return !this.isSupported(field) || !field.isVisible;
+    }
+
+    isValid(field: FormFieldModel): boolean {
+        if (field.isValid && (!field.value || DateTimeFieldValidator.isValidDateTime(field.value))) {
+            return true;
         }
-        return true;
+
+        return false;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.skipValidation(field)) {
+            return true;
+        }
+
+        if (this.isValid(field)) {
+            return true;
+        }
+
+        field.validationSummary = new ErrorMessageModel({ message: field.dateDisplayFormat || field.defaultDateTimeFormat });
+        return false;
     }
 }
 

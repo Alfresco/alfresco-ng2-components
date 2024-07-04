@@ -64,11 +64,26 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         this.subscribeToDateChanges();
     }
 
+    private initFormControl(): void {
+        this.datetimeInputControl = new FormControl<Date>(
+            {
+                value: new Date(this.field?.value),
+                disabled: this.field?.readOnly || this.readOnly
+            },
+            this.isRequired() ? [Validators.required] : []
+        );
+    }
+
     private subscribeToDateChanges(): void {
         this.datetimeChangesSubscription = this.datetimeInputControl.valueChanges.subscribe((newDate: Date) => {
             this.field.value = newDate.toISOString();
+            this.checkErrors();
             this.onFieldChanged(this.field);
         });
+    }
+
+    private checkErrors(): void {
+        this.datetimeInputControl.invalid ? this.field.markAsInvalid() : this.field.markAsValid();
     }
 
     private initDateAdapter(): void {
@@ -89,16 +104,6 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         if (this.field?.maxValue) {
             this.maxDate = DateFnsUtils.utcToLocal(new Date(this.field.maxValue));
         }
-    }
-
-    private initFormControl(): void {
-        this.datetimeInputControl = new FormControl(
-            {
-                value: new Date(this.field?.value),
-                disabled: this.field?.readOnly || this.readOnly
-            },
-            this.isRequired() ? [Validators.required] : []
-        );
     }
 
     ngOnDestroy(): void {

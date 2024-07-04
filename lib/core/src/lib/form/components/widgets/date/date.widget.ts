@@ -21,7 +21,7 @@ import { NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
@@ -30,7 +30,6 @@ import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
-import { isValid } from 'date-fns';
 
 @Component({
     selector: 'date-widget',
@@ -77,23 +76,26 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.subscribeToDateChanges();
     }
 
-    private subscribeToDateChanges(): void {
-        this.dateChangesSubscription = this.dateInputControl.valueChanges.subscribe((newDate: Date) => {
-            if (newDate && isValid(newDate)) {
-                this.field.value = newDate;
-                this.onFieldChanged(this.field);
-            }
-        });
-    }
-
     private initFormControl(): void {
-        this.dateInputControl = new FormControl(
+        this.dateInputControl = new FormControl<Date>(
             {
                 value: this.field?.value,
                 disabled: this.field?.readOnly || this.readOnly
             },
             this.isRequired() ? [Validators.required] : []
         );
+    }
+
+    private subscribeToDateChanges(): void {
+        this.dateChangesSubscription = this.dateInputControl.valueChanges.subscribe((newDate: Date) => {
+            this.field.value = newDate;
+            this.checkErrors();
+            this.onFieldChanged(this.field);
+        });
+    }
+
+    private checkErrors(): void {
+        this.dateInputControl.invalid ? this.field.markAsInvalid() : this.field.markAsValid();
     }
 
     private initDateAdapter(): void {
@@ -117,16 +119,6 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         if (this.field?.value) {
             this.startAt = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
         }
-    }
-
-    onDateChanged(event: MatDatepickerInputEvent<Date>): void {
-        const value = event.value;
-        if (value) {
-            this.field.value = value;
-            this.dateInputControl.setValue(value);
-        }
-
-        this.onFieldChanged(this.field);
     }
 
     ngOnDestroy(): void {
