@@ -1,3 +1,5 @@
 {
-  "recommendations": ["lucono.karma-test-explorer", "esbenp.prettier-vscode", "firsttris.vscode-jest-runner"]
+  "recommendations": [
+    "lucono.karma-test-explorer"
+  ]
 }
