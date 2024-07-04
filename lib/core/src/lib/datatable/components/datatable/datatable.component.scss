@@ -158,28 +158,14 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         display: flex;
         align-items: center;
 
-        &:hover {
-            .adf-datatable-hover-only {
-                visibility: visible;
-            }
-        }
-
-        .adf-datatable-hover-only {
-            visibility: hidden;
-
-            &.adf-datatable-checkbox-selected {
-                visibility: visible;
-            }
-        }
-
-        .adf-datatable-checkbox-cell {
+        .adf-datatable-checkbox {
             max-width: $data-table-thumbnail-width;
             width: $data-table-thumbnail-width;
         }
 
         /* query for Microsoft IE 11 */
         @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-            .adf-datatable-checkbox-cell {
+            .adf-datatable-checkbox {
                 padding-top: 15px;
             }
         }
@@ -295,11 +281,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         margin-left: auto;
         justify-content: end;
         padding-right: 15px;
-    }
-
-    .adf-datatable-checkbox-cell {
-        display: flex;
-        justify-content: center;
     }
 
     .adf-cell-value {
@@ -451,8 +432,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         display: none;
     }
 
-    /* stylelint-disable media-feature-range-notation */
-
     /* mobile phone */
     @media all and (max-width: 768px) {
         .adf-desktop-only.adf-ellipsis-cell {
@@ -578,7 +557,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 }
 
-/* stylelint-disable selector-class-pattern */
 .cdk-drag-preview {
     &.adf-datatable-cell-header {
         border-radius: 6px;
@@ -642,7 +620,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     align-items: center;
     height: inherit;
 
-    .adf-datatable-body[role='rowgroup'] {
+    .adf-datatable-body[role="rowgroup"] {
         .adf-datatable-row {
             height: 100%;
             background-color: var(--adf-theme-background-card-color);
