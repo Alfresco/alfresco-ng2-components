@@ -74,6 +74,7 @@
     "@mat-datetimepicker/core": "12.0.1",
     "@ngx-translate/core": "^14.0.0",
     "@storybook/core-server": "^8.1.10",
+    "@storybook/theming": "^8.1.10",
     "angular-oauth2-oidc": "^13.0.1",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "apollo-angular": "^5.0.2",
