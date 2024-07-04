@@ -55,6 +55,12 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     readOnly = true;
 
     @Input()
+    allowedEditActions: { [key: string]: boolean } = {
+        rotate: true,
+        crop: true
+    };
+
+    @Input()
     urlFile: string;
 
     @Input()

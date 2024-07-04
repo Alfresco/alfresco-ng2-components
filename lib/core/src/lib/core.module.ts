@@ -35,7 +35,6 @@ import { FormBaseModule } from './form/form-base.module';
 import { SidenavLayoutModule } from './layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { CommentListModule } from './comments/comment-list/comment-list.module';
-import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
 import { TemplateModule } from './templates/template.module';
 import { ClipboardModule } from './clipboard/clipboard.module';
 import { NotificationHistoryModule } from './notifications/notification-history.module';
@@ -95,7 +94,6 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         LanguageMenuModule,
         InfoDrawerModule,
         DataTableModule,
-        ButtonsMenuModule,
         TemplateModule,
         IconModule,
         SortingPickerModule,
@@ -135,7 +133,6 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         InfoDrawerModule,
         DataTableModule,
         TranslateModule,
-        ButtonsMenuModule,
         TemplateModule,
         SortingPickerModule,
         IconModule,

@@ -16,17 +16,20 @@
  */
 
 import { Component, ContentChildren, QueryList, AfterContentInit, ViewEncapsulation } from '@angular/core';
-import { MatMenuItem } from '@angular/material/menu';
+import { MatMenuItem, MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-buttons-action-menu',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule, MatMenuModule, MatIconModule],
     templateUrl: './buttons-menu.component.html',
     styleUrls: ['./buttons-menu.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-
-export class ButtonsMenuComponent implements  AfterContentInit {
-
+export class ButtonsMenuComponent implements AfterContentInit {
     @ContentChildren(MatMenuItem) buttons: QueryList<MatMenuItem>;
 
     isMenuEmpty: boolean;

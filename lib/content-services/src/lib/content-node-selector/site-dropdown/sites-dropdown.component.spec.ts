@@ -25,9 +25,9 @@ import {
     getFakeSitePagingFirstPage,
     getFakeSitePagingLastPage,
     getFakeSitePagingWithMembers
-} from '../mock';
-import { ContentTestingModule } from '../testing/content.testing.module';
-import { SitesService } from '../common/services/sites.service';
+} from '../../mock';
+import { ContentTestingModule } from '../../testing/content.testing.module';
+import { SitesService } from '../../common/services/sites.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';

@@ -21,15 +21,15 @@ import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, RequestScope, ResultSetPaging, SiteEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
 import { of } from 'rxjs';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { ContentTestingModule } from '../testing/content.testing.module';
-import { DocumentListService } from '../document-list/services/document-list.service';
-import { DocumentListComponent } from '../document-list/components/document-list.component';
-import { CustomResourcesService } from '../document-list/services/custom-resources.service';
-import { NodeEntryEvent, ShareDataRow } from '../document-list';
-import { SearchQueryBuilderService } from '../search';
-import { mockSearchRequest } from '../mock/search-query.mock';
-import { SitesService } from '../common/services/sites.service';
-import { NodesApiService } from '../common/services/nodes-api.service';
+import { ContentTestingModule } from '../../testing/content.testing.module';
+import { DocumentListService } from '../../document-list/services/document-list.service';
+import { DocumentListComponent } from '../../document-list/components/document-list.component';
+import { CustomResourcesService } from '../../document-list/services/custom-resources.service';
+import { NodeEntryEvent, ShareDataRow } from '../../document-list';
+import { SearchQueryBuilderService } from '../../search';
+import { mockSearchRequest } from '../../mock/search-query.mock';
+import { SitesService } from '../../common/services/sites.service';
+import { NodesApiService } from '../../common/services/nodes-api.service';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {

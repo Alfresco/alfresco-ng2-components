@@ -66,6 +66,7 @@ Displays the documents from a repository.
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
 | currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
+| displayCheckboxesOnHover | `boolean` | false | Enables checkboxes in datatable rows being displayed on hover only. | 
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
 | filterValue | `any` |  | Initial value for filter. |
 | headerFilters | `boolean` | false | Toggles the header filters mode. |

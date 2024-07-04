@@ -2,18 +2,16 @@
 Title: Buttons Menu Component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-06-08
+Last reviewed: 2024-06-21
 ---
 
-# [Buttons Menu Component](../../../lib/core/src/lib/buttons-menu/buttons-menu.component.ts "Defined in buttons-menu.component.ts")
+# Buttons Menu Component
 
 Displays buttons on a responsive menu. 
 
-![adf-buttons-menu-desktop](../../docassets/images/adf-buttons-menu-desktop.png)
+![adf-buttons-menu-desktop](images/adf-buttons-menu-desktop.png)
 
 ## Basic Usage
-
-### [Transclusions](../../user-guide/transclusion.md)
 
 Place the buttons for the menu inside this component's HTML tags.
 They must use the following structure:
@@ -42,16 +40,16 @@ They also make use of the Angular material directive `mat-menu-item`.
 
 ## Details
 
-This component is fully responsive and it will display one of two different layouts
+This component is fully responsive, and it will display one of two different layouts
 depending on the screen size:
 
 **Desktop View**
 
-![adf-buttons-menu-desktop](../../docassets/images/adf-buttons-menu-desktop.png)
+![adf-buttons-menu-desktop](images/adf-buttons-menu-desktop.png)
 
 **Mobile View**
 
-![adf-buttons-menu-mobile](../../docassets/images/adf-buttons-menu-mobile.png)
+![adf-buttons-menu-mobile](images/adf-buttons-menu-mobile.png)
 
 The component has a property called `isMenuEmpty` that you can access from code. If this is
 set to true then the component will not show an empty menu with no buttons defined.

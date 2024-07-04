@@ -29,7 +29,7 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { UploadModule } from '../upload';
-import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
+import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
 import { NodeAction } from '../document-list/models/node-action.enum';
 import { SitesService } from '../common/services/sites.service';
 import { NodesApiService } from '../common/services/nodes-api.service';

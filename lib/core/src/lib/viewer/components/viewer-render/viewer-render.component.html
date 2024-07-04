@@ -44,6 +44,7 @@
                 <adf-img-viewer [urlFile]="urlFile"
                                 [readOnly]="readOnly"
                                 [fileName]="internalFileName"
+                                [allowedEditActions]="allowedEditActions"
                                 [blobFile]="blobFile"
                                 (error)="onUnsupportedFile()"
                                 (submit)="onSubmitFile($event)"

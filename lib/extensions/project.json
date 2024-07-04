@@ -1,7 +1,7 @@
 {
   "name": "extensions",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "lib/extensions",
+  "sourceRoot": "lib/extensions/src",
   "projectType": "library",
   "prefix": "adf",
   "targets": {
