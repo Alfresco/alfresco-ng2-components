@@ -16,6 +16,15 @@
         "externalBuildTargets": [
           "build"
         ]
+      },
+      "configurations": {
+        "test": {
+          "outputPath": "dist/tmp/libs/js-api",
+          "tsConfig": "lib/js-api/tsconfig.spec.json",
+          "assets": [
+            "lib/js-api/test/mockObjects/assets/**/*"
+          ]
+        }
       }
     },
     "publish": {
@@ -33,11 +42,15 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "lib/js-api/jest.config.ts",
-        "passWithNoTests": true
+        "commands": [
+          "nx run js-api:build:test",
+          "mocha --full-trace --config lib/js-api/.mocharc.json",
+          "rm -fr dist/tmp/libs/js-api"
+        ],
+        "parallel": false
       },
       "configurations": {
         "ci": {

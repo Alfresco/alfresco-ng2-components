@@ -18,8 +18,6 @@
 import assert from 'assert';
 import { AlfrescoApi, ContentApi, Oauth2Auth } from '../src';
 import { EcmAuthMock, OAuthMock } from './mockObjects';
-import { TextEncoder, TextDecoder } from 'util';
-Object.assign(global, { TextDecoder, TextEncoder });
 import jsdom from 'jsdom';
 
 const { JSDOM } = jsdom;
@@ -171,6 +169,7 @@ describe('Oauth2  test', () => {
         });
 
         it('should refresh token when the login not use the implicitFlow ', function (done) {
+            this.timeout(3000);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -203,9 +202,10 @@ describe('Oauth2  test', () => {
             }, 600);
 
             oauth2Auth.login('admin', 'admin');
-        }, 3000);
+        });
 
         it('should not hang the app also if teh logout is missing', function (done) {
+            this.timeout(3000);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -237,7 +237,7 @@ describe('Oauth2  test', () => {
             }, 600);
 
             oauth2Auth.login('admin', 'admin');
-        }, 3000);
+        });
 
         it('should emit a token_issued event if login is ok ', (done) => {
             oauth2Mock.get200Response();
@@ -426,6 +426,7 @@ describe('Oauth2  test', () => {
         // TODO: very flaky test, fails on different machines if running slow, might relate to `this.timeout`
         // eslint-disable-next-line ban/ban
         xit('should extend content session after oauth token refresh', function (done) {
+            this.timeout(3000);
 
             oauth2Mock.get200Response();
             authResponseMock.get200ValidTicket();
@@ -463,8 +464,9 @@ describe('Oauth2  test', () => {
             });
 
             alfrescoApi.login('admin', 'admin');
+            this.timeout(3000);
             alfrescoApi.refreshToken();
-        }, 3000);
+        });
 
         it('isLoggedIn should return true if the api is logged in', (done) => {
             oauth2Mock.get200Response();

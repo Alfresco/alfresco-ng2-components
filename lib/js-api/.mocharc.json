@@ -1,0 +1,4 @@
+{
+  "extensions": ["ts"],
+  "spec": ["dist/tmp/libs/js-api/test/**/*.spec.js"]
+}

@@ -8,7 +8,6 @@
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "types": ["jest"]
+    "skipDefaultLibCheck": true
   }
 }
