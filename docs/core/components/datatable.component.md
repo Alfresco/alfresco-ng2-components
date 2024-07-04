@@ -448,16 +448,15 @@ Learn more about styling your datatable: [Customizing the component's styles](#c
 
 ### Events
 
-| Name                      | Type                                                                                                                                                            | Description                                             |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
-| columnOrderChanged        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>`               | Emitted when the column order is changed.               |
-| columnsWidthChanged       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>`               | Emitted when the column width is changed.               |
-| selectedItemsCountChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<number>`                                                                                            | Emitted when the item row count is changed.             |
-| executeRowAction          | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/src/lib/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action.            |
-| rowClick                  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/src/lib/datatable/data/data-row-event.model.ts)`>`              | Emitted when the user clicks a row.                     |
-| rowDblClick               | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/src/lib/datatable/data/data-row-event.model.ts)`>`              | Emitted when the user double-clicks a row.              |
-| showRowActionsMenu        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/src/lib/datatable/components/data-cell.event.ts)`>`            | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu        | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/src/lib/datatable/components/data-cell.event.ts)`>`            | Emitted before the context menu is displayed for a row. |
+| Name                | Type                                                                                                                                                            | Description                                             |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
+| columnOrderChanged  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>`               | Emitted when the column order is changed.               |
+| columnsWidthChanged | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataColumn`](../../../lib/core/src/lib/datatable/data/data-column.model.ts)`<>[]>`               | Emitted when the column width is changed.               |
+| executeRowAction    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/src/lib/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action.            |
+| rowClick            | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/src/lib/datatable/data/data-row-event.model.ts)`>`              | Emitted when the user clicks a row.                     |
+| rowDblClick         | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/src/lib/datatable/data/data-row-event.model.ts)`>`              | Emitted when the user double-clicks a row.              |
+| showRowActionsMenu  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/src/lib/datatable/components/data-cell.event.ts)`>`            | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu  | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/src/lib/datatable/components/data-cell.event.ts)`>`            | Emitted before the context menu is displayed for a row. |
 
 ## Details
 

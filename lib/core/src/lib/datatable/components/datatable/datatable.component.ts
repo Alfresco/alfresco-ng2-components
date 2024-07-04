@@ -191,10 +191,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Output()
     columnsWidthChanged = new EventEmitter<DataColumn[]>();
 
-    /** Emitted when the selected row items count in the table changed. */
-    @Output()
-    selectedItemsCountChanged = new EventEmitter<number>();
-
     /**
      * Flag that indicates if the datatable is in loading state and needs to show the
      * loading template (see the docs to learn how to configure a loading template).
@@ -520,37 +516,34 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
-        if (!this.data) {
-            return;
-        }
-
-        if (this.isSingleSelectionMode()) {
-            if (row.isSelected) {
-                this.resetSelection();
-                this.emitRowSelectionEvent('row-unselect', null);
-            } else {
-                this.resetSelection();
-                this.selectRow(row, true);
-                this.emitRowSelectionEvent('row-select', row);
+        if (this.data) {
+            if (this.isSingleSelectionMode()) {
+                if (row.isSelected) {
+                    this.resetSelection();
+                    this.emitRowSelectionEvent('row-unselect', null);
+                } else {
+                    this.resetSelection();
+                    this.selectRow(row, true);
+                    this.emitRowSelectionEvent('row-select', row);
+                }
             }
-        }
 
-        if (this.isMultiSelectionMode()) {
-            const modifier = e && (e.metaKey || e.ctrlKey);
-            let newValue: boolean;
-            if (this.selection.length === 1) {
-                newValue = !row.isSelected;
-            } else {
-                newValue = modifier ? !row.isSelected : true;
-            }
-            const domEventName = newValue ? 'row-select' : 'row-unselect';
+            if (this.isMultiSelectionMode()) {
+                const modifier = e && (e.metaKey || e.ctrlKey);
+                let newValue: boolean;
+                if (this.selection.length === 1) {
+                    newValue = !row.isSelected;
+                } else {
+                    newValue = modifier ? !row.isSelected : true;
+                }
+                const domEventName = newValue ? 'row-select' : 'row-unselect';
 
-            if (!modifier) {
-                this.resetSelection();
+                if (!modifier) {
+                    this.resetSelection();
+                }
+                this.selectRow(row, newValue);
+                this.emitRowSelectionEvent(domEventName, row);
             }
-            this.selectRow(row, newValue);
-            this.emitRowSelectionEvent(domEventName, row);
-            this.checkSelectAllCheckboxState();
         }
     }
 
@@ -679,8 +672,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 this.isSelectAllChecked = true;
                 this.isSelectAllIndeterminate = false;
             } else if (numberOfSelectedRows > 0 && numberOfSelectedRows < rows.length) {
+                this.isSelectAllChecked = false;
                 this.isSelectAllIndeterminate = true;
-                this.isSelectAllChecked = true;
             } else {
                 this.isSelectAllChecked = false;
                 this.isSelectAllIndeterminate = false;
@@ -806,8 +799,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                     this.selection.splice(idx, 1);
                 }
             }
-
-            this.selectedItemsCountChanged.emit(this.selection.length);
         }
     }
 
