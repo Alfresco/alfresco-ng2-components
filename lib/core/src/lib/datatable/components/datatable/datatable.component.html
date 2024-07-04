@@ -185,8 +185,7 @@
                 <label *ngIf="multiselect" [for]="'select-file-' + idx" class="adf-datatable-cell adf-datatable-checkbox-cell adf-datatable-checkbox-single">
                     <mat-checkbox
                         [id]="'select-file-' + idx"
-                        [class.adf-datatable-checkbox-selected]="row.isSelected"
-                        [class.adf-datatable-hover-only]="displayCheckboxesOnHover"
+                              [class.adf-datatable-checkbox-selected]="row.isSelected"
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
                         role="checkbox"

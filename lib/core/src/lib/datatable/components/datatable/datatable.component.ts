@@ -238,12 +238,6 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     blurOnResize = true;
 
-    /**
-     * Flag that indicates if selection checkboxes inside row should be displayed on hover only.
-     */
-    @Input()
-    displayCheckboxesOnHover = false;
-
     headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;

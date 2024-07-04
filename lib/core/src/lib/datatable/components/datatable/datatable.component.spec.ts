@@ -1329,36 +1329,6 @@ describe('DataTable', () => {
         expect(rows[1].getValue('icon')).toBe('directions_car');
         expect(rows[2].getValue('icon')).toBe('local_shipping');
     });
-
-    describe('displayCheckboxesOnHover', () => {
-        const getCheckboxes = () =>
-            fixture.debugElement.queryAll(By.css('.adf-datatable-checkbox-single .adf-checkbox-sr-only')).map((row) => row.nativeElement);
-
-        beforeEach(() => {
-            dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
-            dataTable.multiselect = true;
-        });
-
-        it('should always display checkboxes when displayCheckboxesOnHover is set to false', () => {
-            dataTable.displayCheckboxesOnHover = false;
-            fixture.detectChanges();
-
-            const checkboxes = getCheckboxes();
-            checkboxes.forEach((checkbox) => {
-                expect(checkbox.classList).not.toContain('adf-datatable-hover-only');
-            });
-        });
-
-        it('should display checkboxes on hover when displayCheckboxesOnHover is set to true', () => {
-            dataTable.displayCheckboxesOnHover = true;
-            fixture.detectChanges();
-
-            const checkboxes = getCheckboxes();
-            checkboxes.forEach((checkbox) => {
-                expect(checkbox.classList).toContain('adf-datatable-hover-only');
-            });
-        });
-    });
 });
 
 describe('Accesibility', () => {
