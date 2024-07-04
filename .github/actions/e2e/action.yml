@@ -99,7 +99,7 @@ runs:
       run: |
         echo "running: check EXTERNAL-CS is UP"
         set -u;
-        ./dist/libs/cli/bin/adf-cli \
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli \
           check-cs-env \
           --host "$EXTERNAL_ACS_HOST" \
           -u "$E2E_USERNAME" \
@@ -111,7 +111,7 @@ runs:
       run: |
         echo "Running: Check CS is UP"
         set -u;
-        ./dist/libs/cli/bin/adf-cli \
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli \
           check-cs-env \
           --host "$E2E_HOST" \
           -u "$E2E_USERNAME" \
@@ -123,7 +123,7 @@ runs:
       run: |
         echo "Running: check PS is UP"
         set -u;
-        ./dist/libs/cli/bin/adf-cli init-aps-env \
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aps-env \
           --host "$E2E_HOST" \
           -u "$E2E_USERNAME" \
           -p "$E2E_PASSWORD" \
@@ -135,7 +135,7 @@ runs:
       run: |
         echo "running: check PS-CLOUD is UP"
         set -u;
-        ./dist/libs/cli/bin/adf-cli init-aae-env \
+        ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env \
           --oauth "$E2E_IDENTITY_HOST_APA" \
           --host "$E2E_HOST_APA" \
           --modelerUsername "$E2E_MODELER_USERNAME" \
