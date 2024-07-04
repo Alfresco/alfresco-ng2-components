@@ -28,7 +28,6 @@ import { PreviewService } from '../../services/preview.service';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsCloudDemoComponent {
-
     @ViewChild('taskHeader', { static: true })
     taskHeader: TaskHeaderCloudComponent;
 
@@ -40,14 +39,13 @@ export class TaskDetailsCloudDemoComponent {
         private router: Router,
         private notificationService: NotificationService,
         private previewService: PreviewService
-        ) {
+    ) {
         this.route.params.subscribe((params) => {
             this.taskId = params.taskId;
         });
         this.route.parent.params.subscribe((params) => {
             this.appName = params.appName;
         });
-
     }
 
     isTaskValid(): boolean {
@@ -75,7 +73,9 @@ export class TaskDetailsCloudDemoComponent {
         try {
             errorMessage = JSON.parse(error).message || JSON.parse(error).entry?.message;
             errorMessage = JSON.parse(errorMessage).message;
-        } catch {}
+        } catch {
+            errorMessage = JSON.parse(error).message;
+        }
         this.notificationService.showError(errorMessage || error);
     }
 }

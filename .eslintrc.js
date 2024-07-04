@@ -54,6 +54,7 @@ module.exports = {
                     { name: ['test', 'only'], message: 'Calls to test.only is not allowed' },
                     { name: ['describe', 'only'], message: 'Calls to describe.only is not allowed' }
                 ],
+                '@typescript-eslint/no-explicit-any': 'off',
                 '@angular-eslint/component-selector': [
                     'error',
                     {
