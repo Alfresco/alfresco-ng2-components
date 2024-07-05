@@ -8,7 +8,7 @@ echo "ℹ️ demo-shell: Running the docker with tag" $TAGS
 DOCKER_PROJECT_ARGS="PROJECT_NAME=demo-shell"
 
 # Publish Image to docker
-./dist/libs/cli/bin/adf-cli docker \
+./node_modules/@alfresco/adf-cli/bin/adf-cli docker \
     --loginCheck \
     --loginUsername "$DOCKER_REPOSITORY_USER" \
     --loginPassword "$DOCKER_REPOSITORY_PASSWORD" \

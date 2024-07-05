@@ -7,8 +7,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
+    "lib": ["ESNext", "dom"],
     "types": ["mocha"]
   },
   "exclude": [],
