@@ -48,11 +48,11 @@ export class ContentUserInfoComponent implements OnDestroy {
 
     /** Custom path for the background banner image for ACS users. */
     @Input()
-    ecmBackgroundImage: string = './assets/images/ecm-background.png';
+    ecmBackgroundImage: string = './resources/images/ecm-background.png';
 
     /** Custom path for the background banner image for APS users. */
     @Input()
-    bpmBackgroundImage: string = './assets/images/bpm-background.png';
+    bpmBackgroundImage: string = './resources/images/bpm-background.png';
 
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
