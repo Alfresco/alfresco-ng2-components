@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { BaseApi } from './base.api';
 import { AgentPaging } from '../model/agentPaging';
+import { BaseApi } from '../../hxi-connector-api/api/base.api';
 
 export class AgentsApi extends BaseApi {
     getAgents(): Promise<AgentPaging> {

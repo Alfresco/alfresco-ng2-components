@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { AgentPaging, AgentsApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +33,32 @@ export class AgentService {
 
     constructor(private apiService: AlfrescoApiService) {}
 
-    getAgents(): Observable<AgentPaging> {
-        return from(this.agentsApi.getAgents());
+    getAgents(mocked = true): Observable<AgentPaging> {
+        return mocked
+            ? of({
+                  list: {
+                      entries: [
+                          {
+                              entry: {
+                                  id: '1',
+                                  name: 'HR Agent'
+                              }
+                          },
+                          {
+                              entry: {
+                                  id: '2',
+                                  name: 'Policy Agent'
+                              }
+                          },
+                          {
+                              entry: {
+                                  id: '3',
+                                  name: 'Rules & Rates Agent'
+                              }
+                          }
+                      ]
+                  }
+              })
+            : from(this.agentsApi.getAgents());
     }
 }
