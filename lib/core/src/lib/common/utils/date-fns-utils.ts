@@ -225,4 +225,18 @@ export class DateFnsUtils {
         const utcDate = `${date.getFullYear()}-${panDate(date.getMonth() + 1)}-${panDate(date.getDate())}T00:00:00.000Z`;
         return new Date(utcDate);
     }
+
+    static stringDateContainsTimeZone(value: string): boolean {
+        return /(Z|([+|-]\d\d:?\d\d))$/.test(value);
+    }
+
+    static getDate(value: string | number | Date): Date {
+        let date = new Date(value);
+
+        if (typeof value === 'string' && !DateFnsUtils.stringDateContainsTimeZone(value)) {
+            date = this.utcToLocal(date);
+        }
+
+        return date;
+    }
 }
