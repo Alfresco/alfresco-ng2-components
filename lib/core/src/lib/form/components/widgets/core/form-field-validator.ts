@@ -159,7 +159,7 @@ export class DateTimeFieldValidator implements FormFieldValidator {
     }
 
     static isValidDateTime(input: string): boolean {
-        const date = new Date(input);
+        const date = DateFnsUtils.getDate(input);
         return isDateValid(date);
     }
 
@@ -275,12 +275,12 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
 
     private checkDateTime(field: FormFieldModel): boolean {
         let isValid = true;
-        const fieldValueDate = new Date(field.value);
-        const min = new Date(field.minValue);
+        const fieldValueDate = DateFnsUtils.getDate(field.value);
+        const min = DateFnsUtils.getDate(field.minValue);
 
         if (isBefore(fieldValueDate, min)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(DateFnsUtils.utcToLocal(min), field.dateDisplayFormat));
+            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat));
             isValid = false;
         }
         return isValid;
@@ -317,12 +317,12 @@ export class MaxDateTimeFieldValidator implements FormFieldValidator {
 
     private checkDateTime(field: FormFieldModel): boolean {
         let isValid = true;
-        const fieldValueDate = new Date(field.value);
-        const max = new Date(field.maxValue);
+        const fieldValueDate = DateFnsUtils.getDate(field.value);
+        const max = DateFnsUtils.getDate(field.maxValue);
 
         if (isAfter(fieldValueDate, max)) {
             field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(DateFnsUtils.utcToLocal(max), field.dateDisplayFormat));
+            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat));
             isValid = false;
         }
         return isValid;
