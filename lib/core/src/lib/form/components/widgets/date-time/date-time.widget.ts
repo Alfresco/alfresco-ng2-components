@@ -49,7 +49,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     minDate: Date;
     maxDate: Date;
 
-    datetimeInputControl: FormControl;
+    datetimeInputControl: FormControl<Date>;
 
     private datetimeChangesSubscription: Subscription;
 
@@ -67,7 +67,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     private initFormControl(): void {
         this.datetimeInputControl = new FormControl<Date>(
             {
-                value: new Date(this.field?.value),
+                value: DateFnsUtils.getDate(this.field.value),
                 disabled: this.field?.readOnly || this.readOnly
             },
             this.isRequired() ? [Validators.required] : []
@@ -98,11 +98,11 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     private initDateRange(): void {
         if (this.field?.minValue) {
-            this.minDate = DateFnsUtils.utcToLocal(new Date(this.field.minValue));
+            this.minDate = DateFnsUtils.getDate(this.field.minValue);
         }
 
         if (this.field?.maxValue) {
-            this.maxDate = DateFnsUtils.utcToLocal(new Date(this.field.maxValue));
+            this.maxDate = DateFnsUtils.getDate(this.field.maxValue);
         }
     }
 

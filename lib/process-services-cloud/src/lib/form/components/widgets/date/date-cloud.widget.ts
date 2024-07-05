@@ -28,11 +28,21 @@ import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'date-widget',
     standalone: true,
-    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
+    imports: [
+        NgIf,
+        TranslateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        ErrorWidgetComponent
+    ],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
@@ -53,13 +63,14 @@ import { MatInputModule } from '@angular/material/input';
     encapsulation: ViewEncapsulation.None
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+    typeId = 'DateCloudWidgetComponent';
     readonly DATE_FORMAT = 'dd-MM-yyyy';
 
     minDate: Date = null;
     maxDate: Date = null;
     startAt: Date = null;
 
-    dateInputControl: FormControl;
+    dateInputControl: FormControl<Date>;
 
     private dateChangesSubscription: Subscription;
 

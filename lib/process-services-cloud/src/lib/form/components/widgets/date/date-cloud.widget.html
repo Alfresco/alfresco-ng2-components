@@ -14,7 +14,6 @@
                 [placeholder]="field.placeholder"
                 [min]="minDate"
                 [max]="maxDate"
-                [disabled]="field.readOnly"
                 [title]="field.tooltip"
                 (blur)="markAsTouched()">
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly"></mat-datepicker-toggle>
