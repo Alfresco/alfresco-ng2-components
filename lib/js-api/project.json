@@ -1,0 +1,64 @@
+{
+  "name": "js-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/js-api",
+  "projectType": "library",
+  "prefix": "adf",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/js-api",
+        "main": "lib/js-api/src/index.ts",
+        "tsConfig": "lib/js-api/tsconfig.lib.json",
+        "assets": ["lib/js-api/*.md"],
+        "externalBuildTargets": [
+          "build"
+        ]
+      },
+      "configurations": {
+        "test": {
+          "outputPath": "dist/tmp/libs/js-api",
+          "tsConfig": "lib/js-api/tsconfig.spec.json",
+          "assets": [
+            "lib/js-api/test/mockObjects/assets/**/*"
+          ]
+        }
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs lib-js-api {args.ver} {args.tag}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["lib/js-api/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "commands": [
+          "nx run js-api:build:test",
+          "mocha --full-trace --config lib/js-api/.mocharc.json",
+          "rm -fr dist/tmp/libs/js-api"
+        ],
+        "parallel": false
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
