@@ -26,7 +26,7 @@ import { PROCESS_LIST_DIRECTIVES } from './process-list';
 import { TASK_LIST_DIRECTIVES } from './task-list';
 import { FORM_DIRECTIVES } from './form';
 import { TASK_COMMENTS_DIRECTIVES } from './task-comments';
-import { PROCESS_USER_INFO_DIRECTIVES } from './process-user-info';
+import { PROCESS_USER_INFO_DIRECTIVES } from '../../../../demo-shell/src/app/components/app-layout/user-info/process-user-info';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({

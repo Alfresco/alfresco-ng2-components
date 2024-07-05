@@ -20,7 +20,7 @@ import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-servic
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
-import { PeopleProcessService } from '../services/people-process.service';
+import { PeopleProcessService } from '@alfresco/adf-process-services';
 import { UserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';

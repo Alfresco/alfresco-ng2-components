@@ -68,6 +68,7 @@ import { SearchFilterChipsComponent } from './components/search/search-filter-ch
 import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
 import { FolderDirectiveModule } from './folder-directive';
 import { ContentUserInfoModule } from './components/app-layout/user-info/content-user-info';
+import { ProcessUserInfoComponent } from './components/app-layout/user-info/process-user-info';
 
 @NgModule({
     imports: [
@@ -91,7 +92,8 @@ import { ContentUserInfoModule } from './components/app-layout/user-info/content
         MonacoEditorModule.forRoot(),
         FolderDirectiveModule,
         ShowDiagramComponent,
-        ContentUserInfoModule
+        ContentUserInfoModule,
+        ProcessUserInfoComponent
     ],
     declarations: [
         AppComponent,

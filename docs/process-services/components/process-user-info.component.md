@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2023-01-24
 ---
 
-# [Process User Info component](../../../lib/process-services/src/lib/process-user-info/process-user-info.component.ts "Defined in process-user-info.component.ts")
+# [Process User Info component](../../../demo-shell/src/app/components/app-layout/user-info/process-user-info/process-user-info.component.ts "Defined in process-user-info.component.ts")
 
 Shows user information for `PROCESS` and `ALL` mode.
 

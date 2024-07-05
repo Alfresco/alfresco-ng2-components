@@ -19,8 +19,7 @@ import { IdentityUserModel, UserInfoMode } from '@alfresco/adf-core';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
-import { EcmUserModel } from '../../../../../../../lib/content-services/src/lib/common/models/ecm-user.model';
-import { PeopleContentService } from '../../../../../../../lib/content-services/src/lib/common/services/people-content.service';
+import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-content-user-info',

@@ -19,12 +19,7 @@ import { CoreTestingModule, IdentityUserModel, InitialUsernamePipe, UserInfoMode
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By, DomSanitizer } from '@angular/platform-browser';
-import {
-    fakeEcmEditedUser,
-    fakeEcmUser,
-    fakeEcmUserNoImage
-} from '../../../../../../../lib/content-services/src/lib/common/mocks/ecm-user.service.mock';
-import { ContentTestingModule } from '../../../../../../../lib/content-services/src/lib/testing/content.testing.module';
+import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage, ContentTestingModule } from '@alfresco/adf-content-services';
 
 import { ContentUserInfoComponent } from './content-user-info.component';
 
