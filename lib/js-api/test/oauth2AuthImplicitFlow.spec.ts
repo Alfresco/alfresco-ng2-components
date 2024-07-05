@@ -53,7 +53,13 @@ describe('Oauth2 Implicit flow test', () => {
     });
 
     it('should redirect to login if access token is not valid', (done) => {
-        window = globalAny.window = { location: {} };
+        window = globalAny.window = {
+            location: {
+                assign: (v: any) => {
+                    window.location.href = v;
+                }
+            }
+        };
         globalAny.document = {
             getElementById: () => ''
         };
@@ -81,7 +87,13 @@ describe('Oauth2 Implicit flow test', () => {
     });
 
     it('should not loop over redirection when redirectUri contains hash and token is not valid ', (done) => {
-        window = globalAny.window = { location: {} };
+        window = globalAny.window = {
+            location: {
+                assign: (v: any) => {
+                    window.location.href = v;
+                }
+            }
+        };
         globalAny.document = {
             getElementById: () => ''
         };
@@ -112,7 +124,13 @@ describe('Oauth2 Implicit flow test', () => {
     });
 
     it('should not redirect to login if access token is valid', (done) => {
-        window = globalAny.window = { location: {} };
+        window = globalAny.window = {
+            location: {
+                assign: (v: any) => {
+                    window.location.href = v;
+                }
+            }
+        };
         globalAny.document = {
             getElementById: () => ''
         };
@@ -144,11 +162,17 @@ describe('Oauth2 Implicit flow test', () => {
     });
 
     it('should set the loginFragment to redirect after the login if it is present', (done) => {
-        window = globalAny.window = {};
+        window = globalAny.window = {
+            location: {
+                assign: (v: any) => {
+                    window.location.href = v;
+                }
+            }
+        };
         globalAny.document = {
             getElementById: () => ''
         };
-        window.location = <Location>{ hash: 'asfasfasfa' };
+        window.location.hash = 'asfasfasfa';
 
         Object.defineProperty(window.location, 'hash', {
             writable: true,
