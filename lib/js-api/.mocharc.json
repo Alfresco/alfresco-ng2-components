@@ -1,7 +1,4 @@
 {
   "extensions": ["ts"],
-  "spec": ["lib/js-api/test/**/*.spec.ts"],
-  "node-option": [
-    "loader=ts-node/register"
-  ]
+  "spec": ["dist/tmp/libs/js-api/test/**/*.spec.js"]
 }
