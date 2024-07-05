@@ -1,5 +1,5 @@
 {
-  "extends": "../../../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "module": "CommonJS",
     "moduleResolution": "node",
@@ -7,6 +7,9 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ESNext", "dom"]
-  }
+    "lib": ["ESNext", "dom"],
+    "types": ["mocha"]
+  },
+  "exclude": [],
+  "include": ["**/*"]
 }
