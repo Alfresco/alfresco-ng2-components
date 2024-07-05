@@ -10,7 +10,7 @@ DOCKER_PROJECT_ARGS="PROJECT_NAME=storybook/stories"
 echo "{}" > $DIR/../../../dist/storybook/stories/app.config.json
 
 # Publish Image to docker
-./node_modules/@alfresco/adf-cli/bin/adf-cli docker \
+/node_modules/@alfresco/adf-cli/bin/adf-cli docker \
     --loginCheck \
     --loginUsername "$DOCKER_REPOSITORY_USER" \
     --loginPassword "$DOCKER_REPOSITORY_PASSWORD" \
