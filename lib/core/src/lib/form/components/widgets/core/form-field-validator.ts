@@ -249,7 +249,7 @@ export abstract class BoundaryDateTimeFieldValidator implements FormFieldValidat
     private supportedTypes = [FormFieldTypes.DATETIME];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field[this.getSubjectField()];
     }
 
     validate(field: FormFieldModel): boolean {
