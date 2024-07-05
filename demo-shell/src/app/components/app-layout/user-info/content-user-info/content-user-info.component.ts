@@ -19,8 +19,8 @@ import { IdentityUserModel, UserInfoMode } from '@alfresco/adf-core';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
-import { EcmUserModel } from '../common/models/ecm-user.model';
-import { PeopleContentService } from '../common/services/people-content.service';
+import { EcmUserModel } from '../../../../../../../lib/content-services/src/lib/common/models/ecm-user.model';
+import { PeopleContentService } from '../../../../../../../lib/content-services/src/lib/common/services/people-content.service';
 
 @Component({
     selector: 'adf-content-user-info',
@@ -29,7 +29,6 @@ import { PeopleContentService } from '../common/services/people-content.service'
     encapsulation: ViewEncapsulation.None
 })
 export class ContentUserInfoComponent implements OnDestroy {
-
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     /** Determines if user is logged in. */
@@ -79,8 +78,7 @@ export class ContentUserInfoComponent implements OnDestroy {
 
     private destroy$ = new Subject();
 
-    constructor(private peopleContentService: PeopleContentService) {
-    }
+    constructor(private peopleContentService: PeopleContentService) {}
 
     ngOnDestroy(): void {
         this.destroy$.next(true);

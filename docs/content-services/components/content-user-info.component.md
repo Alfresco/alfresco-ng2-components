@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2023-01-24
 ---
 
-# [Content User Info component](../../../lib/content-services/src/lib/content-user-info/content-user-info.component.ts "Defined in content-user-info.component.ts")
+# [Content User Info component](../../../demo-shell/src/app/components/app-layout/user-info/content-user-info/content-user-info.component.ts "Defined in content-user-info.component.ts")
 
 Shows user information for `CONTENT` and `CONTENT_SSO` mode.
 

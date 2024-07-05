@@ -67,6 +67,7 @@ import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
 import { FolderDirectiveModule } from './folder-directive';
+import { ContentUserInfoModule } from './components/app-layout/user-info/content-user-info';
 
 @NgModule({
     imports: [
@@ -89,7 +90,8 @@ import { FolderDirectiveModule } from './folder-directive';
         AppCloudSharedModule,
         MonacoEditorModule.forRoot(),
         FolderDirectiveModule,
-        ShowDiagramComponent
+        ShowDiagramComponent,
+        ContentUserInfoModule
     ],
     declarations: [
         AppComponent,
