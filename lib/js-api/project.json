@@ -37,15 +37,16 @@
     },
     "npm-publish": {
       "executor": "nx:run-commands",
+      "dependsOn": [ "build" ],
       "options": {
-        "command": "node tools/scripts/publish.mjs lib-js-api {args.ver} {args.tag}"
-      },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build-all"
-        }
-      ]
+        "cwd": "dist/libs/js-api",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
