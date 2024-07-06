@@ -37,7 +37,7 @@
     },
     "npm-publish": {
       "executor": "nx:run-commands",
-      "dependsOn": [ "build" ],
+      "dependsOn": [ "build-all" ],
       "options": {
         "cwd": "dist/libs/js-api",
         "commands": [
