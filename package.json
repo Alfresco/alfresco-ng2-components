@@ -96,8 +96,8 @@
   },
   "devDependencies": {
     "@alfresco/eslint-plugin-eslint-angular": "file:lib/eslint-angular",
-    "@angular-devkit/build-angular": "14.1.3",
-    "@angular-devkit/schematics": "~14.2.12",
+    "@angular-devkit/build-angular": "18.0.7",
+    "@angular-devkit/schematics": "~18.0.7",
     "@angular-eslint/eslint-plugin": "15.2.1",
     "@angular-eslint/eslint-plugin-template": "16.0.2",
     "@angular-eslint/template-parser": "16.2.0",
