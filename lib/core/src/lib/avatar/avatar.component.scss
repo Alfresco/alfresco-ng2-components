@@ -1,0 +1,15 @@
+.adf-avatar__image {
+    cursor: default;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    border-radius: 50%;
+    width: var(--adf-avatar-size, 32px);
+    height: var(--adf-avatar-size, 32px);
+    background-color: #f3f3f3;
+    color: #333;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    align-content: center;
+}

@@ -1,0 +1,7 @@
+<div style="display: flex">
+    <img *ngIf="src; else initialsTemplate" class="adf-avatar__image" [src]="src" [alt]="initials" [title]="tooltip" />
+</div>
+
+<ng-template #initialsTemplate>
+    <div class="adf-avatar__image" [title]="tooltip">{{ initials }}</div>
+</ng-template>
