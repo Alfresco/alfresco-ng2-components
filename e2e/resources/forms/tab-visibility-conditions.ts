@@ -80,7 +80,7 @@ const createVisibilityCondition = (
 
 const createTab = (
     id = '71da814d-5580-4f1f-972a-8089253aeded',
-    title = 'TABBASICFIELDVALUE',
+    title = 'tabBasicFieldValue',
     visibilityCondition = createVisibilityCondition('field', 'TextOne', null)
 ) => ({
     id,
@@ -135,7 +135,7 @@ const createTabVisibilityJson = (
 export const tabFieldValueVisibilityJson = createTabVisibilityJson();
 
 export const tabVarValueVisibilityJson = createTabVisibilityJson(
-    [createTab('71da814d-5580-4f1f-972a-8089253aeded', 'TABBASICVARVALUE', createVisibilityCondition('variable', 'stringVar'))],
+    [createTab('71da814d-5580-4f1f-972a-8089253aeded', 'tabBasicVarValue', createVisibilityCondition('variable', 'stringVar'))],
     [fieldDefinition1],
     [
         {
@@ -171,7 +171,7 @@ export const tabFieldFieldVisibilityJson = createTabVisibilityJson(
     [
         createTab(
             '71da814d-5580-4f1f-972a-8089253aeded',
-            'TABBASICFIELDFIELD',
+            'tabBasicFieldField',
             createVisibilityCondition('field', 'TextThree', undefined, 'TextOne', 'field')
         ),
         createTab('442eea0b-65f9-484e-b37f-f5a91d5e1f21', 'tabWithFields', null)
@@ -233,7 +233,7 @@ export const tabNextOperatorsVisibilityJson = createTabVisibilityJson(
     [
         createTab(
             '71da814d-5580-4f1f-972a-8089253aeded',
-            'TABNEXTOPERATORS',
+            'tabNextOperators',
             createVisibilityCondition('field', 'TextOne', createVisibilityCondition('field', 'TextThree', null, 'showTab', 'value', '!='))
         ),
         createTab('442eea0b-65f9-484e-b37f-f5a91d5e1f21', 'tabWithFields', null)
