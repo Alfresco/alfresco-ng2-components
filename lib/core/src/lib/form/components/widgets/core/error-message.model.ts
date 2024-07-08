@@ -23,7 +23,7 @@ export class ErrorMessageModel {
 
     constructor(obj?: any) {
         this.message = obj?.message || '';
-        this.attributes = new Map();
+        this.attributes = obj?.attributes || new Map();
     }
 
     isActive(): boolean {
@@ -31,7 +31,7 @@ export class ErrorMessageModel {
     }
 
     getAttributesAsJsonObj() {
-        let result = {};
+        const result = {};
         if (this.attributes.size > 0) {
             this.attributes.forEach((value, key) => {
                 result[key] = typeof value === 'string' ? value : JSON.stringify(value);

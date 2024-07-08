@@ -19,17 +19,18 @@
 
 import { NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils } from '../../../../common';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
+import { ErrorMessageModel } from '../core/error-message.model';
 
 @Component({
     selector: 'date-widget',
@@ -60,11 +61,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     maxDate: Date;
     startAt: Date;
 
-    dateInputControl: FormControl;
+    dateInputControl: FormControl<Date>;
 
     private dateChangesSubscription: Subscription;
 
-    constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>) {
+    constructor(public readonly formService: FormService, private readonly dateAdapter: DateAdapter<Date>) {
         super(formService);
     }
 
@@ -89,13 +90,51 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     private subscribeToDateChanges(): void {
         this.dateChangesSubscription = this.dateInputControl.valueChanges.subscribe((newDate: Date) => {
             this.field.value = newDate;
-            this.checkErrors();
+            this.validateField();
             this.onFieldChanged(this.field);
         });
     }
 
-    private checkErrors(): void {
-        this.dateInputControl.invalid ? this.field.markAsInvalid() : this.field.markAsValid();
+    private validateField(): void {
+        if (this.dateInputControl.invalid) {
+            this.handleErrors(this.dateInputControl.errors);
+        } else {
+            this.resetErrors();
+        }
+    }
+
+    private handleErrors(errors: ValidationErrors): void {
+        const errorAttributes = new Map<string, string>();
+        switch (true) {
+            case !!errors.matDatepickerParse:
+                this.updateValidationSummary(this.field.dateDisplayFormat || this.field.defaultDateTimeFormat);
+                break;
+            case !!errors.required:
+                this.updateValidationSummary('FORM.FIELD.REQUIRED');
+                break;
+            case !!errors.matDatepickerMin: {
+                const minValue = DateFnsUtils.formatDate(errors.matDatepickerMin.min, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('minValue', minValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_LESS_THAN', errorAttributes);
+                break;
+            }
+            case !!errors.matDatepickerMax: {
+                const maxValue = DateFnsUtils.formatDate(errors.matDatepickerMax.max, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('maxValue', maxValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', errorAttributes);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private updateValidationSummary(message: string, attributes?: Map<string, string>): void {
+        this.field.validationSummary = new ErrorMessageModel({ message, attributes });
+    }
+
+    private resetErrors(): void {
+        this.updateValidationSummary('');
     }
 
     private initDateAdapter(): void {

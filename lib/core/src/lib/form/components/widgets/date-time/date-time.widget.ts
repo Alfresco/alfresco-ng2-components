@@ -19,7 +19,7 @@
 
 import { NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -30,6 +30,7 @@ import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { Subscription } from 'rxjs';
+import { ErrorMessageModel } from '../core/error-message.model';
 
 @Component({
     selector: 'date-time-widget',
@@ -53,7 +54,11 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     private datetimeChangesSubscription: Subscription;
 
-    constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {
+    constructor(
+        public readonly formService: FormService,
+        private readonly dateAdapter: DateAdapter<Date>,
+        private readonly dateTimeAdapter: DatetimeAdapter<Date>
+    ) {
         super(formService);
     }
 
@@ -76,14 +81,52 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     private subscribeToDateChanges(): void {
         this.datetimeChangesSubscription = this.datetimeInputControl.valueChanges.subscribe((newDate: Date) => {
-            this.field.value = newDate.toISOString();
-            this.checkErrors();
+            this.field.value = newDate;
+            this.validateField();
             this.onFieldChanged(this.field);
         });
     }
 
-    private checkErrors(): void {
-        this.datetimeInputControl.invalid ? this.field.markAsInvalid() : this.field.markAsValid();
+    private validateField(): void {
+        if (this.datetimeInputControl.invalid) {
+            this.handleErrors(this.datetimeInputControl.errors);
+        } else {
+            this.resetErrors();
+        }
+    }
+
+    private handleErrors(errors: ValidationErrors): void {
+        const errorAttributes = new Map<string, string>();
+        switch (true) {
+            case !!errors.matDatepickerParse:
+                this.updateValidationSummary(this.field.dateDisplayFormat || this.field.defaultDateTimeFormat);
+                break;
+            case !!errors.required:
+                this.updateValidationSummary('FORM.FIELD.REQUIRED');
+                break;
+            case !!errors.matDatepickerMin: {
+                const minValue = DateFnsUtils.formatDate(errors.matDatepickerMin.min, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('minValue', minValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_LESS_THAN', errorAttributes);
+                break;
+            }
+            case !!errors.matDatepickerMax: {
+                const maxValue = DateFnsUtils.formatDate(errors.matDatepickerMax.max, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('maxValue', maxValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', errorAttributes);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private updateValidationSummary(message: string, attributes?: Map<string, string>): void {
+        this.field.validationSummary = new ErrorMessageModel({ message, attributes });
+    }
+
+    private resetErrors(): void {
+        this.updateValidationSummary('');
     }
 
     private initDateAdapter(): void {

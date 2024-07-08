@@ -20,10 +20,18 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Subscription } from 'rxjs';
-import { WidgetComponent, FormService, AdfDateFnsAdapter, DateFnsUtils, ADF_DATE_FORMATS, ErrorWidgetComponent } from '@alfresco/adf-core';
+import {
+    WidgetComponent,
+    FormService,
+    AdfDateFnsAdapter,
+    DateFnsUtils,
+    ADF_DATE_FORMATS,
+    ErrorWidgetComponent,
+    ErrorMessageModel
+} from '@alfresco/adf-core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { addDays } from 'date-fns';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -99,13 +107,51 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     private subscribeToDateChanges(): void {
         this.dateChangesSubscription = this.dateInputControl.valueChanges.subscribe((newDate: any) => {
             this.field.value = newDate;
-            this.checkErrors();
+            this.validateField();
             this.onFieldChanged(this.field);
         });
     }
 
-    private checkErrors(): void {
-        this.dateInputControl.invalid ? this.field.markAsInvalid() : this.field.markAsValid();
+    private validateField(): void {
+        if (this.dateInputControl.invalid) {
+            this.handleErrors(this.dateInputControl.errors);
+        } else {
+            this.resetErrors();
+        }
+    }
+
+    private handleErrors(errors: ValidationErrors): void {
+        const errorAttributes = new Map<string, string>();
+        switch (true) {
+            case !!errors.matDatepickerParse:
+                this.updateValidationSummary(this.field.dateDisplayFormat || this.field.defaultDateTimeFormat);
+                break;
+            case !!errors.required:
+                this.updateValidationSummary('FORM.FIELD.REQUIRED');
+                break;
+            case !!errors.matDatepickerMin: {
+                const minValue = DateFnsUtils.formatDate(errors.matDatepickerMin.min, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('minValue', minValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_LESS_THAN', errorAttributes);
+                break;
+            }
+            case !!errors.matDatepickerMax: {
+                const maxValue = DateFnsUtils.formatDate(errors.matDatepickerMax.max, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('maxValue', maxValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', errorAttributes);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private updateValidationSummary(message: string, attributes?: Map<string, string>): void {
+        this.field.validationSummary = new ErrorMessageModel({ message, attributes });
+    }
+
+    private resetErrors(): void {
+        this.updateValidationSummary('');
     }
 
     private initDateAdapter(): void {
