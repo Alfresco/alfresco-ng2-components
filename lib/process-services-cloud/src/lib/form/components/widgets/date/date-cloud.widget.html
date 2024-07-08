@@ -23,6 +23,5 @@
             </mat-datepicker>
         </mat-form-field>
         <error-widget [error]="field.validationSummary"></error-widget>
-        <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
     </div>
 </div>
