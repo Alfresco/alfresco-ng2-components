@@ -1,0 +1,1 @@
+../../../lib/core/src/lib/avatar/avatar.component.md

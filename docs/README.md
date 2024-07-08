@@ -30,10 +30,8 @@ A few other pages of information are also available:
 -   The [Release notes](release-notes/README.md) section has details of all
     the features introduced and bugs fixed with each release.
 -   The [Version compatibility](compatibility.md) page shows which versions
-    of Alfresco's backend servies (ACS and APS) are compatible with each released
+    of Alfresco backend services (ACS and APS) are compatible with each released
     version of ADF.
--   The [Roadmap](roadmap.md)
-    contains a preview of features we hope to release in future versions of ADF.
 -   The [License info](license-info/README.md) section lists the third-party libraries used by ADF along with links to their Open Source licenses.
 -   The [Vulnerability](vulnerability/README.md) section lists the third-party
     libraries known vulnerability.
@@ -78,6 +76,15 @@ See the library's
 for more information about installing and using the source code.
 
 <!--core start-->
+
+### Primitives
+
+A collection of Angular components for generic use.
+
+| Name                                                    | Description                  |
+|---------------------------------------------------------|------------------------------|
+| [Avatar Component](core/components/avatar.component.md) | Displays user avatars.       |
+| [Button Component](core/components/button.component.md) | A standard button component. |
 
 ### Components
 
