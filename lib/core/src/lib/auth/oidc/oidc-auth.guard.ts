@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -25,7 +25,7 @@ const ROUTE_DEFAULT = '/';
 @Injectable({
     providedIn: 'root'
 })
-export class OidcAuthGuard implements CanActivate {
+export class OidcAuthGuard  {
     constructor(private auth: AuthService, private _router: Router) { }
 
     canActivate(

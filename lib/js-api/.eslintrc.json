@@ -4,9 +4,14 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular"],
+      "extends": ["plugin:@nx/angular"],
       "rules": {
-        "no-underscore-dangle": ["warn", { "allowAfterThis": true }],
+        "no-underscore-dangle": [
+          "warn",
+          {
+            "allowAfterThis": true
+          }
+        ],
         "@typescript-eslint/dot-notation": "off",
         "@typescript-eslint/explicit-member-accessibility": [
           "off",
@@ -30,7 +35,6 @@
         "no-duplicate-imports": "error",
         "no-multiple-empty-lines": "error",
         "no-return-await": "error",
-
         "unicorn/filename-case": "off",
         "@typescript-eslint/no-unused-expressions": "off",
         "@typescript-eslint/consistent-type-assertions": "off",
