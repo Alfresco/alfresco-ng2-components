@@ -6,8 +6,9 @@
     border-radius: 50%;
     width: var(--adf-avatar-size, 32px);
     height: var(--adf-avatar-size, 32px);
-    background-color: #f3f3f3;
-    color: #333;
+    color: var(--adf-avatar-color, #333);
+    background-color: var(--adf-avatar-bg-color, #f3f3f3);
+    box-shadow: 0 0 0 1px var(--adf-avatar-border-color, rgba(31, 35, 40, 0.15));
     text-align: center;
     font-size: 14px;
     font-weight: 500;
