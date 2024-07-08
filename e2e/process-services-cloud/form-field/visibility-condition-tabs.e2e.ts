@@ -46,13 +46,13 @@ describe('Visibility conditions on tabs - cloud', () => {
     };
 
     const tab = {
-        tabWithFields: 'TABWITHFIELDS',
-        tabFieldValue: 'TABBASICFIELDVALUE',
-        tabVarValue: 'TABBASICVARVALUE',
+        tabWithFields: 'tabWithFields',
+        tabFieldValue: 'tabBasicFieldValue',
+        tabVarValue: 'tabBasicVarValue',
         tabVarField: 'tabBasicVarField',
-        tabFieldField: 'TABBASICFIELDFIELD',
+        tabFieldField: 'tabBasicFieldField',
         tabVarVar: 'tabBasicVarVar',
-        tabNextOperators: 'TABNEXTOPERATORS'
+        tabNextOperators: 'tabNextOperators'
     };
 
     beforeAll(async () => {
