@@ -93,14 +93,18 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
             if (!this.contentAuth) {
                 this.contentAuth = new ContentAuth(this.config, this, this.httpClient);
             }
-
-            this.contentAuth.validateTicket().then((ticket) => {
-                config.ticketEcm = ticket;
-            })
-            .catch(() => {
-                config.ticketEcm = null;
-                this.initConfig(config);
-            });
+            this.contentAuth
+                .validateTicket()
+                .then((ticket) => {
+                    config.ticketEcm = ticket;
+                })
+                .catch((error) => {
+                    if (error.status === 401) {
+                        config.ticketEcm = null;
+                        this.initConfig(config);
+                        this.emitBuffer('ticket_invalidated');
+                    }
+                });
         }
     }
 
