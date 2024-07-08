@@ -107,6 +107,10 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private setDefaultVariableConfig(): void {
+        if (!this.field.json) {
+            return;
+        }
+
         this.field.json.variableConfig = {
             variableName: this.field.json?.variableConfig?.variableName || this.defaultVariableName,
             optionsPath: this.field.json?.variableConfig?.optionsPath || this.defaultVariableOptionPath,
