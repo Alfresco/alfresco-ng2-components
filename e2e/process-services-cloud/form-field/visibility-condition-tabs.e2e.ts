@@ -49,9 +49,9 @@ describe('Visibility conditions on tabs - cloud', () => {
         tabWithFields: 'TABWITHFIELDS',
         tabFieldValue: 'TABBASICFIELDVALUE',
         tabVarValue: 'TABBASICVARVALUE',
-        tabVarField: 'TABBASICVARFIELD',
+        tabVarField: 'tabBasicVarField',
         tabFieldField: 'TABBASICFIELDFIELD',
-        tabVarVar: 'TABBASICVARVAR',
+        tabVarVar: 'tabBasicVarVar',
         tabNextOperators: 'TABNEXTOPERATORS'
     };
 
