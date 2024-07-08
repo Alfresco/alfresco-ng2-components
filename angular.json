@@ -29,9 +29,7 @@
             "tsConfig": "tsconfig.dev.json",
             "polyfills": "demo-shell/src/polyfills.ts",
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             },
             "assets": [
               "demo-shell/src/assets",
@@ -114,11 +112,7 @@
               "node_modules/cropperjs/dist/cropper.min.css",
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
-            "scripts": [
-              "node_modules/pdfjs-dist/build/pdf.js",
-              "node_modules/pdfjs-dist/web/pdf_viewer.js",
-              "node_modules/raphael/raphael.min.js"
-            ],
+            "scripts": ["node_modules/pdfjs-dist/build/pdf.js", "node_modules/pdfjs-dist/web/pdf_viewer.js", "node_modules/raphael/raphael.min.js"],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -204,10 +198,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "demo-shell/**/*.ts",
-              "demo-shell/**/*.html"
-            ]
+            "lintFilePatterns": ["demo-shell/**/*.ts", "demo-shell/**/*.html"]
           }
         }
       }
@@ -241,8 +232,8 @@
     },
     "js-api": {
       "projectType": "library",
-      "root": "lib/js-api/src",
-      "sourceRoot": "lib/js-api/src",
+      "root": "lib/js-api",
+      "sourceRoot": "lib/js-api",
       "architect": {
         "build": {
           "builder": "nx:run-commands",
@@ -263,9 +254,7 @@
               }
             ]
           },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
+          "dependsOn": ["copyToNodeModules"]
         },
         "copyToNodeModules": {
           "executor": "nx:run-commands",
@@ -292,16 +281,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/js-api/**/*.ts"
-            ]
+            "lintFilePatterns": ["lib/js-api/**/*.ts"]
           }
         },
         "npm-publish": {
           "builder": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/js-api",
             "commands": [
@@ -347,13 +332,9 @@
             "sourceMap": true,
             "codeCoverage": true,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             },
-            "styles": [
-              "demo-shell/src/styles.scss"
-            ]
+            "styles": ["demo-shell/src/styles.scss"]
           }
         },
         "lint": {
@@ -388,9 +369,7 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -413,9 +392,7 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -426,39 +403,37 @@
         },
         "stylelint": {
           "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx stylelint lib/core/**/*.scss --config .stylelintrc.json"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx stylelint lib/core/**/*.scss --config .stylelintrc.json"
+              }
+            ]
           }
         },
         "license": {
           "builder": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
+              }
+            ]
           }
         },
         "pretheme": {
           "builder": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
+              }
+            ]
           }
         },
         "npm-publish": {
           "builder": "nx:run-commands",
-          "dependsOn": [
-            "build", "pretheme"
-          ],
+          "dependsOn": ["build", "pretheme"],
           "options": {
             "cwd": "dist/libs/core",
             "commands": [
@@ -468,9 +443,7 @@
               }
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           }
         }
@@ -505,19 +478,14 @@
             "sourceMap": true,
             "codeCoverage": true,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/content-services/**/*.ts",
-              "lib/content-services/**/*.html"
-            ]
+            "lintFilePatterns": ["lib/content-services/**/*.ts", "lib/content-services/**/*.html"]
           }
         },
         "storybook": {
@@ -534,9 +502,7 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -559,9 +525,7 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -572,19 +536,17 @@
         },
         "stylelint": {
           "builder": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx stylelint lib/content-services/**/*.scss --config .stylelintrc.json"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx stylelint lib/content-services/**/*.scss --config .stylelintrc.json"
+              }
+            ]
           }
         },
         "npm-publish": {
           "executor": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/content-services",
             "commands": [
@@ -626,36 +588,29 @@
             "sourceMap": true,
             "codeCoverage": true,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/process-services/**/*.ts",
-              "lib/process-services/**/*.html"
-            ]
+            "lintFilePatterns": ["lib/process-services/**/*.ts", "lib/process-services/**/*.html"]
           }
         },
         "stylelint": {
           "builder": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx stylelint lib/process-services-cloud/**/*.scss --config .stylelintrc.json"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx stylelint lib/process-services-cloud/**/*.scss --config .stylelintrc.json"
+              }
+            ]
           }
         },
         "npm-publish": {
           "executor": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/process-services",
             "commands": [
@@ -664,7 +619,7 @@
                 "forwardAllArgs": true
               }
             ]
-        }
+          }
         }
       }
     },
@@ -697,19 +652,14 @@
             "sourceMap": true,
             "codeCoverage": true,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/process-services-cloud/**/*.ts",
-              "lib/process-services-cloud/**/*.html"
-            ]
+            "lintFilePatterns": ["lib/process-services-cloud/**/*.ts", "lib/process-services-cloud/**/*.html"]
           }
         },
         "storybook": {
@@ -726,9 +676,7 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -751,9 +699,7 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -765,29 +711,27 @@
 
         "e2e-playwright": {
           "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx playwright test --config='e2e-playwright/playwright.config.ts'"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx playwright test --config='e2e-playwright/playwright.config.ts'"
+              }
+            ]
           }
         },
         "stylelint": {
           "executor": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx stylelint lib/process-services-cloud/**/*.scss --config .stylelintrc.json"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx stylelint lib/process-services-cloud/**/*.scss --config .stylelintrc.json"
+              }
+            ]
           }
         },
         "npm-publish": {
           "builder": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/process-services-cloud",
             "commands": [
@@ -829,36 +773,29 @@
             "sourceMap": true,
             "codeCoverage": true,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/insights/**/*.ts",
-              "lib/insights/**/*.html"
-            ]
+            "lintFilePatterns": ["lib/insights/**/*.ts", "lib/insights/**/*.html"]
           }
         },
         "stylelint": {
           "builder": "nx:run-commands",
-              "options": {
-              "commands": [
-                  {
-                      "command": "npx stylelint lib/insights/**/*.scss --config .stylelintrc.json"
-                  }
-              ]
+          "options": {
+            "commands": [
+              {
+                "command": "npx stylelint lib/insights/**/*.scss --config .stylelintrc.json"
+              }
+            ]
           }
         },
         "npm-publish": {
           "builder": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/insights",
             "commands": [
@@ -899,26 +836,19 @@
             "sourceMap": true,
             "codeCoverage": true,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/extensions/**/*.ts",
-              "lib/extensions/**/*.html"
-            ]
+            "lintFilePatterns": ["lib/extensions/**/*.ts", "lib/extensions/**/*.html"]
           }
         },
         "npm-publish": {
           "executor": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/extensions",
             "commands": [
@@ -938,17 +868,15 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nx/node:webpack",
           "options": {
             "projectRoot": "lib/testing",
             "outputPath": "dist/libs/testing",
             "main": "lib/testing/index.ts",
-            "generatePackageJson" : true,
+            "generatePackageJson": true,
             "tsConfig": "lib/testing/tsconfig.lib.prod.json",
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -956,7 +884,7 @@
               "projectRoot": "lib/testing",
               "outputPath": "dist/libs/testing",
               "main": "lib/testing/index.ts",
-              "generatePackageJson" : true,
+              "generatePackageJson": true,
               "tsConfig": "lib/testing/tsconfig.lib.prod.json"
             }
           },
@@ -965,10 +893,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/testing/**/*.ts",
-              "lib/testing/**/*.html"
-            ]
+            "lintFilePatterns": ["lib/testing/**/*.ts", "lib/testing/**/*.html"]
           }
         },
         "bundle": {
@@ -980,9 +905,7 @@
               }
             ]
           },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
+          "dependsOn": ["copyToNodeModules"]
         },
         "copyToNodeModules": {
           "builder": "nx:run-commands",
@@ -1002,9 +925,7 @@
         },
         "npm-publish": {
           "builder": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/testing",
             "commands": [
@@ -1024,17 +945,15 @@
       "prefix": "adf",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:webpack",
+          "builder": "@nx/node:webpack",
           "options": {
             "projectRoot": "lib/eslint-angular",
             "outputPath": "dist/libs/eslint-plugin-eslint-angular",
             "main": "lib/eslint-angular/index.ts",
-            "generatePackageJson" : true,
+            "generatePackageJson": true,
             "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json",
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -1042,7 +961,7 @@
               "projectRoot": "lib/eslint-angular",
               "outputPath": "dist/libs/eslint-plugin-eslint-angular",
               "main": "lib/eslint-angular/index.ts",
-              "generatePackageJson" : true,
+              "generatePackageJson": true,
               "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json"
             }
           },
@@ -1051,9 +970,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/eslint-angular/**/*.ts"
-            ]
+            "lintFilePatterns": ["lib/eslint-angular/**/*.ts"]
           }
         },
         "bundle": {
@@ -1068,9 +985,7 @@
         },
         "npm-publish": {
           "builder": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/eslint-plugin-eslint-angular",
             "commands": [
@@ -1094,10 +1009,7 @@
           "options": {
             "command": "cd lib/cli && npm run dist",
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib",
-                "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
@@ -1116,9 +1028,7 @@
               }
             ]
           },
-          "dependsOn": [
-            "copyToNodeModules"
-          ]
+          "dependsOn": ["copyToNodeModules"]
         },
         "copyToNodeModules": {
           "builder": "nx:run-commands",
@@ -1139,17 +1049,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "lib/cli/**/*.ts",
-              "lib/cli/**/*.html"
-            ]
+            "lintFilePatterns": ["lib/cli/**/*.ts", "lib/cli/**/*.html"]
           }
         },
         "npm-publish": {
           "builder": "nx:run-commands",
-          "dependsOn": [
-            "build"
-          ],
+          "dependsOn": ["build"],
           "options": {
             "cwd": "dist/libs/cli",
             "commands": [
@@ -1175,9 +1080,7 @@
             "configDir": "lib/stories/.storybook",
             "compodoc": false,
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             },
             "styles": [
               "demo-shell/src/styles.scss",
@@ -1206,9 +1109,7 @@
               "node_modules/pdfjs-dist/web/pdf_viewer.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib", "lib/core/src/lib"
-              ]
+              "includePaths": ["lib", "lib/core/src/lib"]
             }
           },
           "configurations": {
