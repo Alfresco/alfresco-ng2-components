@@ -33,9 +33,11 @@ export class ErrorMessageModel {
     getAttributesAsJsonObj() {
         let result = {};
         if (this.attributes.size > 0) {
+            const obj = Object.create(null);
             this.attributes.forEach((value, key) => {
-                result[key] = typeof value === 'string' ? value : JSON.stringify(value);
+                obj[key] = value;
             });
+            result = JSON.stringify(obj);
         }
         return result;
     }

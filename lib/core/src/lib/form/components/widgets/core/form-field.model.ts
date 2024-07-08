@@ -299,7 +299,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     parseValue(json: any): any {
-        const value = Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null;
+        let value = Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null;
 
         /*
          This is needed due to Activiti issue related to reading dropdown values as value string
@@ -440,12 +440,7 @@ export class FormFieldModel extends FormWidgetModel {
                     this.value = new Date();
                 }
 
-                let dateValue;
-                try {
-                    dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
-                } catch (e) {
-                    dateValue = new Date('error');
-                }
+                const dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
 
                 if (isValidDate(dateValue)) {
                     const datePart = DateFnsUtils.formatDate(dateValue, 'yyyy-MM-dd');
@@ -461,7 +456,7 @@ export class FormFieldModel extends FormWidgetModel {
                     this.value = new Date();
                 }
 
-                const dateTimeValue = this.value !== null ? DateFnsUtils.getDate(this.value) : null;
+                const dateTimeValue = this.value !== null ? new Date(this.value) : null;
 
                 if (isValidDate(dateTimeValue)) {
                     this.form.values[this.id] = dateTimeValue.toISOString();
