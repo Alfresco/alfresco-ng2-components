@@ -45,5 +45,6 @@ export * from './lib/security/index';
 export * from './lib/infinite-scroll-datasource';
 export * from './lib/prediction/index';
 export * from './lib/agent/index';
+export * from './lib/search-ai/index';
 
 export * from './lib/content.module';
