@@ -3,7 +3,7 @@
 }
 
 .adf-avatar__image {
-    cursor: default;
+    cursor: var(--adf-avatar-cursor, auto);
     display: inline-block;
     overflow: hidden;
     line-height: 1;

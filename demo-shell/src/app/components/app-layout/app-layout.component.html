@@ -23,8 +23,13 @@
                     src="https://avatars.githubusercontent.com/u/503991?v=4&size=64"
                     initials="DV"
                     tooltip="Denys Vuika"
-                    >
+                    cursor="pointer"
+                    [matMenuTriggerFor]="userMenu">
                 </adf-avatar>
+                <mat-menu #userMenu="matMenu">
+                    <button mat-menu-item>Item 1</button>
+                    <button mat-menu-item>Item 2</button>
+                </mat-menu>
             </adf-layout-header>
         </ng-template>
     </adf-sidenav-layout-header>

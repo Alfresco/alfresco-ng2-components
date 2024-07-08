@@ -39,4 +39,8 @@ export class AvatarComponent {
     @HostBinding('style.--adf-avatar-size')
     @Input()
     size = getComputedStyle(document.documentElement).getPropertyValue('--adf-avatar-size');
+
+    @HostBinding('style.--adf-avatar-cursor')
+    @Input()
+    cursor = getComputedStyle(document.documentElement).getPropertyValue('--adf-avatar-cursor');
 }
