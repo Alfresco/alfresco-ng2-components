@@ -16,6 +16,7 @@
  */
 
 export * from './lib/about/index';
+export * from './lib/avatar/avatar.component';
 export * from './lib/button/button.component';
 export * from './lib/viewer/index';
 export * from './lib/toolbar/index';
