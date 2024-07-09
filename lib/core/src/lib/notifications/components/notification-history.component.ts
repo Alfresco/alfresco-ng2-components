@@ -29,7 +29,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 
 @Component({
@@ -46,7 +45,6 @@ import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
         MatListModule,
         NgIf,
         NgForOf,
-        MatTooltipModule,
         TimeAgoPipe,
         InitialUsernamePipe
     ],

@@ -37,25 +37,56 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-    providers: [
-        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
-    ],
+    providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }],
     imports: [
-        MatAutocompleteModule, MatButtonModule, MatCardModule, MatDialogModule,
-        MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
-        MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
-        MatTabsModule, MatProgressSpinnerModule, MatNativeDateModule, MatRippleModule, MatTooltipModule,
-        MatChipsModule, MatMenuModule, MatExpansionModule
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatOptionModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTableModule,
+        MatTabsModule,
+        MatProgressSpinnerModule,
+        MatNativeDateModule,
+        MatRippleModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatExpansionModule
     ],
     exports: [
-        MatAutocompleteModule, MatButtonModule, MatCardModule, MatDialogModule,
-        MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
-        MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
-        MatTabsModule, MatProgressSpinnerModule, MatNativeDateModule, MatRippleModule, MatTooltipModule,
-        MatChipsModule, MatMenuModule, MatExpansionModule
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatOptionModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTableModule,
+        MatTabsModule,
+        MatProgressSpinnerModule,
+        MatNativeDateModule,
+        MatRippleModule,
+        MatChipsModule,
+        MatMenuModule,
+        MatExpansionModule
     ]
 })
 export class MaterialModule {}

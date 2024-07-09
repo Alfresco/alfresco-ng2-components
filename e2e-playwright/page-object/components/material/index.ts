@@ -16,4 +16,3 @@
  */
 
 export * from './error.component';
-export * from './validation.component';

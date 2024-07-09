@@ -22,7 +22,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -44,7 +43,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, NgIf, TranslateModule, MatInputModule, FormsModule, MatTooltipModule, ErrorWidgetComponent],
+    imports: [MatFormFieldModule, NgIf, TranslateModule, MatInputModule, FormsModule, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent {

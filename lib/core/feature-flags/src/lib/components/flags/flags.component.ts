@@ -34,7 +34,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlagsOverrideComponent } from '../feature-override-indicator.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
@@ -52,7 +51,6 @@ import { TranslateModule } from '@ngx-translate/core';
         MatIconModule,
         MatButtonModule,
         MatInputModule,
-        MatTooltipModule,
         MatDialogModule,
         TranslateModule
     ],

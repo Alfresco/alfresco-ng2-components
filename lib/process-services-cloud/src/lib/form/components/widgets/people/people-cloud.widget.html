@@ -17,9 +17,7 @@
                 [mode]="mode"
                 [groupsRestriction]="groupsRestriction"
                 (blur)="markAsTouched()"
-                [matTooltip]="field.tooltip"
-                matTooltipPosition="above"
-                matTooltipShowDelay="1000">
+                [attr.title]="field.tooltip">
             </adf-cloud-people>
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired() && isTouched()"

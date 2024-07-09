@@ -26,7 +26,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { contextMenuAnimation } from './animations';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'adf-context-menu',
@@ -37,7 +36,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         class: 'adf-context-menu'
     },
     encapsulation: ViewEncapsulation.None,
-    imports: [MatIconModule, MatMenuModule, MatTooltipModule, NgForOf, NgIf, TranslateModule],
+    imports: [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslateModule],
     animations: [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {

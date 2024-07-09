@@ -3,7 +3,7 @@
         <button
             mat-icon-button
             *ngFor="let report of reports; let idx = index"
-            [matTooltip]="report.title"
+            [title]="report.title"
             [color]="isCurrent(idx) ? 'primary' : null"
             (click)="selectCurrent(idx)"
         >

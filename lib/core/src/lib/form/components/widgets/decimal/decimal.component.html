@@ -24,10 +24,8 @@
                    (ngModelChange)="onFieldChanged(field)"
                    [disabled]="field.readOnly"
                    [placeholder]="field.placeholder"
-                   [matTooltip]="field.tooltip"
-                   (blur)="markAsTouched()"
-                   matTooltipPosition="above"
-                   [matTooltipShowDelay]="1000" />
+                   [title]="field.tooltip"
+                   (blur)="markAsTouched()" />
         </mat-form-field>
 
         <error-widget [error]="field.validationSummary"></error-widget>

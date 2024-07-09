@@ -67,7 +67,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     @Input()
     filter = (options: AutocompleteOption[], value: string): AutocompleteOption[] => {
         const filterValue = value.toLowerCase();
-        return options.filter(option => option.value.toLowerCase().includes(filterValue)).slice(0, 15);
+        return options.filter((option) => option.value.toLowerCase().includes(filterValue)).slice(0, 15);
     };
 
     @Output()
@@ -80,7 +80,6 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     formCtrl = new FormControl('');
     filteredOptions: AutocompleteOption[] = [];
     selectedOptions: AutocompleteOption[] = [];
-    tooltipShowDelay = 800;
     private onDestroy$ = new Subject<void>();
     private _activeAnyOption = false;
 
@@ -92,7 +91,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
         this.formCtrl.valueChanges
             .pipe(
                 startWith(''),
-                tap(() => this.activeAnyOption = false),
+                tap(() => (this.activeAnyOption = false)),
                 debounce((value: string) => (value ? timer(300) : EMPTY)),
                 takeUntil(this.onDestroy$)
             )
@@ -105,7 +104,10 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.autocompleteOptions) {
-            this.filteredOptions = changes.autocompleteOptions.currentValue?.length > 0 ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value) : [];
+            this.filteredOptions =
+                changes.autocompleteOptions.currentValue?.length > 0
+                    ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value)
+                    : [];
         }
     }
 
@@ -123,10 +125,10 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
 
             if (value && this.isExists(value) && !this.isAdded(value)) {
                 if (this.allowOnlyPredefinedValues) {
-                    const index = this.autocompleteOptions.findIndex(option => option.value.toLowerCase() === value.toLowerCase());
+                    const index = this.autocompleteOptions.findIndex((option) => option.value.toLowerCase() === value.toLowerCase());
                     this.selectedOptions.push(this.autocompleteOptions[index]);
                 } else {
-                    this.selectedOptions.push({value});
+                    this.selectedOptions.push({ value });
                 }
                 this.optionsChanged.emit(this.selectedOptions);
                 event.chipInput.clear();
@@ -153,14 +155,12 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
 
     private isAdded(value: string): boolean {
         const valueLowerCase = value.toLowerCase();
-        return this.selectedOptions.some(option => option.value.toLowerCase() === valueLowerCase);
+        return this.selectedOptions.some((option) => option.value.toLowerCase() === valueLowerCase);
     }
 
     private isExists(value: string): boolean {
         const valueLowerCase = value.toLowerCase();
-        return this.allowOnlyPredefinedValues
-            ? this.autocompleteOptions.some(option => option.value.toLowerCase() === valueLowerCase)
-            : true;
+        return this.allowOnlyPredefinedValues ? this.autocompleteOptions.some((option) => option.value.toLowerCase() === valueLowerCase) : true;
     }
 
     private reset() {

@@ -2,9 +2,7 @@
     <label class="adf-label" [attr.for]="field.id">
         {{ field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span>
     </label>
-    <div [matTooltip]="field.tooltip"
-         matTooltipPosition="above"
-         [matTooltipShowDelay]="1000">
+    <div [title]="field.tooltip">
         <a [href]="linkUrl" target="_blank" rel="nofollow">{{ linkText }}</a>
     </div>
 </div>

@@ -10,7 +10,7 @@
 
         <adf-toolbar class="adf-cloud-form-toolbar" *ngIf="displayMode === 'fullScreen' && findDisplayConfiguration('fullScreen')?.options?.displayToolbar">
             <div class="adf-cloud-form__form-title">
-                <span class="adf-cloud-form__display-name" [matTooltip]="form.taskName">
+                <span class="adf-cloud-form__display-name" [title]="form.taskName">
                     {{form.taskName}}
                     <ng-container *ngIf="!form.taskName">
                         {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
@@ -23,7 +23,7 @@
                         data-automation-id="adf-toolbar-right-back"
                         [attr.aria-label]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                         [attr.data-automation-id]="'adf-cloud-form-close-button'"
-                        [matTooltip]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
+                        [title]="'ADF_VIEWER.ACTIONS.CLOSE' | translate"
                         mat-icon-button
                         title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}"
                         (click)="switchToDisplayMode()">
@@ -48,12 +48,12 @@
                                 <mat-icon>fullscreen</mat-icon>
                             </button>
                         </div>
-                        <div *ngIf="showRefreshButton" class="adf-cloud-form-reload-button" [matTooltip]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
+                        <div *ngIf="showRefreshButton" class="adf-cloud-form-reload-button" [title]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
                             <button mat-icon-button (click)="onRefreshClicked()" [attr.aria-label]="'ADF_VIEWER.ACTIONS.FULLSCREEN' | translate">
                                 <mat-icon>refresh</mat-icon>
                             </button>
                         </div>
-                        <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title" [matTooltip]="form.taskName">
+                        <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title" [title]="form.taskName">
                             {{form.taskName}}
                             <ng-container *ngIf="!form.taskName">
                                 {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}

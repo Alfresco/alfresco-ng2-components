@@ -33,12 +33,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'attach-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, MatTooltipModule, ErrorWidgetComponent],
+    imports: [CommonModule, TranslateModule, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],
     host: {

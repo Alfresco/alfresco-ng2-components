@@ -23,10 +23,8 @@
                    [disabled]="field.readOnly || readOnly"
                    [textMask]="{mask: mask, isReversed: isMaskReversed}"
                    [placeholder]="placeholder"
-                   [matTooltip]="field.tooltip"
-                   (blur)="markAsTouched()"
-                   matTooltipPosition="above"
-                   [matTooltipShowDelay]="1000">
+                   [title]="field.tooltip"
+                   (blur)="markAsTouched()">
         </mat-form-field>
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
