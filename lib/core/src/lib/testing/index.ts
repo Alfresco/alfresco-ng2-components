@@ -17,4 +17,3 @@
 
 export * from './setup-test-bed';
 export * from './core.testing.module';
-export * from './automation.service';
