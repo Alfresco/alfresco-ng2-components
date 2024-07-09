@@ -80,7 +80,6 @@ export class SettingsPage {
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
-        await this.clickSignInSSO();
     }
 
     async setProviderEcmSsoWithoutCodeFlow(
