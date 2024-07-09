@@ -16,19 +16,12 @@
  */
 
 import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-    FormModel,
-    FormFieldModel,
-    FormService,
-    FormOutcomeEvent,
-    NotificationService,
-    CoreAutomationService,
-    FormRenderingService
-} from '@alfresco/adf-core';
+import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService, FormRenderingService } from '@alfresco/adf-core';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CoreAutomationService } from '../../../testing/automation.service';
 
 @Component({
     selector: 'app-form',

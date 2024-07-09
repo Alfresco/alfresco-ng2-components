@@ -16,18 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../app-config/app-config.service';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { StorageService } from '../common/services/storage.service';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
-import { DemoForm } from '../mock/form/demo-form.mock';
-import { AuthenticationService } from '../auth/services/authentication.service';
+import { AppConfigService, AlfrescoApiService, StorageService, UserPreferencesService, AuthenticationService } from '@alfresco/adf-core';
+import { DemoForm } from './demo-form.mock';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CoreAutomationService {
-
     public forms = new DemoForm();
 
     constructor(
@@ -36,8 +31,7 @@ export class CoreAutomationService {
         private userPreferencesService: UserPreferencesService,
         private storageService: StorageService,
         private auth: AuthenticationService
-    ) {
-    }
+    ) {}
 
     setup() {
         const adfProxy = window['adf'] || {};
