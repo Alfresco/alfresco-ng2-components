@@ -17,10 +17,11 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../../material.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
@@ -29,7 +30,7 @@ describe('SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, SidebarActionMenuComponent]
         });
         fixture = TestBed.createComponent(SidebarActionMenuComponent);
         element = fixture.nativeElement;
@@ -51,6 +52,8 @@ describe('SidebarActionMenuComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [CommonModule, SidebarActionMenuComponent, MatIconModule, MatMenuModule],
     template: `
         <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
             <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
@@ -82,8 +85,7 @@ describe('Custom SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SidebarActionMenuComponent, CustomSidebarActionMenuComponent],
-            imports: [MaterialModule, NoopAnimationsModule]
+            imports: [CoreTestingModule, SidebarActionMenuComponent, CustomSidebarActionMenuComponent]
         });
         fixture = TestBed.createComponent(CustomSidebarActionMenuComponent);
         fixture.detectChanges();

@@ -16,9 +16,14 @@
  */
 
 import { ChangeDetectionStrategy, Component, Directive, Input, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-sidebar-action-menu',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule, MatMenuModule],
     templateUrl: './sidebar-action-menu.component.html',
     styleUrls: ['./sidebar-action-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
