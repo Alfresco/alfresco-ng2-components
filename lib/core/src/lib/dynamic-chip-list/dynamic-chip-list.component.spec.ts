@@ -182,7 +182,7 @@ describe('DynamicChipListComponent', () => {
             element.style.maxWidth = '309px';
         });
 
-        afterEach(() =>{
+        afterEach(() => {
             fixture.destroy();
         });
 

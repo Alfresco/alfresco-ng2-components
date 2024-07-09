@@ -87,7 +87,9 @@ describe('TaskListCloudService', () => {
         const taskRequest = { appName: null } as TaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallUrl);
         service.getTaskByRequest(taskRequest).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('Appname not configured');
                 done();

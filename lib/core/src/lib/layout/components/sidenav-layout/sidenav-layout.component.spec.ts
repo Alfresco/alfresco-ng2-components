@@ -71,7 +71,9 @@ describe('SidenavLayoutComponent', () => {
             addListener(mediaFn) {
                 this.mediaFn = mediaFn;
             },
-            removeListener: () => {}
+            removeListener: () => {
+                /* noop */
+            }
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);

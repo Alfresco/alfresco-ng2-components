@@ -152,7 +152,9 @@ describe('ProcessService', () => {
             startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(mockError));
 
             service.startProcess(processDefId, processName).subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (res) => {
                     expect(res).toBe(mockError);
                     done();
@@ -163,7 +165,9 @@ describe('ProcessService', () => {
         it('should return a default error if no data is returned by the API', (done) => {
             startNewProcessInstance = startNewProcessInstance.and.returnValue(Promise.reject(new Error('Server error')));
             service.startProcess(processDefId, processName).subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (err) => {
                     expect(err.message).toBe('Server error');
                     done();
@@ -193,7 +197,9 @@ describe('ProcessService', () => {
         it('should pass on any error that is returned by the API', (done) => {
             deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(mockError));
             service.cancelProcess(null).subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (res) => {
                     expect(res).toBe(mockError);
                     done();
@@ -204,7 +210,9 @@ describe('ProcessService', () => {
         it('should return a default error if no data is returned by the API', (done) => {
             deleteProcessInstance = deleteProcessInstance.and.returnValue(Promise.reject(new Error('Server error')));
             service.cancelProcess(null).subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (err) => {
                     expect(err.message).toBe('Server error');
                     done();
@@ -250,7 +258,9 @@ describe('ProcessService', () => {
         it('should pass on any error that is returned by the API', (done) => {
             getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(mockError));
             service.getProcessDefinitions().subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (res) => {
                     expect(res).toBe(mockError);
                     done();
@@ -261,7 +271,9 @@ describe('ProcessService', () => {
         it('should return a default error if no data is returned by the API', (done) => {
             getProcessDefinitions = getProcessDefinitions.and.returnValue(Promise.reject(new Error('Server error')));
             service.getProcessDefinitions().subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (err) => {
                     expect(err.message).toBe('Server error');
                     done();
@@ -319,7 +331,9 @@ describe('ProcessService', () => {
         it('should pass on any error that is returned by the API', (done) => {
             listTasks = listTasks.and.returnValue(Promise.reject(mockError));
             service.getProcessTasks(processId).subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (res) => {
                     expect(res).toBe(mockError);
                     done();
@@ -330,7 +344,9 @@ describe('ProcessService', () => {
         it('should return a default error if no data is returned by the API', (done) => {
             listTasks = listTasks.and.returnValue(Promise.reject(new Error('Server error')));
             service.getProcessTasks(processId).subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (err) => {
                     expect(err.message).toBe('Server error');
                     done();
@@ -377,7 +393,9 @@ describe('ProcessService', () => {
             it('should pass on any error that is returned by the API', (done) => {
                 getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(mockError));
                 service.getProcessInstanceVariables(null).subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -388,7 +406,9 @@ describe('ProcessService', () => {
             it('should return a default error if no data is returned by the API', (done) => {
                 getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(new Error('Server error')));
                 service.getProcessInstanceVariables(null).subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (err) => {
                         expect(err.message).toBe('Server error');
                         done();
@@ -417,7 +437,9 @@ describe('ProcessService', () => {
             it('should pass on any error that is returned by the API', (done) => {
                 createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(mockError));
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (err) => {
                         expect(err).toBe(mockError);
                         done();
@@ -430,7 +452,9 @@ describe('ProcessService', () => {
                     Promise.reject(new Error('Server error'))
                 );
                 service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (err) => {
                         expect(err.message).toBe('Server error');
                         done();
@@ -443,7 +467,9 @@ describe('ProcessService', () => {
             it('should pass on any error that is returned by the API', (done) => {
                 deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(mockError));
                 service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -454,7 +480,9 @@ describe('ProcessService', () => {
             it('should return a default error if no data is returned by the API', (done) => {
                 deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(new Error('Server error')));
                 service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (err) => {
                         expect(err.message).toBe('Server error');
                         done();

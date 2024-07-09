@@ -32,7 +32,9 @@ class TestComponent {
     allowClear = true;
     searchFilter = {
         selectedBuckets: [],
-        unselectFacetBucket: () => {}
+        unselectFacetBucket: () => {
+            /*noop*/
+        }
     };
 }
 

@@ -27,7 +27,6 @@ import { Subject } from 'rxjs';
     encapsulation: ViewEncapsulation.None
 })
 export class IdentityUserInfoComponent implements OnDestroy {
-
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     /** Is the user logged in */

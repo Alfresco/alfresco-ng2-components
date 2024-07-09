@@ -54,7 +54,7 @@ export class DemoForm {
                     col: -1,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 fieldType: 'RestFieldRepresentation',
                                 id: 'label',
@@ -419,8 +419,8 @@ export class DemoForm {
                     visibilityCondition: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [],
-                        2: []
+                        '1': [],
+                        '2': []
                     }
                 },
                 {
@@ -461,7 +461,7 @@ export class DemoForm {
                     visibilityCondition: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 fieldType: 'FormFieldRepresentation',
                                 id: 'label8',
@@ -627,7 +627,7 @@ export class DemoForm {
                                 visibilityCondition: null
                             }
                         ],
-                        2: [
+                        '2': [
                             {
                                 fieldType: 'HyperlinkRepresentation',
                                 id: 'label15',
@@ -887,7 +887,7 @@ export class DemoForm {
                     visibilityCondition: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 fieldType: 'FormFieldRepresentation',
                                 id: 'label1',
@@ -971,7 +971,7 @@ export class DemoForm {
                                 visibilityCondition: null
                             }
                         ],
-                        2: [
+                        '2': [
                             {
                                 fieldType: 'FormFieldRepresentation',
                                 id: 'label2',
@@ -1054,7 +1054,7 @@ export class DemoForm {
                     visibilityCondition: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 fieldType: 'FormFieldRepresentation',
                                 id: 'label4',
@@ -1138,7 +1138,7 @@ export class DemoForm {
                                 visibilityCondition: null
                             }
                         ],
-                        2: [
+                        '2': [
                             {
                                 fieldType: 'FormFieldRepresentation',
                                 id: 'label5',
@@ -1305,7 +1305,7 @@ export class DemoForm {
                     visibilityCondition: null,
                     numberOfColumns: 2,
                     fields: {
-                        1: [
+                        '1': [
                             {
                                 fieldType: 'RestFieldRepresentation',
                                 id: 'label9',
@@ -1407,7 +1407,7 @@ export class DemoForm {
                                 requestHeaders: null
                             }
                         ],
-                        2: [
+                        '2': [
                             {
                                 fieldType: 'RestFieldRepresentation',
                                 id: 'label10',
@@ -1534,7 +1534,7 @@ export class DemoForm {
                         visibilityCondition: null,
                         numberOfColumns: 2,
                         fields: {
-                            1: [
+                            '1': [
                                 {
                                     fieldType: 'RestFieldRepresentation',
                                     id: 'typeaheadField',
@@ -1579,7 +1579,7 @@ export class DemoForm {
                                     requestHeaders: null
                                 }
                             ],
-                            2: [
+                            '2': [
                                 {
                                     fieldType: 'RestFieldRepresentation',
                                     id: 'radioButton',
@@ -1673,7 +1673,7 @@ export class DemoForm {
                         visibilityCondition: null,
                         numberOfColumns: 2,
                         fields: {
-                            1: [
+                            '1': [
                                 {
                                     fieldType: 'RestFieldRepresentation',
                                     id: 'selectBox',
@@ -1735,7 +1735,7 @@ export class DemoForm {
                                     requestHeaders: null
                                 }
                             ],
-                            2: []
+                            '2': []
                         }
                     }
                 ],
@@ -1787,7 +1787,7 @@ export class DemoForm {
                         tab: null,
                         numberOfColumns: 2,
                         fields: {
-                            1: [
+                            '1': [
                                 {
                                     fieldType: 'FormFieldRepresentation',
                                     id: 'texttest',
@@ -1805,7 +1805,7 @@ export class DemoForm {
                                     }
                                 }
                             ],
-                            2: [
+                            '2': [
                                 {
                                     fieldType: 'AttachFileFieldRepresentation',
                                     id: 'attachfiletest',
@@ -1837,7 +1837,7 @@ export class DemoForm {
                         tab: null,
                         numberOfColumns: 2,
                         fields: {
-                            1: [
+                            '1': [
                                 {
                                     id: 'DisplayRichtext06jsjb',
                                     name: 'Display Rich text',
@@ -1910,7 +1910,7 @@ export class DemoForm {
                                     }
                                 }
                             ],
-                            2: []
+                            '2': []
                         }
                     }
                 ],

@@ -27,48 +27,13 @@ export const formModelTabs: any = {
         stencilSetId: null,
         referenceId: null,
         formDefinition: {
-          tabs: [],
-          fields: [
-            {
-              fieldType: 'ContainerRepresentation',
-              id: '1507037668653',
-              name: 'Label',
-              type: 'container',
-              value: null,
-              required: false,
-              readOnly: false,
-              overrideId: false,
-              colspan: 1,
-              placeholder: null,
-              minLength: 0,
-              maxLength: 0,
-              minValue: null,
-              maxValue: null,
-              regexPattern: null,
-              optionType: null,
-              hasEmptyValue: null,
-              options: null,
-              restUrl: null,
-              restResponsePath: null,
-              restIdProperty: null,
-              restLabelProperty: null,
-              tab: null,
-              className: null,
-              dateDisplayFormat: null,
-              layout: null,
-              sizeX: 2,
-              sizeY: 1,
-              row: -1,
-              col: -1,
-              visibilityCondition: null,
-              numberOfColumns: 2,
-              fields: {
-                1: [
-                  {
-                    fieldType: 'AmountFieldRepresentation',
-                    id: 'label',
+            tabs: [],
+            fields: [
+                {
+                    fieldType: 'ContainerRepresentation',
+                    id: '1507037668653',
                     name: 'Label',
-                    type: 'amount',
+                    type: 'container',
                     value: null,
                     required: false,
                     readOnly: false,
@@ -89,31 +54,110 @@ export const formModelTabs: any = {
                     restLabelProperty: null,
                     tab: null,
                     className: null,
-                    params: {
-                      existingColspan: 1,
-                      maxColspan: 2
-                    },
                     dateDisplayFormat: null,
-                    layout: {
-                      row: -1,
-                      column: -1,
-                      colspan: 1
-                    },
-                    sizeX: 1,
+                    layout: null,
+                    sizeX: 2,
                     sizeY: 1,
                     row: -1,
                     col: -1,
                     visibilityCondition: null,
-                    enableFractions: false,
-                    currency: null
-                  }
-                ],
-                2: [
-                  {
-                    fieldType: 'FormFieldRepresentation',
-                    id: 'label1',
-                    name: 'Label1',
-                    type: 'date',
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                fieldType: 'AmountFieldRepresentation',
+                                id: 'label',
+                                name: 'Label',
+                                type: 'amount',
+                                value: null,
+                                required: false,
+                                readOnly: false,
+                                overrideId: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                minValue: null,
+                                maxValue: null,
+                                regexPattern: null,
+                                optionType: null,
+                                hasEmptyValue: null,
+                                options: null,
+                                restUrl: null,
+                                restResponsePath: null,
+                                restIdProperty: null,
+                                restLabelProperty: null,
+                                tab: null,
+                                className: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                },
+                                dateDisplayFormat: null,
+                                layout: {
+                                    row: -1,
+                                    column: -1,
+                                    colspan: 1
+                                },
+                                sizeX: 1,
+                                sizeY: 1,
+                                row: -1,
+                                col: -1,
+                                visibilityCondition: null,
+                                enableFractions: false,
+                                currency: null
+                            }
+                        ],
+                        '2': [
+                            {
+                                fieldType: 'FormFieldRepresentation',
+                                id: 'label1',
+                                name: 'Label1',
+                                type: 'date',
+                                value: null,
+                                required: false,
+                                readOnly: false,
+                                overrideId: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                minValue: null,
+                                maxValue: null,
+                                regexPattern: null,
+                                optionType: null,
+                                hasEmptyValue: null,
+                                options: null,
+                                restUrl: null,
+                                restResponsePath: null,
+                                restIdProperty: null,
+                                restLabelProperty: null,
+                                tab: null,
+                                className: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 1
+                                },
+                                dateDisplayFormat: null,
+                                layout: {
+                                    row: -1,
+                                    column: -1,
+                                    colspan: 1
+                                },
+                                sizeX: 1,
+                                sizeY: 1,
+                                row: -1,
+                                col: -1,
+                                visibilityCondition: null
+                            }
+                        ]
+                    }
+                },
+                {
+                    fieldType: 'ContainerRepresentation',
+                    id: '1507037670167',
+                    name: 'Label',
+                    type: 'container',
                     value: null,
                     required: false,
                     readOnly: false,
@@ -134,115 +178,71 @@ export const formModelTabs: any = {
                     restLabelProperty: null,
                     tab: null,
                     className: null,
-                    params: {
-                      existingColspan: 1,
-                      maxColspan: 1
-                    },
                     dateDisplayFormat: null,
-                    layout: {
-                      row: -1,
-                      column: -1,
-                      colspan: 1
-                    },
-                    sizeX: 1,
+                    layout: null,
+                    sizeX: 2,
                     sizeY: 1,
                     row: -1,
                     col: -1,
-                    visibilityCondition: null
-                  }
-                ]
-              }
-            },
-            {
-              fieldType: 'ContainerRepresentation',
-              id: '1507037670167',
-              name: 'Label',
-              type: 'container',
-              value: null,
-              required: false,
-              readOnly: false,
-              overrideId: false,
-              colspan: 1,
-              placeholder: null,
-              minLength: 0,
-              maxLength: 0,
-              minValue: null,
-              maxValue: null,
-              regexPattern: null,
-              optionType: null,
-              hasEmptyValue: null,
-              options: null,
-              restUrl: null,
-              restResponsePath: null,
-              restIdProperty: null,
-              restLabelProperty: null,
-              tab: null,
-              className: null,
-              dateDisplayFormat: null,
-              layout: null,
-              sizeX: 2,
-              sizeY: 1,
-              row: -1,
-              col: -1,
-              visibilityCondition: null,
-              numberOfColumns: 2,
-              fields: {
-                1: [
-                  {
-                    fieldType: 'FormFieldRepresentation',
-                    id: 'label2',
-                    name: 'Label2',
-                    type: 'boolean',
-                    value: null,
-                    required: false,
-                    readOnly: false,
-                    overrideId: false,
-                    colspan: 1,
-                    placeholder: null,
-                    minLength: 0,
-                    maxLength: 0,
-                    minValue: null,
-                    maxValue: null,
-                    regexPattern: null,
-                    optionType: null,
-                    hasEmptyValue: null,
-                    options: null,
-                    restUrl: null,
-                    restResponsePath: null,
-                    restIdProperty: null,
-                    restLabelProperty: null,
-                    tab: null,
-                    className: null,
-                    params: {
-                      existingColspan: 1,
-                      maxColspan: 2
-                    },
-                    dateDisplayFormat: null,
-                    layout: {
-                      row: -1,
-                      column: -1,
-                      colspan: 1
-                    },
-                    sizeX: 1,
-                    sizeY: 1,
-                    row: -1,
-                    col: -1,
-                    visibilityCondition: null
-                  }
-                ],
-                2: []
-              }
-            }
-          ],
-          outcomes: [],
-          javascriptEvents: [],
-          className: '',
-          style: '',
-          customFieldTemplates: {},
-          metadata: {},
-          variables: [],
-          customFieldsValueInfo: {},
-          gridsterForm: false
+                    visibilityCondition: null,
+                    numberOfColumns: 2,
+                    fields: {
+                        '1': [
+                            {
+                                fieldType: 'FormFieldRepresentation',
+                                id: 'label2',
+                                name: 'Label2',
+                                type: 'boolean',
+                                value: null,
+                                required: false,
+                                readOnly: false,
+                                overrideId: false,
+                                colspan: 1,
+                                placeholder: null,
+                                minLength: 0,
+                                maxLength: 0,
+                                minValue: null,
+                                maxValue: null,
+                                regexPattern: null,
+                                optionType: null,
+                                hasEmptyValue: null,
+                                options: null,
+                                restUrl: null,
+                                restResponsePath: null,
+                                restIdProperty: null,
+                                restLabelProperty: null,
+                                tab: null,
+                                className: null,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                },
+                                dateDisplayFormat: null,
+                                layout: {
+                                    row: -1,
+                                    column: -1,
+                                    colspan: 1
+                                },
+                                sizeX: 1,
+                                sizeY: 1,
+                                row: -1,
+                                col: -1,
+                                visibilityCondition: null
+                            }
+                        ],
+                        '2': []
+                    }
+                }
+            ],
+            outcomes: [],
+            javascriptEvents: [],
+            className: '',
+            style: '',
+            customFieldTemplates: {},
+            metadata: {},
+            variables: [],
+            customFieldsValueInfo: {},
+            gridsterForm: false
         }
     }
-  };
+};

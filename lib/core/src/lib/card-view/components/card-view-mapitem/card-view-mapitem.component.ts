@@ -24,7 +24,6 @@ import { BaseCardView } from '../base-card-view';
     templateUrl: './card-view-mapitem.component.html',
     styleUrls: ['./card-view-mapitem.component.scss']
 })
-
 export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel> {
     @Input()
     displayEmpty: boolean = true;

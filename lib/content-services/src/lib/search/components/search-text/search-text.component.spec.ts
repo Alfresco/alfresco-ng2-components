@@ -43,7 +43,9 @@ describe('SearchTextComponent', () => {
 
         component.context = {
             queryFragments: {},
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         } as any;
 
         loader = TestbedHarnessEnvironment.loader(fixture);

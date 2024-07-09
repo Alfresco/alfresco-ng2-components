@@ -94,7 +94,9 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     _isMenuMinimized;
 
     templateContext = {
-        toggleMenu: () => {},
+        toggleMenu: () => {
+            /* noop */
+        },
         isMenuMinimized: () => this.isMenuMinimized
     };
 

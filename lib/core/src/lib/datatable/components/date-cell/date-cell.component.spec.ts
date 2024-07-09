@@ -62,11 +62,7 @@ const checkDisplayedTooltip = (expectedTooltip: string) => {
 
 const configureTestingModule = (providers: any[]) => {
     TestBed.configureTestingModule({
-        imports: [
-            DateCellComponent,
-            HttpClientTestingModule,
-            TranslateModule.forRoot()
-        ],
+        imports: [DateCellComponent, HttpClientTestingModule, TranslateModule.forRoot()],
         providers
     });
     fixture = TestBed.createComponent(DateCellComponent);

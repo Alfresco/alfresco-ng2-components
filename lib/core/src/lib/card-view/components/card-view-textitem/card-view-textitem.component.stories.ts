@@ -43,8 +43,7 @@ export default {
         },
         displayEmpty: {
             control: 'boolean',
-            description:
-                'Defines if it should display CardView item when data is empty',
+            description: 'Defines if it should display CardView item when data is empty',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'true' }
@@ -90,7 +89,6 @@ export default {
         useChipsForMultiValueProperty: true,
         multiValueSeparator: ', ',
         displayLabelForChips: false
-
     }
 } as Meta<CardViewTextItemComponent>;
 

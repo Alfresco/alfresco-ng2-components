@@ -96,7 +96,9 @@ describe('ContentAction', () => {
     });
 
     it('should get action handler from document actions service', () => {
-        const handler = () => {};
+        const handler = () => {
+            /*noop*/
+        };
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
 
         const action = new ContentActionComponent(actionList, documentActions, null);
@@ -112,7 +114,9 @@ describe('ContentAction', () => {
     });
 
     it('should get action handler from folder actions service', () => {
-        const handler = () => {};
+        const handler = () => {
+            /*noop*/
+        };
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
 
         const action = new ContentActionComponent(actionList, null, folderActions);
@@ -220,14 +224,18 @@ describe('ContentAction', () => {
     });
 
     it('should find document action handler via service', () => {
-        const handler = () => {};
+        const handler = () => {
+            /*noop*/
+        };
         const action = new ContentActionComponent(actionList, documentActions, null);
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
         expect(action.getSystemHandler('document', 'name')).toBe(handler);
     });
 
     it('should find folder action handler via service', () => {
-        const handler = () => {};
+        const handler = () => {
+            /*noop*/
+        };
         const action = new ContentActionComponent(actionList, null, folderActions);
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
         expect(action.getSystemHandler('folder', 'name')).toBe(handler);

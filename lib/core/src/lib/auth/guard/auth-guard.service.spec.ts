@@ -50,7 +50,9 @@ describe('AuthGuardService', () => {
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
-                        ssoLogin: () => {},
+                        ssoLogin: () => {
+                            /*noop*/
+                        },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false
                     }

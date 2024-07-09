@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatIconHarness } from '@angular/material/icon/testing';
-import {MatSnackBarHarness} from '@angular/material/snack-bar/testing';
+import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslationMock } from '../../mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -96,8 +96,7 @@ describe('NotificationService', () => {
         TestBed.configureTestingModule({
             imports: [TranslateModule.forRoot(), NoopAnimationsModule, HttpClientModule, MatSnackBarModule],
             declarations: [ProvidesNotificationServiceComponent],
-            providers:[
-            { provide: TranslationService, useClass: TranslationMock }]
+            providers: [{ provide: TranslationService, useClass: TranslationMock }]
         });
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);

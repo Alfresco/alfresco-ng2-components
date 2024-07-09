@@ -43,7 +43,7 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
         { provide: OAuthStorage, useExisting: StorageService },
-        { provide: AuthenticationService},
+        { provide: AuthenticationService },
         { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
         {
             provide: AUTH_CONFIG,

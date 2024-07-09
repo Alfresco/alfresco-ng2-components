@@ -135,7 +135,9 @@ describe('PeopleContentService', () => {
     it('should be able to throw an error if createPerson api failed', (done) => {
         spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.reject(new Error('failed to create new person')));
         peopleContentService.createPerson(createNewPersonMock).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error: Error) => {
                 expect(error.message).toEqual('failed to create new person');
                 done();

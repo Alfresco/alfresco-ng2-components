@@ -22,9 +22,7 @@ import { StorageService } from '../common/services/storage.service';
 
 @Injectable()
 export class AlfrescoApiServiceMock extends AlfrescoApiService {
-
-    constructor(protected appConfig: AppConfigService,
-                protected storageService: StorageService) {
+    constructor(protected appConfig: AppConfigService, protected storageService: StorageService) {
         super(appConfig, storageService);
         if (!this.alfrescoApi) {
             this.initAlfrescoApi();

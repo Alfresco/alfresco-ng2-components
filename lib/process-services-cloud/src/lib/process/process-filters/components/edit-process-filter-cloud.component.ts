@@ -499,7 +499,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 }),
                 switchMap(() => this.restoreDefaultProcessFilters())
             )
-            .subscribe(() => {});
+            .subscribe(() => {
+                /*noop*/
+            });
     }
 
     /**
@@ -545,7 +547,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 }),
                 switchMap(() => this.restoreDefaultProcessFilters())
             )
-            .subscribe(() => {});
+            .subscribe(() => {
+                /*noop*/
+            });
     }
 
     /**

@@ -71,13 +71,10 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     getList(): Observable<CardViewSelectItemOption<string | number>[]> {
-        return combineLatest([this.getOptions(), this.filter$])
-            .pipe(
-                map(([items, filter]) => items.filter((item) =>
-                    filter ? item.label.toLowerCase().includes(filter.toLowerCase())
-                        : true)),
-                takeUntil(this.destroy$)
-            );
+        return combineLatest([this.getOptions(), this.filter$]).pipe(
+            map(([items, filter]) => items.filter((item) => (filter ? item.label.toLowerCase().includes(filter.toLowerCase()) : true))),
+            takeUntil(this.destroy$)
+        );
     }
 
     onChange(event: MatSelectChange): void {

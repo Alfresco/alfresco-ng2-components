@@ -37,11 +37,7 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
         redirectUri: '/',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSubfolderRedirectUri: OauthConfigModel = {
@@ -54,11 +50,7 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/subfolder/assets/silent-refresh.html',
         redirectUri: '/subfolder',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSubfolder2RedirectUri: OauthConfigModel = {
@@ -71,11 +63,7 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
         redirectUri: '/subfolder2',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSlashRedirectUri: OauthConfigModel = {
@@ -88,11 +76,7 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
         redirectUri: '/',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigCodeFlow = {
@@ -106,19 +90,13 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
         redirectUri: '/',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [
-                { provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }
-            ]
+            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }]
         });
         service = TestBed.inject(AuthConfigService);
         spyOn<any>(service, 'getLocationOrigin').and.returnValue('http://localhost:3000');

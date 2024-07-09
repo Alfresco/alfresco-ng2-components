@@ -19,7 +19,6 @@ import { SearchNumberRangeComponent } from './search-number-range.component';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 describe('SearchNumberRangeComponent', () => {
-
     let component: SearchNumberRangeComponent;
 
     beforeEach(() => {
@@ -48,7 +47,9 @@ describe('SearchNumberRangeComponent', () => {
             queryFragments: {
                 contentSize: 'query'
             },
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         };
 
         component.id = 'contentSize';
@@ -66,7 +67,9 @@ describe('SearchNumberRangeComponent', () => {
     it('should update query builder on value changes', () => {
         const context: any = {
             queryFragments: {},
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         };
 
         component.id = 'contentSize';
@@ -76,10 +79,13 @@ describe('SearchNumberRangeComponent', () => {
         spyOn(context, 'update').and.stub();
 
         component.ngOnInit();
-        component.apply({
-            from: '10',
-            to: '20'
-        }, true);
+        component.apply(
+            {
+                from: '10',
+                to: '20'
+            },
+            true
+        );
 
         const expectedQuery = 'cm:content.size:[10 TO 20]';
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
@@ -110,7 +116,9 @@ describe('SearchNumberRangeComponent', () => {
     it('should format value based on the current pattern', () => {
         const context: any = {
             queryFragments: {},
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         };
 
         component.id = 'range1';
@@ -129,10 +137,13 @@ describe('SearchNumberRangeComponent', () => {
         component.ngOnInit();
         component.from = new UntypedFormControl('10');
         component.to = new UntypedFormControl('20');
-        component.form = new UntypedFormGroup({
-            from: component.from,
-            to: component.to
-        }, component.formValidator);
+        component.form = new UntypedFormGroup(
+            {
+                from: component.from,
+                to: component.to
+            },
+            component.formValidator
+        );
 
         expect(component.formValidator).toBeTruthy();
     });

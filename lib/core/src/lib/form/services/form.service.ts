@@ -56,7 +56,9 @@ export class FormService implements FormValidationService {
 
     formRulesEvent = new Subject<FormRulesEvent>();
 
-    constructor() {}
+    constructor() {
+        /* noop */
+    }
 
     /**
      * Parses JSON data to create a corresponding Form model.

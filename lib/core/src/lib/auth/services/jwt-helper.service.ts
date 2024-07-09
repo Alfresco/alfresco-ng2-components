@@ -22,7 +22,6 @@ import { StorageService } from '../../common/services/storage.service';
     providedIn: 'root'
 })
 export class JwtHelperService {
-
     static USER_NAME = 'name';
     static FAMILY_NAME = 'family_name';
     static GIVEN_NAME = 'given_name';
@@ -34,8 +33,7 @@ export class JwtHelperService {
     static USER_PREFERRED_USERNAME = 'preferred_username';
     static HXP_AUTHORIZATION = 'hxp_authorization';
 
-    constructor(private storageService: StorageService) {
-    }
+    constructor(private storageService: StorageService) {}
 
     /**
      * Decodes a JSON web token into a JS object.
@@ -85,7 +83,7 @@ export class JwtHelperService {
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
-     getValueFromLocalToken<T>(key: string): T {
+    getValueFromLocalToken<T>(key: string): T {
         return this.getValueFromToken(this.getAccessToken(), key) || this.getValueFromToken(this.getIdToken(), key);
     }
 
@@ -114,7 +112,7 @@ export class JwtHelperService {
      * @param key Key name of the field to retrieve
      * @returns Value from the token
      */
-     getValueFromLocalIdToken<T>(key: string): T {
+    getValueFromLocalIdToken<T>(key: string): T {
         return this.getValueFromToken(this.getIdToken(), key);
     }
 
@@ -123,7 +121,7 @@ export class JwtHelperService {
      *
      * @returns id token
      */
-     getIdToken(): string {
+    getIdToken(): string {
         return this.storageService.getItem(JwtHelperService.USER_ID_TOKEN);
     }
 
@@ -186,7 +184,7 @@ export class JwtHelperService {
      * @param rolesToCheck List of role names to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
-    hasRealmRoles(rolesToCheck: string []): boolean {
+    hasRealmRoles(rolesToCheck: string[]): boolean {
         return rolesToCheck.some((currentRole) => this.hasRealmRole(currentRole));
     }
 
@@ -197,7 +195,7 @@ export class JwtHelperService {
      * @param rolesToCheck List of role names to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
-    hasRealmRolesForClientRole(clientName: string, rolesToCheck: string []): boolean {
+    hasRealmRolesForClientRole(clientName: string, rolesToCheck: string[]): boolean {
         return rolesToCheck.some((currentRole) => this.hasClientRole(clientName, currentRole));
     }
 

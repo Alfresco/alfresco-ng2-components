@@ -38,7 +38,6 @@ export interface TicketEntry {
     providedIn: 'root'
 })
 export class ContentAuth {
-
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
     onError = new Subject<any>();
@@ -60,9 +59,7 @@ export class ContentAuth {
         return this.appConfigService.get<string>(AppConfigValues.ECMHOST) + '/' + contextRootEcm + '/api/-default-/public/authentication/versions/1';
     }
 
-    constructor(private appConfigService: AppConfigService,
-                private adfHttpClient: AdfHttpClient,
-                private storageService: StorageService) {
+    constructor(private appConfigService: AppConfigService, private adfHttpClient: AdfHttpClient, private storageService: StorageService) {
         this.appConfigService.onLoad.subscribe(() => {
             this.setConfig();
         });
@@ -72,7 +69,6 @@ export class ContentAuth {
         if (this.storageService.getItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL)) {
             this.setTicket(this.storageService.getItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL));
         }
-
     }
 
     saveUsername(username: string) {
@@ -148,7 +144,8 @@ export class ContentAuth {
                     this.adfHttpClient.emit('error');
                     this.onError.next('error');
                     reject(error);
-                });
+                }
+            );
         });
     }
 
@@ -200,12 +197,12 @@ export class ContentAuth {
 
     createTicket(ticketBodyCreate: TicketBody): Promise<TicketEntry> {
         if (ticketBodyCreate === null || ticketBodyCreate === undefined) {
-            this.onError.next((`Missing param ticketBodyCreate`));
+            this.onError.next(`Missing param ticketBodyCreate`);
 
             throw new Error(`Missing param ticketBodyCreate`);
         }
 
-        return this.adfHttpClient.post(this.basePath + '/tickets', {bodyParam: ticketBodyCreate});
+        return this.adfHttpClient.post(this.basePath + '/tickets', { bodyParam: ticketBodyCreate });
     }
 
     async requireAlfTicket(): Promise<void> {
@@ -216,5 +213,4 @@ export class ContentAuth {
     deleteTicket(): Promise<any> {
         return this.adfHttpClient.delete(this.basePath + '/tickets/-me-');
     }
-
 }

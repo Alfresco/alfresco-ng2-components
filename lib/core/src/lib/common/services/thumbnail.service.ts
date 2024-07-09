@@ -178,7 +178,7 @@ export class ThumbnailService {
      */
     public getMimeTypeIcon(mimeType: string): string {
         const icon = this.mimeTypeIcons[mimeType];
-        return (icon || DEFAULT_ICON);
+        return icon || DEFAULT_ICON;
     }
 
     /**

@@ -1203,7 +1203,12 @@ describe('ContentMetadataComponent', () => {
     describe('events', () => {
         it('should not propagate the event on left arrows press', () => {
             fixture.detectChanges();
-            const event = { keyCode: 37, stopPropagation: () => {} };
+            const event = {
+                keyCode: 37,
+                stopPropagation: () => {
+                    /*noop*/
+                }
+            };
             spyOn(event, 'stopPropagation').and.stub();
             const element = fixture.debugElement.query(By.css('adf-card-view'));
             element.triggerEventHandler('keydown', event);
@@ -1212,7 +1217,12 @@ describe('ContentMetadataComponent', () => {
 
         it('should not propagate the event on right arrows press', () => {
             fixture.detectChanges();
-            const event = { keyCode: 39, stopPropagation: () => {} };
+            const event = {
+                keyCode: 39,
+                stopPropagation: () => {
+                    /*noop*/
+                }
+            };
             spyOn(event, 'stopPropagation').and.stub();
             const element = fixture.debugElement.query(By.css('adf-card-view'));
             element.triggerEventHandler('keydown', event);
@@ -1221,7 +1231,12 @@ describe('ContentMetadataComponent', () => {
 
         it('should propagate the event on other keys press', () => {
             fixture.detectChanges();
-            const event = { keyCode: 40, stopPropagation: () => {} };
+            const event = {
+                keyCode: 40,
+                stopPropagation: () => {
+                    /*noop*/
+                }
+            };
             spyOn(event, 'stopPropagation').and.stub();
             const element = fixture.debugElement.query(By.css('adf-card-view'));
             element.triggerEventHandler('keydown', event);

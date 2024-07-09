@@ -86,7 +86,9 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
                 .pipe(mergeMap((file) => this.uploadRawContent(file)))
                 .subscribe(
                     (res) => filesSaved.push(res),
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     () => {
                         this.field.value = filesSaved;
                         this.field.json.value = filesSaved;

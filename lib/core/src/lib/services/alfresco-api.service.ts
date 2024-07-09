@@ -30,7 +30,6 @@ export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
     providedIn: 'root'
 })
 export class AlfrescoApiService {
-
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
     protected alfrescoApi: AlfrescoApi;
@@ -50,14 +49,15 @@ export class AlfrescoApiService {
         protected appConfig: AppConfigService,
         protected storageService: StorageService,
         @Optional()
-        @Inject(ALFRESCO_API_FACTORY) private alfrescoApiFactory?: AlfrescoApiFactory
+        @Inject(ALFRESCO_API_FACTORY)
+        private alfrescoApiFactory?: AlfrescoApiFactory
     ) {}
 
     async load(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;
 
         if (config.authType === 'OAUTH') {
-                await this.mapAlfrescoApiOpenIdConfig();
+            await this.mapAlfrescoApiOpenIdConfig();
         }
 
         this.initAlfrescoApiWithConfig();

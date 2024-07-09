@@ -240,18 +240,16 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     }
 
     getRunningApplications() {
-        this.appsProcessCloudService
-            .getDeployedApplicationsByStatus(APP_RUNNING_STATUS, this.role)
-            .subscribe((applications) => {
-                if (applications && applications.length > 0) {
-                    applications.map((application) => {
-                        this.applicationNames.push({
-                            label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList),
-                            value: application.name
-                        });
+        this.appsProcessCloudService.getDeployedApplicationsByStatus(APP_RUNNING_STATUS, this.role).subscribe((applications) => {
+            if (applications && applications.length > 0) {
+                applications.map((application) => {
+                    this.applicationNames.push({
+                        label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList),
+                        value: application.name
                     });
-                }
-            });
+                });
+            }
+        });
     }
 
     getProcessDefinitions() {
@@ -494,7 +492,9 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
                 switchMap(() => this.restoreDefaultTaskFilters()),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe(() => {});
+            .subscribe(() => {
+                /*noop*/
+            });
     }
 
     save(saveAction: TaskFilterAction): void {

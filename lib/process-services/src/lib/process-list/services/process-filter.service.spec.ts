@@ -210,7 +210,9 @@ describe('Process filter', () => {
                 getFilters = getFilters.and.returnValue(Promise.reject(mockError));
 
                 service.getProcessFilters(null).subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -244,7 +246,9 @@ describe('Process filter', () => {
                 createFilter = createFilter.and.returnValue(Promise.reject(mockError));
 
                 service.addProcessFilter(filter).subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (res) => {
                         expect(res).toBe(mockError);
                         done();
@@ -255,7 +259,9 @@ describe('Process filter', () => {
             it('should return a default error if no data is returned by the API', (done) => {
                 createFilter = createFilter.and.returnValue(Promise.reject(new Error('Server error')));
                 service.addProcessFilter(filter).subscribe(
-                    () => {},
+                    () => {
+                        /*noop*/
+                    },
                     (err) => {
                         expect(err.message).toBe('Server error');
                         done();

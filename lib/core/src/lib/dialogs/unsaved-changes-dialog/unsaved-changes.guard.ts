@@ -28,7 +28,7 @@ import { tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class UnsavedChangesGuard  {
+export class UnsavedChangesGuard {
     unsaved = false;
 
     constructor(private dialog: MatDialog) {}
@@ -39,9 +39,13 @@ export class UnsavedChangesGuard  {
      * @returns boolean | Observable<boolean> true when there is no unsaved changes or changes can be discarded, false otherwise.
      */
     canDeactivate(): boolean | Observable<boolean> {
-        return this.unsaved ?
-            this.dialog.open<UnsavedChangesDialogComponent, undefined, boolean>(UnsavedChangesDialogComponent, {
-                maxWidth: 346
-            }).afterClosed().pipe(tap((confirmed) => this.unsaved = !confirmed)) : true;
+        return this.unsaved
+            ? this.dialog
+                  .open<UnsavedChangesDialogComponent, undefined, boolean>(UnsavedChangesDialogComponent, {
+                      maxWidth: 346
+                  })
+                  .afterClosed()
+                  .pipe(tap((confirmed) => (this.unsaved = !confirmed)))
+            : true;
     }
 }

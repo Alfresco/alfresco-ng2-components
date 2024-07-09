@@ -22,7 +22,6 @@ import { ExtensionService } from '@alfresco/adf-extensions';
 
 @Injectable()
 export class AppConfigServiceMock extends AppConfigService {
-
     config: any = {
         application: {
             name: 'Alfresco ADF Application',

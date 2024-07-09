@@ -232,8 +232,12 @@ describe('AspectListDialogComponent', () => {
 
         it('should complete the select stream Cancel button is clicked', (done) => {
             data.select.subscribe(
-                () => {},
-                () => {},
+                () => {
+                    /*noop*/
+                },
+                () => {
+                    /*noop*/
+                },
                 () => done()
             );
             const cancelButton: HTMLButtonElement = fixture.nativeElement.querySelector('#aspect-list-dialog-actions-cancel');

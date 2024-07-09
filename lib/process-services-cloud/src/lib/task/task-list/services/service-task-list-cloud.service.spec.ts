@@ -88,7 +88,9 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
         const taskRequest = { appName: null } as ServiceTaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallUrl);
         service.getServiceTaskByRequest(taskRequest).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('Appname not configured');
                 done();

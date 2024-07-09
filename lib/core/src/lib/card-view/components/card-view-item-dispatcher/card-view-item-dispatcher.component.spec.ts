@@ -151,7 +151,9 @@ describe('CardViewItemDispatcherComponent', () => {
 
         it('should call through the life-cycle methods', () => {
             lifeCycleMethods.forEach((lifeCycleMethod) => {
-                shinyCustomElementItemComponent[lifeCycleMethod] = () => {};
+                shinyCustomElementItemComponent[lifeCycleMethod] = () => {
+                    /*noop*/
+                };
                 spyOn(shinyCustomElementItemComponent, lifeCycleMethod);
                 const param = {};
 

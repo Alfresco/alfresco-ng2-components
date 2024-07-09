@@ -25,31 +25,40 @@ describe('FilterOutArrayObjectsByPropPipe', () => {
     });
 
     it('should filter out object', () => {
-        const testArray = [{
-            id: 1
-        }, {
-            id: 2
-        }, {
-            id: 3
-        }];
+        const testArray = [
+            {
+                id: 1
+            },
+            {
+                id: 2
+            },
+            {
+                id: 3
+            }
+        ];
 
         const result = pipe.transform(testArray, 'id', 3);
 
-        expect(result.length).toBe(testArray.length  - 1);
+        expect(result.length).toBe(testArray.length - 1);
         expect(result[0]).toEqual(testArray[0]);
         expect(result[1]).toEqual(testArray[1]);
     });
 
     it('should filter out multiple objects', () => {
-        const testArray = [{
-            isHidden: true
-        }, {
-            isHidden: true
-        }, {
-            isHidden: true
-        }, {
-            isHidden: false
-        }];
+        const testArray = [
+            {
+                isHidden: true
+            },
+            {
+                isHidden: true
+            },
+            {
+                isHidden: true
+            },
+            {
+                isHidden: false
+            }
+        ];
 
         const result = pipe.transform(testArray, 'isHidden', true);
 

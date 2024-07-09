@@ -44,7 +44,9 @@ describe('ExtensionViewerDirective', () => {
                 {
                     provide: ChangeDetectorRef,
                     useValue: {
-                        detectChanges: () => {}
+                        detectChanges: () => {
+                            /* noop */
+                        }
                     }
                 }
             ]

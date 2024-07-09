@@ -296,7 +296,9 @@ export class UploadService {
                     }
                 }
             })
-            .catch(() => {});
+            .catch(() => {
+                /*noop*/
+            });
 
         return promise;
     }

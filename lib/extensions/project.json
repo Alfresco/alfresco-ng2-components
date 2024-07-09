@@ -1,8 +1,8 @@
 {
   "name": "extensions",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "lib/extensions/src",
   "projectType": "library",
+  "sourceRoot": "lib/extensions",
   "prefix": "adf",
   "targets": {
     "build": {
@@ -13,10 +13,13 @@
       },
       "configurations": {
         "production": {
+          "project": "lib/extensions/ng-package.json",
           "tsConfig": "lib/extensions/tsconfig.lib.prod.json"
         }
       },
-      "defaultConfiguration": "production"
+      "development": {
+        "tsConfig": "lib/extensions/tsconfig.lib.json"
+      }
     },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
@@ -32,7 +35,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": ["lib/extensions/**/*.ts", "lib/extensions/**/*.html"]
       }

@@ -231,7 +231,9 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         try {
             statusCode = JSON.parse(error.message).error.statusCode;
-        } catch {}
+        } catch {
+            /*noop*/
+        }
 
         if (statusCode === 403) {
             message = 'SHARE.UNSHARE_PERMISSION_ERROR';

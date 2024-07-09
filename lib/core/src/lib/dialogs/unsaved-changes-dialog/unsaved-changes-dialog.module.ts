@@ -25,13 +25,7 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [UnsavedChangesDialogComponent],
-    imports: [
-        MatDialogModule,
-        TranslateModule,
-        MatButtonModule,
-        MatIconModule,
-        CommonModule
-    ],
+    imports: [MatDialogModule, TranslateModule, MatButtonModule, MatIconModule, CommonModule],
     exports: [UnsavedChangesDialogComponent]
 })
 export class UnsavedChangesDialogModule {}

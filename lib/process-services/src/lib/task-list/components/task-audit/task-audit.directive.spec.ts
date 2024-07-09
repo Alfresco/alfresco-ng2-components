@@ -43,7 +43,9 @@ describe('TaskAuditDirective', () => {
         fileName: string;
         format: string;
 
-        onAuditClick() {}
+        onAuditClick() {
+            /*noop*/
+        }
     }
 
     let fixture: ComponentFixture<BasicButtonComponent>;

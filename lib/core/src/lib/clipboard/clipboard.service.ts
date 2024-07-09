@@ -53,7 +53,9 @@ export class ClipboardService {
                     this.document.execCommand('copy');
                 }
                 this.notify(message);
-            } catch {}
+            } catch {
+                /*noop*/
+            }
         }
     }
 
@@ -76,7 +78,9 @@ export class ClipboardService {
                 document.execCommand('copy');
             }
             this.notify(message);
-        } catch {}
+        } catch {
+            /*noop*/
+        }
     }
 
     private notify(message) {

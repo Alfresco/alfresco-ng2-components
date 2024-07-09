@@ -53,7 +53,9 @@ describe('AppLayoutComponent', () => {
             minimizeSidenavConditions: [],
             preferencesService: {
                 get: () => 'true',
-                set: () => {}
+                set: () => {
+                    /*noop*/
+                }
             }
         };
 
@@ -153,13 +155,19 @@ describe('AppLayoutComponent', () => {
         component.minimizeSidenav = false;
         component.layout.container = {
             isMobileScreenSize: true,
-            toggleMenu: () => {}
+            toggleMenu: () => {
+                /*noop*/
+            }
         };
 
         spyOn(component.layout.container, 'toggleMenu');
         fixture.detectChanges();
 
-        component.hideMenu({ preventDefault: () => {} } as any);
+        component.hideMenu({
+            preventDefault: () => {
+                /*noop*/
+            }
+        } as any);
 
         expect(component.layout.container.toggleMenu).toHaveBeenCalled();
     });
@@ -169,13 +177,19 @@ describe('AppLayoutComponent', () => {
         component.minimizeSidenav = true;
         component.layout.container = {
             isMobileScreenSize: true,
-            toggleMenu: () => {}
+            toggleMenu: () => {
+                /*noop*/
+            }
         };
 
         spyOn(component.layout.container, 'toggleMenu');
         fixture.detectChanges();
 
-        component.hideMenu({ preventDefault: () => {} } as any);
+        component.hideMenu({
+            preventDefault: () => {
+                /*noop*/
+            }
+        } as any);
 
         expect(component.layout.container.toggleMenu).toHaveBeenCalled();
     });

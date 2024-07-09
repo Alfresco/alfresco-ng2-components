@@ -42,8 +42,7 @@ export class DownloadService {
                 }
 
                 if (blob) {
-                    if (typeof window.navigator !== 'undefined' &&
-                        window.navigator['msSaveOrOpenBlob']) {
+                    if (typeof window.navigator !== 'undefined' && window.navigator['msSaveOrOpenBlob']) {
                         window.navigator['msSaveOrOpenBlob'](blob, fileName);
                     } else {
                         const url = window.URL.createObjectURL(blob);

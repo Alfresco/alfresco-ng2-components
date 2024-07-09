@@ -212,8 +212,7 @@ export default {
 
 const tabLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
     props: args,
-    template:
-        `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
+    template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
             <div info-drawer-buttons>
                 <mat-icon>clear</mat-icon>
             </div>
@@ -235,8 +234,7 @@ const tabLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
 
 const singleLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
     props: args,
-    template:
-        `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
+    template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
             <div info-drawer-title>File info</div>
 
             <div info-drawer-buttons>

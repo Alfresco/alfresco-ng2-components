@@ -31,10 +31,18 @@ const securityOptions: SecurityOptions = {
 };
 
 const emitter = {
-    emit: () => {},
-    off: () => {},
-    on: () => {},
-    once: () => {}
+    emit: () => {
+        /*noop*/
+    },
+    off: () => {
+        /*noop*/
+    },
+    on: () => {
+        /*noop*/
+    },
+    once: () => {
+        /*noop*/
+    }
 };
 
 const emitters: Emitters = {

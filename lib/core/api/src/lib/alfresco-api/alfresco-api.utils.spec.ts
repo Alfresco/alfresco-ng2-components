@@ -18,13 +18,14 @@
 import { isConstructor, getQueryParamsWithCustomEncoder, removeNilValues } from './alfresco-api.utils';
 
 describe('AlfrescoApiUtils', () => {
-
     describe('isConstructor', () => {
         class MockClass {}
         /**
          * Mock function for tests
          */
-        function mockFUnction() {}
+        function mockFUnction() {
+            /*noop*/
+        }
 
         it('should return true for class and functions', () => {
             expect(isConstructor(MockClass)).toBe(true);
@@ -50,9 +51,7 @@ describe('AlfrescoApiUtils', () => {
         });
     });
 
-
     describe('getQueryParamsWithCustomEncoder', () => {
-
         it('should return queryParams with removed undefined values', () => {
             const actual = getQueryParamsWithCustomEncoder({
                 key1: 'value1',
@@ -73,9 +72,7 @@ describe('AlfrescoApiUtils', () => {
         });
     });
 
-
     describe('removeUndefinedValues', () => {
-
         it('should return queryParams with removed undefined values', () => {
             const actual = removeNilValues({
                 key1: 'value1',
@@ -98,5 +95,4 @@ describe('AlfrescoApiUtils', () => {
             expect(actual?.getAll('key2')).toEqual(['value2', 'value3']);
         });
     });
-
 });

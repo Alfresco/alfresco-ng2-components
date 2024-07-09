@@ -25,7 +25,7 @@ import { Observable } from 'rxjs';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
-export abstract class AuthGuardBase  {
+export abstract class AuthGuardBase {
     protected get withCredentials(): boolean {
         return this.appConfigService.get<boolean>('auth.withCredentials', false);
     }

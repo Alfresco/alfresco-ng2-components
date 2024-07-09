@@ -36,7 +36,9 @@ describe('DebugFeaturesService', () => {
                     fictive: true
                 }
             }),
-        setItem: () => {}
+        setItem: () => {
+            /*noop*/
+        }
     };
 
     beforeEach(() => {
