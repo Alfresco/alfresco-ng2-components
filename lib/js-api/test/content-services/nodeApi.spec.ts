@@ -58,7 +58,9 @@ describe('Node', () => {
             nodeMock.get404ChildrenNotExist();
 
             nodesApi.listNodeChildren('b4cff62a-664d-4d45-9302-98723eac1319').then(
-                () => {},
+                () => {
+                    /* do nothing */
+                },
                 (error) => {
                     assert.equal(error.status, 404);
                     done();
@@ -102,7 +104,9 @@ describe('Node', () => {
             nodeMock.get404DeleteNotFound();
 
             nodesApi.deleteNode('80a94ac8-test-47ad-864e-5d939424c47c').then(
-                () => {},
+                () => {
+                    /* do nothing */
+                },
                 (error) => {
                     assert.equal(error.status, 404);
                     done();
@@ -114,7 +118,9 @@ describe('Node', () => {
             nodeMock.get403DeletePermissionDenied();
 
             nodesApi.deleteNode('80a94ac8-3ece-47ad-864e-5d939424c47c').then(
-                () => {},
+                () => {
+                    /* do nothing */
+                },
                 () => {
                     done();
                 }
@@ -142,7 +148,9 @@ describe('Node', () => {
             nodeMock.get404DeleteNotFound();
 
             nodesApi.deleteNodes(['80a94ac8-3ece-47ad-864e-5d939424c47c', '80a94ac8-test-47ad-864e-5d939424c47c']).then(
-                () => {},
+                () => {
+                    /* do nothing */
+                },
                 (error) => {
                     assert.equal(error.status, 404);
                     done();

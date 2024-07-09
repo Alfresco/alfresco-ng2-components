@@ -20,4 +20,4 @@ import { RequestFilterQueriesInner } from './requestFilterQueriesInner';
 /**
  * Filter Queries. Constraints that apply to the results set but do not affect the score of each entry.
  */
-export interface RequestFilterQueries extends Array<RequestFilterQueriesInner> {}
+export type RequestFilterQueries = Array<RequestFilterQueriesInner>;
