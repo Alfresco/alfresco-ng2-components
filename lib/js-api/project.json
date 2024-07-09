@@ -26,6 +26,14 @@
         }
       }
     },
+    "build-all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npm run js_api_build"
+        ]
+      }
+    },
     "bundle": {
       "executor": "nx:run-commands",
       "options": {
@@ -49,7 +57,7 @@
       "dependsOn": [
         {
           "projects": "self",
-          "target": "build"
+          "target": "build-all"
         }
       ]
     },
