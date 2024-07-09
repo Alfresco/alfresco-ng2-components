@@ -47,6 +47,20 @@ export class EcmAuthMock extends BaseMock {
             .reply(200, { entry: { id: returnMockTicket } });
     }
 
+    get401InvalidTicket(): void {
+        nock(this.host, { encodedQueryParams: true })
+            .get('/alfresco/api/-default-/public/authentication/versions/1/tickets/-me-')
+            .reply(401, {
+                error: {
+                    errorKey: 'framework.exception.ApiDefault',
+                    statusCode: 401,
+                    briefSummary: '05210059 Authentication failed for Web Script org/alfresco/api/ResourceWebScript.get',
+                    stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                    descriptionURL: 'https://api-explorer.alfresco.com'
+                }
+            });
+    }
+
     get403Response(): void {
         nock(this.host, { encodedQueryParams: true })
             .post('/alfresco/api/-default-/public/authentication/versions/1/tickets', {
