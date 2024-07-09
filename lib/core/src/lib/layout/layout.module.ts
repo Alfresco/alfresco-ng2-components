@@ -24,8 +24,12 @@ import { SidenavLayoutHeaderDirective } from './directives/sidenav-layout-header
 import { SidenavLayoutNavigationDirective } from './directives/sidenav-layout-navigation.directive';
 import { SidenavLayoutComponent } from './components/sidenav-layout/sidenav-layout.component';
 import { LayoutContainerComponent } from './components/layout-container/layout-container.component';
-import { SidebarActionMenuComponent, SidebarMenuDirective,
-    SidebarMenuExpandIconDirective, SidebarMenuTitleIconDirective } from './components/sidebar-action/sidebar-action-menu.component';
+import {
+    SidebarActionMenuComponent,
+    SidebarMenuDirective,
+    SidebarMenuExpandIconDirective,
+    SidebarMenuTitleIconDirective
+} from './components/sidebar-action/sidebar-action-menu.component';
 import { HeaderLayoutComponent } from './components/header/header.component';
 import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
@@ -33,7 +37,11 @@ import { TranslateModule } from '@ngx-translate/core';
         CommonModule,
         MaterialModule,
         RouterModule,
-        TranslateModule
+        TranslateModule,
+
+        SidenavLayoutHeaderDirective,
+        SidenavLayoutContentDirective,
+        SidenavLayoutNavigationDirective
     ],
     exports: [
         SidenavLayoutHeaderDirective,
@@ -48,9 +56,6 @@ import { TranslateModule } from '@ngx-translate/core';
         HeaderLayoutComponent
     ],
     declarations: [
-        SidenavLayoutHeaderDirective,
-        SidenavLayoutContentDirective,
-        SidenavLayoutNavigationDirective,
         SidenavLayoutComponent,
         LayoutContainerComponent,
         SidebarActionMenuComponent,

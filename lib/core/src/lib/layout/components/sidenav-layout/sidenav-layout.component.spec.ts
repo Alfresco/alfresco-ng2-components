@@ -51,7 +51,7 @@ export class DummyLayoutContainerComponent {
     template: ` <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
         <adf-sidenav-layout-header>
             <ng-template let-toggleMenu="toggleMenu">
-                <div role="button" id="header-test" (click)="toggleMenu()" role="button" tabindex="0" (keyup.enter)="toggleMenu()"></div>
+                <div id="header-test" (click)="toggleMenu()" role="button" tabindex="0" (keyup.enter)="toggleMenu()"></div>
             </ng-template>
         </adf-sidenav-layout-header>
 
@@ -78,14 +78,16 @@ describe('SidenavLayoutComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, PlatformModule, LayoutModule, MaterialModule],
-            declarations: [
-                DummyLayoutContainerComponent,
-                SidenavLayoutComponent,
+            imports: [
+                CommonModule,
+                PlatformModule,
+                LayoutModule,
+                MaterialModule,
                 SidenavLayoutContentDirective,
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
+            declarations: [DummyLayoutContainerComponent, SidenavLayoutComponent],
             providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
@@ -221,15 +223,16 @@ describe('Template transclusion', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, PlatformModule, LayoutModule, MaterialModule],
-            declarations: [
-                DummyLayoutContainerComponent,
-                SidenavLayoutTesterComponent,
-                SidenavLayoutComponent,
+            imports: [
+                CommonModule,
+                PlatformModule,
+                LayoutModule,
+                MaterialModule,
                 SidenavLayoutContentDirective,
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
             ],
+            declarations: [DummyLayoutContainerComponent, SidenavLayoutTesterComponent, SidenavLayoutComponent],
             providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }]
         });
         mediaMatcher = TestBed.inject(MediaMatcher);
