@@ -1,27 +1,200 @@
 {
-  "name": "demoshell-e2e",
+  "name": "demoshell",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "./demo-shell",
+  "sourceRoot": "demo-shell/src",
   "projectType": "application",
   "targets": {
-    "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "proxyConfig": "./e2e/proxy.conf.js",
-        "browserTarget": "dev:build",
-        "port": 3000
+        "allowedCommonJsDependencies": [
+          "minimatch",
+          "minimatch-browser",
+          "superagent",
+          "event-emitter",
+          "brace-expansion",
+          "zen-observable",
+          "subscriptions-transport-ws",
+          "d",
+          "chart.js",
+          "cropperjs"
+        ],
+        "outputPath": "dist/demo-shell",
+        "index": "demo-shell/src/index.html",
+        "main": "demo-shell/src/main.ts",
+        "tsConfig": "tsconfig.dev.json",
+        "polyfills": "demo-shell/src/polyfills.ts",
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        },
+        "assets": [
+          "demo-shell/src/assets",
+          "demo-shell/src/favicon-96x96.png",
+          "demo-shell/src/app.config.json",
+          {
+            "glob": "**/*",
+            "input": "demo-shell/src/assets",
+            "output": "/assets"
+          },
+          {
+            "glob": "app.config.json",
+            "input": "demo-shell/src",
+            "output": "/"
+          },
+          {
+            "glob": "**/*",
+            "input": "demo-shell/resources",
+            "output": "/resources"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/core/src/lib/assets",
+            "output": "/assets"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/process-services/src/lib/assets",
+            "output": "/assets"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/process-services-cloud/src/lib/assets",
+            "output": "/assets"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/content-services/src/lib/assets",
+            "output": "/assets"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/core/src/lib/i18n",
+            "output": "/assets/adf-core/i18n"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/content-services/src/lib/i18n",
+            "output": "/assets/adf-content-services/i18n"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/process-services/src/lib/i18n",
+            "output": "/assets/adf-process-services/i18n"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/process-services-cloud/src/lib/i18n",
+            "output": "/assets/adf-process-services-cloud/i18n"
+          },
+          {
+            "glob": "**/*",
+            "input": "lib/insights/src/lib/i18n",
+            "output": "/assets/adf-insights/i18n"
+          },
+          {
+            "glob": "pdf.worker.min.js",
+            "input": "node_modules/pdfjs-dist/build",
+            "output": "/"
+          },
+          {
+            "glob": "**/*",
+            "input": "node_modules/monaco-editor",
+            "output": "/assets/monaco/"
+          }
+        ],
+        "styles": [
+          "demo-shell/src/styles.scss",
+          "demo-shell/src/custom-style-dev.scss",
+          "node_modules/cropperjs/dist/cropper.min.css",
+          "node_modules/pdfjs-dist/web/pdf_viewer.css"
+        ],
+        "scripts": ["node_modules/pdfjs-dist/build/pdf.js", "node_modules/pdfjs-dist/web/pdf_viewer.js", "node_modules/raphael/raphael.min.js"],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true
       },
       "configurations": {
         "production": {
-          "browserTarget": "dev:build:production"
+          "budgets": [
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "12kb"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "buildOptimizer": true,
+          "verbose": false,
+          "fileReplacements": [
+            {
+              "replace": "demo-shell/src/environments/environment.ts",
+              "with": "demo-shell/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "canary": {
+          "fileReplacements": [
+            {
+              "replace": "demo-shell/src/environments/environment.ts",
+              "with": "demo-shell/src/environments/environment.canary.ts"
+            }
+          ]
+        },
+        "e2e": {
+          "budgets": [
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "buildOptimizer": true,
+          "verbose": false,
+          "fileReplacements": [
+            {
+              "replace": "demo-shell/src/environments/environment.ts",
+              "with": "demo-shell/src/environments/environment.e2e.ts"
+            }
+          ]
+        }
+      },
+      "defaultConfiguration": ""
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "demoshell:build",
+        "host": "0.0.0.0",
+        "port": 3000,
+        "proxyConfig": "demo-shell/proxy.conf.js",
+        "disableHostCheck": true
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "demoshell:build:production"
+        },
+        "canary": {
+          "browserTarget": "demoshell:build:canary"
+        },
+        "e2e": {
+          "browserTarget": "demoshell:build:e2e"
         }
       }
     },
-    "e2e": {
-      "executor": "@angular-devkit/build-angular:protractor",
+    "lint": {
+      "executor": "@nx/linter:eslint",
       "options": {
-        "protractorConfig": "./e2e/protractor.conf.js",
-        "devServerTarget": "lib-e2e-test:serve"
+        "lintFilePatterns": ["demo-shell/**/*.ts", "demo-shell/**/*.html"]
       }
     }
   }
