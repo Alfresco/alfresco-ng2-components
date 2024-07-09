@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './alfresco-api.mock';
 export * from './cookie.service.mock';
 export * from './event.mock';
 export * from './translation.service.mock';

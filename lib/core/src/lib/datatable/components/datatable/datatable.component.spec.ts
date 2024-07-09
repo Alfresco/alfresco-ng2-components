@@ -27,8 +27,6 @@ import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../data-column/data-column.component';
-import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
-import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
@@ -40,6 +38,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
+
 @Component({
     selector: 'adf-custom-column-header-component',
     template: ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
@@ -633,7 +632,7 @@ describe('DataTable', () => {
     });
 
     it('should initialize default adapter', () => {
-        const table = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
+        const table = TestBed.createComponent(DataTableComponent).componentInstance;
         expect(table.data).toBeUndefined();
         table.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
