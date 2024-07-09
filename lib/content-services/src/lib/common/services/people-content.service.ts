@@ -23,11 +23,6 @@ import { Pagination, PeopleApi, PersonBodyCreate, PersonBodyUpdate } from '@alfr
 import { EcmUserModel } from '../models/ecm-user.model';
 import { ContentService } from './content.service';
 
-// eslint-disable-next-line no-shadow
-export enum ContentGroups {
-    ALFRESCO_ADMINISTRATORS = 'ALFRESCO_ADMINISTRATORS'
-}
-
 export interface PeopleContentQueryResponse {
     pagination: Pagination;
     entries: EcmUserModel[];
@@ -56,11 +51,7 @@ export class PeopleContentService {
         return this._peopleApi;
     }
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        authenticationService: AuthenticationService,
-        private contentService: ContentService
-    ) {
+    constructor(private apiService: AlfrescoApiService, authenticationService: AuthenticationService, private contentService: ContentService) {
         authenticationService.onLogout.subscribe(() => {
             this.resetLocalCurrentUser();
         });
@@ -73,10 +64,7 @@ export class PeopleContentService {
      * @returns User information
      */
     getPerson(personId: string): Observable<EcmUserModel> {
-        return from(this.peopleApi.getPerson(personId))
-            .pipe(
-                map((personEntry) => new EcmUserModel(personEntry.entry))
-            );
+        return from(this.peopleApi.getPerson(personId)).pipe(map((personEntry) => new EcmUserModel(personEntry.entry)));
     }
 
     getCurrentPerson(): Observable<EcmUserModel> {
@@ -92,7 +80,7 @@ export class PeopleContentService {
         if (this.currentUser) {
             return of(this.currentUser);
         }
-        return this.getPerson('-me-').pipe(tap(user => (this.currentUser = user)));
+        return this.getPerson('-me-').pipe(tap((user) => (this.currentUser = user)));
     }
 
     /**
@@ -118,7 +106,7 @@ export class PeopleContentService {
      * @returns Response containing pagination and list of entries
      */
     listPeople(requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
-        const requestQueryParams = {skipCount: requestQuery?.skipCount, maxItems: requestQuery?.maxItems};
+        const requestQueryParams = { skipCount: requestQuery?.skipCount, maxItems: requestQuery?.maxItems };
         const orderBy = this.buildOrderArray(requestQuery?.sorting);
         if (orderBy.length) {
             requestQueryParams['orderBy'] = orderBy;
@@ -126,7 +114,7 @@ export class PeopleContentService {
 
         const promise = this.peopleApi.listPeople(requestQueryParams);
         return from(promise).pipe(
-            map(response => ({
+            map((response) => ({
                 pagination: response.list.pagination,
                 entries: response.list.entries.map((person) => person.entry as EcmUserModel)
             }))
@@ -141,9 +129,7 @@ export class PeopleContentService {
      * @returns Created new person
      */
     createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
-        return from(this.peopleApi.createPerson(newPerson, opts)).pipe(
-            map((res) => res?.entry as EcmUserModel)
-        );
+        return from(this.peopleApi.createPerson(newPerson, opts)).pipe(map((res) => res?.entry as EcmUserModel));
     }
 
     /**
@@ -155,9 +141,7 @@ export class PeopleContentService {
      * @returns Updated person model
      */
     updatePerson(personId: string, details: PersonBodyUpdate, opts?: any): Observable<EcmUserModel> {
-        return from(this.peopleApi.updatePerson(personId, details, opts)).pipe(
-            map((res) => res?.entry as EcmUserModel)
-        );
+        return from(this.peopleApi.updatePerson(personId, details, opts)).pipe(map((res) => res?.entry as EcmUserModel));
     }
 
     /**
