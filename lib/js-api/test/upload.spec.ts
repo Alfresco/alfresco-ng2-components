@@ -61,12 +61,10 @@ describe('Upload', () => {
 
             const file = createTestFileStream('testFile.txt');
 
-            uploadApi.uploadFile(file).catch(
-                (error: any) => {
-                    assert.equal(error.status, 409);
-                    done();
-                }
-            );
+            uploadApi.uploadFile(file).catch((error: any) => {
+                assert.equal(error.status, 409);
+                done();
+            });
         });
 
         it('upload file should get 200 and rename if the new name clashes with an existing file in the current parent folder and autorename is true', async () => {
@@ -100,7 +98,9 @@ describe('Upload', () => {
 
             const uploadPromise: any = uploadApi.uploadFile(file);
 
-            uploadPromise.catch(() => {});
+            uploadPromise.catch(() => {
+                /* do nothing */
+            });
             uploadPromise.on('success', () => {
                 done();
             });
@@ -112,7 +112,9 @@ describe('Upload', () => {
             const file = createTestFileStream('testFile.txt');
 
             const uploadPromise: any = uploadApi.uploadFile(file);
-            uploadPromise.catch(() => {});
+            uploadPromise.catch(() => {
+                /* do nothing */
+            });
             uploadPromise.on('error', () => {
                 done();
             });
@@ -125,7 +127,9 @@ describe('Upload', () => {
 
             const uploadPromise: any = uploadApi.uploadFile(file);
 
-            uploadPromise.catch(() => {});
+            uploadPromise.catch(() => {
+                /* do nothing */
+            });
             uploadPromise.on('unauthorized', () => {
                 done();
             });
@@ -185,7 +189,9 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const uploadPromise: any = uploadApi.uploadFile(file);
-                uploadPromise.catch(() => {});
+                uploadPromise.catch(() => {
+                    /* do nothing */
+                });
                 uploadPromise.once('success', () => {
                     errorOneOk = true;
                     resolve('Resolving');
@@ -196,7 +202,9 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const uploadPromise: any = uploadApi.uploadFile(fileTwo);
-                uploadPromise.catch(() => {});
+                uploadPromise.catch(() => {
+                    /* do nothing */
+                });
                 uploadPromise.once('success', () => {
                     errorTwoOk = true;
                     resolve('Resolving');
@@ -221,7 +229,9 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const uploadPromiseOne: any = uploadApi.uploadFile(file);
-                uploadPromiseOne.catch(() => {});
+                uploadPromiseOne.catch(() => {
+                    /* do nothing */
+                });
                 uploadPromiseOne.once('success', () => {
                     successOneOk = true;
                     resolve('Resolving');
@@ -232,7 +242,9 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const uploadPromiseTwo: any = uploadApi.uploadFile(fileTwo);
-                uploadPromiseTwo.catch(() => {});
+                uploadPromiseTwo.catch(() => {
+                    /* do nothing */
+                });
                 uploadPromiseTwo.once('success', () => {
                     successTwoOk = true;
                     resolve('Resolving');
@@ -307,7 +319,9 @@ describe('Upload', () => {
             let promiseProgressTwo = {};
 
             const uploadPromise: any = uploadApi.uploadFile(file);
-            uploadPromise.catch(() => {});
+            uploadPromise.catch(() => {
+                /* do nothing */
+            });
 
             uploadPromise
                 .once('error', () => {

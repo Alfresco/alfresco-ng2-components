@@ -140,7 +140,9 @@ describe('Bpm Auth test', () => {
             });
 
             processAuth.login('wrong', 'name').then(
-                () => {},
+                () => {
+                    /* do nothing */
+                },
                 (error) => {
                     assert.equal(error.status, 401);
                     done();
@@ -159,7 +161,9 @@ describe('Bpm Auth test', () => {
 
                 const loginPromise = processAuth.login('wrong', 'name');
 
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => {
+                    /* do nothing */
+                });
                 loginPromise.on('unauthorized', () => {
                     done();
                 });
@@ -174,7 +178,9 @@ describe('Bpm Auth test', () => {
                 });
 
                 const loginPromise = processAuth.login('wrong', 'name');
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => {
+                    /* do nothing */
+                });
                 loginPromise.on('forbidden', () => {
                     done();
                 });
@@ -190,7 +196,9 @@ describe('Bpm Auth test', () => {
 
                 const loginPromise = processAuth.login('admin', 'admin');
 
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => {
+                    /* do nothing */
+                });
                 loginPromise.on('success', () => {
                     done();
                 });

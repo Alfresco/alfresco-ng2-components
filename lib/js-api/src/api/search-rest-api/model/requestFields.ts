@@ -21,4 +21,4 @@ You can use this parameter to restrict the fields returned within a response if,
 The list applies to a returned individual entity or entries within a collection.
 If the **include** parameter is used as well then the fields specified in the **include** parameter are returned in addition to those specified in the **fields** parameter.
  */
-export interface RequestFields extends Array<string> {}
+export type RequestFields = Array<string>;

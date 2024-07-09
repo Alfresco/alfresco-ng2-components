@@ -20,4 +20,4 @@ import { RequestFacetQueriesInner } from './requestFacetQueriesInner';
 /**
  * Facet queries to include
  */
-export interface RequestFacetQueries extends Array<RequestFacetQueriesInner> {}
+export type RequestFacetQueries = Array<RequestFacetQueriesInner>;

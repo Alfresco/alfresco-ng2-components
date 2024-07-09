@@ -24,4 +24,4 @@ import { RequestTemplatesInner } from './requestTemplatesInner';
  * to generate
  * cm:name:example cm:name:example
  */
-export interface RequestTemplates extends Array<RequestTemplatesInner> {}
+export type RequestTemplates = Array<RequestTemplatesInner>;

@@ -59,7 +59,9 @@ describe('Tags', () => {
             tagMock.get401Response();
 
             tagsApi.listTags().then(
-                () => {},
+                () => {
+                    /* do nothing */
+                },
                 () => {
                     done();
                 }
