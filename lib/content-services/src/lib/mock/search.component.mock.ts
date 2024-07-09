@@ -71,40 +71,9 @@ export const results = {
     }
 };
 
-export const folderResult = {
-    list: {
-        entries: [
-            {
-                entry: {
-                    id: '123',
-                    name: 'MyFolder',
-                    isFile: false,
-                    isFolder: true,
-                    createdByUser: {
-                        displayName: 'John Doe'
-                    },
-                    modifiedByUser: {
-                        displayName: 'John Doe'
-                    }
-                }
-            }
-        ]
-    }
-};
-
 export const noResult = {
     list: {
         entries: []
-    }
-};
-
-export const errorJson = {
-    error: {
-        errorKey: 'Search failed',
-        statusCode: 400,
-        briefSummary: '08220082 search failed',
-        stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-        descriptionURL: 'https://api-explorer.alfresco.com'
     }
 };
 
