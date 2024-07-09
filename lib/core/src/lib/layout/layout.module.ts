@@ -44,7 +44,8 @@ import { TranslateModule } from '@ngx-translate/core';
         SidenavLayoutNavigationDirective,
         SidebarMenuDirective,
         SidebarMenuExpandIconDirective,
-        SidebarMenuTitleIconDirective
+        SidebarMenuTitleIconDirective,
+        HeaderLayoutComponent
     ],
     exports: [
         SidenavLayoutHeaderDirective,
@@ -58,6 +59,6 @@ import { TranslateModule } from '@ngx-translate/core';
         SidebarMenuTitleIconDirective,
         HeaderLayoutComponent
     ],
-    declarations: [SidenavLayoutComponent, LayoutContainerComponent, SidebarActionMenuComponent, HeaderLayoutComponent]
+    declarations: [SidenavLayoutComponent, LayoutContainerComponent, SidebarActionMenuComponent]
 })
 export class SidenavLayoutModule {}

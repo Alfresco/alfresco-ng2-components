@@ -34,7 +34,7 @@ describe('HeaderLayoutComponent', () => {
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule]
+                imports: [CoreTestingModule, HeaderLayoutComponent]
             });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
             loader = TestbedHarnessEnvironment.loader(fixture);
