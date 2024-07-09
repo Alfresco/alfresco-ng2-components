@@ -40,7 +40,7 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost,
                 false,
-                true,
+                false,
                 browser.params.testConfig.appConfig.oauth2.clientId,
                 browser.params.testConfig.appConfig.oauth2.redirectUriLogout
             );
@@ -59,7 +59,7 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost,
                 true,
-                true,
+                false,
                 browser.params.testConfig.appConfig.oauth2.clientId,
                 browser.params.testConfig.appConfig.oauth2.redirectUriLogout
             );

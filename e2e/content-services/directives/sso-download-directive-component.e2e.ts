@@ -77,7 +77,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost,
             false,
-            true,
+            false,
             browser.params.testConfig.appConfig.oauth2.clientId
         );
 

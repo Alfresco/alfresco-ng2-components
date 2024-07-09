@@ -65,7 +65,7 @@ export class SettingsPage {
         authHost,
         identityHost,
         silentLogin = true,
-        implicitFlow = true,
+        implicitFlow = false,
         clientId?: string,
         logoutUrl: string = '/logout'
     ) {
@@ -80,9 +80,7 @@ export class SettingsPage {
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
-        await browser.sleep(1000);
         await this.clickSignInSSO();
-        await browser.sleep(1000);
     }
 
     async setProviderEcmSsoWithoutCodeFlow(
@@ -90,7 +88,7 @@ export class SettingsPage {
         authHost,
         identityHost,
         silentLogin = true,
-        implicitFlow = true,
+        implicitFlow = false,
         clientId?: string,
         logoutUrl: string = '/logout'
     ) {
@@ -106,9 +104,7 @@ export class SettingsPage {
         await this.setClientId(clientId);
         await this.setLogoutUrl(logoutUrl);
         await this.clickApply();
-        await browser.sleep(1000);
         await this.clickSignInSSO();
-        await browser.sleep(1000);
     }
 
     async setLogoutUrl(logoutUrl) {
