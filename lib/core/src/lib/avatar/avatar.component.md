@@ -72,7 +72,7 @@ The following CSS classes are available for theming:
 | `--adf-avatar-border-radius`    | `50%`     | The border radius of the avatar.    |
 | `--adf-avatar-background-color` | `#f3f3f3` | The background color of the avatar. |
 | `--adf-avatar-color`            | `#333`    | The text color of the initials.     |
-| `--adf-avatar-font-size`        | `16px`    | The font size of the initials.      |
-| `--adf-avatar-font-weight`      | `400`     | The font weight of the initials.    |
+| `--adf-avatar-font-size`        | `14px`    | The font size of the initials.      |
+| `--adf-avatar-font-weight`      | `500`     | The font weight of the initials.    |
 | `--adf-avatar-cursor`           | `auto`    | The cursor style.                   |
 ```
