@@ -21,7 +21,7 @@ import { QuestionRequest } from '../model/questionRequest';
 import { AiAnswerPaging } from '../model/aiAnswerPaging';
 
 export class SearchAiApi extends BaseApi {
-    search(questions: QuestionRequest[]): Promise<QuestionModel[]> {
+    ask(questions: QuestionRequest[]): Promise<QuestionModel[]> {
         return this.get({
             path: 'questions',
             bodyParam: questions

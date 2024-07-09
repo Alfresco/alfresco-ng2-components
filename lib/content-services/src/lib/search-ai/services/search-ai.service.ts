@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { AiAnswerPaging, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { BehaviorSubject, from, Observable } from 'rxjs';
+import { BehaviorSubject, from, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectionState } from '@alfresco/adf-extensions';
 import { TranslateService } from '@ngx-translate/core';
@@ -28,11 +28,9 @@ import { SearchAiInputState } from '../models/search-ai-input-state';
     providedIn: 'root'
 })
 export class SearchAiService {
-    toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
+    private toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
         active: false
     });
-    toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
-
     private readonly textFileMimeTypes = [
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -48,6 +46,8 @@ export class SearchAiService {
         return this._searchAiApi;
     }
 
+    toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
+
     constructor(private apiService: AlfrescoApiService, private translateService: TranslateService) {}
 
     updateSearchAiInputState(state: SearchAiInputState): void {
@@ -55,11 +55,47 @@ export class SearchAiService {
     }
 
     ask(question: QuestionRequest, mocked = true): Observable<QuestionModel> {
-        return mocked ? null : from(this.searchAiApi.search([question])).pipe(map((questions) => questions[0]));
+        return mocked
+            ? of({
+                  question: 'Some question',
+                  questionId: 'some id',
+                  restrictionQuery: 'Some restriction query'
+              })
+            : from(this.searchAiApi.ask([question])).pipe(map((questions) => questions[0]));
     }
 
     getAnswer(questionId: string, mocked = true): Observable<AiAnswerPaging> {
-        return mocked ? null : from(this.searchAiApi.getAnswer(questionId));
+        return mocked
+            ? of({
+                  list: {
+                      pagination: {
+                          count: 1,
+                          hasMoreItems: false,
+                          totalItems: 1,
+                          skipCount: 0,
+                          maxItems: 100
+                      },
+                      entries: [
+                          {
+                              entry: {
+                                  answer: 'Some answer',
+                                  questionId: 'some id',
+                                  references: [
+                                      {
+                                          referenceId: '6adde3ef-a7b0-42f8-85a2-f9882dc531d4',
+                                          referenceText: 'some type'
+                                      },
+                                      {
+                                          referenceId: '3a00859f-b012-4b0c-b7a5-6bd02d022dc6',
+                                          referenceText: 'some type'
+                                      }
+                                  ]
+                              }
+                          }
+                      ]
+                  }
+              })
+            : from(this.searchAiApi.getAnswer(questionId));
     }
 
     checkSearchAvailability(selectedNodesState: SelectionState): string {
