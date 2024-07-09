@@ -25,7 +25,6 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { DateFieldValidator, DateTimeFieldValidator } from '../core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { addMinutes } from 'date-fns';
 import { HttpClientModule } from '@angular/common/http';
@@ -46,17 +45,19 @@ describe('DateTimeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(),
-                      HttpClientModule,
-                      NoopAnimationsModule,
-                      MatDialogModule,
-                      MatMenuModule,
-                      MatFormFieldModule,
-                      MatNativeDatetimeModule,
-                      MatDatepickerModule,
-                      MatButtonModule,
-                      MatDatetimepickerModule,
-                      MatTooltipModule]
+            imports: [
+                TranslateModule.forRoot(),
+                HttpClientModule,
+                NoopAnimationsModule,
+                MatDialogModule,
+                MatMenuModule,
+                MatFormFieldModule,
+                MatNativeDatetimeModule,
+                MatDatepickerModule,
+                MatButtonModule,
+                MatDatetimepickerModule,
+                MatTooltipModule
+            ]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
 
@@ -158,7 +159,7 @@ describe('DateTimeWidgetComponent', () => {
 
         let expectedDate = new Date('9999-09-12T09:10:00.000Z');
         expectedDate = addMinutes(expectedDate, expectedDate.getTimezoneOffset());
-        widget.onDateChanged({ value: expectedDate} as any);
+        widget.onDateChanged({ value: expectedDate } as any);
 
         expect(field.value).toBe('9999-09-12T09:10:00.000Z');
         expect(field.isValid).toBeTrue();

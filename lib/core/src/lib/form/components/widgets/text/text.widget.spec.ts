@@ -27,7 +27,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -43,13 +42,15 @@ describe('TextWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(),
-                      NoopAnimationsModule,
-                      MatInputModule,
-                      MatFormFieldModule,
-                      MatTooltipModule,
-                      FormsModule,
-                      MatIconModule]
+            imports: [
+                TranslateModule.forRoot(),
+                NoopAnimationsModule,
+                MatInputModule,
+                MatFormFieldModule,
+                MatTooltipModule,
+                FormsModule,
+                MatIconModule
+            ]
         });
         fixture = TestBed.createComponent(TextWidgetComponent);
         widget = fixture.componentInstance;
@@ -103,7 +104,7 @@ describe('TextWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Your name here'}));
+                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Your name here' }));
                 expect(inputField).toBeTruthy();
             });
 
@@ -253,7 +254,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the field placeholder', async () => {
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'simple placeholder'}));
+                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'simple placeholder' }));
                 expect(inputField).toBeTruthy();
             });
 
@@ -261,7 +262,7 @@ describe('TextWidgetComponent', () => {
                 const input = await loader.getHarness(MatInputHarness);
                 await (await input.host()).click();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'simple placeholder'}));
+                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'simple placeholder' }));
                 expect(inputField).toBeTruthy();
             });
 
@@ -392,7 +393,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the input mask placeholder', async () => {
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Phone : (__) ___-___'}));
+                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Phone : (__) ___-___' }));
                 expect(inputField).toBeTruthy();
             });
 
@@ -400,7 +401,7 @@ describe('TextWidgetComponent', () => {
                 const input = await loader.getHarness(MatInputHarness);
                 await (await input.host()).click();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Phone : (__) ___-___'}));
+                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Phone : (__) ___-___' }));
                 expect(inputField).toBeTruthy();
             });
         });

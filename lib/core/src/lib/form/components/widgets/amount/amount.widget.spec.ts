@@ -24,7 +24,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -191,7 +190,7 @@ describe('AmountWidgetComponent - rendering', () => {
         await fixture.whenStable();
 
         const field = await loader.getHarness(MatFormFieldHarness);
-        const inputField = await loader.getHarness(MatInputHarness.with({placeholder: 'Check Placeholder Text'}));
+        const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Check Placeholder Text' }));
         expect(inputField).toBeTruthy();
         expect(await field.getPrefixText()).toBe('$');
 

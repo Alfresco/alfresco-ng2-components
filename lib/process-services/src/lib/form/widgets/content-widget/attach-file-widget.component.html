@@ -64,7 +64,7 @@
                  (keyup.enter)="onAttachFileClicked(file)"
                  [attr.aria-label]="file.name"
                  [tabindex]="i"/>
-            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [matTooltip]="file.name" (keyup.enter)="onAttachFileClicked(file)"
+            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [title]="file.name" (keyup.enter)="onAttachFileClicked(file)"
                  [tabindex]="i" class="adf-file">{{file.name}}</span>
             <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
                     [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
