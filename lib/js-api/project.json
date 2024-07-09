@@ -45,7 +45,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["TS_NODE_PROJECT=lib/js-api/test/tsconfig.json mocha --full-trace --config lib/js-api/.mocharc.json"]
-      }
+      },
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
