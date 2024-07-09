@@ -455,7 +455,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         return !args.defaultPrevented;
     }
 
-    protected storeFormAsMetadata() {}
+    protected storeFormAsMetadata() {
+        /*noop*/
+    }
 
     ngOnDestroy() {
         this.onDestroy$.next(true);

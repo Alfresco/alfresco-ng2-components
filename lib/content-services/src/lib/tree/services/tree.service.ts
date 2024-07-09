@@ -138,7 +138,9 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
         return this.treeNodesSource.asObservable();
     }
 
-    public disconnect(): void {}
+    public disconnect(): void {
+        /*noop*/
+    }
 
     private collapseInnerNode(nodeToCollapse: T): void {
         const index: number = this.treeNodes.indexOf(nodeToCollapse);

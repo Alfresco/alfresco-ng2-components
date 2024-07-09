@@ -25,11 +25,10 @@ const ROUTE_DEFAULT = '/';
 @Injectable({
     providedIn: 'root'
 })
-export class OidcAuthGuard  {
-    constructor(private auth: AuthService, private _router: Router) { }
+export class OidcAuthGuard {
+    constructor(private auth: AuthService, private _router: Router) {}
 
-    canActivate(
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this._isAuthenticated();
     }
 
@@ -42,10 +41,9 @@ export class OidcAuthGuard  {
             return true;
         }
 
-        return this.auth.loginCallback({ customHashFragment: window.location.search })
-            .then(route => this._router.navigateByUrl(route, { replaceUrl: true }))
+        return this.auth
+            .loginCallback({ customHashFragment: window.location.search })
+            .then((route) => this._router.navigateByUrl(route, { replaceUrl: true }))
             .catch(() => this._router.navigateByUrl(ROUTE_DEFAULT, { replaceUrl: true }));
     }
-
 }
-

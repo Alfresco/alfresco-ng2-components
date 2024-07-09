@@ -376,7 +376,6 @@ export default {
         noPermission: false,
         rowMenuCacheEnabled: false,
         allowFiltering: false
-
     }
 } as Meta<DataTableComponent>;
 

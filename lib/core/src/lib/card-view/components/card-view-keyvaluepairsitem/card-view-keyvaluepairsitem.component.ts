@@ -28,7 +28,6 @@ import { BaseCardView } from '../base-card-view';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-card-view-key-value-pairs-item' }
 })
-
 export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {
     values: CardViewKeyValuePairsItemType[];
     matTableValues: MatTableDataSource<CardViewKeyValuePairsItemType>;

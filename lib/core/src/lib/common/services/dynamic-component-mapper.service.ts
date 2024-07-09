@@ -17,10 +17,13 @@
 
 import { Type } from '@angular/core';
 
-const getType = (type: any): any => () => type;
+const getType =
+    (type: any): any =>
+    () =>
+        type;
 
 export interface DynamicComponentModel {
- type: string;
+    type: string;
 }
 
 export type DynamicComponentResolveFunction = (model: DynamicComponentModel) => Type<any>;
@@ -31,7 +34,6 @@ export class DynamicComponentResolver {
 }
 
 export abstract class DynamicComponentMapper {
-
     protected defaultValue: Type<any> = undefined;
     protected types: { [key: string]: DynamicComponentResolveFunction } = {};
 

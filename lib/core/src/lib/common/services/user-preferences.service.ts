@@ -36,7 +36,6 @@ export enum UserPreferenceValues {
     providedIn: 'root'
 })
 export class UserPreferencesService {
-
     defaults = {
         paginationSize: 25,
         supportedPageSizes: [5, 10, 15, 20],
@@ -48,11 +47,13 @@ export class UserPreferencesService {
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
-    constructor(public translate: TranslateService,
+    constructor(
+        public translate: TranslateService,
         private appConfig: AppConfigService,
         private storage: StorageService,
-        private alfrescoApiService: AlfrescoApiService) {
-        this.alfrescoApiService.alfrescoApiInitialized.pipe(filter(status => status)).subscribe(this.initUserPreferenceStatus.bind(this));
+        private alfrescoApiService: AlfrescoApiService
+    ) {
+        this.alfrescoApiService.alfrescoApiInitialized.pipe(filter((status) => status)).subscribe(this.initUserPreferenceStatus.bind(this));
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
     }
@@ -84,11 +85,10 @@ export class UserPreferencesService {
      * @returns Notification callback
      */
     select<T = any>(property: string): Observable<T> {
-        return this.onChange
-            .pipe(
-                map((userPreferenceStatus) => userPreferenceStatus[property]),
-                distinctUntilChanged()
-            );
+        return this.onChange.pipe(
+            map((userPreferenceStatus) => userPreferenceStatus[property]),
+            distinctUntilChanged()
+        );
     }
 
     /**
@@ -117,10 +117,7 @@ export class UserPreferencesService {
         if (!property) {
             return;
         }
-        this.storage.setItem(
-            this.getPropertyKey(property),
-            value
-        );
+        this.storage.setItem(this.getPropertyKey(property), value);
         this.userPreferenceStatus[property] = value;
         this.onChangeSubject.next(this.userPreferenceStatus);
     }
@@ -149,9 +146,7 @@ export class UserPreferencesService {
         if (!property) {
             return false;
         }
-        return this.storage.hasItem(
-            this.getPropertyKey(property)
-        );
+        return this.storage.hasItem(this.getPropertyKey(property));
     }
 
     /**
@@ -243,7 +238,7 @@ export class UserPreferencesService {
         return (
             this.appConfig
                 .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY, [{ key: 'en' } as LanguageItem])
-                .find((language) => key.includes(language.key)) || { key: 'en' } as LanguageItem
+                .find((language) => key.includes(language.key)) || ({ key: 'en' } as LanguageItem)
         );
     }
 }

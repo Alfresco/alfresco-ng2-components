@@ -23,11 +23,8 @@ import { UserAccessService } from '../services/user-access.service';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuardSsoRoleService  {
-    constructor(private userAccessService: UserAccessService,
-                private router: Router,
-                private dialog: MatDialog) {
-    }
+export class AuthGuardSsoRoleService {
+    constructor(private userAccessService: UserAccessService, private router: Router, private dialog: MatDialog) {}
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
         this.userAccessService.fetchUserAccess();
@@ -73,5 +70,4 @@ export class AuthGuardSsoRoleService  {
     private hasRoles(roles: string[] = []): boolean {
         return this.userAccessService.hasGlobalAccess(roles);
     }
-
 }

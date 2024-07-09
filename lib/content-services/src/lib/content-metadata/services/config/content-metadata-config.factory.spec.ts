@@ -25,20 +25,20 @@ import { ContentMetadataConfig } from '../../interfaces/content-metadata.interfa
 import { HttpClientModule } from '@angular/common/http';
 
 describe('ContentMetadataConfigFactory', () => {
-
     let factory: ContentMetadataConfigFactory;
     let appConfig: AppConfigService;
     let config: ContentMetadataConfig;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule
-            ],
+            imports: [HttpClientModule],
             providers: [
                 {
-                    provide: LogService, useValue: {
-                        error: () => {}
+                    provide: LogService,
+                    useValue: {
+                        error: () => {
+                            /*noop*/
+                        }
                     }
                 }
             ]
@@ -48,7 +48,6 @@ describe('ContentMetadataConfigFactory', () => {
     });
 
     describe('get', () => {
-
         let logService: LogService;
 
         beforeEach(() => {
@@ -57,7 +56,6 @@ describe('ContentMetadataConfigFactory', () => {
         });
 
         describe('get', () => {
-
             it('should get back to default preset if no preset is provided as parameter', () => {
                 config = factory.get();
 
@@ -85,7 +83,6 @@ describe('ContentMetadataConfigFactory', () => {
         });
 
         describe('set', () => {
-
             const setConfig = (presetName: string, presetConfig: any) => {
                 appConfig.config['content-metadata'] = {
                     presets: {
@@ -118,5 +115,5 @@ describe('ContentMetadataConfigFactory', () => {
                 expect(config).toEqual(jasmine.any(LayoutOrientedConfigService));
             });
         });
-   });
+    });
 });

@@ -18,5 +18,7 @@
 import { MatIconRegistry } from '@angular/material/icon';
 
 export const matIconRegistryMock = {
-    addSvgIconInNamespace: () => {}
+    addSvgIconInNamespace: () => {
+        /*noop*/
+    }
 } as any as MatIconRegistry;

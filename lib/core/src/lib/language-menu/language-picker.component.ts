@@ -33,5 +33,4 @@ import { LanguageItem } from '../common/services/language-item.interface';
 export class LanguagePickerComponent {
     @Output()
     public changedLanguage = new EventEmitter<LanguageItem>();
-
 }

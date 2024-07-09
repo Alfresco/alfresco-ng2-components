@@ -16,16 +16,7 @@
  */
 
 import { CommentModel } from '../models/comment.model';
-import {
-    Component,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 
@@ -36,7 +27,6 @@ import { CommentsService } from './interfaces/comments-service.interface';
     encapsulation: ViewEncapsulation.None
 })
 export class CommentsComponent implements OnChanges {
-
     /** The numeric ID of the task. */
     @Input()
     id: string;
@@ -96,19 +86,18 @@ export class CommentsComponent implements OnChanges {
 
         this.beingAdded = true;
 
-        this.commentsService.add(this.id, this.message)
-            .subscribe(
-                (res: CommentModel) => {
-                    this.addToComments(res);
-                    this.resetMessage();
-                },
-                (err) => {
-                    this.error.emit(err);
-                },
-                () => {
-                    this.beingAdded = false;
-                }
-            );
+        this.commentsService.add(this.id, this.message).subscribe(
+            (res: CommentModel) => {
+                this.addToComments(res);
+                this.resetMessage();
+            },
+            (err) => {
+                this.error.emit(err);
+            },
+            () => {
+                this.beingAdded = false;
+            }
+        );
     }
 
     clearMessage(event: Event): void {

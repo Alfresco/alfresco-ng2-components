@@ -36,7 +36,6 @@ import { BooleanPipe } from '../../../pipes/boolean.pipe';
     host: { class: 'adf-datatable-content-cell' }
 })
 export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
-
     ngOnInit() {
         super.ngOnInit();
     }

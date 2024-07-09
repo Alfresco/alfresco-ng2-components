@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, ContentChildren, QueryList } from '@angular/core';
 import { DataColumnComponent } from './data-column.component';
@@ -25,7 +25,5 @@ import { DataColumnComponent } from './data-column.component';
     template: ''
 })
 export class DataColumnListComponent {
-
     @ContentChildren(DataColumnComponent) columns: QueryList<DataColumnComponent>;
-
 }

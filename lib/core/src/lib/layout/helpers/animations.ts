@@ -18,19 +18,27 @@
 import { trigger, transition, animate, style, state, AnimationTriggerMetadata } from '@angular/animations';
 
 export const sidenavAnimation: AnimationTriggerMetadata = trigger('sidenavAnimation', [
-    state('expanded', style({ width: '{{ width }}px' }), { params : { width: 0 } }),
-    state('compact',  style({ width: '{{ width }}px' }), { params : { width: 0 } }),
+    state('expanded', style({ width: '{{ width }}px' }), { params: { width: 0 } }),
+    state('compact', style({ width: '{{ width }}px' }), { params: { width: 0 } }),
     transition('compact <=> expanded', animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'))
 ]);
 
 export const contentAnimation: AnimationTriggerMetadata = trigger('contentAnimationLeft', [
-    state('expanded', style({
-        'margin-left': '{{ margin-left }}px',
-        'margin-right': '{{ margin-right }}px'
-    }), { params: { 'margin-left': 0, 'margin-right': 0 } }),
-    state('compact', style({
-        'margin-left': '{{ margin-left }}px',
-        'margin-right': '{{ margin-right }}px'
-    }), { params: { 'margin-left': 0, 'margin-right': 0 } }),
+    state(
+        'expanded',
+        style({
+            'margin-left': '{{ margin-left }}px',
+            'margin-right': '{{ margin-right }}px'
+        }),
+        { params: { 'margin-left': 0, 'margin-right': 0 } }
+    ),
+    state(
+        'compact',
+        style({
+            'margin-left': '{{ margin-left }}px',
+            'margin-right': '{{ margin-right }}px'
+        }),
+        { params: { 'margin-left': 0, 'margin-right': 0 } }
+    ),
     transition('expanded <=> compact', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
 ]);

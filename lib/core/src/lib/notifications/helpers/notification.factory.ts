@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-import {
-    NotificationInitiator,
-    NOTIFICATION_TYPE,
-    NotificationModel
-} from '../models/notification.model';
+import { NotificationInitiator, NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 
-export const rootInitiator: NotificationInitiator  = {
+export const rootInitiator: NotificationInitiator = {
     key: '*',
     displayName: 'SYSTEM'
 };

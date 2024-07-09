@@ -185,7 +185,9 @@ describe('AttachFileWidgetDialogComponent', () => {
             spyOn(matDialogRef, 'close').and.callThrough();
             fixture.detectChanges();
             widget.data.loginOnly = true;
-            widget.data.registerExternalHost = () => {};
+            widget.data.registerExternalHost = () => {
+                /*noop*/
+            };
             isLogged = false;
         });
 

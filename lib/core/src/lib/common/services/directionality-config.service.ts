@@ -32,11 +32,9 @@ export class DirectionalityConfigService {
     ) {
         const renderer: Renderer2 = this.rendererFactory.createRenderer(null, null);
 
-        this.userPreferencesService
-            .select('textOrientation')
-            .subscribe((direction: Direction) => {
-                renderer.setAttribute(this.document.body, 'dir', direction);
-                (this.directionality as any).value = direction;
-            });
+        this.userPreferencesService.select('textOrientation').subscribe((direction: Direction) => {
+            renderer.setAttribute(this.document.body, 'dir', direction);
+            (this.directionality as any).value = direction;
+        });
     }
 }

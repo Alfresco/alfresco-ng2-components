@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export const initialSortingTypes: Array<{key: string; label: string}> = [
+export const initialSortingTypes: Array<{ key: string; label: string }> = [
     { key: 'sortByFirstName', label: 'First Name' },
     { key: 'sortByLastName', label: 'Last Name' },
     { key: 'sortByBirthDate', label: 'Birth Date' }

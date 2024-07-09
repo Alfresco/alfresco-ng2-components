@@ -30,11 +30,11 @@ export class DebugAppConfigService extends AppConfigService {
     /** @override */
     get<T>(key: string, defaultValue?: T): T {
         if (key === AppConfigValues.OAUTHCONFIG) {
-            return (JSON.parse(this.storage.getItem(key)) || super.get<T>(key, defaultValue));
+            return JSON.parse(this.storage.getItem(key)) || super.get<T>(key, defaultValue);
         } else if (key === AppConfigValues.APPLICATION) {
             return undefined;
         } else {
-            return (this.storage.getItem(key) as any || super.get<T>(key, defaultValue));
+            return (this.storage.getItem(key) as any) || super.get<T>(key, defaultValue);
         }
     }
 }

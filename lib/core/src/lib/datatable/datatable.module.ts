@@ -30,10 +30,12 @@ import { DataTableRowComponent } from './components/datatable-row/datatable-row.
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { DateCellComponent } from './components/date-cell/date-cell.component';
 import { ColumnsSelectorComponent } from './components/columns-selector/columns-selector.component';
-import { EmptyListBodyDirective,
+import {
+    EmptyListBodyDirective,
     EmptyListComponent,
     EmptyListFooterDirective,
-    EmptyListHeaderDirective } from './components/empty-list/empty-list.component';
+    EmptyListHeaderDirective
+} from './components/empty-list/empty-list.component';
 import { FileSizeCellComponent } from './components/filesize-cell/filesize-cell.component';
 import { LocationCellComponent } from './components/location-cell/location-cell.component';
 import { LoadingContentTemplateDirective } from './directives/loading-template.directive';

@@ -92,7 +92,9 @@ describe('DocumentList', () => {
             providers: [{ provide: MatDialog, useValue: mockDialog }]
         });
         eventMock = {
-            preventDefault: () => {}
+            preventDefault: () => {
+                /*noop*/
+            }
         };
 
         fixture = TestBed.createComponent(DocumentListComponent);
@@ -282,7 +284,9 @@ describe('DocumentList', () => {
     it('should call action handler with node', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = () => {
+            /*noop*/
+        };
 
         spyOn(action, 'handler').and.stub();
 
@@ -293,7 +297,9 @@ describe('DocumentList', () => {
     it('should call action handler with node and permission', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = () => {
+            /*noop*/
+        };
         action.permission = 'fake-permission';
         spyOn(action, 'handler').and.stub();
 
@@ -305,7 +311,9 @@ describe('DocumentList', () => {
     it('should call action execute with node if it is defined', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.execute = () => {};
+        action.execute = () => {
+            /*noop*/
+        };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -318,7 +326,9 @@ describe('DocumentList', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
         action.handler = () => deleteObservable;
-        action.execute = () => {};
+        action.execute = () => {
+            /*noop*/
+        };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -394,7 +404,9 @@ describe('DocumentList', () => {
 
     it('should not execute action without node provided', () => {
         const action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = () => {
+            /*noop*/
+        };
 
         spyOn(action, 'handler').and.stub();
         documentList.executeContentAction(null, action);

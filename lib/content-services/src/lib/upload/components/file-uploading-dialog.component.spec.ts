@@ -44,7 +44,9 @@ describe('FileUploadingDialogComponent', () => {
         userPreferenceService = TestBed.inject(UserPreferencesService);
         uploadService.clearQueue();
 
-        spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
+        spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {
+            /*noop*/
+        });
 
         emitter = new EventEmitter();
         fileList = [new FileModel({ name: 'fake-name', size: 10 } as File), new FileModel({ name: 'fake-name2', size: 10 } as File)];

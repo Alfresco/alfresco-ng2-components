@@ -62,7 +62,9 @@ describe('ShareDialogComponent', () => {
                 {
                     provide: MatDialogRef,
                     useValue: {
-                        close: () => {}
+                        close: () => {
+                            /*noop*/
+                        }
                     }
                 },
                 { provide: MAT_DIALOG_DATA, useValue: {} }

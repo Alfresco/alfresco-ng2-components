@@ -42,12 +42,7 @@ import { CommentsComponent } from './comments.component';
         MatLineModule,
         CommentListModule
     ],
-    declarations: [
-        CommentsComponent
-    ],
-    exports: [
-        CommentsComponent
-    ]
+    declarations: [CommentsComponent],
+    exports: [CommentsComponent]
 })
-export class CommentsModule {
-}
+export class CommentsModule {}

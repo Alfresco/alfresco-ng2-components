@@ -58,7 +58,9 @@ describe('NodeLockDialogComponent', () => {
                         ['cm:expiryDate']: expiryDate
                     }
                 },
-                onError: () => {}
+                onError: () => {
+                    /*noop*/
+                }
             };
             fixture.detectChanges();
         });

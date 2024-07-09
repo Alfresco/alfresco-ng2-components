@@ -24,7 +24,8 @@
             "lib/js-api/test/mockObjects/assets/**/*"
           ]
         }
-      }
+      },
+      "dependsOn": ["build-all"]
     },
     "build-all": {
       "executor": "nx:run-commands",

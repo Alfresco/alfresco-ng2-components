@@ -176,7 +176,9 @@ describe('AlfrescoViewerComponent', () => {
                     provide: RenditionService,
                     useValue: {
                         getNodeRendition: () => throwError('thrown'),
-                        generateMediaTracksRendition: () => {}
+                        generateMediaTracksRendition: () => {
+                            /*noop*/
+                        }
                     }
                 },
                 { provide: Location, useClass: SpyLocation },
@@ -880,7 +882,9 @@ describe('AlfrescoViewerComponent', () => {
 
         describe('Events', () => {
             it('should update version when emitted by image-viewer and user has update permissions', () => {
-                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {
+                    /*noop*/
+                });
                 spyOn(uploadService, 'addToQueue');
                 component.readOnly = false;
                 component.nodeEntry = new NodeEntry({
@@ -909,7 +913,9 @@ describe('AlfrescoViewerComponent', () => {
             });
 
             it('should not update version when emitted by image-viewer and user doesn`t have update permissions', () => {
-                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {
+                    /*noop*/
+                });
                 component.readOnly = true;
                 component.nodeEntry = new NodeEntry({
                     entry: new Node({ name: 'fakeImage.png', id: '12', content: new ContentInfo({ mimeType: 'img/png' }) })

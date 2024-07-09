@@ -35,7 +35,9 @@ describe('SnackbarContentComponent', () => {
                 {
                     provide: MatSnackBarRef,
                     useValue: {
-                        dismissWithAction() {}
+                        dismissWithAction() {
+                            /* noop */
+                        }
                     }
                 },
                 {

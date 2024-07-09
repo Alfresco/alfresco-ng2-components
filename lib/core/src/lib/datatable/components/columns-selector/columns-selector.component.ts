@@ -49,23 +49,16 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     searchQuery = '';
 
     ngOnInit(): void {
-        this.mainMenuTrigger.menuOpened.pipe(
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => {
-            const columns = this.columns.map(column => ({...column}));
+        this.mainMenuTrigger.menuOpened.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            const columns = this.columns.map((column) => ({ ...column }));
             this.columnItems = this.columnsSorting ? this.sortColumns(columns) : columns;
         });
 
-        this.mainMenuTrigger.menuClosed.pipe(
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => {
+        this.mainMenuTrigger.menuClosed.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             this.searchInputControl.setValue('');
         });
 
-        this.searchInputControl.valueChanges.pipe(
-            debounceTime(300),
-            takeUntil(this.onDestroy$)
-        ).subscribe((searchQuery) => {
+        this.searchInputControl.valueChanges.pipe(debounceTime(300), takeUntil(this.onDestroy$)).subscribe((searchQuery) => {
             this.searchQuery = searchQuery;
         });
     }
@@ -89,12 +82,16 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     }
 
     isCheckboxDisabled(column: DataColumn): boolean {
-        return this.maxColumnsVisible && column.isHidden && this.maxColumnsVisible === this.columnItems.filter(dataColumn => !dataColumn.isHidden).length;
+        return (
+            this.maxColumnsVisible &&
+            column.isHidden &&
+            this.maxColumnsVisible === this.columnItems.filter((dataColumn) => !dataColumn.isHidden).length
+        );
     }
 
     private sortColumns(columns: DataColumn[]): DataColumn[] {
-        const shownColumns = columns.filter(column => !column.isHidden);
-        const hiddenColumns = columns.filter(column => column.isHidden);
+        const shownColumns = columns.filter((column) => !column.isHidden);
+        const hiddenColumns = columns.filter((column) => column.isHidden);
 
         return [...shownColumns, ...hiddenColumns];
     }

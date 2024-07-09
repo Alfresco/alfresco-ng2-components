@@ -114,7 +114,9 @@ export class RenditionService {
                 try {
                     await this.renditionsApi.createRendition(nodeId, { id: renditionId });
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
-                } catch {}
+                } catch {
+                    /*noop*/
+                }
             }
         }
         return new Promise<RenditionEntry>((resolve) => resolve(rendition));
@@ -292,6 +294,8 @@ export class RenditionService {
                         : type;
                 this.printFile(url, printType);
             })
-            .catch(() => {});
+            .catch(() => {
+                /*noop*/
+            });
     }
 }

@@ -51,6 +51,7 @@ describe('SidebarActionMenuComponent', () => {
 });
 
 @Component({
+    // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
     template: `
         <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
             <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>

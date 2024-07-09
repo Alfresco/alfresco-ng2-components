@@ -757,7 +757,7 @@ describe('WidgetVisibilityService', () => {
                         value: null,
                         numberOfColumns: 2,
                         fields: {
-                            1: [
+                            '1': [
                                 {
                                     id: 'radioboxField',
                                     name: 'radioboxField test',

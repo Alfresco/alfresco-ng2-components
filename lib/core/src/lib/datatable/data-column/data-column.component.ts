@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
+/* eslint-disable @angular-eslint/component-selector, @angular-eslint/no-input-rename */
 
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 import { DataColumnType } from '@alfresco/adf-extensions';
@@ -26,7 +26,6 @@ import { CurrencyConfig, DateConfig, DecimalConfig } from '../data/data-column.m
     template: ''
 })
 export class DataColumnComponent implements OnInit {
-
     /** Id of the Column */
     @Input()
     id: string = '';
@@ -91,7 +90,7 @@ export class DataColumnComponent implements OnInit {
     @Input('class')
     cssClass: string;
 
-     /** Enables/disables a Clipboard directive to allow copying of cell contents. */
+    /** Enables/disables a Clipboard directive to allow copying of cell contents. */
     @Input()
     copyContent: boolean;
 

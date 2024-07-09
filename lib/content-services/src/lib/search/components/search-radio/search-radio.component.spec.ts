@@ -45,7 +45,9 @@ describe('SearchRadioComponent', () => {
                 queryFragments: {
                     radio: 'query'
                 },
-                update: () => {}
+                update: () => {
+                    /*noop*/
+                }
             } as any;
             component.settings = { options: sizeOptions } as any;
 
@@ -65,7 +67,9 @@ describe('SearchRadioComponent', () => {
                 queryFragments: {
                     radio: 'query'
                 },
-                update: () => {}
+                update: () => {
+                    /*noop*/
+                }
             } as any;
             component.settings = { pageSize: 15, options: sizeOptions } as any;
             component.ngOnInit();
@@ -85,7 +89,9 @@ describe('SearchRadioComponent', () => {
             queryFragments: {
                 radio: 'query'
             },
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         } as any;
         component.settings = { options: sizeOptions } as any;
 

@@ -90,13 +90,15 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     _isMenuMinimized;
 
     templateContext = {
-        toggleMenu: () => {},
+        toggleMenu: () => {
+            /* noop */
+        },
         isMenuMinimized: () => this.isMenuMinimized
     };
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService ) {
+    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService) {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 

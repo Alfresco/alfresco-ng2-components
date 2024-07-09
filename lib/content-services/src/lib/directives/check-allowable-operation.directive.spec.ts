@@ -41,7 +41,11 @@ describe('CheckAllowableOperationDirective', () => {
             imports: [ContentDirectiveModule, HttpClientTestingModule],
             providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
         });
-        changeDetectorMock = { detectChanges: () => {} } as ChangeDetectorRef;
+        changeDetectorMock = {
+            detectChanges: () => {
+                /*noop*/
+            }
+        } as ChangeDetectorRef;
     });
 
     describe('HTML nativeElement as subject', () => {

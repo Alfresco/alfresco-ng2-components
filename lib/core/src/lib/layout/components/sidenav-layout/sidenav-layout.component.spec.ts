@@ -43,7 +43,9 @@ export class DummyLayoutContainerComponent {
     @Input() mediaQueryList: MediaQueryList;
     @Input() hideSidenav: boolean;
     @Input() expandedSidenav: boolean;
-    toggleMenu() {}
+    toggleMenu() {
+        /* noop */
+    }
 }
 
 @Component({
@@ -95,7 +97,9 @@ describe('SidenavLayoutComponent', () => {
             addListener(mediaFn) {
                 this.mediaFn = mediaFn;
             },
-            removeListener: () => {}
+            removeListener: () => {
+                /* noop */
+            }
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);
@@ -215,8 +219,12 @@ describe('Template transclusion', () => {
     let mediaMatcher: MediaMatcher;
     const mediaQueryList: any = {
         matches: false,
-        addListener: () => {},
-        removeListener: () => {}
+        addListener: () => {
+            /* noop */
+        },
+        removeListener: () => {
+            /* noop */
+        }
     };
 
     beforeEach(() => {

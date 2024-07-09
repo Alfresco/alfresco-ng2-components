@@ -24,18 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatIconModule,
-        MatSelectModule,
-        TranslateModule
-    ],
-    declarations: [
-        SortingPickerComponent
-    ],
-    exports: [
-        SortingPickerComponent
-    ]
+    imports: [CommonModule, MatButtonModule, MatIconModule, MatSelectModule, TranslateModule],
+    declarations: [SortingPickerComponent],
+    exports: [SortingPickerComponent]
 })
 export class SortingPickerModule {}

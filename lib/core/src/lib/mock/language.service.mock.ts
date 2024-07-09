@@ -22,30 +22,30 @@ import { LanguageItem } from '../common/services/language-item.interface';
 
 @Injectable()
 export class LanguageServiceMock implements LanguageServiceInterface {
-
     private languages = new BehaviorSubject<LanguageItem[]>([
-        {key: 'de', label: 'Deutsch'},
-        {key: 'en', label: 'English'},
-        {key: 'es', label: 'Español'},
-        {key: 'fr', label: 'Français'},
-        {key: 'it', label: 'Italiano'},
-        {key: 'ja', label: '日本語'},
-        {key: 'nb', label: 'Bokmål'},
-        {key: 'nl', label: 'Nederlands'},
-        {key: 'pt-BR', label: 'Português (Brasil)'},
-        {key: 'ru', label: 'Русский'},
-        {key: 'zh-CN', label: '中文简体'},
-        {key: 'cs', label: 'Čeština'},
-        {key: 'da', label: 'Dansk'},
-        {key: 'fi', label: 'Suomi'},
-        {key: 'pl', label: 'Polski'},
-        {key: 'sv', label: 'Svenska'},
-        {key: 'ar', label: 'العربية', direction: 'rtl'}
+        { key: 'de', label: 'Deutsch' },
+        { key: 'en', label: 'English' },
+        { key: 'es', label: 'Español' },
+        { key: 'fr', label: 'Français' },
+        { key: 'it', label: 'Italiano' },
+        { key: 'ja', label: '日本語' },
+        { key: 'nb', label: 'Bokmål' },
+        { key: 'nl', label: 'Nederlands' },
+        { key: 'pt-BR', label: 'Português (Brasil)' },
+        { key: 'ru', label: 'Русский' },
+        { key: 'zh-CN', label: '中文简体' },
+        { key: 'cs', label: 'Čeština' },
+        { key: 'da', label: 'Dansk' },
+        { key: 'fi', label: 'Suomi' },
+        { key: 'pl', label: 'Polski' },
+        { key: 'sv', label: 'Svenska' },
+        { key: 'ar', label: 'العربية', direction: 'rtl' }
     ]);
 
     languages$ = this.languages.asObservable();
 
     changeLanguage(_language: LanguageItem): void {
+        /* noop */
     }
 
     setLanguages(items: LanguageItem[]): void {

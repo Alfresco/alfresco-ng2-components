@@ -62,9 +62,13 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
 
-    onChange: (value: any) => void = () => {};
+    onChange: (value: any) => void = () => {
+        /* noop */
+    };
 
-    onTouched = () => {};
+    onTouched = () => {
+        /* noop */
+    };
 
     constructor(
         private element: ElementRef,

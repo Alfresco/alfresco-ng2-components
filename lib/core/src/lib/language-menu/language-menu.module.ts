@@ -27,23 +27,8 @@ import { LanguageMenuComponent } from './language-menu.component';
 import { LanguagePickerComponent } from './language-picker.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule,
-        TranslateModule
-    ],
-    declarations: [
-        LanguageMenuComponent,
-        LanguagePickerComponent
-    ],
-    exports: [
-        LanguageMenuComponent,
-        LanguagePickerComponent,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule
-    ]
+    imports: [CommonModule, MatMenuModule, MatIconModule, MatButtonModule, TranslateModule],
+    declarations: [LanguageMenuComponent, LanguagePickerComponent],
+    exports: [LanguageMenuComponent, LanguagePickerComponent, MatMenuModule, MatIconModule, MatButtonModule]
 })
 export class LanguageMenuModule {}

@@ -23,18 +23,8 @@ import { DataColumnComponent } from './data-column.component';
 import { DateColumnHeaderComponent } from './data-column-header.component';
 
 @NgModule({
-    imports: [
-        CommonModule
-    ],
-    declarations: [
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
-    ],
-    exports: [
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
-    ]
+    imports: [CommonModule],
+    declarations: [DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent],
+    exports: [DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent]
 })
 export class DataColumnModule {}

@@ -26,7 +26,9 @@ describe('DataTableRowComponent', () => {
     const row: DataRow = {
         isSelected: false,
         hasValue: jasmine.createSpy('hasValue'),
-        getValue: () => {}
+        getValue: () => {
+            /* noop */
+        }
     };
 
     beforeEach(() => {
@@ -51,16 +53,14 @@ describe('DataTableRowComponent', () => {
         component.row = row;
         fixture.detectChanges();
 
-        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected'))
-            .not.toBe(true);
+        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected')).not.toBe(true);
     });
 
     it('should not have select class when row data is null', () => {
         row.isSelected = false;
         fixture.detectChanges();
 
-        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected'))
-            .not.toBe(true);
+        expect(fixture.debugElement.nativeElement.classList.contains('adf-is-selected')).not.toBe(true);
     });
 
     it('should set aria selected to true when row is selected', () => {

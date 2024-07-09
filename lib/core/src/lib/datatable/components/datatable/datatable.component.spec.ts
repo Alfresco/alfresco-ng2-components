@@ -530,7 +530,9 @@ describe('DataTable', () => {
 
         dataTable.onRowClick(rows[0], {
             metaKey: true,
-            preventDefault: () => {},
+            preventDefault: () => {
+                /* noop */
+            },
             composedPath: () => []
         } as any);
     });

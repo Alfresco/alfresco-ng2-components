@@ -31,11 +31,7 @@ describe('OidcAuthGuard', () => {
         const authSpy = jasmine.createSpyObj('AuthService', ['loginCallback']);
 
         TestBed.configureTestingModule({
-            providers: [
-                OidcAuthGuard,
-                { provide: AuthService, useValue: authSpy },
-                { provide: Router, useValue: routerSpyObj }
-            ],
+            providers: [OidcAuthGuard, { provide: AuthService, useValue: authSpy }, { provide: Router, useValue: routerSpyObj }],
             imports: [RouterTestingModule]
         });
 

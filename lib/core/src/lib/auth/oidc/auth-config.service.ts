@@ -35,10 +35,7 @@ export function authConfigFactory(authConfigService: AuthConfigService): Promise
     providedIn: 'root'
 })
 export class AuthConfigService {
-    constructor(
-        private appConfigService: AppConfigService,
-        @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig
-    ) {}
+    constructor(private appConfigService: AppConfigService, @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig) {}
 
     private _authConfig!: AuthConfig;
     get authConfig(): AuthConfig {
@@ -85,11 +82,10 @@ export class AuthConfigService {
             return oauth2.redirectUri;
         }
 
-        const locationOrigin = oauth2.redirectUri && oauth2.redirectUri !== '/' ? this.getLocationOrigin() + '' + oauth2.redirectUri : this.getLocationOrigin();
+        const locationOrigin =
+            oauth2.redirectUri && oauth2.redirectUri !== '/' ? this.getLocationOrigin() + '' + oauth2.redirectUri : this.getLocationOrigin();
 
-        const redirectUri = useHash
-            ? `${locationOrigin}/#/${viewUrl}`
-            : `${locationOrigin}/${viewUrl}`;
+        const redirectUri = useHash ? `${locationOrigin}/#/${viewUrl}` : `${locationOrigin}/${viewUrl}`;
 
         // handle issue from the OIDC library with hashStrategy and implicitFlow, with would append &state to the url with would lead to error
         // `cannot match any routes`, and displaying the wildcard ** error page

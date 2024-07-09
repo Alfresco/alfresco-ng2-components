@@ -28,7 +28,7 @@ import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.comp
 export class CardViewComponent {
     /** (**required**) Items to show in the card view. */
     @Input()
-    properties: CardViewItem [];
+    properties: CardViewItem[];
 
     /** Toggles whether or not the items can be edited. */
     @Input()

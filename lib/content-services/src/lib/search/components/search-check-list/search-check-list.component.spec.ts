@@ -89,7 +89,9 @@ describe('SearchCheckListComponent', () => {
         component.id = 'checklist';
         component.context = {
             queryFragments: {},
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         } as any;
 
         component.ngOnInit();
@@ -123,7 +125,9 @@ describe('SearchCheckListComponent', () => {
             queryFragments: {
                 checklist: 'query'
             },
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         } as any;
         spyOn(component.context, 'update').and.stub();
 
@@ -146,7 +150,9 @@ describe('SearchCheckListComponent', () => {
                 queryFragments: {
                     checklist: 'query'
                 },
-                update: () => {}
+                update: () => {
+                    /*noop*/
+                }
             } as any;
             component.settings = { options: sizeOptions } as any;
 
@@ -166,7 +172,9 @@ describe('SearchCheckListComponent', () => {
                 queryFragments: {
                     checklist: 'query'
                 },
-                update: () => {}
+                update: () => {
+                    /*noop*/
+                }
             } as any;
             component.settings = { pageSize: 15, options: sizeOptions } as any;
             component.ngOnInit();
@@ -186,7 +194,9 @@ describe('SearchCheckListComponent', () => {
             queryFragments: {
                 checklist: 'query'
             },
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         } as any;
         component.settings = { options: sizeOptions } as any;
         spyOn(component, 'submitValues').and.stub();

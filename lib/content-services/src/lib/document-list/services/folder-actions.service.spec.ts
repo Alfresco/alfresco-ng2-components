@@ -37,7 +37,9 @@ describe('FolderActionsService', () => {
     });
 
     it('should register custom action handler', () => {
-        const handler: ContentActionHandler = () => {};
+        const handler: ContentActionHandler = () => {
+            /*noop*/
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -47,7 +49,9 @@ describe('FolderActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        const handler: ContentActionHandler = () => {};
+        const handler: ContentActionHandler = () => {
+            /*noop*/
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
     });
@@ -69,7 +73,9 @@ describe('FolderActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        const handler: ContentActionHandler = () => {};
+        const handler: ContentActionHandler = () => {
+            /*noop*/
+        };
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();

@@ -51,12 +51,10 @@ describe('PaginationComponent', () => {
                 HttpClientModule,
                 MatMenuModule,
                 TranslateModule.forRoot({
-                    loader: {provide: TranslateLoader, useClass: TranslateFakeLoader}
+                    loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
                 })
             ],
-            providers:[
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
+            providers: [{ provide: TranslationService, useClass: TranslationMock }]
         });
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
@@ -68,7 +66,7 @@ describe('PaginationComponent', () => {
     });
 
     it('should have an "empty" class if no items present', async () => {
-       fixture.detectChanges();
+        fixture.detectChanges();
         await fixture.whenStable();
 
         expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();
@@ -293,7 +291,9 @@ describe('PaginationComponent', () => {
         it('should send pagination event to paginated component', () => {
             const customComponent = {
                 pagination: new BehaviorSubject<PaginationModel>({}),
-                updatePagination: () => {},
+                updatePagination: () => {
+                    /* noop */
+                },
                 supportedPageSizes: [],
                 rows: []
             } as PaginatedComponent;
@@ -312,7 +312,9 @@ describe('PaginationComponent', () => {
 
         it('should go to previous page if current page has 0 items', () => {
             const customComponent = {
-                updatePagination: () => {},
+                updatePagination: () => {
+                    /* noop */
+                },
                 pagination: new BehaviorSubject<PaginationModel>({}),
                 rows: []
             } as PaginatedComponent;

@@ -36,7 +36,9 @@ describe('StorageFeaturesService', () => {
                         fictive: true
                     }
                 }),
-            setItem: () => {}
+            setItem: () => {
+                /*noop*/
+            }
         };
 
         beforeEach(() => {

@@ -22,12 +22,10 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
     selector: 'adf-header-filter-template'
 })
 export class HeaderFilterTemplateDirective implements AfterContentInit {
-
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private dataTable: DataTableComponent) {
-    }
+    constructor(private dataTable: DataTableComponent) {}
 
     ngAfterContentInit() {
         if (this.dataTable) {

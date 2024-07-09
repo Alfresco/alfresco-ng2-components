@@ -31,16 +31,13 @@ export interface EditJsonDialogSettings {
     host: { class: 'adf-edit-json-dialog' }
 })
 export class EditJsonDialogComponent implements OnInit {
-
     editable: boolean = false;
     title: string = 'JSON';
 
     @Input()
     value: string = '';
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA) private settings: EditJsonDialogSettings
-    ) {}
+    constructor(@Inject(MAT_DIALOG_DATA) private settings: EditJsonDialogSettings) {}
 
     ngOnInit() {
         if (this.settings) {

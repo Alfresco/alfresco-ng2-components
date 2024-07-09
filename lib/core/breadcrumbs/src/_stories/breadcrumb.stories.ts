@@ -47,13 +47,7 @@ const meta: Meta = {
     component: DemoBreadcrumbComponent,
     decorators: [
         moduleMetadata({
-            imports: [
-                BreadcrumbComponent,
-                BreadcrumbItemComponent,
-                MatButtonModule,
-                MatMenuModule,
-                MatIconModule
-            ]
+            imports: [BreadcrumbComponent, BreadcrumbItemComponent, MatButtonModule, MatMenuModule, MatIconModule]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]

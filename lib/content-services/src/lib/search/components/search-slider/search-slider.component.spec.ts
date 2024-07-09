@@ -51,7 +51,9 @@ describe('SearchSliderComponent', () => {
     it('should update its query part on slider change', () => {
         const context: any = {
             queryFragments: {},
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         };
 
         spyOn(context, 'update').and.stub();
@@ -82,7 +84,9 @@ describe('SearchSliderComponent', () => {
 
         const context: any = {
             queryFragments: {},
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         };
 
         component.settings = settings;
@@ -110,7 +114,9 @@ describe('SearchSliderComponent', () => {
 
         const context: any = {
             queryFragments: {},
-            update: () => {}
+            update: () => {
+                /*noop*/
+            }
         };
 
         component.settings = settings;

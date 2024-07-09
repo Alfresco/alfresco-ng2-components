@@ -22,7 +22,6 @@ import { Logger } from '../../utils/logger';
 import { browser } from 'protractor';
 
 export class GroupIdentityService {
-
     api: ApiService;
 
     constructor(api: ApiService) {
@@ -75,9 +74,10 @@ export class GroupIdentityService {
 
                 Logger.log(`Data ${JSON.stringify(data)}`);
 
-                return data[0];                Logger.error('Group not found');
-
+                return data[0];
+                Logger.error('Group not found');
             } catch (error) {
+                /*noop*/
             }
         };
 
@@ -135,5 +135,4 @@ export class GroupIdentityService {
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0].id;
     }
-
 }

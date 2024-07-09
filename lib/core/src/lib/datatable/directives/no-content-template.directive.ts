@@ -25,12 +25,10 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
     selector: 'adf-no-content-template, no-content-template'
 })
 export class NoContentTemplateDirective implements AfterContentInit {
-
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private dataTable: DataTableComponent) {
-    }
+    constructor(private dataTable: DataTableComponent) {}
 
     ngAfterContentInit() {
         if (this.dataTable) {

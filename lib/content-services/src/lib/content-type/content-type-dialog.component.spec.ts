@@ -140,8 +140,12 @@ describe('Content Type Dialog Component', () => {
 
     it('should complete the select stream Cancel button is clicked', (done) => {
         data.select.subscribe(
-            () => {},
-            () => {},
+            () => {
+                /*noop*/
+            },
+            () => {
+                /*noop*/
+            },
             () => done()
         );
         const cancelButton: HTMLButtonElement = fixture.nativeElement.querySelector('#content-type-dialog-actions-cancel');
@@ -163,7 +167,9 @@ describe('Content Type Dialog Component', () => {
             (value) => {
                 expect(value).toBe(true);
             },
-            () => {},
+            () => {
+                /*noop*/
+            },
             () => done()
         );
         const applyButton: HTMLButtonElement = fixture.nativeElement.querySelector('#content-type-dialog-apply-button');

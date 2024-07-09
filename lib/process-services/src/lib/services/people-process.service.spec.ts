@@ -112,7 +112,9 @@ describe('PeopleProcessService', () => {
 
         it('getWorkflowUsers catch errors call', fakeAsync(() => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }
@@ -136,7 +138,9 @@ describe('PeopleProcessService', () => {
 
         it('involveUserWithTask catch errors call', fakeAsync(() => {
             service.involveUserWithTask('fake-task-id', 'fake-user-id').subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }
@@ -160,7 +164,9 @@ describe('PeopleProcessService', () => {
 
         it('removeInvolvedUser catch errors call', fakeAsync(() => {
             service.removeInvolvedUser('fake-task-id', 'fake-user-id').subscribe(
-                () => {},
+                () => {
+                    /*noop*/
+                },
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }

@@ -994,9 +994,13 @@ class FormWithCustomOutComesComponent {
     @ViewChild('adfForm', { static: true })
     adfForm: FormComponent;
 
-    onCustomButtonOneClick() {}
+    onCustomButtonOneClick() {
+        /*noop*/
+    }
 
-    onCustomButtonTwoClick() {}
+    onCustomButtonTwoClick() {
+        /*noop*/
+    }
 }
 
 describe('FormWithCustomOutComesComponent', () => {

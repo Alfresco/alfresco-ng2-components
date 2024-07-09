@@ -79,7 +79,9 @@ describe('Task Cloud Service', () => {
         const taskId = '68d54a8f';
 
         service.completeTask(appName, taskId).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (err) => {
                 expect(err).toBeDefined();
                 done();
@@ -147,7 +149,9 @@ describe('Task Cloud Service', () => {
         const assignee = 'user12';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.claimTask(appName, taskId, assignee).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -161,7 +165,9 @@ describe('Task Cloud Service', () => {
         const assignee = 'user12';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.claimTask(appName, taskId, assignee).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -187,7 +193,9 @@ describe('Task Cloud Service', () => {
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.unclaimTask(appName, taskId).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -200,7 +208,9 @@ describe('Task Cloud Service', () => {
         const taskId = null;
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.unclaimTask(appName, taskId).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -226,7 +236,9 @@ describe('Task Cloud Service', () => {
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.getTaskById(appName, taskId).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -239,7 +251,9 @@ describe('Task Cloud Service', () => {
         const taskId = null;
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.getTaskById(appName, taskId).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -253,7 +267,9 @@ describe('Task Cloud Service', () => {
         const updatePayload = { description: 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -267,7 +283,9 @@ describe('Task Cloud Service', () => {
         const updatePayload = { description: 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -295,7 +313,9 @@ describe('Task Cloud Service', () => {
         const updatePayload = { description: 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -309,7 +329,9 @@ describe('Task Cloud Service', () => {
         const updatePayload = { description: 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -400,7 +422,9 @@ describe('Task Cloud Service', () => {
         const taskId = '68d54a8f';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.assign(appName, taskId, 'mock-assignee').subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();
@@ -413,7 +437,9 @@ describe('Task Cloud Service', () => {
         const taskId = '';
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.assign(appName, taskId, 'mock-assignee').subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('AppName/TaskId not configured');
                 done();

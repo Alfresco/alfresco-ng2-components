@@ -113,7 +113,9 @@ describe('Test PdfViewer component', () => {
                 {
                     provide: MatDialog,
                     useValue: {
-                        open: () => {}
+                        open: () => {
+                            /* noop */
+                        }
                     }
                 },
                 RenderingQueueServices
@@ -240,7 +242,9 @@ describe('Test PdfViewer component', () => {
 
         describe('Zoom', () => {
             it('should zoom in increment the scale value', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                    /* noop */
+                });
 
                 const zoomInButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-in-button');
 
@@ -254,7 +258,9 @@ describe('Test PdfViewer component', () => {
             }), 55000);
 
             it('should zoom out decrement the scale value', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                    /* noop */
+                });
                 const zoomOutButton: any = elementUrlTestComponent.querySelector('#viewer-zoom-out-button');
 
                 tick(250);
@@ -267,7 +273,9 @@ describe('Test PdfViewer component', () => {
             }), 55000);
 
             it('should it-in button toggle page-fit and auto scale mode', fakeAsync(() => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                    /* noop */
+                });
 
                 const itPage: any = elementUrlTestComponent.querySelector('#viewer-scale-page-button');
 
@@ -426,7 +434,9 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should use the custom zoom if it is present in the app.config', (done) => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                    /* noop */
+                });
 
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
@@ -461,7 +471,9 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should use the minimum scale zoom if the value given in app.config is less than the minimum allowed scale', (done) => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                    /* noop */
+                });
 
                 fixtureUrlTestComponent.detectChanges();
 
@@ -498,7 +510,9 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should use the maximum scale zoom if the value given in app.config is greater than the maximum allowed scale', (done) => {
-                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
+                spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {
+                    /* noop */
+                });
 
                 fixtureUrlTestComponent.detectChanges();
                 fixtureUrlTestComponent.whenStable().then(() => {
@@ -682,7 +696,9 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should try to access protected pdf', (done) => {
-                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {}, pdfjsLib.PasswordResponses.NEED_PASSWORD);
+                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {
+                    /* noop */
+                }, pdfjsLib.PasswordResponses.NEED_PASSWORD);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -693,7 +709,9 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should raise dialog asking for password', (done) => {
-                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {}, pdfjsLib.PasswordResponses.NEED_PASSWORD);
+                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {
+                    /* noop */
+                }, pdfjsLib.PasswordResponses.NEED_PASSWORD);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -705,7 +723,9 @@ describe('Test PdfViewer component', () => {
             });
 
             it('it should raise dialog with incorrect password', (done) => {
-                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {}, pdfjsLib.PasswordResponses.INCORRECT_PASSWORD);
+                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {
+                    /* noop */
+                }, pdfjsLib.PasswordResponses.INCORRECT_PASSWORD);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -743,7 +763,9 @@ describe('Test PdfViewer component', () => {
             });
 
             it('should try to access protected pdf', (done) => {
-                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {}, pdfjsLib.PasswordResponses.NEED_PASSWORD);
+                componentUrlTestPasswordComponent.pdfViewerComponent.onPdfPassword(() => {
+                    /* noop */
+                }, pdfjsLib.PasswordResponses.NEED_PASSWORD);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();

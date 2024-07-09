@@ -31,7 +31,6 @@ import { LanguageItem } from '../common/services/language-item.interface';
     `
 })
 export class LanguageMenuComponent {
-
     /** Emitted when the language change */
     @Output()
     changedLanguage: EventEmitter<LanguageItem> = new EventEmitter<LanguageItem>();

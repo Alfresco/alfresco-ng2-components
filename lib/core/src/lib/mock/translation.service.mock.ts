@@ -26,7 +26,6 @@ export interface LangChangeEvent {
 
 @Injectable()
 export class TranslationMock implements TranslationService {
-
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
@@ -35,13 +34,21 @@ export class TranslationMock implements TranslationService {
         onLangChange: new EventEmitter<LangChangeEvent>()
     };
 
-    addTranslationFolder() {}
+    addTranslationFolder() {
+        /* noop */
+    }
 
-    onTranslationChanged() {}
+    onTranslationChanged() {
+        /* noop */
+    }
 
-    use(): any {}
+    use(): any {
+        /* noop */
+    }
 
-    loadTranslation() {}
+    loadTranslation() {
+        /* noop */
+    }
 
     get(key: string | Array<string>): Observable<string | any> {
         return of(key);
@@ -50,5 +57,4 @@ export class TranslationMock implements TranslationService {
     instant(key: string | Array<string>): string | any {
         return key;
     }
-
 }

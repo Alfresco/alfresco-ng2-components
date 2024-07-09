@@ -1390,10 +1390,18 @@ describe('FormCloudComponent', () => {
                     {
                         displayMode: FormCloudDisplayMode.fullScreen,
                         options: {
-                            onCompleteTask: () => {},
-                            onDisplayModeOff: () => {},
-                            onDisplayModeOn: () => {},
-                            onSaveTask: () => {},
+                            onCompleteTask: () => {
+                                /*noop*/
+                            },
+                            onDisplayModeOff: () => {
+                                /*noop*/
+                            },
+                            onDisplayModeOn: () => {
+                                /*noop*/
+                            },
+                            onSaveTask: () => {
+                                /*noop*/
+                            },
                             displayToolbar: false
                         }
                     }

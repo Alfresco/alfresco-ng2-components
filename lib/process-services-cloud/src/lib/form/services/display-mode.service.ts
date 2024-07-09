@@ -35,10 +35,14 @@ export class DisplayModeService {
         {
             displayMode: FormCloudDisplayMode.fullScreen,
             options: {
-                onDisplayModeOn: () => { },
+                onDisplayModeOn: () => {
+                    /*noop*/
+                },
                 onDisplayModeOff: (id: string) => DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
                 onCompleteTask: (id: string) => DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
-                onSaveTask: () => { },
+                onSaveTask: () => {
+                    /*noop*/
+                },
                 displayToolbar: true
             }
         }
@@ -72,16 +76,19 @@ export class DisplayModeService {
         if (configuration) {
             return configuration.displayMode;
         } else if (availableConfigurations && availableConfigurations.length > 0) {
-            return availableConfigurations.length === 1 ?
-                availableConfigurations[0].displayMode :
-                (availableConfigurations.find(config => config.default)?.displayMode || availableConfigurations[0].displayMode);
+            return availableConfigurations.length === 1
+                ? availableConfigurations[0].displayMode
+                : availableConfigurations.find((config) => config.default)?.displayMode || availableConfigurations[0].displayMode;
         } else {
             return DisplayModeService.DEFAULT_DISPLAY_MODE;
         }
     }
 
-    findConfiguration(displayMode?: FormCloudDisplayMode, availableConfigurations?: FormCloudDisplayModeConfiguration[]): FormCloudDisplayModeConfiguration {
-        return this.getDisplayModeConfigurations(availableConfigurations).find(config => config.displayMode === displayMode);
+    findConfiguration(
+        displayMode?: FormCloudDisplayMode,
+        availableConfigurations?: FormCloudDisplayModeConfiguration[]
+    ): FormCloudDisplayModeConfiguration {
+        return this.getDisplayModeConfigurations(availableConfigurations).find((config) => config.displayMode === displayMode);
     }
 
     onCompleteTask(id?: string, displayMode?: FormCloudDisplayMode, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {

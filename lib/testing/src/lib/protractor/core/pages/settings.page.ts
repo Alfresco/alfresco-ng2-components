@@ -42,7 +42,9 @@ export class SettingsPage {
 
         try {
             currentUrl = await browser.getCurrentUrl();
-        } catch (e) {}
+        } catch (e) {
+            /*noop*/
+        }
 
         if (!currentUrl || currentUrl.indexOf(this.settingsURL) === -1) {
             await browser.get(this.settingsURL);

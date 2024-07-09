@@ -25,5 +25,4 @@ import { Directive } from '@angular/core';
 @Directive({
     selector: 'adf-custom-empty-content-template, empty-folder-content'
 })
-
 export class CustomEmptyContentTemplateDirective {}

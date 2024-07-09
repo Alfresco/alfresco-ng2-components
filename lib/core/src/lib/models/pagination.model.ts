@@ -16,7 +16,6 @@
  */
 
 export class PaginationModel {
-
     merge?: boolean;
     count?: number;
     hasMoreItems?: boolean;

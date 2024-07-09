@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
@@ -173,12 +165,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this.updateChanges(updatedNode.changed);
             });
 
-        this.cardViewContentUpdateService.updatedAspect$
-            .pipe(debounceTime(500), takeUntil(this.onDestroy$))
-            .subscribe((node) => {
-                this.node.aspectNames = node?.aspectNames;
-                this.loadProperties(node);
-            });
+        this.cardViewContentUpdateService.updatedAspect$.pipe(debounceTime(500), takeUntil(this.onDestroy$)).subscribe((node) => {
+            this.node.aspectNames = node?.aspectNames;
+            this.loadProperties(node);
+        });
 
         this.loadProperties(this.node);
         this.verifyAllowableOperations();
@@ -210,7 +200,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     isPanelEditing(panelTitle: string): boolean {
-        return this.editing && ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle);
+        return (
+            this.editing &&
+            ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle)
+        );
     }
 
     protected handleUpdateError(error: Error) {
@@ -218,7 +211,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         try {
             statusCode = JSON.parse(error.message).error.statusCode;
-        } catch {}
+        } catch {
+            /*noop*/
+        }
 
         let message = `METADATA.ERRORS.${statusCode}`;
 
@@ -250,7 +245,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.displayDefaultProperties?.currentValue) {
             this.expandPanel(this.DefaultPanels.PROPERTIES);
         }
-
     }
 
     ngOnDestroy() {
@@ -365,7 +359,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
+        if (event.keyCode === 37 || event.keyCode === 39) {
+            // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }

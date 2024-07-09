@@ -20,14 +20,15 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { UploadDirective } from './upload.directive';
 
 describe('UploadDirective', () => {
-
     let directive: UploadDirective;
     let nativeElement: any;
 
     beforeEach(() => {
         nativeElement = {
             classList: jasmine.createSpyObj('classList', ['add', 'remove']),
-            dispatchEvent: () => {}
+            dispatchEvent: () => {
+                /*noop*/
+            }
         };
         directive = new UploadDirective(new ElementRef(nativeElement), null, null);
     });
@@ -139,7 +140,7 @@ describe('UploadDirective', () => {
         directive.enabled = true;
         directive.mode = ['click'];
         const files = [{}];
-        const event = {currentTarget: {files}, target: {value: '/testpath/document.pdf'}};
+        const event = { currentTarget: { files }, target: { value: '/testpath/document.pdf' } };
 
         directive.onSelectFiles(event);
         expect(event.target.value).toBe('');

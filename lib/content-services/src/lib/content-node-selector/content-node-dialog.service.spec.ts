@@ -90,7 +90,9 @@ describe('ContentNodeDialogService', () => {
         } as Node;
 
         service.openLockNodeDialog(testNode).subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(error).toBe('OPERATION.FAIL.NODE.NO_PERMISSION');
             }
@@ -104,7 +106,9 @@ describe('ContentNodeDialogService', () => {
 
     it('should NOT be able to open the dialog when node has NOT permission', () => {
         service.openCopyMoveDialog(NodeAction.CHOOSE, fakeNode, 'noperm').subscribe(
-            () => {},
+            () => {
+                /*noop*/
+            },
             (error) => {
                 expect(spyOnDialogOpen).not.toHaveBeenCalled();
                 expect(JSON.parse(error.message).error.statusCode).toBe(403);
@@ -114,7 +118,9 @@ describe('ContentNodeDialogService', () => {
 
     it('should be able to open the dialog using a folder id', fakeAsync(() => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
-        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe(() => {});
+        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe(() => {
+            /*noop*/
+        });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
@@ -122,7 +128,9 @@ describe('ContentNodeDialogService', () => {
     it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
-        service.openFileBrowseDialogBySite().subscribe(() => {});
+        service.openFileBrowseDialogBySite().subscribe(() => {
+            /*noop*/
+        });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
@@ -130,7 +138,9 @@ describe('ContentNodeDialogService', () => {
     it('should be able to open the dialog for folder using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
-        service.openFolderBrowseDialogBySite().subscribe(() => {});
+        service.openFolderBrowseDialogBySite().subscribe(() => {
+            /*noop*/
+        });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));

@@ -31,13 +31,12 @@ import { BaseCardView } from '../base-card-view';
                 `
     ]
 })
-
 export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemModel> {
     @Input()
     editable: boolean;
 
     changed(change: MatCheckboxChange) {
-        this.cardViewUpdateService.update({ ...this.property } as CardViewBoolItemModel, change.checked );
+        this.cardViewUpdateService.update({ ...this.property } as CardViewBoolItemModel, change.checked);
         this.property.value = change.checked;
     }
 }
