@@ -21,7 +21,6 @@ import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { LayoutModule, MediaMatcher } from '@angular/cdk/layout';
 import { PlatformModule } from '@angular/cdk/platform';
-import { MaterialModule } from '../../../material.module';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
@@ -29,6 +28,7 @@ import { UserPreferencesService } from '../../../common/services/user-preference
 import { CommonModule } from '@angular/common';
 import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-layout-container',
@@ -82,7 +82,7 @@ describe('SidenavLayoutComponent', () => {
                 CommonModule,
                 PlatformModule,
                 LayoutModule,
-                MaterialModule,
+                NoopAnimationsModule,
                 SidenavLayoutContentDirective,
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
@@ -227,7 +227,7 @@ describe('Template transclusion', () => {
                 CommonModule,
                 PlatformModule,
                 LayoutModule,
-                MaterialModule,
+                NoopAnimationsModule,
                 SidenavLayoutContentDirective,
                 SidenavLayoutHeaderDirective,
                 SidenavLayoutNavigationDirective
