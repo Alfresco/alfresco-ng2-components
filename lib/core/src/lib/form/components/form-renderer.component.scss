@@ -210,11 +210,9 @@
         white-space: nowrap;
     }
 
-    /* stylelint-disable declaration-no-important */
     &-form-mat-card-actions {
-        float: right;
-        padding-bottom: 25px !important;
-        padding-right: 25px !important;
+        padding-bottom: 25px;
+        padding-right: 25px;
 
         & #{$mat-button} {
             height: 36px;
@@ -227,10 +225,6 @@
 
         & #{$mat-button-label} {
             min-width: 58px;
-            height: 20px;
-            opacity: 0.54;
-            font-size: var(--theme-body-2-font-size);
-            font-weight: bold;
         }
     }
 
