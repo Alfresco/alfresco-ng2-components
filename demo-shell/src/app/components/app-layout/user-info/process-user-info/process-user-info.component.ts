@@ -20,7 +20,7 @@ import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-servic
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
-import { PeopleProcessService } from '../services/people-process.service';
+import { PeopleProcessService } from '@alfresco/adf-process-services';
 import { UserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -57,11 +57,11 @@ export class ProcessUserInfoComponent implements OnDestroy {
 
     /** Custom path for the background banner image for APS users. */
     @Input()
-    bpmBackgroundImage: string = './assets/images/bpm-background.png';
+    bpmBackgroundImage: string = './resources/images/bpm-background.png';
 
     /** Custom path for the background banner image for ACS users. */
     @Input()
-    ecmBackgroundImage: string = './assets/images/ecm-background.png';
+    ecmBackgroundImage: string = './resources/images/ecm-background.png';
 
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
