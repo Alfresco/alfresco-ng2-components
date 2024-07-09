@@ -19,7 +19,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';

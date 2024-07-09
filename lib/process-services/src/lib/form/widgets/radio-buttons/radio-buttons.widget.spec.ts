@@ -42,8 +42,6 @@ import { ProcessDefinitionService } from '../../services/process-definition.serv
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -58,7 +56,6 @@ describe('RadioButtonsWidgetComponent', () => {
             imports: [
                 TranslateModule.forRoot(),
                 MatRadioModule,
-                MatTooltipModule,
                 MatButtonModule,
                 FormsModule,
                 HttpClientTestingModule,
