@@ -31,8 +31,12 @@ describe('Oauth2  test', () => {
     beforeEach(() => {
         const hostOauth2 = 'https://myOauthUrl:30081';
         const mockStorage = {
-            getItem: () => {},
-            setItem: () => {}
+            getItem: () => {
+                /* do nothing */
+            },
+            setItem: () => {
+                /* do nothing */
+            }
         };
 
         oauth2Mock = new OAuthMock(hostOauth2);

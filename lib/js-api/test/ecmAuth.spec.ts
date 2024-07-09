@@ -120,7 +120,9 @@ describe('Ecm Auth test', () => {
             authEcmMock.get403Response();
 
             contentAuth.login('wrong', 'name').then(
-                () => {},
+                () => {
+                    /* do nothing */
+                },
                 (error: any) => {
                     assert.equal(error.status, 403);
                     done();
@@ -132,7 +134,9 @@ describe('Ecm Auth test', () => {
             authEcmMock.get400Response();
 
             contentAuth.login(null, null).then(
-                () => {},
+                () => {
+                    /* do nothing */
+                },
                 (error) => {
                     assert.equal(error.status, 400);
                     done();
@@ -145,7 +149,9 @@ describe('Ecm Auth test', () => {
                 authEcmMock.get401Response();
 
                 const loginPromise: any = contentAuth.login('wrong', 'name');
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => {
+                    /* do nothing */
+                });
 
                 loginPromise.on('unauthorized', () => {
                     done();
@@ -157,7 +163,9 @@ describe('Ecm Auth test', () => {
 
                 const loginPromise: any = contentAuth.login('wrong', 'name');
 
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => {
+                    /* do nothing */
+                });
 
                 loginPromise.on('forbidden', () => {
                     done();
@@ -169,7 +177,9 @@ describe('Ecm Auth test', () => {
 
                 const loginPromise: any = contentAuth.login('admin', 'admin');
 
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => {
+                    /* do nothing */
+                });
 
                 loginPromise.on('success', () => {
                     done();
@@ -224,7 +234,9 @@ describe('Ecm Auth test', () => {
             it('Logout should be rejected if the Ticket is already expired', (done) => {
                 authEcmMock.get404ResponseLogout();
                 contentAuth.logout().then(
-                    () => {},
+                    () => {
+                        /* do nothing */
+                    },
                     (error) => {
                         assert.equal(error.error.toString(), 'Error: Not Found');
                         done();
