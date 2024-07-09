@@ -68,6 +68,11 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         this.storage = Storage.getInstance();
         this.storage.setDomainPrefix(config.domainPrefix);
 
+        this.initConfig(config);
+        this.validateTicket(config);
+    }
+
+    private initConfig(config: AlfrescoApiConfig) {
         this.config = new AlfrescoApiConfig(config);
 
         this.clientsFactory();
@@ -80,8 +85,26 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
                 this.emitBuffer('logged-in');
             }
         }
+    }
 
-        return config;
+    private validateTicket(config: AlfrescoApiConfig) {
+        if (config.ticketEcm && !this.isOauthConfiguration()) {
+            if (!this.contentAuth) {
+                this.contentAuth = new ContentAuth(this.config, this, this.httpClient);
+            }
+            this.contentAuth
+                .validateTicket()
+                .then((ticket) => {
+                    config.ticketEcm = ticket;
+                })
+                .catch((error) => {
+                    if (error.status === 401) {
+                        config.ticketEcm = null;
+                        this.initConfig(config);
+                        this.emitBuffer('ticket_invalidated');
+                    }
+                });
+        }
     }
 
     private initAuth(config: AlfrescoApiConfig): void {
