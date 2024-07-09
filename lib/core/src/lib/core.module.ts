@@ -32,7 +32,7 @@ import { PaginationModule } from './pagination/pagination.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
-import { SidenavLayoutModule } from './layout/layout.module';
+import { LAYOUT_DIRECTIVES } from './layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { CommentListModule } from './comments/comment-list/comment-list.module';
 import { TemplateModule } from './templates/template.module';
@@ -74,7 +74,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         ExtensionsModule,
         ...ABOUT_DIRECTIVES,
         ViewerModule,
-        SidenavLayoutModule,
+        ...LAYOUT_DIRECTIVES,
         PipeModule,
         CommonModule,
         IdentityUserInfoModule,
@@ -111,7 +111,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
     exports: [
         ...ABOUT_DIRECTIVES,
         ViewerModule,
-        SidenavLayoutModule,
+        ...LAYOUT_DIRECTIVES,
         PipeModule,
         CommonModule,
         DirectiveModule,

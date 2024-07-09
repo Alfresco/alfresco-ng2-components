@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material.module';
 import { SidenavLayoutContentDirective } from './directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from './directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from './directives/sidenav-layout-navigation.directive';
@@ -31,36 +28,23 @@ import {
     SidebarMenuTitleIconDirective
 } from './components/sidebar-action/sidebar-action-menu.component';
 import { HeaderLayoutComponent } from './components/header/header.component';
-import { TranslateModule } from '@ngx-translate/core';
-@NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        RouterModule,
-        TranslateModule,
 
-        SidenavLayoutHeaderDirective,
-        SidenavLayoutContentDirective,
-        SidenavLayoutNavigationDirective,
-        SidebarMenuDirective,
-        SidebarMenuExpandIconDirective,
-        SidebarMenuTitleIconDirective,
-        HeaderLayoutComponent,
-        SidebarActionMenuComponent,
-        LayoutContainerComponent
-    ],
-    exports: [
-        SidenavLayoutHeaderDirective,
-        SidenavLayoutContentDirective,
-        SidenavLayoutNavigationDirective,
-        SidenavLayoutComponent,
-        LayoutContainerComponent,
-        SidebarActionMenuComponent,
-        SidebarMenuDirective,
-        SidebarMenuExpandIconDirective,
-        SidebarMenuTitleIconDirective,
-        HeaderLayoutComponent
-    ],
-    declarations: [SidenavLayoutComponent]
+export const LAYOUT_DIRECTIVES = [
+    SidenavLayoutHeaderDirective,
+    SidenavLayoutContentDirective,
+    SidenavLayoutNavigationDirective,
+    SidebarMenuDirective,
+    SidebarMenuExpandIconDirective,
+    SidebarMenuTitleIconDirective,
+    HeaderLayoutComponent,
+    SidebarActionMenuComponent,
+    LayoutContainerComponent,
+    SidenavLayoutComponent
+] as const;
+
+/** @deprecated Use `...LAYOUT_DIRECTIVES` instead, or import standalone components directly */
+@NgModule({
+    imports: [...LAYOUT_DIRECTIVES],
+    exports: [...LAYOUT_DIRECTIVES]
 })
 export class SidenavLayoutModule {}

@@ -33,12 +33,16 @@ import { UserPreferencesService } from '../../../common/services/user-preference
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Direction } from '@angular/cdk/bidi';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { LayoutContainerComponent } from '../layout-container/layout-container.component';
 
 @Component({
     selector: 'adf-sidenav-layout',
+    standalone: true,
+    imports: [CommonModule, LayoutContainerComponent],
     templateUrl: './sidenav-layout.component.html',
     styleUrls: ['./sidenav-layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -80,8 +84,8 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
     @ContentChild(SidenavLayoutContentDirective)
     contentDirective: SidenavLayoutContentDirective;
 
-    private menuOpenStateSubject: BehaviorSubject<boolean>;
-    public menuOpenState$: Observable<boolean>;
+    private menuOpenStateSubject = new BehaviorSubject<boolean>(false);
+    public menuOpenState$ = this.menuOpenStateSubject.asObservable();
 
     @ViewChild('container', { static: true }) container: any;
     @ViewChild('emptyTemplate', { static: true }) emptyTemplate: any;
@@ -96,15 +100,12 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService ) {
+    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService) {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 
     ngOnInit() {
         const initialMenuState = !this.expandedSidenav;
-
-        this.menuOpenStateSubject = new BehaviorSubject<boolean>(initialMenuState);
-        this.menuOpenState$ = this.menuOpenStateSubject.asObservable();
 
         const stepOver = this.stepOver || SidenavLayoutComponent.STEP_OVER;
         this.isMenuMinimized = initialMenuState;

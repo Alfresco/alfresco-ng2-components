@@ -90,13 +90,13 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
 
         this.CONTENT_STATES.MOBILE = { value: 'expanded' };
 
-        this.mediaQueryList.addListener(this.onMediaQueryChange);
+        this.mediaQueryList?.addListener(this.onMediaQueryChange);
 
         this.updateSidenavState();
     }
 
     ngOnDestroy(): void {
-        this.mediaQueryList.removeListener(this.onMediaQueryChange);
+        this.mediaQueryList?.removeListener(this.onMediaQueryChange);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -115,7 +115,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     get isMobileScreenSize(): boolean {
-        return this.mediaQueryList.matches;
+        return !!this.mediaQueryList?.matches;
     }
 
     getContentAnimationState(): any {
