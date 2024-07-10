@@ -247,7 +247,7 @@ describe('Start Process Component', () => {
                 expect(await startProcessPage.isStartProcessButtonEnabled()).toEqual(true);
             });
 
-            fit('[C286509] Should select automatically the processDefinition when the app contains only one', async () => {
+            it('[C286509] Should select automatically the processDefinition when the app contains only one', async () => {
                 await processServicesPage.goToApp(simpleApp.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();

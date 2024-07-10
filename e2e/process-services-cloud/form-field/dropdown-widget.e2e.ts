@@ -130,7 +130,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         expect(optionsSelected.toString().replace(/\s+/g, '')).toEqual([optionsToSelect, optionsToSelect].toString());
     });
 
-    fit('[C309878] Should be able to select a dropdown option, save and complete the task form', async () => {
+    it('[C309878] Should be able to select a dropdown option, save and complete the task form', async () => {
         const { name: dropdownOptionTaskName } = runningTasks['dropdownOptionsProcess'];
         await taskFilter.clickTaskFilter('my-tasks');
         await taskList.getDataTable().waitTillContentLoaded();
