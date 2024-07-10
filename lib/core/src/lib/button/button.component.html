@@ -2,8 +2,8 @@
     <ng-container *ngSwitchDefault>
         <button
             mat-button
-            [id]="uid"
-            [title]="tooltip"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -18,8 +18,8 @@
     <ng-container *ngSwitchCase="'raised'">
         <button
             mat-raised-button
-            [id]="uid"
-            [title]="tooltip"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -34,8 +34,8 @@
     <ng-container *ngSwitchCase="'stroked'">
         <button
             mat-stroked-button
-            [id]="uid"
-            [title]="tooltip"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -50,8 +50,8 @@
     <ng-container *ngSwitchCase="'flat'">
         <button
             mat-flat-button
-            [id]="uid"
-            [title]="tooltip"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -66,8 +66,8 @@
     <ng-container *ngSwitchCase="'icon'">
         <button
             mat-icon-button
-            [id]="uid"
-            [title]="tooltip"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
