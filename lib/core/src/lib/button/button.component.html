@@ -81,7 +81,7 @@
             [attr.data-automation-id]="testId"
         >
             <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
-            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
+            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
