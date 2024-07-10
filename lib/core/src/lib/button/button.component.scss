@@ -1,3 +1,12 @@
 adf-button {
     // custom styles
+
+    .adf-button__content {
+        // custom styles
+    }
+
+    .adf-button__icon {
+        // custom styles
+        font-size: var(--adf-button-icon-size);
+    }
 }

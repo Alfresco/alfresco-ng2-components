@@ -80,3 +80,22 @@ The button component has been designed to be accessible. The following attribute
 | Name    | Description                         |
 |---------|-------------------------------------|
 | `click` | Emitted when the button is clicked. |
+
+
+## Theming
+
+The following CSS classes are available for theming:
+
+| Name                   | Description                 |
+|------------------------|-----------------------------|
+| `adf-button`           | The host element.           |
+| `.adf-button__content` | The button content element. |
+| `.adf-button__icon`    | The icon element.           |
+
+### CSS Variables
+
+The following CSS variables are available for theming:
+
+| Name                     | Default | Description   |
+|--------------------------|---------|---------------|
+| `--adf-button-icon-size` |         | The icon size |
