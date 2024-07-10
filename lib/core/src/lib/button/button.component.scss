@@ -6,7 +6,8 @@ adf-button {
     }
 
     .adf-button__icon {
-        // custom styles
-        font-size: var(--adf-button-icon-size);
+        font-size: var(--adf-button-icon-size, 24px);
+        width: var(--adf-button-icon-size, 24px);
+        height: var(--adf-button-icon-size, 24px);
     }
 }

@@ -98,4 +98,4 @@ The following CSS variables are available for theming:
 
 | Name                     | Default | Description   |
 |--------------------------|---------|---------------|
-| `--adf-button-icon-size` |         | The icon size |
+| `--adf-button-icon-size` | `24px`  | The icon size |
