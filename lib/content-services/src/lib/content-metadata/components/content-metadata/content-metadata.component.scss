@@ -69,7 +69,7 @@ $panel-properties-height: 56px !default;
             padding: 6px;
 
             &.metadata-properties-tag-chip {
-                overflow: hidden;
+                overflow-wrap: anywhere;
             }
         }
 
