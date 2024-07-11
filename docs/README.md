@@ -193,27 +193,28 @@ A collection of Angular components for generic use.
 
 ### Services
 
-| Name | Description | Source link |
-| ---- | ----------- | ----------- |
-| [APS Alfresco Content Service](core/services/activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/process-services/src/lib/form/services/activiti-alfresco.service.ts) |
-| [Alfresco Api Service](core/services/alfresco-api.service.md) | Provides access to an initialized AlfrescoJSApi instance. | [Source](../lib/core/src/lib/services/alfresco-api.service.ts) |
-| [App Config service](core/services/app-config.service.md) | Supports app configuration settings, stored server side. | [Source](../lib/core/src/lib/app-config/app-config.service.ts) |
-| [Apps Process service](core/services/apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../lib/process-services/src/lib/services/apps-process.service.ts) |
-| [Auth Guard Bpm service](core/services/auth-guard-bpm.service.md) | Adds authentication with Process Services to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard-bpm.service.ts) |
-| [Auth Guard Ecm service](core/services/auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard-ecm.service.ts) |
+| Name                                                                        | Description | Source link |
+|-----------------------------------------------------------------------------| ----------- | ----------- |
+| [Action Service](../lib/core/src/lib/services/action.service.md)            | Allows you to subscribe to events and publish events. | [Source](../lib/core/src/lib/services/action.service.ts) |
+| [APS Alfresco Content Service](core/services/activiti-alfresco.service.md)  | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/process-services/src/lib/form/services/activiti-alfresco.service.ts) |
+| [Alfresco Api Service](core/services/alfresco-api.service.md)               | Provides access to an initialized AlfrescoJSApi instance. | [Source](../lib/core/src/lib/services/alfresco-api.service.ts) |
+| [App Config service](core/services/app-config.service.md)                   | Supports app configuration settings, stored server side. | [Source](../lib/core/src/lib/app-config/app-config.service.ts) |
+| [Apps Process service](core/services/apps-process.service.md)               | Gets details of the Process Services apps that are deployed for the user. | [Source](../lib/process-services/src/lib/services/apps-process.service.ts) |
+| [Auth Guard Bpm service](core/services/auth-guard-bpm.service.md)           | Adds authentication with Process Services to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard-bpm.service.ts) |
+| [Auth Guard Ecm service](core/services/auth-guard-ecm.service.md)           | Adds authentication with Content Services to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard-ecm.service.ts) |
 | [Auth Guard SSO Role service](core/services/auth-guard-sso-role.service.md) | Checks the user roles of a user. | [Source](../lib/core/src/lib/auth/guard/auth-guard-sso-role.service.ts) |
-| [Auth Guard service](core/services/auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard.service.ts) |
-| [Authentication Service](core/services/authentication.service.md) | Provides authentication to ACS and APS. | [Source](../lib/core/src/lib/auth/services/authentication.service.ts) |
-| [Bpm User service](core/services/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/src/lib/services/bpm-user.service.ts) |
-| [Card Item Type service](core/services/card-item-types.service.md) | Maps type names to field component types for the Card View component. | [Source](../lib/core/src/lib/card-view/services/card-item-types.service.ts) |
-| [Card View Update service](core/services/card-view-update.service.md) | Reports edits and clicks within fields of a Card View component. |  |
-| Implements BaseCardViewUpdate. | [Source](../lib/core/src/lib/card-view/services/card-view-update.service.ts) |  |
-| [Clipboard service](core/services/clipboard.service.md) | Copies text to the clipboard. | [Source](../lib/core/src/lib/clipboard/clipboard.service.ts) |
-| [Comment Content service](core/services/comment-content.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../lib/core/src/lib/services/comment-content.service.ts) |
-| [Comment Process service](core/services/comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/process-services/src/lib/process-comments/services/comment-process.service.ts) |
-| [Content service](core/services/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/content-services/src/lib/common/services/content.service.ts) |
-| [Cookie service](core/services/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/src/lib/common/services/cookie.service.ts) |
-| [DataTable service](core/services/datatable.service.md) | If you need to update one row of your datatable you can use the  DataTableService to update it. |  |
+| [Auth Guard service](core/services/auth-guard.service.md)                   | Adds authentication to a route within the app. | [Source](../lib/core/src/lib/auth/guard/auth-guard.service.ts) |
+| [Authentication Service](core/services/authentication.service.md)           | Provides authentication to ACS and APS. | [Source](../lib/core/src/lib/auth/services/authentication.service.ts) |
+| [Bpm User service](core/services/bpm-user.service.md)                       | Gets information about the current Process Services user. | [Source](../lib/core/src/lib/services/bpm-user.service.ts) |
+| [Card Item Type service](core/services/card-item-types.service.md)          | Maps type names to field component types for the Card View component. | [Source](../lib/core/src/lib/card-view/services/card-item-types.service.ts) |
+| [Card View Update service](core/services/card-view-update.service.md)       | Reports edits and clicks within fields of a Card View component. |  |
+| Implements BaseCardViewUpdate.                                              | [Source](../lib/core/src/lib/card-view/services/card-view-update.service.ts) |  |
+| [Clipboard service](core/services/clipboard.service.md)                     | Copies text to the clipboard. | [Source](../lib/core/src/lib/clipboard/clipboard.service.ts) |
+| [Comment Content service](core/services/comment-content.service.md)         | Adds and retrieves comments for nodes in Content Services. | [Source](../lib/core/src/lib/services/comment-content.service.ts) |
+| [Comment Process service](core/services/comment-process.service.md)         | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/process-services/src/lib/process-comments/services/comment-process.service.ts) |
+| [Content service](core/services/content.service.md)                         | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/content-services/src/lib/common/services/content.service.ts) |
+| [Cookie service](core/services/cookie.service.md)                           | Stores key-value data items as browser cookies. | [Source](../lib/core/src/lib/common/services/cookie.service.ts) |
+| [DataTable service](core/services/datatable.service.md)                     | If you need to update one row of your datatable you can use the  DataTableService to update it. |  |
 
 To update a single row you can use the rowUpdate subject. 
 The model to update the DataTable require the ID of the row you want change and the new data Object of the row | [Source](../lib/core/src/lib/datatable/services/datatable.service.ts) |
