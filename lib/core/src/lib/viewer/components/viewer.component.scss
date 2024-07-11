@@ -39,6 +39,14 @@
     &__file-title {
         text-align: center;
         flex: 1 1 auto;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        @media screen and (max-width: 1450px) {
+            left: 30%;
+        }
     }
 
     &__display-name {
