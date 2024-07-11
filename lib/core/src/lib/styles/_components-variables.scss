@@ -56,10 +56,10 @@
         --adf-user-info-container-margin-right: $adf-ref-margin-right,
         --adf-info-drawer-tab-default-color: mat.get-color-from-palette($accent),
         --adf-info-drawer-tab-default-background: mat.get-color-from-palette($background, card),
-        --adf-info-drawer-tab-default-bottom-line:$adf-ref-tab-bottom-line-default,
-        --adf-info-drawer-tab-hover-color:mat.get-color-from-palette($accent),
+        --adf-info-drawer-tab-default-bottom-line: $adf-ref-tab-bottom-line-default,
+        --adf-info-drawer-tab-hover-color: mat.get-color-from-palette($accent),
         --adf-info-drawer-tab-hover-background: mat.get-color-from-palette($background, card),
-        --adf-info-drawer-tab-hover-bottom-line:$adf-ref-tab-bottom-line-default,
+        --adf-info-drawer-tab-hover-bottom-line: $adf-ref-tab-bottom-line-default,
         --adf-info-drawer-tab-active-unfocused-color: mat.get-color-from-palette($primary),
         --adf-info-drawer-tab-active-unfocused-background: mat.get-color-from-palette($background, card),
         --adf-info-drawer-tab-active-unfocused-bottom-line: $adf-ref-tab-bottom-line-default,
@@ -72,7 +72,6 @@
         --adf-people-cloud-autosuggest-result-active-color: mat.get-color-from-palette($foreground, text),
         --adf-people-cloud-autosuggest-result-disabled-color: mat.get-color-from-palette($foreground, secondary-text),
         --adf-people-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
-
         --adf-metadata-property-panel-border-color: $adf-ref-metadata-property-panel-border-color,
         --adf-metadata-buttons-background-color: $adf-ref-metadata-buttons-background-color,
         --adf-metadata-action-button-clear-color: $adf-ref-metadata-action-button-clear-color,
@@ -85,19 +84,17 @@
         --adf-group-cloud-autosuggest-result-active-color: mat.get-color-from-palette($foreground, text),
         --adf-group-cloud-autosuggest-result-disabled-color: mat.get-color-from-palette($foreground, secondary-text),
         --adf-group-cloud-input-caption-error-color: mat.get-color-from-palette($warn),
-
         --adf-task-assignment-filter-option-default-color: mat.get-color-from-palette($foreground, text),
         --adf-task-assignment-filter-option-selected-color: mat.get-color-from-palette($primary),
         --adf-task-assignment-filter-label-default-color: mat.get-color-from-palette($foreground, secondary-text),
         --adf-task-assignment-filter-label-focus-color: mat.get-color-from-palette($primary),
-
         --adf-process-header-cloud-card-background: mat.get-color-from-palette($background, card),
         --adf-header-icon-button-default-color: $adf-ref-header-icon-color,
         --adf-header-icon-button-default-border-radius: $adf-ref-header-icon-border-radius,
         --adf-header-icon-button-hover-color: $adf-ref-header-icon-color,
         --adf-header-icon-button-pressed-color: $adf-ref-header-icon-color,
         --adf-header-icon-button-disabled-color: $adf-ref-header-icon-color,
-        --adf-danger-button-background: $adf-danger-button-background,
+        --adf-error-color: $adf-error-color,
         --adf-secondary-button-background: $adf-secondary-button-background,
 
         --adf-display-external-property-widget-preview-selection-color: mat.get-color-from-palette($foreground, secondary-text)
