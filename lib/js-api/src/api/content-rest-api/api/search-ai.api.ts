@@ -20,7 +20,16 @@ import { BaseApi } from '../../hxi-connector-api/api/base.api';
 import { QuestionRequest } from '../model/questionRequest';
 import { AiAnswerPaging } from '../model/aiAnswerPaging';
 
+/**
+ * Search AI API.
+ */
 export class SearchAiApi extends BaseApi {
+    /**
+     * Ask a question to the AI.
+     *
+     * @param questions The questions to ask.
+     * @returns QuestionModel object containing information about questions.
+     */
     ask(questions: QuestionRequest[]): Promise<QuestionModel[]> {
         return this.get({
             path: 'questions',
@@ -28,6 +37,12 @@ export class SearchAiApi extends BaseApi {
         });
     }
 
+    /**
+     * Get an answer to specific question.
+     *
+     * @param questionId The ID of the question to get an answer for.
+     * @returns AiAnswerPaging object containing the answer.
+     */
     getAnswer(questionId: string): Promise<AiAnswerPaging> {
         return this.get({
             path: 'answers',

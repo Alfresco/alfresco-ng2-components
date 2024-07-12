@@ -50,10 +50,22 @@ export class SearchAiService {
 
     constructor(private apiService: AlfrescoApiService, private translateService: TranslateService) {}
 
+    /**
+     * Update the state of the search AI input.
+     *
+     * @param state The new state of the search AI input.
+     */
     updateSearchAiInputState(state: SearchAiInputState): void {
         this.toggleSearchAiInput.next(state);
     }
 
+    /**
+     * Ask a question to the AI.
+     *
+     * @param question The question to ask.
+     * @param mocked temporary parameter to mock returned information about question. Should be removed when backend implemented.
+     * @returns QuestionModel object containing information about questions.
+     */
     ask(question: QuestionRequest, mocked = true): Observable<QuestionModel> {
         return mocked
             ? of({
@@ -64,6 +76,13 @@ export class SearchAiService {
             : from(this.searchAiApi.ask([question])).pipe(map((questions) => questions[0]));
     }
 
+    /**
+     * Get an answer to specific question.
+     *
+     * @param questionId The ID of the question to get an answer for.
+     * @param mocked temporary parameter to mock answer on question. Should be removed when backend implemented.
+     * @returns AiAnswerPaging object containing the answer.
+     */
     getAnswer(questionId: string, mocked = true): Observable<AiAnswerPaging> {
         return mocked
             ? of({
@@ -98,6 +117,12 @@ export class SearchAiService {
             : from(this.searchAiApi.getAnswer(questionId));
     }
 
+    /**
+     * Check if using of search is possible (if all conditions are met).
+     *
+     * @param selectedNodesState information about selected nodes.
+     * @returns string with error if any condition is not met, empty string otherwise.
+     */
     checkSearchAvailability(selectedNodesState: SelectionState): string {
         const messages: string[] = [];
         if (selectedNodesState.count === 0) {

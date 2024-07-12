@@ -33,6 +33,12 @@ export class AgentService {
 
     constructor(private apiService: AlfrescoApiService) {}
 
+    /**
+     * Gets all agents.
+     *
+     * @param mocked temporary parameter to mock agents. Should be removed when backend implemented.
+     * @returns AgentPaging object containing the agents.
+     */
     getAgents(mocked = true): Observable<AgentPaging> {
         return mocked
             ? of({

@@ -18,7 +18,15 @@
 import { AgentPaging } from '../model/agentPaging';
 import { BaseApi } from '../../hxi-connector-api/api/base.api';
 
+/**
+ * Agents Api.
+ */
 export class AgentsApi extends BaseApi {
+    /**
+     * Gets all agents.
+     *
+     * @returns AgentPaging object containing the agents.
+     */
     getAgents(): Promise<AgentPaging> {
         return this.get({
             path: '/agents'
