@@ -40,21 +40,24 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     }
 
     abstract getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders;
-
     abstract getToken(): string;
-
     abstract isLoggedIn(): boolean;
-
     abstract logout(): any;
 
+    /** @deprecated use `isLoggedIn` instead */
     abstract isEcmLoggedIn(): boolean;
 
+    /** @deprecated use `isLoggedIn` instead */
     abstract isBpmLoggedIn(): boolean;
 
     abstract reset(): void;
 
+    abstract getUsername(): string;
+
+    /** @deprecated use `getUsername` instead */
     abstract getEcmUsername(): string;
 
+    /** @deprecated use `getUsername` instead */
     abstract getBpmUsername(): string;
 
     /**
@@ -108,11 +111,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     isALLProvider(): boolean {
         const provider = this.appConfig.get('providers') as string;
         return provider && provider.toUpperCase() === 'ALL';
-    }
-
-    isOauthConfiguration(): boolean {
-        const authType = this.appConfig.get('authType') as string;
-        return authType === 'OAUTH';
     }
 
     /**

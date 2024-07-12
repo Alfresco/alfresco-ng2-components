@@ -82,16 +82,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return this.oauthService.hasValidIdToken();
     }
 
-    isImplicitFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.implicitFlow;
-    }
-
-    isAuthCodeFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.codeFlow;
-    }
-
     login(username: string, password: string): Observable<{ type: string; ticket: any }> {
         return this.auth.baseAuthLogin(username, password).pipe(
             map((response) => {
@@ -125,12 +115,17 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         });
     }
 
+    /**
+     * Gets the username of the authenticated user.
+     *
+     * @returns the logged username
+     */
     getUsername() {
         return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
     /**
-     * @deprecated
+     * @deprecated use `getUsername` instead
      * @returns the logged username
      */
     getEcmUsername(): string {
@@ -138,7 +133,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     }
 
     /**
-     * @deprecated
+     * @deprecated use `getUsername` instead
      * @returns the logged username
      */
     getBpmUsername(): string {
@@ -147,10 +142,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
 
     ssoLogin(redirectUrl?: string) {
         this.auth.login(redirectUrl);
-    }
-
-    ssoCodeFlowLogin() {
-        this.oauthService.initCodeFlow();
     }
 
     isRememberMeSet(): boolean {
