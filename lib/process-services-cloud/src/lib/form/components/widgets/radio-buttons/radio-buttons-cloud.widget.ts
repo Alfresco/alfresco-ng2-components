@@ -52,7 +52,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     }
 
     ngOnInit() {
-        if (this.field?.restUrl) {
+        if (this.field?.restUrl && !this.field.readOnly) {
             this.getValuesFromRestApi();
         }
     }

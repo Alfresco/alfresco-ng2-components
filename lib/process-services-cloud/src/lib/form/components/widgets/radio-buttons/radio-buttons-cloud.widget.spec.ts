@@ -81,28 +81,32 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widget.field.value).toEqual('fake-opt');
     });
 
-    it('should show radio buttons as text when is readonly', async () => {
-        widget.field = new FormFieldModel(new FormModel({}), {
-            id: 'radio-id',
-            name: 'radio-name',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            readOnly: true
-        });
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-        expect(element.querySelector('display-text-widget')).toBeDefined();
-    });
+    describe('when radio buttons widget is readonly', () => {
+        beforeEach(() => {
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
 
-    it('should be able to set label property for Radio Button widget', () => {
-        widget.field = new FormFieldModel(new FormModel({}), {
-            id: 'radio-id',
-            name: 'radio-name-label',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            readOnly: true
+            widget.field = new FormFieldModel(new FormModel({}), {
+                id: 'radio-id',
+                name: 'radio-name',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                readOnly: true,
+                restUrl: '<url>'
+            });
+
+            fixture.detectChanges();
         });
-        fixture.detectChanges();
-        expect(element.querySelector('label').innerText).toBe('radio-name-label');
+
+        it('should show radio buttons as text', () => {
+            expect(element.querySelector('display-text-widget')).toBeDefined();
+        });
+
+        it('should set label property', () => {
+            expect(element.querySelector('label').innerText).toBe('radio-name');
+        });
+
+        it('should not request options from rest api', () => {
+            expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
+        });
     });
 
     it('should be able to set a Radio Button widget as required', async () => {
