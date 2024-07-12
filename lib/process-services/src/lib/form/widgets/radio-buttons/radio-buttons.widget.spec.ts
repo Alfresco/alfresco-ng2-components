@@ -166,6 +166,38 @@ describe('RadioButtonsWidgetComponent', () => {
         expect(widget.field.value).toEqual('fake-opt');
     });
 
+    describe('when radio buttons widget is readonly', () => {
+        it('should not request field values from service by task id', () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: '<task-id>' }), {
+                id: 'radio-id',
+                name: 'radio-name',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                restUrl: '<url>',
+                readOnly: true
+            });
+
+            spyOn(taskFormService, 'getRestFieldValues');
+            widget.ngOnInit();
+
+            expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
+        });
+
+        it('should not request field values from service by process definition id', () => {
+            widget.field = new FormFieldModel(new FormModel({ processDefinitionId: '<definition-id>' }), {
+                id: 'radio-id',
+                name: 'radio-name',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                restUrl: '<url>',
+                readOnly: true
+            });
+
+            spyOn(processDefinitionService, 'getRestFieldValuesByProcessId');
+            widget.ngOnInit();
+
+            expect(processDefinitionService.getRestFieldValuesByProcessId).not.toHaveBeenCalled();
+        });
+    });
+
     describe('when template is ready', () => {
         let radioButtonWidget: RadioButtonsWidgetComponent;
         let fixture: ComponentFixture<RadioButtonsWidgetComponent>;
