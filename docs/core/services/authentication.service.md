@@ -50,10 +50,6 @@ Provides authentication to ACS and APS.
 -   **isALLProvider**(): `boolean`<br/>
     Does the provider support both ECM and BPM?
     -   **Returns** `boolean` - True if both are supported, false otherwise
--   **isAuthCodeFlow**(): `boolean`<br/>
-
-    -   **Returns** `boolean` - 
-
 -   **isBPMProvider**(): `boolean`<br/>
     Does the provider support BPM?
     -   **Returns** `boolean` - True if supported, false otherwise
@@ -66,10 +62,6 @@ Provides authentication to ACS and APS.
 -   **isEcmLoggedIn**(): `boolean`<br/>
     Checks if the user is logged in on an ECM provider.
     -   **Returns** `boolean` - True if logged in, false otherwise
--   **isImplicitFlow**(): `boolean`<br/>
-
-    -   **Returns** `boolean` - 
-
 -   **isKerberosEnabled**(): `boolean`<br/>
     Does kerberos enabled?
     -   **Returns** `boolean` - True if enabled, false otherwise

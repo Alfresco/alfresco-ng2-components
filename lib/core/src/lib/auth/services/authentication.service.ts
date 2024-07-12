@@ -149,6 +149,8 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     }
 
     /**
+     * Gets the username of the authenticated user.
+     *
      * @returns the username of the authenticated user
      */
     getUsername(): string {
@@ -160,7 +162,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     }
 
     /**
-     * @deprecated
+     * @deprecated use `getUsername` instead
      * @returns the logged username
      */
     getEcmUsername(): string {
@@ -172,7 +174,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     }
 
     /**
-     * @deprecated
+     * @deprecated use `getUsername` instead
      * @returns the logged username
      */
     getBpmUsername(): string {
