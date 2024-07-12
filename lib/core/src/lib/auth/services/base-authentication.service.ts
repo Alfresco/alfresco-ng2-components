@@ -51,7 +51,6 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     abstract isBpmLoggedIn(): boolean;
 
     abstract reset(): void;
-
     abstract getUsername(): string;
 
     /** @deprecated use `getUsername` instead */
