@@ -137,22 +137,22 @@ describe('LockService', () => {
         } as Node;
 
         it('should return false when the user is the lock owner', () => {
-            spyOn(authenticationService, 'getEcmUsername').and.returnValue('lock-owner-user');
+            spyOn(authenticationService, 'getUsername').and.returnValue('lock-owner-user');
             expect(service.isLocked(nodeOwnerAllowedLock)).toBeFalsy();
         });
 
         it('should return true when the user is not the lock owner', () => {
-            spyOn(authenticationService, 'getEcmUsername').and.returnValue('banana-user');
+            spyOn(authenticationService, 'getUsername').and.returnValue('banana-user');
             expect(service.isLocked(nodeOwnerAllowedLock)).toBeTruthy();
         });
 
         it('should return false when the user is not the lock owner but the lock is expired', () => {
-            spyOn(authenticationService, 'getEcmUsername').and.returnValue('banana-user');
+            spyOn(authenticationService, 'getUsername').and.returnValue('banana-user');
             expect(service.isLocked(nodeOwnerAllowedLockWithExpiredDate)).toBeFalsy();
         });
 
         it('should return true when is not the lock owner and the expiration date is valid', () => {
-            spyOn(authenticationService, 'getEcmUsername').and.returnValue('banana-user');
+            spyOn(authenticationService, 'getUsername').and.returnValue('banana-user');
             expect(service.isLocked(nodeOwnerAllowedLockWithActiveExpiration)).toBeTruthy();
         });
     });

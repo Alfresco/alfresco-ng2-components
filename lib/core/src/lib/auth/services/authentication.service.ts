@@ -116,6 +116,10 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
+    /**
+     * @deprecated use `isLoggedIn` instead
+     * @returns true if the ECM provider is logged in
+     */
     isEcmLoggedIn(): boolean {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.isEcmLoggedIn();
@@ -124,6 +128,10 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
         }
     }
 
+    /**
+     * @deprecated use `isLoggedIn` instead
+     * @returns true if the BPM provider is logged in
+     */
     isBpmLoggedIn(): boolean {
         if (this.isOauth()) {
             return this.oidcAuthenticationService.isBpmLoggedIn();
@@ -166,11 +174,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
      * @returns the logged username
      */
     getEcmUsername(): string {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.getUsername();
-        } else {
-            return this.basicAlfrescoAuthService.getEcmUsername();
-        }
+        return this.getUsername();
     }
 
     /**
@@ -178,11 +182,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
      * @returns the logged username
      */
     getBpmUsername(): string {
-        if (this.isOauth()) {
-            return this.oidcAuthenticationService.getUsername();
-        } else {
-            return this.basicAlfrescoAuthService.getBpmUsername();
-        }
+        return this.getUsername();
     }
 
     getAuthHeaders(requestUrl: string, headers: HttpHeaders): HttpHeaders {

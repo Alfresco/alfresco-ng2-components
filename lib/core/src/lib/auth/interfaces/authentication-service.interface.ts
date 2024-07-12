@@ -20,7 +20,6 @@ import ee from 'event-emitter';
 import { Observable } from 'rxjs';
 
 export interface AuthenticationServiceInterface {
-
     onError: any;
     onLogin: any;
     onLogout: any;
@@ -31,30 +30,26 @@ export interface AuthenticationServiceInterface {
     emit: (type: string, ...args: any[]) => void;
 
     getToken(): string;
-
     isLoggedIn(): boolean;
-
     isOauth(): boolean;
-
     logout(): any;
 
-    isEcmLoggedIn(): boolean;
-
-    isBpmLoggedIn(): boolean;
-
     isECMProvider(): boolean;
-
     isBPMProvider(): boolean;
-
     isALLProvider(): boolean;
-
-    getEcmUsername(): string;
-
-    getBpmUsername(): string;
+    getUsername(): string;
 
     getAuthHeaders(requestUrl: string, header: HttpHeaders): HttpHeaders;
-
     addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders>;
-
     reset(): void;
+
+    /** @deprecated use `isLoggedIn` instead, use `isECMProvider` if you need to know the auth type */
+    isEcmLoggedIn(): boolean;
+    /** @deprecated use `isLoggedIn` instead, use `isBPMProvider` if you need to know the auth type */
+    isBpmLoggedIn(): boolean;
+
+    /** @deprecated use `getUsername` instead */
+    getEcmUsername(): string;
+    /** @deprecated use `getUsername` instead */
+    getBpmUsername(): string;
 }
