@@ -32,4 +32,15 @@ export class AgentsApi extends BaseApi {
             path: '/agents'
         });
     }
+
+    /**
+     * Gets agent avatar by id.
+     *
+     * @returns string with an image.
+     */
+    getAgentAvatar(agentId: string): Promise<string> {
+        return this.get({
+            path: `/agents/${agentId}/avatars/-default-`
+        });
+    }
 }
