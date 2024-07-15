@@ -105,11 +105,11 @@ export class SearchAiService {
                                   questionId: 'some id',
                                   references: [
                                       {
-                                          referenceId: '6adde3ef-a7b0-42f8-85a2-f9882dc531d4',
+                                          referenceId: '5bccf580-c5de-4d60-a59f-09e553366039',
                                           referenceText: 'some type'
                                       },
                                       {
-                                          referenceId: '3a00859f-b012-4b0c-b7a5-6bd02d022dc6',
+                                          referenceId: 'fbcf160a-1139-467f-9e57-d17f52db48c3',
                                           referenceText: 'some type'
                                       }
                                   ]

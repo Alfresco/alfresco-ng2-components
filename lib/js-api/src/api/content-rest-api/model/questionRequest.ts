@@ -17,5 +17,5 @@
 
 export interface QuestionRequest {
     question: string;
-    restrictionQuery: string;
+    nodeIds: string[];
 }

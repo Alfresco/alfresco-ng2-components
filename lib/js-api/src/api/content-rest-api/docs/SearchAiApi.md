@@ -156,7 +156,7 @@ searchAiApi.getAnswer('some question id').then((answer) => {
 
 **Properties**
 
-| Name                 | Type   |
-|----------------------|--------|
-| **question**         | string |
-| **restrictionQuery** | string |
+| Name         | Type     |
+|--------------|----------|
+| **question** | string   |
+| **nodeIds**  | string[] |
