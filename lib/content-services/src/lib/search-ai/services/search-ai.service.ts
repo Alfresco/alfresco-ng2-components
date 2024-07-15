@@ -28,9 +28,6 @@ import { SearchAiInputState } from '../models/search-ai-input-state';
     providedIn: 'root'
 })
 export class SearchAiService {
-    private toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
-        active: false
-    });
     private readonly textFileMimeTypes = [
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -39,11 +36,20 @@ export class SearchAiService {
         'text/plain',
         'application/pdf'
     ];
+
+    private toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
+        active: false
+    });
     private _searchAiApi: SearchAiApi;
+    private _mocked = true;
 
     get searchAiApi(): SearchAiApi {
         this._searchAiApi = this._searchAiApi ?? new SearchAiApi(this.apiService.getInstance());
         return this._searchAiApi;
+    }
+
+    set mocked(mocked: boolean) {
+        this._mocked = mocked;
     }
 
     toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
@@ -63,11 +69,10 @@ export class SearchAiService {
      * Ask a question to the AI.
      *
      * @param question The question to ask.
-     * @param mocked temporary parameter to mock returned information about question. Should be removed when backend implemented.
      * @returns QuestionModel object containing information about questions.
      */
-    ask(question: QuestionRequest, mocked = true): Observable<QuestionModel> {
-        return mocked
+    ask(question: QuestionRequest): Observable<QuestionModel> {
+        return this._mocked
             ? of({
                   question: 'Some question',
                   questionId: 'some id',
@@ -80,11 +85,10 @@ export class SearchAiService {
      * Get an answer to specific question.
      *
      * @param questionId The ID of the question to get an answer for.
-     * @param mocked temporary parameter to mock answer on question. Should be removed when backend implemented.
      * @returns AiAnswerPaging object containing the answer.
      */
-    getAnswer(questionId: string, mocked = true): Observable<AiAnswerPaging> {
-        return mocked
+    getAnswer(questionId: string): Observable<AiAnswerPaging> {
+        return this._mocked
             ? of({
                   list: {
                       pagination: {
@@ -121,22 +125,35 @@ export class SearchAiService {
      * Check if using of search is possible (if all conditions are met).
      *
      * @param selectedNodesState information about selected nodes.
+     * @param maxSelectedNodes max number of selected nodes. Default 100.
      * @returns string with error if any condition is not met, empty string otherwise.
      */
-    checkSearchAvailability(selectedNodesState: SelectionState): string {
-        const messages: string[] = [];
+    checkSearchAvailability(selectedNodesState: SelectionState, maxSelectedNodes = 100): string {
+        const messages: {
+            key: string;
+            [parameter: string]: number | string;
+        }[] = [];
         if (selectedNodesState.count === 0) {
-            messages.push('KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NO_FILES_SELECTED');
+            messages.push({
+                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NO_FILES_SELECTED'
+            });
         }
-        if (selectedNodesState.count > 100) {
-            messages.push('KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED');
+        if (selectedNodesState.count > maxSelectedNodes) {
+            messages.push({
+                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED',
+                maxFiles: maxSelectedNodes
+            });
         }
         if (selectedNodesState.nodes.some((node) => !node.entry.isFolder && !this.textFileMimeTypes.includes(node.entry.content.mimeType))) {
-            messages.push('KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NON_TEXT_FILE_SELECTED');
+            messages.push({
+                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NON_TEXT_FILE_SELECTED'
+            });
         }
         if (selectedNodesState.nodes.some((node) => node.entry.isFolder)) {
-            messages.push('KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.FOLDER_SELECTED');
+            messages.push({
+                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.FOLDER_SELECTED'
+            });
         }
-        return messages.map((message) => this.translateService.instant(message)).join(' ');
+        return messages.map((message) => this.translateService.instant(message.key, message)).join(' ');
     }
 }

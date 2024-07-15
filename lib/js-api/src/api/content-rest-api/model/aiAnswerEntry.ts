@@ -17,13 +17,6 @@
 
 import { AiAnswer } from './aiAnswer';
 
-export class AiAnswerEntry {
+export interface AiAnswerEntry {
     entry: AiAnswer;
-
-    constructor(input?: Partial<AiAnswerEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new AiAnswer(input.entry) : undefined;
-        }
-    }
 }

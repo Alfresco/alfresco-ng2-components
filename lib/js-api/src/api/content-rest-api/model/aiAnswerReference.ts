@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class AiAnswerReference {
+export interface AiAnswerReference {
     referenceId: string;
     referenceText: string;
-
-    constructor(input?: Partial<AiAnswerReference>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

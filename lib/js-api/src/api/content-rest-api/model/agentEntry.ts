@@ -17,13 +17,6 @@
 
 import { Agent } from './agent';
 
-export class AgentEntry {
+export interface AgentEntry {
     entry: Agent;
-
-    constructor(input?: Partial<AgentEntry>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entry = input.entry ? new Agent(input.entry) : undefined;
-        }
-    }
 }

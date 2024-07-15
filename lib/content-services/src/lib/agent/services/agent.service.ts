@@ -25,10 +25,15 @@ import { from, Observable, of } from 'rxjs';
 })
 export class AgentService {
     private _agentsApi: AgentsApi;
+    private _mocked = true;
 
     get agentsApi(): AgentsApi {
         this._agentsApi = this._agentsApi ?? new AgentsApi(this.apiService.getInstance());
         return this._agentsApi;
+    }
+
+    set mocked(mocked: boolean) {
+        this._mocked = mocked;
     }
 
     constructor(private apiService: AlfrescoApiService) {}
@@ -36,11 +41,10 @@ export class AgentService {
     /**
      * Gets all agents.
      *
-     * @param mocked temporary parameter to mock agents. Should be removed when backend implemented.
      * @returns AgentPaging object containing the agents.
      */
-    getAgents(mocked = true): Observable<AgentPaging> {
-        return mocked
+    getAgents(): Observable<AgentPaging> {
+        return this._mocked
             ? of({
                   list: {
                       entries: [

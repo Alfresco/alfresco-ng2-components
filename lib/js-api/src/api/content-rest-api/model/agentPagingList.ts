@@ -18,15 +18,7 @@
 import { Pagination } from './pagination';
 import { AgentEntry } from './agentEntry';
 
-export class AgentPagingList {
+export interface AgentPagingList {
     entries?: AgentEntry[];
     pagination?: Pagination;
-
-    constructor(input?: Partial<AgentPagingList>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entries = input.entries?.map((item) => new AgentEntry(item));
-            this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
-        }
-    }
 }

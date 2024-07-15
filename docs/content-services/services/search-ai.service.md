@@ -16,19 +16,20 @@ Manages search AI in Content Services.
 -   **updateSearchAiInputState**(state: `SearchAiInputState`): `void`<br/>
     Update the state of the search AI input.
     -   _state:_ `SearchAiInputState` - The new state of the search AI input.
--   **ask**(question: [`QuestionRequest`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#questionrequest), mocked?: `boolean`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`QuestionModel`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#questionmodel)`>`<br/>
+-   **ask**(question: [`QuestionRequest`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#questionrequest)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`QuestionModel`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#questionmodel)`>`<br/>
     Ask a question to the AI.
     -   _question:_ [`QuestionRequest`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#questionrequest) - The question to ask.
     -   _mocked:_ `boolean`  - (Optional) temporary parameter to mock returned information about question. Should be removed when backend implemented. True by default.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`QuestionModel`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#questionmodel)`>` - QuestionModel object containing information about questions.
 -   **getAnswer**(questionId: `string`, mocked?: `boolean`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AiAnswerPaging`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#aianswerpaging)`>`<br/>
     Get an answer to specific question.
-    -   _questionId:_ `boolean` - The ID of the question to get an answer for.
+    -   _questionId:_ `string` - The ID of the question to get an answer for.
     -   _mocked:_ `boolean` - (Optional) temporary parameter to mock answer on question. Should be removed when backend implemented. True by default.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AiAnswerPaging`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#aianswerpaging)`>` - AiAnswerPaging object containing the answer.
--   **checkSearchAvailability**(selectedNodesState: `SelectionState`): `string`<br/>
+-   **checkSearchAvailability**(selectedNodesState: `SelectionState`, maxSelectedNodes: `number`): `string`<br/>
     Check if using of search is possible (if all conditions are met).
     -   _selectedNodesState:_ `SelectionState` - information about selected nodes.
+    -   _maxSelectedNodes:_ `number` - max number of selected nodes. Default 100.
     -   **Returns** `string` - string with error if any condition is not met, empty string otherwise.
 
 ## Details

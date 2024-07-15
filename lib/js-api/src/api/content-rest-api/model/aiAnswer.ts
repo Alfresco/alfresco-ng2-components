@@ -17,15 +17,8 @@
 
 import { AiAnswerReference } from './aiAnswerReference';
 
-export class AiAnswer {
+export interface AiAnswer {
     answer: string;
     questionId: string;
     references: AiAnswerReference[];
-
-    constructor(input?: Partial<AiAnswer>) {
-        if (input) {
-            Object.assign(this, input);
-            this.references = input.references.map((item) => new AiAnswerReference(item));
-        }
-    }
 }

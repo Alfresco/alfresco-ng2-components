@@ -17,13 +17,6 @@
 
 import { AgentPagingList } from './agentPagingList';
 
-export class AgentPaging {
+export interface AgentPaging {
     list?: AgentPagingList;
-
-    constructor(input?: Partial<AgentPaging>) {
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new AgentPagingList(input.list) : undefined;
-        }
-    }
 }

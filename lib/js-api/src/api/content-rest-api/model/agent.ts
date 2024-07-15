@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class Agent {
+export interface Agent {
     id: string;
     name: string;
-
-    constructor(input?: Partial<Agent>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

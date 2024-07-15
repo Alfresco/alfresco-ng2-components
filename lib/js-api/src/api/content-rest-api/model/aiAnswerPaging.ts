@@ -17,13 +17,6 @@
 
 import { AiAnswerPagingList } from './aiAnswerPagingList';
 
-export class AiAnswerPaging {
+export interface AiAnswerPaging {
     list?: AiAnswerPagingList;
-
-    constructor(input?: Partial<AiAnswerPaging>) {
-        if (input) {
-            Object.assign(this, input);
-            this.list = input.list ? new AiAnswerPagingList(input.list) : undefined;
-        }
-    }
 }

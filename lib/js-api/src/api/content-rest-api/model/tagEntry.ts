@@ -18,7 +18,7 @@
 import { Tag } from './tag';
 
 export class TagEntry {
-    entry: Tag;
+    entry?: Tag;
 
     constructor(input?: Partial<TagEntry>) {
         if (input) {
@@ -26,5 +26,4 @@ export class TagEntry {
             this.entry = input.entry ? new Tag(input.entry) : undefined;
         }
     }
-
 }

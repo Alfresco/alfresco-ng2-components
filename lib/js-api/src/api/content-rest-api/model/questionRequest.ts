@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-export class QuestionRequest {
+export interface QuestionRequest {
     question: string;
     restrictionQuery: string;
-
-    constructor(input?: Partial<QuestionRequest>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }

@@ -110,9 +110,9 @@ searchAiApi.getAnswer('some question id').then((answer) => {
 
 **Properties**
 
-| Name           | Type                           |
-|----------------|--------------------------------|
-| **pagination** | [Pagination](Pagination.md)    |
+| Name           | Type                              |
+|----------------|-----------------------------------|
+| **pagination** | [Pagination](Pagination.md)       |
 | **entries**    | [AiAnswerEntry[]](#AiAnswerEntry) |
 
 ## AiAnswerEntry

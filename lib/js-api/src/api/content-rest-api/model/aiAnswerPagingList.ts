@@ -18,15 +18,7 @@
 import { Pagination } from './pagination';
 import { AiAnswerEntry } from './aiAnswerEntry';
 
-export class AiAnswerPagingList {
+export interface AiAnswerPagingList {
     entries?: AiAnswerEntry[];
     pagination?: Pagination;
-
-    constructor(input?: Partial<AiAnswerPagingList>) {
-        if (input) {
-            Object.assign(this, input);
-            this.entries = input.entries?.map((item) => new AiAnswerEntry(item));
-            this.pagination = input.pagination ? new Pagination(input.pagination) : undefined;
-        }
-    }
 }

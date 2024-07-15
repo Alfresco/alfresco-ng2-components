@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export class QuestionModel {
+export interface QuestionModel {
     question: string;
     questionId: string;
     restrictionQuery: string;
-
-    constructor(input?: Partial<QuestionModel>) {
-        if (input) {
-            Object.assign(this, input);
-        }
-    }
 }
