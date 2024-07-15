@@ -26,4 +26,5 @@ export class TagEntry {
             this.entry = input.entry ? new Tag(input.entry) : undefined;
         }
     }
+
 }
