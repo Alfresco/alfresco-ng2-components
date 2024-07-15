@@ -16,15 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { SearchCategory } from '../search/models/search-category.interface';
+import { SearchCategory } from '../../search/models/search-category.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ContentNodeSelectorPanelService {
-
     propertyTypes = ['d:text', 'd:date', 'd:datetime'];
-    modelPropertyTypeToSearchFilterTypeMap = new Map<string, string> ();
+    modelPropertyTypeToSearchFilterTypeMap = new Map<string, string>();
     customModels: any[];
 
     constructor() {
@@ -35,7 +34,7 @@ export class ContentNodeSelectorPanelService {
 
     convertCustomModelPropertiesToSearchCategories(): SearchCategory[] {
         const searchConfig: SearchCategory[] = [];
-        this.customModels?.forEach( (propertyModel) => {
+        this.customModels?.forEach((propertyModel) => {
             searchConfig.push(this.convertModelPropertyIntoSearchFilter(propertyModel));
         });
 
@@ -46,7 +45,7 @@ export class ContentNodeSelectorPanelService {
         let filterSearch: SearchCategory;
         if (this.isTypeSupported(modelProperty.dataType)) {
             filterSearch = {
-                id : modelProperty.prefixedName,
+                id: modelProperty.prefixedName,
                 name: modelProperty.prefixedName,
                 expanded: false,
                 enabled: true,
@@ -66,5 +65,4 @@ export class ContentNodeSelectorPanelService {
     isTypeSupported(dataType: string): boolean {
         return this.propertyTypes.includes(dataType);
     }
-
 }

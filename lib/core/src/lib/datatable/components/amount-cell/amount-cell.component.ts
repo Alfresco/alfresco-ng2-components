@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { AsyncPipe, CurrencyPipe, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DEFAULT_CURRENCY_CODE, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { CurrencyConfig } from '../../data/data-column.model';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input, OnInit, DEFAULT_CURRENCY_CODE, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { CurrencyConfig } from '../../data/data-column.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'adf-amount-cell',
     standalone: true,
-    imports: [AsyncPipe, CurrencyPipe, NgIf],
+    imports: [CommonModule],
+    selector: 'adf-amount-cell',
     templateUrl: './amount-cell.component.html',
     host: { class: 'adf-datatable-content-cell' },
     encapsulation: ViewEncapsulation.None,

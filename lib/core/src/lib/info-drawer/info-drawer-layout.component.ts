@@ -16,12 +16,9 @@
  */
 
 import { Component, Directive, Input, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-info-drawer-layout',
-    standalone: true,
-    imports: [CommonModule],
     templateUrl: './info-drawer-layout.component.html',
     styleUrls: ['./info-drawer-layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -36,20 +33,6 @@ export class InfoDrawerLayoutComponent {
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
-@Directive({
-    standalone: true,
-    selector: '[adf-info-drawer-title], [info-drawer-title]'
-})
-export class InfoDrawerTitleDirective {}
-
-@Directive({
-    standalone: true,
-    selector: '[adf-info-drawer-buttons], [info-drawer-buttons]'
-})
-export class InfoDrawerButtonsDirective {}
-
-@Directive({
-    standalone: true,
-    selector: '[adf-info-drawer-content], [info-drawer-content]'
-})
-export class InfoDrawerContentDirective {}
+@Directive({ selector: '[adf-info-drawer-title], [info-drawer-title]' }) export class InfoDrawerTitleDirective {}
+@Directive({ selector: '[adf-info-drawer-buttons], [info-drawer-buttons]' }) export class InfoDrawerButtonsDirective {}
+@Directive({ selector: '[adf-info-drawer-content], [info-drawer-content]' }) export class InfoDrawerContentDirective {}

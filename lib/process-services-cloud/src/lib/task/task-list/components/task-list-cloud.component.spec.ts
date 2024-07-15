@@ -650,7 +650,7 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
         fixture.detectChanges();
 
         const cell = fixture.debugElement.query(By.css('[data-automation-id="text_ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE"]'));
-        expect(cell.nativeElement.textContent.trim()).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE');
+        expect(cell.nativeElement.textContent).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY_VALUES.NONE');
     });
 
     it('replacePriorityValues should return undefined when no rows defined', () => {

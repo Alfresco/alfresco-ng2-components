@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ContentNodeSelectorPanelService } from '../../../content-node-selector/content-node-selector-panel.service';
+import { ContentNodeSelectorPanelService } from '../../../content-node-selector/content-node-selector-panel/content-node-selector-panel.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 
 @Component({

@@ -175,7 +175,7 @@ describe('FormFieldModel', () => {
         ]);
     });
 
-    it('should parse the date with the default format (D-M-YYYY) if the display format is missing', () => {
+    it('should store the date value as Date object if the display format is missing', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
@@ -196,11 +196,11 @@ describe('FormFieldModel', () => {
                 }
             }
         });
-        expect(field.value).toBe('28-4-2017');
+        expect(field.value).toEqual(new Date('2017-04-28T00:00:00.000+0000'));
         expect(form.values['mmddyyyy']).toEqual('2017-04-28T00:00:00.000Z');
     });
 
-    it('should parse the date with the format MM-DD-YYYY', () => {
+    it('should store the date value as Date object when date format is provided', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
@@ -222,63 +222,11 @@ describe('FormFieldModel', () => {
             },
             dateDisplayFormat: 'MM-DD-YYYY'
         });
-        expect(field.value).toBe('04-28-2017');
+        expect(field.value).toEqual(new Date('2017-04-28T00:00:00.000+0000'));
         expect(form.values['mmddyyyy']).toEqual('2017-04-28T00:00:00.000Z');
     });
 
-    it('should parse the date with the format MM-YY-DD', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            fieldType: 'FormFieldRepresentation',
-            id: 'mmyydd',
-            name: 'MM-YY-DD',
-            type: 'date',
-            value: '2017-04-28T00:00:00.000+0000',
-            required: false,
-            readOnly: false,
-            params: {
-                field: {
-                    id: 'mmyydd',
-                    name: 'MM-YY-DD',
-                    type: 'date',
-                    value: null,
-                    required: false,
-                    readOnly: false
-                }
-            },
-            dateDisplayFormat: 'MM-YY-DD'
-        });
-        expect(field.value).toBe('04-17-28');
-        expect(form.values['mmyydd']).toEqual('2017-04-28T00:00:00.000Z');
-    });
-
-    it('should parse the date with the format DD-MM-YYYY', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            fieldType: 'FormFieldRepresentation',
-            id: 'ddmmyyy',
-            name: 'DD-MM-YYYY',
-            type: 'date',
-            value: '2017-04-28T00:00:00.000+0000',
-            required: false,
-            readOnly: false,
-            params: {
-                field: {
-                    id: 'ddmmyyy',
-                    name: 'DD-MM-YYYY',
-                    type: 'date',
-                    value: null,
-                    required: false,
-                    readOnly: false
-                }
-            },
-            dateDisplayFormat: 'DD-MM-YYYY'
-        });
-        expect(field.value).toBe('28-04-2017');
-        expect(form.values['ddmmyyy']).toEqual('2017-04-28T00:00:00.000Z');
-    });
-
-    it('should parse the date with the format DD-MM-YYYY when it is readonly', () => {
+    it('should NOT parse the date form value when date format is provided and its readonly', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
@@ -300,10 +248,10 @@ describe('FormFieldModel', () => {
             },
             dateDisplayFormat: 'DD-MM-YYYY'
         });
-        expect(field.value).toBe('28-04-2017');
+        expect(field.value).toEqual(new Date('2017-04-28T00:00:00.000+0000'));
     });
 
-    it('should set the value to todays date when the value is today', () => {
+    it('should set the date value to todays Date object when the value is today', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
@@ -327,14 +275,13 @@ describe('FormFieldModel', () => {
         });
 
         const currentDate = new Date();
-        const expectedDate = DateFnsUtils.formatDate(currentDate, 'dd-MM-yyyy');
         const expectedDateFormat = `${DateFnsUtils.formatDate(currentDate, 'yyyy-MM-dd')}T00:00:00.000Z`;
 
-        expect(field.value).toBe(expectedDate);
+        expect(field.value).toEqual(currentDate);
         expect(form.values['ddmmyyy']).toEqual(expectedDateFormat);
     });
 
-    it('should set the value to now date time when the value is now', () => {
+    it('should set the date value to now Date object when the value is now', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
             fieldType: 'FormFieldRepresentation',
@@ -358,11 +305,15 @@ describe('FormFieldModel', () => {
         });
 
         const currentDateTime = new Date();
-        const expectedDateTime = DateFnsUtils.formatDate(currentDateTime, 'YYYY-MM-DD HH:mm');
-        const expectedDateTimeFormat = `${DateFnsUtils.formatDate(currentDateTime, 'YYYY-MM-DDTHH:mm:00')}.000Z`;
 
-        expect(field.value).toBe(expectedDateTime);
-        expect(form.values['datetime']).toEqual(expectedDateTimeFormat);
+        expect(field.value.getDate()).toEqual(currentDateTime.getDate());
+        expect(field.value.getHours()).toEqual(currentDateTime.getHours());
+        expect(field.value.getMinutes()).toEqual(currentDateTime.getMinutes());
+
+        const formDateTimeFormatted = DateFnsUtils.formatDate(new Date(form.values['datetime']), 'YYYY-MM-DDTHH:mm');
+        const currentDateTimeFormatted = DateFnsUtils.formatDate(currentDateTime, 'YYYY-MM-DDTHH:mm');
+
+        expect(formDateTimeFormatted).toEqual(currentDateTimeFormatted);
     });
 
     it('should set the value to null when the value is null', () => {

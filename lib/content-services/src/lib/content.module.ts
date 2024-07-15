@@ -26,7 +26,6 @@ import { TagModule } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
-import { SitesDropdownModule } from './site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
 import { VersionManagerModule } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
@@ -49,6 +48,7 @@ import { ContentUserInfoModule } from './content-user-info/content-user-info.mod
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
+import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
 
 @NgModule({
     imports: [
@@ -64,7 +64,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         ContentUserInfoModule,
         UploadModule,
         MaterialModule,
-        SitesDropdownModule,
+        DropdownSitesComponent,
         BreadcrumbModule,
         ContentNodeSelectorModule,
         ContentNodeShareModule,
@@ -90,7 +90,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
         ContentUserInfoModule,
         UploadModule,
         SearchModule,
-        SitesDropdownModule,
+        DropdownSitesComponent,
         BreadcrumbModule,
         ContentNodeSelectorModule,
         ContentNodeShareModule,

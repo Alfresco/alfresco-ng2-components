@@ -17,9 +17,6 @@
 
 /* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 
-import { FocusKeyManager } from '@angular/cdk/a11y';
-import { CdkDrag, CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { CommonModule } from '@angular/common';
 import {
     AfterContentInit,
     AfterViewInit,
@@ -42,45 +39,28 @@ import {
     ViewChildren,
     ViewEncapsulation
 } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { DomSanitizer } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
+import { FocusKeyManager } from '@angular/cdk/a11y';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { Observable, Observer, Subscription } from 'rxjs';
-import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
-import { ContextMenuModule } from '../../../context-menu';
-import { DirectiveModule } from '../../../directives';
-import { IconComponent } from '../../../icon';
-import { FileTypePipe, FilterOutArrayObjectsByPropPipe, LocalizedDatePipe } from '../../../pipes';
-import { DataColumnListComponent } from '../../data-column';
+import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
+
 import { ObjectDataRow } from '../../data/object-datarow.model';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
-import { DropZoneDirective } from '../../directives/drop-zone.directive';
-import { ResizableModule } from '../../directives/resizable/resizable.module';
-import { ResizeEvent } from '../../directives/resizable/types';
-import { AmountCellComponent } from '../amount-cell/amount-cell.component';
-import { BooleanCellComponent } from '../boolean-cell/boolean-cell.component';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
-import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
-import { DateCellComponent } from '../date-cell/date-cell.component';
-import { FileSizeCellComponent } from '../filesize-cell/filesize-cell.component';
-import { IconCellComponent } from '../icon-cell/icon-cell.component';
-import { JsonCellComponent } from '../json-cell/json-cell.component';
-import { LocationCellComponent } from '../location-cell/location-cell.component';
-import { NumberCellComponent } from '../number-cell/number-cell.component';
+import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ResizeEvent } from '../../directives/resizable/types';
 
 // eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
@@ -91,40 +71,9 @@ export enum ShowHeaderMode {
 
 @Component({
     selector: 'adf-datatable',
-    standalone: true,
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [
-        CommonModule,
-        DragDropModule,
-        DataTableRowComponent,
-        TranslateModule,
-        MatCheckboxModule,
-        ResizableModule,
-        DropZoneDirective,
-        MatTooltipModule,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        DirectiveModule,
-        ContextMenuModule,
-        IconCellComponent,
-        DateCellComponent,
-        LocationCellComponent,
-        FileSizeCellComponent,
-        DataTableCellComponent,
-        BooleanCellComponent,
-        JsonCellComponent,
-        AmountCellComponent,
-        NumberCellComponent,
-        LocalizedDatePipe,
-        FilterOutArrayObjectsByPropPipe,
-        FileTypePipe,
-        IconComponent
-    ],
     host: { class: 'adf-datatable' }
 })
 export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, DoCheck, OnDestroy, AfterViewInit {
@@ -241,6 +190,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     /** Emitted when the column width is changed. */
     @Output()
     columnsWidthChanged = new EventEmitter<DataColumn[]>();
+
+    /** Emitted when the selected row items count in the table changed. */
+    @Output()
+    selectedItemsCountChanged = new EventEmitter<number>();
 
     /**
      * Flag that indicates if the datatable is in loading state and needs to show the
@@ -567,34 +520,37 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
-        if (this.data) {
-            if (this.isSingleSelectionMode()) {
-                if (row.isSelected) {
-                    this.resetSelection();
-                    this.emitRowSelectionEvent('row-unselect', null);
-                } else {
-                    this.resetSelection();
-                    this.selectRow(row, true);
-                    this.emitRowSelectionEvent('row-select', row);
-                }
-            }
+        if (!this.data) {
+            return;
+        }
 
-            if (this.isMultiSelectionMode()) {
-                const modifier = e && (e.metaKey || e.ctrlKey);
-                let newValue: boolean;
-                if (this.selection.length === 1) {
-                    newValue = !row.isSelected;
-                } else {
-                    newValue = modifier ? !row.isSelected : true;
-                }
-                const domEventName = newValue ? 'row-select' : 'row-unselect';
-
-                if (!modifier) {
-                    this.resetSelection();
-                }
-                this.selectRow(row, newValue);
-                this.emitRowSelectionEvent(domEventName, row);
+        if (this.isSingleSelectionMode()) {
+            if (row.isSelected) {
+                this.resetSelection();
+                this.emitRowSelectionEvent('row-unselect', null);
+            } else {
+                this.resetSelection();
+                this.selectRow(row, true);
+                this.emitRowSelectionEvent('row-select', row);
             }
+        }
+
+        if (this.isMultiSelectionMode()) {
+            const modifier = e && (e.metaKey || e.ctrlKey);
+            let newValue: boolean;
+            if (this.selection.length === 1) {
+                newValue = !row.isSelected;
+            } else {
+                newValue = modifier ? !row.isSelected : true;
+            }
+            const domEventName = newValue ? 'row-select' : 'row-unselect';
+
+            if (!modifier) {
+                this.resetSelection();
+            }
+            this.selectRow(row, newValue);
+            this.emitRowSelectionEvent(domEventName, row);
+            this.checkSelectAllCheckboxState();
         }
     }
 
@@ -723,8 +679,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                 this.isSelectAllChecked = true;
                 this.isSelectAllIndeterminate = false;
             } else if (numberOfSelectedRows > 0 && numberOfSelectedRows < rows.length) {
-                this.isSelectAllChecked = false;
                 this.isSelectAllIndeterminate = true;
+                this.isSelectAllChecked = true;
             } else {
                 this.isSelectAllChecked = false;
                 this.isSelectAllIndeterminate = false;
@@ -850,6 +806,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
                     this.selection.splice(idx, 1);
                 }
             }
+
+            this.selectedItemsCountChanged.emit(this.selection.length);
         }
     }
 

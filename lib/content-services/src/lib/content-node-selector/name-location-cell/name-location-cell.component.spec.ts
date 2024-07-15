@@ -27,9 +27,7 @@ describe('NameLocationCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                NameLocationCellComponent
-            ]
+            imports: [NameLocationCellComponent]
         });
         fixture = TestBed.createComponent(NameLocationCellComponent);
         component = fixture.componentInstance;

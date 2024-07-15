@@ -15,21 +15,25 @@
  * limitations under the License.
  */
 
-import { AsyncPipe, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
-import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { MatDialog } from '@angular/material/dialog';
+import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
 
 @Component({
     selector: 'adf-json-cell',
-    standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    templateUrl: './json-cell.component.html',
+    template: `
+        <ng-container *ngIf="value$ | async as value; else editEmpty">
+            <button mat-button color="primary" (click)="view()">json</button>
+        </ng-container>
+
+        <ng-template #editEmpty>
+            <button *ngIf="editable" mat-button color="primary" (click)="view()">json</button>
+        </ng-template>
+    `,
     styleUrls: ['./json-cell.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [AsyncPipe, MatButtonModule, NgIf],
     host: { class: 'adf-datatable-content-cell' }
 })
 export class JsonCellComponent extends DataTableCellComponent implements OnInit {

@@ -15,5 +15,14 @@
  * limitations under the License.
  */
 
-export * from './buttons-menu.component';
-export * from './buttons-menu.module';
+import { FormFieldModel, FormFieldValidator } from '@alfresco/adf-core';
+
+export class MockFormFieldValidator implements FormFieldValidator {
+    isSupported(_field: FormFieldModel): boolean {
+        return true;
+    }
+
+    validate(_field: FormFieldModel): boolean {
+        return true;
+    }
+}

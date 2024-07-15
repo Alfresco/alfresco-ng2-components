@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonHarness } from '@angular/material/button/testing';
-import { CoreTestingModule } from '../../../testing';
-import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { JsonCellComponent } from './json-cell.component';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('JsonCellComponent', () => {
     let loader: HarnessLoader;

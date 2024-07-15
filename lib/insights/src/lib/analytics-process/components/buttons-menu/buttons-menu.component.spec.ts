@@ -16,15 +16,19 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MaterialModule } from '../material.module';
-import { CoreTestingModule } from '../testing/core.testing.module';
-import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { ButtonsMenuComponent } from '@alfresco/adf-insights';
+import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-custom-container',
+    standalone: true,
+    imports: [CommonModule, ButtonsMenuComponent, MatMenuModule, MatIconModule],
     template: `
         <adf-buttons-action-menu>
-            <button mat-menu-item (click)="assignValue()"><mat-icon>settings</mat-icon><span> Button </span></button>
+            <button mat-menu-item (click)="assignValue()"><mat-icon>settings</mat-icon><span>Button</span></button>
         </adf-buttons-action-menu>
     `
 })
@@ -50,9 +54,7 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, MaterialModule],
-                declarations: [CustomContainerComponent],
-                schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                imports: [ButtonsMenuComponent, CustomContainerComponent]
             });
             fixture = TestBed.createComponent(CustomContainerComponent);
             element = fixture.debugElement.nativeElement;
@@ -93,9 +95,8 @@ describe('ButtonsMenuComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, MaterialModule],
-                declarations: [CustomEmptyContainerComponent],
-                schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                imports: [ButtonsMenuComponent],
+                declarations: [CustomEmptyContainerComponent]
             });
             fixture = TestBed.createComponent(CustomEmptyContainerComponent);
             element = fixture.nativeElement;

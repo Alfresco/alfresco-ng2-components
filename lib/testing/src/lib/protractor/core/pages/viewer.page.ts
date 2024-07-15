@@ -58,7 +58,7 @@ export class ViewerPage {
     unknownFormat = $(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`);
 
     async viewFile(fileName: string): Promise<void> {
-        const fileView = $$(`#document-list-container td[data-automation-id="${fileName}"]`).first();
+        const fileView = $$(`#document-list-container div[data-automation-id="${fileName}"]`).first();
         await BrowserActions.click(fileView);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         await this.waitTillContentLoaded();
@@ -245,7 +245,7 @@ export class ViewerPage {
     }
 
     async clickInfoButton(): Promise<void> {
-        await BrowserActions.click(this.infoButton);
+        await BrowserActions.click($('button[data-automation-id="adf-toolbar-sidebar"]'));
     }
 
     async clickOnTab(tabName: string): Promise<void> {

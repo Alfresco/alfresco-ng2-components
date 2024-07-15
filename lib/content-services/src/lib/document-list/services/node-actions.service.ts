@@ -32,21 +32,21 @@ import { NodeAction } from '../models/node-action.enum';
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class NodeActionsService {
-
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private contentDialogService: ContentNodeDialogService,
-                public dialogRef: MatDialog,
-                public content: ContentService,
-                private documentListService?: DocumentListService,
-                private apiService?: AlfrescoApiService,
-                private dialog?: MatDialog,
-                private downloadService?: DownloadService) {}
+    constructor(
+        private contentDialogService: ContentNodeDialogService,
+        public dialogRef: MatDialog,
+        public content: ContentService,
+        private documentListService?: DocumentListService,
+        private apiService?: AlfrescoApiService,
+        private dialog?: MatDialog,
+        private downloadService?: DownloadService
+    ) {}
 
     downloadNode(node: NodeEntry) {
-        new NodeDownloadDirective(this.apiService, this.downloadService, this.dialog)
-            .downloadNode(node);
+        new NodeDownloadDirective(this.apiService, this.downloadService, this.dialog).downloadNode(node);
     }
 
     /**
@@ -102,23 +102,29 @@ export class NodeActionsService {
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    private doFileOperation(action: NodeAction.COPY | NodeAction.MOVE, type: 'content' | 'folder', contentEntry: Node, permission?: string): Subject<string> {
+    private doFileOperation(
+        action: NodeAction.COPY | NodeAction.MOVE,
+        type: 'content' | 'folder',
+        contentEntry: Node,
+        permission?: string
+    ): Subject<string> {
         const observable = new Subject<string>();
 
-        this.contentDialogService
-            .openCopyMoveDialog(action, contentEntry, permission)
-            .subscribe((selections: Node[]) => {
+        this.contentDialogService.openCopyMoveDialog(action, contentEntry, permission).subscribe(
+            (selections: Node[]) => {
                 const selection = selections[0];
-                this.documentListService[`${action.toLowerCase()}Node`].call(this.documentListService, contentEntry.id, selection.id)
+                this.documentListService[`${action.toLowerCase()}Node`]
+                    .call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(
-                    observable.next.bind(observable, `OPERATION.SUCCESS.${type.toUpperCase()}.${action}`),
-                    observable.error.bind(observable)
+                        observable.next.bind(observable, `OPERATION.SUCCESS.${type.toUpperCase()}.${action}`),
+                        observable.error.bind(observable)
                     );
             },
             (error) => {
                 observable.error(error);
                 return observable;
-            });
+            }
+        );
         return observable;
     }
 }

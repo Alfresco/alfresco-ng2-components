@@ -15,9 +15,20 @@
  * limitations under the License.
  */
 
+import { FormFieldModel, FormFieldValidator } from '@alfresco/adf-core';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
+
+export class MockFormFieldValidator implements FormFieldValidator {
+    isSupported(_field: FormFieldModel): boolean {
+        return true;
+    }
+
+    validate(_field: FormFieldModel): boolean {
+        return true;
+    }
+}
 
 export const fakeProcessInstance: ProcessInstanceCloud = {
     appName: 'simple-app',
@@ -253,47 +264,51 @@ export const fakeFormModelJson = {
     version: 0,
     standAlone: true,
     tabs: [],
-    fields: [{
-        id: '60b007f6-f838-458c-b4d4-43c69f355ef9',
-        name: 'Label',
-        type: 'container',
-        ab: null,
-        numberOfColumns: 1,
-        fields: {
-            1: [{
-                id: 'dropdown',
-                name: 'Dropdown',
-                type: 'dropdown',
-                readOnly: false,
-                required: false,
-                colspan: 1,
-                rowspan: 1,
-                optionType: 'manual',
-                options: [
+    fields: [
+        {
+            id: '60b007f6-f838-458c-b4d4-43c69f355ef9',
+            name: 'Label',
+            type: 'container',
+            ab: null,
+            numberOfColumns: 1,
+            fields: {
+                1: [
                     {
-                        id: '1',
-                        name: 'Label 1'
-                    },
-                    {
-                        id: '2',
-                        name: 'Label 2'
+                        id: 'dropdown',
+                        name: 'Dropdown',
+                        type: 'dropdown',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        optionType: 'manual',
+                        options: [
+                            {
+                                id: '1',
+                                name: 'Label 1'
+                            },
+                            {
+                                id: '2',
+                                name: 'Label 2'
+                            }
+                        ],
+                        authName: null,
+                        restUrl: null,
+                        restResponsePath: null,
+                        restIdProperty: null,
+                        restLabelProperty: null,
+                        selectionType: 'single',
+                        visibilityCondition: null,
+                        params: {
+                            existingColspan: 1,
+                            maxColspan: 2
+                        },
+                        rule: null
                     }
-                ],
-                authName: null,
-                restUrl: null,
-                restResponsePath: null,
-                restIdProperty: null,
-                restLabelProperty: null,
-                selectionType: 'single',
-                visibilityCondition: null,
-                params: {
-                    existingColspan: 1,
-                    maxColspan: 2
-                },
-                rule: null
-            }]
+                ]
+            }
         }
-    }],
+    ],
     outcomes: [],
     metadata: {},
     variables: []

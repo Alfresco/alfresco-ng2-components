@@ -16,10 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../../testing';
-import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { LocationCellComponent } from './location-cell.component';
+import { CoreTestingModule } from '../../../testing/core.testing.module';
 
 describe('LocationCellComponent', () => {
     let component: LocationCellComponent;
@@ -30,7 +30,10 @@ describe('LocationCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [LocationCellComponent, CoreTestingModule]
+            imports: [
+                LocationCellComponent,
+                CoreTestingModule
+            ]
         });
         fixture = TestBed.createComponent(LocationCellComponent);
         component = fixture.componentInstance;
@@ -49,9 +52,12 @@ describe('LocationCellComponent', () => {
             }
         };
 
-        columnData = { format: '/files', type: 'location', key: 'path' };
+        columnData = { format: '/files', type: 'location', key: 'path'};
 
-        dataTableAdapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
+        dataTableAdapter = new ObjectDataTableAdapter(
+            [rowData],
+            [ new ObjectDataColumn(columnData) ]
+        );
 
         component.link = [];
         component.column = dataTableAdapter.getColumns()[0];
@@ -72,7 +78,7 @@ describe('LocationCellComponent', () => {
     it('should set router link', () => {
         fixture.detectChanges();
 
-        expect(component.link).toEqual([columnData.format, rowData.path.elements[2].id]);
+        expect(component.link).toEqual([ columnData.format , rowData.path.elements[2].id ]);
     });
 
     it('should NOT set router link when format NOT provided', () => {
@@ -93,7 +99,7 @@ describe('LocationCellComponent', () => {
             expect(value).toBe('');
             done();
         });
-    });
+   });
 
     it('should not setup cell when path is missing required properties', (done) => {
         rowData.path = { someProp: '' };

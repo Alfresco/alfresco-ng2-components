@@ -21,6 +21,7 @@ import { AnalyticsReportListComponent } from './components/analytics-report-list
 import { AnalyticsReportParametersComponent } from './components/analytics-report-parameters.component';
 import { AnalyticsGeneratorComponent } from './components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from './components/analytics-report-heat-map.component';
+import { ButtonsMenuComponent } from './components/buttons-menu/buttons-menu.component';
 
 export * from './components/analytics.component';
 export * from './components/analytics-report-heat-map.component';
@@ -28,12 +29,14 @@ export * from './components/analytics-generator.component';
 export * from './components/analytics-report-list.component';
 export * from './components/analytics-report-parameters.component';
 export * from './components/analytics.component';
+export * from './components/buttons-menu/buttons-menu.component';
 
 export * from './services/analytics.service';
 export * from './components/widgets';
 
 export const ANALYTICS_PROCESS_DIRECTIVES = [
     ...WIDGET_DIRECTIVES,
+    ButtonsMenuComponent,
     AnalyticsComponent,
     AnalyticsReportListComponent,
     AnalyticsReportParametersComponent,

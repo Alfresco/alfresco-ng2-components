@@ -1468,6 +1468,12 @@ describe('DocumentList', () => {
         expect(documentList.reload).not.toHaveBeenCalled();
     });
 
+    it('should emit custom date range on date picker closed', () => {
+        const selectedItemsCountChangedSpy = spyOn(documentList.selectedItemsCountChanged, 'emit');
+        documentList.onSelectedItemsCountChanged(1);
+        expect(selectedItemsCountChangedSpy).toHaveBeenCalledWith(1);
+    });
+
     it('should add includeFields in the server request when present', () => {
         documentList.includeFields = ['test-include'];
         documentList.currentFolderId = 'fake-id';
@@ -1907,11 +1913,11 @@ describe('DocumentListComponent rendering', () => {
         const rows = fixture.nativeElement.querySelectorAll('.adf-datatable-body adf-datatable-row');
         expect(rows).toBeDefined();
         expect(rows.length).toBe(3);
-        const cell1 = fixture.nativeElement.querySelector('td[title="Name"][data-automation-id="Name 1"]');
+        const cell1 = fixture.nativeElement.querySelector('div[title="Name"][data-automation-id="Name 1"]');
         expect(cell1.innerText).toBe('Name 1');
-        const cell2 = fixture.nativeElement.querySelector('td[title="Name"][data-automation-id="Name 2"]');
+        const cell2 = fixture.nativeElement.querySelector('div[title="Name"][data-automation-id="Name 2"]');
         expect(cell2.innerText).toBe('Name 2');
-        const cell3 = fixture.nativeElement.querySelector('td[title="Id"][data-automation-id="Name 3"]');
+        const cell3 = fixture.nativeElement.querySelector('div[title="Id"][data-automation-id="Name 3"]');
         expect(cell3.innerText).toBe('3');
     });
 });

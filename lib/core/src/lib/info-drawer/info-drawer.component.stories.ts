@@ -18,7 +18,7 @@
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { InfoDrawerComponent } from './info-drawer.component';
-import { INFO_DRAWER_DIRECTIVES } from './info-drawer.module';
+import { InfoDrawerModule } from './info-drawer.module';
 import { mockTabText, mockCardText } from './mock/info-drawer.mock';
 
 export default {
@@ -26,7 +26,7 @@ export default {
     title: 'Core/Info Drawer/Info Drawer',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, ...INFO_DRAWER_DIRECTIVES]
+            imports: [CoreStoryModule, InfoDrawerModule]
         })
     ],
     parameters: {
@@ -200,9 +200,10 @@ export default {
     }
 } as Meta;
 
-const tabLayoutTemplate: Story<InfoDrawerComponent> = (args: InfoDrawerComponent) => ({
+const tabLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
     props: args,
-    template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
+    template:
+        `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader" (currentTab)="currentTab($event)" selectedIndex="{{ selectedIndex }}">
             <div info-drawer-buttons>
                 <mat-icon>clear</mat-icon>
             </div>
@@ -222,9 +223,10 @@ const tabLayoutTemplate: Story<InfoDrawerComponent> = (args: InfoDrawerComponent
         </adf-info-drawer>`
 });
 
-const singleLayoutTemplate: Story<InfoDrawerComponent> = (args: InfoDrawerComponent) => ({
+const singleLayoutTemplate: Story<InfoDrawerModule> = (args: InfoDrawerComponent) => ({
     props: args,
-    template: `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
+    template:
+        `<adf-info-drawer title="{{ title }}" [showHeader]="showHeader">
             <div info-drawer-title>File info</div>
 
             <div info-drawer-buttons>

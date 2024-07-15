@@ -1,0 +1,120 @@
+<ng-container [ngSwitch]="variant">
+    <ng-container *ngSwitchDefault>
+        <button
+            mat-button
+            [id]="uid"
+            [title]="tooltip"
+            [color]="color"
+            [disabled]="disabled"
+            [disableRipple]="disableRipple"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId"
+        >
+            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+        </button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'raised'">
+        <button
+            mat-raised-button
+            [id]="uid"
+            [title]="tooltip"
+            [color]="color"
+            [disabled]="disabled"
+            [disableRipple]="disableRipple"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId"
+        >
+            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+        </button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'stroked'">
+        <button
+            mat-stroked-button
+            [id]="uid"
+            [title]="tooltip"
+            [color]="color"
+            [disabled]="disabled"
+            [disableRipple]="disableRipple"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId"
+        >
+            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+        </button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'flat'">
+        <button
+            mat-flat-button
+            [id]="uid"
+            [title]="tooltip"
+            [color]="color"
+            [disabled]="disabled"
+            [disableRipple]="disableRipple"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId"
+        >
+            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+        </button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'icon'">
+        <button
+            mat-icon-button
+            [id]="uid"
+            [title]="tooltip"
+            [color]="color"
+            [disabled]="disabled"
+            [disableRipple]="disableRipple"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId"
+        >
+            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
+        </button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'fab'">
+        <button
+            mat-fab
+            [id]="uid"
+            [title]="tooltip"
+            [color]="color"
+            [disabled]="disabled"
+            [disableRipple]="disableRipple"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId"
+        >
+            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
+        </button>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'mini-fab'">
+        <button
+            mat-mini-fab
+            [id]="uid"
+            [title]="tooltip"
+            [color]="color"
+            [disabled]="disabled"
+            [disableRipple]="disableRipple"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId"
+        >
+            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
+        </button>
+    </ng-container>
+</ng-container>
+
+<ng-template #buttonContent>
+    <ng-content></ng-content>
+</ng-template>

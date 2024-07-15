@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AdfDateFnsAdapter, ButtonsMenuModule, DownloadService, ToolbarComponent, ToolbarTitleComponent } from '@alfresco/adf-core';
+import { AdfDateFnsAdapter, DownloadService, ToolbarComponent, ToolbarTitleComponent } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -45,6 +45,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { WIDGET_DIRECTIVES } from './widgets';
 import { MatButtonModule } from '@angular/material/button';
+import { ButtonsMenuComponent } from './buttons-menu/buttons-menu.component';
 
 const FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
 
@@ -113,15 +114,15 @@ export interface ReportFormValues {
         MatIconModule,
         ReactiveFormsModule,
         ToolbarComponent,
+        ToolbarTitleComponent,
         MatFormFieldModule,
         MatInputModule,
         MatMenuModule,
-        ToolbarTitleComponent,
         ...WIDGET_DIRECTIVES,
         MatDialogModule,
         FormsModule,
         MatButtonModule,
-        ButtonsMenuModule
+        ButtonsMenuComponent
     ],
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.scss'],

@@ -20,17 +20,17 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 import { Node, NodeEntry, NodePaging, ResultSetPaging, Site, SiteEntry, SitePaging, SitePagingList, UserInfo } from '@alfresco/js-api';
 import { DataRow, ThumbnailService, DataColumn } from '@alfresco/adf-core';
-import { ContentService, UploadService, NodesApiService, SitesService, FileModel, FileUploadStatus, FileUploadCompleteEvent } from '../common';
+import { ContentService, UploadService, NodesApiService, SitesService, FileModel, FileUploadStatus, FileUploadCompleteEvent } from '../../common';
 import { of, throwError } from 'rxjs';
-import { DropdownBreadcrumbComponent } from '../breadcrumb';
+import { DropdownBreadcrumbComponent } from '../../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
-import { ContentTestingModule } from '../testing/content.testing.module';
-import { DocumentListService } from '../document-list/services/document-list.service';
+import { ContentTestingModule } from '../../testing/content.testing.module';
+import { DocumentListService } from '../../document-list/services/document-list.service';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
-import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../document-list';
-import { SearchQueryBuilderService } from '../search';
+import { NodeEntryEvent, ShareDataRow, ShareDataTableAdapter } from '../../document-list';
+import { SearchQueryBuilderService } from '../../search';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
-import { mockContentModelTextProperty } from '../mock/content-model.mock';
+import { mockContentModelTextProperty } from '../../mock/content-model.mock';
 
 const fakeResultSetPaging: ResultSetPaging = {
     list: {

@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, Input, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ResizableDirective } from './resizable.directive';
+import { Input, OnInit, Directive, Renderer2, ElementRef, OnDestroy, NgZone } from '@angular/core';
 
 @Directive({
-    selector: '[adf-resize-handle]',
-    standalone: true
+    selector: '[adf-resize-handle]'
 })
 export class ResizeHandleDirective implements OnInit, OnDestroy {
     /**

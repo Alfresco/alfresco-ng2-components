@@ -1,17 +1,21 @@
-<div class="adf-columns-selector"
-     data-automation-id="adf-columns-selector"
-     tabindex="0"
-     role="button"
-     (keyup.enter)="$event.stopPropagation()"
-     (click)="$event.stopPropagation();">
+<div
+    class="adf-columns-selector"
+    data-automation-id="adf-columns-selector"
+    tabindex="0"
+    role="button"
+    (keyup.enter)="$event.stopPropagation()"
+    (click)="$event.stopPropagation();"
+>
     <div class="adf-columns-selector-header">
         <span class="adf-columns-selector-header-label">
-            {{ 'ADF-DATATABLE.COLUMNS_SELECTOR.COLUMNS' | translate }}
+            {{"ADF-DATATABLE.COLUMNS_SELECTOR.COLUMNS" | translate}}
         </span>
 
-        <button data-automation-id="adf-columns-selector-close-button"
-                mat-icon-button
-                (click)="closeMenu()">
+        <button
+            data-automation-id="adf-columns-selector-close-button"
+            mat-icon-button
+            (click)="closeMenu()"
+        >
             <mat-icon>close</mat-icon>
         </button>
     </div>
@@ -19,28 +23,32 @@
     <mat-divider class="adf-columns-selector-divider"></mat-divider>
 
     <div class="adf-columns-selector-search-input-container">
-        <mat-icon class="adf-columns-selector-search-input-icon">
+        <mat-icon
+            class="adf-columns-selector-search-input-icon">
             search
         </mat-icon>
 
-        <input [formControl]="searchInputControl"
-               class="adf-columns-selector-search-input"
-               data-automation-id="adf-columns-selector-search-input"
-               type="text"
-               [placeholder]="'ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH' | translate">
+        <input
+            [formControl]="searchInputControl"
+            class="adf-columns-selector-search-input"
+            data-automation-id="adf-columns-selector-search-input"
+            type="text"
+            [placeholder]='"ADF-DATATABLE.COLUMNS_SELECTOR.SEARCH" | translate'>
     </div>
 
     <div class="adf-columns-selector-list-container">
         <ng-container *ngFor="let column of columnItems">
-            <div *ngIf="(column.title | translate | filterString:searchQuery) as translatedTitle"
-                 class="adf-columns-selector-list-item">
-                <mat-checkbox color="primary"
-                              class="adf-columns-selector-column-checkbox"
-                              [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
-                              [checked]="!column.isHidden"
-                              [disabled]="isCheckboxDisabled(column)"
-                              (change)="changeColumnVisibility(column)">
-                    <div class="adf-columns-selector-list-content">{{ translatedTitle }}</div>
+            <div
+                *ngIf="(column.title | translate | filterString:searchQuery) as translatedTitle"
+                class="adf-columns-selector-list-item">
+                <mat-checkbox
+                    color="primary"
+                    class="adf-columns-selector-column-checkbox"
+                    [attr.data-automation-id]="'adf-columns-selector-column-checkbox-' + column.title"
+                    [checked]="!column.isHidden"
+                    [disabled]="isCheckboxDisabled(column)"
+                    (change)="changeColumnVisibility(column)">
+                    <div class="adf-columns-selector-list-content">{{translatedTitle}}</div>
                 </mat-checkbox>
             </div>
         </ng-container>
@@ -49,11 +57,12 @@
     <mat-divider class="adf-columns-selector-divider"></mat-divider>
 
     <div class="adf-columns-selector-footer">
-        <button mat-flat-button
-                data-automation-id="adf-columns-selector-apply-button"
-                color="primary"
-                (click)="apply()">
-            {{ 'ADF-DATATABLE.COLUMNS_SELECTOR.APPLY' | translate }}
+        <button
+            mat-flat-button
+            data-automation-id="adf-columns-selector-apply-button"
+            color="primary"
+            (click)="apply()">
+            {{"ADF-DATATABLE.COLUMNS_SELECTOR.APPLY" | translate}}
         </button>
     </div>
 </div>

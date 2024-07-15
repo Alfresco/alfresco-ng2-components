@@ -21,7 +21,8 @@
             display: none;
         }
 
-        button > mat-icon.mat-icon.material-icons {
+        /* stylelint-disable selector-class-pattern */
+        button > .mat-icon {
             color: black;
             margin: 0 10px;
         }

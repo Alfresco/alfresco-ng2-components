@@ -388,6 +388,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Output()
     columnsOrderChanged = new EventEmitter<string[] | undefined>();
 
+    /** Emitted when the selected row items count in the table changed. */
+    @Output()
+    selectedItemsCountChanged = new EventEmitter<number | undefined>();
+
     @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
 
@@ -830,6 +834,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.columnsWidths = { ...this.columnsWidths, ...newColumnsWidths };
         this.createColumns();
         this.columnsWidthChanged.emit(this.columnsWidths);
+    }
+
+    onSelectedItemsCountChanged(count: number) {
+        this.selectedItemsCountChanged.emit(count);
     }
 
     onNodeClick(nodeEntry: NodeEntry) {

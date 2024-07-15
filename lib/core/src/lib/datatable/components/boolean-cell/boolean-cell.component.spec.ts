@@ -16,9 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ObjectDataColumn } from '../../data/object-datacolumn.model';
-import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { BooleanCellComponent } from './boolean-cell.component';
+import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 
 describe('BooleanCellComponent', () => {
     let component: BooleanCellComponent;

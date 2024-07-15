@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
-import { DataTableModule } from '../../datatable.module';
-import { mockPathInfos } from '../mocks/datatable.mock';
 import { DataTableComponent } from './datatable.component';
+import { DataTableModule } from '../../datatable.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { mockPathInfos } from '../mocks/datatable.mock';
 
 export default {
     component: DataTableComponent,
@@ -150,22 +150,9 @@ export default {
                     cssClass: 'adf-ellipsis-cell',
                     copyContent: true
                 },
-                {
-                    type: 'image',
-                    key: 'imageCol',
-                    title: 'Image Column',
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell'
-                },
+                { type: 'image', key: 'imageCol', title: 'Image Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'icon', key: 'iconCol', title: 'Icon Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
-                {
-                    type: 'date',
-                    key: 'dateCol',
-                    title: 'Date Column',
-                    sortable: true,
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell'
-                },
+                { type: 'date', key: 'dateCol', title: 'Date Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
                 {
                     type: 'date',
                     key: 'dateCol',
@@ -175,43 +162,11 @@ export default {
                     cssClass: 'adf-ellipsis-cell',
                     dateConfig: { format: 'timeAgo' }
                 },
-                {
-                    type: 'fileSize',
-                    key: 'fileSizeCol',
-                    title: 'File Size Column',
-                    sortable: true,
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell'
-                },
-                {
-                    type: 'location',
-                    format: '/files',
-                    key: 'locationCol',
-                    title: 'Location Column',
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell'
-                },
-                {
-                    type: 'boolean',
-                    key: 'booleanCol',
-                    title: 'Boolean Column',
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell'
-                },
-                {
-                    type: 'amount',
-                    key: 'amountCol',
-                    title: 'Amount Column',
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell'
-                },
-                {
-                    type: 'number',
-                    key: 'numberCol',
-                    title: 'Number Column',
-                    draggable: true,
-                    cssClass: 'adf-ellipsis-cell'
-                },
+                { type: 'fileSize', key: 'fileSizeCol', title: 'File Size Column', sortable: true, draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'location', format: '/files', key: 'locationCol', title: 'Location Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'boolean', key: 'booleanCol', title: 'Boolean Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'amount', key: 'amountCol', title: 'Amount Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
+                { type: 'number', key: 'numberCol', title: 'Number Column', draggable: true, cssClass: 'adf-ellipsis-cell' },
                 { type: 'json', key: 'jsonCol', title: 'JSON Column', draggable: true, cssClass: 'adf-ellipsis-cell' }
             ],
             table: {

@@ -23,7 +23,7 @@ import { BrowserVisibility } from '../../utils/browser-visibility';
 export class DataTableItem {
     columns = new Array<Column>();
     rootElement: ElementFinder;
-    rows = `tbody[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
+    rows = `div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`;
 
     constructor(rootElement = $$('adf-datatable').first()) {
         this.rootElement = rootElement;
@@ -34,16 +34,14 @@ export class DataTableItem {
     }
 
     async getColumn(columnName: string): Promise<Column> {
-        return this.columns.find((column) => column.getColumnName() === columnName);
+        return this.columns.find(
+            (column) =>  column.getColumnName() === columnName
+        );
     }
 
     async getRow(columnName: string, columnValue: string): Promise<ElementFinder> {
-        console.log('getRow', '-------------------------------------------------------');
         const column = await this.getColumn(columnName);
-        const locator =
-            `//td[@title="${column.columnName}"]` +
-            column.createLocator(columnValue) +
-            `//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`;
+        const locator = `//div[@title="${column.columnName}"]` + column.createLocator(columnValue) + `//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`;
         return this.rootElement.element(by.xpath(locator));
     }
 
@@ -73,26 +71,19 @@ export class DataTableItem {
     async getColumnValueForRow(identifyingColumnName: string, identifyingColumnValue: string, columnName: string): Promise<string> {
         const row = await this.getRow(identifyingColumnName, identifyingColumnValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
-        const rowColumn = row.$(`td[title="${columnName}"] span`);
+        const rowColumn = row.$(`div[title="${columnName}"] span`);
         return BrowserActions.getText(rowColumn);
     }
 
     async checkRowIsSelected(columnName: string, columnValue: string): Promise<void> {
-        console.log('checkRowIsSelected', '-------------------------------------------------------');
         const column = await this.getColumn(columnName);
-        const locator =
-            `//td[@title="${column.columnName}"]` +
-            column.createLocator(columnValue) +
-            `//ancestor::adf-datatable-row[contains(@class, 'is-selected')]`;
+        const locator = `//div[@title="${column.columnName}"]` + column.createLocator(columnValue) + `//ancestor::adf-datatable-row[contains(@class, 'is-selected')]`;
         await BrowserVisibility.waitUntilElementIsVisible(element(by.xpath(locator)));
     }
 
     async checkRowIsNotSelected(columnName: string, columnValue: string): Promise<void> {
         const column = await this.getColumn(columnName);
-        const locator =
-            `//div[@title="${column.columnName}"]` +
-            column.createLocator(columnValue) +
-            `//ancestor::adf-datatable-row[contains(@class, 'is-selected')]`;
+        const locator = `//div[@title="${column.columnName}"]` + column.createLocator(columnValue) + `//ancestor::adf-datatable-row[contains(@class, 'is-selected')]`;
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.xpath(locator)));
     }
 

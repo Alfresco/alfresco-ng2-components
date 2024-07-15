@@ -299,7 +299,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     parseValue(json: any): any {
-        let value = Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null;
+        const value = Object.prototype.hasOwnProperty.call(json, 'value') && json.value !== undefined ? json.value : null;
 
         /*
          This is needed due to Activiti issue related to reading dropdown values as value string
@@ -351,10 +351,6 @@ export class FormFieldModel extends FormWidgetModel {
             return entry.length > 0 ? entry[0].id : value;
         }
 
-        /*
-         This is needed due to Activiti displaying/editing dates in d-M-YYYY format
-         but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
-         */
         if (this.isDateField(json) || this.isDateTimeField(json)) {
             if (value) {
                 let dateValue: Date;
@@ -368,7 +364,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
 
                 if (isValidDate(dateValue)) {
-                    return DateFnsUtils.formatDate(dateValue, this.dateDisplayFormat);
+                    return dateValue;
                 }
             }
 
@@ -441,10 +437,15 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.DATE: {
                 if (typeof this.value === 'string' && this.value === 'today') {
-                    this.value = DateFnsUtils.formatDate(new Date(), this.dateDisplayFormat);
+                    this.value = new Date();
                 }
 
-                const dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
+                let dateValue;
+                try {
+                    dateValue = DateFnsUtils.parseDate(this.value, this.dateDisplayFormat);
+                } catch (e) {
+                    dateValue = new Date('error');
+                }
 
                 if (isValidDate(dateValue)) {
                     const datePart = DateFnsUtils.formatDate(dateValue, 'yyyy-MM-dd');
@@ -457,7 +458,7 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.DATETIME: {
                 if (typeof this.value === 'string' && this.value === 'now') {
-                    this.value = DateFnsUtils.formatDate(new Date(), this.dateDisplayFormat);
+                    this.value = new Date();
                 }
 
                 const dateTimeValue = this.value !== null ? new Date(this.value) : null;

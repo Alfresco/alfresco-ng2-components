@@ -20,12 +20,13 @@ import * as path from 'path';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachmentListPage {
-    attachFileButton = $('input[type="file"]');
-    buttonMenu = $('button[data-automation-id="action_menu_0"]');
-    viewButton = $('button[data-automation-id*="MENU_ACTIONS.VIEW_CONTENT"]');
-    removeButton = $('button[data-automation-id*="MENU_ACTIONS.REMOVE_CONTENT"]');
-    downloadButton = $('button[data-automation-id*="MENU_ACTIONS.DOWNLOAD_CONTENT"]');
-    noContentContainer = $('td[class*="adf-no-content-container"]');
+
+    attachFileButton = $('input[type=\'file\']');
+    buttonMenu = $('button[data-automation-id=\'action_menu_0\']');
+    viewButton = $('button[data-automation-id*=\'MENU_ACTIONS.VIEW_CONTENT\']');
+    removeButton = $('button[data-automation-id*=\'MENU_ACTIONS.REMOVE_CONTENT\']');
+    downloadButton = $('button[data-automation-id*=\'MENU_ACTIONS.DOWNLOAD_CONTENT\']');
+    noContentContainer = $('div[class*=\'adf-no-content-container\']');
 
     async checkEmptyAttachmentList(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noContentContainer);
@@ -38,7 +39,7 @@ export class AttachmentListPage {
     }
 
     async checkFileIsAttached(name: string): Promise<void> {
-        const fileAttached = $$('td[data-automation-id="' + name + '"]').first();
+        const fileAttached = $$('div[data-automation-id="' + name + '"]').first();
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
@@ -48,7 +49,7 @@ export class AttachmentListPage {
 
     async viewFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click($$('td[data-automation-id="' + name + '"]').first());
+        await BrowserActions.click($$('div[data-automation-id="' + name + '"]').first());
         await BrowserActions.click(this.buttonMenu);
         await browser.sleep(500);
         await BrowserActions.click(this.viewButton);
@@ -57,7 +58,7 @@ export class AttachmentListPage {
 
     async removeFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click($$('td[data-automation-id="' + name + '"]').first());
+        await BrowserActions.click($$('div[data-automation-id="' + name + '"]').first());
         await BrowserActions.click(this.buttonMenu);
         await browser.sleep(500);
         await BrowserActions.click(this.removeButton);
@@ -66,7 +67,7 @@ export class AttachmentListPage {
 
     async downloadFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click($$('td[data-automation-id="' + name + '"]').first());
+        await BrowserActions.click($$('div[data-automation-id="' + name + '"]').first());
         await BrowserActions.click(this.buttonMenu);
         await browser.sleep(500);
         await BrowserActions.click(this.downloadButton);
@@ -74,14 +75,15 @@ export class AttachmentListPage {
 
     async doubleClickFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserVisibility.waitUntilElementIsVisible($$(`td[data-automation-id="${name}"]`).first());
-        const fileAttached = $$(`td[data-automation-id="${name}"]`).first();
+        await BrowserVisibility.waitUntilElementIsVisible($$(`div[data-automation-id="${name}"]`).first());
+        const fileAttached = $$(`div[data-automation-id="${name}"]`).first();
         await BrowserActions.click(fileAttached);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
     async checkFileIsRemoved(name: string): Promise<void> {
-        const fileAttached = $$(`td[data-automation-id="${name}"]`).first();
+        const fileAttached = $$(`div[data-automation-id="${name}"]`).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
     }
+
 }

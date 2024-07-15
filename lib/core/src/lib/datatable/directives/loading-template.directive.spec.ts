@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../../testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { LoadingContentTemplateDirective } from './loading-template.directive';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('LoadingContentTemplateDirective', () => {
     let fixture: ComponentFixture<DataTableComponent>;

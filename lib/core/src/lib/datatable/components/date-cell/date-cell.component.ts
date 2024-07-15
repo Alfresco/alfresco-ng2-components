@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { AppConfigService } from '../../../app-config';
-import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
-import { DateConfig } from '../../data/data-column.model';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { AppConfigService } from '../../../app-config/app-config.service';
+import { DateConfig } from '../../data/data-column.model';
+import { CommonModule } from '@angular/common';
+import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 
 @Component({
     standalone: true,
@@ -32,6 +32,7 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
+
     @Input()
     dateConfig: DateConfig;
 

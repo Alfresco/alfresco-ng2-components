@@ -16,7 +16,10 @@
  */
 
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { CoreModule, InfoDrawerModule } from '@alfresco/adf-core';
+import { ContentModule, ContentDirectiveModule, VersionManagerModule, ContentMetadataModule } from '@alfresco/adf-content-services';
 import { FileViewComponent } from './file-view.component';
 
 const routes: Routes = [
@@ -27,7 +30,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), FileViewComponent],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        CoreModule,
+        ContentModule,
+        InfoDrawerModule,
+        ContentModule,
+        ContentDirectiveModule,
+        ContentMetadataModule,
+        VersionManagerModule
+    ],
+    declarations: [FileViewComponent],
     exports: [FileViewComponent]
 })
-export class FileViewModule {}
+export class FileViewModule {
+
+}

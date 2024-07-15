@@ -15,31 +15,22 @@
  * limitations under the License.
  */
 
-import { Subject } from 'rxjs';
 import { DataColumn } from './data-column.model';
 import { DataRow } from './data-row.model';
 import { DataSorting } from './data-sorting.model';
+import { Subject } from 'rxjs';
 
 export interface DataTableAdapter {
     rowsChanged?: Subject<Array<DataRow>>;
 
     selectedRow: DataRow;
-
     getRows(): Array<DataRow>;
-
     setRows(rows: Array<DataRow>): void;
-
     getColumns(): Array<DataColumn>;
-
     setColumns(columns: Array<DataColumn>): void;
-
     getValue(row: DataRow, col: DataColumn, resolverFn?: (_row: DataRow, _col: DataColumn) => any): any;
-
     getColumnType(row: DataRow, col: DataColumn): string;
-
     getSorting(): DataSorting;
-
     setSorting(sorting: DataSorting): void;
-
     sort(key?: string, direction?: string): void;
 }

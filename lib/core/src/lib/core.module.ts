@@ -19,12 +19,15 @@ import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
+
 import { MaterialModule } from './material.module';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
 import { DataTableModule } from './datatable/datatable.module';
+import { InfoDrawerModule } from './info-drawer/info-drawer.module';
 import { LanguageMenuModule } from './language-menu/language-menu.module';
+import { LoginModule } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { ViewerModule } from './viewer/viewer.module';
@@ -32,15 +35,17 @@ import { FormBaseModule } from './form/form-base.module';
 import { SidenavLayoutModule } from './layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { CommentListModule } from './comments/comment-list/comment-list.module';
-import { ButtonsMenuModule } from './buttons-menu/buttons-menu.module';
 import { TemplateModule } from './templates/template.module';
 import { ClipboardModule } from './clipboard/clipboard.module';
 import { NotificationHistoryModule } from './notifications/notification-history.module';
 import { BlankPageModule } from './blank-page/blank-page.module';
+
 import { DirectiveModule } from './directives/directive.module';
 import { PipeModule } from './pipes/pipe.module';
+
 import { TranslationService } from './translation/translation.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
+import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './common/services/directionality-config-factory';
@@ -62,9 +67,6 @@ import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
 import { AppConfigPipe, StoragePrefixFactory } from './app-config';
 import { UnsavedChangesDialogModule } from './dialogs';
 import { DynamicChipListModule } from './dynamic-chip-list';
-import { INFO_DRAWER_DIRECTIVES } from './info-drawer';
-import { IconComponent } from './icon';
-import { LOGIN_DIRECTIVES } from './login';
 
 @NgModule({
     imports: [
@@ -88,13 +90,12 @@ import { LOGIN_DIRECTIVES } from './login';
         FormBaseModule,
         CommentsModule,
         CommentListModule,
-        ...LOGIN_DIRECTIVES,
+        LoginModule,
         LanguageMenuModule,
-        ...INFO_DRAWER_DIRECTIVES,
+        InfoDrawerModule,
         DataTableModule,
-        ButtonsMenuModule,
         TemplateModule,
-        IconComponent,
+        IconModule,
         SortingPickerModule,
         NotificationHistoryModule,
         SearchTextModule,
@@ -127,15 +128,14 @@ import { LOGIN_DIRECTIVES } from './login';
         FormBaseModule,
         CommentsModule,
         CommentListModule,
-        ...LOGIN_DIRECTIVES,
+        LoginModule,
         LanguageMenuModule,
-        ...INFO_DRAWER_DIRECTIVES,
+        InfoDrawerModule,
         DataTableModule,
         TranslateModule,
-        ButtonsMenuModule,
         TemplateModule,
         SortingPickerModule,
-        IconComponent,
+        IconModule,
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule,

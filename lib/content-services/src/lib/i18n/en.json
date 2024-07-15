@@ -663,6 +663,9 @@
     "ARIA-LABEL": {
       "BREADCRUMB": "Breadcrumb",
       "DROPDOWN": "Dropdown"
+    },
+    "HEADER": {
+      "SELECTED": "Selected ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {

@@ -15,13 +15,21 @@
  * limitations under the License.
  */
 
+import {
+    Component,
+    ViewEncapsulation,
+    ElementRef,
+    Input,
+    HostBinding,
+    HostListener,
+    Output,
+    EventEmitter
+} from '@angular/core';
 import { FocusableOption } from '@angular/cdk/a11y';
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewEncapsulation } from '@angular/core';
 import { DataRow } from '../../data/data-row.model';
 
 @Component({
     selector: 'adf-datatable-row',
-    standalone: true,
     template: `<ng-content></ng-content>`,
     encapsulation: ViewEncapsulation.None,
     host: {
@@ -49,13 +57,13 @@ export class DataTableRowComponent implements FocusableOption {
     @HostBinding('attr.aria-selected')
     get isAriaSelected(): boolean {
         if (!this.row) {
-            return false;
+           return false;
         }
         return this.row.isSelected;
     }
 
     @HostBinding('attr.aria-label')
-    get ariaLabel(): string | null {
+    get ariaLabel(): string|null {
         if (!this.row) {
             return null;
         }
@@ -67,7 +75,7 @@ export class DataTableRowComponent implements FocusableOption {
     }
 
     @HostBinding('attr.tabindex')
-    get tabindex(): number | null {
+    get tabindex(): number|null {
         return this.disabled ? null : 0;
     }
 

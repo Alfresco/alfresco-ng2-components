@@ -18,10 +18,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { InfiniteSelectScrollDirective, AuthenticationService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry, Site } from '@alfresco/js-api';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { TranslateService } from '@ngx-translate/core';
-import { SitesService } from '../common/services/sites.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SitesService } from '../../common/services/sites.service';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -33,6 +35,8 @@ export enum Relations {
 
 @Component({
     selector: 'adf-sites-dropdown',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
     templateUrl: './sites-dropdown.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-sites-dropdown' }
@@ -75,7 +79,7 @@ export class DropdownSitesComponent implements OnInit {
      * an empty model is emitted.
      */
     @Output()
-    change: EventEmitter<SiteEntry> = new EventEmitter();
+    change = new EventEmitter<SiteEntry>();
 
     @Output()
     error = new EventEmitter<any>();

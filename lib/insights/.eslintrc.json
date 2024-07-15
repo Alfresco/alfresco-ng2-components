@@ -7,6 +7,10 @@
       "extends": [
         "plugin:@nrwl/nx/angular"
       ],
+      "parserOptions": {
+        "project": ["lib/insights/tsconfig.lib.json", "lib/insights/tsconfig.spec.json"],
+        "createDefaultProgram": true
+      },
       "rules": {
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
         "@angular-eslint/no-output-native": "off",
@@ -74,6 +78,10 @@
     {
       "files": ["*.html"],
       "extends": ["plugin:@nrwl/nx/angular-template"],
+      "parserOptions": {
+        "project": ["lib/insights/tsconfig.lib.json", "lib/insights/tsconfig.spec.json"],
+        "createDefaultProgram": true
+      },
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
         "@angular-eslint/template/no-positive-tabindex": "error"
