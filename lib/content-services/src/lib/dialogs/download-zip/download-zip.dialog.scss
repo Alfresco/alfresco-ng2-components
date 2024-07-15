@@ -1,3 +1,15 @@
 .adf-download-zip-dialog-button {
     text-transform: uppercase;
 }
+
+.adf-dialog-content:has(.adf-dialog-content-progress-text) {
+    padding: 0;
+
+    .adf-dialog-content-progress-text {
+        margin-top: 4px;
+
+        &-percentage {
+            font-weight: 900;
+        }
+    }
+}

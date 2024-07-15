@@ -15,31 +15,12 @@
  * limitations under the License.
  */
 
-import { DownloadStatus } from './download-status';
+export const FileDownloadStatus = {
+    PENDING: 'PENDING',
+    CANCELLED: 'CANCELLED',
+    IN_PROGRESS: 'IN_PROGRESS',
+    DONE: 'DONE',
+    MAX_CONTENT_SIZE_EXCEEDED: 'MAX_CONTENT_SIZE_EXCEEDED'
+} as const;
 
-export interface Download {
-    /**
-     * number of files added so far in the zip
-     */
-    filesAdded?: number;
-    /**
-     * number of bytes added so far in the zip
-     */
-    bytesAdded?: number;
-    /**
-     * the id of the download node
-     */
-    id?: string;
-    /**
-     * the total number of files to be added in the zip
-     */
-    totalFiles?: number;
-    /**
-     * the total number of bytes to be added in the zip
-     */
-    totalBytes?: number;
-    /**
-     * the current status of the download node creation
-     */
-    status?: DownloadStatus;
-}
+export type DownloadStatus = keyof typeof FileDownloadStatus;
