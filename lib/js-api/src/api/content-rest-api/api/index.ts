@@ -18,6 +18,7 @@
 export * from './types';
 export * from './actions.api';
 export * from './activities.api';
+export * from './agents.api';
 export * from './audit.api';
 export * from './categories.api';
 export * from './comments.api';
@@ -32,6 +33,7 @@ export * from './probes.api';
 export * from './queries.api';
 export * from './ratings.api';
 export * from './renditions.api';
+export * from './search-ai.api';
 export * from './sharedlinks.api';
 export * from './sites.api';
 export * from './tags.api';
