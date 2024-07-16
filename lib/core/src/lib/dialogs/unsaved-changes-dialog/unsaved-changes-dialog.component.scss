@@ -18,11 +18,12 @@ adf-unsaved-changes-dialog {
 
         &-discard-changes-button {
             color: var(--theme-warn-color-default-contrast);
-            background-color: var(--adf-danger-button-background);
+            background-color: var(--adf-error-color);
             min-width: 143px;
         }
 
-        &-cancel-button, &-discard-changes-button {
+        &-cancel-button,
+        &-discard-changes-button {
             padding: 4px 14px;
             height: 32px;
             display: flex;

@@ -371,6 +371,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Agent Service](content-services/services/agent.service.md) | Manages agents in Content Services. | [Source](../lib/content-services/src/lib/agent/services/agent.service.ts) |
 | [Audit Service](content-services/services/audit.service.md) | Manages Audit apps and entries. | [Source](../lib/content-services/src/lib/audit/audit.service.ts) |
 | [Card View Content Update Service](content-services/services/card-view-content-update.service.md) | Manages Card View properties in the content services environment. |  |
 | Implements BaseCardViewContentUpdate. | [Source](../lib/content-services/src/lib/common/services/card-view-content-update.service.ts) |  |
@@ -387,6 +388,7 @@ for more information about installing and using the source code.
 | [Node Comments Service](content-services/services/node-comments.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../lib/content-services/src/lib/node-comments/services/node-comments.service.ts) |
 | [Node permission dialog service](content-services/services/node-permission-dialog.service.md) | Displays dialogs to let the user set node permissions. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission-dialog.service.ts) |
 | [Node Permission service](content-services/services/node-permission.service.md) | Manages role permissions for content nodes. | [Source](../lib/content-services/src/lib/permission-manager/services/node-permission.service.ts) |
+| [Search Ai Service](content-services/services/search-ai.service.md) | Manages search AI in Content Services. | [Source](../lib/content-services/src/lib/search-ai/services/search-ai.service.ts) |
 | [Search filter service](content-services/services/search-filter.service.md) | Registers widgets for use with the Search Filter component. | [Source](../lib/content-services/src/lib/search/services/search-filter.service.ts) |
 | [Search Query Builder service](content-services/services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/src/lib/search/services/search-query-builder.service.ts) |
 | [Security Controls service](content-services/services/security-controls.service.md) | Manages security groups & marks in Content Services. | [Source](../lib/content-services/src/lib/security/services/security-controls-groups-marks-security.service.ts) |
