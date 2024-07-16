@@ -55,7 +55,7 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
     }
 
     ngOnInit() {
-        if (this.field?.restUrl && !this.field.readOnly) {
+        if (this.field?.restUrl && !this.field?.form?.readOnly) {
             if (this.field.form.taskId) {
                 this.getOptionsByTaskId();
             } else {
