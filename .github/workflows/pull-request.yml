@@ -526,11 +526,12 @@ jobs:
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
         with:
           repo: Alfresco/hxp-frontend-apps
-          ref: develop
+          ref: fix/AAE-24001-check-adf
           workflow: acceptance-tests.yml
           inputs: >
             {
               "environment": "hxpsRc",
+              "force-adf-link": true,
               "notify-on-failure": true,
               "rp-trigger": "adf-to-hxp-test",
               "slack-channel-id": "D056HA6MP6Y",
