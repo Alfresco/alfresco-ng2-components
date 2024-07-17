@@ -808,7 +808,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 }
             });
 
-        const getVariableDropdownWidgetWithoutConfig = () => 
+        const getVariableDropdownWidgetWithoutConfig = () =>
             new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
                 id: 'variable-dropdown-id',
                 name: 'variable-options-dropdown',
@@ -831,7 +831,7 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(widget.field.json.variableConfig.optionsPath).toBe('data');
             expect(widget.field.json.variableConfig.optionsId).toBe('id');
             expect(widget.field.json.variableConfig.optionsLabel).toBe('name');
-        })
+        });
 
         it('should display options persisted from process variable', async () => {
             widget.field = getVariableDropdownWidget(
