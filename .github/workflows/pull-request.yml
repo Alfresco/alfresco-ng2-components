@@ -530,7 +530,7 @@ jobs:
           workflow: acceptance-tests.yml
           inputs: >
             {
-              "environment": "hxpsRc",
+              "environment": "apaRc",
               "force-adf-link": true,
               "notify-on-failure": true,
               "rp-trigger": "adf-to-hxp-test",
