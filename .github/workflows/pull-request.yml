@@ -511,7 +511,7 @@ jobs:
       - name: Determine complexity
         id: complexity
         run: |
-          echo "::set-output level=major"
+          echo "level=major" >> $GITHUB_OUTPUT
 
   verify-downstream:
     needs: [determine-complexity]
