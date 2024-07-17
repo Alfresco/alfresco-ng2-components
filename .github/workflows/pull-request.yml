@@ -492,6 +492,45 @@ jobs:
           echo "result ${{ toJson(steps.pr-forbidden.*.result) }}" && echo "result ${{ steps.pr-forbidden.*.result }}"
           echo "result ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}"
 
+  determine-complexity:
+    outputs:
+      level: ${{ steps.complexity.outputs.level }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 1
+      - name: Determine complexity
+        id: complexity
+        run: |
+          echo "::set-output level=major"
+
+  verify-downstream:
+    needs: [determine-complexity]
+    if: ${{ needs.determine-complexity.outputs.level == 'major' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 1
+      - name: Tests - HxP Frontend
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
+        with:
+          repo: Alfresco/hxp-frontend-apps
+          ref: develop
+          workflow: acceptance-tests.yml
+          inputs: >
+            {
+              "environment": "hxpsRc",
+              "notify-on-failure": true,
+              "rp-trigger": "adf-to-hxp-test",
+              "slack-channel-id": "D056HA6MP6Y",
+              "slack-message-title": "ADF => HxP check\n🔴 Frontend e2e test failed"
+            }
+          token: ${{ secrets.ALFRESCO_BUILD_GH_TOKEN }}
+          wait-for-completion: true
   finalize:
     if: ${{ always() }}
     runs-on: ubuntu-latest
