@@ -33,7 +33,7 @@
     "@angular/material": ">=14.1.2",
     "@angular/router": ">=14.1.3",
     "@mat-datetimepicker/core": ">=10.1.1",
-    "@alfresco/js-api": ">=7.9.0",
+    "@alfresco/js-api": ">=7.8.0",
     "@alfresco/adf-extensions": ">=6.9.0",
     "@ngx-translate/core": ">=14.0.0",
     "minimatch-browser": ">=1.0.0",
