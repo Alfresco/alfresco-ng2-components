@@ -531,7 +531,6 @@ jobs:
           inputs: >
             {
               "environment": "apaRc",
-              "use-local-adf": true,
               "force-adf-link": true,
               "notify-on-failure": true,
               "rp-trigger": "adf-to-hxp-test",
