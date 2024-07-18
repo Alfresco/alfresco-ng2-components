@@ -531,7 +531,7 @@ jobs:
           inputs: >
             {
               "environment": "apaRc",
-              "use-local-ad": "fix/AAE-24001-complexity-trigger",
+              "use-local-adf": "fix/AAE-24001-complexity-trigger",
               "notify-on-failure": true,
               "rp-trigger": "adf-to-hxp-test",
               "slack-channel-id": "D056HA6MP6Y",
