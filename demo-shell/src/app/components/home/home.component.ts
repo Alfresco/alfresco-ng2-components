@@ -16,12 +16,14 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { ProgressComponent } from '@alfresco/adf-core';
 
 @Component({
     standalone: true,
     selector: 'app-home-view',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
+    imports: [ProgressComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent {}

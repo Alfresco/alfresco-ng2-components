@@ -1,0 +1,23 @@
+<ng-container [ngSwitch]="variant">
+    <ng-container *ngSwitchDefault>
+        <mat-progress-bar
+            [mode]="$any(mode)"
+            [value]="value"
+            [color]="color"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId">
+        </mat-progress-bar>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'spinner'">
+        <mat-progress-spinner
+            [mode]="$any(mode)"
+            [value]="value"
+            [color]="color"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-hidden]="ariaHidden"
+            [attr.data-automation-id]="testId">
+        </mat-progress-spinner>
+    </ng-container>
+</ng-container>
