@@ -22,7 +22,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
     selector: 'app-home-view',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
-    imports: [],
     encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent {}
