@@ -43,7 +43,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     abstract getToken(): string;
 
-    abstract isLoggedIn(): boolean;
+    abstract isLoggedInNew(): boolean;
 
     abstract logout(): any;
 

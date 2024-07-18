@@ -59,10 +59,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return false;
     }
 
-    isLoggedIn(): boolean {
-        return this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken();
-    }
-
     hasValidAccessToken(): boolean {
         return this.oauthService.hasValidAccessToken();
     }
