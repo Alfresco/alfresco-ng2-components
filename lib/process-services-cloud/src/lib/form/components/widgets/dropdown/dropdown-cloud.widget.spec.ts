@@ -37,6 +37,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { DebugElement } from '@angular/core';
 
 describe('DropdownCloudWidgetComponent', () => {
     let formService: FormService;
@@ -118,35 +119,79 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(await allOptions[2].getText()).toEqual('option_3');
         });
 
-        it('should NOT load data from restUrl when field is readonly', () => {
+        it('should NOT load data from restUrl when form is readonly', () => {
             spyOn(formCloudService, 'getRestWidgetData');
-            widget.field.readOnly = true;
+            widget.field.readOnly = false;
             widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
-            widget.field.restIdProperty = 'name';
+            widget.field.form.readOnly = true;
 
             widget.ngOnInit();
 
             expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
         });
 
-        it('should show error message if the restUrl failed to fetch options', async () => {
-            const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
+        describe('should load data from restUrl when form is NOT readonly', () => {
+            beforeEach(() => {
+                spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([]));
+
+                widget.field.restUrl = 'https://fake-rest-url';
+                widget.field.optionType = 'rest';
+                widget.field.restIdProperty = 'name';
+                widget.field.form.readOnly = false;
+            });
+
+            it('when widget is NOT readonly', () => {
+                widget.field.readOnly = false;
+                widget.ngOnInit();
+
+                expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
+            });
+
+            it('when widget is readonly', () => {
+                widget.field.readOnly = true;
+                widget.ngOnInit();
+
+                expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
+            });
+        });
+
+        describe('when failed on loading options from restUrl', () => {
+            let getRestWidgetDataSpy: jasmine.Spy;
+            const getErrorMessageElement = (): DebugElement => fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
             const errorIcon: string = 'error_outline';
-            widget.field.restUrl = 'https://fake-rest-url';
-            widget.field.optionType = 'rest';
-            widget.field.restIdProperty = 'name';
 
-            widget.ngOnInit();
+            beforeEach(() => {
+                getRestWidgetDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(throwError('Failed to fetch options'));
+                widget.field.restUrl = 'https://fake-rest-url';
+                widget.field.optionType = 'rest';
+            });
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
-            await dropdown.open();
+            it('should show error message when widget is NOT readonly', () => {
+                widget.field.readOnly = false;
 
-            const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
-            expect(jsonDataSpy).toHaveBeenCalled();
-            expect(widget.isRestApiFailed).toBe(true);
-            expect(widget.field.options.length).toEqual(0);
-            expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
+                widget.ngOnInit();
+                fixture.detectChanges();
+
+                const errorMessageElement = getErrorMessageElement();
+                expect(getRestWidgetDataSpy).toHaveBeenCalled();
+                expect(widget.isRestApiFailed).toBe(true);
+                expect(widget.field.options.length).toEqual(0);
+                expect(errorMessageElement.nativeElement.textContent.trim()).toBe(errorIcon + 'FORM.FIELD.REST_API_FAILED');
+            });
+
+            it('should NOT show error message when widget is readonly', async () => {
+                widget.field.readOnly = true;
+
+                widget.ngOnInit();
+                fixture.detectChanges();
+
+                const errorMessageElement = getErrorMessageElement();
+                expect(getRestWidgetDataSpy).toHaveBeenCalled();
+                expect(widget.isRestApiFailed).toBe(true);
+                expect(widget.field.options.length).toEqual(0);
+                expect(errorMessageElement).toBe(null);
+            });
         });
 
         it('should preselect dropdown widget value when Json (rest call) passed', async () => {

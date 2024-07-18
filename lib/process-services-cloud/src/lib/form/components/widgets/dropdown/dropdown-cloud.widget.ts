@@ -84,7 +84,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private checkFieldOptionsSource(): void {
         switch (true) {
-            case this.isReadOnly():
+            case this.isReadOnlyForm():
                 break;
             case this.hasRestUrl() && !this.isLinkedWidget():
                 this.persistFieldOptionsFromRestApi();
@@ -392,7 +392,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
-    private isReadOnly(): boolean {
+    private isReadOnlyForm(): boolean {
+        return this.field?.form?.readOnly ?? false;
+    }
+
+    get isReadOnlyField(): boolean {
         return this.field.readOnly;
     }
 
@@ -410,7 +414,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     updateOptions(): void {
-        if (this.isReadOnly()) {
+        if (this.isReadOnlyForm()) {
             this.list$ = of(this.field.options);
         }
 
