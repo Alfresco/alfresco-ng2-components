@@ -52,7 +52,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.field?.restUrl) {
+        if (this.field?.restUrl && !this.field?.form?.readOnly) {
             if (this.field.form.taskId) {
                 this.getValuesByTaskId();
             } else {
@@ -101,5 +101,9 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 
     showRequiredMessage(): boolean {
         return (this.isInvalidFieldRequired() || this.field.value === 'empty') && this.isTouched();
+    }
+
+    get isReadOnlyField(): boolean {
+        return this.field.readOnly;
     }
 }
