@@ -123,6 +123,10 @@ jobs:
       - name: Get branch name
         uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@76affd16a4dd9a440cf66bf42656b1d826e8dfc2 # v5.34.0
 
+      - name: print branch name
+        shell: bash
+        run: |
+          echo "branch name: ${{ env.BRANCH_NAME }}"
       - name: Save commit message
         uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@76affd16a4dd9a440cf66bf42656b1d826e8dfc2 # v5.34.0
 
