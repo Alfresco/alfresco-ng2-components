@@ -509,9 +509,10 @@ jobs:
         with:
           fetch-depth: 1
       - name: Determine complexity
-        id: complexity
-        run: |
-          echo "level=major" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/determine-complexity
+        with:
+          file-changed-limit: 10
+          lines-changed-limit: 100
 
   verify-downstream:
     needs: determine-complexity

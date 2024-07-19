@@ -1,0 +1,37 @@
+name: Determine Complexity
+description: 'Determine the complexity of the PR'
+
+inputs:
+  file-changed-limit:
+    description: 'The limit of files changed in the PR to throw a major complexity'
+    required: true
+    type: number
+  lines-changed-limit:
+    description: 'The limit of lines changed in the PR to throw a major complexity'
+    required: true
+    type: number
+
+runs:
+  using: "composite"
+
+  steps:
+    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    - name: Determine complexity
+      uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+      env:
+        file-changed-limit: ${{ inputs.file-changed-limit }}
+        line-changed-limit: ${{ inputs.lines-changed-limit }}
+      with:
+        script: |
+          console.log('Determine Complexity');
+          console.log(`File changed limit: ${process.env.fileChangedLimit}`);
+          const determineComplexity = require('./.github/actions/determine-complexity/determine-pr-complexity.js');
+
+          determineComplexity({
+            core,
+            github,
+            context,
+            fileChangedLimit: process.env.fileChangedLimit,
+            lineChangedLimit: process.env.lineChangedLimit
+          });
+
