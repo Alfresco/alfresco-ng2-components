@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-async function getPRDetails(github, core, owner, repo, pull_number) {
+async function getPRDetails(github, core, owner, repo, pull_number, limitFileChanged, limitLinesChanged) {
     const { data: files } = await github.rest.pulls.listFiles({
         owner,
         repo,
@@ -47,9 +47,9 @@ async function getPRDetails(github, core, owner, repo, pull_number) {
     }
 
     if (level !== 'major') {
-        if (filesChanged > LIMIT_FILE_CHANGED) {
+        if (filesChanged > limitFileChanged) {
             level = 'major';
-        } else if (linesChanged > LIMIT_LINES_CHANGED) {
+        } else if (linesChanged > limitLinesChanged) {
             level = 'major';
         }
     }
@@ -62,22 +62,16 @@ async function getPRDetails(github, core, owner, repo, pull_number) {
     };
 }
 
-let LIMIT_FILE_CHANGED;
-let LIMIT_LINES_CHANGED;
-
 module.exports = async ({ core, github, context, fileChangedLimit = 5, linesChangedLimit = 50 }) => {
     const owner = context.repo.owner;
     const repo = context.repo.repo;
     const pull_number = context.payload.pull_request.number;
 
-    LIMIT_FILE_CHANGED = fileChangedLimit;
-    LIMIT_LINES_CHANGED = linesChangedLimit;
-
     core.info(`Getting PR details for ${owner}/${repo}#${pull_number}`);
     core.info(`Limit for files changed: ${fileChangedLimit}`);
     core.info(`Limit for lines changed: ${linesChangedLimit}`);
 
-    const details = await getPRDetails(github, core, owner, repo, pull_number);
+    const details = await getPRDetails(github, core, owner, repo, pull_number, fileChangedLimit, linesChangedLimit);
 
     core.info(`PR details: ${JSON.stringify(details)}`);
     core.setOutput('level', details.level);
