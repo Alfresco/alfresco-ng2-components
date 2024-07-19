@@ -62,13 +62,16 @@ async function getPRDetails(github, core, owner, repo, pull_number) {
     };
 }
 
+let LIMIT_FILE_CHANGED;
+let LIMIT_LINES_CHANGED;
+
 module.exports = async ({ core, github, context, fileChangedLimit = 5, linesChangedLimit = 50 }) => {
     const owner = context.repo.owner;
     const repo = context.repo.repo;
     const pull_number = context.payload.pull_request.number;
 
-    const LIMIT_FILE_CHANGED = fileChangedLimit;
-    const LIMIT_LINES_CHANGED = linesChangedLimit;
+    LIMIT_FILE_CHANGED = fileChangedLimit;
+    LIMIT_LINES_CHANGED = linesChangedLimit;
 
     core.info(`Getting PR details for ${owner}/${repo}#${pull_number}`);
     core.info(`Limit for files changed: ${fileChangedLimit}`);
