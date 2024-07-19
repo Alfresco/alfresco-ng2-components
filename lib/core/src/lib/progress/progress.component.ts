@@ -20,7 +20,6 @@ import { MatProgressBarModule, ProgressBarMode } from '@angular/material/progres
 import { MatProgressSpinnerModule, ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
 
 export type ProgressVariant = 'bar' | 'spinner' | undefined;
 export type ProgressMode = ProgressBarMode | ProgressSpinnerMode;
@@ -29,7 +28,7 @@ export type ProgressColor = ThemePalette;
 @Component({
     selector: 'adf-progress',
     standalone: true,
-    imports: [CommonModule, MatProgressBarModule, MatProgressSpinnerModule, MatButtonModule],
+    imports: [CommonModule, MatProgressBarModule, MatProgressSpinnerModule],
     templateUrl: './progress.component.html',
     styleUrls: ['progress.component.scss'],
     encapsulation: ViewEncapsulation.None
