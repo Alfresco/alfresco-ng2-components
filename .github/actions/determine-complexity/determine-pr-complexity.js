@@ -16,15 +16,11 @@
  */
 
 async function getPRDetails(github, core, owner, repo, pull_number) {
-    core.info(`Fetching PR details`);
-
     const { data: files } = await github.rest.pulls.listFiles({
         owner,
         repo,
         pull_number
     });
-
-    core.info(`Fetched PR details: ${JSON.stringify(files)}`);
 
     let filesChanged = files.length;
     let linesChanged = files.reduce((total, file) => total + file.additions + file.deletions, 0);
