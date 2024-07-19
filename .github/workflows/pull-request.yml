@@ -531,7 +531,7 @@ jobs:
           inputs: >
             {
               "environment": "apaRc",
-              "use-local-adf": ${{ env.BRANCH_NAME }},
+              "use-local-adf": "${{ env.BRANCH_NAME }}",
               "notify-on-failure": true,
               "rp-trigger": "adf-to-hxp-test",
               "slack-channel-id": "D056HA6MP6Y",
