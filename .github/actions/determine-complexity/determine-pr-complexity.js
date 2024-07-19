@@ -86,7 +86,7 @@ module.exports = async ({ core, github, context, fileChangedLimit = 5, linesChan
     core.info(`Limit for files changed: ${fileChangedLimit}`);
     core.info(`Limit for lines changed: ${linesChangedLimit}`);
 
-    const details = await getPRDetails(github, owner, repo, pull_number);
+    const details = await getPRDetails(github, core, owner, repo, pull_number);
 
     core.info(`PR details: ${JSON.stringify(details)}`);
 };
