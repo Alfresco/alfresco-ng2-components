@@ -24,6 +24,8 @@ runs:
       with:
         script: |
           console.log('Determine Complexity');
+          console.log('Lines changed limit: ' + process.env.lineChangedLimit);
+          console.log('Files changed limit: ' + process.env.fileChangedLimit);
           const determineComplexity = require('./.github/actions/determine-complexity/determine-pr-complexity.js');
 
           determineComplexity({
