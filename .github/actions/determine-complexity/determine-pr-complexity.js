@@ -18,7 +18,7 @@
 async function getPRDetails(github, core, owner, repo, pull_number) {
     core.info(`Fetching PR details`);
 
-    const { data: files } = await github.pulls.listFiles({
+    const { data: files } = await github.rest.pulls.listFiles({
         owner,
         repo,
         pull_number
