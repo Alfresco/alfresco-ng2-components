@@ -523,6 +523,10 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 1
+      - name: print branch name
+        shell: bash
+        run: |
+          echo "branch name: ${{ env.BRANCH_NAME }}"
       - name: Tests - HxP Frontend
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
         with:
