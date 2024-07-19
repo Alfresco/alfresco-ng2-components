@@ -30,9 +30,6 @@ async function getPRDetails(github, core, owner, repo, pull_number) {
     let packagesAffected = new Set();
     for (let file of files) {
         if (file.filename.startsWith('lib/core/')) {
-            if (file.filename.startsWith('lib/core/auth/')) {
-                level = 'extreme';
-            }
             level = 'major';
             packageName = 'core';
             packagesAffected.add(packageName);
@@ -50,18 +47,10 @@ async function getPRDetails(github, core, owner, repo, pull_number) {
     }
 
     if (level !== 'major') {
-        if (linesChanged > 100) {
+        if (filesChanged > LIMIT_FILE_CHANGED) {
             level = 'major';
-        } else if (linesChanged > 50) {
-            level = 'medium';
-        }
-    }
-
-    if (level !== 'major') {
-        if (filesChanged > 10) {
+        } else if (linesChanged > LIMIT_LINES_CHANGED) {
             level = 'major';
-        } else if (filesChanged > 5) {
-            level = 'medium';
         }
     }
 
@@ -77,6 +66,9 @@ module.exports = async ({ core, github, context, fileChangedLimit = 5, linesChan
     const owner = context.repo.owner;
     const repo = context.repo.repo;
     const pull_number = context.payload.pull_request.number;
+
+    const LIMIT_FILE_CHANGED = fileChangedLimit;
+    const LIMIT_LINES_CHANGED = linesChangedLimit;
 
     core.info(`Getting PR details for ${owner}/${repo}#${pull_number}`);
     core.info(`Limit for files changed: ${fileChangedLimit}`);
