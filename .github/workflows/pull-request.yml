@@ -500,6 +500,7 @@ jobs:
           echo "result ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}"
 
   determine-complexity:
+    needs: check-if-pr-is-approved
     outputs:
       level: ${{ steps.complexity.outputs.level }}
     runs-on: ubuntu-latest
