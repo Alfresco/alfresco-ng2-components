@@ -31,14 +31,15 @@ async function getPRDetails(github, core, owner, repo, pull_number, limitFileCha
     for (let file of files) {
         if (file.filename.startsWith('lib/core/')) {
             level = 'major';
-            packageName = 'core';
-            packagesAffected.add(packageName);
+            packagesAffected.add(file.filename.split('/')[2]);
             break;
         } else if (file.filename.startsWith('lib/extensions/')) {
             level = 'major';
-            packageName = 'extensions';
-            packagesAffected.add(packageName);
-
+            packagesAffected.add(file.filename.split('/')[2]);
+            break;
+        } else if (file.filename.startsWith('lib/contetent-services/') || file.filename.startsWith('lib/process-services-cloud/')) {
+            level = 'minor';
+            packagesAffected.add(file.filename.split('/')[2]);
             break;
         } else {
             level = 'minor';
