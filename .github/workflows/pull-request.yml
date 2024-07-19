@@ -113,7 +113,6 @@ jobs:
           fi
 
   check-if-pr-is-approved:
-    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -155,6 +154,7 @@ jobs:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
+        if: false
         run: |
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
             echo -e "\033[32mci:force check can be skipped\033[0m"
