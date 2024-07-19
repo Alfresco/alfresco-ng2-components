@@ -171,7 +171,7 @@ export class RedirectAuthService extends AuthService {
 
     return this.ensureDiscoveryDocument().then(() => {
       this.oauthService.setupAutomaticSilentRefresh();
-      return void this.allowRefreshTokenAndSilenceRefreshOnMultipleTabs();
+      return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
     }).catch(() => {
        // catch error to prevent the app from crashing when trying to access unprotected routes
     });
@@ -184,7 +184,7 @@ export class RedirectAuthService extends AuthService {
    * https://github.com/manfredsteyer/angular-oauth2-oidc/issues/850#issuecomment-889921776 fix silent refresh for the implicit flow
    * https://github.com/manfredsteyer/angular-oauth2-oidc/issues/850#issuecomment-1557286966 fix refresh token for the code flow
    */
-  private allowRefreshTokenAndSilenceRefreshOnMultipleTabs() {
+  private allowRefreshTokenAndSilentRefreshOnMultipleTabs() {
     let lastUpdatedAccessToken: string | undefined;
 
     if (this.oauthService.hasValidAccessToken()) {
