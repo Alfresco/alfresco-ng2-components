@@ -19,7 +19,7 @@ import { LoginOptions, TokenResponse } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
 
 /**
- * Provide authentication/authorization through OAuth2/OIDC protocol. 2
+ * Provide authentication/authorization through OAuth2/OIDC protocol.
  */
 export abstract class AuthService {
     abstract onLogin: Observable<any>;
