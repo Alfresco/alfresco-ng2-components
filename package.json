@@ -72,7 +72,6 @@
     "@cspell/eslint-plugin": "^7.3.6",
     "@mat-datetimepicker/core": "11.0.3",
     "@ngx-translate/core": "^14.0.0",
-    "@octokit/core": "^6.1.2",
     "@storybook/core-server": "^7.6.5",
     "angular-oauth2-oidc": "^13.0.1",
     "angular-oauth2-oidc-jwks": "^17.0.2",
