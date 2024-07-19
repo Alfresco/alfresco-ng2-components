@@ -16,7 +16,7 @@
  */
 
 import { Inject, Injectable, inject } from '@angular/core';
-import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions } from 'angular-oauth2-oidc';
+import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
@@ -169,11 +169,55 @@ export class RedirectAuthService extends AuthService {
       });
     }
 
-    return this.ensureDiscoveryDocument().then(() =>
-      void this.oauthService.setupAutomaticSilentRefresh()
-    ).catch(() => {
+    return this.ensureDiscoveryDocument().then(() => {
+      this.oauthService.setupAutomaticSilentRefresh();
+      return void this.allowRefreshTokenAndSilenceRefreshOnMultipleTabs();
+    }).catch(() => {
        // catch error to prevent the app from crashing when trying to access unprotected routes
     });
+  }
+
+  /**
+   * Fix a known issue (https://github.com/manfredsteyer/angular-oauth2-oidc/issues/850)
+   * where multiple tabs can cause the token refresh and the silent refresh to fail.
+   * This patch is based on the solutions provided in the following comments:
+   * https://github.com/manfredsteyer/angular-oauth2-oidc/issues/850#issuecomment-889921776 fix silent refresh for the implicit flow
+   * https://github.com/manfredsteyer/angular-oauth2-oidc/issues/850#issuecomment-1557286966 fix refresh token for the code flow
+   */
+  private allowRefreshTokenAndSilenceRefreshOnMultipleTabs() {
+    let lastUpdatedAccessToken: string | undefined;
+
+    if (this.oauthService.hasValidAccessToken()) {
+        lastUpdatedAccessToken = this.oauthService.getAccessToken();
+    }
+
+    const originalRefreshToken = this.oauthService.refreshToken.bind(this.oauthService);
+    this.oauthService.refreshToken = (): Promise<TokenResponse> =>
+        navigator.locks.request(`refresh_tokens_${location.origin}`, () => {
+            if (!!lastUpdatedAccessToken && lastUpdatedAccessToken !== this.oauthService.getAccessToken()) {
+                (this.oauthService as any).eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                (this.oauthService as any).eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+                lastUpdatedAccessToken = this.oauthService.getAccessToken();
+                return;
+            }
+
+            return originalRefreshToken().then((resp) => (lastUpdatedAccessToken = resp.access_token));
+        });
+
+    const originalSilentRefresh = this.oauthService.silentRefresh.bind(this.oauthService);
+    this.oauthService.silentRefresh = async (params: any = {}, noPrompt = true): Promise<OAuthEvent> =>
+        navigator.locks.request(`silent_refresh_${location.origin}`, async (): Promise<OAuthEvent> => {
+            if (lastUpdatedAccessToken !== this.oauthService.getAccessToken()) {
+                (this.oauthService as any).eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                (this.oauthService as any).eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+                const event = new OAuthSuccessEvent('silently_refreshed');
+                (this.oauthService as any).eventsSubject.next(event);
+                lastUpdatedAccessToken = this.oauthService.getAccessToken();
+                return event;
+            } else {
+                return originalSilentRefresh(params, noPrompt);
+            }
+        });
   }
 
   updateIDPConfiguration(config: AuthConfig) {
