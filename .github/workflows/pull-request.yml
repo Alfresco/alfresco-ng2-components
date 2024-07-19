@@ -527,10 +527,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 1
-      - name: print branch name
-        shell: bash
-        run: |
-          echo "branch name: ${{ env.BRANCH_NAME }}"
+      - uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@482f25ec9cb6ac522d5c03b21b6f8987d3cdb4f0 # v5.29.2
       - name: Tests - HxP Frontend
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
         with:
