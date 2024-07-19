@@ -15,12 +15,45 @@
  * limitations under the License.
  */
 
+function determineComplexity(changedFiles, totalFilesChanged, totalLinesChanged, limitFileChanged, limitLinesChanged) {
+    let level = 'unknown';
+    let packagesAffected = new Set();
+
+    // Determine packagesAffected and if the level should be major based on file paths
+    for (let filePath of changedFiles) {
+        if (filePath.startsWith('lib/core/') || filePath.startsWith('lib/extensions/')) {
+            level = 'major';
+            packagesAffected.add(filePath.split('/')[2]);
+        }
+    }
+
+    // Check if the number of files or lines changed exceeds limits
+    if (totalFilesChanged > limitFileChanged || totalLinesChanged > limitLinesChanged) {
+        level = 'major';
+    }
+
+    return {
+        filesChanged: totalFilesChanged,
+        linesChanged: totalLinesChanged,
+        level: level,
+        packagesAffected: Array.from(packagesAffected) // Convert Set to Array for the output
+    };
+}
+
 async function getPRDetails(github, core, owner, repo, pull_number, limitFileChanged, limitLinesChanged) {
     const { data: files } = await github.rest.pulls.listFiles({
         owner,
         repo,
         pull_number
     });
+
+    const complexity = determineComplexity(
+        files.map((file) => file.filename),
+        files.length,
+        files.reduce((total, file) => total + file.additions + file.deletions, 0),
+        limitFileChanged,
+        limitLinesChanged
+    );
 
     let filesChanged = files.length;
     let linesChanged = files.reduce((total, file) => total + file.additions + file.deletions, 0);

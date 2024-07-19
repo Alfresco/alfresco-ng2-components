@@ -512,7 +512,7 @@ jobs:
         uses: ./.github/actions/determine-complexity
         with:
           file-changed-limit: 10
-          lines-changed-limit: 450
+          lines-changed-limit: 340
 
   verify-downstream:
     needs: determine-complexity
