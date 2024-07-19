@@ -19,12 +19,11 @@ runs:
     - name: Determine complexity
       uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
       env:
-        file-changed-limit: ${{ inputs.file-changed-limit }}
-        line-changed-limit: ${{ inputs.lines-changed-limit }}
+        fileChangedLimit: ${{ inputs.file-changed-limit }}
+        lineChangedLimit: ${{ inputs.lines-changed-limit }}
       with:
         script: |
           console.log('Determine Complexity');
-          console.log(`File changed limit: ${process.env.fileChangedLimit}`);
           const determineComplexity = require('./.github/actions/determine-complexity/determine-pr-complexity.js');
 
           determineComplexity({
