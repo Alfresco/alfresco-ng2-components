@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
 import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { CoreTestingModule } from '@alfresco/adf-core';
@@ -27,7 +26,7 @@ import { IdentityGroupService } from '../services/identity-group.service';
 import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipHarness, MatChipListHarness } from '@angular/material/chips/testing';
+import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 
@@ -73,7 +72,7 @@ describe('GroupCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, GroupCloudModule]
+            imports: [CoreTestingModule, GroupCloudModule]
         });
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;
@@ -83,13 +82,22 @@ describe('GroupCloudComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    it('should populate placeholder when title is present', () => {
+    it('should populate placeholder when title is present', async () => {
         component.title = 'TITLE_KEY';
 
         fixture.detectChanges();
 
-        const matLabel = element.querySelector<HTMLInputElement>('#adf-group-cloud-title-id');
-        expect(matLabel.textContent).toEqual('TITLE_KEY');
+        const inputElement = await loader.getHarness(MatInputHarness.with({ selector: '[data-automation-id="adf-cloud-group-search-input"]' }));
+
+        expect(await inputElement.getPlaceholder()).toEqual('TITLE_KEY');
+    });
+
+    it('should not populate placeholder when title is not present', async () => {
+        fixture.detectChanges();
+
+        const inputElement = await loader.getHarness(MatInputHarness.with({ selector: '[data-automation-id="adf-cloud-group-search-input"]' }));
+
+        expect(await inputElement.getPlaceholder()).toEqual('');
     });
 
     describe('Search group', () => {
@@ -350,7 +358,7 @@ describe('GroupCloudComponent', () => {
             const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toBe(1);
 
-            const chipList = await loader.getHarness(MatChipListHarness);
+            const chipList = await loader.getHarness(MatChipGridHarness);
             expect(await chipList.isDisabled()).toBe(true);
         });
 
@@ -365,7 +373,7 @@ describe('GroupCloudComponent', () => {
             const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toBe(2);
 
-            const chipList = await loader.getHarness(MatChipListHarness);
+            const chipList = await loader.getHarness(MatChipGridHarness);
             expect(await chipList.isDisabled()).toBe(true);
         });
     });

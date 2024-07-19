@@ -1,8 +1,10 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-people-widget {
         width: 100%;
 
-        .mat-form-field-label-wrapper {
+        #{$mat-form-field-label} {
             top: 10px;
         }
     }

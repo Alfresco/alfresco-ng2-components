@@ -31,7 +31,7 @@
                 </button>
         </adf-toolbar>
 
-        <mat-card [class.adf-cloud-form-content-card]="displayMode === 'fullScreen'">
+        <mat-card appearance="outlined" [class.adf-cloud-form-content-card]="displayMode === 'fullScreen'">
             <div class="adf-cloud-form-content-card-container">
             <mat-card-header *ngIf="showTitle || showRefreshButton || showValidationIcon">
                 <mat-card-title>
@@ -69,7 +69,7 @@
                 >
                 </adf-form-renderer>
             </mat-card-content>
-            <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions">
+            <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
                 <ng-content select="adf-cloud-form-custom-outcomes"></ng-content>
                 <ng-container *ngFor="let outcome of form.outcomes">
                     <button

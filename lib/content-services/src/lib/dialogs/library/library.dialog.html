@@ -1,10 +1,10 @@
 <h2 mat-dialog-title>{{ createTitle | translate }}</h2>
 
-<mat-dialog-content>
+<mat-dialog-content class="adf-library-dialog-content">
   <form novalidate [formGroup]="form" (submit)="submit()">
     <mat-form-field class="adf-library-dialog-form-field">
+      <mat-label>{{ 'LIBRARY.DIALOG.FORM.NAME' | translate }}</mat-label>
       <input
-        placeholder="{{ 'LIBRARY.DIALOG.FORM.NAME' | translate }}"
         required
         matInput
         formControlName="title"
@@ -29,9 +29,9 @@
     </mat-form-field>
 
     <mat-form-field class="adf-library-dialog-form-field">
+      <mat-label>{{ 'LIBRARY.DIALOG.FORM.SITE_ID' | translate }}</mat-label>
       <input
         required
-        placeholder="{{ 'LIBRARY.DIALOG.FORM.SITE_ID' | translate }}"
         matInput
         formControlName="id"
         autocomplete="off"
@@ -46,10 +46,10 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="adf-library-dialog-form-field">
+    <mat-form-field class="adf-library-dialog-form-field adf-library-dialog-form-field-description">
+      <mat-label>{{ 'LIBRARY.DIALOG.FORM.DESCRIPTION' | translate }}</mat-label>
       <textarea
         matInput
-        placeholder="{{ 'LIBRARY.DIALOG.FORM.DESCRIPTION' | translate }}"
         rows="3"
         formControlName="description"
       ></textarea>

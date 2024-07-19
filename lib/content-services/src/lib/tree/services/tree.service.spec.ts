@@ -17,7 +17,6 @@
 
 import { TreeService } from './tree.service';
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '@alfresco/adf-core';
 import { TreeNode } from '../models/tree-node.interface';
 import {
     treeNodesMock,
@@ -33,9 +32,8 @@ describe('TreeService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [],
+            providers: [TreeService]
         });
         service = TestBed.inject(TreeService);
     });

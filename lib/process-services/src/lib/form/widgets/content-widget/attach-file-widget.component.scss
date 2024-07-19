@@ -1,4 +1,5 @@
 @import 'styles/flex';
+@import 'styles/mat-selectors';
 
 .adf {
     &-attach-widget-container {
@@ -23,6 +24,16 @@
         align-items: center;
     }
 
+    &-attach-widget__menu-trigger {
+        display: flex;
+        flex-direction: row-reverse;
+
+        #{$mat-icon} {
+            margin-left: 4px;
+            margin-right: 0;
+        }
+    }
+
     &-attach-widget__input-type {
         width: 0.1px;
         height: 0.1px;
@@ -39,11 +50,11 @@
     &-attach-widget-repo-button {
         padding-left: 10px;
 
-        .mat-button-wrapper {
+        #{$mat-button-label} {
             display: inline;
         }
 
-        .mat-mini-fab.mat-accent {
+        #{$mat-mini-fab}#{$mat-accent} {
             background-color: inherit;
         }
     }
@@ -66,16 +77,16 @@
     }
 
     &-attach-files-row {
-        .mat-line {
+        #{$mat-line} {
             margin-bottom: 0;
         }
 
-        .mat-list-text {
+        #{$mat-list-item-primary-text} {
             max-width: 200px;
         }
 
         @include layout-bp(lt-md) {
-            .mat-list-text {
+            #{$mat-list-item-primary-text} {
                 max-width: 150px;
             }
         }

@@ -1,5 +1,11 @@
+@import 'styles/mat-selectors';
+
 .adf-share-link-dialog {
     .adf-share-link {
+        #{$mat-form-field-flex} {
+            height: 48px;
+        }
+
         &__dialog-content {
             display: flex;
             flex-direction: column;
@@ -8,7 +14,6 @@
         &__dialog-container {
             background-color: var(--theme-card-background-color);
             border-radius: 16px;
-            padding: 16px 24px;
         }
 
         &__label,
@@ -29,6 +34,16 @@
 
         &__form {
             padding-top: 8px;
+
+            #{$mat-form-field-infix}:has(.adf-share-link__input) {
+                border-top: 0.9375em solid transparent;
+                border-bottom: 0.9375em solid transparent;
+                height: 16px;
+            }
+
+            &--field {
+                padding-bottom: 16px;
+            }
         }
 
         &__public-content {
@@ -48,6 +63,23 @@
             flex-wrap: wrap;
             align-items: center;
             margin: 8px 0;
+
+            &-sharable {
+                margin-bottom: 0;
+            }
+        }
+
+        &--sharable-container {
+            margin-bottom: 0;
+        }
+
+        &--header {
+            padding: 16px 24px 0;
+        }
+
+        &--dialog-content {
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
         &__input {
@@ -66,6 +98,8 @@
 
         &__icon {
             color: var(--adf-theme-foreground-icon-color-054);
+            padding-bottom: 0;
+            padding-right: 0;
         }
 
         &__para {
@@ -78,12 +112,24 @@
             font-size: var(--theme-subheading-2-font-size);
         }
 
+        &__copy-icon {
+            padding-top: 18px;
+            font-size: 22px;
+        }
+
         &__calender-icon {
-            font-size: 18px;
+            top: 12px;
+            position: relative;
+            right: -6px;
+
+            svg {
+                height: 18px;
+                width: 18px;
+            }
         }
 
         &__date-time-container {
-            padding-bottom: 8px;
+            padding-bottom: 20px;
         }
 
         &__border-color {
@@ -98,15 +144,17 @@
     .adf-full-width {
         width: 100%;
         border-radius: 6px;
+        margin-top: -6px;
     }
 
     .adf-sharable-link {
+        margin-top: 2px;
         margin-left: 8px;
     }
 
     .adf-share-link__actions {
         justify-content: flex-end;
-        padding: 0;
+        padding: 8px 24px 32px 0;
         margin: 8px 0 0;
 
         & > button {

@@ -1,14 +1,16 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
-    <mat-form-field class="adf-sites-dropdown-form-field">
+    <mat-form-field class="adf-sites-dropdown-form-field" appearance="fill" subscriptSizing="dynamic">
         <mat-label>{{ 'NODE_SELECTOR.LOCATION' | translate }}</mat-label>
         <mat-select
             adf-infinite-select-scroll
             (scrollEnd)="loadAllOnScroll()"
+            #siteSelect
             data-automation-id="site-my-files-option"
             class="adf-site-dropdown-list-element"
             id="site-dropdown"
             placeholder="{{placeholder | translate}}"
             [(value)]="selected"
+            placeholder="{{placeholder | translate}}"
             (selectionChange)="selectedSite($event)">
             <mat-select-trigger class="adf-sites-dropdown-select-trigger">
                 {{ selected?.entry.title | translate}}

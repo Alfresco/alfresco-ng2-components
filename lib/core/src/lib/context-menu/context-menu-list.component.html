@@ -1,5 +1,5 @@
-<div mat-menu class="mat-menu-panel" @panelAnimation>
-    <div id="adf-context-menu-content" class="mat-menu-content">
+<div mat-menu class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open" @panelAnimation>
+    <div id="adf-context-menu-content" class="mat-mdc-menu-content">
         <ng-container *ngFor="let link of links">
             <button *ngIf="link.model?.visible"
                     [attr.data-automation-id]="'context-' + (link.title || link.model?.title | translate)"

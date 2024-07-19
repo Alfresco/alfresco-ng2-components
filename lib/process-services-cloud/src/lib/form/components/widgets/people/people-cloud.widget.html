@@ -1,24 +1,26 @@
 <div class="adf-dropdown-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly" [class.adf-left-label-input-container]="field.leftLabels">
-    <div>
-        <label class="adf-label" [class.adf-left-label]="field.leftLabels" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+     <div *ngIf="field.leftLabels">
+        <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
     </div>
     <div>
         <adf-cloud-people
-                [preSelectUsers]="preSelectUsers"
-                [appName]="appName"
-                [title]="title"
-                [readOnly]="field.readOnly"
-                [validate]="validate"
-                [searchUserCtrl]="search"
-                [required]="isRequired()"
-                (changedUsers)="onChangedUser($event)"
-                [roles]="roles"
-                [mode]="mode"
-                [groupsRestriction]="groupsRestriction"
-                (blur)="markAsTouched()"
-                [attr.title]="field.tooltip">
-            </adf-cloud-people>
+            [preSelectUsers]="preSelectUsers"
+            [appName]="appName"
+            [title]="title"
+            [readOnly]="field.readOnly"
+            [validate]="validate"
+            [searchUserCtrl]="search"
+            [required]="isRequired()"
+            (changedUsers)="onChangedUser($event)"
+            [roles]="roles"
+            [mode]="mode"
+            [groupsRestriction]="groupsRestriction"
+            (blur)="markAsTouched()"
+            [attr.title]="field.tooltip"
+        >
+            <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id" label>{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
+        </adf-cloud-people>
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired() && isTouched()"
                     required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>

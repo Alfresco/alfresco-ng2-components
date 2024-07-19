@@ -18,12 +18,17 @@
 import { FormCloudComponentPage, LoginPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { tabFieldValueVisibilityJson, tabVarValueVisibilityJson, tabVarFieldVisibilityJson,
-    tabFieldFieldVisibilityJson, tabFieldVarVisibilityJson, tabVarVarVisibilityJson,
-    tabNextOperatorsVisibilityJson } from '../../resources/forms/tab-visibility-conditions';
+import {
+    tabFieldValueVisibilityJson,
+    tabVarValueVisibilityJson,
+    tabVarFieldVisibilityJson,
+    tabFieldFieldVisibilityJson,
+    tabFieldVarVisibilityJson,
+    tabVarVarVisibilityJson,
+    tabNextOperatorsVisibilityJson
+} from '../../resources/forms/tab-visibility-conditions';
 
 describe('Visibility conditions on tabs - cloud', () => {
-
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudComponentPage();

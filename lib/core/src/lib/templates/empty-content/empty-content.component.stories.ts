@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { EmptyContentComponent } from './empty-content.component';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { TemplateModule } from '../template.module';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: EmptyContentComponent,
@@ -26,6 +27,9 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, TemplateModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -39,7 +43,6 @@ export default {
         icon: {
             control: 'text',
             description: 'Material Icon to use.',
-            defaultValue: 'cake',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'cake' }
@@ -48,37 +51,42 @@ export default {
         title: {
             control: 'text',
             description: 'String or Resource Key for the title.',
-            defaultValue: 'title',
             table: {
-                type: { summary: 'string' }
+                type: { summary: 'string' },
+                defaultValue: { summary: 'title' }
             }
         },
         subtitle: {
             control: 'text',
             description: 'String or Resource Key for the subtitle.',
-            defaultValue: 'subtitle',
             table: {
-                type: { summary: 'string' }
+                type: { summary: 'string' },
+                defaultValue: { summary: 'subtitle' }
             }
         },
         anyContentProjection: {
             name: 'with any component / selector',
             control: 'boolean',
             description: 'Showcase content projection with any component / selector',
-            defaultValue: false,
             table: {
                 category: 'Content Projection',
                 type: {
                     summary: 'code',
                     detail: '<div style="color:red">\n  projected content\n</div>'
                 },
-                defaultValue: { summary: false }
+                defaultValue: { summary: 'false' }
             }
         }
+    },
+    args: {
+        icon: 'cake',
+        title: 'title',
+        subtitle: 'subtitle',
+        anyContentProjection: false
     }
-} as Meta;
+} as Meta<EmptyContentComponent>;
 
-const template: Story<EmptyContentComponent> = (args: EmptyContentComponent & { anyContentProjection: boolean }) => ({
+const template: StoryFn<EmptyContentComponent> = (args: EmptyContentComponent & { anyContentProjection: boolean }) => ({
     props: args,
     template: `
     <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
@@ -88,5 +96,5 @@ const template: Story<EmptyContentComponent> = (args: EmptyContentComponent & { 
     </adf-empty-content>`
 });
 
-export const emptyContent = template.bind({});
-emptyContent.parameters = { layout: 'centered' };
+export const EmptyContent = template.bind({});
+EmptyContent.parameters = { layout: 'centered' };

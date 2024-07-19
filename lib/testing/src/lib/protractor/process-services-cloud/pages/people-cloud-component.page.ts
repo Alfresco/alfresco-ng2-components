@@ -29,8 +29,8 @@ export class PeopleCloudComponentPage {
     formFields = new FormFields();
     labelLocator: Locator = by.css(`label[class*='adf-label']`);
     inputLocator: Locator = by.css('input');
-    assigneeChipList = $(`${materialLocators.Chip.list.root}[data-automation-id="adf-cloud-people-chip-list"]`);
-    noOfUsersDisplayed = $$(`${materialLocators.Chip.list.root} span.adf-people-label-name`);
+    assigneeChipList = $(`${materialLocators.Chip.grid.root}[data-automation-id="adf-cloud-people-chip-list"]`);
+    noOfUsersDisplayed = $$(`${materialLocators.Chip.grid.root} span.adf-people-label-name`);
 
     getAssigneeRowLocatorByContainingName = async (name: string): Promise<ElementFinder> => element.all(by.cssContainingText(`${materialLocators.Option.root} span.adf-people-label-name`, name)).first();
 
@@ -65,12 +65,12 @@ export class PeopleCloudComponentPage {
 
     async getChipAssignee(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeChipList);
-        return this.assigneeChipList.all(by.css(materialLocators.Chip.root)).first().getText();
+        return this.assigneeChipList.all(by.css(materialLocators.Chip.grid.row.root)).first().getText();
     }
 
     async getChipAssigneeCount(): Promise<number> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assigneeChipList);
-        return this.assigneeChipList.all(by.css(materialLocators.Chip.root)).count();
+        return this.assigneeChipList.all(by.css(materialLocators.Chip.grid.row.root)).count();
     }
 
     async checkUserIsDisplayed(name: string): Promise<boolean> {

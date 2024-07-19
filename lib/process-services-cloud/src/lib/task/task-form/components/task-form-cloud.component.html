@@ -27,7 +27,7 @@
     </adf-cloud-form>
 
     <ng-template #withoutForm>
-        <mat-card class="adf-task-form-container">
+        <mat-card appearance="outlined" class="adf-task-form-container">
             <mat-card-header *ngIf="showTitle">
                 <mat-card-title>
                     <h4>
@@ -44,7 +44,7 @@
                     [subtitle]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.SUBTITLE'">
                 </adf-empty-content>
             </mat-card-content>
-            <mat-card-actions class="adf-task-form-actions">
+            <mat-card-actions class="adf-task-form-actions" align="end">
                 <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
                 </ng-template>
                 <button mat-button *ngIf="canCompleteTask()" adf-cloud-complete-task [appName]="appName"

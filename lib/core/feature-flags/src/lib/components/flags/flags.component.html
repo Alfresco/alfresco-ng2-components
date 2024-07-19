@@ -1,5 +1,5 @@
 <mat-toolbar class="adf-feature-flags-overrides-header">
-  <div class="adf-feature-flags-overrides-header-text">
+  <div class="adf-feature-flags-overrides-header-text" tabindex="0">
     <adf-feature-flags-override-indicator
       class="adf-activity-indicator"
       size='large'>
@@ -7,7 +7,6 @@
     <span>{{ "CORE.FEATURE-FLAGS.OVERRIDES" | translate }}</span>
   </div>
   <mat-slide-toggle
-    color="warning"
     [checked]="isEnabled"
     (change)="onEnable($event.checked)">
   </mat-slide-toggle>
@@ -23,7 +22,7 @@
   <table mat-table [dataSource]="flags" class="adf-feature-flags-overrides-table mat-elevation-z0">
     <ng-container matColumnDef="icon">
       <th mat-header-cell class="adf-icon-col adf-header-cell" *matHeaderCellDef>
-        <mat-icon class="material-icons-outlined" fontIcon="search" class="adf-search-icon"></mat-icon>
+        <mat-icon class="material-icons-outlined adf-search-icon">search</mat-icon>
       </th>
       <td mat-cell class="adf-icon-col" *matCellDef="let element">
         <button mat-icon-button *ngIf="element.fictive; else flagFromApi" class="adf-fictive-flag-button" (click)="onDelete(element.flag)">
@@ -35,7 +34,7 @@
 
     <ng-container matColumnDef="flag">
       <th mat-header-cell class="flag-col header-cell" *matHeaderCellDef>
-        <mat-form-field class="adf-flag-form-field" appearance="outline" floatLabel="auto">
+        <mat-form-field class="adf-flag-form-field" appearance="fill" floatLabel="auto">
           <input class="flag-input" [placeholder]="(isEnabled ? 'CORE.FEATURE-FLAGS.FILTER_OR_ADD_NEW' : 'CORE.FEATURE-FLAGS.FILTER') | translate" matInput type="text" [(ngModel)]="inputValue" (keyup)="onInputChange(inputValue)" (keypress)="onAdd($event)">
         </mat-form-field>
       </th>
@@ -68,6 +67,6 @@
 </ng-container>
 
 <ng-template #flagFromApi>
-  <mat-icon class="material-icons-outlined" fontIcon="cloud"></mat-icon>
+  <mat-icon class="material-icons-outlined">cloud</mat-icon>
 </ng-template>
 

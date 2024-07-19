@@ -50,4 +50,8 @@ export class AuthenticationMock extends AuthenticationService {
 
         return throwError('Fake server error');
     }
+
+    logout(): Observable<any> {
+        return of({});
+    }
 }
