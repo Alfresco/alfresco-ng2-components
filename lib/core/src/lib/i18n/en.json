@@ -418,7 +418,7 @@
       "PAGE_SELECTOR_LABEL": "Page selector"
     },
     "LOADING": "Loading",
-    "UNKNOWN_FORMAT": "Couldn't load preview. Unknown format.",
+    "UNKNOWN_FORMAT": "Couldn't load preview. Unsupported file type or loading error. Please try refreshing the page.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Page {{ pageNum }}"
