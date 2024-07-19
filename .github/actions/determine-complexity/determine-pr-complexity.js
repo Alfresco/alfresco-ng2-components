@@ -89,4 +89,5 @@ module.exports = async ({ core, github, context, fileChangedLimit = 5, linesChan
     const details = await getPRDetails(github, core, owner, repo, pull_number);
 
     core.info(`PR details: ${JSON.stringify(details)}`);
+    core.setOutput('level', details.level);
 };
