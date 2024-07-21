@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './alfresco-api.mock';
 export * from './cookie.service.mock';
 export * from './event.mock';
 export * from './translation.service.mock';
@@ -25,7 +24,6 @@ export * from './form/form.component.mock';
 export * from './form/form-definition.mock';
 export * from './form/form-definition-readonly.mock';
 export * from './form/form-definition-visibility.mock';
-export * from './form/start-form.component.mock';
 export * from './form/form.service.mock';
 export * from './form/widget-visibility.service.mock';
 

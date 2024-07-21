@@ -33,14 +33,14 @@
             <mat-icon>zoom_in</mat-icon>
         </button>
 
-        <button *ngIf="!readOnly" id="viewer-rotate-button"
+        <button *ngIf="!readOnly && allowedEditActions.rotate" id="viewer-rotate-button"
                 title="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.ROTATE' | translate }}"
                 mat-icon-button
                 (click)="rotateImage()">
             <mat-icon>rotate_left</mat-icon>
         </button>
-        <button *ngIf="!readOnly" id="viewer-crop-button"
+        <button *ngIf="!readOnly && allowedEditActions.crop" id="viewer-crop-button"
                 title="{{ 'ADF_VIEWER.ARIA.CROP' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.CROP' | translate }}"
                 mat-icon-button
@@ -58,7 +58,7 @@
 
     </adf-toolbar>
 
-    <adf-toolbar class="adf-secondary-toolbar" *ngIf="!readOnly && isEditing">
+    <adf-toolbar class="adf-secondary-toolbar" *ngIf="isEditing && !readOnly">
         <button id="viewer-cancel-button"
                 title="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"
                 attr.aria-label="{{ 'ADF_VIEWER.ARIA.CANCEL' | translate }}"

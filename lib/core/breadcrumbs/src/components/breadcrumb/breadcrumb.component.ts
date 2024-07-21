@@ -15,11 +15,24 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef, ViewChildren } from '@angular/core';
+import {
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ContentChildren,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    QueryList,
+    SimpleChanges,
+    TemplateRef,
+    ViewChildren
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { map, startWith } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -32,7 +45,7 @@ import { BreadcrumbItemComponent } from '../breadcrumb-item/breadcrumb-item.comp
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ CommonModule, MatIconModule, TranslateModule, MatButtonModule, MatTooltipModule ]
+    imports: [CommonModule, MatIconModule, TranslateModule, MatButtonModule, BreadcrumbFocusDirective]
 })
 export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     private _breadcrumbTemplateRefs: Array<TemplateRef<unknown>> = [];
@@ -57,9 +70,7 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
         this.breadcrumbItems.changes
             .pipe(
                 startWith(this.breadcrumbItems),
-                map((breadcrumbItems: QueryList<BreadcrumbItemComponent>) =>
-                    this.mapToTemplateRefs(breadcrumbItems)
-                )
+                map((breadcrumbItems: QueryList<BreadcrumbItemComponent>) => this.mapToTemplateRefs(breadcrumbItems))
             )
             .subscribe((templateRefs) => {
                 this._breadcrumbTemplateRefs = templateRefs;
@@ -83,16 +94,11 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
     }
 
     private setBreadcrumbs(breadcrumbs: Array<TemplateRef<unknown>>) {
-        this.selectedBreadcrumbs =
-            this.compact && breadcrumbs.length > 2
-                ? [breadcrumbs[0], breadcrumbs[breadcrumbs.length - 1]]
-                : [...breadcrumbs];
+        this.selectedBreadcrumbs = this.compact && breadcrumbs.length > 2 ? [breadcrumbs[0], breadcrumbs[breadcrumbs.length - 1]] : [...breadcrumbs];
         this.cdr.detectChanges();
     }
 
-    private mapToTemplateRefs( breadcrumbItems: QueryList<BreadcrumbItemComponent> ) {
-        return breadcrumbItems
-            .toArray()
-            .map((breadcrumbItem) => breadcrumbItem.templateRef);
+    private mapToTemplateRefs(breadcrumbItems: QueryList<BreadcrumbItemComponent>) {
+        return breadcrumbItems.toArray().map((breadcrumbItem) => breadcrumbItem.templateRef);
     }
 }

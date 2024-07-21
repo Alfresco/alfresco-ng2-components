@@ -19,7 +19,6 @@ export * from './lib/process-list/index';
 export * from './lib/task-list/index';
 export * from './lib/app-list/index';
 export * from './lib/attachment/index';
-export * from './lib/process-user-info/index';
 export * from './lib/process-comments/index';
 export * from './lib/people/index';
 export * from './lib/form/index';

@@ -57,7 +57,7 @@
         </a>
 
         <div *ngSwitchDefault class="adf-breadcrumb-item-current" aria-current="location">
-            {{ (selectedRowItemsCount < 1 ? item.name : 'BREADCRUMB.HEADER.SELECTED') | translate: { count: selectedRowItemsCount } }}
+            {{ item.name | translate }}
         </div>
 
         <mat-icon class="adf-breadcrumb-item-chevron" *ngIf="!last">

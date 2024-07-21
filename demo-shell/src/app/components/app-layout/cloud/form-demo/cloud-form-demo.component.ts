@@ -16,32 +16,18 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-    CoreAutomationService,
-    FormFieldModel,
-    FormModel,
-    FormRenderingService,
-    NotificationService
-} from '@alfresco/adf-core';
-import {
-    CloudFormRenderingService,
-    FormCloudService
-} from '@alfresco/adf-process-services-cloud';
+import { FormFieldModel, FormModel, FormRenderingService, NotificationService } from '@alfresco/adf-core';
+import { CloudFormRenderingService, FormCloudService } from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
-import {
-    CustomEditorComponent,
-    CustomWidgetComponent
-} from '../../../cloud/custom-form-components/custom-editor.component';
+import { CustomEditorComponent, CustomWidgetComponent } from '../../../cloud/custom-form-components/custom-editor.component';
+import { CoreAutomationService } from '../../../../../testing/automation.service';
 
 @Component({
     templateUrl: './cloud-form-demo.component.html',
     styleUrls: ['./cloud-form-demo.component.scss'],
-    providers: [
-        { provide: FormRenderingService, useClass: CloudFormRenderingService }
-    ]
+    providers: [{ provide: FormRenderingService, useClass: CloudFormRenderingService }]
 })
 export class FormCloudDemoComponent implements OnInit, OnDestroy {
-
     form: FormModel;
     errorFields: FormFieldModel[] = [];
     formConfig: string;
@@ -61,7 +47,8 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
         private notificationService: NotificationService,
         private formService: FormCloudService,
         private automationService: CoreAutomationService,
-        private formRenderingService: FormRenderingService) {
+        private formRenderingService: FormRenderingService
+    ) {
         this.formRenderingService.register({
             'demo-widget': () => CustomEditorComponent,
             'custom-editor': () => CustomEditorComponent,

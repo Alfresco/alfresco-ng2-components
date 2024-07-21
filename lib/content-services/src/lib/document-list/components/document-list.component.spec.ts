@@ -1468,12 +1468,6 @@ describe('DocumentList', () => {
         expect(documentList.reload).not.toHaveBeenCalled();
     });
 
-    it('should emit custom date range on date picker closed', () => {
-        const selectedItemsCountChangedSpy = spyOn(documentList.selectedItemsCountChanged, 'emit');
-        documentList.onSelectedItemsCountChanged(1);
-        expect(selectedItemsCountChangedSpy).toHaveBeenCalledWith(1);
-    });
-
     it('should add includeFields in the server request when present', () => {
         documentList.includeFields = ['test-include'];
         documentList.currentFolderId = 'fake-id';

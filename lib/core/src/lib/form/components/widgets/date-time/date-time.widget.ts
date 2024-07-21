@@ -23,7 +23,6 @@ import { FormsModule } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { isValid } from 'date-fns';
@@ -43,16 +42,7 @@ import { WidgetComponent } from '../widget.component';
     ],
     templateUrl: './date-time.widget.html',
     styleUrls: ['./date-time.widget.scss'],
-    imports: [
-        NgIf,
-        TranslateModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatetimepickerModule,
-        FormsModule,
-        MatTooltipModule,
-        ErrorWidgetComponent
-    ],
+    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, FormsModule, ErrorWidgetComponent],
     encapsulation: ViewEncapsulation.None
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
@@ -77,15 +67,15 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = DateFnsUtils.utcToLocal(new Date(this.field.minValue));
+                this.minDate = DateFnsUtils.localToUtc(new Date(this.field.minValue));
             }
 
             if (this.field.maxValue) {
-                this.maxDate = DateFnsUtils.utcToLocal(new Date(this.field.maxValue));
+                this.maxDate = DateFnsUtils.localToUtc(new Date(this.field.maxValue));
             }
 
             if (this.field.value) {
-                this.value = new Date(this.field.value);
+                this.value = DateFnsUtils.localToUtc(new Date(this.field.value));
             }
         }
     }
@@ -95,7 +85,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         const newValue = this.dateTimeAdapter.parse(input.value, this.field.dateDisplayFormat);
 
         if (isValid(newValue)) {
-            this.field.value = DateFnsUtils.localToUtc(newValue).toISOString();
+            this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
         } else {
             this.field.value = input.value;
         }
@@ -108,7 +98,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
         const input = event.targetElement as HTMLInputElement;
 
         if (newValue && isValid(newValue)) {
-            this.field.value = DateFnsUtils.localToUtc(newValue).toISOString();
+            this.field.value = DateFnsUtils.utcToLocal(newValue).toISOString();
         } else {
             this.field.value = input.value;
         }

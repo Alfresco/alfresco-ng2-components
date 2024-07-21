@@ -167,6 +167,7 @@
                                [blobFile]="blobFile"
                                [readOnly]="readOnly"
                                (submitFile)="onSubmitFile($event)"
+                               [allowedEditActions]="allowedEditActions"
                                [urlFile]="urlFile"
                                (isSaving)="allowNavigate = !$event"
                                [tracks]="tracks"

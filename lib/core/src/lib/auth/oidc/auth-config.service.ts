@@ -53,6 +53,7 @@ export class AuthConfigService {
         const oauth2 = this.appConfigService.oauth2;
         const origin = this.getLocationOrigin();
         const redirectUri = this.getRedirectUri();
+        const customQueryParams = oauth2.audience ? { audience: oauth2.audience } : {};
 
         return new AuthConfig({
             ...oauth2,
@@ -66,9 +67,7 @@ export class AuthConfigService {
             scope: oauth2.scope,
             dummyClientSecret: oauth2.secret || '',
             logoutUrl: oauth2.logoutUrl,
-            customQueryParams: {
-                audience: oauth2.audience
-            },
+            customQueryParams,
             ...(oauth2.codeFlow && { responseType: 'code' })
         });
     }

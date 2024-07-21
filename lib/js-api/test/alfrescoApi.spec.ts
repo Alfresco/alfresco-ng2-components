@@ -40,6 +40,26 @@ describe('Basic configuration test', () => {
                 'https://testServer.com:1616/strangeContextRoot/api/-default-/public/alfresco/versions/1'
             );
         });
+
+        it('should detect invalid ticket and unset it', (done) => {
+            const hostEcm = 'https://127.0.0.1:8080';
+            const authEcmMock = new EcmAuthMock(hostEcm);
+
+            const config = {
+                hostEcm,
+                authType: 'BASIC',
+                ticketEcm: 'wrong-ticket'
+            };
+
+            authEcmMock.get401InvalidTicket();
+
+            const alfrescoApi = new AlfrescoApi(config);
+
+            alfrescoApi.on('ticket_invalidated', () => {
+                assert.equal(alfrescoApi.config.ticketEcm, null);
+                done();
+            });
+        });
     });
 
     describe('setconfig parameter ', () => {

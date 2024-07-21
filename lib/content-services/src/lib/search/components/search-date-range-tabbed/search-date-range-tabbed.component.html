@@ -1,7 +1,7 @@
 <adf-search-filter-tabbed>
     <ng-container *ngFor="let field of fields">
         <adf-search-date-range
-            *adf-search-filter-tab="field | tabLabels: settings"
+            *adf-search-filter-tab="getTabLabel(field)"
             [dateFormat]="settings.dateFormat"
             [maxDate]="settings.maxDate"
             [field]="field"

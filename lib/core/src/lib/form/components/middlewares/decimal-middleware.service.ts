@@ -32,7 +32,7 @@ export class DecimalRenderMiddlewareService implements FormFieldModelRenderMiddl
         return field;
     }
 
-    private forceMaxPrecisionIfNeeded(value: string | number, allowedMaxPrecision): string | number {
+    private forceMaxPrecisionIfNeeded(value: string | number, allowedMaxPrecision: number): string | number {
         let numberOfDecimalDigits = 0;
         const stringValue = typeof value === 'string' ? value : `${value}`;
         const numberChunks = stringValue.split('.');
@@ -42,12 +42,9 @@ export class DecimalRenderMiddlewareService implements FormFieldModelRenderMiddl
         }
 
         if (numberOfDecimalDigits > allowedMaxPrecision) {
-            const valueWithCorrectPrecision = parseFloat(value.toString())
-                .toFixed(allowedMaxPrecision);
-
-            return valueWithCorrectPrecision;
+            return parseFloat(value.toString()).toFixed(allowedMaxPrecision);
         }
 
         return value;
     }
-};
+}

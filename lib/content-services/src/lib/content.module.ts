@@ -44,7 +44,6 @@ import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
-import { ContentUserInfoModule } from './content-user-info/content-user-info.module';
 import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
@@ -61,7 +60,6 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         DialogModule,
         SearchModule,
         DocumentListModule,
-        ContentUserInfoModule,
         UploadModule,
         MaterialModule,
         DropdownSitesComponent,
@@ -87,7 +85,6 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         ...CONTENT_PIPES,
         TagModule,
         DocumentListModule,
-        ContentUserInfoModule,
         UploadModule,
         SearchModule,
         DropdownSitesComponent,

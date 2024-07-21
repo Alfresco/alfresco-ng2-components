@@ -17,10 +17,8 @@
 
 import { NgModule } from '@angular/core';
 import { NodeNameTooltipPipe } from './node-name-tooltip.pipe';
-import { IsIncludedPipe } from './is-included.pipe';
-import { TabLabelsPipe } from './tab-labels.pipe';
 
-export const CONTENT_PIPES = [NodeNameTooltipPipe, IsIncludedPipe, TabLabelsPipe] as const;
+export const CONTENT_PIPES = [NodeNameTooltipPipe] as const;
 
 /**
  * @deprecated Use the individual pipe modules instead.

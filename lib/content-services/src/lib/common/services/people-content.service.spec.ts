@@ -15,10 +15,51 @@
  * limitations under the License.
  */
 
-import { createNewPersonMock, fakeEcmAdminUser, fakeEcmUser, fakeEcmUser2, fakeEcmUserList } from '../mocks/ecm-user.service.mock';
+import { fakeEcmUser } from '../mocks/ecm-user.service.mock';
 import { AlfrescoApiService, AlfrescoApiServiceMock, CoreTestingModule } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
+import { PersonPaging } from '@alfresco/js-api';
+
+export const fakeEcmUser2 = {
+    id: 'another-fake-id',
+    firstName: 'another-fake-first-name',
+    lastName: 'another',
+    displayName: 'admin.adf User',
+    email: 'admin.adf@alfresco.com',
+    company: null,
+    enabled: true,
+    emailNotificationsEnabled: true
+};
+
+const fakeEcmUserList = new PersonPaging({
+    list: {
+        pagination: {
+            count: 2,
+            hasMoreItems: false,
+            totalItems: 2,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [{ entry: fakeEcmUser }, { entry: fakeEcmUser2 }]
+    }
+});
+
+export const createNewPersonMock = {
+    id: 'fake-id',
+    firstName: 'fake-ecm-first-name',
+    lastName: 'fake-ecm-last-name',
+    description: 'i am a fake user for test',
+    password: 'fake-avatar-id',
+    email: 'fakeEcm@ecmUser.com'
+};
+
+export const fakeEcmAdminUser = {
+    ...fakeEcmUser,
+    capabilities: {
+        isAdmin: true
+    }
+};
 
 describe('PeopleContentService', () => {
     let peopleContentService: PeopleContentService;

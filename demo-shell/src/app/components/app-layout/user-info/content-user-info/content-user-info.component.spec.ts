@@ -19,10 +19,50 @@ import { CoreTestingModule, IdentityUserModel, InitialUsernamePipe, UserInfoMode
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { By, DomSanitizer } from '@angular/platform-browser';
-import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../common/mocks/ecm-user.service.mock';
-import { ContentTestingModule } from '../testing/content.testing.module';
-
+import { fakeEcmUser, ContentTestingModule } from '@alfresco/adf-content-services';
 import { ContentUserInfoComponent } from './content-user-info.component';
+
+const fakeEcmEditedUser = {
+    id: 'fake-id',
+    firstName: null,
+    lastName: 'fake-last-name',
+    description: 'i am a fake user for test',
+    avatarId: 'fake-avatar-id',
+    email: 'fakeEcm@ecmUser.com',
+    skypeId: 'fake-skype-id',
+    googleId: 'fake-googleId-id',
+    instantMessageId: 'fake-instantMessageId-id',
+    company: null,
+    jobTitle: 'test job',
+    location: 'fake location',
+    mobile: '000000000',
+    telephone: '11111111',
+    statusUpdatedAt: 'fake-date',
+    userStatus: 'active',
+    enabled: true,
+    emailNotificationsEnabled: true
+};
+
+export const fakeEcmUserNoImage = {
+    id: 'fake-id',
+    firstName: 'fake-first-name',
+    lastName: 'fake-last-name',
+    description: 'i am a fake user for test',
+    avatarId: null,
+    email: 'fakeEcm@ecmUser.com',
+    skypeId: 'fake-skype-id',
+    googleId: 'fake-googleId-id',
+    instantMessageId: 'fake-instantMessageId-id',
+    company: null,
+    jobTitle: null,
+    location: 'fake location',
+    mobile: '000000000',
+    telephone: '11111111',
+    statusUpdatedAt: 'fake-date',
+    userStatus: 'active',
+    enabled: true,
+    emailNotificationsEnabled: true
+};
 
 class FakeSanitizer extends DomSanitizer {
     constructor() {

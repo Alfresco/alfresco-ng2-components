@@ -20,8 +20,7 @@
         </div>
 
         <div *ngIf="(!hasFile || multipleOption) && !field.readOnly">
-            <button mat-raised-button color="primary" (click)="uploadFiles.click()" [matTooltip]="field.tooltip"
-                matTooltipPosition="above" matTooltipShowDelay="1000">
+            <button mat-raised-button color="primary" (click)="uploadFiles.click()" [title]="field.tooltip">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}<mat-icon>file_upload</mat-icon>
                 <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.form.nodeId"
                     (change)="onFileChanged($event)" />

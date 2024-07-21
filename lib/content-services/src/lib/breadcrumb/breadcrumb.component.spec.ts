@@ -33,9 +33,6 @@ describe('Breadcrumb', () => {
     });
     let documentListComponent: DocumentListComponent;
 
-    const getBreadcrumbActionText = (): string =>
-        fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
-
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule],
@@ -302,27 +299,5 @@ describe('Breadcrumb', () => {
         expect(component.route.length).toBe(4);
         expect(component.route[3].id).toBe('test-id');
         expect(component.route[3].name).toBe('test-name');
-    });
-
-    it('should set title based on selectedRowItemsCount', () => {
-        component.transform = (transformNode) => {
-            transformNode.id = 'test-id';
-            transformNode.name = 'test-name';
-            return transformNode;
-        };
-
-        component.folderNode = {
-            path: { elements: [{ id: 'element-1-id', name: 'element-1-name' }] }
-        } as Node;
-
-        component.ngOnChanges();
-        fixture.detectChanges();
-
-        expect(getBreadcrumbActionText()).toEqual('test-name');
-
-        component.selectedRowItemsCount = 2;
-        fixture.detectChanges();
-
-        expect(getBreadcrumbActionText()).toEqual('BREADCRUMB.HEADER.SELECTED');
     });
 });

@@ -30,10 +30,8 @@ A few other pages of information are also available:
 -   The [Release notes](release-notes/README.md) section has details of all
     the features introduced and bugs fixed with each release.
 -   The [Version compatibility](compatibility.md) page shows which versions
-    of Alfresco's backend servies (ACS and APS) are compatible with each released
+    of Alfresco backend services (ACS and APS) are compatible with each released
     version of ADF.
--   The [Roadmap](roadmap.md)
-    contains a preview of features we hope to release in future versions of ADF.
 -   The [License info](license-info/README.md) section lists the third-party libraries used by ADF along with links to their Open Source licenses.
 -   The [Vulnerability](vulnerability/README.md) section lists the third-party
     libraries known vulnerability.
@@ -78,6 +76,15 @@ See the library's
 for more information about installing and using the source code.
 
 <!--core start-->
+
+### Primitives
+
+A collection of Angular components for generic use.
+
+| Name                                          | Description                  |
+|-----------------------------------------------|------------------------------|
+| [Avatar](core/components/avatar.component.md) | Displays user avatars.       |
+| [Button](core/components/button.component.md) | A standard button component. |
 
 ### Components
 
@@ -278,7 +285,6 @@ for more information about installing and using the source code.
 | [Content Node Selector Panel component](content-services/components/content-node-selector-panel.component.md) | Opens a Content Node Selector  in its own dialog window. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-selector-panel/content-node-selector-panel.component.ts) |
 | [Content Node Selector component](content-services/components/content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/src/lib/content-node-selector/content-node-selector.component.ts) |
 | [Content Type Dialog component](content-services/components/content-type-dialog.component.md) | Confirm dialog when user changes content type of a node. | [Source](../lib/content-services/src/lib/content-type/content-type-dialog.component.ts) |
-| [Content User Info component](content-services/components/content-user-info.component.md) | Shows user information for CONTENT and CONTENT_SSO mode. | [Source](../lib/content-services/src/lib/content-user-info/content-user-info.component.ts) |
 | [Document List component](content-services/components/document-list.component.md) | Displays the documents from a repository. | [Source](../lib/content-services/src/lib/document-list/components/document-list.component.ts) |
 | [Dropdown Breadcrumb Component](content-services/components/dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/src/lib/breadcrumb/dropdown-breadcrumb.component.ts) |
 | [File Uploading Dialog Component](content-services/components/file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/src/lib/upload/components/file-uploading-dialog.component.ts) |
@@ -429,7 +435,6 @@ for more information about installing and using the source code.
 | [Process Instance Details Header component](process-services/components/process-instance-header.component.md) | Sub-component of the process details component, which renders some general information about the selected process. | [Source](../lib/process-services/src/lib/process-list/components/process-instance-header/process-instance-header.component.ts) |
 | [Process Instance Tasks component](process-services/components/process-instance-tasks.component.md) | Lists both the active and completed tasks associated with a particular process instance | [Source](../lib/process-services/src/lib/process-list/components/process-instance-tasks/process-instance-tasks.component.ts) |
 | [Process Instance List](process-services/components/process-list.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services/src/lib/process-list/components/process-list/process-list.component.ts) |
-| [Process User Info component](process-services/components/process-user-info.component.md) | Shows user information for PROCESS and ALL mode. | [Source](../lib/process-services/src/lib/process-user-info/process-user-info.component.ts) |
 | [Select App Component](process-services/components/select-apps-dialog.component.md) | Shows all available apps and returns the selected app. | [Source](../lib/process-services/src/lib/app-list/select-apps-dialog/select-apps-dialog.component.ts) |
 | [Start Process component](process-services/components/start-process.component.md) | Starts a process. | [Source](../lib/process-services/src/lib/process-list/components/start-process/start-process.component.ts) |
 | [Start Task Component](process-services/components/start-task.component.md) | Creates/Starts a new task for the specified app. | [Source](../lib/process-services/src/lib/task-list/components/start-task/start-task.component.ts) |

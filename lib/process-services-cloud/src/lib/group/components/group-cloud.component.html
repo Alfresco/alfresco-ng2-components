@@ -8,7 +8,7 @@
                 [removable]="!(group.readonly)"
                 [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
                 (removed)="onRemove(group)"
-                matTooltip="{{ (group.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
+                title="{{ (group.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
                 {{group.name}}
                 <mat-icon
                     *ngIf="!(group.readonly || readOnly)"

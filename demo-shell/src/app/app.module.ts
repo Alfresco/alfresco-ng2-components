@@ -22,7 +22,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppConfigService, DebugAppConfigService, CoreModule, CoreAutomationService, AuthModule, provideTranslations } from '@alfresco/adf-core';
+import { AppConfigService, DebugAppConfigService, CoreModule, AuthModule, provideTranslations } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -67,6 +67,9 @@ import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
 import { FolderDirectiveModule } from './folder-directive';
+import { ContentUserInfoModule } from './components/app-layout/user-info/content-user-info';
+import { PROCESS_USER_INFO_DIRECTIVES } from './components/app-layout/user-info/process-user-info';
+import { CoreAutomationService } from '../testing/automation.service';
 
 @NgModule({
     imports: [
@@ -89,7 +92,9 @@ import { FolderDirectiveModule } from './folder-directive';
         AppCloudSharedModule,
         MonacoEditorModule.forRoot(),
         FolderDirectiveModule,
-        ShowDiagramComponent
+        ShowDiagramComponent,
+        ContentUserInfoModule,
+        ...PROCESS_USER_INFO_DIRECTIVES
     ],
     declarations: [
         AppComponent,

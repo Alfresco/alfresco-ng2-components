@@ -27,7 +27,6 @@ import { ProcessDefinitionService } from '../../services/process-definition.serv
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 
 describe('RadioButtonsWidgetComponent', () => {
     let formService: FormService;
@@ -242,9 +241,9 @@ describe('RadioButtonsWidgetComponent', () => {
 
             fixture.detectChanges();
 
-            const tooltip = await loader.getHarness(MatTooltipHarness.with({ selector: '#radio-id-opt-1' }));
-            await tooltip.show();
-            expect(await tooltip.getTooltipText()).toEqual(radioButtonWidget.field.tooltip);
+            const option = await loader.getHarness(MatRadioButtonHarness.with({ selector: '#radio-id-opt-1' }));
+            const tooltip = await (await option.host()).getAttribute('title');
+            expect(tooltip).toEqual(radioButtonWidget.field.tooltip);
         });
 
         describe('and radioButton is populated via taskId', () => {

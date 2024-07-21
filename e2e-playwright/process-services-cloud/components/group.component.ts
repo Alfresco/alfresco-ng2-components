@@ -17,13 +17,11 @@
 
 import { Page } from '@playwright/test';
 import { BaseComponent } from '../../page-object/components/base.component';
-import { ErrorComponent, TooltipComponent, ListboxComponent } from '../../page-object/components';
+import { ErrorComponent } from '../../page-object/components';
 
 export class GroupComponent extends BaseComponent {
     private static rootElement = 'adf-cloud-group';
     public error = new ErrorComponent(this.page);
-    public tooltip = new TooltipComponent(this.page);
-    public listbox = new ListboxComponent(this.page);
 
     public groupNaming = this.getChild('[data-automation-id="adf-cloud-group-chip-list"]');
     public groupInput = this.getChild('[data-automation-id="adf-group-cloud-search-input"]');
@@ -33,5 +31,4 @@ export class GroupComponent extends BaseComponent {
     }
 
     public getUserLocator = (userName: string) => this.getChild(`[data-automation-id="adf-cloud-group-chip-${userName}"]`);
-
 }

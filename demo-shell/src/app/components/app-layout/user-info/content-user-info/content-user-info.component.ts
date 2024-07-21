@@ -19,8 +19,7 @@ import { IdentityUserModel, UserInfoMode } from '@alfresco/adf-core';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
-import { EcmUserModel } from '../common/models/ecm-user.model';
-import { PeopleContentService } from '../common/services/people-content.service';
+import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-content-user-info',
@@ -29,7 +28,6 @@ import { PeopleContentService } from '../common/services/people-content.service'
     encapsulation: ViewEncapsulation.None
 })
 export class ContentUserInfoComponent implements OnDestroy {
-
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     /** Determines if user is logged in. */
@@ -50,11 +48,11 @@ export class ContentUserInfoComponent implements OnDestroy {
 
     /** Custom path for the background banner image for ACS users. */
     @Input()
-    ecmBackgroundImage: string = './assets/images/ecm-background.png';
+    ecmBackgroundImage: string = './resources/images/ecm-background.png';
 
     /** Custom path for the background banner image for APS users. */
     @Input()
-    bpmBackgroundImage: string = './assets/images/bpm-background.png';
+    bpmBackgroundImage: string = './resources/images/bpm-background.png';
 
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
@@ -79,8 +77,7 @@ export class ContentUserInfoComponent implements OnDestroy {
 
     private destroy$ = new Subject();
 
-    constructor(private peopleContentService: PeopleContentService) {
-    }
+    constructor(private peopleContentService: PeopleContentService) {}
 
     ngOnDestroy(): void {
         this.destroy$.next(true);

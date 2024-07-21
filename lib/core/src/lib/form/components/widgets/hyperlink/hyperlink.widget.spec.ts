@@ -16,7 +16,6 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
@@ -28,7 +27,7 @@ describe('HyperlinkWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatTooltipModule]
+            imports: [CoreTestingModule]
         });
         fixture = TestBed.createComponent(HyperlinkWidgetComponent);
         widget = fixture.componentInstance;
@@ -199,7 +198,7 @@ describe('HyperlinkWidgetComponent', () => {
 
         fixture.detectChanges();
         const checkbox = fixture.debugElement.nativeElement.querySelector('.adf-hyperlink-widget div');
-        const tooltip = checkbox.getAttribute('ng-reflect-message');
+        const tooltip = checkbox.getAttribute('title');
 
         expect(tooltip).toEqual(widget.field.tooltip);
     });

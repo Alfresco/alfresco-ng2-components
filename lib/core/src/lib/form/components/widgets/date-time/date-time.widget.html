@@ -24,10 +24,8 @@
                    (dateChange)="onDateChanged($event)"
                    (keydown.enter)="datetimePicker.open()"
                    [placeholder]="field.placeholder"
-                   [matTooltip]="field.tooltip"
+                   [title]="field.tooltip"
                    (blur)="markAsTouched()"
-                   matTooltipPosition="above"
-                   [matTooltipShowDelay]="1000"
                    [min]="minDate"
                    [max]="maxDate">
             <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"

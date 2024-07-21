@@ -158,30 +158,14 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         display: flex;
         align-items: center;
 
-        &:hover {
-            .adf-datatable-checkbox-cell {
-                &.adf-datatable-checkbox-single {
-                    visibility: visible;
-                }
-            }
-        }
-
-        .adf-datatable-checkbox-single {
-            visibility: hidden;
-
-            &:has(.adf-datatable-checkbox-selected) {
-                visibility: visible;
-            }
-        }
-
-        .adf-datatable-checkbox-cell {
+        .adf-datatable-checkbox {
             max-width: $data-table-thumbnail-width;
             width: $data-table-thumbnail-width;
         }
 
         /* query for Microsoft IE 11 */
         @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-            .adf-datatable-checkbox-cell {
+            .adf-datatable-checkbox {
                 padding-top: 15px;
             }
         }
@@ -297,11 +281,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         margin-left: auto;
         justify-content: end;
         padding-right: 15px;
-    }
-
-    .adf-datatable-checkbox-cell {
-        display: flex;
-        justify-content: center;
     }
 
     .adf-cell-value {

@@ -42,7 +42,6 @@ test.describe('People component stories tests', () => {
         await peopleComponent.getUserLocator('Kielbasa Sausage').hover();
 
         await expect.soft(peopleComponent.usersNaming).toContainText(expectedUsersName);
-        await expect(peopleComponent.tooltip.content).toContainText('Mandatory');
     });
 
     test('Invalid Preselected Users', async ({ processServicesCloud, peopleComponent }) => {

@@ -20,7 +20,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material/input';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { MatTooltipHarness } from '@angular/material/tooltip/testing';
 import { CoreTestingModule } from '../../../../testing';
 import { FormService } from '../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
@@ -58,17 +57,8 @@ describe('DecimalComponent', () => {
             const input = await loader.getHarness(MatInputHarness);
             await (await input.host()).hover();
 
-            const tooltip = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltip.getTooltipText()).toBe('my custom tooltip');
-        });
-
-        it('should hide tooltip', async () => {
-            const input = await loader.getHarness(MatInputHarness);
-            await (await input.host()).hover();
-            await (await input.host()).mouseAway();
-
-            const tooltip = await loader.getHarness(MatTooltipHarness);
-            expect(await tooltip.isOpen()).toBe(false);
+            const tooltip = await (await input.host()).getAttribute('title');
+            expect(tooltip).toBe('my custom tooltip');
         });
     });
 

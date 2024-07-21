@@ -27,8 +27,6 @@ import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../data-column/data-column.component';
-import { domSanitizerMock } from '../../../mock/dom-sanitizer-mock';
-import { matIconRegistryMock } from '../../../mock/mat-icon-registry-mock';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { take } from 'rxjs/operators';
 import { By } from '@angular/platform-browser';
@@ -40,6 +38,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
+
 @Component({
     selector: 'adf-custom-column-header-component',
     template: ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
@@ -154,7 +153,6 @@ describe('DataTable', () => {
     });
 
     it('should preserve the historical selection order', () => {
-        spyOn(dataTable.selectedItemsCountChanged, 'emit');
         dataTable.data = new ObjectDataTableAdapter([{ id: 0 }, { id: 1 }, { id: 2 }], [new ObjectDataColumn({ key: 'id' })]);
 
         const rows = dataTable.data.getRows();
@@ -167,25 +165,6 @@ describe('DataTable', () => {
         expect(selection[0].getValue('id')).toBe(2);
         expect(selection[1].getValue('id')).toBe(0);
         expect(selection[2].getValue('id')).toBe(1);
-
-        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledTimes(3);
-    });
-
-    it('should selectedItemsCountChanged be emitted 4 times', () => {
-        spyOn(dataTable.selectedItemsCountChanged, 'emit');
-        dataTable.data = new ObjectDataTableAdapter([{ id: 0 }, { id: 1 }, { id: 2 }], [new ObjectDataColumn({ key: 'id' })]);
-
-        const rows = dataTable.data.getRows();
-
-        dataTable.selectRow(rows[2], true);
-        dataTable.selectRow(rows[0], true);
-        dataTable.selectRow(rows[1], true);
-        dataTable.selectRow(rows[1], false);
-
-        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(1);
-        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(2);
-        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(3);
-        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledTimes(4);
     });
 
     it('should update schema if columns change', fakeAsync(() => {
@@ -557,7 +536,6 @@ describe('DataTable', () => {
     });
 
     it('should unselect the row searching it by row id, when row id is defined', () => {
-        spyOn(dataTable.selectedItemsCountChanged, 'emit');
         const findSelectionByIdSpy = spyOn(dataTable, 'findSelectionById');
         dataTable.data = new ObjectDataTableAdapter([], [new ObjectDataColumn({ key: 'name' })]);
 
@@ -573,8 +551,6 @@ describe('DataTable', () => {
 
         expect(indexOfSpy).not.toHaveBeenCalled();
         expect(findSelectionByIdSpy).toHaveBeenCalledWith(fakeDataRows[0].id);
-        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledTimes(1);
-        expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(2);
     });
 
     it('should unselect the row by searching for the exact same reference of it (indexOf), when row id is not defined ', () => {
@@ -656,7 +632,7 @@ describe('DataTable', () => {
     });
 
     it('should initialize default adapter', () => {
-        const table = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
+        const table = TestBed.createComponent(DataTableComponent).componentInstance;
         expect(table.data).toBeUndefined();
         table.ngOnChanges({ data: new SimpleChange('123', {}, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
@@ -892,7 +868,7 @@ describe('DataTable', () => {
         dataTable.multiselect = true;
         dataTable.onCheckboxChange(rows[0], { checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllIndeterminate).toBe(true);
-        expect(dataTable.isSelectAllChecked).toBe(true);
+        expect(dataTable.isSelectAllChecked).toBe(false);
 
         dataTable.onCheckboxChange(rows[1], { checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllIndeterminate).toBe(false);

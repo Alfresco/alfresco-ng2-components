@@ -21,7 +21,7 @@
             </div>
 
             <!-- Columns -->
-            <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox-cell">
+            <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
                 <mat-checkbox [indeterminate]="isSelectAllIndeterminate" [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)" class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}</mat-checkbox>
             </div>
 
@@ -68,7 +68,7 @@
                         !isResizing && col.sortable}"
                 >
                     <ng-container *ngIf="!col.header">
-                        <span *ngIf="col.title" matTooltip="{{col.title | translate}}" class="adf-datatable-cell-value">{{col.title | translate}}</span>
+                        <span *ngIf="col.title" title="{{col.title | translate}}" class="adf-datatable-cell-value">{{col.title | translate}}</span>
 
                         <span *ngIf="col.title && col.sortable && isDraggingHeaderColumn" class="adf-sr-only" aria-live="polite">
                             {{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}
@@ -124,7 +124,7 @@
                 <ng-container *ngIf="mainActionTemplate">
                     <button
                         data-automation-id="adf-datatable-main-menu-button"
-                        matTooltip="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
+                        title="{{ 'ADF-DATATABLE.CONTENT-ACTIONS.SELECT_COLUMNS' | translate }}"
                         mat-icon-button
                         #mainMenuTrigger="matMenuTrigger"
                         (keydown.enter)="mainMenuTrigger.openMenu()"
@@ -182,10 +182,9 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect" [for]="'select-file-' + idx" class="adf-datatable-cell adf-datatable-checkbox-cell adf-datatable-checkbox-single">
+                <label *ngIf="multiselect" [for]="'select-file-' + idx" class="adf-datatable-cell adf-datatable-checkbox">
                     <mat-checkbox
                         [id]="'select-file-' + idx"
-                              [class.adf-datatable-checkbox-selected]="row.isSelected"
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
                         role="checkbox"

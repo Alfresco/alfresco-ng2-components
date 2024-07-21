@@ -1,0 +1,20 @@
+.adf-avatar {
+    display: flex;
+}
+
+.adf-avatar__image {
+    cursor: var(--adf-avatar-cursor, auto);
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    border-radius: var(--adf-avatar-border-radius, 50%);
+    width: var(--adf-avatar-size, 32px);
+    height: var(--adf-avatar-size, 32px);
+    color: var(--adf-avatar-color, #333);
+    background-color: var(--adf-avatar-background-color, #f3f3f3);
+    box-shadow: 0 0 0 1px var(--adf-avatar-border-color, rgba(31, 35, 40, 0.15));
+    font-size: var(--adf-avatar-font-size, 14px);
+    font-weight: var(--adf-avatar-font-weight, 500);
+    text-align: center;
+    align-content: center;
+}
