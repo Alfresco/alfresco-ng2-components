@@ -4,7 +4,7 @@
             <button mat-icon-button class="adf-facet-search-icon" tabindex="-1">
                 <mat-icon class="adf-search-field-icon">search</mat-icon>
             </button>
-            <mat-form-field class="adf-facet-search-field" floatLabel="never">
+            <mat-form-field class="adf-facet-search-field" subscriptSizing="dynamic">
                 <input
                     matInput
                     placeholder="{{ 'SEARCH.FILTER.ACTIONS.SEARCH' | translate }}"
@@ -13,7 +13,6 @@
                 />
                 <button
                     *ngIf="field.buckets.filterText"
-                    mat-button
                     matSuffix
                     mat-icon-button
                     [attr.title]="'SEARCH.FILTER.BUTTONS.CLEAR' | translate"

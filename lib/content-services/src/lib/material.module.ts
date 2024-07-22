@@ -88,5 +88,4 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatBadgeModule
     ]
 })
-export class MaterialModule {
-}
+export class MaterialModule {}

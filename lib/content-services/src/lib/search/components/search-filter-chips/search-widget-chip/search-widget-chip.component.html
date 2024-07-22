@@ -1,5 +1,5 @@
 <mat-chip [attr.data-automation-id]="'search-filter-chip-' + category.name"
-          [disableRipple]="true"
+          disableRipple
           class="adf-search-filter-chip"
           [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
           tabIndex="0"

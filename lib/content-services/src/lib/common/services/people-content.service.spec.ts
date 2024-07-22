@@ -16,10 +16,12 @@
  */
 
 import { fakeEcmUser } from '../mocks/ecm-user.service.mock';
-import { AlfrescoApiService, AlfrescoApiServiceMock, CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
 import { PersonPaging } from '@alfresco/js-api';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EMPTY, of } from 'rxjs';
 
 export const fakeEcmUser2 = {
     id: 'another-fake-id',
@@ -66,8 +68,12 @@ describe('PeopleContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            imports: [HttpClientTestingModule],
+            providers: [
+                PeopleContentService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+            ]
         });
 
         peopleContentService = TestBed.inject(PeopleContentService);

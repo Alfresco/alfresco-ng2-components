@@ -148,13 +148,13 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should pass through the injected currentFolderId to the documentList', () => {
             const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-            expect(documentList).not.toBeNull();
+            expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
         });
 
         it('should pass through the injected rowFilter to the documentList', () => {
             const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-            expect(documentList).not.toBeNull();
+            expect(documentList).not.toBeNull('Document list should be shown');
             expect(
                 documentList.componentInstance.rowFilter({
                     node: {
@@ -178,69 +178,66 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should pass through the injected imageResolver to the documentList', () => {
             const documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-            expect(documentList).not.toBeNull();
+            expect(documentList).not.toBeNull('Document list should be shown');
             expect(documentList.componentInstance.imageResolver).toBe(data.imageResolver);
         });
     });
 
     describe('Cancel button', () => {
-        const getCancelButton = () => fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
-
         it('should not be shown if dialogRef is NOT injected', () => {
             const closeButton = fixture.debugElement.query(By.css('[content-node-selector-actions-cancel]'));
             expect(closeButton).toBeNull();
         });
 
         it('should close the dialog', () => {
-            let cancelButton = getCancelButton();
+            let cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
             cancelButton.triggerEventHandler('click', {});
             expect(dialog.close).toHaveBeenCalled();
 
             fixture.detectChanges();
-            cancelButton = getCancelButton();
+            cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
             expect(cancelButton).not.toBeNull();
         });
     });
 
     describe('Action button for the chosen node', () => {
-        const getActionButton = () =>
-            fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'))?.nativeElement as HTMLButtonElement;
-
         it('should be disabled by default', () => {
             fixture.detectChanges();
 
-            const actionButton = getActionButton();
-            expect(actionButton.disabled).toBeTruthy();
+            const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            expect(actionButton.nativeElement.disabled).toBeTruthy();
         });
 
         it('should be enabled when a node is chosen', () => {
             component.onSelect([new Node({ id: 'fake' })]);
             fixture.detectChanges();
 
-            const actionButton = getActionButton();
-            expect(actionButton.disabled).toBeFalsy();
+            const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            expect(actionButton.nativeElement.disabled).toBeFalsy();
         });
 
         it('should be disabled when no node chosen', () => {
             component.onSelect([new Node({ id: 'fake' })]);
             fixture.detectChanges();
 
-            const actionButtonWithNodeSelected = getActionButton();
-            expect(actionButtonWithNodeSelected.disabled).toBe(false);
+            const actionButtonWithNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+
+            expect(actionButtonWithNodeSelected.nativeElement.disabled).toBe(false);
 
             component.onSelect([]);
             fixture.detectChanges();
 
-            const actionButtonWithoutNodeSelected = getActionButton();
-            expect(actionButtonWithoutNodeSelected.disabled).toBe(true);
+            const actionButtonWithoutNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+
+            expect(actionButtonWithoutNodeSelected.nativeElement.disabled).toBe(true);
         });
 
-        it('should close the dialog when action button is clicked', () => {
+        it('should close the dialog when action button is clicked', async () => {
             component.onSelect([new Node({ id: 'fake' })]);
             fixture.detectChanges();
 
-            const actionButton = getActionButton();
-            actionButton.click();
+            const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+            await actionButton.nativeElement.click();
 
             expect(dialog.close).toHaveBeenCalled();
         });
@@ -260,8 +257,6 @@ describe('ContentNodeSelectorComponent', () => {
     });
 
     describe('Upload button', () => {
-        const getUploadButton = () => fixture.debugElement.query(By.css('adf-upload-button button'))?.nativeElement as HTMLButtonElement;
-
         it('Should not be able to upload a file whilst a search is still running', async () => {
             enableLocalUpload();
             fixture.detectChanges();
@@ -308,10 +303,10 @@ describe('ContentNodeSelectorComponent', () => {
             component.hasAllowableOperations = true;
 
             fixture.detectChanges();
-            const adfUploadButton = getUploadButton();
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
 
             expect(adfUploadButton).not.toBeNull();
-            expect(adfUploadButton.disabled).toBe(true);
+            expect(adfUploadButton.nativeElement.disabled).toBe(true);
         });
 
         it('should be able to enable UploadButton if showingSearch set to false', async () => {
@@ -320,10 +315,10 @@ describe('ContentNodeSelectorComponent', () => {
             component.hasAllowableOperations = true;
 
             fixture.detectChanges();
-            const adfUploadButton = getUploadButton();
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
 
             expect(adfUploadButton).not.toBeNull();
-            expect(adfUploadButton.disabled).toBe(false);
+            expect(adfUploadButton.nativeElement.disabled).toBe(false);
         });
 
         it('should be able to show warning message while searching', async () => {
@@ -359,10 +354,10 @@ describe('ContentNodeSelectorComponent', () => {
             component.onTabSelectionChange(1);
 
             fixture.detectChanges();
-            const adfUploadButton = getUploadButton();
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
 
             expect(adfUploadButton).not.toBeNull();
-            expect(adfUploadButton.disabled).toBe(true);
+            expect(adfUploadButton.nativeElement.disabled).toBe(true);
         });
 
         it('should be able to enable UploadButton if user has allowable operations', async () => {
@@ -370,10 +365,10 @@ describe('ContentNodeSelectorComponent', () => {
             component.hasAllowableOperations = true;
 
             fixture.detectChanges();
-            const adfUploadButton = getUploadButton();
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
 
             expect(adfUploadButton).not.toBeNull();
-            expect(adfUploadButton.disabled).toBe(false);
+            expect(adfUploadButton.nativeElement.disabled).toBe(false);
         });
 
         it('should not be able to show warning message if user has allowable operations', async () => {
@@ -448,8 +443,6 @@ describe('ContentNodeSelectorComponent', () => {
     });
 
     describe('Drag and drop area', () => {
-        const getEmptyList = () => fixture.nativeElement.querySelector('[data-automation-id="adf-empty-list"]');
-
         it('should uploadStarted be false by default', () => {
             expect(component.uploadStarted).toBe(false);
         });
@@ -467,8 +460,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             fixture.detectChanges();
             await fixture.whenRenderingDone();
-
-            const emptyListTemplate = getEmptyList();
+            const emptyListTemplate = fixture.nativeElement.querySelector('[data-automation-id="adf-empty-list"]');
             const dragAndDropArea = fixture.debugElement.query(By.css('.adf-upload-drag-area'));
 
             expect(emptyListTemplate).not.toBeNull();
@@ -482,15 +474,13 @@ describe('ContentNodeSelectorComponent', () => {
             component.uploadStarted = true;
             fixture.detectChanges();
             await fixture.whenRenderingDone();
+            const emptyListTemplate = fixture.nativeElement.querySelector('[data-automation-id="adf-empty-list"]');
 
-            const emptyListTemplate = getEmptyList();
             expect(emptyListTemplate).toBeNull();
         });
     });
 
     describe('Selected nodes counter', () => {
-        const getNodeCounter = () => fixture.debugElement.nativeElement.querySelector('adf-node-counter');
-
         it('should getSelectedCount return 0 by default', () => {
             expect(component.getSelectedCount()).toBe(0);
         });
@@ -504,19 +494,19 @@ describe('ContentNodeSelectorComponent', () => {
         it('should show the counter depending on the action', () => {
             component.action = NodeAction.ATTACH;
             fixture.detectChanges();
-            expect(getNodeCounter()).not.toBe(null);
+            expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
 
             component.action = NodeAction.CHOOSE;
             fixture.detectChanges();
-            expect(getNodeCounter()).not.toBe(null);
+            expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).not.toBe(null);
 
             component.action = NodeAction.COPY;
             fixture.detectChanges();
-            expect(getNodeCounter()).toBe(null);
+            expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
 
             component.action = NodeAction.MOVE;
             fixture.detectChanges();
-            expect(getNodeCounter()).toBe(null);
+            expect(fixture.debugElement.nativeElement.querySelector('adf-node-counter')).toBe(null);
         });
     });
 });

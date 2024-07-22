@@ -1,0 +1,152 @@
+{
+  "name": "core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "lib/core",
+  "prefix": "adf",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "tsConfig": "lib/core/tsconfig.lib.json",
+        "project": "lib/core/ng-package.json"
+      },
+      "dependsOn": ["^build", "license"],
+      "configurations": {
+        "production": {
+          "project": "lib/core/ng-package.json",
+          "tsConfig": "lib/core/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "lib/core/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "lib/core/test.ts",
+        "tsConfig": "lib/core/tsconfig.spec.json",
+        "karmaConfig": "lib/core/karma.conf.js",
+        "sourceMap": true,
+        "codeCoverage": true,
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        },
+        "styles": ["demo-shell/src/styles.scss"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "lib/core/**/*.ts",
+          "lib/core/**/*.html",
+          "lib/core/api/**/*.ts",
+          "lib/core/api/**/*.html",
+          "lib/core/auth/**/*.ts",
+          "lib/core/auth/**/*.html",
+          "lib/core/shell/**/*.ts",
+          "lib/core/shell/**/*.html",
+          "lib/core/breadcrumbs/**/*.ts",
+          "lib/core/breadcrumbs/**/*.html"
+        ]
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "browserTarget": "core:build",
+        "configDir": "lib/core/.storybook",
+        "compodoc": false,
+        "styles": [
+          "demo-shell/src/styles.scss",
+          "demo-shell/src/custom-style-dev.scss",
+          "node_modules/cropperjs/dist/cropper.min.css",
+          "node_modules/pdfjs-dist/web/pdf_viewer.css",
+          
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "options": {
+        "browserTarget": "core:build",
+        "configDir": "lib/core/.storybook",
+        "outputDir": "dist/storybook/core",
+        "compodoc": false,
+        "styles": [
+          "demo-shell/src/styles.scss",
+          "demo-shell/src/custom-style-dev.scss",
+          "node_modules/cropperjs/dist/cropper.min.css",
+          "node_modules/pdfjs-dist/web/pdf_viewer.css",
+          "lib/core/src/lib/styles/prebuilt/adf-blue-orange.scss"
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "stylelint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx stylelint lib/core/**/*.scss --config stylelint-config.json"
+          }
+        ]
+      }
+    },
+    "license": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt"
+          }
+        ]
+      }
+    },
+    "pretheme": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail"
+          }
+        ]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build", "pretheme"],
+      "options": {
+        "cwd": "dist/libs/core",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ],
+        "stylePreprocessorOptions": {
+          "includePaths": ["lib", "lib/core/src/lib"]
+        }
+      }
+    }
+  }
+}

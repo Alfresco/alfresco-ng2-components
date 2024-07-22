@@ -47,12 +47,6 @@
       "ARROW_ICON": "Arrow right icon"
     }
   },
-  "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Confirm",
-    "ACTION": "Do you want to proceed?",
-    "YES_LABEL": "Yes",
-    "NO_LABEL": "No"
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "This folder is empty"

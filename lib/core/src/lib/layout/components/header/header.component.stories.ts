@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
 import { SidenavLayoutModule } from '../../layout.module';
 import { HeaderLayoutComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { importProvidersFrom } from '@angular/core';
 
 export default {
     component: HeaderLayoutComponent,
@@ -27,6 +28,9 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [CoreStoryModule, SidenavLayoutModule, RouterTestingModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     parameters: {
@@ -42,7 +46,6 @@ export default {
         color: {
             control: 'radio',
             options: ['primary', 'accent', 'warn', '#42f57e', undefined],
-            defaultValue: undefined,
             description: `Background color for the header.
                 It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'`,
             table: {
@@ -71,7 +74,6 @@ export default {
         logo: {
             control: 'text',
             description: 'Path to an image file for the application logo',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
@@ -80,7 +82,6 @@ export default {
         title: {
             control: 'text',
             description: 'Title of the application',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
@@ -89,7 +90,6 @@ export default {
         tooltip: {
             control: 'text',
             description: 'The tooltip text for the application logo',
-            defaultValue: undefined,
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'undefined' }
@@ -122,10 +122,16 @@ export default {
                 category: 'Actions'
             }
         }
+    },
+    args: {
+        expandedSidenav: true,
+        showSidenavToggle: true,
+        position: 'start',
+        redirectUrl: '/'
     }
-} as Meta;
+} as Meta<HeaderLayoutComponent>;
 
-const template: Story<SidenavLayoutModule> = (args: HeaderLayoutComponent) => ({
+const template: StoryFn<SidenavLayoutModule> = (args) => ({
     props: args
 });
 

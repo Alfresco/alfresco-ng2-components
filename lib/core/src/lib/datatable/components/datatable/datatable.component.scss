@@ -1,6 +1,7 @@
 /* stylelint-disable no-descending-specificity */
 @use '@angular/material' as mat;
 @import '../../../styles/mixins';
+@import 'styles/mat-selectors';
 
 $data-table-header-font-size: var(--theme-caption-font-size) !default;
 $data-table-header-sort-icon-size: var(--theme-subheading-2-font-size) !default;
@@ -375,7 +376,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 
         .adf-datatable-content-cell {
             overflow: unset;
-            position: absolute;
         }
 
         /* query for Microsoft IE 11 */

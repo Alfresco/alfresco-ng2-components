@@ -1,17 +1,27 @@
-.adf-categories-management {
-    padding-top: 12px;
+@import 'styles/mat-selectors';
 
+.adf-categories-management {
     .adf-category-name-field {
-        justify-content: space-between;
-        width: 100%;
-        color: var(--adf-metadata-property-panel-text-color);
-        background: var(--adf-metadata-buttons-background-color);
-        height: 32px;
-        border-radius: 12px;
-        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-right: 12px;
 
         input {
+            background: var(--adf-metadata-buttons-background-color);
+            border-radius: 12px;
             padding: 7px 8px;
+            border: none;
+            outline: none;
+            font: inherit;
+            color: currentcolor;
+            margin: 0;
+            vertical-align: bottom;
+            text-align: inherit;
+            box-sizing: content-box;
+        }
+
+        #{$mat-form-field-error} {
+            padding-top: 5px;
         }
     }
 
@@ -46,7 +56,7 @@
         background-color: inherit;
         color: inherit;
 
-        &:hover {
+        &:not(#{$mat-list-item-disabled}):hover {
             cursor: pointer;
             background: var(--adf-theme-mat-grey-color-a200);
         }
@@ -68,9 +78,15 @@
 }
 
 .adf-existing-categories-panel {
+    min-height: 22vh;
+
     .adf-create-category-label {
         color: var(--theme-primary-color);
         cursor: pointer;
         overflow-wrap: anywhere;
+    }
+
+    #{$mat-list-item-disabled} #{$mat-list-item-primary-text} {
+        opacity: 1;
     }
 }

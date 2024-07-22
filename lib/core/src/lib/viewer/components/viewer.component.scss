@@ -1,4 +1,6 @@
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
+@import 'styles/mat-selectors';
+
 .adf-full-screen {
     width: 100%;
     height: 100%;
@@ -10,7 +12,7 @@
     width: 100%;
     height: 100%;
 
-    .mat-toolbar {
+    #{$mat-toolbar} {
         color: var(--adf-theme-foreground-text-color-054);
 
         .adf-toolbar-title {
@@ -29,7 +31,7 @@
     }
 
     &-toolbar {
-        .mat-toolbar {
+        #{$mat-toolbar} {
             background-color: var(--adf-theme-background-card-color-087);
         }
     }
@@ -37,6 +39,14 @@
     &__file-title {
         text-align: center;
         flex: 1 1 auto;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        @media screen and (max-width: 1450px) {
+            left: 30%;
+        }
     }
 
     &__display-name {

@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import 'styles/mat-selectors';
+
 .adf-filter {
     &-button:has(.adf-filter-icon) {
         margin-left: -7px;
@@ -23,7 +26,7 @@
     &-container {
         display: flex;
         flex-direction: column;
-        padding: 15px 15px 10px;
+        padding: 15.5px 15px 10px;
         color: var(--adf-theme-foreground-text-color-087);
 
         .adf-facet-buttons {
@@ -43,9 +46,20 @@
         font-size: 1.1em;
         padding-bottom: 5px;
         color: var(--adf-theme-foreground-text-color-087);
+        -webkit-font-smoothing: subpixel-antialiased;
+    }
+}
+
+.adf-search-filter-menu.adf-filter-menu {
+    min-width: 260px;
+
+    @include mat.elevation(4);
+
+    > div:first-child {
+        padding: 0;
     }
 
-    &-actions {
+    .adf-filter-actions {
         display: flex;
         justify-content: flex-end;
         padding: 15px;
@@ -53,15 +67,15 @@
 
         > button {
             font-size: 0.9em;
-            color: var(--adf-theme-foreground-text-color-087);
+            height: 36px;
+            width: auto;
+            padding-left: 16px;
+            padding-right: 16px;
+            -webkit-font-smoothing: subpixel-antialiased;
+
+            #{$mat-button-label} {
+                font-weight: unset;
+            }
         }
-    }
-}
-
-.adf-search-filter-menu.adf-filter-menu {
-    min-width: 260px;
-
-    > div:first-child {
-        padding: 0;
     }
 }

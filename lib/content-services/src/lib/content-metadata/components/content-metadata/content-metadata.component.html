@@ -100,7 +100,9 @@
                 </adf-content-metadata-header>
             </mat-expansion-panel-header>
             <div *ngIf="currentPanel.panelTitle === DefaultPanels.TAGS && !editing" class="adf-metadata-properties-tags">
-                <span *ngFor="let tag of tags" class="adf-metadata-properties-tag">{{ tag }}</span>
+                <mat-chip-set>
+                    <mat-chip *ngFor="let tag of tags" [disableRipple]="true" class="metadata-properties-tag-chip" data-automation-id="metadata-properties-tag-chip">{{ tag }}</mat-chip>
+                </mat-chip-set>
             </div>
             <div *ngIf="showEmptyTagMessage" class="adf-metadata-no-item-added">
                 {{ 'METADATA.BASIC.NO_TAGS_ADDED' | translate }}

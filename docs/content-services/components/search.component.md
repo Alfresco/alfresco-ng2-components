@@ -96,7 +96,7 @@ However, you can use a more complex template if necessary:
                 class="adf-search-autocomplete-item"
                 (click)="elementClicked(item)"
                 (keyup.enter)="elementClicked(item)">
-                <mat-icon mat-list-icon>
+                <mat-icon matListItemLine>
                     <img [src]="getMimeTypeIcon(item)" />
                 </mat-icon>
                     <h4 mat-line id="result_name_{{idx}}"

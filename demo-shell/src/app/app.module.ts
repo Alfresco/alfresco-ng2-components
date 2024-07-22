@@ -76,7 +76,7 @@ import { CoreAutomationService } from '../testing/automation.service';
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: 'legacy' }),
+        RouterModule.forRoot(appRoutes, { useHash: true }),
         AuthModule.forRoot({ useHash: true }),
         FormsModule,
         HttpClientModule,
