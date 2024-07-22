@@ -23,6 +23,7 @@ import { NavbarItemComponent } from './navbar-item.component';
 describe('NavbarItemComponent', () => {
     let component: NavbarItemComponent;
     let fixture: ComponentFixture<NavbarItemComponent>;
+    let button: HTMLElement;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -31,7 +32,11 @@ describe('NavbarItemComponent', () => {
 
         fixture = TestBed.createComponent(NavbarItemComponent);
         component = fixture.componentInstance;
+        component.label = 'Test Label';
+        component.routerLink = '/expected-route';
         fixture.detectChanges();
+
+        button = fixture.nativeElement.querySelector('.adf-navbar-item-btn');
     });
 
     it('should create', () => {
@@ -39,17 +44,12 @@ describe('NavbarItemComponent', () => {
     });
 
     it('should display label', () => {
-        component.label = 'Test Label';
         fixture.detectChanges();
-
-        const button = fixture.nativeElement.querySelector('.adf-navbar-item-btn');
         expect(button.textContent).toContain('Test Label');
     });
 
     it('should bind routerLink', () => {
-        component.routerLink = '/expected-route';
         fixture.detectChanges();
-        const button = fixture.nativeElement.querySelector('.adf-navbar-item-btn');
         expect(button.getAttribute('ng-reflect-router-link')).toEqual('/expected-route');
     });
 });

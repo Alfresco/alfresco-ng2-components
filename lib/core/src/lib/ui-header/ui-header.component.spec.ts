@@ -16,36 +16,26 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { UiHeaderComponent } from './ui-header.component';
-import { ToolbarModule } from '../toolbar';
-import { of } from 'rxjs';
 
 describe('UiHeaderComponent', () => {
     let component: UiHeaderComponent;
     let fixture: ComponentFixture<UiHeaderComponent>;
 
+    const getLogoImgElement = () => fixture.nativeElement.querySelector('.adf-toolbar-logo');
+    const getTitleElement = () => fixture.nativeElement.querySelector('.adf-toolbar-title');
+
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CommonModule, TranslateModule.forRoot(), ToolbarModule, UiHeaderComponent, RouterTestingModule],
-            providers: [
-                {
-                    provide: ActivatedRoute,
-                    useValue: {
-                        params: of({ id: 'test' })
-                    }
-                }
-            ]
+            imports: [CommonModule, TranslateModule.forRoot(), UiHeaderComponent]
         }).compileComponents();
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(UiHeaderComponent);
         component = fixture.componentInstance;
-        component.logoSrc = 'test-src';
         fixture.detectChanges();
     });
 
@@ -67,26 +57,25 @@ describe('UiHeaderComponent', () => {
         const testLogoSrc = 'https://example.com/new-logo.png';
         component.logoSrc = testLogoSrc;
         fixture.detectChanges();
-        const logoImage = fixture.nativeElement.querySelector('.adf-toolbar-logo');
-        expect(logoImage.src).toEqual(testLogoSrc);
+        expect(getLogoImgElement().src).toEqual(testLogoSrc);
     });
 
     it('should set correct logoAlt when provided', () => {
         const testLogoAlt = 'New Logo';
         component.logoAlt = testLogoAlt;
-        component.logoSrc = 'https://example.com/new-logo.png';
+        component.logoSrc = 'test.png';
         fixture.detectChanges();
-        const logoImage = fixture.nativeElement.querySelector('.adf-toolbar-logo');
-        expect(logoImage.getAttribute('alt')).toEqual(testLogoAlt);
+        expect(getLogoImgElement().getAttribute('alt')).toEqual(testLogoAlt);
     });
 
     it('should set correct logo height and width when provided', () => {
         const logoHeight = '50px';
         const logoWidth = '100px';
+        component.logoSrc = 'test.png';
         component.logoHeight = logoHeight;
         component.logoWidth = logoWidth;
         fixture.detectChanges();
-        const style = getComputedStyle(fixture.nativeElement.querySelector('.adf-toolbar-logo'));
+        const style = getComputedStyle(getLogoImgElement());
         expect(style.height).toEqual(logoHeight);
         expect(style.width).toEqual(logoWidth);
     });
@@ -96,8 +85,7 @@ describe('UiHeaderComponent', () => {
         component.variant = 'extended';
         component.title = title;
         fixture.detectChanges();
-        const titleElement = fixture.nativeElement.querySelector('.adf-toolbar-title');
-        expect(titleElement.textContent).toEqual(title);
+        expect(getTitleElement().textContent).toEqual(title);
     });
 
     it('should not display title if variant = minimal', () => {
@@ -105,18 +93,16 @@ describe('UiHeaderComponent', () => {
         component.variant = 'minimal';
         component.title = title;
         fixture.detectChanges();
-        const titleElement = fixture.nativeElement.querySelector('.adf-toolbar-title');
-        expect(titleElement.textContent).toBeFalsy();
+        expect(getTitleElement().textContent).toBeFalsy();
     });
 
     it('should not display logo if src is not provided', () => {
         component.logoSrc = '';
         fixture.detectChanges();
-        const logoImage = fixture.nativeElement.querySelector('.adf-toolbar-logo');
-        expect(logoImage).toBeFalsy();
+        expect(getLogoImgElement()).toBeFalsy();
     });
 
-    it('should set correct header height when provided', () => {
+    it('should set correct header height if provided', () => {
         const headerHeight = '150px';
         component.headerHeight = headerHeight;
         fixture.detectChanges();

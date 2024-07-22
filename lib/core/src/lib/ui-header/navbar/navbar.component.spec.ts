@@ -45,7 +45,8 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
-        expect(component.items.length).toBe(testItems.length);
+        const renderedItems = fixture.nativeElement.querySelectorAll('.adf-navbar-item-btn');
+        expect(renderedItems.length).toBe(testItems.length);
     });
 
     it('should render navbar items with correct label and router-link', () => {
