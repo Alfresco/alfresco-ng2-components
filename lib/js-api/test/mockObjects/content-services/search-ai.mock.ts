@@ -19,7 +19,7 @@ import { BaseMock } from '../base.mock';
 import nock from 'nock';
 
 export class SearchAiMock extends BaseMock {
-    getAsk200Response(): void {
+    mockGetAsk200Response(): void {
         nock(this.host, { encodedQueryParams: true })
             .get('/alfresco/api/-default-/private/hxi/versions/1/questions', [
                 {
@@ -43,5 +43,46 @@ export class SearchAiMock extends BaseMock {
                     restrictionQuery: 'some node id 2,some node id 3'
                 }
             ]);
+    }
+
+    mockGetAnswer200Response(): void {
+        nock(this.host, { encodedQueryParams: true })
+            .get('/alfresco/api/-default-/private/hxi/versions/1/answers?questionId=id1')
+            .reply(200, {
+                list: {
+                    pagination: {
+                        count: 2,
+                        hasMoreItems: false,
+                        skipCount: 0,
+                        maxItems: 100
+                    },
+                    entries: [
+                        {
+                            entry: {
+                                answer: 'Some answer 1',
+                                questionId: 'some id 1',
+                                references: [
+                                    {
+                                        referenceId: 'some reference id 1',
+                                        referenceText: 'some reference text 1'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            entry: {
+                                answer: 'Some answer 2',
+                                questionId: 'some id 2',
+                                references: [
+                                    {
+                                        referenceId: 'some reference id 2',
+                                        referenceText: 'some reference text 2'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            });
     }
 }

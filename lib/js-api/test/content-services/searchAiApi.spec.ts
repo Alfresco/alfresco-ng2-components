@@ -37,7 +37,7 @@ describe('SearchAiApi', () => {
 
     describe('ask', () => {
         it('should load question information', (done) => {
-            searchAiMock.getAsk200Response();
+            searchAiMock.mockGetAsk200Response();
             searchAiApi
                 .ask([
                     {
@@ -50,17 +50,18 @@ describe('SearchAiApi', () => {
                     }
                 ])
                 .then((questions) => {
-                    assert.equal(questions.length, 2);
-                    assert.deepStrictEqual(questions[0], {
-                        questionId: 'some id 1',
-                        question: 'some question 1',
-                        restrictionQuery: 'some node id 1'
-                    });
-                    assert.deepStrictEqual(questions[1], {
-                        questionId: 'some id 2',
-                        question: 'some question 2',
-                        restrictionQuery: 'some node id 2,some node id 3'
-                    });
+                    assert.deepStrictEqual(questions, [
+                        {
+                            questionId: 'some id 1',
+                            question: 'some question 1',
+                            restrictionQuery: 'some node id 1'
+                        },
+                        {
+                            questionId: 'some id 2',
+                            question: 'some question 2',
+                            restrictionQuery: 'some node id 2,some node id 3'
+                        }
+                    ]);
                     done();
                 });
         });
@@ -68,18 +69,43 @@ describe('SearchAiApi', () => {
 
     describe('getAnswer', () => {
         it('should load question answer', (done) => {
-            searchAiMock.getAsk200Response();
-            searchAiApi.getAnswer('some id').then((questions) => {
-                assert.equal(questions.length, 2);
-                assert.deepStrictEqual(questions[0], {
-                    questionId: 'some id 1',
-                    question: 'some question 1',
-                    restrictionQuery: 'some node id 1'
-                });
-                assert.deepStrictEqual(questions[1], {
-                    questionId: 'some id 2',
-                    question: 'some question 2',
-                    restrictionQuery: 'some node id 2,some node id 3'
+            searchAiMock.mockGetAnswer200Response();
+            searchAiApi.getAnswer('id1').then((answer) => {
+                assert.deepStrictEqual(answer, {
+                    list: {
+                        pagination: {
+                            count: 2,
+                            hasMoreItems: false,
+                            skipCount: 0,
+                            maxItems: 100
+                        },
+                        entries: [
+                            {
+                                entry: {
+                                    answer: 'Some answer 1',
+                                    questionId: 'some id 1',
+                                    references: [
+                                        {
+                                            referenceId: 'some reference id 1',
+                                            referenceText: 'some reference text 1'
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                entry: {
+                                    answer: 'Some answer 2',
+                                    questionId: 'some id 2',
+                                    references: [
+                                        {
+                                            referenceId: 'some reference id 2',
+                                            referenceText: 'some reference text 2'
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
                 });
                 done();
             });

@@ -37,16 +37,31 @@ describe('AgentsApi', () => {
 
     describe('getAgents', () => {
         it('should load list of agents', (done) => {
-            agentMock.getAgents200Response();
+            agentMock.mockGetAgents200Response();
             agentsApi.getAgents().then((paging) => {
-                assert.equal(paging.list.pagination.count, 2);
-                assert.deepStrictEqual(paging.list.entries[0].entry, {
-                    id: 'some id 1',
-                    name: 'some name 1'
-                });
-                assert.deepStrictEqual(paging.list.entries[1].entry, {
-                    id: 'some id 2',
-                    name: 'some name 2'
+                assert.deepStrictEqual(paging, {
+                    list: {
+                        pagination: {
+                            count: 2,
+                            hasMoreItems: false,
+                            skipCount: 0,
+                            maxItems: 100
+                        },
+                        entries: [
+                            {
+                                entry: {
+                                    id: 'some id 1',
+                                    name: 'some name 1'
+                                }
+                            },
+                            {
+                                entry: {
+                                    id: 'some id 2',
+                                    name: 'some name 2'
+                                }
+                            }
+                        ]
+                    }
                 });
                 done();
             });
