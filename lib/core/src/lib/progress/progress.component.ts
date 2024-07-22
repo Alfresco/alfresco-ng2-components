@@ -30,7 +30,6 @@ export type ProgressColor = ThemePalette;
     standalone: true,
     imports: [CommonModule, MatProgressBarModule, MatProgressSpinnerModule],
     templateUrl: './progress.component.html',
-    styleUrls: ['progress.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ProgressComponent {
