@@ -1,12 +1,11 @@
 {
   "name": "js-api",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "lib/js-api",
   "projectType": "library",
-  "prefix": "adf",
+  "sourceRoot": "lib/js-api",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/js-api",
@@ -25,7 +24,8 @@
             "lib/js-api/test/mockObjects/assets/**/*"
           ]
         }
-      }
+      },
+      "dependsOn": ["build-all"]
     },
     "build-all": {
       "executor": "nx:run-commands",
@@ -33,26 +33,6 @@
         "commands": [
           "npm run js_api_build"
         ]
-      }
-    },
-    "npm-publish": {
-      "executor": "nx:run-commands",
-      "dependsOn": [ "build-all" ],
-      "options": {
-        "cwd": "dist/libs/js-api",
-        "commands": [
-          {
-            "command": "npm publish --tag {args.tag}",
-            "forwardAllArgs": true
-          }
-        ]
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["lib/js-api/**/*.ts"]
       }
     },
     "bundle": {
@@ -64,9 +44,7 @@
           }
         ]
       },
-      "dependsOn": [
-        "copyToNodeModules"
-      ]
+      "dependsOn": ["copyToNodeModules"]
     },
     "copyToNodeModules": {
       "executor": "nx:run-commands",
@@ -101,7 +79,25 @@
           "codeCoverage": true
         }
       }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["lib/js-api/**/*.ts"]
+      }
+    },
+    "npm-publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/libs/js-api",
+        "commands": [
+          {
+            "command": "npm publish --tag {args.tag}",
+            "forwardAllArgs": true
+          }
+        ]
+      }
     }
-  },
-  "tags": []
+  }
 }

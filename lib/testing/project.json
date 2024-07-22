@@ -6,7 +6,7 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/webpack:webpack",
       "options": {
         "projectRoot": "lib/testing",
         "outputPath": "dist/libs/testing",
@@ -16,8 +16,8 @@
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         },
-        "target": "node",
-        "compiler": "tsc"
+        "compiler": "tsc",
+        "target": "node"
       },
       "configurations": {
         "production": {
@@ -52,7 +52,7 @@
       "options": {
         "commands": [
           {
-            "command": "rm -rf ./node_modules/@alfresco/adf-testing/ && mkdir -p ./node_modules/@alfresco/adf-testing/ &&  cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
+            "command": "rm -rf ./node_modules/@alfresco/adf-testing/ && mkdir -p ./node_modules/@alfresco/adf-testing/ && cp -R ./dist/libs/testing/* ./node_modules/@alfresco/adf-testing/"
           }
         ]
       },
