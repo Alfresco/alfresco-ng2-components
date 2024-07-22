@@ -178,10 +178,10 @@ describe('DropdownCloudWidgetComponent', () => {
             expect(await (await dropdown.getOptions())[0].getText()).toEqual('default1_value');
         });
 
-        it('should preselect dropdown widget value when String (defined value) passed ', async () => {
+        it('should preselect dropdown widget value when value matches one of the fetched options', async () => {
             widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
-            widget.field.value = 'opt1';
+            widget.field.value = { id: 'opt1', name: 'default1_value' };
 
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
                 of([
@@ -244,7 +244,7 @@ describe('DropdownCloudWidgetComponent', () => {
             await dropdown.clickOptions({ selector: '[id="opt_1"]' });
 
             expect(await dropdown.getValueText()).toEqual('option_1');
-            expect(widget.fieldValue).toEqual('opt_1');
+            expect(widget.fieldValue).toEqual({ id: 'opt_1', name: 'option_1' });
 
             await dropdown.open();
             await dropdown.clickOptions({ selector: '[id="empty"]' });
@@ -253,8 +253,8 @@ describe('DropdownCloudWidgetComponent', () => {
             const dropdownLabel = await formField.getLabel();
 
             expect(dropdownLabel).toEqual('This is a mock none option');
-            expect(widget.fieldValue).toEqual(undefined);
-            expect(await dropdown.getValueText()).toEqual('');
+            expect(widget.fieldValue).toEqual({ id: 'empty', name: 'This is a mock none option' });
+            expect(await dropdown.getValueText()).toEqual('This is a mock none option');
         });
     });
 
@@ -309,6 +309,22 @@ describe('DropdownCloudWidgetComponent', () => {
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
         });
+    });
+
+    it('should NOT display a required error when dropdown is readonly', async () => {
+        widget.field.readOnly = true;
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('.adf-invalid')).toBeFalsy();
+
+        const dropdownSelect = element.querySelector('.adf-select');
+        dropdownSelect.dispatchEvent(new Event('blur'));
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(element.querySelector('.adf-invalid')).toBeFalsy();
     });
 
     describe('filter', () => {
@@ -399,7 +415,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should show preselected option for rest options', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
@@ -438,7 +454,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should support multiple options for rest options', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
                 id: 'dropdown-id',
                 name: 'date-name',
                 type: 'dropdown',
