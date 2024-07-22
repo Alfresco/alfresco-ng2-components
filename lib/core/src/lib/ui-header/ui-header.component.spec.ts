@@ -22,8 +22,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { UiHeaderComponent } from './ui-header.component';
 import { ToolbarModule } from '../toolbar';
-import { NavbarComponent, NavbarItemComponent } from './index';
-
 import { of } from 'rxjs';
 
 describe('UiHeaderComponent', () => {
@@ -32,15 +30,7 @@ describe('UiHeaderComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [
-                CommonModule,
-                TranslateModule.forRoot(),
-                ToolbarModule,
-                NavbarComponent,
-                NavbarItemComponent,
-                UiHeaderComponent,
-                RouterTestingModule
-            ],
+            imports: [CommonModule, TranslateModule.forRoot(), ToolbarModule, UiHeaderComponent, RouterTestingModule],
             providers: [
                 {
                     provide: ActivatedRoute,

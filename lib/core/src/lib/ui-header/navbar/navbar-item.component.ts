@@ -16,7 +16,6 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -33,7 +32,7 @@ export interface NavbarItem {
     templateUrl: 'navbar-item.component.html',
     styleUrls: ['./navbar-item.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [MatToolbarModule, TranslateModule, MatToolbarModule, MatButtonModule, CommonModule, RouterModule],
+    imports: [TranslateModule, MatButtonModule, CommonModule, RouterModule],
     host: { class: 'adf-navbar-item' }
 })
 export class NavbarItemComponent {

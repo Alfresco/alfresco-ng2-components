@@ -16,13 +16,11 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NavbarComponent } from './navbar.component';
-import { NavbarItemComponent } from './navbar-item.component';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NavbarComponent } from './navbar.component';
 
 describe('NavbarComponent', () => {
     let component: NavbarComponent;
@@ -30,15 +28,7 @@ describe('NavbarComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [
-                CommonModule,
-                TranslateModule.forRoot(),
-                RouterModule.forRoot([]),
-                MatToolbarModule,
-                MatButtonModule,
-                NavbarComponent,
-                NavbarItemComponent
-            ]
+            imports: [CommonModule, TranslateModule.forRoot(), RouterModule.forRoot([]), MatButtonModule, NavbarComponent]
         }).compileComponents();
     });
 

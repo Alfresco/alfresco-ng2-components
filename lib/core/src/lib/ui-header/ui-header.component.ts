@@ -16,11 +16,11 @@
  */
 
 import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
 import { ToolbarModule } from '../toolbar';
 import { TranslateModule } from '@ngx-translate/core';
-import { NavbarItem, NavbarItemComponent } from './navbar/navbar-item.component';
+import { NavbarItem } from './navbar/navbar-item.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
 export type HeaderVariant = 'minimal' | 'extended';
@@ -28,7 +28,7 @@ export type HeaderVariant = 'minimal' | 'extended';
 @Component({
     selector: 'adf-ui-header',
     standalone: true,
-    imports: [CommonModule, TranslateModule, ToolbarModule, NavbarComponent, NavbarItemComponent, NgIf],
+    imports: [CommonModule, TranslateModule, ToolbarModule, NavbarComponent],
     templateUrl: './ui-header.component.html',
     styleUrls: ['./ui-header.component.scss'],
     host: { class: 'adf-ui-header' },

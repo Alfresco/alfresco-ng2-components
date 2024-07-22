@@ -17,9 +17,7 @@
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { NavbarItem, NavbarItemComponent } from './navbar-item.component';
 
 @Component({
@@ -28,7 +26,7 @@ import { NavbarItem, NavbarItemComponent } from './navbar-item.component';
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [MatToolbarModule, MatToolbarModule, MatButtonModule, CommonModule, RouterModule, NavbarItemComponent],
+    imports: [MatToolbarModule, CommonModule, NavbarItemComponent],
     host: { class: 'adf-navbar' }
 })
 export class NavbarComponent {

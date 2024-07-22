@@ -16,9 +16,9 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NavbarItemComponent } from './navbar-item.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { NavbarItemComponent } from './navbar-item.component';
 
 describe('NavbarItemComponent', () => {
     let component: NavbarItemComponent;
