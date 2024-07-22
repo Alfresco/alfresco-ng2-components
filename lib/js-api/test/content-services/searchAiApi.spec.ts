@@ -38,6 +38,7 @@ describe('SearchAiApi', () => {
     describe('ask', () => {
         it('should load question information', (done) => {
             searchAiMock.mockGetAsk200Response();
+
             searchAiApi
                 .ask([
                     {
@@ -70,6 +71,7 @@ describe('SearchAiApi', () => {
     describe('getAnswer', () => {
         it('should load question answer', (done) => {
             searchAiMock.mockGetAnswer200Response();
+
             searchAiApi.getAnswer('id1').then((answer) => {
                 assert.deepStrictEqual(answer, {
                     list: {

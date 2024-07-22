@@ -38,6 +38,7 @@ describe('AgentsApi', () => {
     describe('getAgents', () => {
         it('should load list of agents', (done) => {
             agentMock.mockGetAgents200Response();
+
             agentsApi.getAgents().then((paging) => {
                 assert.deepStrictEqual(paging, {
                     list: {
