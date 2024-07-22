@@ -18,9 +18,9 @@ updates:
       ngrx:
         patterns:
           - "@ngrx/*"
-      nrwl:
+      nx:
         patterns:
-          - "@nrwl/*"
+          - "@nx/*"
     ignore:
       - dependency-name: "pdfjs-dist"
       - dependency-name: "@types/*"

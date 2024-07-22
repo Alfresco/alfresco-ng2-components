@@ -135,7 +135,7 @@
     "@types/jsdom": "^21.1.5",
     "@types/minimatch": "^3.0.3",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.10.0",
+    "@types/node": "20.14.10",
     "@types/pdfjs-dist": "^2.10.378",
     "@types/selenium-webdriver": "^4.1.17",
     "@types/shelljs": "^0.8.15",
