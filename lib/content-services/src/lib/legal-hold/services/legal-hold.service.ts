@@ -110,9 +110,9 @@ export class LegalHoldService {
      * Start the asynchronous bulk process for a hold with id holdId based on search query results.
      *
      * @param holdId The identifier of a hold
-     * @param query search query
-     * @param language language
-     * @returns Promise<BulkHoldAddResponse>
+     * @param query Search query
+     * @param language Language Code
+     * @returns Observable<BulkHoldAddResponse>
      */
     bulkHold(holdId: string, query: string, language: string): Observable<BulkHoldAddResponse> {
         return from(this.legalHoldApi.bulkHold(holdId, query, language));

@@ -10,6 +10,7 @@ All URIs are relative to _https://localhost/alfresco/api/-default-/public/gs/ver
 | [**unassignHold**](LegalHoldApi.md#unassignHold) | **DELETE** /holds/{holdId}/children/{nodeId} | Unassign node from legal hold |
 | [**createHold**](LegalHoldApi.md#createHold)     | **POST** /file-plans/{filePlanId}/holds      | Create one hold               |
 | [**createHolds**](LegalHoldApi.md#createHolds)   | **POST** /file-plans/{filePlanId}/holds      | Create list of holds          |
+| [**bulkHold**](LegalHoldApi.md#bulkHold)         | **POST** /holds/{holdId}/bulk                | Bulk add of nodes to the hold |
 
 <a name="getHolds"></a>
 
@@ -290,7 +291,7 @@ legalHoldApi.createHolds('-filePlan-', holds).then(
 
 > BulkHoldAddResponse bulkHold(holdId, query, language)
 
-Start the asynchronous bulk process for a hold with id holdId based on search query results.
+Start the asynchronous bulk process for a hold with id `holdId` based on search query results.
 
 ### Example
 

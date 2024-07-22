@@ -159,8 +159,8 @@ export class LegalHoldApi extends BaseApi {
      * Start the asynchronous bulk process for a hold with id holdId based on search query results.
      *
      * @param holdId The identifier of a hold
-     * @param query search query
-     * @param language language
+     * @param query Search query
+     * @param language Language code
      * @returns Promise<BulkHoldAddResponse>
      */
     bulkHold(holdId: string, query: string, language: string): Promise<BulkHoldAddResponse> {
