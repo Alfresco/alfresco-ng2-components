@@ -1,16 +1,17 @@
 .adf-navbar-item {
-    &__btn {
+    .adf-navbar-item-btn {
         height: var(--adf-navbar-btn-height, 100%);
         background-color: var(--adf-navbar-btn-background-color, inherit);
         font-size: var(--adf-navbar-btn-font-size, 16px);
         font-weight: var(--adf-navbar-btn-font-weight, 500);
+        color: var(--adf-navbar-btn-color, #000);
         opacity: var(--adf-navbar-btn-opacity, 0.48);
         box-sizing: border-box;
         border-bottom: 3px solid transparent;
         border-top: 3px solid transparent;
     }
 
-    .adf-navbar-item-selected {
+    .adf-navbar-item-active {
         border-radius: var(--adf-navbar-selected-btn-border-radius, 0);
         opacity: var(--adf-navbar-selected-btn-opacity, 1);
         border-bottom: var(--adf-navbar-selected-btn-border-bottom, 3px solid black);

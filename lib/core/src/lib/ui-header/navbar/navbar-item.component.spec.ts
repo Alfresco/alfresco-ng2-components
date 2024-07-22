@@ -42,14 +42,14 @@ describe('NavbarItemComponent', () => {
         component.label = 'Test Label';
         fixture.detectChanges();
 
-        const button = fixture.nativeElement.querySelector('.adf-navbar-item__btn');
+        const button = fixture.nativeElement.querySelector('.adf-navbar-item-btn');
         expect(button.textContent).toContain('Test Label');
     });
 
     it('should bind routerLink', () => {
         component.routerLink = '/expected-route';
         fixture.detectChanges();
-        const button = fixture.nativeElement.querySelector('.adf-navbar-item__btn');
+        const button = fixture.nativeElement.querySelector('.adf-navbar-item-btn');
         expect(button.getAttribute('ng-reflect-router-link')).toEqual('/expected-route');
     });
 });

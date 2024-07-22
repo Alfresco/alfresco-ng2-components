@@ -39,11 +39,11 @@ The following CSS classes are available for theming:
 
 ### CSS Classes
 
-| Name                       | Description                                |
-|----------------------------|--------------------------------------------|
-| `adf-navbar-item`          | The host element for the navbar item.      |
-| `adf-navbar-item__btn`     | The button element within the navbar item. |
-| `adf-navbar-item-selected` | The class applied to a selected item.      |
+| Name                     | Description                                |
+|--------------------------|--------------------------------------------|
+| `adf-navbar-item`        | The host element for the navbar item.      |
+| `adf-navbar-item-btn`    | The button element within the navbar item. |
+| `adf-navbar-item-active` | The class applied to a selected item.      |
 
 ### CSS Variables
 
@@ -53,6 +53,7 @@ The following CSS classes are available for theming:
 | `--adf-navbar-btn-background-color`       | The background color of the navbar button.           |
 | `--adf-navbar-btn-font-size`              | The font size of the navbar button.                  |
 | `--adf-navbar-btn-font-weight`            | The font weight of the navbar button.                |
+| `--adf-navbar-btn-color`                  | The font color of the navbar button.                 |
 | `--adf-navbar-btn-opacity`                | The opacity of the navbar button.                    |
 | `--adf-navbar-selected-btn-border-radius` | The border radius of a selected navbar button.       |
 | `--adf-navbar-selected-btn-opacity`       | The opacity of a selected navbar button.             |
@@ -75,7 +76,6 @@ export interface NavbarItem {
 |------------|----------|-----------------------------------------------|
 | label      | `string` | The text label of the navbar item.            |
 | routerLink | `string` | The router link the navbar item navigates to. |
-
 
 ## See Also
 

@@ -65,7 +65,7 @@ describe('NavbarComponent', () => {
         ];
         component.items = testItems;
         fixture.detectChanges();
-        const renderedItems = fixture.nativeElement.querySelectorAll('.adf-navbar-item__btn');
+        const renderedItems = fixture.nativeElement.querySelectorAll('.adf-navbar-item-btn');
         testItems.forEach((item, index) => {
             expect(renderedItems[index].textContent).toContain(item.label);
             expect(renderedItems[index].getAttribute('ng-reflect-router-link')).toContain(item.routerLink);
