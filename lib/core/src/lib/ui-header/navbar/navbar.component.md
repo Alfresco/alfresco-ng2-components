@@ -9,17 +9,7 @@ The Navbar component is designed to provide a navigational tool for your applica
 Creating a simple navbar with navigation items:
 
 ```html
-<adf-navbar>
-    <adf-navbar-item routerLink="/home" label="Home"></adf-navbar-item>
-    <adf-navbar-item routerLink="/about" label="About"></adf-navbar-item>
-    <adf-navbar-item routerLink="/contact" label="Contact"></adf-navbar-item>
-</adf-navbar>
-```
-
-Integrating with a dropdown menu:
-
-```html
-<adf-navbar [items]="navbarItems"></adf-navbar>
+<adf-navbar [items]="navItems"></adf-navbar>
 ```
 
 ## API

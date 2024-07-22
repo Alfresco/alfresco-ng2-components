@@ -58,6 +58,25 @@ The following CSS classes are available for theming:
 | `--adf-navbar-selected-btn-opacity`       | The opacity of a selected navbar button.             |
 | `--adf-navbar-selected-btn-border-bottom` | The border bottom style of a selected navbar button. |
 
+# NavbarItem Interface
+
+The `NavbarItem` interface defines the structure for items used within the Navbar component.
+
+```typescript
+export interface NavbarItem {
+    label: string;
+    routerLink?: string;
+}
+```
+
+## Properties
+
+| Name       | Type     | Description                                   |
+|------------|----------|-----------------------------------------------|
+| label      | `string` | The text label of the navbar item.            |
+| routerLink | `string` | The router link the navbar item navigates to. |
+
+
 ## See Also
 
 -   [Navbar component](./navbar.component.md)
