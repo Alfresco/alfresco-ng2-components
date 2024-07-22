@@ -33,9 +33,9 @@ export class SearchAiApi extends BaseApi {
     ask(questions: QuestionRequest[]): Promise<QuestionModel[]> {
         return this.get({
             path: 'questions',
-            bodyParam: questions.map((question) => ({
-                ...question,
-                restrictionQuery: question.nodeIds.join(',')
+            bodyParam: questions.map((questionRequest) => ({
+                question: questionRequest.question,
+                restrictionQuery: questionRequest.nodeIds.join(',')
             }))
         });
     }
