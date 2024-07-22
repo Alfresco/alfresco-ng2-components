@@ -59,7 +59,7 @@ For a complete list of changes, supported browsers and new feature please refer 
 - [93fd0bec6](https://github.com/Alfresco/alfresco-ng2-components/commit/93fd0bec6) [ACS-6140] reduce access to internal material classes (#9053)
 - [9278d9296](https://github.com/Alfresco/alfresco-ng2-components/commit/9278d9296) [AAE-16965] Improve data table date column (#9038)
 - [85ddcdf22](https://github.com/Alfresco/alfresco-ng2-components/commit/85ddcdf22) Fix missing primary scss variable (#9056)
-- [0b56a4858](https://github.com/Alfresco/alfresco-ng2-components/commit/0b56a4858) [AAE-16579] upgrade nx dep solve critical  webpack loader-utils issue in develop (#9030)
+- [0b56a4858](https://github.com/Alfresco/alfresco-ng2-components/commit/0b56a4858) [AAE-16579] upgrade nrwl dep solve critical  webpack loader-utils issue in develop (#9030)
 - [15f82c812](https://github.com/Alfresco/alfresco-ng2-components/commit/15f82c812) [AAE-15296] added design tokens to InfoDrawerComponent (#9051)
 - [54e95bc5f](https://github.com/Alfresco/alfresco-ng2-components/commit/54e95bc5f) [AAE-16970] Custom colors are not calculating correctly in default UI (#9054)
 - [81f0df3da](https://github.com/Alfresco/alfresco-ng2-components/commit/81f0df3da) [AAE-16995] Code refactor of LocationCellComponent (#9033)
