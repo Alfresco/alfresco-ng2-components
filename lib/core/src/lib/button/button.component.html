@@ -2,8 +2,9 @@
     <ng-container *ngSwitchDefault>
         <button
             mat-button
-            [id]="uid"
-            [title]="tooltip"
+            class="adf-button__content"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -18,8 +19,9 @@
     <ng-container *ngSwitchCase="'raised'">
         <button
             mat-raised-button
-            [id]="uid"
-            [title]="tooltip"
+            class="adf-button__content"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -34,8 +36,9 @@
     <ng-container *ngSwitchCase="'stroked'">
         <button
             mat-stroked-button
-            [id]="uid"
-            [title]="tooltip"
+            class="adf-button__content"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -50,8 +53,9 @@
     <ng-container *ngSwitchCase="'flat'">
         <button
             mat-flat-button
-            [id]="uid"
-            [title]="tooltip"
+            class="adf-button__content"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -66,8 +70,9 @@
     <ng-container *ngSwitchCase="'icon'">
         <button
             mat-icon-button
-            [id]="uid"
-            [title]="tooltip"
+            class="adf-button__content"
+            [attr.id]="uid"
+            [attr.title]="tooltip"
             [color]="color"
             [disabled]="disabled"
             [disableRipple]="disableRipple"
@@ -75,14 +80,15 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
-            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
+            <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
+            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
 
     <ng-container *ngSwitchCase="'fab'">
         <button
             mat-fab
+            class="adf-button__content"
             [id]="uid"
             [title]="tooltip"
             [color]="color"
@@ -92,7 +98,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+            <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
             <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
@@ -100,6 +106,7 @@
     <ng-container *ngSwitchCase="'mini-fab'">
         <button
             mat-mini-fab
+            class="adf-button__content"
             [id]="uid"
             [title]="tooltip"
             [color]="color"
@@ -109,7 +116,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+            <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
             <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
         </button>
     </ng-container>
