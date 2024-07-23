@@ -49,6 +49,7 @@ export interface Descriptor {
 }
 
 export enum DescriptorCustomUIAuthFlowType {
+    CODE = 'CODE',
     IMPLICIT = 'IMPLICIT'
 }
 
