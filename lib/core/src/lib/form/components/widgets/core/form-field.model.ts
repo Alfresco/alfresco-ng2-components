@@ -426,10 +426,9 @@ export class FormFieldModel extends FormWidgetModel {
                         break;
                     }
 
-                    const entry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
-                    if (entry.length > 0) {
-                        this.form.values[this.id] = entry[0];
-                    }
+                    const matchingOption: FormFieldOption = this.options.find((opt) => opt.id === this.value);
+
+                    this.form.values[this.id] = matchingOption || null;
                 }
                 break;
             }

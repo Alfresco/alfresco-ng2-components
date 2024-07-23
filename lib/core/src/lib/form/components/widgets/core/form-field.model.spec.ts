@@ -931,7 +931,7 @@ describe('FormFieldModel', () => {
             field.updateForm();
 
             expect(field.value).toEqual('delayed-rest-option-id');
-            expect(form.values['dropdown_field']).toEqual(undefined);
+            expect(form.values['dropdown_field']).toEqual(null);
             expect(field.options).toEqual([]);
         });
     });
