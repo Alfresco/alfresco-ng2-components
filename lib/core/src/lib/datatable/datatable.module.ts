@@ -72,7 +72,8 @@ export const DATATABLE_DIRECTIVES = [
     DateColumnHeaderComponent,
     LocalizedDatePipe,
     ResizableDirective,
-    ResizeHandleDirective
+    ResizeHandleDirective,
+    DropZoneDirective
 ] as const;
 
 @NgModule({
@@ -108,8 +109,7 @@ export const DATATABLE_DIRECTIVES = [
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
-        MainMenuDataTableTemplateDirective,
-        DropZoneDirective
+        MainMenuDataTableTemplateDirective
     ],
     exports: [
         ...DATATABLE_DIRECTIVES,
@@ -130,8 +130,7 @@ export const DATATABLE_DIRECTIVES = [
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
-        MainMenuDataTableTemplateDirective,
-        DropZoneDirective
+        MainMenuDataTableTemplateDirective
     ]
 })
 export class DataTableModule {}
