@@ -532,7 +532,7 @@ describe('FormFieldModel', () => {
         expect(field.value).toBeFalsy();
     });
 
-    it('should return the label of selected dropdown value ', () => {
+    it('should return the label of selected dropdown value', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
             options: [
@@ -882,96 +882,112 @@ describe('FormFieldModel', () => {
         expect(form.values['dropdown_field'].name).toEqual('Option 1');
     });
 
-    it('dropdown field type should be formatted on rest properties', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            fieldType: 'HeaderFieldtype',
-            id: 'dropdown_field',
-            name: 'header',
-            type: FormFieldTypes.DROPDOWN,
-            value: 'opt1',
-            required: false,
-            readOnly: true,
-            restUrl: 'fake-url-just-to-show',
-            optionType: 'rest',
-            restIdProperty: 'fake-id-property',
-            restLabelProperty: 'fake-label-property',
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ]
+    describe('dropdown field of rest type', () => {
+        it('should assign rest properties properly', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                fieldType: 'HeaderFieldtype',
+                id: 'dropdown_field',
+                name: 'header',
+                type: FormFieldTypes.DROPDOWN,
+                value: '',
+                required: false,
+                readOnly: true,
+                optionType: 'rest',
+                restUrl: 'fake-url',
+                restIdProperty: 'fake-id-property',
+                restLabelProperty: 'fake-label-property',
+                restResponsePath: 'fake-response-path',
+                options: []
+            });
+            field.updateForm();
+
+            expect(field.value).toEqual('');
+            expect(form.values['dropdown_field']).toEqual(null);
+            expect(field.options).toEqual([]);
+            expect(field.restUrl).toEqual('fake-url');
+            expect(field.restIdProperty).toEqual('fake-id-property');
+            expect(field.restLabelProperty).toEqual('fake-label-property');
+            expect(field.restResponsePath).toEqual('fake-response-path');
         });
-        field.updateForm();
-        expect(form.values['dropdown_field'].id).toEqual('opt1');
-        expect(form.values['dropdown_field'].name).toEqual('Option 1');
+
+        it('should skip list of static options and assign empty array instead', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                fieldType: 'HeaderFieldtype',
+                id: 'dropdown_field',
+                name: 'header',
+                type: FormFieldTypes.DROPDOWN,
+                value: 'delayed-rest-option-id',
+                required: false,
+                readOnly: true,
+                optionType: 'rest',
+                restUrl: 'fake-url',
+                options: [
+                    { id: 'opt1', name: 'Option 1' },
+                    { id: 'opt2', name: 'Option 2' }
+                ]
+            });
+            field.updateForm();
+
+            expect(field.value).toEqual('delayed-rest-option-id');
+            expect(form.values['dropdown_field']).toEqual(undefined);
+            expect(field.options).toEqual([]);
+        });
     });
 
-    it('dropdown field type should be formatted on id and name properties if rest properties are not set', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            fieldType: 'HeaderFieldtype',
-            id: 'dropdown_field',
-            name: 'header',
-            type: FormFieldTypes.DROPDOWN,
-            value: 'opt1',
-            required: false,
-            readOnly: true,
-            restUrl: 'fake-url-just-to-show',
-            optionType: 'rest',
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ]
-        });
-        field.updateForm();
-        expect(form.values['dropdown_field']['id']).toEqual('opt1');
-        expect(form.values['dropdown_field']['name']).toEqual('Option 1');
-    });
+    describe('radio buttons field of rest type', () => {
+        it('should assign rest properties properly', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                fieldType: 'HeaderFieldtype',
+                id: 'radio_bananan_field',
+                name: 'banana',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                value: '',
+                required: false,
+                readOnly: true,
+                optionType: 'rest',
+                restUrl: 'fake-url',
+                restIdProperty: 'fake-id-property',
+                restLabelProperty: 'fake-label-property',
+                restResponsePath: 'fake-response-path',
+                options: []
+            });
+            field.updateForm();
 
-    it('radio button field rest type should appear with its configured label and id into the rest values', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            fieldType: 'HeaderFieldtype',
-            id: 'radio_bananan_field',
-            name: 'banana',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            value: 'opt1',
-            required: false,
-            readOnly: true,
-            restUrl: '<whatever-url-you-like-we-do-not-mind>',
-            restIdProperty: 'banana',
-            restLabelProperty: 'banLabel',
-            optionType: 'rest',
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ]
+            expect(field.value).toEqual('');
+            expect(form.values['radio_bananan_field']).toEqual(null);
+            expect(field.options).toEqual([]);
+            expect(field.restUrl).toEqual('fake-url');
+            expect(field.restIdProperty).toEqual('fake-id-property');
+            expect(field.restLabelProperty).toEqual('fake-label-property');
+            expect(field.restResponsePath).toEqual('fake-response-path');
         });
-        field.updateForm();
-        expect(form.values['radio_bananan_field'].id).toEqual('opt1');
-        expect(form.values['radio_bananan_field'].name).toEqual('Option 1');
-    });
 
-    it('radio button field rest type should appear with id / name properties when rest properties are not configured', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            fieldType: 'HeaderFieldtype',
-            id: 'radio_bananan_field',
-            name: 'banana',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            value: 'opt1',
-            required: false,
-            readOnly: true,
-            restUrl: '<whatever-url-you-like-we-do-not-mind>',
-            optionType: 'rest',
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ]
+        it('should skip list of static options and assign empty array instead', () => {
+            const form = new FormModel();
+            const field = new FormFieldModel(form, {
+                fieldType: 'HeaderFieldtype',
+                id: 'radio_bananan_field',
+                name: 'banana',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                value: 'delayed-rest-option-id',
+                required: false,
+                readOnly: true,
+                restUrl: 'fake-url',
+                optionType: 'rest',
+                options: [
+                    { id: 'opt1', name: 'Option 1' },
+                    { id: 'opt2', name: 'Option 2' }
+                ]
+            });
+            field.updateForm();
+
+            expect(field.value).toEqual('delayed-rest-option-id');
+            expect(form.values['radio_bananan_field']).toEqual(null);
+            expect(field.options).toEqual([]);
         });
-        field.updateForm();
-        expect(form.values['radio_bananan_field']['id']).toEqual('opt1');
-        expect(form.values['radio_bananan_field']['name']).toEqual('Option 1');
     });
 
     it('should parse and resolve people null value as null', () => {
