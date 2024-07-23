@@ -87,7 +87,9 @@ export const DATATABLE_DIRECTIVES = [
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
     CustomNoPermissionTemplateDirective,
-    MainMenuDataTableTemplateDirective
+    MainMenuDataTableTemplateDirective,
+    DataTableRowComponent,
+    DataTableCellComponent
 ] as const;
 
 @NgModule({
@@ -106,7 +108,7 @@ export const DATATABLE_DIRECTIVES = [
         ReactiveFormsModule,
         ...DATATABLE_DIRECTIVES
     ],
-    declarations: [DataTableComponent, DataTableCellComponent, DataTableRowComponent],
-    exports: [...DATATABLE_DIRECTIVES, DataTableComponent, DataTableCellComponent, DataTableRowComponent, ColumnsSelectorComponent]
+    declarations: [DataTableComponent],
+    exports: [...DATATABLE_DIRECTIVES, DataTableComponent]
 })
 export class DataTableModule {}
