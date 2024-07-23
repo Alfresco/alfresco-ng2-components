@@ -1,10 +1,9 @@
 <mat-card
-    *ngIf="(loading$ | async) === false; else spinner"
+    *ngIf="processDefinitionLoaded && !isFormCloudLoading; else spinner"
     class="adf-start-process"
 >
 
     <mat-card-content>
-
         <mat-card-title
             *ngIf="showTitle"
             class="adf-title">
@@ -15,7 +14,7 @@
             {{ errorMessageId | translate }}
         </mat-card-subtitle>
 
-        <div *ngIf="!isProcessDefinitionsEmpty(); else emptyProcessDefinitionsList">
+        <div *ngIf="!isProcessDefinitionsEmpty; else emptyProcessDefinitionsList">
             <form [formGroup]="processForm" class="adf-select-process-form">
                 <mat-form-field
                     class="adf-process-input-container"
@@ -75,7 +74,7 @@
                 </adf-inplace-form-input>
             </form>
 
-            <ng-container *ngIf="hasForm() else taskFormCloudButtons">
+            <ng-container *ngIf="hasForm else taskFormCloudButtons">
                 <adf-cloud-form
                     [appName]="appName"
                     [appVersion]="processDefinitionCurrent.appVersion"
@@ -114,7 +113,7 @@
         <button
             color="primary"
             mat-raised-button
-            [disabled]="disableStartButton() || !isProcessFormValid()"
+            [disabled]="disableStartButton || !isProcessFormValid"
             (click)="startProcess()"
             data-automation-id="btn-start"
             id="button-start"

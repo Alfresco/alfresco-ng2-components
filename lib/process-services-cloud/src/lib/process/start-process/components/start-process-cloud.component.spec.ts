@@ -140,7 +140,7 @@ describe('StartProcessCloudComponent', () => {
 
             fixture.detectChanges();
             const startBtn = fixture.nativeElement.querySelector('#button-start');
-            expect(component.isProcessFormValid()).toBe(true);
+            expect(component.isProcessFormValid).toBe(true);
             expect(startBtn.disabled).toBe(false);
         }));
 
@@ -154,7 +154,7 @@ describe('StartProcessCloudComponent', () => {
 
             expect(component.processDefinitionCurrent.name).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[1])).name);
             const startBtn = fixture.nativeElement.querySelector('#button-start');
-            expect(component.isProcessFormValid()).toBe(true);
+            expect(component.isProcessFormValid).toBe(true);
             expect(startBtn.disabled).toBe(false);
         });
 
@@ -167,7 +167,7 @@ describe('StartProcessCloudComponent', () => {
 
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(startBtn.disabled).toBe(true);
-            expect(component.isProcessFormValid()).toBe(false);
+            expect(component.isProcessFormValid).toBe(false);
         });
 
         it('should have start button disabled when name not filled out', async () => {
@@ -179,7 +179,7 @@ describe('StartProcessCloudComponent', () => {
 
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(startBtn.disabled).toBe(true);
-            expect(component.isProcessFormValid()).toBe(false);
+            expect(component.isProcessFormValid).toBe(false);
         });
 
         it('should include the static input mappings in the resolved values', fakeAsync(() => {
@@ -334,7 +334,7 @@ describe('StartProcessCloudComponent', () => {
 
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(startBtn.disabled).toBe(false);
-            expect(component.isProcessFormValid()).toBe(true);
+            expect(component.isProcessFormValid).toBe(true);
         });
 
         it('should have start button enabled when default values are set', async () => {
@@ -444,7 +444,7 @@ describe('StartProcessCloudComponent', () => {
             await fixture.whenStable();
 
             const processForm = fixture.nativeElement.querySelector('adf-cloud-form');
-            expect(component.hasForm()).toBeTruthy();
+            expect(component.hasForm).toBeTruthy();
             expect(processForm).not.toBeNull();
         });
 
@@ -713,7 +713,7 @@ describe('StartProcessCloudComponent', () => {
             await fixture.whenStable();
 
             const processForm = fixture.nativeElement.querySelector('adf-cloud-form');
-            expect(component.hasForm()).toBeTruthy();
+            expect(component.hasForm).toBeTruthy();
             expect(processForm).not.toBeNull();
 
             const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
@@ -896,7 +896,6 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should hide title', () => {
-            component.loading$.next(false);
             component.showTitle = false;
             fixture.detectChanges();
 
@@ -906,7 +905,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should show title', () => {
-            component.loading$.next(false);
+            component.processDefinitionLoaded = true;
             fixture.detectChanges();
 
             const title = fixture.debugElement.query(By.css('.adf-title'));
@@ -915,7 +914,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should show process definition dropdown', () => {
-            component.loading$.next(false);
+            component.processDefinitionLoaded = true;
             component.processDefinitionList = fakeProcessDefinitions;
             fixture.detectChanges();
 
@@ -925,7 +924,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should hide process definition dropdown', () => {
-            component.loading$.next(false);
+            component.processDefinitionLoaded = true;
             component.processDefinitionList = fakeProcessDefinitions;
             component.showSelectProcessDropdown = false;
             fixture.detectChanges();
@@ -936,7 +935,17 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should show the loading spinner before process definitions loaded', () => {
-            component.loading$.next(true);
+            component.processDefinitionLoaded = false;
+            fixture.detectChanges();
+
+            const spinner = fixture.debugElement.query(By.css('.adf-loading'));
+
+            expect(spinner).toBeTruthy();
+        });
+
+        it('should show the loading spinner when cloud form is loading', () => {
+            component.processDefinitionLoaded = true;
+            component.isFormCloudLoading = true;
             fixture.detectChanges();
 
             const spinner = fixture.debugElement.query(By.css('.adf-loading'));
@@ -945,7 +954,7 @@ describe('StartProcessCloudComponent', () => {
         });
 
         it('should show the process card after process definitions loaded', () => {
-            component.loading$.next(false);
+            component.processDefinitionLoaded = true;
             fixture.detectChanges();
 
             const card = fixture.debugElement.query(By.css('.adf-start-process'));
@@ -968,13 +977,13 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
             component.appName = 'test app name';
-            component.isLoading = false;
+            component.isProcessStarting = false;
             fixture.detectChanges();
             await fixture.whenStable();
 
             const startButton = fixture.debugElement.query(By.css('#button-start'));
             expect(startButton).not.toBeNull();
-            expect(component.disableStartButton()).toBeFalse();
+            expect(component.disableStartButton).toBeFalse();
             expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeFalse();
         });
 
@@ -982,13 +991,13 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
             component.appName = 'test app name';
-            component.isLoading = true;
+            component.isProcessStarting = true;
             fixture.detectChanges();
             await fixture.whenStable();
 
             const startButton = fixture.debugElement.query(By.css('#button-start'));
             expect(startButton).not.toBeNull();
-            expect(component.disableStartButton()).toBeTrue();
+            expect(component.disableStartButton).toBeTrue();
             expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeTrue();
         });
     });
