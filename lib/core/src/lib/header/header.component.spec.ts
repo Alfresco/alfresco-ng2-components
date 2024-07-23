@@ -18,23 +18,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { UiHeaderComponent } from './ui-header.component';
+import { HeaderComponent } from './header.component';
 
-describe('UiHeaderComponent', () => {
-    let component: UiHeaderComponent;
-    let fixture: ComponentFixture<UiHeaderComponent>;
+describe('HeaderComponent', () => {
+    let component: HeaderComponent;
+    let fixture: ComponentFixture<HeaderComponent>;
 
     const getLogoImgElement = () => fixture.nativeElement.querySelector('.adf-toolbar-logo');
     const getTitleElement = () => fixture.nativeElement.querySelector('.adf-toolbar-title');
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CommonModule, TranslateModule.forRoot(), UiHeaderComponent]
+            imports: [CommonModule, TranslateModule.forRoot(), HeaderComponent]
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(UiHeaderComponent);
+        fixture = TestBed.createComponent(HeaderComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

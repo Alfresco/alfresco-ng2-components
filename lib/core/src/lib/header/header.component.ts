@@ -26,15 +26,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 export type HeaderVariant = 'minimal' | 'extended';
 
 @Component({
-    selector: 'adf-ui-header',
+    selector: 'adf-header',
     standalone: true,
     imports: [CommonModule, TranslateModule, ToolbarModule, NavbarComponent],
-    templateUrl: './ui-header.component.html',
-    styleUrls: ['./ui-header.component.scss'],
-    host: { class: 'adf-ui-header' },
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    host: { class: 'adf-header' },
     encapsulation: ViewEncapsulation.None
 })
-export class UiHeaderComponent {
+export class HeaderComponent {
     @Input() variant: HeaderVariant = 'minimal';
 
     @HostBinding('style.--adf-toolbar-title-width')

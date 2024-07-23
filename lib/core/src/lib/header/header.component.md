@@ -1,15 +1,15 @@
-# UI Header Component
+# Header Component
 
 `standalone`, `component`
 
-The UI Header component is a versatile component used to display a header section in applications. It supports various configurations including minimal and extended variants, customizable logo, title, and navigation items.
+The Header component is a versatile component used to display a header section in applications. It supports various configurations including minimal and extended variants, customizable logo, title, and navigation items.
 
 ## Usage
 
 Displaying a minimal header with a logo and navbar:
 
 ```html
-<adf-ui-header
+<adf-header
     variant="minimal"
     headerHeight="64px"
     color="primary"
@@ -20,13 +20,13 @@ Displaying a minimal header with a logo and navbar:
     [title]="title"
     [navbarItems]="items"
 >
-</adf-ui-header>
+</adf-header>
 ```
 
 Toolbar actions can be added to the header by placing them inside a `div` element with the `adf-toolbar-actions` class.
 
 ```html
-<adf-ui-header
+<adf-header
     variant="minimal"
     [logoSrc]="src"
     [title]="title"
@@ -37,15 +37,15 @@ Toolbar actions can be added to the header by placing them inside a `div` elemen
         <adf-button variant="icon" icon="search" (click)="onSearchClick()"></adf-button>
         <adf-avatar [src]="src"></adf-avatar>
     </div>
-</adf-ui-header>
+</adf-header>
 ```
 
-![adf-ui-header-extended.png](../../../../../docs/docassets/images/adf-ui-header-minimal.png)
+![adf-header-extended.png](docs-images/adf-header-minimal.png)
 
 Displaying an extended header with toolbar actions:
 
 ```html
-<adf-ui-header variant="extended" [logoSrc]="src" [title]="title" [navbarItems]="items">
+<adf-header variant="extended" [logoSrc]="src" [title]="title" [navbarItems]="items">
     <div class="adf-toolbar-actions">
         <adf-button variant="flat">Secondary</adf-button>
         <adf-button variant="flat" color="accent">Primary</adf-button>
@@ -67,17 +67,17 @@ Displaying an extended header with toolbar actions:
             ...
         </mat-menu>
     </div>
-</adf-ui-header>
+</adf-header>
 ```
 
-![adf-ui-header-extended.png](../../../../../docs/docassets/images/adf-ui-header-extended.png)
+![adf-header-extended.png](docs-images/adf-header-extended.png)
 
 ## API
 
 Import the following standalone components:
 
 ```typescript
-import { UiHeaderComponent } from '@alfresco/adf-core';
+import { HeaderComponent } from '@alfresco/adf-core';
 ```
 
 ## Properties
@@ -100,7 +100,7 @@ The following CSS classes are available for theming:
 
 | Name                  | Description                         |
 |-----------------------|-------------------------------------|
-| `adf-ui-header`       | The host element.                   |
+| `adf-header`          | The host element.                   |
 | `adf-toolbar`         | The toolbar element (single row).   |
 | `adf-toolbar-title`   | The toolbar title element.          |
 | `adf-toolbar-logo`    | The logo element inside the header. |

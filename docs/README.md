@@ -86,7 +86,7 @@ A collection of Angular components for generic use.
 | [Avatar](core/components/avatar.component.md)     | Displays user avatars.                          |
 | [Button](core/components/button.component.md)     | A standard button component.                    |
 | [Progress](core/components/progress.component.md) | A progress bar component.                       |
-| [Header](core/components/ui-header.component.md)  | A simple reusable application header component. |
+| [Header](core/components/adf-header.component.md) | A simple reusable application header component. |
 
 ### Components
 

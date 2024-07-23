@@ -80,4 +80,4 @@ export interface NavbarItem {
 ## See Also
 
 -   [Navbar component](./navbar.component.md)
--   [UI Header component](../ui-header.component.md)
+-   [Header component](../header.component.md)

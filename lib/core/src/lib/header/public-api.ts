@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-export * from './ui-header.component';
+export * from './header.component';
 export * from './navbar/navbar.component';
 export * from './navbar/navbar-item.component';

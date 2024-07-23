@@ -37,4 +37,4 @@ The following CSS classes are available for theming:
 ## See Also
 
 -   [Navbar Item component](./navbar-item.component.md)
--   [UI Header component](../ui-header.component.md)
+-   [Header component](../header.component.md)

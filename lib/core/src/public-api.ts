@@ -21,7 +21,7 @@ export * from './lib/button/button.component';
 export * from './lib/progress/progress.component';
 export * from './lib/viewer/index';
 export * from './lib/toolbar/index';
-export * from './lib/ui-header/index';
+export * from './lib/header/index';
 export * from './lib/pagination/index';
 export * from './lib/login/index';
 export * from './lib/language-menu/index';
