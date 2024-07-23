@@ -71,7 +71,7 @@ export default {
     }
 } as Meta<SidebarActionMenuComponent>;
 
-const template: StoryFn<SidenavLayoutModule> = (args) => ({
+const template: StoryFn<SidebarActionMenuComponent> = (args) => ({
     props: args
 });
 

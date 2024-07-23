@@ -131,7 +131,7 @@ export default {
     }
 } as Meta<HeaderLayoutComponent>;
 
-const template: StoryFn<SidenavLayoutModule> = (args) => ({
+const template: StoryFn<HeaderLayoutComponent> = (args) => ({
     props: args
 });
 

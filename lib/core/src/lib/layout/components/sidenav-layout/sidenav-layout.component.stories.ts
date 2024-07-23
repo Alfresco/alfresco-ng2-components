@@ -136,7 +136,7 @@ export default {
     }
 } as Meta<SidenavLayoutComponent>;
 
-const template: StoryFn<SidenavLayoutModule> = (args) => ({
+const template: StoryFn<SidenavLayoutComponent> = (args) => ({
     props: args,
     template: `
     <adf-sidenav-layout
