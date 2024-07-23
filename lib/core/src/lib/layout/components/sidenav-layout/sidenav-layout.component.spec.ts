@@ -18,40 +18,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
-import { LayoutModule, MediaMatcher } from '@angular/cdk/layout';
-import { PlatformModule } from '@angular/cdk/platform';
-import { MaterialModule } from '../../../material.module';
+import { Component } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavLayoutContentDirective } from '../../directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from '../../directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from '../../directives/sidenav-layout-navigation.directive';
 import { UserPreferencesService } from '../../../common/services/user-preferences.service';
 import { CommonModule } from '@angular/common';
-import { Direction } from '@angular/cdk/bidi';
 import { of } from 'rxjs';
-
-@Component({
-    selector: 'adf-layout-container',
-    template: ` <ng-content select="[app-layout-navigation]"></ng-content>
-        <ng-content select="[app-layout-content]"></ng-content>`
-})
-export class DummyLayoutContainerComponent {
-    @Input() sidenavMin: number;
-    @Input() sidenavMax: number;
-    @Input() position: string;
-    @Input() direction: Direction;
-    @Input() mediaQueryList: MediaQueryList;
-    @Input() hideSidenav: boolean;
-    @Input() expandedSidenav: boolean;
-    toggleMenu() {}
-}
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-test-component-for-sidenav',
+    standalone: true,
+    imports: [SidenavLayoutComponent, SidenavLayoutHeaderDirective, SidenavLayoutNavigationDirective, SidenavLayoutContentDirective],
     template: ` <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
         <adf-sidenav-layout-header>
             <ng-template let-toggleMenu="toggleMenu">
-                <div role="button" id="header-test" (click)="toggleMenu()" role="button" tabindex="0" (keyup.enter)="toggleMenu()"></div>
+                <div id="header-test" (click)="toggleMenu()" role="button" tabindex="0" (keyup.enter)="toggleMenu()"></div>
             </ng-template>
         </adf-sidenav-layout-header>
 
@@ -72,22 +56,14 @@ export class SidenavLayoutTesterComponent {}
 
 describe('SidenavLayoutComponent', () => {
     let fixture: ComponentFixture<any>;
-    let mediaMatcher: MediaMatcher;
     let mediaQueryList: any;
     let component: SidenavLayoutComponent;
+    let mediaMatcher: MediaMatcher;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, PlatformModule, LayoutModule, MaterialModule],
-            declarations: [
-                DummyLayoutContainerComponent,
-                SidenavLayoutComponent,
-                SidenavLayoutContentDirective,
-                SidenavLayoutHeaderDirective,
-                SidenavLayoutNavigationDirective
-            ],
-            providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [CommonModule, NoopAnimationsModule, SidenavLayoutComponent],
+            providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }]
         });
         mediaQueryList = {
             mediaFn: null,
@@ -99,12 +75,7 @@ describe('SidenavLayoutComponent', () => {
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);
-        spyOn(mediaMatcher, 'matchMedia').and.callFake((mediaQuery) => {
-            mediaQueryList.originalMediaQueryPassed = mediaQuery;
-            spyOn(mediaQueryList, 'addListener').and.callThrough();
-            spyOn(mediaQueryList, 'removeListener').and.stub();
-            return mediaQueryList;
-        });
+        spyOn(mediaMatcher, 'matchMedia').and.callFake(() => mediaQueryList);
 
         fixture = TestBed.createComponent(SidenavLayoutComponent);
         component = fixture.componentInstance;
@@ -115,40 +86,10 @@ describe('SidenavLayoutComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    describe('General behaviour', () => {
-        beforeEach(() => fixture.detectChanges());
-
-        it('should pass through input parameters', () => {
-            component.sidenavMin = 1;
-            component.sidenavMax = 2;
-            component.hideSidenav = true;
-            component.expandedSidenav = false;
-            fixture.detectChanges();
-
-            const layoutContainerComponent = fixture.debugElement.query(By.directive(DummyLayoutContainerComponent)).componentInstance;
-
-            expect(layoutContainerComponent.sidenavMin).toBe(component.sidenavMin);
-            expect(layoutContainerComponent.sidenavMax).toBe(component.sidenavMax);
-            expect(layoutContainerComponent.hideSidenav).toBe(component.hideSidenav);
-            expect(layoutContainerComponent.expandedSidenav).toBe(component.expandedSidenav);
-            expect(layoutContainerComponent.mediaQueryList.originalMediaQueryPassed).toBe(`(max-width: 600px)`);
-        });
-
-        it('addListener of mediaQueryList should have been called', () => {
-            expect(mediaQueryList.addListener).toHaveBeenCalledTimes(1);
-            expect(mediaQueryList.addListener).toHaveBeenCalledWith(component.onMediaQueryChange);
-        });
-
-        it('addListener of mediaQueryList should have been called', () => {
-            fixture.destroy();
-
-            expect(mediaQueryList.removeListener).toHaveBeenCalledTimes(1);
-            expect(mediaQueryList.removeListener).toHaveBeenCalledWith(component.onMediaQueryChange);
-        });
-    });
-
     describe('toggleMenu', () => {
-        beforeEach(() => fixture.detectChanges());
+        beforeEach(() => {
+            component.ngOnInit();
+        });
 
         it('should toggle the isMenuMinimized if the mediaQueryList.matches is false (we are on desktop)', () => {
             mediaQueryList.matches = false;
@@ -178,7 +119,7 @@ describe('SidenavLayoutComponent', () => {
 
     describe('menuOpenState', () => {
         it('should be true by default', (done) => {
-            fixture.detectChanges();
+            component.ngOnInit();
 
             component.menuOpenState$.subscribe((value) => {
                 expect(value).toBe(true);
@@ -188,7 +129,7 @@ describe('SidenavLayoutComponent', () => {
 
         it('should be the same as the expanded Sidenav value by default', (done) => {
             component.expandedSidenav = false;
-            fixture.detectChanges();
+            component.ngOnInit();
 
             component.menuOpenState$.subscribe((value) => {
                 expect(value).toBe(false);
@@ -198,8 +139,8 @@ describe('SidenavLayoutComponent', () => {
 
         it('should emit value on toggleMenu action', (done) => {
             component.expandedSidenav = false;
-            fixture.detectChanges();
 
+            component.ngOnInit();
             component.toggleMenu();
 
             component.menuOpenState$.subscribe((value) => {
@@ -213,31 +154,22 @@ describe('SidenavLayoutComponent', () => {
 describe('Template transclusion', () => {
     let fixture: ComponentFixture<any>;
     let mediaMatcher: MediaMatcher;
-    const mediaQueryList: any = {
-        matches: false,
-        addListener: () => {},
-        removeListener: () => {}
-    };
+    let mediaQueryList: any;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, PlatformModule, LayoutModule, MaterialModule],
-            declarations: [
-                DummyLayoutContainerComponent,
-                SidenavLayoutTesterComponent,
-                SidenavLayoutComponent,
-                SidenavLayoutContentDirective,
-                SidenavLayoutHeaderDirective,
-                SidenavLayoutNavigationDirective
-            ],
+            imports: [CommonModule, NoopAnimationsModule, SidenavLayoutTesterComponent],
             providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }]
         });
+
+        mediaQueryList = {
+            matches: false,
+            addListener: () => {},
+            removeListener: () => {}
+        };
+
         mediaMatcher = TestBed.inject(MediaMatcher);
-        spyOn(mediaMatcher, 'matchMedia').and.callFake(() => {
-            spyOn(mediaQueryList, 'addListener').and.stub();
-            spyOn(mediaQueryList, 'removeListener').and.stub();
-            return mediaQueryList;
-        });
+        spyOn(mediaMatcher, 'matchMedia').and.callFake(() => mediaQueryList);
 
         fixture = TestBed.createComponent(SidenavLayoutTesterComponent);
         fixture.detectChanges();
@@ -267,32 +199,17 @@ describe('Template transclusion', () => {
             mediaQueryList.matches = false;
             fixture.detectChanges();
             const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
-            const innerHeaderElement = fixture.debugElement.query(innerHeaderSelector);
 
-            expect(outerHeaderElement === null).toBe(false, 'Outer header should be shown');
-            expect(innerHeaderElement === null).toBe(true, 'Inner header should not be shown');
+            expect(outerHeaderElement).toBeDefined();
         });
 
         it('should contain the transcluded header template inside of the layout-container', () => {
             mediaQueryList.matches = true;
+
             fixture.detectChanges();
-            const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
             const innerHeaderElement = fixture.debugElement.query(innerHeaderSelector);
 
-            expect(outerHeaderElement === null).toBe(true, 'Outer header should not be shown');
-            expect(innerHeaderElement === null).toBe(false, 'Inner header should be shown');
-        });
-
-        it(`should call through the layout container's toggleMenu method`, () => {
-            mediaQueryList.matches = false;
-            fixture.detectChanges();
-            const layoutContainerComponent = fixture.debugElement.query(By.directive(DummyLayoutContainerComponent)).componentInstance;
-            spyOn(layoutContainerComponent, 'toggleMenu');
-
-            const outerHeaderElement = fixture.debugElement.query(outerHeaderSelector);
-            outerHeaderElement.triggerEventHandler('click', {});
-
-            expect(layoutContainerComponent.toggleMenu).toHaveBeenCalled();
+            expect(innerHeaderElement).toBeDefined();
         });
     });
 

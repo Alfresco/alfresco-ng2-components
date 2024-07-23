@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
-import { SidenavLayoutModule } from '../../layout.module';
+import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { SidenavLayoutComponent } from './sidenav-layout.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,7 +29,7 @@ export default {
     title: 'Core/Layout/Sidenav Layout',
     decorators: [
         moduleMetadata({
-            imports: [SidenavLayoutModule, RouterTestingModule, MatIconModule, MatListModule]
+            imports: [CoreStoryModule, ...LAYOUT_DIRECTIVES, RouterTestingModule, MatIconModule, MatListModule]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -136,7 +136,7 @@ export default {
     }
 } as Meta<SidenavLayoutComponent>;
 
-const template: StoryFn<SidenavLayoutModule> = (args) => ({
+const template: StoryFn<SidenavLayoutComponent> = (args) => ({
     props: args,
     template: `
     <adf-sidenav-layout

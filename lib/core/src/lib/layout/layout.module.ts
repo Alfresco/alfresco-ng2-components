@@ -15,49 +15,36 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../material.module';
 import { SidenavLayoutContentDirective } from './directives/sidenav-layout-content.directive';
 import { SidenavLayoutHeaderDirective } from './directives/sidenav-layout-header.directive';
 import { SidenavLayoutNavigationDirective } from './directives/sidenav-layout-navigation.directive';
 import { SidenavLayoutComponent } from './components/sidenav-layout/sidenav-layout.component';
 import { LayoutContainerComponent } from './components/layout-container/layout-container.component';
-import { SidebarActionMenuComponent, SidebarMenuDirective,
-    SidebarMenuExpandIconDirective, SidebarMenuTitleIconDirective } from './components/sidebar-action/sidebar-action-menu.component';
+import {
+    SidebarActionMenuComponent,
+    SidebarMenuDirective,
+    SidebarMenuExpandIconDirective,
+    SidebarMenuTitleIconDirective
+} from './components/sidebar-action/sidebar-action-menu.component';
 import { HeaderLayoutComponent } from './components/header/header.component';
-import { TranslateModule } from '@ngx-translate/core';
+
+export const LAYOUT_DIRECTIVES = [
+    SidenavLayoutHeaderDirective,
+    SidenavLayoutContentDirective,
+    SidenavLayoutNavigationDirective,
+    SidebarMenuDirective,
+    SidebarMenuExpandIconDirective,
+    SidebarMenuTitleIconDirective,
+    HeaderLayoutComponent,
+    SidebarActionMenuComponent,
+    LayoutContainerComponent,
+    SidenavLayoutComponent
+] as const;
+
+/** @deprecated Use `...LAYOUT_DIRECTIVES` instead, or import standalone components directly */
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        RouterModule,
-        TranslateModule
-    ],
-    exports: [
-        SidenavLayoutHeaderDirective,
-        SidenavLayoutContentDirective,
-        SidenavLayoutNavigationDirective,
-        SidenavLayoutComponent,
-        LayoutContainerComponent,
-        SidebarActionMenuComponent,
-        SidebarMenuDirective,
-        SidebarMenuExpandIconDirective,
-        SidebarMenuTitleIconDirective,
-        HeaderLayoutComponent
-    ],
-    declarations: [
-        SidenavLayoutHeaderDirective,
-        SidenavLayoutContentDirective,
-        SidenavLayoutNavigationDirective,
-        SidenavLayoutComponent,
-        LayoutContainerComponent,
-        SidebarActionMenuComponent,
-        SidebarMenuDirective,
-        SidebarMenuExpandIconDirective,
-        SidebarMenuTitleIconDirective,
-        HeaderLayoutComponent
-    ]
+    imports: [...LAYOUT_DIRECTIVES],
+    exports: [...LAYOUT_DIRECTIVES]
 })
 export class SidenavLayoutModule {}
