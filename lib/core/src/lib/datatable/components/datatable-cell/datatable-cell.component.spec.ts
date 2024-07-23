@@ -51,7 +51,7 @@ describe('DataTableCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [DataTableCellComponent],
+            imports: [DataTableCellComponent],
             providers: [DataTableService]
         });
 
