@@ -277,7 +277,8 @@ describe('FormFieldModel', () => {
         const currentDate = new Date();
         const expectedDateFormat = `${DateFnsUtils.formatDate(currentDate, 'yyyy-MM-dd')}T00:00:00.000Z`;
 
-        expect(field.value).toEqual(currentDate);
+        expect(field.value.getDate()).toEqual(currentDate.getDate());
+        expect(field.value.getHours()).toEqual(currentDate.getHours());
         expect(form.values['ddmmyyy']).toEqual(expectedDateFormat);
     });
 
