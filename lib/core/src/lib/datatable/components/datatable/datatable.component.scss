@@ -1,3 +1,5 @@
+/* stylelint-disable selector-class-pattern */
+/* stylelint-disable media-feature-range-notation */
 /* stylelint-disable no-descending-specificity */
 @use '@angular/material' as mat;
 @import '../../../styles/mixins';
@@ -598,6 +600,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 }
 
+.adf-actions-column-icon {
+    margin-top: -10px;
+}
+
 .adf-upload__dragging {
     & > div {
         border-top: 1px dashed var(--theme-accent-color-a200);
@@ -620,7 +626,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     align-items: center;
     height: inherit;
 
-    .adf-datatable-body[role="rowgroup"] {
+    .adf-datatable-body[role='rowgroup'] {
         .adf-datatable-row {
             height: 100%;
             background-color: var(--adf-theme-background-card-color);
