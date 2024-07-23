@@ -77,7 +77,17 @@ export const DATATABLE_DIRECTIVES = [
     EmptyListComponent,
     EmptyListHeaderDirective,
     EmptyListBodyDirective,
-    EmptyListFooterDirective
+    EmptyListFooterDirective,
+    FileSizeCellComponent,
+    JsonCellComponent,
+    NoContentTemplateDirective,
+    NoPermissionTemplateDirective,
+    LoadingContentTemplateDirective,
+    HeaderFilterTemplateDirective,
+    CustomEmptyContentTemplateDirective,
+    CustomLoadingContentTemplateDirective,
+    CustomNoPermissionTemplateDirective,
+    MainMenuDataTableTemplateDirective
 ] as const;
 
 @NgModule({
@@ -96,37 +106,7 @@ export const DATATABLE_DIRECTIVES = [
         ReactiveFormsModule,
         ...DATATABLE_DIRECTIVES
     ],
-    declarations: [
-        DataTableComponent,
-        DataTableCellComponent,
-        DataTableRowComponent,
-        FileSizeCellComponent,
-        JsonCellComponent,
-        NoContentTemplateDirective,
-        NoPermissionTemplateDirective,
-        LoadingContentTemplateDirective,
-        HeaderFilterTemplateDirective,
-        CustomEmptyContentTemplateDirective,
-        CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective,
-        MainMenuDataTableTemplateDirective
-    ],
-    exports: [
-        ...DATATABLE_DIRECTIVES,
-        DataTableComponent,
-        DataTableCellComponent,
-        DataTableRowComponent,
-        ColumnsSelectorComponent,
-        FileSizeCellComponent,
-        JsonCellComponent,
-        NoContentTemplateDirective,
-        NoPermissionTemplateDirective,
-        LoadingContentTemplateDirective,
-        HeaderFilterTemplateDirective,
-        CustomEmptyContentTemplateDirective,
-        CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective,
-        MainMenuDataTableTemplateDirective
-    ]
+    declarations: [DataTableComponent, DataTableCellComponent, DataTableRowComponent],
+    exports: [...DATATABLE_DIRECTIVES, DataTableComponent, DataTableCellComponent, DataTableRowComponent, ColumnsSelectorComponent]
 })
 export class DataTableModule {}
