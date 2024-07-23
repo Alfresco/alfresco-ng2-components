@@ -69,7 +69,8 @@ export const DATATABLE_DIRECTIVES = [
     ColumnsSelectorComponent,
     DataColumnComponent,
     DataColumnListComponent,
-    DateColumnHeaderComponent
+    DateColumnHeaderComponent,
+    LocalizedDatePipe
 ] as const;
 
 @NgModule({
@@ -86,8 +87,7 @@ export const DATATABLE_DIRECTIVES = [
         IconModule,
         FormsModule,
         ReactiveFormsModule,
-        ...DATATABLE_DIRECTIVES,
-        LocalizedDatePipe
+        ...DATATABLE_DIRECTIVES
     ],
     declarations: [
         DataTableComponent,

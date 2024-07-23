@@ -43,6 +43,8 @@ export * from './data/data-table.schema';
 
 export * from './data-column';
 
+export * from './directives/resizable/resizable.directive';
+export * from './directives/resizable/resize-handle.directive';
 export * from './directives/drop-zone.directive';
 export * from './directives/loading-template.directive';
 export * from './directives/no-content-template.directive';
