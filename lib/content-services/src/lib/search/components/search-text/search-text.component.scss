@@ -26,7 +26,15 @@
         }
     }
 
-    #{$mat-notched-outline-leading}  {
+    #{$mat-text-field-focused} {
+        #{$mat-notched-outline-trailing},
+        #{$mat-notched-outline-notch},
+        #{$mat-notched-outline-leading} {
+            border-bottom-width: 2px;
+        }
+    }
+
+    #{$mat-notched-outline-leading} {
         display: none;
     }
 
