@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { FolderDialogComponent } from './folder.dialog';
-import { NodeLockDialogComponent } from './node-lock.dialog';
+import { NodeLockDialogComponent } from './node-lock/node-lock.dialog';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { LibraryDialogComponent } from './library/library.dialog';
 import { ContentDirectiveModule } from '../directives';
@@ -40,9 +40,11 @@ import { CategoriesModule } from '../category';
         ContentDirectiveModule,
         DownloadZipDialogModule,
         CategoriesModule,
-        CategorySelectorDialogComponent
+        CategorySelectorDialogComponent,
+        NodeLockDialogComponent,
+        LibraryDialogComponent
     ],
-    declarations: [FolderDialogComponent, NodeLockDialogComponent, LibraryDialogComponent],
+    declarations: [FolderDialogComponent],
     exports: [FolderDialogComponent, NodeLockDialogComponent, LibraryDialogComponent, CategorySelectorDialogComponent]
 })
 export class DialogModule {}

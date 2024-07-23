@@ -16,7 +16,7 @@
  */
 
 export * from './folder.dialog';
-export * from './node-lock.dialog';
+export * from './node-lock/node-lock.dialog';
 export * from './category-selector/category-selector.dialog';
 
 export * from './dialog.module';
