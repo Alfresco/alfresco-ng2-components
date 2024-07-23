@@ -19,21 +19,21 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { MaterialModule } from '../material.module';
 import { ContextMenuModule } from '../context-menu/context-menu.module';
 import { PipeModule } from '../pipes/pipe.module';
-
 import { DirectiveModule } from '../directives/directive.module';
 import { DataTableCellComponent } from './components/datatable-cell/datatable-cell.component';
 import { DataTableRowComponent } from './components/datatable-row/datatable-row.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { DateCellComponent } from './components/date-cell/date-cell.component';
 import { ColumnsSelectorComponent } from './components/columns-selector/columns-selector.component';
-import { EmptyListBodyDirective,
+import {
+    EmptyListBodyDirective,
     EmptyListComponent,
     EmptyListFooterDirective,
-    EmptyListHeaderDirective } from './components/empty-list/empty-list.component';
+    EmptyListHeaderDirective
+} from './components/empty-list/empty-list.component';
 import { FileSizeCellComponent } from './components/filesize-cell/filesize-cell.component';
 import { LocationCellComponent } from './components/location-cell/location-cell.component';
 import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
@@ -59,6 +59,16 @@ import { NumberCellComponent } from './components/number-cell/number-cell.compon
 import { LocalizedDatePipe } from '../pipes';
 import { IconCellComponent } from './components/icon-cell/icon-cell.component';
 
+export const DATATABLE_DIRECTIVES = [
+    BooleanCellComponent,
+    AmountCellComponent,
+    NumberCellComponent,
+    LocationCellComponent,
+    DateCellComponent,
+    IconCellComponent,
+    ColumnsSelectorComponent
+] as const;
+
 @NgModule({
     imports: [
         RouterModule,
@@ -75,13 +85,8 @@ import { IconCellComponent } from './components/icon-cell/icon-cell.component';
         ReactiveFormsModule,
         ResizableModule,
         DataColumnModule,
-        BooleanCellComponent,
-        AmountCellComponent,
-        NumberCellComponent,
-        LocationCellComponent,
-        DateCellComponent,
-        LocalizedDatePipe,
-        IconCellComponent
+        ...DATATABLE_DIRECTIVES,
+        LocalizedDatePipe
     ],
     declarations: [
         DataTableComponent,
@@ -93,7 +98,6 @@ import { IconCellComponent } from './components/icon-cell/icon-cell.component';
         DataTableRowComponent,
         FileSizeCellComponent,
         JsonCellComponent,
-        ColumnsSelectorComponent,
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,
@@ -105,6 +109,7 @@ import { IconCellComponent } from './components/icon-cell/icon-cell.component';
         DropZoneDirective
     ],
     exports: [
+        ...DATATABLE_DIRECTIVES,
         DataTableComponent,
         EmptyListComponent,
         EmptyListHeaderDirective,
