@@ -188,6 +188,8 @@ legalHoldApi.unassignHold('holdId', 'nodeId').then(
 
 # **createHold**
 
+> HoldEntry createHold(filePlanId, holds)
+
 Create legal hold.
 
 ### Example
