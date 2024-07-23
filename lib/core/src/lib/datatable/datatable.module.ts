@@ -65,7 +65,10 @@ export const DATATABLE_DIRECTIVES = [
     LocationCellComponent,
     DateCellComponent,
     IconCellComponent,
-    ColumnsSelectorComponent
+    ColumnsSelectorComponent,
+    DataColumnComponent,
+    DataColumnListComponent,
+    DateColumnHeaderComponent
 ] as const;
 
 @NgModule({
@@ -104,10 +107,7 @@ export const DATATABLE_DIRECTIVES = [
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        DropZoneDirective,
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
+        DropZoneDirective
     ],
     exports: [
         ...DATATABLE_DIRECTIVES,
@@ -129,10 +129,7 @@ export const DATATABLE_DIRECTIVES = [
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        DropZoneDirective,
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
+        DropZoneDirective
     ]
 })
 export class DataTableModule {}
