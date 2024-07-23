@@ -121,8 +121,7 @@ jobs:
          fetch-depth: 0
 
       - name: Get branch name
-        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@76affd16a4dd9a440cf66bf42656b1d826e8dfc2 # v5.34.0
-
+        uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@a288b9efdaa50413573b2e130896d906478b8e50 # v5.31.0
       - name: Save commit message
         uses: Alfresco/alfresco-build-tools/.github/actions/get-commit-message@76affd16a4dd9a440cf66bf42656b1d826e8dfc2 # v5.34.0
 
@@ -492,6 +491,49 @@ jobs:
           echo "result ${{ toJson(steps.pr-forbidden.*.result) }}" && echo "result ${{ steps.pr-forbidden.*.result }}"
           echo "result ${{ contains(toJson(steps.pr-forbidden.*.result), 'failure') }}"
 
+  determine-complexity:
+    needs: check-if-pr-is-approved
+    outputs:
+      level: ${{ steps.complexity.outputs.level }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 1
+      - name: Determine complexity
+        uses: ./.github/actions/determine-complexity
+        with:
+          file-changed-limit: 10
+          lines-changed-limit: 400
+
+  verify-downstream:
+    needs: determine-complexity
+    if: ${{ needs.determine-complexity.outputs.level == 'major' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/get-branch-name@a288b9efdaa50413573b2e130896d906478b8e50 # v5.31.0
+      - name: Tests - HxP Frontend
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7 # v4.0.0
+        with:
+          repo: Alfresco/hxp-frontend-apps
+          ref: fix/AAE-24001-check-adf
+          workflow: acceptance-tests.yml
+          inputs: >
+            {
+              "environment": "apaRc",
+              "use-local-adf": "${{ env.BRANCH_NAME }}",
+              "notify-on-failure": true,
+              "rp-trigger": "adf-to-hxp-test",
+              "slack-channel-id": "C016SMNNL8L",
+              "slack-message-title": "ADF => HxP check\n🔴 Frontend e2e test failed on branch ${{ env.BRANCH_NAME }}"
+            }
+          token: ${{ secrets.ALFRESCO_BUILD_GH_TOKEN }}
+          wait-for-completion: true
   finalize:
     if: ${{ always() }}
     runs-on: ubuntu-latest
