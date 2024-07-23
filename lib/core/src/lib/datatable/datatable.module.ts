@@ -52,7 +52,6 @@ import { IconModule } from '../icon/icon.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
 import { ResizableModule } from './directives/resizable/resizable.module';
-import { DataColumnModule } from './data-column/data-column.module';
 import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
 import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
 import { NumberCellComponent } from './components/number-cell/number-cell.component';
@@ -84,7 +83,6 @@ export const DATATABLE_DIRECTIVES = [
         FormsModule,
         ReactiveFormsModule,
         ResizableModule,
-        DataColumnModule,
         ...DATATABLE_DIRECTIVES,
         LocalizedDatePipe
     ],
@@ -106,7 +104,10 @@ export const DATATABLE_DIRECTIVES = [
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        DropZoneDirective
+        DropZoneDirective,
+        DataColumnComponent,
+        DataColumnListComponent,
+        DateColumnHeaderComponent
     ],
     exports: [
         ...DATATABLE_DIRECTIVES,
