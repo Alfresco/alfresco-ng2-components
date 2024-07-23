@@ -29,8 +29,10 @@ import {
     UserPreferencesService,
     DataCellEvent,
     DEFAULT_PAGINATION,
-    DataTableModule,
-    EmptyContentComponent
+    EmptyContentComponent,
+    DataTableComponent,
+    LoadingContentTemplateDirective,
+    NoContentTemplateDirective
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessService } from '../../services/process.service';
@@ -69,7 +71,15 @@ export const processPresetsDefaultModel = {
 @Component({
     selector: 'adf-process-instance-list',
     standalone: true,
-    imports: [CommonModule, DataTableModule, MatProgressSpinnerModule, EmptyContentComponent, TranslateModule],
+    imports: [
+        CommonModule,
+        MatProgressSpinnerModule,
+        EmptyContentComponent,
+        TranslateModule,
+        DataTableComponent,
+        LoadingContentTemplateDirective,
+        NoContentTemplateDirective
+    ],
     styleUrls: ['./process-list.component.css'],
     templateUrl: './process-list.component.html'
 })

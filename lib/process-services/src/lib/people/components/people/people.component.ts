@@ -26,13 +26,22 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
-import { DataTableModule } from '@alfresco/adf-core';
 import { PeopleListComponent } from '../people-list/people-list.component';
+import { DataColumnComponent, DataColumnListComponent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-people',
     standalone: true,
-    imports: [CommonModule, MatCardModule, TranslateModule, MatIconModule, DataTableModule, PeopleSearchComponent, PeopleListComponent],
+    imports: [
+        CommonModule,
+        MatCardModule,
+        TranslateModule,
+        MatIconModule,
+        PeopleSearchComponent,
+        PeopleListComponent,
+        DataColumnListComponent,
+        DataColumnComponent
+    ],
     templateUrl: './people.component.html',
     styleUrls: ['./people.component.scss'],
     encapsulation: ViewEncapsulation.None
