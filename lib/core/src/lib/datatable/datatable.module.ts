@@ -73,7 +73,11 @@ export const DATATABLE_DIRECTIVES = [
     LocalizedDatePipe,
     ResizableDirective,
     ResizeHandleDirective,
-    DropZoneDirective
+    DropZoneDirective,
+    EmptyListComponent,
+    EmptyListHeaderDirective,
+    EmptyListBodyDirective,
+    EmptyListFooterDirective
 ] as const;
 
 @NgModule({
@@ -94,10 +98,6 @@ export const DATATABLE_DIRECTIVES = [
     ],
     declarations: [
         DataTableComponent,
-        EmptyListComponent,
-        EmptyListHeaderDirective,
-        EmptyListBodyDirective,
-        EmptyListFooterDirective,
         DataTableCellComponent,
         DataTableRowComponent,
         FileSizeCellComponent,
@@ -114,10 +114,6 @@ export const DATATABLE_DIRECTIVES = [
     exports: [
         ...DATATABLE_DIRECTIVES,
         DataTableComponent,
-        EmptyListComponent,
-        EmptyListHeaderDirective,
-        EmptyListBodyDirective,
-        EmptyListFooterDirective,
         DataTableCellComponent,
         DataTableRowComponent,
         ColumnsSelectorComponent,
