@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { Hold, HoldEntry, HoldPaging } from '@alfresco/js-api';
+import { BulkHoldAddResponse, Hold, HoldEntry, HoldPaging } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
     let service: LegalHoldService;
@@ -148,6 +148,23 @@ describe('LegalHoldsService', () => {
             service.createHolds(mockId, mockHolds).subscribe((holds) => {
                 expect(holds).toEqual(legalHolds);
                 expect(service.legalHoldApi.createHolds).toHaveBeenCalledWith(mockId, mockHolds);
+                done();
+            });
+        });
+    });
+
+    describe('bulkHold', () => {
+        it('should add nodes to hold based on search query results', (done) => {
+            const nodeId = 'mockNodeId';
+            const query = 'mockQuery';
+            const language = 'afts';
+            const mockResponse: BulkHoldAddResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
+
+            spyOn(service.legalHoldApi, 'bulkHold').and.returnValue(Promise.resolve(mockResponse));
+
+            service.bulkHold(nodeId, query, language).subscribe((response) => {
+                expect(response).toEqual(mockResponse);
+                expect(service.legalHoldApi.bulkHold).toHaveBeenCalledWith(nodeId, query, language);
                 done();
             });
         });

@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { ContentPagingQuery, Hold, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
+import { BulkHoldAddResponse, ContentPagingQuery, Hold, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -104,5 +104,17 @@ export class LegalHoldService {
      */
     createHolds(filePlanId: string, holds: Hold[]): Observable<HoldPaging> {
         return from(this.legalHoldApi.createHolds(filePlanId, holds));
+    }
+
+    /**
+     * Start the asynchronous bulk process for a hold with id holdId based on search query results.
+     *
+     * @param holdId The identifier of a hold
+     * @param query Search query
+     * @param language Language Code
+     * @returns Observable<BulkHoldAddResponse>
+     */
+    bulkHold(holdId: string, query: string, language: string): Observable<BulkHoldAddResponse> {
+        return from(this.legalHoldApi.bulkHold(holdId, query, language));
     }
 }
