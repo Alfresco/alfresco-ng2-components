@@ -529,8 +529,8 @@ jobs:
               "use-local-adf": "${{ env.BRANCH_NAME }}",
               "notify-on-failure": true,
               "rp-trigger": "adf-to-hxp-test",
-              "slack-channel-id": "D056HA6MP6Y",
-              "slack-message-title": "ADF => HxP check\n🔴 Frontend e2e test failed"
+              "slack-channel-id": "C016SMNNL8L",
+              "slack-message-title": "ADF => HxP check\n🔴 Frontend e2e test failed on branch ${{ env.BRANCH_NAME }}"
             }
           token: ${{ secrets.ALFRESCO_BUILD_GH_TOKEN }}
           wait-for-completion: true
