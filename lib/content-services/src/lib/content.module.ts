@@ -29,7 +29,7 @@ import { VersionManagerModule } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
 import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
 import { ContentDirectiveModule } from './directives/content-directive.module';
-import { DialogModule } from './dialogs/dialog.module';
+import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { TreeViewModule } from './tree-view/tree-view.module';
@@ -56,7 +56,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        DialogModule,
+        ...CONTENT_DIALOG_DIRECTIVES,
         SearchModule,
         DocumentListModule,
         UploadModule,
@@ -92,7 +92,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
         ContentNodeSelectorModule,
         ContentNodeShareModule,
         ContentMetadataModule,
-        DialogModule,
+        ...CONTENT_DIALOG_DIRECTIVES,
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,
