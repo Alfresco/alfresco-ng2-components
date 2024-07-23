@@ -39,9 +39,10 @@ import { CategoriesModule } from '../category';
         MatDatetimepickerModule,
         ContentDirectiveModule,
         DownloadZipDialogModule,
-        CategoriesModule
+        CategoriesModule,
+        CategorySelectorDialogComponent
     ],
-    declarations: [FolderDialogComponent, NodeLockDialogComponent, LibraryDialogComponent, CategorySelectorDialogComponent],
+    declarations: [FolderDialogComponent, NodeLockDialogComponent, LibraryDialogComponent],
     exports: [FolderDialogComponent, NodeLockDialogComponent, LibraryDialogComponent, CategorySelectorDialogComponent]
 })
 export class DialogModule {}

@@ -17,8 +17,7 @@
 
 import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContextMenuDirective, ContextMenuModule, DataTableModule, IconModule, UserPreferencesService } from '@alfresco/adf-core';
-import { MatTreeModule } from '@angular/material/tree';
+import { ContextMenuDirective, UserPreferencesService } from '@alfresco/adf-core';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { singleNode, treeNodesChildrenMockExpanded, treeNodesMock, treeNodesMockExpanded, treeNodesNoChildrenMock } from '../mock/tree-node.mock';
 import { of, Subject } from 'rxjs';
@@ -33,11 +32,7 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
@@ -69,21 +64,7 @@ describe('TreeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                HttpClientTestingModule,
-                TranslateModule.forRoot(),
-                MatTreeModule,
-                MatIconModule,
-                MatMenuModule,
-                MatTreeModule,
-                DataTableModule,
-                ContextMenuModule,
-                MatCheckboxModule,
-                MatProgressSpinnerModule,
-                IconModule
-            ],
-            declarations: [TreeComponent],
+            imports: [NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot(), TreeComponent],
             providers: [UserPreferencesService, { provide: TreeService, useClass: TreeServiceMock }]
         });
 

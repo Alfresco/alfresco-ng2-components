@@ -46,6 +46,7 @@ import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.serv
 import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
 import { CategoriesManagementComponent } from './category';
 import { TreeComponent } from './tree';
+import { NewVersionUploaderDialogComponent } from './new-version-uploader';
 
 @NgModule({
     imports: [
@@ -76,7 +77,8 @@ import { TreeComponent } from './tree';
         TreeComponent,
         SearchTextModule,
         AlfrescoViewerModule,
-        CategoriesManagementComponent
+        CategoriesManagementComponent,
+        NewVersionUploaderDialogComponent
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
@@ -102,7 +104,8 @@ import { TreeComponent } from './tree';
         TreeComponent,
         SearchTextModule,
         AlfrescoViewerModule,
-        CategoriesManagementComponent
+        CategoriesManagementComponent,
+        NewVersionUploaderDialogComponent
     ]
 })
 export class ContentModule {

@@ -44,14 +44,8 @@ describe('NewVersionUploaderDialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [
-                NewVersionUploaderDialogComponent,
-                VersionListComponent,
-                VersionUploadComponent,
-                UploadVersionButtonComponent,
-                VersionComparisonComponent
-            ],
+            imports: [ContentTestingModule, NewVersionUploaderDialogComponent],
+            declarations: [VersionListComponent, VersionUploadComponent, UploadVersionButtonComponent, VersionComparisonComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: { node: mockNode, showVersionsOnly, file: mockFile } },
                 {
