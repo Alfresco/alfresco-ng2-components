@@ -153,7 +153,6 @@ jobs:
           DEVEL_FLAG: ${{ inputs.devel }}
           GH_TOKEN: ${{ github.token }}
           skip_check: "false"
-        if: false
         run: |
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ github.actor }}" == "dependabot[bot]" ]; then
             echo -e "\033[32mci:force check can be skipped\033[0m"
@@ -196,7 +195,6 @@ jobs:
     name: "Setup"
     runs-on: ubuntu-latest
     needs: [check-if-pr-is-approved, pre-checks]
-    if: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -217,7 +215,6 @@ jobs:
     name: "Unit tests: ${{ matrix.unit-tests.name }}"
     runs-on: ubuntu-latest
     needs: [setup]
-    if: false
     strategy:
       fail-fast: false
       # max-parallel: 4
@@ -252,7 +249,6 @@ jobs:
     name: "Lint"
     runs-on: ubuntu-latest
     needs: [setup]
-    if: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -268,7 +264,6 @@ jobs:
     name: "Build libs"
     runs-on: ubuntu-latest
     needs: [setup]
-    if: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -286,7 +281,6 @@ jobs:
     name: "e2e: storybook"
     needs: [build-libs, lint, unit-tests]
     runs-on: ubuntu-latest
-    if: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -306,7 +300,6 @@ jobs:
     name: "e2e: ${{ matrix.e2e-test.description }}"
     needs: [build-libs, lint, unit-tests]
     runs-on: ubuntu-latest
-    if: false
     strategy:
       fail-fast: false
       # max-parallel: 4
