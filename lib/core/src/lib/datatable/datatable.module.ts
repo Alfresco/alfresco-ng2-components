@@ -51,12 +51,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { IconModule } from '../icon/icon.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
-import { ResizableModule } from './directives/resizable/resizable.module';
 import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
 import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
 import { NumberCellComponent } from './components/number-cell/number-cell.component';
 import { LocalizedDatePipe } from '../pipes';
 import { IconCellComponent } from './components/icon-cell/icon-cell.component';
+import { ResizableDirective } from './directives/resizable/resizable.directive';
+import { ResizeHandleDirective } from './directives/resizable/resize-handle.directive';
 
 export const DATATABLE_DIRECTIVES = [
     BooleanCellComponent,
@@ -85,7 +86,6 @@ export const DATATABLE_DIRECTIVES = [
         IconModule,
         FormsModule,
         ReactiveFormsModule,
-        ResizableModule,
         ...DATATABLE_DIRECTIVES,
         LocalizedDatePipe
     ],
@@ -107,7 +107,9 @@ export const DATATABLE_DIRECTIVES = [
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        DropZoneDirective
+        DropZoneDirective,
+        ResizableDirective,
+        ResizeHandleDirective
     ],
     exports: [
         ...DATATABLE_DIRECTIVES,
@@ -129,7 +131,9 @@ export const DATATABLE_DIRECTIVES = [
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
         MainMenuDataTableTemplateDirective,
-        DropZoneDirective
+        DropZoneDirective,
+        ResizableDirective,
+        ResizeHandleDirective
     ]
 })
 export class DataTableModule {}
