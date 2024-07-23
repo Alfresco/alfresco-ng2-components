@@ -31,9 +31,7 @@ describe('HeaderComponent', () => {
         await TestBed.configureTestingModule({
             imports: [CommonModule, TranslateModule.forRoot(), HeaderComponent]
         }).compileComponents();
-    });
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(HeaderComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
