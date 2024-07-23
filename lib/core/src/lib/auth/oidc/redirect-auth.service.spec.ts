@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse } from 'angular-oauth2-oidc';
 import { Subject } from 'rxjs';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
@@ -31,7 +31,13 @@ describe('RedirectAuthService', () => {
     const oauthEvents$ = new Subject<OAuthEvent>();
     const mockOauthService: Partial<OAuthService> = {
         clearHashAfterLogin: false,
-        events: oauthEvents$
+        events: oauthEvents$,
+        configure: () => {},
+        hasValidAccessToken: jasmine.createSpy().and.returnValue(true),
+        setupAutomaticSilentRefresh: () => {
+            mockOauthService.silentRefresh();
+            mockOauthService.refreshToken();
+        }
     };
 
     beforeEach(() => {
@@ -45,8 +51,10 @@ describe('RedirectAuthService', () => {
             ]
         });
 
-        service = TestBed.inject(RedirectAuthService);
         TestBed.inject(OAuthService);
+        service = TestBed.inject(RedirectAuthService);
+        spyOn(service, 'ensureDiscoveryDocument').and.resolveTo(true);
+        mockOauthService.getAccessToken = () => 'access-token';
     });
 
     it('should emit event when token_received event is received', () => {
@@ -65,5 +73,24 @@ describe('RedirectAuthService', () => {
         oauthEvents$.next({ type: 'user_profile_loaded' } as OAuthEvent);
 
         expect(onTokenReceivedSpy).not.toHaveBeenCalled();
+    });
+
+    it('should call refresh token and silent refresh when automatic silent refresh is setup', async () => {
+        let refreshTokenCalled = false;
+        let silentRefreshCalled = false;
+
+        mockOauthService.refreshToken = async () => {
+            refreshTokenCalled = true;
+            return Promise.resolve({} as TokenResponse);
+        };
+        mockOauthService.silentRefresh = async () => {
+            silentRefreshCalled = true;
+            return Promise.resolve({} as OAuthEvent);
+        };
+
+        await service.init();
+
+        expect(refreshTokenCalled).toBe(true);
+        expect(silentRefreshCalled).toBe(true);
     });
 });
