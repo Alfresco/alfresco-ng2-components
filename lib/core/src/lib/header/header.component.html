@@ -29,7 +29,9 @@
 </ng-template>
 
 <ng-template #toolbarActions>
-    <ng-content select=".adf-toolbar-actions"></ng-content>
+    <div class="adf-toolbar-actions">
+        <ng-content select="[adf-toolbar-actions]"></ng-content>
+    </div>
 </ng-template>
 
 <ng-template #navbarTemplate>

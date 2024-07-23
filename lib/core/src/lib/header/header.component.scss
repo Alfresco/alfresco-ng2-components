@@ -22,7 +22,7 @@
             width: var(--adf-header-logo-width, --adf-header-logo-height);
         }
 
-        .adf-toolbar-actions {
+        .adf-toolbar-actions > * {
             display: flex;
             align-items: center;
             gap: var(--adf-toolbar-actions-gap, 10px);

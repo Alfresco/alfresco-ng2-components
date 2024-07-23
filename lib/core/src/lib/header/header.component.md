@@ -23,7 +23,7 @@ Displaying a minimal header with a logo and navbar:
 </adf-header>
 ```
 
-Toolbar actions can be added to the header by placing them inside a `div` element with the `adf-toolbar-actions` class.
+Toolbar actions can be added to the header by placing them inside an element with the `adf-toolbar-actions` attribute.
 
 ```html
 <adf-header
@@ -32,7 +32,7 @@ Toolbar actions can be added to the header by placing them inside a `div` elemen
     [title]="title"
     [navbarItems]="items"
 >
-    <div class="adf-toolbar-actions">
+    <div adf-toolbar-actions>
         <adf-toolbar-divider></adf-toolbar-divider>
         <adf-button variant="icon" icon="search" (click)="onSearchClick()"></adf-button>
         <adf-avatar [src]="src"></adf-avatar>
@@ -46,7 +46,7 @@ Displaying an extended header with toolbar actions:
 
 ```html
 <adf-header variant="extended" [logoSrc]="src" [title]="title" [navbarItems]="items">
-    <div class="adf-toolbar-actions">
+    <div adf-toolbar-actions>
         <adf-button variant="flat">Secondary</adf-button>
         <adf-button variant="flat" color="accent">Primary</adf-button>
 
