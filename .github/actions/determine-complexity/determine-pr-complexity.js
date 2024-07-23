@@ -21,7 +21,7 @@ function determineComplexity(changedFiles, totalFilesChanged, totalLinesChanged,
 
     // Determine packagesAffected and if the level should be major based on file paths
     for (let filePath of changedFiles) {
-        if (filePath.startsWith('lib/core/') || filePath.startsWith('lib/extensions/')) {
+        if (filePath.startsWith('lib/core/') || filePath.startsWith('lib/extensions/') || filePath.startsWith('lib/js-api/')) {
             level = 'major';
             packagesAffected.add(filePath.split('/')[2]);
         }
@@ -47,7 +47,7 @@ async function getPRDetails(github, core, owner, repo, pull_number, limitFileCha
         pull_number
     });
 
-    const complexity = determineComplexity(
+    const result = determineComplexity(
         files.map((file) => file.filename),
         files.length,
         files.reduce((total, file) => total + file.additions + file.deletions, 0),
@@ -55,45 +55,7 @@ async function getPRDetails(github, core, owner, repo, pull_number, limitFileCha
         limitLinesChanged
     );
 
-    let filesChanged = files.length;
-    let linesChanged = files.reduce((total, file) => total + file.additions + file.deletions, 0);
-
-    let level = 'unknown';
-    let packageName = 'unknown';
-    let packagesAffected = new Set();
-    for (let file of files) {
-        if (file.filename.startsWith('lib/core/')) {
-            level = 'major';
-            packagesAffected.add(file.filename.split('/')[2]);
-            break;
-        } else if (file.filename.startsWith('lib/extensions/')) {
-            level = 'major';
-            packagesAffected.add(file.filename.split('/')[2]);
-            break;
-        } else if (file.filename.startsWith('lib/contetent-services/') || file.filename.startsWith('lib/process-services-cloud/')) {
-            level = 'minor';
-            packagesAffected.add(file.filename.split('/')[2]);
-            break;
-        } else {
-            level = 'minor';
-            packagesAffected.add(packageName);
-        }
-    }
-
-    if (level !== 'major') {
-        if (filesChanged > limitFileChanged) {
-            level = 'major';
-        } else if (linesChanged > limitLinesChanged) {
-            level = 'major';
-        }
-    }
-
-    return {
-        filesChanged,
-        linesChanged,
-        level: level,
-        packagesAffected: Array.from(packagesAffected)
-    };
+    return result;
 }
 
 module.exports = async ({ core, github, context, fileChangedLimit = 5, linesChangedLimit = 50 }) => {
