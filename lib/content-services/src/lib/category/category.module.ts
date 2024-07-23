@@ -15,27 +15,12 @@
  * limitations under the License.
  */
 
-import { CoreModule } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { ContentDirectiveModule } from '../directives/content-directive.module';
-import { MaterialModule } from '../material.module';
 import { CategoriesManagementComponent } from './categories-management/categories-management.component';
 
+/** @deprecated use `CategoriesManagementComponent` standalone component instead */
 @NgModule({
-    imports: [
-        CommonModule,
-        CoreModule,
-        MaterialModule,
-        TranslateModule,
-        ContentDirectiveModule
-    ],
-    declarations: [
-        CategoriesManagementComponent
-    ],
-    exports: [
-        CategoriesManagementComponent
-    ]
+    imports: [CategoriesManagementComponent],
+    exports: [CategoriesManagementComponent]
 })
 export class CategoriesModule {}

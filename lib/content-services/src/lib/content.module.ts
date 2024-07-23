@@ -42,10 +42,10 @@ import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
-import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
+import { CategoriesManagementComponent } from './category';
 
 @NgModule({
     imports: [
@@ -76,7 +76,7 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        CategoriesModule
+        CategoriesManagementComponent
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
@@ -102,7 +102,7 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         TreeModule,
         SearchTextModule,
         AlfrescoViewerModule,
-        CategoriesModule
+        CategoriesManagementComponent
     ]
 })
 export class ContentModule {

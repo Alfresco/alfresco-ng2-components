@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@alfresco/adf-core';
-
 import { MaterialModule } from '../material.module';
 import { FolderDialogComponent } from './folder.dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
@@ -42,17 +41,7 @@ import { CategoriesModule } from '../category';
         DownloadZipDialogModule,
         CategoriesModule
     ],
-    declarations: [
-        FolderDialogComponent,
-        NodeLockDialogComponent,
-        LibraryDialogComponent,
-        CategorySelectorDialogComponent
-    ],
-    exports: [
-        FolderDialogComponent,
-        NodeLockDialogComponent,
-        LibraryDialogComponent,
-        CategorySelectorDialogComponent
-    ]
+    declarations: [FolderDialogComponent, NodeLockDialogComponent, LibraryDialogComponent, CategorySelectorDialogComponent],
+    exports: [FolderDialogComponent, NodeLockDialogComponent, LibraryDialogComponent, CategorySelectorDialogComponent]
 })
 export class DialogModule {}
