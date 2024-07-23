@@ -16,14 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UserAccessService } from '../services/user-access.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuardSsoRoleService implements CanActivate {
+export class AuthGuardSsoRoleService  {
     constructor(private userAccessService: UserAccessService,
                 private router: Router,
                 private dialog: MatDialog) {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, UrlTree } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
@@ -25,7 +25,7 @@ import { Observable } from 'rxjs';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
-export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
+export abstract class AuthGuardBase  {
     protected get withCredentials(): boolean {
         return this.appConfigService.get<boolean>('auth.withCredentials', false);
     }
