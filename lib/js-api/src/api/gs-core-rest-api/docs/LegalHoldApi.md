@@ -188,8 +188,6 @@ legalHoldApi.unassignHold('holdId', 'nodeId').then(
 
 # **createHold**
 
-> HoldEntry createHold(filePlanId, holds)
-
 Create legal hold.
 
 ### Example
@@ -235,8 +233,6 @@ legalHoldApi.createHold('-filePlan-', hold).then(
 
 # **createHolds**
 
-> HoldPaging createHolds(filePlanId, holds)
-
 Create legal holds list.
 
 ### Example
@@ -252,7 +248,7 @@ this.alfrescoApi.setConfig({
 
 const legalHoldApi = new LegalHoldApi(this.alfrescoApi);
 
-let opts = [
+let holds = [
     {
         name: 'Hold 1',
         reason: 'Reason 1'
