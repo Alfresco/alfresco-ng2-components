@@ -40,12 +40,12 @@ import { versionCompatibilityFactory } from './version-compatibility/version-com
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
-import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
 import { CategoriesManagementComponent } from './category';
+import { TreeComponent } from './tree';
 
 @NgModule({
     imports: [
@@ -73,7 +73,7 @@ import { CategoriesManagementComponent } from './category';
         AspectListModule,
         VersionCompatibilityModule,
         NodeCommentsModule,
-        TreeModule,
+        TreeComponent,
         SearchTextModule,
         AlfrescoViewerModule,
         CategoriesManagementComponent
@@ -99,7 +99,7 @@ import { CategoriesManagementComponent } from './category';
         ContentTypeModule,
         VersionCompatibilityModule,
         NodeCommentsModule,
-        TreeModule,
+        TreeComponent,
         SearchTextModule,
         AlfrescoViewerModule,
         CategoriesManagementComponent
