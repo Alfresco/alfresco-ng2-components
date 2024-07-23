@@ -8,8 +8,9 @@ All URIs are relative to _https://localhost/alfresco/api/-default-/public/gs/ver
 | [**assignHold**](LegalHoldApi.md#assignHold)     | **POST** /holds/{holdId}/children            | Assign node to legal hold     |
 | [**assignHolds**](LegalHoldApi.md#assignHolds)   | **POST** /holds/{holdId}/children            | Assign nodes to legal hold    |
 | [**unassignHold**](LegalHoldApi.md#unassignHold) | **DELETE** /holds/{holdId}/children/{nodeId} | Unassign node from legal hold |
-[**createHold**](LegalHoldApi.md#createHold) | **POST** /file-plans/{filePlanId}/holds | Create one hold
-[**createHolds**](LegalHoldApi.md#createHolds) | **POST** /file-plans/{filePlanId}/holds | Create list of holds
+| [**createHold**](LegalHoldApi.md#createHold)     | **POST** /file-plans/{filePlanId}/holds      | Create one hold               |
+| [**createHolds**](LegalHoldApi.md#createHolds)   | **POST** /file-plans/{filePlanId}/holds      | Create list of holds          |
+| [**bulkHold**](LegalHoldApi.md#bulkHold)         | **POST** /holds/{holdId}/bulk                | Bulk add of nodes to the hold |
 
 <a name="getHolds"></a>
 
@@ -133,7 +134,7 @@ legalHoldApi.assignHolds([{ id: 'foo' }, { id: 'bar' }], 'holdId').then(
 ### Parameters
 
 | Name        | Type                 | Default value | Description                                          |
-| ----------- |----------------------| ------------- | ---------------------------------------------------- |
+| ----------- | -------------------- | ------------- | ---------------------------------------------------- |
 | **nodeIds** | **{ id: string }[]** |               | The list with id of nodes to assign to existing hold |
 | **holdId**  | **string**           |               | The identifier of a hold.                            |
 
@@ -184,7 +185,9 @@ legalHoldApi.unassignHold('holdId', 'nodeId').then(
 **void**
 
 <a name="createHold"></a>
+
 # **createHold**
+
 > HoldEntry createHold(filePlanId, holds)
 
 Create legal hold.
@@ -202,33 +205,35 @@ this.alfrescoApi.setConfig({
 
 const legalHoldApi = new LegalHoldApi(this.alfrescoApi);
 
-const hold = { 
-  name: 'Hold 1',
-  reason: 'Reason 1'
+const hold = {
+    name: 'Hold 1',
+    reason: 'Reason 1'
 };
 
-legalHoldApi.createHold('-filePlan-', hold).then((data) => {
-  console.log('API called successfully. Returned data: ' + data);
-}, function(error) {
-  console.error(error);
-});
-
+legalHoldApi.createHold('-filePlan-', hold).then(
+    (data) => {
+        console.log('API called successfully. Returned data: ' + data);
+    },
+    function (error) {
+        console.error(error);
+    }
+);
 ```
 
 ### Parameters
 
-Name | Type | Default value  | Description
-------------- | ------------- | ------------- | -------------
- **filePlanId** | **string** | | The site details 
- **hold** | **Hold**|  | Hold to create.
+| Name           | Type       | Default value | Description      |
+| -------------- | ---------- | ------------- | ---------------- |
+| **filePlanId** | **string** |               | The site details |
+| **hold**       | **Hold**   |               | Hold to create.  |
 
 ### Return type
 
 [**HoldEntry**](./HoldEntry.md)
 
 <a name="createHolds"></a>
+
 # **createHolds**
-> HoldPaging createHolds(filePlanId, holds)
 
 Create legal holds list.
 
@@ -245,8 +250,8 @@ this.alfrescoApi.setConfig({
 
 const legalHoldApi = new LegalHoldApi(this.alfrescoApi);
 
-let opts = [
-    { 
+let holds = [
+    {
         name: 'Hold 1',
         reason: 'Reason 1'
     },
@@ -257,21 +262,66 @@ let opts = [
     }
 ];
 
-legalHoldApi.createHolds('-filePlan-', holds).then((data) => {
-  console.log('API called successfully. Returned data: ' + data);
-}, function(error) {
-  console.error(error);
-});
-
+legalHoldApi.createHolds('-filePlan-', holds).then(
+    (data) => {
+        console.log('API called successfully. Returned data: ' + data);
+    },
+    function (error) {
+        console.error(error);
+    }
+);
 ```
 
 ### Parameters
 
-Name | Type | Default value  | Description
-------------- | ------------- | ------------- | -------------
- **filePlanId** | **string** | | The site details 
- **holds** | **Hold[]**|  | Array of new holds.
+| Name           | Type       | Default value | Description         |
+| -------------- | ---------- | ------------- | ------------------- |
+| **filePlanId** | **string** |               | The site details    |
+| **holds**      | **Hold[]** |               | Array of new holds. |
 
 ### Return type
 
 [**HoldPaging**](./HoldPaging.md)
+
+<a name="bulkHold"></a>
+
+# **bulkHold**
+
+> BulkHoldAddResponse bulkHold(holdId, query, language)
+
+Start the asynchronous bulk process for a hold with id `holdId` based on search query results.
+
+### Example
+
+```javascript
+import LegalHoldApi from 'LegalHoldApi';
+import { AlfrescoApi } from '@alfresco/js-api';
+
+this.alfrescoApi = new AlfrescoApi();
+this.alfrescoApi.setConfig({
+    hostEcm: 'http://127.0.0.1:8080'
+});
+
+const legalHoldApi = new LegalHoldApi(this.alfrescoApi);
+
+legalHoldApi.bulkHold('holdId', 'SITE:swsdp and TYPE:content', 'afts').then(
+    (data) => {
+        console.log('API called successfully. Returned data: ' + data);
+    },
+    function (error) {
+        console.error(error);
+    }
+);
+```
+
+### Parameters
+
+| Name         | Type       | Default value | Description              |
+| ------------ | ---------- | ------------- | ------------------------ |
+| **holdId**   | **string** |               | The identifier of a hold |
+| **query**    | **string** |               | Search query.            |
+| **language** | **string** |               | Language.                |
+
+### Return type
+
+[**BulkHoldAddResponse**](./BulkHoldAddResponse.md)
