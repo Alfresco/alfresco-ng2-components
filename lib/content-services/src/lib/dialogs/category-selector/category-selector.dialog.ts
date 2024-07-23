@@ -19,7 +19,7 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
-import { CategoriesManagementComponent, CategoriesManagementMode } from '../category';
+import { CategoriesManagementComponent, CategoriesManagementMode } from '../../category';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';

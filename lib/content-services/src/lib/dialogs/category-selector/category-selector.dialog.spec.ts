@@ -23,7 +23,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService, AppConfigServiceMock, TranslationMock, TranslationService } from '@alfresco/adf-core';
-import { CategoriesManagementComponent } from '../category';
+import { CategoriesManagementComponent } from '../../category';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('Category selector dialog component', () => {
