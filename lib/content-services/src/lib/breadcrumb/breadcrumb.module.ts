@@ -15,27 +15,15 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
-import { CoreModule } from '@alfresco/adf-core';
 
+export const BREADCRUMB_DIRECTIVES = [BreadcrumbComponent, DropdownBreadcrumbComponent] as const;
+
+/** @deprecated use `...BREADCRUMB_DIRECTIVES` instead */
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule
-    ],
-    exports: [
-        BreadcrumbComponent,
-        DropdownBreadcrumbComponent
-    ],
-    declarations: [
-        BreadcrumbComponent,
-        DropdownBreadcrumbComponent
-    ]
+    imports: [...BREADCRUMB_DIRECTIVES],
+    exports: [...BREADCRUMB_DIRECTIVES]
 })
 export class BreadcrumbModule {}

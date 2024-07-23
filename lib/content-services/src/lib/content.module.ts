@@ -19,14 +19,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
-
 import { MaterialModule } from './material.module';
-
 import { TagModule } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
-import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
+import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { VersionManagerModule } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
 import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
@@ -63,7 +61,7 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         UploadModule,
         MaterialModule,
         DropdownSitesComponent,
-        BreadcrumbModule,
+        ...BREADCRUMB_DIRECTIVES,
         ContentNodeSelectorModule,
         ContentNodeShareModule,
         ContentMetadataModule,
@@ -88,7 +86,7 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         UploadModule,
         SearchModule,
         DropdownSitesComponent,
-        BreadcrumbModule,
+        ...BREADCRUMB_DIRECTIVES,
         ContentNodeSelectorModule,
         ContentNodeShareModule,
         ContentMetadataModule,
