@@ -911,7 +911,7 @@ describe('FormFieldModel', () => {
             expect(field.restResponsePath).toEqual('fake-response-path');
         });
 
-        it('should skip list of static options and assign empty array instead', () => {
+        it('should not consider the static list of option in case of rest type', () => {
             const form = new FormModel();
             const field = new FormFieldModel(form, {
                 fieldType: 'HeaderFieldtype',
