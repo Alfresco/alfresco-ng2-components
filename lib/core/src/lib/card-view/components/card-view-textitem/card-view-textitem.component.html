@@ -111,11 +111,12 @@
         (keyup.enter)="clicked()"
         (click)="clicked()"
     >
-        <mat-form-field class="adf-property-field adf-card-textitem-field">
+        <mat-form-field class="adf-property-field adf-card-textitem-field" [floatLabel]="'always'">
             <mat-label
                 *ngIf="showProperty || isEditable"
                 [attr.data-automation-id]="'card-textitem-label-' + property.key"
                 class="adf-property-label"
+                [ngClass]="{ 'adf-property-value-editable': editable }"
             >
                 {{ property.label | translate }}
             </mat-label>

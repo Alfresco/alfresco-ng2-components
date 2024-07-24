@@ -18,8 +18,9 @@
     }
 
     .adf-textitem-action {
-        width: 20px;
-        height: 20px;
+        width: 30px;
+        height: 30px;
+        padding: 0;
         line-height: 20px;
         color: var(--adf-theme-foreground-text-color-025);
 
@@ -27,6 +28,15 @@
         &:focus {
             color: var(--adf-theme-foreground-text-color);
         }
+
+        #{$mat-button-touch-target} {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    #{$mat-form-field-icon-suffix} {
+        align-self: baseline;
     }
 
     .adf-textitem-chip-list-container {
