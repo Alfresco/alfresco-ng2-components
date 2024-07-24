@@ -124,6 +124,22 @@ describe('FormFieldModel', () => {
             expect(field.value).toEqual('id_one');
         });
 
+        it('should add value (selected options) to field options if NOT present (multiple selection)', () => {
+            const selectedOptions = [
+                { id: 'id_one', name: 'One' },
+                { id: 'id_two', name: 'Two' }
+            ];
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [],
+                value: selectedOptions,
+                selectionType: 'multiple'
+            });
+
+            expect(field.options).toEqual(selectedOptions);
+            expect(field.value).toEqual(selectedOptions);
+        });
+
         it('should assign "empty" option as value if value is null and "empty" option is present in options', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
@@ -531,56 +547,43 @@ describe('FormFieldModel', () => {
     });
 
     describe('radio buttons field model instantiation', () => {
+        const mockOptions = [
+            { id: 'opt1', name: 'Option 1' },
+            { id: 'opt2', name: 'Option 2' }
+        ];
+
         describe('should parse and resolve selected option id in case of', () => {
             it('string - id', () => {
                 const field = new FormFieldModel(new FormModel(), {
                     type: FormFieldTypes.RADIO_BUTTONS,
-                    options: [
-                        { id: 'opt1', name: 'Option 1' },
-                        { id: 'opt2', name: 'Option 2' }
-                    ],
+                    options: mockOptions,
                     value: 'opt2'
                 });
 
                 expect(field.value).toBe('opt2');
-                expect(field.options).toEqual([
-                    { id: 'opt1', name: 'Option 1' },
-                    { id: 'opt2', name: 'Option 2' }
-                ]);
+                expect(field.options).toEqual(mockOptions);
             });
 
             it('string - name', () => {
                 const field = new FormFieldModel(new FormModel(), {
                     type: FormFieldTypes.RADIO_BUTTONS,
-                    options: [
-                        { id: 'opt1', name: 'Option 1' },
-                        { id: 'opt2', name: 'Option 2' }
-                    ],
+                    options: mockOptions,
                     value: 'Option 1'
                 });
 
                 expect(field.value).toBe('opt1');
-                expect(field.options).toEqual([
-                    { id: 'opt1', name: 'Option 1' },
-                    { id: 'opt2', name: 'Option 2' }
-                ]);
+                expect(field.options).toEqual(mockOptions);
             });
 
             it('object with id and name', () => {
                 const field = new FormFieldModel(new FormModel(), {
                     type: FormFieldTypes.RADIO_BUTTONS,
-                    options: [
-                        { id: 'opt1', name: 'Option 1' },
-                        { id: 'opt2', name: 'Option 2' }
-                    ],
+                    options: mockOptions,
                     value: { id: 'opt2', name: 'Option 2' }
                 });
 
                 expect(field.value).toBe('opt2');
-                expect(field.options).toEqual([
-                    { id: 'opt1', name: 'Option 1' },
-                    { id: 'opt2', name: 'Option 2' }
-                ]);
+                expect(field.options).toEqual(mockOptions);
             });
 
             it('object with id, name and options', () => {
@@ -590,18 +593,12 @@ describe('FormFieldModel', () => {
                     value: {
                         id: 'opt2',
                         name: 'Option 2',
-                        options: [
-                            { id: 'opt1', name: 'Option 1' },
-                            { id: 'opt2', name: 'Option 2' }
-                        ]
+                        options: mockOptions
                     }
                 });
 
                 expect(field.value).toBe('opt2');
-                expect(field.options).toEqual([
-                    { id: 'opt1', name: 'Option 1' },
-                    { id: 'opt2', name: 'Option 2' }
-                ]);
+                expect(field.options).toEqual(mockOptions);
             });
         });
 
