@@ -166,8 +166,12 @@ describe('Template transclusion', () => {
 
         mediaQueryList = {
             matches: false,
-            addListener: () => {},
-            removeListener: () => {}
+            addListener: () => {
+                /* noop */
+            },
+            removeListener: () => {
+                /* noop */
+            }
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);

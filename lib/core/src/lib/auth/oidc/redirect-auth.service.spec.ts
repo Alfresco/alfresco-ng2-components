@@ -32,7 +32,9 @@ describe('RedirectAuthService', () => {
     const mockOauthService: Partial<OAuthService> = {
         clearHashAfterLogin: false,
         events: oauthEvents$,
-        configure: () => {},
+        configure: () => {
+            /* noop */
+        },
         hasValidAccessToken: jasmine.createSpy().and.returnValue(true),
         setupAutomaticSilentRefresh: () => {
             mockOauthService.silentRefresh();
