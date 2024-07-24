@@ -75,4 +75,3 @@ The following CSS classes are available for theming:
 | `--adf-avatar-font-size`        | `14px`    | The font size of the initials.      |
 | `--adf-avatar-font-weight`      | `500`     | The font weight of the initials.    |
 | `--adf-avatar-cursor`           | `auto`    | The cursor style.                   |
-```

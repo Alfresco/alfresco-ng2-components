@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
-import { SidenavLayoutModule } from '../../layout.module';
+import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { importProvidersFrom } from '@angular/core';
 
@@ -26,7 +26,7 @@ export default {
     title: 'Core/Layout/Sidebar Action Menu',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, SidenavLayoutModule]
+            imports: [CoreStoryModule, ...LAYOUT_DIRECTIVES]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -71,7 +71,7 @@ export default {
     }
 } as Meta<SidebarActionMenuComponent>;
 
-const template: StoryFn<SidenavLayoutModule> = (args) => ({
+const template: StoryFn<SidebarActionMenuComponent> = (args) => ({
     props: args
 });
 

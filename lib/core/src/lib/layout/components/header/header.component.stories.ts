@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
-import { SidenavLayoutModule } from '../../layout.module';
+import { LAYOUT_DIRECTIVES } from '../../layout.module';
 import { HeaderLayoutComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { importProvidersFrom } from '@angular/core';
@@ -27,7 +27,7 @@ export default {
     title: 'Core/Layout/Header',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, SidenavLayoutModule, RouterTestingModule]
+            imports: [CoreStoryModule, ...LAYOUT_DIRECTIVES, RouterTestingModule]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -131,7 +131,7 @@ export default {
     }
 } as Meta<HeaderLayoutComponent>;
 
-const template: StoryFn<SidenavLayoutModule> = (args) => ({
+const template: StoryFn<HeaderLayoutComponent> = (args) => ({
     props: args
 });
 

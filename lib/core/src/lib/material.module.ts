@@ -44,6 +44,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
 
+/** @deprecated This module is deprecated and will be removed in a future release. */
 @NgModule({
     imports: [
         MatAutocompleteModule,

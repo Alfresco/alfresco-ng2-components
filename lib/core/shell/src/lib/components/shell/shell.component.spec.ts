@@ -17,7 +17,7 @@
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { AppConfigService, SidenavLayoutModule } from '@alfresco/adf-core';
+import { AppConfigService, LAYOUT_DIRECTIVES } from '@alfresco/adf-core';
 import { ShellLayoutComponent } from './shell.component';
 import { Router, NavigationStart, RouterModule } from '@angular/router';
 import { of, Subject } from 'rxjs';
@@ -62,7 +62,7 @@ describe('AppLayoutComponent', () => {
                 CommonModule,
                 NoopAnimationsModule,
                 HttpClientModule,
-                SidenavLayoutModule,
+                ...LAYOUT_DIRECTIVES,
                 ExtensionsModule,
                 RouterModule.forChild([]),
                 TranslateModule.forRoot(),
