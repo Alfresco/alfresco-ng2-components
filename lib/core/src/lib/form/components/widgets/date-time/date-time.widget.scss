@@ -15,9 +15,8 @@
     &-left-label-input-datepicker {
         #{$mat-form-field-suffix} {
             top: 0;
-
         }
-        #{$mat-form--text-field-infix} {
+        #{$mat-form-text-field-infix} {
             width: 100%;
         }
     }

@@ -101,7 +101,7 @@
     }
 
     .adf-alfresco-logo {
-        padding: 24px 16px 24px;
+        padding: 24px 16px;
     }
 
     .adf-alfresco-logo img {
@@ -217,7 +217,7 @@
                     padding-bottom: 6px;
                 }
 
-                #{$mat-floating-label--required} {
+                #{$mat-floating-label-required} {
                     &::after {
                         font-size: var(--theme-subheading-2-font-size);
                     }
