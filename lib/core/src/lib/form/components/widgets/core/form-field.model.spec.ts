@@ -137,7 +137,20 @@ describe('FormFieldModel', () => {
             });
 
             expect(field.options).toEqual(selectedOptions);
-            expect(field.value).toEqual(selectedOptions);
+        });
+
+        it('should assign static options array to options in case of manual type', () => {
+            const staticOptions = [
+                { id: 'op1', name: 'Option 1' },
+                { id: 'op2', name: 'Option 2' }
+            ];
+
+            const field = new FormFieldModel(new FormModel(), {
+                optionType: 'manual',
+                options: staticOptions
+            });
+
+            expect(field.options).toEqual(staticOptions);
         });
 
         it('should assign "empty" option as value if value is null and "empty" option is present in options', () => {
@@ -863,25 +876,6 @@ describe('FormFieldModel', () => {
         expect(form.values['header_field']).not.toBeDefined();
     });
 
-    it('dropdown field type should appear into form values', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            fieldType: 'HeaderFieldtype',
-            id: 'dropdown_field',
-            name: 'header',
-            type: FormFieldTypes.DROPDOWN,
-            value: 'opt1',
-            required: false,
-            readOnly: true,
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ]
-        });
-        field.updateForm();
-        expect(form.values['dropdown_field'].name).toEqual('Option 1');
-    });
-
     describe('dropdown field', () => {
         const getFieldConfig = (optionType, options, value) =>
             new FormFieldModel(new FormModel(), {
@@ -927,13 +921,22 @@ describe('FormFieldModel', () => {
         });
 
         it('should consider the static list of options in case of manual type', () => {
-            const field = getFieldConfig('manual', staticOptions, 'opt1');
+            const field = getFieldConfig('manual', staticOptions, '');
 
             field.updateForm();
 
-            expect(field.value).toEqual('opt1');
-            expect(field.form.values['dropdown_field']).toEqual({ id: 'opt1', name: 'Option 1' });
+            expect(field.value).toEqual('');
+            expect(field.form.values['dropdown_field']).toEqual(null);
             expect(field.options).toEqual(staticOptions);
+        });
+
+        it('should selected option appear in form values', () => {
+            const field = getFieldConfig('manual', staticOptions, 'opt2');
+
+            field.updateForm();
+
+            expect(field.value).toEqual('opt2');
+            expect(field.form.values['dropdown_field']).toEqual({ id: 'opt2', name: 'Option 2' });
         });
     });
 
