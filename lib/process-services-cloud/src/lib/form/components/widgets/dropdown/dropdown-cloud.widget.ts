@@ -24,6 +24,7 @@ import {
     FormFieldTypes,
     FormService,
     RuleEntry,
+    VariableConfig,
     WidgetComponent
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
@@ -66,6 +67,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     list$: Observable<FormFieldOption[]>;
     filter$ = new BehaviorSubject<string>('');
 
+    private readonly defaultVariableName = '';
     private readonly defaultVariableOptionId = 'id';
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
@@ -80,6 +82,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.setPreviewState();
         this.checkFieldOptionsSource();
         this.updateOptions();
+        this.setDefaultVariableConfig();
     }
 
     private checkFieldOptionsSource(): void {
@@ -101,6 +104,19 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             default:
                 break;
         }
+    }
+
+    private setDefaultVariableConfig(): void {
+        if (!this.field.json) {
+            return;
+        }
+
+        this.field.json.variableConfig = {
+            variableName: this.field.json?.variableConfig?.variableName || this.defaultVariableName,
+            optionsPath: this.field.json?.variableConfig?.optionsPath || this.defaultVariableOptionPath,
+            optionsId: this.field.json?.variableConfig?.optionsId || this.defaultVariableOptionId,
+            optionsLabel: this.field.json?.variableConfig?.optionsLabel || this.defaultVariableOptionLabel
+        } as VariableConfig;
     }
 
     private persistFieldOptionsFromVariable(): void {

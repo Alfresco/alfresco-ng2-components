@@ -808,12 +808,30 @@ describe('DropdownCloudWidgetComponent', () => {
                 }
             });
 
+        const getVariableDropdownWidgetWithoutConfig = () =>
+            new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
+                id: 'variable-dropdown-id',
+                name: 'variable-options-dropdown',
+                type: 'dropdown',
+                optionType: 'variable'
+            });
+
         const checkDropdownVariableOptionsFailed = () => {
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
             expect(failedErrorMsgElement.nativeElement.textContent.trim()).toBe(errorIcon.concat('FORM.FIELD.VARIABLE_DROPDOWN_OPTIONS_FAILED'));
 
             expect(widget.field.options.length).toEqual(0);
         };
+
+        it('should add default variable config when variable config property is not provided', () => {
+            widget.field = getVariableDropdownWidgetWithoutConfig();
+            fixture.detectChanges();
+
+            expect(widget.field.json.variableConfig.variableName).toBe('');
+            expect(widget.field.json.variableConfig.optionsPath).toBe('data');
+            expect(widget.field.json.variableConfig.optionsId).toBe('id');
+            expect(widget.field.json.variableConfig.optionsLabel).toBe('name');
+        });
 
         it('should display options persisted from process variable', async () => {
             widget.field = getVariableDropdownWidget(
