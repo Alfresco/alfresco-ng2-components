@@ -1,7 +1,6 @@
 @import 'styles/mat-selectors';
 
 .adf-property-list {
-    background: var(--adf-card-view-background);
     border: var(--adf-card-view-border);
     border-color: var(--adf-card-view-border-color);
     border-radius: var(--adf-card-view-border-radius);
@@ -26,12 +25,6 @@
     }
 
     .adf-property {
-        .adf-card-view-textitem {
-            .adf-property-field {
-                padding-top: 0;
-            }
-        }
-
         .adf-property-field {
             width: 100%;
 
@@ -77,7 +70,13 @@
 
                 &.adf-property-field-label--empty {
                     transform: translateY(-1.3437em) scale(1);
-             }
+                }
+            }
+        }
+
+        .adf-card-view-textitem {
+            .adf-property-field {
+                padding-top: 0;
             }
         }
     }
