@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
-
 import { MaterialModule } from './material.module';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CardViewModule } from './card-view/card-view.module';
@@ -32,7 +31,7 @@ import { PaginationModule } from './pagination/pagination.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
-import { SidenavLayoutModule } from './layout/layout.module';
+import { LAYOUT_DIRECTIVES } from './layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { CommentListModule } from './comments/comment-list/comment-list.module';
 import { TemplateModule } from './templates/template.module';
@@ -45,7 +44,6 @@ import { PipeModule } from './pipes/pipe.module';
 
 import { TranslationService } from './translation/translation.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
-import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './common/services/directionality-config-factory';
@@ -67,6 +65,7 @@ import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
 import { AppConfigPipe, StoragePrefixFactory } from './app-config';
 import { UnsavedChangesDialogModule } from './dialogs';
 import { DynamicChipListModule } from './dynamic-chip-list';
+import { IconComponent } from './icon';
 
 @NgModule({
     imports: [
@@ -74,7 +73,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         ExtensionsModule,
         ...ABOUT_DIRECTIVES,
         ViewerModule,
-        SidenavLayoutModule,
+        ...LAYOUT_DIRECTIVES,
         PipeModule,
         CommonModule,
         IdentityUserInfoModule,
@@ -95,7 +94,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         InfoDrawerModule,
         DataTableModule,
         TemplateModule,
-        IconModule,
+        IconComponent,
         SortingPickerModule,
         NotificationHistoryModule,
         SearchTextModule,
@@ -111,7 +110,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
     exports: [
         ...ABOUT_DIRECTIVES,
         ViewerModule,
-        SidenavLayoutModule,
+        ...LAYOUT_DIRECTIVES,
         PipeModule,
         CommonModule,
         DirectiveModule,
@@ -135,7 +134,7 @@ import { DynamicChipListModule } from './dynamic-chip-list';
         TranslateModule,
         TemplateModule,
         SortingPickerModule,
-        IconModule,
+        IconComponent,
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule,

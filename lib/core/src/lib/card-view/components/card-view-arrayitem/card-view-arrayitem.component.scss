@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 .adf {
     &-array-item-icon {
         font-size: var(--theme-subheading-2-font-size);
@@ -21,7 +23,7 @@
     }
 
     &-array-item-more-chip-container {
-        &.mat-card {
+        &#{$mat-card} {
             box-shadow: none;
             max-height: 300px;
             overflow-y: auto;
@@ -29,7 +31,7 @@
     }
 
     &-property-value {
-        .mat-chip-list {
+        #{$mat-chip-list} {
             padding-top: 6px;
         }
     }
@@ -41,12 +43,16 @@
         place-content: center space-between;
         align-items: center;
         background: var(--adf-card-view-array-item-background);
-        border: var(--adf-card-view-array-item-border);
         border-color: var(--adf-card-view-array-item-border-color);
         border-radius: var(--adf-card-view-array-item-border-radius);
 
-        .mat-chip:hover {
+        #{$mat-chip}:hover {
             cursor: pointer;
         }
+    }
+
+    &-card-view-array-chip-content {
+        align-items: center;
+        display: flex;
     }
 }

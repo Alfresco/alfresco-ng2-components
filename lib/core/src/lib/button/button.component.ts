@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
@@ -43,4 +43,8 @@ export class ButtonComponent {
     @Input() ariaLabel?: string;
     @Input() ariaHidden?: boolean;
     @Input() testId?: string;
+
+    @HostBinding('style.--adf-button-icon-size')
+    @Input()
+    iconSize = getComputedStyle(document.documentElement).getPropertyValue('--adf-button-icon-size');
 }

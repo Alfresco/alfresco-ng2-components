@@ -41,7 +41,7 @@
                        class="adf-userinfo-tab" [class.adf-hide-tab]="!ecmUser">
             <mat-tab label="{{ 'USER_PROFILE.TAB.CS' | translate }}" role="dialog"
                      *ngIf="mode===userInfoMode.ALL">
-                <mat-card class="adf-userinfo-card" *ngIf="ecmUser">
+                <mat-card appearance="outlined" class="adf-userinfo-card" *ngIf="ecmUser">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + ecmBackgroundImage + ')'">
                         <div *ngIf="ecmUser.avatarId; else initialTemplate"
@@ -54,7 +54,7 @@
                                 [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
                         </ng-template>
 
-                        <div class="mat-title" id="ecm-username">{{ecmUser | fullName}}</div>
+                        <div class="mat-headline-6" id="ecm-username">{{ecmUser | fullName}}</div>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="adf-userinfo-supporting-text">
@@ -75,7 +75,7 @@
             </mat-tab>
             <mat-tab id="bpm-panel" label="{{ 'USER_PROFILE.TAB.PS' | translate }}" role="dialog"
                      *ngIf="mode===userInfoMode.PROCESS || mode===userInfoMode.ALL">
-                <mat-card class="adf-userinfo-card">
+                <mat-card appearance="outlined" class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header"
                                      [style.background-image]="'url(' + bpmBackgroundImage + ')'">
                         <img *ngIf="bpmUser.pictureId; else initialTemplate"
@@ -85,7 +85,7 @@
                             <div
                                 [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'"></div>
                         </ng-template>
-                        <div class="mat-title" id="bpm-username">{{bpmUser | fullName}}</div>
+                        <div class="mat-headline-6" id="bpm-username">{{bpmUser | fullName}}</div>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="adf-userinfo-supporting-text">

@@ -1,5 +1,8 @@
+@import 'styles/mat-selectors';
+
 /* cspell: disable-next-line */
 /* stylelint-disable scss/at-extend-no-missing-placeholder */
+
 .adf-full-screen {
     width: 100%;
     height: 100%;
@@ -31,8 +34,7 @@
     }
 
     &-toolbar {
-        /* stylelint-disable-next-line selector-class-pattern */
-        .mat-toolbar {
+        #{$mat-toolbar} {
             background-color: var(--adf-theme-background-card-color-087);
         }
     }
@@ -74,14 +76,9 @@
             flex-direction: column;
             height: 100%;
 
-            mat-card-content {
+            #{$mat-card-content} {
                 height: 100%;
                 overflow: hidden auto;
-            }
-
-            mat-card-actions {
-                display: flex;
-                justify-content: flex-end;
             }
         }
     }

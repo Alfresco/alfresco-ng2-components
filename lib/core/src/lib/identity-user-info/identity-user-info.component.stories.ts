@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    Meta,
-    moduleMetadata,
-    Story
-} from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
 import { IdentityUserInfoModule } from './identity-user-info.module';
+import { importProvidersFrom } from '@angular/core';
 
 const fakeIdentityUser = {
     familyName: 'Identity',
@@ -36,65 +33,58 @@ export default {
     title: 'Core/Identity User Info/Identity User Info',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, IdentityUserInfoModule]
+            imports: [IdentityUserInfoModule]
+        }),
+        applicationConfig({
+            providers: [importProvidersFrom(CoreStoryModule)]
         })
     ],
     argTypes: {
         isLoggedIn: {
-            description:
-                'Determines if user is logged in',
+            description: 'Determines if user is logged in',
             control: 'boolean',
-            defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         identityUser: {
-            description:
-                'Identity User Info',
+            description: 'Identity User Info',
             control: 'object',
             table: {
                 type: { summary: 'IdentityUserModel' }
             }
         },
         menuPositionX: {
-            description:
-                'Material Angular menu horizontal position in regard to User Info',
+            description: 'Material Angular menu horizontal position in regard to User Info',
             control: 'radio',
             options: ['before', 'after'],
-            defaultValue: 'after',
             table: {
                 type: { summary: 'MenuPositionX' },
                 defaultValue: { summary: 'after' }
             }
         },
         menuPositionY: {
-            description:
-                'Material Angular menu vertical position in regard to User Info',
+            description: 'Material Angular menu vertical position in regard to User Info',
             control: 'radio',
             options: ['above', 'below'],
-            defaultValue: 'below',
             table: {
                 type: { summary: 'MenuPositionY' },
                 defaultValue: { summary: 'below' }
             }
         },
         showName: {
-            description:
-                'Determines if name should be shown next to user avatar',
+            description: 'Determines if name should be shown next to user avatar',
             control: 'boolean',
-            defaultValue: true,
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: true }
+                defaultValue: { summary: 'true' }
             }
         },
         namePosition: {
             description: 'User name position in regard to avatar',
             control: 'radio',
             options: ['left', 'right'],
-            defaultValue: 'right',
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'right' }
@@ -114,15 +104,21 @@ export default {
                 }
             }
         }
+    },
+    args: {
+        identityUser: fakeIdentityUser,
+        isLoggedIn: true,
+        menuPositionX: 'after',
+        menuPositionY: 'below',
+        showName: true,
+        namePosition: 'right',
+        bpmBackgroundImage: './assets/images/bpm-background.png'
     }
-} as Meta;
+} as Meta<IdentityUserInfoComponent>;
 
-const template: Story<IdentityUserInfoComponent> = (args: IdentityUserInfoComponent) => ({
+const template: StoryFn<IdentityUserInfoComponent> = (args) => ({
     props: args
 });
 
-export const loginWithSSO = template.bind({});
-loginWithSSO.args = {
-    identityUser: fakeIdentityUser
-};
-loginWithSSO.parameters = { layout: 'centered' };
+export const LoginWithSSO = template.bind({});
+LoginWithSSO.parameters = { layout: 'centered' };

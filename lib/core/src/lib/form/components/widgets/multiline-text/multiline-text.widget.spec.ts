@@ -17,11 +17,16 @@
 
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { CoreTestingModule } from '../../../../testing';
-import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
+import { FormModel } from '../core/form.model';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormFieldTypes } from '../core/form-field-types';
 import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
+import { ComponentFixture, getTestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslationService } from '../../../../translation/translation.service';
+import { TranslationMock } from '../../../../mock/translation.service.mock';
 
 describe('MultilineTextWidgetComponentComponent', () => {
     let loader: HarnessLoader;
@@ -30,10 +35,11 @@ describe('MultilineTextWidgetComponentComponent', () => {
     let element: HTMLElement;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+        getTestBed().configureTestingModule({
+            imports: [TranslateModule.forRoot(), NoopAnimationsModule],
+            providers: [{ provide: TranslationService, useClass: TranslationMock }]
         });
-        fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
+        fixture = getTestBed().createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);

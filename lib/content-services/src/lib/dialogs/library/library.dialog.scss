@@ -1,8 +1,15 @@
+@import 'styles/mat-selectors';
+
 .adf-library-dialog {
+    .adf-library-dialog-content {
+        padding: 0;
+        overflow: unset;
+    }
+
     .adf-library-dialog-radio-group {
         display: flex;
         flex-direction: column;
-        margin: 0 0 20px;
+        margin: 0;
     }
 
     .adf-library-dialog-radio-group .adf-library-dialog-radio-group-button {
@@ -11,7 +18,47 @@
 
     .adf-library-dialog-form-field {
         width: 100%;
-        padding-top: 20px;
+        padding-top: 9.5px;
+
+        &:first-of-type {
+            padding-top: 13.5px;
+        }
+
+        &:last-of-type {
+            padding-top: 4.5px;
+        }
+
+        #{$mat-floating-label} {
+            -webkit-font-smoothing: subpixel-antialiased;
+        }
+
+        &#{$mat-form-field-hide-placeholder} {
+            #{$mat-floating-label} {
+                padding-top: 11px;
+            }
+        }
+
+        &-description {
+            &#{$mat-form-field-hide-placeholder} {
+                #{$mat-floating-label} {
+                    padding-top: 20px;
+                }
+            }
+        }
+
+        #{$mat-form-field-infix} {
+            padding-bottom: 3.5px;
+        }
+
+        #{$mat-form-field-error-wrapper} {
+            margin-left: -2px;
+            font-size: 10.5px;
+            -webkit-font-smoothing: subpixel-antialiased;
+
+            #{$mat-form-field-error} {
+                height: 13.125px;
+            }
+        }
     }
 
     .adf-action-buttons {
@@ -21,6 +68,10 @@
 
         .adf-action-button {
             text-transform: uppercase;
+
+            span {
+                font-weight: 500;
+            }
         }
     }
 }

@@ -1,8 +1,44 @@
+@import 'styles/mat-selectors';
+
 adf-comments {
     .adf-comments-container {
         height: 100%;
         width: 100%;
         overflow: auto;
+
+        .adf-comments-input-container {
+            width: 100%;
+            padding-bottom: 8px;
+
+            #{$mat-form-field} {
+                width: 100%;
+            }
+
+            #{$mat-form-field-subscript-wrapper} {
+                display: none;
+            }
+
+            #{$mat-form-field-wrapper} {
+                #{$mat-form-field-flex} {
+                    #{$mat-form-field-infix} {
+                        padding-bottom: 2px;
+                        padding-top: 25px;
+                    }
+                }
+
+                #{$mat-input-element} {
+                    &:focus::placeholder {
+                        color: var(--theme-primary-color);
+                        -webkit-font-smoothing: subpixel-antialiased;
+                    }
+                }
+            }
+
+            textarea {
+                resize: vertical;
+                height: 20px;
+            }
+        }
     }
 
     .adf-comments-divider {
@@ -13,24 +49,16 @@ adf-comments {
         padding: 10px 0;
         font-size: var(--theme-body-1-font-size);
         font-weight: 600;
-        margin: 0;
-    }
-
-    .adf-comments-input-container {
-        width: 100%;
-        padding: 8px 0;
-
-        textarea {
-            resize: vertical;
-        }
-
-        .mat-form-field {
-            width: 100%;
-        }
     }
 
     .adf-comments-input-actions {
+        padding-top: 16px;
         display: flex;
         justify-content: flex-end;
+    }
+
+    #{$mat-list-item-unscoped-content} {
+        display: flex;
+        padding: 0 16px;
     }
 }

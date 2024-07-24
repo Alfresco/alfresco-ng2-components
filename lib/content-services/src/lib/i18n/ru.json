@@ -46,12 +46,6 @@
       "ARROW_ICON": "Значок правой стрелки"
     }
   },
-  "ADF_CONFIRM_DIALOG": {
-    "TITLE": "Подтвердить",
-    "ACTION": "Хотите продолжить?",
-    "YES_LABEL": "Да",
-    "NO_LABEL": "Нет"
-  },
   "ADF-DOCUMENT-LIST": {
     "EMPTY": {
       "HEADER": "Эта папка пуста"

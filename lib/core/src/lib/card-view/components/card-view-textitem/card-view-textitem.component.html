@@ -6,7 +6,6 @@
                 'adf-property-read-only': !isEditable
             }"
             [floatLabel]="'always'"
-            appearance="standard"
         >
             <mat-label
                 *ngIf="showProperty || isEditable"
@@ -43,6 +42,7 @@
                 *ngIf="property.multiline"
                 title="{{ property.label | translate }}"
                 [cdkTextareaAutosize]="true"
+                [cdkAutosizeMinRows]="1"
                 [cdkAutosizeMaxRows]="5"
                 class="adf-property-value"
                 [ngClass]="{
@@ -71,19 +71,17 @@
         >
             {{ property.label | translate }}
         </mat-label>
-        <mat-chip-list #chipList class="adf-textitem-chip-list">
-            <mat-chip *ngFor="let propertyValue of editedValue; let idx = index" [removable]="isEditable" (removed)="removeValueFromList(idx)">
+        <mat-chip-grid #chipElement class="adf-textitem-chip-list">
+            <mat-chip-row *ngFor="let propertyValue of editedValue; let idx = index" [removable]="isEditable" (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
                 <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
-            </mat-chip>
-        </mat-chip-list>
+            </mat-chip-row>
+        </mat-chip-grid>
 
         <mat-form-field
             *ngIf="isEditable"
-            appearance="standard"
             class="adf-property-field adf-textitem-chip-list-input"
             [ngClass]="{ 'adf-property-read-only': !isEditable }"
-            [floatLabel]="'never'"
         >
             <input
                 matInput
@@ -95,7 +93,7 @@
                 title="{{ property.label | translate }}"
                 [placeholder]="editedValue ? '' : (property.default | translate)"
                 [attr.aria-label]="property.label | translate"
-                [matChipInputFor]="chipList"
+                [matChipInputFor]="chipElement"
                 [matChipInputAddOnBlur]="true"
                 (matChipInputTokenEnd)="addValueToList($event)"
                 [attr.data-automation-id]="'card-textitem-editchipinput-' + property.key"
@@ -113,7 +111,7 @@
         (keyup.enter)="clicked()"
         (click)="clicked()"
     >
-        <mat-form-field class="adf-property-field adf-card-textitem-field" appearance="standard" [floatLabel]="'never'">
+        <mat-form-field class="adf-property-field adf-card-textitem-field">
             <mat-label
                 *ngIf="showProperty || isEditable"
                 [attr.data-automation-id]="'card-textitem-label-' + property.key"

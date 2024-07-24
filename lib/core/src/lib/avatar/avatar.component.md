@@ -58,11 +58,11 @@ import { AvatarComponent } from '@alfresco/adf-core';
 
 The following CSS classes are available for theming:
 
-| Name                   | Description           |
-|------------------------|-----------------------|
-| `adf-avatar`           | The host element.     |
-| `adf-avatar__image`    | The image element.    |
-| `adf-avatar__initials` | The initials element. |
+| Name                    | Description           |
+|-------------------------|-----------------------|
+| `adf-avatar`            | The host element.     |
+| `.adf-avatar__image`    | The image element.    |
+| `.adf-avatar__initials` | The initials element. |
 
 ### CSS Variables
 
@@ -75,4 +75,3 @@ The following CSS classes are available for theming:
 | `--adf-avatar-font-size`        | `14px`    | The font size of the initials.      |
 | `--adf-avatar-font-weight`      | `500`     | The font weight of the initials.    |
 | `--adf-avatar-cursor`           | `auto`    | The cursor style.                   |
-```

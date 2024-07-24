@@ -1,24 +1,30 @@
+@import 'styles/mat-selectors';
+
 .adf-task-form-cloud-container {
     .adf-task-form {
         &-container {
             overflow: hidden;
 
             .adf-task-form-actions:has(button) {
-                float: right;
                 padding-bottom: 25px;
                 padding-right: 25px;
 
-                & .adf-task-form-actions-button {
+                .adf-task-form-actions-button {
                     height: 36px;
                     border-radius: 5px;
+                }
 
-                    span {
-                        width: 58px;
-                        height: 20px;
-                        opacity: 0.54;
-                        font-size: var(--theme-body-2-font-size);
-                        font-weight: bold;
-                    }
+                #{$mat-button} {
+                    height: 36px;
+                    border-radius: 5px;
+                    width: auto;
+                    padding: 0 16px;
+                    margin: 0 8px;
+                    white-space: nowrap;
+                }
+
+                #{$mat-button-label} {
+                    min-width: 58px;
                 }
             }
         }

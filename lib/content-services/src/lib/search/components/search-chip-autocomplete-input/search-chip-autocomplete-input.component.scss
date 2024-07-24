@@ -1,11 +1,29 @@
+/* stylelint-disable selector-class-pattern */
+@import 'styles/mat-selectors';
+
 adf-search-chip-autocomplete-input {
     .adf-chip-list {
         width: 100%;
+    }
 
-        /* stylelint-disable-next-line */
-        .mat-form-field-infix {
-            border: none;
+    .adf-chip-list:has(#{$mat-notched-outline}) {
+        margin-top: 4px;
+    }
+
+    #{$mat-form--text-field-infix} {
+        border: none;
+    }
+
+    .adf-chip-list#{$mat-form-field} {
+        #{$mat-form-field-infix} {
+            padding-top: 14px;
+            padding-bottom: 14px;
+            min-height: unset;
         }
+    }
+
+    .adf-search-properties-file-input {
+        margin-left: 3px;
     }
 
     .adf-autocomplete-added-option-chips.adf-option-chips {
@@ -14,6 +32,14 @@ adf-search-chip-autocomplete-input {
         background-color: var(--theme-primary-color-default-contrast);
         height: auto;
         word-break: break-word;
+        padding: 4px 0;
+    }
+
+    #{$mat-evolution-chip-set} {
+        #{$mat-evolution-chip} {
+            margin-left: 0;
+            margin-right: 4px;
+        }
     }
 
     .adf-option-chips-delete-button.adf-autocomplete-added-option-chips-delete-button {

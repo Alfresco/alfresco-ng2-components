@@ -1,5 +1,6 @@
+@import 'styles/mat-selectors';
+
 .adf-property-list {
-    background: var(--adf-card-view-background);
     border: var(--adf-card-view-border);
     border-color: var(--adf-card-view-border-color);
     border-radius: var(--adf-card-view-border-radius);
@@ -20,18 +21,18 @@
     }
 
     .adf-property-container {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .adf-property {
         .adf-property-field {
             width: 100%;
 
-            .mat-form-field-underline {
+            #{mat-form-field-underline} {
                 display: none;
             }
 
-            .mat-input-element {
+            #{mat-input-element} {
                 text-overflow: ellipsis;
                 color: var(--adf-metadata-property-panel-title-color);
                 padding: 6px 0;
@@ -39,51 +40,60 @@
             }
 
             .adf-card-view__key-value-pairs__row {
-                .mat-input-element {
+                #{$mat-input-element} {
                     margin-top: 0;
                     padding-left: 12px;
                 }
             }
 
-            .mat-form-field-infix {
-                display: flex;
+            #{$mat-form--text-field-infix} {
                 border-top-width: 0;
-                padding: 0;
             }
 
-            .mat-form-field-flex {
+            #{$mat-form-field-flex} {
                 padding-top: 0;
             }
 
-            .mat-form-field-wrapper {
+            #{$mat-form-field-wrapper} {
+                background-color: inherit;
                 padding-bottom: 0;
+                padding-left: 0;
+                padding-right: 0;
             }
 
-            .mat-form-field-label {
+            #{$mat-form-field-label} {
                 padding: 0;
                 justify-content: center;
                 display: flex;
                 flex-direction: column;
                 height: 20px;
 
-                &.mat-form-field-empty {
+                &.adf-property-field-label--empty {
                     transform: translateY(-1.3437em) scale(1);
                 }
+            }
+        }
+
+        .adf-card-view-textitem {
+            .adf-property-field {
+                padding-top: 0;
             }
         }
     }
 
     .adf-property-value {
-        color: var(--adf-metadata-property-panel-text-color);
+        color: var(--adf-metadata-property-panel-title-color);
 
         &.adf-property-value-editable {
             color: var(--adf-metadata-property-panel-title-color);
             background-color: var(--adf-metadata-buttons-background-color);
             border-radius: 6px;
+            height: 32px;
+            padding-left: 10px;
 
-            &.mat-input-element {
+            #{$mat-input-element} {
                 color: var(--adf-metadata-action-button-clear-color);
-                padding: 6px 0 6px 12px;
+                padding: 5px 0 6px 12px;
                 margin: 5px 0 0;
             }
         }
@@ -91,7 +101,7 @@
         &.adf-property-readonly-value {
             color: var(--adf-metadata-property-panel-label-color);
 
-            &.mat-input-element {
+            #{$mat-input-element} {
                 color: var(--adf-metadata-property-panel-label-color);
             }
         }

@@ -15,23 +15,26 @@
  * limitations under the License.
  */
 
-import { MatButtonModule } from '@angular/material/button';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { AuthenticationService } from '../../../auth';
 import { AuthenticationMock } from '../../../auth/mock/authentication.service.mock';
-import { CoreStoryModule } from '../../../testing/core.story.module';
-import { LoginModule } from '../../login.module';
 import { LoginDialogStorybookComponent } from './login-dialog.stories.component';
+import { LoginDialogComponent } from './login-dialog.component';
+import { importProvidersFrom } from '@angular/core';
+import { CoreStoryModule } from '../../../../..';
 
 export default {
     component: LoginDialogStorybookComponent,
     title: 'Core/Login/Login Dialog',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, LoginModule, RouterTestingModule, MatButtonModule],
+            imports: [LoginDialogComponent, RouterTestingModule]
+        }),
+        applicationConfig({
             providers: [
-                { provide: AuthenticationService, useClass: AuthenticationMock }
+                { provide: AuthenticationService, useClass: AuthenticationMock },
+                importProvidersFrom(CoreStoryModule)
             ]
         })
     ],
@@ -44,25 +47,21 @@ export default {
     },
     argTypes: {
         correct: {
-            control: 'none',
             name: 'To test correct functionality:',
             description: 'Use `fake-username` and `fake-password`.',
             table: { category: 'Storybook Info' }
         },
         corsError: {
-            control: 'none',
             name: 'To test CORS error:',
             description: 'Use `fake-username-CORS-error` and `fake-password`.',
             table: { category: 'Storybook Info' }
         },
         csrfError: {
-            control: 'none',
             name: 'To test CSRF error:',
             description: 'Use `fake-username-CSRF-error` and `fake-password`.',
             table: { category: 'Storybook Info' }
         },
         ecmAccessError: {
-            control: 'none',
             name: 'To test ECM access error:',
             description: 'Use `fake-username-ECM-access-error` and `fake-password`.',
             table: { category: 'Storybook Info' }
@@ -92,11 +91,11 @@ export default {
             }
         }
     }
-} as Meta;
+} as Meta<LoginDialogStorybookComponent>;
 
-const template: Story<LoginDialogStorybookComponent> = (args: LoginDialogStorybookComponent) => ({
+const template: StoryFn<LoginDialogStorybookComponent> = (args) => ({
     props: args
 });
 
-export const loginDialog = template.bind({});
-loginDialog.parameters = { layout: 'centered' };
+export const LoginDialog = template.bind({});
+LoginDialog.parameters = { layout: 'centered' };

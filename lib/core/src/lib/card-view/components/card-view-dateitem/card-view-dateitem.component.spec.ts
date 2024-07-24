@@ -20,7 +20,6 @@ import { By } from '@angular/platform-browser';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,6 +28,15 @@ import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslationMock } from '../../../mock';
+import { TranslationService } from '../../../translation';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { addMinutes } from 'date-fns';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -38,7 +46,16 @@ describe('CardViewDateItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CoreTestingModule]
+            imports: [
+                TranslateModule.forRoot(),
+                NoopAnimationsModule,
+                HttpClientTestingModule,
+                MatSnackBarModule,
+                MatDatepickerModule,
+                MatDialogModule,
+                MatTooltipModule
+            ],
+            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {
@@ -194,7 +211,7 @@ describe('CardViewDateItemComponent', () => {
         fixture.detectChanges();
         const property = { ...component.property };
 
-        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
+        component.onDateChanged({ value: addMinutes(expectedDate, expectedDate.getTimezoneOffset()) } as MatDatetimepickerInputEvent<Date>);
         expect(itemUpdatedSpy).toHaveBeenCalledWith({
             target: property,
             changed: {
@@ -210,7 +227,7 @@ describe('CardViewDateItemComponent', () => {
         const expectedDate = new Date('Jul 10 2017');
         fixture.detectChanges();
 
-        component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
+        component.onDateChanged({ value: addMinutes(expectedDate, expectedDate.getTimezoneOffset()) } as MatDatetimepickerInputEvent<Date>);
 
         await fixture.whenStable();
         expect(component.property.value).toEqual(expectedDate);
@@ -324,7 +341,7 @@ describe('CardViewDateItemComponent', () => {
         component.property.default = 'Jul 10 2017 00:01:00';
         component.property.key = 'fake-key';
         component.property.value = new Date('Jul 10 2017 00:01:00');
-        const expectedDate = new Date('Jul 10 2018');
+        const expectedDate = new Date('Jul 10 2018 00:00:00');
         fixture.detectChanges();
 
         await fixture.whenStable();
@@ -335,7 +352,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateChanged({ value: expectedDate } as MatDatetimepickerInputEvent<Date>);
 
         fixture.detectChanges();
-        expect(component.property.value).toEqual(expectedDate);
+        expect(addMinutes(component.property.value, component.property.value.getTimezoneOffset())).toEqual(expectedDate);
     });
 
     it('should render chips for multivalue dates when chips are enabled', async () => {

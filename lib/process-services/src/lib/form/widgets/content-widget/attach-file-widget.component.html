@@ -7,12 +7,12 @@
         <div id="adf-attach-widget-simple-upload" *ngIf="isSimpleUploadButton() && isUploadButtonVisible()">
             <a mat-raised-button color="primary">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
-                <mat-icon>file_upload</mat-icon>
+                <mat-icon>file_upload</mat-icon>d
                 <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.id" (change)="onAttachFileChanged($event)" />
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" (focusout)="markAsTouched()" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id" class="adf-attach-widget__menu-trigger">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
                 <mat-icon>attach_file</mat-icon>
             </button>
@@ -55,36 +55,19 @@
 
 <div data-automation-id="adf-attach-widget-readonly-list">
     <mat-list *ngIf="hasFile">
-        <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value">
-            <img
-                mat-list-icon
-                class="adf-attach-widget__icon"
-                [id]="'file-' + file.id + '-icon'"
-                [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)"
-                [alt]="mimeTypeIcon"
-                (click)="onAttachFileClicked(file)"
-                (keyup.enter)="onAttachFileClicked(file)"
-                [attr.aria-label]="file.name"
-                role="button"
-                tabindex="0"
-            />
-            <span
-                matLine
-                id="{{ 'file-' + file.id }}"
-                (click)="onAttachFileClicked(file)"
-                [title]="file.name"
-                (keyup.enter)="onAttachFileClicked(file)"
-                tabindex="0"
-                role="button"
-                class="adf-file"
-                >{{ file.name }}</span
-            >
-            <button
-                id="{{ 'file-' + file.id + '-option-menu' }}"
-                mat-icon-button
-                [matMenuTriggerFor]="fileActionMenu"
-                [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate"
-            >
+        <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value; index as i">
+            <img matListItemLine class="adf-attach-widget__icon"
+                 [id]="'file-'+file.id+'-icon'"
+                 [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)"
+                 [alt]="mimeTypeIcon"
+                 (click)="onAttachFileClicked(file)"
+                 (keyup.enter)="onAttachFileClicked(file)"
+                 [attr.aria-label]="file.name"
+                 [tabindex]="i"/>
+            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [title]="file.name" (keyup.enter)="onAttachFileClicked(file)"
+                 [tabindex]="i" class="adf-file">{{file.name}}</span>
+            <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
+                    [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #fileActionMenu="matMenu" xPosition="before">

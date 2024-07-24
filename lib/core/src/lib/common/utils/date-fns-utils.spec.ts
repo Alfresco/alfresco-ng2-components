@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { isValid } from 'date-fns';
+import { addMinutes, isValid } from 'date-fns';
 import { DateFnsUtils } from './date-fns-utils';
 
 describe('DateFnsUtils', () => {
@@ -73,7 +73,7 @@ describe('DateFnsUtils', () => {
         const expectedParsedDate = new Date('2023-09-22T00:00:00Z');
 
         const result = DateFnsUtils.parseDate(dateString, dateFormat);
-        expect(result).toEqual(expectedParsedDate);
+        expect(result).toEqual(addMinutes(expectedParsedDate,expectedParsedDate.getTimezoneOffset()));
     });
 
     it('should parse alternative ISO datetime', () => {
@@ -137,5 +137,38 @@ describe('DateFnsUtils', () => {
         expect(forceLocalDateJapan.getDate()).toBe(1);
         expect(forceLocalDateJapan.getMonth()).toBe(0);
         expect(forceLocalDateJapan.getFullYear()).toBe(2020);
+    });
+
+    it('should detect if a formatted string contains a timezone', () => {
+        let result = DateFnsUtils.stringDateContainsTimeZone('2021-06-09T14:10');
+        expect(result).toEqual(false);
+
+        result = DateFnsUtils.stringDateContainsTimeZone('2021-06-09T14:10:00');
+        expect(result).toEqual(false);
+
+        result = DateFnsUtils.stringDateContainsTimeZone('2021-06-09T14:10:00Z');
+        expect(result).toEqual(true);
+
+        result = DateFnsUtils.stringDateContainsTimeZone('2021-06-09T14:10:00+00:00');
+        expect(result).toEqual(true);
+
+        result = DateFnsUtils.stringDateContainsTimeZone('2021-06-09T14:10:00-00:00');
+        expect(result).toEqual(true);
+    });
+
+    it('should get the date from number', () => {
+        const spyUtcToLocal = spyOn(DateFnsUtils, 'utcToLocal').and.callThrough();
+
+        const date = DateFnsUtils.getDate(1623232200000);
+        expect(date.toISOString()).toBe('2021-06-09T09:50:00.000Z');
+        expect(spyUtcToLocal).not.toHaveBeenCalled();
+    });
+
+    it('should get transformed date when string date does not contain the timezone', () => {
+        const spyUtcToLocal = spyOn(DateFnsUtils, 'utcToLocal').and.callThrough();
+
+        DateFnsUtils.getDate('2021-06-09T14:10:00');
+
+        expect(spyUtcToLocal).toHaveBeenCalled();
     });
 });

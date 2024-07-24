@@ -1,3 +1,13 @@
 adf-button {
     // custom styles
+
+    .adf-button__content {
+        // custom styles
+    }
+
+    .adf-button__icon {
+        font-size: var(--adf-button-icon-size, 24px);
+        width: var(--adf-button-icon-size, 24px);
+        height: var(--adf-button-icon-size, 24px);
+    }
 }

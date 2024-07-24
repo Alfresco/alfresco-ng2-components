@@ -1,45 +1,48 @@
-<form [formGroup]="form">
-    <label
-        for="adf-search-properties-file-size"
-        class="adf-search-properties-file-size-label">
-        {{ 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE' | translate }}
-    </label>
-    <mat-form-field
-        [style.width.px]="fileSizeOperatorsMaxWidth"
-        class="adf-search-properties-file-size-operator">
-        <mat-select
-            data-automation-id="adf-search-properties-file-size-operator-select"
-            [formControl]="form.controls.fileSizeOperator"
-            #fileSizeOperatorSelect>
-            <mat-option
-                *ngFor="let fileSizeOperator of fileSizeOperators"
-                [value]="fileSizeOperator">
-                {{ fileSizeOperator | translate }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <input
-        [formControl]="form.controls.fileSize"
-        type="number"
-        min="0"
-        step="any"
-        (input)="narrowDownAllowedCharacters($event)"
-        (keydown)="preventIncorrectNumberCharacters($event)"
-        id="adf-search-properties-file-size"
-        [placeholder]="'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate"
-        (blur)="clearNumberFieldWhenInvalid($event)"
-        data-automation-id="adf-search-properties-file-size-input" />
-    <mat-form-field class="adf-search-properties-file-size-unit">
-        <mat-select
-            [formControl]="form.controls.fileSizeUnit"
-            data-automation-id="adf-search-properties-file-size-unit-select">
-            <mat-option
-                *ngFor="let fileSizeUnit of fileSizeUnits"
-                [value]="fileSizeUnit">
-                {{ fileSizeUnit.abbreviation | translate }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+<form [formGroup]="form" class="adf-search-properties-form">
+    <div class="adf-search-properties-file-size-container">
+        <label
+            for="adf-search-properties-file-size"
+            class="adf-search-properties-file-size-label">
+            {{ 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE' | translate }}
+        </label>
+        <mat-form-field
+            [style.width.px]="fileSizeOperatorsMaxWidth"
+            subscriptSizing="dynamic"
+            class="adf-search-properties-file-size-operator">
+            <mat-select
+                data-automation-id="adf-search-properties-file-size-operator-select"
+                [formControl]="form.controls.fileSizeOperator"
+                #fileSizeOperatorSelect>
+                <mat-option
+                    *ngFor="let fileSizeOperator of fileSizeOperators"
+                    [value]="fileSizeOperator">
+                    {{ fileSizeOperator | translate }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <input
+            [formControl]="form.controls.fileSize"
+            type="number"
+            min="0"
+            step="any"
+            (input)="narrowDownAllowedCharacters($event)"
+            (keydown)="preventIncorrectNumberCharacters($event)"
+            id="adf-search-properties-file-size"
+            [placeholder]="'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_PLACEHOLDER' | translate"
+            (blur)="clearNumberFieldWhenInvalid($event)"
+            data-automation-id="adf-search-properties-file-size-input" />
+        <mat-form-field class="adf-search-properties-file-size-unit" subscriptSizing="dynamic">
+            <mat-select
+                [formControl]="form.controls.fileSizeUnit"
+                data-automation-id="adf-search-properties-file-size-unit-select">
+                <mat-option
+                    *ngFor="let fileSizeUnit of fileSizeUnits"
+                    [value]="fileSizeUnit">
+                    {{ fileSizeUnit.abbreviation | translate }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
     <p class="adf-search-properties-file-type-label">{{ 'SEARCH.SEARCH_PROPERTIES.FILE_TYPE' | translate }}</p>
     <adf-search-chip-autocomplete-input
         [autocompleteOptions]="autocompleteOptions"

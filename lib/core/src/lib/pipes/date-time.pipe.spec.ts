@@ -15,22 +15,11 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { DateTimePipe } from './date-time.pipe';
 import { addMinutes, isValid } from 'date-fns';
 
 describe('DateTimePipe', () => {
-    let pipe: DateTimePipe;
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [DateTimePipe]
-        });
-
-        pipe = new DateTimePipe();
-    });
+    const pipe = new DateTimePipe();
 
     it('should transform string input to date format', () => {
         const value = '2023-08-24 12:00:00';
@@ -40,7 +29,7 @@ describe('DateTimePipe', () => {
         expect(isValid(transformedDate)).toBe(true);
 
         const expectedDate = new Date(value);
-        expect(transformedDate).toEqual(addMinutes(new Date(expectedDate), new Date().getTimezoneOffset()));
+        expect(transformedDate).toEqual(addMinutes(expectedDate, expectedDate.getTimezoneOffset()));
     });
 
     it('should transform Date input', () => {
@@ -50,7 +39,7 @@ describe('DateTimePipe', () => {
         expect(transformedDate instanceof Date).toBe(true);
         expect(isValid(transformedDate)).toBe(true);
 
-        expect(transformedDate).toEqual(value);
+        expect(transformedDate).toEqual(addMinutes(value, value.getTimezoneOffset()));
     });
 
     it('should transform number input to date format', () => {

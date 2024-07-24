@@ -4,6 +4,7 @@
     *ngIf="showProperty || isEditable"
     [attr.for]="'card-view-dateitem-' + property.key"
     [ngClass]="{ 'adf-property-readonly-value': isReadonlyProperty, 'adf-property-value-editable': editable }"
+    [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
 >
     {{ property.label | translate }}
 </label>
@@ -13,6 +14,7 @@
             *ngIf="showProperty"
             [attr.data-automation-id]="'card-dateitem-' + property.key"
             (dblclick)="copyToClipboard(property.displayValue)"
+            matTooltipShowDelay="1000"
             [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
             >{{ property.displayValue }}</span
         >
@@ -73,17 +75,17 @@
         {{ property.default | translate }}
     </ng-template>
 
-    <div *ngIf="property.multivalued" class="adf-property-field adf-dateitem-chip-list-container adf-dateitem-editable">
-        <mat-chip-list #chipList class="adf-textitem-chip-list">
-            <mat-chip
+    <div *ngIf="property.multivalued"
+         class="adf-property-field adf-dateitem-chip-list-container adf-dateitem-editable">
+        <mat-chip-listbox #chipList class="adf-textitem-chip-list">
+            <mat-chip-option
                 *ngFor="let propertyValue of property.displayValue; let idx = index"
                 [removable]="isEditable"
-                (removed)="removeValueFromList(idx)"
-            >
+                (removed)="removeValueFromList(idx)">
                 {{ propertyValue }}
                 <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
-            </mat-chip>
-        </mat-chip-list>
+            </mat-chip-option>
+        </mat-chip-listbox>
 
         <div
             *ngIf="isEditable"

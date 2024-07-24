@@ -19,9 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderLayoutComponent } from './header.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
-import { SidenavLayoutModule } from '../../layout.module';
 import { Component } from '@angular/core';
-import { MaterialModule } from '../../../material.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatToolbarHarness } from '@angular/material/toolbar/testing';
@@ -34,7 +32,7 @@ describe('HeaderLayoutComponent', () => {
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule]
+                imports: [CoreTestingModule, HeaderLayoutComponent]
             });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
             loader = TestbedHarnessEnvironment.loader(fixture);
@@ -253,6 +251,8 @@ describe('HeaderLayoutComponent', () => {
     describe('Template transclusion', () => {
         @Component({
             selector: 'adf-test-layout-header',
+            standalone: true,
+            imports: [HeaderLayoutComponent],
             template: ` <adf-layout-header title="test" color="primary">
                 <p>Test text</p>
                 <p></p>
@@ -262,8 +262,7 @@ describe('HeaderLayoutComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, SidenavLayoutModule, MaterialModule],
-                declarations: [HeaderLayoutTesterComponent]
+                imports: [CoreTestingModule, HeaderLayoutTesterComponent]
             });
         });
 

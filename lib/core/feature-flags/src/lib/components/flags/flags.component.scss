@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 /* stylelint-disable selector-class-pattern */
 .adf-feature-flags-overrides-header {
     position: sticky;
@@ -25,10 +27,6 @@
 .adf-feature-flags-overrides-table {
     width: 100%;
 
-    .adf-header-cell.adf-icon-col {
-        top: 64px;
-    }
-
     .adf-search-icon {
         position: relative;
         top: 4px;
@@ -38,28 +36,8 @@
         width: 100%;
         display: flex;
 
-        .mat-form-field-flex {
-            margin: 0;
-            padding: 0;
-        }
-
-        .mat-form-field-wrapper,
-        .mat-form-field-appearance-outline .mat-form-field-wrapper {
-            padding: 0;
-            margin: 0;
-        }
-
-        .adf-feature-flags-overrides-table .adf-flag-form-field .mat-form-field-wrapper {
-            width: 100%;
-        }
-
-        .mat-form-field-infix {
-            padding: 0;
-            border: none;
-        }
-
-        .mat-form-field-outline,
-        .mat-form-field-label-wrapper {
+        #{$mat-form-field-subscript-wrapper},
+        #{$mat-line-ripple} {
             display: none;
         }
     }
@@ -103,10 +81,10 @@
 
     .adf-icon-col {
         width: 56px;
+        padding-left: 24px;
     }
 
     .adf-val-col {
         width: 85px;
-        text-align: right;
     }
 }

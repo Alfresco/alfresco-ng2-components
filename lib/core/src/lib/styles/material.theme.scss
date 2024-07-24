@@ -1,16 +1,18 @@
+@import './mat-selectors';
+
 @mixin adf-material-theme() {
-    .mat-expansion-panel {
-        & .mat-expansion-panel-header.cdk-keyboard-focused,
-        & .mat-expansion-panel-header.cdk-program-focused,
-        &:not(.mat-expanded) .mat-expansion-panel-header:hover {
+    #{$mat-expansion-panel} {
+        & #{$mat-expansion-panel-header}.cdk-keyboard-focused,
+        & #{$mat-expansion-panel-header}.cdk-program-focused,
+        &:not(#{$mat-expanded}) #{$mat-expansion-panel-header}:hover {
             &:not([aria-disabled='true']) {
                 background-color: var(--adf-theme-background-hover-color);
             }
         }
     }
 
-    .mat-calendar {
-        .mat-calendar-header {
+    #{$mat-calendar} {
+        #{$mat-calendar-header} {
             button {
                 color: var(--adf-theme-foreground-text-color-087);
 
@@ -20,13 +22,13 @@
             }
         }
 
-        .mat-calendar-content {
-            .mat-calendar-table-header th {
+        #{$mat-calendar-content} {
+            #{$mat-calendar-table-header} th {
                 color: var(--adf-theme-foreground-text-color-054);
             }
 
-            .mat-calendar-body-disabled > div {
-                color: var(--adf-theme-foreground-text-color-054);
+            #{$mat-calendar-body-disabled} > div {
+                color: var(--adf-theme-foreground-text-color-054) !important;
             }
         }
     }
@@ -53,6 +55,30 @@
 
             .mat-datetimepicker-calendar-body-disabled > div {
                 color: var(--adf-theme-foreground-text-color-054);
+            }
+        }
+    }
+
+    #{$mat-snackbar} {
+        &#{$mat-snack-bar-container} {
+            margin: 24px;
+
+            #{$mat-snackbar-label} {
+                line-height: unset;
+            }
+        }
+    }
+
+    #{$mat-input-element} {
+        &:focus::placeholder {
+            color: var(--theme-primary-color);
+        }
+    }
+
+    #{$mat-datetimepicker-dialog} {
+        #{$mat-dialog-container} {
+            #{$mat-dialog-surface} {
+                padding: 0;
             }
         }
     }
