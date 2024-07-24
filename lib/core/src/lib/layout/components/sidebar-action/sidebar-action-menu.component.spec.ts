@@ -23,6 +23,8 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
+/* eslint-disable @alfresco/eslint-angular/no-angular-material-selectors */
+
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
     let component: SidebarActionMenuComponent;
