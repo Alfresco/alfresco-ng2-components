@@ -19,7 +19,6 @@ import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
 import { ToolbarModule } from '../toolbar';
-import { TranslateModule } from '@ngx-translate/core';
 import { NavbarItem } from './navbar/navbar-item.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
@@ -28,7 +27,7 @@ export type HeaderVariant = 'minimal' | 'extended';
 @Component({
     selector: 'adf-header',
     standalone: true,
-    imports: [CommonModule, TranslateModule, ToolbarModule, NavbarComponent],
+    imports: [CommonModule, ToolbarModule, NavbarComponent],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     host: { class: 'adf-header' },

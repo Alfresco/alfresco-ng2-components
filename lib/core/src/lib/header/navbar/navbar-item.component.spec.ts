@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { NavbarItemComponent } from './navbar-item.component';
 
 describe('NavbarItemComponent', () => {
@@ -27,7 +26,7 @@ describe('NavbarItemComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [NavbarItemComponent, RouterTestingModule, TranslateModule.forRoot()]
+            imports: [NavbarItemComponent, RouterTestingModule]
         }).compileComponents();
 
         fixture = TestBed.createComponent(NavbarItemComponent);
