@@ -943,16 +943,6 @@ describe('StartProcessCloudComponent', () => {
             expect(spinner).toBeTruthy();
         });
 
-        it('should show the loading spinner when cloud form is loading', () => {
-            component.processDefinitionLoaded = true;
-            component.isFormCloudLoading = true;
-            fixture.detectChanges();
-
-            const spinner = fixture.debugElement.query(By.css('.adf-loading'));
-
-            expect(spinner).toBeTruthy();
-        });
-
         it('should show the process card after process definitions loaded', () => {
             component.processDefinitionLoaded = true;
             fixture.detectChanges();
@@ -973,7 +963,7 @@ describe('StartProcessCloudComponent', () => {
             component.processDefinitionName = fakeProcessDefinitions[0].name;
         });
 
-        it('start process button should be enabled when isLoading is false', async () => {
+        it('start process button should be enabled when isProcessStarting is false', async () => {
             fixture.detectChanges();
             component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
             component.appName = 'test app name';
@@ -985,6 +975,20 @@ describe('StartProcessCloudComponent', () => {
             expect(startButton).not.toBeNull();
             expect(component.disableStartButton).toBeFalse();
             expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeFalse();
+        });
+
+        it('start process button should be disabled when isFormCloudLoading is true', async () => {
+            fixture.detectChanges();
+            component.processForm.controls['processInstanceName'].setValue(fakeProcessDefinitions[0].id);
+            component.appName = 'test app name';
+            component.isFormCloudLoading = true;
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const startButton = fixture.debugElement.query(By.css('#button-start'));
+            expect(startButton).not.toBeNull();
+            expect(component.disableStartButton).toBeTrue();
+            expect((startButton.nativeElement as HTMLButtonElement).disabled).toBeTrue();
         });
 
         it('start process button should be disabled when isLoading is true', async () => {
