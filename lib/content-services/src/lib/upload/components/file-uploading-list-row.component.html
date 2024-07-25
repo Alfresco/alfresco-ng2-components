@@ -14,7 +14,7 @@
     <span *ngIf="isUploadVersion()" class="adf-file-uploading-row__version" tabindex="0" >
         <mat-chip-option color="primary"
             [attr.aria-label]="'ADF_FILE_UPLOAD.ARIA-LABEL.VERSION' | translate: { version:  versionNumber }"
-            [title]="'version' + versionNumber" disabled
+            [title]="'version' + versionNumber" [disabled]="true"
         >{{ versionNumber }}</mat-chip-option>
     </span>
 

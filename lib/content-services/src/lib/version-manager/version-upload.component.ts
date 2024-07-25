@@ -28,13 +28,22 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { UploadModule } from '../upload';
 import { MatButtonModule } from '@angular/material/button';
+import { UploadVersionButtonComponent } from '../upload';
 
 @Component({
     selector: 'adf-version-upload',
     standalone: true,
-    imports: [CommonModule, MatRadioModule, FormsModule, TranslateModule, MatFormFieldModule, MatInputModule, UploadModule, MatButtonModule],
+    imports: [
+        CommonModule,
+        MatRadioModule,
+        FormsModule,
+        TranslateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        UploadVersionButtonComponent
+    ],
     templateUrl: './version-upload.component.html',
     styleUrls: ['./version-upload.component.scss'],
     encapsulation: ViewEncapsulation.None,

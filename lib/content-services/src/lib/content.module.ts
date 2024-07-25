@@ -22,7 +22,6 @@ import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf
 import { MaterialModule } from './material.module';
 import { TagModule } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
-import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
 import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
@@ -47,6 +46,7 @@ import { CategoriesManagementComponent } from './category';
 import { TreeComponent } from './tree';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader';
 import { VersionCompatibilityDirective } from './version-compatibility';
+import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
 
 @NgModule({
     imports: [
@@ -59,7 +59,7 @@ import { VersionCompatibilityDirective } from './version-compatibility';
         ...CONTENT_DIALOG_DIRECTIVES,
         SearchModule,
         DocumentListModule,
-        UploadModule,
+        ...CONTENT_UPLOAD_DIRECTIVES,
         MaterialModule,
         DropdownSitesComponent,
         ...BREADCRUMB_DIRECTIVES,
@@ -85,7 +85,7 @@ import { VersionCompatibilityDirective } from './version-compatibility';
         ...CONTENT_PIPES,
         TagModule,
         DocumentListModule,
-        UploadModule,
+        ...CONTENT_UPLOAD_DIRECTIVES,
         SearchModule,
         DropdownSitesComponent,
         ...BREADCRUMB_DIRECTIVES,
