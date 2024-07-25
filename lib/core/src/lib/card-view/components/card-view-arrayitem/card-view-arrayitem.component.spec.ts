@@ -118,13 +118,12 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chipListBox = await loader.getHarness(MatChipListboxHarness);
-            const chipList = await chipListBox.getChips();
-            expect(chipList).not.toBeNull();
-            expect(chipList.length).toBe(4);
+            const chipListBox = await loader.getAllHarnesses(MatChipHarness);
+            expect(chipListBox).not.toBeNull();
+            expect(chipListBox.length).toBe(4);
 
-            const firstChipText = await chipList[0].getText();
-            const secondChipText = await chipList[1].getText();
+            const firstChipText = await chipListBox[0].getText();
+            const secondChipText = await chipListBox[1].getText();
             expect(firstChipText).toEqual('Zlatan');
             expect(secondChipText).toEqual('Lionel Messi');
         });
@@ -136,15 +135,14 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chipListBox = await loader.getHarness(MatChipListboxHarness);
-            const chipList = await chipListBox.getChips();
-            expect(chipList).not.toBeNull();
-            expect(chipList.length).toBe(4);
+            const chipListBox = await loader.getAllHarnesses(MatChipHarness);
+            expect(chipListBox).not.toBeNull();
+            expect(chipListBox.length).toBe(4);
 
             const chip1Icon = await loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="card-arrayitem-chip-Zlatan"]` }));
             const chip2Icon = await loader.getHarness(MatIconHarness.with({ ancestor: `[data-automation-id="card-arrayitem-chip-Lionel Messi"]` }));
-            const firstChipText = await chipList[0].getText();
-            const secondChipText = await chipList[1].getText();
+            const firstChipText = await chipListBox[0].getText();
+            const secondChipText = await chipListBox[1].getText();
 
             expect(firstChipText).toEqual('Zlatan');
             expect(await chip1Icon.getName()).toBe('person');
@@ -178,12 +176,11 @@ describe('CardViewArrayItemComponent', () => {
         it('should render all values if noOfItemsToDisplay is not defined', async () => {
             fixture.detectChanges();
 
-            const chipList = await loader.getHarness(MatChipListboxHarness);
-            const chips = await chipList.getChips();
+            const chipList = await loader.getAllHarnesses(MatChipHarness);
 
             const moreElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-more-chip"]'));
             expect(moreElement).toBeNull();
-            expect(chips.length).toBe(4);
+            expect(chipList.length).toBe(4);
         });
 
         it('should render only two values along with more item chip if noOfItemsToDisplay is set to 2', async () => {
@@ -193,11 +190,10 @@ describe('CardViewArrayItemComponent', () => {
             });
             fixture.detectChanges();
 
-            const chipList = await loader.getHarness(MatChipListboxHarness);
-            const chips = await chipList.getChips();
+            const chipList = await loader.getAllHarnesses(MatChipHarness);
 
-            expect(chips.length).toBe(3);
-            expect(await chips[2].getText()).toBe('2 CORE.CARDVIEW.MORE');
+            expect(chipList.length).toBe(3);
+            expect(await chipList[2].getText()).toBe('2 CORE.CARDVIEW.MORE');
         });
     });
 });

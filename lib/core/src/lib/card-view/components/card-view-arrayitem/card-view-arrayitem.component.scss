@@ -2,8 +2,7 @@
 
 .adf {
     &-array-item-icon {
-        font-size: var(--theme-subheading-2-font-size);
-        padding-top: 8px;
+        margin-right: 5px;
     }
 
     &-array-item-action {
@@ -52,7 +51,7 @@
     }
 
     &-card-view-array-chip-content {
-        align-items: center;
         display: flex;
+        cursor: pointer;
     }
 }
