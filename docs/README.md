@@ -380,7 +380,6 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Audit Service](content-services/services/audit.service.md) | Manages Audit apps and entries. | [Source](../lib/content-services/src/lib/audit/audit.service.ts) |
 | [Card View Content Update Service](content-services/services/card-view-content-update.service.md) | Manages Card View properties in the content services environment. |  |
 | Implements BaseCardViewContentUpdate. | [Source](../lib/content-services/src/lib/common/services/card-view-content-update.service.ts) |  |
 | [Category tree datasource service](content-services/services/category-tree-datasource.service.md) | Datasource service for category tree. | [Source](../lib/content-services/src/lib/category/services/category-tree-datasource.service.ts) |
