@@ -45,10 +45,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { TagModule } from '../../../tag';
 import { CategoriesManagementComponent } from '../../../category';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TagsCreatorComponent } from '../../../tag';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -70,10 +70,10 @@ enum DefaultPanels {
         MatIconModule,
         CardViewModule,
         MatChipsModule,
-        TagModule,
         CategoriesManagementComponent,
         DynamicExtensionComponent,
-        MatProgressBarModule
+        MatProgressBarModule,
+        TagsCreatorComponent
     ],
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
