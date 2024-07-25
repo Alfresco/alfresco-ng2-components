@@ -19,9 +19,13 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } 
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-json-cell',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container *ngIf="value$ | async as value; else editEmpty">

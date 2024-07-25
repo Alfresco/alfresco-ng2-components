@@ -16,14 +16,15 @@
  */
 
 import { Component, Inject, InjectionToken, Injector, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AdditionalDialogActionButton, DialogData } from './dialog-data.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DialogSize, DialogSizes } from './dialog.model';
-import { MaterialModule } from '../../material.module';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component data');
 
@@ -32,7 +33,7 @@ export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component d
     selector: 'adf-dialog',
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
-    imports: [CommonModule, MaterialModule, TranslateModule],
+    imports: [CommonModule, TranslateModule, MatIconModule, MatDialogModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class DialogComponent implements OnDestroy {

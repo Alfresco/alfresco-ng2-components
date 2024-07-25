@@ -54,7 +54,7 @@ describe('ResizableDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ResizableDirective],
+            imports: [ResizableDirective],
             providers: [
                 { provide: Renderer2, useValue: rendererMock },
                 { provide: ElementRef, useValue: elementRefMock }
@@ -125,7 +125,9 @@ describe('ResizableDirective', () => {
         directive.mousedown.next({ ...mouseDownEvent, resize: true });
         directive.mouseup.next(mouseUpEvent);
 
-        expect(directive.resizeEnd.emit).toHaveBeenCalledWith({ rectangle: { top: 0, left: 0, right: 0, width: 150, height: 0, bottom: 0, scrollTop: 0, scrollLeft: 0 } });
+        expect(directive.resizeEnd.emit).toHaveBeenCalledWith({
+            rectangle: { top: 0, left: 0, right: 0, width: 150, height: 0, bottom: 0, scrollTop: 0, scrollLeft: 0 }
+        });
     });
 
     it('should emit resizing on mousemove', () => {

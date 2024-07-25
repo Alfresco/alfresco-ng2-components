@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, StoryFn, moduleMetadata } from '@storybook/angular';
 import { CoreStoryModule } from '../../../testing/core.story.module';
 import { DataTableComponent } from './datatable.component';
-import { DataTableModule } from '../../datatable.module';
+import { DATATABLE_DIRECTIVES } from '../../datatable.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mockPathInfos } from '../mocks/datatable.mock';
@@ -29,7 +29,7 @@ export default {
     title: 'Core/Datatable/Datatable',
     decorators: [
         moduleMetadata({
-            imports: [DataTableModule, MatProgressSpinnerModule, RouterTestingModule]
+            imports: [...DATATABLE_DIRECTIVES, MatProgressSpinnerModule, RouterTestingModule]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -376,7 +376,6 @@ export default {
         noPermission: false,
         rowMenuCacheEnabled: false,
         allowFiltering: false
-
     }
 } as Meta<DataTableComponent>;
 

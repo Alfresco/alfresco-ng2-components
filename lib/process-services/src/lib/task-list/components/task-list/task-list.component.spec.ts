@@ -24,7 +24,6 @@ import {
     ObjectDataRow,
     DataCellEvent,
     ObjectDataColumn,
-    DataTableModule,
     AppConfigServiceMock,
     AlfrescoApiServiceMock,
     AlfrescoApiService
@@ -106,14 +105,7 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                DataTableModule,
-                NoopAnimationsModule,
-                MatProgressSpinnerModule,
-                HttpClientTestingModule,
-                TaskListComponent
-            ],
+            imports: [TranslateModule.forRoot(), NoopAnimationsModule, MatProgressSpinnerModule, HttpClientTestingModule, TaskListComponent],
             providers: [
                 TaskListService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

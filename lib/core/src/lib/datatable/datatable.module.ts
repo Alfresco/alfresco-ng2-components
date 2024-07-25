@@ -15,25 +15,18 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-
-import { MaterialModule } from '../material.module';
-import { ContextMenuModule } from '../context-menu/context-menu.module';
-import { PipeModule } from '../pipes/pipe.module';
-
-import { DirectiveModule } from '../directives/directive.module';
 import { DataTableCellComponent } from './components/datatable-cell/datatable-cell.component';
 import { DataTableRowComponent } from './components/datatable-row/datatable-row.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
 import { DateCellComponent } from './components/date-cell/date-cell.component';
 import { ColumnsSelectorComponent } from './components/columns-selector/columns-selector.component';
-import { EmptyListBodyDirective,
+import {
+    EmptyListBodyDirective,
     EmptyListComponent,
     EmptyListFooterDirective,
-    EmptyListHeaderDirective } from './components/empty-list/empty-list.component';
+    EmptyListHeaderDirective
+} from './components/empty-list/empty-list.component';
 import { FileSizeCellComponent } from './components/filesize-cell/filesize-cell.component';
 import { LocationCellComponent } from './components/location-cell/location-cell.component';
 import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
@@ -45,88 +38,53 @@ import { CustomLoadingContentTemplateDirective } from './directives/custom-loadi
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
 import { MainMenuDataTableTemplateDirective } from './directives/main-data-table-action-template.directive';
 import { JsonCellComponent } from './components/json-cell/json-cell.component';
-import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './directives/drop-zone.directive';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { IconModule } from '../icon/icon.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataColumnComponent, DataColumnListComponent, DateColumnHeaderComponent } from './data-column';
-import { ResizableModule } from './directives/resizable/resizable.module';
-import { DataColumnModule } from './data-column/data-column.module';
 import { BooleanCellComponent } from './components/boolean-cell/boolean-cell.component';
 import { AmountCellComponent } from './components/amount-cell/amount-cell.component';
 import { NumberCellComponent } from './components/number-cell/number-cell.component';
 import { LocalizedDatePipe } from '../pipes';
 import { IconCellComponent } from './components/icon-cell/icon-cell.component';
+import { ResizableDirective } from './directives/resizable/resizable.directive';
+import { ResizeHandleDirective } from './directives/resizable/resize-handle.directive';
 
+export const DATATABLE_DIRECTIVES = [
+    BooleanCellComponent,
+    AmountCellComponent,
+    NumberCellComponent,
+    LocationCellComponent,
+    DateCellComponent,
+    IconCellComponent,
+    ColumnsSelectorComponent,
+    DataColumnComponent,
+    DataColumnListComponent,
+    DateColumnHeaderComponent,
+    LocalizedDatePipe,
+    ResizableDirective,
+    ResizeHandleDirective,
+    DropZoneDirective,
+    EmptyListComponent,
+    EmptyListHeaderDirective,
+    EmptyListBodyDirective,
+    EmptyListFooterDirective,
+    FileSizeCellComponent,
+    JsonCellComponent,
+    NoContentTemplateDirective,
+    NoPermissionTemplateDirective,
+    LoadingContentTemplateDirective,
+    HeaderFilterTemplateDirective,
+    CustomEmptyContentTemplateDirective,
+    CustomLoadingContentTemplateDirective,
+    CustomNoPermissionTemplateDirective,
+    MainMenuDataTableTemplateDirective,
+    DataTableRowComponent,
+    DataTableCellComponent,
+    DataTableComponent
+] as const;
+
+/** @deprecated use `...DATATABLE_DIRECTIVES` instead, or import standalone components directly */
 @NgModule({
-    imports: [
-        RouterModule,
-        MaterialModule,
-        CommonModule,
-        TranslateModule,
-        ContextMenuModule,
-        PipeModule,
-        DirectiveModule,
-        ClipboardModule,
-        DragDropModule,
-        IconModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ResizableModule,
-        DataColumnModule,
-        BooleanCellComponent,
-        AmountCellComponent,
-        NumberCellComponent,
-        LocationCellComponent,
-        DateCellComponent,
-        LocalizedDatePipe,
-        IconCellComponent
-    ],
-    declarations: [
-        DataTableComponent,
-        EmptyListComponent,
-        EmptyListHeaderDirective,
-        EmptyListBodyDirective,
-        EmptyListFooterDirective,
-        DataTableCellComponent,
-        DataTableRowComponent,
-        FileSizeCellComponent,
-        JsonCellComponent,
-        ColumnsSelectorComponent,
-        NoContentTemplateDirective,
-        NoPermissionTemplateDirective,
-        LoadingContentTemplateDirective,
-        HeaderFilterTemplateDirective,
-        CustomEmptyContentTemplateDirective,
-        CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective,
-        MainMenuDataTableTemplateDirective,
-        DropZoneDirective
-    ],
-    exports: [
-        DataTableComponent,
-        EmptyListComponent,
-        EmptyListHeaderDirective,
-        EmptyListBodyDirective,
-        EmptyListFooterDirective,
-        DataTableCellComponent,
-        DataTableRowComponent,
-        ColumnsSelectorComponent,
-        FileSizeCellComponent,
-        JsonCellComponent,
-        NoContentTemplateDirective,
-        NoPermissionTemplateDirective,
-        LoadingContentTemplateDirective,
-        HeaderFilterTemplateDirective,
-        CustomEmptyContentTemplateDirective,
-        CustomLoadingContentTemplateDirective,
-        CustomNoPermissionTemplateDirective,
-        MainMenuDataTableTemplateDirective,
-        DropZoneDirective,
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
-    ]
+    imports: [...DATATABLE_DIRECTIVES],
+    exports: [...DATATABLE_DIRECTIVES]
 })
 export class DataTableModule {}

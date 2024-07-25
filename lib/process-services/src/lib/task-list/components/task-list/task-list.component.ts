@@ -28,8 +28,10 @@ import {
     PaginationModel,
     DataCellEvent,
     DEFAULT_PAGINATION,
-    DataTableModule,
-    EmptyContentComponent
+    EmptyContentComponent,
+    DataTableComponent,
+    LoadingContentTemplateDirective,
+    NoContentTemplateDirective
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -46,7 +48,15 @@ export const PRESET_KEY = 'adf-task-list.presets';
 @Component({
     selector: 'adf-tasklist',
     standalone: true,
-    imports: [CommonModule, DataTableModule, MatProgressSpinnerModule, EmptyContentComponent, TranslateModule],
+    imports: [
+        CommonModule,
+        MatProgressSpinnerModule,
+        EmptyContentComponent,
+        TranslateModule,
+        DataTableComponent,
+        LoadingContentTemplateDirective,
+        NoContentTemplateDirective
+    ],
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })
