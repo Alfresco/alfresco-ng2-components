@@ -30,7 +30,7 @@ import { ContentNodeSelectorModule } from './content-node-selector/content-node-
 import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
 import { ContentDirectiveModule } from './directives/content-directive.module';
 import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
-import { ContentMetadataModule } from './content-metadata/content-metadata.module';
+import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { TreeViewModule } from './tree-view/tree-view.module';
 import { ContentTypeModule } from './content-type/content-type.module';
@@ -65,7 +65,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
         ...BREADCRUMB_DIRECTIVES,
         ContentNodeSelectorModule,
         ContentNodeShareModule,
-        ContentMetadataModule,
+        ...CONTENT_METADATA_DIRECTIVES,
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,
@@ -91,7 +91,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
         ...BREADCRUMB_DIRECTIVES,
         ContentNodeSelectorModule,
         ContentNodeShareModule,
-        ContentMetadataModule,
+        ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIALOG_DIRECTIVES,
         ContentDirectiveModule,
         PermissionManagerModule,

@@ -22,9 +22,17 @@ import { ContentMetadataCustomPanel, PresetConfig } from '../../interfaces/conte
 import { VersionCompatibilityService } from '../../../version-compatibility/version-compatibility.service';
 import { ContentService } from '../../../common/services/content.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-content-metadata-card',
+    standalone: true,
+    imports: [CommonModule, MatCardModule, ContentMetadataComponent, MatButtonModule, MatIconModule, TranslateModule],
     templateUrl: './content-metadata-card.component.html',
     styleUrls: ['./content-metadata-card.component.scss'],
     encapsulation: ViewEncapsulation.None,
