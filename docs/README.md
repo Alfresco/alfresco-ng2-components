@@ -105,7 +105,6 @@ A collection of Angular components for generic use.
 | [Form field component](core/components/form-field.component.md) | Represents a UI field in a form. | [Source](../lib/core/src/lib/form/components/form-field/form-field.component.ts) |
 | [Form List Component](core/components/form-list.component.md) | Shows forms as a list. | [Source](../lib/process-services/src/lib/form/form-list/form-list.component.ts) |
 | [Header component](core/components/header.component.md) | Reusable header for Alfresco applications. | [Source](../lib/core/src/lib/layout/components/header/header.component.ts) |
-| [Host settings component](core/components/host-settings.component.md) ![Internal](docassets/images/InternalIcon.png) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../lib/core/src/lib/settings/host-settings.component.ts) |
 | [Icon Component](core/components/icon.component.md) | Provides a universal way of rendering registered and named icons. | [Source](../lib/core/src/lib/icon/icon.component.ts) |
 | [Identity User Info component](core/components/identity-user-info.component.md) | Shows user information for SSO mode. | [Source](../lib/core/src/lib/identity-user-info/identity-user-info.component.ts) |
 | [Infinite Pagination component](core/components/infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../lib/core/src/lib/pagination/infinite-pagination.component.ts) |
