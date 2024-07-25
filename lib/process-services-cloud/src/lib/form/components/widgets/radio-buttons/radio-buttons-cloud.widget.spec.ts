@@ -81,31 +81,73 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widget.field.value).toEqual('fake-opt');
     });
 
-    it('should show radio buttons as text when is readonly', async () => {
-        widget.field = new FormFieldModel(new FormModel({}), {
-            id: 'radio-id',
-            name: 'radio-name',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            readOnly: true
+    describe('when widget is readonly', () => {
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel({}), {
+                id: 'radio-id',
+                name: 'radio-name',
+                type: FormFieldTypes.RADIO_BUTTONS,
+                readOnly: true
+            });
+
+            fixture.detectChanges();
         });
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-        expect(element.querySelector('display-text-widget')).toBeDefined();
+
+        it('should show radio buttons as text', () => {
+            expect(element.querySelector('display-text-widget')).toBeDefined();
+        });
+
+        it('should set label property', () => {
+            expect(element.querySelector('label').innerText).toBe('radio-name');
+        });
     });
 
-    it('should be able to set label property for Radio Button widget', () => {
-        widget.field = new FormFieldModel(new FormModel({}), {
-            id: 'radio-id',
-            name: 'radio-name-label',
+    describe('fetching options from rest api', () => {
+        const getRadioButtonsWidgetConfig = (readOnly: boolean) => ({
+            id: 'rest-radio-id',
+            name: 'Rest Radio Buttons',
             type: FormFieldTypes.RADIO_BUTTONS,
-            readOnly: true
+            readOnly,
+            optionType: 'rest',
+            restUrl: '<url>'
         });
-        fixture.detectChanges();
-        expect(element.querySelector('label').innerText).toBe('radio-name-label');
+
+        beforeEach(() => {
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
+        });
+
+        describe('when widget is readonly', () => {
+            it('should call rest api when form is NOT readonly', () => {
+                widget.field = new FormFieldModel(new FormModel({}, undefined, false), getRadioButtonsWidgetConfig(true));
+                fixture.detectChanges();
+
+                expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
+            });
+            it('should NOT call rest api when form is readonly', () => {
+                widget.field = new FormFieldModel(new FormModel({}, undefined, true), getRadioButtonsWidgetConfig(true));
+                fixture.detectChanges();
+
+                expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('when widget is NOT readonly', () => {
+            it('should call rest api when form is NOT readonly', () => {
+                widget.field = new FormFieldModel(new FormModel({}, undefined, false), getRadioButtonsWidgetConfig(false));
+                fixture.detectChanges();
+
+                expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
+            });
+            it('should NOT call rest api when form is readonly', () => {
+                widget.field = new FormFieldModel(new FormModel({}, undefined, true), getRadioButtonsWidgetConfig(false));
+                fixture.detectChanges();
+
+                expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
+            });
+        });
     });
 
-    it('should be able to set a Radio Button widget as required', async () => {
+    it('should be able to set a Radio Buttons widget as required', async () => {
         widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',
@@ -131,7 +173,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widget.field.isValid).toBe(true);
     });
 
-    it('should set Radio Button as valid when required and not empty', async () => {
+    it('should set Radio Buttons widget as valid when required and not empty', async () => {
         widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',
             name: 'radio-name-label',
@@ -149,7 +191,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widget.field.isValid).toBe(true);
     });
 
-    it('should be able to set a Radio Button widget when rest option enabled', () => {
+    it('should be able to set a Radio Buttons widget when rest option enabled', () => {
         spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
         widget.field = new FormFieldModel(new FormModel({}), {
             id: 'radio-id',

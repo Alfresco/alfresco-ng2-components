@@ -112,67 +112,111 @@ describe('FormFieldModel', () => {
         expect(field.readOnly).toBeTruthy();
     });
 
-    it('should parse and leave dropdown value as is', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.DROPDOWN,
-            options: [],
-            value: 'deferred'
+    describe('dropdown field model instantiation', () => {
+        it('should add value (selected option) to field options if NOT present', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [],
+                value: { id: 'id_one', name: 'One' }
+            });
+
+            expect(field.options).toEqual([{ id: 'id_one', name: 'One' }]);
+            expect(field.value).toEqual('id_one');
         });
 
-        expect(field.value).toBe('deferred');
-    });
+        it('should add value (selected options) to field options if NOT present (multiple selection)', () => {
+            const selectedOptions = [
+                { id: 'id_one', name: 'One' },
+                { id: 'id_two', name: 'Two' }
+            ];
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [],
+                value: selectedOptions,
+                selectionType: 'multiple'
+            });
 
-    it('should add value to field options if NOT present', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.DROPDOWN,
-            options: [],
-            value: { id: 'id_one', name: 'One' }
+            expect(field.options).toEqual(selectedOptions);
+            expect(field.value).toEqual(selectedOptions);
         });
 
-        expect(field.options).toEqual([{ id: 'id_one', name: 'One' }]);
-        expect(field.value).toEqual('id_one');
-    });
+        it('should assign "empty" option as value if value is null and "empty" option is present in options', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [
+                    { id: 'empty', name: 'Chose one...' },
+                    { id: 'one', name: 'One' }
+                ],
+                value: null
+            });
 
-    it('should assign "empty" option as value if value is null and "empty" option is present in options', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.DROPDOWN,
-            options: [
-                { id: 'empty', name: 'Chose one...' },
+            expect(field.hasEmptyValue).toBe(true);
+            expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose one...' });
+            expect(field.value).toEqual('empty');
+        });
+
+        it('should set hasEmptyValue to true if "empty" option is present in options', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [{ id: 'empty', name: 'Choose one...' }],
+                value: null
+            });
+
+            expect(field.hasEmptyValue).toBe(true);
+            expect(field.emptyOption).toEqual({ id: 'empty', name: 'Choose one...' });
+        });
+
+        it('should add default "empty" option to the options if hasEmptyValue is true but "empty" option is not present', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [{ id: 'one', name: 'One' }],
+                value: null,
+                hasEmptyValue: true
+            });
+
+            expect(field.hasEmptyValue).toBe(true);
+            expect(field.emptyOption).toEqual({ id: 'empty', name: 'Choose one...' });
+            expect(field.options).toEqual([
+                { id: 'empty', name: 'Choose one...' },
                 { id: 'one', name: 'One' }
-            ],
-            value: null
+            ]);
         });
 
-        expect(field.hasEmptyValue).toBe(true);
-        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Chose one...' });
-        expect(field.value).toEqual('empty');
-    });
-
-    it('should set hasEmptyValue to true if "empty" option is present in options', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.DROPDOWN,
-            options: [{ id: 'empty', name: 'Choose one...' }],
-            value: null
+        it('should parse dropdown with multiple options', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                options: [
+                    { id: 'fake-option-1', name: 'fake label 1' },
+                    { id: 'fake-option-2', name: 'fake label 2' },
+                    { id: 'fake-option-3', name: 'fake label 3' }
+                ],
+                value: [],
+                selectionType: 'multiple'
+            });
+            expect(field.hasMultipleValues).toBe(true);
+            expect(field.hasEmptyValue).toBe(false);
         });
 
-        expect(field.hasEmptyValue).toBe(true);
-        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Choose one...' });
-    });
+        describe('should leave not resolved value (in case of delayed options)', () => {
+            it('when string', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.DROPDOWN,
+                    options: [],
+                    value: 'delayed-option-id'
+                });
 
-    it('should add default "empty" option to the options if hasEmptyValue is true but "empty" option is not present', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.DROPDOWN,
-            options: [{ id: 'one', name: 'One' }],
-            value: null,
-            hasEmptyValue: true
+                expect(field.value).toBe('delayed-option-id');
+            });
+
+            it('when object', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.DROPDOWN,
+                    options: [],
+                    value: { id: 'delayed-option-id', name: 'Delayed option' }
+                });
+                expect(field.value).toBe('delayed-option-id');
+            });
         });
-
-        expect(field.hasEmptyValue).toBe(true);
-        expect(field.emptyOption).toEqual({ id: 'empty', name: 'Choose one...' });
-        expect(field.options).toEqual([
-            { id: 'empty', name: 'Choose one...' },
-            { id: 'one', name: 'One' }
-        ]);
     });
 
     it('should store the date value as Date object if the display format is missing', () => {
@@ -502,41 +546,93 @@ describe('FormFieldModel', () => {
         expect(field.hasEmptyValue).toBe(true);
     });
 
-    it('should parse dropdown with multiple options', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.DROPDOWN,
-            options: [
-                { id: 'fake-option-1', name: 'fake label 1' },
-                { id: 'fake-option-2', name: 'fake label 2' },
-                { id: 'fake-option-3', name: 'fake label 3' }
-            ],
-            value: [],
-            selectionType: 'multiple'
-        });
-        expect(field.hasMultipleValues).toBe(true);
-        expect(field.hasEmptyValue).toBe(false);
-    });
+    describe('radio buttons field model instantiation', () => {
+        const mockOptions = [
+            { id: 'opt1', name: 'Option 1' },
+            { id: 'opt2', name: 'Option 2' }
+        ];
 
-    it('should parse and resolve radio button value', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.RADIO_BUTTONS,
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ],
-            value: 'opt2'
+        describe('should parse and resolve selected option id in case of', () => {
+            it('string - id', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    options: mockOptions,
+                    value: 'opt2'
+                });
+
+                expect(field.value).toBe('opt2');
+                expect(field.options).toEqual(mockOptions);
+            });
+
+            it('string - name', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    options: mockOptions,
+                    value: 'Option 1'
+                });
+
+                expect(field.value).toBe('opt1');
+                expect(field.options).toEqual(mockOptions);
+            });
+
+            it('object with id and name', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    options: mockOptions,
+                    value: { id: 'opt2', name: 'Option 2' }
+                });
+
+                expect(field.value).toBe('opt2');
+                expect(field.options).toEqual(mockOptions);
+            });
+
+            it('object with id, name and options', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    options: [{ id: 'lower-priority-opt', name: 'Lower Priority Option' }],
+                    value: {
+                        id: 'opt2',
+                        name: 'Option 2',
+                        options: mockOptions
+                    }
+                });
+
+                expect(field.value).toBe('opt2');
+                expect(field.options).toEqual(mockOptions);
+            });
         });
 
-        expect(field.value).toBe('opt2');
-    });
+        describe('should leave not resolved value (in case of delayed options)', () => {
+            it('when string', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    options: [],
+                    value: 'delayed-option-id'
+                });
 
-    it('should parse and leave radio button value as is', () => {
-        const field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.RADIO_BUTTONS,
-            options: [],
-            value: 'deferred-radio'
+                expect(field.value).toBe('delayed-option-id');
+            });
+
+            it('when object', () => {
+                const field = new FormFieldModel(new FormModel(), {
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    options: [],
+                    value: { id: 'delayed-option-id', name: 'Delayed option' }
+                });
+                expect(field.value).toBe('delayed-option-id');
+            });
         });
-        expect(field.value).toBe('deferred-radio');
+
+        it('should add value (selected option) to field options if NOT present', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.RADIO_BUTTONS,
+                options: [],
+                value: { id: 'opt1', name: 'Option 1' }
+            });
+
+            expect(field.options).toEqual([{ id: 'opt1', name: 'Option 1' }]);
+            expect(field.value).toEqual('opt1');
+        });
     });
 
     it('should parse boolean value when set to "true"', () => {
@@ -595,49 +691,94 @@ describe('FormFieldModel', () => {
         expect(form.values['dropdown-2']).toEqual(field.options[1]);
     });
 
-    it('should update form with radio button value', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            id: 'radio-1',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ]
+    describe('radio buttons field value change', () => {
+        let form: FormModel;
+        let field: FormFieldModel;
+
+        describe('when rest type', () => {
+            beforeEach(() => {
+                form = new FormModel();
+                field = new FormFieldModel(form, {
+                    id: 'rest-radio',
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    optionType: 'rest',
+                    options: [
+                        { id: 'restOpt1', name: 'Rest Option 1' },
+                        { id: 'restOpt2', name: 'Rest Option 2' }
+                    ]
+                });
+            });
+
+            it('should update form with selected option and options from which we chose', () => {
+                field.value = 'restOpt2';
+
+                expect(form.values['rest-radio']).toEqual({
+                    id: 'restOpt2',
+                    name: 'Rest Option 2',
+                    options: field.options
+                });
+            });
+
+            describe('should update form with selected option properties set to null and options from which we chose', () => {
+                it('when value does NOT match any option', () => {
+                    field.value = 'not_exist';
+
+                    expect(form.values['rest-radio']).toEqual({
+                        id: null,
+                        name: null,
+                        options: field.options
+                    });
+                });
+
+                it('when radio button value is null', () => {
+                    field.value = null;
+
+                    expect(form.values['rest-radio']).toEqual({
+                        id: null,
+                        name: null,
+                        options: field.options
+                    });
+                });
+            });
         });
 
-        field.value = 'opt2';
-        expect(form.values['radio-1']).toEqual(field.options[1]);
-    });
+        describe('when manual type', () => {
+            beforeEach(() => {
+                form = new FormModel();
+                field = new FormFieldModel(form, {
+                    id: 'manual-radio',
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    optionType: 'manual',
+                    options: [
+                        { id: 'opt1', name: 'Static Option 1' },
+                        { id: 'opt2', name: 'Static Option 2' }
+                    ]
+                });
+            });
 
-    it('should update form with null when radio button value does NOT match any option', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            id: 'radio-2',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ]
+            it('should update form with selected option', () => {
+                field.value = 'opt1';
+
+                expect(form.values['manual-radio']).toEqual({
+                    id: 'opt1',
+                    name: 'Static Option 1'
+                });
+            });
+
+            describe('should update form with selected option set to null', () => {
+                it('when value does NOT match any option', () => {
+                    field.value = 'not_exist';
+
+                    expect(form.values['manual-radio']).toEqual(null);
+                });
+
+                it('when radio button value is null', () => {
+                    field.value = null;
+
+                    expect(form.values['manual-radio']).toEqual(null);
+                });
+            });
         });
-
-        field.value = 'missing';
-        expect(form.values['radio-2']).toBe(null);
-    });
-
-    it('should update form with null when radio button value is null', () => {
-        const form = new FormModel();
-        const field = new FormFieldModel(form, {
-            id: 'radio-2',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
-            ]
-        });
-
-        field.value = null;
-        expect(form.values['radio-2']).toBe(null);
     });
 
     it('should not update form with display-only field value', () => {
