@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -32,7 +32,6 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
-
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -50,11 +49,9 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     currentFilter: TaskFilterCloudModel;
     enableNotifications: boolean;
 
-    constructor(private taskFilterCloudService: TaskFilterCloudService,
-                private translationService: TranslationService,
-                private appConfigService: AppConfigService) {
-        super();
-    }
+    private readonly taskFilterCloudService = inject(TaskFilterCloudService);
+    private readonly translationService = inject(TranslationService);
+    private readonly appConfigService = inject(AppConfigService);
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
@@ -106,7 +103,8 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     initFilterCounterNotifications() {
         if (this.appName && this.enableNotifications) {
-            this.taskFilterCloudService.getTaskNotificationSubscription(this.appName)
+            this.taskFilterCloudService
+                .getTaskNotificationSubscription(this.appName)
                 .pipe(debounceTime(1000))
                 .subscribe((result: TaskCloudEngineEvent[]) => {
                     result.map((taskEvent: TaskCloudEngineEvent) => {
@@ -128,20 +126,28 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     isFilterPresent(filter: TaskFilterCloudModel, filterNotification: TaskDetailsCloudModel): boolean {
-        return filter.status === filterNotification.status
-            && (filter.assignee === filterNotification.assignee || filterNotification.assignee === undefined);
+        return (
+            filter.status === filterNotification.status &&
+            (filter.assignee === filterNotification.assignee || filterNotification.assignee === undefined)
+        );
     }
 
     public selectFilter(paramFilter: FilterParamsModel) {
-        if (paramFilter) {
-            this.currentFilter = this.filters.find((filter, index) =>
-                paramFilter.index === index ||
-                paramFilter.key === filter.key ||
-                paramFilter.id === filter.id ||
-                (paramFilter.name &&
-                    (paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
-                ));
+        if (!paramFilter) {
+            return;
         }
+
+        const preferredFilter = this.filters.find((filter) => filter.id === paramFilter.id);
+
+        this.currentFilter =
+            preferredFilter ??
+            this.filters.find(
+                (filter, index) =>
+                    paramFilter.index === index ||
+                    paramFilter.key === filter.key ||
+                    paramFilter.id === filter.id ||
+                    (paramFilter.name && paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
+            ); // fallback to preserve the previous behavior
     }
 
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {

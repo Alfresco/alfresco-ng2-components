@@ -15,53 +15,37 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'adf-cloud-process-filter-dialog-cloud',
-  templateUrl: './process-filter-dialog-cloud.component.html',
-  styleUrls: ['./process-filter-dialog-cloud.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-cloud-process-filter-dialog-cloud',
+    templateUrl: './process-filter-dialog-cloud.component.html',
+    styleUrls: ['./process-filter-dialog-cloud.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
-export class ProcessFilterDialogCloudComponent implements OnInit {
+export class ProcessFilterDialogCloudComponent {
+    public readonly dialogRef = inject(MatDialogRef<ProcessFilterDialogCloudComponent>);
+    public readonly data = inject(MAT_DIALOG_DATA);
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     public static ACTION_SAVE = 'SAVE';
     defaultIcon = 'inbox';
 
-    filterForm: UntypedFormGroup;
-
-    constructor(
-        private fb: UntypedFormBuilder,
-        public dialogRef: MatDialogRef<ProcessFilterDialogCloudComponent>,
-        @Inject(MAT_DIALOG_DATA) public data) {
-    }
-
-    ngOnInit() {
-        this.filterForm = this.fb.group({
-            name: [this.data.name, Validators.required]
-        });
-    }
+    filterForm = new FormGroup({
+        name: new FormControl(this.data.name, [Validators.required])
+    });
 
     onSaveClick() {
         this.dialogRef.close({
             action: ProcessFilterDialogCloudComponent.ACTION_SAVE,
             icon: this.defaultIcon,
-            name: this.nameController.value
+            name: this.filterForm.controls.name.value
         });
     }
 
     onCancelClick() {
         this.dialogRef.close();
-    }
-
-    get nameController(): AbstractControl {
-        return this.filterForm.get('name');
-    }
-
-    isValid(): boolean {
-        return this.filterForm.valid;
     }
 }

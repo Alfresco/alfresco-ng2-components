@@ -10,7 +10,7 @@
                         <ng-container *ngIf="toggleFilterActions">
                             <button *ngFor="let filterAction of taskFilterActions"
                                     mat-icon-button
-                                    title="{{ filterAction.tooltip | translate}}"
+                                    [title]="filterAction.tooltip | translate"
                                     [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
                                     [disabled]="isDisabledAction(filterAction)"
                                     (click)="executeFilterActions(filterAction)">
@@ -62,7 +62,7 @@
                                    (keyup)="onDateChanged($any($event).target.value, taskFilterProperty)"
                                    (dateChange)="onDateChanged($event.value, taskFilterProperty)"
                                    [matDatepicker]="dateController"
-                                   placeholder="{{taskFilterProperty.label | translate}}"
+                                   [placeholder]="taskFilterProperty.label | translate"
                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
                             <mat-datepicker-toggle matSuffix
                                                    [for]="dateController"

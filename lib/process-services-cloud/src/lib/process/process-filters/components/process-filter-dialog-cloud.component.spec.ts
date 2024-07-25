@@ -107,7 +107,6 @@ describe('ProcessFilterDialogCloudComponent', () => {
     });
 
     it('should able close dialog on click of cancel button', () => {
-        component.data = { data: { name: '' } };
         const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-cancel-button-id');
         fixture.detectChanges();
         cancelButton.click();
