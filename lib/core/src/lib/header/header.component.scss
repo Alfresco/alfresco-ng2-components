@@ -1,0 +1,36 @@
+.adf-header {
+    display: flex;
+    flex-direction: column;
+    width: var(--adf-header-width, 100%);
+    height: var(--adf-header-height, 100%);
+
+    .adf-toolbar {
+        width: var(--adf-toolbar-width, 100%);
+        height: var(--adf-toolbar-height, 100%);
+
+        .adf-toolbar-title {
+            width: var(--adf-toolbar-title-width, 100%);
+            align-items: center;
+            font-size: var(--adf-toolbar-title-font-size, 16px);
+            font-weight: var(--adf-toolbar-title-font-weight, 500);
+            color: var(--adf-toolbar-title-color, #000);
+            gap: var(--adf-toolbar-title-gap, 25px);
+        }
+
+        .adf-toolbar-logo {
+            height: var(--adf-header-logo-height, 36px);
+            width: var(--adf-header-logo-width, --adf-header-logo-height);
+        }
+
+        .adf-toolbar-actions > * {
+            display: flex;
+            align-items: center;
+            gap: var(--adf-toolbar-actions-gap, 10px);
+        }
+
+        .adf-toolbar-container.adf-toolbar-container-row {
+            height: 100%;
+            column-gap: 10px;
+        }
+    }
+}

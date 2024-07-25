@@ -1,0 +1,10 @@
+<button *ngIf="routerLink; else noRouterLink" class="adf-navbar-item-btn"
+        [routerLink]="routerLink"
+        routerLinkActive="adf-navbar-item-active"
+        mat-button>{{ label }}
+</button>
+<ng-template #noRouterLink>
+    <button class="adf-navbar-item-btn" mat-button>
+        {{ label }}
+    </button>
+</ng-template>

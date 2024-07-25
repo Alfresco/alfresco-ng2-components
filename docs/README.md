@@ -81,11 +81,12 @@ for more information about installing and using the source code.
 
 A collection of Angular components for generic use.
 
-| Name                                              | Description                  |
-|---------------------------------------------------|------------------------------|
-| [Avatar](core/components/avatar.component.md)     | Displays user avatars.       |
-| [Button](core/components/button.component.md)     | A standard button component. |
-| [Progress](core/components/progress.component.md) | A progress bar component.    |
+| Name                                              | Description                                     |
+|---------------------------------------------------|-------------------------------------------------|
+| [Avatar](core/components/avatar.component.md)     | Displays user avatars.                          |
+| [Button](core/components/button.component.md)     | A standard button component.                    |
+| [Progress](core/components/progress.component.md) | A progress bar component.                       |
+| [Header](core/components/adf-header.component.md) | A simple reusable application header component. |
 
 ### Components
 
