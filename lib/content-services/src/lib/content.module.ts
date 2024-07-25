@@ -35,7 +35,6 @@ import { PermissionManagerModule } from './permission-manager/permission-manager
 import { TreeViewModule } from './tree-view/tree-view.module';
 import { ContentTypeModule } from './content-type/content-type.module';
 import { AspectListModule } from './aspect-list/aspect-list.module';
-import { VersionCompatibilityModule } from './version-compatibility/version-compatibility.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { CONTENT_PIPES } from './pipes/content-pipe.module';
@@ -47,6 +46,7 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
 import { CategoriesManagementComponent } from './category';
 import { TreeComponent } from './tree';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader';
+import { VersionCompatibilityDirective } from './version-compatibility';
 
 @NgModule({
     imports: [
@@ -72,7 +72,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
         TreeViewModule,
         ContentTypeModule,
         AspectListModule,
-        VersionCompatibilityModule,
+        VersionCompatibilityDirective,
         NodeCommentsModule,
         TreeComponent,
         SearchTextModule,
@@ -99,7 +99,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
         TreeViewModule,
         AspectListModule,
         ContentTypeModule,
-        VersionCompatibilityModule,
+        VersionCompatibilityDirective,
         NodeCommentsModule,
         TreeComponent,
         SearchTextModule,

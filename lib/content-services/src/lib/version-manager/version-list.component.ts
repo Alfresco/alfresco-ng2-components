@@ -30,9 +30,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { VersionCompatibilityModule } from '../version-compatibility';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
+import { VersionCompatibilityDirective } from '../version-compatibility';
 
 export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry> {
     constructor(private versionsApi: VersionsApi, private node: Node) {
@@ -59,9 +59,9 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
         CdkVirtualForOf,
         MatIconModule,
         MatMenuModule,
-        VersionCompatibilityModule,
         TranslateModule,
-        MatButtonModule
+        MatButtonModule,
+        VersionCompatibilityDirective
     ],
     templateUrl: './version-list.component.html',
     styleUrls: ['./version-list.component.scss'],
