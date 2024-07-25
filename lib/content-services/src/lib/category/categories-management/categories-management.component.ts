@@ -17,11 +17,19 @@
 
 import { Category } from '@alfresco/js-api';
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { debounce, first, map, takeUntil, tap } from 'rxjs/operators';
 import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { AutoFocusDirective } from '../../directives';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface CategoryNameControlErrors {
     duplicatedExistingCategory?: boolean;
@@ -32,6 +40,18 @@ interface CategoryNameControlErrors {
 
 @Component({
     selector: 'adf-categories-management',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        AutoFocusDirective,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatIconModule,
+        MatListModule,
+        MatProgressSpinnerModule
+    ],
     templateUrl: './categories-management.component.html',
     styleUrls: ['./categories-management.component.scss'],
     encapsulation: ViewEncapsulation.None

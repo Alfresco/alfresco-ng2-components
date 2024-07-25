@@ -15,27 +15,12 @@
  * limitations under the License.
  */
 
-import { ContextMenuModule, CoreModule } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from '../material.module';
 import { TreeComponent } from './components/tree.component';
 
+/** @deprecated use `TreeComponent` standalone component instead */
 @NgModule({
-    imports: [
-        CommonModule,
-        CoreModule,
-        MaterialModule,
-        TranslateModule,
-        ContextMenuModule
-    ],
-    declarations: [
-        TreeComponent
-    ],
-    exports: [
-        TreeComponent
-    ]
+    imports: [TreeComponent],
+    exports: [TreeComponent]
 })
-export class TreeModule {
-}
+export class TreeModule {}

@@ -19,19 +19,17 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
-
 import { MaterialModule } from './material.module';
-
 import { TagModule } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
-import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
+import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { VersionManagerModule } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
 import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
 import { ContentDirectiveModule } from './directives/content-directive.module';
-import { DialogModule } from './dialogs/dialog.module';
+import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
 import { TreeViewModule } from './tree-view/tree-view.module';
@@ -42,12 +40,13 @@ import { versionCompatibilityFactory } from './version-compatibility/version-com
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
-import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
-import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
+import { CategoriesManagementComponent } from './category';
+import { TreeComponent } from './tree';
+import { NewVersionUploaderDialogComponent } from './new-version-uploader';
 
 @NgModule({
     imports: [
@@ -57,13 +56,13 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        DialogModule,
+        ...CONTENT_DIALOG_DIRECTIVES,
         SearchModule,
         DocumentListModule,
         UploadModule,
         MaterialModule,
         DropdownSitesComponent,
-        BreadcrumbModule,
+        ...BREADCRUMB_DIRECTIVES,
         ContentNodeSelectorModule,
         ContentNodeShareModule,
         ContentMetadataModule,
@@ -75,10 +74,11 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         AspectListModule,
         VersionCompatibilityModule,
         NodeCommentsModule,
-        TreeModule,
+        TreeComponent,
         SearchTextModule,
         AlfrescoViewerModule,
-        CategoriesModule
+        CategoriesManagementComponent,
+        NewVersionUploaderDialogComponent
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
@@ -88,11 +88,11 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         UploadModule,
         SearchModule,
         DropdownSitesComponent,
-        BreadcrumbModule,
+        ...BREADCRUMB_DIRECTIVES,
         ContentNodeSelectorModule,
         ContentNodeShareModule,
         ContentMetadataModule,
-        DialogModule,
+        ...CONTENT_DIALOG_DIRECTIVES,
         ContentDirectiveModule,
         PermissionManagerModule,
         VersionManagerModule,
@@ -101,10 +101,11 @@ import { DropdownSitesComponent } from './content-node-selector/site-dropdown/si
         ContentTypeModule,
         VersionCompatibilityModule,
         NodeCommentsModule,
-        TreeModule,
+        TreeComponent,
         SearchTextModule,
         AlfrescoViewerModule,
-        CategoriesModule
+        CategoriesManagementComponent,
+        NewVersionUploaderDialogComponent
     ]
 })
 export class ContentModule {

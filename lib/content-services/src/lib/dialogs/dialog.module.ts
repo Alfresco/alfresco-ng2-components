@@ -15,44 +15,24 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from '@alfresco/adf-core';
-
-import { MaterialModule } from '../material.module';
-import { FolderDialogComponent } from './folder.dialog';
-import { NodeLockDialogComponent } from './node-lock.dialog';
-import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { FolderDialogComponent } from './folder/folder.dialog';
+import { NodeLockDialogComponent } from './node-lock/node-lock.dialog';
 import { LibraryDialogComponent } from './library/library.dialog';
-import { ContentDirectiveModule } from '../directives';
 import { DownloadZipDialogModule } from './download-zip/download-zip.dialog.module';
-import { CategorySelectorDialogComponent } from './category-selector.dialog';
-import { CategoriesModule } from '../category';
+import { CategorySelectorDialogComponent } from './category-selector/category-selector.dialog';
 
+export const CONTENT_DIALOG_DIRECTIVES = [
+    DownloadZipDialogModule,
+    FolderDialogComponent,
+    NodeLockDialogComponent,
+    LibraryDialogComponent,
+    CategorySelectorDialogComponent
+];
+
+/** @deprecated use `..CONTENT_DIALOG_DIRECTIVES` or standalone component imports instead */
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatDatetimepickerModule,
-        ContentDirectiveModule,
-        DownloadZipDialogModule,
-        CategoriesModule
-    ],
-    declarations: [
-        FolderDialogComponent,
-        NodeLockDialogComponent,
-        LibraryDialogComponent,
-        CategorySelectorDialogComponent
-    ],
-    exports: [
-        FolderDialogComponent,
-        NodeLockDialogComponent,
-        LibraryDialogComponent,
-        CategorySelectorDialogComponent
-    ]
+    imports: [...CONTENT_DIALOG_DIRECTIVES],
+    exports: [...CONTENT_DIALOG_DIRECTIVES]
 })
 export class DialogModule {}

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2024-03-12
 ---
 
-# [Category selector dialog component](../../../lib/content-services/src/lib/dialogs/category-selector.dialog.ts "Defined in category-selector.dialog.ts")
+# Category Selector Dialog
 
 Allows the user to select one or multiple categories.
 
@@ -13,43 +13,41 @@ Allows the user to select one or multiple categories.
 
 ## Dialog inputs
 
-| Name | Type      | Default value | Description |
-| ---- |-----------| ------------- | ----------- |
-| select | [`Subject<Category[]>`](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/js-api/src/api/content-rest-api/docs/CategoriesApi.md)  |  | Emits an array of selected categories when the dialog closes |
-| multiSelect | `boolean` | `true` | (optional) Toggles multiselect mode |
+| Name        | Type                  | Default value | Description                                                  |
+|-------------|-----------------------|---------------|--------------------------------------------------------------|
+| select      | `Subject<Category[]>` |               | Emits an array of selected categories when the dialog closes |
+| multiSelect | `boolean`             | `true`        | (optional) Toggles multiselect mode                          |
 
 ## Basic Usage 
 
 ```ts
-constructor(private dialog: MatDialog) {}
+export class MyComponent {
+    constructor(private dialog: MatDialog) {
+    }
 
-...
+    openCatDialog() {
+        const data: CategorySelectorDialogOptions = {
+            select: new Subject<Category[]>(),
+            multiSelect: false
+        };
 
-function openCatDialog() {
-    const data: CategorySelectorDialogOptions = {
-        select: new Subject<Category[]>(),
-        multiSelect: false
-    };
+        this.dialog.open(CategorySelectorDialogComponent, {
+            data,
+            width: '400px'
+        });
 
-    this.dialog.open(CategorySelectorDialogComponent, {
-        data,
-        width: '400px'
-    });
-
-    data.select.subscribe(
-        (selections: Category[]) => {
-            ...
-        }
-    );
+        data.select.subscribe((selections) => {
+            // ...
+        });
+    }
 }
 ```
-All the results will be streamed to the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the `CategorySelectorDialogOptions` object passed to the dialog.
+All the results will be streamed to the `select` subject present in the `CategorySelectorDialogOptions` object passed to the dialog.
 When the category is selected by clicking the `Select` button, the `options.select` stream will be completed.
 
 ## Details
 
-This component lets the user select categories. Use the
-Angular [`MatDialog`](https://material.angular.io/components/dialog/overview)
+This component lets the user select categories. Use the Angular `MatDialog`
 service to open the dialog, as shown in the example, and pass a `options` object
 with properties.
 

@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
+import { BREADCRUMB_DIRECTIVES } from '../breadcrumb/breadcrumb.module';
 import { SearchModule } from '../search/search.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
@@ -39,7 +39,7 @@ import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component
         CommonModule,
         MaterialModule,
         DropdownSitesComponent,
-        BreadcrumbModule,
+        ...BREADCRUMB_DIRECTIVES,
         SearchModule,
         DocumentListModule,
         UploadModule,

@@ -38,6 +38,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatBadgeModule } from '@angular/material/badge';
 
+/** @deprecated this module is deprecated and will be removed in future versions */
 @NgModule({
     imports: [
         MatButtonModule,
