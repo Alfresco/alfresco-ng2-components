@@ -20,7 +20,7 @@ import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
 import { MaterialModule } from './material.module';
-import { TagModule } from './tag/tag.module';
+import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
 import { SearchModule } from './search/search.module';
 import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
@@ -52,7 +52,7 @@ import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
     imports: [
         ...CONTENT_PIPES,
         CoreModule,
-        TagModule,
+        ...CONTENT_TAG_DIRECTIVES,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -83,7 +83,7 @@ import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
         ...CONTENT_PIPES,
-        TagModule,
+        ...CONTENT_TAG_DIRECTIVES,
         DocumentListModule,
         ...CONTENT_UPLOAD_DIRECTIVES,
         SearchModule,
