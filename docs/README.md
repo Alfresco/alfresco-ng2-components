@@ -92,8 +92,6 @@ A collection of Angular components for generic use.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [About GitHub Link Component](core/components/about-github-link.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which version of the application is running based on the latest GitHub commit, as well as the server settings for the application. | [Source](../lib/core/src/lib/about/about-github-link/about-github-link.component.ts) |
-| [About Product Version Component](core/components/about-product-version.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which version of Process Services (BPM) and Content Services (ECM) an application is running. It also shows the relevant license information, application status and Alfresco modules running in an application. | [Source](../lib/core/src/lib/about/about-product-version/about-product-version.component.ts) |
 | [About Component](core/components/about.component.md) | Presentational component to display About information as a set of collapsible panels. | [Source](../lib/core/src/lib/about/about.component.ts) |
 | [Card View component](core/components/card-view.component.md) | Displays a configurable property list renderer. | [Source](../lib/core/src/lib/card-view/components/card-view/card-view.component.ts) |
 | [Comment list component](core/components/comment-list.component.md) | Shows a list of comments. | [Source](../lib/core/src/lib/comments/comment-list/comment-list.component.ts) |
