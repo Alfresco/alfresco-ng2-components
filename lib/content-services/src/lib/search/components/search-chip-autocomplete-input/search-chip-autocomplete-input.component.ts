@@ -29,15 +29,21 @@ import {
     OnChanges
 } from '@angular/core';
 import { ENTER } from '@angular/cdk/keycodes';
-import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { debounce, startWith, takeUntil, tap } from 'rxjs/operators';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslateModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule],
     templateUrl: './search-chip-autocomplete-input.component.html',
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None

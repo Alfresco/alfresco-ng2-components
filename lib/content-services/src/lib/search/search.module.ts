@@ -57,7 +57,7 @@ import { SearchFacetChipTabbedComponent } from './components/search-filter-chips
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
 import { SearchInputComponent } from './components/search-input';
 
-export const CONTENT_SEARCH_DIRECTIVES = [SearchCheckListComponent] as const;
+export const CONTENT_SEARCH_DIRECTIVES = [SearchCheckListComponent, SearchChipAutocompleteInputComponent, SearchChipListComponent] as const;
 
 @NgModule({
     imports: [
@@ -76,10 +76,8 @@ export const CONTENT_SEARCH_DIRECTIVES = [SearchCheckListComponent] as const;
         EmptySearchResultComponent,
         SearchFilterComponent,
         SearchFilterCardComponent,
-        SearchChipListComponent,
         SearchWidgetContainerComponent,
         SearchTextComponent,
-        SearchChipAutocompleteInputComponent,
         SearchFilterAutocompleteChipsComponent,
         SearchRadioComponent,
         SearchSliderComponent,
@@ -110,10 +108,8 @@ export const CONTENT_SEARCH_DIRECTIVES = [SearchCheckListComponent] as const;
         EmptySearchResultComponent,
         SearchFilterComponent,
         SearchFilterCardComponent,
-        SearchChipListComponent,
         SearchWidgetContainerComponent,
         SearchTextComponent,
-        SearchChipAutocompleteInputComponent,
         SearchFilterAutocompleteChipsComponent,
         SearchRadioComponent,
         SearchSliderComponent,
