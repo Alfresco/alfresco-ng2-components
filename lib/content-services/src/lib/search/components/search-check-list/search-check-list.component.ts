@@ -16,13 +16,17 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface SearchListOption {
     name: string;
@@ -32,13 +36,14 @@ export interface SearchListOption {
 
 @Component({
     selector: 'adf-search-check-list',
+    standalone: true,
+    imports: [CommonModule, MatCheckboxModule, TranslateModule, MatButtonModule, MatIconModule],
     templateUrl: './search-check-list.component.html',
     styleUrls: ['./search-check-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-check-list' }
 })
 export class SearchCheckListComponent implements SearchWidget, OnInit {
-
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -101,7 +106,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     updateDisplayValue(): void {
         const displayValue = this.options.items
             .filter((option) => option.checked)
-            .map(({name}) => this.translationService.instant(name))
+            .map(({ name }) => this.translationService.instant(name))
             .join(', ');
         this.displayValue$.next(displayValue);
     }
@@ -125,15 +130,12 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     }
 
     setValue(value: any) {
-        this.options.items.filter((item) => value.includes(item.value))
-            .map((item) => item.checked = true);
+        this.options.items.filter((item) => value.includes(item.value)).map((item) => (item.checked = true));
         this.submitValues();
     }
 
     private getCheckedValues() {
-        return this.options.items
-            .filter((option) => option.checked)
-            .map((option) => option.value);
+        return this.options.items.filter((option) => option.checked).map((option) => option.value);
     }
 
     submitValues() {

@@ -57,8 +57,19 @@ import { SearchFacetChipTabbedComponent } from './components/search-filter-chips
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
 import { SearchInputComponent } from './components/search-input';
 
+export const CONTENT_SEARCH_DIRECTIVES = [SearchCheckListComponent] as const;
+
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, CoreModule, SearchTextModule, SearchInputComponent],
+    imports: [
+        ...CONTENT_SEARCH_DIRECTIVES,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        CoreModule,
+        SearchTextModule,
+        SearchInputComponent
+    ],
     declarations: [
         SearchComponent,
         SearchControlComponent,
@@ -74,7 +85,6 @@ import { SearchInputComponent } from './components/search-input';
         SearchSliderComponent,
         SearchNumberRangeComponent,
         SearchPanelComponent,
-        SearchCheckListComponent,
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
@@ -109,7 +119,7 @@ import { SearchInputComponent } from './components/search-input';
         SearchSliderComponent,
         SearchNumberRangeComponent,
         SearchPanelComponent,
-        SearchCheckListComponent,
+        ...CONTENT_SEARCH_DIRECTIVES,
         SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
