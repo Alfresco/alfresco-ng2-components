@@ -695,46 +695,87 @@ describe('FormFieldModel', () => {
         let form: FormModel;
         let field: FormFieldModel;
 
-        beforeEach(() => {
-            form = new FormModel();
-            field = new FormFieldModel(form, {
-                id: 'radio-1',
-                type: FormFieldTypes.RADIO_BUTTONS,
-                options: [
-                    { id: 'opt1', name: 'Option 1' },
-                    { id: 'opt2', name: 'Option 2' }
-                ]
+        describe('when rest type', () => {
+            beforeEach(() => {
+                form = new FormModel();
+                field = new FormFieldModel(form, {
+                    id: 'rest-radio',
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    optionType: 'rest',
+                    options: [
+                        { id: 'restOpt1', name: 'Rest Option 1' },
+                        { id: 'restOpt2', name: 'Rest Option 2' }
+                    ]
+                });
             });
-        });
 
-        it('should update form with selected option and options from which we chose', () => {
-            field.value = 'opt2';
+            it('should update form with selected option and options from which we chose', () => {
+                field.value = 'restOpt2';
 
-            expect(form.values['radio-1']).toEqual({
-                id: 'opt2',
-                name: 'Option 2',
-                options: field.options
-            });
-        });
-
-        describe('should update form with selected option properties set to null and options from which we chose', () => {
-            it('when value does NOT match any option', () => {
-                field.value = 'not_exist';
-
-                expect(form.values['radio-1']).toEqual({
-                    id: null,
-                    name: null,
+                expect(form.values['rest-radio']).toEqual({
+                    id: 'restOpt2',
+                    name: 'Rest Option 2',
                     options: field.options
                 });
             });
 
-            it('when radio button value is null', () => {
-                field.value = null;
+            describe('should update form with selected option properties set to null and options from which we chose', () => {
+                it('when value does NOT match any option', () => {
+                    field.value = 'not_exist';
 
-                expect(form.values['radio-1']).toEqual({
-                    id: null,
-                    name: null,
-                    options: field.options
+                    expect(form.values['rest-radio']).toEqual({
+                        id: null,
+                        name: null,
+                        options: field.options
+                    });
+                });
+
+                it('when radio button value is null', () => {
+                    field.value = null;
+
+                    expect(form.values['rest-radio']).toEqual({
+                        id: null,
+                        name: null,
+                        options: field.options
+                    });
+                });
+            });
+        });
+
+        describe('when manual type', () => {
+            beforeEach(() => {
+                form = new FormModel();
+                field = new FormFieldModel(form, {
+                    id: 'manual-radio',
+                    type: FormFieldTypes.RADIO_BUTTONS,
+                    optionType: 'manual',
+                    options: [
+                        { id: 'opt1', name: 'Static Option 1' },
+                        { id: 'opt2', name: 'Static Option 2' }
+                    ]
+                });
+            });
+
+            it('should update form with selected option', () => {
+                field.value = 'opt1';
+
+                expect(form.values['manual-radio']).toEqual({
+                    id: 'opt1',
+                    name: 'Static Option 1'
+                });
+            });
+
+            describe('should update form with selected option set to null', () => {
+                it('when value does NOT match any option', () => {
+                    field.value = 'not_exist';
+
+                    expect(form.values['manual-radio']).toEqual(null);
+                });
+
+                it('when radio button value is null', () => {
+                    field.value = null;
+
+                    expect(form.values['manual-radio']).toEqual(null);
                 });
             });
         });
