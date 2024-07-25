@@ -24,7 +24,15 @@ import { ContentService } from '../common';
 import { InfiniteScrollDatasource } from '../infinite-scroll-datasource';
 import { from, Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { VersionCompatibilityModule } from '../version-compatibility';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry> {
     constructor(private versionsApi: VersionsApi, private node: Node) {
@@ -41,6 +49,20 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
 
 @Component({
     selector: 'adf-version-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatProgressBarModule,
+        MatListModule,
+        CdkVirtualScrollViewport,
+        CdkFixedSizeVirtualScroll,
+        CdkVirtualForOf,
+        MatIconModule,
+        MatMenuModule,
+        VersionCompatibilityModule,
+        TranslateModule,
+        MatButtonModule
+    ],
     templateUrl: './version-list.component.html',
     styleUrls: ['./version-list.component.scss'],
     encapsulation: ViewEncapsulation.None,

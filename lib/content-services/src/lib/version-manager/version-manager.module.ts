@@ -15,23 +15,22 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-
 import { VersionUploadComponent } from './version-upload.component';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
-import { UploadModule } from '../upload/upload.module';
-import { VersionCompatibilityModule } from '../version-compatibility/version-compatibility.module';
-import { CoreModule, FileTypePipe } from '@alfresco/adf-core';
 import { VersionComparisonComponent } from './version-comparison.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
+export const CONTENT_VERSION_DIRECTIVES = [
+    VersionUploadComponent,
+    VersionManagerComponent,
+    VersionListComponent,
+    VersionComparisonComponent
+] as const;
+
+/** @deprecated use `...CONTENT_VERSION_DIRECTIVES` instead */
 @NgModule({
-    imports: [CommonModule, MaterialModule, CoreModule, UploadModule, VersionCompatibilityModule, FormsModule, ScrollingModule, FileTypePipe],
-    exports: [VersionUploadComponent, VersionManagerComponent, VersionListComponent, FormsModule, VersionComparisonComponent],
-    declarations: [VersionUploadComponent, VersionManagerComponent, VersionListComponent, VersionComparisonComponent]
+    imports: [...CONTENT_VERSION_DIRECTIVES],
+    exports: [...CONTENT_VERSION_DIRECTIVES]
 })
 export class VersionManagerModule {}

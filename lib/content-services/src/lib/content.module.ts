@@ -25,7 +25,7 @@ import { DocumentListModule } from './document-list/document-list.module';
 import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
 import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
-import { VersionManagerModule } from './version-manager/version-manager.module';
+import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
 import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
 import { ContentDirectiveModule } from './directives/content-directive.module';
@@ -68,7 +68,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
         ...CONTENT_METADATA_DIRECTIVES,
         ContentDirectiveModule,
         PermissionManagerModule,
-        VersionManagerModule,
+        ...CONTENT_VERSION_DIRECTIVES,
         TreeViewModule,
         ContentTypeModule,
         AspectListModule,
@@ -95,7 +95,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
         ...CONTENT_DIALOG_DIRECTIVES,
         ContentDirectiveModule,
         PermissionManagerModule,
-        VersionManagerModule,
+        ...CONTENT_VERSION_DIRECTIVES,
         TreeViewModule,
         AspectListModule,
         ContentTypeModule,

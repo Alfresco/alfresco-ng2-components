@@ -22,16 +22,25 @@ import { takeUntil } from 'rxjs/operators';
 import { ContentService } from '../common/services/content.service';
 import { UploadService } from '../common/services/upload.service';
 import { FileUploadErrorEvent, FileUploadEvent } from '../common/events/file.event';
+import { CommonModule } from '@angular/common';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { UploadModule } from '../upload';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-version-upload',
+    standalone: true,
+    imports: [CommonModule, MatRadioModule, FormsModule, TranslateModule, MatFormFieldModule, MatInputModule, UploadModule, MatButtonModule],
     templateUrl: './version-upload.component.html',
     styleUrls: ['./version-upload.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-version-upload' }
 })
 export class VersionUploadComponent implements OnInit, OnDestroy {
-
     semanticVersion: string = 'minor';
     comment: string;
     uploadVersion: boolean = false;
@@ -89,16 +98,13 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     @Output()
     uploadStarted = new EventEmitter<FileUploadEvent>();
 
-    constructor(private contentService: ContentService, private uploadService: UploadService) {
-    }
+    constructor(private contentService: ContentService, private uploadService: UploadService) {}
 
     ngOnInit() {
-        this.uploadService.fileUploadStarting
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((event: FileUploadEvent) => {
-                this.disabled = true;
-                this.uploadStarted.emit(event);
-            });
+        this.uploadService.fileUploadStarting.pipe(takeUntil(this.onDestroy$)).subscribe((event: FileUploadEvent) => {
+            this.disabled = true;
+            this.uploadStarted.emit(event);
+        });
     }
 
     canUpload(): boolean {
@@ -143,8 +149,8 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     }
 
     getNextMajorVersion(version: string): string {
-        const { major} = this.getParsedVersion(version);
-        return `${major + 1 }.0`;
+        const { major } = this.getParsedVersion(version);
+        return `${major + 1}.0`;
     }
 
     private getParsedVersion(version: string) {
