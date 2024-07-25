@@ -27,11 +27,10 @@ import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
 import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
-import { ContentDirectiveModule } from './directives/content-directive.module';
+import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
 import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
 import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
-import { PermissionManagerModule } from './permission-manager/permission-manager.module';
-import { TreeViewModule } from './tree-view/tree-view.module';
+import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
 import { ContentTypeModule } from './content-type/content-type.module';
 import { AspectListModule } from './aspect-list/aspect-list.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
@@ -47,6 +46,7 @@ import { TreeComponent } from './tree';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader';
 import { VersionCompatibilityDirective } from './version-compatibility';
 import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
+import { TreeViewComponent } from './tree-view';
 
 @NgModule({
     imports: [
@@ -66,10 +66,10 @@ import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
         ContentNodeSelectorModule,
         ContentNodeShareModule,
         ...CONTENT_METADATA_DIRECTIVES,
-        ContentDirectiveModule,
-        PermissionManagerModule,
+        ...CONTENT_DIRECTIVES,
+        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES,
-        TreeViewModule,
+        TreeViewComponent,
         ContentTypeModule,
         AspectListModule,
         VersionCompatibilityDirective,
@@ -93,10 +93,10 @@ import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
         ContentNodeShareModule,
         ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIALOG_DIRECTIVES,
-        ContentDirectiveModule,
-        PermissionManagerModule,
+        ...CONTENT_DIRECTIVES,
+        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES,
-        TreeViewModule,
+        TreeViewComponent,
         AspectListModule,
         ContentTypeModule,
         VersionCompatibilityDirective,
