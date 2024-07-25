@@ -16,14 +16,19 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-breadcrumb',
+    standalone: true,
+    imports: [CommonModule, MatIconModule, TranslateModule, MatSelectModule],
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,

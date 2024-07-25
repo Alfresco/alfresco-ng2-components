@@ -47,8 +47,7 @@ describe('CategoriesManagementComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [CategoriesManagementComponent],
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, CategoriesManagementComponent],
             providers: [
                 {
                     provide: CategoryService,

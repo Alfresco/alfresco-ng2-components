@@ -16,10 +16,13 @@
  */
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
-import { CategoriesManagementMode } from '../category';
+import { CategoriesManagementComponent, CategoriesManagementMode } from '../../category';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 export interface CategorySelectorDialogOptions {
     select: Subject<Category[]>;
@@ -28,6 +31,8 @@ export interface CategorySelectorDialogOptions {
 
 @Component({
     selector: 'adf-category-selector-dialog',
+    standalone: true,
+    imports: [CommonModule, MatDialogModule, TranslateModule, CategoriesManagementComponent, MatButtonModule],
     templateUrl: './category-selector.dialog.html',
     styleUrls: ['./category-selector.dialog.scss'],
     encapsulation: ViewEncapsulation.None
@@ -40,8 +45,7 @@ export class CategorySelectorDialogComponent implements OnInit {
     constructor(
         private dialog: MatDialogRef<CategorySelectorDialogComponent, boolean>,
         @Inject(MAT_DIALOG_DATA) private options: CategorySelectorDialogOptions
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.multiSelect = this.options.multiSelect ?? true;

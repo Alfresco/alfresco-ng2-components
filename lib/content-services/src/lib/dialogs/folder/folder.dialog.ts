@@ -16,19 +16,33 @@
  */
 
 import { Observable } from 'rxjs';
-
 import { Component, Inject, OnInit, Optional, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
 import { TranslationService } from '@alfresco/adf-core';
-import { NodesApiService } from '../common/services/nodes-api.service';
-
+import { NodesApiService } from '../../common/services/nodes-api.service';
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { AutoFocusDirective } from '../../directives';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-folder-dialog',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        AutoFocusDirective,
+        MatButtonModule
+    ],
     templateUrl: './folder.dialog.html',
     styleUrls: ['./folder.dialog.scss'],
     encapsulation: ViewEncapsulation.None,

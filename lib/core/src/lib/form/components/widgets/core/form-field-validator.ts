@@ -159,7 +159,7 @@ export class DateTimeFieldValidator implements FormFieldValidator {
     }
 
     static isValidDateTime(input: string): boolean {
-        const date = new Date(input);
+        const date = DateFnsUtils.getDate(input);
         return isDateValid(date);
     }
 
@@ -245,19 +245,11 @@ export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
     }
 }
 
-/**
- * Validates the min constraint for the datetime value.
- *
- * Notes for developers:
- * the format of the min/max values is always the ISO datetime: i.e. 2023-10-01T15:21:00.000Z.
- * Min/Max values can be parsed with standard `new Date(value)` calls.
- *
- */
-export class MinDateTimeFieldValidator implements FormFieldValidator {
+export abstract class BoundaryDateTimeFieldValidator implements FormFieldValidator {
     private supportedTypes = [FormFieldTypes.DATETIME];
 
     isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
+        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field[this.getSubjectField()];
     }
 
     validate(field: FormFieldModel): boolean {
@@ -275,15 +267,43 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
 
     private checkDateTime(field: FormFieldModel): boolean {
         let isValid = true;
-        const fieldValueDate = new Date(field.value);
-        const min = new Date(field.minValue);
+        const fieldValueDate = DateFnsUtils.getDate(field.value);
+        const subjectFieldDate = DateFnsUtils.getDate(field[this.getSubjectField()]);
 
-        if (isBefore(fieldValueDate, min)) {
-            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat).replace(':', '-'));
+        if (this.compareDates(fieldValueDate, subjectFieldDate)) {
+            field.validationSummary.message = this.getErrorMessage();
+            field.validationSummary.attributes.set(this.getSubjectField(), DateFnsUtils.formatDate(subjectFieldDate, field.dateDisplayFormat));
             isValid = false;
         }
         return isValid;
+    }
+
+    protected abstract compareDates(fieldValueDate: Date, subjectFieldDate: Date): boolean;
+
+    protected abstract getSubjectField(): string;
+
+    protected abstract getErrorMessage(): string;
+}
+
+/**
+ * Validates the min constraint for the datetime value.
+ *
+ * Notes for developers:
+ * the format of the min/max values is always the ISO datetime: i.e. 2023-10-01T15:21:00.000Z.
+ * Min/Max values can be parsed with standard `new Date(value)` calls.
+ *
+ */
+export class MinDateTimeFieldValidator extends BoundaryDateTimeFieldValidator {
+    protected compareDates(fieldValueDate: Date, subjectFieldDate: Date): boolean {
+        return isBefore(fieldValueDate, subjectFieldDate);
+    }
+
+    protected getSubjectField(): string {
+        return 'minValue';
+    }
+
+    protected getErrorMessage(): string {
+        return `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
     }
 }
 
@@ -295,37 +315,17 @@ export class MinDateTimeFieldValidator implements FormFieldValidator {
  * Min/Max values can be parsed with standard `new Date(value)` calls.
  *
  */
-export class MaxDateTimeFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATETIME];
-
-    isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
+export class MaxDateTimeFieldValidator extends BoundaryDateTimeFieldValidator {
+    protected compareDates(fieldValueDate: Date, subjectFieldDate: Date): boolean {
+        return isAfter(fieldValueDate, subjectFieldDate);
     }
 
-    validate(field: FormFieldModel): boolean {
-        let isValid = true;
-        if (this.isSupported(field) && field.value && field.isVisible) {
-            if (!DateTimeFieldValidator.isValidDateTime(field.value)) {
-                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
-                isValid = false;
-            } else {
-                isValid = this.checkDateTime(field);
-            }
-        }
-        return isValid;
+    protected getSubjectField(): string {
+        return 'maxValue';
     }
 
-    private checkDateTime(field: FormFieldModel): boolean {
-        let isValid = true;
-        const fieldValueDate = new Date(field.value);
-        const max = new Date(field.maxValue);
-
-        if (isAfter(fieldValueDate, max)) {
-            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat).replace(':', '-'));
-            isValid = false;
-        }
-        return isValid;
+    protected getErrorMessage(): string {
+        return `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
     }
 }
 

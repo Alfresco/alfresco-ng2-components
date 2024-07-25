@@ -27,7 +27,7 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeAction } from '../document-list/models/node-action.enum';
-import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
+import { NodeLockDialogComponent } from '../dialogs/node-lock/node-lock.dialog';
 import { switchMap } from 'rxjs/operators';
 import { SitesService } from '../common/services/sites.service';
 
@@ -36,26 +36,20 @@ import { SitesService } from '../common/services/sites.service';
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class ContentNodeDialogService {
-    static nonDocumentSiteContent = [
-        'blog',
-        'calendar',
-        'dataLists',
-        'discussions',
-        'links',
-        'wiki'
-    ];
+    static nonDocumentSiteContent = ['blog', 'calendar', 'dataLists', 'discussions', 'links', 'wiki'];
 
     /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private dialog: MatDialog,
-                private contentService: ContentService,
-                private documentListService: DocumentListService,
-                private siteService: SitesService,
-                private translation: TranslationService,
-                private thumbnailService: ThumbnailService) {
-    }
+    constructor(
+        private dialog: MatDialog,
+        private contentService: ContentService,
+        private documentListService: DocumentListService,
+        private siteService: SitesService,
+        private translation: TranslationService,
+        private thumbnailService: ThumbnailService
+    ) {}
 
     /**
      * Opens a file browser at a chosen folder location.
@@ -65,7 +59,9 @@ export class ContentNodeDialogService {
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
-        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((nodeEntry: NodeEntry) => this.openUploadFileDialog(NodeAction.CHOOSE, nodeEntry.entry, true)));
+        return this.documentListService
+            .getFolderNode(folderNodeId)
+            .pipe(switchMap((nodeEntry: NodeEntry) => this.openUploadFileDialog(NodeAction.CHOOSE, nodeEntry.entry, true)));
     }
 
     /**
@@ -102,7 +98,9 @@ export class ContentNodeDialogService {
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogBySite(): Observable<Node[]> {
-        return this.siteService.getSites().pipe(switchMap((response: SitePaging) => this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid)));
+        return this.siteService
+            .getSites()
+            .pipe(switchMap((response: SitePaging) => this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid)));
     }
 
     /**
@@ -131,7 +129,9 @@ export class ContentNodeDialogService {
      * @returns Information about the selected folder(s)
      */
     openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
-        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: NodeEntry) => this.openUploadFolderDialog(NodeAction.CHOOSE, node.entry)));
+        return this.documentListService
+            .getFolderNode(folderNodeId)
+            .pipe(switchMap((node: NodeEntry) => this.openUploadFolderDialog(NodeAction.CHOOSE, node.entry)));
     }
 
     /**
@@ -145,7 +145,6 @@ export class ContentNodeDialogService {
      */
     openCopyMoveDialog(action: NodeAction, contentEntry: Node, permission?: string, excludeSiteContent?: string[]): Observable<Node[]> {
         if (this.contentService.hasAllowableOperations(contentEntry, permission)) {
-
             const select = new Subject<Node[]>();
 
             const data: ContentNodeSelectorComponentData = {
@@ -236,7 +235,11 @@ export class ContentNodeDialogService {
         return select;
     }
 
-    private openContentNodeDialog(data: ContentNodeSelectorComponentData, panelClass: string, width: string): MatDialogRef<ContentNodeSelectorComponent> {
+    private openContentNodeDialog(
+        data: ContentNodeSelectorComponentData,
+        panelClass: string,
+        width: string
+    ): MatDialogRef<ContentNodeSelectorComponent> {
         return this.dialog.open(ContentNodeSelectorComponent, {
             data,
             panelClass,
@@ -275,5 +278,4 @@ export class ContentNodeDialogService {
     private isSite(entry) {
         return !!entry.guid || entry.nodeType === 'st:site' || entry.nodeType === 'st:sites';
     }
-
 }

@@ -18,7 +18,7 @@
 import { TestBed, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
-import { ContentTestingModule } from '../testing/content.testing.module';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 import { addMinutes } from 'date-fns';
 
 describe('NodeLockDialogComponent', () => {
@@ -32,7 +32,7 @@ describe('NodeLockDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, NodeLockDialogComponent],
             providers: [{ provide: MatDialogRef, useValue: dialogRef }]
         });
         fixture = TestBed.createComponent(NodeLockDialogComponent);

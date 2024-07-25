@@ -16,12 +16,17 @@
  */
 
 import { Component, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { PathElement, Node } from '@alfresco/js-api';
 import { BreadcrumbComponent } from './breadcrumb.component';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-dropdown-breadcrumb',
+    standalone: true,
+    imports: [CommonModule, MatIconModule, MatSelectModule, TranslateModule],
     templateUrl: './dropdown-breadcrumb.component.html',
     styleUrls: ['./dropdown-breadcrumb.component.scss'],
     encapsulation: ViewEncapsulation.None,
