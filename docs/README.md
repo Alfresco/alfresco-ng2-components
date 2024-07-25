@@ -92,9 +92,6 @@ A collection of Angular components for generic use.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [About Application Modules Component](core/components/about-application.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which ADF libraries and plugins an application is using. | [Source](../lib/core/src/lib/about/about-application-modules/about-application-modules.component.ts) |
-| [About GitHub Link Component](core/components/about-github-link.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which version of the application is running based on the latest GitHub commit, as well as the server settings for the application. | [Source](../lib/core/src/lib/about/about-github-link/about-github-link.component.ts) |
-| [About Product Version Component](core/components/about-product-version.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows which version of Process Services (BPM) and Content Services (ECM) an application is running. It also shows the relevant license information, application status and Alfresco modules running in an application. | [Source](../lib/core/src/lib/about/about-product-version/about-product-version.component.ts) |
 | [About Component](core/components/about.component.md) | Presentational component to display About information as a set of collapsible panels. | [Source](../lib/core/src/lib/about/about.component.ts) |
 | [Card View component](core/components/card-view.component.md) | Displays a configurable property list renderer. | [Source](../lib/core/src/lib/card-view/components/card-view/card-view.component.ts) |
 | [Comment list component](core/components/comment-list.component.md) | Shows a list of comments. | [Source](../lib/core/src/lib/comments/comment-list/comment-list.component.ts) |
@@ -108,7 +105,6 @@ A collection of Angular components for generic use.
 | [Form field component](core/components/form-field.component.md) | Represents a UI field in a form. | [Source](../lib/core/src/lib/form/components/form-field/form-field.component.ts) |
 | [Form List Component](core/components/form-list.component.md) | Shows forms as a list. | [Source](../lib/process-services/src/lib/form/form-list/form-list.component.ts) |
 | [Header component](core/components/header.component.md) | Reusable header for Alfresco applications. | [Source](../lib/core/src/lib/layout/components/header/header.component.ts) |
-| [Host settings component](core/components/host-settings.component.md) ![Internal](docassets/images/InternalIcon.png) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../lib/core/src/lib/settings/host-settings.component.ts) |
 | [Icon Component](core/components/icon.component.md) | Provides a universal way of rendering registered and named icons. | [Source](../lib/core/src/lib/icon/icon.component.ts) |
 | [Identity User Info component](core/components/identity-user-info.component.md) | Shows user information for SSO mode. | [Source](../lib/core/src/lib/identity-user-info/identity-user-info.component.ts) |
 | [Infinite Pagination component](core/components/infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../lib/core/src/lib/pagination/infinite-pagination.component.ts) |
@@ -120,8 +116,7 @@ A collection of Angular components for generic use.
 | [Login Dialog Panel component](core/components/login-dialog-panel.component.md) | Shows and manages a login dialog. | [Source](../lib/core/src/lib/login/components/login-dialog-panel.component.ts) |
 | [Login Dialog component](core/components/login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../lib/core/src/lib/login/components/login-dialog.component.ts) |
 | [Login component](core/components/login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../lib/core/src/lib/login/components/login.component.ts) |
-| [Notification History component](core/components/notification-history.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | This component is in the current status just an experimental component. |  |
-| The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/src/lib/notifications/components/notification-history.component.ts) |  |
+| [Notification History component](core/components/notification-history.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | This component is in the current status just an experimental component. The main purpose of the Notification history component is list all the notification received in the current session. They will disappear from the list after the refresh. | [Source](../lib/core/src/lib/notifications/components/notification-history.component.ts) |  |
 | [Pagination Component](core/components/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/src/lib/pagination/pagination.component.ts) |
 | [Search Text Input Component](core/components/search-text-input.component.md) | Displays a input text that supports autocompletion | [Source](<>) |
 | [Sidebar action menu component](core/components/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/src/lib/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
@@ -197,7 +192,7 @@ A collection of Angular components for generic use.
 ### Services
 
 | Name | Description | Source link |
-| ---- | ----------- | ----------- |
+| ---- | ----------- | -------- |
 | [APS Alfresco Content Service](core/services/activiti-alfresco.service.md) | Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS). | [Source](../lib/process-services/src/lib/form/services/activiti-alfresco.service.ts) |
 | [Alfresco Api Service](core/services/alfresco-api.service.md) | Provides access to an initialized AlfrescoJSApi instance. | [Source](../lib/core/src/lib/services/alfresco-api.service.ts) |
 | [App Config service](core/services/app-config.service.md) | Supports app configuration settings, stored server side. | [Source](../lib/core/src/lib/app-config/app-config.service.ts) |
@@ -209,17 +204,13 @@ A collection of Angular components for generic use.
 | [Authentication Service](core/services/authentication.service.md) | Provides authentication to ACS and APS. | [Source](../lib/core/src/lib/auth/services/authentication.service.ts) |
 | [Bpm User service](core/services/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/src/lib/services/bpm-user.service.ts) |
 | [Card Item Type service](core/services/card-item-types.service.md) | Maps type names to field component types for the Card View component. | [Source](../lib/core/src/lib/card-view/services/card-item-types.service.ts) |
-| [Card View Update service](core/services/card-view-update.service.md) | Reports edits and clicks within fields of a Card View component. |  |
-| Implements BaseCardViewUpdate. | [Source](../lib/core/src/lib/card-view/services/card-view-update.service.ts) |  |
+| [Card View Update service](core/services/card-view-update.service.md) | Reports edits and clicks within fields of a Card View component. Implements BaseCardViewUpdate. | [Source](../lib/core/src/lib/card-view/services/card-view-update.service.ts) |  |
 | [Clipboard service](core/services/clipboard.service.md) | Copies text to the clipboard. | [Source](../lib/core/src/lib/clipboard/clipboard.service.ts) |
 | [Comment Content service](core/services/comment-content.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../lib/core/src/lib/services/comment-content.service.ts) |
 | [Comment Process service](core/services/comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../lib/process-services/src/lib/process-comments/services/comment-process.service.ts) |
 | [Content service](core/services/content.service.md) | Accesses app-generated data objects via URLs and file downloads. | [Source](../lib/content-services/src/lib/common/services/content.service.ts) |
 | [Cookie service](core/services/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/src/lib/common/services/cookie.service.ts) |
-| [DataTable service](core/services/datatable.service.md) | If you need to update one row of your datatable you can use the  DataTableService to update it. |  |
-
-To update a single row you can use the rowUpdate subject. 
-The model to update the DataTable require the ID of the row you want change and the new data Object of the row | [Source](../lib/core/src/lib/datatable/services/datatable.service.ts) |
+| [DataTable service](core/services/datatable.service.md) | If you need to update one row of your datatable you can use the  DataTableService to update it. To update a single row you can use the rowUpdate subject. The model to update the DataTable require the ID of the row you want change and the new data Object of the row | [Source](../lib/core/src/lib/datatable/services/datatable.service.ts) |
 | [Deleted Nodes Api service](core/services/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/src/lib/services/deleted-nodes-api.service.ts) |
 | [Discovery Api service](core/services/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/content-services/src/lib/common/services/discovery-api.service.ts) |
 | [Download zip service](core/services/download-zip.service.md) | Creates and manages downloads. | [Source](../lib/content-services/src/lib/dialogs/download-zip/services/download-zip.service.ts) |
@@ -380,6 +371,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Audit Service](content-services/services/audit.service.md) | Manages Audit apps and entries. | [Source](../lib/content-services/src/lib/audit/audit.service.ts) |
 | [Card View Content Update Service](content-services/services/card-view-content-update.service.md) | Manages Card View properties in the content services environment. |  |
 | Implements BaseCardViewContentUpdate. | [Source](../lib/content-services/src/lib/common/services/card-view-content-update.service.ts) |  |
 | [Category tree datasource service](content-services/services/category-tree-datasource.service.md) | Datasource service for category tree. | [Source](../lib/content-services/src/lib/category/services/category-tree-datasource.service.ts) |
