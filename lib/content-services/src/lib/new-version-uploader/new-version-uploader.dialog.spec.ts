@@ -20,7 +20,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { mockFile, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { UploadVersionButtonComponent } from '../upload';
-import { VersionComparisonComponent, VersionListComponent, VersionUploadComponent } from '../version-manager';
 import { NewVersionUploaderDataAction } from './models';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 
@@ -44,13 +43,7 @@ describe('NewVersionUploaderDialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ContentTestingModule,
-                NewVersionUploaderDialogComponent,
-                VersionListComponent,
-                VersionUploadComponent,
-                VersionComparisonComponent
-            ],
+            imports: [ContentTestingModule, NewVersionUploaderDialogComponent],
             declarations: [UploadVersionButtonComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: { node: mockNode, showVersionsOnly, file: mockFile } },
