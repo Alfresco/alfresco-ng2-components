@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 
@@ -28,14 +28,11 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'content-action',
+    standalone: true,
     template: '',
-    providers: [
-        DocumentActionsService,
-        FolderActionsService
-    ]
+    providers: [DocumentActionsService, FolderActionsService]
 })
 export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
-
     /** The title of the action as shown in the menu. */
     @Input()
     title: string = 'Action';
@@ -98,8 +95,8 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         private list: ContentActionListComponent,
         private documentActions: DocumentActionsService,
-        private folderActions: FolderActionsService) {
-    }
+        private folderActions: FolderActionsService
+    ) {}
 
     ngOnInit() {
         if (this.target === ContentActionTarget.All) {
