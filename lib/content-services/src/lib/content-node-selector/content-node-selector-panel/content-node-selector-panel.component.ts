@@ -26,7 +26,8 @@ import {
     ShowHeaderMode,
     ToolbarComponent,
     DataColumnListComponent,
-    DataColumnComponent
+    DataColumnComponent,
+    ToolbarTitleComponent
 } from '@alfresco/adf-core';
 import { NodesApiService, UploadService, FileUploadCompleteEvent, FileUploadDeleteEvent, SitesService } from '../../common';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -72,6 +73,7 @@ export const defaultValidation = () => true;
         MatButtonModule,
         SearchModule,
         ToolbarComponent,
+        ToolbarTitleComponent,
         DropdownBreadcrumbComponent,
         NodeCounterDirective,
         DocumentListModule,
