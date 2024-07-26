@@ -41,7 +41,9 @@ export const DOCUMENT_LIST_DIRECTIVES = [
     ContentActionComponent,
     FileAutoDownloadComponent,
     FilterHeaderComponent,
-    LibraryNameColumnComponent
+    LibraryNameColumnComponent,
+    LibraryRoleColumnComponent,
+    LibraryStatusColumnComponent
 ] as const;
 
 @NgModule({
@@ -56,22 +58,7 @@ export const DOCUMENT_LIST_DIRECTIVES = [
         NodeNameTooltipPipe,
         ...DOCUMENT_LIST_DIRECTIVES
     ],
-    declarations: [
-        DocumentListComponent,
-        TrashcanNameColumnComponent,
-        LibraryStatusColumnComponent,
-        LibraryRoleColumnComponent,
-        NameColumnComponent,
-        ContentActionListComponent
-    ],
-    exports: [
-        ...DOCUMENT_LIST_DIRECTIVES,
-        DocumentListComponent,
-        TrashcanNameColumnComponent,
-        LibraryStatusColumnComponent,
-        LibraryRoleColumnComponent,
-        NameColumnComponent,
-        ContentActionListComponent
-    ]
+    declarations: [DocumentListComponent, TrashcanNameColumnComponent, NameColumnComponent, ContentActionListComponent],
+    exports: [...DOCUMENT_LIST_DIRECTIVES, DocumentListComponent, TrashcanNameColumnComponent, NameColumnComponent, ContentActionListComponent]
 })
 export class DocumentListModule {}
