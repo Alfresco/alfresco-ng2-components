@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
-import { MaterialModule } from './material.module';
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
 import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
@@ -31,13 +28,10 @@ import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
 import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
 import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
 import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
-import { ContentTypeModule } from './content-type/content-type.module';
 import { AspectListModule } from './aspect-list/aspect-list.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { CONTENT_PIPES } from './pipes/content-pipe.module';
-import { NodeCommentsModule } from './node-comments/node-comments.module';
-import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 import { CategoriesManagementComponent } from './category';
@@ -46,20 +40,19 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
 import { VersionCompatibilityDirective } from './version-compatibility';
 import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
 import { TreeViewComponent } from './tree-view';
+import { NodeCommentsComponent } from './node-comments';
+import { AlfrescoViewerComponent } from './viewer';
+import { ContentTypeDialogComponent } from './content-type';
 
 @NgModule({
     imports: [
         ...CONTENT_PIPES,
         CoreModule,
         ...CONTENT_TAG_DIRECTIVES,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
         ...CONTENT_DIALOG_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
-        MaterialModule,
         ...BREADCRUMB_DIRECTIVES,
         ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
@@ -68,13 +61,13 @@ import { TreeViewComponent } from './tree-view';
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES,
         TreeViewComponent,
-        ContentTypeModule,
+        ContentTypeDialogComponent,
         AspectListModule,
         VersionCompatibilityDirective,
-        NodeCommentsModule,
+        NodeCommentsComponent,
         TreeComponent,
         SearchTextModule,
-        AlfrescoViewerModule,
+        AlfrescoViewerComponent,
         CategoriesManagementComponent,
         NewVersionUploaderDialogComponent
     ],
@@ -95,12 +88,12 @@ import { TreeViewComponent } from './tree-view';
         ...CONTENT_VERSION_DIRECTIVES,
         TreeViewComponent,
         AspectListModule,
-        ContentTypeModule,
+        ContentTypeDialogComponent,
         VersionCompatibilityDirective,
-        NodeCommentsModule,
+        NodeCommentsComponent,
         TreeComponent,
         SearchTextModule,
-        AlfrescoViewerModule,
+        AlfrescoViewerComponent,
         CategoriesManagementComponent,
         NewVersionUploaderDialogComponent
     ]
