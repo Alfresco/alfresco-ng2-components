@@ -44,10 +44,11 @@ import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component
         DocumentListModule,
         UploadModule,
         ContentDirectiveModule,
-        NameLocationCellComponent
+        NameLocationCellComponent,
+        ContentNodeSelectorPanelComponent
     ],
     exports: [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent],
-    declarations: [ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent],
+    declarations: [ContentNodeSelectorComponent],
     providers: [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorModule {}
