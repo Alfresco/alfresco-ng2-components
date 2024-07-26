@@ -16,13 +16,18 @@
  */
 
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatRadioChange } from '@angular/material/radio';
+import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface SearchRadioOption {
     name: string;
@@ -31,13 +36,14 @@ export interface SearchRadioOption {
 
 @Component({
     selector: 'adf-search-radio',
+    standalone: true,
+    imports: [CommonModule, MatRadioModule, FormsModule, TranslateModule, MatButtonModule, MatIconModule],
     templateUrl: './search-radio.component.html',
     styleUrls: ['./search-radio.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-radio' }
 })
 export class SearchRadioComponent implements SearchWidget, OnInit {
-
     /** The value of the selected radio button. */
     @Input()
     value: string;
@@ -61,9 +67,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
             this.pageSize = this.settings.pageSize || 5;
 
             if (this.settings.options && this.settings.options.length > 0) {
-                this.options = new SearchFilterList<SearchRadioOption>(
-                    this.settings.options, this.pageSize
-                );
+                this.options = new SearchFilterList<SearchRadioOption>(this.settings.options, this.pageSize);
             }
         }
 
@@ -119,7 +123,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     }
 
     updateDisplayValue(): void {
-        const selectOptions = this.options.items.find(({ value}) => value === this.value);
+        const selectOptions = this.options.items.find(({ value }) => value === this.value);
         if (selectOptions) {
             this.displayValue$.next(selectOptions.name);
         } else {

@@ -18,9 +18,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchSortingDefinition } from '../../models/search-sorting-definition.interface';
+import { CommonModule } from '@angular/common';
+import { SortingPickerModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-search-sorting-picker',
+    standalone: true,
+    imports: [CommonModule, SortingPickerModule],
     templateUrl: './search-sorting-picker.component.html',
     styleUrls: ['./search-sorting-picker.component.scss'],
     encapsulation: ViewEncapsulation.None,

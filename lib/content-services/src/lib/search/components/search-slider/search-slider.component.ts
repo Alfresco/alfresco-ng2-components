@@ -20,9 +20,16 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatSliderModule } from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-search-slider',
+    standalone: true,
+    imports: [CommonModule, MatSliderModule, FormsModule, MatButtonModule, TranslateModule],
     templateUrl: './search-slider.component.html',
     styleUrls: ['./search-slider.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -105,7 +112,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     }
 
     private updateQuery(value: number | null) {
-        this.displayValue$.next( this.value ? `${this.value} ${this.settings.unit ?? ''}` : '' );
+        this.displayValue$.next(this.value ? `${this.value} ${this.settings.unit ?? ''}` : '');
         if (this.id && this.context && this.settings && this.settings.field) {
             if (value === null) {
                 this.context.queryFragments[this.id] = '';
@@ -115,5 +122,4 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
             this.context.update();
         }
     }
-
 }

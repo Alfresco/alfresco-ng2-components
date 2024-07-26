@@ -16,7 +16,7 @@
  */
 
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FileSizeCondition } from './file-size-condition';
 import { FileSizeOperator } from './file-size-operator.enum';
 import { FileSizeUnit } from './file-size-unit.enum';
@@ -24,12 +24,18 @@ import { Subject } from 'rxjs';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchProperties } from './search-properties';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
 
 @Component({
     selector: 'adf-search-properties',
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, TranslateModule, MatFormFieldModule, MatSelectModule, SearchChipAutocompleteInputComponent],
     templateUrl: './search-properties.component.html',
     styleUrls: ['./search-properties.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -47,7 +53,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         fileSize: undefined,
         fileSizeUnit: FileSizeUnit.KB
     });
-    private _fileSizeOperators = Object.keys(FileSizeOperator).map<string>(key => FileSizeOperator[key]);
+    private _fileSizeOperators = Object.keys(FileSizeOperator).map<string>((key) => FileSizeOperator[key]);
     private _fileSizeUnits = [FileSizeUnit.KB, FileSizeUnit.MB, FileSizeUnit.GB];
     private canvas = document.createElement('canvas');
     private _fileSizeOperatorsMaxWidth: number;
@@ -56,7 +62,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     private sizeField: string;
     private nameField: string;
 
-    @ViewChild('fileSizeOperatorSelect', {read: ElementRef})
+    @ViewChild('fileSizeOperatorSelect', { read: ElementRef })
     fileSizeOperatorSelectElement: ElementRef;
 
     get form(): SearchPropertiesComponent['_form'] {
@@ -102,8 +108,12 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         if (this.fileSizeOperatorSelectElement?.nativeElement.clientWidth && !this._fileSizeOperatorsMaxWidth) {
             setTimeout(() => {
                 const extraFreeSpace = 20;
-                this._fileSizeOperatorsMaxWidth = Math.max(...this._fileSizeOperators.map((operator) =>
-                    this.getOperatorNameWidth(operator, this.getCanvasFont(this.fileSizeOperatorSelectElement.nativeElement)))) +
+                this._fileSizeOperatorsMaxWidth =
+                    Math.max(
+                        ...this._fileSizeOperators.map((operator) =>
+                            this.getOperatorNameWidth(operator, this.getCanvasFont(this.fileSizeOperatorSelectElement.nativeElement))
+                        )
+                    ) +
                     this.fileSizeOperatorSelectElement.nativeElement.querySelector('.mat-mdc-select-arrow-wrapper').clientWidth +
                     extraFreeSpace;
             });
@@ -144,7 +154,9 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         const extensionWithDot = filterValue.startsWith('.');
         return extensions.filter((option) => {
             const optionLowerCase = option.value.toLowerCase();
-            return extensionWithDot && filterValueLowerCase ? optionLowerCase.startsWith(filterValueLowerCase) : optionLowerCase.includes(filterValue);
+            return extensionWithDot && filterValueLowerCase
+                ? optionLowerCase.startsWith(filterValueLowerCase)
+                : optionLowerCase.includes(filterValue);
         });
     };
 
@@ -163,7 +175,9 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
             let query = '';
             let displayedValue = '';
             if (this.form.value.fileSize !== undefined && this.form.value.fileSize !== null) {
-                displayedValue = `${this.translateService.instant(this.form.value.fileSizeOperator)} ${this.form.value.fileSize} ${this.translateService.instant(this.form.value.fileSizeUnit.abbreviation)}`;
+                displayedValue = `${this.translateService.instant(this.form.value.fileSizeOperator)} ${
+                    this.form.value.fileSize
+                } ${this.translateService.instant(this.form.value.fileSizeUnit.abbreviation)}`;
                 const size = this.form.value.fileSize * this.form.value.fileSizeUnit.bytes;
                 switch (this.form.value.fileSizeOperator) {
                     case FileSizeOperator.AT_MOST:
@@ -208,11 +222,11 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     }
 
     private parseToAutocompleteOptions(array: string[]): AutocompleteOption[] {
-        return array.map(value => ({value}));
+        return array.map((value) => ({ value }));
     }
 
     private parseFromAutocompleteOptions(array: AutocompleteOption[]): string[] {
-        return array.flatMap(option => option.value);
+        return array.flatMap((option) => option.value);
     }
 
     private getOperatorNameWidth(operator: string, font: string): number {

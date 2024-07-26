@@ -21,6 +21,10 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { Subject } from 'rxjs';
 import { TranslationService } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 export enum LogicalSearchFields {
     MATCH_ALL = 'matchAll',
@@ -35,6 +39,8 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
 
 @Component({
     selector: 'adf-search-logical-filter',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, TranslateModule, FormsModule],
     templateUrl: './search-logical-filter.component.html',
     styleUrls: ['./search-logical-filter.component.scss'],
     encapsulation: ViewEncapsulation.None

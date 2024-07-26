@@ -76,7 +76,19 @@ export const CONTENT_SEARCH_DIRECTIVES = [
     SearchFacetTabbedContentComponent,
     SearchFilterTabbedComponent,
     SearchFilterTabDirective,
-    SearchDateRangeTabbedComponent
+    SearchDateRangeTabbedComponent,
+    SearchSortingPickerComponent,
+    SearchSliderComponent,
+    SearchNumberRangeComponent,
+    SearchPanelComponent,
+    SearchRadioComponent,
+    SearchFilterContainerComponent,
+    SearchFormComponent,
+    SearchFilterChipsComponent,
+    SearchWidgetChipComponent,
+    SearchFacetChipComponent,
+    SearchLogicalFilterComponent,
+    SearchPropertiesComponent
 ] as const;
 
 @NgModule({
@@ -90,37 +102,7 @@ export const CONTENT_SEARCH_DIRECTIVES = [
         SearchTextModule,
         SearchInputComponent
     ],
-    declarations: [
-        SearchComponent,
-        SearchControlComponent,
-        SearchRadioComponent,
-        SearchSliderComponent,
-        SearchNumberRangeComponent,
-        SearchPanelComponent,
-        SearchSortingPickerComponent,
-        SearchFilterContainerComponent,
-        SearchFormComponent,
-        SearchFilterChipsComponent,
-        SearchWidgetChipComponent,
-        SearchFacetChipComponent,
-        SearchLogicalFilterComponent,
-        SearchPropertiesComponent
-    ],
-    exports: [
-        SearchComponent,
-        SearchControlComponent,
-        SearchRadioComponent,
-        SearchSliderComponent,
-        SearchNumberRangeComponent,
-        SearchPanelComponent,
-        ...CONTENT_SEARCH_DIRECTIVES,
-        SearchSortingPickerComponent,
-        SearchFilterContainerComponent,
-        SearchFormComponent,
-        SearchFilterChipsComponent,
-        SearchFacetFieldComponent,
-        SearchWidgetChipComponent,
-        SearchLogicalFilterComponent
-    ]
+    declarations: [SearchComponent, SearchControlComponent],
+    exports: [SearchComponent, SearchControlComponent, ...CONTENT_SEARCH_DIRECTIVES]
 })
 export class SearchModule {}
