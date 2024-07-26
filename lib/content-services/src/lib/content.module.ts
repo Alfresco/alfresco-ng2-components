@@ -25,7 +25,7 @@ import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
 import { SearchModule } from './search/search.module';
 import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
-import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
+import { CONTENT_NODE_SELECTOR_DIRECTIVES } from './content-node-selector/content-node-selector.module';
 import { CONTENT_NODE_SHARE_DIRECTIVES } from './content-node-share/content-node-share.module';
 import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
 import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
@@ -63,7 +63,7 @@ import { TreeViewComponent } from './tree-view';
         MaterialModule,
         DropdownSitesComponent,
         ...BREADCRUMB_DIRECTIVES,
-        ContentNodeSelectorModule,
+        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
@@ -89,7 +89,7 @@ import { TreeViewComponent } from './tree-view';
         SearchModule,
         DropdownSitesComponent,
         ...BREADCRUMB_DIRECTIVES,
-        ContentNodeSelectorModule,
+        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIALOG_DIRECTIVES,

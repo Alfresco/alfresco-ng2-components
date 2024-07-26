@@ -15,42 +15,16 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { BREADCRUMB_DIRECTIVES } from '../breadcrumb/breadcrumb.module';
-import { SearchModule } from '../search/search.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
-import { CONTENT_UPLOAD_DIRECTIVES } from '../upload/upload.module';
-import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
-import { CONTENT_DIRECTIVES } from '../directives/content-directive.module';
-import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component';
 
-export const CONTENT_NODE_SELECTOR_DIRECTIVES = [ContentNodeSelectorPanelComponent];
+export const CONTENT_NODE_SELECTOR_DIRECTIVES = [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent];
 
+/** @deprecated use `...CONTENT_NODE_SELECTOR_DIRECTIVES` or import the individual components */
 @NgModule({
-    imports: [
-        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
-        FormsModule,
-        ReactiveFormsModule,
-        CoreModule,
-        CommonModule,
-        MaterialModule,
-        DropdownSitesComponent,
-        ...BREADCRUMB_DIRECTIVES,
-        SearchModule,
-        DocumentListModule,
-        NameLocationCellComponent,
-        CONTENT_DIRECTIVES,
-        ...CONTENT_UPLOAD_DIRECTIVES
-    ],
-    exports: [...CONTENT_NODE_SELECTOR_DIRECTIVES, NameLocationCellComponent, ContentNodeSelectorComponent],
-    declarations: [ContentNodeSelectorComponent],
-    providers: [SearchQueryBuilderService]
+    imports: [...CONTENT_NODE_SELECTOR_DIRECTIVES],
+    exports: [...CONTENT_NODE_SELECTOR_DIRECTIVES]
 })
 export class ContentNodeSelectorModule {}
