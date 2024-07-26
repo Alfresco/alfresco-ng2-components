@@ -15,21 +15,19 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { Component } from '@angular/core';
-
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 
 @Component({
     selector: 'content-actions',
-    template: ''
+    template: '',
+    standalone: true
 })
 export class ContentActionListComponent {
-
-    constructor(private documentList: DocumentListComponent) {
-    }
+    constructor(private documentList: DocumentListComponent) {}
 
     /**
      * Registers action handler within the parent document list component.
