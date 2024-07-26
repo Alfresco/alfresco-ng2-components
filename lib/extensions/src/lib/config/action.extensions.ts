@@ -30,6 +30,7 @@ export interface ContentActionRef extends ExtensionElement {
     type: ContentActionType;
 
     title?: string;
+    tooltip?: string;
     description?: string;
     icon?: string;
     children?: Array<ContentActionRef>;
