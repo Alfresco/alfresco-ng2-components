@@ -71,7 +71,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, ContentNodeSelectorPanelComponent],
+            imports: [ContentTestingModule],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
     });
