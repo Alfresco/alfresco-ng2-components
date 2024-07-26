@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
 import { MaterialModule } from './material.module';
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
-import { DocumentListModule } from './document-list/document-list.module';
+import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
 import { SearchModule } from './search/search.module';
 import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
@@ -58,7 +58,7 @@ import { TreeViewComponent } from './tree-view';
         ReactiveFormsModule,
         ...CONTENT_DIALOG_DIRECTIVES,
         SearchModule,
-        DocumentListModule,
+        ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
         MaterialModule,
         DropdownSitesComponent,
@@ -84,7 +84,7 @@ import { TreeViewComponent } from './tree-view';
     exports: [
         ...CONTENT_PIPES,
         ...CONTENT_TAG_DIRECTIVES,
-        DocumentListModule,
+        ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
         SearchModule,
         DropdownSitesComponent,

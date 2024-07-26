@@ -15,18 +15,10 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CoreModule, EditJsonDialogModule } from '@alfresco/adf-core';
-
-import { MaterialModule } from '../material.module';
-import { UploadModule } from '../upload/upload.module';
-import { SearchModule } from './../search/search.module';
-
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';
 import { ContentActionComponent } from './components/content-action/content-action.component';
 import { DocumentListComponent } from './components/document-list.component';
-
 import { TrashcanNameColumnComponent } from './components/trashcan-name-column/trashcan-name-column.component';
 import { LibraryStatusColumnComponent } from './components/library-status-column/library-status-column.component';
 import { LibraryRoleColumnComponent } from './components/library-role-column/library-role-column.component';
@@ -34,8 +26,6 @@ import { LibraryNameColumnComponent } from './components/library-name-column/lib
 import { NameColumnComponent } from './components/name-column/name-column.component';
 import { FilterHeaderComponent } from './components/filter-header/filter-header.component';
 import { FileAutoDownloadComponent } from './components/file-auto-download/file-auto-download.component';
-import { ContentDirectiveModule } from '../directives/content-directive.module';
-import { NodeNameTooltipPipe } from '../pipes';
 
 export const DOCUMENT_LIST_DIRECTIVES = [
     ContentActionComponent,
@@ -46,22 +36,13 @@ export const DOCUMENT_LIST_DIRECTIVES = [
     LibraryStatusColumnComponent,
     NameColumnComponent,
     TrashcanNameColumnComponent,
-    ContentActionListComponent
+    ContentActionListComponent,
+    DocumentListComponent
 ] as const;
 
+/** @deprecated use `...DOCUMENT_LIST_DIRECTIVES` or import standalone components */
 @NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        MaterialModule,
-        UploadModule,
-        EditJsonDialogModule,
-        SearchModule,
-        ContentDirectiveModule,
-        NodeNameTooltipPipe,
-        ...DOCUMENT_LIST_DIRECTIVES
-    ],
-    declarations: [DocumentListComponent],
-    exports: [...DOCUMENT_LIST_DIRECTIVES, DocumentListComponent]
+    imports: [...DOCUMENT_LIST_DIRECTIVES],
+    exports: [...DOCUMENT_LIST_DIRECTIVES]
 })
 export class DocumentListModule {}
