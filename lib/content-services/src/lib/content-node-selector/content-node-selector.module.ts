@@ -19,8 +19,14 @@ import { NgModule } from '@angular/core';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
+import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component';
 
-export const CONTENT_NODE_SELECTOR_DIRECTIVES = [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent];
+export const CONTENT_NODE_SELECTOR_DIRECTIVES = [
+    ContentNodeSelectorPanelComponent,
+    NameLocationCellComponent,
+    ContentNodeSelectorComponent,
+    DropdownSitesComponent
+];
 
 /** @deprecated use `...CONTENT_NODE_SELECTOR_DIRECTIVES` or import the individual components */
 @NgModule({

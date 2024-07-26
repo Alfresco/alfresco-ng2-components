@@ -40,7 +40,6 @@ import { NodeCommentsModule } from './node-comments/node-comments.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
-import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
 import { CategoriesManagementComponent } from './category';
 import { TreeComponent } from './tree';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader';
@@ -61,7 +60,6 @@ import { TreeViewComponent } from './tree-view';
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
         MaterialModule,
-        DropdownSitesComponent,
         ...BREADCRUMB_DIRECTIVES,
         ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
@@ -87,7 +85,6 @@ import { TreeViewComponent } from './tree-view';
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
-        DropdownSitesComponent,
         ...BREADCRUMB_DIRECTIVES,
         ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
