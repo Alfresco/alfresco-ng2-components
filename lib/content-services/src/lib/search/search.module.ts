@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
-
-import { CoreModule, SearchTextModule } from '@alfresco/adf-core';
-
 import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
 import { EmptySearchResultComponent } from './components/empty-search-result.component';
@@ -55,7 +49,6 @@ import { SearchDateRangeTabbedComponent } from './components/search-date-range-t
 import { SearchFilterTabDirective } from './components/search-filter-tabbed/search-filter-tab.directive';
 import { SearchFacetChipTabbedComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
-import { SearchInputComponent } from './components/search-input';
 
 export const CONTENT_SEARCH_DIRECTIVES = [
     SearchCheckListComponent,
@@ -88,21 +81,14 @@ export const CONTENT_SEARCH_DIRECTIVES = [
     SearchWidgetChipComponent,
     SearchFacetChipComponent,
     SearchLogicalFilterComponent,
-    SearchPropertiesComponent
+    SearchPropertiesComponent,
+    SearchComponent,
+    SearchControlComponent
 ] as const;
 
+/** @deprecated use `...CONTENT_SEARCH_DIRECTIVES` or import the specific component */
 @NgModule({
-    imports: [
-        ...CONTENT_SEARCH_DIRECTIVES,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        CoreModule,
-        SearchTextModule,
-        SearchInputComponent
-    ],
-    declarations: [SearchComponent, SearchControlComponent],
-    exports: [SearchComponent, SearchControlComponent, ...CONTENT_SEARCH_DIRECTIVES]
+    imports: [...CONTENT_SEARCH_DIRECTIVES],
+    exports: [...CONTENT_SEARCH_DIRECTIVES]
 })
 export class SearchModule {}

@@ -22,7 +22,7 @@ import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf
 import { MaterialModule } from './material.module';
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
-import { SearchModule } from './search/search.module';
+import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
 import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
 import { CONTENT_NODE_SELECTOR_DIRECTIVES } from './content-node-selector/content-node-selector.module';
@@ -57,7 +57,7 @@ import { TreeViewComponent } from './tree-view';
         FormsModule,
         ReactiveFormsModule,
         ...CONTENT_DIALOG_DIRECTIVES,
-        SearchModule,
+        ...CONTENT_SEARCH_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
         MaterialModule,
@@ -86,7 +86,7 @@ import { TreeViewComponent } from './tree-view';
         ...CONTENT_TAG_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
-        SearchModule,
+        ...CONTENT_SEARCH_DIRECTIVES,
         DropdownSitesComponent,
         ...BREADCRUMB_DIRECTIVES,
         ...CONTENT_NODE_SELECTOR_DIRECTIVES,

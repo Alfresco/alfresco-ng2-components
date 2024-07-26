@@ -41,7 +41,6 @@ import { ShareDataRow } from '../../document-list/data/share-data-row.model';
 import { NodeEntryEvent } from '../../document-list/components/node.event';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { SearchModule } from '../../search/search.module';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -55,6 +54,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NameLocationCellComponent } from '../name-location-cell/name-location-cell.component';
 import { DropdownBreadcrumbComponent } from '../../breadcrumb/dropdown-breadcrumb.component';
 import { SearchQueryBuilderService } from '../../search/services/search-query-builder.service';
+import { SearchPanelComponent } from '../../search/components/search-panel/search-panel.component';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -73,7 +73,6 @@ export const defaultValidation = () => true;
         MatIconModule,
         DropdownSitesComponent,
         MatButtonModule,
-        SearchModule,
         ToolbarTitleComponent,
         ToolbarComponent,
         DropdownBreadcrumbComponent,
@@ -84,7 +83,8 @@ export const defaultValidation = () => true;
         DataColumnComponent,
         NameLocationCellComponent,
         InfinitePaginationComponent,
-        CustomEmptyContentTemplateDirective
+        CustomEmptyContentTemplateDirective,
+        SearchPanelComponent
     ],
     templateUrl: './content-node-selector-panel.component.html',
     styleUrls: ['./content-node-selector-panel.component.scss'],

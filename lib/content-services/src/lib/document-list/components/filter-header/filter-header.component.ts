@@ -23,12 +23,12 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from '../document-list.token';
 import { CommonModule } from '@angular/common';
-import { SearchModule } from '../../../search/search.module';
+import { SearchFilterContainerComponent } from '../../../search/components/search-filter-container/search-filter-container.component';
 
 @Component({
     selector: 'adf-filter-header',
     standalone: true,
-    imports: [CommonModule, HeaderFilterTemplateDirective, SearchModule],
+    imports: [CommonModule, HeaderFilterTemplateDirective, SearchFilterContainerComponent],
     templateUrl: './filter-header.component.html'
 })
 export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
