@@ -57,7 +57,26 @@ import { SearchFacetChipTabbedComponent } from './components/search-filter-chips
 import { SearchFacetTabbedContentComponent } from './components/search-filter-chips/search-facet-chip-tabbed/search-facet-tabbed-content.component';
 import { SearchInputComponent } from './components/search-input';
 
-export const CONTENT_SEARCH_DIRECTIVES = [SearchCheckListComponent, SearchChipAutocompleteInputComponent, SearchChipListComponent] as const;
+export const CONTENT_SEARCH_DIRECTIVES = [
+    SearchCheckListComponent,
+    SearchChipAutocompleteInputComponent,
+    SearchChipListComponent,
+    EmptySearchResultComponent,
+    SearchFilterComponent,
+    SearchFilterCardComponent,
+    SearchWidgetContainerComponent,
+    SearchTextComponent,
+    SearchFilterAutocompleteChipsComponent,
+    SearchDatetimeRangeComponent,
+    SearchFacetFieldComponent,
+    ResetSearchDirective,
+    SearchDateRangeComponent,
+    SearchFilterMenuCardComponent,
+    SearchFacetChipTabbedComponent,
+    SearchFacetTabbedContentComponent,
+    SearchFilterTabbedComponent,
+    SearchFilterTabDirective
+] as const;
 
 @NgModule({
     imports: [
@@ -73,64 +92,36 @@ export const CONTENT_SEARCH_DIRECTIVES = [SearchCheckListComponent, SearchChipAu
     declarations: [
         SearchComponent,
         SearchControlComponent,
-        EmptySearchResultComponent,
-        SearchFilterComponent,
-        SearchFilterCardComponent,
-        SearchWidgetContainerComponent,
-        SearchTextComponent,
-        SearchFilterAutocompleteChipsComponent,
         SearchRadioComponent,
         SearchSliderComponent,
         SearchNumberRangeComponent,
         SearchPanelComponent,
-        SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
         SearchFormComponent,
         SearchFilterChipsComponent,
-        SearchFilterMenuCardComponent,
-        SearchFacetFieldComponent,
         SearchWidgetChipComponent,
         SearchFacetChipComponent,
         SearchLogicalFilterComponent,
-        ResetSearchDirective,
         SearchPropertiesComponent,
-        SearchFilterTabbedComponent,
-        SearchDateRangeComponent,
-        SearchDateRangeTabbedComponent,
-        SearchFilterTabDirective,
-        SearchFacetChipTabbedComponent,
-        SearchFacetTabbedContentComponent
+        SearchDateRangeTabbedComponent
     ],
     exports: [
         SearchComponent,
         SearchControlComponent,
-        EmptySearchResultComponent,
-        SearchFilterComponent,
-        SearchFilterCardComponent,
-        SearchWidgetContainerComponent,
-        SearchTextComponent,
-        SearchFilterAutocompleteChipsComponent,
         SearchRadioComponent,
         SearchSliderComponent,
         SearchNumberRangeComponent,
         SearchPanelComponent,
         ...CONTENT_SEARCH_DIRECTIVES,
-        SearchDatetimeRangeComponent,
         SearchSortingPickerComponent,
         SearchFilterContainerComponent,
         SearchFormComponent,
         SearchFilterChipsComponent,
-        SearchFilterMenuCardComponent,
         SearchFacetFieldComponent,
         SearchWidgetChipComponent,
         SearchLogicalFilterComponent,
-        SearchFilterTabbedComponent,
-        SearchDateRangeComponent,
-        SearchDateRangeTabbedComponent,
-        ResetSearchDirective,
-        SearchFacetChipTabbedComponent,
-        SearchFacetTabbedContentComponent
+        SearchDateRangeTabbedComponent
     ]
 })
 export class SearchModule {}

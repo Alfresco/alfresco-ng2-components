@@ -18,11 +18,12 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 
 @Directive({
-  selector: '[adf-search-filter-tab]'
+    selector: '[adf-search-filter-tab]',
+    standalone: true
 })
 export class SearchFilterTabDirective {
     @Input('adf-search-filter-tab')
     name: string;
 
-    constructor(public readonly templateRef: TemplateRef<any>) { }
+    constructor(public readonly templateRef: TemplateRef<any>) {}
 }

@@ -17,16 +17,25 @@
 
 import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
 import { FacetField } from '../../models/facet-field.interface';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { FacetFieldBucket } from '../../models/facet-field-bucket.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { FacetWidget } from '../../models/facet-widget.interface';
 import { TranslationService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'adf-search-facet-field',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatCheckboxModule],
     templateUrl: './search-facet-field.component.html',
     styleUrls: ['./search-facet-field.component.scss'],
     encapsulation: ViewEncapsulation.None
