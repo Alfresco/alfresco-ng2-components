@@ -40,8 +40,8 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
@@ -57,10 +57,29 @@ import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
 import { buffer, debounceTime, filter, map, share } from 'rxjs/operators';
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MatIconRegistry } from '@angular/material/icon';
+import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { FileTypePipe, FilterOutArrayObjectsByPropPipe, LocalizedDatePipe } from '../../../pipes';
+import { DropZoneDirective } from '../../directives/drop-zone.directive';
+import { ResizableDirective } from '../../directives/resizable/resizable.directive';
+import { IconComponent } from '../../../icon';
+import { ResizeHandleDirective } from '../../directives/resizable/resize-handle.directive';
+import { MatButtonModule } from '@angular/material/button';
+import { UploadDirective } from '../../../directives';
+import { ContextMenuDirective } from '../../../context-menu';
+import { IconCellComponent } from '../icon-cell/icon-cell.component';
+import { DateCellComponent } from '../date-cell/date-cell.component';
+import { LocationCellComponent } from '../location-cell/location-cell.component';
+import { FileSizeCellComponent } from '../filesize-cell/filesize-cell.component';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
+import { BooleanCellComponent } from '../boolean-cell/boolean-cell.component';
+import { JsonCellComponent } from '../json-cell/json-cell.component';
+import { AmountCellComponent } from '../amount-cell/amount-cell.component';
+import { NumberCellComponent } from '../number-cell/number-cell.component';
 
 // eslint-disable-next-line no-shadow
 export enum ShowHeaderMode {
@@ -71,6 +90,37 @@ export enum ShowHeaderMode {
 
 @Component({
     selector: 'adf-datatable',
+    standalone: true,
+    imports: [
+        CommonModule,
+        DataTableRowComponent,
+        CdkDropList,
+        TranslateModule,
+        MatCheckboxModule,
+        FilterOutArrayObjectsByPropPipe,
+        CdkDrag,
+        DropZoneDirective,
+        ResizableDirective,
+        CdkDragHandle,
+        IconComponent,
+        ResizeHandleDirective,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        UploadDirective,
+        ContextMenuDirective,
+        FileTypePipe,
+        IconCellComponent,
+        LocalizedDatePipe,
+        DateCellComponent,
+        LocationCellComponent,
+        FileSizeCellComponent,
+        DataTableCellComponent,
+        BooleanCellComponent,
+        JsonCellComponent,
+        AmountCellComponent,
+        NumberCellComponent
+    ],
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.scss'],
     encapsulation: ViewEncapsulation.None,

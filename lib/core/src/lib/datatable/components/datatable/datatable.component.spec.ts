@@ -34,13 +34,18 @@ import { mockCarsData, mockCarsSchemaDefinition } from '../mocks/datatable.mock'
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
-@Component({ selector: 'adf-custom-column-template-component', template: ` <ng-template #tmplRef></ng-template> ` })
+@Component({
+    selector: 'adf-custom-column-template-component',
+    standalone: true,
+    template: ` <ng-template #tmplRef></ng-template> `
+})
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
 
 @Component({
     selector: 'adf-custom-column-header-component',
+    standalone: true,
     template: ` <ng-template #tmplRef> CUSTOM HEADER </ng-template> `
 })
 class CustomColumnHeaderComponent {
@@ -140,8 +145,7 @@ describe('DataTable', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [CustomColumnHeaderComponent]
+            imports: [CoreTestingModule, CustomColumnHeaderComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
@@ -1315,8 +1319,7 @@ describe('Accesibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [CustomColumnTemplateComponent],
+            imports: [CoreTestingModule, CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         columnCustomTemplate = TestBed.createComponent(CustomColumnTemplateComponent).componentInstance.templateRef;
@@ -1518,8 +1521,7 @@ describe('Drag&Drop column header', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [CustomColumnTemplateComponent],
+            imports: [CoreTestingModule, CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -1619,8 +1621,7 @@ describe('Show/hide columns', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [CustomColumnTemplateComponent],
+            imports: [CoreTestingModule, CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(DataTableComponent);
@@ -1726,8 +1727,7 @@ describe('Column Resizing', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [CustomColumnTemplateComponent],
+            imports: [CoreTestingModule, CustomColumnTemplateComponent],
             schemas: [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(DataTableComponent);

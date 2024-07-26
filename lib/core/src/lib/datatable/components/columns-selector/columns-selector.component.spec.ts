@@ -40,8 +40,7 @@ describe('ColumnsSelectorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [ColumnsSelectorComponent]
+            imports: [CoreTestingModule, ColumnsSelectorComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(ColumnsSelectorComponent);

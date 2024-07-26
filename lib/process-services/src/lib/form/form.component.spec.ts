@@ -960,8 +960,7 @@ describe('FormComponent', () => {
         radioField = formFields.find((field) => field.id === 'radio');
 
         expect(dropdownField.value).toBe('dropdown_option_2');
-        expect(radioField.value.id).toBe('radio_option_3');
-        expect(radioField.value.name).toBe('Radio option 3');
+        expect(radioField.value).toBe('radio_option_3');
     });
 
     it('should refresh radio buttons value when id is given to data', () => {

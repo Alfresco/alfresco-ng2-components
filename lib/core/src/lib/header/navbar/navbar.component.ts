@@ -15,26 +15,21 @@
  * limitations under the License.
  */
 
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NavbarItem, NavbarItemComponent } from './navbar-item.component';
 
-import { DataColumnListComponent } from './data-column-list.component';
-import { DataColumnComponent } from './data-column.component';
-import { DateColumnHeaderComponent } from './data-column-header.component';
-
-@NgModule({
-    imports: [
-        CommonModule
-    ],
-    declarations: [
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
-    ],
-    exports: [
-        DataColumnComponent,
-        DataColumnListComponent,
-        DateColumnHeaderComponent
-    ]
+@Component({
+    selector: 'adf-navbar',
+    standalone: true,
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [MatToolbarModule, CommonModule, NavbarItemComponent],
+    host: { class: 'adf-navbar' }
 })
-export class DataColumnModule {}
+export class NavbarComponent {
+    @Input()
+    items: NavbarItem[] = [];
+}

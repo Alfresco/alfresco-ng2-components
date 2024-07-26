@@ -1,0 +1,43 @@
+<ng-container [ngSwitch]="variant">
+    <ng-container *ngSwitchCase="'minimal'">
+        <adf-toolbar [color]="color">
+            <adf-toolbar-title>
+                <ng-container *ngTemplateOutlet="toolbarTitleContent"></ng-container>
+            </adf-toolbar-title>
+            <ng-container *ngTemplateOutlet="navbarTemplate"></ng-container>
+            <div class="adf-toolbar--spacer"></div>
+            <ng-container *ngTemplateOutlet="toolbarActions"></ng-container>
+        </adf-toolbar>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'extended'">
+        <adf-toolbar [color]="color">
+            <adf-toolbar-title>
+                <ng-container *ngTemplateOutlet="toolbarTitleContent"></ng-container>
+            </adf-toolbar-title>
+            <ng-container *ngTemplateOutlet="toolbarActions"></ng-container>
+        </adf-toolbar>
+        <adf-toolbar [color]="color">
+            <ng-container *ngTemplateOutlet="navbarTemplate"></ng-container>
+        </adf-toolbar>
+    </ng-container>
+</ng-container>
+
+<ng-template #toolbarTitleContent>
+    <img *ngIf="logoSrc" [src]="logoSrc" [alt]="logoAlt" class="adf-toolbar-logo"/>
+    <span *ngIf="variant==='extended'">{{ title }}</span>
+</ng-template>
+
+<ng-template #toolbarActions>
+    <div class="adf-toolbar-actions">
+        <ng-content select="[adf-toolbar-actions]"></ng-content>
+    </div>
+</ng-template>
+
+<ng-template #navbarTemplate>
+    <adf-navbar [items]="navbarItems">
+        <ng-content select="adf-navbar-item"></ng-content>
+    </adf-navbar>
+</ng-template>
+
+

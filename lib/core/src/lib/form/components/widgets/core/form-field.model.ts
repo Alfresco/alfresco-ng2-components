@@ -322,7 +322,7 @@ export class FormFieldModel extends FormWidgetModel {
             }
 
             if (this.isValidOption(value)) {
-                this.addOption(value);
+                this.addOption({ id: value.id, name: value.name });
                 return value.id;
             }
 
@@ -341,14 +341,27 @@ export class FormFieldModel extends FormWidgetModel {
          but saving back as object: { id: <id>, name: <name> }
          */
         if (json.type === FormFieldTypes.RADIO_BUTTONS) {
+            if (json.value?.options) {
+                this.options = this.parseValidOptions(json.value.options);
+            }
+
             // Activiti has a bug with default radio button value where initial selection passed as `name` value
             // so try resolving current one with a fallback to first entry via name or id
             // TODO: needs to be reported and fixed at Activiti side
-            const entry: FormFieldOption[] = this.options.filter(
+            const matchingOption = this.options.find(
                 (opt) => opt.id === value || opt.name === value || (value && (opt.id === value.id || opt.name === value.name))
             );
 
-            return entry.length > 0 ? entry[0].id : value;
+            if (matchingOption) {
+                return matchingOption.id;
+            }
+
+            if (this.isValidOption(value)) {
+                this.addOption({ id: value.id, name: value.name });
+                return value.id;
+            }
+
+            return value;
         }
 
         if (this.isDateField(json) || this.isDateTimeField(json)) {
@@ -414,7 +427,15 @@ export class FormFieldModel extends FormWidgetModel {
             }
             case FormFieldTypes.RADIO_BUTTONS: {
                 const radioButton: FormFieldOption = this.options.find((opt) => opt.id === this.value);
-                this.form.values[this.id] = radioButton || null;
+
+                if (this.optionType === 'rest') {
+                    this.form.values[this.id] = radioButton
+                        ? { ...radioButton, options: this.options }
+                        : { id: null, name: null, options: this.options };
+                } else {
+                    this.form.values[this.id] = radioButton ? { ...radioButton } : null;
+                }
+
                 break;
             }
             case FormFieldTypes.UPLOAD: {

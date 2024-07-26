@@ -17,7 +17,7 @@
 
 import { applicationConfig, Meta, StoryFn, moduleMetadata } from '@storybook/angular';
 import { DataColumnComponent } from './data-column.component';
-import { DataTableModule } from '../datatable.module';
+import { DATATABLE_DIRECTIVES } from '../datatable.module';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import * as mockData from '../../mock/data-column.mock';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -29,7 +29,7 @@ export default {
     title: 'Core/Data Column/Data Column',
     decorators: [
         moduleMetadata({
-            imports: [DataTableModule, RouterTestingModule]
+            imports: [...DATATABLE_DIRECTIVES, RouterTestingModule]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -37,8 +37,7 @@ export default {
     ],
     argTypes: {
         copyContent: {
-            description:
-                'Enables/disables a Clipboard directive to allow copying of cell contents.',
+            description: 'Enables/disables a Clipboard directive to allow copying of cell contents.',
             control: { type: 'boolean' },
             table: {
                 category: 'Component Inputs',
@@ -48,8 +47,7 @@ export default {
             }
         },
         cssClass: {
-            description:
-                'Additional CSS class to be applied to column (header and cells).',
+            description: 'Additional CSS class to be applied to column (header and cells).',
             control: { type: 'text' },
             table: {
                 category: 'Component Inputs',
@@ -59,8 +57,7 @@ export default {
             }
         },
         customData: {
-            description:
-                'You can specify any custom data which can be used by any specific feature',
+            description: 'You can specify any custom data which can be used by any specific feature',
             control: { disable: true },
             table: {
                 category: 'Component Inputs',
@@ -122,8 +119,7 @@ export default {
             }
         },
         format: {
-            description:
-                'Used for location type. Setups root path for router navigation.',
+            description: 'Used for location type. Setups root path for router navigation.',
             control: { type: 'text', disable: true },
             table: {
                 category: 'Component Inputs',
@@ -169,8 +165,7 @@ export default {
             }
         },
         key: {
-            description:
-                'Data source key. Can be either a column/property key like title or a property path like `createdBy.name`.',
+            description: 'Data source key. Can be either a column/property key like title or a property path like `createdBy.name`.',
             control: { type: 'text', disable: false },
             table: {
                 category: 'Component Inputs',
@@ -180,8 +175,7 @@ export default {
             }
         },
         sortable: {
-            description:
-                'Toggles ability to sort by this column, for example by clicking the column header.',
+            description: 'Toggles ability to sort by this column, for example by clicking the column header.',
             control: { type: 'boolean' },
             table: {
                 category: 'Component Inputs',
@@ -194,8 +188,7 @@ export default {
             }
         },
         sortingKey: {
-            description:
-                'When using server side sorting the column used by the api call where the sorting will be performed',
+            description: 'When using server side sorting the column used by the api call where the sorting will be performed',
             control: { disable: true },
             table: {
                 category: 'Component Inputs',
@@ -235,18 +228,7 @@ export default {
             description:
                 'Value type for the column. Possible settings are: `text`, `icon`, `image`, `date`, `fileSize`, `location`, `boolean`, `amount`, `number` and `json`.',
             control: { type: 'select', disable: false },
-            options: [
-                'text',
-                'icon',
-                'image',
-                'date',
-                'fileSize',
-                'location',
-                'boolean',
-                'amount',
-                'number',
-                'json'
-            ],
+            options: ['text', 'icon', 'image', 'date', 'fileSize', 'location', 'boolean', 'amount', 'number', 'json'],
             table: {
                 category: 'Component Inputs',
                 type: {
@@ -258,8 +240,7 @@ export default {
             }
         },
         currencyConfig: {
-            description:
-                `The currencyConfig input allows you to customize the formatting and display of currency values within the component.`,
+            description: `The currencyConfig input allows you to customize the formatting and display of currency values within the component.`,
             control: { type: 'object', disable: true },
             table: {
                 category: 'Component Inputs',
@@ -272,8 +253,7 @@ export default {
             }
         },
         decimalConfig: {
-            description:
-                `The decimalConfig input allows you to customize the formatting and display of decimal values within the component.`,
+            description: `The decimalConfig input allows you to customize the formatting and display of decimal values within the component.`,
             control: { type: 'object', disable: true },
             table: {
                 category: 'Component Inputs',
@@ -286,8 +266,7 @@ export default {
             }
         },
         dateConfig: {
-            description:
-                `The dateConfig input allows you to configure date formatting and localization for a component.`,
+            description: `The dateConfig input allows you to configure date formatting and localization for a component.`,
             control: { type: 'object', disable: true },
             table: {
                 category: 'Component Inputs',
@@ -345,8 +324,7 @@ export default {
     }
 } as Meta<DataColumnComponent>;
 
-const formatCustomTooltip = (row: DataRow): string =>
-    row ? 'This is ' + row.getValue('firstname') : null;
+const formatCustomTooltip = (row: DataRow): string => (row ? 'This is ' + row.getValue('firstname') : null);
 
 const template: StoryFn<DataColumnComponent> = (args: DataColumnComponent & { rows: DataRow[] }) => ({
     props: args,
@@ -464,8 +442,8 @@ FileSizeColumn.args = {
 export const LocationColumn: StoryFn = template.bind({});
 LocationColumn.argTypes = {
     copyContent: { control: { disable: true } },
-    format: { control: { disable: false }},
-    sortable: { control: { disable: true }}
+    format: { control: { disable: false } },
+    sortable: { control: { disable: true } }
 };
 LocationColumn.args = {
     rows: mockData.locationColumnRows,
@@ -525,4 +503,3 @@ NumberColumn.args = {
     type: 'number',
     title: 'Number Column'
 };
-
