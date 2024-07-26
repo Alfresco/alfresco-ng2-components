@@ -393,7 +393,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private isReadOnlyForm(): boolean {
-        return this.field?.form?.readOnly ?? false;
+        return !!this.field?.form?.readOnly;
     }
 
     get isReadOnlyField(): boolean {
