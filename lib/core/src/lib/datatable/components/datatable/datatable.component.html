@@ -182,7 +182,12 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect" [for]="'select-file-' + idx" class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single">
+                <label *ngIf="multiselect"
+                       (keydown.enter)="onEnterKeyPressed(row, $any($event))"
+                       (click)="onCheckboxLabelClick(row, $event)"
+                       [for]="'select-file-' + idx"
+                       class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single"
+                       tabindex="0">
                     <mat-checkbox
                         [id]="'select-file-' + idx"
                         [class.adf-datatable-checkbox-selected]="row.isSelected"

@@ -923,6 +923,43 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBe(true);
     });
 
+    it('should call onRowClick when checkbox label clicked and target is not checkbox', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }, { name: '2' }],
+            [new ObjectDataColumn({ key: 'name', sortable: false }), new ObjectDataColumn({ key: 'other', sortable: false })]
+        );
+        const rows = dataTable.data.getRows();
+        const event = new MouseEvent('click');
+        Object.defineProperty(event, 'target', { value: { tagName: 'label', closest: () => null} });
+        spyOn(dataTable, 'onRowClick');
+
+        dataTable.onCheckboxLabelClick(rows[0], event);
+        expect(dataTable.onRowClick).toHaveBeenCalledWith(rows[0], event);
+    });
+
+    it('should not call onRowClick when checkbox label clicked and target is checkbox', () => {
+        const data = new ObjectDataTableAdapter([{}, {}], []);
+        const rows = data.getRows();
+        const event = new MouseEvent('click');
+        // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
+        Object.defineProperty(event, 'target', { value: { tagName: 'MAT-CHECKBOX', closest: () => null} });
+        spyOn(dataTable, 'onRowClick');
+
+        dataTable.onCheckboxLabelClick(rows[0], event);
+        expect(dataTable.onRowClick).not.toHaveBeenCalled();
+    });
+
+    it('should not call onRowClick when checkbox label clicked and target is inside checkbox', () => {
+        const data = new ObjectDataTableAdapter([{}, {}], []);
+        const rows = data.getRows();
+        const event = new MouseEvent('click');
+        Object.defineProperty(event, 'target', { value: { tagName: 'div', closest: () => 'element'} });
+        spyOn(dataTable, 'onRowClick');
+
+        dataTable.onCheckboxLabelClick(rows[0], event);
+        expect(dataTable.onRowClick).not.toHaveBeenCalled();
+    });
+
     it('should require multiselect option to toggle row state', () => {
         const data = new ObjectDataTableAdapter([{}, {}, {}], []);
         const rows = data.getRows();

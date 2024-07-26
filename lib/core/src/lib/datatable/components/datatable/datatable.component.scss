@@ -151,6 +151,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             &:last-child {
                 border-bottom: 1px solid var(--adf-theme-foreground-text-color-007);
             }
+
+            label {
+                cursor: inherit;
+            }
         }
     }
 
