@@ -37,7 +37,12 @@ import { FileAutoDownloadComponent } from './components/file-auto-download/file-
 import { ContentDirectiveModule } from '../directives/content-directive.module';
 import { NodeNameTooltipPipe } from '../pipes';
 
-export const DOCUMENT_LIST_DIRECTIVES = [ContentActionComponent, FileAutoDownloadComponent] as const;
+export const DOCUMENT_LIST_DIRECTIVES = [
+    ContentActionComponent,
+    FileAutoDownloadComponent,
+    FilterHeaderComponent,
+    LibraryNameColumnComponent
+] as const;
 
 @NgModule({
     imports: [
@@ -56,10 +61,8 @@ export const DOCUMENT_LIST_DIRECTIVES = [ContentActionComponent, FileAutoDownloa
         TrashcanNameColumnComponent,
         LibraryStatusColumnComponent,
         LibraryRoleColumnComponent,
-        LibraryNameColumnComponent,
         NameColumnComponent,
-        ContentActionListComponent,
-        FilterHeaderComponent
+        ContentActionListComponent
     ],
     exports: [
         ...DOCUMENT_LIST_DIRECTIVES,
@@ -67,10 +70,8 @@ export const DOCUMENT_LIST_DIRECTIVES = [ContentActionComponent, FileAutoDownloa
         TrashcanNameColumnComponent,
         LibraryStatusColumnComponent,
         LibraryRoleColumnComponent,
-        LibraryNameColumnComponent,
         NameColumnComponent,
-        ContentActionListComponent,
-        FilterHeaderComponent
+        ContentActionListComponent
     ]
 })
 export class DocumentListModule {}
