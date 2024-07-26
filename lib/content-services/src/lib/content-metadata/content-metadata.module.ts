@@ -15,35 +15,16 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
 import { ContentMetadataComponent } from './components/content-metadata/content-metadata.component';
 import { ContentMetadataCardComponent } from './components/content-metadata-card/content-metadata-card.component';
-import { TagModule } from '../tag/tag.module';
-import { CategoriesModule } from '../category/category.module';
-import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { ContentMetadataHeaderComponent } from './components/content-metadata/content-metadata-header.component';
 
+export const CONTENT_METADATA_DIRECTIVES = [ContentMetadataComponent, ContentMetadataCardComponent, ContentMetadataHeaderComponent] as const;
+
+/** @deprecated use `...CONTENT_METADATA_DIRECTIVES` instead */
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule,
-        TagModule,
-        CategoriesModule,
-        ExtensionsModule,
-        ContentMetadataHeaderComponent
-    ],
-    exports: [
-        ContentMetadataComponent,
-        ContentMetadataCardComponent,
-        ContentMetadataHeaderComponent
-    ],
-    declarations: [
-        ContentMetadataComponent,
-        ContentMetadataCardComponent
-    ]
+    imports: [...CONTENT_METADATA_DIRECTIVES],
+    exports: [...CONTENT_METADATA_DIRECTIVES]
 })
 export class ContentMetadataModule {}

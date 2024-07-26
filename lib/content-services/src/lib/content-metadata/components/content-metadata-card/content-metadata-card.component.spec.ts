@@ -61,7 +61,8 @@ describe('ContentMetadataCardComponent', () => {
                 MatDialogModule,
                 PipeModule,
                 MatSnackBarModule,
-                MatTooltipModule
+                MatTooltipModule,
+                ContentMetadataCardComponent
             ],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
@@ -69,7 +70,7 @@ describe('ContentMetadataCardComponent', () => {
                 {
                     provide: APP_INITIALIZER,
                     useFactory: versionCompatibilityFactory,
-                    deps: [ VersionCompatibilityService ],
+                    deps: [VersionCompatibilityService],
                     multi: true
                 }
             ]

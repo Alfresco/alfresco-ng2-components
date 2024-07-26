@@ -36,8 +36,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchChipAutocompleteInputComponent],
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, SearchChipAutocompleteInputComponent]
         });
 
         fixture = TestBed.createComponent(SearchChipAutocompleteInputComponent);

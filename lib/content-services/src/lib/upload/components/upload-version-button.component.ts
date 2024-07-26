@@ -21,25 +21,33 @@ import { Node } from '@alfresco/js-api';
 import { UploadButtonComponent } from './upload-button.component';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 import { FileModel } from '../../common/models/file.model';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-upload-version-button',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.scss'],
-    viewProviders: [
-        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadVersionButtonComponent) }
-    ],
+    viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadVersionButtonComponent) }],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-upload-version-button' }
 })
 export class UploadVersionButtonComponent extends UploadButtonComponent implements OnChanges, OnInit {
-
     /** (**Required**) The node to be versioned. */
     @Input()
     node: Node;
 
     protected createFileModel(file: File): FileModel {
-        const fileModel = super.createFileModel(file, this.rootFolderId, ((file as any).webkitRelativePath || '').replace(/\/[^/]*$/, ''), this.node.id);
+        const fileModel = super.createFileModel(
+            file,
+            this.rootFolderId,
+            ((file as any).webkitRelativePath || '').replace(/\/[^/]*$/, ''),
+            this.node.id
+        );
 
         if (!this.isFileAcceptable(fileModel)) {
             const message = this.translationService.instant('FILE_UPLOAD.VERSION.MESSAGES.INCOMPATIBLE_VERSION');

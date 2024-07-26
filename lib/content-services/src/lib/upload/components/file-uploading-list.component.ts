@@ -15,23 +15,17 @@
  * limitations under the License.
  */
 
-import {
-    TranslationService
-} from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 
-import {
-    Component,
-    ContentChild,
-    Input,
-    Output,
-    TemplateRef,
-    EventEmitter
-} from '@angular/core';
+import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-file-uploading-list',
+    standalone: true,
+    imports: [CommonModule],
     templateUrl: './file-uploading-list.component.html',
     styleUrls: ['./file-uploading-list.component.scss']
 })
@@ -46,10 +40,7 @@ export class FileUploadingListComponent {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(
-        private uploadService: UploadService,
-        private translateService: TranslationService) {
-    }
+    constructor(private uploadService: UploadService, private translateService: TranslationService) {}
 
     /**
      * Cancel file upload
@@ -79,14 +70,14 @@ export class FileUploadingListComponent {
             this.uploadService.cancelUpload(file);
         }
 
-        this.files = this.files.filter(entry => entry !== file);
+        this.files = this.files.filter((entry) => entry !== file);
     }
 
     /**
      * Calls the appropriate methods for each file, depending on state
      */
     cancelAllFiles(): void {
-        const filesToCancel = this.files.filter(file => this.isUploadingFile(file));
+        const filesToCancel = this.files.filter((file) => this.isUploadingFile(file));
 
         if (filesToCancel.length > 0) {
             this.uploadService.cancelUpload(...filesToCancel);
@@ -103,10 +94,7 @@ export class FileUploadingListComponent {
             !this.isUploadCancelled() &&
             Boolean(this.files.length) &&
             !this.files.some(
-                ({ status }) =>
-                    status === FileUploadStatus.Starting ||
-                    status === FileUploadStatus.Progress ||
-                    status === FileUploadStatus.Pending
+                ({ status }) => status === FileUploadStatus.Starting || status === FileUploadStatus.Progress || status === FileUploadStatus.Pending
             )
         );
     }
@@ -120,22 +108,14 @@ export class FileUploadingListComponent {
         return (
             !!this.files.length &&
             this.files.every(
-                ({ status }) =>
-                    status === FileUploadStatus.Aborted ||
-                    status === FileUploadStatus.Cancelled ||
-                    status === FileUploadStatus.Deleted
+                ({ status }) => status === FileUploadStatus.Aborted || status === FileUploadStatus.Cancelled || status === FileUploadStatus.Deleted
             )
         );
     }
 
     private cancelNodeVersionInstances(file: FileModel) {
         this.files
-            .filter(
-                (item) =>
-                    item.options.newVersion &&
-                    item.data.entry.id === file.data.entry.id
-
-            )
+            .filter((item) => item.options.newVersion && item.data.entry.id === file.data.entry.id)
             .map((item) => {
                 item.status = FileUploadStatus.Deleted;
             });
@@ -145,23 +125,15 @@ export class FileUploadingListComponent {
         let messageError: string = null;
 
         if (files.length === 1) {
-            messageError = this.translateService.instant(
-                'FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR',
-                { fileName: files[0].name }
-            );
+            messageError = this.translateService.instant('FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR', { fileName: files[0].name });
         } else {
-            messageError = this.translateService.instant(
-                'FILE_UPLOAD.MESSAGES.REMOVE_FILES_ERROR',
-                { total: files.length }
-            );
+            messageError = this.translateService.instant('FILE_UPLOAD.MESSAGES.REMOVE_FILES_ERROR', { total: files.length });
         }
 
         this.error.emit(messageError);
     }
 
     private isUploadingFile(file: FileModel): boolean {
-        return file.status === FileUploadStatus.Pending ||
-            file.status === FileUploadStatus.Starting ||
-            file.status === FileUploadStatus.Progress;
+        return file.status === FileUploadStatus.Pending || file.status === FileUploadStatus.Starting || file.status === FileUploadStatus.Progress;
     }
 }

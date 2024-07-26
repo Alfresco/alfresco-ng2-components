@@ -17,12 +17,21 @@
 
 import { TagEntry, TagPaging } from '@alfresco/js-api';
 import { Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
 import { TagsCreatorMode } from './tags-creator-mode';
 import { TagService } from '../services/tag.service';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { AutoFocusDirective } from '../../directives';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
@@ -42,6 +51,19 @@ const DEFAULT_TAGS_SORTING = {
  */
 @Component({
     selector: 'adf-tags-creator',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        AutoFocusDirective,
+        TranslateModule,
+        MatChipsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatListModule,
+        MatProgressSpinnerModule
+    ],
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -15,21 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
     AppConfigService,
     CardViewBaseItemModel,
     CardViewItem,
+    CardViewModule,
     NotificationService,
     TranslationService,
     UpdateNotification
@@ -45,6 +38,17 @@ import { CategoryService } from '../../../category/services/category.service';
 import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { ContentService } from '../../../common/services/content.service';
+import { CommonModule } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { CategoriesManagementComponent } from '../../../category';
+import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TagsCreatorComponent } from '../../../tag';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -56,6 +60,21 @@ enum DefaultPanels {
 
 @Component({
     selector: 'adf-content-metadata',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatExpansionModule,
+        ContentMetadataHeaderComponent,
+        MatButtonModule,
+        TranslateModule,
+        MatIconModule,
+        CardViewModule,
+        MatChipsModule,
+        CategoriesManagementComponent,
+        DynamicExtensionComponent,
+        MatProgressBarModule,
+        TagsCreatorComponent
+    ],
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
     host: { class: 'adf-content-metadata' },
@@ -173,12 +192,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 this.updateChanges(updatedNode.changed);
             });
 
-        this.cardViewContentUpdateService.updatedAspect$
-            .pipe(debounceTime(500), takeUntil(this.onDestroy$))
-            .subscribe((node) => {
-                this.node.aspectNames = node?.aspectNames;
-                this.loadProperties(node);
-            });
+        this.cardViewContentUpdateService.updatedAspect$.pipe(debounceTime(500), takeUntil(this.onDestroy$)).subscribe((node) => {
+            this.node.aspectNames = node?.aspectNames;
+            this.loadProperties(node);
+        });
 
         this.loadProperties(this.node);
         this.verifyAllowableOperations();
@@ -210,7 +227,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     isPanelEditing(panelTitle: string): boolean {
-        return this.editing && ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle);
+        return (
+            this.editing &&
+            ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle)
+        );
     }
 
     protected handleUpdateError(error: Error) {
@@ -250,7 +270,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.displayDefaultProperties?.currentValue) {
             this.expandPanel(this.DefaultPanels.PROPERTIES);
         }
-
     }
 
     ngOnDestroy() {
@@ -365,7 +384,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) { // ArrowLeft && ArrowRight
+        if (event.keyCode === 37 || event.keyCode === 39) {
+            // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }

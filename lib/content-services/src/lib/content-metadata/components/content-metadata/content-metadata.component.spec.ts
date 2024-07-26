@@ -195,7 +195,8 @@ describe('ContentMetadataComponent', () => {
                 MatSnackBarModule,
                 MatProgressBarModule,
                 MatTooltipModule,
-                PipeModule
+                PipeModule,
+                ContentMetadataComponent
             ],
             providers: [
                 { provide: TranslationService, useClass: TranslationMock },

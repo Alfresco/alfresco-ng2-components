@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
 import { FileUploadingDialogComponent } from './components/file-uploading-dialog.component';
 import { FileUploadingListRowComponent } from './components/file-uploading-list-row.component';
 import { FileUploadingListComponent } from './components/file-uploading-list.component';
@@ -25,33 +23,24 @@ import { UploadButtonComponent } from './components/upload-button.component';
 import { UploadVersionButtonComponent } from './components/upload-version-button.component';
 import { UploadDragAreaComponent } from './components/upload-drag-area.component';
 import { FileUploadErrorPipe } from './pipes/file-upload-error.pipe';
-import { CoreModule, FileSizePipe } from '@alfresco/adf-core';
 import { FileDraggableDirective } from './directives/file-draggable.directive';
 import { ToggleIconDirective } from './directives/toggle-icon.directive';
-import { A11yModule } from '@angular/cdk/a11y';
 
+export const CONTENT_UPLOAD_DIRECTIVES = [
+    FileUploadErrorPipe,
+    FileDraggableDirective,
+    ToggleIconDirective,
+    UploadDragAreaComponent,
+    UploadButtonComponent,
+    UploadVersionButtonComponent,
+    FileUploadingListRowComponent,
+    FileUploadingListComponent,
+    FileUploadingDialogComponent
+] as const;
+
+/** @deprecated use `...CONTENT_UPLOAD_DIRECTIVES` instead or import standalone components directly */
 @NgModule({
-    imports: [CoreModule, CommonModule, MaterialModule, A11yModule, FileUploadErrorPipe, FileSizePipe],
-    declarations: [
-        FileDraggableDirective,
-        UploadDragAreaComponent,
-        UploadButtonComponent,
-        UploadVersionButtonComponent,
-        FileUploadingDialogComponent,
-        FileUploadingListComponent,
-        FileUploadingListRowComponent,
-        ToggleIconDirective
-    ],
-    exports: [
-        FileDraggableDirective,
-        UploadDragAreaComponent,
-        UploadButtonComponent,
-        UploadVersionButtonComponent,
-        FileUploadingDialogComponent,
-        FileUploadingListComponent,
-        FileUploadingListRowComponent,
-        FileUploadErrorPipe,
-        ToggleIconDirective
-    ]
+    imports: [...CONTENT_UPLOAD_DIRECTIVES],
+    exports: [...CONTENT_UPLOAD_DIRECTIVES]
 })
 export class UploadModule {}

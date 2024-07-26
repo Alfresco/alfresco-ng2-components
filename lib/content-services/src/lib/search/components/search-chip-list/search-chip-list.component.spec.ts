@@ -23,9 +23,12 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipRemoveHarness } from '@angular/material/chips/testing';
+import { SearchChipListComponent } from './search-chip-list.component';
 
 @Component({
     selector: 'adf-test-component',
+    standalone: true,
+    imports: [SearchChipListComponent],
     template: ` <adf-search-chip-list [searchFilter]="searchFilter" [clearAll]="allowClear"> </adf-search-chip-list> `
 })
 class TestComponent {
@@ -33,7 +36,7 @@ class TestComponent {
     searchFilter = {
         selectedBuckets: [],
         unselectFacetBucket: () => {}
-    };
+    } as any;
 }
 
 describe('SearchChipListComponent', () => {
@@ -44,8 +47,7 @@ describe('SearchChipListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestComponent]
+            imports: [ContentTestingModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

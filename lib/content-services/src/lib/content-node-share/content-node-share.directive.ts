@@ -26,6 +26,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Directive({
     selector: '[adf-share]',
+    standalone: true,
     exportAs: 'adfShare'
 })
 export class NodeSharedDirective implements OnChanges, OnDestroy {

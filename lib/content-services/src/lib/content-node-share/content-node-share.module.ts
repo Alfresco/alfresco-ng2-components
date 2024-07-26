@@ -16,15 +16,14 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
-import { MaterialModule } from '../material.module';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { NodeSharedDirective } from './content-node-share.directive';
 
+export const CONTENT_NODE_SHARE_DIRECTIVES = [ShareDialogComponent, NodeSharedDirective] as const;
+
+/** @deprecated use `...CONTENT_NODE_SHARE_DIRECTIVES` or import each directive individually */
 @NgModule({
-    imports: [CoreModule, CommonModule, MaterialModule],
-    declarations: [ShareDialogComponent, NodeSharedDirective],
-    exports: [ShareDialogComponent, NodeSharedDirective]
+    imports: [...CONTENT_NODE_SHARE_DIRECTIVES],
+    exports: [...CONTENT_NODE_SHARE_DIRECTIVES]
 })
 export class ContentNodeShareModule {}

@@ -16,7 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { NotificationService } from '@alfresco/adf-core';
 import { NodesApiService, RenditionService } from '../common';
@@ -33,7 +33,6 @@ import { MatSlideToggleHarness } from '@angular/material/slide-toggle/testing';
 describe('ShareDialogComponent', () => {
     let loader: HarnessLoader;
     let node: NodeEntry;
-    let matDialog: MatDialog;
     const notificationServiceMock = {
         openSnackMessage: jasmine.createSpy('openSnackMessage')
     };
@@ -56,7 +55,7 @@ describe('ShareDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, MatDialogModule, ShareDialogComponent],
             providers: [
                 { provide: NotificationService, useValue: notificationServiceMock },
                 {
@@ -71,7 +70,6 @@ describe('ShareDialogComponent', () => {
         fixture = TestBed.createComponent(ShareDialogComponent);
         component = fixture.componentInstance;
 
-        matDialog = TestBed.inject(MatDialog);
         sharedLinksApiService = TestBed.inject(SharedLinksApiService);
         renditionService = TestBed.inject(RenditionService);
         nodesApiService = TestBed.inject(NodesApiService);
@@ -179,7 +177,8 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should open a confirmation dialog when unshare button is triggered', async () => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
+        const dialog = fixture.debugElement.injector.get(MatDialog);
+        const openSpy = spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -194,11 +193,12 @@ describe('ShareDialogComponent', () => {
         const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: shareToggleId }));
         await toggle.toggle();
 
-        expect(matDialog.open).toHaveBeenCalled();
+        expect(openSpy).toHaveBeenCalled();
     });
 
     it('should unshare file when confirmation dialog returns true', async () => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(true) } as any);
+        const dialog = fixture.debugElement.injector.get(MatDialog);
+        spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(true) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
@@ -208,6 +208,7 @@ describe('ShareDialogComponent', () => {
         };
 
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: shareToggleId }));
         await toggle.toggle();
@@ -216,7 +217,8 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should not unshare file when confirmation dialog returns false', async () => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
+        const dialog = fixture.debugElement.injector.get(MatDialog);
+        spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 

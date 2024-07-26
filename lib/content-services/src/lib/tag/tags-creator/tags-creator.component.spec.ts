@@ -20,22 +20,15 @@ import { TagsCreatorComponent } from './tags-creator.component';
 import { NotificationService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatError, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { ContentDirectiveModule, TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatError } from '@angular/material/form-field';
+import { TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 import { EMPTY, of, throwError } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule } from '@angular/material/list';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatChipOptionHarness } from '@angular/material/chips/testing';
-import { MatChipsModule } from '@angular/material/chips';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
@@ -46,20 +39,7 @@ describe('TagsCreatorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [TagsCreatorComponent],
-            imports: [
-                ContentDirectiveModule,
-                MatButtonModule,
-                MatFormFieldModule,
-                MatIconModule,
-                MatInputModule,
-                MatProgressSpinnerModule,
-                MatListModule,
-                MatChipsModule,
-                NoopAnimationsModule,
-                ReactiveFormsModule,
-                TranslateModule.forRoot()
-            ],
+            imports: [NoopAnimationsModule, TranslateModule.forRoot(), TagsCreatorComponent],
             providers: [
                 {
                     provide: TagService,

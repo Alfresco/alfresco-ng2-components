@@ -18,11 +18,14 @@
 import { Node } from '@alfresco/js-api';
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-node-path-column',
+    standalone: true,
+    imports: [CommonModule],
     template: `
-        <span class="adf-user-name-column adf-datatable-cell-value"  title="{{ displayText$ | async }}">
+        <span class="adf-user-name-column adf-datatable-cell-value" title="{{ displayText$ | async }}">
             {{ displayText$ | async }}
         </span>
     `,
