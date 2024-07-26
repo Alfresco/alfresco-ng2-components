@@ -23,10 +23,15 @@ import {
     InfinitePaginationComponent,
     PaginatedComponent,
     DataSorting,
-    ShowHeaderMode
+    ShowHeaderMode,
+    ToolbarTitleComponent,
+    ToolbarComponent,
+    DataColumnListComponent,
+    DataColumnComponent,
+    CustomEmptyContentTemplateDirective
 } from '@alfresco/adf-core';
 import { NodesApiService, UploadService, FileUploadCompleteEvent, FileUploadDeleteEvent, SitesService } from '../../common';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry, SearchRequest, RequestScope } from '@alfresco/js-api';
 import { DocumentListComponent } from '../../document-list/components/document-list.component';
 import { RowFilter } from '../../document-list/data/row-filter.model';
@@ -36,8 +41,20 @@ import { ShareDataRow } from '../../document-list/data/share-data-row.model';
 import { NodeEntryEvent } from '../../document-list/components/node.event';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { SearchQueryBuilderService } from '../../search';
+import { SearchModule } from '../../search/search.module';
 import { ContentNodeSelectorPanelService } from './content-node-selector-panel.service';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
+import { AutoFocusDirective } from '../../directives/auto-focus.directive';
+import { NodeCounterDirective } from '../../directives/node-counter.directive';
+import { MatIconModule } from '@angular/material/icon';
+import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
+import { MatButtonModule } from '@angular/material/button';
+import { NameLocationCellComponent } from '../name-location-cell/name-location-cell.component';
+import { DropdownBreadcrumbComponent } from '../../breadcrumb/dropdown-breadcrumb.component';
+import { SearchQueryBuilderService } from '../../search/services/search-query-builder.service';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -45,6 +62,30 @@ export const defaultValidation = () => true;
 
 @Component({
     selector: 'adf-content-node-selector-panel',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        TranslateModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        AutoFocusDirective,
+        MatIconModule,
+        DropdownSitesComponent,
+        MatButtonModule,
+        SearchModule,
+        ToolbarTitleComponent,
+        ToolbarComponent,
+        DropdownBreadcrumbComponent,
+        NodeCounterDirective,
+        DocumentListComponent,
+        HighlightDirective,
+        DataColumnListComponent,
+        DataColumnComponent,
+        NameLocationCellComponent,
+        InfinitePaginationComponent,
+        CustomEmptyContentTemplateDirective
+    ],
     templateUrl: './content-node-selector-panel.component.html',
     styleUrls: ['./content-node-selector-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,

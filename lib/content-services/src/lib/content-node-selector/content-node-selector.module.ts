@@ -31,8 +31,11 @@ import { SearchQueryBuilderService } from '../search/services/search-query-build
 import { CONTENT_DIRECTIVES } from '../directives/content-directive.module';
 import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component';
 
+export const CONTENT_NODE_SELECTOR_DIRECTIVES = [ContentNodeSelectorPanelComponent];
+
 @NgModule({
     imports: [
+        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
@@ -46,8 +49,8 @@ import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component
         CONTENT_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES
     ],
-    exports: [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent],
-    declarations: [ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent],
+    exports: [...CONTENT_NODE_SELECTOR_DIRECTIVES, NameLocationCellComponent, ContentNodeSelectorComponent],
+    declarations: [ContentNodeSelectorComponent],
     providers: [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorModule {}
