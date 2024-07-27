@@ -32,8 +32,6 @@ import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
-import { AppsViewComponent } from './components/process-service/apps-view.component';
-import { FilesComponent } from './components/files/files.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { appRoutes } from './app.routes';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
@@ -42,20 +40,14 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
-import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
-import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
-import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
 import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
-import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
 import { environment } from '../environments/environment';
-import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { RouterModule } from '@angular/router';
-import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
@@ -82,7 +74,6 @@ import { CoreAutomationService } from '../testing/automation.service';
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
         NgChartsModule,
-        AppCloudSharedModule,
         MonacoEditorModule.forRoot(),
         FolderCreateDirective,
         ShowDiagramComponent,
@@ -97,23 +88,16 @@ import { CoreAutomationService } from '../testing/automation.service';
         SearchBarComponent,
         SearchResultComponent,
         ProcessServiceComponent,
-        AppsViewComponent,
-        FilesComponent,
         VersionManagerDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
-        CloudLayoutComponent,
-        AppsCloudDemoComponent,
-        TasksCloudDemoComponent,
         ProcessesCloudDemoComponent,
         TaskDetailsCloudDemoComponent,
         ProcessDetailsCloudDemoComponent,
         StartTaskCloudDemoComponent,
         StartProcessCloudDemoComponent,
-        CloudFiltersDemoComponent,
         CustomEditorComponent,
         CustomWidgetComponent,
-        ProcessCloudLayoutComponent,
         SearchFilterChipsComponent
     ],
     providers: [
