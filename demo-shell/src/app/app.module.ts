@@ -66,7 +66,7 @@ import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-la
 import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
-import { FolderDirectiveModule } from './folder-directive';
+import { FolderCreateDirective } from './folder-directive';
 import { ContentUserInfoModule } from './components/app-layout/user-info/content-user-info';
 import { PROCESS_USER_INFO_DIRECTIVES } from './components/app-layout/user-info/process-user-info';
 import { CoreAutomationService } from '../testing/automation.service';
@@ -91,7 +91,7 @@ import { CoreAutomationService } from '../testing/automation.service';
         NgChartsModule,
         AppCloudSharedModule,
         MonacoEditorModule.forRoot(),
-        FolderDirectiveModule,
+        FolderCreateDirective,
         ShowDiagramComponent,
         ContentUserInfoModule,
         ...PROCESS_USER_INFO_DIRECTIVES

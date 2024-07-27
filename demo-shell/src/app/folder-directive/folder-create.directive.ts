@@ -26,7 +26,8 @@ const DEFAULT_FOLDER_PARENT_ID = '-my-';
 const DIALOG_WIDTH: number = 400;
 
 @Directive({
-    selector: '[adf-create-folder]'
+    selector: '[adf-create-folder]',
+    standalone: true
 })
 export class FolderCreateDirective {
     /** Parent folder where the new folder will be located after creation. */
