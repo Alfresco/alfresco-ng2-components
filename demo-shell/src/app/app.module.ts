@@ -17,7 +17,6 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +24,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService, DebugAppConfigService, CoreModule, AuthModule, provideTranslations } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
-import { MaterialModule } from './material.module';
 import { appRoutes } from './app.routes';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -40,12 +38,9 @@ import { CoreAutomationService } from '../testing/automation.service';
     imports: [
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
-        ReactiveFormsModule,
         RouterModule.forRoot(appRoutes, { useHash: true }),
         AuthModule.forRoot({ useHash: true }),
-        FormsModule,
         HttpClientModule,
-        MaterialModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ContentModule.forRoot(),
