@@ -33,7 +33,6 @@ import { SearchResultComponent } from './components/search/search-result.compone
 import { FormComponent } from './components/form/form.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
-import { FormViewerComponent } from './components/process-service/form-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { FilesComponent } from './components/files/files.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
@@ -99,7 +98,6 @@ import { CoreAutomationService } from '../testing/automation.service';
         SearchBarComponent,
         SearchResultComponent,
         ProcessServiceComponent,
-        FormViewerComponent,
         AppsViewComponent,
         FilesComponent,
         FormComponent,
