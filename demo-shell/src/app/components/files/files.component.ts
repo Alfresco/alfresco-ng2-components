@@ -127,7 +127,8 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
         MatSelectModule,
         HighlightPipe,
         DataColumnListComponent,
-        CustomEmptyContentTemplateDirective
+        CustomEmptyContentTemplateDirective,
+        VersionManagerDialogAdapterComponent
     ],
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss'],

@@ -16,15 +16,32 @@
  */
 
 import { Component, inject, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ProcessAttachmentListComponent, ProcessService, ProcessUploadService } from '@alfresco/adf-process-services';
-import { UploadService } from '@alfresco/adf-content-services';
+import {
+    CreateProcessAttachmentComponent,
+    ProcessAttachmentListComponent,
+    ProcessService,
+    ProcessUploadService
+} from '@alfresco/adf-process-services';
+import { UploadDragAreaComponent, UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { EmptyListComponent } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-process-attachments',
+    standalone: true,
+    imports: [
+        CommonModule,
+        UploadDragAreaComponent,
+        ProcessAttachmentListComponent,
+        EmptyListComponent,
+        TranslateModule,
+        CreateProcessAttachmentComponent
+    ],
     templateUrl: './process-attachments.component.html',
     styleUrls: ['./process-attachments.component.css'],
     providers: [{ provide: UploadService, useClass: ProcessUploadService }],

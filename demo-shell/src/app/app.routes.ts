@@ -42,12 +42,13 @@ import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-det
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
+import { AppSearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { AppLoginComponent } from './components/login/login.component';
 
 export const appRoutes: Routes = [
-    { path: 'login', loadChildren: () => import('./components/login/login.module').then((m) => m.AppLoginModule) },
+    { path: 'login', component: AppLoginComponent },
     { path: 'logout', component: LogoutComponent },
     {
         path: 'settings',
@@ -193,7 +194,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'search-filter-chips',
-                component: SearchFilterChipsComponent,
+                component: AppSearchFilterChipsComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

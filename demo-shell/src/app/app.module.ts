@@ -26,34 +26,14 @@ import { AppConfigService, DebugAppConfigService, CoreModule, AuthModule, provid
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
-import { LogoutComponent } from './components/logout/logout.component';
-import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { SearchBarComponent } from './components/search/search-bar.component';
-import { SearchResultComponent } from './components/search/search-result.component';
-import { ProcessServiceComponent } from './components/process-service/process-service.component';
-import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
-import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { appRoutes } from './app.routes';
-import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
-import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
-import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
-import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
-import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
-import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
-import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
 import { environment } from '../environments/environment';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { RouterModule } from '@angular/router';
-import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
-import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
-import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
-import { FolderCreateDirective } from './folder-directive';
-import { ContentUserInfoModule } from './components/app-layout/user-info/content-user-info';
-import { PROCESS_USER_INFO_DIRECTIVES } from './components/app-layout/user-info/process-user-info';
 import { CoreAutomationService } from '../testing/automation.service';
 
 @NgModule({
@@ -74,32 +54,9 @@ import { CoreAutomationService } from '../testing/automation.service';
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
         NgChartsModule,
-        MonacoEditorModule.forRoot(),
-        FolderCreateDirective,
-        ShowDiagramComponent,
-        ContentUserInfoModule,
-        ...PROCESS_USER_INFO_DIRECTIVES
+        MonacoEditorModule.forRoot()
     ],
-    declarations: [
-        AppComponent,
-        LogoutComponent,
-        AppLayoutComponent,
-        UserInfoComponent,
-        SearchBarComponent,
-        SearchResultComponent,
-        ProcessServiceComponent,
-        VersionManagerDialogAdapterComponent,
-        TaskAttachmentsComponent,
-        ProcessAttachmentsComponent,
-        ProcessesCloudDemoComponent,
-        TaskDetailsCloudDemoComponent,
-        ProcessDetailsCloudDemoComponent,
-        StartTaskCloudDemoComponent,
-        StartProcessCloudDemoComponent,
-        CustomEditorComponent,
-        CustomWidgetComponent,
-        SearchFilterChipsComponent
-    ],
+    declarations: [AppComponent],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         provideTranslations('app', 'resources')

@@ -18,17 +18,18 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
-import { TaskHeaderCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { TaskFormModule, TaskHeaderCloudComponent, TaskHeaderCloudModule } from '@alfresco/adf-process-services-cloud';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({
     selector: 'app-task-details-cloud-demo',
+    standalone: true,
+    imports: [TaskFormModule, TaskHeaderCloudModule],
     templateUrl: './task-details-cloud-demo.component.html',
     styleUrls: ['./task-details-cloud-demo.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class TaskDetailsCloudDemoComponent {
-
     @ViewChild('taskHeader', { static: true })
     taskHeader: TaskHeaderCloudComponent;
 
@@ -40,14 +41,13 @@ export class TaskDetailsCloudDemoComponent {
         private router: Router,
         private notificationService: NotificationService,
         private previewService: PreviewService
-        ) {
+    ) {
         this.route.params.subscribe((params) => {
             this.taskId = params.taskId;
         });
         this.route.parent.params.subscribe((params) => {
             this.appName = params.appName;
         });
-
     }
 
     isTaskValid(): boolean {

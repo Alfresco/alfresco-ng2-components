@@ -17,14 +17,26 @@
 
 import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
 import { PeopleProcessService } from '@alfresco/adf-process-services';
-import { AuthenticationService, BasicAlfrescoAuthService, IdentityUserModel, IdentityUserService, UserInfoMode } from '@alfresco/adf-core';
+import {
+    AuthenticationService,
+    BasicAlfrescoAuthService,
+    IdentityUserInfoModule,
+    IdentityUserModel,
+    IdentityUserService,
+    UserInfoMode
+} from '@alfresco/adf-core';
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Observable, of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import { UserRepresentation } from '@alfresco/js-api';
+import { ContentUserInfoComponent } from './content-user-info';
+import { ProcessUserInfoComponent } from './process-user-info';
 
 @Component({
     selector: 'app-shell-user-info',
+    standalone: true,
+    imports: [CommonModule, ContentUserInfoComponent, IdentityUserInfoModule, ProcessUserInfoComponent],
     templateUrl: './user-info.component.html'
 })
 export class UserInfoComponent implements OnInit {
