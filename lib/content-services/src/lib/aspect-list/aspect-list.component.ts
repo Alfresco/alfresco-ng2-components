@@ -20,10 +20,18 @@ import { NodesApiService } from '../common/services/nodes-api.service';
 import { Observable, Subject, zip } from 'rxjs';
 import { concatMap, map, takeUntil, tap } from 'rxjs/operators';
 import { AspectListService } from './services/aspect-list.service';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { AspectEntry } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @Component({
     selector: 'adf-aspect-list',
+    standalone: true,
+    imports: [CommonModule, MatExpansionModule, MatCheckboxModule, MatTableModule, TranslateModule, MatProgressSpinnerModule],
     templateUrl: './aspect-list.component.html',
     styleUrls: ['./aspect-list.component.scss'],
     encapsulation: ViewEncapsulation.None

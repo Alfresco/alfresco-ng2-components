@@ -15,34 +15,15 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AspectListComponent } from './aspect-list.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { PipeModule } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatDialogModule } from '@angular/material/dialog';
 import { AspectListDialogComponent } from './aspect-list-dialog.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ContentDirectiveModule } from '../directives/content-directive.module';
 
+export const ASPECT_LIST_DIRECTIVES = [AspectListComponent, AspectListDialogComponent] as const;
+
+/** @deprecated use `...ASPECT_LIST_DIRECTIVES` or import the individual components */
 @NgModule({
-    imports: [
-        CommonModule,
-        MatTableModule,
-        MatExpansionModule,
-        MatCheckboxModule,
-        PipeModule,
-        TranslateModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatProgressSpinnerModule,
-        ContentDirectiveModule
-    ],
-    exports: [AspectListComponent, AspectListDialogComponent],
-    declarations: [AspectListComponent, AspectListDialogComponent]
+    imports: [...ASPECT_LIST_DIRECTIVES],
+    exports: [...ASPECT_LIST_DIRECTIVES]
 })
 export class AspectListModule {}

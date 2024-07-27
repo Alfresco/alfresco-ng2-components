@@ -28,7 +28,7 @@ import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
 import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
 import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
 import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
-import { AspectListModule } from './aspect-list/aspect-list.module';
+import { ASPECT_LIST_DIRECTIVES } from './aspect-list/aspect-list.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { CONTENT_PIPES } from './pipes/content-pipe.module';
@@ -62,7 +62,7 @@ import { ContentTypeDialogComponent } from './content-type';
         ...CONTENT_VERSION_DIRECTIVES,
         TreeViewComponent,
         ContentTypeDialogComponent,
-        AspectListModule,
+        ...ASPECT_LIST_DIRECTIVES,
         VersionCompatibilityDirective,
         NodeCommentsComponent,
         TreeComponent,
@@ -87,7 +87,7 @@ import { ContentTypeDialogComponent } from './content-type';
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES,
         TreeViewComponent,
-        AspectListModule,
+        ...ASPECT_LIST_DIRECTIVES,
         ContentTypeDialogComponent,
         VersionCompatibilityDirective,
         NodeCommentsComponent,
