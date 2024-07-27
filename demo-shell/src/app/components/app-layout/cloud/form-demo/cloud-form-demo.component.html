@@ -10,7 +10,7 @@
                 </adf-cloud-form>
             </div>
 
-            <div class="app-console" #console>
+            <div class="app-console">
                 <h3>Error log:</h3>
                 <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message | translate}}</p>
             </div>

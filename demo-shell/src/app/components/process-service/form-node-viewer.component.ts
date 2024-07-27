@@ -17,23 +17,24 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormComponent } from '@alfresco/adf-process-services';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-form-node-viewer',
+    standalone: true,
+    imports: [CommonModule, FormComponent],
     templateUrl: './form-node-viewer.component.html',
     styleUrls: ['./form-node-viewer.component.css']
 })
 export class FormNodeViewerComponent implements OnInit {
-
     nodeId: string;
 
-    constructor(private route: ActivatedRoute) {
-    }
+    constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
         this.route.params.subscribe((params) => {
             this.nodeId = params['id'];
         });
     }
-
 }

@@ -17,13 +17,22 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormFieldModel, FormModel, FormRenderingService, NotificationService } from '@alfresco/adf-core';
-import { CloudFormRenderingService, FormCloudService } from '@alfresco/adf-process-services-cloud';
+import { CloudFormRenderingService, FormCloudModule, FormCloudService } from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
 import { CustomEditorComponent, CustomWidgetComponent } from '../../../cloud/custom-form-components/custom-editor.component';
 import { CoreAutomationService } from '../../../../../testing/automation.service';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     templateUrl: './cloud-form-demo.component.html',
+    standalone: true,
+    imports: [CommonModule, MatTabsModule, FormCloudModule, MonacoEditorModule, TranslateModule, FormsModule, MatButtonModule, MatIconModule],
     styleUrls: ['./cloud-form-demo.component.scss'],
     providers: [{ provide: FormRenderingService, useClass: CloudFormRenderingService }]
 })

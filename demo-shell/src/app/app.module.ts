@@ -34,14 +34,12 @@ import { FormComponent } from './components/form/form.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
-import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { FilesComponent } from './components/files/files.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { appRoutes } from './app.routes';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
-import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
@@ -51,15 +49,12 @@ import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.compo
 import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
 import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
-import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
 import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
-import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
-import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { RouterModule } from '@angular/router';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
@@ -105,26 +100,21 @@ import { CoreAutomationService } from '../testing/automation.service';
         SearchResultComponent,
         ProcessServiceComponent,
         FormViewerComponent,
-        FormNodeViewerComponent,
         AppsViewComponent,
         FilesComponent,
         FormComponent,
         VersionManagerDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,
-        DemoPermissionComponent,
-        DemoErrorComponent,
         CloudLayoutComponent,
         AppsCloudDemoComponent,
         TasksCloudDemoComponent,
         ProcessesCloudDemoComponent,
         TaskDetailsCloudDemoComponent,
-        CloudViewerComponent,
         ProcessDetailsCloudDemoComponent,
         StartTaskCloudDemoComponent,
         StartProcessCloudDemoComponent,
         CloudFiltersDemoComponent,
-        FormCloudDemoComponent,
         CustomEditorComponent,
         CustomWidgetComponent,
         ProcessCloudLayoutComponent,
