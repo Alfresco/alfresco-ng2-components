@@ -44,13 +44,14 @@ import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { FileViewComponent } from './components/file-view/file-view.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then((m) => m.AppLoginModule) },
     { path: 'logout', component: LogoutComponent },
     {
         path: 'settings',
-        loadChildren: () => import('./components/settings/settings.module').then((m) => m.AppSettingsModule)
+        component: SettingsComponent
     },
     {
         path: 'files/:nodeId/view',
@@ -168,7 +169,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'settings-layout',
-                loadChildren: () => import('./components/settings/settings.module').then((m) => m.AppSettingsModule)
+                component: SettingsComponent
             },
             {
                 path: 'files',
