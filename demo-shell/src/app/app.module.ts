@@ -30,7 +30,6 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { SearchResultComponent } from './components/search/search-result.component';
-import { FormComponent } from './components/form/form.component';
 import { ProcessServiceComponent } from './components/process-service/process-service.component';
 import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
@@ -100,7 +99,6 @@ import { CoreAutomationService } from '../testing/automation.service';
         ProcessServiceComponent,
         AppsViewComponent,
         FilesComponent,
-        FormComponent,
         VersionManagerDialogAdapterComponent,
         TaskAttachmentsComponent,
         ProcessAttachmentsComponent,

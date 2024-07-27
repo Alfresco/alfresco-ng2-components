@@ -27,7 +27,7 @@ import { FormNodeViewerComponent } from './components/process-service/form-node-
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { FilesComponent } from './components/files/files.component';
-import { FormComponent } from './components/form/form.component';
+import { AppFormComponent } from './components/form/app-form.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { AppComponent } from './app.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
@@ -261,7 +261,7 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             { path: 'form-cloud', component: FormCloudDemoComponent },
-            { path: 'form', component: FormComponent },
+            { path: 'form', component: AppFormComponent },
             {
                 path: 'task-list',
                 canActivate: [AuthGuardBpm],
