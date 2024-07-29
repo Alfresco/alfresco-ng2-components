@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
-import { CoreModule, provideTranslations } from '@alfresco/adf-core';
+import { provideTranslations } from '@alfresco/adf-core';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
@@ -47,7 +47,6 @@ import { ContentTypeDialogComponent } from './content-type';
 
 @NgModule({
     imports: [
-        CoreModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         ...CONTENT_PIPES,
