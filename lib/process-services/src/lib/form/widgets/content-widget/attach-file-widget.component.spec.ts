@@ -610,7 +610,6 @@ describe('AttachFileWidgetComponent', () => {
     });
 
     it('should open fileBrowserDialog if devMode flag is on', async () => {
-        global['ngDevMode'] = true;
         widget.openSelectDialog({});
         await fixture.whenStable();
         expect(contentNodeDialogService.openFileBrowseDialogByDefaultLocation).toHaveBeenCalled();
