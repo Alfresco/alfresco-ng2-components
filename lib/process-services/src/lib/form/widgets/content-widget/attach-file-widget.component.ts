@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, isDevMode, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
@@ -217,7 +217,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private isExternalHost(repository: AlfrescoEndpointRepresentation): boolean {
         const currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
         const chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
-        return chosenRepositoryHost !== currentECMHost;
+        return chosenRepositoryHost !== currentECMHost && !isDevMode();
     }
 
     private findSource(sourceIdentifier: string): AlfrescoEndpointRepresentation {

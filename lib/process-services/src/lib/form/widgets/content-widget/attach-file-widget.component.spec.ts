@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import * as angularCore from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AttachFileWidgetComponent } from './attach-file-widget.component';
@@ -607,5 +608,12 @@ describe('AttachFileWidgetComponent', () => {
         await fixture.whenStable();
 
         expect(openLoginSpy).toHaveBeenCalledWith(fakeRepositoryListAnswer[2], undefined, 'alfresco-2000-external');
+    });
+
+    it('should open fileBrowserDialog if devMode flag is on', async () => {
+        spyOn(angularCore, 'isDevMode').and.returnValue(true);
+        widget.openSelectDialog({});
+        await fixture.whenStable();
+        expect(contentNodeDialogService.openFileBrowseDialogByDefaultLocation).toHaveBeenCalled();
     });
 });
