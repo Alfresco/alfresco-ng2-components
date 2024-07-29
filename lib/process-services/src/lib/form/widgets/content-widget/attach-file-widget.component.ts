@@ -200,7 +200,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     openSelectDialog(repository: AlfrescoEndpointRepresentation) {
-        if (this.isExternalHost(repository)) {
+        if (this.isExternalHost(repository) && !isDevMode()) {
             this.uploadFileFromExternalCS(repository);
         } else {
             this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe((selections: Node[]) => {
@@ -217,7 +217,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private isExternalHost(repository: AlfrescoEndpointRepresentation): boolean {
         const currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
         const chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
-        return chosenRepositoryHost !== currentECMHost && !isDevMode();
+        return chosenRepositoryHost !== currentECMHost;
     }
 
     private findSource(sourceIdentifier: string): AlfrescoEndpointRepresentation {
