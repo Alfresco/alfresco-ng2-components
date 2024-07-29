@@ -72,7 +72,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     private initFormControl(): void {
         this.datetimeInputControl = new FormControl<Date>(
             {
-                value: DateFnsUtils.getDate(this.field.value),
+                value: this.field.value,
                 disabled: this.field?.readOnly || this.readOnly
             },
             this.isRequired() ? [Validators.required] : []
@@ -81,7 +81,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     private subscribeToDateChanges(): void {
         this.datetimeChangesSubscription = this.datetimeInputControl.valueChanges.subscribe((newDate: Date) => {
-            this.field.value = newDate;
+            this.field.value = newDate.toISOString();
             this.validateField();
             this.onFieldChanged(this.field);
         });
