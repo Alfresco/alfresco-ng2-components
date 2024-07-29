@@ -41,7 +41,6 @@ import { BlankPageModule } from './blank-page/blank-page.module';
 import { DirectiveModule } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslationService } from './translation/translation.service';
-import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './common/services/directionality-config-factory';
@@ -64,6 +63,7 @@ import { AppConfigPipe, StoragePrefixFactory } from './app-config';
 import { UnsavedChangesDialogModule } from './dialogs';
 import { DynamicChipListModule } from './dynamic-chip-list';
 import { IconComponent } from './icon';
+import { SortingPickerComponent } from './sorting-picker';
 
 @NgModule({
     imports: [
@@ -93,7 +93,7 @@ import { IconComponent } from './icon';
         ...DATATABLE_DIRECTIVES,
         ...TEMPLATE_DIRECTIVES,
         IconComponent,
-        SortingPickerModule,
+        SortingPickerComponent,
         NotificationHistoryModule,
         SearchTextModule,
         BlankPageModule,
@@ -131,7 +131,7 @@ import { IconComponent } from './icon';
         ...DATATABLE_DIRECTIVES,
         TranslateModule,
         ...TEMPLATE_DIRECTIVES,
-        SortingPickerModule,
+        SortingPickerComponent,
         IconComponent,
         NotificationHistoryModule,
         SearchTextModule,
