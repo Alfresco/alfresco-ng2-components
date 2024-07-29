@@ -27,6 +27,7 @@ import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { ProcessContentService } from '../../services/process-content.service';
+import { isDevMode } from '@angular/core';
 
 const fakeRepositoryListAnswer = [
     {
@@ -611,7 +612,7 @@ describe('AttachFileWidgetComponent', () => {
     });
 
     it('should open fileBrowserDialog if devMode flag is on', async () => {
-        spyOn(angularCore, 'isDevMode').and.returnValue(true);
+        global['ngDevMode'] = true;
         widget.openSelectDialog({});
         await fixture.whenStable();
         expect(contentNodeDialogService.openFileBrowseDialogByDefaultLocation).toHaveBeenCalled();
