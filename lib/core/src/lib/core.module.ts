@@ -32,8 +32,8 @@ import { ToolbarModule } from './toolbar/toolbar.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
 import { LAYOUT_DIRECTIVES } from './layout/layout.module';
-import { CommentsModule } from './comments/comments.module';
-import { CommentListModule } from './comments/comment-list/comment-list.module';
+import { CommentsComponent } from './comments/comments.component';
+import { CommentListComponent } from './comments/comment-list/comment-list.component';
 import { TEMPLATE_DIRECTIVES } from './templates/template.module';
 import { ClipboardModule } from './clipboard/clipboard.module';
 import { NOTIFICATION_HISTORY_DIRECTIVES } from './notifications/notification-history.module';
@@ -85,8 +85,8 @@ import { SortingPickerComponent } from './sorting-picker';
         ContextMenuModule,
         CardViewModule,
         FormBaseModule,
-        CommentsModule,
-        CommentListModule,
+        CommentsComponent,
+        CommentListComponent,
         ...LOGIN_DIRECTIVES,
         ...LANGUAGE_MENU_DIRECTIVES,
         InfoDrawerModule,
@@ -123,8 +123,8 @@ import { SortingPickerComponent } from './sorting-picker';
         ContextMenuModule,
         CardViewModule,
         FormBaseModule,
-        CommentsModule,
-        CommentListModule,
+        CommentsComponent,
+        CommentListComponent,
         ...LOGIN_DIRECTIVES,
         ...LANGUAGE_MENU_DIRECTIVES,
         InfoDrawerModule,
