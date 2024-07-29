@@ -59,11 +59,11 @@ import { AdfDateFnsAdapter } from './common/utils/date-fns-adapter';
 import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
 import { AppConfigPipe, StoragePrefixFactory } from './app-config';
-import { UnsavedChangesDialogModule } from './dialogs';
 import { IconComponent } from './icon';
 import { SortingPickerComponent } from './sorting-picker';
 import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
+import { UnsavedChangesDialogComponent } from './dialogs';
 
 @NgModule({
     imports: [
@@ -97,7 +97,7 @@ import { IdentityUserInfoComponent } from './identity-user-info';
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
         BlankPageComponent,
-        UnsavedChangesDialogModule,
+        UnsavedChangesDialogComponent,
         DynamicChipListComponent,
         HttpClientModule,
         HttpClientXsrfModule.withOptions({
@@ -136,7 +136,7 @@ import { IdentityUserInfoComponent } from './identity-user-info';
         ...NOTIFICATION_HISTORY_DIRECTIVES,
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
         BlankPageComponent,
-        UnsavedChangesDialogModule,
+        UnsavedChangesDialogComponent,
         DynamicChipListComponent
     ]
 })
