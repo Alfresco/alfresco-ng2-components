@@ -25,19 +25,12 @@ import { GroupCloudComponent } from './components/group-cloud.component';
 import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
 import { IDENTITY_GROUP_SERVICE_TOKEN } from './services/identity-group-service.token';
 import { IdentityGroupService } from './services/identity-group.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CoreModule
-    ],
+    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, MatProgressBarModule],
     declarations: [GroupCloudComponent, InitialGroupNamePipe],
-    providers: [
-        { provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }
-    ],
+    providers: [{ provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }],
     exports: [GroupCloudComponent, InitialGroupNamePipe]
 })
-export class GroupCloudModule { }
+export class GroupCloudModule {}
