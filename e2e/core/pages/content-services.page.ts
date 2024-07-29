@@ -35,7 +35,7 @@ export class ContentServicesPage {
     uploadBorder = $('#document-list-container');
     currentFolder = $('div[class*="adf-breadcrumb-item adf-active"] div');
     createFolderButton = $('button[data-automation-id="create-new-folder"]');
-    uploadFileButton = $('.adf-upload-button-file-container button');
+    uploadFileButton = $('.adf-upload-button-file-container input');
     uploadFileButtonInput = $('input[data-automation-id="upload-single-file"]');
     uploadMultipleFileButton = $('input[data-automation-id="upload-multiple-files"]');
     uploadFolderButton = $('input[data-automation-id="uploadFolder"]');
