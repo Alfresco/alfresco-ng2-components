@@ -25,15 +25,16 @@
             background-color: initial;
         }
 
-        /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
-        mat-select {
-            padding: 6px 0 8px 12px;
+        #{$mat-select} {
             margin-top: 0;
             border-radius: 6px;
-            width: 90%;
 
             #{$mat-select-value} {
                 color: var(--adf-metadata-action-button-clear-color);
+            }
+
+            #{$mat-select-trigger} {
+                padding: 6px 12px 6px 6px;
             }
         }
     }
