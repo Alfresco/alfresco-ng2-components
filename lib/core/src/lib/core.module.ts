@@ -22,20 +22,20 @@ import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } fr
 import { MaterialModule } from './material.module';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CardViewModule } from './card-view/card-view.module';
-import { ContextMenuModule } from './context-menu/context-menu.module';
+import { CONTEXT_MENU_DIRECTIVES } from './context-menu/context-menu.module';
 import { DATATABLE_DIRECTIVES } from './datatable/datatable.module';
 import { INFO_DRAWER_DIRECTIVES } from './info-drawer/info-drawer.module';
 import { LANGUAGE_MENU_DIRECTIVES } from './language-menu/language-menu.module';
 import { LOGIN_DIRECTIVES } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
-import { ViewerModule } from './viewer/viewer.module';
+import { VIEWER_DIRECTIVES } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
 import { LAYOUT_DIRECTIVES } from './layout/layout.module';
 import { CommentsComponent } from './comments/comments.component';
 import { CommentListComponent } from './comments/comment-list/comment-list.component';
 import { TEMPLATE_DIRECTIVES } from './templates/template.module';
-import { ClipboardModule } from './clipboard/clipboard.module';
+import { CLIPBOARD_DIRECTIVES } from './clipboard/clipboard.module';
 import { NOTIFICATION_HISTORY_DIRECTIVES } from './notifications/notification-history.module';
 import { BlankPageComponent } from './blank-page/blank-page.component';
 import { CORE_DIRECTIVES } from './directives/directive.module';
@@ -70,7 +70,7 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         TranslateModule,
         ExtensionsModule,
         ...ABOUT_DIRECTIVES,
-        ViewerModule,
+        ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
         ...CORE_PIPES,
         CommonModule,
@@ -82,11 +82,12 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         AppConfigPipe,
         PaginationModule,
         ToolbarModule,
-        ContextMenuModule,
+        ...CONTEXT_MENU_DIRECTIVES,
         CardViewModule,
         FormBaseModule,
         CommentsComponent,
         CommentListComponent,
+        ...CLIPBOARD_DIRECTIVES,
         ...LOGIN_DIRECTIVES,
         ...LANGUAGE_MENU_DIRECTIVES,
         ...INFO_DRAWER_DIRECTIVES,
@@ -111,17 +112,17 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         ReactiveFormsModule,
         FormsModule,
         ...ABOUT_DIRECTIVES,
-        ViewerModule,
+        ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
         ...CORE_PIPES,
         ...CORE_DIRECTIVES,
-        ClipboardModule,
+        ...CLIPBOARD_DIRECTIVES,
         IdentityUserInfoComponent,
         MaterialModule,
         AppConfigPipe,
         PaginationModule,
         ToolbarModule,
-        ContextMenuModule,
+        ...CONTEXT_MENU_DIRECTIVES,
         CardViewModule,
         FormBaseModule,
         CommentsComponent,

@@ -17,9 +17,11 @@
 
 import { Directive, Input, HostListener, Component, ViewContainerRef, ViewEncapsulation, OnInit } from '@angular/core';
 import { ClipboardService } from './clipboard.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Directive({
     selector: '[adf-clipboard]',
+    standalone: true,
     exportAs: 'adfClipboard'
 })
 export class ClipboardDirective {
@@ -73,6 +75,8 @@ export class ClipboardDirective {
 
 @Component({
     selector: 'adf-copy-content-tooltip',
+    standalone: true,
+    imports: [TranslateModule],
     template: `<span class="adf-copy-tooltip">{{ placeholder | translate }} </span>`,
     encapsulation: ViewEncapsulation.None
 })

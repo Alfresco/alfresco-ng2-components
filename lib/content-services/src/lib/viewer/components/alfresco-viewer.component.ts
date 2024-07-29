@@ -34,7 +34,7 @@ import {
     CloseButtonPosition,
     Track,
     ViewerComponent,
-    ViewerModule,
+    VIEWER_DIRECTIVES,
     ViewerMoreActionsComponent,
     ViewerOpenWithComponent,
     ViewerSidebarComponent,
@@ -61,7 +61,7 @@ import { NodeDownloadDirective } from '../../directives';
 @Component({
     selector: 'adf-alfresco-viewer',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, ViewerModule, NodeDownloadDirective],
+    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
     templateUrl: './alfresco-viewer.component.html',
     styleUrls: ['./alfresco-viewer.component.scss'],
     host: { class: 'adf-alfresco-viewer' },
