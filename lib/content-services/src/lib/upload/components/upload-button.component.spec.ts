@@ -171,15 +171,15 @@ describe('UploadButtonComponent', () => {
         component.uploadFolders = false;
         component.multipleFiles = false;
 
-        expect(compiled.querySelector('#upload-single-file-label').innerText).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
+        expect(compiled.querySelector('#upload-single-file-label').innerText).toContain('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
 
         component.multipleFiles = true;
         fixture.detectChanges();
-        expect(compiled.querySelector('#upload-multiple-file-label').innerText).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
+        expect(compiled.querySelector('#upload-multiple-file-label').innerText).toContain('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
 
         component.uploadFolders = true;
         fixture.detectChanges();
-        expect(compiled.querySelector('#uploadFolder-label').innerText).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FOLDER');
+        expect(compiled.querySelector('#uploadFolder-label').innerText).toContain('FILE_UPLOAD.BUTTON.UPLOAD_FOLDER');
     });
 
     it('should staticTitle properties change the title of the upload buttons', () => {
@@ -189,15 +189,15 @@ describe('UploadButtonComponent', () => {
         component.multipleFiles = false;
 
         fixture.detectChanges();
-        expect(compiled.querySelector('#upload-single-file-label-static').textContent).toEqual('test-text');
+        expect(compiled.querySelector('#upload-single-file-label').textContent).toContain('test-text');
 
         component.multipleFiles = true;
         fixture.detectChanges();
-        expect(compiled.querySelector('#upload-multiple-file-label-static').textContent).toEqual('test-text');
+        expect(compiled.querySelector('#upload-multiple-file-label').textContent).toContain('test-text');
 
         component.uploadFolders = true;
         fixture.detectChanges();
-        expect(compiled.querySelector('#uploadFolder-label-static').textContent).toEqual('test-text');
+        expect(compiled.querySelector('#uploadFolder-label').textContent).toContain('test-text');
     });
 
     describe('fileSize', () => {

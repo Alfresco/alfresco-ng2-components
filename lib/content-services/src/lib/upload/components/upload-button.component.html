@@ -3,16 +3,8 @@
     <div *ngIf="!uploadFolders">
 
         <!--Single Files Upload-->
-        <button *ngIf="!multipleFiles"
-            [disabled]="isButtonDisabled()"
-            mat-raised-button
-            (click)="uploadSingleFile.click()">
-            <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
-            <span id="upload-single-file-label"
-                *ngIf="!staticTitle">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
-            <span id="upload-single-file-label-static"
-                *ngIf="staticTitle">{{ staticTitle }}</span>
-            <input #uploadSingleFile
+        <ng-container *ngIf="!multipleFiles">
+            <input
                 id="upload-single-file"
                 data-automation-id="upload-single-file"
                 [type]="file ? 'button' : 'file'"
@@ -21,22 +13,16 @@
                 [attr.disabled]="isButtonDisabled()"
                 [title]="tooltip"
                 (change)="onFilesAdded($event)"
-                (click)="onClickUploadButton()">
-        </button>
+                (click)="onClickUploadButton()"/>
+            <label for="upload-single-file" id="upload-single-file-label" class="adf-upload-button-label">
+                <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
+                {{ staticTitle ? staticTitle : 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}
+            </label>
+        </ng-container>
 
         <!--Multiple Files Upload-->
-        <button *ngIf="multipleFiles"
-            [disabled]="isButtonDisabled()"
-            mat-raised-button
-            (click)="uploadMultipleFiles.click()">
-            <mat-icon>file_upload</mat-icon>
-
-            <span id="upload-multiple-file-label"
-                *ngIf="!staticTitle">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
-            <span
-                id="upload-multiple-file-label-static"
-                *ngIf="staticTitle">{{ staticTitle }}</span>
-            <input #uploadMultipleFiles
+        <ng-container *ngIf="multipleFiles">
+            <input
                 id="upload-multiple-files"
                 data-automation-id="upload-multiple-files"
                 type="file"
@@ -45,32 +31,30 @@
                 accept="{{acceptedFilesType}}"
                 [attr.disabled]="isButtonDisabled()"
                 [title]="tooltip"
-                (change)="onFilesAdded($event)">
-        </button>
+                (change)="onFilesAdded($event)"/>
+            <label for="upload-multiple-file" id="upload-multiple-file-label" data-automation-id="upload-multiple-files" class="adf-upload-button-label">
+                <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
+                {{ staticTitle ? staticTitle : 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}
+            </label>
+        </ng-container>
     </div>
 
     <!--Folders Upload-->
-    <div *ngIf="uploadFolders">
-        <button
-            [disabled]="isButtonDisabled()"
-            mat-raised-button
-            (click)="uploadFolders.click()">
-            <mat-icon>file_upload</mat-icon>
-            <span id="uploadFolder-label"
-                *ngIf="!staticTitle">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate }}</span>
-            <span id="uploadFolder-label-static"
-                *ngIf="staticTitle">{{ staticTitle }}</span>
-            <input #uploadFolders
-                id="uploadFolder"
-                data-automation-id="uploadFolder"
-                type="file"
-                name="uploadFiles"
-                multiple="multiple"
-                accept="{{acceptedFilesType}}"
-                webkitdirectory directory
-                [attr.disabled]="isButtonDisabled()"
-                [title]="tooltip"
-                (change)="onDirectoryAdded($event)">
-        </button>
-    </div>
+    <ng-container *ngIf="uploadFolders">
+        <input
+            id="uploadFolder"
+            data-automation-id="uploadFolder"
+            type="file"
+            name="uploadFiles"
+            multiple="multiple"
+            accept="{{acceptedFilesType}}"
+            webkitdirectory directory
+            [attr.disabled]="isButtonDisabled()"
+            [title]="tooltip"
+            (change)="onDirectoryAdded($event)"/>
+        <label for="uploadFolder" data-automation-id="uploadFolder" id="uploadFolder-label" class="adf-upload-button-label">
+            <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
+            {{ staticTitle ? staticTitle : 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate}}
+        </label>
+    </ng-container>
 </form>
