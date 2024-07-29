@@ -38,7 +38,7 @@ import { TEMPLATE_DIRECTIVES } from './templates/template.module';
 import { ClipboardModule } from './clipboard/clipboard.module';
 import { NOTIFICATION_HISTORY_DIRECTIVES } from './notifications/notification-history.module';
 import { BlankPageComponent } from './blank-page/blank-page.component';
-import { DirectiveModule } from './directives/directive.module';
+import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslationService } from './translation/translation.service';
 import { TranslateLoaderService } from './translation/translate-loader.service';
@@ -61,9 +61,9 @@ import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AdfDateTimeFnsAdapter } from './common/utils/datetime-fns-adapter';
 import { AppConfigPipe, StoragePrefixFactory } from './app-config';
 import { UnsavedChangesDialogModule } from './dialogs';
-import { DynamicChipListModule } from './dynamic-chip-list';
 import { IconComponent } from './icon';
 import { SortingPickerComponent } from './sorting-picker';
+import { DynamicChipListComponent } from './dynamic-chip-list';
 
 @NgModule({
     imports: [
@@ -75,7 +75,7 @@ import { SortingPickerComponent } from './sorting-picker';
         ...CORE_PIPES,
         CommonModule,
         IdentityUserInfoModule,
-        DirectiveModule,
+        ...CORE_DIRECTIVES,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
@@ -98,7 +98,7 @@ import { SortingPickerComponent } from './sorting-picker';
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
         BlankPageComponent,
         UnsavedChangesDialogModule,
-        DynamicChipListModule,
+        DynamicChipListComponent,
         HttpClientModule,
         HttpClientXsrfModule.withOptions({
             cookieName: 'CSRF-TOKEN',
@@ -106,16 +106,16 @@ import { SortingPickerComponent } from './sorting-picker';
         })
     ],
     exports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
         ...ABOUT_DIRECTIVES,
         ViewerModule,
         ...LAYOUT_DIRECTIVES,
         ...CORE_PIPES,
-        CommonModule,
-        DirectiveModule,
+        ...CORE_DIRECTIVES,
         ClipboardModule,
-        FormsModule,
         IdentityUserInfoModule,
-        ReactiveFormsModule,
         MaterialModule,
         AppConfigPipe,
         PaginationModule,
@@ -137,7 +137,7 @@ import { SortingPickerComponent } from './sorting-picker';
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
         BlankPageComponent,
         UnsavedChangesDialogModule,
-        DynamicChipListModule
+        DynamicChipListComponent
     ]
 })
 export class CoreModule {
