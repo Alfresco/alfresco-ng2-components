@@ -17,10 +17,8 @@
 
 import { applicationConfig, componentWrapperDecorator, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
-
-import { LanguageMenuModule } from './language-menu.module';
+import { LANGUAGE_MENU_DIRECTIVES } from './language-menu.module';
 import { LanguageMenuComponent } from './language-menu.component';
-
 import { LanguageService } from './service/language.service';
 import { LanguageServiceMock } from '../mock/language.service.mock';
 import { importProvidersFrom } from '@angular/core';
@@ -30,7 +28,7 @@ export default {
     title: 'Core/Language Menu/Language Menu',
     decorators: [
         moduleMetadata({
-            imports: [LanguageMenuModule],
+            imports: [...LANGUAGE_MENU_DIRECTIVES],
             providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
         }),
         applicationConfig({

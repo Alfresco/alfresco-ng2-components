@@ -25,8 +25,8 @@ import { CardViewModule } from './card-view/card-view.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
 import { DATATABLE_DIRECTIVES } from './datatable/datatable.module';
 import { InfoDrawerModule } from './info-drawer/info-drawer.module';
-import { LanguageMenuModule } from './language-menu/language-menu.module';
-import { LoginModule } from './login/login.module';
+import { LANGUAGE_MENU_DIRECTIVES } from './language-menu/language-menu.module';
+import { LOGIN_DIRECTIVES } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { ViewerModule } from './viewer/viewer.module';
@@ -34,14 +34,12 @@ import { FormBaseModule } from './form/form-base.module';
 import { LAYOUT_DIRECTIVES } from './layout/layout.module';
 import { CommentsModule } from './comments/comments.module';
 import { CommentListModule } from './comments/comment-list/comment-list.module';
-import { TemplateModule } from './templates/template.module';
+import { TEMPLATE_DIRECTIVES } from './templates/template.module';
 import { ClipboardModule } from './clipboard/clipboard.module';
 import { NotificationHistoryModule } from './notifications/notification-history.module';
 import { BlankPageModule } from './blank-page/blank-page.module';
-
 import { DirectiveModule } from './directives/directive.module';
-import { PipeModule } from './pipes/pipe.module';
-
+import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslationService } from './translation/translation.service';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { TranslateLoaderService } from './translation/translate-loader.service';
@@ -74,7 +72,7 @@ import { IconComponent } from './icon';
         ...ABOUT_DIRECTIVES,
         ViewerModule,
         ...LAYOUT_DIRECTIVES,
-        PipeModule,
+        ...CORE_PIPES,
         CommonModule,
         IdentityUserInfoModule,
         DirectiveModule,
@@ -89,11 +87,11 @@ import { IconComponent } from './icon';
         FormBaseModule,
         CommentsModule,
         CommentListModule,
-        LoginModule,
-        LanguageMenuModule,
+        ...LOGIN_DIRECTIVES,
+        ...LANGUAGE_MENU_DIRECTIVES,
         InfoDrawerModule,
         ...DATATABLE_DIRECTIVES,
-        TemplateModule,
+        ...TEMPLATE_DIRECTIVES,
         IconComponent,
         SortingPickerModule,
         NotificationHistoryModule,
@@ -111,7 +109,7 @@ import { IconComponent } from './icon';
         ...ABOUT_DIRECTIVES,
         ViewerModule,
         ...LAYOUT_DIRECTIVES,
-        PipeModule,
+        ...CORE_PIPES,
         CommonModule,
         DirectiveModule,
         ClipboardModule,
@@ -127,12 +125,12 @@ import { IconComponent } from './icon';
         FormBaseModule,
         CommentsModule,
         CommentListModule,
-        LoginModule,
-        LanguageMenuModule,
+        ...LOGIN_DIRECTIVES,
+        ...LANGUAGE_MENU_DIRECTIVES,
         InfoDrawerModule,
         ...DATATABLE_DIRECTIVES,
         TranslateModule,
-        TemplateModule,
+        ...TEMPLATE_DIRECTIVES,
         SortingPickerModule,
         IconComponent,
         NotificationHistoryModule,
@@ -184,6 +182,10 @@ export class CoreModule {
         };
     }
 
+    /**
+     * @deprecated this api is deprecated, import `CoreModule` instead
+     * @returns ModuleWithProviders<CoreModule>
+     */
     static forChild(): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule

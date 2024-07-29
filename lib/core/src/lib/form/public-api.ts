@@ -21,6 +21,8 @@ export * from './components/inplace-form-input/inplace-form-input.component';
 export * from './components/form-custom-button.directive';
 export * from './components/form-renderer.component';
 export * from './components/widgets';
+export * from './components/middlewares/middleware';
+export * from './components/middlewares/decimal-middleware.service';
 
 export * from './services/form-rendering.service';
 export * from './services/form.service';
