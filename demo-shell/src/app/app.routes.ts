@@ -48,7 +48,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { AppLoginComponent } from './components/login/login.component';
 import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
-import { CardViewComponent } from './components/card-view/card-view.component';
+import { AppCardViewComponent } from './components/card-view/card-view.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: AppLoginComponent },
@@ -110,7 +110,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        component: CardViewComponent
+                        component: AppCardViewComponent
                     }
                 ]
             },

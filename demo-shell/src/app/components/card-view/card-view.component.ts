@@ -30,7 +30,7 @@ import {
     UpdateNotification,
     DecimalNumberPipe,
     CardViewArrayItemModel,
-    CardViewModule
+    CardViewComponent
 } from '@alfresco/adf-core';
 import { of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -40,11 +40,11 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, CardViewModule, MatSlideToggleModule, MatButtonModule],
+    imports: [CommonModule, MatSlideToggleModule, MatButtonModule, CardViewComponent],
     templateUrl: './card-view.component.html',
     styleUrls: ['./card-view.component.scss']
 })
-export class CardViewComponent implements OnInit, OnDestroy {
+export class AppCardViewComponent implements OnInit, OnDestroy {
     isEditable = true;
     properties: any;
     logs: string[];

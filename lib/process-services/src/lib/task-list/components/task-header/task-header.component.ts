@@ -25,7 +25,7 @@ import {
     AppConfigService,
     CardViewIntItemModel,
     CardViewItemLengthValidator,
-    CardViewModule
+    CardViewComponent
 } from '@alfresco/adf-core';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskDescriptionValidator } from '../../validators/task-description.validator';
@@ -40,7 +40,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
     selector: 'adf-task-header',
     standalone: true,
-    imports: [CommonModule, MatCardModule, CardViewModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslateModule],
+    imports: [CommonModule, MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslateModule, CardViewComponent],
     templateUrl: './task-header.component.html',
     styleUrls: ['./task-header.component.scss'],
     encapsulation: ViewEncapsulation.None

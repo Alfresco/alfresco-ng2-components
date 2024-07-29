@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewSelectItemComponent } from './card-view-selectitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewSelectItemModel, CardViewModule } from '../../public-api';
+import { CardViewSelectItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { of } from 'rxjs';
 import { importProvidersFrom } from '@angular/core';
 
@@ -27,7 +27,7 @@ export default {
     title: 'Core/Card View/Card View Select Item',
     decorators: [
         moduleMetadata({
-            imports: [CardViewModule]
+            imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -52,8 +52,7 @@ export default {
         },
         displayEmpty: {
             control: 'boolean',
-            description:
-                'Defines if it should display CardView item when data is empty',
+            description: 'Defines if it should display CardView item when data is empty',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'true' }

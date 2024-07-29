@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
 import { MaterialModule } from './material.module';
 import { ABOUT_DIRECTIVES } from './about/about.module';
-import { CardViewModule } from './card-view/card-view.module';
+import { CARD_VIEW_DIRECTIVES } from './card-view/card-view.module';
 import { CONTEXT_MENU_DIRECTIVES } from './context-menu/context-menu.module';
 import { DATATABLE_DIRECTIVES } from './datatable/datatable.module';
 import { INFO_DRAWER_DIRECTIVES } from './info-drawer/info-drawer.module';
@@ -83,7 +83,7 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         PaginationModule,
         ToolbarModule,
         ...CONTEXT_MENU_DIRECTIVES,
-        CardViewModule,
+        ...CARD_VIEW_DIRECTIVES,
         FormBaseModule,
         CommentsComponent,
         CommentListComponent,
@@ -123,7 +123,7 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         PaginationModule,
         ToolbarModule,
         ...CONTEXT_MENU_DIRECTIVES,
-        CardViewModule,
+        ...CARD_VIEW_DIRECTIVES,
         FormBaseModule,
         CommentsComponent,
         CommentListComponent,

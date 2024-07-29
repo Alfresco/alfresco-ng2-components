@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewModule, CardViewTextItemModel } from '../../public-api';
+import { CARD_VIEW_DIRECTIVES, CardViewTextItemModel } from '../../public-api';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
@@ -26,7 +26,7 @@ export default {
     title: 'Core/Card View/Card View Text Item',
     decorators: [
         moduleMetadata({
-            imports: [CardViewModule]
+            imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -43,8 +43,7 @@ export default {
         },
         displayEmpty: {
             control: 'boolean',
-            description:
-                'Defines if it should display CardView item when data is empty',
+            description: 'Defines if it should display CardView item when data is empty',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'true' }
@@ -90,7 +89,6 @@ export default {
         useChipsForMultiValueProperty: true,
         multiValueSeparator: ', ',
         displayLabelForChips: false
-
     }
 } as Meta<CardViewTextItemComponent>;
 

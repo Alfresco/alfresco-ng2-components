@@ -22,6 +22,7 @@ import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.comp
 
 @Component({
     selector: 'adf-card-view-item-dispatcher',
+    standalone: true,
     template: '<ng-template #content></ng-template>'
 })
 export class CardViewItemDispatcherComponent implements OnChanges {

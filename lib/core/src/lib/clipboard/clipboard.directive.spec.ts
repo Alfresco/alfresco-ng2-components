@@ -42,9 +42,9 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule, MatButtonModule],
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule, MatButtonModule, ClipboardDirective],
             providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }],
-            declarations: [TestTargetClipboardComponent, ClipboardDirective]
+            declarations: [TestTargetClipboardComponent]
         });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
@@ -86,9 +86,9 @@ describe('CopyClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule],
+            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule, ClipboardDirective],
             providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }],
-            declarations: [TestCopyClipboardComponent, ClipboardDirective]
+            declarations: [TestCopyClipboardComponent]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
         element = fixture.debugElement.nativeElement;

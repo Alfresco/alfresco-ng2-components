@@ -19,9 +19,18 @@ import { Component, ViewEncapsulation, ViewChild, ElementRef, OnDestroy, Inject,
 import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-select-filter-input',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, TranslateModule],
     templateUrl: './select-filter-input.component.html',
     styleUrls: ['./select-filter-input.component.scss'],
     host: { class: 'adf-select-filter-input' },
