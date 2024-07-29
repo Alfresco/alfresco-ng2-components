@@ -294,7 +294,7 @@ describe('ContentNodeSelectorComponent', () => {
             const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button'));
 
             expect(adfUploadButton).not.toBeNull();
-            expect(adfUploadButton.nativeElement.textContent).toEqual('file_uploadFORM.FIELD.UPLOAD');
+            expect(adfUploadButton.nativeElement.textContent).toEqual('file_upload FORM.FIELD.UPLOAD');
         });
 
         it('should be able to disable UploadButton if showingSearch set to true', async () => {
@@ -303,7 +303,7 @@ describe('ContentNodeSelectorComponent', () => {
             component.hasAllowableOperations = true;
 
             fixture.detectChanges();
-            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button input'));
 
             expect(adfUploadButton).not.toBeNull();
             expect(adfUploadButton.nativeElement.disabled).toBe(true);
@@ -315,7 +315,7 @@ describe('ContentNodeSelectorComponent', () => {
             component.hasAllowableOperations = true;
 
             fixture.detectChanges();
-            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button input'));
 
             expect(adfUploadButton).not.toBeNull();
             expect(adfUploadButton.nativeElement.disabled).toBe(false);
@@ -354,7 +354,7 @@ describe('ContentNodeSelectorComponent', () => {
             component.onTabSelectionChange(1);
 
             fixture.detectChanges();
-            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button input'));
 
             expect(adfUploadButton).not.toBeNull();
             expect(adfUploadButton.nativeElement.disabled).toBe(true);
@@ -365,7 +365,7 @@ describe('ContentNodeSelectorComponent', () => {
             component.hasAllowableOperations = true;
 
             fixture.detectChanges();
-            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button button'));
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button input'));
 
             expect(adfUploadButton).not.toBeNull();
             expect(adfUploadButton.nativeElement.disabled).toBe(false);
