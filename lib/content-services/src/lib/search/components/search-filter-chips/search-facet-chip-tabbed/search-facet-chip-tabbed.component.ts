@@ -87,7 +87,8 @@ export class SearchFacetChipTabbedComponent {
             this.menuTrigger.closeMenu();
         }
     }
-    onIsPopulatedEventChange(isPopulated: boolean): void {
+
+    onIsPopulatedEventChange(isPopulated: boolean) {
         this.isPopulated = isPopulated;
         this.changeDetectorRef.detectChanges();
     }

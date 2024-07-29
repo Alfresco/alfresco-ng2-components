@@ -1,7 +1,5 @@
 <div class="adf-new-version-container">
-
     <adf-version-comparison *ngIf="showVersionComparison" [node]="node" [newFileVersion]="newFileVersion"></adf-version-comparison>
-
     <div class="adf-new-version-uploader-container" id="adf-new-version-uploader-container" [@uploadToggle]="uploadState">
         <table class="adf-version-upload" *ngIf="uploadState !== 'close' && !versionList.isLoading">
             <tr>
@@ -19,20 +17,16 @@
             </tr>
         </table>
     </div>
-
     <div class="adf-version-list-container">
         <div class="adf-version-list-table">
             <div>
                 <button mat-raised-button
                         id="adf-show-version-upload-button"
                         (click)="toggleNewVersion()" color="primary"
-                        *ngIf="uploadState ==='close'">{{
-                    'ADF_VERSION_LIST.ACTIONS.UPLOAD.ADD'|
-                    translate }}
+                        *ngIf="uploadState ==='close'">{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.ADD' | translate }}
                 </button>
             </div>
             <div>
-
                 <adf-version-list
                     #versionList
                     [node]="node"

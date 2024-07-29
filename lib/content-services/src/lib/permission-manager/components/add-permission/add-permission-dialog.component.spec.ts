@@ -63,7 +63,7 @@ describe('AddPermissionDialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, AddPermissionDialogComponent],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: data }

@@ -17,9 +17,31 @@
 
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { FileSizePipe, IconComponent } from '@alfresco/adf-core';
+import { MatChipsModule } from '@angular/material/chips';
+import { TranslateModule } from '@ngx-translate/core';
+import { ToggleIconDirective } from '../directives/toggle-icon.directive';
+import { MatButtonModule } from '@angular/material/button';
+import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
 
 @Component({
     selector: 'adf-file-uploading-list-row',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatListModule,
+        IconComponent,
+        MatChipsModule,
+        TranslateModule,
+        ToggleIconDirective,
+        FileSizePipe,
+        MatButtonModule,
+        FileUploadErrorPipe
+    ],
     templateUrl: './file-uploading-list-row.component.html',
     styleUrls: ['./file-uploading-list-row.component.scss'],
     encapsulation: ViewEncapsulation.None

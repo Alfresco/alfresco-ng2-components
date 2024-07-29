@@ -15,34 +15,17 @@
  * limitations under the License.
  */
 
-import { CommonModule, NgForOf } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
 import { TagActionsComponent } from './tag-actions.component';
 import { TagListComponent } from './tag-list.component';
 import { TagNodeListComponent } from './tag-node-list.component';
 import { TagsCreatorComponent } from './tags-creator/tags-creator.component';
-import { ContentDirectiveModule } from '../directives/content-directive.module';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
-import { DynamicChipListModule } from '@alfresco/adf-core';
 
+export const CONTENT_TAG_DIRECTIVES = [TagsCreatorComponent, TagActionsComponent, TagListComponent, TagNodeListComponent] as const;
+
+/** @deprecated use `...CONTENT_TAG_DIRECTIVES` instead or import standalone components directly */
 @NgModule({
-    imports: [
-        CommonModule,
-        ContentDirectiveModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        DynamicChipListModule,
-        MatChipsModule,
-        MatIconModule,
-        NgForOf
-    ],
-    exports: [TagActionsComponent, TagListComponent, TagNodeListComponent, TagsCreatorComponent],
-    declarations: [TagActionsComponent, TagListComponent, TagNodeListComponent, TagsCreatorComponent]
+    imports: [...CONTENT_TAG_DIRECTIVES],
+    exports: [...CONTENT_TAG_DIRECTIVES]
 })
 export class TagModule {}

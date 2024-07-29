@@ -32,7 +32,7 @@ describe('AddPermissionComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, AddPermissionComponent]
         });
         nodePermissionService = TestBed.inject(NodePermissionService);
         const response: any = { node: { id: 'fake-node', allowableOperations: ['updatePermissions'] }, roles: [{ label: 'Test', role: 'test' }] };

@@ -21,6 +21,14 @@ import { TagService } from './services/tag.service';
 import { Subject } from 'rxjs';
 import { TagPaging } from '@alfresco/js-api';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 /**
  *
@@ -29,13 +37,14 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-tag-node-actions-list',
+    standalone: true,
+    imports: [CommonModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatButtonModule],
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-tag-node-actions-list' }
 })
 export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
-
     /** The identifier of a node. */
     @Input()
     nodeId: string;
@@ -59,13 +68,10 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private tagService: TagService, private translateService: TranslationService) {
-    }
+    constructor(private tagService: TagService, private translateService: TranslationService) {}
 
     ngOnInit() {
-        this.tagService.refresh
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.refreshTag());
+        this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.refreshTag());
     }
 
     ngOnChanges() {
@@ -79,15 +85,18 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     refreshTag() {
         if (this.nodeId) {
-            this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging: TagPaging) => {
-                this.tagsEntries = tagPaging.list.entries;
-                this.disableAddTag = false;
-                this.result.emit(this.tagsEntries);
-            }, () => {
-                this.tagsEntries = null;
-                this.disableAddTag = true;
-                this.result.emit(this.tagsEntries);
-            });
+            this.tagService.getTagsByNodeId(this.nodeId).subscribe(
+                (tagPaging: TagPaging) => {
+                    this.tagsEntries = tagPaging.list.entries;
+                    this.disableAddTag = false;
+                    this.result.emit(this.tagsEntries);
+                },
+                () => {
+                    this.tagsEntries = null;
+                    this.disableAddTag = true;
+                    this.result.emit(this.tagsEntries);
+                }
+            );
         }
     }
 
@@ -105,7 +114,7 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     searchTag(searchTagName: string) {
         if (this.tagsEntries) {
-            return this.tagsEntries.find((currentTag) => (searchTagName === currentTag.entry.tag));
+            return this.tagsEntries.find((currentTag) => searchTagName === currentTag.entry.tag);
         }
     }
 

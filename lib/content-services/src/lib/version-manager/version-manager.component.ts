@@ -22,29 +22,29 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { ContentService } from '../common/services/content.service';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { FileUploadErrorEvent } from '../common/events/file.event';
+import { CommonModule } from '@angular/common';
+import { VersionComparisonComponent } from './version-comparison.component';
+import { VersionUploadComponent } from './version-upload.component';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-version-manager',
+    standalone: true,
+    imports: [CommonModule, VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslateModule, VersionListComponent],
     templateUrl: './version-manager.component.html',
     styleUrls: ['./version-manager.component.scss'],
     animations: [
         trigger('uploadToggle', [
-            state('open', style({height: '175px', opacity: 1, visibility: 'visible'})),
-            state('close', style({height: '0%', opacity: 0, visibility: 'hidden'})),
-            transition('open => close', [
-                style({visibility: 'hidden'}),
-                animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')
-            ]),
-            transition('close => open', [
-                style({visibility: 'visible'}),
-                animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')
-            ])
+            state('open', style({ height: '175px', opacity: 1, visibility: 'visible' })),
+            state('close', style({ height: '0%', opacity: 0, visibility: 'hidden' })),
+            transition('open => close', [style({ visibility: 'hidden' }), animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')]),
+            transition('close => open', [style({ visibility: 'visible' }), animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')])
         ])
     ],
     encapsulation: ViewEncapsulation.None
 })
 export class VersionManagerComponent implements OnInit {
-
     /** Target node to manage version history. */
     @Input()
     node: Node;
@@ -86,9 +86,7 @@ export class VersionManagerComponent implements OnInit {
 
     uploadState: string = 'close';
 
-    constructor(private contentService: ContentService,
-                private nodesApiService: NodesApiService) {
-    }
+    constructor(private contentService: ContentService, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         if (this.newFileVersion) {

@@ -30,7 +30,7 @@ describe('TagNodeList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, TagNodeListComponent]
         });
         fixture = TestBed.createComponent(TagNodeListComponent);
         component = fixture.componentInstance;

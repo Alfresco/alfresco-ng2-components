@@ -16,13 +16,38 @@
  */
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { NodeEntry, PermissionElement } from '@alfresco/js-api';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { MemberModel } from '../../models/member.model';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { DataColumnComponent, DataColumnListComponent, DataTableComponent, DateColumnHeaderComponent } from '@alfresco/adf-core';
+import { MatIconModule } from '@angular/material/icon';
+import { AddPermissionPanelComponent } from './add-permission-panel.component';
+import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
+import { UserNameColumnComponent } from '../user-name-column/user-name-column.component';
+import { UserRoleColumnComponent } from '../user-role-column/user-role-column.component';
 
 @Component({
     selector: 'adf-add-permission-dialog',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatButtonModule,
+        TranslateModule,
+        DataTableComponent,
+        DataColumnListComponent,
+        DataColumnComponent,
+        DateColumnHeaderComponent,
+        MatIconModule,
+        AddPermissionPanelComponent,
+        UserIconColumnComponent,
+        UserNameColumnComponent,
+        UserRoleColumnComponent
+    ],
     templateUrl: './add-permission-dialog.component.html',
     styleUrls: ['./add-permission-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -34,8 +59,7 @@ export class AddPermissionDialogComponent {
     private existingMembers: PermissionElement[] = [];
     currentSelection: NodeEntry[] = [];
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData,
-                private dialogRef: MatDialogRef<AddPermissionDialogComponent>) {
+    constructor(@Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData, private dialogRef: MatDialogRef<AddPermissionDialogComponent>) {
         this.existingMembers = this.data.node.permissions.locallySet || [];
     }
 
@@ -44,18 +68,19 @@ export class AddPermissionDialogComponent {
     }
 
     onAddClicked() {
-        const selection = this.selectedMembers.filter(member => !member.readonly).map(member => member.toPermissionElement());
+        const selection = this.selectedMembers.filter((member) => !member.readonly).map((member) => member.toPermissionElement());
         this.data.confirm.next(selection);
         this.data.confirm.complete();
     }
 
     onSearchAddClicked() {
-        const newMembers = this.currentSelection.map(item => MemberModel.parseFromSearchResult(item))
-            .filter(({id}) => !this.selectedMembers.find((member) => member.id === id));
+        const newMembers = this.currentSelection
+            .map((item) => MemberModel.parseFromSearchResult(item))
+            .filter(({ id }) => !this.selectedMembers.find((member) => member.id === id));
         this.selectedMembers = this.selectedMembers.concat(newMembers);
 
         this.selectedMembers.forEach((member) => {
-            const existingMember = this.existingMembers.find(({authorityId}) => authorityId === member.id);
+            const existingMember = this.existingMembers.find(({ authorityId }) => authorityId === member.id);
             if (existingMember) {
                 member.role = existingMember.name;
                 member.accessStatus = existingMember.accessStatus;
@@ -82,8 +107,7 @@ export class AddPermissionDialogComponent {
     }
 
     onBulkUpdate(role: string) {
-        this.selectedMembers.filter(member => !member.readonly)
-            .forEach(member => (member.role = role));
+        this.selectedMembers.filter((member) => !member.readonly).forEach((member) => (member.role = role));
     }
 
     onMemberDelete({ id }: MemberModel) {
@@ -101,6 +125,6 @@ export class AddPermissionDialogComponent {
     }
 
     isValid(): boolean {
-        return this.selectedMembers.filter(({readonly}) => !readonly).length && this.selectedMembers.every(({role}) => !!role);
+        return this.selectedMembers.filter(({ readonly }) => !readonly).length && this.selectedMembers.every(({ role }) => !!role);
     }
 }

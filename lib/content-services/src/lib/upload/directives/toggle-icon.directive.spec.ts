@@ -21,9 +21,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 @Component({
     selector: 'adf-test-component',
-    template: `
-       <button id="testButton" adf-toggle-icon>test</button>
-    `
+    standalone: true,
+    imports: [ToggleIconDirective],
+    template: ` <button id="testButton" adf-toggle-icon>test</button> `
 })
 class TestComponent {
     @ViewChild(ToggleIconDirective)
@@ -36,10 +36,7 @@ describe('ToggleIconDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                TestComponent,
-                ToggleIconDirective
-            ]
+            imports: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

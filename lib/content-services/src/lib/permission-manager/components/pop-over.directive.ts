@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    HostListener,
-    Input,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    ViewContainerRef
-} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { takeUntil } from 'rxjs/operators';
@@ -34,8 +24,8 @@ import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cd
 
 @Directive({
     selector: '[adf-pop-over]',
+    standalone: true,
     exportAs: 'adfPopOver'
-
 })
 export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     get open(): boolean {
@@ -58,7 +48,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
         private overlay: Overlay,
         private vcr: ViewContainerRef,
         private focusTrapFactory: ConfigurableFocusTrapFactory
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.createOverlay();

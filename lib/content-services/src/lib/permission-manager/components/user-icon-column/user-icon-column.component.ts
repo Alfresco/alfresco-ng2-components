@@ -15,19 +15,23 @@
  * limitations under the License.
  */
 
-import { User } from '@alfresco/adf-core';
+import { InitialUsernamePipe, User } from '@alfresco/adf-core';
 import { Group, NodeEntry } from '@alfresco/js-api';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NodePermissionService } from '../../services/node-permission.service';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-user-icon-column',
+    standalone: true,
+    imports: [CommonModule, MatIconModule, InitialUsernamePipe],
     template: `
-        <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'"  *ngIf="!isSelected">
+        <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'" *ngIf="!isSelected">
             <ng-container *ngIf="displayText$ | async as user">
                 <mat-icon *ngIf="group" class="adf-group-icon">people_alt_outline</mat-icon>
-                <div *ngIf="!group" [outerHTML]="user | usernameInitials: 'adf-people-initial'"></div>
+                <div *ngIf="!group" [outerHTML]="user | usernameInitials : 'adf-people-initial'"></div>
             </ng-container>
         </div>
         <div class="adf-cell-value" *ngIf="isSelected">

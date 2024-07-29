@@ -19,15 +19,47 @@ import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } 
 import { Node } from '@alfresco/js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { RoleModel } from '../../models/role.model';
+import { CommonModule } from '@angular/common';
+import {
+    DataColumnComponent,
+    DataColumnListComponent,
+    DataTableComponent,
+    DateColumnHeaderComponent,
+    EmptyContentComponent,
+    NoContentTemplateDirective
+} from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
+import { UserNameColumnComponent } from '../user-name-column/user-name-column.component';
+import { NodePathColumnComponent } from '../node-path-column/node-path-column.component';
+import { UserRoleColumnComponent } from '../user-role-column/user-role-column.component';
 
 @Component({
-  selector: 'adf-permission-container',
-  templateUrl: './permission-container.component.html',
-  styleUrls: ['./permission-container.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-permission-container',
+    standalone: true,
+    imports: [
+        CommonModule,
+        DataTableComponent,
+        DataColumnListComponent,
+        DataColumnComponent,
+        TranslateModule,
+        DateColumnHeaderComponent,
+        MatButtonModule,
+        MatIconModule,
+        NoContentTemplateDirective,
+        EmptyContentComponent,
+        UserIconColumnComponent,
+        UserNameColumnComponent,
+        NodePathColumnComponent,
+        UserRoleColumnComponent
+    ],
+    templateUrl: './permission-container.component.html',
+    styleUrls: ['./permission-container.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class PermissionContainerComponent implements OnChanges {
-
     @Input()
     node: Node;
 
@@ -48,7 +80,7 @@ export class PermissionContainerComponent implements OnChanges {
 
     /** Emitted when the permission is updated. */
     @Output()
-    update = new EventEmitter<{role: string; permission: PermissionDisplayModel}>();
+    update = new EventEmitter<{ role: string; permission: PermissionDisplayModel }>();
 
     @Output()
     updateAll = new EventEmitter<string>();
