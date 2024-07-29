@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { ProcessFiltersCloudModule } from './process-filters/process-filters-cloud.module';
 import { ProcessListCloudModule } from './process-list/process-list-cloud.module';
 import { StartProcessCloudModule } from './start-process/start-process-cloud.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, LocalizedDatePipe } from '@alfresco/adf-core';
 import { ProcessHeaderCloudModule } from './process-header/process-header-cloud.module';
 import { ProcessDirectiveModule } from './directives/process-directive.module';
 import { ProcessNameCloudPipe } from '../pipes/process-name-cloud.pipe';
@@ -33,13 +33,7 @@ import { ProcessNameCloudPipe } from '../pipes/process-name-cloud.pipe';
         ProcessHeaderCloudModule,
         ProcessDirectiveModule
     ],
-    exports: [
-        ProcessFiltersCloudModule,
-        ProcessListCloudModule,
-        StartProcessCloudModule,
-        ProcessHeaderCloudModule,
-        ProcessDirectiveModule
-    ],
-    providers: [ProcessNameCloudPipe]
+    exports: [ProcessFiltersCloudModule, ProcessListCloudModule, StartProcessCloudModule, ProcessHeaderCloudModule, ProcessDirectiveModule],
+    providers: [ProcessNameCloudPipe, LocalizedDatePipe]
 })
-export class ProcessCloudModule { }
+export class ProcessCloudModule {}

@@ -105,6 +105,7 @@ import { UnsavedChangesDialogComponent } from './dialogs';
             headerName: 'X-CSRF-TOKEN'
         })
     ],
+    providers: [...CORE_PIPES],
     exports: [
         CommonModule,
         ReactiveFormsModule,
