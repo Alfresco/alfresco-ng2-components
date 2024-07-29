@@ -28,7 +28,7 @@ import { InfoDrawerModule } from './info-drawer/info-drawer.module';
 import { LANGUAGE_MENU_DIRECTIVES } from './language-menu/language-menu.module';
 import { LOGIN_DIRECTIVES } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
-import { TOOLBAR_DIRECTIVES } from './toolbar/toolbar.module';
+import { ToolbarModule } from './toolbar/toolbar.module';
 import { ViewerModule } from './viewer/viewer.module';
 import { FormBaseModule } from './form/form-base.module';
 import { LAYOUT_DIRECTIVES } from './layout/layout.module';
@@ -81,7 +81,7 @@ import { SortingPickerComponent } from './sorting-picker';
         MaterialModule,
         AppConfigPipe,
         PaginationModule,
-        ...TOOLBAR_DIRECTIVES,
+        ToolbarModule,
         ContextMenuModule,
         CardViewModule,
         FormBaseModule,
@@ -119,7 +119,7 @@ import { SortingPickerComponent } from './sorting-picker';
         MaterialModule,
         AppConfigPipe,
         PaginationModule,
-        ...TOOLBAR_DIRECTIVES,
+        ToolbarModule,
         ContextMenuModule,
         CardViewModule,
         FormBaseModule,

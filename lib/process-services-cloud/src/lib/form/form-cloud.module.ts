@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule, FormatSpacePipe, TOOLBAR_DIRECTIVES } from '@alfresco/adf-core';
+import { CoreModule, FormatSpacePipe, ToolbarModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -27,7 +27,7 @@ import {
     AlfrescoViewerComponent,
     CONTENT_METADATA_DIRECTIVES,
     CONTENT_UPLOAD_DIRECTIVES,
-    CONTENT_NODE_SELECTOR_DIRECTIVES
+    ContentNodeSelectorModule
 } from '@alfresco/adf-content-services';
 import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
@@ -57,11 +57,11 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
-        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
+        ContentNodeSelectorModule,
         PeopleCloudModule,
         GroupCloudModule,
         RichTextEditorModule,
-        ...TOOLBAR_DIRECTIVES,
+        ToolbarModule,
         A11yModule,
         FormatSpacePipe,
         AlfrescoViewerComponent,
