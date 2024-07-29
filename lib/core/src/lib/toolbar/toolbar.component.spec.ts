@@ -18,14 +18,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ToolbarComponent } from './toolbar.component';
-import { ToolbarModule } from './toolbar.module';
 
 describe('ToolbarComponent', () => {
     let fixture: ComponentFixture<ToolbarComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ToolbarModule]
+            imports: [CoreTestingModule, ToolbarComponent]
         });
 
         fixture = TestBed.createComponent(ToolbarComponent);

@@ -20,6 +20,8 @@ import { ThemePalette } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
+import { ToolbarTitleComponent } from './toolbar-title.component';
+import { ToolbarDividerComponent } from './toolbar-divider.component';
 
 @Component({
     selector: 'adf-toolbar',
@@ -28,7 +30,7 @@ import { NgIf } from '@angular/common';
     styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    imports: [MatToolbarModule, TranslateModule, NgIf],
+    imports: [MatToolbarModule, TranslateModule, NgIf, ToolbarTitleComponent, ToolbarDividerComponent],
     host: { class: 'adf-toolbar' }
 })
 export class ToolbarComponent {

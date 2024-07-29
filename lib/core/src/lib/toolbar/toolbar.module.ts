@@ -20,8 +20,11 @@ import { ToolbarDividerComponent } from './toolbar-divider.component';
 import { ToolbarTitleComponent } from './toolbar-title.component';
 import { ToolbarComponent } from './toolbar.component';
 
+export const TOOLBAR_DIRECTIVES = [ToolbarComponent, ToolbarTitleComponent, ToolbarDividerComponent] as const;
+
+/** @deprecated import standalone components instead, or use `...TOOLBAR_DIRECTIVES` */
 @NgModule({
-    imports: [ToolbarComponent, ToolbarTitleComponent, ToolbarDividerComponent],
-    exports: [ToolbarComponent, ToolbarTitleComponent, ToolbarDividerComponent]
+    imports: [...TOOLBAR_DIRECTIVES],
+    exports: [...TOOLBAR_DIRECTIVES]
 })
 export class ToolbarModule {}
