@@ -24,7 +24,7 @@ import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
 import { DATATABLE_DIRECTIVES } from './datatable/datatable.module';
-import { InfoDrawerModule } from './info-drawer/info-drawer.module';
+import { INFO_DRAWER_DIRECTIVES } from './info-drawer/info-drawer.module';
 import { LANGUAGE_MENU_DIRECTIVES } from './language-menu/language-menu.module';
 import { LOGIN_DIRECTIVES } from './login/login.module';
 import { PaginationModule } from './pagination/pagination.module';
@@ -89,7 +89,7 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         CommentListComponent,
         ...LOGIN_DIRECTIVES,
         ...LANGUAGE_MENU_DIRECTIVES,
-        InfoDrawerModule,
+        ...INFO_DRAWER_DIRECTIVES,
         ...DATATABLE_DIRECTIVES,
         ...TEMPLATE_DIRECTIVES,
         IconComponent,
@@ -127,7 +127,7 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         CommentListComponent,
         ...LOGIN_DIRECTIVES,
         ...LANGUAGE_MENU_DIRECTIVES,
-        InfoDrawerModule,
+        ...INFO_DRAWER_DIRECTIVES,
         ...DATATABLE_DIRECTIVES,
         TranslateModule,
         ...TEMPLATE_DIRECTIVES,

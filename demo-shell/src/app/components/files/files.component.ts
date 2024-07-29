@@ -41,10 +41,12 @@ import {
     ToolbarComponent,
     ToolbarDividerComponent,
     DataColumnComponent,
-    InfoDrawerModule,
     HighlightPipe,
     DataColumnListComponent,
-    CustomEmptyContentTemplateDirective
+    CustomEmptyContentTemplateDirective,
+    InfoDrawerTabComponent,
+    InfoDrawerComponent,
+    InfoDrawerLayoutComponent
 } from '@alfresco/adf-core';
 import {
     ContentService,
@@ -114,7 +116,6 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
         NodeLockDirective,
         ContentActionListComponent,
         ContentActionComponent,
-        InfoDrawerModule,
         PaginationComponent,
         ContentMetadataComponent,
         VersionManagerComponent,
@@ -128,7 +129,10 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
         HighlightPipe,
         DataColumnListComponent,
         CustomEmptyContentTemplateDirective,
-        VersionManagerDialogAdapterComponent
+        VersionManagerDialogAdapterComponent,
+        InfoDrawerTabComponent,
+        InfoDrawerComponent,
+        InfoDrawerLayoutComponent
     ],
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss'],

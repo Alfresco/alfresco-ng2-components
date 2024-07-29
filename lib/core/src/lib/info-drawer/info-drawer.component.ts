@@ -15,10 +15,31 @@
  * limitations under the License.
  */
 
-import { Component, ContentChildren, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import {
+    Component,
+    ContentChildren,
+    EventEmitter,
+    HostListener,
+    Input,
+    Output,
+    QueryList,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { CommonModule } from '@angular/common';
+import {
+    InfoDrawerButtonsDirective,
+    InfoDrawerContentDirective,
+    InfoDrawerLayoutComponent,
+    InfoDrawerTitleDirective
+} from './info-drawer-layout.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
     selector: 'adf-info-drawer-tab',
+    standalone: true,
     template: '<ng-template><ng-content></ng-content></ng-template>',
     encapsulation: ViewEncapsulation.None
 })
@@ -37,6 +58,18 @@ export class InfoDrawerTabComponent {
 
 @Component({
     selector: 'adf-info-drawer',
+    standalone: true,
+    imports: [
+        CommonModule,
+        InfoDrawerLayoutComponent,
+        TranslateModule,
+        MatTabsModule,
+        MatIconModule,
+        InfoDrawerButtonsDirective,
+        InfoDrawerTitleDirective,
+        InfoDrawerContentDirective,
+        InfoDrawerTabComponent
+    ],
     templateUrl: './info-drawer.component.html',
     styleUrls: ['./info-drawer.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -45,7 +78,7 @@ export class InfoDrawerTabComponent {
 export class InfoDrawerComponent {
     /** The title of the info drawer (string or translation key). */
     @Input()
-    title: string|null = null;
+    title: string | null = null;
 
     @Input()
     icon: string | null = null;

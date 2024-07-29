@@ -17,7 +17,7 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, PRIMARY_OUTLET, Router } from '@angular/router';
-import { InfoDrawerModule, NotificationService, ViewerComponent } from '@alfresco/adf-core';
+import { InfoDrawerComponent, InfoDrawerTabComponent, NotificationService, ViewerComponent } from '@alfresco/adf-core';
 import {
     AlfrescoViewerComponent,
     AllowableOperationsEnum,
@@ -44,7 +44,6 @@ import { FormsModule } from '@angular/forms';
         CommonModule,
         AlfrescoViewerComponent,
         ViewerComponent,
-        InfoDrawerModule,
         NodeCommentsComponent,
         ContentMetadataComponent,
         MatSlideToggleModule,
@@ -52,7 +51,9 @@ import { FormsModule } from '@angular/forms';
         MatButtonModule,
         MatInputModule,
         FormsModule,
-        VersionManagerComponent
+        VersionManagerComponent,
+        InfoDrawerTabComponent,
+        InfoDrawerComponent
     ],
     templateUrl: './file-view.component.html',
     encapsulation: ViewEncapsulation.None
