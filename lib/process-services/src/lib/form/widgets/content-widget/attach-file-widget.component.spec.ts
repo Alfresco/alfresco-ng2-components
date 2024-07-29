@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import * as angularCore from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AttachFileWidgetComponent } from './attach-file-widget.component';
@@ -27,7 +26,6 @@ import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { ActivitiContentService } from '../../services/activiti-alfresco.service';
 import { ProcessContentService } from '../../services/process-content.service';
-import { isDevMode } from '@angular/core';
 
 const fakeRepositoryListAnswer = [
     {
