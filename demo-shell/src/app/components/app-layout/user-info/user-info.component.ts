@@ -20,7 +20,7 @@ import { PeopleProcessService } from '@alfresco/adf-process-services';
 import {
     AuthenticationService,
     BasicAlfrescoAuthService,
-    IdentityUserInfoModule,
+    IdentityUserInfoComponent,
     IdentityUserModel,
     IdentityUserService,
     UserInfoMode
@@ -36,7 +36,7 @@ import { ProcessUserInfoComponent } from './process-user-info';
 @Component({
     selector: 'app-shell-user-info',
     standalone: true,
-    imports: [CommonModule, ContentUserInfoComponent, IdentityUserInfoModule, ProcessUserInfoComponent],
+    imports: [CommonModule, ContentUserInfoComponent, IdentityUserInfoComponent, ProcessUserInfoComponent],
     templateUrl: './user-info.component.html'
 })
 export class UserInfoComponent implements OnInit {

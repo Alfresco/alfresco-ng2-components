@@ -51,7 +51,6 @@ import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/au
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import { IdentityUserInfoModule } from './identity-user-info/identity-user-info.module';
 import { loadAppConfig } from './app-config/app-config.loader';
 import { AppConfigService } from './app-config/app-config.service';
 import { StorageService } from './common/services/storage.service';
@@ -64,6 +63,7 @@ import { UnsavedChangesDialogModule } from './dialogs';
 import { IconComponent } from './icon';
 import { SortingPickerComponent } from './sorting-picker';
 import { DynamicChipListComponent } from './dynamic-chip-list';
+import { IdentityUserInfoComponent } from './identity-user-info';
 
 @NgModule({
     imports: [
@@ -74,7 +74,7 @@ import { DynamicChipListComponent } from './dynamic-chip-list';
         ...LAYOUT_DIRECTIVES,
         ...CORE_PIPES,
         CommonModule,
-        IdentityUserInfoModule,
+        IdentityUserInfoComponent,
         ...CORE_DIRECTIVES,
         FormsModule,
         ReactiveFormsModule,
@@ -115,7 +115,7 @@ import { DynamicChipListComponent } from './dynamic-chip-list';
         ...CORE_PIPES,
         ...CORE_DIRECTIVES,
         ClipboardModule,
-        IdentityUserInfoModule,
+        IdentityUserInfoComponent,
         MaterialModule,
         AppConfigPipe,
         PaginationModule,

@@ -45,6 +45,7 @@ import { WidgetComponent } from '../widget.component';
         '(select)': 'event($event)'
     },
     imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
+    providers: [DecimalNumberPipe],
     encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
