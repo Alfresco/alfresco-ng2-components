@@ -18,7 +18,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AttachFileWidgetComponent } from './attach-file-widget.component';
-import { FormFieldModel, FormModel, FormFieldTypes, FormService, FormFieldMetadata, DownloadService } from '@alfresco/adf-core';
+import {
+    FormFieldModel,
+    FormModel,
+    FormFieldTypes,
+    FormService,
+    FormFieldMetadata,
+    DownloadService,
+    AppConfigService,
+    AppConfigValues
+} from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
@@ -136,6 +145,7 @@ describe('AttachFileWidgetComponent', () => {
     let fixture: ComponentFixture<AttachFileWidgetComponent>;
     let element: HTMLInputElement;
     let activitiContentService: ActivitiContentService;
+    let appConfigService: AppConfigService;
     let contentNodeDialogService: ContentNodeDialogService;
     let processContentService: ProcessContentService;
     let downloadService: DownloadService;
@@ -153,6 +163,7 @@ describe('AttachFileWidgetComponent', () => {
         contentNodeDialogService = TestBed.inject(ContentNodeDialogService);
         processContentService = TestBed.inject(ProcessContentService);
         downloadService = TestBed.inject(DownloadService);
+        appConfigService = TestBed.inject(AppConfigService);
         formService = TestBed.inject(FormService);
         attachFileWidgetDialogService = TestBed.inject(AttachFileWidgetDialogService);
     });
@@ -610,6 +621,7 @@ describe('AttachFileWidgetComponent', () => {
     });
 
     it('should open fileBrowserDialog if devMode flag is on', async () => {
+        spyOn(appConfigService, 'get').withArgs(AppConfigValues.ECMHOST).and.returnValue('ECMHOST');
         widget.openSelectDialog({});
         await fixture.whenStable();
         expect(contentNodeDialogService.openFileBrowseDialogByDefaultLocation).toHaveBeenCalled();
