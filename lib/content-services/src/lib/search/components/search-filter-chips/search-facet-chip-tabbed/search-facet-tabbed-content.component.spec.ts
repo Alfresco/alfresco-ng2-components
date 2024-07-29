@@ -23,7 +23,6 @@ import { FacetField } from '../../../models/facet-field.interface';
 import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
-import { of } from 'rxjs';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness, MatTabHarness } from '@angular/material/tabs/testing';
@@ -34,6 +33,7 @@ describe('SearchFacetTabbedContentComponent', () => {
     let queryBuilder: SearchQueryBuilderService;
     let searchFacetService: SearchFacetFiltersService;
     let loader: HarnessLoader;
+    let queryBuilderUpdateSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -45,7 +45,7 @@ describe('SearchFacetTabbedContentComponent', () => {
         component = fixture.componentInstance;
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         searchFacetService = TestBed.inject(SearchFacetFiltersService);
-        spyOn(queryBuilder, 'update').and.stub();
+        queryBuilderUpdateSpy = spyOn(queryBuilder, 'update').and.stub();
 
         const facet1: FacetField = { type: 'field', label: 'field', field: 'field', buckets: new SearchFilterList() };
         const facet2: FacetField = { type: 'field', label: 'field2', field: 'field2', buckets: new SearchFilterList() };
@@ -58,9 +58,6 @@ describe('SearchFacetTabbedContentComponent', () => {
                 field2: facet2
             }
         };
-
-        component.onReset$ = of(void 0);
-        component.onApply$ = of(void 0);
 
         fixture.detectChanges();
     });
@@ -189,7 +186,7 @@ describe('SearchFacetTabbedContentComponent', () => {
         spyOn(searchFacetService, 'updateSelectedBuckets').and.callThrough();
         component.submitValues();
         expect(component.submitValues).toHaveBeenCalled();
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilderUpdateSpy).toHaveBeenCalled();
         expect(component.updateDisplayValue).toHaveBeenCalled();
         expect(searchFacetService.updateSelectedBuckets).toHaveBeenCalled();
     });
@@ -197,7 +194,12 @@ describe('SearchFacetTabbedContentComponent', () => {
     it('should update search query and display value on reset', () => {
         spyOn(component, 'updateDisplayValue').and.callThrough();
         component.reset();
-        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilderUpdateSpy).toHaveBeenCalled();
         expect(component.updateDisplayValue).toHaveBeenCalled();
+    });
+
+    it('should not call queryBuilder.update on options change', () => {
+        component.onOptionsChange([{ value: 'test' }], 'field');
+        expect(queryBuilderUpdateSpy).not.toHaveBeenCalled();
     });
 });

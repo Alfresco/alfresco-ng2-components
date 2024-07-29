@@ -93,7 +93,6 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnC
         this.isPopulated.emit(this.tabbedFacet.fields.some((facetField) => this.selectedOptions[facetField].length > 0));
         this.updateDisplayValue();
         this.updateUserFacetBuckets();
-        this.queryBuilder.update();
     }
 
     updateDisplayValue() {
