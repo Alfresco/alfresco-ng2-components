@@ -18,7 +18,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'adf-blank-page',
-  template: ``
+    selector: 'adf-blank-page',
+    standalone: true,
+    template: ``
 })
 export class BlankPageComponent {}

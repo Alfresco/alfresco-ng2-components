@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
-import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
+import { CoreModule, provideTranslations } from '@alfresco/adf-core';
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
 import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
@@ -46,8 +46,8 @@ import { ContentTypeDialogComponent } from './content-type';
 
 @NgModule({
     imports: [
-        ...CONTENT_PIPES,
         CoreModule,
+        ...CONTENT_PIPES,
         ...CONTENT_TAG_DIRECTIVES,
         ...CONTENT_DIALOG_DIRECTIVES,
         ...CONTENT_SEARCH_DIRECTIVES,
@@ -66,7 +66,6 @@ import { ContentTypeDialogComponent } from './content-type';
         VersionCompatibilityDirective,
         NodeCommentsComponent,
         TreeComponent,
-        SearchTextModule,
         AlfrescoViewerComponent,
         CategoriesManagementComponent,
         NewVersionUploaderDialogComponent
@@ -92,7 +91,6 @@ import { ContentTypeDialogComponent } from './content-type';
         VersionCompatibilityDirective,
         NodeCommentsComponent,
         TreeComponent,
-        SearchTextModule,
         AlfrescoViewerComponent,
         CategoriesManagementComponent,
         NewVersionUploaderDialogComponent
@@ -121,6 +119,10 @@ export class ContentModule {
         };
     }
 
+    /**
+     * @deprecated use `ContentModule` instead
+     * @returns ModuleWithProviders<ContentModule>
+     */
     static forChild(): ModuleWithProviders<ContentModule> {
         return {
             ngModule: ContentModule

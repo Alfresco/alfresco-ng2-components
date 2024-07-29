@@ -36,8 +36,8 @@ import { CommentsModule } from './comments/comments.module';
 import { CommentListModule } from './comments/comment-list/comment-list.module';
 import { TEMPLATE_DIRECTIVES } from './templates/template.module';
 import { ClipboardModule } from './clipboard/clipboard.module';
-import { NotificationHistoryModule } from './notifications/notification-history.module';
-import { BlankPageModule } from './blank-page/blank-page.module';
+import { NOTIFICATION_HISTORY_DIRECTIVES } from './notifications/notification-history.module';
+import { BlankPageComponent } from './blank-page/blank-page.component';
 import { DirectiveModule } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslationService } from './translation/translation.service';
@@ -45,7 +45,7 @@ import { TranslateLoaderService } from './translation/translate-loader.service';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './common/services/directionality-config-factory';
 import { DirectionalityConfigService } from './common/services/directionality-config.service';
-import { SearchTextModule } from './search-text/search-text-input.module';
+import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -94,9 +94,9 @@ import { SortingPickerComponent } from './sorting-picker';
         ...TEMPLATE_DIRECTIVES,
         IconComponent,
         SortingPickerComponent,
-        NotificationHistoryModule,
-        SearchTextModule,
-        BlankPageModule,
+        ...NOTIFICATION_HISTORY_DIRECTIVES,
+        ...SEARCH_TEXT_INPUT_DIRECTIVES,
+        BlankPageComponent,
         UnsavedChangesDialogModule,
         DynamicChipListModule,
         HttpClientModule,
@@ -133,9 +133,9 @@ import { SortingPickerComponent } from './sorting-picker';
         ...TEMPLATE_DIRECTIVES,
         SortingPickerComponent,
         IconComponent,
-        NotificationHistoryModule,
-        SearchTextModule,
-        BlankPageModule,
+        ...NOTIFICATION_HISTORY_DIRECTIVES,
+        ...SEARCH_TEXT_INPUT_DIRECTIVES,
+        BlankPageComponent,
         UnsavedChangesDialogModule,
         DynamicChipListModule
     ]
