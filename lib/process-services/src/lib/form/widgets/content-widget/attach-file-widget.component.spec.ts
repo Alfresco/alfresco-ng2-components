@@ -622,7 +622,7 @@ describe('AttachFileWidgetComponent', () => {
 
     it('should open fileBrowserDialog if devMode flag is on', async () => {
         spyOn(appConfigService, 'get').withArgs(AppConfigValues.ECMHOST).and.returnValue('ECMHOST');
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation');
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([]));
         widget.openSelectDialog({ repositoryUrl: 'repositoryUrl' });
         await fixture.whenStable();
         expect(contentNodeDialogService.openFileBrowseDialogByDefaultLocation).toHaveBeenCalled();
