@@ -43,7 +43,7 @@
                                    class="adf-notification-history-menu-item"
                                    (click)="onNotificationClick(notification)">
                         <div *ngIf="notification.initiator; else no_avatar"
-                             matListAvatar
+                             matListItemAvatar
                              [outerHTML]="notification.initiator | usernameInitials : 'adf-notification-initiator-pic'"></div>
                         <ng-template #no_avatar>
                             <mat-icon matListItemLine

@@ -30,6 +30,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
 import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'adf-notification-history',
@@ -46,7 +47,8 @@ import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
         NgIf,
         NgForOf,
         TimeAgoPipe,
-        InitialUsernamePipe
+        InitialUsernamePipe,
+        MatSnackBarModule
     ],
     encapsulation: ViewEncapsulation.None
 })

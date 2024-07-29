@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
-import { MaterialModule } from './material.module';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CARD_VIEW_DIRECTIVES } from './card-view/card-view.module';
 import { CONTEXT_MENU_DIRECTIVES } from './context-menu/context-menu.module';
@@ -73,12 +70,8 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
         ...CORE_PIPES,
-        CommonModule,
         IdentityUserInfoComponent,
         ...CORE_DIRECTIVES,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
         AppConfigPipe,
         ...PAGINATION_DIRECTIVES,
         ...TOOLBAR_DIRECTIVES,
@@ -108,9 +101,6 @@ import { UnsavedChangesDialogComponent } from './dialogs';
     ],
     providers: [...CORE_PIPES],
     exports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
         ...ABOUT_DIRECTIVES,
         ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
@@ -118,7 +108,6 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         ...CORE_DIRECTIVES,
         ...CLIPBOARD_DIRECTIVES,
         IdentityUserInfoComponent,
-        MaterialModule,
         AppConfigPipe,
         ...PAGINATION_DIRECTIVES,
         ...TOOLBAR_DIRECTIVES,
