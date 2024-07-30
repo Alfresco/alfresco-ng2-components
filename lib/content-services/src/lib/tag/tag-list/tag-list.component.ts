@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { TagService } from './services/tag.service';
+import { TagService } from '../services/tag.service';
 import { PaginationModel } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

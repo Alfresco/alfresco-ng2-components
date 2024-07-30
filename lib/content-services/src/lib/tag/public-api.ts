@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-export * from './tag-actions.component';
-export * from './tag-list.component';
-export * from './tag-node-list.component';
+export * from './tag-actions/tag-actions.component';
+export * from './tag-list/tag-list.component';
+export * from './tag-node-list/tag-node-list.component';
 
 export * from './services/tag.service';
 
@@ -25,4 +25,3 @@ export * from './tag.module';
 
 export * from './tags-creator/tags-creator-mode';
 export * from './tags-creator/tags-creator.component';
-

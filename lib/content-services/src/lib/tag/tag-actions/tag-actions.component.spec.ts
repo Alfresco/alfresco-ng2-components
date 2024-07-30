@@ -17,9 +17,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TagActionsComponent } from './tag-actions.component';
-import { TagService } from './services/tag.service';
+import { TagService } from '../services/tag.service';
 import { of } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('TagActionsComponent', () => {
     const dataTag = {
