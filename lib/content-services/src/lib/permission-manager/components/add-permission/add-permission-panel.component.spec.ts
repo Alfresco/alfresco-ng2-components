@@ -37,7 +37,7 @@ describe('AddPermissionPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, AddPermissionPanelComponent]
         });
         fixture = TestBed.createComponent(AddPermissionPanelComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);

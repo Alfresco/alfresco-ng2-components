@@ -24,23 +24,29 @@ export const forbidSpecialCharacters = ({ value }: UntypedFormControl) => {
     const specialCharacters: RegExp = /([\*\"\<\>\\\/\?\:\|])/;
     const isValid: boolean = !specialCharacters.test(value);
 
-    return (isValid) ? null : {
-        message: `${I18N_ERRORS_PATH}.SPECIAL_CHARACTERS`
-    };
+    return isValid
+        ? null
+        : {
+              message: `${I18N_ERRORS_PATH}.SPECIAL_CHARACTERS`
+          };
 };
 
 export const forbidEndingDot = ({ value }: UntypedFormControl) => {
-    const isValid: boolean = ((value || '').trim().split('').pop() !== '.');
+    const isValid: boolean = (value || '').trim().split('').pop() !== '.';
 
-    return isValid ? null : {
-        message: `${I18N_ERRORS_PATH}.ENDING_DOT`
-    };
+    return isValid
+        ? null
+        : {
+              message: `${I18N_ERRORS_PATH}.ENDING_DOT`
+          };
 };
 
 export const forbidOnlySpaces = ({ value }: UntypedFormControl) => {
-    const isValid: boolean = !!((value || '')).trim();
+    const isValid: boolean = !!(value || '').trim();
 
-    return isValid ? null : {
-        message: `${I18N_ERRORS_PATH}.ONLY_SPACES`
-    };
+    return isValid
+        ? null
+        : {
+              message: `${I18N_ERRORS_PATH}.ONLY_SPACES`
+          };
 };

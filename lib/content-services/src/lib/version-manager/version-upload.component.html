@@ -8,11 +8,12 @@
         </mat-radio-button>
     </mat-radio-group>
     <mat-form-field class="adf-new-version-max-width" subscriptSizing="dynamic">
-                    <mat-label>{{'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate}}</mat-label>
-                    <textarea matInput [(ngModel)]="comment" class="adf-new-version-text-area" id="adf-new-version-text-area"
-                              (change)="onCommentChange()"></textarea>
+        <mat-label>{{'ADF_VERSION_LIST.ACTIONS.UPLOAD.COMMENT' | translate}}</mat-label>
+        <textarea matInput
+                  [(ngModel)]="comment"
+                  class="adf-new-version-text-area" id="adf-new-version-text-area"
+                  (change)="onCommentChange()"></textarea>
     </mat-form-field>
-
 </div>
 <div class="adf-version-upload-buttons">
     <adf-upload-version-button *ngIf="showUploadButton"

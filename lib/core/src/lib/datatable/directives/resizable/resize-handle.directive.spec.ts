@@ -30,12 +30,12 @@ describe('ResizeHandleDirective', () => {
     };
 
     const elementRefMock = {
-        nativeElement: { dispatchEvent: () => { } }
+        nativeElement: { dispatchEvent: () => {} }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [ResizeHandleDirective],
+            imports: [ResizeHandleDirective],
             providers: [
                 { provide: Renderer2, useValue: rendererMock },
                 { provide: ElementRef, useValue: elementRefMock }

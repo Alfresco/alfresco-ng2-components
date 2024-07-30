@@ -20,9 +20,12 @@ import { BehaviorSubject } from 'rxjs';
 import { Group, NodeEntry } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { EcmUserModel } from '../../../common/models/ecm-user.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-user-name-column',
+    standalone: true,
+    imports: [CommonModule],
     template: `
         <div class="adf-ellipsis-cell" [attr.data-automation-id]="displayText$ | async">
             <span class="adf-user-name-column" title="{{ displayText$ | async }}"> {{ displayText$ | async }}</span>

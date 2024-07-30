@@ -19,92 +19,93 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
-
 import { MaterialModule } from './material.module';
-
-import { TagModule } from './tag/tag.module';
+import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
-import { UploadModule } from './upload/upload.module';
 import { SearchModule } from './search/search.module';
-import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
-import { VersionManagerModule } from './version-manager/version-manager.module';
+import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
+import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
 import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
-import { ContentNodeShareModule } from './content-node-share/content-node-share.module';
-import { ContentDirectiveModule } from './directives/content-directive.module';
-import { DialogModule } from './dialogs/dialog.module';
-import { ContentMetadataModule } from './content-metadata/content-metadata.module';
-import { PermissionManagerModule } from './permission-manager/permission-manager.module';
-import { TreeViewModule } from './tree-view/tree-view.module';
+import { CONTENT_NODE_SHARE_DIRECTIVES } from './content-node-share/content-node-share.module';
+import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
+import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
+import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
+import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
 import { ContentTypeModule } from './content-type/content-type.module';
 import { AspectListModule } from './aspect-list/aspect-list.module';
-import { VersionCompatibilityModule } from './version-compatibility/version-compatibility.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { CONTENT_PIPES } from './pipes/content-pipe.module';
 import { NodeCommentsModule } from './node-comments/node-comments.module';
-import { TreeModule } from './tree/tree.module';
 import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
-import { CategoriesModule } from './category/category.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
 import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
+import { CategoriesManagementComponent } from './category';
+import { TreeComponent } from './tree';
+import { NewVersionUploaderDialogComponent } from './new-version-uploader';
+import { VersionCompatibilityDirective } from './version-compatibility';
+import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
+import { TreeViewComponent } from './tree-view';
 
 @NgModule({
     imports: [
         ...CONTENT_PIPES,
         CoreModule,
-        TagModule,
+        ...CONTENT_TAG_DIRECTIVES,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        DialogModule,
+        ...CONTENT_DIALOG_DIRECTIVES,
         SearchModule,
         DocumentListModule,
-        UploadModule,
+        ...CONTENT_UPLOAD_DIRECTIVES,
         MaterialModule,
         DropdownSitesComponent,
-        BreadcrumbModule,
+        ...BREADCRUMB_DIRECTIVES,
         ContentNodeSelectorModule,
-        ContentNodeShareModule,
-        ContentMetadataModule,
-        ContentDirectiveModule,
-        PermissionManagerModule,
-        VersionManagerModule,
-        TreeViewModule,
+        ...CONTENT_NODE_SHARE_DIRECTIVES,
+        ...CONTENT_METADATA_DIRECTIVES,
+        ...CONTENT_DIRECTIVES,
+        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
+        ...CONTENT_VERSION_DIRECTIVES,
+        TreeViewComponent,
         ContentTypeModule,
         AspectListModule,
-        VersionCompatibilityModule,
+        VersionCompatibilityDirective,
         NodeCommentsModule,
-        TreeModule,
+        TreeComponent,
         SearchTextModule,
         AlfrescoViewerModule,
-        CategoriesModule
+        CategoriesManagementComponent,
+        NewVersionUploaderDialogComponent
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
         ...CONTENT_PIPES,
-        TagModule,
+        ...CONTENT_TAG_DIRECTIVES,
         DocumentListModule,
-        UploadModule,
+        ...CONTENT_UPLOAD_DIRECTIVES,
         SearchModule,
         DropdownSitesComponent,
-        BreadcrumbModule,
+        ...BREADCRUMB_DIRECTIVES,
         ContentNodeSelectorModule,
-        ContentNodeShareModule,
-        ContentMetadataModule,
-        DialogModule,
-        ContentDirectiveModule,
-        PermissionManagerModule,
-        VersionManagerModule,
-        TreeViewModule,
+        ...CONTENT_NODE_SHARE_DIRECTIVES,
+        ...CONTENT_METADATA_DIRECTIVES,
+        ...CONTENT_DIALOG_DIRECTIVES,
+        ...CONTENT_DIRECTIVES,
+        ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
+        ...CONTENT_VERSION_DIRECTIVES,
+        TreeViewComponent,
         AspectListModule,
         ContentTypeModule,
-        VersionCompatibilityModule,
+        VersionCompatibilityDirective,
         NodeCommentsModule,
-        TreeModule,
+        TreeComponent,
         SearchTextModule,
         AlfrescoViewerModule,
-        CategoriesModule
+        CategoriesManagementComponent,
+        NewVersionUploaderDialogComponent
     ]
 })
 export class ContentModule {

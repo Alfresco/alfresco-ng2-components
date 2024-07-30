@@ -50,7 +50,7 @@ describe('TagActionsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, TagActionsComponent]
         });
         fixture = TestBed.createComponent(TagActionsComponent);
         tagService = TestBed.inject(TagService);

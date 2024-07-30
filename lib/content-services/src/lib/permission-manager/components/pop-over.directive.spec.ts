@@ -22,6 +22,8 @@ import { By } from '@angular/platform-browser';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
+    standalone: true,
+    imports: [PopOverDirective],
     template: `
         <div
             [adf-pop-over]="popOver"
@@ -43,8 +45,7 @@ describe('PopOverDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [OverlayModule],
-            declarations: [PopOverDirective, PopOverTestComponent]
+            imports: [OverlayModule, PopOverTestComponent]
         });
         fixture = TestBed.createComponent(PopOverTestComponent);
     });

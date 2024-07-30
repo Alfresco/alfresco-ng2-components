@@ -24,11 +24,11 @@ export const INPUT_FOCUS_CSS_CLASS = 'adf-file-draggable-input-focus';
 export const DROP_EFFECT = 'copy';
 
 @Directive({
-    selector: '[adf-file-draggable]'
+    selector: '[adf-file-draggable]',
+    standalone: true
 })
 export class FileDraggableDirective implements OnInit, OnDestroy {
-
-    files: File [];
+    files: File[];
 
     /** Enables/disables drag-and-drop functionality. */
     @Input('adf-file-draggable')

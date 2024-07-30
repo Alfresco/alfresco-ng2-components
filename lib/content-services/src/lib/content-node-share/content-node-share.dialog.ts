@@ -16,17 +16,24 @@
  */
 
 import { Component, Inject, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ContentService } from '../common/services/content.service';
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { SharedLinkBodyCreate } from '@alfresco/js-api';
-import { ConfirmDialogComponent } from '@alfresco/adf-core';
+import { ClipboardModule, ConfirmDialogComponent } from '@alfresco/adf-core';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { RenditionService } from '../common/services/rendition.service';
 import { format, add, endOfDay, isBefore } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 interface SharedDialogFormProps {
     sharedUrl: FormControl<string>;
@@ -35,6 +42,20 @@ interface SharedDialogFormProps {
 
 @Component({
     selector: 'adf-share-dialog',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatIconModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatInputModule,
+        ClipboardModule,
+        MatButtonModule
+    ],
     templateUrl: './content-node-share.dialog.html',
     styleUrls: ['./content-node-share.dialog.scss'],
     host: { class: 'adf-share-dialog' },

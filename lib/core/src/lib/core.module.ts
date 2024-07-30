@@ -23,7 +23,7 @@ import { MaterialModule } from './material.module';
 import { ABOUT_DIRECTIVES } from './about/about.module';
 import { CardViewModule } from './card-view/card-view.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
-import { DataTableModule } from './datatable/datatable.module';
+import { DATATABLE_DIRECTIVES } from './datatable/datatable.module';
 import { InfoDrawerModule } from './info-drawer/info-drawer.module';
 import { LanguageMenuModule } from './language-menu/language-menu.module';
 import { LoginModule } from './login/login.module';
@@ -92,7 +92,7 @@ import { IconComponent } from './icon';
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
-        DataTableModule,
+        ...DATATABLE_DIRECTIVES,
         TemplateModule,
         IconComponent,
         SortingPickerModule,
@@ -130,7 +130,7 @@ import { IconComponent } from './icon';
         LoginModule,
         LanguageMenuModule,
         InfoDrawerModule,
-        DataTableModule,
+        ...DATATABLE_DIRECTIVES,
         TranslateModule,
         TemplateModule,
         SortingPickerModule,

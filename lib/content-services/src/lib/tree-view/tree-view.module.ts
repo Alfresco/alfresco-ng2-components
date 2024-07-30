@@ -18,7 +18,7 @@
 import { NgModule } from '@angular/core';
 import { TreeViewComponent } from './components/tree-view.component';
 
-/** @deprecated this module is deprecated and will be removed in future versions */
+/** @deprecated use `TreeViewComponent` instead */
 @NgModule({
     imports: [TreeViewComponent],
     exports: [TreeViewComponent]

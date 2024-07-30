@@ -17,16 +17,19 @@
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { ThumbnailService } from '@alfresco/adf-core';
+import { FileTypePipe, ThumbnailService } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-version-comparison',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, FileTypePipe],
     templateUrl: './version-comparison.component.html',
     styleUrls: ['./version-comparison.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class VersionComparisonComponent {
-
     /** Target node. */
     @Input()
     node: Node;
@@ -35,7 +38,5 @@ export class VersionComparisonComponent {
     @Input()
     newFileVersion: File;
 
-    constructor(public thumbnailService: ThumbnailService) {
-    }
-
+    constructor(public thumbnailService: ThumbnailService) {}
 }

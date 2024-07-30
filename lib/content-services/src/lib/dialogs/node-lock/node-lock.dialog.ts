@@ -16,14 +16,33 @@
  */
 
 import { Component, Inject, OnInit, Optional, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { differenceInSeconds } from 'date-fns';
 import { NodeBodyLock, Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-node-lock',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatDatetimepickerModule,
+        MatInputModule,
+        MatButtonModule
+    ],
     templateUrl: './node-lock.dialog.html',
     encapsulation: ViewEncapsulation.None
 })

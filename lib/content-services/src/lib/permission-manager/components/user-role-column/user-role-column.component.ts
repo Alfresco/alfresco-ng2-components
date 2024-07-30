@@ -17,9 +17,16 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RoleModel } from '../../models/role.model';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
+import { LocalizedRolePipe } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-user-role-column',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslateModule, LocalizedRolePipe],
     template: `
         <mat-form-field class="adf-role-selector-field" *ngIf="!readonly">
             <mat-select

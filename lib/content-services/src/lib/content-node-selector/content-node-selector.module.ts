@@ -21,14 +21,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
+import { BREADCRUMB_DIRECTIVES } from '../breadcrumb/breadcrumb.module';
 import { SearchModule } from '../search/search.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
-import { UploadModule } from '../upload/upload.module';
+import { CONTENT_UPLOAD_DIRECTIVES } from '../upload/upload.module';
 import { SearchQueryBuilderService } from '../search/services/search-query-builder.service';
-import { ContentDirectiveModule } from '../directives/content-directive.module';
+import { CONTENT_DIRECTIVES } from '../directives/content-directive.module';
 import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component';
 
 @NgModule({
@@ -39,12 +39,12 @@ import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component
         CommonModule,
         MaterialModule,
         DropdownSitesComponent,
-        BreadcrumbModule,
+        ...BREADCRUMB_DIRECTIVES,
         SearchModule,
         DocumentListModule,
-        UploadModule,
-        ContentDirectiveModule,
-        NameLocationCellComponent
+        NameLocationCellComponent,
+        CONTENT_DIRECTIVES,
+        ...CONTENT_UPLOAD_DIRECTIVES
     ],
     exports: [ContentNodeSelectorPanelComponent, NameLocationCellComponent, ContentNodeSelectorComponent],
     declarations: [ContentNodeSelectorPanelComponent, ContentNodeSelectorComponent],

@@ -20,7 +20,7 @@ import { TagService } from './services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Chip } from '@alfresco/adf-core';
+import { Chip, DynamicChipListComponent } from '@alfresco/adf-core';
 
 /**
  *
@@ -29,6 +29,8 @@ import { Chip } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-tag-node-list',
+    standalone: true,
+    imports: [DynamicChipListComponent],
     templateUrl: './tag-node-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
@@ -63,9 +65,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     ngOnInit(): void {
-        this.tagService.refresh
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.refreshTag());
+        this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.refreshTag());
     }
 
     ngOnDestroy(): void {

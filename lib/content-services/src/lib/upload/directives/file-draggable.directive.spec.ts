@@ -21,10 +21,12 @@ import { FileDraggableDirective, INPUT_FOCUS_CSS_CLASS } from '../directives/fil
 
 @Component({
     selector: 'adf-test-component',
+    standalone: true,
+    imports: [FileDraggableDirective],
     template: `
         <div id="test-container" [adf-file-draggable]="true">
             <div id="test-content"></div>
-       </div>
+        </div>
     `
 })
 class TestComponent {
@@ -42,10 +44,7 @@ describe('FileDraggableDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                TestComponent,
-                FileDraggableDirective
-            ]
+            imports: [TestComponent]
         });
 
         fixture = TestBed.createComponent(TestComponent);
@@ -61,11 +60,12 @@ describe('FileDraggableDirective', () => {
         fixture.destroy();
     });
 
-    const createEvent = (eventName: string): DragEvent => new DragEvent(eventName, {
-        bubbles: true,
-        cancelable: true,
-        dataTransfer: new DataTransfer()
-    });
+    const createEvent = (eventName: string): DragEvent =>
+        new DragEvent(eventName, {
+            bubbles: true,
+            cancelable: true,
+            dataTransfer: new DataTransfer()
+        });
 
     const raiseEvent = (eventName: string): DragEvent => {
         const event = createEvent(eventName);

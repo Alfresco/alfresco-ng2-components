@@ -17,17 +17,23 @@
 
 import { Node } from '@alfresco/js-api';
 import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NewVersionUploaderDialogData, NewVersionUploaderData, NewVersionUploaderDataAction } from './models';
+import { CommonModule } from '@angular/common';
+import { VersionManagerModule } from '../version-manager';
+import { AppConfigPipe } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-new-version-uploader-dialog',
+    standalone: true,
+    imports: [CommonModule, VersionManagerModule, MatDialogModule, AppConfigPipe, TranslateModule, MatButtonModule],
     templateUrl: './new-version-uploader.dialog.html',
     styleUrls: ['./new-version-uploader.dialog.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class NewVersionUploaderDialogComponent implements OnInit {
-
     /**
      * Dialog title to show into the header.
      * If data.title is not provided, a default title is set
@@ -45,7 +51,7 @@ export class NewVersionUploaderDialogComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: NewVersionUploaderDialogData,
         private dialogRef: MatDialogRef<NewVersionUploaderDialogComponent>
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.setDialogTitle();
@@ -79,5 +85,4 @@ export class NewVersionUploaderDialogComponent implements OnInit {
     refresh(node: Node) {
         this.dialogAction.emit({ action: NewVersionUploaderDataAction.refresh, node });
     }
-
 }

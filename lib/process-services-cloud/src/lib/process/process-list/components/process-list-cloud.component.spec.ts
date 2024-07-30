@@ -24,7 +24,6 @@ import {
     CustomEmptyContentTemplateDirective,
     DataColumn,
     DataRowEvent,
-    DataTableModule,
     getDataColumnMock,
     ObjectDataRow,
     User
@@ -636,9 +635,9 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, DataTableModule, MatProgressSpinnerModule],
+            imports: [ProcessServiceCloudTestingModule, MatProgressSpinnerModule, CustomEmptyContentTemplateDirective],
             providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
-            declarations: [EmptyTemplateComponent, ProcessListCloudComponent, CustomEmptyContentTemplateDirective]
+            declarations: [EmptyTemplateComponent, ProcessListCloudComponent]
         });
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
         fixtureEmpty.detectChanges();

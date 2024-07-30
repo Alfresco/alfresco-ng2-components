@@ -15,17 +15,12 @@
  * limitations under the License.
  */
 
-import { CoreModule, InitialUsernamePipe, PipeModule } from '@alfresco/adf-core';
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
 import { PermissionListComponent } from './components/permission-list/permission-list.component';
 import { AddPermissionComponent } from './components/add-permission/add-permission.component';
 import { AddPermissionDialogComponent } from './components/add-permission/add-permission-dialog.component';
 import { InheritPermissionDirective } from './components/inherited-button.directive';
 import { AddPermissionPanelComponent } from './components/add-permission/add-permission-panel.component';
-import { SearchModule } from '../search/search.module';
 import { UserNameColumnComponent } from './components/user-name-column/user-name-column.component';
 import { UserIconColumnComponent } from './components/user-icon-column/user-icon-column.component';
 import { UserRoleColumnComponent } from './components/user-role-column/user-role-column.component';
@@ -33,32 +28,23 @@ import { NodePathColumnComponent } from './components/node-path-column/node-path
 import { PopOverDirective } from './components/pop-over.directive';
 import { PermissionContainerComponent } from './components/permission-container/permission-container.component';
 
+export const CONTENT_PERMISSION_MANAGER_DIRECTIVES = [
+    AddPermissionPanelComponent,
+    AddPermissionComponent,
+    AddPermissionDialogComponent,
+    NodePathColumnComponent,
+    PermissionContainerComponent,
+    PermissionListComponent,
+    UserNameColumnComponent,
+    UserIconColumnComponent,
+    UserRoleColumnComponent,
+    InheritPermissionDirective,
+    PopOverDirective
+] as const;
+
+/** @deprecated use `...CONTENT_PERMISSION_MANAGER_DIRECTIVES` or import the standalone components directly */
 @NgModule({
-    imports: [CoreModule, CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, SearchModule, PipeModule, InitialUsernamePipe],
-    declarations: [
-        PermissionListComponent,
-        AddPermissionPanelComponent,
-        InheritPermissionDirective,
-        AddPermissionComponent,
-        AddPermissionDialogComponent,
-        UserNameColumnComponent,
-        UserIconColumnComponent,
-        UserRoleColumnComponent,
-        PopOverDirective,
-        NodePathColumnComponent,
-        PermissionContainerComponent
-    ],
-    exports: [
-        PermissionListComponent,
-        AddPermissionPanelComponent,
-        InheritPermissionDirective,
-        AddPermissionComponent,
-        AddPermissionDialogComponent,
-        UserNameColumnComponent,
-        UserIconColumnComponent,
-        UserRoleColumnComponent,
-        PopOverDirective,
-        NodePathColumnComponent
-    ]
+    imports: [...CONTENT_PERMISSION_MANAGER_DIRECTIVES],
+    exports: [...CONTENT_PERMISSION_MANAGER_DIRECTIVES]
 })
 export class PermissionManagerModule {}

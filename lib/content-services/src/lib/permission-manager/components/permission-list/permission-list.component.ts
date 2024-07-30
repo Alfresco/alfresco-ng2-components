@@ -20,9 +20,30 @@ import { PermissionElement } from '@alfresco/js-api';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { PermissionListService } from './permission-list.service';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { PermissionContainerComponent } from '../permission-container/permission-container.component';
+import { PopOverDirective } from '../pop-over.directive';
 
 @Component({
     selector: 'adf-permission-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatSlideToggleModule,
+        TranslateModule,
+        MatButtonModule,
+        PermissionContainerComponent,
+        PopOverDirective
+    ],
     templateUrl: './permission-list.component.html',
     styleUrls: ['./permission-list.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -64,7 +85,7 @@ export class PermissionListComponent implements OnInit {
         this.selectedPermissions = [];
     }
 
-    updatePermission({role, permission}) {
+    updatePermission({ role, permission }) {
         this.permissionList.updateRole(role, permission);
     }
 

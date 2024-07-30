@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, DataTableModule, FormBaseModule, DataRow, DataColumn } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, FormBaseModule, DataRow, DataColumn, DataTableComponent } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormCloudService } from '../../../services/form-cloud.service';
@@ -28,7 +28,7 @@ import { DataTablePathParserHelper } from './helpers/data-table-path-parser.help
 
 @Component({
     standalone: true,
-    imports: [CommonModule, TranslateModule, DataTableModule, FormBaseModule],
+    imports: [CommonModule, TranslateModule, FormBaseModule, DataTableComponent],
     selector: 'data-table',
     templateUrl: './data-table.widget.html',
     styleUrls: ['./data-table.widget.scss'],

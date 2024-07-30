@@ -21,10 +21,12 @@ import { Component } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { CoreModule } from '@alfresco/adf-core';
-import { ContentNodeShareModule } from './content-node-share.module';
+import { NodeSharedDirective } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-node-share-test-component',
+    standalone: true,
+    imports: [NodeSharedDirective],
     template: `
         <button
             [disabled]="!shareRef.isFile"
@@ -51,8 +53,7 @@ describe('NodeSharedDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot(), ContentTestingModule, ContentNodeShareModule],
-            declarations: [NodeShareTestComponent]
+            imports: [CoreModule.forRoot(), ContentTestingModule, NodeShareTestComponent]
         });
         fixture = TestBed.createComponent(NodeShareTestComponent);
         document = TestBed.inject(DOCUMENT);

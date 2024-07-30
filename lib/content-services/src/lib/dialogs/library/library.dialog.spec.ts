@@ -39,7 +39,7 @@ describe('LibraryDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, LibraryDialogComponent],
             providers: [{ provide: MatDialogRef, useValue: dialogRef }],
             schemas: [NO_ERRORS_SCHEMA]
         });

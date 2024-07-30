@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableModule, TranslationService } from '@alfresco/adf-core';
+import { DataColumnComponent, DataColumnListComponent, TranslationService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
@@ -32,7 +32,15 @@ import { PeopleListComponent } from '../people-list/people-list.component';
 @Component({
     selector: 'adf-people-search-field',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, DataTableModule, PeopleListComponent],
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        PeopleListComponent,
+        DataColumnListComponent,
+        DataColumnComponent
+    ],
     templateUrl: './people-search-field.component.html',
     styleUrls: ['./people-search-field.component.scss'],
     host: { class: 'adf-people-search-field' },

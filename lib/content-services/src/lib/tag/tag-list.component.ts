@@ -21,19 +21,24 @@ import { PaginationModel } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TagEntry } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * This component provide a list of all the tag inside the ECM
  */
 @Component({
     selector: 'adf-tag-list',
+    standalone: true,
+    imports: [CommonModule, MatChipsModule, MatButtonModule, MatIconModule],
     templateUrl: './tag-list.component.html',
     styleUrls: ['./tag-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-tag-list' }
 })
 export class TagListComponent implements OnInit, OnDestroy {
-
     /** Emitted when a tag is selected. */
     @Output()
     result = new EventEmitter();
@@ -57,7 +62,6 @@ export class TagListComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private tagService: TagService) {
-
         this.defaultPagination = {
             skipCount: 0,
             maxItems: this.size,
@@ -66,12 +70,10 @@ export class TagListComponent implements OnInit, OnDestroy {
 
         this.pagination = this.defaultPagination;
 
-        this.tagService.refresh
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                this.tagsEntries = [];
-                this.refreshTag(this.defaultPagination);
-            });
+        this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.tagsEntries = [];
+            this.refreshTag(this.defaultPagination);
+        });
     }
 
     ngOnInit() {

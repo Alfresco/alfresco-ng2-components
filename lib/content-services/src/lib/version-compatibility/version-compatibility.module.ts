@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { VersionCompatibilityDirective } from './version-compatibility.directive';
 
+/** @deprecated use `VersionCompatibilityDirective` instead */
 @NgModule({
-    imports: [CommonModule],
-    exports: [VersionCompatibilityDirective],
-    declarations: [VersionCompatibilityDirective]
+    imports: [VersionCompatibilityDirective],
+    exports: [VersionCompatibilityDirective]
 })
 export class VersionCompatibilityModule {}

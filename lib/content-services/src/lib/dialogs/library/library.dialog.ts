@@ -16,29 +16,44 @@
  */
 
 import { Observable, Subject } from 'rxjs';
-import {
-    Component,
-    OnInit,
-    Output,
-    EventEmitter,
-    OnDestroy,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewEncapsulation } from '@angular/core';
 import {
     UntypedFormBuilder,
     UntypedFormGroup,
     Validators,
     UntypedFormControl,
-    AbstractControl
+    AbstractControl,
+    ReactiveFormsModule,
+    FormsModule
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
 import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { AutoFocusDirective } from '../../directives';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-library-dialog',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        AutoFocusDirective,
+        MatRadioModule,
+        FormsModule,
+        MatButtonModule
+    ],
     styleUrls: ['./library.dialog.scss'],
     templateUrl: './library.dialog.html',
     encapsulation: ViewEncapsulation.None,
@@ -86,22 +101,12 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         private formBuilder: UntypedFormBuilder,
         private dialog: MatDialogRef<LibraryDialogComponent>,
         private notificationService: NotificationService
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         const validators = {
-            id: [
-                Validators.required,
-                Validators.maxLength(72),
-                this.forbidSpecialCharacters
-            ],
-            title: [
-                Validators.required,
-                this.forbidOnlySpaces,
-                Validators.minLength(2),
-                Validators.maxLength(256)
-            ],
+            id: [Validators.required, Validators.maxLength(72), this.forbidSpecialCharacters],
+            title: [Validators.required, this.forbidOnlySpaces, Validators.minLength(2), Validators.maxLength(256)],
             description: [Validators.maxLength(512)]
         };
 
@@ -165,13 +170,15 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         }
 
         this.disableCreateButton = true;
-        this.create().pipe(finalize(() => this.disableCreateButton = false)).subscribe(
-            (node: SiteEntry) => {
-                this.success.emit(node);
-                dialog.close(node);
-            },
-            (error) => this.handleError(error)
-        );
+        this.create()
+            .pipe(finalize(() => (this.disableCreateButton = false)))
+            .subscribe(
+                (node: SiteEntry) => {
+                    this.success.emit(node);
+                    dialog.close(node);
+                },
+                (error) => this.handleError(error)
+            );
     }
 
     visibilityChangeHandler(event) {
@@ -238,9 +245,9 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
     private findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
         return this.queriesApi.findSites(libraryTitle, {
-                maxItems: 1,
-                fields: ['title']
-            });
+            maxItems: 1,
+            fields: ['title']
+        });
     }
 
     private forbidSpecialCharacters({ value }: UntypedFormControl) {
@@ -254,8 +261,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         return isValid
             ? null
             : {
-                message: 'LIBRARY.ERRORS.ILLEGAL_CHARACTERS'
-            };
+                  message: 'LIBRARY.ERRORS.ILLEGAL_CHARACTERS'
+              };
     }
 
     private forbidOnlySpaces({ value }: UntypedFormControl) {
@@ -268,8 +275,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         return isValid
             ? null
             : {
-                message: 'LIBRARY.ERRORS.ONLY_SPACES'
-            };
+                  message: 'LIBRARY.ERRORS.ONLY_SPACES'
+              };
     }
 
     private createSiteIdValidator() {
@@ -281,10 +288,14 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
             }
 
             return new Promise((resolve) => {
-                timer = setTimeout(() => this.sitesService.getSite(control.value).subscribe(
-                    () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
-                    () => resolve(null)
-                ), 300);
+                timer = setTimeout(
+                    () =>
+                        this.sitesService.getSite(control.value).subscribe(
+                            () => resolve({ message: 'LIBRARY.ERRORS.EXISTENT_SITE' }),
+                            () => resolve(null)
+                        ),
+                    300
+                );
             });
         };
     }
