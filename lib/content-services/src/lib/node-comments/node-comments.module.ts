@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
-export * from './node-comments.component';
-export * from './services/node-comments.service';
-export * from './node-comments.module';
+import { NgModule } from '@angular/core';
+import { NodeCommentsComponent } from './node-comments.component';
+
+/** @deprecated import NodeCommentsComponent standalone component directly */
+@NgModule({
+    imports: [NodeCommentsComponent],
+    exports: [NodeCommentsComponent]
+})
+export class NodeCommentsModule {}
