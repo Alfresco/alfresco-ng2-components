@@ -20,6 +20,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { DownloadZipService } from './services/download-zip.service';
 import { ContentService } from '../../common/services/content.service';
+import { FileDownloadStatus } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-download-zip-dialog',
@@ -32,6 +33,7 @@ export class DownloadZipDialogComponent implements OnInit {
     // flag for async threads
     cancelled = false;
     downloadId: string;
+    percentageDone = 0;
 
     constructor(
         private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
@@ -79,7 +81,12 @@ export class DownloadZipDialogComponent implements OnInit {
 
         this.downloadZipService.getDownload(downloadId).subscribe((downloadEntry) => {
             if (downloadEntry.entry) {
-                if (downloadEntry.entry.status === 'DONE') {
+                if (downloadEntry.entry.status === FileDownloadStatus.IN_PROGRESS) {
+                    this.percentageDone = Number(((downloadEntry.entry.bytesAdded * 100) / downloadEntry.entry.totalBytes).toFixed(2));
+                }
+
+                if (downloadEntry.entry.status === FileDownloadStatus.DONE) {
+                    this.percentageDone = 100;
                     this.download(url, fileName);
                 } else {
                     setTimeout(() => {

@@ -19,6 +19,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { DownloadZipService } from './services/download-zip.service';
+import { DownloadEntry, FileDownloadStatus } from '@alfresco/js-api';
 import { EMPTY, Observable, of } from 'rxjs';
 import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -166,5 +167,29 @@ describe('DownloadZipDialogComponent', () => {
 
         expect(component.cancelDownload).toHaveBeenCalled();
         expect(component.download).not.toHaveBeenCalled();
+    });
+
+    it('should waitForDownload and display correct download %', () => {
+        const downloadEntry$: Observable<DownloadEntry> = new Observable((observer) => {
+            observer.next({
+                entry: {
+                    filesAdded: 10,
+                    bytesAdded: 1000,
+                    id: '1',
+                    totalFiles: 10,
+                    totalBytes: 1000,
+                    status: FileDownloadStatus.DONE
+                }
+            });
+            observer.complete();
+        });
+
+        const downloadZipSpy = spyOn(downloadZipService, 'getDownload').and.callFake(() => downloadEntry$);
+
+        component.waitAndDownload('1', 'testUrl', 'filename');
+        fixture.detectChanges();
+
+        expect(downloadZipSpy).toHaveBeenCalledWith('1');
+        expect(component.percentageDone).toBe(100);
     });
 });
