@@ -15,49 +15,83 @@
  * limitations under the License.
  */
 
-import { AgentService } from './agent.service';
 import { TestBed } from '@angular/core/testing';
-import { AgentPaging } from '@alfresco/js-api';
-import { ContentTestingModule } from '../../testing/content.testing.module';
+import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
+import { Agent, AgentPaging, AgentsApi, AgentWithAvatar } from '@alfresco/js-api';
+import { AgentService } from '@alfresco/adf-content-services';
+
+const agent1: Agent = {
+    id: '1',
+    name: 'HR Agent',
+    description: 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
+};
+
+const agent2: Agent = {
+    id: '2',
+    name: 'Policy Agent',
+    description: 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
+};
+
+const agentPagingObjectMock: AgentPaging = {
+    list: {
+        entries: [
+            {
+                entry: agent1
+            },
+            {
+                entry: agent2
+            }
+        ]
+    }
+};
+
+const avatarAgentMock = 'https://res.cloudinary.com/hyld/image/upload/f_auto,c_fill,g_auto,w_1400,h_730/v1/h2/hero/blue-shirt-woman';
+
+const agentWithAvatarListMock: AgentWithAvatar[] = [
+    {
+        ...agent1,
+        avatar: avatarAgentMock
+    },
+    {
+        ...agent2,
+        avatar: avatarAgentMock
+    }
+];
 
 describe('AgentService', () => {
-    let service: AgentService;
+    let agentService: AgentService;
+    let apiService: AlfrescoApiService;
+    let agentsApi: AgentsApi;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [CoreTestingModule]
         });
-        service = TestBed.inject(AgentService);
-        service.mocked = false;
+
+        agentService = TestBed.inject(AgentService);
+        apiService = TestBed.inject(AlfrescoApiService);
+        agentsApi = new AgentsApi(apiService.getInstance());
+        agentService.mocked = false;
+
+        spyOn(agentsApi, 'getAgentAvatar').and.returnValue(Promise.resolve(avatarAgentMock));
+        spyOn(agentService.agentsApi, 'getAgentAvatar').and.returnValue(Promise.resolve(avatarAgentMock));
     });
 
-    describe('getAgents', () => {
-        it('should load agents', (done) => {
-            const paging: AgentPaging = {
-                list: {
-                    entries: [
-                        {
-                            entry: {
-                                id: '1',
-                                name: 'HR Agent'
-                            }
-                        },
-                        {
-                            entry: {
-                                id: '2',
-                                name: 'Policy Agent'
-                            }
-                        }
-                    ]
-                }
-            };
-            spyOn(service.agentsApi, 'getAgents').and.returnValue(Promise.resolve(paging));
+    it('should load agents', (done) => {
+        spyOn(agentService.agentsApi, 'getAgents').and.returnValue(Promise.resolve(agentPagingObjectMock));
 
-            service.getAgents().subscribe((pagingResponse) => {
-                expect(pagingResponse).toBe(paging);
-                expect(service.agentsApi.getAgents).toHaveBeenCalled();
-                done();
-            });
+        agentService.getAgents().subscribe((pagingResponse) => {
+            expect(pagingResponse).toEqual(agentWithAvatarListMock);
+            expect(agentService.agentsApi.getAgents).toHaveBeenCalled();
+            done();
+        });
+    });
+
+    it('should get agent avatar', (done) => {
+        agentService.getAgentAvatar('avatarId').subscribe((response) => {
+            expect(response).toEqual(avatarAgentMock);
+            expect(agentService.agentsApi.getAgentAvatar).toHaveBeenCalledWith('avatarId');
+            done();
         });
     });
 });
