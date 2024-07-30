@@ -204,8 +204,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             this.uploadFileFromExternalCS(repository);
         } else {
             this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe((selections: Node[]) => {
-                this.tempFilesList.push(...selections);
-                this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
+                if (selections.length) {
+                    this.tempFilesList.push(...selections);
+                    this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
+                }
             });
         }
     }
