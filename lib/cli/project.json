@@ -40,11 +40,7 @@
           }
         ]
       },
-      "dependsOn": [
-        {
-          "target": "build"
-        }
-      ]
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
