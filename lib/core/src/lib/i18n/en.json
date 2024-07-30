@@ -107,7 +107,8 @@
         "ACTIONS": {
           "CANCEL": "Cancel"
         },
-        "TITLE": "Adding files to zip, this could take a few minutes"
+        "TITLE": "Adding files to zip, this could take a few minutes",
+        "COMPLETE": "complete"
       },
       "EDIT_JSON": {
         "CLOSE": "Close",

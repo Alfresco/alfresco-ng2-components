@@ -1,6 +1,12 @@
 <h1 matDialogTitle>{{ 'CORE.DIALOG.DOWNLOAD_ZIP.TITLE' | translate }}</h1>
-<div mat-dialog-content>
-    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+<div mat-dialog-content class="adf-dialog-content">
+    <mat-progress-bar value="{{ percentageDone }}" color="primary" mode="determinate"></mat-progress-bar>
+    <div class="adf-dialog-content-progress-text">
+        <span class="adf-dialog-content-progress-text-percentage">
+            {{ percentageDone }}%
+        </span>
+        {{ 'CORE.DIALOG.DOWNLOAD_ZIP.COMPLETE' | translate }}
+    </div>
 </div>
 <mat-dialog-actions align="end">
     <button class="adf-download-zip-dialog-button" mat-button color="primary" id="cancel-button" (click)="cancelDownload()">
