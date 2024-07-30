@@ -19,6 +19,7 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { zipNode, downloadEntry } from './mock/download-zip-data.mock';
+import { FileDownloadStatus } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-download-zip-dialog-storybook',
@@ -38,11 +39,11 @@ export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
         this.setEntryStatus(this.showLoading);
     }
 
-    setEntryStatus(isLoading: boolean){
+    setEntryStatus(isLoading: boolean) {
         if (!isLoading) {
-            downloadEntry.entry.status = 'DONE';
+            downloadEntry.entry.status = FileDownloadStatus.DONE;
         } else {
-            downloadEntry.entry.status = 'PACKING';
+            downloadEntry.entry.status = FileDownloadStatus.IN_PROGRESS;
         }
     }
 
