@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-export interface Agent {
-    id: string;
-    name: string;
-    description: string;
+import { Agent } from './agent';
+
+export interface AgentWithAvatar extends Agent {
+    avatar: string;
 }

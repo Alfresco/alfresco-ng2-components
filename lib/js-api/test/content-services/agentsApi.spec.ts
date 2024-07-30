@@ -67,5 +67,17 @@ describe('AgentsApi', () => {
                 done();
             });
         });
+
+        describe('getAgentAvatar', () => {
+            it('should get agent avatar', (done) => {
+                const agentId = 'agentId';
+                agentMock.getAgentAvatar200Response(agentId);
+
+                agentsApi.getAgentAvatar(agentId).then((data) => {
+                    assert.deepStrictEqual(data, { avatarImage: 'agentAvatarImageMock' });
+                    done();
+                });
+            });
+        });
     });
 });
