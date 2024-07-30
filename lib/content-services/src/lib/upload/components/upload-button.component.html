@@ -35,7 +35,7 @@
                 [attr.disabled]="isButtonDisabled()"
                 [title]="tooltip"
                 (change)="onFilesAdded($event)"/>
-            <label for="upload-multiple-file" data-automation-id="upload-multiple-files" class="adf-upload-button-label">
+            <label for="upload-multiple-files" class="adf-upload-button-label">
                 <mat-icon class="adf-upload-button-icon">file_upload</mat-icon>
                 <span id="upload-multiple-file-label" *ngIf="!staticTitle">
                     {{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</span>
