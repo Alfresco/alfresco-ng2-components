@@ -86,12 +86,18 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.initFormControl();
         this.initDateAdapter();
         this.initRangeSelection();
         this.initStartAt();
         this.subscribeToDateChanges();
+        this.updateField();
+    }
+
+    updateField(): void {
+        this.validateField();
+        this.onFieldChanged(this.field);
     }
 
     private initFormControl(): void {
@@ -107,16 +113,17 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
     private subscribeToDateChanges(): void {
         this.dateChangesSubscription = this.dateInputControl.valueChanges.subscribe((newDate: any) => {
             this.field.value = newDate;
-            this.validateField();
-            this.onFieldChanged(this.field);
+            this.updateField();
         });
     }
 
     private validateField(): void {
         if (this.dateInputControl.invalid) {
             this.handleErrors(this.dateInputControl.errors);
+            this.field.markAsInvalid();
         } else {
             this.resetErrors();
+            this.field.markAsValid();
         }
     }
 

@@ -1,6 +1,6 @@
 <div class="{{ field.className }}"
      id="data-time-widget"
-     [class.adf-invalid]="!field.isValid && isTouched()"
+     [class.adf-invalid]="datetimeInputControl.invalid && datetimeInputControl.touched"
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">
@@ -21,7 +21,7 @@
                    (keydown.enter)="datetimePicker.open()"
                    [placeholder]="field.placeholder"
                    [title]="field.tooltip"
-                   (blur)="markAsTouched()"
+                   (blur)="updateField()"
                    [min]="minDate"
                    [max]="maxDate">
             <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
@@ -35,6 +35,6 @@
                 [disabled]="field.readOnly">
             </mat-datetimepicker>
         </mat-form-field>
-        <error-widget [error]="field.validationSummary"></error-widget>
+        <error-widget *ngIf="datetimeInputControl.invalid && datetimeInputControl.touched" [error]="field.validationSummary"></error-widget>
     </div>
 </div>

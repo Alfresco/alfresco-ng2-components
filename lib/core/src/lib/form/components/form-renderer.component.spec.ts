@@ -110,7 +110,7 @@ describe('Form Renderer Component', () => {
             expectElementToBeHidden(displayTextElementContainer);
 
             inputDateTestOne.value = '2019-11-19';
-            inputDateTestOne.dispatchEvent(new Event('change'));
+            inputDateTestOne.dispatchEvent(new Event('input'));
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -130,7 +130,7 @@ describe('Form Renderer Component', () => {
             expectElementToBeVisible(displayTextElementContainer);
 
             inputDateTestOne.value = '2019-11-19';
-            inputDateTestOne.dispatchEvent(new Event('change'));
+            inputDateTestOne.dispatchEvent(new Event('input'));
 
             fixture.detectChanges();
             await fixture.whenStable();

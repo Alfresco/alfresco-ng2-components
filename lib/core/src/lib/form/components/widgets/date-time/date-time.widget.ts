@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -49,24 +49,25 @@ import { ErrorMessageModel } from '../core/error-message.model';
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     minDate: Date;
     maxDate: Date;
-
     datetimeInputControl: FormControl<Date>;
 
     private datetimeChangesSubscription: Subscription;
 
-    constructor(
-        public readonly formService: FormService,
-        private readonly dateAdapter: DateAdapter<Date>,
-        private readonly dateTimeAdapter: DatetimeAdapter<Date>
-    ) {
-        super(formService);
-    }
+    public readonly formService = inject(FormService);
+    private readonly dateAdapter = inject(DateAdapter);
+    private readonly dateTimeAdapter = inject(DatetimeAdapter);
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.initFormControl();
         this.initDateAdapter();
         this.initDateRange();
         this.subscribeToDateChanges();
+        this.updateField();
+    }
+
+    updateField(): void {
+        this.validateField();
+        this.onFieldChanged(this.field);
     }
 
     private initFormControl(): void {
@@ -81,17 +82,18 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
 
     private subscribeToDateChanges(): void {
         this.datetimeChangesSubscription = this.datetimeInputControl.valueChanges.subscribe((newDate: Date) => {
-            this.field.value = newDate.toISOString();
-            this.validateField();
-            this.onFieldChanged(this.field);
+            this.field.value = newDate;
+            this.updateField();
         });
     }
 
     private validateField(): void {
-        if (this.datetimeInputControl.invalid) {
+        if (this.datetimeInputControl?.invalid) {
             this.handleErrors(this.datetimeInputControl.errors);
+            this.field.markAsInvalid();
         } else {
             this.resetErrors();
+            this.field.markAsValid();
         }
     }
 

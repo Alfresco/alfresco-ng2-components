@@ -18,7 +18,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -65,16 +65,21 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     private dateChangesSubscription: Subscription;
 
-    constructor(public readonly formService: FormService, private readonly dateAdapter: DateAdapter<Date>) {
-        super(formService);
-    }
+    public readonly formService = inject(FormService);
+    private readonly dateAdapter = inject(DateAdapter);
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.initFormControl();
         this.initDateAdapter();
         this.initDateRange();
         this.initStartAt();
         this.subscribeToDateChanges();
+        this.updateField();
+    }
+
+    updateField(): void {
+        this.validateField();
+        this.onFieldChanged(this.field);
     }
 
     private initFormControl(): void {
@@ -90,16 +95,17 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     private subscribeToDateChanges(): void {
         this.dateChangesSubscription = this.dateInputControl.valueChanges.subscribe((newDate: Date) => {
             this.field.value = newDate;
-            this.validateField();
-            this.onFieldChanged(this.field);
+            this.updateField();
         });
     }
 
     private validateField(): void {
         if (this.dateInputControl.invalid) {
             this.handleErrors(this.dateInputControl.errors);
+            this.field.markAsInvalid();
         } else {
             this.resetErrors();
+            this.field.markAsValid();
         }
     }
 

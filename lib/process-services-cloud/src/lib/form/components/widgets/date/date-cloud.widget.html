@@ -1,4 +1,4 @@
-<div class="{{field.className}}" id="data-widget" [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-left-label-input-container]="field.leftLabels">
+<div class="{{field.className}}" id="data-widget" [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched" [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span class="adf-asterisk"
             *ngIf="isRequired()">*</span></label>
@@ -15,13 +15,13 @@
                 [min]="minDate"
                 [max]="maxDate"
                 [title]="field.tooltip"
-                (blur)="markAsTouched()">
+                (blur)="updateField()">
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly"></mat-datepicker-toggle>
             <mat-datepicker #datePicker
                 [startAt]="startAt"
                 [disabled]="field.readOnly">
             </mat-datepicker>
         </mat-form-field>
-        <error-widget [error]="field.validationSummary"></error-widget>
+        <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary"></error-widget>
     </div>
 </div>

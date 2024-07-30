@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
 import { CoreTestingModule } from '../../../../testing';
-import { DateFieldValidator, FormFieldModel, FormFieldTypes, FormModel, MaxDateFieldValidator, MinDateFieldValidator } from '../core';
+import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { DateWidgetComponent } from './date.widget';
 
 describe('DateWidgetComponent', () => {
@@ -34,7 +34,6 @@ describe('DateWidgetComponent', () => {
         });
 
         form = new FormModel();
-        form.fieldValidators = [new DateFieldValidator(), new MinDateFieldValidator(), new MaxDateFieldValidator()];
 
         fixture = TestBed.createComponent(DateWidgetComponent);
         adapter = fixture.debugElement.injector.get(DateAdapter);
@@ -61,13 +60,13 @@ describe('DateWidgetComponent', () => {
             minValue
         });
 
-        widget.ngOnInit();
+        fixture.detectChanges();
 
         const expected = adapter.parse(minValue, widget.DATE_FORMAT) as Date;
         expect(adapter.compareDate(widget.minDate, expected)).toBe(0);
     });
 
-    it('should validate min date value constraint', async () => {
+    it('should validate min date value constraint', () => {
         const minValue = '13-03-1982';
 
         const field = new FormFieldModel(form, {
@@ -79,19 +78,18 @@ describe('DateWidgetComponent', () => {
         });
 
         widget.field = field;
-        widget.ngOnInit();
+        fixture.detectChanges();
 
         widget.dateInputControl.setValue(new Date('1982/03/12'));
 
         fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(widget.field.isValid).toBeFalsy();
         expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
         expect(field.validationSummary.attributes.get('minValue')).toBe('13-03-1982');
     });
 
-    it('should validate max date value constraint', async () => {
+    it('should validate max date value constraint', () => {
         const maxValue = '13-03-1982';
 
         const field = new FormFieldModel(form, {
@@ -103,12 +101,11 @@ describe('DateWidgetComponent', () => {
         });
 
         widget.field = field;
-        widget.ngOnInit();
+        fixture.detectChanges();
 
         widget.dateInputControl.setValue(new Date('2023/03/13'));
 
         fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(widget.field.isValid).toBeFalsy();
         expect(field.validationSummary.message).toBe('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN');
@@ -132,13 +129,13 @@ describe('DateWidgetComponent', () => {
         widget.field = new FormFieldModel(form, {
             maxValue
         });
-        widget.ngOnInit();
+        fixture.detectChanges();
 
         const expected = adapter.parse(maxValue, widget.DATE_FORMAT) as Date;
         expect(adapter.compareDate(widget.maxDate, expected)).toBe(0);
     });
 
-    it('should eval visibility on date changed', async () => {
+    it('should eval visibility on date changed', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
         const field = new FormFieldModel(form, {
@@ -151,7 +148,6 @@ describe('DateWidgetComponent', () => {
         widget.field = field;
 
         fixture.detectChanges();
-        await fixture.whenStable();
 
         widget.dateInputControl.setValue(new Date('12/12/2012'));
 
@@ -185,7 +181,7 @@ describe('DateWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should show visible date widget', async () => {
+        it('should show visible date widget', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -194,7 +190,6 @@ describe('DateWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
             expect(dateElement).not.toBeNull();
@@ -202,7 +197,7 @@ describe('DateWidgetComponent', () => {
             expect(dateElement?.value).toContain('9-9-9999');
         });
 
-        it('[C310335] - Should be able to change display format for Date widget', async () => {
+        it('[C310335] - Should be able to change display format for Date widget', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -212,7 +207,6 @@ describe('DateWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             let dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
             expect(dateElement?.value).toContain('12-30-9999');
@@ -223,7 +217,6 @@ describe('DateWidgetComponent', () => {
 
             fixture.componentInstance.ngOnInit();
             fixture.detectChanges();
-            await fixture.whenStable();
 
             dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
             expect(dateElement?.value).toContain('05.06.2019');
@@ -234,7 +227,7 @@ describe('DateWidgetComponent', () => {
                 id: 'date-field-id',
                 name: 'date-name',
                 value: '9-9-9999',
-                type: 'date'
+                type: FormFieldTypes.DATE
             });
 
             fixture.detectChanges();
@@ -256,18 +249,22 @@ describe('DateWidgetComponent', () => {
                 id: 'date-field-id',
                 name: 'date-name',
                 value: 'aa',
-                type: 'date',
+                type: FormFieldTypes.DATE,
                 readOnly: 'false'
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
             fixture.detectChanges();
 
+            widget.dateInputControl.setValue(new Date('invalid date'));
+
+            fixture.detectChanges();
+
             expect(widget.field.isValid).toBeFalsy();
         });
     });
 
-    it('should display always the json value', async () => {
+    it('should display always the json value', () => {
         const field = new FormFieldModel(form, {
             id: 'date-field-id',
             name: 'date-name',
@@ -279,7 +276,6 @@ describe('DateWidgetComponent', () => {
         widget.field = field;
 
         fixture.detectChanges();
-        await fixture.whenStable();
 
         const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
         expect(dateElement).toBeDefined();
@@ -290,7 +286,6 @@ describe('DateWidgetComponent', () => {
 
         fixture.componentInstance.ngOnInit();
         fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(dateElement.value).toContain('02-03-2020');
     });

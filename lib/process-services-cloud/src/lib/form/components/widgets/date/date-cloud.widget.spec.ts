@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
-import { FormFieldModel, FormModel, FormFieldTypes, DateFieldValidator, MinDateFieldValidator, MaxDateFieldValidator } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { DateAdapter } from '@angular/material/core';
 import { isEqual, subDays, addDays } from 'date-fns';
@@ -35,7 +35,6 @@ describe('DateWidgetComponent', () => {
         });
 
         form = new FormModel();
-        form.fieldValidators = [new DateFieldValidator(), new MinDateFieldValidator(), new MaxDateFieldValidator()];
 
         fixture = TestBed.createComponent(DateCloudWidgetComponent);
         adapter = fixture.debugElement.injector.get(DateAdapter);
@@ -83,7 +82,7 @@ describe('DateWidgetComponent', () => {
         expect(isEqual(widget.maxDate, expected)).toBeTrue();
     });
 
-    it('should eval visibility on date changed', async () => {
+    it('should eval visibility on date changed', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
         const field = new FormFieldModel(form, {
@@ -97,7 +96,6 @@ describe('DateWidgetComponent', () => {
         widget.field = field;
 
         fixture.detectChanges();
-        await fixture.whenStable();
 
         widget.dateInputControl.setValue(new Date('9999-9-9'));
 
@@ -110,7 +108,7 @@ describe('DateWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should show visible date widget', async () => {
+        it('should show visible date widget', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -119,7 +117,6 @@ describe('DateWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
             expect(dateElement).not.toBeNull();
@@ -143,7 +140,7 @@ describe('DateWidgetComponent', () => {
             expect(dateElement.value).toContain('9999-30-12');
         });
 
-        it('should disable date button when is readonly', async () => {
+        it('should disable date button when is readonly', () => {
             widget.field = new FormFieldModel(form, {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -154,20 +151,18 @@ describe('DateWidgetComponent', () => {
             widget.field.isVisible = true;
             widget.field.readOnly = false;
             fixture.detectChanges();
-            await fixture.whenStable();
 
             let dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
-            await fixture.whenStable();
 
             dateButton = element.querySelector<HTMLButtonElement>('button');
             expect(dateButton.disabled).toBeTruthy();
         });
 
-        it('should set isValid to false when the value is not a correct date value', async () => {
+        it('should set isValid to false when the value is not a correct date value', () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -179,13 +174,16 @@ describe('DateWidgetComponent', () => {
             widget.field.readOnly = false;
 
             fixture.detectChanges();
-            await fixture.whenStable();
+
+            widget.dateInputControl.setValue(new Date('invalid date'));
+
+            fixture.detectChanges();
 
             expect(widget.field.isValid).toBeFalsy();
         });
     });
 
-    it('should display always the json value', async () => {
+    it('should display always the json value', () => {
         const field = new FormFieldModel(form, {
             id: 'date-field-id',
             name: 'date-name',
@@ -197,7 +195,6 @@ describe('DateWidgetComponent', () => {
         widget.field = field;
 
         fixture.detectChanges();
-        await fixture.whenStable();
 
         const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
         expect(dateElement).toBeDefined();
@@ -208,13 +205,12 @@ describe('DateWidgetComponent', () => {
 
         fixture.componentInstance.ngOnInit();
         fixture.detectChanges();
-        await fixture.whenStable();
 
         expect(dateElement.value).toContain('02-03-2020');
     });
 
     describe('when form model has left labels', () => {
-        it('should have left labels classes on leftLabels true', async () => {
+        it('should have left labels classes on leftLabels true', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
                 id: 'date-id',
                 name: 'date-name',
@@ -225,7 +221,6 @@ describe('DateWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const widgetContainer = element.querySelector('.adf-left-label-input-container');
             expect(widgetContainer).not.toBeNull();
@@ -237,7 +232,7 @@ describe('DateWidgetComponent', () => {
             expect(adfLeftLabel).not.toBeNull();
         });
 
-        it('should not have left labels classes on leftLabels false', async () => {
+        it('should not have left labels classes on leftLabels false', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
                 id: 'date-id',
                 name: 'date-name',
@@ -248,7 +243,6 @@ describe('DateWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const widgetContainer = element.querySelector('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
@@ -260,7 +254,7 @@ describe('DateWidgetComponent', () => {
             expect(adfLeftLabel).toBeNull();
         });
 
-        it('should not have left labels classes on leftLabels not present', async () => {
+        it('should not have left labels classes on leftLabels not present', () => {
             widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'date-id',
                 name: 'date-name',
@@ -271,7 +265,6 @@ describe('DateWidgetComponent', () => {
             });
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const widgetContainer = element.querySelector('.adf-left-label-input-container');
             expect(widgetContainer).toBeNull();
@@ -293,7 +286,7 @@ describe('DateWidgetComponent', () => {
         });
 
         describe('Minimum date range value and date', () => {
-            it('should set minimum date range date to today if minimum date range value is 0', async () => {
+            it('should set minimum date range date to today if minimum date range value is 0', () => {
                 widget.field = new FormFieldModel(form, {
                     type: FormFieldTypes.DATE,
                     dynamicDateRangeSelection: true,
@@ -302,7 +295,6 @@ describe('DateWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 const expectedMinDate = adapter.today();
 
@@ -310,7 +302,7 @@ describe('DateWidgetComponent', () => {
                 expect(widget.field.minValue).toBe(todayString);
             });
 
-            it('should set minimum date range date to null if minimum date range value is null', async () => {
+            it('should set minimum date range date to null if minimum date range value is null', () => {
                 widget.field = new FormFieldModel(form, {
                     type: FormFieldTypes.DATE,
                     dynamicDateRangeSelection: true,
@@ -319,13 +311,12 @@ describe('DateWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 expect(widget.minDate).toBeNull();
                 expect(widget.field.minValue).toBeNull();
             });
 
-            it('should set minimum date range date to today minus abs(minDateRangeValue) if minimum date range value is negative', async () => {
+            it('should set minimum date range date to today minus abs(minDateRangeValue) if minimum date range value is negative', () => {
                 widget.field = new FormFieldModel(form, {
                     type: FormFieldTypes.DATE,
                     dynamicDateRangeSelection: true,
@@ -334,7 +325,6 @@ describe('DateWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 const expectedMinDate = subDays(adapter.today(), 2);
 
@@ -342,7 +332,7 @@ describe('DateWidgetComponent', () => {
                 expect(widget.field.minValue).toBe('20-02-2022');
             });
 
-            it('should set minimum date range date to today plus minDateRangeValue if minimum date range value is positive', async () => {
+            it('should set minimum date range date to today plus minDateRangeValue if minimum date range value is positive', () => {
                 widget.field = new FormFieldModel(form, {
                     type: FormFieldTypes.DATE,
                     dynamicDateRangeSelection: true,
@@ -351,7 +341,6 @@ describe('DateWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 const expectedMinDate = addDays(adapter.today(), 2);
 
@@ -361,7 +350,7 @@ describe('DateWidgetComponent', () => {
         });
 
         describe('Maximum date range value and date', () => {
-            it('should set maximum date range date to today if maximum date range value is 0', async () => {
+            it('should set maximum date range date to today if maximum date range value is 0', () => {
                 widget.field = new FormFieldModel(form, {
                     type: FormFieldTypes.DATE,
                     dynamicDateRangeSelection: true,
@@ -370,7 +359,6 @@ describe('DateWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 const expectedMaxDate = adapter.today();
 
@@ -378,7 +366,7 @@ describe('DateWidgetComponent', () => {
                 expect(widget.field.maxValue).toBe(todayString);
             });
 
-            it('should set maximum date range date to null if maximum date range value is null', async () => {
+            it('should set maximum date range date to null if maximum date range value is null', () => {
                 widget.field = new FormFieldModel(form, {
                     type: FormFieldTypes.DATE,
                     dynamicDateRangeSelection: true,
@@ -387,13 +375,12 @@ describe('DateWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 expect(widget.maxDate).toBeNull();
                 expect(widget.field.maxValue).toBeNull();
             });
 
-            it('should set maximum date range date to today minus abs(maxDateRangeValue) if maximum date range value is negative', async () => {
+            it('should set maximum date range date to today minus abs(maxDateRangeValue) if maximum date range value is negative', () => {
                 widget.field = new FormFieldModel(form, {
                     type: FormFieldTypes.DATE,
                     dynamicDateRangeSelection: true,
@@ -402,7 +389,6 @@ describe('DateWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 const expectedMaxDate = subDays(adapter.today(), 2);
 
@@ -410,7 +396,7 @@ describe('DateWidgetComponent', () => {
                 expect(widget.field.maxValue).toBe('20-02-2022');
             });
 
-            it('should set maximum date range date to today plus maxDateRangeValue if maximum date range value is positive', async () => {
+            it('should set maximum date range date to today plus maxDateRangeValue if maximum date range value is positive', () => {
                 widget.field = new FormFieldModel(form, {
                     type: FormFieldTypes.DATE,
                     dynamicDateRangeSelection: true,
@@ -419,7 +405,6 @@ describe('DateWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                await fixture.whenStable();
 
                 const expectedMaxDate = addDays(adapter.today(), 2);
 
@@ -437,9 +422,8 @@ describe('DateWidgetComponent', () => {
             });
         });
 
-        it('should be able to display label with asterisk', async () => {
+        it('should be able to display label with asterisk', () => {
             fixture.detectChanges();
-            await fixture.whenStable();
 
             const asterisk: HTMLElement = element.querySelector('.adf-asterisk');
 
@@ -447,9 +431,8 @@ describe('DateWidgetComponent', () => {
             expect(asterisk.textContent).toEqual('*');
         });
 
-        it('should be invalid after user interaction without typing', async () => {
+        it('should be invalid after user interaction without typing', () => {
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
@@ -457,7 +440,6 @@ describe('DateWidgetComponent', () => {
             dateCloudInput.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();
-            await fixture.whenStable();
 
             expect(element.querySelector('.adf-invalid')).toBeTruthy();
         });
