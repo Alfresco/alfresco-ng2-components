@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { BulkHoldAddResponse, ContentPagingQuery, Hold, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
+import { BulkAssignHoldResponse, ContentPagingQuery, Hold, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -112,21 +112,23 @@ export class LegalHoldService {
      * @param holdId The identifier of a hold
      * @param query Search query
      * @param language Language Code
-     * @returns Observable<BulkHoldAddResponse>
+     * @returns Observable<BulkAssignHoldResponse>
      */
-    bulkHold(holdId: string, query: string, language: string): Observable<BulkHoldAddResponse> {
-        return from(this.legalHoldApi.bulkHold(holdId, query, language));
+    bulkAssignHold(holdId: string, query: string, language: string): Observable<BulkAssignHoldResponse> {
+        return from(this.legalHoldApi.bulkAssignHold(holdId, query, language));
     }
 
     /**
      * Assign a folder to a hold.
      *
      * @param holdId The identifier of a hold
-     * @param query Search query
+     * @param folderId The identifier of a folder
      * @param language Language Code
-     * @returns Observable<BulkHoldAddResponse>
+     * @returns Observable<BulkAssignHoldResponse>
      */
-    bulkFolderHold(holdId: string, query: string, language: string): Observable<BulkHoldAddResponse> {
-        return from(this.legalHoldApi.bulkHold(holdId, query, language));
+    bulkAssignHoldForFolder(holdId: string, folderId: string, language: string): Observable<BulkAssignHoldResponse> {
+        const query = `ANCESTOR:'workspace://SpacesStore/${folderId}' and TYPE:content`;
+
+        return from(this.legalHoldApi.bulkAssignHold(holdId, query, language));
     }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export interface BulkHoldAddResponse {
+export interface BulkAssignHoldResponse {
     bulkStatusId: string;
     totalItems: number;
 }

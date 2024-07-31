@@ -49,21 +49,21 @@ Manages holds for nodes.
     -   _nodeId_: `string` - The Id of the node which is unassigned
     -   **Returns** [`void`] <br/>
 
--   **bulkHold**(holdId: `string`, query: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+-   **bulkAssignHold**(holdId: `string`, query: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
     Assign a node to a hold.
     -   _holdId_: `string` - The hold Id
     -   _query_: `string` - Search query
     -   _language_: `string` - Language code. `afts` can be used to automatically define a language
 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkHoldAddResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkHoldAddResponse.md)`>` - Bulk status <br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>` - Bulk status <br/>
 
--   **bulkFolderHold**(holdId: `string`, query: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+-   **bulkAssignHold**(holdId: `string`, query: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
     Assign a node to a hold.
     -   _holdId_: `string` - The hold Id
     -   _query_: `string` - Search query
     -   _language_: `string` - Language code. `afts` can be used to automatically define a language
 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkHoldAddResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkHoldAddResponse.md)`>` - Bulk status <br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>` - Bulk status <br/>
 
 
 ## Details

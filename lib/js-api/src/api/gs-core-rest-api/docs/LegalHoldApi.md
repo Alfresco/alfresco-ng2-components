@@ -10,7 +10,7 @@ All URIs are relative to _https://localhost/alfresco/api/-default-/public/gs/ver
 | [**unassignHold**](LegalHoldApi.md#unassignHold) | **DELETE** /holds/{holdId}/children/{nodeId} | Unassign node from legal hold |
 | [**createHold**](LegalHoldApi.md#createHold)     | **POST** /file-plans/{filePlanId}/holds      | Create one hold               |
 | [**createHolds**](LegalHoldApi.md#createHolds)   | **POST** /file-plans/{filePlanId}/holds      | Create list of holds          |
-| [**bulkHold**](LegalHoldApi.md#bulkHold)         | **POST** /holds/{holdId}/bulk                | Bulk add of nodes to the hold |
+| [**bulkAssignHold**](LegalHoldApi.md#bulkAssignHold)         | **POST** /holds/{holdId}/bulk                | Bulk add of nodes to the hold |
 
 <a name="getHolds"></a>
 
@@ -283,11 +283,11 @@ legalHoldApi.createHolds('-filePlan-', holds).then(
 
 [**HoldPaging**](./HoldPaging.md)
 
-<a name="bulkHold"></a>
+<a name="bulkAssignHold"></a>
 
-# **bulkHold**
+# **bulkAssignHold**
 
-> BulkHoldAddResponse bulkHold(holdId, query, language)
+> BulkAssignHoldResponse bulkAssignHold(holdId, query, language)
 
 Start the asynchronous bulk process for a hold with id `holdId` based on search query results.
 
@@ -304,7 +304,7 @@ this.alfrescoApi.setConfig({
 
 const legalHoldApi = new LegalHoldApi(this.alfrescoApi);
 
-legalHoldApi.bulkHold('holdId', 'SITE:swsdp and TYPE:content', 'afts').then(
+legalHoldApi.bulkAssignHold('holdId', 'SITE:swsdp and TYPE:content', 'afts').then(
     (data) => {
         console.log('API called successfully. Returned data: ' + data);
     },
@@ -324,4 +324,4 @@ legalHoldApi.bulkHold('holdId', 'SITE:swsdp and TYPE:content', 'afts').then(
 
 ### Return type
 
-[**BulkHoldAddResponse**](./BulkHoldAddResponse.md)
+[**BulkAssignHoldResponse**](./BulkAssignHoldResponse.md)

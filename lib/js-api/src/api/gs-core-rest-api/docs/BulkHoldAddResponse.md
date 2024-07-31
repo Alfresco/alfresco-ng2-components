@@ -1,9 +1,9 @@
-# BulkHoldAddResponse
+# BulkAssignHoldResponse
 
 ## Basic usage
 
 ```ts
-export interface BulkHoldAddResponse {
+export interface BulkAssignHoldResponse {
     bulkStatusId: string;
     totalItems: number;
 }

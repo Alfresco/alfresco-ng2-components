@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { BulkHoldAddResponse, Hold, HoldEntry, HoldPaging } from '@alfresco/js-api';
+import { BulkAssignHoldResponse, Hold, HoldEntry, HoldPaging } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
     let service: LegalHoldService;
@@ -153,35 +153,36 @@ describe('LegalHoldsService', () => {
         });
     });
 
-    describe('bulkHold', () => {
+    describe('bulkAssignHold', () => {
         it('should add nodes to hold based on search query results', (done) => {
             const nodeId = 'mockNodeId';
             const query = 'mockQuery';
             const language = 'afts';
-            const mockResponse: BulkHoldAddResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
+            const mockResponse: BulkAssignHoldResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
 
-            spyOn(service.legalHoldApi, 'bulkHold').and.returnValue(Promise.resolve(mockResponse));
+            spyOn(service.legalHoldApi, 'bulkAssignHold').and.returnValue(Promise.resolve(mockResponse));
 
-            service.bulkHold(nodeId, query, language).subscribe((response) => {
+            service.bulkAssignHold(nodeId, query, language).subscribe((response) => {
                 expect(response).toEqual(mockResponse);
-                expect(service.legalHoldApi.bulkHold).toHaveBeenCalledWith(nodeId, query, language);
+                expect(service.legalHoldApi.bulkAssignHold).toHaveBeenCalledWith(nodeId, query, language);
                 done();
             });
         });
     });
 
-    describe('bulkFolderHold', () => {
+    describe('bulkAssignHoldForFolder', () => {
         it('should add nodes to hold based on search query results', (done) => {
             const nodeId = 'mockNodeId';
-            const query = 'mockQuery';
+            const folderId = 'mockFolderId';
             const language = 'afts';
-            const mockResponse: BulkHoldAddResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
+            const mockQuery = `ANCESTOR:'workspace://SpacesStore/${folderId}' and TYPE:content`;
+            const mockResponse: BulkAssignHoldResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
 
-            spyOn(service.legalHoldApi, 'bulkHold').and.returnValue(Promise.resolve(mockResponse));
+            spyOn(service.legalHoldApi, 'bulkAssignHold').and.returnValue(Promise.resolve(mockResponse));
 
-            service.bulkFolderHold(nodeId, query, language).subscribe((response) => {
+            service.bulkAssignHoldForFolder(nodeId, folderId, language).subscribe((response) => {
                 expect(response).toEqual(mockResponse);
-                expect(service.legalHoldApi.bulkHold).toHaveBeenCalledWith(nodeId, query, language);
+                expect(service.legalHoldApi.bulkAssignHold).toHaveBeenCalledWith(nodeId, mockQuery, language);
                 done();
             });
         });
