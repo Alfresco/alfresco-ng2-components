@@ -111,7 +111,7 @@ export class LegalHoldService {
      *
      * @param holdId The identifier of a hold
      * @param query Search query
-     * @param language Language Code
+     * @param language Language code
      * @returns Observable<BulkAssignHoldResponse>
      */
     bulkAssignHold(holdId: string, query: string, language: string): Observable<BulkAssignHoldResponse> {
@@ -123,10 +123,10 @@ export class LegalHoldService {
      *
      * @param holdId The identifier of a hold
      * @param folderId The identifier of a folder
-     * @param language Language Code
+     * @param language Language code
      * @returns Observable<BulkAssignHoldResponse>
      */
-    bulkAssignHoldForFolder(holdId: string, folderId: string, language: string): Observable<BulkAssignHoldResponse> {
+    bulkAssignHoldToFolder(holdId: string, folderId: string, language: string): Observable<BulkAssignHoldResponse> {
         const query = `ANCESTOR:'workspace://SpacesStore/${folderId}' and TYPE:content`;
 
         return from(this.legalHoldApi.bulkAssignHold(holdId, query, language));

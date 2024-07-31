@@ -170,7 +170,7 @@ describe('LegalHoldsService', () => {
         });
     });
 
-    describe('bulkAssignHoldForFolder', () => {
+    describe('bulkAssignHoldToFolder', () => {
         it('should add nodes to hold based on search query results', (done) => {
             const nodeId = 'mockNodeId';
             const folderId = 'mockFolderId';
@@ -180,7 +180,7 @@ describe('LegalHoldsService', () => {
 
             spyOn(service.legalHoldApi, 'bulkAssignHold').and.returnValue(Promise.resolve(mockResponse));
 
-            service.bulkAssignHoldForFolder(nodeId, folderId, language).subscribe((response) => {
+            service.bulkAssignHoldToFolder(nodeId, folderId, language).subscribe((response) => {
                 expect(response).toEqual(mockResponse);
                 expect(service.legalHoldApi.bulkAssignHold).toHaveBeenCalledWith(nodeId, mockQuery, language);
                 done();
