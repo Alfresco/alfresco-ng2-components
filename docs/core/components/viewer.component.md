@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2023-01-30
 ---
 
-# [Viewer component](../../../lib/core/src/lib/viewer/components/viewer.component.ts "Defined in viewer.component.ts")
+# Viewer Component
 
 Displays content from blob file or url file.
 
@@ -171,13 +171,13 @@ The [Viewer component](viewer.component.md) consists of separate Views that hand
 
 Configure your webpack-enabled application with the PDF.js library as follows.
 
-1.  Install pdfjs-dist
+- Install pdfjs-dist
 
 ```sh
 npm install pdfjs-dist
 ```
 
-2.  Update `vendors.ts` by appending the following code. This will enable the [viewer component](viewer.component.md)
+- Update `vendors.ts` by appending the following code. This will enable the [viewer component](viewer.component.md)
     and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
     library to render PDF files in the background:
 
@@ -189,7 +189,7 @@ pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
 require('pdfjs-dist/web/pdf_viewer.js');
 ```
 
-3.  Update the `plugins` section of the `webpack.common.js` file with the following lines:
+- Update the `plugins` section of the `webpack.common.js` file with the following lines:
 
 ```js
 new CopyWebpackPlugin([
@@ -376,15 +376,23 @@ You can enable a custom "More actions" menu by providing at least one action ins
 You can set a default zoom scaling value for pdf viewer by adding the following code in `app.config.json`.
 Note: For the pdf viewer the value has to be within the range of 25 - 1000.
 
-"adf-viewer": {
-"pdf-viewer-scaling": 150
+```json
+{
+    "adf-viewer": {
+        "pdf-viewer-scaling": 150
+    }
 }
+```
 
 In the same way you can set a default zoom scaling value for the image viewer by adding the following code in `app.config.json`.
 
-"adf-viewer": {
-"image-viewer-scaling": 150
+```json
+{
+    "adf-viewer": {
+        "image-viewer-scaling": 150
+    }
 }
+```
 
 By default the viewer's zoom scaling is set to 100%.
 
@@ -396,13 +404,15 @@ In case the user decides to wait, the viewer can further be configured to displa
 
 In order to configure this feature, add the following code in `app.config.json`.
 
-```
-  "viewer": {
-    "enableDownloadPrompt":  true,
-    "enableDownloadPromptReminder": true,
-    "downloadPromptDelay": 50,
-    "downloadPromptReminderDelay": 30
-  }
+```json
+{
+    "viewer": {
+        "enableDownloadPrompt": true,
+        "enableDownloadPromptReminder": true,
+        "downloadPromptDelay": 50,
+        "downloadPromptReminderDelay": 30
+    }
+}
 ```
 
 Here `enableDownloadPrompt: true` enables the dialog to be visible after a set period of time. This time can be configured by updating the value in the 
@@ -411,7 +421,7 @@ Here `enableDownloadPrompt: true` enables the dialog to be visible after a set p
 The second boolean flag `enableDownloadPromptReminder: true` can be used to configure whether the reminder prompts should be displayed or not. 
 `downloadPromptReminderDelay` property can be used to configure the time to wait between reminder prompts.
 
-Note: All times in this configuration must be provided in seconds
+> All times in this configuration must be provided in seconds
 
 ## See also
 
