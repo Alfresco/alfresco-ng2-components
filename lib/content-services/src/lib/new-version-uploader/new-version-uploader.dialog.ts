@@ -21,7 +21,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
 import { NewVersionUploaderDialogData, NewVersionUploaderData, NewVersionUploaderDataAction } from './models';
 import { CommonModule } from '@angular/common';
 import { VersionComparisonComponent } from '../version-manager/version-comparison.component';
-import { AppConfigPipe } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { VersionUploadComponent } from '../version-manager/version-upload.component';
@@ -33,7 +32,6 @@ import { VersionListComponent } from '../version-manager/version-list.component'
     imports: [
         CommonModule,
         MatDialogModule,
-        AppConfigPipe,
         TranslateModule,
         MatButtonModule,
         VersionComparisonComponent,

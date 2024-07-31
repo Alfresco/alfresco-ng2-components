@@ -24,6 +24,8 @@ export interface NewVersionUploaderDialogData {
     file?: File;
     currentVersion?: Version;
     showVersionsOnly?: boolean;
+    showComments?: boolean;
+    allowDownload?: true;
 }
 
 export type NewVersionUploaderData = VersionManagerUploadData | ViewVersion | RefreshData;
