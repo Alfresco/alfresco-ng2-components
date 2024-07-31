@@ -45,18 +45,14 @@ export class NewVersionUploaderService {
      * @param data data to pass to MatDialog
      * @param config allow to override default MatDialogConfig
      * @param selectorAutoFocusedOnClose element's selector which should be autofocused after closing modal
-     * @param showComments enable comments
-     * @param allowDownload enable version download
      * @returns an Observable represents the triggered dialog action or an error in case of an error condition
      */
     openUploadNewVersionDialog(
         data: NewVersionUploaderDialogData,
         config?: MatDialogConfig,
-        selectorAutoFocusedOnClose?: string,
-        showComments = true,
-        allowDownload = true
+        selectorAutoFocusedOnClose?: string
     ): Observable<NewVersionUploaderData> {
-        const { file, node, showVersionsOnly } = data;
+        const { file, node, showVersionsOnly, showComments, allowDownload } = data;
 
         return new Observable((observer) => {
             this.versionsApi.listVersionHistory(node.id).then((versionPaging) => {
