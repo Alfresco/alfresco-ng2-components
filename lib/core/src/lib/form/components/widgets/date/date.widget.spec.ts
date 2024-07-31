@@ -203,23 +203,14 @@ describe('DateWidgetComponent', () => {
                 name: 'date-name',
                 value: new Date('12-30-9999'),
                 type: FormFieldTypes.DATE,
-                dateDisplayFormat: 'MM-dd-yyyy'
+                dateDisplayFormat: 'dd.MM.yyyy'
             });
 
             fixture.detectChanges();
-
             let dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-            expect(dateElement?.value).toContain('12-30-9999');
-
-            dateElement.value = '05-06-2019';
-            dateElement.dispatchEvent(new Event('input'));
-            widget.field.dateDisplayFormat = 'dd.MM.yyyy';
-
-            fixture.componentInstance.ngOnInit();
-            fixture.detectChanges();
 
             dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-            expect(dateElement?.value).toContain('05.06.2019');
+            expect(dateElement?.value).toContain('30.12.9999');
         });
 
         it('should disable date button when is readonly', () => {

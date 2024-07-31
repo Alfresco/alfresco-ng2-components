@@ -29,7 +29,8 @@ import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeF
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ErrorMessageModel } from '../core/error-message.model';
 
 @Component({
@@ -49,16 +50,16 @@ import { ErrorMessageModel } from '../core/error-message.model';
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     minDate: Date;
     maxDate: Date;
-    datetimeInputControl: FormControl<Date>;
+    datetimeInputControl: FormControl<Date> = new FormControl<Date>(null);
 
-    private datetimeChangesSubscription: Subscription;
+    private onDestroy$ = new Subject<void>();
 
     public readonly formService = inject(FormService);
     private readonly dateAdapter = inject(DateAdapter);
     private readonly dateTimeAdapter = inject(DatetimeAdapter);
 
     ngOnInit(): void {
-        this.initFormControl();
+        this.patchFormControl();
         this.initDateAdapter();
         this.initDateRange();
         this.subscribeToDateChanges();
@@ -70,18 +71,18 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
         this.onFieldChanged(this.field);
     }
 
-    private initFormControl(): void {
-        this.datetimeInputControl = new FormControl<Date>(
-            {
-                value: this.field.value,
-                disabled: this.field?.readOnly || this.readOnly
-            },
-            this.isRequired() ? [Validators.required] : []
-        );
+    private patchFormControl(): void {
+        this.datetimeInputControl.setValue(this.field.value, { emitEvent: false });
+        this.datetimeInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        if (this.field?.readOnly || this.readOnly) {
+            this.datetimeInputControl.disable({ emitEvent: false });
+        }
+
+        this.datetimeInputControl.updateValueAndValidity({ emitEvent: false });
     }
 
     private subscribeToDateChanges(): void {
-        this.datetimeChangesSubscription = this.datetimeInputControl.valueChanges.subscribe((newDate: Date) => {
+        this.datetimeInputControl.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((newDate: Date) => {
             this.field.value = newDate;
             this.updateField();
         });
@@ -152,6 +153,7 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit, 
     }
 
     ngOnDestroy(): void {
-        this.datetimeChangesSubscription?.unsubscribe();
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 }
