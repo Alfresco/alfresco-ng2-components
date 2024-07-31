@@ -9,6 +9,8 @@ Last reviewed: 2023-01-30
 
 Displays content from blob file or url file.
 
+> For Alfresco Content Services support, see the [Alfresco Viewer](../../content-services/components/alfresco-viewer.component.md) component details.
+
 ## Contents
 
 -   [Basic usage](#basic-usage)
