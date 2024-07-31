@@ -46,7 +46,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@storybook/core-server": "8.2.6",
     "@storybook/theming": "8.2.6",
-    "angular-oauth2-oidc": "^13.0.1",
+    "angular-oauth2-oidc": "^15.0.1",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "apollo-angular": "^5.0.2",
     "chart.js": "^4.3.0",
