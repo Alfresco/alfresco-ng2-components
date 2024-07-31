@@ -427,8 +427,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected onFormDataRefreshed(form: FormModel) {
-        // TEST ADF LINK
-        this.changeDetector.detectChanges();
         this.formDataRefreshed.emit(form);
     }
 
