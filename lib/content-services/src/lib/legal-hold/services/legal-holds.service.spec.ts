@@ -169,4 +169,21 @@ describe('LegalHoldsService', () => {
             });
         });
     });
+
+    describe('bulkFolderHold', () => {
+        it('should add nodes to hold based on search query results', (done) => {
+            const nodeId = 'mockNodeId';
+            const query = 'mockQuery';
+            const language = 'afts';
+            const mockResponse: BulkHoldAddResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
+
+            spyOn(service.legalHoldApi, 'bulkHold').and.returnValue(Promise.resolve(mockResponse));
+
+            service.bulkFolderHold(nodeId, query, language).subscribe((response) => {
+                expect(response).toEqual(mockResponse);
+                expect(service.legalHoldApi.bulkHold).toHaveBeenCalledWith(nodeId, query, language);
+                done();
+            });
+        });
+    });
 });

@@ -18,11 +18,13 @@ Manages holds for nodes.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
     -   _options_: `ContentPagingQuery` - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - List of holds <br/>
+
 -   **createHold**(filePlanId: `string`, hold: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>`<br/>
     Create new hold in File Plan.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
     -   _hold_: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md) - Hold that should be created
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>` - Hold entry<br/>
+
 -   **createHolds**(filePlanId: `string`, holds: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>`<br/>
     Create new holds in File Plan.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
@@ -33,19 +35,35 @@ Manages holds for nodes.
     Assign a node to a hold.
     -   _nodeId_: `string` - The Id of the node which will be assigned to a hold
     -   _holdId_: `string` - The Id of the hold to which nodes will be assigned
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>` - Entry with the hold
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>` - Entry with the hold <br/>
 
 -   **assignHolds**(nodeIds: `<{id: string}[]>`, holdId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldPaging.md)`>`<br/>
     Assign a node to a hold.
     -   _nodeIds_: `<{id: string}[]>` - The Ids of the nodes which will be assigned to a hold
     -   _holdId_: `string` - The Id of the hold to which nodes will be assigned
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>` - Hold paging
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>` - Hold paging <br/>
 
 -   **unassignHold**(holdId: `string`, nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
     Assign a node to a hold.
     -   _holdId_: `string` - The hold Id
     -   _nodeId_: `string` - The Id of the node which is unassigned
-    -   **Returns** [`void`]
+    -   **Returns** [`void`] <br/>
+
+-   **bulkHold**(holdId: `string`, query: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+    Assign a node to a hold.
+    -   _holdId_: `string` - The hold Id
+    -   _query_: `string` - Search query
+    -   _language_: `string` - Language code. `afts` can be used to automatically define a language
+
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkHoldAddResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkHoldAddResponse.md)`>` - Bulk status <br/>
+
+-   **bulkFolderHold**(holdId: `string`, query: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+    Assign a node to a hold.
+    -   _holdId_: `string` - The hold Id
+    -   _query_: `string` - Search query
+    -   _language_: `string` - Language code. `afts` can be used to automatically define a language
+
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkHoldAddResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkHoldAddResponse.md)`>` - Bulk status <br/>
 
 
 ## Details

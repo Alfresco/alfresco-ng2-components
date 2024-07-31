@@ -117,4 +117,16 @@ export class LegalHoldService {
     bulkHold(holdId: string, query: string, language: string): Observable<BulkHoldAddResponse> {
         return from(this.legalHoldApi.bulkHold(holdId, query, language));
     }
+
+    /**
+     * Assign a folder to a hold.
+     *
+     * @param holdId The identifier of a hold
+     * @param query Search query
+     * @param language Language Code
+     * @returns Observable<BulkHoldAddResponse>
+     */
+    bulkFolderHold(holdId: string, query: string, language: string): Observable<BulkHoldAddResponse> {
+        return from(this.legalHoldApi.bulkHold(holdId, query, language));
+    }
 }
