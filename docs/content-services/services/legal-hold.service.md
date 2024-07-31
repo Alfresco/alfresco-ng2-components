@@ -50,15 +50,15 @@ Manages holds for nodes.
     -   **Returns** [`void`] <br/>
 
 -   **bulkAssignHold**(holdId: `string`, query: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
-    Assign a node to a hold.
+    Assign multiple files to a hold.
     -   _holdId_: `string` - The hold id
     -   _query_: `string` - Search query
     -   _language_: `string` - Language code. `afts` can be used to automatically define a language
 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>` - Bulk status <br/>
 
--   **bulkAssignHoldToFolder**(holdId: `string`, query: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
-    Assign a node to a hold.
+-   **bulkAssignHoldToFolder**(holdId: `string`, folderId: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+    Assign a folder to a hold.
     -   _holdId_: `string` - The hold id
     -   _folderId_: `string` - The folder id
     -   _language_: `string` - Language code. `afts` can be used to automatically define a language
