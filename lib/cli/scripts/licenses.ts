@@ -115,7 +115,7 @@ export default function main(_args: string[], workingDir: string) {
         exit(0);
     }
 
-    const options = program.opts<LicensesCommandArgs>();
+    const options: LicensesCommandArgs = program.opts();
     let packagePath = path.resolve(workingDir, 'package.json');
 
     if (options.package) {

@@ -49,7 +49,7 @@ export default async function main() {
         .option('-u, --username [type]', 'username ')
         .parse(argv);
 
-    const opts = program.opts<InitAcsEnvArgs>();
+    const opts = program.opts();
     await checkEnv(opts);
 
     logger.info(`***** Step initialize ACS *****`);

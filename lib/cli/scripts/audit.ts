@@ -51,7 +51,7 @@ export default function main(_args: string[], workingDir: string) {
         exit(0);
     }
 
-    const options = program.opts<AuditCommandArgs>();
+    const options: AuditCommandArgs = program.opts();
 
     let packagePath = path.resolve(workingDir, 'package.json');
 

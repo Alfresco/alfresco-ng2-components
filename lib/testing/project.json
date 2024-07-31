@@ -56,12 +56,7 @@
           }
         ]
       },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build"
-        }
-      ]
+      "dependsOn": ["build"]
     },
     "npm-publish": {
       "executor": "nx:run-commands",

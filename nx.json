@@ -1,48 +1,43 @@
 {
   "npmScope": "adf",
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
   "defaultProject": "demoshell",
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
-  },
   "affected": {
     "defaultBase": "develop"
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
-    "lint": {
-      "dependsOn": ["stylelint"]
-    },
-    "build-storybook": {
-      "inputs": ["default", "^production", "{workspaceRoot}/.storybook/**/*"]
-    },
-    "test": {
-      "inputs": ["default", "^production"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
     }
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "stylelint"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "stylelint"
+        ],
         "cacheDirectory": "nxcache",
-        "runtimeCacheInputs": ["node -v"]
+        "runtimeCacheInputs": [
+          "node -v"
+        ]
       }
     }
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "sharedGlobals": [
       "{workspaceRoot}/angular.json",
       "{workspaceRoot}/demo-shell/src/index.html",
