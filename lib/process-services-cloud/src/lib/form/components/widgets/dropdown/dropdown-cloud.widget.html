@@ -30,7 +30,7 @@
                 <mat-option id="readonlyOption" *ngIf="isReadOnlyType()" [value]="field.value">{{field.value}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <div *ngIf="!previewState">
+        <div *ngIf="!previewState && !isReadOnlyField">
             <error-widget [error]="field.validationSummary"></error-widget>
             <error-widget class="adf-dropdown-required-message" *ngIf="showRequiredMessage()"
                         required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
