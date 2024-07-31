@@ -53,7 +53,7 @@ describe('ProcessFilterCloudService', () => {
         });
         service = TestBed.inject(ProcessFilterCloudService);
 
-        const preferenceCloudService = service.preferenceService;
+        const preferenceCloudService = TestBed.inject(PROCESS_FILTERS_SERVICE_TOKEN);
         const identityUserService = TestBed.inject(IdentityUserService);
 
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeProcessCloudFilters));

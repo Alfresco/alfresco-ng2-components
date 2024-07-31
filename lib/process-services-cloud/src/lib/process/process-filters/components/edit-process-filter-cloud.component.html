@@ -8,7 +8,7 @@
                     <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
                     <div *ngIf="showFilterActions" class="adf-cloud-edit-process-filter-actions">
                         <ng-container *ngIf="toggleFilterActions">
-                            <button *ngFor="let filterAction of processFilterActions" mat-icon-button title="{{ filterAction.tooltip | translate}}" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="isDisabledAction(filterAction)" (click)="executeFilterActions($event, filterAction)">
+                            <button *ngFor="let filterAction of processFilterActions" mat-icon-button [title]="filterAction.tooltip | translate" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="isDisabledAction(filterAction)" (click)="executeFilterActions($event, filterAction)">
                                 <adf-icon [value]="filterAction.icon"></adf-icon>
                             </button>
                         </ng-container>

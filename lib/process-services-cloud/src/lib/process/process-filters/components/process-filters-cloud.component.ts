@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
@@ -59,12 +59,13 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     error = new EventEmitter<any>();
 
     filters$: Observable<ProcessFilterCloudModel[]>;
-    currentFilter: ProcessFilterCloudModel;
+    currentFilter?: ProcessFilterCloudModel;
     filters: ProcessFilterCloudModel[] = [];
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private processFilterCloudService: ProcessFilterCloudService, private translationService: TranslationService) {}
+    private readonly processFilterCloudService = inject(ProcessFilterCloudService);
+    private readonly translationService = inject(TranslationService);
 
     ngOnInit() {
         if (this.appName === '') {
@@ -90,17 +91,17 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     getFilters(appName: string): void {
         this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
 
-        this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
-            (res) => {
+        this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe({
+            next: (res) => {
                 this.resetFilter();
                 this.filters = res || [];
                 this.selectFilterAndEmit(this.filterParam);
                 this.success.emit(res);
             },
-            (err: any) => {
+            error: (err: any) => {
                 this.error.emit(err);
             }
-        );
+        });
     }
 
     /**
@@ -109,15 +110,20 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
      * @param paramFilter filter model
      */
     selectFilter(paramFilter: FilterParamsModel) {
-        if (paramFilter) {
-            this.currentFilter = this.filters.find(
+        if (!paramFilter) {
+            return;
+        }
+
+        const preferredFilter = this.filters.find((filter) => paramFilter.id === filter.id);
+        this.currentFilter =
+            preferredFilter ??
+            this.filters.find(
                 (filter, index) =>
                     paramFilter.id === filter.id ||
                     (paramFilter.name && this.checkFilterNamesEquality(paramFilter.name, filter.name)) ||
                     (paramFilter.key && paramFilter.key === filter.key) ||
                     paramFilter.index === index
-            );
-        }
+            ); // fallback to preserve the previous behavior
     }
 
     /**
