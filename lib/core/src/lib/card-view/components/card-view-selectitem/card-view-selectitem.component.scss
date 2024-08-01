@@ -17,12 +17,12 @@
     .adf-property-value-editable.adf-property-value-editable {
         padding-left: 0;
 
-        #{$mat-text-field--no-label} #{$mat-form-field-infix} {
+        #{$mat-text-field-no-label} #{$mat-form-field-infix} {
             padding: 0;
         }
 
         #{$mat-form-field-wrapper} {
-            background-color: initial;
+            background-color: unset;
         }
 
         #{$mat-select} {
@@ -49,7 +49,7 @@
         color: var(--adf-metadata-property-panel-title-color);
     }
 
-    .mdc-line-ripple {
+    #{$mat-line-ripple} {
         display: none;
     }
 
