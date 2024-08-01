@@ -8,10 +8,7 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "cd lib/cli && npm i && npm run dist",
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        }
+        "command": "cd lib/cli && npm i && npm run dist"
       },
       "configurations": {
         "production": {
@@ -40,12 +37,7 @@
           }
         ]
       },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build"
-        }
-      ]
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

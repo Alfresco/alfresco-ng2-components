@@ -77,6 +77,10 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     maxItems: number;
 
+    /** Number of table rows that are currently selected.  */
+    @Input()
+    selectedRowItemsCount = 0;
+
     previousNodes: PathElement[];
     lastNodes: PathElement[];
 

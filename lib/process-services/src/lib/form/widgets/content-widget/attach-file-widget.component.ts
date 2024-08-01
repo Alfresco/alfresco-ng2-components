@@ -17,7 +17,7 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, isDevMode, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
@@ -200,12 +200,14 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     openSelectDialog(repository: AlfrescoEndpointRepresentation) {
-        if (this.isExternalHost(repository)) {
+        if (this.isExternalHost(repository) && !isDevMode()) {
             this.uploadFileFromExternalCS(repository);
         } else {
             this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe((selections: Node[]) => {
-                this.tempFilesList.push(...selections);
-                this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
+                if (selections.length) {
+                    this.tempFilesList.push(...selections);
+                    this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
+                }
             });
         }
     }

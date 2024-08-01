@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
-import { TranslationService } from '@alfresco/adf-core';
 import { takeUntil } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { ServiceTaskFilterCloudService } from '../services/service-task-filter-cloud.service';
+import { TranslationService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-cloud-service-task-filters',
@@ -30,7 +30,6 @@ import { ServiceTaskFilterCloudService } from '../services/service-task-filter-c
     encapsulation: ViewEncapsulation.None
 })
 export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
-
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<ServiceTaskFilterCloudModel>();
@@ -43,10 +42,8 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     filters: ServiceTaskFilterCloudModel[] = [];
     currentFilter: ServiceTaskFilterCloudModel;
 
-    constructor(private serviceTaskFilterCloudService: ServiceTaskFilterCloudService,
-                private translationService: TranslationService) {
-            super();
-    }
+    private readonly serviceTaskFilterCloudService = inject(ServiceTaskFilterCloudService);
+    private readonly translationService = inject(TranslationService);
 
     ngOnInit() {
         this.getFilters(this.appName);
@@ -89,15 +86,21 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
      * @param paramFilter filter model
      */
     selectFilter(paramFilter: FilterParamsModel) {
-        if (paramFilter) {
-            this.currentFilter = this.filters.find((filter, index) =>
-                paramFilter.index === index ||
-                paramFilter.key === filter.key ||
-                paramFilter.id === filter.id ||
-                (paramFilter.name &&
-                    (paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
-                ));
+        if (!paramFilter) {
+            return;
         }
+
+        const preferredFilter = this.filters.find((filter) => filter.id === paramFilter.id);
+
+        this.currentFilter =
+            preferredFilter ??
+            this.filters.find(
+                (filter, index) =>
+                    paramFilter.index === index ||
+                    paramFilter.key === filter.key ||
+                    paramFilter.id === filter.id ||
+                    (paramFilter.name && paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
+            ); // fallback to preserve the previous behavior
     }
 
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {

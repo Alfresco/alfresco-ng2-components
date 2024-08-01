@@ -50,7 +50,7 @@ VERSION=`get_next_version $DIR/..`
 JS_API_VERSION=`get_next_version $DIR/../lib/js-api`
 
 echo "====== New libs version: $VERSION ====="
-echo "====== New js-api version: $VERSION ====="
+echo "====== New js-api version: $JS_API_VERSION ====="
 
 gnu_mode() {
     echo "====== GNU MODE ====="

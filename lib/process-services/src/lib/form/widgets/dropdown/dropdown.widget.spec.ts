@@ -17,7 +17,15 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of } from 'rxjs';
-import { WidgetVisibilityService, FormFieldOption, FormFieldModel, FormModel, FormFieldTypes, CoreTestingModule } from '@alfresco/adf-core';
+import {
+    WidgetVisibilityService,
+    FormFieldOption,
+    FormFieldModel,
+    FormModel,
+    FormFieldTypes,
+    CoreTestingModule,
+    ErrorMessageModel
+} from '@alfresco/adf-core';
 import { DropdownWidgetComponent } from './dropdown.widget';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
@@ -66,27 +74,40 @@ describe('DropdownWidgetComponent', () => {
         expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
     });
 
-    it('should request field values from service', () => {
+    describe('requesting field options', () => {
+        let getRestFieldValuesSpy: jasmine.Spy;
         const taskId = '<form-id>';
         const fieldId = '<field-id>';
 
-        const form = new FormModel({
-            taskId
+        beforeEach(() => {
+            getRestFieldValuesSpy = spyOn(taskFormService, 'getRestFieldValues').and.returnValue(of([]));
+
+            widget.field = new FormFieldModel(new FormModel({ taskId }), { id: fieldId, restUrl: '<url>' });
         });
 
-        widget.field = new FormFieldModel(form, {
-            id: fieldId,
-            restUrl: '<url>'
+        it('should request options from service when form is NOT readonly', () => {
+            widget.field.form.readOnly = false;
+            widget.ngOnInit();
+
+            expect(getRestFieldValuesSpy).toHaveBeenCalledWith(taskId, fieldId);
         });
 
-        spyOn(taskFormService, 'getRestFieldValues').and.returnValue(
-            new Observable((observer) => {
-                observer.next(null);
-                observer.complete();
-            })
-        );
+        it('should NOT request options from service when form is readonly', () => {
+            widget.field.form.readOnly = true;
+            widget.ngOnInit();
+
+            expect(getRestFieldValuesSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    it('should NOT display any error when widget is readonly', () => {
+        widget.field = new FormFieldModel(new FormModel({}, undefined, false), { readOnly: true });
+        widget.field.validationSummary = { message: 'Some error occurred' } as ErrorMessageModel;
+
         widget.ngOnInit();
-        expect(taskFormService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-dropdown-required-message')).toBeNull();
     });
 
     it('should preserve empty option when loading fields', () => {

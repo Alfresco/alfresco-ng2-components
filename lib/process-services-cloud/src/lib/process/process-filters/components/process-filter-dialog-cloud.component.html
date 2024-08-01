@@ -6,12 +6,12 @@
         <mat-card-content class="adf-process-filter-dialog-card-content">
         <form [formGroup]="filterForm">
             <mat-form-field class="adf-process-filter-name" [floatLabel]="'auto'">
-                <input matInput placeholder="{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.FILTER_NAME' | translate }}" formControlName="name" id="adf-filter-name-id">
+                <input matInput placeholder="{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.FILTER_NAME' | translate }}" [formControl]="filterForm.controls.name" id="adf-filter-name-id">
             </mat-form-field>
         </form>
         </mat-card-content>
         <mat-card-actions class='adf-process-filter-dialog-actions'>
-            <button mat-button (click)="onSaveClick()" id="adf-save-button-id" [disabled]="!isValid()">
+            <button mat-button (click)="onSaveClick()" id="adf-save-button-id" [disabled]="!filterForm.valid">
                 {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.SAVE' | translate}}
             </button>
             <button mat-button (click)="onCancelClick()" id="adf-cancel-button-id">

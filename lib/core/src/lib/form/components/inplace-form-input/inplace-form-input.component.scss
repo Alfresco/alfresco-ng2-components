@@ -4,11 +4,17 @@
 $adf-inplace-input-padding: 7px;
 
 .adf-inplace-input-container {
+    &-error {
+        .adf-inplace-input {
+            border: 1px solid var(--theme-warn-color);
+        }
+    }
+
     #{$mat-line-ripple} {
         display: none;
     }
 
-    #{$mat-form--text-field-infix} {
+    #{$mat-form-text-field-infix} {
         display: flex;
         border-top: 0;
     }
@@ -33,12 +39,6 @@ $adf-inplace-input-padding: 7px;
         &:hover:not(:focus) {
             border: 1px solid var(--adf-theme-background-hover-color);
             background-color: var(--adf-theme-background-hover-color);
-        }
-    }
-
-    &-error {
-        .adf-inplace-input {
-            border: 1px solid var(--theme-warn-color);
         }
     }
 }

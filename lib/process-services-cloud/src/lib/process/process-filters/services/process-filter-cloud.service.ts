@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { switchMap, map } from 'rxjs/operators';
@@ -29,10 +29,10 @@ export class ProcessFilterCloudService {
     private filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
     filters$: Observable<ProcessFilterCloudModel[]>;
 
-    constructor(
-        @Inject(PROCESS_FILTERS_SERVICE_TOKEN) public preferenceService: PreferenceCloudServiceInterface,
-        private identityUserService: IdentityUserService
-    ) {
+    private readonly preferenceService = inject<PreferenceCloudServiceInterface>(PROCESS_FILTERS_SERVICE_TOKEN);
+    private readonly identityUserService = inject(IdentityUserService);
+
+    constructor() {
         this.filtersSubject = new BehaviorSubject([]);
         this.filters$ = this.filtersSubject.asObservable();
     }
