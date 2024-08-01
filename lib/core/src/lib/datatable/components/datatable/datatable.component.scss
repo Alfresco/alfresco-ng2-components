@@ -159,6 +159,20 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         display: flex;
         align-items: center;
 
+        &:hover {
+            .adf-datatable-hover-only {
+                visibility: visible;
+            }
+        }
+
+        .adf-datatable-hover-only {
+            visibility: hidden;
+
+            &.adf-datatable-checkbox-selected {
+                visibility: visible;
+            }
+        }
+
         .adf-datatable-checkbox {
             max-width: $data-table-thumbnail-width;
             width: $data-table-thumbnail-width;
@@ -288,6 +302,11 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         margin-left: auto;
         justify-content: end;
         padding-right: 15px;
+    }
+
+    .adf-datatable-checkbox {
+        display: flex;
+        justify-content: center;
     }
 
     .adf-cell-value {
@@ -438,6 +457,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         display: none;
     }
 
+    /* stylelint-disable media-feature-range-notation */
+
     /* mobile phone */
     @media all and (width <= 768px) {
         .adf-desktop-only.adf-ellipsis-cell {
@@ -499,11 +520,6 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     .adf-datatable-cell--fileSize.adf-datatable__header--sorted-desc::before {
         left: -3px;
         right: -3px;
-    }
-
-    &.adf-datatable-checkbox {
-        display: flex;
-        align-items: center;
     }
 
     .adf-datatable-cell-header-content {

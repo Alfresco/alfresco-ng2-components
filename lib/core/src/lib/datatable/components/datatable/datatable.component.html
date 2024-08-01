@@ -182,11 +182,14 @@
                     </mat-menu>
                 </div>
 
-                <label *ngIf="multiselect" [for]="'select-file-' + idx" class="adf-datatable-cell adf-datatable-checkbox">
+                <label *ngIf="multiselect" [for]="'select-file-' + idx" class="adf-datatable-cell adf-datatable-checkbox adf-datatable-checkbox-single">
                     <mat-checkbox
                         [id]="'select-file-' + idx"
+                        [class.adf-datatable-checkbox-selected]="row.isSelected"
+                        [class.adf-datatable-hover-only]="displayCheckboxesOnHover"
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
+                        [aria-label]="'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate"
                         role="checkbox"
                         (change)="onCheckboxChange(row, $event)"
                         class="adf-checkbox-sr-only">
