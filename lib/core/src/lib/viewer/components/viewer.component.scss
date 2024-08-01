@@ -93,7 +93,8 @@
 
             display: flex;
             flex-direction: row;
-            overflow-x: hidden;
+            overflow: hidden;
+            overflow-y: auto;
             position: relative;
         }
 
