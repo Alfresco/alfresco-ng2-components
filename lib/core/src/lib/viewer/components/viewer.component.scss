@@ -44,7 +44,7 @@
         left: 50%;
         transform: translateX(-50%);
 
-        @media screen and (max-width: 1450px) {
+        @media screen and (width <= 1450px) {
             left: 30%;
         }
     }
@@ -70,8 +70,7 @@
             @extend .adf-full-screen;
 
             position: relative;
-            overflow-y: hidden;
-            overflow-x: hidden;
+            overflow: hidden;
             z-index: 1;
             background-color: var(--theme-background-color);
             display: flex;
@@ -94,7 +93,6 @@
 
             display: flex;
             flex-direction: row;
-            overflow-y: auto;
             overflow-x: hidden;
             position: relative;
         }
@@ -152,6 +150,17 @@
             order: 1;
             flex: 1 1 auto;
             display: flex;
+        }
+    }
+
+    &-toolbar-actions,
+    .adf-viewer-close-button {
+        #{$mat-icon} {
+            margin-top: -10px;
+        }
+
+        #{$mat-toolbar} {
+            height: 100%;
         }
     }
 }
