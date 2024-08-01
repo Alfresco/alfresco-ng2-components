@@ -218,6 +218,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.onDestroy$.complete();
     }
 
+    filterTracker(_index: number, item: ProcessFilterProperties) {
+        return item.key;
+    }
+
     buildForm(processFilterProperties: ProcessFilterProperties[]) {
         this.editProcessFilterForm = this.formBuilder.group(this.getFormControlsConfig(processFilterProperties));
         this.onFilterChange();
@@ -349,9 +353,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getAppVersionOptions() {
-        this.appVersionOptions = [];
-
         this.processCloudService.getApplicationVersions(this.appName).subscribe((appVersions) => {
+            this.appVersionOptions.length = 0;
             appVersions.forEach((appVersion) => {
                 this.appVersionOptions.push({ label: appVersion.entry.version, value: appVersion.entry.version });
             });
@@ -432,10 +435,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getRunningApplications() {
-        this.applicationNames = [];
-
         this.appsProcessCloudService.getDeployedApplicationsByStatus('RUNNING', this.role).subscribe((applications) => {
             if (applications && applications.length > 0) {
+                this.applicationNames.length = 0;
                 applications.map((application) => {
                     this.applicationNames.push({
                         label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList),
@@ -447,10 +449,9 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     getProcessDefinitions() {
-        this.processDefinitionNames = [];
-
         this.processCloudService.getProcessDefinitions(this.appName).subscribe((processDefinitions) => {
             if (processDefinitions && processDefinitions.length > 0) {
+                this.processDefinitionNames.length = 0;
                 this.processDefinitionNames.push(this.allProcessDefinitionNamesOption);
                 processDefinitions.map((processDefinition) => {
                     this.processDefinitionNames.push({ label: processDefinition.name, value: processDefinition.name });
