@@ -52,19 +52,13 @@
     }
 
     .adf-fictive-flag-button {
-        margin-left: -8px;
-        position: relative;
-
-        mat-icon {
-            position: relative;
-            left: 8px;
-        }
+        margin-left: -12px;
 
         .adf-custom-flag-icon {
             display: block;
         }
 
-        .adf-rash-icon {
+        .adf-trash-icon {
             display: none;
         }
 
