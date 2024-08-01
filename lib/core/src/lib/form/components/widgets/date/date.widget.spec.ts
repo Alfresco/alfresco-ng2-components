@@ -20,6 +20,7 @@ import { DateAdapter } from '@angular/material/core';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { DateWidgetComponent } from './date.widget';
+import { isEqual } from 'date-fns';
 
 describe('DateWidgetComponent', () => {
     let widget: DateWidgetComponent;
@@ -53,21 +54,21 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should setup min value for date picker', () => {
-        const minValue = '13-03-1982';
-        widget.field = new FormFieldModel(form, {
+        const minValue = '1982-03-13';
+        widget.field = new FormFieldModel(null, {
             id: 'date-id',
             name: 'date-name',
             minValue
         });
 
-        fixture.detectChanges();
+        widget.ngOnInit();
 
-        const expected = adapter.parse(minValue, widget.DATE_FORMAT) as Date;
-        expect(adapter.compareDate(widget.minDate, expected)).toBe(0);
+        const expected = adapter.parse(minValue, widget.DATE_FORMAT);
+        expect(isEqual(widget.minDate, expected)).toBeTrue();
     });
 
     it('should validate min date value constraint', () => {
-        const minValue = '13-03-1982';
+        const minValue = '1982-03-13';
 
         const field = new FormFieldModel(form, {
             id: 'date-id',
@@ -90,7 +91,7 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should validate max date value constraint', () => {
-        const maxValue = '13-03-1982';
+        const maxValue = '1982-03-13';
 
         const field = new FormFieldModel(form, {
             id: 'date-id',
@@ -125,7 +126,7 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should setup max value for date picker', () => {
-        const maxValue = '31-03-1982';
+        const maxValue = '1982-03-31';
         widget.field = new FormFieldModel(form, {
             maxValue
         });
@@ -278,6 +279,31 @@ describe('DateWidgetComponent', () => {
         fixture.componentInstance.ngOnInit();
         fixture.detectChanges();
 
-        expect(dateElement.value).toContain('02-03-2020');
+        expect(dateElement.value).toContain('03-02-2020');
+    });
+
+    it('should display value with specified format when format of provided date is different', () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: new Date('12-30-9999'),
+            type: FormFieldTypes.DATE,
+            readOnly: false,
+            dateDisplayFormat: 'MM/dd/yyyy'
+        });
+        widget.field = field;
+
+        fixture.detectChanges();
+
+        const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
+        expect(dateElement.value).toContain('12/30/9999');
+
+        dateElement.value = '03-02-2020';
+        dateElement.dispatchEvent(new Event('input'));
+
+        fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+
+        expect(dateElement.value).toContain('03/02/2020');
     });
 });

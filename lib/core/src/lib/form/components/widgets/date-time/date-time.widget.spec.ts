@@ -77,7 +77,7 @@ describe('DateTimeWidgetComponent', () => {
         widget.field = new FormFieldModel(form, {
             id: 'date-id',
             name: 'date-name',
-            type: 'datetime',
+            type: FormFieldTypes.DATETIME,
             minValue
         });
 
@@ -90,7 +90,7 @@ describe('DateTimeWidgetComponent', () => {
         widget.field = new FormFieldModel(form, {
             id: 'date-id',
             name: 'date-name',
-            type: 'datetime'
+            type: FormFieldTypes.DATETIME
         });
         fixture.detectChanges();
 
@@ -115,7 +115,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-field-id',
             name: 'date-name',
             value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            type: FormFieldTypes.DATETIME
         });
 
         widget.field = field;
@@ -132,7 +132,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-field-id',
             name: 'date-name',
             value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            type: FormFieldTypes.DATETIME
         });
 
         widget.field = field;
@@ -147,7 +147,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-field-id',
             name: 'date-name',
             value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            type: FormFieldTypes.DATETIME
         });
 
         widget.field = field;
@@ -167,7 +167,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-field-id',
             name: 'date-name',
             value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            type: FormFieldTypes.DATETIME
         });
 
         widget.field = field;
@@ -188,7 +188,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-field-id',
             name: 'date-name',
             value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            type: FormFieldTypes.DATETIME
         });
 
         widget.field = field;
@@ -208,7 +208,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-field-id',
             name: 'date-name',
             value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            type: FormFieldTypes.DATETIME
         });
 
         widget.field = field;
@@ -230,7 +230,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-field-id',
             name: 'date-name',
             value: '9999-09-12T09:00:00.000Z',
-            type: 'datetime'
+            type: FormFieldTypes.DATETIME
         });
 
         widget.field = field;
@@ -299,7 +299,7 @@ describe('DateTimeWidgetComponent', () => {
                 id: 'date-field-id',
                 name: 'date-name',
                 value: '9999-11-30T10:30:00.000Z',
-                type: 'datetime'
+                type: FormFieldTypes.DATETIME
             });
 
             fixture.detectChanges();
@@ -315,7 +315,7 @@ describe('DateTimeWidgetComponent', () => {
                 name: 'date-name',
                 value: '9999-12-30T10:30:00.000Z',
                 dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime'
+                type: FormFieldTypes.DATETIME
             });
 
             fixture.detectChanges();
@@ -331,7 +331,7 @@ describe('DateTimeWidgetComponent', () => {
                 name: 'date-name',
                 value: '9999-12-30T10:30:00.000Z',
                 dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
-                type: 'datetime'
+                type: FormFieldTypes.DATETIME
             });
             fixture.detectChanges();
 
@@ -353,7 +353,7 @@ describe('DateTimeWidgetComponent', () => {
             id: 'date-field-id',
             name: 'datetime-field-name',
             value: '9999-12-30T10:30:00.000Z',
-            type: 'datetime',
+            type: FormFieldTypes.DATETIME,
             dateDisplayFormat: 'MM-DD-YYYY HH:mm A'
         });
         widget.field = field;
@@ -371,6 +371,31 @@ describe('DateTimeWidgetComponent', () => {
         await fixture.whenStable();
 
         expect(await input.getValue()).toBe('03-02-2020 00:00 AM');
+    });
+
+    it('should display value with specified format when format of provided datetime is different', async () => {
+        const field = new FormFieldModel(form, {
+            id: 'date-field-id',
+            name: 'datetime-field-name',
+            value: '9999-12-30T10:30:00.000Z',
+            type: FormFieldTypes.DATETIME,
+            dateDisplayFormat: 'MM/DD/YYYY HH;mm A'
+        });
+        widget.field = field;
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const input = await loader.getHarness(MatInputHarness);
+        expect(await input.getValue()).toBe('12/30/9999 10;30 AM');
+
+        widget.field.value = '2020-03-02T00:00:00.000Z';
+
+        fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(await input.getValue()).toBe('03/02/2020 00;00 AM');
     });
 
     describe('when form model has left labels', () => {

@@ -88,10 +88,11 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
     }
 
     override parse(value: any, parseFormat: string | string[]): Date {
+        const dateToParse = value ? DateFnsUtils.getDate(value) : value;
         const format = Array.isArray(parseFormat)
             ? parseFormat.map(DateFnsUtils.convertMomentToDateFnsFormat)
             : DateFnsUtils.convertMomentToDateFnsFormat(parseFormat);
-        return super.parse(value, format);
+        return super.parse(dateToParse, format);
     }
 
     override format(date: Date, displayFormat: string): string {
