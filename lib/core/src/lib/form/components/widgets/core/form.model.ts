@@ -191,10 +191,8 @@ export class FormModel implements ProcessFormModel {
             return;
         }
 
-        if (!FormFieldTypes.isReactiveType(field.type)) {
-            if (!field.validate()) {
-                this.markAsInvalid();
-            }
+        if (!FormFieldTypes.isReactiveType(field.type) && !field.validate()) {
+            this.markAsInvalid();
         }
 
         this.validateForm();
