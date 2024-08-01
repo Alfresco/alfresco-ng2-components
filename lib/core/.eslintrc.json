@@ -4,7 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular"],
+      "extends": ["plugin:@nx/angular"],
       "parserOptions": {
         "project": ["lib/core/tsconfig.lib.json", "lib/core/tsconfig.spec.json"],
         "createDefaultProgram": true
@@ -15,7 +15,12 @@
         "@typescript-eslint/consistent-type-assertions": "warn",
         "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/member-ordering": "off",
-        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+        "no-underscore-dangle": [
+          "error",
+          {
+            "allowAfterThis": true
+          }
+        ],
         "no-shadow": "warn",
         "quote-props": "warn",
         "object-shorthand": "warn",
@@ -24,7 +29,6 @@
         "arrow-body-style": "warn",
         "@angular-eslint/no-output-native": "off",
         "space-before-function-paren": "warn",
-
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -77,11 +81,10 @@
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
         "@angular-eslint/template/no-positive-tabindex": "error",
-
         "@angular-eslint/template/no-negated-async": "off"
       }
     }
