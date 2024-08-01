@@ -150,11 +150,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             this.environmentId = value.environmentId;
         }
 
-        if (isChanged) {
-            this.processFilterProperties = this.createAndFilterProperties();
-            this.processFilterActions = this.createAndFilterActions();
+        this.processFilterProperties = this.createAndFilterProperties();
+        this.processFilterActions = this.createAndFilterActions();
+        this.buildForm(this.processFilterProperties);
 
-            this.buildForm(this.processFilterProperties);
+        if (isChanged) {
             this.filterChange.emit(value);
         }
     }
