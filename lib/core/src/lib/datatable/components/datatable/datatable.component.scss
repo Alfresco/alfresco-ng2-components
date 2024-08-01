@@ -218,10 +218,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             min-width: $data-table-cell-min-width-file-size;
         }
 
-        button {
-            #{$mat-icon} {
-                margin-top: -10px;
-            }
+        .adf-icon {
+            vertical-align: unset;
         }
     }
 
