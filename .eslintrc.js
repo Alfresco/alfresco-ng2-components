@@ -12,7 +12,7 @@ module.exports = {
         '**/docs'
     ],
 
-    plugins: ['@nrwl/nx'],
+    plugins: ['@nx'],
 
     overrides: [
         {
@@ -22,11 +22,10 @@ module.exports = {
                 createDefaultProgram: true
             },
             extends: [
-                'plugin:@nrwl/nx/typescript',
-                'plugin:@nrwl/nx/angular',
+                'plugin:@nx/typescript',
+                'plugin:@nx/angular',
                 'plugin:@cspell/recommended',
-                'plugin:@angular-eslint/ng-cli-compat',
-                'plugin:@angular-eslint/ng-cli-compat--formatting-add-on',
+                'plugin:@angular-eslint/recommended',
                 'plugin:@angular-eslint/template/process-inline-templates',
                 'plugin:jsdoc/recommended-typescript-error'
             ],
