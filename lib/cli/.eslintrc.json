@@ -4,7 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular"],
+      "extends": ["plugin:@nx/angular"],
       "parserOptions": {
         "project": ["lib/cli/tsconfig.json"],
         "createDefaultProgram": true
@@ -44,7 +44,7 @@
         "project": ["lib/cli/tsconfig.json"],
         "createDefaultProgram": true
       },
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {}
     }
   ]
