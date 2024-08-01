@@ -40,7 +40,6 @@
                         <mat-form-field [floatLabel]="'auto'" *ngIf="processFilterProperty.type === 'multi-select'" [attr.data-automation-id]="processFilterProperty.key">
                             <mat-label class="adf-edit-process-filter-content__select-label">{{processFilterProperty.label | translate}}</mat-label>
                             <mat-select
-                                placeholder="{{processFilterProperty.label | translate}}"
                                 [formControlName]="processFilterProperty.key"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"
                                 [multiple]="true">
