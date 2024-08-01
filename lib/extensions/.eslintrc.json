@@ -4,14 +4,18 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular"],
+      "extends": ["plugin:@nx/angular"],
       "parserOptions": {
         "project": ["lib/extensions/tsconfig.lib.json", "lib/extensions/tsconfig.spec.json"],
         "createDefaultProgram": true
       },
       "rules": {
-        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
-
+        "no-underscore-dangle": [
+          "error",
+          {
+            "allowAfterThis": true
+          }
+        ],
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -64,7 +68,7 @@
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "error",
         "@angular-eslint/template/no-positive-tabindex": "error"
