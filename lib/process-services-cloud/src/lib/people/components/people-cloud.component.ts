@@ -183,7 +183,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             }
         }
 
-        this.isReadonly() ? this.searchUserCtrl.disable() : this.searchUserCtrl.enable();
+        if (this.isReadonly()) {
+            this.searchUserCtrl.disable();
+        } else {
+            this.searchUserCtrl.enable();
+        }
     }
 
     private initSearch(): void {
