@@ -4,7 +4,7 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": ["plugin:@nrwl/nx/angular"],
+      "extends": ["plugin:@nx/angular"],
       "parserOptions": {
         "project": ["lib/process-services/tsconfig.lib.json", "lib/process-services/tsconfig.spec.json"],
         "createDefaultProgram": true
@@ -14,7 +14,12 @@
         "@typescript-eslint/naming-convention": "warn",
         "@typescript-eslint/consistent-type-assertions": "warn",
         "@typescript-eslint/prefer-for-of": "warn",
-        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+        "no-underscore-dangle": [
+          "error",
+          {
+            "allowAfterThis": true
+          }
+        ],
         "no-shadow": "warn",
         "quote-props": "warn",
         "object-shorthand": "warn",
@@ -22,7 +27,6 @@
         "arrow-body-style": "warn",
         "@angular-eslint/no-output-native": "off",
         "space-before-function-paren": "warn",
-
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -75,7 +79,7 @@
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
+      "extends": ["plugin:@nx/angular-template"],
       "parserOptions": {
         "project": ["lib/process-services/tsconfig.lib.json", "lib/process-services/tsconfig.spec.json"],
         "createDefaultProgram": true
