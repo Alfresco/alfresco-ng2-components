@@ -326,12 +326,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.keyManager.onKeydown(event);
     }
 
-    constructor(
-        private elementRef: ElementRef,
-        differs: IterableDiffers,
-        private matIconRegistry: MatIconRegistry,
-        private sanitizer: DomSanitizer
-    ) {
+    constructor(private elementRef: ElementRef, differs: IterableDiffers, private matIconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -763,7 +758,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     isIconValue(row: DataRow, col: DataColumn): boolean {
         if (row && col) {
-            const value = row.getValue(col.key);
+            const value = this.data.getValue(row, col);
             return value?.startsWith('material-icons://');
         }
         return false;
@@ -771,7 +766,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     asIconValue(row: DataRow, col: DataColumn): string {
         if (this.isIconValue(row, col)) {
-            const value = row.getValue(col.key) || '';
+            const value = this.data.getValue(row, col) || '';
             return value.replace('material-icons://', '');
         }
         return null;
