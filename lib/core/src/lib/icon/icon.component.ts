@@ -25,7 +25,6 @@ import { NgIf } from '@angular/common';
     standalone: true,
     imports: [MatIconModule, NgIf],
     templateUrl: './icon.component.html',
-    styleUrls: ['./icon.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-icon' }
