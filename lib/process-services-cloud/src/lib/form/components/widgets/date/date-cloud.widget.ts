@@ -17,15 +17,42 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, inject } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Subject } from 'rxjs';
-import { WidgetComponent, FormService, AdfDateFnsAdapter, DateFnsUtils, ADF_DATE_FORMATS } from '@alfresco/adf-core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { addDays } from 'date-fns';
+import { takeUntil } from 'rxjs/operators';
+import {
+    WidgetComponent,
+    FormService,
+    AdfDateFnsAdapter,
+    DateFnsUtils,
+    ADF_DATE_FORMATS,
+    ErrorWidgetComponent,
+    ErrorMessageModel,
+    DEFAULT_DATE_FORMAT
+} from '@alfresco/adf-core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { addDays, parseISO } from 'date-fns';
+import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'date-widget',
+    standalone: true,
+    imports: [
+        NgIf,
+        TranslateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        ErrorWidgetComponent
+    ],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
@@ -47,80 +74,143 @@ import { addDays } from 'date-fns';
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     typeId = 'DateCloudWidgetComponent';
-    readonly DATE_FORMAT = 'dd-MM-yyyy';
 
     minDate: Date = null;
     maxDate: Date = null;
     startAt: Date = null;
 
-    /**
-     * Current date value.
-     * The value is always stored in the format `dd-MM-yyyy`,
-     * but displayed in the UI component using `dateDisplayFormat`
-     */
-    @Input()
-    value: any = null;
+    dateInputControl: FormControl<Date> = new FormControl<Date>(null);
 
-    private onDestroy$ = new Subject<boolean>();
+    private onDestroy$ = new Subject<void>();
 
-    constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>) {
-        super(formService);
+    public readonly formService = inject(FormService);
+    private readonly dateAdapter = inject(DateAdapter);
+
+    ngOnInit(): void {
+        this.patchFormControl();
+        this.initDateAdapter();
+        this.initRangeSelection();
+        this.initStartAt();
+        this.subscribeToDateChanges();
+        this.updateField();
     }
 
-    ngOnInit() {
-        if (this.field.dateDisplayFormat) {
+    updateField(): void {
+        this.validateField();
+        this.onFieldChanged(this.field);
+    }
+
+    private patchFormControl(): void {
+        this.dateInputControl.setValue(this.field.value, { emitEvent: false });
+        this.dateInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        if (this.field?.readOnly || this.readOnly) {
+            this.dateInputControl.disable({ emitEvent: false });
+        }
+
+        this.dateInputControl.updateValueAndValidity({ emitEvent: false });
+    }
+
+    private subscribeToDateChanges(): void {
+        this.dateInputControl.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((newDate: Date) => {
+            this.field.value = newDate;
+            this.updateField();
+        });
+    }
+
+    private validateField(): void {
+        if (this.dateInputControl.invalid) {
+            this.handleErrors(this.dateInputControl.errors);
+            this.field.markAsInvalid();
+        } else {
+            this.resetErrors();
+            this.field.markAsValid();
+        }
+    }
+
+    private handleErrors(errors: ValidationErrors): void {
+        const errorAttributes = new Map<string, string>();
+        switch (true) {
+            case !!errors.matDatepickerParse:
+                this.updateValidationSummary(this.field.dateDisplayFormat || this.field.defaultDateTimeFormat);
+                break;
+            case !!errors.required:
+                this.updateValidationSummary('FORM.FIELD.REQUIRED');
+                break;
+            case !!errors.matDatepickerMin: {
+                const minValue = DateFnsUtils.formatDate(errors.matDatepickerMin.min, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('minValue', minValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_LESS_THAN', errorAttributes);
+                break;
+            }
+            case !!errors.matDatepickerMax: {
+                const maxValue = DateFnsUtils.formatDate(errors.matDatepickerMax.max, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('maxValue', maxValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', errorAttributes);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private updateValidationSummary(message: string, attributes?: Map<string, string>): void {
+        this.field.validationSummary = new ErrorMessageModel({ message, attributes });
+    }
+
+    private resetErrors(): void {
+        this.updateValidationSummary('');
+    }
+
+    private initDateAdapter(): void {
+        if (this.field?.dateDisplayFormat) {
             const adapter = this.dateAdapter as AdfDateFnsAdapter;
             adapter.displayFormat = this.field.dateDisplayFormat;
         }
+    }
 
-        if (this.field) {
-            if (this.field.dynamicDateRangeSelection) {
-                if (this.field.minDateRangeValue === null) {
-                    this.minDate = null;
-                    this.field.minValue = null;
-                } else {
-                    this.minDate = addDays(this.dateAdapter.today(), this.field.minDateRangeValue);
-                    this.field.minValue = DateFnsUtils.formatDate(this.minDate, this.DATE_FORMAT);
-                }
-                if (this.field.maxDateRangeValue === null) {
-                    this.maxDate = null;
-                    this.field.maxValue = null;
-                } else {
-                    this.maxDate = addDays(this.dateAdapter.today(), this.field.maxDateRangeValue);
-                    this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, this.DATE_FORMAT);
-                }
-            } else {
-                if (this.field.minValue) {
-                    this.minDate = this.dateAdapter.parse(this.field.minValue, this.DATE_FORMAT);
-                }
-
-                if (this.field.maxValue) {
-                    this.maxDate = this.dateAdapter.parse(this.field.maxValue, this.DATE_FORMAT);
-                }
-            }
-
-            if (this.field.value) {
-                this.startAt = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
-                this.value = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
-            }
+    private initStartAt(): void {
+        if (this.field?.value) {
+            this.startAt = this.dateAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
         }
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
-    onDateChanged(event: MatDatepickerInputEvent<Date>) {
-        const value = event.value;
-        const input = event.targetElement as HTMLInputElement;
-
-        if (value) {
-            this.field.value = this.dateAdapter.format(value, this.DATE_FORMAT);
+    private initRangeSelection(): void {
+        if (this.field?.dynamicDateRangeSelection) {
+            this.setDynamicRangeSelection();
         } else {
-            this.field.value = input.value;
+            this.setStaticRangeSelection();
+        }
+    }
+
+    private setDynamicRangeSelection(): void {
+        if (this.field.minDateRangeValue === null) {
+            this.minDate = null;
+            this.field.minValue = null;
+        } else {
+            this.minDate = addDays(this.dateAdapter.today(), this.field.minDateRangeValue);
+            this.field.minValue = DateFnsUtils.formatDate(this.minDate, DEFAULT_DATE_FORMAT);
+        }
+        if (this.field.maxDateRangeValue === null) {
+            this.maxDate = null;
+            this.field.maxValue = null;
+        } else {
+            this.maxDate = addDays(this.dateAdapter.today(), this.field.maxDateRangeValue);
+            this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, DEFAULT_DATE_FORMAT);
+        }
+    }
+
+    private setStaticRangeSelection(): void {
+        if (this.field?.minValue) {
+            this.minDate = parseISO(this.field.minValue);
         }
 
-        this.onFieldChanged(this.field);
+        if (this.field?.maxValue) {
+            this.maxDate = parseISO(this.field.maxValue);
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 }

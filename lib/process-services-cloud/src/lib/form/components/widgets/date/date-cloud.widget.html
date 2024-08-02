@@ -1,4 +1,4 @@
-<div class="{{field.className}}" id="data-widget" [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-left-label-input-container]="field.leftLabels">
+<div class="{{field.className}}" id="data-widget" [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched" [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span class="adf-asterisk"
             *ngIf="isRequired()">*</span></label>
@@ -7,24 +7,21 @@
         <mat-form-field class="adf-date-widget" [class.adf-left-label-input-datepicker]="field.leftLabels" [hideRequiredMarker]="true">
             <label class="adf-label" *ngIf="!field.leftLabels" [attr.for]="field.id">{{field.name | translate }} ({{field.dateDisplayFormat}})<span class="adf-asterisk"
                 *ngIf="isRequired()">*</span></label>
-            <input matInput [matDatepicker]="datePicker"
+            <input matInput
+                [matDatepicker]="datePicker"
                 [id]="field.id"
-                [(ngModel)]="value"
-                [required]="field.required"
+                [formControl]="dateInputControl"
                 [placeholder]="field.placeholder"
                 [min]="minDate"
                 [max]="maxDate"
-                [disabled]="field.readOnly"
                 [title]="field.tooltip"
-                (dateChange)="onDateChanged($event)"
-                (blur)="markAsTouched()">
+                (blur)="updateField()">
             <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly"></mat-datepicker-toggle>
             <mat-datepicker #datePicker
                 [startAt]="startAt"
                 [disabled]="field.readOnly">
             </mat-datepicker>
         </mat-form-field>
-        <error-widget [error]="field.validationSummary"></error-widget>
-        <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+        <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary"></error-widget>
     </div>
 </div>

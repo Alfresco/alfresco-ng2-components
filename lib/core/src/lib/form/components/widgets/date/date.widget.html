@@ -1,4 +1,4 @@
-<div class="{{ field.className }}" id="data-widget" [class.adf-invalid]="!field.isValid && isTouched()">
+<div class="{{ field.className }}" id="data-widget" [class.adf-invalid]="dateInputControl.invalid && dateInputControl.touched">
     <mat-form-field [floatLabel]="'always'" class="adf-date-widget">
         <mat-label class="adf-label"
                    [id]="field.id + '-label'"
@@ -8,21 +8,16 @@
         <input matInput
                [matDatepicker]="datePicker"
                [id]="field.id"
-               [(ngModel)]="value"
-               [required]="field.required"
+               [formControl]="dateInputControl"
                [placeholder]="field.placeholder"
                [min]="minDate"
                [max]="maxDate"
-               [disabled]="field.readOnly"
-               (dateChange)="onDateChange($event)"
-               (blur)="markAsTouched()">
+               (blur)="updateField()">
         <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly"></mat-datepicker-toggle>
         <mat-datepicker #datePicker
                         [startAt]="startAt"
                         [disabled]="field.readOnly">
         </mat-datepicker>
     </mat-form-field>
-    <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
-                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary"></error-widget>
 </div>
