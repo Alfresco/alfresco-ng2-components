@@ -27,7 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils } from '../../../../common';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils, DEFAULT_DATE_FORMAT } from '../../../../common';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
@@ -57,8 +57,6 @@ import { parseISO } from 'date-fns';
     encapsulation: ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-    DATE_FORMAT = 'dd-MM-yyyy';
-
     minDate: Date;
     maxDate: Date;
     startAt: Date;
@@ -163,7 +161,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     private initStartAt(): void {
         if (this.field?.value) {
-            this.startAt = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
+            this.startAt = this.dateAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
         }
     }
 

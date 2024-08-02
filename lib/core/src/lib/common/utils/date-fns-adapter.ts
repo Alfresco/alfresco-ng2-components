@@ -47,15 +47,17 @@ import { isValid, Locale, parse } from 'date-fns';
  * }
  */
 
+export const DEFAULT_DATE_FORMAT = 'dd-MM-yyyy';
+
 /**
  * Material date formats for Date-fns
  */
 export const ADF_DATE_FORMATS: MatDateFormats = {
     parse: {
-        dateInput: 'dd-MM-yyyy'
+        dateInput: DEFAULT_DATE_FORMAT
     },
     display: {
-        dateInput: 'dd-MM-yyyy',
+        dateInput: DEFAULT_DATE_FORMAT,
         monthLabel: 'LLL',
         monthYearLabel: 'LLL uuuu',
         dateA11yLabel: 'PP',
@@ -106,7 +108,7 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
     }
 
     private parseAndValidateDate(value: any): Date {
-        const parsedDate = parse(value, this.displayFormat, new Date());
+        const parsedDate = parse(value, this.displayFormat || DEFAULT_DATE_FORMAT, new Date());
         return isValid(parsedDate) ? parsedDate : value;
     }
 }

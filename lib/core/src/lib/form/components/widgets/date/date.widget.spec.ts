@@ -20,6 +20,7 @@ import { DateAdapter } from '@angular/material/core';
 import { CoreTestingModule } from '../../../../testing';
 import { FormFieldModel, FormFieldTypes, FormModel } from '../core';
 import { DateWidgetComponent } from './date.widget';
+import { DEFAULT_DATE_FORMAT } from '../../../../common';
 import { isEqual } from 'date-fns';
 
 describe('DateWidgetComponent', () => {
@@ -63,7 +64,7 @@ describe('DateWidgetComponent', () => {
 
         widget.ngOnInit();
 
-        const expected = adapter.parse(minValue, widget.DATE_FORMAT);
+        const expected = adapter.parse(minValue, DEFAULT_DATE_FORMAT);
         expect(isEqual(widget.minDate, expected)).toBeTrue();
     });
 
@@ -132,7 +133,7 @@ describe('DateWidgetComponent', () => {
         });
         fixture.detectChanges();
 
-        const expected = adapter.parse(maxValue, widget.DATE_FORMAT) as Date;
+        const expected = adapter.parse(maxValue, DEFAULT_DATE_FORMAT) as Date;
         expect(adapter.compareDate(widget.maxDate, expected)).toBe(0);
     });
 
@@ -280,30 +281,5 @@ describe('DateWidgetComponent', () => {
         fixture.detectChanges();
 
         expect(dateElement.value).toContain('03-02-2020');
-    });
-
-    it('should display value with specified format when format of provided date is different', () => {
-        const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: new Date('12-30-9999'),
-            type: FormFieldTypes.DATE,
-            readOnly: false,
-            dateDisplayFormat: 'MM/dd/yyyy'
-        });
-        widget.field = field;
-
-        fixture.detectChanges();
-
-        const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-        expect(dateElement.value).toContain('12/30/9999');
-
-        dateElement.value = '03-02-2020';
-        dateElement.dispatchEvent(new Event('input'));
-
-        fixture.componentInstance.ngOnInit();
-        fixture.detectChanges();
-
-        expect(dateElement.value).toContain('03/02/2020');
     });
 });

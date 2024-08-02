@@ -28,7 +28,8 @@ import {
     DateFnsUtils,
     ADF_DATE_FORMATS,
     ErrorWidgetComponent,
-    ErrorMessageModel
+    ErrorMessageModel,
+    DEFAULT_DATE_FORMAT
 } from '@alfresco/adf-core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { addDays, parseISO } from 'date-fns';
@@ -73,7 +74,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     typeId = 'DateCloudWidgetComponent';
-    readonly DATE_FORMAT = 'dd-MM-yyyy';
 
     minDate: Date = null;
     maxDate: Date = null;
@@ -170,7 +170,7 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
     private initStartAt(): void {
         if (this.field?.value) {
-            this.startAt = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
+            this.startAt = this.dateAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
         }
     }
 
@@ -188,14 +188,14 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
             this.field.minValue = null;
         } else {
             this.minDate = addDays(this.dateAdapter.today(), this.field.minDateRangeValue);
-            this.field.minValue = DateFnsUtils.formatDate(this.minDate, this.DATE_FORMAT);
+            this.field.minValue = DateFnsUtils.formatDate(this.minDate, DEFAULT_DATE_FORMAT);
         }
         if (this.field.maxDateRangeValue === null) {
             this.maxDate = null;
             this.field.maxValue = null;
         } else {
             this.maxDate = addDays(this.dateAdapter.today(), this.field.maxDateRangeValue);
-            this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, this.DATE_FORMAT);
+            this.field.maxValue = DateFnsUtils.formatDate(this.maxDate, DEFAULT_DATE_FORMAT);
         }
     }
 

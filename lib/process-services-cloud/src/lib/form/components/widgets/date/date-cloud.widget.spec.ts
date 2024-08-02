@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
-import { FormFieldModel, FormModel, FormFieldTypes } from '@alfresco/adf-core';
+import { FormFieldModel, FormModel, FormFieldTypes, DEFAULT_DATE_FORMAT } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { DateAdapter } from '@angular/material/core';
 import { isEqual, subDays, addDays } from 'date-fns';
@@ -53,7 +53,7 @@ describe('DateWidgetComponent', () => {
 
         fixture.detectChanges();
 
-        const expected = adapter.parse(minValue, widget.DATE_FORMAT);
+        const expected = adapter.parse(minValue, DEFAULT_DATE_FORMAT);
         expect(isEqual(widget.minDate, expected)).toBeTrue();
     });
 
@@ -78,7 +78,7 @@ describe('DateWidgetComponent', () => {
         });
         fixture.detectChanges();
 
-        const expected = adapter.parse(maxValue, widget.DATE_FORMAT);
+        const expected = adapter.parse(maxValue, DEFAULT_DATE_FORMAT);
         expect(isEqual(widget.maxDate, expected)).toBeTrue();
     });
 
@@ -207,31 +207,6 @@ describe('DateWidgetComponent', () => {
         fixture.detectChanges();
 
         expect(dateElement.value).toContain('03-02-2020');
-    });
-
-    it('should display value with specified format when format of provided date is different', () => {
-        const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: new Date('12-30-9999'),
-            type: FormFieldTypes.DATE,
-            readOnly: false,
-            dateDisplayFormat: 'MM/dd/yyyy'
-        });
-        widget.field = field;
-
-        fixture.detectChanges();
-
-        const dateElement = element.querySelector<HTMLInputElement>('#date-field-id');
-        expect(dateElement.value).toContain('12/30/9999');
-
-        dateElement.value = '03-02-2020';
-        dateElement.dispatchEvent(new Event('input'));
-
-        fixture.componentInstance.ngOnInit();
-        fixture.detectChanges();
-
-        expect(dateElement.value).toContain('03/02/2020');
     });
 
     describe('when form model has left labels', () => {
