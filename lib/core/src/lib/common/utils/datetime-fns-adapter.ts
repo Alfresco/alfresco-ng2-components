@@ -19,7 +19,7 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { DateFnsUtils } from './date-fns-utils';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimeFormats } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { Locale, addHours, addMinutes, formatISO, isValid } from 'date-fns';
+import { Locale, addHours, addMinutes, isValid, parse } from 'date-fns';
 
 /**
  * Material date/time formats for Date-fns (mat-datetimepicker)
@@ -126,7 +126,7 @@ export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
     }
 
     override parse(value: any, parseFormat: any): Date {
-        const dateToParse = isValid(new Date(value)) ? formatISO(new Date(value)) : value;
+        const dateToParse = isValid(new Date(value)) ? parse(value, this.displayFormat, new Date()) : value;
         return this._delegate.parse(dateToParse, parseFormat);
     }
 
