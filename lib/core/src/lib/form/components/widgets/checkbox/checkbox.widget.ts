@@ -32,8 +32,9 @@ import { WidgetComponent } from '../widget.component';
     templateUrl: './checkbox.widget.html',
     styles: [
         `
-            .adf-checkbox {
+            .adf-checkbox label {
                 word-break: break-word;
+                white-space: normal;
             }
         `
     ],
