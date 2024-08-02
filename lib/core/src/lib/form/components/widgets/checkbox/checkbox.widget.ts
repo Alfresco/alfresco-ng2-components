@@ -30,6 +30,13 @@ import { WidgetComponent } from '../widget.component';
     selector: 'checkbox-widget',
     standalone: true,
     templateUrl: './checkbox.widget.html',
+    styles: [
+        `
+            .adf-checkbox {
+                word-break: break-word;
+            }
+        `
+    ],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',

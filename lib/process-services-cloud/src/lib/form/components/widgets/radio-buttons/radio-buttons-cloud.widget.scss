@@ -43,9 +43,8 @@
         margin: 5px;
 
         label {
-            span {
-                white-space: normal;
-            }
+            white-space: normal;
+            word-break: break-word;
         }
     }
 
