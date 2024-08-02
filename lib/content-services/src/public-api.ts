@@ -45,4 +45,5 @@ export * from './lib/infinite-scroll-datasource';
 export * from './lib/prediction/index';
 
 export * from './lib/content.module';
+export * from './lib/content-module-legacy';
 export * from './lib/testing/content.testing.module';
