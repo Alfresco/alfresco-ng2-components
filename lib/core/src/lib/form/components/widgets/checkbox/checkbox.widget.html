@@ -2,6 +2,7 @@
      [class.adf-invalid]="!field.isValid && isTouched()">
     <mat-checkbox [id]="field.id"
                   color="primary"
+                  class="adf-checkbox"
                   [required]="isRequired()"
                   [disabled]="field.readOnly || readOnly"
                   [(ngModel)]="field.value"
