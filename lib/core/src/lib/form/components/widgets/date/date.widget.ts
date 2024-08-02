@@ -32,6 +32,7 @@ import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel } from '../core/error-message.model';
+import { parseISO } from 'date-fns';
 
 @Component({
     selector: 'date-widget',
@@ -152,11 +153,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
 
     private initDateRange(): void {
         if (this.field?.minValue) {
-            this.minDate = this.dateAdapter.parse(this.field.minValue, this.DATE_FORMAT);
+            this.minDate = parseISO(this.field.minValue);
         }
 
         if (this.field?.maxValue) {
-            this.maxDate = this.dateAdapter.parse(this.field.maxValue, this.DATE_FORMAT);
+            this.maxDate = parseISO(this.field.maxValue);
         }
     }
 

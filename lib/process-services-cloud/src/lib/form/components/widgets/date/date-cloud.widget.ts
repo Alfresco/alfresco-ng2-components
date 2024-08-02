@@ -31,7 +31,7 @@ import {
     ErrorMessageModel
 } from '@alfresco/adf-core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { addDays } from 'date-fns';
+import { addDays, parseISO } from 'date-fns';
 import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -201,11 +201,11 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit,
 
     private setStaticRangeSelection(): void {
         if (this.field?.minValue) {
-            this.minDate = this.dateAdapter.parse(this.field.minValue, this.DATE_FORMAT);
+            this.minDate = parseISO(this.field.minValue);
         }
 
         if (this.field?.maxValue) {
-            this.maxDate = this.dateAdapter.parse(this.field.maxValue, this.DATE_FORMAT);
+            this.maxDate = parseISO(this.field.maxValue);
         }
     }
 
