@@ -6,16 +6,18 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "command": "cd lib/cli && npm i && npm run dist"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "lib/cli/tsconfig.json"
-        }
-      },
-      "defaultConfiguration": "production"
+        "outputPath": "dist/./libs/cli",
+        "main": "lib/cli/src/index.ts",
+        "tsConfig": "lib/cli/tsconfig.json",
+        "assets": [
+          "lib/cli/*.md"
+        ]
+      }
     },
     "bundle": {
       "executor": "nx:run-commands",
@@ -26,7 +28,9 @@
           }
         ]
       },
-      "dependsOn": ["copyToNodeModules"]
+      "dependsOn": [
+        "copyToNodeModules"
+      ]
     },
     "copyToNodeModules": {
       "executor": "nx:run-commands",
@@ -37,17 +41,24 @@
           }
         ]
       },
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["lib/cli/**/*.ts", "lib/cli/**/*.html"]
+        "lintFilePatterns": [
+          "lib/cli/**/*.ts",
+          "lib/cli/**/*.html"
+        ]
       }
     },
     "npm-publish": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "cwd": "dist/libs/cli",
         "commands": [
