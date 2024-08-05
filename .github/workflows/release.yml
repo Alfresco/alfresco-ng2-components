@@ -8,7 +8,8 @@ on:
         required: false
         type: boolean
         default: true
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - develop
       - master
@@ -86,6 +87,7 @@ env:
 jobs:
   setup:
     timeout-minutes: 20
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     name: "Setup"
     runs-on: ubuntu-latest
     steps:
@@ -108,6 +110,7 @@ jobs:
   release-demoshell:
     needs: [setup]
     timeout-minutes: 15
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -133,6 +136,7 @@ jobs:
   release-storybook:
     needs: [setup]
     timeout-minutes: 15
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -159,6 +163,7 @@ jobs:
   release-npm:
     needs: [setup]
     timeout-minutes: 30
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -225,6 +230,7 @@ jobs:
   npm-check-bundle:
     needs: [release-npm]
     timeout-minutes: 15
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -237,6 +243,7 @@ jobs:
       name: Final Results
       needs: [release-demoshell, release-storybook, release-npm, npm-check-bundle]
       steps:
+
         - uses: slackapi/slack-github-action@70cd7be8e40a46e8b0eced40b0de447bdb42f68e # v1.26.0
           name: Nofify FE eng-guild-front-end workflow failed
           if: ${{ contains(toJson(needs.*.result), 'failure') }}
@@ -244,4 +251,4 @@ jobs:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           with:
             channel-id: 'C016SMNNL8L' #eng-guild-front-end
-            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author username: ${{ github.event.pusher.name }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
+            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author: name:${{ github.event.pusher.name }} username:${{ github.event.pusher.username }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
