@@ -70,7 +70,7 @@ export class RatingsApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param ratingId The identifier of a rating.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteRating(nodeId: string, ratingId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');

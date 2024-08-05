@@ -32,7 +32,7 @@ export class AppDefinitionsApi extends BaseApi {
      * deleteAppDefinition
      *
      * @param appDefinitionId appDefinitionId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteAppDefinition(appDefinitionId: number): Promise<void> {
         throwIfNotDefined(appDefinitionId, 'appDefinitionId');
@@ -53,7 +53,7 @@ export class AppDefinitionsApi extends BaseApi {
      * This will return a zip file containing the app definition model and all related models (process definitions and forms).
      *
      * @param modelId modelId from a runtime app or the id of an app definition model
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     exportAppDefinition(modelId: number): Promise<any> {
         throwIfNotDefined(modelId, 'modelId');

@@ -60,7 +60,7 @@ export class RecordsApi extends BaseApi {
      * Delete a record. Deleted file plan components cannot be recovered, they are deleted permanently.
      *
      * @param recordId The identifier of a record.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteRecord(recordId: string): Promise<void> {
         throwIfNotDefined(recordId, 'recordId');
@@ -154,7 +154,7 @@ export class RecordsApi extends BaseApi {
      * the attachment will be returned in the response. (default to true)
      * @param opts.ifModifiedSince Only returns the content if it has been modified since the date provided.
      * Use the date format defined by HTTP. For example, Wed, 09 Mar 2016 16:56:34 GMT.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     getRecordContent(
         recordId: string,

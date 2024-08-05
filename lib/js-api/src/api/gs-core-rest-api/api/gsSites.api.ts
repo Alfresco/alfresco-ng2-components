@@ -49,7 +49,7 @@ export class GsSitesApi extends BaseApi {
     /**
      * Delete the Records Management (RM) site
      *
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteRMSite(): Promise<void> {
         return this.delete({

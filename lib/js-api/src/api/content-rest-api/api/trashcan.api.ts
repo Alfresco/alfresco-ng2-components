@@ -38,7 +38,7 @@ export class TrashcanApi extends BaseApi {
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
      * @param nodeId The identifier of a node.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteDeletedNode(nodeId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -112,7 +112,11 @@ export class TrashcanApi extends BaseApi {
     ): Promise<Blob> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(renditionId, 'renditionId');
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             nodeId,
@@ -271,7 +275,10 @@ export class TrashcanApi extends BaseApi {
      */
     listDeletedNodes(opts?: ContentPagingQuery & ContentIncludeQuery): Promise<DeletedNodesPaging> {
         const queryParams = {
-            ...(opts || { /* empty */ }),
+            ...(opts ||
+                {
+                    /* empty */
+                }),
             include: buildCollectionParam(opts?.include, 'csv')
         };
 

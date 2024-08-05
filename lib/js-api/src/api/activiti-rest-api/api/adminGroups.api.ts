@@ -33,7 +33,7 @@ export class AdminGroupsApi extends BaseApi {
      * Activate a group
      *
      * @param groupId groupId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     activate(groupId: number): Promise<any> {
         throwIfNotDefined(groupId, 'groupId');
@@ -52,7 +52,7 @@ export class AdminGroupsApi extends BaseApi {
      * Add users to a group
      *
      * @param groupId groupId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     addAllUsersToGroup(groupId: number): Promise<any> {
         throwIfNotDefined(groupId, 'groupId');
@@ -72,7 +72,7 @@ export class AdminGroupsApi extends BaseApi {
      *
      * @param groupId groupId
      * @param addGroupCapabilitiesRepresentation addGroupCapabilitiesRepresentation
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     addGroupCapabilities(groupId: number, addGroupCapabilitiesRepresentation: AddGroupCapabilitiesRepresentation): Promise<any> {
         throwIfNotDefined(groupId, 'groupId');
@@ -94,7 +94,7 @@ export class AdminGroupsApi extends BaseApi {
      *
      * @param groupId groupId
      * @param userId userId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     addGroupMember(groupId: number, userId: number): Promise<any> {
         throwIfNotDefined(groupId, 'groupId');
@@ -117,7 +117,7 @@ export class AdminGroupsApi extends BaseApi {
      * @param groupId groupId
      * @param relatedGroupId relatedGroupId
      * @param type type
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     addRelatedGroup(groupId: number, relatedGroupId: number, type: string): Promise<any> {
         throwIfNotDefined(groupId, 'groupId');
@@ -161,7 +161,7 @@ export class AdminGroupsApi extends BaseApi {
      *
      * @param groupId groupId
      * @param groupCapabilityId groupCapabilityId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteGroupCapability(groupId: number, groupCapabilityId: number): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');
@@ -183,7 +183,7 @@ export class AdminGroupsApi extends BaseApi {
      *
      * @param groupId groupId
      * @param userId userId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteGroupMember(groupId: number, userId: number): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');
@@ -204,7 +204,7 @@ export class AdminGroupsApi extends BaseApi {
      * Delete a group
      *
      * @param groupId groupId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteGroup(groupId: number): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');
@@ -224,7 +224,7 @@ export class AdminGroupsApi extends BaseApi {
      *
      * @param groupId groupId
      * @param relatedGroupId relatedGroupId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteRelatedGroup(groupId: number, relatedGroupId: number): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');
