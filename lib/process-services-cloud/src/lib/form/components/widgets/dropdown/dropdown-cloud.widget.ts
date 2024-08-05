@@ -154,13 +154,13 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         return opt1 === opt2;
     }
 
-    selectionChangedForField(field: FormFieldModel) {
+    selectionChangedForField(field: FormFieldModel): void {
         const formFieldValueChangedEvent = new FormFieldEvent(field.form, field);
         this.formService.formFieldValueChanged.next(formFieldValueChangedEvent);
         this.onFieldChanged(field);
     }
 
-    private initFormControl() {
+    private initFormControl(): void {
         if (this.field?.required) {
             this.dropdownControl.addValidators([Validators.required]);
         }
@@ -190,7 +190,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.handleErrors();
     }
 
-    private handleErrors() {
+    private handleErrors(): void {
         if (this.dropdownControl.valid) {
             this.field.validationSummary = new ErrorMessageModel('');
             return;
@@ -201,7 +201,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         }
     }
 
-    private initFilter() {
+    private initFilter(): void {
         this.filter$
             .pipe(
                 filter((search) => search !== undefined),
