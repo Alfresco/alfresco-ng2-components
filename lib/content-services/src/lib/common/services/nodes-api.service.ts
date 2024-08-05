@@ -248,7 +248,7 @@ export class NodesApiService {
      * @param options.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
      * @returns List of assigned holds Observable<Hold[]>
      */
-    getNodeAssignHolds(
+    getNodeAssignedHolds(
         nodeId: string,
         options?: {
             includeSource?: boolean;
