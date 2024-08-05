@@ -18,9 +18,6 @@
 import { Column } from './column';
 
 export class TextColumn extends Column {
-    columnType: string;
-    columnName: string;
-
     constructor(columnName: string) {
         super(columnName, 'text');
     }
