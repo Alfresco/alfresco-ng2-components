@@ -8,7 +8,7 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "cd lib/cli && npm i && npm run dist"
+        "command": "cd lib/cli && npm run dist"
       },
       "configurations": {
         "production": {
@@ -26,7 +26,9 @@
           }
         ]
       },
-      "dependsOn": ["copyToNodeModules"]
+      "dependsOn": [
+        "copyToNodeModules"
+      ]
     },
     "copyToNodeModules": {
       "executor": "nx:run-commands",
@@ -37,17 +39,37 @@
           }
         ]
       },
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "installDeps", "build"
+      ]
+    },
+    "installDeps": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "cd lib/cli && npm i"
+          }
+        ]
+      },
+      "dependsOn": [
+        "build"
+      ]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["lib/cli/**/*.ts", "lib/cli/**/*.html"]
+        "lintFilePatterns": [
+          "lib/cli/**/*.ts",
+          "lib/cli/**/*.html"
+        ]
       }
     },
     "npm-publish": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "cwd": "dist/libs/cli",
         "commands": [
