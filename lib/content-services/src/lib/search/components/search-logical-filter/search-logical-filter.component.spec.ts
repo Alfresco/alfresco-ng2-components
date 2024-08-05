@@ -99,13 +99,14 @@ describe('SearchLogicalFilterComponent', () => {
         expect(component.hasValidValue()).toBeTrue();
     });
 
-    it('should update display value after phrases changes', () => {
+    it('should update display value after phrases changes and user user clicks submit', () => {
         spyOn(component.displayValue$, 'next');
         enterNewPhrase('test2', 0);
+        component.submitValues();
         expect(component.displayValue$.next).toHaveBeenCalledOnceWith(` SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[0]}: test2`);
     });
 
-    it('should have correct display value after each field has at least one phrase', () => {
+    it('should have correct display value after each field has at least one phrase and user clicks submit', () => {
         spyOn(component.displayValue$, 'next');
         enterNewPhrase('test1', 0);
         enterNewPhrase('test2', 1);
@@ -115,6 +116,7 @@ describe('SearchLogicalFilterComponent', () => {
         const displayVal2 = ` SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[1]}: test2`;
         const displayVal3 = ` SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[2]}: test3`;
         const displayVal4 = ` SEARCH.LOGICAL_SEARCH.${Object.keys(LogicalSearchFields)[3]}: test4`;
+        component.submitValues();
         expect(component.displayValue$.next).toHaveBeenCalledWith(displayVal1 + displayVal2 + displayVal4 + displayVal3);
     });
 

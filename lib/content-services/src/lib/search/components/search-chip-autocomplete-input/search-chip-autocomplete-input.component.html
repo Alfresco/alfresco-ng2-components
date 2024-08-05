@@ -19,6 +19,7 @@
             placeholder="{{ placeholder | translate }}"
             aria-controls="adf-search-chip-autocomplete"
             #optionInput
+            #autocompleteTrigger="matAutocompleteTrigger"
             [formControl]="formCtrl"
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
@@ -26,7 +27,7 @@
             [attr.aria-label]="placeholder | translate"
             class="adf-search-properties-file-input"
             (matChipInputTokenEnd)="add($event)"
-            (blur)="activeAnyOption = false"
+            (blur)="activeAnyOption = false; autocompleteTrigger.closePanel()"
             data-automation-id="adf-search-chip-autocomplete-input">
     </mat-chip-grid>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" id="adf-search-chip-autocomplete"

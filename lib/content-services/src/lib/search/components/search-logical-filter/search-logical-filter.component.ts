@@ -29,7 +29,7 @@ export enum LogicalSearchFields {
     MATCH_EXACT = 'matchExact'
 }
 
-export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string; };
+export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string };
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {}
 
@@ -55,20 +55,16 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
         this.clearSearchInputs();
     }
 
-    onInputChange() {
-        this.updateDisplayValue();
-    }
-
     submitValues() {
         if (this.hasValidValue() && this.id && this.context && this.settings && this.settings.field) {
             this.updateDisplayValue();
-            const fields = this.settings.field.split(',').map((field) => field += ':');
+            const fields = this.settings.field.split(',').map((field) => (field += ':'));
             let query = '';
             Object.keys(this.searchCondition).forEach((key) => {
                 if (this.searchCondition[key] !== '') {
                     let connector = '';
                     let subQuery = '';
-                    switch(key) {
+                    switch (key) {
                         case LogicalSearchFields.MATCH_ALL:
                         case LogicalSearchFields.MATCH_EXACT:
                             connector = 'AND';
@@ -88,12 +84,16 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
                         if (key === LogicalSearchFields.MATCH_EXACT) {
                             fieldQuery += field + '"' + this.searchCondition[key].trim() + '"';
                         } else {
-                            this.searchCondition[key].split(' ').filter((condition: string) => condition !== '').forEach((phrase: string) => {
-                                const refinedPhrase = '"' + phrase + '"';
-                                fieldQuery += fieldQuery === '(' ?
-                                    `${key === LogicalSearchFields.EXCLUDE ? 'NOT ' : ''}${field}${refinedPhrase}` :
-                                    ` ${connector} ${field}${refinedPhrase}`;
-                            });
+                            this.searchCondition[key]
+                                .split(' ')
+                                .filter((condition: string) => condition !== '')
+                                .forEach((phrase: string) => {
+                                    const refinedPhrase = '"' + phrase + '"';
+                                    fieldQuery +=
+                                        fieldQuery === '('
+                                            ? `${key === LogicalSearchFields.EXCLUDE ? 'NOT ' : ''}${field}${refinedPhrase}`
+                                            : ` ${connector} ${field}${refinedPhrase}`;
+                                });
                         }
                         subQuery += `${fieldQuery})`;
                     });
@@ -103,6 +103,8 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
             });
             this.context.queryFragments[this.id] = query;
             this.context.update();
+        } else {
+            this.reset();
         }
     }
 
