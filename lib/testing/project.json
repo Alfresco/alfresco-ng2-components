@@ -5,27 +5,17 @@
   "projectType": "library",
   "prefix": "adf",
   "targets": {
+
     "build": {
-      "executor": "@nx/webpack:webpack",
+      "executor": "@angular-devkit/build-angular:ng-packagr",
       "options": {
-        "projectRoot": "lib/testing",
-        "outputPath": "dist/libs/testing",
-        "main": "lib/testing/index.ts",
-        "generatePackageJson": true,
-        "tsConfig": "lib/testing/tsconfig.lib.prod.json",
-        "stylePreprocessorOptions": {
-          "includePaths": ["lib", "lib/core/src/lib"]
-        },
-        "target": "node",
-        "compiler": "tsc"
+        "tsConfig": "lib/testing/tsconfig.lib.json",
+        "project": "lib/testing/ng-package.json"
       },
       "configurations": {
         "production": {
-          "projectRoot": "lib/testing",
-          "outputPath": "dist/libs/testing",
-          "main": "lib/testing/index.ts",
-          "generatePackageJson": true,
-          "tsConfig": "lib/testing/tsconfig.lib.prod.json"
+          "project": "lib/testing/ng-package.json",
+          "tsConfig": "lib/testing/tsconfig.prod.json"
         }
       },
       "defaultConfiguration": "production"
