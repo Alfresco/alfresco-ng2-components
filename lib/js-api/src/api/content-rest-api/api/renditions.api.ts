@@ -30,7 +30,7 @@ export class RenditionsApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param renditionBodyCreate The rendition \"id\".
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     createRendition(nodeId: string, renditionBodyCreate: RenditionBodyCreate): Promise<any> {
         throwIfNotDefined(nodeId, 'nodeId');

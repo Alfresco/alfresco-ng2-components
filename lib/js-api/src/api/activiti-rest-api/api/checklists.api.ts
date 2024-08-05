@@ -73,7 +73,7 @@ export class ChecklistsApi extends BaseApi {
      *
      * @param taskId taskId
      * @param orderRepresentation orderRepresentation
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     orderChecklist(taskId: string, orderRepresentation: ChecklistOrderRepresentation): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');

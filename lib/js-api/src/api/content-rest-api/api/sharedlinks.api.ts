@@ -61,7 +61,7 @@ export class SharedlinksApi extends BaseApi {
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
      * @param sharedId The identifier of a shared link to a file.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteSharedLink(sharedId: string): Promise<void> {
         throwIfNotDefined(sharedId, 'sharedId');
@@ -83,7 +83,7 @@ export class SharedlinksApi extends BaseApi {
      *
      * @param sharedId The identifier of a shared link to a file.
      * @param sharedLinkBodyEmail The shared link email to send.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     emailSharedLink(sharedId: string, sharedLinkBodyEmail: SharedLinkBodyEmail): Promise<any> {
         throwIfNotDefined(sharedId, 'sharedId');

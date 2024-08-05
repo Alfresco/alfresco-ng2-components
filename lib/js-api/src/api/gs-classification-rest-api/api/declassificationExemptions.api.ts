@@ -44,7 +44,7 @@ export class DeclassificationExemptionsApi extends BaseApi {
      * You can't delete a classification exemption that is being used to classify content.
      *
      * @param declassificationExemptionId The identifier for the declassification exemption
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteDeclassificationExemption(declassificationExemptionId: string): Promise<void> {
         throwIfNotDefined(declassificationExemptionId, 'declassificationExemptionId');

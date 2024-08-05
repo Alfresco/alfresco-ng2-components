@@ -42,7 +42,7 @@ export class AuditApi extends BaseApi {
      * @param where Audit entries to permanently delete for an audit application, given an inclusive time period or range of ids. For example:
      * - where=(createdAt BETWEEN ('2017-06-02T12:13:51.593+01:00' , '2017-06-04T10:05:16.536+01:00')
      * - where=(id BETWEEN ('1234', '4321')
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteAuditEntriesForAuditApp(auditApplicationId: string, where: string): Promise<void> {
         throwIfNotDefined(auditApplicationId, 'auditApplicationId');
@@ -71,7 +71,7 @@ export class AuditApi extends BaseApi {
      *
      * @param auditApplicationId The identifier of an audit application.
      * @param auditEntryId The identifier of an audit entry.
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteAuditEntry(auditApplicationId: string, auditEntryId: string): Promise<void> {
         throwIfNotDefined(auditApplicationId, 'auditApplicationId');
@@ -228,7 +228,11 @@ export class AuditApi extends BaseApi {
             ContentIncludeQuery
     ): Promise<AuditEntryPaging> {
         throwIfNotDefined(auditApplicationId, 'auditApplicationId');
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             auditApplicationId
@@ -286,7 +290,11 @@ export class AuditApi extends BaseApi {
             ContentFieldsQuery
     ): Promise<AuditEntryPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             nodeId

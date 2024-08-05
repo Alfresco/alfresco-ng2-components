@@ -63,7 +63,7 @@ export class RecordFoldersApi extends BaseApi {
      * Deleted file plan components cannot be recovered, they are deleted permanently.
      *
      * @param recordFolderId The identifier of a record folder.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteRecordFolder(recordFolderId: string): Promise<void> {
         throwIfNotDefined(recordFolderId, 'recordFolderId');
