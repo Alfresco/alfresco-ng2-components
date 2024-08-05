@@ -31,4 +31,6 @@ export interface OauthConfigModel {
     redirectSilentIframeUri?: string;
     refreshTokenTimeout?: number;
     publicUrls: string[];
+    clockSkewInSec?: number;
+    sessionChecksEnabled?: boolean;
 }
