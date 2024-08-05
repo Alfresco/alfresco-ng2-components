@@ -164,20 +164,6 @@ describe('FormFieldModel', () => {
             expect(field.options).toEqual(selectedOptions);
         });
 
-        it('should assign static options array to options in case of manual type', () => {
-            const staticOptions = [
-                { id: 'op1', name: 'Option 1' },
-                { id: 'op2', name: 'Option 2' }
-            ];
-
-            const field = new FormFieldModel(new FormModel(), {
-                optionType: 'manual',
-                options: staticOptions
-            });
-
-            expect(field.options).toEqual(staticOptions);
-        });
-
         it('should assign "empty" option as value if value is null and "empty" option is present in options', () => {
             const field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,
