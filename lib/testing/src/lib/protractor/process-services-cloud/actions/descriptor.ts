@@ -23,7 +23,6 @@ import { ApiUtil } from '../../../shared/api/api.util';
 import { ApiService } from '../../../shared/api/api.service';
 
 export class Descriptor {
-
     requestApiHelper: E2eRequestApiHelper;
     endPoint = `deployment-service/v1/descriptors/`;
 
@@ -61,6 +60,7 @@ export class Descriptor {
                 return this.requestApiHelper.delete(`${this.endPoint}${name}`);
             } catch (error) {
                 Logger.error(`[Descriptor] Delete descriptor ${name} failed with error: ${error.message}`);
+                return null;
             }
         };
         return ApiUtil.waitForApi(apiCall, isDescriptorDeleted, 10, 15000);
