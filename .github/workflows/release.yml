@@ -1,15 +1,7 @@
 name: "release"
 
 on:
-  workflow_call:
-    inputs:
-      dry-run-flag:
-        description: 'enable dry-run on artifact push'
-        required: false
-        type: boolean
-        default: true
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - develop
       - master
@@ -243,7 +235,6 @@ jobs:
       name: Final Results
       needs: [release-demoshell, release-storybook, release-npm, npm-check-bundle]
       steps:
-
         - uses: slackapi/slack-github-action@70cd7be8e40a46e8b0eced40b0de447bdb42f68e # v1.26.0
           name: Nofify FE eng-guild-front-end workflow failed
           if: ${{ contains(toJson(needs.*.result), 'failure') }}
@@ -251,4 +242,4 @@ jobs:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           with:
             channel-id: 'C016SMNNL8L' #eng-guild-front-end
-            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author: name:${{ github.event.pusher.name }} username:${{ github.event.pusher.username }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
+            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author username: ${{ github.event.pusher.name }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
