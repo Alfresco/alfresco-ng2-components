@@ -1,13 +1,6 @@
 name: "release"
 
 on:
-  workflow_call:
-    inputs:
-      dry-run-flag:
-        description: 'enable dry-run on artifact push'
-        required: false
-        type: boolean
-        default: true
   push:
     branches:
       - develop
@@ -86,6 +79,7 @@ env:
 jobs:
   setup:
     timeout-minutes: 20
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     name: "Setup"
     runs-on: ubuntu-latest
     steps:
@@ -108,6 +102,7 @@ jobs:
   release-demoshell:
     needs: [setup]
     timeout-minutes: 15
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -133,6 +128,7 @@ jobs:
   release-storybook:
     needs: [setup]
     timeout-minutes: 15
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -159,6 +155,7 @@ jobs:
   release-npm:
     needs: [setup]
     timeout-minutes: 30
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -225,6 +222,7 @@ jobs:
   npm-check-bundle:
     needs: [release-npm]
     timeout-minutes: 15
+    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
