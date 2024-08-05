@@ -32,6 +32,7 @@ adf-file-uploading-list-row:not(:first-child) {
         line-height: 40px;
         height: 40px;
         align-items: center;
+        padding: 0 12px;
     }
 
     &__group--toggle {
@@ -48,6 +49,7 @@ adf-file-uploading-list-row:not(:first-child) {
 
     &__status--error {
         color: var(--theme-warn-color);
+        padding: 0 12px;
     }
 
     &__action--cancel {
