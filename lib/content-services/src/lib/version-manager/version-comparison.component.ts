@@ -38,5 +38,5 @@ export class VersionComparisonComponent {
     @Input()
     newFileVersion: File;
 
-    constructor(public thumbnailService: ThumbnailService) {}
+    constructor(public thumbnailService: ThumbnailService) { /* empty */ }
 }

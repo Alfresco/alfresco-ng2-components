@@ -36,7 +36,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance = exampleProcess;
 
         appConfigService = TestBed.inject(AppConfigService);
-        appConfigService.config['adf-process-instance-header'] = {};
+        appConfigService.config['adf-process-instance-header'] = { /* empty */ };
     });
 
     it('should render empty component if no process details provided', () => {
@@ -177,7 +177,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         });
 
         it('should show all the default properties if there is no configuration', async () => {
-            appConfigService.config['adf-process-instance-header'] = {};
+            appConfigService.config['adf-process-instance-header'] = { /* empty */ };
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();

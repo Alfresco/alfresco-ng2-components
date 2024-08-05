@@ -274,7 +274,7 @@ describe('RadioButtonsWidgetComponent', () => {
         });
 
         it('should show Radio Buttons as text when is readonly', async () => {
-            radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+            radioButtonWidget.field = new FormFieldModel(new FormModel({ /* empty */ }), {
                 id: 'radio-id',
                 name: 'radio-name',
                 type: FormFieldTypes.RADIO_BUTTONS,
@@ -286,7 +286,7 @@ describe('RadioButtonsWidgetComponent', () => {
         });
 
         it('should be able to set label property for Radio Buttons widget', () => {
-            radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+            radioButtonWidget.field = new FormFieldModel(new FormModel({ /* empty */ }), {
                 id: 'radio-id',
                 name: 'radio-name-label',
                 type: FormFieldTypes.RADIO_BUTTONS,
@@ -297,7 +297,7 @@ describe('RadioButtonsWidgetComponent', () => {
         });
 
         it('should be able to set a Radio Buttons widget as required', async () => {
-            radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+            radioButtonWidget.field = new FormFieldModel(new FormModel({ /* empty */ }), {
                 id: 'radio-id',
                 name: 'radio-name-label',
                 type: FormFieldTypes.RADIO_BUTTONS,
@@ -322,7 +322,7 @@ describe('RadioButtonsWidgetComponent', () => {
         });
 
         it('should be able to set another Radio Buttons widget as required', async () => {
-            radioButtonWidget.field = new FormFieldModel(new FormModel({}), {
+            radioButtonWidget.field = new FormFieldModel(new FormModel({ /* empty */ }), {
                 id: 'radio-id',
                 name: 'radio-name-label',
                 type: FormFieldTypes.RADIO_BUTTONS,

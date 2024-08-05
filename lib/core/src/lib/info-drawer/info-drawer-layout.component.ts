@@ -40,16 +40,16 @@ export class InfoDrawerLayoutComponent {
     selector: '[adf-info-drawer-title], [info-drawer-title]',
     standalone: true
 })
-export class InfoDrawerTitleDirective {}
+export class InfoDrawerTitleDirective { /* empty */ }
 
 @Directive({
     selector: '[adf-info-drawer-buttons], [info-drawer-buttons]',
     standalone: true
 })
-export class InfoDrawerButtonsDirective {}
+export class InfoDrawerButtonsDirective { /* empty */ }
 
 @Directive({
     selector: '[adf-info-drawer-content], [info-drawer-content]',
     standalone: true
 })
-export class InfoDrawerContentDirective {}
+export class InfoDrawerContentDirective { /* empty */ }

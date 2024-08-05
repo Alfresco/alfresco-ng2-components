@@ -28,4 +28,4 @@ export const CONTENT_PIPES = [NodeNameTooltipPipe] as const;
     providers: [...CONTENT_PIPES],
     exports: [...CONTENT_PIPES]
 })
-export class ContentPipeModule {}
+export class ContentPipeModule { /* empty */ }

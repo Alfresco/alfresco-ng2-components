@@ -33,4 +33,4 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './unsaved-changes-dialog.component.html',
     styleUrls: ['./unsaved-changes-dialog.component.scss']
 })
-export class UnsavedChangesDialogComponent {}
+export class UnsavedChangesDialogComponent { /* empty */ }

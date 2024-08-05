@@ -61,4 +61,4 @@ export const VIEWER_DIRECTIVES = [
     imports: [...VIEWER_DIRECTIVES],
     exports: [...VIEWER_DIRECTIVES]
 })
-export class ViewerModule {}
+export class ViewerModule { /* empty */ }

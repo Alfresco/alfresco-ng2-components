@@ -35,7 +35,7 @@ export class SearchSortingPickerComponent implements OnInit {
     value: string;
     ascending: boolean;
 
-    constructor(private queryBuilder: SearchQueryBuilderService) {}
+    constructor(private queryBuilder: SearchQueryBuilderService) { /* empty */ }
 
     ngOnInit() {
         this.options = this.queryBuilder.getSortingOptions();

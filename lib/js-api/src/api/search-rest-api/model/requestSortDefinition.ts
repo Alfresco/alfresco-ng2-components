@@ -20,4 +20,4 @@ import { RequestSortDefinitionInner } from './requestSortDefinitionInner';
 /**
  * How to sort the rows? An array of sort specifications. The array order defines the ordering precedence.
  */
-export interface RequestSortDefinition extends Array<RequestSortDefinitionInner> {}
+export interface RequestSortDefinition extends Array<RequestSortDefinitionInner> { /* empty */ }

@@ -43,4 +43,4 @@ export const CONTENT_UPLOAD_DIRECTIVES = [
     imports: [...CONTENT_UPLOAD_DIRECTIVES],
     exports: [...CONTENT_UPLOAD_DIRECTIVES]
 })
-export class UploadModule {}
+export class UploadModule { /* empty */ }

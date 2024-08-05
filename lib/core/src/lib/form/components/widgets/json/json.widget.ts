@@ -46,7 +46,7 @@ export class JsonWidgetComponent extends WidgetComponent {
 
     view() {
         const rawValue = this.field.value;
-        const value = typeof rawValue === 'object' ? JSON.stringify(rawValue || {}, null, 2) : rawValue;
+        const value = typeof rawValue === 'object' ? JSON.stringify(rawValue || { /* empty */ }, null, 2) : rawValue;
 
         const settings: EditJsonDialogSettings = {
             title: this.field.name,

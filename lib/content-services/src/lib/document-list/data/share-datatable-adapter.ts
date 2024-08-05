@@ -241,7 +241,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             return;
         }
 
-        const options: Intl.CollatorOptions = {};
+        const options: Intl.CollatorOptions = { /* empty */ };
 
         if (sorting?.key && rows?.length) {
 

@@ -76,7 +76,7 @@ describe('AnalyticsReportHeatMapComponent', () => {
         });
 
         it('should return false when no metrics are defined in the report', () => {
-            component.report = {};
+            component.report = { /* empty */ };
             expect(component.hasMetric()).toBeFalsy();
         });
 

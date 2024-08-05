@@ -37,7 +37,7 @@ export class ContextMenuOverlayService {
     constructor(
         private injector: Injector,
         private overlay: Overlay
-    ) {}
+    ) { /* empty */ }
 
     open(config: ContextMenuOverlayConfig): ContextMenuOverlayRef {
         const overlayConfig = { ...DEFAULT_CONFIG, ...config };

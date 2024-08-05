@@ -43,4 +43,4 @@ import { ViewerComponent } from '../viewer.component';
         </adf-viewer>
     `
 })
-export class ViewerWithCustomMoreActionsComponent {}
+export class ViewerWithCustomMoreActionsComponent { /* empty */ }

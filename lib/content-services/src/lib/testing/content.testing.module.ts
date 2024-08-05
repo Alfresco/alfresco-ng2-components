@@ -60,4 +60,4 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
     ],
     exports: [NoopAnimationsModule, TranslateModule, CoreModule, ContentModule]
 })
-export class ContentTestingModule {}
+export class ContentTestingModule { /* empty */ }

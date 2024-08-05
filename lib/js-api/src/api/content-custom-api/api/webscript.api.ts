@@ -62,10 +62,10 @@ export class WebscriptApi extends BaseApi {
         return this.apiClient.callApi(
             '/' + servicePath + '/' + scriptPath,
             httpMethod,
-            {},
+            { /* empty */ },
             scriptArgs,
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
             postBody,
             contentTypes,
             accepts,

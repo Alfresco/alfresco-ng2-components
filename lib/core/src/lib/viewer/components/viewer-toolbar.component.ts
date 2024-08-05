@@ -25,4 +25,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     host: { class: 'adf-viewer-toolbar' },
     template: `<ng-content></ng-content>`
 })
-export class ViewerToolbarComponent {}
+export class ViewerToolbarComponent { /* empty */ }

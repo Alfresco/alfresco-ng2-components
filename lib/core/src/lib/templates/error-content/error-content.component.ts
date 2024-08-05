@@ -44,7 +44,7 @@ export class ErrorContentComponent implements OnInit {
     errorCodeTranslated: string;
     isSmallScreen$: Observable<boolean>;
 
-    constructor(private route: ActivatedRoute, private translateService: TranslationService, private breakpointObserver: BreakpointObserver) {}
+    constructor(private route: ActivatedRoute, private translateService: TranslationService, private breakpointObserver: BreakpointObserver) { /* empty */ }
 
     ngOnInit() {
         if (this.route) {

@@ -27,7 +27,7 @@ import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+
 /**
  * The default extensions factory
  *
@@ -47,7 +47,7 @@ export const EXTENSION_JSON_VALUES = new InjectionToken<string[][]>('extension-j
     factory: extensionJsonsFactory
 });
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+
 /**
  * Provides the extension json values for the angular modules
  *
@@ -86,7 +86,7 @@ export class ExtensionService {
     routes: Array<RouteRef> = [];
     actions: Array<ActionRef> = [];
     features: Array<any> = [];
-    authGuards: { [key: string]: Type<any> } = {};
+    authGuards: { [key: string]: Type<any> } = { /* empty */ };
 
     setup$: Observable<ExtensionConfig>;
 
@@ -179,7 +179,7 @@ export class ExtensionService {
      */
     setAuthGuards(values: { [key: string]: Type<any> }) {
         if (values) {
-            this.authGuards = Object.assign({}, this.authGuards, values);
+            this.authGuards = Object.assign({ /* empty */ }, this.authGuards, values);
         }
     }
 
@@ -276,7 +276,7 @@ export class ExtensionService {
         if (typeof value === 'string' ) {
             return this.evaluateExpression(value, context);
         } else {
-            const duplicate = Object.assign({}, value);
+            const duplicate = Object.assign({ /* empty */ }, value);
             Object.keys(duplicate).forEach( (key) => {
                 duplicate[key] = this.evaluateExpression(duplicate[key], context);
             });

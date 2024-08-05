@@ -23,18 +23,18 @@ import { AdfHttpClient } from './adf-http-client.service';
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 
 const securityOptions: SecurityOptions = {
-    authentications: {},
-    defaultHeaders: {},
+    authentications: { /* empty */ },
+    defaultHeaders: { /* empty */ },
     isBpmRequest: false,
     enableCsrf: true,
     withCredentials: false
 };
 
 const emitter = {
-    emit: () => {},
-    off: () => {},
-    on: () => {},
-    once: () => {}
+    emit: () => { /* empty */ },
+    off: () => { /* empty */ },
+    on: () => { /* empty */ },
+    once: () => { /* empty */ }
 };
 
 const emitters: Emitters = {

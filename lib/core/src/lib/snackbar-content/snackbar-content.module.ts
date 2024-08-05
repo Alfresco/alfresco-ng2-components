@@ -38,4 +38,4 @@ import { TranslateModule } from '@ngx-translate/core';
         SnackbarContentComponent
     ]
 })
-export class SnackbarContentModule {}
+export class SnackbarContentModule { /* empty */ }

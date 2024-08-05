@@ -154,7 +154,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
-    changedProperties = {};
+    changedProperties = { /* empty */ };
     hasMetadataChanged = false;
     assignedCategories: Category[] = [];
     categories: Category[] = [];
@@ -238,7 +238,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         try {
             statusCode = JSON.parse(error.message).error.statusCode;
-        } catch {}
+        } catch { /* empty */ }
 
         let message = `METADATA.ERRORS.${statusCode}`;
 
@@ -327,7 +327,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     revertChanges() {
-        this.changedProperties = {};
+        this.changedProperties = { /* empty */ };
         this.hasMetadataChanged = false;
     }
 
@@ -393,8 +393,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private updateNode() {
         forkJoin({
             updatedNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
-            ...(this.displayTags ? this.saveTags() : {}),
-            ...(this.displayCategories ? this.saveCategories() : {})
+            ...(this.displayTags ? this.saveTags() : { /* empty */ }),
+            ...(this.displayCategories ? this.saveCategories() : { /* empty */ })
         })
             .pipe(
                 catchError((err) => {
@@ -433,7 +433,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private updateUndefinedNodeProperties(node: Node): void {
         if (!node.properties) {
-            node.properties = {};
+            node.properties = { /* empty */ };
         }
     }
 
@@ -492,7 +492,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private saveCategories(): { [key: string]: Observable<CategoryPaging | CategoryEntry | void> } {
-        const observables: { [key: string]: Observable<CategoryPaging | CategoryEntry | void> } = {};
+        const observables: { [key: string]: Observable<CategoryPaging | CategoryEntry | void> } = { /* empty */ };
         if (this.categories) {
             this.assignedCategories.forEach((assignedCategory) => {
                 if (this.categories.every((category) => category.name !== assignedCategory.name)) {
@@ -520,7 +520,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private saveTags(): { [key: string]: Observable<TagPaging | TagEntry | void> } {
-        const observables: { [key: string]: Observable<TagPaging | TagEntry | void> } = {};
+        const observables: { [key: string]: Observable<TagPaging | TagEntry | void> } = { /* empty */ };
         if (this.tags) {
             this.assignedTagsEntries.forEach((tagEntry) => {
                 if (!this.tags.some((tag) => tagEntry.entry.tag === tag)) {

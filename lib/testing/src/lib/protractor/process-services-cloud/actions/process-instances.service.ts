@@ -31,7 +31,7 @@ export class ProcessInstancesService {
             const path = '/' + appName + '/rb/v1/process-instances';
             const method = 'POST';
 
-            const queryParams = {};
+            const queryParams = { /* empty */ };
             const postBody = {
                 processDefinitionKey: processDefKey,
                 payloadType: 'StartProcessPayload',
@@ -52,8 +52,8 @@ export class ProcessInstancesService {
             const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/suspend';
             const method = 'POST';
 
-            const queryParams = {};
-            const postBody = {};
+            const queryParams = { /* empty */ };
+            const postBody = { /* empty */ };
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
@@ -67,8 +67,8 @@ export class ProcessInstancesService {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId;
             const method = 'DELETE';
-            const queryParams = {};
-            const postBody = {};
+            const queryParams = { /* empty */ };
+            const postBody = { /* empty */ };
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 
@@ -82,8 +82,8 @@ export class ProcessInstancesService {
         try {
             const path = '/' + appName + '/rb/v1/process-instances/' + processInstanceId + '/complete';
             const method = 'POST';
-            const queryParams = {};
-            const postBody = {};
+            const queryParams = { /* empty */ };
+            const postBody = { /* empty */ };
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 

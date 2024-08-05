@@ -49,7 +49,7 @@ export class ActivitiContentService {
         return this._contentApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private sitesService: SitesService) {}
+    constructor(private apiService: AlfrescoApiService, private sitesService: SitesService) { /* empty */ }
 
     /**
      * Returns a list of child nodes below the specified folder
@@ -102,7 +102,7 @@ export class ActivitiContentService {
                 sourceId: node.id + '@' + siteId
             })
         ).pipe(
-            map((res) => res || {}),
+            map((res) => res || { /* empty */ }),
             catchError((err) => this.handleError(err))
         );
     }
@@ -117,7 +117,7 @@ export class ActivitiContentService {
             link: node.isLink
         };
         return from(this.contentApi.createTemporaryRelatedContent(params)).pipe(
-            map((res) => res || {}),
+            map((res) => res || { /* empty */ }),
             catchError((err) => this.handleError(err))
         );
     }

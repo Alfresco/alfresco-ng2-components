@@ -58,7 +58,7 @@ export class LibraryFavoriteDirective implements OnChanges {
         }
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.library.currentValue) {

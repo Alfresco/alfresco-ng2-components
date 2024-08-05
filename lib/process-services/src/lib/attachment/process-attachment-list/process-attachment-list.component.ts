@@ -105,7 +105,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         private downloadService: DownloadService,
         private thumbnailService: ThumbnailService,
         private ngZone: NgZone
-    ) {}
+    ) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['processInstanceId']?.currentValue) {

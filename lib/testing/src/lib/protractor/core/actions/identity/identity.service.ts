@@ -30,7 +30,7 @@ export class IdentityService {
         ACTIVITI_IDENTITY: 'ACTIVITI_IDENTITY'
     };
 
-    constructor(public api: ApiService) {}
+    constructor(public api: ApiService) { /* empty */ }
 
     async createIdentityUserWithRole(roles: string[]): Promise<any> {
         const rolesService = new RolesService(this.api);
@@ -62,7 +62,7 @@ export class IdentityService {
             const path = '/users';
             const method = 'POST';
 
-            const queryParams = {};
+            const queryParams = { /* empty */ };
             const postBody = {
                 username: user.username,
                 firstName: user.firstName,
@@ -80,8 +80,8 @@ export class IdentityService {
     async deleteUser(userId: string): Promise<any> {
         const path = `/users/${userId}`;
         const method = 'DELETE';
-        const queryParams = {};
-        const postBody = {};
+        const queryParams = { /* empty */ };
+        const postBody = { /* empty */ };
 
         const deletePromise = this.api.performIdentityOperation(path, method, queryParams, postBody);
 
@@ -96,7 +96,7 @@ export class IdentityService {
         const path = `/users`;
         const method = 'GET';
         const queryParams = { username };
-        const postBody = {};
+        const postBody = { /* empty */ };
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0];
@@ -105,7 +105,7 @@ export class IdentityService {
     async resetPassword(id: string, password: string): Promise<any> {
         const path = `/users/${id}/reset-password`;
         const method = 'PUT';
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = { type: 'password', value: password, temporary: false };
 
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
@@ -117,7 +117,7 @@ export class IdentityService {
         try {
             const path = `/users/${userId}/groups/${groupId}`;
             const method = 'PUT';
-            const queryParams = {};
+            const queryParams = { /* empty */ };
             const postBody = { realm: 'alfresco', userId, groupId };
 
             return this.api.performIdentityOperation(path, method, queryParams, postBody);
@@ -129,7 +129,7 @@ export class IdentityService {
     async assignRole(userId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/users/${userId}/role-mappings/realm`;
         const method = 'POST';
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = [{ id: roleId, name: roleName }];
 
         return this.api.performIdentityOperation(path, method, queryParams, postBody);
@@ -138,7 +138,7 @@ export class IdentityService {
     async deleteClientRole(userId: string, clientId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/users/${userId}/role-mappings/clients/${clientId}`;
         const method = 'DELETE';
-        const queryParams = {};
+        const queryParams = { /* empty */ };
             const postBody = [{
                 id: roleId,
                 name: roleName,

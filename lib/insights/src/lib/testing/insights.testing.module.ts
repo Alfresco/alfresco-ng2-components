@@ -39,4 +39,4 @@ import {
     ],
     exports: [NoopAnimationsModule, TranslateModule, CoreModule, InsightsModule]
 })
-export class InsightsTestingModule {}
+export class InsightsTestingModule { /* empty */ }

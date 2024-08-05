@@ -83,7 +83,7 @@ export class HostSettingsComponent implements OnInit {
         private alfrescoApiService: AlfrescoApiService,
         private appConfig: AppConfigService,
         private authenticationService: AuthenticationService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         if (this.providers.length === 1) {

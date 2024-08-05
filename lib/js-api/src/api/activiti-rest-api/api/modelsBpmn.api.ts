@@ -27,7 +27,7 @@ export class ModelsBpmnApi extends BaseApi {
      *
      * @param processModelId processModelId
      * @param processModelHistoryId processModelHistoryId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     getHistoricProcessModelBpmn20Xml(processModelId: number, processModelHistoryId: number): Promise<any> {
         throwIfNotDefined(processModelId, 'processModelId');
@@ -51,7 +51,7 @@ export class ModelsBpmnApi extends BaseApi {
      * Export a process definition as BPMN 2.0 XML
      *
      * @param processModelId processModelId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     getProcessModelBpmn20Xml(processModelId: number): Promise<any> {
         throwIfNotDefined(processModelId, 'processModelId');

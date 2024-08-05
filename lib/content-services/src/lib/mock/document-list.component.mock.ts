@@ -36,7 +36,7 @@ export const fakeNodeWithCreatePermission = new Node({
     modifiedByUser: { id: 'Test', displayName: 'Test' },
     name: 'Test',
     id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
-    properties: {},
+    properties: { /* empty */ },
     allowableOperations: ['delete', 'update', 'create']
 });
 
@@ -60,7 +60,7 @@ export const fakeNodeWithNoPermission = new Node({
     modifiedByUser: { id: 'Test', displayName: 'Test' },
     name: 'Test',
     id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
-    properties: {}
+    properties: { /* empty */ }
 });
 
 export const fakeNodeAnswerWithEntries = {

@@ -23,4 +23,4 @@ import { AlfrescoViewerComponent } from './components/alfresco-viewer.component'
     imports: [AlfrescoViewerComponent],
     exports: [AlfrescoViewerComponent]
 })
-export class AlfrescoViewerModule {}
+export class AlfrescoViewerModule { /* empty */ }

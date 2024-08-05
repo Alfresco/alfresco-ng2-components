@@ -29,7 +29,7 @@ export class NoContentTemplateDirective implements AfterContentInit {
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private dataTable: DataTableComponent) {}
+    constructor(private dataTable: DataTableComponent) { /* empty */ }
 
     ngAfterContentInit() {
         if (this.dataTable) {

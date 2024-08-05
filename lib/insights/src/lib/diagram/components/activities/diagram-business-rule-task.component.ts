@@ -28,4 +28,4 @@ import { DiagramIconBusinessRuleTaskComponent } from '../icons/diagram-icon-busi
     imports: [DiagramTaskComponent, DiagramIconBusinessRuleTaskComponent],
     templateUrl: './diagram-business-rule-task.component.html'
 })
-export class DiagramBusinessRuleTaskComponent extends DiagramElement {}
+export class DiagramBusinessRuleTaskComponent extends DiagramElement { /* empty */ }

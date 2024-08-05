@@ -16,5 +16,5 @@
  */
 
 export class LoginErrorEvent {
-    constructor(public err: any) {}
+    constructor(public err: any) { /* empty */ }
 }

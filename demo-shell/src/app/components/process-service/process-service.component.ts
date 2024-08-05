@@ -250,7 +250,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     applyTaskFilter(filter: UserTaskFilterRepresentation) {
-        this.taskFilter = Object.assign({}, filter);
+        this.taskFilter = Object.assign({ /* empty */ }, filter);
 
         if (filter && this.taskList) {
             this.taskList.hasCustomDataSource = false;

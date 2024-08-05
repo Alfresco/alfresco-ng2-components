@@ -23,11 +23,11 @@ export interface ExtensionComponent {
 
 @Injectable({ providedIn: 'root' })
 export class ComponentRegisterService {
-    components: { [key: string]: Type<any> } = {};
+    components: { [key: string]: Type<any> } = { /* empty */ };
 
     setComponents(values: { [key: string]: Type<any> }) {
         if (values) {
-            this.components = Object.assign({}, this.components, values);
+            this.components = Object.assign({ /* empty */ }, this.components, values);
         }
     }
 

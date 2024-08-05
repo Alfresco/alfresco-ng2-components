@@ -35,7 +35,7 @@ export class ProcessDefinitionService {
         return this._processDefinitionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.
@@ -70,9 +70,9 @@ export class ProcessDefinitionService {
      */
     toJson(res: any) {
         if (res) {
-            return res || {};
+            return res || { /* empty */ };
         }
-        return {};
+        return { /* empty */ };
     }
 
     /**

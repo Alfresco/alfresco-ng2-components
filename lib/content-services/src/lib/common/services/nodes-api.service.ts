@@ -43,7 +43,7 @@ export class NodesApiService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
+    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) { /* empty */ }
 
     private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;
@@ -56,7 +56,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Node information
      */
-    getNode(nodeId: string, options: any = {}): Observable<Node> {
+    getNode(nodeId: string, options: any = { /* empty */ }): Observable<Node> {
         const defaults = {
             include: ['path', 'properties', 'allowableOperations', 'permissions']
         };
@@ -75,7 +75,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns List of child items from the folder
      */
-    getNodeChildren(nodeId: string, options: any = {}): Observable<NodePaging> {
+    getNodeChildren(nodeId: string, options: any = { /* empty */ }): Observable<NodePaging> {
         const defaults = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
@@ -94,7 +94,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Details of the new node
      */
-    createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
+    createNode(parentNodeId: string, nodeBody: any, options: any = { /* empty */ }): Observable<Node> {
         return from(this.nodesApi.createNode(parentNodeId, nodeBody, options)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
@@ -109,7 +109,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Details of the new folder
      */
-    createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
+    createFolder(parentNodeId: string, nodeBody: any, options: any = { /* empty */ }): Observable<Node> {
         const body = Object.assign({ nodeType: 'cm:folder' }, nodeBody);
         return this.createNode(parentNodeId, body, options);
     }
@@ -122,7 +122,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Updated node information
      */
-    updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
+    updateNode(nodeId: string, nodeBody: any, options: any = { /* empty */ }): Observable<Node> {
         const defaults = {
             include: ['path', 'properties', 'allowableOperations', 'permissions', 'definition']
         };
@@ -141,7 +141,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Empty result that notifies when the deletion is complete
      */
-    deleteNode(nodeId: string, options: any = {}): Observable<any> {
+    deleteNode(nodeId: string, options: any = { /* empty */ }): Observable<any> {
         return from(this.nodesApi.deleteNode(nodeId, options)).pipe(catchError((err) => throwError(err)));
     }
 
@@ -221,7 +221,7 @@ export class NodesApiService {
             properties,
             relativePath: path
         };
-        return from(this.nodesApi.createNode('-root-', body, {}));
+        return from(this.nodesApi.createNode('-root-', body, { /* empty */ }));
     }
 
     /**
@@ -250,7 +250,7 @@ export class NodesApiService {
     }
 
     private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
-        const metadata = {};
+        const metadata = { /* empty */ };
 
         if (nodeEntry?.entry.properties) {
             for (const key in nodeEntry.entry.properties) {

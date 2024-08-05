@@ -34,7 +34,7 @@ export class FolderActionsService {
     error = new Subject<Error>();
     success = new Subject<string>();
 
-    private handlers: { [id: string]: ContentActionHandler } = {};
+    private handlers: { [id: string]: ContentActionHandler } = { /* empty */ };
 
     constructor(private nodeActionsService: NodeActionsService,
                 private documentListService: DocumentListService,

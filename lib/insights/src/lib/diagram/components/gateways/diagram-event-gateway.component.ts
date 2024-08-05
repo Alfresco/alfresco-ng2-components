@@ -31,8 +31,8 @@ import { RaphaelPentagonDirective } from '../raphael/raphael-pentagon.component'
     templateUrl: './diagram-event-gateway.component.html'
 })
 export class DiagramEventGatewayComponent extends DiagramElement implements OnInit {
-    center: any = {};
-    centerPentagon: any = {};
+    center: any = { /* empty */ };
+    centerPentagon: any = { /* empty */ };
     options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 0.5 };
 
     circleRadiusInner = 10.4;

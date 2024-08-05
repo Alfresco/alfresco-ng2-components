@@ -76,7 +76,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
         private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
         private translationService: TranslationService,
         private focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.category = this.searchFilterQueryBuilder.getCategoryForColumn(this.col.key);

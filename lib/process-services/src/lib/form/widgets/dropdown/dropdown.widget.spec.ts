@@ -101,7 +101,7 @@ describe('DropdownWidgetComponent', () => {
     });
 
     it('should NOT display any error when widget is readonly', () => {
-        widget.field = new FormFieldModel(new FormModel({}, undefined, false), { readOnly: true });
+        widget.field = new FormFieldModel(new FormModel({ /* empty */ }, undefined, false), { readOnly: true });
         widget.field.validationSummary = { message: 'Some error occurred' } as ErrorMessageModel;
 
         widget.ngOnInit();

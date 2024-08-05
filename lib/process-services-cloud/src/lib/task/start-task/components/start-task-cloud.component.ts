@@ -107,7 +107,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         private userPreferencesService: UserPreferencesService,
         private formBuilder: UntypedFormBuilder,
         private identityUserService: IdentityUserService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.userPreferencesService

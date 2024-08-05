@@ -35,7 +35,7 @@ export class InfiniteSelectScrollDirective implements AfterViewInit, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
     private itemHeightToWaitBeforeLoadNext = 0;
 
-    constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
+    constructor(@Inject(MatSelect) private matSelect: MatSelect) { /* empty */ }
 
     ngAfterViewInit() {
         this.matSelect.openedChange.pipe(takeUntil(this.onDestroy$)).subscribe((opened: boolean) => {

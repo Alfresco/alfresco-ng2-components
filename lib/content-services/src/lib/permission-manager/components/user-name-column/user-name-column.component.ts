@@ -49,7 +49,7 @@ export class UserNameColumnComponent implements OnInit {
     displayText$ = new BehaviorSubject<string>('');
     subTitleText$ = new BehaviorSubject<string>('');
 
-    constructor(private nodePermissionService: NodePermissionService) {}
+    constructor(private nodePermissionService: NodePermissionService) { /* empty */ }
 
     ngOnInit() {
         if (this.context != null) {

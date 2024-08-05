@@ -100,7 +100,7 @@ describe('Upload', () => {
 
             const uploadPromise: any = uploadApi.uploadFile(file);
 
-            uploadPromise.catch(() => {});
+            uploadPromise.catch(() => { /* empty */ });
             uploadPromise.on('success', () => {
                 done();
             });
@@ -112,7 +112,7 @@ describe('Upload', () => {
             const file = createTestFileStream('testFile.txt');
 
             const uploadPromise: any = uploadApi.uploadFile(file);
-            uploadPromise.catch(() => {});
+            uploadPromise.catch(() => { /* empty */ });
             uploadPromise.on('error', () => {
                 done();
             });
@@ -125,7 +125,7 @@ describe('Upload', () => {
 
             const uploadPromise: any = uploadApi.uploadFile(file);
 
-            uploadPromise.catch(() => {});
+            uploadPromise.catch(() => { /* empty */ });
             uploadPromise.on('unauthorized', () => {
                 done();
             });
@@ -185,7 +185,7 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const uploadPromise: any = uploadApi.uploadFile(file);
-                uploadPromise.catch(() => {});
+                uploadPromise.catch(() => { /* empty */ });
                 uploadPromise.once('success', () => {
                     errorOneOk = true;
                     resolve('Resolving');
@@ -196,7 +196,7 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const uploadPromise: any = uploadApi.uploadFile(fileTwo);
-                uploadPromise.catch(() => {});
+                uploadPromise.catch(() => { /* empty */ });
                 uploadPromise.once('success', () => {
                     errorTwoOk = true;
                     resolve('Resolving');
@@ -221,7 +221,7 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const uploadPromiseOne: any = uploadApi.uploadFile(file);
-                uploadPromiseOne.catch(() => {});
+                uploadPromiseOne.catch(() => { /* empty */ });
                 uploadPromiseOne.once('success', () => {
                     successOneOk = true;
                     resolve('Resolving');
@@ -232,7 +232,7 @@ describe('Upload', () => {
                 uploadMock.get201CreationFile();
 
                 const uploadPromiseTwo: any = uploadApi.uploadFile(fileTwo);
-                uploadPromiseTwo.catch(() => {});
+                uploadPromiseTwo.catch(() => { /* empty */ });
                 uploadPromiseTwo.once('success', () => {
                     successTwoOk = true;
                     resolve('Resolving');
@@ -303,11 +303,11 @@ describe('Upload', () => {
 
             uploadMock.get401Response();
 
-            let promiseProgressOne = {};
-            let promiseProgressTwo = {};
+            let promiseProgressOne = { /* empty */ };
+            let promiseProgressTwo = { /* empty */ };
 
             const uploadPromise: any = uploadApi.uploadFile(file);
-            uploadPromise.catch(() => {});
+            uploadPromise.catch(() => { /* empty */ });
 
             uploadPromise
                 .once('error', () => {

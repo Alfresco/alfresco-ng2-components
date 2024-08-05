@@ -102,12 +102,12 @@ export class ResizableDirective implements OnInit, OnDestroy {
                 mergeMap(({ clientX = 0 }) =>
                     merge(mousemove$.pipe(take(1)).pipe(map((coords) => [undefined, coords])), mousemove$.pipe(pairwise()))
                         .pipe(
-                            map(([previousCoords = {}, newCoords = {}]) => [
+                            map(([previousCoords = { /* empty */ }, newCoords = { /* empty */ }]) => [
                                 { clientX: previousCoords.clientX - clientX },
                                 { clientX: newCoords.clientX - clientX }
                             ])
                         )
-                        .pipe(filter(([previousCoords = {}, newCoords = {}]) => Math.ceil(previousCoords.clientX) !== Math.ceil(newCoords.clientX)))
+                        .pipe(filter(([previousCoords = { /* empty */ }, newCoords = { /* empty */ }]) => Math.ceil(previousCoords.clientX) !== Math.ceil(newCoords.clientX)))
                         .pipe(
                             map(([, newCoords]) => ({
                                 clientX: Math.round(newCoords.clientX)

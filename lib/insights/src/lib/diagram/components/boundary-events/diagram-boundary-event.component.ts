@@ -31,7 +31,7 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
     templateUrl: './diagram-boundary-event.component.html'
 })
 export class DiagramBoundaryEventComponent extends DiagramElement implements OnInit {
-    center: any = {};
+    center: any = { /* empty */ };
     options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1 };
 
     signalFillColor: string;

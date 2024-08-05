@@ -249,7 +249,7 @@ describe('TaskDetailsComponent', () => {
 
         it('should emit an error event if an error occurs fetching the next task', () => {
             const emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
-            getTasksSpy.and.returnValue(throwError({}));
+            getTasksSpy.and.returnValue(throwError({ /* empty */ }));
             component.onComplete();
             expect(emitSpy).toHaveBeenCalled();
         });
@@ -279,7 +279,7 @@ describe('TaskDetailsComponent', () => {
 
         it('should emit an error event when form error occurs', () => {
             const emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
-            component.onFormError({});
+            component.onFormError({ /* empty */ });
             expect(emitSpy).toHaveBeenCalled();
         });
 
@@ -287,7 +287,7 @@ describe('TaskDetailsComponent', () => {
             const dialogEl = await loader.getHarnessOrNull(MatDialogHarness);
             expect(dialogEl).toBeNull();
 
-            component.onFormError({});
+            component.onFormError({ /* empty */ });
 
             await loader.getHarness(MatDialogHarness);
         });

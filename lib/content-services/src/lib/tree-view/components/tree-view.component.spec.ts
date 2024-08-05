@@ -41,8 +41,8 @@ describe('TreeViewComponent', () => {
     ];
 
     const fakeChildrenList: TreeBaseNode[] = [
-        { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node: {} as any },
-        { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node: {} as any }
+        { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node: { /* empty */ } as any },
+        { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node: { /* empty */ } as any }
     ];
 
     const fakeNextChildrenList: TreeBaseNode[] = [
@@ -51,14 +51,14 @@ describe('TreeViewComponent', () => {
             name: 'fake-next-child-name',
             level: 0,
             expandable: true,
-            node: {} as any
+            node: { /* empty */ } as any
         },
         {
             nodeId: 'fake-next-second-id',
             name: 'fake-next-second-name',
             level: 0,
             expandable: true,
-            node: {} as any
+            node: { /* empty */ } as any
         }
     ];
 

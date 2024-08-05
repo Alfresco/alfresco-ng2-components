@@ -28,4 +28,4 @@ import { DiagramIconBoxPublishTaskComponent } from '../icons/diagram-icon-box-pu
     imports: [DiagramTaskComponent, DiagramIconBoxPublishTaskComponent],
     templateUrl: './diagram-box-publish-task.component.html'
 })
-export class DiagramBoxPublishTaskComponent extends DiagramElement {}
+export class DiagramBoxPublishTaskComponent extends DiagramElement { /* empty */ }

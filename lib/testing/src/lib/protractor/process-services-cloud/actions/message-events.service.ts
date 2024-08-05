@@ -31,10 +31,10 @@ export class MessageEventsService {
             const path = '/' + appName + '/rb/v1/process-instances/message';
             const method = 'POST';
 
-            const queryParams = {};
+            const queryParams = { /* empty */ };
             const postBody = {
                 name: startMessage,
-                variables: {},
+                variables: { /* empty */ },
                 payloadType: 'StartMessagePayload',
                 ...options
             };
@@ -52,10 +52,10 @@ export class MessageEventsService {
             const path = '/' + appName + '/rb/v1/process-instances/message';
             const method = 'PUT';
 
-            const queryParams = {};
+            const queryParams = { /* empty */ };
             const postBody = {
                 name: receiveMessage,
-                variables: {},
+                variables: { /* empty */ },
                 payloadType: 'ReceiveMessagePayload',
                 ...options
             };

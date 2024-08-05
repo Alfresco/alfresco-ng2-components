@@ -47,8 +47,8 @@ export class FavoritesApiService {
     ) {
     }
 
-    remapFavoritesData(data: FavoritePaging = {}): NodePaging {
-        const pagination = (data?.list?.pagination || {});
+    remapFavoritesData(data: FavoritePaging = { /* empty */ }): NodePaging {
+        const pagination = (data?.list?.pagination || { /* empty */ });
         const entries: any[] = this
             .remapFavoriteEntries(data?.list?.entries || []);
 

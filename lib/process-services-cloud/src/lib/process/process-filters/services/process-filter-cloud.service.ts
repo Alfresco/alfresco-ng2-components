@@ -38,7 +38,7 @@ export class ProcessFilterCloudService {
     }
 
     readQueryParams(obj: any): ProcessFilterCloudModel {
-        const model = Object.assign({}, obj) as ProcessFilterCloudModel;
+        const model = Object.assign({ /* empty */ }, obj) as ProcessFilterCloudModel;
 
         if (Object.prototype.hasOwnProperty.call(obj, 'appVersion') && obj['appVersion']) {
             if (typeof obj['appVersion'] === 'string') {
@@ -58,7 +58,7 @@ export class ProcessFilterCloudService {
     }
 
     writeQueryParams(value: any, filterProperties: string[], appName?: string, id?: string): any {
-        value = value || {};
+        value = value || { /* empty */ };
         const result = {
             appName: appName || value['appName'],
             id: id || value['id'],

@@ -31,9 +31,6 @@ export class SimpleInheritedPermissionTestComponent {
     nodeId: string = 'fake-node-id';
     updatedNode: boolean = false;
 
-    constructor() {
-    }
-
     onUpdate(node: any) {
         this.updatedNode = node.permissions?.isInheritanceEnabled ?? false;
     }

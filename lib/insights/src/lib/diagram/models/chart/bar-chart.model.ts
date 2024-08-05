@@ -34,7 +34,7 @@ export class BarChart extends Chart {
             ],
             xAxes: [
                 {
-                    ticks: {},
+                    ticks: { /* empty */ },
                     stacked: false
                 }
             ]

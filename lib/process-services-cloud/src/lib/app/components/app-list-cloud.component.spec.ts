@@ -49,7 +49,7 @@ describe('AppListCloudComponent', () => {
             </adf-cloud-app-list>
         `
     })
-    class CustomEmptyAppListCloudTemplateComponent {}
+    class CustomEmptyAppListCloudTemplateComponent { /* empty */ }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -106,7 +106,7 @@ describe('AppListCloudComponent', () => {
     });
 
     it('should display default no permissions template when response returns exception', (done) => {
-        getAppsSpy.and.returnValue(throwError({}));
+        getAppsSpy.and.returnValue(throwError({ /* empty */ }));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             component.loadingError$.next(true);

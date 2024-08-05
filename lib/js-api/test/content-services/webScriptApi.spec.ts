@@ -80,7 +80,7 @@ describe('WebScript', () => {
 
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
-            webscriptPromise.catch(() => {});
+            webscriptPromise.catch(() => { /* empty */ });
             webscriptPromise.on('success', () => {
                 done();
             });
@@ -91,7 +91,7 @@ describe('WebScript', () => {
 
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
-            webscriptPromise.catch(() => {});
+            webscriptPromise.catch(() => { /* empty */ });
             webscriptPromise.on('error', () => {
                 done();
             });
@@ -102,7 +102,7 @@ describe('WebScript', () => {
 
             const webscriptPromise: any = webscriptApi.executeWebScript('GET', scriptPath, null, contextRoot, servicePath);
 
-            webscriptPromise.catch(() => {});
+            webscriptPromise.catch(() => { /* empty */ });
             webscriptPromise.on('unauthorized', () => {
                 done();
             });

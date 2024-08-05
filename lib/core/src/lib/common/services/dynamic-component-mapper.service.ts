@@ -33,7 +33,7 @@ export class DynamicComponentResolver {
 export abstract class DynamicComponentMapper {
 
     protected defaultValue: Type<any> = undefined;
-    protected types: { [key: string]: DynamicComponentResolveFunction } = {};
+    protected types: { [key: string]: DynamicComponentResolveFunction } = { /* empty */ };
 
     /**
      * Gets the currently active DynamicComponentResolveFunction for a field type.

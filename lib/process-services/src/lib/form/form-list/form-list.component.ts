@@ -32,7 +32,7 @@ export class FormListComponent implements OnChanges {
     @Input()
     forms: any[] = [];
 
-    constructor(protected modelService: ModelService) {}
+    constructor(protected modelService: ModelService) { /* empty */ }
 
     ngOnChanges() {
         this.getForms();

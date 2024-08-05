@@ -28,4 +28,4 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule, MatDialogModule, MatProgressBarModule, MatButtonModule, TranslateModule],
     exports: [DownloadZipDialogComponent]
 })
-export class DownloadZipDialogModule {}
+export class DownloadZipDialogModule { /* empty */ }

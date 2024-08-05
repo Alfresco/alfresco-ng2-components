@@ -30,7 +30,7 @@ const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
 export class IdentityUserService implements IdentityUserServiceInterface {
     queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
-    constructor(private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
+    constructor(private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) { /* empty */ }
 
     /**
      * Gets the name and other basic details of the current user.

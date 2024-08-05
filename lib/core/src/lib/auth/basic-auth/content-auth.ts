@@ -94,7 +94,7 @@ export class ContentAuth {
         this.authentications.basicAuth.username = username;
         this.authentications.basicAuth.password = password;
 
-        const loginRequest: any = {};
+        const loginRequest: any = { /* empty */ };
 
         loginRequest.userId = this.authentications.basicAuth.username;
         loginRequest.password = this.authentications.basicAuth.password;

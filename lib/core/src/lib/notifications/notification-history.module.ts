@@ -26,4 +26,4 @@ export const NOTIFICATION_HISTORY_DIRECTIVES = [NotificationHistoryComponent, Ad
     imports: [...NOTIFICATION_HISTORY_DIRECTIVES],
     exports: [...NOTIFICATION_HISTORY_DIRECTIVES]
 })
-export class NotificationHistoryModule {}
+export class NotificationHistoryModule { /* empty */ }

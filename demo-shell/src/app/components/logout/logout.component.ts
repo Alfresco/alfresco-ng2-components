@@ -25,4 +25,4 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: './logout.component.html',
     styleUrls: ['./logout.component.scss']
 })
-export class LogoutComponent {}
+export class LogoutComponent { /* empty */ }

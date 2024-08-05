@@ -29,4 +29,4 @@ import { ReactiveFormsModule } from '@angular/forms';
     exports: [DateRangeFilterComponent],
     providers: [DateRangeFilterService]
 })
-export class ProcessCommonModule {}
+export class ProcessCommonModule { /* empty */ }

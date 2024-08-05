@@ -66,7 +66,7 @@ describe('FormComponent', () => {
         declarations: [CustomWidget],
         exports: [CustomWidget]
     })
-    class CustomUploadModule {}
+    class CustomUploadModule { /* empty */ }
 
     const buildWidget = (type: string, injector: Injector): any => {
         const resolver = formRenderingService.getComponentTypeResolver(type);
@@ -446,7 +446,7 @@ describe('FormComponent', () => {
     });
 
     it('should fetch and parse form by task id', (done) => {
-        spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+        spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
         spyOn(taskFormService, 'getTaskForm').and.callFake(
             (currentTaskId) =>
                 new Observable((observer) => {
@@ -470,7 +470,7 @@ describe('FormComponent', () => {
     it('should handle error when getting form by task id', (done) => {
         const error = 'Some error';
 
-        spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+        spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
         spyOn(formComponent, 'handleError').and.stub();
         spyOn(taskFormService, 'getTaskForm').and.callFake(() => throwError(error));
 
@@ -481,7 +481,7 @@ describe('FormComponent', () => {
     });
 
     it('should apply readonly state when getting form by task id', (done) => {
-        spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+        spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
         spyOn(taskFormService, 'getTaskForm').and.callFake(
             (taskId) =>
                 new Observable((observer) => {
@@ -721,7 +721,7 @@ describe('FormComponent', () => {
     });
 
     it('should load form for ecm node', () => {
-        const metadata = {};
+        const metadata = { /* empty */ };
         spyOn(nodeService, 'getNodeMetadata').and.returnValue(of(new NodeMetadata(metadata, null)));
         spyOn(formComponent, 'loadFormFromActiviti').and.stub();
 
@@ -942,7 +942,7 @@ describe('FormComponent', () => {
         expect(dropdownField.value).toBe('empty');
         expect(radioField.value).toBeNull();
 
-        const formValues: any = {};
+        const formValues: any = { /* empty */ };
         formValues.dropdownId = {
             id: 'dropdown_option_2',
             name: 'Dropdown option 2'
@@ -968,7 +968,7 @@ describe('FormComponent', () => {
         let formFields = formComponent.form.getFormFields();
         let radioFieldById = formFields.find((field) => field.id === 'radio');
 
-        const formValues: any = {};
+        const formValues: any = { /* empty */ };
         formValues.radio = 'option_3';
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
@@ -993,9 +993,9 @@ class FormWithCustomOutComesComponent {
     @ViewChild('adfForm', { static: true })
     adfForm: FormComponent;
 
-    onCustomButtonOneClick() {}
+    onCustomButtonOneClick() { /* empty */ }
 
-    onCustomButtonTwoClick() {}
+    onCustomButtonTwoClick() { /* empty */ }
 }
 
 describe('FormWithCustomOutComesComponent', () => {

@@ -35,7 +35,7 @@ class TestComponent {
     allowClear = true;
     searchFilter = {
         selectedBuckets: [],
-        unselectFacetBucket: () => {}
+        unselectFacetBucket: () => { /* empty */ }
     } as any;
 }
 

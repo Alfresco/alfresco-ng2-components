@@ -67,7 +67,7 @@ describe('ProcessAttachmentListComponent', () => {
 
     it('should emit an error when an error occurs loading attachments', () => {
         const emitSpy = spyOn(component.error, 'emit');
-        getProcessRelatedContentSpy.and.returnValue(throwError({}));
+        getProcessRelatedContentSpy.and.returnValue(throwError({ /* empty */ }));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ processInstanceId: change });
         expect(emitSpy).toHaveBeenCalled();
@@ -227,7 +227,7 @@ describe('ProcessAttachmentListComponent', () => {
         });
 
         it('should NOT fetch new attachments when empty changeset made', () => {
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
             expect(getProcessRelatedContentSpy).not.toHaveBeenCalled();
         });
 
@@ -247,7 +247,7 @@ describe('ProcessAttachmentListComponent', () => {
         </adf-process-attachment-list>
     `
 })
-class CustomEmptyTemplateComponent {}
+class CustomEmptyTemplateComponent { /* empty */ }
 
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;

@@ -40,12 +40,12 @@ export abstract class DataTableSchema<T = unknown> {
     protected columnsVisibility: { [columnId: string]: boolean } | undefined;
     protected columnsWidths: { [columnId: string]: number } | undefined;
 
-    private layoutPresets = {};
+    private layoutPresets = { /* empty */ };
 
     private columnsSchemaSubject$ = new ReplaySubject<boolean>();
     isColumnSchemaCreated$ = this.columnsSchemaSubject$.asObservable();
 
-    constructor(private appConfigService: AppConfigService, protected presetKey: string, protected presetsModel: any) {}
+    constructor(private appConfigService: AppConfigService, protected presetKey: string, protected presetsModel: any) { /* empty */ }
 
     public createDatatableSchema(): void {
         this.loadLayoutPresets();
@@ -67,7 +67,7 @@ export abstract class DataTableSchema<T = unknown> {
     public loadLayoutPresets(): void {
         const externalSettings = this.appConfigService.get(this.presetKey, null);
         if (externalSettings) {
-            this.layoutPresets = Object.assign({}, this.presetsModel, externalSettings);
+            this.layoutPresets = Object.assign({ /* empty */ }, this.presetsModel, externalSettings);
         } else {
             this.layoutPresets = this.presetsModel;
         }

@@ -33,7 +33,7 @@ export class ContextMenuDirective {
     @Input('adf-context-menu-enabled')
     enabled: boolean = false;
 
-    constructor(private contextMenuService: ContextMenuOverlayService) {}
+    constructor(private contextMenuService: ContextMenuOverlayService) { /* empty */ }
 
     @HostListener('contextmenu', ['$event'])
     onShowContextMenu(event?: MouseEvent) {

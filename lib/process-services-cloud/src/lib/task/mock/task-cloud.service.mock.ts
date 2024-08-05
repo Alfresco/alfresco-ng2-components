@@ -32,7 +32,7 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
     currentUserMock = 'AssignedTaskUser';
     dataChangesDetected$ = new Subject();
 
-    constructor(private appConfigService: AppConfigService) {}
+    constructor(private appConfigService: AppConfigService) { /* empty */ }
 
     getTaskById(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);

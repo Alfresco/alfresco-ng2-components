@@ -76,7 +76,7 @@ export class PreferencesApi extends BaseApi {
         };
 
         const queryParams = {
-            ...(opts || {}),
+            ...(opts || { /* empty */ }),
             fields: buildCollectionParam(opts?.fields, 'csv')
         };
 

@@ -36,7 +36,7 @@ export class StringUtils {
     }
 
     static removeAll(target: string, ...delimiters: string[]): string {
-        const delimiterObj = {};
+        const delimiterObj = { /* empty */ };
         delimiters.forEach(delimiter => {
             delimiterObj[delimiter] = '';
         });

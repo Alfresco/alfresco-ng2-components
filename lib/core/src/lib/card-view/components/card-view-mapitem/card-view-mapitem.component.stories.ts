@@ -57,7 +57,7 @@ const template: StoryFn<CardViewMapItemComponent> = (args) => ({
     props: args
 });
 
-export const CardViewMapItem = template.bind({});
+export const CardViewMapItem = template.bind({ /* empty */ });
 CardViewMapItem.args = {
     property: new CardViewMapItemModel({
         label: 'My map',
@@ -68,7 +68,7 @@ CardViewMapItem.args = {
 };
 CardViewMapItem.parameters = { layout: 'centered' };
 
-export const EmptyCardViewMapItem = template.bind({});
+export const EmptyCardViewMapItem = template.bind({ /* empty */ });
 EmptyCardViewMapItem.args = {
     property: new CardViewMapItemModel({
         label: 'My map',

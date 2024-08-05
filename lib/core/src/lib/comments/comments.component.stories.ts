@@ -83,25 +83,25 @@ const template: StoryFn<CommentsComponent> = (args) => ({
     props: args
 });
 
-export const SingleCommentWithAvatar = template.bind({});
+export const SingleCommentWithAvatar = template.bind({ /* empty */ });
 SingleCommentWithAvatar.args = {
     comments: [commentsStoriesData[0]],
     readOnly: true
 };
 
-export const SingleCommentWithoutAvatar = template.bind({});
+export const SingleCommentWithoutAvatar = template.bind({ /* empty */ });
 SingleCommentWithoutAvatar.args = {
     comments: [commentsStoriesData[1]],
     readOnly: true
 };
 
-export const NoComments = template.bind({});
+export const NoComments = template.bind({ /* empty */ });
 NoComments.args = {
     comments: [],
     readOnly: true
 };
 
-export const Comments = template.bind({});
+export const Comments = template.bind({ /* empty */ });
 Comments.args = {
     comments: commentsStoriesData,
     id: '-fake-'

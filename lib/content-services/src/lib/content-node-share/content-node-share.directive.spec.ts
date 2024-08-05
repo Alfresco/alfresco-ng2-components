@@ -73,7 +73,7 @@ describe('NodeSharedDirective', () => {
         selection = {
             entry: {
                 isFile: true,
-                properties: {}
+                properties: { /* empty */ }
             }
         };
     });

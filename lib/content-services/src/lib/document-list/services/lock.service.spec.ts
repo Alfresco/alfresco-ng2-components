@@ -29,7 +29,7 @@ describe('LockService', () => {
 
     const fakeNodeUnlocked: Node = { name: 'unlocked', isLocked: false, isFile: true } as Node;
     const fakeFolderNode: Node = { name: 'unlocked', isLocked: false, isFile: false, isFolder: true } as Node;
-    const fakeNodeNoProperty: Node = { name: 'unlocked', isLocked: true, isFile: true, properties: {} } as Node;
+    const fakeNodeNoProperty: Node = { name: 'unlocked', isLocked: true, isFile: true, properties: { /* empty */ } } as Node;
 
     beforeEach(() => {
         TestBed.configureTestingModule({

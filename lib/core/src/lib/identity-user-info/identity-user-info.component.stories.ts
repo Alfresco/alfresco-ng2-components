@@ -119,5 +119,5 @@ const template: StoryFn<IdentityUserInfoComponent> = (args) => ({
     props: args
 });
 
-export const LoginWithSSO = template.bind({});
+export const LoginWithSSO = template.bind({ /* empty */ });
 LoginWithSSO.parameters = { layout: 'centered' };

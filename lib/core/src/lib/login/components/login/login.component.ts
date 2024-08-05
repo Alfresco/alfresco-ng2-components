@@ -158,7 +158,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
         private route: ActivatedRoute
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.initFormError();

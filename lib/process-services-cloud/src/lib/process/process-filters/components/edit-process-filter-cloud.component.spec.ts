@@ -783,7 +783,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should emit delete event and delete the filter on click of delete button', async () => {
             component.toggleFilterActions = true;
-            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of({} as any));
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of({ /* empty */ } as any));
             const deleteSpy = spyOn(component.action, 'emit');
 
             fixture.detectChanges();

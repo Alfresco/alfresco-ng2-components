@@ -150,7 +150,7 @@ export const displayValueTextJson = {
             }
         ],
              outcomes : [],
-             metadata : {},
+             metadata : { /* empty */ },
          variables : [
             {
                  id :  '928c5dce-0ee4-4de3-8775-975eda5a4543' ,

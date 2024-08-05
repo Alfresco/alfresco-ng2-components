@@ -40,7 +40,7 @@ export class FileUploadingListComponent {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private uploadService: UploadService, private translateService: TranslationService) {}
+    constructor(private uploadService: UploadService, private translateService: TranslationService) { /* empty */ }
 
     /**
      * Cancel file upload

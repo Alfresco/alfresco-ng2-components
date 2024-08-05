@@ -81,7 +81,7 @@ export const formDisplayValueVisibility = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -311,7 +311,7 @@ export const formDisplayValueForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'bcdfe3af-d635-40ee-b9fd-4f9d3655d77b',
@@ -421,7 +421,7 @@ export const formDisplayValueCombinedVisibility = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -490,7 +490,7 @@ export const formNumberWidgetVisibility = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'f9f6d1ae-374a-49f9-b664-5286c558abaa',
@@ -729,7 +729,7 @@ export const formNumberTextJson = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: '3b316e21-3632-4dde-ba19-b27dca09a83b',
@@ -805,7 +805,7 @@ export const formRequiredNumberWidget = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'f9f6d1ae-374a-49f9-b664-5286c558abaa',
@@ -975,7 +975,7 @@ export const colspanForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1017,7 +1017,7 @@ export const numberNotRequiredForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1062,7 +1062,7 @@ export const numberMinMaxForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1095,7 +1095,7 @@ export const textWidgetVisibility = {
                                 minLength: 0,
                                 maxLength: 0,
                                 regexPattern: null,
-                                visibilityCondition: {},
+                                visibilityCondition: { /* empty */ },
                                 params: { existingColspan: 1, maxColspan: 2 }
                             }
                         ],
@@ -1205,7 +1205,7 @@ export const textWidgetVisibility = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1299,7 +1299,7 @@ export const numberWidgetVisibilityForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1370,7 +1370,7 @@ export const radioWidgetVisibilityForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1434,7 +1434,7 @@ export const customWidgetForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1506,7 +1506,7 @@ export const customWidgetFormWithVisibility = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1619,7 +1619,7 @@ export const formDateVisibility = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1728,7 +1728,7 @@ export const amountWidgetFormVisibilityMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1818,7 +1818,7 @@ export const checkboxWidgetFormVisibilityMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1890,7 +1890,7 @@ export const dateWidgetFormVisibilityMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1981,7 +1981,7 @@ export const multilineWidgetFormVisibilityMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: '946ed79c-c7cf-4373-b741-4e9d8d8b7f36',
@@ -2076,7 +2076,7 @@ export const displayTextWidgetFormVisibilityMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: '8a8537a6-cfca-45d3-bd42-80ffc48a26f8',
@@ -2130,7 +2130,7 @@ export const displayBigDecimalWidgetMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }

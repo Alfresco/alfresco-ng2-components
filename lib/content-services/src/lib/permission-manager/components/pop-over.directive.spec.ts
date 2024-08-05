@@ -38,7 +38,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
         </ng-template>
     `
 })
-class PopOverTestComponent {}
+class PopOverTestComponent { /* empty */ }
 
 describe('PopOverDirective', () => {
     let fixture: ComponentFixture<PopOverTestComponent>;

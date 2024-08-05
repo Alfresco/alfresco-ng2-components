@@ -47,7 +47,7 @@ export class ModelsActions {
     }
 
     async getModels(opts: any): Promise<ResultListDataRepresentationModelRepresentation> {
-        const options = opts || {};
+        const options = opts || { /* empty */ };
         let models;
         try {
             models = await this.modelsApi.getModels(options);

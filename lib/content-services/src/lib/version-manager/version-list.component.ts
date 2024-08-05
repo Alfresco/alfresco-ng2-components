@@ -132,7 +132,7 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
         private contentService: ContentService,
         private contentVersionService: ContentVersionService,
         private dialog: MatDialog
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.versionsDataSource = new VersionListDataSource(this.versionsApi, this.node);

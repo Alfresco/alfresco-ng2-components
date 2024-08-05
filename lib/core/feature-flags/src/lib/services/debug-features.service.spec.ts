@@ -36,7 +36,7 @@ describe('DebugFeaturesService', () => {
                     fictive: true
                 }
             }),
-        setItem: () => {}
+        setItem: () => { /* empty */ }
     };
 
     beforeEach(() => {
@@ -112,7 +112,7 @@ describe('DebugFeaturesService', () => {
 
     it('should get the flags as an observable', (done) => {
         service.getFlags$().subscribe((flags) => {
-            expect(flags).toEqual({});
+            expect(flags).toEqual({ /* empty */ });
             done();
         });
     });

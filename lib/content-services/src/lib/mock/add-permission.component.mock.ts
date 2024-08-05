@@ -149,7 +149,7 @@ export const fakeAuthorityListResult: any = {
             skipCount: 0,
             maxItems: 100
         },
-        context: {},
+        context: { /* empty */ },
         entries: fakeAuthorityResults
     }
 };

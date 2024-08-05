@@ -73,12 +73,12 @@ describe('FormModel', () => {
     });
 
     it('should use fallback value for task name', () => {
-        const form = new FormModel({});
+        const form = new FormModel({ /* empty */ });
         expect(form.taskName).toBe(FormModel.UNSET_TASK_NAME);
     });
 
     it('should set readonly state from params', () => {
-        const form = new FormModel({}, null, true);
+        const form = new FormModel({ /* empty */ }, null, true);
         expect(form.readOnly).toBeTruthy();
     });
 
@@ -274,7 +274,7 @@ describe('FormModel', () => {
     });
 
     it('should raise validation event when validating form', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
 
         formService.validateForm.subscribe((validateFormEvent) =>
             expect(validateFormEvent).toBeTruthy()
@@ -283,7 +283,7 @@ describe('FormModel', () => {
     });
 
     it('should raise validation event when validating field', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
 
         formService.validateFormField.subscribe((validateFormFieldEvent) =>
@@ -293,7 +293,7 @@ describe('FormModel', () => {
     });
 
     it('should skip field validation when default behaviour prevented', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
 
         let prevented = false;
 
@@ -330,7 +330,7 @@ describe('FormModel', () => {
     });
 
     it('should validate field when field validation not prevented', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
 
         let validated = false;
 
@@ -346,7 +346,7 @@ describe('FormModel', () => {
     });
 
     it('should validate form when field validation not prevented', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
         spyOn(form, 'validateForm').and.stub();
 
         let validated = false;
@@ -365,7 +365,7 @@ describe('FormModel', () => {
     });
 
     it('should not validate form when field validation prevented', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
         spyOn(form, 'validateForm').and.stub();
 
         let prevented = false;
@@ -391,7 +391,7 @@ describe('FormModel', () => {
     });
 
     it('should use custom field validator', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
         const testField = new FormFieldModel(form, {
             id: 'test-field-1'
         });
@@ -412,7 +412,7 @@ describe('FormModel', () => {
     });
 
     it('should re-validate the field when required attribute changes', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
         const testField = new FormFieldModel(form, {
             id: 'test-field-1',
             required: false
@@ -430,11 +430,11 @@ describe('FormModel', () => {
     });
 
     it('should not change default validators export', () => {
-        const form = new FormModel({}, null, false, formService);
+        const form = new FormModel({ /* empty */ }, null, false, formService);
         const defaultLength = FORM_FIELD_VALIDATORS.length;
 
         expect(form.fieldValidators.length).toBe(defaultLength);
-        form.fieldValidators.push({} as any);
+        form.fieldValidators.push({ /* empty */ } as any);
 
         expect(form.fieldValidators.length).toBe(defaultLength + 1);
         expect(FORM_FIELD_VALIDATORS.length).toBe(defaultLength);
@@ -576,7 +576,7 @@ describe('FormModel', () => {
 
         beforeEach(() => {
             form = new FormModel(fakeMetadataForm);
-            form.values['pfx_property_three'] = {};
+            form.values['pfx_property_three'] = { /* empty */ };
             form.values['pfx_property_four'] = 'empty';
             form.values['pfx_property_five'] = 'green';
             form.values['pfx_property_six'] = 'text-value';

@@ -270,7 +270,7 @@ describe('TreeComponent', () => {
     it('should load more subnodes and remove load more button when load more button is clicked', () => {
         component.refreshTree();
         fixture.detectChanges();
-        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(singleNode) }));
+        spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: { /* empty */ }, entries: Array.from(singleNode) }));
         const loadMoreBtn = fixture.debugElement.query(By.css('.adf-tree-load-more-button')).nativeElement;
         const appendSpy = spyOn(component.treeService, 'appendNodes').and.callThrough();
         loadMoreBtn.dispatchEvent(new Event('click'));
@@ -286,7 +286,7 @@ describe('TreeComponent', () => {
         fixture.detectChanges();
         spyOn(component.treeService, 'getSubNodes').and.returnValue(
             of({
-                pagination: {},
+                pagination: { /* empty */ },
                 entries: Array.from(singleNode)
             })
         );
@@ -321,14 +321,14 @@ describe('TreeComponent', () => {
         });
 
         it('should update selection when leaf node is selected', () => {
-            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesMock) }));
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: { /* empty */ }, entries: Array.from(treeNodesMock) }));
             fixture.detectChanges();
             tickCheckbox(0);
             expect(component.treeNodesSelection.isSelected(component.treeService.treeNodes[0])).toBeTrue();
         });
 
         it('should update selection of each child node when parent node is selected and deselected', () => {
-            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded) }));
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: { /* empty */ }, entries: Array.from(treeNodesChildrenMockExpanded) }));
             fixture.detectChanges();
             tickCheckbox(0);
             expect(component.treeNodesSelection.isSelected(component.treeService.treeNodes[0])).toBeTrue();
@@ -340,7 +340,7 @@ describe('TreeComponent', () => {
         });
 
         it('parent node should have intermediate state when not all subnodes are selected', () => {
-            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(treeNodesChildrenMockExpanded) }));
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: { /* empty */ }, entries: Array.from(treeNodesChildrenMockExpanded) }));
             fixture.detectChanges();
             tickCheckbox(0);
             tickCheckbox(1);
@@ -352,7 +352,7 @@ describe('TreeComponent', () => {
             component.refreshTree();
             fixture.detectChanges();
             tickCheckbox(0);
-            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: {}, entries: Array.from(singleNode) }));
+            spyOn(component.treeService, 'getSubNodes').and.returnValue(of({ pagination: { /* empty */ }, entries: Array.from(singleNode) }));
             component.treeNodesSelection.changed.subscribe((selectionChange: SelectionChange<TreeNode>) => {
                 expect(selectionChange.added.length).toEqual(1);
                 expect(selectionChange.added[0].id).toEqual(singleNode[0].id);

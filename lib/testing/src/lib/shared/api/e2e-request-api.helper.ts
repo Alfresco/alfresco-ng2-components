@@ -32,11 +32,11 @@ export interface E2eRequestApiHelperOptions {
 }
 
 const getDefaultOptions = (): E2eRequestApiHelperOptions => ({
-    pathParams: {},
-    queryParams: {},
-    headerParams: {},
-    formParams: {},
-    bodyParam: {},
+    pathParams: { /* empty */ },
+    queryParams: { /* empty */ },
+    headerParams: { /* empty */ },
+    formParams: { /* empty */ },
+    bodyParam: { /* empty */ },
     contentTypes: ['application/json'],
     accepts: ['application/json'],
     returnType: undefined

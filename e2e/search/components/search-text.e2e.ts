@@ -64,7 +64,7 @@ describe('Search component - Text widget', () => {
                 {
                     'cm:description': newFolderModel.description
                 }
-        }, {});
+        }, { /* empty */ });
 
         await browser.sleep(browser.params.testConfig.timeouts.index_search);
 

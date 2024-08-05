@@ -79,7 +79,7 @@ describe('VersionUploadComponent', () => {
         component.error.subscribe(() => {
             expect(component.disabled).toEqual(false);
         });
-        component.onError({} as any);
+        component.onError({ /* empty */ } as any);
         fixture.detectChanges();
     });
 

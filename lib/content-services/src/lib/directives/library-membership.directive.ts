@@ -64,7 +64,7 @@ export class LibraryMembershipDirective implements OnChanges {
         private alfrescoApiService: AlfrescoApiService,
         private sitesService: SitesService,
         private versionCompatibilityService: VersionCompatibilityService
-    ) {}
+    ) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.selection.currentValue?.entry) {

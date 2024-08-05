@@ -85,7 +85,7 @@ export class ProcessInstancesApi extends BaseApi {
      * @param family family
      * @param identityId identityId
      * @param type type
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     deleteIdentityLink(processInstanceId: string, family: string, identityId: string, type: string): Promise<void> {
         throwIfNotDefined(processInstanceId, 'processInstanceId');
@@ -112,7 +112,7 @@ export class ProcessInstancesApi extends BaseApi {
      * If the process instance has not yet been completed, it will be cancelled. If it has already finished or been cancelled then the process instance will be removed and will no longer appear in queries.
      *
      * @param processInstanceId processInstanceId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     deleteProcessInstance(processInstanceId: string): Promise<void> {
         throwIfNotDefined(processInstanceId, 'processInstanceId');

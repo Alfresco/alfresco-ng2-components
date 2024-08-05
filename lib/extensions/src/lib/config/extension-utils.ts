@@ -101,7 +101,7 @@ export const reduceEmptyMenus = (
 };
 
 export const mergeObjects = (...objects: any[]): any => {
-    const result = {};
+    const result = { /* empty */ };
 
     objects.forEach((source) => {
         Object.keys(source).forEach((prop) => {
@@ -135,7 +135,7 @@ export const mergeObjects = (...objects: any[]): any => {
 
 export const mergeArrays = (left: any[], right: any[]): any[] => {
     const result = [];
-    const map = {};
+    const map = { /* empty */ };
 
     (left || []).forEach((entry) => {
         const element = entry;

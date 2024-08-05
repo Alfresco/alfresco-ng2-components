@@ -87,7 +87,7 @@ describe('ProcessListCloudService', () => {
         const processRequest = { appName: null } as ProcessQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallUrl);
         service.getProcessByRequest(processRequest).subscribe(
-            () => { },
+            () => { /** empty */ },
             (error) => {
                 expect(error).toBe('Appname not configured');
                 done();

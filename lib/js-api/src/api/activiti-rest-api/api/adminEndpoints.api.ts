@@ -151,7 +151,7 @@ export class AdminEndpointsApi extends BaseApi {
      *
      * @param basicAuthId basicAuthId
      * @param tenantId tenantId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     removeBasicAuthConfiguration(basicAuthId: number, tenantId: number): Promise<void> {
         throwIfNotDefined(basicAuthId, 'basicAuthId');
@@ -177,7 +177,7 @@ export class AdminEndpointsApi extends BaseApi {
      *
      * @param endpointConfigurationId endpointConfigurationId
      * @param tenantId tenantId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     removeEndpointConfiguration(endpointConfigurationId: number, tenantId: number): Promise<void> {
         throwIfNotDefined(endpointConfigurationId, 'endpointConfigurationId');

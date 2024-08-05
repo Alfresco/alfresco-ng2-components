@@ -40,7 +40,7 @@ describe('CategoryService', () => {
     const fakeParentCategoryId = 'testParentId';
     const fakeCategoryId = 'fakeId';
     const fakeNodeId = 'fakeNodeId';
-    const fakeCategoriesResponse: CategoryPaging = { list: { pagination: {}, entries: [] } };
+    const fakeCategoriesResponse: CategoryPaging = { list: { pagination: { /* empty */ }, entries: [] } };
     const fakeCategoryEntry: CategoryEntry = { entry: { id: 'testId', name: 'testName' } };
     const fakeCategoryBody: CategoryBody = { name: 'updatedName' };
     const fakeCategoriesLinkBodies: CategoryLinkBody[] = [{ categoryId: fakeCategoryId }];
@@ -79,14 +79,14 @@ describe('CategoryService', () => {
     it('should create subcategory', fakeAsync(() => {
         const createSpy = spyOn(categoryService.categoriesApi, 'createSubcategories').and.returnValue(Promise.resolve(fakeCategoryEntry));
         categoryService.createSubcategories(fakeParentCategoryId, [fakeCategoryEntry.entry]).subscribe(() => {
-            expect(createSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, [fakeCategoryEntry.entry], {});
+            expect(createSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, [fakeCategoryEntry.entry], { /* empty */ });
         });
     }));
 
     it('should update category', fakeAsync(() => {
         const updateSpy = spyOn(categoryService.categoriesApi, 'updateCategory').and.returnValue(Promise.resolve(fakeCategoryEntry));
         categoryService.updateCategory(fakeParentCategoryId, fakeCategoryBody).subscribe(() => {
-            expect(updateSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, fakeCategoryBody, {});
+            expect(updateSpy).toHaveBeenCalledOnceWith(fakeParentCategoryId, fakeCategoryBody, { /* empty */ });
         });
     }));
 

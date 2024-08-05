@@ -60,7 +60,7 @@ export class PeopleSearchComponent implements OnInit {
     closeSearch = new EventEmitter();
 
     filteredResults$: Observable<LightUserRepresentation[]>;
-    selectedUser: LightUserRepresentation = {} as any;
+    selectedUser: LightUserRepresentation = { /* empty */ } as any;
     performSearch: PerformSearchCallback;
 
     ngOnInit() {

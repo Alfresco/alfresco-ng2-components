@@ -28,7 +28,6 @@ export class FileUtils {
         const files: FileInfo[] = [];
         return new Promise((resolve) => {
             const iterations = [];
-            // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
             (function traverse() {
                 reader.readEntries((entries) => {
                     if (!entries.length) {

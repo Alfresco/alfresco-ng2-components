@@ -48,7 +48,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
         private overlay: Overlay,
         private vcr: ViewContainerRef,
         private focusTrapFactory: ConfigurableFocusTrapFactory
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit(): void {
         this.createOverlay();

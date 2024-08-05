@@ -27,4 +27,4 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [MatIconModule, TranslateModule],
     encapsulation: ViewEncapsulation.None
 })
-export class UnknownFormatComponent {}
+export class UnknownFormatComponent { /* empty */ }

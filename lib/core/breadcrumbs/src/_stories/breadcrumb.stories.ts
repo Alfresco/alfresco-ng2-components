@@ -38,7 +38,7 @@ type StoryWithoutFunction<T> = NonFunctionProperties<StoryFn<T>>;
  * @returns a copy of the story
  */
 function storybookCopyStory<T>(story: StoryFn<T>, annotations?: StoryWithoutFunction<T>): StoryFn<T> {
-    const cloned = story.bind({});
+    const cloned = story.bind({ /* empty */ });
     return Object.assign(cloned, annotations);
 }
 

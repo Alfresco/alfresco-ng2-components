@@ -96,7 +96,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(folder.entry.id);
             await identityService.deleteIdentityUser(acsUser.email);
-        } catch (error) {}
+        } catch (error) { /* empty */ }
         await apiService.getInstance().logout();
         await browser.executeScript('window.sessionStorage.clear();');
         await browser.executeScript('window.localStorage.clear();');

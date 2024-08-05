@@ -22,7 +22,7 @@ import { BpmAuthMock, EcmAuthMock, OAuthMock } from './mockObjects';
 describe('Basic configuration test', () => {
     describe('config parameter ', () => {
         it('Should basePath have a default value', () => {
-            const alfrescoJsApi = new AlfrescoApi({});
+            const alfrescoJsApi = new AlfrescoApi({ /* empty */ });
 
             assert.equal(alfrescoJsApi.contentClient.basePath, 'http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1');
         });

@@ -190,7 +190,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         it('should close the dialog', () => {
             let cancelButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-cancel"]'));
-            cancelButton.triggerEventHandler('click', {});
+            cancelButton.triggerEventHandler('click', { /* empty */ });
             expect(dialog.close).toHaveBeenCalled();
 
             fixture.detectChanges();

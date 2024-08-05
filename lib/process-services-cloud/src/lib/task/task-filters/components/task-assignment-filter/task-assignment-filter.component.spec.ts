@@ -70,7 +70,7 @@ describe('TaskAssignmentFilterComponent', () => {
             component.taskFilterProperty = {
                 key: 'assignment',
                 label: 'mock-filter',
-                value: {},
+                value: { /* empty */ },
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
             };
@@ -196,7 +196,7 @@ describe('TaskAssignmentFilterComponent', () => {
             component.taskFilterProperty = {
                 key: 'assignment',
                 label: 'mock-filter',
-                value: {},
+                value: { /* empty */ },
                 type: 'assignment',
                 attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
             };

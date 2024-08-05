@@ -22,7 +22,7 @@ import { PluginInterface } from './plugin-model';
 import { AlfrescoApi, GsSitesApi } from '@alfresco/js-api';
 
 export class GovernanceHealth {
-    constructor(private pluginInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {}
+    constructor(private pluginInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) { /* empty */ }
 
     async isRecordManagementAvailable(): Promise<boolean> {
         try {

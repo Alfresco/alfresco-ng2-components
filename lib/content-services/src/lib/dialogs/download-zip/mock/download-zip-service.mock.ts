@@ -25,7 +25,7 @@ export class AlfrescoApiServiceMock {
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
     alfrescoApi = new AlfrescoApiMock();
 
-    load() {}
+    load() { /* empty */ }
     getInstance = () => this.alfrescoApi;
 }
 

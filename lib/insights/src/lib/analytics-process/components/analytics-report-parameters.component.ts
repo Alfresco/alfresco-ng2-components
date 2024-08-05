@@ -189,7 +189,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         private downloadService: DownloadService,
         private dialog: MatDialog,
         private dateAdapter: AdfDateFnsAdapter
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.onDropdownChanged.pipe(takeUntil(this.onDestroy$)).subscribe((field: any) => {
@@ -232,7 +232,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 if (this.reportParameters.hasParameters()) {
                     this.successReportParams.emit(res);
                 } else {
-                    this.reportForm = this.formBuilder.group<ReportFormProps>({});
+                    this.reportForm = this.formBuilder.group<ReportFormProps>({ /* empty */ });
                     this.success.emit();
                 }
             },
@@ -432,12 +432,12 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
-        const formBuilderGroup: ReportFormProps = {};
+        const formBuilderGroup: ReportFormProps = { /* empty */ };
 
         parameters.forEach((param) => {
             switch (param.type) {
                 case 'dateRange':
-                    formBuilderGroup.dateRange = new FormGroup({}, Validators.required);
+                    formBuilderGroup.dateRange = new FormGroup({ /* empty */ }, Validators.required);
                     break;
                 case 'processDefinition':
                     formBuilderGroup.processDefGroup = new FormGroup(

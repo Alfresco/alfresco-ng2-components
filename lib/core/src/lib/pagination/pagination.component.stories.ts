@@ -95,5 +95,5 @@ const template: StoryFn<PaginationComponent> = (args) => ({
     props: args
 });
 
-export const Pagination = template.bind({});
+export const Pagination = template.bind({ /* empty */ });
 Pagination.parameters = { layout: 'centered' };

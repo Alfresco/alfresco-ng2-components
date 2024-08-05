@@ -91,7 +91,7 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
     /**
      * The default HTTP headers to be included for all API calls.
      */
-    defaultHeaders = {};
+    defaultHeaders = { /* empty */ };
 
     /**
      * The default HTTP timeout for all API calls.
@@ -318,7 +318,7 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
 
         return {
             apiClientEmitter,
-            eventEmitter: ee({})
+            eventEmitter: ee({ /* empty */ })
         };
     }
 

@@ -95,7 +95,7 @@ export class TreeViewDataSource {
         const index = this.data.indexOf(node);
         let count = 0;
         for (let i = index + 1; i < this.data.length
-            && this.data[i].level > node.level; i++ , count++) { }
+            && this.data[i].level > node.level; i++ , count++) {/** empty */}
         this.data.splice(index + 1, count);
         this.dataChange.next(this.data);
     }

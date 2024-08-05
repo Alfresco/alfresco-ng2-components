@@ -39,7 +39,7 @@ export class LogoutDirective implements OnInit {
         private router: Router,
         private appConfig: AppConfigService,
         private authenticationService: AuthenticationService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         if (this.elementRef.nativeElement) {

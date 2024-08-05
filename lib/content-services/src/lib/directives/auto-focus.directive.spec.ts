@@ -26,7 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [AutoFocusDirective],
     template: ` <div tabindex="0" adf-auto-focus>Test</div>`
 })
-class AutoFocusTestComponent {}
+class AutoFocusTestComponent { /* empty */ }
 
 describe('AutoFocusDirective', () => {
     let fixture: ComponentFixture<AutoFocusTestComponent>;

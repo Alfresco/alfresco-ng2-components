@@ -29,7 +29,7 @@ export class UserProfileApi extends BaseApi {
      * Change user password
      *
      * @param changePasswordRepresentation changePasswordRepresentation
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     changePassword(changePasswordRepresentation: ChangePasswordRepresentation): Promise<any> {
         throwIfNotDefined(changePasswordRepresentation, 'changePasswordRepresentation');

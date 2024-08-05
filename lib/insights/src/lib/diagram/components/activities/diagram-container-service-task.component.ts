@@ -45,4 +45,4 @@ import { DiagramServiceTaskComponent } from './diagram-service-task.component';
     ],
     templateUrl: './diagram-container-service-task.component.html'
 })
-export class DiagramContainerServiceTaskComponent extends DiagramElement {}
+export class DiagramContainerServiceTaskComponent extends DiagramElement { /* empty */ }

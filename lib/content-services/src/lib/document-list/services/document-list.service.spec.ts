@@ -112,7 +112,7 @@ describe('DocumentListService', () => {
     it('should add the includeTypes in the request Node Children if required', () => {
         const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
 
-        service.getFolder('/fake-root/fake-name', {}, ['isLocked']);
+        service.getFolder('/fake-root/fake-name', { /* empty */ }, ['isLocked']);
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('-root-', {
             includeSource: true,
@@ -124,7 +124,7 @@ describe('DocumentListService', () => {
     it('should not add the includeTypes in the request Node Children if is duplicated', () => {
         const spyGetNodeInfo = spyOn(service['nodes'], 'listNodeChildren').and.callThrough();
 
-        service.getFolder('/fake-root/fake-name', {}, ['allowableOperations']);
+        service.getFolder('/fake-root/fake-name', { /* empty */ }, ['allowableOperations']);
 
         expect(spyGetNodeInfo).toHaveBeenCalledWith('-root-', {
             includeSource: true,

@@ -58,7 +58,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
         return this._tagChips;
     }
 
-    constructor(private tagService: TagService) {}
+    constructor(private tagService: TagService) { /* empty */ }
 
     ngOnChanges(): void {
         this.refreshTag();

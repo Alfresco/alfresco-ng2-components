@@ -51,4 +51,4 @@ import { MASK_DIRECTIVE, WIDGET_DIRECTIVES, WidgetComponent } from './components
         }
     ]
 })
-export class FormBaseModule {}
+export class FormBaseModule { /* empty */ }

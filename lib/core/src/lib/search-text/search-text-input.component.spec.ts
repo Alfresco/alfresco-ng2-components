@@ -151,7 +151,7 @@ describe('SearchTextInputComponent', () => {
 
             expect(component.subscriptAnimationState.value).toBe('active');
 
-            inputDebugElement.triggerEventHandler('keyup.escape', {});
+            inputDebugElement.triggerEventHandler('keyup.escape', { /* empty */ });
 
             tick(100);
             fixture.detectChanges();

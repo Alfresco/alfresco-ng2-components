@@ -28,4 +28,4 @@ export const CONTENT_TAG_DIRECTIVES = [TagsCreatorComponent, TagActionsComponent
     imports: [...CONTENT_TAG_DIRECTIVES],
     exports: [...CONTENT_TAG_DIRECTIVES]
 })
-export class TagModule {}
+export class TagModule { /* empty */ }

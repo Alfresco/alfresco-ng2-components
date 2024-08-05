@@ -76,7 +76,7 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     paginatedNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
-    constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
+    constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) { /* empty */ }
 
     ngOnInit() {
         this.notifications = JSON.parse(this.storageService.getItem(NotificationHistoryComponent.NOTIFICATION_STORAGE)) || [];

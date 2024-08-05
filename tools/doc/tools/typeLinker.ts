@@ -43,12 +43,12 @@ function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
     ignoreLinkWords = aggData.config.ignoreLinkWords;
 
-    linkOverrides = {};
+    linkOverrides = { /* empty */ };
     aggData.config.linkOverrides.forEach(override => {
         linkOverrides[override.toLowerCase()] = 1;
     });
 
-    aggData.docFiles = {};
+    aggData.docFiles = { /* empty */ };
     aggData.nameLookup = new SplitNameLookup();
 
     const docFilePaths = Object.keys(mdCache);
@@ -107,10 +107,10 @@ function updateFile(tree, pathname, aggData) {
 }
 
 class SplitNameNode {
-    children: {};
+    children: { /* empty */ };
 
     constructor(public key: string = '', public value: string = '') {
-        this.children = {};
+        this.children = { /* empty */ };
     }
 
     addChild(child: SplitNameNode) {

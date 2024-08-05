@@ -28,4 +28,4 @@ import { DiagramIconSendTaskComponent } from '../icons/diagram-icon-send-task.co
     imports: [DiagramTaskComponent, DiagramIconSendTaskComponent],
     templateUrl: './diagram-send-task.component.html'
 })
-export class DiagramSendTaskComponent extends DiagramElement {}
+export class DiagramSendTaskComponent extends DiagramElement { /* empty */ }

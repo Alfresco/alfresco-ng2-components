@@ -30,7 +30,7 @@ describe('LoginFooterDirective', () => {
             providers: [
                 {
                     provide: OidcAuthenticationService,
-                    useValue: {}
+                    useValue: { /* empty */ }
                 }
             ]
         });

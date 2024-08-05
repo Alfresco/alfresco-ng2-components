@@ -72,7 +72,7 @@ export class TransferContainersApi extends BaseApi {
         opts?: RecordsSourceQuery & RecordsIncludeQuery & RecordsPagingQuery
     ): Promise<TransferContainerAssociationPaging> {
         throwIfNotDefined(transferContainerId, 'transferContainerId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             transferContainerId
@@ -109,7 +109,7 @@ export class TransferContainersApi extends BaseApi {
     ): Promise<TransferContainerEntry> {
         throwIfNotDefined(transferContainerId, 'transferContainerId');
         throwIfNotDefined(nodeBodyUpdate, 'nodeBodyUpdate');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             transferContainerId

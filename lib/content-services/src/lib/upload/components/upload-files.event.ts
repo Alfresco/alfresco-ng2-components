@@ -35,7 +35,7 @@ export class UploadFilesEvent {
         private uploadService: UploadService,
         private successEmitter: EventEmitter<any>,
         private errorEmitter: EventEmitter<any>
-    ) {}
+    ) { /* empty */ }
 
     pauseUpload() {
         this.preventDefault();

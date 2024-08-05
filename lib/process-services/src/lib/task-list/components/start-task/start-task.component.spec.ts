@@ -370,7 +370,7 @@ describe('StartTaskComponent', () => {
     it('should emit error when there is an error while creating task', () => {
         component.taskForm.controls['name'].setValue('fakeName');
         const errorSpy = spyOn(component.error, 'emit');
-        spyOn(service, 'createNewTask').and.returnValue(throwError({}));
+        spyOn(service, 'createNewTask').and.returnValue(throwError({ /* empty */ }));
         const createTaskButton = element.querySelector<HTMLElement>('#button-start');
         fixture.detectChanges();
         createTaskButton.click();

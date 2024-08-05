@@ -24,7 +24,7 @@ import { TranslationService } from '@alfresco/adf-core';
     standalone: true
 })
 export class FileUploadErrorPipe implements PipeTransform {
-    constructor(private translation: TranslationService) {}
+    constructor(private translation: TranslationService) { /* empty */ }
 
     transform(errorCode: number): string {
         return this.translation.instant(`FILE_UPLOAD.ERRORS.${errorCode || 'GENERIC'}`);

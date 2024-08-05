@@ -45,7 +45,7 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
     constructor(
         private elementRef: ElementRef,
         private processCloudService: ProcessCloudService,
-        private identityUserService: IdentityUserService) {}
+        private identityUserService: IdentityUserService) { /* empty */ }
 
     ngOnInit() {
         this.processCloudService.dataChangesDetected

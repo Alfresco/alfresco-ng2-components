@@ -417,7 +417,7 @@ export const ACTIVITI_CLOUD_APPS = {
                 users: ['hruser']
             }
         ],
-        infrastructure: { connectors: { restconnector: {} }, bridges: {} },
+        infrastructure: { connectors: { restconnector: { /* empty */ } }, bridges: { /* empty */ } },
         connectors: {
             restConnector: {
                 response: {

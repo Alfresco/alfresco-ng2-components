@@ -200,7 +200,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should handle default errors and show generic error in snackbar', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        const error = {};
+        const error = { /* empty */ };
         spyOn(sitesService, 'createSite').and.callFake(() => throwError(error));
         spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
         spyOn(notificationService, 'showError').and.callThrough();

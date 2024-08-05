@@ -63,7 +63,7 @@ describe('Upload component', async () => {
         for (const node of nodeList) {
             try {
                 await uploadActions.deleteFileOrFolder(node);
-            } catch (error) {}
+            } catch (error) { /* empty */ }
         }
     };
 

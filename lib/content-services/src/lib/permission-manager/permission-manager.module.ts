@@ -47,4 +47,4 @@ export const CONTENT_PERMISSION_MANAGER_DIRECTIVES = [
     imports: [...CONTENT_PERMISSION_MANAGER_DIRECTIVES],
     exports: [...CONTENT_PERMISSION_MANAGER_DIRECTIVES]
 })
-export class PermissionManagerModule {}
+export class PermissionManagerModule { /* empty */ }

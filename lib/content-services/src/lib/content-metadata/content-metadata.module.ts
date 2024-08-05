@@ -27,4 +27,4 @@ export const CONTENT_METADATA_DIRECTIVES = [ContentMetadataComponent, ContentMet
     imports: [...CONTENT_METADATA_DIRECTIVES],
     exports: [...CONTENT_METADATA_DIRECTIVES]
 })
-export class ContentMetadataModule {}
+export class ContentMetadataModule { /* empty */ }

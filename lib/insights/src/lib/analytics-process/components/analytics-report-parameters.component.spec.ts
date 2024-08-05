@@ -313,7 +313,7 @@ describe('AnalyticsReportParametersComponent', () => {
             component.success.subscribe(() => {
                 expect(component.reportForm).toBeDefined();
                 expect(component.reportForm.valid).toEqual(true);
-                expect(component.reportForm.controls).toEqual({});
+                expect(component.reportForm.controls).toEqual({ /* empty */ });
             });
 
             const reportId = 1;

@@ -51,7 +51,7 @@ export class AlfrescoApiService {
         protected storageService: StorageService,
         @Optional()
         @Inject(ALFRESCO_API_FACTORY) private alfrescoApiFactory?: AlfrescoApiFactory
-    ) {}
+    ) { /* empty */ }
 
     async load(config: AlfrescoApiConfig): Promise<void> {
         this.currentAppConfig = config;

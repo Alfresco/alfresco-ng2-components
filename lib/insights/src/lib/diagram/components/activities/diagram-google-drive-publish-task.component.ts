@@ -28,4 +28,4 @@ import { DiagramIconGoogleDrivePublishTaskComponent } from '../icons/diagram-ico
     imports: [DiagramTaskComponent, DiagramIconGoogleDrivePublishTaskComponent],
     templateUrl: './diagram-google-drive-publish-task.component.html'
 })
-export class DiagramGoogleDrivePublishTaskComponent extends DiagramElement {}
+export class DiagramGoogleDrivePublishTaskComponent extends DiagramElement { /* empty */ }

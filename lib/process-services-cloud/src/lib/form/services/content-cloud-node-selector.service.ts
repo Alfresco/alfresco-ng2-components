@@ -36,7 +36,7 @@ export class ContentCloudNodeSelectorService {
 
     sourceNodeNotFound = false;
 
-    constructor(private apiService: AlfrescoApiService, private notificationService: NotificationService, private dialog: MatDialog) {}
+    constructor(private apiService: AlfrescoApiService, private notificationService: NotificationService, private dialog: MatDialog) { /* empty */ }
 
     openUploadFileDialog(
         currentFolderId?: string,
@@ -66,7 +66,7 @@ export class ContentCloudNodeSelectorService {
         if (destinationFolderPath.alias && destinationFolderPath.path) {
             try {
                 return await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
-            } catch {}
+            } catch { /* empty */ }
         }
 
         return this.getNodeId(destinationFolderPath.alias).toPromise();
@@ -82,7 +82,7 @@ export class ContentCloudNodeSelectorService {
         if (nodeId) {
             try {
                 isExistingNode = await this.getNodeId(nodeId).pipe(mapTo(true)).toPromise();
-            } catch {}
+            } catch { /* empty */ }
         }
         return isExistingNode;
     }

@@ -42,7 +42,7 @@ export class DownloadZipDialogComponent implements OnInit {
         private downloadZipService: DownloadZipService,
         private nodeService: NodesApiService,
         private contentService: ContentService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         if (this.data?.nodeIds?.length > 0) {

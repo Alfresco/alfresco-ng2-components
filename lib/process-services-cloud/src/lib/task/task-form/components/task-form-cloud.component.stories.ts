@@ -160,19 +160,19 @@ const template: StoryFn<TaskFormCloudComponent> = (args) => ({
     props: args
 });
 
-export const DefaultTaskFormCloud = template.bind({});
+export const DefaultTaskFormCloud = template.bind({ /* empty */ });
 DefaultTaskFormCloud.args = {
     appName: 'app',
     taskId: 'mock-task-with-form'
 };
 
-export const InvalidOrMissingApp = template.bind({});
+export const InvalidOrMissingApp = template.bind({ /* empty */ });
 InvalidOrMissingApp.args = {
     ...DefaultTaskFormCloud.args,
     appName: undefined
 };
 
-export const InvalidOrMissingTaskId = template.bind({});
+export const InvalidOrMissingTaskId = template.bind({ /* empty */ });
 InvalidOrMissingTaskId.args = {
     ...DefaultTaskFormCloud.args,
     taskId: undefined

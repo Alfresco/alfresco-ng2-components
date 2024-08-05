@@ -37,7 +37,7 @@ export class HighlightDirective implements AfterViewChecked {
     @Input('adf-highlight-class')
     classToApply: string = 'adf-highlight';
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private highlightTransformService: HighlightTransformService) {}
+    constructor(private el: ElementRef, private renderer: Renderer2, private highlightTransformService: HighlightTransformService) { /* empty */ }
 
     ngAfterViewChecked() {
         this.highlight();

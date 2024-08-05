@@ -50,7 +50,7 @@ export class TaskVariablesApi extends BaseApi {
      * Create or update variables
      *
      * @param taskId taskId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     deleteAllLocalTaskVariables(taskId: string): Promise<void> {
         throwIfNotDefined(taskId, 'taskId');
@@ -71,7 +71,7 @@ export class TaskVariablesApi extends BaseApi {
      * @param taskId taskId
      * @param variableName variableName
      * @param opts Optional parameters
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     deleteVariable(taskId: string, variableName: string, opts?: ScopeQuery): Promise<void> {
         throwIfNotDefined(taskId, 'taskId');

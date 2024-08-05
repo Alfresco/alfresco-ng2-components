@@ -46,4 +46,4 @@ export const CONTENT_DIRECTIVES = [
     imports: [...CONTENT_DIRECTIVES],
     exports: [...CONTENT_DIRECTIVES]
 })
-export class ContentDirectiveModule {}
+export class ContentDirectiveModule { /* empty */ }

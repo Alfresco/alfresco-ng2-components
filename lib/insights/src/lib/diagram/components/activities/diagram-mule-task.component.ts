@@ -28,4 +28,4 @@ import { DiagramIconMuleTaskComponent } from '../icons/diagram-icon-mule-task.co
     imports: [DiagramTaskComponent, DiagramIconMuleTaskComponent],
     templateUrl: './diagram-mule-task.component.html'
 })
-export class DiagramMuleTaskComponent extends DiagramElement {}
+export class DiagramMuleTaskComponent extends DiagramElement { /* empty */ }

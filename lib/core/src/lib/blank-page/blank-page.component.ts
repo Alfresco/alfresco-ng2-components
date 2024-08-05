@@ -22,4 +22,4 @@ import { Component } from '@angular/core';
     standalone: true,
     template: ``
 })
-export class BlankPageComponent {}
+export class BlankPageComponent { /* empty */ }

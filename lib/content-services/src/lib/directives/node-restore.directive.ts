@@ -220,7 +220,7 @@ export class NodeRestoreDirective {
     }
 
     private notification(): void {
-        const status = Object.assign({}, this.restoreProcessStatus);
+        const status = Object.assign({ /* empty */ }, this.restoreProcessStatus);
 
         const message = this.getRestoreMessage();
         this.reset();

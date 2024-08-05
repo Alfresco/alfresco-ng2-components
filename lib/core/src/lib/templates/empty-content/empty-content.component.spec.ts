@@ -32,7 +32,7 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
         </adf-empty-content>
     `
 })
-class TestComponent {}
+class TestComponent { /* empty */ }
 
 describe('EmptyContentComponent', () => {
     let fixture: ComponentFixture<TestComponent>;

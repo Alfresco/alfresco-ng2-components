@@ -41,7 +41,7 @@ export class Application {
 
     async undeploy(applicationName: string): Promise<any> {
         const isApplicationUndeployed = (response: any) => {
-            if (JSON.stringify(response) === '{}') {
+            if (JSON.stringify(response) === '{ /* empty */ }') {
                 Logger.info(`[Application] Application was undeployed successfully`);
                 return true;
             } else {
@@ -69,7 +69,7 @@ export class Application {
 
     async getDescriptors(): Promise<ResultSetPaging> {
         Logger.info(`[Descriptor] Return descriptors`);
-        return this.requestApiHelper.get<ResultSetPaging>(`v1/descriptors`, {});
+        return this.requestApiHelper.get<ResultSetPaging>(`v1/descriptors`, { /* empty */ });
     }
 
     async getApplicationsByStatus(status: string): Promise<ResultSetPaging> {

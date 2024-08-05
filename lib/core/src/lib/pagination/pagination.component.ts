@@ -125,7 +125,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         private cdr: ChangeDetectorRef,
         private userPreferencesService: UserPreferencesService,
         private translate: TranslateService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.userPreferencesService

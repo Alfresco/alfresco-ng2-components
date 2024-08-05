@@ -34,7 +34,7 @@ export class WidgetVisibilityModel {
             this.leftFormFieldId = json.leftFormFieldId;
             this.leftRestResponseId = json.leftRestResponseId;
         } else {
-            this.json = {};
+            this.json = { /* empty */ };
         }
     }
 

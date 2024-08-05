@@ -72,8 +72,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     private defaultSecurityOptions = {
         withCredentials: true,
         isBpmRequest: false,
-        authentications: {},
-        defaultHeaders: {}
+        authentications: { /* empty */ },
+        defaultHeaders: { /* empty */ }
     };
 
     constructor(private httpClient: HttpClient) {
@@ -85,7 +85,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     merge(...objects): any {
-        const result = {};
+        const result = { /* empty */ };
 
         objects.forEach((source) => {
             Object.keys(source).forEach((prop) => {
@@ -184,7 +184,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
 
         return {
             apiClientEmitter,
-            eventEmitter: ee({})
+            eventEmitter: ee({ /* empty */ })
         };
     }
 

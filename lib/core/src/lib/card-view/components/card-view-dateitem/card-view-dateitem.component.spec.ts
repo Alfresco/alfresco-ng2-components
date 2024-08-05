@@ -181,7 +181,7 @@ describe('CardViewDateItemComponent', () => {
         spyOn(component.datepicker, 'open');
 
         const datePickerLabelToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-label-toggle-${component.property.key}"]`));
-        datePickerLabelToggle.triggerEventHandler('click', {});
+        datePickerLabelToggle.triggerEventHandler('click', { /* empty */ });
 
         expect(component.datepicker.open).toHaveBeenCalled();
     });

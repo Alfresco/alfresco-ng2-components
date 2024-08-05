@@ -29,7 +29,7 @@ export class PredictionService {
         return this._predictionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Get predictions for a given node

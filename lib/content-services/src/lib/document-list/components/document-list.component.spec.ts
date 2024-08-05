@@ -92,7 +92,7 @@ describe('DocumentList', () => {
             providers: [{ provide: MatDialog, useValue: mockDialog }]
         });
         eventMock = {
-            preventDefault: () => {}
+            preventDefault: () => { /* empty */ }
         };
 
         fixture = TestBed.createComponent(DocumentListComponent);
@@ -107,7 +107,7 @@ describe('DocumentList', () => {
         appConfigService = TestBed.inject(AppConfigService);
         authenticationService = TestBed.inject(AuthenticationService);
 
-        spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
+        spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: { /* empty */ } }));
         spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: new Node() })));
         spyOn(documentList.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node() })));
 
@@ -320,7 +320,7 @@ describe('DocumentList', () => {
     it('should call action handler with node', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = () => { /* empty */ };
 
         spyOn(action, 'handler').and.stub();
 
@@ -331,7 +331,7 @@ describe('DocumentList', () => {
     it('should call action handler with node and permission', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = () => { /* empty */ };
         action.permission = 'fake-permission';
         spyOn(action, 'handler').and.stub();
 
@@ -343,7 +343,7 @@ describe('DocumentList', () => {
     it('should call action execute with node if it is defined', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
-        action.execute = () => {};
+        action.execute = () => { /* empty */ };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -356,7 +356,7 @@ describe('DocumentList', () => {
         const node = new FileNode();
         const action = new ContentActionModel();
         action.handler = () => deleteObservable;
-        action.execute = () => {};
+        action.execute = () => { /* empty */ };
         spyOn(action, 'execute').and.stub();
 
         documentList.executeContentAction(node, action);
@@ -414,7 +414,7 @@ describe('DocumentList', () => {
     it('should reset when a parameter changes', () => {
         spyOn(documentList.dataTable, 'resetSelection').and.callThrough();
 
-        documentList.ngOnChanges({});
+        documentList.ngOnChanges({ /* empty */ });
         expect(documentList.dataTable.resetSelection).toHaveBeenCalled();
     });
 
@@ -432,7 +432,7 @@ describe('DocumentList', () => {
 
     it('should not execute action without node provided', () => {
         const action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = () => { /* empty */ };
 
         spyOn(action, 'handler').and.stub();
         documentList.executeContentAction(null, action);
@@ -854,8 +854,8 @@ describe('DocumentList', () => {
 
     it('should execute context action on callback', () => {
         const action = {
-            node: {},
-            model: {}
+            node: { /* empty */ },
+            model: { /* empty */ }
         };
 
         spyOn(documentList, 'executeContentAction').and.stub();
@@ -872,7 +872,7 @@ describe('DocumentList', () => {
     it('should subscribe to context action handler', () => {
         spyOn(documentList, 'loadFolder').and.stub();
         spyOn(documentList, 'contextActionCallback').and.stub();
-        const value = {};
+        const value = { /* empty */ };
         documentList.ngOnInit();
         documentList.contextActionHandler.next(value);
         expect(documentList.contextActionCallback).toHaveBeenCalledWith(value);
@@ -1068,7 +1068,7 @@ describe('DocumentList', () => {
     });
 
     it('should fetch context menu actions for a file node', () => {
-        const actionModel: any = {};
+        const actionModel: any = { /* empty */ };
         spyOn(documentList, 'getNodeActions').and.returnValue([actionModel]);
 
         const file = new FileNode();
@@ -1082,7 +1082,7 @@ describe('DocumentList', () => {
     });
 
     it('should fetch context menu actions for a folder node', () => {
-        const actionModel: any = {};
+        const actionModel: any = { /* empty */ };
         spyOn(documentList, 'getNodeActions').and.returnValue([actionModel]);
 
         const folder = new FolderNode();
@@ -1153,7 +1153,7 @@ describe('DocumentList', () => {
 
     it('should set row filter and reload contents if currentFolderId is set when setting rowFilter', () => {
         fixture.detectChanges();
-        const filter = {} as RowFilter;
+        const filter = { /* empty */ } as RowFilter;
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
 
@@ -1167,14 +1167,14 @@ describe('DocumentList', () => {
         spyFolder.calls.reset();
         documentList.currentFolderId = null;
 
-        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, {} as RowFilter, true) });
+        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, { /* empty */ } as RowFilter, true) });
 
         expect(spyFolder).not.toHaveBeenCalled();
     });
 
     it('should set image resolver for underlying adapter', () => {
         fixture.detectChanges();
-        const resolver = {} as ImageResolver;
+        const resolver = { /* empty */ } as ImageResolver;
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
         documentList.ngOnChanges({ imageResolver: new SimpleChange(null, resolver, true) });
@@ -1286,7 +1286,7 @@ describe('DocumentList', () => {
         documentList.noPermission = true;
         fixture.detectChanges();
 
-        documentList.ngOnChanges({ node: new SimpleChange(null, { list: { entities: {} } }, true) });
+        documentList.ngOnChanges({ node: new SimpleChange(null, { list: { entities: { /* empty */ } } }, true) });
 
         expect(documentList.data.loadPage).toHaveBeenCalled();
         expect(documentList.noPermission).toBeFalsy();
@@ -1311,7 +1311,7 @@ describe('DocumentList', () => {
 
     it('should allow to perform navigation for virtual sources', () => {
         spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
-            of(new DocumentLoaderNode(null, { list: { pagination: {} } }))
+            of(new DocumentLoaderNode(null, { list: { pagination: { /* empty */ } } }))
         );
 
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
@@ -1474,7 +1474,7 @@ describe('DocumentList', () => {
             of(
                 new DocumentLoaderNode(null, {
                     list: {
-                        pagination: {},
+                        pagination: { /* empty */ },
                         entries: mockPreselectedNodes
                     }
                 })

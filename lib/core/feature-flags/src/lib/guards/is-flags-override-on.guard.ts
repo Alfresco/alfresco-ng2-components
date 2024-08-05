@@ -23,7 +23,7 @@ export const isFlagsOverrideOn = () => () => inject(FlagsOverrideToken) ?? false
 
 @Injectable({ providedIn: 'root' })
 export class IsFlagsOverrideOn  {
-    constructor(@Optional() @Inject(FlagsOverrideToken) private devToolsToken: boolean) {}
+    constructor(@Optional() @Inject(FlagsOverrideToken) private devToolsToken: boolean) { /* empty */ }
 
     canMatch(): boolean {
         return !!this.devToolsToken;

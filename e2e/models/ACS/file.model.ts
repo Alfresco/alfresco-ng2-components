@@ -37,8 +37,8 @@ export class FileModel {
     password = '';
     createdByUser = new CreatedByModel();
     modifiedByUser = new CreatedByModel();
-    content: ContentModel = {};
-    properties: ContentPropertiesModel = {};
+    content: ContentModel = { /* empty */ };
+    properties: ContentPropertiesModel = { /* empty */ };
 
     constructor(details?: any) {
         Object.assign(this, details);

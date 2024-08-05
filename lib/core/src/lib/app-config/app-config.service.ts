@@ -200,7 +200,7 @@ export class AppConfigService {
                 this.http.get(configUrl).subscribe(
                     (data: any) => {
                         this.status = Status.LOADED;
-                        this.config = Object.assign({}, this.config, data || {});
+                        this.config = Object.assign({ /* empty */ }, this.config, data || { /* empty */ });
                         callback?.();
                         resolve(data);
                         this.onDataLoaded();
@@ -250,7 +250,7 @@ export class AppConfigService {
      * @returns auth config model
      */
     get oauth2(): OauthConfigModel {
-        const config = this.get(AppConfigValues.OAUTHCONFIG, {});
+        const config = this.get(AppConfigValues.OAUTHCONFIG, { /* empty */ });
         const implicitFlow = config['implicitFlow'] === true || config['implicitFlow'] === 'true';
         const silentLogin = config['silentLogin'] === true || config['silentLogin'] === 'true';
         const codeFlow = config['codeFlow'] === true || config['codeFlow'] === 'true';

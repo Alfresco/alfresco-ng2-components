@@ -75,7 +75,7 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     @Output()
     nodeContentLoaded = new EventEmitter<Node>();
 
-    constructor(private nodesApiService: NodesApiService) {}
+    constructor(private nodesApiService: NodesApiService) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.['nodeId'] && changes['nodeId'].currentValue && !changes['nodeId'].isFirstChange()) {

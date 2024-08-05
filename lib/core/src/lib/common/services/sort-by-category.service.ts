@@ -44,7 +44,7 @@ export class SortByCategoryMapperService<T extends SortableByCategoryItem = Sort
     }
 
     private mapItemsByCategory(items: T[]): ItemsByCategory<T>[] {
-        const itemsByCategoryObject: { [category: string]: T[] } = {};
+        const itemsByCategoryObject: { [category: string]: T[] } = { /* empty */ };
 
         items.forEach((item) => {
             const category = this.mapItemDefaultCategory(item);

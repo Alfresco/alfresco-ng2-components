@@ -33,8 +33,8 @@ describe('RowEditorComponent', () => {
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
         component.table = new DynamicTableModel(field, new FormService());
-        component.row = {} as DynamicTableRow;
-        component.column = {} as DynamicTableColumn;
+        component.row = { /* empty */ } as DynamicTableRow;
+        component.column = { /* empty */ } as DynamicTableColumn;
     });
 
     it('should be valid upon init', () => {

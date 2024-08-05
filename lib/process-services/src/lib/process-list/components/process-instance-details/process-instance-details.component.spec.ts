@@ -136,7 +136,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
         it('should NOT fetch new process details when empty changeset made', async () => {
             fixture.detectChanges();
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
 
             fixture.detectChanges();
             await fixture.whenStable();

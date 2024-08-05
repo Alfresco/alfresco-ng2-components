@@ -53,4 +53,4 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
     ],
     exports: [NoopAnimationsModule, TranslateModule, CoreModule, ProcessModule]
 })
-export class ProcessTestingModule {}
+export class ProcessTestingModule { /* empty */ }

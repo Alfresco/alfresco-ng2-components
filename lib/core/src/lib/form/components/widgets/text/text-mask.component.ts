@@ -53,11 +53,11 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     private value;
     private invalidCharacters = [];
 
-    constructor(private el: ElementRef, private render: Renderer2) {}
+    constructor(private el: ElementRef, private render: Renderer2) { /* empty */ }
 
-    _onChange = (_: any) => {};
+    _onChange = (_: any) => { /* empty */ };
 
-    _onTouched = () => {};
+    _onTouched = () => { /* empty */ };
 
     @HostListener('input', ['$event'])
     @HostListener('keyup', ['$event'])

@@ -151,8 +151,8 @@ export class ProcessMock extends BaseMock {
                 javascriptEvents: [],
                 className: '',
                 style: '',
-                customFieldTemplates: {},
-                metadata: {},
+                customFieldTemplates: { /* empty */ },
+                metadata: { /* empty */ },
                 variables: [],
                 gridsterForm: false
             });

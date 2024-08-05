@@ -53,15 +53,15 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     fields: string[];
-    tabsValidity: { [key: string]: boolean } = {};
+    tabsValidity: { [key: string]: boolean } = { /* empty */ };
     combinedQuery: string;
     combinedDisplayValue: string;
 
-    private value: { [key: string]: Partial<SearchDateRange> } = {};
+    private value: { [key: string]: Partial<SearchDateRange> } = { /* empty */ };
     private queryMapByField: Map<string, string> = new Map<string, string>();
     private displayValueMapByField: Map<string, string> = new Map<string, string>();
 
-    constructor(private translateService: TranslationService) {}
+    constructor(private translateService: TranslationService) { /* empty */ }
 
     ngOnInit(): void {
         this.fields = this.settings?.field.split(',').map((field) => field.trim());

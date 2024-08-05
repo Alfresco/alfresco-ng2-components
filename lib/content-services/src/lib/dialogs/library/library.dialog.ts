@@ -101,7 +101,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         private formBuilder: UntypedFormBuilder,
         private dialog: MatDialogRef<LibraryDialogComponent>,
         private notificationService: NotificationService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         const validators = {

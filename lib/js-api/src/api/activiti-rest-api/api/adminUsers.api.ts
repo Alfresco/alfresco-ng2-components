@@ -46,7 +46,7 @@ export class AdminUsersApi extends BaseApi {
      * Bulk update a list of users
      *
      * @param update update
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     bulkUpdateUsers(update: BulkUserUpdateRepresentation): Promise<any> {
         throwIfNotDefined(update, 'update');
@@ -112,7 +112,7 @@ export class AdminUsersApi extends BaseApi {
      *
      * @param userId userId
      * @param userRepresentation userRepresentation
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     updateUserDetails(userId: number, userRepresentation: UserRepresentation): Promise<any> {
         throwIfNotDefined(userId, 'userId');

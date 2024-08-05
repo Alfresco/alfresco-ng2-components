@@ -110,7 +110,7 @@ describe('SearchDatetimeRangeComponent', () => {
             queryFragments: {
                 createdDatetimeRange: 'query'
             },
-            update: () => {}
+            update: () => { /* empty */ }
         };
 
         component.id = 'createdDatetimeRange';
@@ -129,8 +129,8 @@ describe('SearchDatetimeRangeComponent', () => {
 
     it('should update the query in UTC format when values change', async () => {
         const context: any = {
-            queryFragments: {},
-            update: () => {}
+            queryFragments: { /* empty */ },
+            update: () => { /* empty */ }
         };
 
         component.id = 'createdDateRange';
@@ -158,8 +158,8 @@ describe('SearchDatetimeRangeComponent', () => {
 
     it('should be able to update the query in UTC format from a GMT format', async () => {
         const context: any = {
-            queryFragments: {},
-            update: () => {}
+            queryFragments: { /* empty */ },
+            update: () => { /* empty */ }
         };
         const fromInGmt = new Date('2021-02-24T17:00:00+02:00');
         const toInGmt = new Date('2021-02-28T15:00:00+02:00');

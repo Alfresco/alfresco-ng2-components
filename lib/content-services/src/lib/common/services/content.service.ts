@@ -43,7 +43,7 @@ export class ContentService {
         return this._contentApi;
     }
 
-    constructor(public authService: AuthenticationService, public apiService: AlfrescoApiService, private thumbnailService?: ThumbnailService) {}
+    constructor(public authService: AuthenticationService, public apiService: AlfrescoApiService, private thumbnailService?: ThumbnailService) { /* empty */ }
 
     /**
      * Gets a content URL for the given node.

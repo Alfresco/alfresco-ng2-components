@@ -24,7 +24,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { ADF_SEARCH_CONFIGURATION } from '../search-configuration.token';
 
 describe('SearchQueryBuilder (runtime config)', () => {
-    const runtimeConfig: SearchConfiguration = {};
+    const runtimeConfig: SearchConfiguration = { /* empty */ };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -68,7 +68,7 @@ describe('SearchQueryBuilder', () => {
         });
     });
 
-    const buildConfig = (searchSettings = {}): AppConfigService => {
+    const buildConfig = (searchSettings = { /* empty */ }): AppConfigService => {
         const config = TestBed.inject(AppConfigService);
         config.config.search = searchSettings;
         return config;

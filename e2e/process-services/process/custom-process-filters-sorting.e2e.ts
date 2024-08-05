@@ -80,7 +80,7 @@ describe('Sorting for process filters', () => {
             await modelsActions.deleteModel(appId);
             await apiService.loginWithProfile('admin');
             await usersActions.deleteTenant(tenantId);
-        } catch (e) {}
+        } catch (e) { /* empty */ }
 
         await navigationBarPage.clickLogoutButton();
     });

@@ -23,4 +23,4 @@ import { Component, ViewEncapsulation } from '@angular/core';
     templateUrl: './empty-search-result.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class EmptySearchResultComponent {}
+export class EmptySearchResultComponent { /* empty */ }

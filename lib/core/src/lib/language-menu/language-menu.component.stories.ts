@@ -59,7 +59,7 @@ const LanguageMenuComponentTemplate: StoryFn<LanguageMenuComponent> = (args) => 
 });
 LanguageMenuComponentTemplate.parameters = { layout: 'centered' };
 
-export const AsMainMenu = LanguageMenuComponentTemplate.bind({});
+export const AsMainMenu = LanguageMenuComponentTemplate.bind({ /* empty */ });
 AsMainMenu.decorators = [
     componentWrapperDecorator(
         (story) => `
@@ -76,7 +76,7 @@ AsMainMenu.decorators = [
 ];
 AsMainMenu.parameters = { layout: 'centered' };
 
-export const AsNestedMenu = LanguageMenuComponentTemplate.bind({});
+export const AsNestedMenu = LanguageMenuComponentTemplate.bind({ /* empty */ });
 AsNestedMenu.decorators = [
     componentWrapperDecorator(
         (story) => `

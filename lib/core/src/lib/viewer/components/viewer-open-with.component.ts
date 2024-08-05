@@ -25,4 +25,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     host: { class: 'adf-viewer-open-with' },
     template: `<ng-content></ng-content>`
 })
-export class ViewerOpenWithComponent {}
+export class ViewerOpenWithComponent { /* empty */ }
