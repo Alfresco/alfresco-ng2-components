@@ -251,4 +251,4 @@ jobs:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           with:
             channel-id: 'C016SMNNL8L' #eng-guild-front-end
-            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author username: @${{ github.actor }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
+            slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author username: ${{ github.actor }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
