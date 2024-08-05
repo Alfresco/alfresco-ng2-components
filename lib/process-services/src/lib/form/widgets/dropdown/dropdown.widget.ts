@@ -52,7 +52,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.field?.restUrl && !this.isReadOnlyForm()) {
+        if (this.isValidRestConfig() && !this.isReadOnlyForm()) {
             if (this.field.form.taskId) {
                 this.getValuesByTaskId();
             } else {
@@ -107,7 +107,19 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
         return this.field.readOnly;
     }
 
+    private isRestType(): boolean {
+        return this.field?.optionType === 'rest';
+    }
+
     private isReadOnlyForm(): boolean {
         return !!this.field?.form?.readOnly;
+    }
+
+    private hasRestUrl(): boolean {
+        return !!this.field?.restUrl;
+    }
+
+    private isValidRestConfig(): boolean {
+        return this.isRestType() && this.hasRestUrl();
     }
 }

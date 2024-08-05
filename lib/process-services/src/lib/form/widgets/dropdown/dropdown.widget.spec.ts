@@ -82,7 +82,7 @@ describe('DropdownWidgetComponent', () => {
         beforeEach(() => {
             getRestFieldValuesSpy = spyOn(taskFormService, 'getRestFieldValues').and.returnValue(of([]));
 
-            widget.field = new FormFieldModel(new FormModel({ taskId }), { id: fieldId, restUrl: '<url>' });
+            widget.field = new FormFieldModel(new FormModel({ taskId }), { id: fieldId, restUrl: '<url>', optionType: 'rest' });
         });
 
         it('should request options from service when form is NOT readonly', () => {
@@ -110,7 +110,7 @@ describe('DropdownWidgetComponent', () => {
         expect(element.querySelector('.adf-dropdown-required-message')).toBeNull();
     });
 
-    it('should preserve empty option when loading fields', () => {
+    it('should NOT preserve empty option when loading fields', () => {
         const restFieldValue: FormFieldOption = { id: '1', name: 'Option1' } as FormFieldOption;
         spyOn(taskFormService, 'getRestFieldValues').and.callFake(
             () =>
@@ -125,15 +125,15 @@ describe('DropdownWidgetComponent', () => {
         widget.field = new FormFieldModel(form, {
             id: '<id>',
             restUrl: '/some/url/address',
+            optionType: 'rest',
             hasEmptyValue: true,
             options: [emptyOption]
         });
         widget.ngOnInit();
 
         expect(taskFormService.getRestFieldValues).toHaveBeenCalled();
-        expect(widget.field.options.length).toBe(2);
-        expect(widget.field.options[0]).toBe(emptyOption);
-        expect(widget.field.options[1]).toBe(restFieldValue);
+        expect(widget.field.options.length).toBe(1);
+        expect(widget.field.options[0]).toEqual(restFieldValue);
     });
 
     describe('when is required', () => {
@@ -187,7 +187,8 @@ describe('DropdownWidgetComponent', () => {
                     name: 'date-name',
                     type: 'dropdown',
                     readOnly: 'false',
-                    restUrl: 'fake-rest-url'
+                    restUrl: 'fake-rest-url',
+                    optionType: 'rest'
                 });
                 widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 widget.field.isVisible = true;
@@ -237,7 +238,8 @@ describe('DropdownWidgetComponent', () => {
                     name: 'date-name',
                     type: 'dropdown',
                     readOnly: 'false',
-                    restUrl: 'fake-rest-url'
+                    restUrl: 'fake-rest-url',
+                    optionType: 'rest'
                 });
                 widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 widget.field.isVisible = true;
