@@ -112,6 +112,15 @@ jobs:
             exit 1
           fi
 
+      - uses: slackapi/slack-github-action@70cd7be8e40a46e8b0eced40b0de447bdb42f68e # v1.26.0
+        name: Test slack notification
+        if: always()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: 'C07FLKM22QL' #tmp-test-tg-slackbot-channel
+          slack-message: "🔴 Warning: The release workflow of alfresco-ng2-components pipe failed\n Author username: @${{ github.actor }}\n Workflow run : <https://github.com/Alfresco/alfresco-ng2-components/actions/runs/${{ github.run_id }}| here>\n>"
+
   check-if-pr-is-approved:
     runs-on: ubuntu-latest
     steps:
