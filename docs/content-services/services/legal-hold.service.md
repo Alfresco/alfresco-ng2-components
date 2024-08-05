@@ -18,15 +18,15 @@ Manages holds for nodes.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
     -   _options_: `ContentPagingQuery` - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - List of holds <br/>
--   **createHold**(filePlanId: `string`, hold: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>`<br/>
+-   **createHold**(filePlanId: `string`, hold: [`HoldBody`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldBody.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>`<br/>
     Create new hold in File Plan.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
-    -   _hold_: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md) - Hold that should be created
+    -   _hold_: [`HoldBody`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldBody.md) - Hold that should be created
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>` - Hold entry<br/>
--   **createHolds**(filePlanId: `string`, holds: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>`<br/>
+-   **createHolds**(filePlanId: `string`, holds: [`HoldBody`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldBody.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>`<br/>
     Create new holds in File Plan.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
-    -   _holds_: `<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - Array of holds that should be created
+    -   _holds_: `<`[`HoldBody`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldBody.md)`[]>` - Array of holds that should be created
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldPaging.md)`>` - List of paginated holds entries
 
 -   **assignHold**(nodeId: `string`, holdId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>`<br/>
@@ -39,7 +39,7 @@ Manages holds for nodes.
     Assign multiple nodes to a hold.
     -   _nodeIds_: `<{id: string}[]>` - The Ids of the nodes which will be assigned to a hold
     -   _holdId_: `string` - The Id of the hold to which nodes will be assigned
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>` - Hold paging
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldPaging.md)`>` - Hold paging
 
 -   **unassignHold**(holdId: `string`, nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
     Unassign a node from a hold.

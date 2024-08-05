@@ -18,7 +18,7 @@
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ContentPagingQuery } from '../../content-rest-api';
-import { Hold, HoldEntry, HoldPaging } from './../model';
+import { HoldBody, HoldEntry, HoldPaging } from './../model';
 
 /**
  * Legal Holds service.
@@ -115,7 +115,7 @@ export class LegalHoldApi extends BaseApi {
      * @param hold Hold to create
      * @returns Promise<HoldEntry>
      */
-    createHold(filePlanId: string, hold: Hold): Promise<HoldEntry> {
+    createHold(filePlanId: string, hold: HoldBody): Promise<HoldEntry> {
         throwIfNotDefined(filePlanId, 'filePlanId');
         throwIfNotDefined(hold, 'hold');
 
@@ -138,7 +138,7 @@ export class LegalHoldApi extends BaseApi {
      * @param holds Array of holds
      * @returns Promise<HoldPaging>
      */
-    createHolds(filePlanId = '-filePlan-', holds: Hold[]): Promise<HoldPaging> {
+    createHolds(filePlanId = '-filePlan-', holds: HoldBody[]): Promise<HoldPaging> {
         throwIfNotDefined(filePlanId, 'filePlanId');
         throwIfNotDefined(holds, 'holds');
 
