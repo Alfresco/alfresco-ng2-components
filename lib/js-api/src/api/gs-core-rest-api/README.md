@@ -21,7 +21,7 @@ Class | Method | HTTP request | Description
 *.GssitesApi* | [**deleteRMSite**](docs/GssitesApi.md#deleteRMSite) | **DELETE** /gs-sites/rm | Delete the Records Management (RM) site
 *.GssitesApi* | [**getRMSite**](docs/GssitesApi.md#getRMSite) | **GET** /gs-sites/rm | Get the Records Management (RM) site
 *.GssitesApi* | [**updateRMSite**](docs/GssitesApi.md#updateRMSite) | **PUT** /gs-sites/rm | Update the Records Management (RM) site
-*.LegalHoldApi* | [**getHolds**](docs/LegalHoldApi.md#getHolds) | **GET** /file-plans/{filePlanId}/holds | Get legal hold list
+*.LegalHoldApi* | [**getHolds**](docs/LegalHoldApi.md#getHolds) | **GET** /file-plans/{filePlanId}/holds | Gets the list of holds available in the file plan
 *.RecordCategoriesApi* | [**createRecordCategoryChild**](docs/RecordCategoriesApi.md#createRecordCategoryChild) | **POST** /record-categories/{recordCategoryId}/children | Create a record category or a record folder
 *.RecordCategoriesApi* | [**deleteRecordCategory**](docs/RecordCategoriesApi.md#deleteRecordCategory) | **DELETE** /record-categories/{recordCategoryId} | Delete a record category
 *.RecordCategoriesApi* | [**getRecordCategory**](docs/RecordCategoriesApi.md#getRecordCategory) | **GET** /record-categories/{recordCategoryId} | Get a record category
