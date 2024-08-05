@@ -726,15 +726,19 @@ describe('FormFieldModel', () => {
                     id: 'rest-radio',
                     type: FormFieldTypes.RADIO_BUTTONS,
                     optionType: 'rest',
-                    options: [
-                        { id: 'restOpt1', name: 'Rest Option 1' },
-                        { id: 'restOpt2', name: 'Rest Option 2' }
-                    ]
+                    restUrl: 'fake-url',
+                    options: []
                 });
+
+                field.options = [
+                    { id: 'restOpt1', name: 'Rest Option 1' },
+                    { id: 'restOpt2', name: 'Rest Option 2' }
+                ];
             });
 
             it('should update form with selected option and options from which we chose', () => {
                 field.value = 'restOpt2';
+                field.updateForm();
 
                 expect(form.values['rest-radio']).toEqual({
                     id: 'restOpt2',
@@ -746,6 +750,7 @@ describe('FormFieldModel', () => {
             describe('should update form with selected option properties set to null and options from which we chose', () => {
                 it('when value does NOT match any option', () => {
                     field.value = 'not_exist';
+                    field.updateForm();
 
                     expect(form.values['rest-radio']).toEqual({
                         id: null,
@@ -756,6 +761,7 @@ describe('FormFieldModel', () => {
 
                 it('when radio button value is null', () => {
                     field.value = null;
+                    field.updateForm();
 
                     expect(form.values['rest-radio']).toEqual({
                         id: null,
@@ -978,7 +984,7 @@ describe('FormFieldModel', () => {
             field.updateForm();
 
             expect(field.value).toEqual('delayed-rest-option-id');
-            expect(field.form.values['radio_field']).toEqual(null);
+            expect(field.form.values['radio_field']).toEqual({ id: null, name: null, options: [] });
             expect(field.restUrl).toEqual('fake-url');
             expect(field.restIdProperty).toEqual('fake-id-property');
             expect(field.restLabelProperty).toEqual('fake-label-property');
@@ -991,7 +997,7 @@ describe('FormFieldModel', () => {
             field.updateForm();
 
             expect(field.value).toEqual('delayed-rest-option-id');
-            expect(field.form.values['radio_field']).toEqual(null);
+            expect(field.form.values['radio_field']).toEqual({ id: null, name: null, options: [] });
             expect(field.options).toEqual([]);
         });
 
