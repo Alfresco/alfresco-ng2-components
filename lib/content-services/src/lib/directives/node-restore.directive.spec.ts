@@ -133,7 +133,7 @@ describe('NodeRestoreDirective', () => {
 
     describe('notification', () => {
         it('should notify on multiple fails', (done) => {
-            const error = { message: '{ "error": { /* empty */ } }' };
+            const error = { message: '{ "error": { } }' };
 
             directiveInstance.restore.subscribe((event: any) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.PARTIAL_PLURAL');
