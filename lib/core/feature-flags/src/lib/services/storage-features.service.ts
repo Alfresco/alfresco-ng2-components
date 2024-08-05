@@ -32,8 +32,12 @@ import { StorageService } from '@alfresco/adf-core';
 
 @Injectable()
 export class StorageFeaturesService implements IFeaturesService, IWritableFeaturesService {
-    private currentFlagState: WritableFlagChangeset = { /* empty */ };
-    private flags = new BehaviorSubject<WritableFlagChangeset>({ /* empty */ });
+    private currentFlagState: WritableFlagChangeset = {
+        /* empty */
+    };
+    private flags = new BehaviorSubject<WritableFlagChangeset>({
+        /* empty */
+    });
     private flags$ = this.flags.asObservable();
 
     constructor(
@@ -51,7 +55,7 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
     }
 
     init(): Observable<WritableFlagChangeset> {
-        const storedFlags = JSON.parse(this.storageService.getItem(this.storageKey) || '{ /* empty */ }');
+        const storedFlags = JSON.parse(this.storageService.getItem(this.storageKey) || '{}');
         const initialFlagChangeSet = FlagSetParser.deserialize(storedFlags);
         this.flags.next(initialFlagChangeSet);
         return of(initialFlagChangeSet);
@@ -70,11 +74,17 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
     }
 
     setFlag(key: string, value: any): void {
-        let fictive = { /* empty */ };
+        let fictive = {
+            /* empty */
+        };
         if (!this.currentFlagState[key]) {
             fictive = { fictive: true };
         } else {
-            fictive = this.currentFlagState[key]?.fictive ? { fictive: true } : { /* empty */ };
+            fictive = this.currentFlagState[key]?.fictive
+                ? { fictive: true }
+                : {
+                      /* empty */
+                  };
         }
 
         this.flags.next({
@@ -104,22 +114,29 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
                         fictive: true
                     }
                 }),
-                { /* empty */ }
+                {
+                    /* empty */
+                }
             )
         );
     }
 
     mergeFlags(flags: FlagChangeset): void {
-        const mergedFlags: WritableFlagChangeset = Object.keys(flags).reduce((acc, key) => {
-            const current = this.currentFlagState[key]?.current;
-            return {
-                ...acc,
-                [key]: {
-                    current: current ?? flags[key].current,
-                    previous: current ?? null
-                }
-            };
-        }, { /* empty */ });
+        const mergedFlags: WritableFlagChangeset = Object.keys(flags).reduce(
+            (acc, key) => {
+                const current = this.currentFlagState[key]?.current;
+                return {
+                    ...acc,
+                    [key]: {
+                        current: current ?? flags[key].current,
+                        previous: current ?? null
+                    }
+                };
+            },
+            {
+                /* empty */
+            }
+        );
 
         Object.keys(this.currentFlagState)
             .filter((key) => !flags[key])
