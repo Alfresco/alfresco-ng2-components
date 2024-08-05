@@ -63,7 +63,7 @@ export class LegalHoldService {
     }
 
     /**
-     * Assign a node to a hold.
+     * Assign multiple nodes to a hold.
      *
      * @param nodeIds The list of managed node Ids
      * @param holdId The Id of the hold to which nodes will be assigned
