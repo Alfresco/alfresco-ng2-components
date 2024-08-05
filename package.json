@@ -203,7 +203,7 @@
     "@nx/eslint-plugin": "16.10.0",
     "@nx/node": "16.10.0",
     "@nx/angular": "16.10.0"
-  },
+ },
   "license": "Apache-2.0",
   "bundlesize": [
     {
