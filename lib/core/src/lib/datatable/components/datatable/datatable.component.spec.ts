@@ -945,6 +945,7 @@ describe('DataTable', () => {
     });
 
     it('should use special material url scheme', () => {
+        dataTable.data = new ObjectDataTableAdapter([{}, {}, {}], []);
         const column = {} as DataColumn;
 
         const row: any = {
@@ -955,7 +956,8 @@ describe('DataTable', () => {
     });
 
     it('should not use special material url scheme', () => {
-        const column = {} as DataColumn;
+        dataTable.data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const column = { type: 'image' } as DataColumn;
 
         const row: any = {
             getValue: () => 'http://www.google.com'
@@ -965,7 +967,8 @@ describe('DataTable', () => {
     });
 
     it('should parse icon value', () => {
-        const column = {} as DataColumn;
+        dataTable.data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const column = { type: 'image' } as DataColumn;
 
         const row: any = {
             getValue: () => 'material-icons://android'
@@ -975,7 +978,8 @@ describe('DataTable', () => {
     });
 
     it('should not parse icon value', () => {
-        const column = {} as DataColumn;
+        dataTable.data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const column = { type: 'image' } as DataColumn;
 
         const row: any = {
             getValue: () => 'http://www.google.com'
