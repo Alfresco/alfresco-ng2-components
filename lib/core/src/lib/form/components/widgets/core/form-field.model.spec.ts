@@ -112,6 +112,31 @@ describe('FormFieldModel', () => {
         expect(field.readOnly).toBeTruthy();
     });
 
+    describe('option type property', () => {
+        const staticOptions = [
+            { id: 'op1', name: 'Option 1' },
+            { id: 'op2', name: 'Option 2' }
+        ];
+
+        it('should assign static options array to options in case of manual type', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                optionType: 'manual',
+                options: staticOptions
+            });
+
+            expect(field.options).toEqual(staticOptions);
+        });
+
+        it('should assign empty array to options in case of rest type', () => {
+            const field = new FormFieldModel(new FormModel(), {
+                optionType: 'rest',
+                options: staticOptions
+            });
+
+            expect(field.options).toEqual([]);
+        });
+    });
+
     describe('dropdown field model instantiation', () => {
         it('should add value (selected option) to field options if NOT present', () => {
             const field = new FormFieldModel(new FormModel(), {
