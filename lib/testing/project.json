@@ -7,7 +7,7 @@
   "targets": {
 
     "build": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@nx/webpack:webpack",
       "options": {
         "tsConfig": "lib/testing/tsconfig.lib.json",
         "project": "lib/testing/ng-package.json"
