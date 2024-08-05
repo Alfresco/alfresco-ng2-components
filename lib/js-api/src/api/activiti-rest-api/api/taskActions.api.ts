@@ -51,7 +51,7 @@ export class TaskActionsApi extends BaseApi {
      *
      * @param taskId taskId
      * @param formIdentifier formIdentifier
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     attachForm(taskId: string, formIdentifier: FormIdentifierRepresentation): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -74,7 +74,7 @@ export class TaskActionsApi extends BaseApi {
      * To claim a task (in case the task is assigned to a group)
      *
      * @param taskId taskId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     claimTask(taskId: string): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -95,7 +95,7 @@ export class TaskActionsApi extends BaseApi {
      * Use this endpoint to complete a standalone task or task without a form
      *
      * @param taskId taskId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     completeTask(taskId: string): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -115,7 +115,7 @@ export class TaskActionsApi extends BaseApi {
      *
      * @param taskId taskId
      * @param userIdentifier userIdentifier
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     delegateTask(taskId: string, userIdentifier: UserIdentifierRepresentation): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -137,7 +137,7 @@ export class TaskActionsApi extends BaseApi {
      *
      * @param taskId taskId
      * @param groupId groupId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     involveGroup(taskId: string, groupId: string): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -159,7 +159,7 @@ export class TaskActionsApi extends BaseApi {
      *
      * @param taskId taskId
      * @param userIdentifier userIdentifier
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     involveUser(taskId: string, userIdentifier: UserIdentifierRepresentation): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -180,7 +180,7 @@ export class TaskActionsApi extends BaseApi {
      * Remove a form from a task
      *
      * @param taskId taskId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     removeForm(taskId: string): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -200,7 +200,7 @@ export class TaskActionsApi extends BaseApi {
      *
      * @param taskId taskId
      * @param identifier identifier
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     removeInvolvedUser(taskId: string, identifier: string | UserIdentifierRepresentation): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -231,7 +231,7 @@ export class TaskActionsApi extends BaseApi {
      *
      *
      * @param taskId taskId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     resolveTask(taskId: string): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -252,7 +252,7 @@ export class TaskActionsApi extends BaseApi {
      * To unclaim a task (in case the task was assigned to a group)
      *
      * @param taskId taskId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     unclaimTask(taskId: string): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');

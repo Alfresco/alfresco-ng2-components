@@ -27,7 +27,7 @@ export class IntegrationBoxApi extends BaseApi {
      * Box Authorization
      * Returns Box OAuth HTML Page
      *
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     confirmAuthorisation(): Promise<any> {
         return this.get({
@@ -41,7 +41,7 @@ export class IntegrationBoxApi extends BaseApi {
      *
      * @param userId userId
      * @param credentials credentials
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     createRepositoryAccount(userId: number, credentials: UserAccountCredentialsRepresentation): Promise<any> {
         throwIfNotDefined(userId, 'userId');
@@ -62,7 +62,7 @@ export class IntegrationBoxApi extends BaseApi {
      * Delete account information
      *
      * @param userId userId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteRepositoryAccount(userId: number): Promise<void> {
         throwIfNotDefined(userId, 'userId');
@@ -101,7 +101,11 @@ export class IntegrationBoxApi extends BaseApi {
      * @return Promise<ResultListDataRepresentationBoxContent>
      */
     getFiles(opts?: { filter?: string; parent?: string }): Promise<ResultListDataRepresentationBoxContent> {
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         return this.get({
             path: '/api/enterprise/integration/box/files',
@@ -114,7 +118,7 @@ export class IntegrationBoxApi extends BaseApi {
      * Get account information
      *
      * @param userId userId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     getRepositoryAccount(userId: number): Promise<any> {
         throwIfNotDefined(userId, 'userId');
@@ -135,7 +139,7 @@ export class IntegrationBoxApi extends BaseApi {
      *
      * @param userId userId
      * @param credentials credentials
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     updateRepositoryAccount(userId: number, credentials: UserAccountCredentialsRepresentation): Promise<any> {
         throwIfNotDefined(userId, 'userId');

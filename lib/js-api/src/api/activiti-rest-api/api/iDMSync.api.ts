@@ -27,7 +27,7 @@ export class IDMSyncApi extends BaseApi {
      * Get log file for a sync log entry
      *
      * @param syncLogEntryId syncLogEntryId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     getLogFile(syncLogEntryId: number): Promise<any> {
         throwIfNotDefined(syncLogEntryId, 'syncLogEntryId');

@@ -61,7 +61,7 @@ export class CommentsApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param commentId The identifier of a comment.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteComment(nodeId: string, commentId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');

@@ -43,7 +43,11 @@ export class ContentApi extends BaseApi {
         throwIfNotDefined(processInstanceId, 'processInstanceId');
         throwIfNotDefined(relatedContent, 'relatedContent');
 
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             processInstanceId
@@ -158,7 +162,7 @@ export class ContentApi extends BaseApi {
      * Remove a local content representation
      *
      * @param contentId contentId
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteContent(contentId: number): Promise<void> {
         throwIfNotDefined(contentId, 'contentId');
@@ -207,7 +211,7 @@ export class ContentApi extends BaseApi {
      *
      * @param contentId contentId
      * @param renditionType renditionType
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     getRawContent(contentId: number, renditionType?: string): Promise<any> {
         throwIfNotDefined(contentId, 'contentId');
@@ -251,7 +255,11 @@ export class ContentApi extends BaseApi {
     ): Promise<ResultListDataRepresentationRelatedContentRepresentation> {
         throwIfNotDefined(processInstanceId, 'processInstanceId');
 
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             processInstanceId
