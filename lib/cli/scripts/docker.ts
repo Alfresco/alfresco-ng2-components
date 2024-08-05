@@ -80,7 +80,7 @@ function buildImage(args: PublishArgs, tag: string) {
     if (args.verbose) {
         logger.info(`Dry-run Perform docker build -t=${args.dockerRepo}:${tag} ${buildArgs} -f=${args.fileName} ${args.pathProject}`);
     }
-    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, ...buildArgs, `-f=${args.fileName}`, args.pathProject], {});
+    const response = exec('docker', ['build', `-t=${args.dockerRepo}:${tag}`, ...buildArgs, `-f=${args.fileName}`, args.pathProject], { /* empty */ });
     logger.info(response);
 }
 
@@ -93,7 +93,7 @@ function buildImage(args: PublishArgs, tag: string) {
  */
 function tagImage(args: PublishArgs, imageTag: string, newTag: string) {
     logger.info(`Perform docker tag... ${args.dockerRepo}:${imageTag} on ${args.dockerRepo}:${newTag}`);
-    const response = exec('docker', ['tag', `${args.dockerRepo}:${imageTag}`, `${args.dockerRepo}:${newTag}`], {});
+    const response = exec('docker', ['tag', `${args.dockerRepo}:${imageTag}`, `${args.dockerRepo}:${newTag}`], { /* empty */ });
     logger.info(response);
 }
 
@@ -105,7 +105,7 @@ function tagImage(args: PublishArgs, imageTag: string, newTag: string) {
  */
 function pullImage(dockerRepo: string, sourceTag: string) {
     logger.info(`Perform docker pull... ${dockerRepo}:${sourceTag}`);
-    const response = exec('docker', ['pull', `${dockerRepo}:${sourceTag}`], {});
+    const response = exec('docker', ['pull', `${dockerRepo}:${sourceTag}`], { /* empty */ });
     logger.info(response);
 }
 
@@ -120,7 +120,7 @@ function pushImage(args: PublishArgs, tag: string) {
         logger.info(`Dry-run Perform docker push... ${args.dockerRepo}:${tag}`);
     } else {
         logger.info(`Perform docker push... ${args.dockerRepo}:${tag}`);
-        const response = exec('docker', ['push', `${args.dockerRepo}:${tag}`], {});
+        const response = exec('docker', ['push', `${args.dockerRepo}:${tag}`], { /* empty */ });
         logger.info(response);
     }
 }
@@ -133,7 +133,7 @@ function pushImage(args: PublishArgs, tag: string) {
  */
 function cleanImage(args: PublishArgs, tag: string) {
     logger.info(`Perform docker clean on tag:${tag}...`);
-    const response = exec('docker', ['rmi', `-f`, `${args.dockerRepo}:${tag}`], {});
+    const response = exec('docker', ['rmi', `-f`, `${args.dockerRepo}:${tag}`], { /* empty */ });
     logger.info(response);
 }
 

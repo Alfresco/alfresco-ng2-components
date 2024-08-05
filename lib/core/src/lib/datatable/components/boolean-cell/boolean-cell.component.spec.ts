@@ -108,7 +108,7 @@ describe('BooleanCellComponent', () => {
             });
 
             it('object', () => {
-                renderAndCheckResult({}, false);
+                renderAndCheckResult({ /* empty */ }, false);
             });
 
             it('null', () => {

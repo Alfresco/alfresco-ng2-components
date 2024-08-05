@@ -419,7 +419,7 @@ export class ProcessListCloudComponent
             }
 
             return visibleColumnsMap;
-        }, {});
+        }, { /* empty */ });
 
         this.createColumns();
         this.createDatatableSchema();
@@ -435,7 +435,7 @@ export class ProcessListCloudComponent
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
             }
             return widthsColumnsMap;
-        }, {});
+        }, { /* empty */ });
 
         this.columnsWidths = { ...this.columnsWidths, ...newColumnsWidths };
 

@@ -66,7 +66,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
                 const propertyGroup = propertyGroups[groupName];
                 const properties = propertyGroup.properties;
 
-                return Object.assign({}, propertyGroup, {
+                return Object.assign({ /* empty */ }, propertyGroup, {
                     properties: Object.keys(properties).map((propertyName) => properties[propertyName])
                 });
             });

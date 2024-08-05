@@ -23,4 +23,4 @@ import { VersionCompatibilityDirective } from './version-compatibility.directive
     imports: [VersionCompatibilityDirective],
     exports: [VersionCompatibilityDirective]
 })
-export class VersionCompatibilityModule {}
+export class VersionCompatibilityModule { /* empty */ }

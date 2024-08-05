@@ -50,8 +50,8 @@ describe('SearchSliderComponent', () => {
 
     it('should update its query part on slider change', () => {
         const context: any = {
-            queryFragments: {},
-            update: () => {}
+            queryFragments: { /* empty */ },
+            update: () => { /* empty */ }
         };
 
         spyOn(context, 'update').and.stub();
@@ -81,8 +81,8 @@ describe('SearchSliderComponent', () => {
         };
 
         const context: any = {
-            queryFragments: {},
-            update: () => {}
+            queryFragments: { /* empty */ },
+            update: () => { /* empty */ }
         };
 
         component.settings = settings;
@@ -109,8 +109,8 @@ describe('SearchSliderComponent', () => {
         };
 
         const context: any = {
-            queryFragments: {},
-            update: () => {}
+            queryFragments: { /* empty */ },
+            update: () => { /* empty */ }
         };
 
         component.settings = settings;

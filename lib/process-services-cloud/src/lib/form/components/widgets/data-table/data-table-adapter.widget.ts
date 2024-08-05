@@ -60,7 +60,7 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
     }
 
     private buildDataRowFromItem(item: any): ObjectDataRow {
-        const rowData = {};
+        const rowData = { /* empty */ };
         this.columnKeys.forEach((path, i) => {
             const rowValue = this.extractPropertyValue(this.helper.splitPathIntoProperties(path), item);
 

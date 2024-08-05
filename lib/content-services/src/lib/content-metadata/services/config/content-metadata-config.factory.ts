@@ -29,7 +29,7 @@ const DEFAULT_PRESET_NAME = 'default';
     providedIn: 'root'
 })
 export class ContentMetadataConfigFactory {
-    constructor(private appConfigService: AppConfigService, private logService: LogService) {}
+    constructor(private appConfigService: AppConfigService, private logService: LogService) { /* empty */ }
 
     public get(presetName: string = 'default'): ContentMetadataConfig {
         let presetConfig: PresetConfig;

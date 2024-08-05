@@ -97,7 +97,7 @@ function updateFile(tree, pathname, aggData, errorMessages) {
 }
 
 function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
-    const result = {};
+    const result = { /* empty */ };
 
     const nav = new MDNav(tree);
 
@@ -132,7 +132,7 @@ function getPropDocsFromMD(tree, sectionHeading, docsColumn) {
 }
 
 function getMethodDocsFromMD(tree) {
-    const result = {};
+    const result = { /* empty */ };
 
     const nav = new MDNav(tree);
 
@@ -178,7 +178,7 @@ function getMethodDocsFromMD(tree) {
 }
 
 function getMDMethodParams(methItem: MDNav) {
-    const result = {};
+    const result = { /* empty */ };
 
     const paramList = methItem.childNav.list().childNav;
 

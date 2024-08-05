@@ -62,7 +62,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) {}
+    constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) { /* empty */ }
 
     ngOnDestroy(): void {
         this.onDestroy$.next(true);

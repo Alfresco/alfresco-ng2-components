@@ -23,4 +23,4 @@ import { CommentListComponent } from './comment-list.component';
     imports: [CommentListComponent],
     exports: [CommentListComponent]
 })
-export class CommentListModule {}
+export class CommentListModule { /* empty */ }

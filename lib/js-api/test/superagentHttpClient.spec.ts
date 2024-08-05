@@ -24,9 +24,9 @@ describe('SuperagentHttpClient', () => {
         const client = new SuperagentHttpClient();
 
         it('should create a request with response type blob', () => {
-            const queryParams = {};
-            const headerParams = {};
-            const formParams = {};
+            const queryParams = { /* empty */ };
+            const headerParams = { /* empty */ };
+            const formParams = { /* empty */ };
 
             const contentTypes = 'application/json';
             const accepts = 'application/json';
@@ -43,7 +43,7 @@ describe('SuperagentHttpClient', () => {
                     },
                     type: 'basic'
                 },
-                defaultHeaders: {}
+                defaultHeaders: { /* empty */ }
             };
 
             const response: any = client['buildRequest'](

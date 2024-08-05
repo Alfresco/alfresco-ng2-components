@@ -181,7 +181,7 @@ describe('Task form cloud component', () => {
         try {
             await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-        } catch (error) {}
+        } catch (error) { /* empty */ }
         await browser.executeScript('window.sessionStorage.clear();');
         await browser.executeScript('window.localStorage.clear();');
     });

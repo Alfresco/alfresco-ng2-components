@@ -58,7 +58,7 @@ export class ProcessDefinitionsApi extends BaseApi {
      * @param processDefinitionId Process definition ID
      * @param family Identity type
      * @param identityId User or group ID
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     deleteIdentityLink(processDefinitionId: string, family: string, identityId: string): Promise<void> {
         throwIfNotDefined(processDefinitionId, 'processDefinitionId');

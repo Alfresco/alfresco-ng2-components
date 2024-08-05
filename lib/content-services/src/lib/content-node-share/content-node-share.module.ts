@@ -26,4 +26,4 @@ export const CONTENT_NODE_SHARE_DIRECTIVES = [ShareDialogComponent, NodeSharedDi
     imports: [...CONTENT_NODE_SHARE_DIRECTIVES],
     exports: [...CONTENT_NODE_SHARE_DIRECTIVES]
 })
-export class ContentNodeShareModule {}
+export class ContentNodeShareModule { /* empty */ }

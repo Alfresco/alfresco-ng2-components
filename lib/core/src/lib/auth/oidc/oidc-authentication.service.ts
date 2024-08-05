@@ -72,12 +72,12 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     }
 
     isImplicitFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        const oauth2: OauthConfigModel = Object.assign({ /* empty */ }, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
         return !!oauth2?.implicitFlow;
     }
 
     isAuthCodeFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
+        const oauth2: OauthConfigModel = Object.assign({ /* empty */ }, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
         return !!oauth2?.codeFlow;
     }
 
@@ -200,7 +200,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
                 options[param] = value;
             }
             return options;
-        }, {});
+        }, { /* empty */ });
     }
 
     private getLogoutParamValue(param: string): string | undefined {

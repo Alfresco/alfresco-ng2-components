@@ -36,7 +36,7 @@ describe('StorageFeaturesService', () => {
                         fictive: true
                     }
                 }),
-            setItem: () => {}
+            setItem: () => { /* empty */ }
         };
 
         beforeEach(() => {
@@ -180,7 +180,7 @@ describe('StorageFeaturesService', () => {
 
         it('should return initial empty flag set', (done) => {
             storageFeaturesService.init().subscribe((flags) => {
-                expect(flags).toEqual({});
+                expect(flags).toEqual({ /* empty */ });
                 done();
             });
         });

@@ -22,7 +22,7 @@ export const throwTimeEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -35,7 +35,7 @@ export const throwTimeEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -48,7 +48,7 @@ export const throwTimeEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -59,7 +59,7 @@ export const throwErrorEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -72,7 +72,7 @@ export const throwErrorEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -85,7 +85,7 @@ export const throwErrorEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -96,7 +96,7 @@ export const throwSignalEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -109,7 +109,7 @@ export const throwSignalEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -122,7 +122,7 @@ export const throwSignalEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -133,7 +133,7 @@ export const throwMessageEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };
 
@@ -146,7 +146,7 @@ export const throwMessageEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };
 
@@ -159,6 +159,6 @@ export const throwMessageEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };

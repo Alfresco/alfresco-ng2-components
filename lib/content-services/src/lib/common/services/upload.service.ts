@@ -44,7 +44,7 @@ export class UploadService {
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    private cache: { [key: string]: any } = {};
+    private cache: { [key: string]: any } = { /* empty */ };
     private totalComplete: number = 0;
     private totalAborted: number = 0;
     private totalError: number = 0;
@@ -84,7 +84,7 @@ export class UploadService {
     }
 
     clearCache() {
-        this.cache = {};
+        this.cache = { /* empty */ };
     }
 
     /**
@@ -296,7 +296,7 @@ export class UploadService {
                     }
                 }
             })
-            .catch(() => {});
+            .catch(() => { /* empty */ });
 
         return promise;
     }

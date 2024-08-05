@@ -27,7 +27,7 @@ describe('UploadDirective', () => {
     beforeEach(() => {
         nativeElement = {
             classList: jasmine.createSpyObj('classList', ['add', 'remove']),
-            dispatchEvent: () => {}
+            dispatchEvent: () => { /* empty */ }
         };
         directive = new UploadDirective(new ElementRef(nativeElement), null, null);
     });
@@ -110,8 +110,8 @@ describe('UploadDirective', () => {
     it('should raise upload-files event on files drop', fakeAsync(() => {
         directive.enabled = true;
         const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
-        spyOn(directive, 'getDataTransfer').and.returnValue({} as any);
-        spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve([{}, {}]));
+        spyOn(directive, 'getDataTransfer').and.returnValue({ /* empty */ } as any);
+        spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve([{ /* empty */ }, { /* empty */ }]));
         spyOn(nativeElement, 'dispatchEvent').and.callFake((customEvent) => {
             expect(customEvent).toBeTruthy();
         });
@@ -121,9 +121,9 @@ describe('UploadDirective', () => {
 
     it('should provide dropped files in upload-files event', fakeAsync(() => {
         directive.enabled = true;
-        const files = [{}];
+        const files = [{ /* empty */ }];
         const event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
-        spyOn(directive, 'getDataTransfer').and.returnValue({} as any);
+        spyOn(directive, 'getDataTransfer').and.returnValue({ /* empty */ } as any);
         spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve(files));
 
         spyOn(nativeElement, 'dispatchEvent').and.callFake((e) => {
@@ -138,7 +138,7 @@ describe('UploadDirective', () => {
     it('should reset input value after file upload', () => {
         directive.enabled = true;
         directive.mode = ['click'];
-        const files = [{}];
+        const files = [{ /* empty */ }];
         const event = {currentTarget: {files}, target: {value: '/testpath/document.pdf'}};
 
         directive.onSelectFiles(event);

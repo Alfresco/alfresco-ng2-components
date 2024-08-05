@@ -54,7 +54,7 @@ describe('DummyFeaturesService', () => {
 
     it('should return an empty object when getFlags$ is called', () => {
         service.getFlags$().subscribe((flags) => {
-            expect(flags).toEqual({});
+            expect(flags).toEqual({ /* empty */ });
         });
     });
 });

@@ -38,7 +38,7 @@ export class UnclaimTaskDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(private taskListService: TaskListService) {}
+    constructor(private taskListService: TaskListService) { /* empty */ }
 
     @HostListener('click')
     onClick() {

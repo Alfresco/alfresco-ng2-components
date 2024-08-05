@@ -88,7 +88,7 @@ export class SuperagentHttpClient implements HttpClient {
                     }
 
                     if (response?.text) {
-                        error = error || {};
+                        error = error || { /* empty */ };
                         reject(Object.assign(error, { message: response.text }));
                     } else {
                         // eslint-disable-next-line prefer-promise-reject-errors
@@ -102,7 +102,7 @@ export class SuperagentHttpClient implements HttpClient {
                             securityOptions.authentications.cookie = response.header['set-cookie'][0];
                         }
                     }
-                    let data = {};
+                    let data = { /* empty */ };
                     if (response.type === 'text/html') {
                         data = SuperagentHttpClient.deserialize(response);
                     } else {
@@ -140,7 +140,7 @@ export class SuperagentHttpClient implements HttpClient {
     ) {
         const request = superagent(httpMethod, url);
 
-        const { isBpmRequest, authentications, defaultHeaders = {}, enableCsrf, withCredentials = false } = securityOptions;
+        const { isBpmRequest, authentications, defaultHeaders = { /* empty */ }, enableCsrf, withCredentials = false } = securityOptions;
 
         // apply authentications
         this.applyAuthToRequest(request, authentications);
@@ -337,7 +337,7 @@ export class SuperagentHttpClient implements HttpClient {
      * @returns normalized parameters.
      */
     private static normalizeParams(params: { [key: string]: any }): { [key: string]: any } {
-        const newParams: { [key: string]: any } = {};
+        const newParams: { [key: string]: any } = { /* empty */ };
 
         for (const key in params) {
             if (Object.prototype.hasOwnProperty.call(params, key) && params[key] !== undefined && params[key] !== null) {

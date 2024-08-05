@@ -191,7 +191,7 @@ export const checkboxVisibilityFormJson = {
 				}
 			],
 			outcomes: [],
-			metadata: {},
+			metadata: { /* empty */ },
 			variables: [
 				{
 					id: '33c60b43-2d44-4f25-bdc4-62b34ae11b43',
@@ -278,7 +278,7 @@ export const multipleCheckboxVisibilityFormJson = {
 				}
 			],
 			outcomes: [],
-			metadata: {},
+			metadata: { /* empty */ },
 			variables: []
 		}
 	}

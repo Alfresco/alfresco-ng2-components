@@ -22,7 +22,7 @@ export const subProcess = {
     height: 200,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const subProcessActive = {
@@ -34,7 +34,7 @@ export const subProcessActive = {
     height: 200,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const subProcessCompleted = {
@@ -46,7 +46,7 @@ export const subProcessCompleted = {
     height: 200,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const eventSubProcess = {
@@ -56,7 +56,7 @@ export const eventSubProcess = {
     height: 200,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const eventSubProcessActive = {
@@ -68,7 +68,7 @@ export const eventSubProcessActive = {
     height: 200,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const eventSubProcessCompleted = {
@@ -80,5 +80,5 @@ export const eventSubProcessCompleted = {
     height: 200,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };

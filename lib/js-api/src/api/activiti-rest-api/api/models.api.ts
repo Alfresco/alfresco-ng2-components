@@ -53,7 +53,7 @@ export class ModelsApi extends BaseApi {
      * @param opts Optional parameters
      * @param opts.cascade cascade
      * @param opts.deleteRuntimeApp deleteRuntimeApp
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     deleteModel(modelId: number, opts?: { cascade?: boolean; deleteRuntimeApp?: boolean }): Promise<any> {
         throwIfNotDefined(modelId, 'modelId');

@@ -89,7 +89,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
 
-    constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
+    constructor(private formBuilder: FormBuilder, private translateService: TranslateService) { /* empty */ }
 
     ngOnInit() {
         if (this.settings) {

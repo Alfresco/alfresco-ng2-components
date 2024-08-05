@@ -38,7 +38,7 @@ export class BpmAuthMock extends BaseMock {
     }
 
     get200ResponseLogout(): void {
-        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/app/logout', {}).reply(200);
+        nock(this.host, { encodedQueryParams: true }).get('/activiti-app/app/logout', { /* empty */ }).reply(200);
     }
 
     get401Response(): void {

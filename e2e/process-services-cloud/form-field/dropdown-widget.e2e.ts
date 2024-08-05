@@ -59,7 +59,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     const dropdown = widget.dropdown();
 
     let testUser: { idIdentityService: string; username: string; password: string };
-    const runningTasks = {};
+    const runningTasks = { /* empty */ };
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {

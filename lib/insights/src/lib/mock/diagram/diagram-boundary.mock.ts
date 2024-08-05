@@ -22,7 +22,7 @@ export const boundaryTimeEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -35,7 +35,7 @@ export const boundaryTimeEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -48,7 +48,7 @@ export const boundaryTimeEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -59,7 +59,7 @@ export const boundaryErrorEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -72,7 +72,7 @@ export const boundaryErrorEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -85,7 +85,7 @@ export const boundaryErrorEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -96,7 +96,7 @@ export const boundarySignalEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -109,7 +109,7 @@ export const boundarySignalEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -122,7 +122,7 @@ export const boundarySignalEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -133,7 +133,7 @@ export const boundaryMessageEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };
 
@@ -146,7 +146,7 @@ export const boundaryMessageEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };
 
@@ -159,6 +159,6 @@ export const boundaryMessageEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };

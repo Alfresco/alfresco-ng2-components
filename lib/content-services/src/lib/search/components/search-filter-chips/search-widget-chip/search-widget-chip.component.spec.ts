@@ -52,7 +52,7 @@ describe('SearchWidgetChipComponent', () => {
         await (await chip.host()).click();
 
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
-        applyButton.triggerEventHandler('click', {});
+        applyButton.triggerEventHandler('click', { /* empty */ });
 
         expect(queryBuilder.update).toHaveBeenCalled();
     });
@@ -62,7 +62,7 @@ describe('SearchWidgetChipComponent', () => {
         await (await chip.host()).click();
 
         const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
-        applyButton.triggerEventHandler('click', {});
+        applyButton.triggerEventHandler('click', { /* empty */ });
         expect(queryBuilder.update).toHaveBeenCalled();
     });
 

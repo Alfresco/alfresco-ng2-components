@@ -71,12 +71,12 @@ export class AppsProcessCloudService {
             return of([]);
         }
         const path = this.getApplicationUrl();
-        const pathParams = {};
+        const pathParams = { /* empty */ };
         const queryParams = { status, roles: role, sort: 'name' };
         const httpMethod = 'GET';
-        const headerParams = {};
-        const formParams = {};
-        const bodyParam = {};
+        const headerParams = { /* empty */ };
+        const formParams = { /* empty */ };
+        const bodyParam = { /* empty */ };
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
         const requestOptions: RequestOptions = {

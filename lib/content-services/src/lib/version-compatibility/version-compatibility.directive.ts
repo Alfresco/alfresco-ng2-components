@@ -34,7 +34,7 @@ export class VersionCompatibilityDirective {
         private templateRef: TemplateRef<any>,
         private viewContainer: ViewContainerRef,
         private versionCompatibilityService: VersionCompatibilityService
-    ) {}
+    ) { /* empty */ }
 
     private validateAcsVersion(requiredVersion: string) {
         this.versionCompatibilityService.acsVersionInitialized$.pipe(take(1)).subscribe(() => {

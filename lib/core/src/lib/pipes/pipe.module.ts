@@ -64,4 +64,4 @@ export const CORE_PIPES = [
     providers: [...CORE_PIPES],
     exports: [...CORE_PIPES]
 })
-export class PipeModule {}
+export class PipeModule { /* empty */ }

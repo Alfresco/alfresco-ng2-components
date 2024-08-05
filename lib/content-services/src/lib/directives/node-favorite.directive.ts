@@ -52,7 +52,7 @@ export class NodeFavoriteDirective implements OnChanges {
         this.toggleFavorite();
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         if (!changes.selection.currentValue.length) {

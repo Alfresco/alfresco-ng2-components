@@ -140,7 +140,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         @Inject(IDENTITY_GROUP_SERVICE_TOKEN)
         private identityGroupService: IdentityGroupServiceInterface
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit(): void {
         this.initSearch();

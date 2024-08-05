@@ -30,7 +30,7 @@ import { RaphaelPlusDirective } from '../raphael/raphael-plus.component';
     templateUrl: './diagram-parallel-gateway.component.html'
 })
 export class DiagramParallelGatewayComponent extends DiagramElement implements OnInit {
-    center: any = {};
+    center: any = { /* empty */ };
     width: any;
     height: any;
     options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 3 };

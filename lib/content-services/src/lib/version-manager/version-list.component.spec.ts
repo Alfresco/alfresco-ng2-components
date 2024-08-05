@@ -109,7 +109,7 @@ describe('VersionListComponent', () => {
             done();
         });
         fixture.detectChanges();
-        component.onVersionDeleted({});
+        component.onVersionDeleted({ /* empty */ });
     });
 
     describe('Version history fetching', () => {

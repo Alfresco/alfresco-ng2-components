@@ -54,7 +54,7 @@ export class FolderEditDirective {
         }
     }
 
-    constructor(public dialogRef: MatDialog, public elementRef: ElementRef, public content: ContentService) {}
+    constructor(public dialogRef: MatDialog, public elementRef: ElementRef, public content: ContentService) { /* empty */ }
 
     private get dialogConfig() {
         const { folder } = this;

@@ -48,7 +48,7 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
         };
     }
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog) { /* empty */ }
 
     ngOnInit() {
         this.settings = {

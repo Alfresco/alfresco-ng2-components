@@ -23,7 +23,7 @@ export const userTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const userTaskActive = {
@@ -36,7 +36,7 @@ export const userTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const userTaskCompleted = {
@@ -49,7 +49,7 @@ export const userTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const manualTask = {
@@ -60,7 +60,7 @@ export const manualTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const manualTaskActive = {
@@ -73,7 +73,7 @@ export const manualTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const manualTaskCompleted = {
@@ -86,7 +86,7 @@ export const manualTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const serviceTask = {
@@ -97,7 +97,7 @@ export const serviceTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const serviceTaskActive = {
@@ -110,7 +110,7 @@ export const serviceTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const serviceTaskCompleted = {
@@ -123,7 +123,7 @@ export const serviceTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const receiveTask = {
@@ -134,7 +134,7 @@ export const receiveTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const receiveTaskActive = {
@@ -147,7 +147,7 @@ export const receiveTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const receiveTaskCompleted = {
@@ -160,7 +160,7 @@ export const receiveTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const scriptTask = {
@@ -171,7 +171,7 @@ export const scriptTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const scriptTaskActive = {
@@ -184,7 +184,7 @@ export const scriptTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const scriptTaskCompleted = {
@@ -197,7 +197,7 @@ export const scriptTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const businessRuleTask = {
@@ -208,7 +208,7 @@ export const businessRuleTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const businessRuleTaskActive = {
@@ -221,7 +221,7 @@ export const businessRuleTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const businessRuleTaskCompleted = {
@@ -234,7 +234,7 @@ export const businessRuleTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const mailTask = {
@@ -245,7 +245,7 @@ export const mailTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'mail'
 };
 
@@ -259,7 +259,7 @@ export const mailTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'mail'
 };
 
@@ -273,7 +273,7 @@ export const mailTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'mail'
 };
 
@@ -285,7 +285,7 @@ export const camelTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'camel'
 };
 
@@ -299,7 +299,7 @@ export const camelTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'camel'
 };
 
@@ -313,7 +313,7 @@ export const camelTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'camel'
 };
 
@@ -325,7 +325,7 @@ export const restCallTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'rest_call'
 };
 
@@ -339,7 +339,7 @@ export const restCallTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'rest_call'
 };
 
@@ -353,7 +353,7 @@ export const restCallTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'rest_call'
 };
 
@@ -365,7 +365,7 @@ export const muleTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'mule'
 };
 
@@ -379,7 +379,7 @@ export const muleTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'mule'
 };
 
@@ -393,7 +393,7 @@ export const muleTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'mule'
 };
 
@@ -405,7 +405,7 @@ export const alfrescoPublishTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'alfresco_publish'
 };
 
@@ -419,7 +419,7 @@ export const alfrescoPublishTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'alfresco_publish'
 };
 
@@ -433,7 +433,7 @@ export const alfrescoPublishTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'alfresco_publish'
 };
 
@@ -445,7 +445,7 @@ export const googleDrivePublishTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'google_drive_publish'
 };
 
@@ -459,7 +459,7 @@ export const googleDrivePublishTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'google_drive_publish'
 };
 
@@ -473,7 +473,7 @@ export const googleDrivePublishTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'google_drive_publish'
 };
 
@@ -485,7 +485,7 @@ export const boxPublishTask = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'box_publish'
 };
 
@@ -499,7 +499,7 @@ export const boxPublishTaskActive = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'box_publish'
 };
 
@@ -513,6 +513,6 @@ export const boxPublishTaskCompleted = {
     height: 67,
     x: 75.56890135999998,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     taskType: 'box_publish'
 };

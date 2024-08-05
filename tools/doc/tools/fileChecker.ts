@@ -32,9 +32,9 @@ export function processDocs(mdCache, aggData) {
     const pathnames = Object.keys(mdCache);
 
     const classlessDocs = [];
-    const linkRefs = {};
-    const imageRefs = {};
-    const brokenImageRefs = {};
+    const linkRefs = { /* empty */ };
+    const imageRefs = { /* empty */ };
+    const brokenImageRefs = { /* empty */ };
 
     const filters = makeFilepathFilters(aggData.config['fileCheckerFilter']);
 
@@ -138,7 +138,7 @@ function filterFilepath(filters: RegExp[], filepath: string): boolean {
     return false;
 }
 
-function multiSetAdd(container: {}, key: string, value: string) {
+function multiSetAdd(container: { /* empty */ }, key: string, value: string) {
     if (container[key]) {
         container[key].push(value);
     } else {

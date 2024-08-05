@@ -36,4 +36,4 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ToolbarDividerComponent {}
+export class ToolbarDividerComponent { /* empty */ }

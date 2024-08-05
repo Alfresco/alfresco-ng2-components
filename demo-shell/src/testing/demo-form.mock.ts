@@ -339,8 +339,8 @@ export class DemoForm {
             javascriptEvents: [],
             className: '',
             style: '',
-            customFieldTemplates: {},
-            metadata: {},
+            customFieldTemplates: { /* empty */ },
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
@@ -360,7 +360,7 @@ export class DemoForm {
                     type: 'integer'
                 }
             ],
-            customFieldsValueInfo: {},
+            customFieldsValueInfo: { /* empty */ },
             gridsterForm: false,
             globalDateFormat: 'D-M-YYYY'
         }
@@ -1459,8 +1459,8 @@ export class DemoForm {
             javascriptEvents: [],
             className: '',
             style: '',
-            customFieldTemplates: {},
-            metadata: {},
+            customFieldTemplates: { /* empty */ },
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
@@ -1743,8 +1743,8 @@ export class DemoForm {
                 javascriptEvents: [],
                 className: '',
                 style: '',
-                customFieldTemplates: {},
-                metadata: {},
+                customFieldTemplates: { /* empty */ },
+                metadata: { /* empty */ },
                 variables: [
                     {
                         id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
@@ -1764,7 +1764,7 @@ export class DemoForm {
                         type: 'integer'
                     }
                 ],
-                customFieldsValueInfo: {},
+                customFieldsValueInfo: { /* empty */ },
                 gridsterForm: false
             }
         }
@@ -1825,7 +1825,7 @@ export class DemoForm {
                                         link: false,
                                         displayableCMProperties: []
                                     },
-                                    visibilityCondition: {}
+                                    visibilityCondition: { /* empty */ }
                                 }
                             ]
                         }

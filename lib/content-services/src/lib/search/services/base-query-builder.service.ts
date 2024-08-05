@@ -60,7 +60,7 @@ export abstract class BaseQueryBuilderService {
     searchForms = new ReplaySubject<SearchForm[]>(1);
 
     categories: SearchCategory[] = [];
-    queryFragments: { [id: string]: string } = {};
+    queryFragments: { [id: string]: string } = { /* empty */ };
     filterQueries: FilterQuery[] = [];
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: SearchSortingDefinition[] = [];
@@ -69,7 +69,7 @@ export abstract class BaseQueryBuilderService {
     private selectedConfiguration: number;
     private _userQuery = '';
 
-    protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = {};
+    protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = { /* empty */ };
 
     get userQuery(): string {
         return this._userQuery;
@@ -85,7 +85,7 @@ export abstract class BaseQueryBuilderService {
     };
 
     // TODO: to be supported in future iterations
-    ranges: { [id: string]: SearchRange } = {};
+    ranges: { [id: string]: SearchRange } = { /* empty */ };
 
     protected constructor(
         protected appConfig: AppConfigService,
@@ -133,11 +133,11 @@ export abstract class BaseQueryBuilderService {
 
     private resetSearchOptions(): void {
         this.categories = [];
-        this.queryFragments = {};
+        this.queryFragments = { /* empty */ };
         this.filterQueries = [];
         this.sorting = [];
         this.sortingOptions = [];
-        this.userFacetBuckets = {};
+        this.userFacetBuckets = { /* empty */ };
         this.scope = null;
     }
 
@@ -168,7 +168,7 @@ export abstract class BaseQueryBuilderService {
             this.config = JSON.parse(JSON.stringify(currentConfiguration));
             this.categories = (this.config.categories || []).filter((category) => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
-            this.userFacetBuckets = {};
+            this.userFacetBuckets = { /* empty */ };
             if (this.config.sorting) {
                 this.sorting = this.config.sorting.defaults || [];
                 this.sortingOptions = this.config.sorting.options || [];

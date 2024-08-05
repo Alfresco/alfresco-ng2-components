@@ -76,7 +76,7 @@ export const schema = `
 `;
 
 export class Node {
-    constructor(private orig: UNIST.Node) {}
+    constructor(private orig: UNIST.Node) { /* empty */ }
 
     type(): string {
         return this.orig.type;
@@ -124,7 +124,7 @@ export class Node {
 }
 
 export class Parent {
-    constructor(protected orig: UNIST.Parent) {}
+    constructor(protected orig: UNIST.Parent) { /* empty */ }
 
     plaintext(): string {
         return toString(this.orig);
@@ -156,7 +156,7 @@ export class Parent {
 }
 
 export class Root extends Parent {
-    _meta: {};
+    _meta: { /* empty */ };
     id: string;
 
     type(): string {
@@ -178,7 +178,7 @@ export class Root extends Parent {
             if (yamlElement) {
                 this._meta = jsyaml.safeLoad(yamlElement.value);
             } else {
-                this._meta = {};
+                this._meta = { /* empty */ };
             }
         }
 
@@ -212,7 +212,7 @@ export class Heading extends Parent {
     }
 }
 
-export class Paragraph extends Parent {}
+export class Paragraph extends Parent { /* empty */ }
 
 export class Link extends Parent {
     title(): string {
@@ -225,7 +225,7 @@ export class Link extends Parent {
 }
 
 export class Text {
-    constructor(protected orig: MDAST.TextNode) {}
+    constructor(protected orig: MDAST.TextNode) { /* empty */ }
 
     value(): String {
         return this.orig.value;

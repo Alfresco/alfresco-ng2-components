@@ -53,4 +53,4 @@ import { RouterTestingModule } from '@angular/router/testing';
         ProcessServicesCloudModule
     ]
 })
-export class ProcessServiceCloudTestingModule {}
+export class ProcessServiceCloudTestingModule { /* empty */ }

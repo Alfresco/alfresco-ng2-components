@@ -53,7 +53,7 @@ describe('AppLayoutComponent', () => {
             minimizeSidenavConditions: [],
             preferencesService: {
                 get: () => 'true',
-                set: () => {}
+                set: () => { /* empty */ }
             }
         };
 
@@ -105,7 +105,7 @@ describe('AppLayoutComponent', () => {
         });
 
         it('should resolve state to true is no configuration', () => {
-            appConfig.config.sidenav = {};
+            appConfig.config.sidenav = { /* empty */ };
 
             fixture.detectChanges();
 
@@ -153,13 +153,13 @@ describe('AppLayoutComponent', () => {
         component.minimizeSidenav = false;
         component.layout.container = {
             isMobileScreenSize: true,
-            toggleMenu: () => {}
+            toggleMenu: () => { /* empty */ }
         };
 
         spyOn(component.layout.container, 'toggleMenu');
         fixture.detectChanges();
 
-        component.hideMenu({ preventDefault: () => {} } as any);
+        component.hideMenu({ preventDefault: () => { /* empty */ } } as any);
 
         expect(component.layout.container.toggleMenu).toHaveBeenCalled();
     });
@@ -169,13 +169,13 @@ describe('AppLayoutComponent', () => {
         component.minimizeSidenav = true;
         component.layout.container = {
             isMobileScreenSize: true,
-            toggleMenu: () => {}
+            toggleMenu: () => { /* empty */ }
         };
 
         spyOn(component.layout.container, 'toggleMenu');
         fixture.detectChanges();
 
-        component.hideMenu({ preventDefault: () => {} } as any);
+        component.hideMenu({ preventDefault: () => { /* empty */ } } as any);
 
         expect(component.layout.container.toggleMenu).toHaveBeenCalled();
     });

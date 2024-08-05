@@ -447,14 +447,14 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
                 return { [property.key]: property.value };
             }
         });
-        return properties.reduce((result, current) => Object.assign(result, current), {});
+        return properties.reduce((result, current) => Object.assign(result, current), { /* empty */ });
     }
 
     private getAttributesControlConfig(property: TaskFilterProperties) {
         return Object.values(property.attributes).reduce((result, key) => {
             result[key] = property.value[key];
             return result;
-        }, {});
+        }, { /* empty */ });
     }
 
     buildForm(taskFilterProperties: TaskFilterProperties[]) {
@@ -494,7 +494,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
                 switchMap(() => this.restoreDefaultTaskFilters()),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe(() => {});
+            .subscribe(() => { /* empty */ });
     }
 
     save(saveAction: TaskFilterAction): void {
@@ -525,7 +525,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
                     id: filterId,
                     key: 'custom-' + filterKey
                 };
-                const resultFilter: T = Object.assign({}, this.changedTaskFilter, newFilter);
+                const resultFilter: T = Object.assign({ /* empty */ }, this.changedTaskFilter, newFilter);
                 this.addFilter(resultFilter).subscribe(() => {
                     saveAsAction.filter = resultFilter;
                     this.action.emit(saveAsAction);

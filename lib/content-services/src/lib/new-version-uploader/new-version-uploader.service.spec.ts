@@ -151,7 +151,7 @@ describe('NewVersionUploaderService', () => {
             }));
 
             it('Should not override dialog configuration, if dialog configuration is empty', fakeAsync(() => {
-                const mockDialogConfiguration: MatDialogConfig = {};
+                const mockDialogConfiguration: MatDialogConfig = { /* empty */ };
                 service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData, mockDialogConfiguration).toPromise();
                 tick();
                 expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {

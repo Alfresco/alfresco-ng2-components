@@ -442,7 +442,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(this.DEFAULT_PAGINATION);
     sortingSubject: BehaviorSubject<DataSorting[]> = new BehaviorSubject<DataSorting[]>(this.DEFAULT_SORTING);
 
-    private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
+    private rowMenuCache: { [key: string]: ContentActionModel[] } = { /* empty */ };
     private loadingTimeout: any;
     private onDestroy$ = new Subject<boolean>();
 
@@ -513,7 +513,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     }
 
     ngOnInit() {
-        this.rowMenuCache = {};
+        this.rowMenuCache = { /* empty */ };
         this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(
             this.thumbnailService,
@@ -849,7 +849,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             }
 
             return visibleColumnsMap;
-        }, {});
+        }, { /* empty */ });
 
         this.createColumns();
         this.data.setColumns(this.columns);
@@ -868,7 +868,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
             }
             return widthsColumnsMap;
-        }, {});
+        }, { /* empty */ });
 
         this.columnsWidths = { ...this.columnsWidths, ...newColumnsWidths };
         this.createColumns();
@@ -1049,7 +1049,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
                 if (JSON.parse(err.message).error.statusCode === 403) {
                     this.noPermission = true;
                 }
-            } catch (error) {}
+            } catch (error) { /* empty */ }
         }
         this.setLoadingState(false);
         this.error.emit(err);

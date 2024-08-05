@@ -28,7 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class AddNotificationStorybookComponent {
     infoCounter: number = 1;
 
-    constructor(private notificationService: NotificationService) {}
+    constructor(private notificationService: NotificationService) { /* empty */ }
 
     showInfo() {
         this.notificationService.showInfo(`Example notification ${this.infoCounter}`);

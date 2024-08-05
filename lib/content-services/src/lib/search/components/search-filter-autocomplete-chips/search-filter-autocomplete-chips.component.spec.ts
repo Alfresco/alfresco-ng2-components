@@ -44,7 +44,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         tagService = TestBed.inject(TagService);
         component.id = 'test-id';
         component.context = {
-            queryFragments: {},
+            queryFragments: { /* empty */ },
             update: () => EMPTY
         } as any;
         component.settings = {
@@ -81,7 +81,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
     it('should load tags if field = TAG', (done) => {
         const tagPagingMock = {
             list: {
-                pagination: {},
+                pagination: { /* empty */ },
                 entries: [{ entry: { tag: 'tag1', id: 'id1' } }, { entry: { tag: 'tag2', id: 'id2' } }]
             }
         };

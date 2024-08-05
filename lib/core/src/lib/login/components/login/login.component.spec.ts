@@ -65,7 +65,7 @@ describe('LoginComponent', () => {
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
-                        ssoLogin: () => {},
+                        ssoLogin: () => { /* empty */ },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -128,7 +128,7 @@ describe('LoginComponent', () => {
         spyOn(router, 'navigate');
 
         component.successRoute = 'input-route';
-        appConfigService.config = {};
+        appConfigService.config = { /* empty */ };
 
         component.ngOnInit();
 
@@ -160,7 +160,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to previous route state on successful login', fakeAsync(() => {
-        appConfigService.config = {};
+        appConfigService.config = { /* empty */ };
         appConfigService.config.providers = 'ECM';
 
         spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));

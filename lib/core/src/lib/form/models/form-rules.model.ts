@@ -39,7 +39,7 @@ export function formRulesManagerFactory<T>(injector: Injector): FormRulesManager
 }
 
 export abstract class FormRulesManager<T> {
-    constructor(protected formService: FormService) {}
+    constructor(protected formService: FormService) { /* empty */ }
 
     protected formModel: FormModel;
     private onDestroy$ = new Subject<boolean>();

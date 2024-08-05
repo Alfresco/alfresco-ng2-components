@@ -46,7 +46,7 @@ const mockFeaturesService = (flagChangeset: FlagChangeset): IFeaturesService => 
 });
 
 const arrayToFlagChangeset = (featureFlags: string[]): FlagChangeset => {
-    const flagChangeset: FlagChangeset = {};
+    const flagChangeset: FlagChangeset = { /* empty */ };
     featureFlags.forEach((featureFlag) => {
         flagChangeset[featureFlag] = { current: true, previous: null };
     });
@@ -54,7 +54,7 @@ const arrayToFlagChangeset = (featureFlags: string[]): FlagChangeset => {
 };
 
 const mockFeatureFlagsToFlagChangeset = (mockFeatureFlags: MockFeatureFlags) => {
-    const flagChangeset: FlagChangeset = {};
+    const flagChangeset: FlagChangeset = { /* empty */ };
     const featureFlags = Object.keys(mockFeatureFlags);
     featureFlags.forEach((featureFlag) => {
         flagChangeset[featureFlag] = { current: mockFeatureFlags[featureFlag], previous: null };

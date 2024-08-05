@@ -30,7 +30,7 @@ import { RaphaelCrossDirective } from '../raphael/raphael-cross.component';
     templateUrl: './diagram-exclusive-gateway.component.html'
 })
 export class DiagramExclusiveGatewayComponent extends DiagramElement implements OnInit {
-    center: any = {};
+    center: any = { /* empty */ };
     width: any;
     height: any;
     options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 3 };

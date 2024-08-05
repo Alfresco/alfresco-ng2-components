@@ -261,7 +261,7 @@ export default {
                     summary: 'DecimalConfig'
                 },
                 defaultValue: {
-                    summary: `{}`
+                    summary: `{ /* empty */ }`
                 }
             }
         },
@@ -292,7 +292,7 @@ export default {
     args: {
         copyContent: false,
         cssClass: '',
-        customData: {},
+        customData: { /* empty */ },
         draggable: false,
         editable: false,
         focus: true,
@@ -354,7 +354,7 @@ const template: StoryFn<DataColumnComponent> = (args: DataColumnComponent & { ro
 });
 
 // Text Column
-export const TextColumn: StoryFn = template.bind({});
+export const TextColumn: StoryFn = template.bind({ /* empty */ });
 TextColumn.args = {
     rows: mockData.textColumnRows,
     key: 'firstname',
@@ -363,7 +363,7 @@ TextColumn.args = {
 };
 
 // Text Column With Custom Tooltip
-export const TextColumnWithCustomTooltip: StoryFn = template.bind({});
+export const TextColumnWithCustomTooltip: StoryFn = template.bind({ /* empty */ });
 TextColumnWithCustomTooltip.argTypes = {
     formatTooltip: { control: { disable: false } }
 };
@@ -376,7 +376,7 @@ TextColumnWithCustomTooltip.args = {
 };
 
 // Icon Column
-export const IconColumn: StoryFn = template.bind({});
+export const IconColumn: StoryFn = template.bind({ /* empty */ });
 IconColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -388,7 +388,7 @@ IconColumn.args = {
 };
 
 // Image Column
-export const ImageColumn: StoryFn = template.bind({});
+export const ImageColumn: StoryFn = template.bind({ /* empty */ });
 ImageColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -400,7 +400,7 @@ ImageColumn.args = {
 };
 
 // Date Column
-export const DateColumn: StoryFn = template.bind({});
+export const DateColumn: StoryFn = template.bind({ /* empty */ });
 DateColumn.argTypes = {
     copyContent: { control: { disable: true } },
     dateConfig: { control: { disable: false } }
@@ -413,7 +413,7 @@ DateColumn.args = {
 };
 
 // Date Column Time Ago
-export const DateColumnTimeAgo: StoryFn = template.bind({});
+export const DateColumnTimeAgo: StoryFn = template.bind({ /* empty */ });
 DateColumnTimeAgo.argTypes = {
     copyContent: { control: { disable: true } },
     dateConfig: { control: { disable: false } }
@@ -427,7 +427,7 @@ DateColumnTimeAgo.args = {
 };
 
 // File Size Column
-export const FileSizeColumn: StoryFn = template.bind({});
+export const FileSizeColumn: StoryFn = template.bind({ /* empty */ });
 FileSizeColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -439,7 +439,7 @@ FileSizeColumn.args = {
 };
 
 // Location Column
-export const LocationColumn: StoryFn = template.bind({});
+export const LocationColumn: StoryFn = template.bind({ /* empty */ });
 LocationColumn.argTypes = {
     copyContent: { control: { disable: true } },
     format: { control: { disable: false } },
@@ -454,7 +454,7 @@ LocationColumn.args = {
 };
 
 // Boolean Column
-export const BooleanColumn: StoryFn = template.bind({});
+export const BooleanColumn: StoryFn = template.bind({ /* empty */ });
 BooleanColumn.argTypes = {
     copyContent: { control: { disable: true } }
 };
@@ -466,7 +466,7 @@ BooleanColumn.args = {
 };
 
 // Json Column
-export const JsonColumn: StoryFn = template.bind({});
+export const JsonColumn: StoryFn = template.bind({ /* empty */ });
 JsonColumn.argTypes = {
     editable: { control: { disable: false } },
     copyContent: { control: { disable: true } }
@@ -479,7 +479,7 @@ JsonColumn.args = {
 };
 
 // Amount Column
-export const AmountColumn: StoryFn = template.bind({});
+export const AmountColumn: StoryFn = template.bind({ /* empty */ });
 AmountColumn.argTypes = {
     copyContent: { control: { disable: true } },
     currencyConfig: { control: { disable: false } }
@@ -492,7 +492,7 @@ AmountColumn.args = {
 };
 
 // Number Column
-export const NumberColumn: StoryFn = template.bind({});
+export const NumberColumn: StoryFn = template.bind({ /* empty */ });
 NumberColumn.argTypes = {
     decimalConfig: { control: { disable: false } },
     copyContent: { control: { disable: true } }

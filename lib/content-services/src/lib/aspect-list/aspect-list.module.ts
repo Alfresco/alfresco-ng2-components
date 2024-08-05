@@ -26,4 +26,4 @@ export const ASPECT_LIST_DIRECTIVES = [AspectListComponent, AspectListDialogComp
     imports: [...ASPECT_LIST_DIRECTIVES],
     exports: [...ASPECT_LIST_DIRECTIVES]
 })
-export class AspectListModule {}
+export class AspectListModule { /* empty */ }

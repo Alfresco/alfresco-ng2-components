@@ -101,4 +101,4 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
     ],
     providers: [FormCloudSpinnerService]
 })
-export class FormCloudModule {}
+export class FormCloudModule { /* empty */ }

@@ -56,8 +56,8 @@ import { EMPTY, of } from 'rxjs';
             deps: [DirectionalityConfigService],
             multi: true
         },
-        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {}, onTokenReceived: of() } }
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => { /* empty */ }, onTokenReceived: of() } }
     ],
     exports: [NoopAnimationsModule, CoreModule, TranslateModule, RouterTestingModule]
 })
-export class CoreTestingModule {}
+export class CoreTestingModule { /* empty */ }

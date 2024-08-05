@@ -56,7 +56,7 @@ describe('FormOutcomeModel', () => {
     });
 
     it('should store original json', () => {
-        const json = {};
+        const json = { /* empty */ };
         const model = new FormOutcomeModel(null, json);
         expect(model.json).toBe(json);
     });

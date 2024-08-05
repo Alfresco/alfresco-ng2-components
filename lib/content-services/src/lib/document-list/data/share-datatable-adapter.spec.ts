@@ -65,7 +65,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should setup rows and columns with constructor', () => {
-        const schema = [{}] as DataColumn[];
+        const schema = [{ /* empty */ }] as DataColumn[];
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, schema);
 
         expect(adapter.getRows()).toEqual([]);
@@ -78,14 +78,14 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should set new columns', () => {
-        const columns = [{}, {}] as DataColumn[];
+        const columns = [{ /* empty */ }, { /* empty */ }] as DataColumn[];
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         adapter.setColumns(columns);
         expect(adapter.getColumns()).toEqual(columns);
     });
 
     it('should reset columns', () => {
-        const columns = [{} as DataColumn, {} as DataColumn];
+        const columns = [{ /* empty */ } as DataColumn, { /* empty */ } as DataColumn];
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, columns);
 
         expect(adapter.getColumns()).toEqual(columns);
@@ -94,7 +94,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should set new rows', () => {
-        const rows = [{}, {}] as DataRow[];
+        const rows = [{ /* empty */ }, { /* empty */ }] as DataRow[];
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         expect(adapter.getRows()).toEqual([]);
@@ -103,7 +103,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should reset rows', () => {
-        const rows = [{}, {}] as DataRow[];
+        const rows = [{ /* empty */ }, { /* empty */ }] as DataRow[];
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         adapter.setRows(rows);
@@ -117,7 +117,7 @@ describe('ShareDataTableAdapter', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         spyOn(adapter, 'sort').and.callThrough();
 
-        const rows = [{}] as DataRow[];
+        const rows = [{ /* empty */ }] as DataRow[];
         adapter.setRows(rows);
 
         expect(adapter.sort).toHaveBeenCalled();
@@ -125,13 +125,13 @@ describe('ShareDataTableAdapter', () => {
 
     it('should fail when getting value for missing row', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
-        const check = () => adapter.getValue(null, {} as DataColumn);
+        const check = () => adapter.getValue(null, { /* empty */ } as DataColumn);
         expect(check).toThrowError(ERR_ROW_NOT_FOUND);
     });
 
     it('should fail when getting value for missing column', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
-        const check = () => adapter.getValue({} as DataRow, null);
+        const check = () => adapter.getValue({ /* empty */ } as DataRow, null);
         expect(check).toThrowError(ERR_COL_NOT_FOUND);
     });
 

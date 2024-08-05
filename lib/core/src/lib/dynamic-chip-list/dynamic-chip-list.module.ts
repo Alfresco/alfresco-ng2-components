@@ -23,4 +23,4 @@ import { DynamicChipListComponent } from './dynamic-chip-list.component';
     imports: [DynamicChipListComponent],
     exports: [DynamicChipListComponent]
 })
-export class DynamicChipListModule {}
+export class DynamicChipListModule { /* empty */ }

@@ -25,4 +25,5 @@ export const CLIPBOARD_DIRECTIVES = [ClipboardDirective, ClipboardComponent] as 
     imports: [...CLIPBOARD_DIRECTIVES],
     exports: [...CLIPBOARD_DIRECTIVES]
 })
-export class ClipboardModule {}
+
+export class ClipboardModule { /* empty */ }

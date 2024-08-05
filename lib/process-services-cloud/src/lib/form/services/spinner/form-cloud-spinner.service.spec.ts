@@ -33,7 +33,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
     selector: 'adf-cloud-overlay-test',
     template: `<div>adf-cloud-overlay-test</div>`
 })
-class SpinnerTestComponent {}
+class SpinnerTestComponent { /* empty */ }
 
 describe('FormCloudSpinnerService', () => {
     let fixture: ComponentFixture<SpinnerTestComponent>;

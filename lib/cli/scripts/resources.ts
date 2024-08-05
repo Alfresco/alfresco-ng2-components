@@ -216,7 +216,7 @@ export const ACTIVITI_CLOUD_APPS: any = {
             { role: 'ACTIVITI_ADMIN', groups: [], users: ['superadminuser', 'processadminuser'] },
             { role: 'ACTIVITI_USER', groups: ['hr', 'sales', 'testgroup'], users: ['hruser'] }
         ],
-        infrastructure: { connectors: { restconnector: {} }, bridges: {} },
+        infrastructure: { connectors: { restconnector: { /* empty */ } }, bridges: { /* empty */ } },
         enableLocalDevelopment: true,
         variables: {
             'process-runtime-service': {

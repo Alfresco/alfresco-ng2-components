@@ -456,7 +456,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.icon = 'FAKE_ICON';
             component.property.clickCallBack = callBackSpy;
             component.editable = true;
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -476,7 +476,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.clickable = true;
             component.property.icon = 'FAKE_ICON';
             component.editable = false;
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -533,7 +533,7 @@ describe('CardViewTextItemComponent', () => {
         it('should input be readonly if item it NOT editable', async () => {
             component.editable = false;
             component.property.clickable = true;
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
 
             loader = TestbedHarnessEnvironment.loader(fixture);
             const inputHarness = await loader.getHarness(

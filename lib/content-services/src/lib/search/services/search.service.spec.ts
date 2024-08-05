@@ -58,7 +58,7 @@ describe('SearchService', () => {
     it('should notify errors returned from the API', (done) => {
         spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.reject(mockError));
         service.getNodeQueryResults('').subscribe(
-            () => {},
+            () => { /* empty */ },
             (res: any) => {
                 expect(res).toBeDefined();
                 expect(res).toEqual(mockError);

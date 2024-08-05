@@ -36,4 +36,4 @@ import { FlagsComponent } from './flags/flags.component';
         `
     ]
 })
-export class FeatureFlagsWrapperComponent {}
+export class FeatureFlagsWrapperComponent { /* empty */ }

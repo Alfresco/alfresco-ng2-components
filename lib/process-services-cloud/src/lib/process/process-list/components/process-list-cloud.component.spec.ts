@@ -281,7 +281,7 @@ describe('ProcessListCloudComponent', () => {
         fixture.detectChanges();
 
         const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
-        mainMenuButton.triggerEventHandler('click', {});
+        mainMenuButton.triggerEventHandler('click', { /* empty */ });
         fixture.detectChanges();
 
         const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
@@ -381,7 +381,7 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should update columns widths when a column width gets changed', () => {
-        spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+        spyOn(preferencesService, 'updatePreference').and.returnValue(of({ /* empty */ }));
         component.appName = 'fake-app-name';
         component.reload();
         fixture.detectChanges();
@@ -397,7 +397,7 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should update columns widths while preserving previously saved widths when a column width gets changed', () => {
-        spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+        spyOn(preferencesService, 'updatePreference').and.returnValue(of({ /* empty */ }));
         component.appName = 'fake-app-name';
         component.reload();
         fixture.detectChanges();
@@ -448,7 +448,7 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should call endpoint when a column visibility gets changed', () => {
-        spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+        spyOn(preferencesService, 'updatePreference').and.returnValue(of({ /* empty */ }));
         spyOn(processListCloudService, 'getProcessByRequest');
         component.ngAfterContentInit();
         spyOn(component, 'createDatatableSchema');
@@ -629,8 +629,8 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
     const preferencesService = jasmine.createSpyObj('preferencesService', {
-        getPreferences: of({}),
-        updatePreference: of({})
+        getPreferences: of({ /* empty */ }),
+        updatePreference: of({ /* empty */ })
     });
 
     beforeEach(() => {

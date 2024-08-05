@@ -49,7 +49,7 @@ export class ContentNodeDialogService {
         private siteService: SitesService,
         private translation: TranslationService,
         private thumbnailService: ThumbnailService
-    ) {}
+    ) { /* empty */ }
 
     /**
      * Opens a file browser at a chosen folder location.

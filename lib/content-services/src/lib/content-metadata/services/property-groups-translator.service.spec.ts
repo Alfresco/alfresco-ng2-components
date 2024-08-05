@@ -104,7 +104,7 @@ describe('PropertyGroupTranslatorService', () => {
 
         it('should translate EVERY property in EVERY group properly', () => {
             propertyGroups.push(
-                Object.assign({}, propertyGroup, {
+                Object.assign({ /* empty */ }, propertyGroup, {
                     properties: [
                         {
                             name: 'FAS:PLAGUE',
@@ -117,7 +117,7 @@ describe('PropertyGroupTranslatorService', () => {
                         }
                     ]
                 }),
-                Object.assign({}, propertyGroup, {
+                Object.assign({ /* empty */ }, propertyGroup, {
                     properties: [
                         {
                             name: 'FAS:ALOY',
@@ -152,7 +152,7 @@ describe('PropertyGroupTranslatorService', () => {
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            propertyGroups.push(Object.assign({}, propertyGroup));
+            propertyGroups.push(Object.assign({ /* empty */ }, propertyGroup));
 
             service.translateToCardViewGroups(propertyGroups, propertyValues, null);
             expect(logServiceError).toHaveBeenCalledWith('Unknown type for mapping: daemonic:scorcher');

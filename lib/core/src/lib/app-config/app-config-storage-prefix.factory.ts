@@ -34,7 +34,7 @@ export class StoragePrefixFactory {
         private appConfigService: AppConfigService,
         @Optional()
         @Inject(STORAGE_PREFIX_FACTORY_SERVICE) private storagePrefixFactory?: StoragePrefixFactoryService
-    ) {}
+    ) { /* empty */ }
 
     getPrefix(): Observable<string | undefined> {
         return this.appConfigService.select(AppConfigValues.STORAGE_PREFIX).pipe(

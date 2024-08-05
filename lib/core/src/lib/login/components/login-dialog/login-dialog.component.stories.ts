@@ -97,5 +97,5 @@ const template: StoryFn<LoginDialogStorybookComponent> = (args) => ({
     props: args
 });
 
-export const LoginDialog = template.bind({});
+export const LoginDialog = template.bind({ /* empty */ });
 LoginDialog.parameters = { layout: 'centered' };

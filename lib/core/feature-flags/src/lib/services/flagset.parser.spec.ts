@@ -41,11 +41,11 @@ describe('FlagSetParser', () => {
         });
 
         it('should handle empty flags', () => {
-            const flags = {};
+            const flags = { /* empty */ };
 
             const serializedFlags = FlagSetParser.serialize(flags);
 
-            expect(serializedFlags).toEqual({});
+            expect(serializedFlags).toEqual({ /* empty */ });
         });
     });
 
@@ -67,11 +67,11 @@ describe('FlagSetParser', () => {
         });
 
         it('should handle empty serialized flags', () => {
-            const serializedFlags = {};
+            const serializedFlags = { /* empty */ };
 
             const flags = FlagSetParser.deserialize(serializedFlags);
 
-            expect(flags).toEqual({});
+            expect(flags).toEqual({ /* empty */ });
         });
     });
 });

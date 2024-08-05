@@ -41,7 +41,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private viewerComponent: ViewerRenderComponent) {}
+    constructor(private viewerComponent: ViewerRenderComponent) { /* empty */ }
 
     ngAfterContentInit() {
         this.templateModel = { template: this.template, isVisible: false };

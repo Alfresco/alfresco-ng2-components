@@ -41,7 +41,7 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
 
     private componentRef: ComponentRef<any>;
 
-    constructor(private extensionService: ExtensionService) {}
+    constructor(private extensionService: ExtensionService) { /* empty */ }
 
     ngOnInit() {
         if (!this.id) {

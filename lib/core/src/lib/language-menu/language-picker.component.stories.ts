@@ -51,10 +51,10 @@ const languagePickerComponentTemplate: StoryFn<LanguagePickerComponent> = (args)
     props: args
 });
 
-export const Primary = languagePickerComponentTemplate.bind({});
+export const Primary = languagePickerComponentTemplate.bind({ /* empty */ });
 Primary.parameters = { layout: 'centered' };
 
-export const AsNestedMenu = languagePickerComponentTemplate.bind({});
+export const AsNestedMenu = languagePickerComponentTemplate.bind({ /* empty */ });
 AsNestedMenu.decorators = [
     componentWrapperDecorator(
         (story) => `

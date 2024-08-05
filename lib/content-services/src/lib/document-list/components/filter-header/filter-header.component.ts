@@ -34,7 +34,7 @@ import { SearchFilterContainerComponent } from '../../../search/components/searc
 export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     /** (optional) Initial filter value to sort . */
     @Input()
-    value: any = {};
+    value: any = { /* empty */ };
 
     /** The id of the current folder of the document list. */
     @Input()

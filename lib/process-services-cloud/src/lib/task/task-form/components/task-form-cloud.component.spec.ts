@@ -106,7 +106,7 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should not show complete button when status is ASSIGNED but assigned to a different person', () => {
-            getCurrentUserSpy.and.returnValue({});
+            getCurrentUserSpy.and.returnValue({ /* empty */ });
             fixture.detectChanges();
 
             const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
@@ -162,7 +162,7 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should not show unclaim button when status is ASSIGNED but assigned to different person', () => {
-            getCurrentUserSpy.and.returnValue({});
+            getCurrentUserSpy.and.returnValue({ /* empty */ });
             fixture.detectChanges();
 
             const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
@@ -312,7 +312,7 @@ describe('TaskFormCloudComponent', () => {
             fixture.detectChanges();
 
             const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-            cancelBtn.triggerEventHandler('click', {});
+            cancelBtn.triggerEventHandler('click', { /* empty */ });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -320,14 +320,14 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should emit taskCompleted when task is completed', async () => {
-            spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
+            spyOn(taskCloudService, 'completeTask').and.returnValue(of({ /* empty */ }));
             spyOn(component.taskCompleted, 'emit').and.stub();
 
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
 
             const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
-            completeBtn.triggerEventHandler('click', {});
+            completeBtn.triggerEventHandler('click', { /* empty */ });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -335,7 +335,7 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should emit taskClaimed when task is claimed', async () => {
-            spyOn(taskCloudService, 'claimTask').and.returnValue(of({}));
+            spyOn(taskCloudService, 'claimTask').and.returnValue(of({ /* empty */ }));
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
             spyOn(component.taskClaimed, 'emit').and.stub();
             taskDetails.status = TASK_CREATED_STATE;
@@ -345,7 +345,7 @@ describe('TaskFormCloudComponent', () => {
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
             const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-            claimBtn.triggerEventHandler('click', {});
+            claimBtn.triggerEventHandler('click', { /* empty */ });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -355,7 +355,7 @@ describe('TaskFormCloudComponent', () => {
         it('should emit error when error occurs', async () => {
             spyOn(component.error, 'emit').and.stub();
 
-            component.onError({});
+            component.onError({ /* empty */ });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -363,7 +363,7 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should reload when task is completed', async () => {
-            spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
+            spyOn(taskCloudService, 'completeTask').and.returnValue(of({ /* empty */ }));
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
 
             component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
@@ -376,7 +376,7 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should reload when task is claimed', async () => {
-            spyOn(taskCloudService, 'claimTask').and.returnValue(of({}));
+            spyOn(taskCloudService, 'claimTask').and.returnValue(of({ /* empty */ }));
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
@@ -393,7 +393,7 @@ describe('TaskFormCloudComponent', () => {
         });
 
         it('should emit taskUnclaimed when task is unclaimed', async () => {
-            spyOn(taskCloudService, 'unclaimTask').and.returnValue(of({}));
+            spyOn(taskCloudService, 'unclaimTask').and.returnValue(of({ /* empty */ }));
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
 

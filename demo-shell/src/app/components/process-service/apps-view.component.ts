@@ -27,7 +27,7 @@ import { AppsListComponent } from '@alfresco/adf-process-services';
     templateUrl: './apps-view.component.html'
 })
 export class AppsViewComponent {
-    constructor(private router: Router) {}
+    constructor(private router: Router) { /* empty */ }
 
     onAppClicked(app: AppDefinitionRepresentation) {
         this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);

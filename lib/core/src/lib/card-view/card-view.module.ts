@@ -45,4 +45,4 @@ export const CARD_VIEW_DIRECTIVES = [
     imports: [...CARD_VIEW_DIRECTIVES],
     exports: [...CARD_VIEW_DIRECTIVES]
 })
-export class CardViewModule {}
+export class CardViewModule { /* empty */ }

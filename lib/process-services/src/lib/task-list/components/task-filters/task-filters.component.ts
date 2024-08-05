@@ -88,7 +88,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         private appsProcessService: AppsProcessService,
         private router: Router,
         private activatedRoute: ActivatedRoute
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.iconsMDL = new IconModel();

@@ -28,7 +28,7 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
      * Remove an app deployment
      *
      * @param appDeploymentId appDeploymentId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     deleteAppDeployment(appDeploymentId: number): Promise<any> {
         throwIfNotDefined(appDeploymentId, 'appDeploymentId');
@@ -47,7 +47,7 @@ export class RuntimeAppDeploymentsApi extends BaseApi {
      * Export the app archive for a deployment
      *
      * @param deploymentId deploymentId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     exportAppDefinition(deploymentId: string): Promise<any> {
         throwIfNotDefined(deploymentId, 'deploymentId');

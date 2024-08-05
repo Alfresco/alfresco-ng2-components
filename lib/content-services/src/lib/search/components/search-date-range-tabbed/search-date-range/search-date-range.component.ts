@@ -97,7 +97,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
         private userPreferencesService: UserPreferencesService,
         private dateAdapter: DateAdapter<DateFnsAdapter>,
         @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats
-    ) {}
+    ) { /* empty */ }
 
     readonly endDateValidator = (formControl: UntypedFormControl): { [key: string]: boolean } | null => {
         if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
@@ -105,7 +105,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
                 invalidDate: true
             };
         }
-        return {};
+        return { /* empty */ };
     };
 
     ngOnInit(): void {

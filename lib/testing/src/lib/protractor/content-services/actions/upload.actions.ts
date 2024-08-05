@@ -61,20 +61,20 @@ export class UploadActions {
 
         // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < emptyFileNames.length; i++) {
-            const jsonItem = {};
+            const jsonItem = { /* empty */ };
             jsonItem['name'] = emptyFileNames[i];
             jsonItem['nodeType'] = 'cm:content';
             filesRequest.push(jsonItem);
         }
 
-        return this.nodesApi.createNode(parentFolderId, filesRequest as any, {});
+        return this.nodesApi.createNode(parentFolderId, filesRequest as any, { /* empty */ });
     }
 
     async createFolder(folderName: string, parentFolderId: string): Promise<NodeEntry> {
         return this.nodesApi.createNode(parentFolderId, {
             name: folderName,
             nodeType: 'cm:folder'
-        }, {});
+        }, { /* empty */ });
     }
 
     async deleteFileOrFolder(nodeId: string) {

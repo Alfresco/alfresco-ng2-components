@@ -28,7 +28,7 @@ export class DiagramsService {
         return this._modelJsonBpmnApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
         return from(this.modelJsonBpmnApi.getModelJSON(processDefinitionId));

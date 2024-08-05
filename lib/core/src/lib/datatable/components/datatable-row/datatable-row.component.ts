@@ -79,7 +79,7 @@ export class DataTableRowComponent implements FocusableOption {
         }
     }
 
-    constructor(private element: ElementRef) {}
+    constructor(private element: ElementRef) { /* empty */ }
 
     focus() {
         this.element.nativeElement.focus();

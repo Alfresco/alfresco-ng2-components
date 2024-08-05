@@ -74,7 +74,7 @@ export class ProcessListDemoComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private route: ActivatedRoute, private formBuilder: UntypedFormBuilder) {}
+    constructor(private route: ActivatedRoute, private formBuilder: UntypedFormBuilder) { /* empty */ }
 
     ngOnInit() {
         this.resetQueryParameters();

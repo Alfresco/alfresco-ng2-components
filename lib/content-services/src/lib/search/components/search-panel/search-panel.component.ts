@@ -31,7 +31,7 @@ import { SearchFilterComponent } from '../search-filter';
     host: { class: 'adf-search-panel' }
 })
 export class SearchPanelComponent implements OnInit {
-    constructor(private contentNodeSelectorPanelService: ContentNodeSelectorPanelService, private queryBuilderService: SearchQueryBuilderService) {}
+    constructor(private contentNodeSelectorPanelService: ContentNodeSelectorPanelService, private queryBuilderService: SearchQueryBuilderService) { /* empty */ }
 
     ngOnInit(): void {
         this.queryBuilderService.categories = this.contentNodeSelectorPanelService.convertCustomModelPropertiesToSearchCategories();

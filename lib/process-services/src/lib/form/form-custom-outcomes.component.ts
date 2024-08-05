@@ -22,4 +22,4 @@ import { Component } from '@angular/core';
     standalone: true,
     template: '<ng-content></ng-content>'
 })
-export class FormCustomOutcomesComponent {}
+export class FormCustomOutcomesComponent { /* empty */ }

@@ -56,7 +56,7 @@ describe('Queries', () => {
             nodesMock.get401Response();
 
             queriesApi.findNodes(searchTerm).then(
-                () => {},
+                () => { /* empty */ },
                 () => {
                     done();
                 }

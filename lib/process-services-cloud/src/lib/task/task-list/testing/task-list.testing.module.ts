@@ -37,4 +37,4 @@ import {
         { provide: TranslationService, useClass: TranslationMock }
     ]
 })
-export class TaskListTestingModule {}
+export class TaskListTestingModule { /* empty */ }

@@ -91,4 +91,4 @@ export const CONTENT_SEARCH_DIRECTIVES = [
     imports: [...CONTENT_SEARCH_DIRECTIVES],
     exports: [...CONTENT_SEARCH_DIRECTIVES]
 })
-export class SearchModule {}
+export class SearchModule { /* empty */ }

@@ -77,7 +77,7 @@ describe('Search Slider Filter', () => {
         try {
             await apiService.login(acsUser.username, acsUser.password);
             await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
-        } catch (error) {}
+        } catch (error) { /* empty */ }
 
         await navigationBarPage.clickLogoutButton();
     });

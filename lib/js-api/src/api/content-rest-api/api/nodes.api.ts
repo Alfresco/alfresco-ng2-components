@@ -198,7 +198,7 @@ export class NodesApi extends BaseApi {
             fields: buildCollectionParam(opts?.fields, 'csv')
         };
 
-        formParams = formParams || {};
+        formParams = formParams || { /* empty */ };
 
         let contentTypes;
         let returnType;
@@ -297,7 +297,7 @@ export class NodesApi extends BaseApi {
      * @param targetId The identifier of a target node.
      * @param opts Optional parameters
      * @param opts.assocType Only delete associations of this type.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteAssociation(nodeId: string, targetId: string, opts?: { assocType?: string }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -338,7 +338,7 @@ export class NodesApi extends BaseApi {
      * @param opts Optional parameters
      * @param opts.permanent If **true** then the node is deleted permanently, without moving to the trashcan.
      * Only the owner of the node or an admin can permanently delete the node. (default to false)
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteNode(nodeId: string, opts?: { permanent?: boolean }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -393,7 +393,7 @@ export class NodesApi extends BaseApi {
      * @param childId The identifier of a child node.
      * @param opts Optional parameters
      * @param opts.assocType Only delete associations of this type.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteSecondaryChildAssociation(nodeId: string, childId: string, opts?: { assocType?: string }): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -476,7 +476,7 @@ export class NodesApi extends BaseApi {
     ): Promise<Blob> {
         throwIfNotDefined(nodeId, 'nodeId');
 
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             nodeId
@@ -486,7 +486,7 @@ export class NodesApi extends BaseApi {
             attachment: opts?.attachment ?? null
         };
 
-        const headerParams = {};
+        const headerParams = { /* empty */ };
 
         if (opts?.ifModifiedSince) {
             Object.defineProperty(headerParams, 'If-Modified-Since', { value: opts?.ifModifiedSince });
@@ -622,7 +622,7 @@ export class NodesApi extends BaseApi {
             ContentPagingQuery
     ): Promise<NodeAssociationPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             nodeId
@@ -671,7 +671,7 @@ export class NodesApi extends BaseApi {
             ContentPagingQuery
     ): Promise<NodeChildAssociationPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             nodeId
@@ -712,7 +712,7 @@ export class NodesApi extends BaseApi {
         } & NodesIncludeQuery
     ): Promise<NodeAssociationPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             nodeId
@@ -753,7 +753,7 @@ export class NodesApi extends BaseApi {
             ContentPagingQuery
     ): Promise<NodeAssociationPaging> {
         throwIfNotDefined(nodeId, 'nodeId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             nodeId
@@ -937,7 +937,7 @@ export class NodesApi extends BaseApi {
     ): Promise<NodeEntry> {
         throwIfNotDefined(nodeId, 'nodeId');
         throwIfNotDefined(contentBodyUpdate, 'contentBodyUpdate');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             nodeId

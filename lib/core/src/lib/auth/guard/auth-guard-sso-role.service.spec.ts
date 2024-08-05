@@ -53,7 +53,7 @@ describe('Auth Guard SSO role service', () => {
     }
 
     it('Should canActivate be true if the Role is present int the JWT token', async () => {
-        spyUserAccess(['MOCK_USER_ROLE'], {});
+        spyUserAccess(['MOCK_USER_ROLE'], { /* empty */ });
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
@@ -61,7 +61,7 @@ describe('Auth Guard SSO role service', () => {
     });
 
     it('Should canActivate be true if case of empty roles to check', async () => {
-        spyUserAccess([], {});
+        spyUserAccess([], { /* empty */ });
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: [] };
 
@@ -69,7 +69,7 @@ describe('Auth Guard SSO role service', () => {
     });
 
     it('Should canActivate be false if the Role is not present int the JWT token', async () => {
-        spyUserAccess(['MOCK_ROOT_USER_ROLE'], {});
+        spyUserAccess(['MOCK_ROOT_USER_ROLE'], { /* empty */ });
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
         router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
@@ -77,7 +77,7 @@ describe('Auth Guard SSO role service', () => {
     });
 
     it('Should not redirect if canActivate is', async () => {
-        spyUserAccess(['MOCK_USER_ROLE'], {});
+        spyUserAccess(['MOCK_USER_ROLE'], { /* empty */ });
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -88,14 +88,14 @@ describe('Auth Guard SSO role service', () => {
     });
 
     it('Should canActivate return false if the data Role to check is empty', async () => {
-        spyUserAccess(['MOCK_USER_ROLE', 'MOCK_ROOT_USER_ROLE'], {});
+        spyUserAccess(['MOCK_USER_ROLE', 'MOCK_ROOT_USER_ROLE'], { /* empty */ });
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
         expect(authGuard.canActivate(router)).toBeFalsy();
     });
 
     it('Should redirect to the redirectURL if canActivate is false and redirectUrl is in data', async () => {
-        spyUserAccess([], {});
+        spyUserAccess([], { /* empty */ });
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -106,7 +106,7 @@ describe('Auth Guard SSO role service', () => {
     });
 
     it('Should not redirect if canActivate is false and redirectUrl is not in  data', async () => {
-        spyUserAccess([], {});
+        spyUserAccess([], { /* empty */ });
         spyOn(routerService, 'navigate').and.stub();
 
         const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
@@ -118,7 +118,7 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate be false hasRealm is true and hasClientRole is false', async () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyUserAccess([''], {});
+        spyUserAccess([''], { /* empty */ });
 
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
@@ -128,7 +128,7 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate be false if hasRealm is false and hasClientRole is true', async () => {
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyUserAccess([], {});
+        spyUserAccess([], { /* empty */ });
 
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['mockApp'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
@@ -162,7 +162,7 @@ describe('Auth Guard SSO role service', () => {
         spyOn(materialDialog, 'closeAll');
 
         const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        spyUserAccess([], {});
+        spyUserAccess([], { /* empty */ });
 
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
@@ -173,7 +173,7 @@ describe('Auth Guard SSO role service', () => {
 
     describe('Excluded Roles', () => {
         it('Should canActivate be false when the user has one of the excluded roles', async () => {
-            spyUserAccess(['MOCK_USER_ROLE'], {});
+            spyUserAccess(['MOCK_USER_ROLE'], { /* empty */ });
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['MOCK_ANOTHER_ROLE'], excludedRoles: ['MOCK_USER_ROLE'] };
@@ -182,7 +182,7 @@ describe('Auth Guard SSO role service', () => {
         });
 
         it('Should canActivate be true when the user has none of the excluded roles', async () => {
-            spyUserAccess(['MOCK_ADMIN_ROLE'], {});
+            spyUserAccess(['MOCK_ADMIN_ROLE'], { /* empty */ });
 
             const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
             router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], excludedRoles: ['MOCK_ROOT_USER_ROLE'] };

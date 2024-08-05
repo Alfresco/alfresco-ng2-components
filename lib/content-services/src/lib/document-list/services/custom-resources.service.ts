@@ -84,7 +84,7 @@ export class CustomResourcesService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Gets files recently accessed by a user.
@@ -204,7 +204,7 @@ export class CustomResourcesService {
                                         'cm:title': entry.title || target.title,
                                         'cm:description': entry.description || target.description
                                     }),
-                                    ...(entry.properties || {})
+                                    ...(entry.properties || { /* empty */ })
                                 };
 
                                 return {
@@ -409,7 +409,7 @@ export class CustomResourcesService {
      * @param pagination Specifies how to paginate the results
      * @returns List of node IDs
      */
-    getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
+    getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = { /* empty */ }): Observable<string[]> {
         if (this.isCustomSource(nodeId)) {
             return this.loadFolderByNodeId(nodeId, pagination).pipe(
                 map((result: any): string[] => result.list.entries.map((node: any): string => this.getIdFromEntry(node, nodeId)))

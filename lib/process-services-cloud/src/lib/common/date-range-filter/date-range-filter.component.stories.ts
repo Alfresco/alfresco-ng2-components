@@ -64,4 +64,4 @@ const template: StoryFn<DateRangeFilterComponent> = (args) => ({
     props: args
 });
 
-export const DateRangeFilter = template.bind({});
+export const DateRangeFilter = template.bind({ /* empty */ });

@@ -113,14 +113,14 @@ function getDocMetadata(tree) {
     if (tree.children[0].type === 'yaml') {
         return yaml.load(tree.children[0].value);
     } else {
-        return {};
+        return { /* empty */ };
     }
 }
 
 function getFirstParagraph(tree) {
     let s = 0;
 
-    for (; s < tree.children.length && !unist.isParagraph(tree.children[s]); s++) {}
+    for (; s < tree.children.length && !unist.isParagraph(tree.children[s]); s++) { /* empty */ }
 
     if (s < tree.children.length) {
         return tree.children[s];
@@ -132,7 +132,7 @@ function getFirstParagraph(tree) {
 function getFirstHeading(tree) {
     let s = 0;
 
-    for (; s < tree.children.length && !unist.isHeading(tree.children[s]); s++) {}
+    for (; s < tree.children.length && !unist.isHeading(tree.children[s]); s++) { /* empty */ }
 
     if (s < tree.children.length) {
         return tree.children[s];

@@ -30,7 +30,7 @@ describe('ResizeHandleDirective', () => {
     };
 
     const elementRefMock = {
-        nativeElement: { dispatchEvent: () => {} }
+        nativeElement: { dispatchEvent: () => { /* empty */ } }
     };
 
     beforeEach(() => {

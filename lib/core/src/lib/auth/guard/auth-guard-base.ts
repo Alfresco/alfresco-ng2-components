@@ -38,7 +38,7 @@ export abstract class AuthGuardBase  {
         protected appConfigService: AppConfigService,
         protected dialog: MatDialog,
         private storageService: StorageService
-    ) {}
+    ) { /* empty */ }
 
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,

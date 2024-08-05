@@ -54,7 +54,7 @@ const template: StoryFn<RichTextEditorComponent> = (args) => ({
     `
 });
 
-export const DefaultRichTextEditor = template.bind({});
+export const DefaultRichTextEditor = template.bind({ /* empty */ });
 DefaultRichTextEditor.args = {
     data: {
         time: 1550476186479,

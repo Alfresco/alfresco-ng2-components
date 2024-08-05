@@ -88,5 +88,5 @@ const template: StoryFn<NotificationHistoryComponent> = (args) => ({
     </div>`
 });
 
-export const NotificationHistory = template.bind({});
+export const NotificationHistory = template.bind({ /* empty */ });
 NotificationHistory.parameters = { layout: 'centered' };

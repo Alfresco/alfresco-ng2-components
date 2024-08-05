@@ -75,7 +75,7 @@ const template: StoryFn<SidebarActionMenuComponent> = (args) => ({
     props: args
 });
 
-export const sidebarActionMenu = template.bind({});
+export const sidebarActionMenu = template.bind({ /* empty */ });
 sidebarActionMenu.args = {
     title: 'Hello from Sidebar Action Menu!'
 };

@@ -24,7 +24,7 @@ import { SearchQueryBuilderService } from '../services/search-query-builder.serv
 @Component({
     template: `<button adf-reset-search>Reset</button>`
 })
-class TestComponent {}
+class TestComponent { /* empty */ }
 
 describe('Directive: ResetSearchDirective', () => {
     let fixture: ComponentFixture<TestComponent>;

@@ -26,9 +26,9 @@ import { ExtensionLoaderService } from './extension-loader.service';
 export class RuleService {
     context: RuleContext = null;
     rules: Array<RuleRef> = [];
-    evaluators: { [key: string]: RuleEvaluator } = {};
+    evaluators: { [key: string]: RuleEvaluator } = { /* empty */ };
 
-    constructor(protected loader: ExtensionLoaderService) {}
+    constructor(protected loader: ExtensionLoaderService) { /* empty */ }
 
     setup(config: ExtensionConfig) {
         this.rules = this.loader.getRules(config);
@@ -41,7 +41,7 @@ export class RuleService {
      */
     setEvaluators(values: { [key: string]: RuleEvaluator }) {
         if (values) {
-            this.evaluators = Object.assign({}, this.evaluators, values);
+            this.evaluators = Object.assign({ /* empty */ }, this.evaluators, values);
         }
     }
 

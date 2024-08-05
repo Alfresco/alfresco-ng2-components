@@ -46,7 +46,7 @@ describe('EcmModelService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({})
+            responseText: JSON.stringify({ /* empty */ })
         });
     });
 
@@ -61,7 +61,7 @@ describe('EcmModelService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({})
+            responseText: JSON.stringify({ /* empty */ })
         });
     });
 
@@ -79,7 +79,7 @@ describe('EcmModelService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({})
+            responseText: JSON.stringify({ /* empty */ })
         });
     });
 
@@ -98,7 +98,7 @@ describe('EcmModelService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({})
+            responseText: JSON.stringify({ /* empty */ })
         });
     });
 
@@ -141,7 +141,7 @@ describe('EcmModelService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({})
+            responseText: JSON.stringify({ /* empty */ })
         });
     });
 
@@ -185,7 +185,7 @@ describe('EcmModelService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({})
+            responseText: JSON.stringify({ /* empty */ })
         });
     });
 
@@ -199,7 +199,7 @@ describe('EcmModelService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({})
+            responseText: JSON.stringify({ /* empty */ })
         });
     });
 
@@ -215,7 +215,7 @@ describe('EcmModelService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({})
+            responseText: JSON.stringify({ /* empty */ })
         });
     });
 

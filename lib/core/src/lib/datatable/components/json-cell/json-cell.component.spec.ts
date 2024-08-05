@@ -79,10 +79,10 @@ describe('JsonCellComponent', () => {
     });
 
     it('should not setup cell when has no data', () => {
-        rowData.entity = {};
+        rowData.entity = { /* empty */ };
         fixture.detectChanges();
         component.value$.subscribe((result) => {
-            expect(result).toEqual({});
+            expect(result).toEqual({ /* empty */ });
         });
     });
 });

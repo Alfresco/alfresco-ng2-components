@@ -39,7 +39,7 @@ export class TooltipCardComponent {
     @Input() htmlContent = '';
     @Input() width = '300';
 
-    constructor(private sanitizer: DomSanitizer) {}
+    constructor(private sanitizer: DomSanitizer) { /* empty */ }
 
     sanitizedHtmlContent(): string {
         return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);

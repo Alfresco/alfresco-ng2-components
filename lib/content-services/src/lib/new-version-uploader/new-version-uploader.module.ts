@@ -23,4 +23,4 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog
     imports: [NewVersionUploaderDialogComponent],
     exports: [NewVersionUploaderDialogComponent]
 })
-export class NewVersionUploaderModule {}
+export class NewVersionUploaderModule { /* empty */ }

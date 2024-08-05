@@ -26,7 +26,7 @@ export interface UploadFileOpts extends CreateNodeOpts {
 export class UploadApi extends NodesApi {
     uploadFile(fileDefinition: any, relativePath?: string, rootFolderId?: string, nodeBody?: NodeBodyCreate, opts?: UploadFileOpts): Promise<NodeEntry | any> {
         rootFolderId = rootFolderId || '-root-';
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const nodeBodyRequired = {
             name: fileDefinition.name,
@@ -36,7 +36,7 @@ export class UploadApi extends NodesApi {
 
         nodeBody = Object.assign(nodeBodyRequired, nodeBody);
 
-        let formParam = Object.assign({}, nodeBody.properties || {});
+        let formParam = Object.assign({ /* empty */ }, nodeBody.properties || { /* empty */ });
         formParam.filedata = fileDefinition;
         formParam.relativePath = relativePath;
         if (opts.name) {

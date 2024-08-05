@@ -35,8 +35,8 @@ describe('AttachFileWidgetDialogService', () => {
         service = TestBed.inject(AttachFileWidgetDialogService);
         materialDialog = TestBed.inject(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
-            afterOpen: () => of({}),
-            afterClosed: () => of({}),
+            afterOpen: () => of({ /* empty */ }),
+            afterClosed: () => of({ /* empty */ }),
             componentInstance: {
                 error: new Subject<any>()
             }

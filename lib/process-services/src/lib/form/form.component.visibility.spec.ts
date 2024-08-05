@@ -63,7 +63,7 @@ describe('FormComponent UI and visibility', () => {
 
     describe('Validation icon', () => {
         it('should display valid icon for valid form', () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+            spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
@@ -75,7 +75,7 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should display invalid icon for valid form', () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+            spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionRequiredField));
 
             const change = new SimpleChange(null, 1, true);
@@ -87,7 +87,7 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should NOT display validation icon when [showValidationIcon] is false', () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+            spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
@@ -101,7 +101,7 @@ describe('FormComponent UI and visibility', () => {
 
     describe('form definition', () => {
         it('should display two text fields form definition', () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+            spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
@@ -118,7 +118,7 @@ describe('FormComponent UI and visibility', () => {
         });
 
         it('should display dropdown field', async () => {
-            spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+            spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionDropdownField));
 
             const change = new SimpleChange(null, 1, true);
@@ -144,7 +144,7 @@ describe('FormComponent UI and visibility', () => {
 
         describe('Visibility conditions', () => {
             it('should hide the field based on the next one', () => {
-                spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+                spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
                 spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilityFieldDependsOnNextOne));
 
                 const change = new SimpleChange(null, 1, true);
@@ -161,7 +161,7 @@ describe('FormComponent UI and visibility', () => {
             });
 
             it('should hide the field based on the previous one', () => {
-                spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+                spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
                 spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilitiFieldDependsOnPreviousOne));
 
                 const change = new SimpleChange(null, 1, true);
@@ -178,7 +178,7 @@ describe('FormComponent UI and visibility', () => {
             });
 
             it('should show the hidden field when the visibility condition change to true', () => {
-                spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+                spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
                 spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilityFieldDependsOnNextOne));
 
                 const change = new SimpleChange(null, 1, true);
@@ -203,7 +203,7 @@ describe('FormComponent UI and visibility', () => {
 
         describe('Readonly Form', () => {
             it('should display two text fields readonly', async () => {
-                spyOn(taskService, 'getTask').and.returnValue(of({} as TaskRepresentation));
+                spyOn(taskService, 'getTask').and.returnValue(of({ /* empty */ } as TaskRepresentation));
                 spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formReadonlyTwoTextFields));
 
                 const change = new SimpleChange(null, 1, true);

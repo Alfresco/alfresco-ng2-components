@@ -83,55 +83,55 @@ const template: StoryFn<TaskHeaderCloudComponent> = (args) => ({
     props: args
 });
 
-export const AssignedAndEditable = template.bind({});
+export const AssignedAndEditable = template.bind({ /* empty */ });
 AssignedAndEditable.args = {
     appName: 'app',
     taskId: 'mock-assigned-task'
 };
 
-export const CompletedAndReadonly = template.bind({});
+export const CompletedAndReadonly = template.bind({ /* empty */ });
 CompletedAndReadonly.args = {
     ...AssignedAndEditable.args,
     taskId: 'mock-completed-task'
 };
 
-export const Suspended = template.bind({});
+export const Suspended = template.bind({ /* empty */ });
 Suspended.args = {
     ...AssignedAndEditable.args,
     taskId: 'mock-suspended-task'
 };
 
-export const WithParentId = template.bind({});
+export const WithParentId = template.bind({ /* empty */ });
 WithParentId.args = {
     ...AssignedAndEditable.args,
     taskId: 'mock-parent-task-id'
 };
 
-export const WithoutAssignee = template.bind({});
+export const WithoutAssignee = template.bind({ /* empty */ });
 WithoutAssignee.args = {
     ...AssignedAndEditable.args,
     taskId: 'mock-created-task'
 };
 
-export const NotClaimableByUser = template.bind({});
+export const NotClaimableByUser = template.bind({ /* empty */ });
 NotClaimableByUser.args = {
     ...AssignedAndEditable.args,
     taskId: 'mock-no-candidate-users'
 };
 
-export const TaskNotClaimableByGroupUser = template.bind({});
+export const TaskNotClaimableByGroupUser = template.bind({ /* empty */ });
 TaskNotClaimableByGroupUser.args = {
     ...AssignedAndEditable.args,
     taskId: 'mock-no-candidate-groups'
 };
 
-export const InvalidForMissingApp = template.bind({});
+export const InvalidForMissingApp = template.bind({ /* empty */ });
 InvalidForMissingApp.args = {
     ...AssignedAndEditable.args,
     appName: undefined
 };
 
-export const InvalidForMissingTaskId = template.bind({});
+export const InvalidForMissingTaskId = template.bind({ /* empty */ });
 InvalidForMissingTaskId.args = {
     ...AssignedAndEditable.args,
     taskId: undefined

@@ -66,7 +66,7 @@ export class FilePropertiesTableCloudComponent {
     @Output()
     removeAttachFile: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private localizedDatePipe: LocalizedDatePipe, private thumbnailService: ThumbnailService) {}
+    constructor(private localizedDatePipe: LocalizedDatePipe, private thumbnailService: ThumbnailService) { /* empty */ }
 
     onRowClicked(file?: Node) {
         this.rowClick.emit(file);

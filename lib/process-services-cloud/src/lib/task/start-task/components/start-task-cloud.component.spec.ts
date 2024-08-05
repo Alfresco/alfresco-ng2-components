@@ -199,7 +199,7 @@ describe('StartTaskCloudComponent', () => {
     it('should emit error when there is an error while creating task', () => {
         component.taskForm.controls['name'].setValue('fakeName');
         const errorSpy = spyOn(component.error, 'emit');
-        createNewTaskSpy.and.returnValue(throwError({}));
+        createNewTaskSpy.and.returnValue(throwError({ /* empty */ }));
         component.appName = 'fakeAppName';
         fixture.detectChanges();
         const assigneeInput = element.querySelector<HTMLElement>('input.adf-cloud-input');

@@ -22,7 +22,7 @@ export const intermediateCatchingTimeEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -35,7 +35,7 @@ export const intermediateCatchingTimeEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -48,7 +48,7 @@ export const intermediateCatchingTimeEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'timer'}
 };
 
@@ -59,7 +59,7 @@ export const intermediateCatchingErrorEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -72,7 +72,7 @@ export const intermediateCatchingErrorEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -85,7 +85,7 @@ export const intermediateCatchingErrorEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'error'}
 };
 
@@ -96,7 +96,7 @@ export const intermediateCatchingSignalEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -109,7 +109,7 @@ export const intermediateCatchingSignalEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -122,7 +122,7 @@ export const intermediateCatchingSignalEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'signal'}
 };
 
@@ -133,7 +133,7 @@ export const intermediateCatchingMessageEvent = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };
 
@@ -146,7 +146,7 @@ export const intermediateCatchingMessageEventActive = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };
 
@@ -159,6 +159,6 @@ export const intermediateCatchingMessageEventCompleted = {
     height: 31,
     x: 40,
     y: 30,
-    properties: [{}],
+    properties: [{ /* empty */ }],
     eventDefinition: {type: 'message'}
 };

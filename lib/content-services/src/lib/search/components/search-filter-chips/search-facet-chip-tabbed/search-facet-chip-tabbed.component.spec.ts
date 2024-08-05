@@ -172,7 +172,7 @@ describe('SearchFacetChipTabbedComponent', () => {
         await (await chip.host()).click();
 
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
-        applyButton.triggerEventHandler('click', {});
+        applyButton.triggerEventHandler('click', { /* empty */ });
         expect(component.menuTrigger.closeMenu).toHaveBeenCalled();
         expect(component.onApply).toHaveBeenCalled();
     });
@@ -185,7 +185,7 @@ describe('SearchFacetChipTabbedComponent', () => {
         await (await chip.host()).click();
 
         const applyButton = fixture.debugElement.query(By.css('#cancel-filter-button'));
-        applyButton.triggerEventHandler('click', {});
+        applyButton.triggerEventHandler('click', { /* empty */ });
         expect(component.menuTrigger.closeMenu).toHaveBeenCalled();
         expect(component.onRemove).toHaveBeenCalled();
     });

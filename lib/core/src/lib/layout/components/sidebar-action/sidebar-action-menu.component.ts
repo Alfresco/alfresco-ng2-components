@@ -55,16 +55,16 @@ export class SidebarActionMenuComponent {
     selector: '[adf-sidebar-menu-options], [sidebar-menu-options]',
     standalone: true
 })
-export class SidebarMenuDirective {}
+export class SidebarMenuDirective { /* empty */ }
 
 @Directive({
     selector: '[adf-sidebar-menu-title-icon], [sidebar-menu-title-icon]',
     standalone: true
 })
-export class SidebarMenuTitleIconDirective {}
+export class SidebarMenuTitleIconDirective { /* empty */ }
 
 @Directive({
     selector: '[adf-sidebar-menu-expand-icon], [sidebar-menu-expand-icon]',
     standalone: true
 })
-export class SidebarMenuExpandIconDirective {}
+export class SidebarMenuExpandIconDirective { /* empty */ }

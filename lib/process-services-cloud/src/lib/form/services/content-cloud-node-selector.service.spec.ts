@@ -59,8 +59,8 @@ describe('ContentCloudNodeSelectorService', () => {
 
         showWarningSpy = spyOn(notificationService, 'showWarning');
         openDialogSpy = spyOn(dialog, 'open').and.returnValue({
-            afterOpened: () => of({}),
-            afterClosed: () => of({}),
+            afterOpened: () => of({ /* empty */ }),
+            afterClosed: () => of({ /* empty */ }),
             componentInstance: {
                 error: new Subject<any>()
             }

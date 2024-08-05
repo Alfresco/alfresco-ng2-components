@@ -37,7 +37,7 @@ export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
 
     private componentRef: ComponentRef<any>;
 
-    constructor(private extensions: ExtensionService) {}
+    constructor(private extensions: ExtensionService) { /* empty */ }
 
     ngOnInit() {
         const componentType = this.extensions.getComponentById(this.id);

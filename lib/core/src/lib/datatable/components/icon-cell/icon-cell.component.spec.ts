@@ -97,7 +97,7 @@ describe('IconCellComponent', () => {
 
         it('should NOT render icon element in case of type different than string', async () => {
             await renderAndCheckResult(0, false);
-            await renderAndCheckResult({}, false);
+            await renderAndCheckResult({ /* empty */ }, false);
             await renderAndCheckResult(null, false);
             await renderAndCheckResult(undefined, false);
             await renderAndCheckResult(NaN, false);

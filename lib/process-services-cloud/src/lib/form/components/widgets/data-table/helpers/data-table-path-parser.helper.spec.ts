@@ -37,13 +37,13 @@ describe('DataTablePathParserHelper', () => {
         const testCases: DataTablePathParserTestCase[] = [
             {
                 description: 'not existent',
-                data: {},
+                data: { /* empty */ },
                 path: 'nonexistent.path',
                 expected: []
             },
             {
                 description: 'not defined',
-                data: {},
+                data: { /* empty */ },
                 path: undefined,
                 expected: []
             },

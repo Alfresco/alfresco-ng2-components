@@ -24,7 +24,7 @@ import { UserLike } from './user-like.interface';
     standalone: true
 })
 export class InitialUsernamePipe implements PipeTransform {
-    constructor(private sanitized: DomSanitizer) {}
+    constructor(private sanitized: DomSanitizer) { /* empty */ }
 
     transform(user: UserLike & { displayName?: string }, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';

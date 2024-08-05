@@ -36,7 +36,7 @@ class TestComponent {
     @ViewChild(NodeDeleteDirective, { static: true })
     deleteDirective: NodeDeleteDirective;
 
-    onDelete() {}
+    onDelete() { /* empty */ }
 }
 
 @Component({

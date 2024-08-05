@@ -141,8 +141,8 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should move selection up', () => {
-        const row1 = {} as DynamicTableRow;
-        const row2 = {} as DynamicTableRow;
+        const row1 = { /* empty */ } as DynamicTableRow;
+        const row2 = { /* empty */ } as DynamicTableRow;
         widget.content.rows.push(...[row1, row2]);
         widget.content.selectedRow = row2;
 
@@ -156,8 +156,8 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should move selection down', () => {
-        const row1 = {} as DynamicTableRow;
-        const row2 = {} as DynamicTableRow;
+        const row1 = { /* empty */ } as DynamicTableRow;
+        const row2 = { /* empty */ } as DynamicTableRow;
         widget.content.rows.push(...[row1, row2]);
         widget.content.selectedRow = row1;
 
@@ -171,7 +171,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should delete selected row', () => {
-        const row = {} as DynamicTableRow;
+        const row = { /* empty */ } as DynamicTableRow;
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         widget.deleteSelection();
@@ -262,7 +262,7 @@ describe('DynamicTableWidgetComponent', () => {
 
     it('should cancel changes', () => {
         widget.editMode = true;
-        widget.editRow = {} as DynamicTableRow;
+        widget.editRow = { /* empty */ } as DynamicTableRow;
         widget.onCancelChanges();
 
         expect(widget.editMode).toBeFalsy();
@@ -290,7 +290,7 @@ describe('DynamicTableWidgetComponent', () => {
         expect(widget.isValid()).toBe(widget.content.field.isValid);
         expect(widget.content.field.isValid).toBeFalsy();
 
-        widget.content.field.value = [{}];
+        widget.content.field.value = [{ /* empty */ }];
 
         expect(widget.content.field.validate()).toBeTruthy();
         expect(widget.isValid()).toBe(widget.content.field.isValid);

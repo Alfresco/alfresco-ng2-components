@@ -381,7 +381,7 @@ describe('TaskListComponent', () => {
 
         it('should NOT reload the task list when no parameters changed', () => {
             component.rows = null;
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeTruthy();
         });
@@ -698,7 +698,7 @@ describe('CustomTaskListComponent', () => {
         </adf-tasklist>
     `
 })
-class EmptyTemplateComponent {}
+class EmptyTemplateComponent { /* empty */ }
 
 describe('Task List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;

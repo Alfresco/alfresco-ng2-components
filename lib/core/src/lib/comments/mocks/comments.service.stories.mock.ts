@@ -22,8 +22,6 @@ import { testUser } from './comments.stories.mock';
 
 export class CommentsServiceStoriesMock implements Partial<CommentsService> {
 
-    constructor() {}
-
     get(_id: string): Observable<CommentModel[]> {
         return commentsResponseMock.getComments();
     }

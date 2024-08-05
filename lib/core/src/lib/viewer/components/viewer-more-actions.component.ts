@@ -25,4 +25,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     host: { class: 'adf-viewer-more-actions' },
     template: `<ng-content></ng-content>`
 })
-export class ViewerMoreActionsComponent {}
+export class ViewerMoreActionsComponent { /* empty */ }

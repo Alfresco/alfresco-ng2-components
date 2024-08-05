@@ -118,7 +118,7 @@ describe('TaskFiltersComponent', () => {
     });
 
     it('should return the filter task list, filtered By Name', () => {
-        const deployApp = spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(of({} as any));
+        const deployApp = spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(of({ /* empty */ } as any));
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(of(fakeTaskFilters));
 
         const change = new SimpleChange(null, 'test', true);

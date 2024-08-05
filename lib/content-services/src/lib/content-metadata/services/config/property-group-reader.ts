@@ -18,7 +18,7 @@
 import { PropertyGroup, Property, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 
 const emptyGroup = {
-    properties: {}
+    properties: { /* empty */ }
 };
 
 const convertObjectToArray = (object: any): Property[] => Object.keys(object).map((key) => object[key]);

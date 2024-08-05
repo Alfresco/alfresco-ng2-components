@@ -62,7 +62,7 @@ export class WidgetComponent implements AfterViewInit {
 
     touched: boolean = false;
 
-    constructor(public formService?: FormService) {}
+    constructor(public formService?: FormService) { /* empty */ }
 
     hasField(): boolean {
         return !!this.field;

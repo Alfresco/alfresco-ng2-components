@@ -27,4 +27,4 @@ export const TOOLBAR_DIRECTIVES = [ToolbarComponent, ToolbarTitleComponent, Tool
     imports: [...TOOLBAR_DIRECTIVES],
     exports: [...TOOLBAR_DIRECTIVES]
 })
-export class ToolbarModule {}
+export class ToolbarModule { /* empty */ }

@@ -27,7 +27,7 @@ describe('ObjectUtils', () => {
     });
 
     it('should not get top level property value', () => {
-        const obj = {};
+        const obj = { /* empty */ };
         expect(ObjectUtils.getValue(obj, 'missing')).toBeUndefined();
     });
 
@@ -43,7 +43,7 @@ describe('ObjectUtils', () => {
     });
 
     it('should not get nested property value', () => {
-        const obj = {};
+        const obj = { /* empty */ };
         expect(ObjectUtils.getValue(obj, 'some.missing.property')).toBeUndefined();
     });
 
@@ -156,7 +156,7 @@ describe('ObjectUtils', () => {
 
     describe('isEmpty', () => {
         it('should return true for empty objects', () => {
-            const emptyObj = {};
+            const emptyObj = { /* empty */ };
             expect(ObjectUtils.isEmpty(emptyObj)).toBe(true);
         });
 
@@ -205,7 +205,7 @@ describe('ObjectUtils', () => {
         });
 
         it('should return empty string for empty objects', () => {
-            const obj = {};
+            const obj = { /* empty */ };
             expect(ObjectUtils.booleanPrettify(obj)).toBe('');
         });
 

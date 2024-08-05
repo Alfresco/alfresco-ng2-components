@@ -68,7 +68,7 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private tagService: TagService, private translateService: TranslationService) {}
+    constructor(private tagService: TagService, private translateService: TranslationService) { /* empty */ }
 
     ngOnInit() {
         this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.refreshTag());

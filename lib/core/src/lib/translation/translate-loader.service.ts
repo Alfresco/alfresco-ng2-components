@@ -33,7 +33,7 @@ export class TranslateLoaderService implements TranslateLoader {
     private queue: string[][] = [];
     private defaultLang: string = 'en';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { /* empty */ }
 
     setDefaultLang(value: string) {
         this.defaultLang = value || 'en';
@@ -102,7 +102,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     getFullTranslationJSON(lang: string): any {
-        let result = {};
+        let result = { /* empty */ };
 
         this.providers
             .slice(0)

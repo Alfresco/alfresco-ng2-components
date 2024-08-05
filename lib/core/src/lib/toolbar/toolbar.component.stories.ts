@@ -112,4 +112,4 @@ const template: StoryFn<ToolbarComponent> = (
     </adf-toolbar>`
 });
 
-export const Toolbar = template.bind({});
+export const Toolbar = template.bind({ /* empty */ });

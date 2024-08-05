@@ -35,12 +35,12 @@ describe('SnackbarContentComponent', () => {
                 {
                     provide: MatSnackBarRef,
                     useValue: {
-                        dismissWithAction() {}
+                        dismissWithAction() { /* empty */ }
                     }
                 },
                 {
                     provide: MAT_SNACK_BAR_DATA,
-                    useValue: {}
+                    useValue: { /* empty */ }
                 }
             ]
         }).compileComponents();

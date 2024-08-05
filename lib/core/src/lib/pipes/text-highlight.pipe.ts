@@ -23,7 +23,7 @@ import { HighlightTransformService, HighlightTransformResult } from '../common/s
     standalone: true
 })
 export class HighlightPipe implements PipeTransform {
-    constructor(private highlightTransformService: HighlightTransformService) {}
+    constructor(private highlightTransformService: HighlightTransformService) { /* empty */ }
 
     transform(text: string, search: string): string {
         const highlightTransformResult: HighlightTransformResult = this.highlightTransformService.highlight(text, search);

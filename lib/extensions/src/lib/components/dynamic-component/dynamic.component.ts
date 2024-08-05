@@ -38,7 +38,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     private componentRef: ComponentRef<ExtensionComponent>;
     private loaded: boolean = false;
 
-    constructor(private extensions: ExtensionService) {}
+    constructor(private extensions: ExtensionService) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         if (!this.loaded) {

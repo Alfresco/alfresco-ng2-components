@@ -24,7 +24,7 @@ export class PreviewService {
     public content: Blob = null;
     public name: string = null;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) { /* empty */ }
 
     showResource(resourceId, versionId?): void {
         if (versionId) {

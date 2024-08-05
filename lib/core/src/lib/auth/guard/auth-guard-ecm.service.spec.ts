@@ -46,7 +46,7 @@ describe('AuthGuardService ECM', () => {
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
-                        ssoLogin: () => {},
+                        ssoLogin: () => { /* empty */ },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -64,8 +64,8 @@ describe('AuthGuardService ECM', () => {
         appConfigService = TestBed.inject(AppConfigService);
 
         appConfigService.config.providers = 'ECM';
-        appConfigService.config.auth = {};
-        appConfigService.config.oauth2 = {};
+        appConfigService.config.auth = { /* empty */ };
+        appConfigService.config.oauth2 = { /* empty */ };
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async () => {

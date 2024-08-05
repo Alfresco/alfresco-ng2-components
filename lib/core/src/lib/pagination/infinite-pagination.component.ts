@@ -103,7 +103,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         merge: true
     };
 
-    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {}
+    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) { /* empty */ }
 
     ngOnInit() {
         this.userPreferencesService

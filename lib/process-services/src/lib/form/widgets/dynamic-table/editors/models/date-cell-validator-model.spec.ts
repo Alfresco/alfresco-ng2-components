@@ -49,7 +49,7 @@ describe('DateCellValidator', () => {
 
     it('should skip validating unsupported columns', () => {
         const column = { editable: true, type: 'unknown' } as DynamicTableColumn;
-        const row = {} as DynamicTableRow;
+        const row = { /* empty */ } as DynamicTableRow;
 
         expect(validator.validate(row, column)).toBeTrue();
     });

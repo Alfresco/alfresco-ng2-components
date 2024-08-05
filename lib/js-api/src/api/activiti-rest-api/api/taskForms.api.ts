@@ -34,7 +34,7 @@ export class TaskFormsApi extends BaseApi {
      *
      * @param taskId taskId
      * @param completeTaskFormRepresentation completeTaskFormRepresentation
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     completeTaskForm(taskId: string, completeTaskFormRepresentation: CompleteFormRepresentation): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -154,7 +154,7 @@ export class TaskFormsApi extends BaseApi {
      *
      * @param taskId taskId
      * @param saveTaskFormRepresentation saveTaskFormRepresentation
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     saveTaskForm(taskId: string, saveTaskFormRepresentation: SaveFormRepresentation): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');

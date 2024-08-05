@@ -107,7 +107,7 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     @Output()
     uploadStarted = new EventEmitter<FileUploadEvent>();
 
-    constructor(private contentService: ContentService, private uploadService: UploadService) {}
+    constructor(private contentService: ContentService, private uploadService: UploadService) { /* empty */ }
 
     ngOnInit() {
         this.uploadService.fileUploadStarting.pipe(takeUntil(this.onDestroy$)).subscribe((event: FileUploadEvent) => {

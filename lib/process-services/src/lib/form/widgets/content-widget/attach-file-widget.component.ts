@@ -194,7 +194,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 (blob: Blob) => {
                     this.downloadService.downloadBlob(blob, file.name);
                 },
-                () => {}
+                () => { /* empty */ }
             );
         }
     }
@@ -254,7 +254,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                     res['isExternal'] = isExternal;
                     filesSaved.push(res);
                 },
-                () => {},
+                () => { /* empty */ },
                 () => {
                     const previousFiles = this.field.value ? this.field.value : [];
                     this.field.value = [...previousFiles, ...filesSaved];

@@ -26,4 +26,4 @@ export const PAGINATION_DIRECTIVES = [InfinitePaginationComponent, PaginationCom
     imports: [...PAGINATION_DIRECTIVES],
     exports: [...PAGINATION_DIRECTIVES]
 })
-export class PaginationModule {}
+export class PaginationModule { /* empty */ }

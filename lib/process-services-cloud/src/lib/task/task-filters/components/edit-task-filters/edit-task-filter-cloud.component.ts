@@ -39,7 +39,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
 
     assignNewFilter(model: TaskFilterCloudModel) {
         this.setLastModifiedToFilter(model);
-        this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, model));
+        this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({ /* empty */ }, this.taskFilter, model));
         this.formHasBeenChanged = !this.deepCompare(this.changedTaskFilter, this.taskFilter);
         this.filterChange.emit(this.changedTaskFilter);
     }

@@ -26,7 +26,7 @@ describe('FullNamePipe', () => {
     });
 
     it('should return empty string when there is no name', () => {
-        const user = {};
+        const user = { /* empty */ };
         expect(pipe.transform(user)).toBe('');
     });
 

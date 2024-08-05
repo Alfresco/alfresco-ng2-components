@@ -88,7 +88,7 @@ const template: StoryFn<AboutComponent> = (args) => ({
     props: args
 });
 
-export const About = template.bind({});
+export const About = template.bind({ /* empty */ });
 About.args = {
     pkg: {
         name: 'My Storybook App',

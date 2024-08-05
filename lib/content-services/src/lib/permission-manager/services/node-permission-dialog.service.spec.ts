@@ -40,7 +40,7 @@ describe('NodePermissionDialogService', () => {
         nodePermissionService = TestBed.inject(NodePermissionService);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => afterOpenObservable,
-            afterClosed: () => of({}),
+            afterClosed: () => of({ /* empty */ }),
             componentInstance: {
                 error: new Subject<any>()
             }
@@ -48,7 +48,7 @@ describe('NodePermissionDialogService', () => {
     });
 
     describe('when node has permission to update permissions', () => {
-        let fakePermissionNode = new Node({});
+        let fakePermissionNode = new Node({ /* empty */ });
 
         beforeEach(() => {
             fakePermissionNode = { id: 'fake-permission-node', allowableOperations: ['updatePermissions'] } as Node;
@@ -86,7 +86,7 @@ describe('NodePermissionDialogService', () => {
     });
 
     describe('when node does not have permission to update permissions', () => {
-        let fakeForbiddenNode = new Node({});
+        let fakeForbiddenNode = new Node({ /* empty */ });
 
         beforeEach(() => {
             fakeForbiddenNode = { id: 'fake-permission-node', allowableOperations: ['update'] } as Node;

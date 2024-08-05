@@ -76,8 +76,8 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     sidenavAnimationState: any;
     contentAnimationState: any;
 
-    SIDENAV_STATES = { MOBILE: {}, EXPANDED: {}, COMPACT: {} };
-    CONTENT_STATES = { MOBILE: {}, EXPANDED: {}, COMPACT: {} };
+    SIDENAV_STATES = { MOBILE: { /* empty */ }, EXPANDED: { /* empty */ }, COMPACT: { /* empty */ } };
+    CONTENT_STATES = { MOBILE: { /* empty */ }, EXPANDED: { /* empty */ }, COMPACT: { /* empty */ } };
 
     constructor() {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);

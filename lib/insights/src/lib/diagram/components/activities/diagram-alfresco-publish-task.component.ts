@@ -26,4 +26,4 @@ import { DiagramIconAlfrescoPublishTaskComponent } from '../icons/diagram-icon-a
     imports: [DiagramTaskComponent, DiagramIconAlfrescoPublishTaskComponent],
     templateUrl: './diagram-alfresco-publish-task.component.html'
 })
-export class DiagramAlfrescoPublishTaskComponent extends DiagramElement {}
+export class DiagramAlfrescoPublishTaskComponent extends DiagramElement { /* empty */ }

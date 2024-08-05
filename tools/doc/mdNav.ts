@@ -17,7 +17,7 @@
 
 export class MDNav {
 
-    constructor(public root: any, public pos: number = 0) {}
+    constructor(public root: any, public pos: number = 0) { /* empty */ }
 
     find(test: (element: any) => boolean = () => true, index: number = 0): MDNav {
         if (!this.root || !this.root.children) {

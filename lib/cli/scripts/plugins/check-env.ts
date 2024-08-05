@@ -25,7 +25,7 @@ export class CheckEnv {
     _alfrescoJsApi: AlfrescoApi;
     counter = 0;
 
-    constructor(private host: string, private username: string, private password: string, private clientId: string = 'alfresco') {}
+    constructor(private host: string, private username: string, private password: string, private clientId: string = 'alfresco') { /* empty */ }
 
     async checkEnv() {
         try {
@@ -71,6 +71,6 @@ export class CheckEnv {
 
     sleep(delay: number) {
         const start = new Date().getTime();
-        while (new Date().getTime() < start + delay) {}
+        while (new Date().getTime() < start + delay) { /* empty */ }
     }
 }

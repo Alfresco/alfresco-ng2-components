@@ -43,7 +43,7 @@ export class SitesService {
         return this._sitesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Create a site
@@ -61,12 +61,12 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns List of sites
      */
-    getSites(opts: any = {}): Observable<SitePaging> {
+    getSites(opts: any = { /* empty */ }): Observable<SitePaging> {
         const defaultOptions = {
             skipCount: 0,
             include: ['properties']
         };
-        const queryOptions = Object.assign({}, defaultOptions, opts);
+        const queryOptions = Object.assign({ /* empty */ }, defaultOptions, opts);
         return from(this.sitesApi.listSites(queryOptions));
     }
 
@@ -89,7 +89,7 @@ export class SitesService {
      * @returns Null response notifying when the operation is complete
      */
     deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
-        const options: any = {};
+        const options: any = { /* empty */ };
         options.permanent = permanentFlag;
         return from(this.sitesApi.deleteSite(siteId, options));
     }

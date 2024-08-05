@@ -101,7 +101,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     describe('when widget is readonly', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({}), {
+            widget.field = new FormFieldModel(new FormModel({ /* empty */ }), {
                 id: 'radio-id',
                 name: 'radio-name',
                 type: FormFieldTypes.RADIO_BUTTONS,
@@ -136,13 +136,13 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         describe('when widget is readonly', () => {
             it('should call rest api when form is NOT readonly', () => {
-                widget.field = new FormFieldModel(new FormModel({}, undefined, false), getRadioButtonsWidgetConfig(true));
+                widget.field = new FormFieldModel(new FormModel({ /* empty */ }, undefined, false), getRadioButtonsWidgetConfig(true));
                 fixture.detectChanges();
 
                 expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
             });
             it('should NOT call rest api when form is readonly', () => {
-                widget.field = new FormFieldModel(new FormModel({}, undefined, true), getRadioButtonsWidgetConfig(true));
+                widget.field = new FormFieldModel(new FormModel({ /* empty */ }, undefined, true), getRadioButtonsWidgetConfig(true));
                 fixture.detectChanges();
 
                 expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
@@ -151,13 +151,13 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         describe('when widget is NOT readonly', () => {
             it('should call rest api when form is NOT readonly', () => {
-                widget.field = new FormFieldModel(new FormModel({}, undefined, false), getRadioButtonsWidgetConfig(false));
+                widget.field = new FormFieldModel(new FormModel({ /* empty */ }, undefined, false), getRadioButtonsWidgetConfig(false));
                 fixture.detectChanges();
 
                 expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
             });
             it('should NOT call rest api when form is readonly', () => {
-                widget.field = new FormFieldModel(new FormModel({}, undefined, true), getRadioButtonsWidgetConfig(false));
+                widget.field = new FormFieldModel(new FormModel({ /* empty */ }, undefined, true), getRadioButtonsWidgetConfig(false));
                 fixture.detectChanges();
 
                 expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
@@ -166,7 +166,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should be able to set a Radio Buttons widget as required', async () => {
-        widget.field = new FormFieldModel(new FormModel({}), {
+        widget.field = new FormFieldModel(new FormModel({ /* empty */ }), {
             id: 'radio-id',
             name: 'radio-name-label',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -192,7 +192,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should set Radio Buttons widget as valid when required and not empty', async () => {
-        widget.field = new FormFieldModel(new FormModel({}), {
+        widget.field = new FormFieldModel(new FormModel({ /* empty */ }), {
             id: 'radio-id',
             name: 'radio-name-label',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -211,7 +211,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     it('should be able to set a Radio Buttons widget when rest option enabled', () => {
         spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
-        widget.field = new FormFieldModel(new FormModel({}), {
+        widget.field = new FormFieldModel(new FormModel({ /* empty */ }), {
             id: 'radio-id',
             name: 'radio-name-label',
             type: FormFieldTypes.RADIO_BUTTONS,
@@ -248,7 +248,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     });
 
     it('should change the value of the form when an option is clicked', async () => {
-        const form = new FormModel({});
+        const form = new FormModel({ /* empty */ });
         widget.field = new FormFieldModel(form, {
             id: 'radio-id',
             name: 'radio-name-label',
