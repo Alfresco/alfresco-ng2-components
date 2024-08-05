@@ -52,7 +52,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     }
 
     ngOnInit() {
-        if (this.isValidRestConfig()) {
+        if (this.isValidRestConfig() && !this.isReadOnlyForm()) {
             this.getValuesFromRestApi();
         }
     }
@@ -106,6 +106,10 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     private isRestType(): boolean {
         return this.field?.optionType === 'rest';
+    }
+
+    private isReadOnlyForm(): boolean {
+        return !!this.field?.form?.readOnly;
     }
 
     private hasRestUrl(): boolean {
