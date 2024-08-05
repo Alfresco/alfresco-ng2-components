@@ -1,6 +1,13 @@
 name: "release"
 
 on:
+  workflow_call:
+    inputs:
+      dry-run-flag:
+        description: 'enable dry-run on artifact push'
+        required: false
+        type: boolean
+        default: true
   push:
     branches:
       - develop
