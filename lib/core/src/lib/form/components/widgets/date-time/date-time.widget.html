@@ -1,6 +1,6 @@
 <div class="{{ field.className }}"
      id="data-time-widget"
-     [class.adf-invalid]="!field.isValid && isTouched()"
+     [class.adf-invalid]="datetimeInputControl.invalid && datetimeInputControl.touched"
      [class.adf-left-label-input-container]="field.leftLabels">
     <div *ngIf="field.leftLabels">
         <label class="adf-label adf-left-label" [attr.for]="field.id">
@@ -17,29 +17,24 @@
             <input matInput
                    [matDatetimepicker]="datetimePicker"
                    [id]="field.id"
-                   [(ngModel)]="value"
-                   [required]="isRequired()"
-                   [disabled]="field.readOnly"
-                   (change)="onValueChanged($event)"
-                   (dateChange)="onDateChanged($event)"
+                   [formControl]="datetimeInputControl"
                    (keydown.enter)="datetimePicker.open()"
                    [placeholder]="field.placeholder"
                    [title]="field.tooltip"
-                   (blur)="markAsTouched()"
+                   (blur)="updateField()"
                    [min]="minDate"
                    [max]="maxDate">
             <mat-datetimepicker-toggle matSuffix [for]="datetimePicker"
-                                       [disabled]="field.readOnly"></mat-datetimepicker-toggle>
+                                       [disabled]="field.readOnly">
+            </mat-datetimepicker-toggle>
+            <mat-datetimepicker #datetimePicker
+                data-automation-id="adf-date-time-widget-picker"
+                type="datetime"
+                [touchUi]="true"
+                [timeInterval]="5"
+                [disabled]="field.readOnly">
+            </mat-datetimepicker>
         </mat-form-field>
-        <error-widget [error]="field.validationSummary"></error-widget>
-        <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
-                      required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-        <mat-datetimepicker #datetimePicker
-                            data-automation-id="adf-date-time-widget-picker"
-                            type="datetime"
-                            [touchUi]="true"
-                            [timeInterval]="5"
-                            [disabled]="field.readOnly">
-        </mat-datetimepicker>
+        <error-widget *ngIf="datetimeInputControl.invalid && datetimeInputControl.touched" [error]="field.validationSummary"></error-widget>
     </div>
 </div>

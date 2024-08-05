@@ -148,13 +148,13 @@ export class FormModel implements ProcessFormModel {
     validateForm(): void {
         const validateFormEvent: any = new ValidateFormEvent(this);
 
-        const errorsField: FormFieldModel[] = [];
-
-        for (let i = 0; i < this.fieldsCache.length; i++) {
-            if (!this.fieldsCache[i].validate()) {
-                errorsField.push(this.fieldsCache[i]);
+        const errorsField: FormFieldModel[] = this.fieldsCache.filter((field) => {
+            if (!FormFieldTypes.isReactiveType(field.type)) {
+                return !field.validate();
+            } else {
+                return field.validationSummary.isActive();
             }
-        }
+        });
 
         this.isValid = errorsField.length <= 0;
 
@@ -191,7 +191,7 @@ export class FormModel implements ProcessFormModel {
             return;
         }
 
-        if (!field.validate()) {
+        if (!FormFieldTypes.isReactiveType(field.type) && !field.validate()) {
             this.markAsInvalid();
         }
 

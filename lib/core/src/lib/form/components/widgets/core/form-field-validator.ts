@@ -20,8 +20,6 @@
 import { FormFieldTypes } from './form-field-types';
 import { isNumberValue } from './form-field-utils';
 import { FormFieldModel } from './form-field.model';
-import { DateFnsUtils } from '../../../../common/utils/date-fns-utils';
-import { isValid as isDateValid, isBefore, isAfter } from 'date-fns';
 
 export interface FormFieldValidator {
     isSupported(field: FormFieldModel): boolean;
@@ -42,8 +40,6 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.UPLOAD,
         FormFieldTypes.AMOUNT,
         FormFieldTypes.DYNAMIC_TABLE,
-        FormFieldTypes.DATE,
-        FormFieldTypes.DATETIME,
         FormFieldTypes.ATTACH_FOLDER,
         FormFieldTypes.DECIMAL,
         FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
@@ -124,208 +120,6 @@ export class NumberFieldValidator implements FormFieldValidator {
             return false;
         }
         return true;
-    }
-}
-
-export class DateFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATE];
-
-    // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
-    static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
-        return DateFnsUtils.isValidDate(inputDate, dateFormat);
-    }
-
-    isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1;
-    }
-
-    validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
-            if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
-                return true;
-            }
-            field.validationSummary.message = field.dateDisplayFormat;
-            return false;
-        }
-        return true;
-    }
-}
-
-export class DateTimeFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATETIME];
-
-    isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1;
-    }
-
-    static isValidDateTime(input: string): boolean {
-        const date = DateFnsUtils.getDate(input);
-        return isDateValid(date);
-    }
-
-    validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field) && field.value && field.isVisible) {
-            if (DateTimeFieldValidator.isValidDateTime(field.value)) {
-                return true;
-            }
-            field.validationSummary.message = field.dateDisplayFormat;
-            return false;
-        }
-        return true;
-    }
-}
-
-export abstract class BoundaryDateFieldValidator implements FormFieldValidator {
-    DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
-    DATE_FORMAT = 'DD-MM-YYYY';
-
-    supportedTypes = [FormFieldTypes.DATE];
-
-    validate(field: FormFieldModel): boolean {
-        let isValid = true;
-        if (this.isSupported(field) && field.value && field.isVisible) {
-            const dateFormat = field.dateDisplayFormat;
-
-            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
-                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
-                isValid = false;
-            } else {
-                isValid = this.checkDate(field, dateFormat);
-            }
-        }
-        return isValid;
-    }
-
-    extractDateFormat(date: string): string {
-        const brokenDownDate = date.split('-');
-        return brokenDownDate[0].length === 4 ? this.DATE_FORMAT_CLOUD : this.DATE_FORMAT;
-    }
-
-    abstract checkDate(field: FormFieldModel, dateFormat: string);
-    abstract isSupported(field: FormFieldModel);
-}
-
-export class MinDateFieldValidator extends BoundaryDateFieldValidator {
-    checkDate(field: FormFieldModel, dateFormat: string): boolean {
-        let isValid = true;
-        const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
-        const minValueDateFormat = this.extractDateFormat(field.minValue);
-        const min = DateFnsUtils.parseDate(field.minValue, minValueDateFormat);
-
-        if (DateFnsUtils.isBeforeDate(fieldValueData, min)) {
-            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-            field.validationSummary.attributes.set('minValue', DateFnsUtils.formatDate(min, field.dateDisplayFormat).toLocaleUpperCase());
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
-    }
-}
-
-export class MaxDateFieldValidator extends BoundaryDateFieldValidator {
-    checkDate(field: FormFieldModel, dateFormat: string): boolean {
-        let isValid = true;
-        const fieldValueData = DateFnsUtils.parseDate(field.value, dateFormat, { dateOnly: true });
-        const maxValueDateFormat = this.extractDateFormat(field.maxValue);
-        const max = DateFnsUtils.parseDate(field.maxValue, maxValueDateFormat);
-
-        if (DateFnsUtils.isAfterDate(fieldValueData, max)) {
-            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
-            field.validationSummary.attributes.set('maxValue', DateFnsUtils.formatDate(max, field.dateDisplayFormat).toLocaleUpperCase());
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
-    }
-}
-
-export abstract class BoundaryDateTimeFieldValidator implements FormFieldValidator {
-    private supportedTypes = [FormFieldTypes.DATETIME];
-
-    isSupported(field: FormFieldModel): boolean {
-        return field && this.supportedTypes.indexOf(field.type) > -1 && !!field[this.getSubjectField()];
-    }
-
-    validate(field: FormFieldModel): boolean {
-        let isValid = true;
-        if (this.isSupported(field) && field.value && field.isVisible) {
-            if (!DateTimeFieldValidator.isValidDateTime(field.value)) {
-                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
-                isValid = false;
-            } else {
-                isValid = this.checkDateTime(field);
-            }
-        }
-        return isValid;
-    }
-
-    private checkDateTime(field: FormFieldModel): boolean {
-        let isValid = true;
-        const fieldValueDate = DateFnsUtils.getDate(field.value);
-        const subjectFieldDate = DateFnsUtils.getDate(field[this.getSubjectField()]);
-
-        if (this.compareDates(fieldValueDate, subjectFieldDate)) {
-            field.validationSummary.message = this.getErrorMessage();
-            field.validationSummary.attributes.set(this.getSubjectField(), DateFnsUtils.formatDate(subjectFieldDate, field.dateDisplayFormat));
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    protected abstract compareDates(fieldValueDate: Date, subjectFieldDate: Date): boolean;
-
-    protected abstract getSubjectField(): string;
-
-    protected abstract getErrorMessage(): string;
-}
-
-/**
- * Validates the min constraint for the datetime value.
- *
- * Notes for developers:
- * the format of the min/max values is always the ISO datetime: i.e. 2023-10-01T15:21:00.000Z.
- * Min/Max values can be parsed with standard `new Date(value)` calls.
- *
- */
-export class MinDateTimeFieldValidator extends BoundaryDateTimeFieldValidator {
-    protected compareDates(fieldValueDate: Date, subjectFieldDate: Date): boolean {
-        return isBefore(fieldValueDate, subjectFieldDate);
-    }
-
-    protected getSubjectField(): string {
-        return 'minValue';
-    }
-
-    protected getErrorMessage(): string {
-        return `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
-    }
-}
-
-/**
- * Validates the max constraint for the datetime value.
- *
- * Notes for developers:
- * the format of the min/max values is always the ISO datetime: i.e. 2023-10-01T15:21:00.000Z.
- * Min/Max values can be parsed with standard `new Date(value)` calls.
- *
- */
-export class MaxDateTimeFieldValidator extends BoundaryDateTimeFieldValidator {
-    protected compareDates(fieldValueDate: Date, subjectFieldDate: Date): boolean {
-        return isAfter(fieldValueDate, subjectFieldDate);
-    }
-
-    protected getSubjectField(): string {
-        return 'maxValue';
-    }
-
-    protected getErrorMessage(): string {
-        return `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
     }
 }
 
@@ -523,12 +317,6 @@ export const FORM_FIELD_VALIDATORS = [
     new MinValueFieldValidator(),
     new MaxValueFieldValidator(),
     new RegExFieldValidator(),
-    new DateFieldValidator(),
-    new DateTimeFieldValidator(),
-    new MinDateFieldValidator(),
-    new MaxDateFieldValidator(),
     new FixedValueFieldValidator(),
-    new MinDateTimeFieldValidator(),
-    new MaxDateTimeFieldValidator(),
     new DecimalFieldValidator()
 ];

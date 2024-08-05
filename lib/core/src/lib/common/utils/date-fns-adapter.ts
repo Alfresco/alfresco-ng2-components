@@ -20,7 +20,7 @@ import { DateFnsUtils } from './date-fns-utils';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { UserPreferenceValues, UserPreferencesService } from '../services/user-preferences.service';
-import { Locale } from 'date-fns';
+import { isValid, Locale, parse } from 'date-fns';
 
 /**
  * Date-fns adapter with moment-to-date-fns conversion.
@@ -47,15 +47,17 @@ import { Locale } from 'date-fns';
  * }
  */
 
+export const DEFAULT_DATE_FORMAT = 'dd-MM-yyyy';
+
 /**
  * Material date formats for Date-fns
  */
 export const ADF_DATE_FORMATS: MatDateFormats = {
     parse: {
-        dateInput: 'dd-MM-yyyy'
+        dateInput: DEFAULT_DATE_FORMAT
     },
     display: {
-        dateInput: 'dd-MM-yyyy',
+        dateInput: DEFAULT_DATE_FORMAT,
         monthLabel: 'LLL',
         monthYearLabel: 'LLL uuuu',
         dateA11yLabel: 'PP',
@@ -88,10 +90,11 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
     }
 
     override parse(value: any, parseFormat: string | string[]): Date {
+        const dateValue = this.isValid(value) ? value : this.parseAndValidateDate(value);
         const format = Array.isArray(parseFormat)
             ? parseFormat.map(DateFnsUtils.convertMomentToDateFnsFormat)
             : DateFnsUtils.convertMomentToDateFnsFormat(parseFormat);
-        return super.parse(value, format);
+        return super.parse(dateValue, format);
     }
 
     override format(date: Date, displayFormat: string): string {
@@ -102,5 +105,10 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
         }
 
         return super.format(date, displayFormat);
+    }
+
+    private parseAndValidateDate(value: any): Date {
+        const parsedDate = parse(value, this.displayFormat || DEFAULT_DATE_FORMAT, new Date());
+        return isValid(parsedDate) ? parsedDate : value;
     }
 }

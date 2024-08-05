@@ -1552,7 +1552,7 @@ export const formDateVisibility = {
                         2: [
                             {
                                 id: 'Text0pqd1u',
-                                name: 'Text',
+                                name: 'Text equal specific date',
                                 type: 'text',
                                 readOnly: false,
                                 required: false,
@@ -1589,7 +1589,7 @@ export const formDateVisibility = {
                         1: [
                             {
                                 id: 'Text0uyqd3',
-                                name: 'Text',
+                                name: 'Text NOT equal specific date',
                                 type: 'text',
                                 readOnly: false,
                                 required: false,

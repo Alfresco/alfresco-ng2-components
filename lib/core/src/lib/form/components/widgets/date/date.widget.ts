@@ -18,18 +18,21 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { NgIf } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../../common';
+import { takeUntil } from 'rxjs/operators';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils, DEFAULT_DATE_FORMAT } from '../../../../common';
 import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
+import { ErrorMessageModel } from '../core/error-message.model';
+import { parseISO } from 'date-fns';
 
 @Component({
     selector: 'date-widget',
@@ -50,62 +53,120 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, TranslateModule, MatInputModule, MatDatepickerModule, FormsModule, ErrorWidgetComponent, NgIf],
+    imports: [MatFormFieldModule, TranslateModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent, NgIf],
     encapsulation: ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-    DATE_FORMAT = 'dd-MM-yyyy';
-
     minDate: Date;
     maxDate: Date;
     startAt: Date;
 
-    @Input()
-    value: any = null;
+    dateInputControl: FormControl<Date> = new FormControl<Date>(null);
 
-    private onDestroy$ = new Subject<boolean>();
+    private onDestroy$ = new Subject<void>();
 
-    constructor(public formService: FormService, private dateAdapter: DateAdapter<Date>) {
-        super(formService);
+    public readonly formService = inject(FormService);
+    private readonly dateAdapter = inject(DateAdapter);
+
+    ngOnInit(): void {
+        this.patchFormControl();
+        this.initDateAdapter();
+        this.initDateRange();
+        this.initStartAt();
+        this.subscribeToDateChanges();
+        this.updateField();
     }
 
-    ngOnInit() {
-        if (this.field.dateDisplayFormat) {
+    updateField(): void {
+        this.validateField();
+        this.onFieldChanged(this.field);
+    }
+    private patchFormControl(): void {
+        this.dateInputControl.setValue(this.field.value, { emitEvent: false });
+        this.dateInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        if (this.field?.readOnly || this.readOnly) {
+            this.dateInputControl.disable({ emitEvent: false });
+        }
+
+        this.dateInputControl.updateValueAndValidity({ emitEvent: false });
+    }
+
+    private subscribeToDateChanges(): void {
+        this.dateInputControl.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((newDate: Date) => {
+            this.field.value = newDate;
+            this.updateField();
+        });
+    }
+
+    private validateField(): void {
+        if (this.dateInputControl.invalid) {
+            this.handleErrors(this.dateInputControl.errors);
+            this.field.markAsInvalid();
+        } else {
+            this.resetErrors();
+            this.field.markAsValid();
+        }
+    }
+
+    private handleErrors(errors: ValidationErrors): void {
+        const errorAttributes = new Map<string, string>();
+        switch (true) {
+            case !!errors.matDatepickerParse:
+                this.updateValidationSummary(this.field.dateDisplayFormat || this.field.defaultDateTimeFormat);
+                break;
+            case !!errors.required:
+                this.updateValidationSummary('FORM.FIELD.REQUIRED');
+                break;
+            case !!errors.matDatepickerMin: {
+                const minValue = DateFnsUtils.formatDate(errors.matDatepickerMin.min, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('minValue', minValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_LESS_THAN', errorAttributes);
+                break;
+            }
+            case !!errors.matDatepickerMax: {
+                const maxValue = DateFnsUtils.formatDate(errors.matDatepickerMax.max, this.field.dateDisplayFormat).toLocaleUpperCase();
+                errorAttributes.set('maxValue', maxValue);
+                this.updateValidationSummary('FORM.FIELD.VALIDATOR.NOT_GREATER_THAN', errorAttributes);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private updateValidationSummary(message: string, attributes?: Map<string, string>): void {
+        this.field.validationSummary = new ErrorMessageModel({ message, attributes });
+    }
+
+    private resetErrors(): void {
+        this.updateValidationSummary('');
+    }
+
+    private initDateAdapter(): void {
+        if (this.field?.dateDisplayFormat) {
             const adapter = this.dateAdapter as AdfDateFnsAdapter;
             adapter.displayFormat = this.field.dateDisplayFormat;
         }
+    }
 
-        if (this.field) {
-            if (this.field.minValue) {
-                this.minDate = this.dateAdapter.parse(this.field.minValue, this.DATE_FORMAT);
-            }
+    private initDateRange(): void {
+        if (this.field?.minValue) {
+            this.minDate = parseISO(this.field.minValue);
+        }
 
-            if (this.field.maxValue) {
-                this.maxDate = this.dateAdapter.parse(this.field.maxValue, this.DATE_FORMAT);
-            }
-
-            if (this.field.value) {
-                this.startAt = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
-                this.value = this.dateAdapter.parse(this.field.value, this.DATE_FORMAT);
-            }
+        if (this.field?.maxValue) {
+            this.maxDate = parseISO(this.field.maxValue);
         }
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
+    private initStartAt(): void {
+        if (this.field?.value) {
+            this.startAt = this.dateAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
+        }
+    }
+
+    ngOnDestroy(): void {
+        this.onDestroy$.next();
         this.onDestroy$.complete();
-    }
-
-    onDateChange(event: MatDatepickerInputEvent<Date>) {
-        const value = event.value;
-        const input = event.targetElement as HTMLInputElement;
-
-        if (value) {
-            this.field.value = this.dateAdapter.format(value, this.DATE_FORMAT);
-        } else {
-            this.field.value = input.value;
-        }
-
-        this.onFieldChanged(this.field);
     }
 }
