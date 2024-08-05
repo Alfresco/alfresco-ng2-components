@@ -36,7 +36,6 @@ import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { DebugElement } from '@angular/core';
 
 describe('DropdownCloudWidgetComponent', () => {
@@ -89,7 +88,7 @@ describe('DropdownCloudWidgetComponent', () => {
         it('should select the default value when an option is chosen as default', async () => {
             widget.field.value = 'option_2';
 
-            expect(widget.fieldValue).toEqual('option_2');
+            expect(widget.field.value).toEqual('option_2');
         });
 
         it('should select the empty value when no default is chosen', async () => {
@@ -97,7 +96,7 @@ describe('DropdownCloudWidgetComponent', () => {
             const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
             await dropdown.open();
 
-            expect(widget.fieldValue).toEqual('empty');
+            expect(widget.field.value).toEqual('empty');
         });
 
         it('should load data from restUrl and populate options', async () => {
@@ -289,17 +288,14 @@ describe('DropdownCloudWidgetComponent', () => {
             await dropdown.clickOptions({ selector: '[id="opt_1"]' });
 
             expect(await dropdown.getValueText()).toEqual('option_1');
-            expect(widget.fieldValue).toEqual('opt_1');
+            expect(widget.field.value).toEqual('opt_1');
 
             await dropdown.open();
             await dropdown.clickOptions({ selector: '[id="empty"]' });
 
-            const formField = await loader.getHarness(MatFormFieldHarness);
-            const dropdownLabel = await formField.getLabel();
+            expect(widget.field.value).toEqual(undefined);
 
-            expect(dropdownLabel).toEqual('This is a mock none option');
-            expect(widget.fieldValue).toEqual(undefined);
-            expect(await dropdown.getValueText()).toEqual('');
+            expect(await dropdown.getValueText()).toEqual('This is a mock none option');
         });
     });
 
@@ -691,7 +687,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     fixture.detectChanges();
 
                     expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
-                    expect(widget.fieldValue).toEqual('');
+                    expect(widget.field.value).toEqual('');
                 });
 
                 it('should not reset the current value when it is part of the available options', () => {
@@ -704,7 +700,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     fixture.detectChanges();
 
                     expect(widget.field.options).toEqual(mockConditionalEntries[0].options);
-                    expect(widget.fieldValue).toEqual('ATH');
+                    expect(widget.field.value).toEqual('ATH');
                 });
 
                 it('should fire a form field value changed event when the value gets reset (notify children on the chain to reset)', () => {
