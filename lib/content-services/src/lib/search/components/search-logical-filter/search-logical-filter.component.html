@@ -4,7 +4,6 @@
         <input type="text"
             [(ngModel)]="searchCondition[LogicalSearchFields[field]]"
             placeholder="{{ ('SEARCH.LOGICAL_SEARCH.' + field + '_HINT') | translate }}"
-            [attr.aria-label]="('SEARCH.LOGICAL_SEARCH.' + field + '_HINT') | translate"
-            (change)="onInputChange()"/>
+            [attr.aria-label]="('SEARCH.LOGICAL_SEARCH.' + field + '_HINT') | translate"/>
     </div>
 </div>
