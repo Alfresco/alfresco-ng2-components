@@ -6,18 +6,16 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "executor": "nx:run-commands",
       "options": {
-        "outputPath": "dist/./libs/cli",
-        "main": "lib/cli/src/index.ts",
-        "tsConfig": "lib/cli/tsconfig.json",
-        "assets": [
-          "lib/cli/*.md"
-        ]
-      }
+        "command": "cd lib/cli && npm run dist"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "lib/cli/tsconfig.json"
+        }
+      },
+      "defaultConfiguration": "production"
     },
     "bundle": {
       "executor": "nx:run-commands",
@@ -38,6 +36,19 @@
         "commands": [
           {
             "command": "rm -rf ./node_modules/@alfresco/adf-cli/ && mkdir -p ./node_modules/@alfresco/adf-cli/ && cp -R ./dist/libs/cli/* ./node_modules/@alfresco/adf-cli/"
+          }
+        ]
+      },
+      "dependsOn": [
+        "installDeps", "build"
+      ]
+    },
+    "installDeps": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "cd lib/cli && npm i"
           }
         ]
       },
