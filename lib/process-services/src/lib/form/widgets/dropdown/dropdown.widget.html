@@ -1,23 +1,16 @@
-<div class="adf-dropdown-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid && isTouched()" [class.adf-readonly]="field.readOnly">
+<div
+    class="adf-dropdown-widget {{field.className}}"
+    [class.adf-invalid]="dropdownControl.invalid && dropdownControl.touched"
+    [class.adf-readonly]="field.readOnly"
+>
     <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span class="adf-asterisk" *ngIf="isRequired()">*</span></label>
     <mat-form-field>
-        <mat-select class="adf-select"
-                    [id]="field.id"
-                    [(ngModel)]="field.value"
-                    [disabled]="field.readOnly"
-                    (ngModelChange)="onFieldChanged(field)"
-                    (blur)="markAsTouched()">
-            <mat-option *ngFor="let opt of field.options"
-                        [value]="getOptionValue(opt, field.value)"
-                        [id]="opt.id">{{opt.name}}
-            </mat-option>
-            <mat-option id="readonlyOption" *ngIf="isReadOnlyType()" [value]="field.value">{{field.value}}</mat-option>
+        <mat-select class="adf-select" [id]="field.id" [formControl]="dropdownControl">
+            <mat-option *ngFor="let opt of field.options" [value]="opt" [id]="opt.id">{{opt.name}} </mat-option>
+            <mat-option id="readonlyOption" *ngIf="dropdownControl.disabled" [value]="field.value">{{field.value}}</mat-option>
         </mat-select>
     </mat-form-field>
-    <ng-container *ngIf="!isReadOnlyField">
+    <ng-container *ngIf="!isReadOnlyField && dropdownControl.touched">
         <error-widget [error]="field.validationSummary"></error-widget>
-        <error-widget class="adf-dropdown-required-message" *ngIf="showRequiredMessage()"
-                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
     </ng-container>
 </div>
