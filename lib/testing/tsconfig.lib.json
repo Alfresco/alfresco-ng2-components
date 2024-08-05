@@ -6,8 +6,8 @@
     "declarationMap": true,
     "resolveJsonModule": true,
     "paths": {
-      "@alfresco/js-api": ["../../../dist/libs/js-api"],
-      "@alfresco/js-api/*": ["../../../dist/libs/js-api/*"]
+      "@alfresco/js-api": ["../../dist/libs/js-api"],
+      "@alfresco/js-api/*": ["../../dist/libs/js-api/*"]
     }
   }
 }
