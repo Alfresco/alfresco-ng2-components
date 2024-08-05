@@ -61,7 +61,7 @@ export class TagsApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param tagId The identifier of a tag.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteTagFromNode(nodeId: string, tagId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -113,9 +113,15 @@ export class TagsApi extends BaseApi {
      * @returns Promise<TagPaging>
      */
     listTags(opts?: { tag?: string; matching?: boolean } & ContentPagingQuery & ContentIncludeQuery & ContentFieldsQuery): Promise<TagPaging> {
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
-        const pathParams = { /* empty */ };
+        const pathParams = {
+            /* empty */
+        };
 
         let where: string;
         if (opts?.tag) {
@@ -198,7 +204,7 @@ export class TagsApi extends BaseApi {
      * Deletes a tag by **tagId**. This will cause the tag to be removed from all nodes.
      *
      * @param tagId The identifier of a tag.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteTag(tagId: string): Promise<void> {
         throwIfNotDefined(tagId, 'tagId');

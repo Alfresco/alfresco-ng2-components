@@ -60,7 +60,7 @@ export class AuthenticationApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      *
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteTicket(): Promise<void> {
         return this.delete({

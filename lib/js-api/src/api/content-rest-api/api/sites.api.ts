@@ -52,7 +52,7 @@ export class SitesApi extends BaseApi {
      * @param inviteeId The invitee username.
      * @param opts Optional parameters
      * @param opts.siteMembershipApprovalBody Accepting a request to join, optionally, allows assignment of a role to the user.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     approveSiteMembershipRequest(siteId: string, inviteeId: string, opts?: { siteMembershipApprovalBody?: any }): Promise<any> {
         throwIfNotDefined(siteId, 'siteId');
@@ -93,7 +93,11 @@ export class SitesApi extends BaseApi {
         opts?: { skipConfiguration?: boolean; skipAddToFavorites?: boolean; fields?: string[] }
     ): Promise<SiteEntry> {
         throwIfNotDefined(siteBodyCreate, 'siteBodyCreate');
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const queryParams = {
             skipConfiguration: opts?.skipConfiguration,
@@ -182,7 +186,7 @@ export class SitesApi extends BaseApi {
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
      * @param opts.permanent Flag to indicate whether the site should be permanently deleted i.e. bypass the trashcan. (default to false)
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteSite(siteId: string, opts?: { permanent?: boolean }): Promise<void> {
         throwIfNotDefined(siteId, 'siteId');
@@ -208,7 +212,7 @@ export class SitesApi extends BaseApi {
      *
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteSiteMembership(siteId: string, personId: string): Promise<void> {
         throwIfNotDefined(siteId, 'siteId');
@@ -233,7 +237,7 @@ export class SitesApi extends BaseApi {
      *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteSiteMembershipForPerson(personId: string, siteId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -258,7 +262,7 @@ export class SitesApi extends BaseApi {
      *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteSiteMembershipRequestForPerson(personId: string, siteId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -542,7 +546,11 @@ export class SitesApi extends BaseApi {
     listSiteMemberships(siteId: string, opts?: { where?: string } & ContentPagingQuery & ContentFieldsQuery): Promise<SiteMemberPaging> {
         throwIfNotDefined(siteId, 'siteId');
 
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             siteId
@@ -602,7 +610,11 @@ export class SitesApi extends BaseApi {
         opts?: { where?: string; orderBy?: string[]; relations?: string[] } & ContentPagingQuery & ContentFieldsQuery
     ): Promise<SiteRolePaging> {
         throwIfNotDefined(personId, 'personId');
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             personId
@@ -700,7 +712,7 @@ export class SitesApi extends BaseApi {
      * @param inviteeId The invitee username.
      * @param opts Optional parameters
      * @param opts.siteMembershipRejectionBody Rejecting a request to join, optionally, allows the inclusion of comment.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     rejectSiteMembershipRequest(siteId: string, inviteeId: string, opts?: { siteMembershipRejectionBody?: any }): Promise<any> {
         throwIfNotDefined(siteId, 'siteId');
@@ -739,7 +751,11 @@ export class SitesApi extends BaseApi {
         throwIfNotDefined(siteId, 'siteId');
         throwIfNotDefined(siteBodyUpdate, 'siteBodyUpdate');
 
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             siteId
@@ -994,7 +1010,7 @@ export class SitesApi extends BaseApi {
      *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteSiteGroupMembership(siteId: string, groupId: string): Promise<void> {
         throwIfNotDefined(siteId, 'siteId');

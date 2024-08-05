@@ -67,7 +67,7 @@ export class UserFiltersApi extends BaseApi {
      * Delete a process instance filter
      *
      * @param userFilterId userFilterId
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteUserProcessInstanceFilter(userFilterId: number): Promise<void> {
         throwIfNotDefined(userFilterId, 'userFilterId');
@@ -86,7 +86,7 @@ export class UserFiltersApi extends BaseApi {
      * Delete a task filter
      *
      * @param userFilterId userFilterId
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteUserTaskFilter(userFilterId: number): Promise<void> {
         throwIfNotDefined(userFilterId, 'userFilterId');
@@ -175,7 +175,7 @@ export class UserFiltersApi extends BaseApi {
      * Re-order the list of user process instance filters
      *
      * @param filterOrderRepresentation filterOrderRepresentation
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     orderUserProcessInstanceFilters(filterOrderRepresentation: UserFilterOrderRepresentation): Promise<any> {
         throwIfNotDefined(filterOrderRepresentation, 'filterOrderRepresentation');
@@ -190,7 +190,7 @@ export class UserFiltersApi extends BaseApi {
      * Re-order the list of user task filters
      *
      * @param filterOrderRepresentation filterOrderRepresentation
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     orderUserTaskFilters(filterOrderRepresentation: UserFilterOrderRepresentation): Promise<any> {
         throwIfNotDefined(filterOrderRepresentation, 'filterOrderRepresentation');

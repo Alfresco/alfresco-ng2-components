@@ -73,7 +73,7 @@ export class UnfiledRecordFoldersApi extends BaseApi {
      * Delete an unfiled record folder. Deleted file plan components cannot be recovered, they are deleted permanently.
      *
      * @param unfiledRecordFolderId The identifier of an unfiled record folder.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{}>
      */
     deleteUnfiledRecordFolder(unfiledRecordFolderId: string): Promise<void> {
         throwIfNotDefined(unfiledRecordFolderId, 'unfiledRecordFolderId');
@@ -150,7 +150,11 @@ export class UnfiledRecordFoldersApi extends BaseApi {
             RecordsSourceQuery
     ): Promise<UnfiledRecordFolderAssociationPaging> {
         throwIfNotDefined(unfiledRecordFolderId, 'unfiledRecordFolderId');
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             unfiledRecordFolderId

@@ -73,7 +73,7 @@ export class RecordCategoriesApi extends BaseApi {
      * Delete a record category
      *
      * @param recordCategoryId The identifier of a record category.
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteRecordCategory(recordCategoryId: string): Promise<void> {
         throwIfNotDefined(recordCategoryId, 'recordCategoryId');

@@ -129,7 +129,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * Delete a classification guide
      *
      * @param classificationGuideId The identifier for the classification guide
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteClassificationGuide(classificationGuideId: string): Promise<void> {
         throwIfNotDefined(classificationGuideId, 'classificationGuideId');
@@ -148,7 +148,7 @@ export class ClassificationGuidesApi extends BaseApi {
      * Delete a topic
      *
      * @param topicId The identifier for the topic
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteTopic(topicId: string): Promise<void> {
         throwIfNotDefined(topicId, 'topicId');
@@ -176,7 +176,11 @@ export class ClassificationGuidesApi extends BaseApi {
      * @returns Promise<ClassificationGuidePaging>
      */
     listClassificationGuides(opts?: { orderBy?: string[]; where?: string } & GsPagingQuery & GsIncludeQuery): Promise<ClassificationGuidePaging> {
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const queryParams = {
             include: buildCollectionParam(opts?.include, 'csv'),
@@ -218,7 +222,11 @@ export class ClassificationGuidesApi extends BaseApi {
             GsIncludeQuery
     ): Promise<SubtopicPaging> {
         throwIfNotDefined(topicId, 'topicId');
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             topicId
@@ -267,7 +275,11 @@ export class ClassificationGuidesApi extends BaseApi {
             GsIncludeQuery
     ): Promise<TopicPaging> {
         throwIfNotDefined(classificationGuideId, 'classificationGuideId');
-        opts = opts || { /* empty */ };
+        opts =
+            opts ||
+            {
+                /* empty */
+            };
 
         const pathParams = {
             classificationGuideId

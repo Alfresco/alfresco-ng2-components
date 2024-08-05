@@ -79,7 +79,7 @@ export class TasksApi extends BaseApi {
      * @param family family
      * @param identityId identityId
      * @param type type
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteIdentityLink(taskId: string, family: string, identityId: string, type: string): Promise<any> {
         throwIfNotDefined(taskId, 'taskId');
@@ -104,7 +104,7 @@ export class TasksApi extends BaseApi {
      * Delete a task
      *
      * @param taskId taskId
-     * @returns Promise<{ /* empty */ }>
+     * @returns Promise<{ }>
      */
     deleteTask(taskId: string): Promise<void> {
         throwIfNotDefined(taskId, 'taskId');

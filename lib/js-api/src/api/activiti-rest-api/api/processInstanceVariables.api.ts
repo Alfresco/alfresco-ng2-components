@@ -50,7 +50,7 @@ export class ProcessInstanceVariablesApi extends BaseApi {
      *
      * @param processInstanceId processInstanceId
      * @param variableName variableName
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     deleteProcessInstanceVariable(processInstanceId: string, variableName: string): Promise<void> {
         throwIfNotDefined(processInstanceId, 'processInstanceId');

@@ -32,7 +32,7 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
      * Returns Alfresco OAuth HTML Page
      *
      * @param code code
-     * @return Promise<{ /* empty */ }>
+     * @return Promise<{}>
      */
     confirmAuthorisation(code: string): Promise<any> {
         throwIfNotDefined(code, 'code');
