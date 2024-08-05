@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { ContentPagingQuery, Hold, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
+import { ContentPagingQuery, Hold, HoldBody, HoldEntry, HoldPaging, LegalHoldApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -91,7 +91,7 @@ export class LegalHoldService {
      * @param hold Hold to create
      * @returns List of created holds Observable<HoldEntry>
      */
-    createHold(filePlanId: string, hold: Hold): Observable<HoldEntry> {
+    createHold(filePlanId: string, hold: HoldBody): Observable<HoldEntry> {
         return from(this.legalHoldApi.createHold(filePlanId, hold));
     }
 
@@ -102,7 +102,7 @@ export class LegalHoldService {
      * @param holds Array of holds to create
      * @returns List of created holds Observable<HoldPaging>
      */
-    createHolds(filePlanId: string, holds: Hold[]): Observable<HoldPaging> {
+    createHolds(filePlanId: string, holds: HoldBody[]): Observable<HoldPaging> {
         return from(this.legalHoldApi.createHolds(filePlanId, holds));
     }
 }

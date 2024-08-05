@@ -75,6 +75,7 @@ export * from './transferContainerChildAssociation';
 export * from './unfiledContainerChildAssociation';
 export * from './unfiledRecordFolderChildAssociation';
 export * from './hold';
+export * from './holdBody';
 export * from './holdEntry';
 export * from './holdPaging';
 export * from './holdPagingList';
