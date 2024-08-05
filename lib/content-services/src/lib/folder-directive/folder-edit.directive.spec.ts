@@ -29,7 +29,7 @@ import { ContentService } from '../common/services/content.service';
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
 })
 class TestComponent {
-    folder = {};
+    folder = { /* empty */ };
     public successParameter: Node = null;
 
     success(node: Node) {
@@ -82,7 +82,7 @@ describe('FolderEditDirective', () => {
 
     it('should emit success event with node if the folder creation was successful', async () => {
         fixture.detectChanges();
-        const testNode: any = {};
+        const testNode: any = { /* empty */ };
 
         element.triggerEventHandler('click', event);
         dialogRefMock.componentInstance.success.next(testNode);

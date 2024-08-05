@@ -258,7 +258,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     contentModelFormFileHandler(file?: any) {
         if (file?.id && this.isRetrieveMetadataOptionEnabled()) {
-            const values: FormValues = {};
+            const values: FormValues = { /* empty */ };
             this.nodesApi.getNode(file.id).then((acsNode) => {
                 const metadata = acsNode?.entry?.properties;
                 if (metadata) {

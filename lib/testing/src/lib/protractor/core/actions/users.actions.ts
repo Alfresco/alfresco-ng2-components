@@ -47,7 +47,7 @@ export class UsersActions {
             await this.api.apiService.login(browser.params.testConfig.users.admin.username, browser.params.testConfig.users.admin.password);
         }
 
-        const user = new UserModel({ ...(userModel ? userModel : {}) });
+        const user = new UserModel({ ...(userModel ? userModel : { /* empty */ }) });
 
         try {
             if (this.api.apiService.isEcmConfiguration() || this.api.apiService.isEcmBpmConfiguration()) {

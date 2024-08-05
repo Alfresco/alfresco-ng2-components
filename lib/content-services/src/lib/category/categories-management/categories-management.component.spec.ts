@@ -42,8 +42,8 @@ describe('CategoriesManagementComponent', () => {
     const category4 = new Category({ id: 'test4', name: 'testCat4' });
     const resultCat1 = new ResultNode({ id: 'test', name: 'testCat', path: { name: 'general/categories' } });
     const resultCat2 = new ResultNode({ id: 'test2', name: 'testCat2', path: { name: 'general/categories' } });
-    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [{ entry: category1 }, { entry: category2 }] } };
-    const categorySearchResponse: ResultSetPaging = { list: { pagination: {}, entries: [{ entry: resultCat1 }, { entry: resultCat2 }] } };
+    const categoryPagingResponse: CategoryPaging = { list: { pagination: { /* empty */ }, entries: [{ entry: category1 }, { entry: category2 }] } };
+    const categorySearchResponse: ResultSetPaging = { list: { pagination: { /* empty */ }, entries: [{ entry: resultCat1 }, { entry: resultCat2 }] } };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -253,7 +253,7 @@ describe('CategoriesManagementComponent', () => {
         });
 
         it('should display correct message when there are no existing categories', fakeAsync(() => {
-            spyOn(categoryService, 'getSubcategories').and.returnValue(of({ list: { pagination: {}, entries: [] } }));
+            spyOn(categoryService, 'getSubcategories').and.returnValue(of({ list: { pagination: { /* empty */ }, entries: [] } }));
             typeCategory('test');
 
             const noExistingCategoriesMsg = fixture.debugElement

@@ -147,7 +147,7 @@ export class GroupsApi extends BaseApi {
      */
     deleteGroup(groupId: string, opts?: DeleteGroupOpts): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const cascadeDelete = opts['cascade'] ? opts['cascade'] : false;
 
@@ -177,7 +177,7 @@ export class GroupsApi extends BaseApi {
      *
      * @param groupId The identifier of a group.
      * @param groupMemberId The identifier of a person or group.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteGroupMembership(groupId: string, groupMemberId: string): Promise<void> {
         throwIfNotDefined(groupId, 'groupId');

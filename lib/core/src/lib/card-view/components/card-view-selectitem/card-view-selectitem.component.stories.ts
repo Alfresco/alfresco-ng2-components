@@ -85,7 +85,7 @@ const template: StoryFn<CardViewSelectItemComponent> = (args) => ({
     props: args
 });
 
-export const CardViewSelectItem = template.bind({});
+export const CardViewSelectItem = template.bind({ /* empty */ });
 CardViewSelectItem.args = {
     property: new CardViewSelectItemModel({
         label: 'CardView Select Item',

@@ -26,7 +26,7 @@ import { Directive, ElementRef } from '@angular/core';
     }
 })
 export class BreadcrumbFocusDirective {
-    constructor(private elementRef: ElementRef) {}
+    constructor(private elementRef: ElementRef) { /* empty */ }
 
     focusOnFirstFocusableElement() {
         this.getFocusableElements(this.elementRef.nativeElement)[0].focus();

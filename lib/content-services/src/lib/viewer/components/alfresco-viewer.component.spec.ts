@@ -57,7 +57,7 @@ import { TranslateModule } from '@ngx-translate/core';
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomToolbarComponent {}
+class ViewerWithCustomToolbarComponent { /* empty */ }
 
 @Component({
     selector: 'adf-viewer-container-toolbar-actions',
@@ -71,7 +71,7 @@ class ViewerWithCustomToolbarComponent {}
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomToolbarActionsComponent {}
+class ViewerWithCustomToolbarActionsComponent { /* empty */ }
 
 @Component({
     selector: 'adf-viewer-container-sidebar',
@@ -83,13 +83,13 @@ class ViewerWithCustomToolbarActionsComponent {}
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomSidebarComponent {}
+class ViewerWithCustomSidebarComponent { /* empty */ }
 
 @Component({
     selector: 'adf-dialog-dummy',
     template: ``
 })
-class DummyDialogComponent {}
+class DummyDialogComponent { /* empty */ }
 
 @Component({
     selector: 'adf-viewer-container-open-with',
@@ -112,7 +112,7 @@ class DummyDialogComponent {}
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomOpenWithComponent {}
+class ViewerWithCustomOpenWithComponent { /* empty */ }
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
@@ -135,7 +135,7 @@ class ViewerWithCustomOpenWithComponent {}
         </adf-alfresco-viewer>
     `
 })
-class ViewerWithCustomMoreActionsComponent {}
+class ViewerWithCustomMoreActionsComponent { /* empty */ }
 
 describe('AlfrescoViewerComponent', () => {
     let component: AlfrescoViewerComponent;
@@ -176,7 +176,7 @@ describe('AlfrescoViewerComponent', () => {
                     provide: RenditionService,
                     useValue: {
                         getNodeRendition: () => throwError('thrown'),
-                        generateMediaTracksRendition: () => {}
+                        generateMediaTracksRendition: () => { /* empty */ }
                     }
                 },
                 { provide: Location, useClass: SpyLocation },
@@ -880,7 +880,7 @@ describe('AlfrescoViewerComponent', () => {
 
         describe('Events', () => {
             it('should update version when emitted by image-viewer and user has update permissions', () => {
-                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => { /* empty */ });
                 spyOn(uploadService, 'addToQueue');
                 component.readOnly = false;
                 component.nodeEntry = new NodeEntry({
@@ -909,7 +909,7 @@ describe('AlfrescoViewerComponent', () => {
             });
 
             it('should not update version when emitted by image-viewer and user doesn`t have update permissions', () => {
-                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
+                spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => { /* empty */ });
                 component.readOnly = true;
                 component.nodeEntry = new NodeEntry({
                     entry: new Node({ name: 'fakeImage.png', id: '12', content: new ContentInfo({ mimeType: 'img/png' }) })

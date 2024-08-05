@@ -77,7 +77,7 @@ const template: StoryFn = (args) => ({
     props: args
 });
 
-export const SingleValuedDateItemCardView = template.bind({});
+export const SingleValuedDateItemCardView = template.bind({ /* empty */ });
 SingleValuedDateItemCardView.args = {
     property: new CardViewDateItemModel({
         label: 'CardView Date Item',
@@ -90,7 +90,7 @@ SingleValuedDateItemCardView.args = {
 };
 SingleValuedDateItemCardView.parameters = { layout: 'centered' };
 
-export const MultiValuedDateItemCardView = template.bind({});
+export const MultiValuedDateItemCardView = template.bind({ /* empty */ });
 MultiValuedDateItemCardView.args = {
     property: new CardViewDateItemModel({
         label: 'CardView Date Item - Multivalue (chips)',
@@ -104,7 +104,7 @@ MultiValuedDateItemCardView.args = {
 };
 MultiValuedDateItemCardView.parameters = { layout: 'centered' };
 
-export const SingleValuedDatetimeItemCardView = template.bind({});
+export const SingleValuedDatetimeItemCardView = template.bind({ /* empty */ });
 SingleValuedDatetimeItemCardView.args = {
     property: new CardViewDatetimeItemModel({
         label: 'CardView Datetime Item',
@@ -117,7 +117,7 @@ SingleValuedDatetimeItemCardView.args = {
 };
 SingleValuedDatetimeItemCardView.parameters = { layout: 'centered' };
 
-export const MultiValuedDatetimeItemCardView = template.bind({});
+export const MultiValuedDatetimeItemCardView = template.bind({ /* empty */ });
 MultiValuedDatetimeItemCardView.args = {
     property: new CardViewDatetimeItemModel({
         label: 'CardView Datetime Item - Multivalue (chips)',

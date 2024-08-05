@@ -35,7 +35,7 @@ export class EditorService {
         return this._editorApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Saves a form.
@@ -69,9 +69,9 @@ export class EditorService {
      */
     toJson(res: any) {
         if (res) {
-            return res || {};
+            return res || { /* empty */ };
         }
-        return {};
+        return { /* empty */ };
     }
 
     /**

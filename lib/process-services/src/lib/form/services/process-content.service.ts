@@ -39,7 +39,7 @@ export class ProcessContentService {
         return this._contentApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Create temporary related content from an uploaded file.
@@ -204,9 +204,9 @@ export class ProcessContentService {
      */
     toJson(res: any) {
         if (res) {
-            return res || {};
+            return res || { /* empty */ };
         }
-        return {};
+        return { /* empty */ };
     }
 
     /**

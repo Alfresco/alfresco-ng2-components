@@ -42,7 +42,7 @@ export class GroupIdentityService {
     async createGroup(groupName: string): Promise<any> {
         const path = '/groups';
         const method = 'POST';
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = {
             name: `${groupName}-${browser.params.groupSuffix}`
         };
@@ -53,8 +53,8 @@ export class GroupIdentityService {
     async deleteGroup(groupId: string): Promise<any> {
         const path = `/groups/${groupId}`;
         const method = 'DELETE';
-        const queryParams = {};
-        const postBody = {};
+        const queryParams = { /* empty */ };
+        const postBody = { /* empty */ };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
     }
@@ -69,7 +69,7 @@ export class GroupIdentityService {
                 const path = `/groups`;
                 const method = 'GET';
                 const queryParams = { search: groupName };
-                const postBody = {};
+                const postBody = { /* empty */ };
 
                 const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
 
@@ -89,7 +89,7 @@ export class GroupIdentityService {
 
         const path = `/groups/${groupId}/role-mappings/realm`;
         const method = 'POST';
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = [{ id: roleId, name: roleName }];
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
@@ -107,7 +107,7 @@ export class GroupIdentityService {
     async addClientRole(groupId: string, clientId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}`;
         const method = 'POST';
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = [
             {
                 id: roleId,
@@ -130,7 +130,7 @@ export class GroupIdentityService {
         const path = `/clients`;
         const method = 'GET';
         const queryParams = { clientId: applicationName };
-        const postBody = {};
+        const postBody = { /* empty */ };
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0].id;

@@ -86,7 +86,7 @@ describe('ExtensionService', () => {
         });
 
         it('should return default value if feature is not found', async () => {
-            const defaultValue = {};
+            const defaultValue = { /* empty */ };
             service.setup(blankConfig);
 
             const requestedFeature = service.getFeature<{ test: string }>('searchedFeature', defaultValue);
@@ -166,8 +166,8 @@ describe('ExtensionService', () => {
         let registered = service.getAuthGuards(['guard1']);
         expect(registered.length).toBe(0);
 
-        const guard1: any = {};
-        const guard2: any = {};
+        const guard1: any = { /* empty */ };
+        const guard2: any = { /* empty */ };
 
         service.setAuthGuards({
             auth1: guard1,
@@ -181,8 +181,8 @@ describe('ExtensionService', () => {
     });
 
     it('should overwrite authentication guards', () => {
-        const guard1: any = {};
-        const guard2: any = {};
+        const guard1: any = { /* empty */ };
+        const guard2: any = { /* empty */ };
 
         service.setAuthGuards({
             auth: guard1
@@ -198,7 +198,7 @@ describe('ExtensionService', () => {
     });
 
     it('should not set authentication guards with null value', () => {
-        const guard1: any = {};
+        const guard1: any = { /* empty */ };
 
         service.setAuthGuards({
             auth: guard1
@@ -215,7 +215,7 @@ describe('ExtensionService', () => {
     });
 
     it('should set components', () => {
-        const component: any = {};
+        const component: any = { /* empty */ };
 
         service.setComponents({
             component1: component
@@ -225,8 +225,8 @@ describe('ExtensionService', () => {
     });
 
     it('should overwrite components', () => {
-        const component1: any = {};
-        const component2: any = {};
+        const component1: any = { /* empty */ };
+        const component2: any = { /* empty */ };
 
         service.setComponents({
             component: component1
@@ -242,7 +242,7 @@ describe('ExtensionService', () => {
     });
 
     it('should not set components with null value', () => {
-        const component: any = {};
+        const component: any = { /* empty */ };
 
         service.setComponents({
             component1: component

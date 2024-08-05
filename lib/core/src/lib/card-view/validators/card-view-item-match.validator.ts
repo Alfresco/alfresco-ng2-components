@@ -26,7 +26,7 @@ export interface MatchValidatorParams {
 export class CardViewItemMatchValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.MATCH_VALIDATION_ERROR';
 
-    constructor(private expression: string, private flags?: string, private requiresMatch?: boolean) {}
+    constructor(private expression: string, private flags?: string, private requiresMatch?: boolean) { /* empty */ }
 
     isValid(value: string | string[]): boolean {
         const regex = new RegExp(this.expression, this?.flags);

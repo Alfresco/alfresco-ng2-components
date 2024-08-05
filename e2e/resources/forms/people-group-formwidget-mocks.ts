@@ -53,7 +53,7 @@ export const peopleSingleModeFormMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -97,7 +97,7 @@ export const peopleMultipleModeFormMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
@@ -148,7 +148,7 @@ export const peopleRequiredFormMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
@@ -199,7 +199,7 @@ export const groupSingleModeFormMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
@@ -250,7 +250,7 @@ export const groupMultipleModeFormMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
@@ -301,7 +301,7 @@ export const groupRequiredFormMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
@@ -352,7 +352,7 @@ export const peopleReadOnlyFormMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',
@@ -403,7 +403,7 @@ export const groupReadOnlyFormMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                 {
                     id: 'd6060d6b-1cb0-45dc-a18b-4d7898a9a5ad',

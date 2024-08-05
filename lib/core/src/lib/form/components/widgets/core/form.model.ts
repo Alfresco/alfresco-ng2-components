@@ -79,12 +79,12 @@ export class FormModel implements ProcessFormModel {
 
     json: any;
     nodeId: string;
-    values: FormValues = {};
+    values: FormValues = { /* empty */ };
     tabs: TabModel[] = [];
     fields: (ContainerModel | FormFieldModel)[] = [];
     outcomes: FormOutcomeModel[] = [];
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
-    customFieldTemplates: FormFieldTemplates = {};
+    customFieldTemplates: FormFieldTemplates = { /* empty */ };
 
     className: string;
     readOnly = false;
@@ -108,13 +108,13 @@ export class FormModel implements ProcessFormModel {
             this.taskId = json.taskId;
             this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
             this.processDefinitionId = json.processDefinitionId;
-            this.customFieldTemplates = json.customFieldTemplates || {};
+            this.customFieldTemplates = json.customFieldTemplates || { /* empty */ };
             this.selectedOutcome = json.selectedOutcome;
             this.className = json.className || '';
             this.variables = json.variables || json.formDefinition?.variables || [];
             this.processVariables = json.processVariables || [];
             this.enableFixedSpace = enableFixedSpace;
-            this.confirmMessage = json.confirmMessage || {};
+            this.confirmMessage = json.confirmMessage || { /* empty */ };
             this.displayMode = json.displayMode;
 
             this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));

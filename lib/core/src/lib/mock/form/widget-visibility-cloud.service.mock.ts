@@ -17,7 +17,7 @@
 
 import { FormModel, FormValues } from '../../form/components/widgets/core';
 
-export const formTest = new FormModel({});
+export const formTest = new FormModel({ /* empty */ });
 
 export const formValues: FormValues = {
     test_1: 'value_1',
@@ -484,10 +484,10 @@ export const complexVisibilityJsonVisible: any = {
         javascriptEvents: [],
         className: '',
         style: '',
-        customFieldTemplates: {},
-        metadata: {},
+        customFieldTemplates: { /* empty */ },
+        metadata: { /* empty */ },
         variables: [],
-        customFieldsValueInfo: {},
+        customFieldsValueInfo: { /* empty */ },
         gridsterForm: false
     }
 };
@@ -865,10 +865,10 @@ export const complexVisibilityJsonNotVisible: any = {
         javascriptEvents: [],
         className: '',
         style: '',
-        customFieldTemplates: {},
-        metadata: {},
+        customFieldTemplates: { /* empty */ },
+        metadata: { /* empty */ },
         variables: [],
-        customFieldsValueInfo: {},
+        customFieldsValueInfo: { /* empty */ },
         gridsterForm: false
     }
 };
@@ -1060,7 +1060,7 @@ export const headerVisibilityCond: any = {
             }
         ],
         outcomes: [],
-        metadata: {},
+        metadata: { /* empty */ },
         variables: []
     }
 };

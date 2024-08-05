@@ -65,7 +65,7 @@ export class DateRangeWidgetComponent implements OnInit {
     startDateValue = new Date();
     endDateValue = new Date();
 
-    constructor(private dateAdapter: DateAdapter<Date>) {}
+    constructor(private dateAdapter: DateAdapter<Date>) { /* empty */ }
 
     ngOnInit() {
         const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;
@@ -82,7 +82,7 @@ export class DateRangeWidgetComponent implements OnInit {
         }
 
         if (!this.dateRange) {
-            this.dateRange = new FormGroup({} as any);
+            this.dateRange = new FormGroup({ /* empty */ } as any);
         }
 
         const startDateControl = new FormControl<Date>(this.startDateValue);

@@ -79,7 +79,7 @@ export class NodeDeleteDirective implements OnChanges {
         this.process(this.selection);
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService, private translation: TranslationService, private elementRef: ElementRef) {}
+    constructor(private alfrescoApiService: AlfrescoApiService, private translation: TranslationService, private elementRef: ElementRef) { /* empty */ }
 
     ngOnChanges() {
         if (!this.selection || (this.selection && this.selection.length === 0)) {

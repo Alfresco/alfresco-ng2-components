@@ -18,7 +18,7 @@
 import { CardViewItemProperties, CardViewItemValidator } from '../interfaces/card-view.interfaces';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
 
-class CarViewCustomItemModel extends CardViewBaseItemModel {}
+class CarViewCustomItemModel extends CardViewBaseItemModel { /* empty */ }
 
 describe('CardViewBaseItemModel', () => {
     let properties: CardViewItemProperties;
@@ -53,7 +53,7 @@ describe('CardViewBaseItemModel', () => {
                 clickable: true,
                 icon: 'dummy-icon',
                 hint: 'Some hint text',
-                validators: [{} as unknown as CardViewItemValidator],
+                validators: [{ /* empty */ } as unknown as CardViewItemValidator],
                 multivalued: true
             };
 

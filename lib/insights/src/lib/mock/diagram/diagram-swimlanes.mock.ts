@@ -22,7 +22,7 @@ export const pool = {
     height: 500,
     x: 60,
     y: 45,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const poolLanes = {
@@ -40,5 +40,5 @@ export const poolLanes = {
         x: 90,
         y: 45
     }],
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };

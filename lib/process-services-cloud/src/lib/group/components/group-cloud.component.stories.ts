@@ -160,23 +160,23 @@ const template: StoryFn<GroupCloudComponent> = (args) => ({
     props: args
 });
 
-export const DefaultGroupCloud = template.bind({});
+export const DefaultGroupCloud = template.bind({ /* empty */ });
 
-export const ValidPreselectedGroups = template.bind({});
+export const ValidPreselectedGroups = template.bind({ /* empty */ });
 ValidPreselectedGroups.args = {
     validate: true,
     mode: 'multiple',
     preSelectGroups: mockFoodGroups
 };
 
-export const MandatoryPreselectedGroups = template.bind({});
+export const MandatoryPreselectedGroups = template.bind({ /* empty */ });
 MandatoryPreselectedGroups.args = {
     validate: true,
     mode: 'multiple',
     preSelectGroups: [mockVegetableAubergine, { ...mockMeatChicken, readonly: true }]
 };
 
-export const InvalidPreselectedGroups = template.bind({});
+export const InvalidPreselectedGroups = template.bind({ /* empty */ });
 InvalidPreselectedGroups.args = {
     validate: true,
     mode: 'multiple',

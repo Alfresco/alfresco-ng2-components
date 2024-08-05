@@ -34,4 +34,4 @@ import { MatButtonModule } from '@angular/material/button';
     ],
     exports: [EditJsonDialogComponent]
 })
-export class EditJsonDialogModule {}
+export class EditJsonDialogModule { /* empty */ }

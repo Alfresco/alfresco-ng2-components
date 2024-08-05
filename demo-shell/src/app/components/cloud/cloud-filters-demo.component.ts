@@ -49,7 +49,7 @@ export class CloudFiltersDemoComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private cloudProcessFiltersService: CloudProcessFiltersService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.currentTaskFilter$ = this.cloudLayoutService.taskFilter$;

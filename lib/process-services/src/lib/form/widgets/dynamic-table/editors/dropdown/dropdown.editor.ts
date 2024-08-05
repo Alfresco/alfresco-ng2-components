@@ -54,7 +54,7 @@ export class DropdownEditorComponent implements OnInit {
         public formService: FormService,
         private taskFormService: TaskFormService,
         private processDefinitionService: ProcessDefinitionService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         const field = this.table.field;

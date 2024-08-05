@@ -34,7 +34,7 @@ export class DialogAspectListService {
         private overlayContainer: OverlayContainer,
         private tagService: TagService,
         private categoryService: CategoryService
-    ) {}
+    ) { /* empty */ }
 
     openAspectListDialog(nodeId?: string, selectorAutoFocusedOnClose?: string): Observable<string[]> {
         const select = new Subject<string[]>();

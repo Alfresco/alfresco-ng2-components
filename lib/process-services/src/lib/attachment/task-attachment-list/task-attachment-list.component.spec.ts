@@ -77,7 +77,7 @@ describe('TaskAttachmentList', () => {
 
     it('should emit an error when an error occurs loading attachments', () => {
         const emitSpy = spyOn(component.error, 'emit');
-        getTaskRelatedContentSpy.and.returnValue(throwError({}));
+        getTaskRelatedContentSpy.and.returnValue(throwError({ /* empty */ }));
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ taskId: change });
         expect(emitSpy).toHaveBeenCalled();
@@ -253,7 +253,7 @@ describe('TaskAttachmentList', () => {
         });
 
         it('should NOT fetch new attachments when empty change set made', () => {
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
             expect(getTaskRelatedContentSpy).not.toHaveBeenCalled();
         });
 
@@ -289,7 +289,7 @@ describe('TaskAttachmentList', () => {
         </adf-task-attachment-list>
     `
 })
-class CustomEmptyTemplateComponent {}
+class CustomEmptyTemplateComponent { /* empty */ }
 
 describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;

@@ -35,7 +35,7 @@ export class PdfThumbComponent implements OnInit, FocusableOption {
 
     image$: Promise<string>;
 
-    constructor(private sanitizer: DomSanitizer, private element: ElementRef) {}
+    constructor(private sanitizer: DomSanitizer, private element: ElementRef) { /* empty */ }
 
     ngOnInit() {
         this.image$ = this.page.getPage().then((page) => this.getThumb(page));

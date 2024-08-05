@@ -58,7 +58,7 @@ export class SecurityControlsService {
     private securityGroup: SecurityGroupsApi;
     private securityMark: SecurityMarksApi;
     private authorityClearance: AuthorityClearanceApi;
-    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
+    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) { /* empty */ }
 
     get groupsApi(): SecurityGroupsApi {
         return this.securityGroup || (this.securityGroup = new SecurityGroupsApi(this.apiService.getInstance()));

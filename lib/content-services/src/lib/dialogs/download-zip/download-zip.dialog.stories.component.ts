@@ -29,7 +29,7 @@ export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     @Input()
     showLoading: boolean;
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog) { /* empty */ }
 
     ngOnInit(): void {
         this.setEntryStatus(this.showLoading);

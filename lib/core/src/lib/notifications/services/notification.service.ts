@@ -141,7 +141,7 @@ export class NotificationService {
             return this.snackBar.openFromComponent<SnackbarContentComponent, SnackBarData>(SnackbarContentComponent, {
                 ...(typeof config === 'number' && {duration: config}),
                 panelClass: INFO_SNACK_CLASS,
-                ...( (typeof config === 'object') ? config : {} ),
+                ...( (typeof config === 'object') ? config : { /* empty */ } ),
                 data: {
                   actionLabel: translatedAction,
                   actionIcon: 'close',
@@ -149,7 +149,7 @@ export class NotificationService {
                   message: translatedMessage,
                   showAction: true,
                   callActionOnIconClick: false,
-                  ...( (typeof config === 'object') ? config.data : {} )
+                  ...( (typeof config === 'object') ? config.data : { /* empty */ } )
                 }
             });
     }

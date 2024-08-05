@@ -64,14 +64,14 @@ export const getQueryParamsWithCustomEncoder = (obj: Record<string | number, unk
 export const removeNilValues = (obj: Record<string | number, unknown>) => {
 
     if (!obj) {
-        return {};
+        return { /* empty */ };
     }
 
     return Object.keys(obj).reduce((acc, key) => {
         const value = obj[key];
         const isNil = value === undefined || value === null;
         return isNil ? acc : { ...acc, [key]: value };
-    }, {});
+    }, { /* empty */ });
 };
 
 

@@ -163,7 +163,7 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         beforeEach(() => {
-            visibilityObjTest = new WidgetVisibilityModel({});
+            visibilityObjTest = new WidgetVisibilityModel({ /* empty */ });
             formTest.values = formValues;
             fakeFormWithField = new FormModel(fakeFormJson);
             jsonFieldFake.visibilityCondition = visibilityObjTest;
@@ -663,7 +663,7 @@ describe('WidgetVisibilityCloudService', () => {
         let visibilityObjTest: WidgetVisibilityModel;
 
         beforeEach(() => {
-            visibilityObjTest = new WidgetVisibilityModel({});
+            visibilityObjTest = new WidgetVisibilityModel({ /* empty */ });
         });
 
         it('should set visibility to true when validation for string variables succeeds', () => {

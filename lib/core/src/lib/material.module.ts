@@ -118,4 +118,4 @@ import { CommonModule } from '@angular/common';
         MatBadgeModule
     ]
 })
-export class MaterialModule {}
+export class MaterialModule { /* empty */ }

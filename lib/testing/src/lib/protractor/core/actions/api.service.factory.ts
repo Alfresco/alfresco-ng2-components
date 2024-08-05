@@ -22,7 +22,7 @@ import { browser } from 'protractor';
 
 export const createApiService = (
     /** @deprecated */
-    appConfigOverride: Partial<AlfrescoApiConfig> = {}
+    appConfigOverride: Partial<AlfrescoApiConfig> = { /* empty */ }
 ) => {
     const patchedAppConfig = {
         ...browser.params.testConfig.appConfig,

@@ -27,4 +27,4 @@ import { MatButtonModule } from '@angular/material/button';
     imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MatDialogModule, MatButtonModule],
     exports: [ConfirmDialogComponent]
 })
-export class ConfirmDialogModule {}
+export class ConfirmDialogModule { /* empty */ }

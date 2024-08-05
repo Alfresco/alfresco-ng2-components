@@ -258,7 +258,7 @@ describe('HeaderLayoutComponent', () => {
                 <p></p>
             </adf-layout-header>`
         })
-        class HeaderLayoutTesterComponent {}
+        class HeaderLayoutTesterComponent { /* empty */ }
 
         beforeEach(() => {
             TestBed.configureTestingModule({

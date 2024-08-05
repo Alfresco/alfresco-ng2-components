@@ -64,7 +64,7 @@ export class NameColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
+    constructor(private element: ElementRef, private nodesApiService: NodesApiService) { /* empty */ }
 
     ngOnInit() {
         this.updateValue();

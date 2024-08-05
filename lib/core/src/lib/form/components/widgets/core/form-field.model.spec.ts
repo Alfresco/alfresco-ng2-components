@@ -29,7 +29,7 @@ describe('FormFieldModel', () => {
     });
 
     it('should store original json', () => {
-        const json = {};
+        const json = { /* empty */ };
         const model = new FormFieldModel(new FormModel(), json);
         expect(model.json).toBe(json);
     });
@@ -53,7 +53,7 @@ describe('FormFieldModel', () => {
             hasEmptyValue: true,
             className: '<class>',
             optionType: '<type>',
-            params: {},
+            params: { /* empty */ },
             hyperlinkUrl: '<url>',
             displayText: '<text>',
             value: '<value>'
@@ -76,10 +76,10 @@ describe('FormFieldModel', () => {
 
     it('should setup empty params', () => {
         let field = new FormFieldModel(new FormModel(), null);
-        expect(field.params).toEqual({});
+        expect(field.params).toEqual({ /* empty */ });
 
         field = new FormFieldModel(new FormModel(), { params: null });
-        expect(field.params).toEqual({});
+        expect(field.params).toEqual({ /* empty */ });
     });
 
     it('should update form on every value change', () => {
@@ -870,11 +870,11 @@ describe('FormFieldModel', () => {
     });
 
     it('should instantiate FormField when has no variable', () => {
-        const form = new FormModel({});
+        const form = new FormModel({ /* empty */ });
         form.json = {
             variables: undefined
         };
-        const field = new FormFieldModel(form, {});
+        const field = new FormFieldModel(form, { /* empty */ });
         expect(field).toBeDefined();
     });
 

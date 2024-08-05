@@ -646,7 +646,7 @@ export const cloudFormMock = {
         }
     ],
     outcomes: [],
-    metadata: {},
+    metadata: { /* empty */ },
     variables: [
         {
             id: 'FormVarStrId',
@@ -735,7 +735,7 @@ export const fakeCloudForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -819,7 +819,7 @@ export const formDefinitionThreeColumnMock = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -829,7 +829,7 @@ export const emptyFormRepresentationJSON = {
     description: '',
     fields: [],
     id: 'form-3de070b6-63df-4058-8028-ac82283d64fa',
-    metadata: {},
+    metadata: { /* empty */ },
     name: 'form',
     outcomes: [],
     length: 0,
@@ -926,7 +926,7 @@ export const conditionalUploadWidgetsMock: any = {
                     }
                 }
             ],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1045,7 +1045,7 @@ export const multilingualForm: any = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -1314,7 +1314,7 @@ export const fakeMetadataForm = {
             }
         ],
         outcomes: [],
-        metadata: {},
+        metadata: { /* empty */ },
         variables: []
     }
 };
@@ -1410,7 +1410,7 @@ export const fakeViewerForm = {
             }
         ],
         outcomes: [],
-        metadata: {},
+        metadata: { /* empty */ },
         variables: []
     }
 };

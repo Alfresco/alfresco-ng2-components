@@ -177,40 +177,40 @@ const template: StoryFn<PeopleCloudComponent> = args => ({
     props: args
 });
 
-export const DefaultPeopleCloud = template.bind({});
+export const DefaultPeopleCloud = template.bind({ /* empty */ });
 
-export const ValidPreselectedUsers = template.bind({});
+export const ValidPreselectedUsers = template.bind({ /* empty */ });
 ValidPreselectedUsers.args = {
     validate: true,
     mode: 'multiple',
     preSelectUsers: mockFoodUsers
 };
 
-export const MandatoryPreselectedUsers = template.bind({});
+export const MandatoryPreselectedUsers = template.bind({ /* empty */ });
 MandatoryPreselectedUsers.args = {
     validate: true,
     mode: 'multiple',
     preSelectUsers: [{ ...mockKielbasaSausage, readonly: true }, mockShepherdsPie]
 };
 
-export const InvalidPreselectedUsers = template.bind({});
+export const InvalidPreselectedUsers = template.bind({ /* empty */ });
 InvalidPreselectedUsers.args = {
     validate: true,
     mode: 'multiple',
     preSelectUsers: [{ id: 'invalid-user', username: 'Invalid User', firstName: 'Invalid', lastName: 'User', email: 'invalid@xyz.com' }]
 };
 
-export const ExcludedUsers = template.bind({});
+export const ExcludedUsers = template.bind({ /* empty */ });
 ExcludedUsers.args = {
     excludedUsers: [mockKielbasaSausage, mockYorkshirePudding]
 };
 
-export const NoUsers = template.bind({});
+export const NoUsers = template.bind({ /* empty */ });
 NoUsers.args = {
     excludedUsers: mockFoodUsers
 };
 
-export const InvalidOrEmptyAppName = template.bind({});
+export const InvalidOrEmptyAppName = template.bind({ /* empty */ });
 InvalidOrEmptyAppName.args = {
     appName: null
 };

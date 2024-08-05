@@ -586,9 +586,9 @@ export const startMockForm = {
     javascriptEvents: [],
     className: '',
     style: '',
-    metadata: {},
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: false,
     globalDateFormat: 'D - M - YYYY'
 };
@@ -1005,9 +1005,9 @@ export const startMockFormWithTab = {
     javascriptEvents: [],
     className: '',
     style: '',
-    metadata: {},
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: false,
     globalDateFormat: 'D - M - YYYY'
 };
@@ -1086,10 +1086,10 @@ export const taskFormSingleUploadMock = {
     javascriptEvents: [],
     className: '',
     style: '',
-    customFieldTemplates: {},
-    metadata: {},
+    customFieldTemplates: { /* empty */ },
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: false,
     globalDateFormat: 'D-M-YYYY'
 };
@@ -1169,10 +1169,10 @@ export const taskFormMultipleUploadMock = {
     javascriptEvents: [],
     className: '',
     style: '',
-    customFieldTemplates: {},
-    metadata: {},
+    customFieldTemplates: { /* empty */ },
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: false,
     globalDateFormat: 'D-M-YYYY'
 };

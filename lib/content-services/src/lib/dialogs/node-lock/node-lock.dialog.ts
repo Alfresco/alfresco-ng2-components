@@ -64,7 +64,7 @@ export class NodeLockDialogComponent implements OnInit {
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         const { node } = this.data;

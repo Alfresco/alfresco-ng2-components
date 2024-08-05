@@ -63,7 +63,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     setConfig(config: AlfrescoApiConfig) {
         if (!config) {
-            config = {};
+            config = { /* empty */ };
         }
 
         this.storage = Storage.getInstance();
@@ -198,14 +198,14 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**@private? */
     errorListeners() {
-        this.contentClient.off('error', () => {});
-        this.authClient.off('error', () => {});
-        this.contentPrivateClient.off('error', () => {});
-        this.processClient.off('error', () => {});
-        this.searchClient.off('error', () => {});
-        this.discoveryClient.off('error', () => {});
-        this.gsClient.off('error', () => {});
-        this.hxiConnectorClient.off('error', () => {});
+        this.contentClient.off('error', () => { /* empty */ });
+        this.authClient.off('error', () => { /* empty */ });
+        this.contentPrivateClient.off('error', () => { /* empty */ });
+        this.processClient.off('error', () => { /* empty */ });
+        this.searchClient.off('error', () => { /* empty */ });
+        this.discoveryClient.off('error', () => { /* empty */ });
+        this.gsClient.off('error', () => { /* empty */ });
+        this.hxiConnectorClient.off('error', () => { /* empty */ });
 
         this.contentClient.on('error', (error: any) => {
             this.errorHandler(error);
@@ -408,7 +408,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
             const contentPromise = this.contentAuth.logout();
             contentPromise.then(
                 () => (this.config.ticket = undefined),
-                () => {}
+                () => { /* empty */ }
             );
             return contentPromise;
         }

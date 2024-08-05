@@ -30,7 +30,7 @@ import { endOfDay, endOfToday, formatISO, parse, startOfDay, startOfMonth, start
     selector: 'adf-search-filter-tabbed',
     template: ``
 })
-export class MockSearchFilterTabbedComponent {}
+export class MockSearchFilterTabbedComponent { /* empty */ }
 
 @Component({
     selector: 'adf-search-date-range',

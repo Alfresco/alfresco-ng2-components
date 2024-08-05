@@ -26,4 +26,4 @@ import { IconComponent } from './icon.component';
     imports: [IconComponent],
     exports: [IconComponent]
 })
-export class IconModule {}
+export class IconModule { /* empty */ }

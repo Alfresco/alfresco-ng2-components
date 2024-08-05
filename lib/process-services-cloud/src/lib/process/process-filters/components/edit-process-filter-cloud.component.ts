@@ -197,7 +197,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         private processFilterCloudService: ProcessFilterCloudService,
         private appsProcessCloudService: AppsProcessCloudService,
         private processCloudService: ProcessCloudService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.userPreferencesService
@@ -235,7 +235,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 return { [property.key]: property.value };
             }
         });
-        return properties.reduce((result, current) => Object.assign(result, current), {});
+        return properties.reduce((result, current) => Object.assign(result, current), { /* empty */ });
     }
 
     get lastModifiedFrom(): AbstractControl<Date> {
@@ -254,7 +254,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return Object.values(property.attributes).reduce((result, key) => {
             result[key] = property.value[key];
             return result;
-        }, {});
+        }, { /* empty */ });
     }
 
     /**
@@ -267,7 +267,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .pipe(finalize(() => (this.isLoading = false)))
             .subscribe((response) => {
                 this.filterHasBeenChanged = false;
-                this.processFilter = new ProcessFilterCloudModel(Object.assign({}, response || {}, this.processFilter || {}));
+                this.processFilter = new ProcessFilterCloudModel(Object.assign({ /* empty */ }, response || { /* empty */ }, this.processFilter || { /* empty */ }));
             });
     }
 
@@ -290,7 +290,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 this.setLastModifiedFromFilter(formValues);
                 this.setLastModifiedToFilter(formValues);
 
-                const newValue = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
+                const newValue = new ProcessFilterCloudModel(Object.assign({ /* empty */ }, this.processFilter, formValues));
                 const changed = !this.compareFilters(newValue, this.processFilter);
                 this.filterHasBeenChanged = changed;
 
@@ -318,7 +318,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
         if (this.filterProperties.includes('initiator')) {
             this.initiatorOptions = this.processFilter.initiator
-                ? this.processFilter.initiator.split(',').map((username) => Object.assign({}, { username }))
+                ? this.processFilter.initiator.split(',').map((username) => Object.assign({ /* empty */ }, { username }))
                 : [];
         }
 
@@ -499,7 +499,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 }),
                 switchMap(() => this.restoreDefaultProcessFilters())
             )
-            .subscribe(() => {});
+            .subscribe(() => { /* empty */ });
     }
 
     /**
@@ -525,7 +525,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     id: filterId,
                     key: 'custom-' + filterKey
                 };
-                const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.processFilter, newFilter);
+                const resultFilter: ProcessFilterCloudModel = Object.assign({ /* empty */ }, this.processFilter, newFilter);
                 this.processFilterCloudService.addFilter(resultFilter).subscribe(() => {
                     saveAsAction.filter = resultFilter;
                     this.filterHasBeenChanged = false;
@@ -545,7 +545,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 }),
                 switchMap(() => this.restoreDefaultProcessFilters())
             )
-            .subscribe(() => {});
+            .subscribe(() => { /* empty */ });
     }
 
     /**
@@ -729,8 +729,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     private isFilterChanged(oldValue: ProcessFilterCloudModel, newValue: ProcessFilterCloudModel): boolean {
-        const oldJson = JSON.stringify(this.processFilterCloudService.writeQueryParams(oldValue || {}, this.filterProperties));
-        const newJson = JSON.stringify(this.processFilterCloudService.writeQueryParams(newValue || {}, this.filterProperties));
+        const oldJson = JSON.stringify(this.processFilterCloudService.writeQueryParams(oldValue || { /* empty */ }, this.filterProperties));
+        const newJson = JSON.stringify(this.processFilterCloudService.writeQueryParams(newValue || { /* empty */ }, this.filterProperties));
 
         return oldJson !== newJson;
     }

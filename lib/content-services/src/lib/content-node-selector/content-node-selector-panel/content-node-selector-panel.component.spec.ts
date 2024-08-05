@@ -367,15 +367,15 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
         describe('Chosen node', () => {
             const entry: Node = { id: 'fakeid' } as Node;
-            const nodePage: NodePaging = { list: { pagination: {} } };
+            const nodePage: NodePaging = { list: { pagination: { /* empty */ } } };
             let hasAllowableOperations;
             const fakeFolderNode = { id: 'fakeNodeId', isFolder: true } as Node;
 
             const returnHasPermission = (): boolean => hasAllowableOperations;
 
             beforeEach(() => {
-                const schema = [{}] as DataColumn[];
-                const rows = [{}, {}] as DataRow[];
+                const schema = [{ /* empty */ }] as DataColumn[];
+                const rows = [{ /* empty */ }, { /* empty */ }] as DataRow[];
                 component.documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, schema);
                 spyOn(component.documentList.data, 'getRows').and.returnValue(rows);
                 spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
@@ -488,7 +488,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be empty when the chosenNode is reset', async () => {
                     hasAllowableOperations = true;
-                    component.onCurrentSelection([{ entry: {} as Node }]);
+                    component.onCurrentSelection([{ entry: { /* empty */ } as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -536,7 +536,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be null when the chosenNode is reset', async () => {
                     fixture.detectChanges();
-                    component.onCurrentSelection([{ entry: {} as Node }]);
+                    component.onCurrentSelection([{ entry: { /* empty */ } as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -572,7 +572,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be null when the chosenNode is reset', async () => {
                     fixture.detectChanges();
-                    component.onCurrentSelection([{ entry: {} as Node }]);
+                    component.onCurrentSelection([{ entry: { /* empty */ } as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();

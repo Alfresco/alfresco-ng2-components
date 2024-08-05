@@ -30,7 +30,7 @@ import { RaphaelCircleDirective } from '../raphael/raphael-circle.component';
     templateUrl: './diagram-inclusive-gateway.component.html'
 })
 export class DiagramInclusiveGatewayComponent extends DiagramElement implements OnInit {
-    center: any = {};
+    center: any = { /* empty */ };
     width: any;
     height: any;
     options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 2.5, radius: 9.75 };

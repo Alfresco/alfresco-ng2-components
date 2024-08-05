@@ -50,7 +50,7 @@ export class ObjectUtils {
     }
 
     static merge(...objects): any {
-        const result = {};
+        const result = { /* empty */ };
 
         objects.forEach((source) => {
             Object.keys(source).forEach((prop) => {

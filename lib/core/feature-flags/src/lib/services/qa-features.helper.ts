@@ -20,7 +20,7 @@ import { FeaturesServiceToken, FlagSet } from '../interfaces/features.interface'
 import { DebugFeaturesService } from './debug-features.service';
 @Injectable()
 export class QaFeaturesHelper {
-    constructor(private applicationRef: ApplicationRef, @Inject(FeaturesServiceToken) private debugFeaturesService: DebugFeaturesService) {}
+    constructor(private applicationRef: ApplicationRef, @Inject(FeaturesServiceToken) private debugFeaturesService: DebugFeaturesService) { /* empty */ }
 
     isOn(key: string): boolean {
         let isOn = false;

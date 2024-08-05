@@ -183,7 +183,7 @@ export default function main(_args: string[], workingDir: string) {
                             projVersion: packageJson.version,
                             projName: packageJson.name
                         },
-                        {},
+                        { /* empty */ },
                         (ejsError: any, mdText: string) => {
                             if (ejsError) {
                                 console.error(ejsError);

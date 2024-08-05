@@ -44,5 +44,5 @@ export class SearchChipListComponent {
     @Input()
     clearAll: boolean = false;
 
-    constructor(public facetFiltersService: SearchFacetFiltersService) {}
+    constructor(public facetFiltersService: SearchFacetFiltersService) { /* empty */ }
 }

@@ -26,4 +26,4 @@ import { Directive } from '@angular/core';
     selector: 'adf-custom-no-permission-template, no-permission-content',
     standalone: true
 })
-export class CustomNoPermissionTemplateDirective {}
+export class CustomNoPermissionTemplateDirective { /* empty */ }

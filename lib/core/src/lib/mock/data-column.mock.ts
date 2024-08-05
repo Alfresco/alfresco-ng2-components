@@ -19,7 +19,7 @@ import { DataColumn } from '../datatable/data/data-column.model';
 import { mockPathInfos } from '../datatable/components/mocks/datatable.mock';
 
 export const getDataColumnMock = <T = unknown>(
-    column: Partial<DataColumn<T>> = {}
+    column: Partial<DataColumn<T>> = { /* empty */ }
 ): DataColumn<T> => ({
     id: 'columnId',
     key: 'key',

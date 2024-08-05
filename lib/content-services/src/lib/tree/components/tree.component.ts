@@ -117,7 +117,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
 
-    constructor(public treeService: TreeService<T>, private userPreferenceService: UserPreferencesService) {}
+    constructor(public treeService: TreeService<T>, private userPreferenceService: UserPreferencesService) { /* empty */ }
 
     set contextMenuSource(contextMenuSource: T) {
         this._contextMenuSource = contextMenuSource;

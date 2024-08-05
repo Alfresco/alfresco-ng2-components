@@ -223,7 +223,7 @@ describe('SearchFilterComponent', () => {
             queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
             const data = {
                 list: {
-                    context: {}
+                    context: { /* empty */ }
                 }
             };
 
@@ -522,7 +522,7 @@ describe('SearchFilterComponent', () => {
             const resetButton = fixture.debugElement.query(By.css('button'));
             resetButton.nativeElement.click();
 
-            expect(component.queryBuilder.queryFragments).toEqual({});
+            expect(component.queryBuilder.queryFragments).toEqual({ /* empty */ });
             expect(queryBuilder.resetToDefaults).toHaveBeenCalled();
         });
     });

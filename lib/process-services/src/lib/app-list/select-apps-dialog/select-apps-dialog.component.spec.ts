@@ -33,7 +33,7 @@ export class DialogSelectAppTestComponent {
     processId: any;
     dialogRef: any;
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog) { /* empty */ }
 
     startProcessAction() {
         this.dialogRef = this.dialog.open(SelectAppsDialogComponent, {
@@ -75,7 +75,7 @@ describe('Select app dialog', () => {
                 },
                 {
                     provide: MAT_DIALOG_DATA,
-                    useValue: {}
+                    useValue: { /* empty */ }
                 }
             ]
         });

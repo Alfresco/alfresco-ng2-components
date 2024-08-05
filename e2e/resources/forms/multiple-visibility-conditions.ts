@@ -453,7 +453,7 @@ export const multipleVisibilityFormJson = {
                  }
              ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [
                  {
                     id: '948aa549-5011-423e-b8a2-020e69daae5f',
@@ -585,7 +585,7 @@ export const multipleTextVisibilityFormJson = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }

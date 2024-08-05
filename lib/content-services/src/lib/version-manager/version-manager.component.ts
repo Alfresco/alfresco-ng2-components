@@ -86,7 +86,7 @@ export class VersionManagerComponent implements OnInit {
 
     uploadState: string = 'close';
 
-    constructor(private contentService: ContentService, private nodesApiService: NodesApiService) {}
+    constructor(private contentService: ContentService, private nodesApiService: NodesApiService) { /* empty */ }
 
     ngOnInit() {
         if (this.newFileVersion) {

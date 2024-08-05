@@ -23,4 +23,4 @@ import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.componen
     imports: [UnsavedChangesDialogComponent],
     exports: [UnsavedChangesDialogComponent]
 })
-export class UnsavedChangesDialogModule {}
+export class UnsavedChangesDialogModule { /* empty */ }

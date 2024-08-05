@@ -66,7 +66,7 @@ export class InMemoryFormService extends FormService {
             };
             delete flattenForm.formDefinition;
 
-            const formValues: FormValues = {};
+            const formValues: FormValues = { /* empty */ };
             (data || []).forEach((variable) => {
                 formValues[variable.name] = variable.value;
             });

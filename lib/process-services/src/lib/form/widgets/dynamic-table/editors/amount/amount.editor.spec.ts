@@ -28,7 +28,7 @@ describe('AmountEditorComponent', () => {
     });
 
     it('should update row value on change', () => {
-        const row = { value: {} } as DynamicTableRow;
+        const row = { value: { /* empty */ } } as DynamicTableRow;
         const column = { id: 'key' } as DynamicTableColumn;
 
         const value = 100;

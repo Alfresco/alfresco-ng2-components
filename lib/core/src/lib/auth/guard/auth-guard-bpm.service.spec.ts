@@ -45,7 +45,7 @@ describe('AuthGuardService BPM', () => {
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
-                        ssoLogin: () => {},
+                        ssoLogin: () => { /* empty */ },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
                         isLoggedIn: () => false
@@ -62,8 +62,8 @@ describe('AuthGuardService BPM', () => {
         appConfigService = TestBed.inject(AppConfigService);
 
         appConfigService.config.providers = 'BPM';
-        appConfigService.config.auth = {};
-        appConfigService.config.oauth2 = {};
+        appConfigService.config.auth = { /* empty */ };
+        appConfigService.config.oauth2 = { /* empty */ };
     });
 
     it('should redirect url if the alfresco js api is NOT logged in and isOAuth with silentLogin', async () => {

@@ -21,5 +21,5 @@ export interface FormSpinnerEventPayload {
 }
 
 export class FormSpinnerEvent {
-    constructor(public type: string, public payload: FormSpinnerEventPayload) {}
+    constructor(public type: string, public payload: FormSpinnerEventPayload) { /* empty */ }
 }

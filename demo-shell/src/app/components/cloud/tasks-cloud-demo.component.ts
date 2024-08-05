@@ -137,7 +137,7 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onFilterChange(filter: any) {
-        this.editedFilter = Object.assign({}, filter);
+        this.editedFilter = Object.assign({ /* empty */ }, filter);
         this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }
 

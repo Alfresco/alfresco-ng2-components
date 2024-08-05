@@ -44,7 +44,7 @@ export class CustomContainerComponent {
     selector: 'adf-custom-empty-container',
     template: `<adf-buttons-action-menu></adf-buttons-action-menu>`
 })
-export class CustomEmptyContainerComponent {}
+export class CustomEmptyContainerComponent { /* empty */ }
 
 describe('ButtonsMenuComponent', () => {
     describe('When Buttons are injected', () => {

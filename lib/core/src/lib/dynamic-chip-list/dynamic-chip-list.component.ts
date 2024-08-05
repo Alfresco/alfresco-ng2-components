@@ -107,7 +107,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         this.changeDetectorRef.detectChanges();
     });
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private changeDetectorRef: ChangeDetectorRef) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.pagination) {

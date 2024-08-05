@@ -75,6 +75,6 @@ describe('PeopleSelectorComponent', () => {
         });
 
         const resetButton = fixture.debugElement.query(By.css('[data-automation-id="adf-people-selector-deselect"]'));
-        resetButton.triggerEventHandler('click', {});
+        resetButton.triggerEventHandler('click', { /* empty */ });
     });
 });

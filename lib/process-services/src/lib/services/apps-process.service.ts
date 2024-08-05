@@ -31,7 +31,7 @@ export class AppsProcessService {
         return this._appsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Gets a list of deployed apps for this user.

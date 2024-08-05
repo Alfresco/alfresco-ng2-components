@@ -23,4 +23,4 @@ import { TreeComponent } from './components/tree.component';
     imports: [TreeComponent],
     exports: [TreeComponent]
 })
-export class TreeModule {}
+export class TreeModule { /* empty */ }

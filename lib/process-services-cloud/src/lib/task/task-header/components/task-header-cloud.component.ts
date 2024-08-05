@@ -67,7 +67,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    taskDetails: TaskDetailsCloudModel = {};
+    taskDetails: TaskDetailsCloudModel = { /* empty */ };
     candidateUsers: CardViewArrayItem[] = [];
     candidateGroups: CardViewArrayItem[] = [];
     properties: CardViewItem[];
@@ -105,7 +105,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges() {
-        this.taskDetails = {};
+        this.taskDetails = { /* empty */ };
         if ((this.appName || this.appName === '') && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
         } else {

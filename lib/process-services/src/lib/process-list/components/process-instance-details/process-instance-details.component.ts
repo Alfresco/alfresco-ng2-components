@@ -79,7 +79,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
 
     processInstanceDetails: ProcessInstanceRepresentation;
 
-    constructor(private processService: ProcessService) {}
+    constructor(private processService: ProcessService) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         const processInstanceId = changes['processInstanceId'];

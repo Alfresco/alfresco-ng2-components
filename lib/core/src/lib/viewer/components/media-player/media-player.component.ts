@@ -49,7 +49,7 @@ export class MediaPlayerComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private urlService: UrlService) {}
+    constructor(private urlService: UrlService) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];

@@ -57,12 +57,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     focus: boolean = false;
 
-    constructor(private formRenderingService: FormRenderingService, private visibilityService: WidgetVisibilityService, private compiler: Compiler) {}
+    constructor(private formRenderingService: FormRenderingService, private visibilityService: WidgetVisibilityService, private compiler: Compiler) { /* empty */ }
 
     ngOnInit() {
         const w: any = window;
         if (w.adf === undefined) {
-            w.adf = {};
+            w.adf = { /* empty */ };
         }
         const originalField = this.getField();
         if (originalField) {
@@ -136,9 +136,9 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     private createComponentFactorySync(compiler: Compiler, metadata: Component, componentClass: any): ComponentFactory<any> {
-        const cmpClass = componentClass || class RuntimeComponent {};
+        const cmpClass = componentClass || class RuntimeComponent { /* empty */ };
         const decoratedCmp = Component(metadata)(cmpClass);
-        const moduleClass = class RuntimeComponentModule {};
+        const moduleClass = class RuntimeComponentModule { /* empty */ };
         const decoratedNgModule = NgModule({ imports: [], declarations: [decoratedCmp] })(moduleClass);
         const module = compiler.compileModuleAndAllComponentsSync(decoratedNgModule);
 

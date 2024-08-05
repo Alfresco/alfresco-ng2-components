@@ -52,6 +52,6 @@ export class AuthenticationMock extends AuthenticationService {
     }
 
     logout(): Observable<any> {
-        return of({});
+        return of({ /* empty */ });
     }
 }

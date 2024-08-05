@@ -31,4 +31,4 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     exports: [PeopleCloudComponent],
     providers: [{ provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }]
 })
-export class PeopleCloudModule {}
+export class PeopleCloudModule { /* empty */ }

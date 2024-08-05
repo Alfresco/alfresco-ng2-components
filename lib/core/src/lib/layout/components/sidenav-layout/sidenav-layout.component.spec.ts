@@ -52,7 +52,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
         </adf-sidenav-layout-content>
     </adf-sidenav-layout>`
 })
-export class SidenavLayoutTesterComponent {}
+export class SidenavLayoutTesterComponent { /* empty */ }
 
 describe('SidenavLayoutComponent', () => {
     let fixture: ComponentFixture<any>;
@@ -71,7 +71,7 @@ describe('SidenavLayoutComponent', () => {
             addListener(mediaFn) {
                 this.mediaFn = mediaFn;
             },
-            removeListener: () => {}
+            removeListener: () => { /* empty */ }
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);
@@ -164,8 +164,8 @@ describe('Template transclusion', () => {
 
         mediaQueryList = {
             matches: false,
-            addListener: () => {},
-            removeListener: () => {}
+            addListener: () => { /* empty */ },
+            removeListener: () => { /* empty */ }
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);

@@ -23,4 +23,4 @@ import { Component } from '@angular/core';
     template: '<ng-content></ng-content>',
     host: { class: 'adf-toolbar-title' }
 })
-export class ToolbarTitleComponent {}
+export class ToolbarTitleComponent { /* empty */ }

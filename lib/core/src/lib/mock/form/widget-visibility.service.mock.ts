@@ -17,7 +17,7 @@
 
 import { FormModel, FormValues } from '../../form/components/widgets/core';
 
-export const formTest = new FormModel({});
+export const formTest = new FormModel({ /* empty */ });
 
 export const fakeTaskProcessVariableModels = [
     { id:   'TEST_VAR_1', type:   'string', value:   'test_value_1' },
@@ -490,10 +490,10 @@ export const fakeFormCheckBoxVisibilityJson: any = {
     javascriptEvents: [],
     className: '',
     style: '',
-    customFieldTemplates: {},
-    metadata: {},
+    customFieldTemplates: { /* empty */ },
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: 'false'
 };
 
@@ -1176,10 +1176,10 @@ export const complexVisibilityJsonVisible: any = {
         javascriptEvents:   [],
         className:   '',
         style:   '',
-        customFieldTemplates:   {},
-        metadata:   {},
+        customFieldTemplates:   { /* empty */ },
+        metadata:   { /* empty */ },
         variables:   [],
-        customFieldsValueInfo:   {},
+        customFieldsValueInfo:   { /* empty */ },
         gridsterForm:   false
     }
 };
@@ -1546,10 +1546,10 @@ export const complexVisibilityJsonNotVisible: any = {
         javascriptEvents:   [],
         className:   '',
         style:   '',
-        customFieldTemplates:   {},
-        metadata:   {},
+        customFieldTemplates:   { /* empty */ },
+        metadata:   { /* empty */ },
         variables:   [],
-        customFieldsValueInfo:   {},
+        customFieldsValueInfo:   { /* empty */ },
         gridsterForm:   false
     }
 };
@@ -1820,7 +1820,7 @@ export const tabInvalidFormVisibility: any = {
             }
         ],
         outcomes: [],
-        metadata: {},
+        metadata: { /* empty */ },
         variables: []
     }
 };

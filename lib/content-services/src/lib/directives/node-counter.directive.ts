@@ -29,7 +29,7 @@ export class NodeCounterDirective implements OnInit, OnChanges {
 
     componentRef: NodeCounterComponent;
 
-    constructor(private viewContainerRef: ViewContainerRef) {}
+    constructor(private viewContainerRef: ViewContainerRef) { /* empty */ }
 
     ngOnInit() {
         this.componentRef = this.viewContainerRef.createComponent(NodeCounterComponent).instance;

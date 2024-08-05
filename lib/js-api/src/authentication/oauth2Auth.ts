@@ -65,7 +65,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
     authentications: Authentication = {
         oauth2: { accessToken: '' },
         type: 'oauth2',
-        basicAuth: {}
+        basicAuth: { /* empty */ }
     };
 
     iFrameHashListener: any;
@@ -152,15 +152,15 @@ export class Oauth2Auth extends AlfrescoApiClient {
     }
 
     getProfile(): Promise<Userinfo> {
-        const postBody = {};
-        const pathParams = {};
-        const queryParams = {};
+        const postBody = { /* empty */ };
+        const pathParams = { /* empty */ };
+        const queryParams = { /* empty */ };
 
         const headerParams = {
             'Content-Type': 'application/x-www-form-urlencoded'
         };
 
-        const formParams = {};
+        const formParams = { /* empty */ };
 
         const contentTypes = ['application/x-www-form-urlencoded'];
         const accepts = ['application/json'];
@@ -465,7 +465,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
     }
 
     parseQueryString(queryString: string): any {
-        const data: { [key: string]: any } = {};
+        const data: { [key: string]: any } = { /* empty */ };
         let pairs: string[];
         let pair: string;
         let separatorIndex: number;
@@ -588,7 +588,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
         const contentTypes = ['application/x-www-form-urlencoded'];
         const accepts = ['application/json'];
 
-        const promise = this.callCustomApi(this.discovery.tokenEndpoint, 'POST', {}, {}, headerParams, formParams, {}, contentTypes, accepts).then(
+        const promise = this.callCustomApi(this.discovery.tokenEndpoint, 'POST', { /* empty */ }, { /* empty */ }, headerParams, formParams, { /* empty */ }, contentTypes, accepts).then(
             (data: any) => {
                 this.saveUsername(username);
                 this.silentRefresh();
@@ -641,7 +641,7 @@ export class Oauth2Auth extends AlfrescoApiClient {
         const accepts = ['application/json'];
 
         const promise = new Promise((resolve, reject) => {
-            this.callCustomApi(this.discovery.tokenEndpoint, 'POST', {}, {}, headerParams, formParams, {}, contentTypes, accepts).then(
+            this.callCustomApi(this.discovery.tokenEndpoint, 'POST', { /* empty */ }, { /* empty */ }, headerParams, formParams, { /* empty */ }, contentTypes, accepts).then(
                 (data: any) => {
                     this.setToken(data.access_token, data.refresh_token);
                     resolve(data);

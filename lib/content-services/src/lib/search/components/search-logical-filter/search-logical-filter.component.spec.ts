@@ -36,7 +36,7 @@ describe('SearchLogicalFilterComponent', () => {
             queryFragments: {
                 logic: ''
             },
-            update: () => {}
+            update: () => { /* empty */ }
         } as any;
         component.settings = { field: 'field1,field2', allowUpdateOnChange: true, hideDefaultAction: false };
         fixture.detectChanges();

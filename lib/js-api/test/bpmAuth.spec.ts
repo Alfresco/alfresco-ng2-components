@@ -29,7 +29,7 @@ describe('Bpm Auth test', () => {
     });
 
     it('should remember username on login', () => {
-        const auth = new ProcessAuth({});
+        const auth = new ProcessAuth({ /* empty */ });
         auth.login('johndoe', 'password');
         assert.equal(auth.authentications.basicAuth.username, 'johndoe');
     });
@@ -140,7 +140,7 @@ describe('Bpm Auth test', () => {
             });
 
             processAuth.login('wrong', 'name').then(
-                () => {},
+                () => { /* empty */ },
                 (error) => {
                     assert.equal(error.status, 401);
                     done();
@@ -159,7 +159,7 @@ describe('Bpm Auth test', () => {
 
                 const loginPromise = processAuth.login('wrong', 'name');
 
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => { /* empty */ });
                 loginPromise.on('unauthorized', () => {
                     done();
                 });
@@ -174,7 +174,7 @@ describe('Bpm Auth test', () => {
                 });
 
                 const loginPromise = processAuth.login('wrong', 'name');
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => { /* empty */ });
                 loginPromise.on('forbidden', () => {
                     done();
                 });
@@ -190,7 +190,7 @@ describe('Bpm Auth test', () => {
 
                 const loginPromise = processAuth.login('admin', 'admin');
 
-                loginPromise.catch(() => {});
+                loginPromise.catch(() => { /* empty */ });
                 loginPromise.on('success', () => {
                     done();
                 });

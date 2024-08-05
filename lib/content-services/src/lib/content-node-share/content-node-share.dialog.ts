@@ -90,7 +90,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private contentService: ContentService,
         private renditionService: RenditionService,
         @Inject(MAT_DIALOG_DATA) public data: ContentNodeShareSettings
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         if (this.data.node?.entry) {
@@ -252,7 +252,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         try {
             statusCode = JSON.parse(error.message).error.statusCode;
-        } catch {}
+        } catch { /* empty */ }
 
         if (statusCode === 403) {
             message = 'SHARE.UNSHARE_PERMISSION_ERROR';

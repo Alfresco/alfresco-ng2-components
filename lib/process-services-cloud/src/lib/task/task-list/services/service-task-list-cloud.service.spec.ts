@@ -88,7 +88,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
         const taskRequest = { appName: null } as ServiceTaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallUrl);
         service.getServiceTaskByRequest(taskRequest).subscribe(
-            () => {},
+            () => { /* empty */ },
             (error) => {
                 expect(error).toBe('Appname not configured');
                 done();
@@ -110,7 +110,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
                 }
             };
 
-            const spyOnPost = spyOn<any>(service, 'post').and.returnValue(of({}));
+            const spyOnPost = spyOn<any>(service, 'post').and.returnValue(of({ /* empty */ }));
             const params = ['fakeName', 'executionId_1', 'flowNodeId_1'] as const;
             await service.replayServiceTaskRequest(...params).toPromise();
             expect(spyOnPost).toHaveBeenCalledWith(expected.expectedQueryUrl, expected.expectedPayload);

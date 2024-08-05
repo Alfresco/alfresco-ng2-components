@@ -82,7 +82,7 @@ export class ChecklistComponent implements OnChanges {
 
     checklist: TaskRepresentation[] = [];
 
-    constructor(private taskListService: TaskListService, private dialog: MatDialog) {}
+    constructor(private taskListService: TaskListService, private dialog: MatDialog) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         const taskId = changes['taskId'];

@@ -47,4 +47,4 @@ export const LAYOUT_DIRECTIVES = [
     imports: [...LAYOUT_DIRECTIVES],
     exports: [...LAYOUT_DIRECTIVES]
 })
-export class SidenavLayoutModule {}
+export class SidenavLayoutModule { /* empty */ }

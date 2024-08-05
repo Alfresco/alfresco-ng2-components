@@ -37,7 +37,7 @@ describe('ObjectDataTableAdapter', () => {
     });
 
     it('should map rows', () => {
-        const adapter = new ObjectDataTableAdapter([{}, {}], null);
+        const adapter = new ObjectDataTableAdapter([{ /* empty */ }, { /* empty */ }], null);
         const rows = adapter.getRows();
 
         expect(rows.length).toBe(2);
@@ -47,8 +47,8 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should map columns without rows', () => {
         const adapter = new ObjectDataTableAdapter(null, [
-            {} as DataColumn,
-            {} as DataColumn
+            { /* empty */ } as DataColumn,
+            { /* empty */ } as DataColumn
         ]);
         const columns = adapter.getColumns();
 
@@ -64,7 +64,7 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should apply new rows array', () => {
         const adapter = new ObjectDataTableAdapter([], []);
-        const newRows = [{}, {}] as DataRow[];
+        const newRows = [{ /* empty */ }, { /* empty */ }] as DataRow[];
 
         adapter.setRows(newRows);
         expect(adapter.getRows()).toBe(newRows);
@@ -81,7 +81,7 @@ describe('ObjectDataTableAdapter', () => {
     });
 
     it('should reset rows by null value', () => {
-        const adapter = new ObjectDataTableAdapter([{}, {}], []);
+        const adapter = new ObjectDataTableAdapter([{ /* empty */ }, { /* empty */ }], []);
         expect(adapter.getRows()).toBeDefined();
         expect(adapter.getRows().length).toBe(2);
 
@@ -99,7 +99,7 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should apply new columns array', () => {
         const adapter = new ObjectDataTableAdapter([], []);
-        const columns = [{},{}] as DataColumn[];
+        const columns = [{ /* empty */ },{ /* empty */ }] as DataColumn[];
 
         adapter.setColumns(columns);
         expect(adapter.getColumns()).toBe(columns);
@@ -117,8 +117,8 @@ describe('ObjectDataTableAdapter', () => {
 
     it('should reset columns by null value', () => {
         const adapter = new ObjectDataTableAdapter([], [
-            {} as DataColumn,
-            {} as DataColumn
+            { /* empty */ } as DataColumn,
+            { /* empty */ } as DataColumn
         ]);
         expect(adapter.getColumns()).toBeDefined();
         expect(adapter.getColumns().length).toBe(2);
@@ -138,7 +138,7 @@ describe('ObjectDataTableAdapter', () => {
     it('should fail getting value with column not defined', () => {
         const adapter = new ObjectDataTableAdapter([], []);
         expect(() => {
-            adapter.getValue({} as DataRow, null);
+            adapter.getValue({ /* empty */ } as DataRow, null);
         }).toThrowError('Column not found');
     });
 
@@ -167,7 +167,7 @@ describe('ObjectDataTableAdapter', () => {
     });
 
     it('should sort rows with new sorting value', () => {
-        const adapter = new ObjectDataTableAdapter([{}, {}], []);
+        const adapter = new ObjectDataTableAdapter([{ /* empty */ }, { /* empty */ }], []);
         spyOn(adapter.getRows(), 'sort').and.stub();
 
         adapter.setSorting(new DataSorting('key', 'direction'));
@@ -175,7 +175,7 @@ describe('ObjectDataTableAdapter', () => {
     });
 
     it('should sort rows only when sorting key provided', () => {
-        const adapter = new ObjectDataTableAdapter([{}, {}], []);
+        const adapter = new ObjectDataTableAdapter([{ /* empty */ }, { /* empty */ }], []);
         spyOn(adapter.getRows(), 'sort').and.stub();
 
         adapter.setSorting(new DataSorting());
@@ -329,7 +329,7 @@ describe('ObjectDataRow', () => {
     });
 
     it('should not get top level property value', () => {
-        const row = new ObjectDataRow({});
+        const row = new ObjectDataRow({ /* empty */ });
         expect(row.getValue('missing')).toBeUndefined();
     });
 
@@ -345,7 +345,7 @@ describe('ObjectDataRow', () => {
     });
 
     it('should not get nested property value', () => {
-        const row = new ObjectDataRow({});
+        const row = new ObjectDataRow({ /* empty */ });
         expect(row.getValue('some.missing.property')).toBeUndefined();
     });
 

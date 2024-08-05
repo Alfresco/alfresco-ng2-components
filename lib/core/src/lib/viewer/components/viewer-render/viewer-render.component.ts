@@ -172,7 +172,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         private extensionService: AppExtensionService,
         public dialog: MatDialog,
         public readonly injector: Injector
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.cacheTypeForContent = 'no-cache';

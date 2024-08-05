@@ -107,13 +107,13 @@ const template: StoryFn<CardViewComponent> = (args) => ({
     props: args
 });
 
-export const DefaultCardView = template.bind({});
+export const DefaultCardView = template.bind({ /* empty */ });
 DefaultCardView.args = {
     properties: cardViewDataSource
 };
 DefaultCardView.parameters = { layout: 'centered' };
 
-export const EmptyCardView = template.bind({});
+export const EmptyCardView = template.bind({ /* empty */ });
 EmptyCardView.args = {
     properties: cardViewUndefinedValues,
     editable: false

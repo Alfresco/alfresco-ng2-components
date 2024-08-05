@@ -87,7 +87,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
         private appsProcessService: AppsProcessService,
         private router: Router,
         private location: Location
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.iconsMDL = new IconModel();

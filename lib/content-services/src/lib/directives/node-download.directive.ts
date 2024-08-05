@@ -49,7 +49,7 @@ export class NodeDownloadDirective {
         this.downloadNodes(this.nodes);
     }
 
-    constructor(private apiService: AlfrescoApiService, private downloadService: DownloadService, private dialog: MatDialog) {}
+    constructor(private apiService: AlfrescoApiService, private downloadService: DownloadService, private dialog: MatDialog) { /* empty */ }
 
     /**
      * Downloads multiple selected nodes.

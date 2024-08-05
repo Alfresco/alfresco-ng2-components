@@ -45,4 +45,4 @@ export const DOCUMENT_LIST_DIRECTIVES = [
     imports: [...DOCUMENT_LIST_DIRECTIVES],
     exports: [...DOCUMENT_LIST_DIRECTIVES]
 })
-export class DocumentListModule {}
+export class DocumentListModule { /* empty */ }

@@ -162,9 +162,9 @@ export class ProcessService {
      */
     private toJson(res: any) {
         if (res) {
-            return res || {};
+            return res || { /* empty */ };
         }
-        return {};
+        return { /* empty */ };
     }
 
     /**
@@ -288,7 +288,7 @@ export class ProcessService {
     }
 
     private extractData(res: any) {
-        return res.data || {};
+        return res.data || { /* empty */ };
     }
 
     private getProcessNameOrDescription(processInstance: ProcessInstanceRepresentation, dateFormat: string): string {

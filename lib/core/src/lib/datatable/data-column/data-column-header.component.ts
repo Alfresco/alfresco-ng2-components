@@ -29,7 +29,7 @@ export class DateColumnHeaderComponent implements AfterContentInit {
     @ContentChild(TemplateRef)
     public header: TemplateRef<any>;
 
-    constructor(private columnComponent: DataColumnComponent) {}
+    constructor(private columnComponent: DataColumnComponent) { /* empty */ }
 
     ngAfterContentInit() {
         if (this.columnComponent) {

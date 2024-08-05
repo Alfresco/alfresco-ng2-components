@@ -33,7 +33,7 @@ export class BaseCloudService {
         accepts: ['application/json']
     };
 
-    constructor(protected adfHttpClient: AdfHttpClient) {}
+    constructor(protected adfHttpClient: AdfHttpClient) { /* empty */ }
 
     getBasePath(appName: string): string {
         return appName ? `${this.contextRoot}/${appName}` : this.contextRoot;

@@ -20,18 +20,18 @@ import { logger } from '../logger';
 import { AlfrescoApi } from '@alfresco/js-api';
 
 export class PluginConfiguration {
-    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) {}
+    constructor(private plugInInfo: PluginInterface, private alfrescoJsApi: AlfrescoApi) { /* empty */ }
 
     async getAppConfig(url: string) {
         return this.callCustomApi(url);
     }
 
     async callCustomApi(url: string) {
-        const pathParams = {};
-        const headerParams = {};
-        const formParams = {};
-        const bodyParam = {};
-        const queryParams = {};
+        const pathParams = { /* empty */ };
+        const headerParams = { /* empty */ };
+        const formParams = { /* empty */ };
+        const bodyParam = { /* empty */ };
+        const queryParams = { /* empty */ };
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
@@ -51,7 +51,7 @@ export class PluginConfiguration {
             return response;
         } catch (error) {
             logger.error(`${this.plugInInfo.host} is not reachable error: `, error);
-            return {};
+            return { /* empty */ };
         }
     }
 }

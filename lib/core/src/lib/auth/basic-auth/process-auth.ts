@@ -132,7 +132,7 @@ export class ProcessAuth {
     async logout(): Promise<any> {
         this.saveUsername('');
         return new Promise((resolve, reject) => {
-            this.adfHttpClient.get(this.basePath + `/app/logout`, {}).then(
+            this.adfHttpClient.get(this.basePath + `/app/logout`, { /* empty */ }).then(
                 () => {
                     this.invalidateSession();
                     this.onLogout.next('logout');

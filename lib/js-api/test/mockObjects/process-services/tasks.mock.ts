@@ -43,7 +43,7 @@ const formValues = [
 export class TasksMock extends BaseMock {
     get200Response(): void {
         nock(this.host, { encodedQueryParams: true })
-            .post('/activiti-app/api/enterprise/tasks/query', {})
+            .post('/activiti-app/api/enterprise/tasks/query', { /* empty */ })
             .reply(200, {
                 size: 2,
                 total: 2,
@@ -166,7 +166,7 @@ export class TasksMock extends BaseMock {
     }
 
     get400TaskFilter(): void {
-        nock(this.host, { encodedQueryParams: true }).post('/activiti-app/api/enterprise/tasks/filter', {}).reply(400, {
+        nock(this.host, { encodedQueryParams: true }).post('/activiti-app/api/enterprise/tasks/filter', { /* empty */ }).reply(400, {
             message: 'A valid filterId or filter params must be provided',
             messageKey: 'GENERAL.ERROR.BAD-REQUEST'
         });
@@ -1025,8 +1025,8 @@ export class TasksMock extends BaseMock {
                 javascriptEvents: [],
                 className: '',
                 style: '',
-                customFieldTemplates: {},
-                metadata: {},
+                customFieldTemplates: { /* empty */ },
+                metadata: { /* empty */ },
                 variables: [],
                 gridsterForm: false
             });

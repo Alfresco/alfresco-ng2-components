@@ -96,5 +96,5 @@ const template: StoryFn<EmptyContentComponent> = (args: EmptyContentComponent & 
     </adf-empty-content>`
 });
 
-export const EmptyContent = template.bind({});
+export const EmptyContent = template.bind({ /* empty */ });
 EmptyContent.parameters = { layout: 'centered' };

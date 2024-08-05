@@ -38,7 +38,7 @@ describe('ContentMetadataConfigFactory', () => {
             providers: [
                 {
                     provide: LogService, useValue: {
-                        error: () => {}
+                        error: () => { /* empty */ }
                     }
                 }
             ]

@@ -35,7 +35,7 @@ export enum LogicalSearchFields {
 
 export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]: string };
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {}
+export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys { /* empty */ }
 
 @Component({
     selector: 'adf-search-logical-filter',
@@ -55,7 +55,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     LogicalSearchFields = LogicalSearchFields;
     displayValue$: Subject<string> = new Subject();
 
-    constructor(private translationService: TranslationService) {}
+    constructor(private translationService: TranslationService) { /* empty */ }
 
     ngOnInit(): void {
         this.clearSearchInputs();

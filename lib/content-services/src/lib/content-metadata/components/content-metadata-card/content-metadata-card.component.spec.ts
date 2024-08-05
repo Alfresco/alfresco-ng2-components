@@ -81,10 +81,10 @@ describe('ContentMetadataCardComponent', () => {
         node = {
             aspectNames: [],
             nodeType: '',
-            content: {},
-            properties: {},
-            createdByUser: {},
-            modifiedByUser: {},
+            content: { /* empty */ },
+            properties: { /* empty */ },
+            createdByUser: { /* empty */ },
+            modifiedByUser: { /* empty */ },
             id: 'some-id'
         } as Node;
 
@@ -207,7 +207,7 @@ describe('ContentMetadataCardComponent', () => {
         fixture.detectChanges();
 
         const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-edit-aspect"]'));
-        button.triggerEventHandler('click', {});
+        button.triggerEventHandler('click', { /* empty */ });
         fixture.detectChanges();
 
         expect(nodeAspectService.updateNodeAspects).toHaveBeenCalledWith('fake-node-id');

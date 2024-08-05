@@ -65,7 +65,7 @@ export class ApplicationsUtil {
         return publishApp;
     }
 
-    async importPublishDeployApp(appFileLocation: string, option = {}): Promise<AppDefinitionRepresentation> {
+    async importPublishDeployApp(appFileLocation: string, option = { /* empty */ }): Promise<AppDefinitionRepresentation> {
         try {
             const appCreated = await this.importApplication(appFileLocation, option);
             const publishApp = await this.publishDeployApp(appCreated.id);
@@ -74,7 +74,7 @@ export class ApplicationsUtil {
             return appCreated;
         } catch (error) {
             Logger.error('Import Publish Deploy Application - Service error, Response: ', JSON.stringify(error));
-            return {};
+            return { /* empty */ };
         }
     }
 
@@ -91,13 +91,13 @@ export class ApplicationsUtil {
         return appCreated;
     }
 
-    async importApplication(appFileLocation: string, options = {}): Promise<AppDefinitionRepresentation> {
+    async importApplication(appFileLocation: string, options = { /* empty */ }): Promise<AppDefinitionRepresentation> {
         try {
             const file = fs.createReadStream(appFileLocation);
             return await this.appDefinitionsApi.importAppDefinition(file, options);
         } catch (error) {
             Logger.error('Import Application - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
-            return {};
+            return { /* empty */ };
         }
     }
 
@@ -107,7 +107,7 @@ export class ApplicationsUtil {
             return appDefinitionsList.data.find((currentApp) => currentApp.name === appName);
         } catch (error) {
             Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error))?.response?.text);
-            return {};
+            return { /* empty */ };
         }
     }
 

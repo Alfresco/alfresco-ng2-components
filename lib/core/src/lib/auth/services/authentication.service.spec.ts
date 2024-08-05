@@ -289,7 +289,7 @@ xdescribe('AuthenticationService', () => {
 
         it('[BPM] should return an error when the logout return error', (done) => {
             authService.logout().subscribe(
-                () => {},
+                () => { /* empty */ },
                 (err: any) => {
                     expect(err).toBeDefined();
                     expect(authService.getToken()).toBe(null);
@@ -372,7 +372,7 @@ xdescribe('AuthenticationService', () => {
 
         it('[ECM] should not save the remember me cookie after failed login', (done) => {
             const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
-                () => {},
+                () => { /* empty */ },
                 () => {
                     expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
                     disposableLogin.unsubscribe();
@@ -427,7 +427,7 @@ xdescribe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only ECM call fail', (done) => {
             const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
-                () => {},
+                () => { /* empty */ },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
                     expect(authService.getToken()).toBe(null, 'getTicketEcm');
@@ -450,7 +450,7 @@ xdescribe('AuthenticationService', () => {
 
         it('[ALL] should return login fail if only BPM call fail', (done) => {
             const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
-                () => {},
+                () => { /* empty */ },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getToken()).toBe(null);
@@ -474,7 +474,7 @@ xdescribe('AuthenticationService', () => {
 
         it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
             const disposableLogin = basicAlfrescoAuthService.login('fake-username', 'fake-password').subscribe(
-                () => {},
+                () => { /* empty */ },
                 () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getToken()).toBe(null);

@@ -26,7 +26,7 @@ describe('DataTableRowComponent', () => {
     const row: DataRow = {
         isSelected: false,
         hasValue: jasmine.createSpy('hasValue'),
-        getValue: () => {}
+        getValue: () => { /* empty */ }
     };
 
     beforeEach(() => {

@@ -87,7 +87,7 @@ export class ActionsApi extends BaseApi {
      * @returns Promise<ActionDefinitionList>
      */
     listActions(opts?: { orderBy?: string[] } & ContentPagingQuery & ContentFieldsQuery): Promise<ActionDefinitionList> {
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const queryParams = {
             skipCount: opts?.skipCount,
@@ -126,7 +126,7 @@ export class ActionsApi extends BaseApi {
      */
     nodeActions(nodeId: string, opts?: { orderBy?: string[] } & ContentPagingQuery & ContentFieldsQuery): Promise<ActionDefinitionList> {
         throwIfNotDefined(nodeId, 'nodeId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             nodeId

@@ -320,7 +320,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
             }
 
             return visibleColumnsMap;
-        }, {});
+        }, { /* empty */ });
 
         this.createColumns();
         this.createDatatableSchema();
@@ -336,7 +336,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
             }
             return widthsColumnsMap;
-        }, {});
+        }, { /* empty */ });
 
         this.columnsWidths = { ...this.columnsWidths, ...newColumnsWidths };
 

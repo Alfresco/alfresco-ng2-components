@@ -388,7 +388,7 @@ export class DataTableComponentPage {
                     this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)),
                     MAX_LOADING_TIME
                 );
-            } catch (error) {}
+            } catch (error) { /* empty */ }
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
@@ -414,7 +414,7 @@ export class DataTableComponentPage {
             try {
                 Logger.log('wait datatable loading spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName(materialLocators.Progress.bar.root)));
-            } catch (error) {}
+            } catch (error) { /* empty */ }
             if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {

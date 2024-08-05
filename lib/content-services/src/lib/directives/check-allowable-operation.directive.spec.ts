@@ -40,7 +40,7 @@ describe('CheckAllowableOperationDirective', () => {
             imports: [HttpClientTestingModule],
             providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
         });
-        changeDetectorMock = { detectChanges: () => {} } as ChangeDetectorRef;
+        changeDetectorMock = { detectChanges: () => { /* empty */ } } as ChangeDetectorRef;
     });
 
     describe('HTML nativeElement as subject', () => {
@@ -48,7 +48,7 @@ describe('CheckAllowableOperationDirective', () => {
             const directive = new CheckAllowableOperationDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
 
-            const nodes = [{}, {}];
+            const nodes = [{ /* empty */ }, { /* empty */ }];
             const change = new SimpleChange([], nodes, false);
             directive.ngOnChanges({ nodes: change });
 
@@ -59,7 +59,7 @@ describe('CheckAllowableOperationDirective', () => {
             const directive = new CheckAllowableOperationDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
 
-            const nodes = [{}, {}];
+            const nodes = [{ /* empty */ }, { /* empty */ }];
             const change = new SimpleChange([], nodes, true);
             directive.ngOnChanges({ nodes: change });
 
@@ -68,7 +68,7 @@ describe('CheckAllowableOperationDirective', () => {
 
         it('enables decorated element', () => {
             const renderer = jasmine.createSpyObj('renderer', ['removeAttribute']);
-            const elementRef = new ElementRef({});
+            const elementRef = new ElementRef({ /* empty */ });
             const directive = new CheckAllowableOperationDirective(elementRef, renderer, null, changeDetectorMock);
 
             directive.enableElement();
@@ -78,7 +78,7 @@ describe('CheckAllowableOperationDirective', () => {
 
         it('disables decorated element', () => {
             const renderer = jasmine.createSpyObj('renderer', ['setAttribute']);
-            const elementRef = new ElementRef({});
+            const elementRef = new ElementRef({ /* empty */ });
             const directive = new CheckAllowableOperationDirective(elementRef, renderer, null, changeDetectorMock);
 
             directive.disableElement();
@@ -104,7 +104,7 @@ describe('CheckAllowableOperationDirective', () => {
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
             spyOn(directive, 'enableElement').and.stub();
 
-            directive.nodes = [{}, {}] as any[];
+            directive.nodes = [{ /* empty */ }, { /* empty */ }] as any[];
 
             expect(directive.updateElement()).toBeTruthy();
             expect(directive.enableElement).toHaveBeenCalled();
@@ -117,7 +117,7 @@ describe('CheckAllowableOperationDirective', () => {
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
             spyOn(directive, 'disableElement').and.stub();
 
-            directive.nodes = [{}, {}] as any[];
+            directive.nodes = [{ /* empty */ }, { /* empty */ }] as any[];
 
             expect(directive.updateElement()).toBeFalsy();
             expect(directive.disableElement).toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe('CheckAllowableOperationDirective', () => {
             const testComponent = new TestComponent();
             testComponent.disabled = false;
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock, testComponent);
-            directive.nodes = [{}, {}] as any[];
+            directive.nodes = [{ /* empty */ }, { /* empty */ }] as any[];
 
             directive.updateElement();
 
@@ -149,7 +149,7 @@ describe('CheckAllowableOperationDirective', () => {
             const testComponent = new TestComponent();
             testComponent.disabled = true;
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock, testComponent);
-            directive.nodes = [{}, {}] as any[];
+            directive.nodes = [{ /* empty */ }, { /* empty */ }] as any[];
 
             directive.updateElement();
 

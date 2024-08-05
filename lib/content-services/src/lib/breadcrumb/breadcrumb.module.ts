@@ -26,4 +26,4 @@ export const BREADCRUMB_DIRECTIVES = [BreadcrumbComponent, DropdownBreadcrumbCom
     imports: [...BREADCRUMB_DIRECTIVES],
     exports: [...BREADCRUMB_DIRECTIVES]
 })
-export class BreadcrumbModule {}
+export class BreadcrumbModule { /* empty */ }

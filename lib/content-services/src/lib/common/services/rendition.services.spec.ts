@@ -42,9 +42,9 @@ describe('RenditionService', () => {
         TestBed.configureTestingModule({
             providers: [
                 RenditionService,
-                { provide: AlfrescoApiService, useValue: {} },
-                { provide: TranslationService, useValue: {} },
-                { provide: ViewUtilService, useValue: {} },
+                { provide: AlfrescoApiService, useValue: { /* empty */ } },
+                { provide: TranslationService, useValue: { /* empty */ } },
+                { provide: ViewUtilService, useValue: { /* empty */ } },
                 {
                     provide: RenditionsApi,
                     useValue: {

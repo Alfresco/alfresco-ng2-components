@@ -20,5 +20,5 @@ export class FileSizeUnit {
     static readonly MB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB', 1048576);
     static readonly GB = new FileSizeUnit('SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.GB', 1073741824);
 
-    private constructor(readonly abbreviation: string, readonly bytes: number) {}
+    private constructor(readonly abbreviation: string, readonly bytes: number) { /* empty */ }
 }

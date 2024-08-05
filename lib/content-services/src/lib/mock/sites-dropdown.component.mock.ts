@@ -191,7 +191,7 @@ export const getFakeSitePagingWithMembers = () =>
                                             person: {
                                                 firstName: 'Administrator',
                                                 emailNotificationsEnabled: true,
-                                                company: {},
+                                                company: { /* empty */ },
                                                 id: 'admin',
                                                 enabled: true,
                                                 email: 'admin@alfresco.com'
@@ -269,7 +269,7 @@ export const getFakeSitePagingWithMembers = () =>
                                             person: {
                                                 firstName: 'Administrator',
                                                 emailNotificationsEnabled: true,
-                                                company: {},
+                                                company: { /* empty */ },
                                                 id: 'admin',
                                                 enabled: true,
                                                 email: 'admin@alfresco.com'

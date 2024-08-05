@@ -207,7 +207,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         private peopleProcessService: PeopleProcessService,
         private cardViewUpdateService: CardViewUpdateService,
         private dialog: MatDialog
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.peopleSearch = new Observable<LightUserRepresentation[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());

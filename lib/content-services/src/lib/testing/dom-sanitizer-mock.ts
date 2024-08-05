@@ -18,5 +18,5 @@
 import { DomSanitizer } from '@angular/platform-browser';
 
 export const domSanitizerMock = {
-    bypassSecurityTrustResourceUrl: () => {}
+    bypassSecurityTrustResourceUrl: () => { /* empty */ }
 } as any as DomSanitizer;

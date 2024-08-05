@@ -213,7 +213,7 @@ export default function main(_args: string[], workingDir: string) {
                 projVersion: packageJson.version,
                 projName: packageJson.name
             },
-            {},
+            { /* empty */ },
             (err: any, text: string) => {
                 if (err) {
                     console.error(err);

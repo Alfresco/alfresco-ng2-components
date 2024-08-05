@@ -38,4 +38,4 @@ export const INFO_DRAWER_DIRECTIVES = [
     imports: [...INFO_DRAWER_DIRECTIVES],
     exports: [...INFO_DRAWER_DIRECTIVES]
 })
-export class InfoDrawerModule {}
+export class InfoDrawerModule { /* empty */ }

@@ -30,7 +30,7 @@ export class TasksService {
         const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = {
             name: taskName,
             payloadType: 'CreateTaskPayload',
@@ -47,7 +47,7 @@ export class TasksService {
         const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = {
             name: taskName,
             payloadType: 'CreateTaskPayload',
@@ -65,7 +65,7 @@ export class TasksService {
         const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
         const method = 'POST';
 
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = { payloadType: 'CompleteTaskPayload' };
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
@@ -78,8 +78,8 @@ export class TasksService {
         const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim`;
         const method = 'POST';
 
-        const queryParams = {};
-        const postBody = {};
+        const queryParams = { /* empty */ };
+        const postBody = { /* empty */ };
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
@@ -91,8 +91,8 @@ export class TasksService {
         const path = '/' + appName + '/rb/v1/tasks/' + taskId;
         const method = 'DELETE';
 
-        const queryParams = {};
-        const postBody = {};
+        const queryParams = { /* empty */ };
+        const postBody = { /* empty */ };
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
@@ -111,8 +111,8 @@ export class TasksService {
         const path = '/' + appName + '/query/v1/tasks/' + taskId;
         const method = 'GET';
 
-        const queryParams = {};
-        const postBody = {};
+        const queryParams = { /* empty */ };
+        const postBody = { /* empty */ };
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
@@ -125,7 +125,7 @@ export class TasksService {
         const method = 'GET';
 
         const queryParams = { name: taskName };
-        const postBody = {};
+        const postBody = { /* empty */ };
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody)
             .catch((error) => {
@@ -138,7 +138,7 @@ export class TasksService {
         const path = '/' + appName + '/rb/v1/tasks';
         const method = 'POST';
 
-        const queryParams = {};
+        const queryParams = { /* empty */ };
         const postBody = { name, parentTaskId, payloadType: 'CreateTaskPayload' };
 
         return this.api.performBpmOperation(path, method, queryParams, postBody)

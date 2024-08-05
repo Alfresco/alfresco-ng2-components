@@ -63,13 +63,13 @@ const template: StoryFn<IconComponent> = (args) => ({
     props: args
 });
 
-export const DefaultIcon = template.bind({});
+export const DefaultIcon = template.bind({ /* empty */ });
 DefaultIcon.args = {
     value: ''
 };
 DefaultIcon.parameters = { layout: 'centered' };
 
-export const CustomIcon = template.bind({});
+export const CustomIcon = template.bind({ /* empty */ });
 CustomIcon.args = {
     value: 'cloud_download'
 };

@@ -29,4 +29,4 @@ export const TEMPLATE_DIRECTIVES = [ErrorContentComponent, EmptyContentComponent
     imports: [...TEMPLATE_DIRECTIVES],
     exports: [...TEMPLATE_DIRECTIVES]
 })
-export class TemplateModule {}
+export class TemplateModule { /* empty */ }

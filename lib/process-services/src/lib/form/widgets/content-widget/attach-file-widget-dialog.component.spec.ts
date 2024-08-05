@@ -53,7 +53,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         TestBed.configureTestingModule({
             imports: [ContentModule.forRoot(), ProcessTestingModule, AttachFileWidgetDialogComponent],
             providers: [
-                { provide: OidcAuthenticationService, useValue: {} },
+                { provide: OidcAuthenticationService, useValue: { /* empty */ } },
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 { provide: MatDialogRef, useValue: { close: () => of() } }
             ],
@@ -185,7 +185,7 @@ describe('AttachFileWidgetDialogComponent', () => {
             spyOn(matDialogRef, 'close').and.callThrough();
             fixture.detectChanges();
             widget.data.loginOnly = true;
-            widget.data.registerExternalHost = () => {};
+            widget.data.registerExternalHost = () => { /* empty */ };
             isLogged = false;
         });
 

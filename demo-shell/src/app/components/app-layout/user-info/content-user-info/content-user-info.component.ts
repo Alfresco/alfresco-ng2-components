@@ -83,7 +83,7 @@ export class ContentUserInfoComponent implements OnDestroy {
 
     private destroy$ = new Subject();
 
-    constructor(private peopleContentService: PeopleContentService) {}
+    constructor(private peopleContentService: PeopleContentService) { /* empty */ }
 
     ngOnDestroy(): void {
         this.destroy$.next(true);

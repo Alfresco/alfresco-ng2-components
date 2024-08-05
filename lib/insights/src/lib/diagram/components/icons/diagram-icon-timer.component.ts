@@ -30,7 +30,7 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
     templateUrl: './diagram-icon-timer.component.html'
 })
 export class DiagramIconTimerComponent extends DiagramElement implements OnInit {
-    center: any = {};
+    center: any = { /* empty */ };
     position: any;
 
     circleRadius: number;

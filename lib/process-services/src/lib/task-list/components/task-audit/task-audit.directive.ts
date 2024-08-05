@@ -60,7 +60,7 @@ export class TaskAuditDirective implements OnChanges {
 
     public audit: any;
 
-    constructor(private downloadService: DownloadService, private taskListService: TaskListService) {}
+    constructor(private downloadService: DownloadService, private taskListService: TaskListService) { /* empty */ }
 
     ngOnChanges(): void {
         if (!this.isValidType()) {

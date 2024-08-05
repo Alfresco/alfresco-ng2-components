@@ -69,12 +69,12 @@ const template: StoryFn<CommentListComponent> = (args) => ({
     props: args
 });
 
-export const TaskBased = template.bind({});
+export const TaskBased = template.bind({ /* empty */ });
 TaskBased.args = {
     comments: commentsTaskData
 };
 
-export const NodeBased = template.bind({});
+export const NodeBased = template.bind({ /* empty */ });
 NodeBased.args = {
     comments: commentsNodeData
 };

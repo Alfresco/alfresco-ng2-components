@@ -263,14 +263,14 @@ describe('UploadWidgetComponent', () => {
         });
 
         it('should show correctly the file name when is formed with special characters', async () => {
-            uploadWidgetComponent.field.value.push(fakeCreationFile('±!@#$%^&*()_+{}:”|<>?§™£-=[];’\\,./.jpg', 10));
+            uploadWidgetComponent.field.value.push(fakeCreationFile('±!@#$%^&*()_+{ /* empty */ }:”|<>?§™£-=[];’\\,./.jpg', 10));
 
             fixture.detectChanges();
             await fixture.whenStable();
 
             const jpegElement = element.querySelector('#file-10');
             expect(jpegElement).not.toBeNull();
-            expect(jpegElement.textContent).toBe(`±!@#$%^&*()_+{}:”|<>?§™£-=[];’\\,./.jpg`);
+            expect(jpegElement.textContent).toBe(`±!@#$%^&*()_+{ /* empty */ }:”|<>?§™£-=[];’\\,./.jpg`);
         });
 
         it('should show correctly the file name when is formed with Arabic characters', async () => {

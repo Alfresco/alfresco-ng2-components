@@ -57,7 +57,7 @@ export class ProcessTaskListCloudService extends BaseCloudService implements Tas
     }
 
     protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
-        const queryParam: any = {};
+        const queryParam: any = { /* empty */ };
         for (const property in requestNode) {
             if (
                 Object.prototype.hasOwnProperty.call(requestNode, property) &&

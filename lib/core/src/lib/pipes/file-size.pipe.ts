@@ -24,7 +24,7 @@ import { TranslationService } from '../translation/translation.service';
     standalone: true
 })
 export class FileSizePipe implements PipeTransform {
-    constructor(private translation: TranslationService) {}
+    constructor(private translation: TranslationService) { /* empty */ }
 
     transform(paramByte: any, decimals: number = 2): string {
         if (paramByte == null) {

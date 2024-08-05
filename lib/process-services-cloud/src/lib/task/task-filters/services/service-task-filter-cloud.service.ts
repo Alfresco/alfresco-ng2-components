@@ -34,7 +34,7 @@ export class ServiceTaskFilterCloudService {
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
         public preferenceService: PreferenceCloudServiceInterface
-    ) {}
+    ) { /* empty */ }
 
     /**
      * Creates and returns the default task filters for an app.

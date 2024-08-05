@@ -47,10 +47,10 @@ export class SearchInputComponent implements OnInit {
     @Output()
     changed = new EventEmitter<string>();
 
-    constructor(private appConfig: AppConfigService) {}
+    constructor(private appConfig: AppConfigService) { /* empty */ }
 
     ngOnInit(): void {
-        const searchConfig = this.appConfig.get<SearchConfiguration>('search') || {};
+        const searchConfig = this.appConfig.get<SearchConfiguration>('search') || { /* empty */ };
         if (searchConfig['app:fields']) {
             this.fields = searchConfig['app:fields'];
         }

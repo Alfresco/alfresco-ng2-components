@@ -162,7 +162,7 @@ describe('InfinitePaginationComponent', () => {
             });
 
             const loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
-            loadMoreButton.triggerEventHandler('click', {});
+            loadMoreButton.triggerEventHandler('click', { /* empty */ });
         });
 
         it('should trigger the loadMore event with merge true to reload all the elements', (done) => {
@@ -180,7 +180,7 @@ describe('InfinitePaginationComponent', () => {
             });
 
             const loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
-            loadMoreButton.triggerEventHandler('click', {});
+            loadMoreButton.triggerEventHandler('click', { /* empty */ });
         });
     });
 

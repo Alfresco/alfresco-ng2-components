@@ -88,7 +88,7 @@ describe('SearchHeaderQueryBuilderService', () => {
     it('should have empty user query by default', () => {
         const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         const builder = new SearchHeaderQueryBuilderService(
-            buildConfig({}),
+            buildConfig({ /* empty */ }),
             alfrescoApiService,
             null
         );

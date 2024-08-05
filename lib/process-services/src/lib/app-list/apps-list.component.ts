@@ -90,7 +90,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     private iconsMDL: IconModel;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private appsProcessService: AppsProcessService) {}
+    constructor(private appsProcessService: AppsProcessService) { /* empty */ }
 
     ngOnInit() {
         if (!this.isValidType()) {

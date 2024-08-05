@@ -104,7 +104,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         private downloadService: DownloadService,
         private thumbnailService: ThumbnailService,
         private ngZone: NgZone
-    ) {}
+    ) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['taskId']?.currentValue) {

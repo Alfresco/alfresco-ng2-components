@@ -98,7 +98,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         private changeDetector: ChangeDetectorRef,
         private userPreferencesService: UserPreferencesService,
         private elementRef: ElementRef
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.dialogActive.pipe(delay(100), takeUntil(this.onDestroy$)).subscribe(() => {

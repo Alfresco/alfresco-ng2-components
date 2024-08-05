@@ -77,7 +77,7 @@ export class HeaderLayoutComponent implements OnInit {
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */
     @Input() position = 'start';
 
-    constructor(private appConfigService: AppConfigService) {}
+    constructor(private appConfigService: AppConfigService) { /* empty */ }
 
     toggleMenu() {
         this.clicked.emit(true);

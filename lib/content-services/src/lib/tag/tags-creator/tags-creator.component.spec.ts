@@ -56,7 +56,7 @@ describe('TagsCreatorComponent', () => {
                 {
                     provide: NotificationService,
                     useValue: {
-                        showError: () => ({})
+                        showError: () => ({ /* empty */ })
                     }
                 }
             ]
@@ -376,7 +376,7 @@ describe('TagsCreatorComponent', () => {
             }));
 
             it('should show error for prohibited characters', fakeAsync(() => {
-                typeTag('tag*"<>\\/?:|{}()^');
+                typeTag('tag*"<>\\/?:|{ /* empty */ }()^');
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
                 const error = getFirstError();
@@ -574,7 +574,7 @@ describe('TagsCreatorComponent', () => {
                     of({
                         list: {
                             entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
-                            pagination: {}
+                            pagination: { /* empty */ }
                         }
                     })
                 );
@@ -596,7 +596,7 @@ describe('TagsCreatorComponent', () => {
                     of({
                         list: {
                             entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
-                            pagination: {}
+                            pagination: { /* empty */ }
                         }
                     })
                 );
@@ -608,7 +608,7 @@ describe('TagsCreatorComponent', () => {
 
             it('should not display existing tags if searching fails', fakeAsync(() => {
                 spyOn(notificationService, 'showError');
-                spyOn(tagService, 'searchTags').and.returnValue(throwError({}));
+                spyOn(tagService, 'searchTags').and.returnValue(throwError({ /* empty */ }));
 
                 typeTag('Tag');
 
@@ -652,7 +652,7 @@ describe('TagsCreatorComponent', () => {
 
             it('should not display exact tag if exact tag loading fails', fakeAsync(() => {
                 spyOn(notificationService, 'showError');
-                spyOn(tagService, 'findTagByName').and.returnValue(throwError({}));
+                spyOn(tagService, 'findTagByName').and.returnValue(throwError({ /* empty */ }));
 
                 typeTag('Tag');
 
@@ -677,7 +677,7 @@ describe('TagsCreatorComponent', () => {
                     of({
                         list: {
                             entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
-                            pagination: {}
+                            pagination: { /* empty */ }
                         }
                     })
                 );
@@ -705,7 +705,7 @@ describe('TagsCreatorComponent', () => {
                     of({
                         list: {
                             entries: [selectedTag, { entry: { tag: leftTag } as any }],
-                            pagination: {}
+                            pagination: { /* empty */ }
                         }
                     })
                 );

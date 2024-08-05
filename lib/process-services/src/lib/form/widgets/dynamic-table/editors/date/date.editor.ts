@@ -57,7 +57,7 @@ export class DateEditorComponent implements OnInit {
     minDate: Date;
     maxDate: Date;
 
-    constructor(private dateAdapter: DateAdapter<Date>) {}
+    constructor(private dateAdapter: DateAdapter<Date>) { /* empty */ }
 
     ngOnInit() {
         const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;

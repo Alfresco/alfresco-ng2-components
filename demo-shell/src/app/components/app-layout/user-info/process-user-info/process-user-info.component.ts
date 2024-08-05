@@ -86,7 +86,7 @@ export class ProcessUserInfoComponent implements OnDestroy {
 
     private destroy$ = new Subject();
 
-    constructor(private peopleProcessService: PeopleProcessService, private peopleContentService: PeopleContentService) {}
+    constructor(private peopleProcessService: PeopleProcessService, private peopleContentService: PeopleContentService) { /* empty */ }
 
     ngOnDestroy(): void {
         this.destroy$.next(true);

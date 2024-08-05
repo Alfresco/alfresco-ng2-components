@@ -103,7 +103,7 @@ export class ProcessListCloudService extends BaseCloudService {
     }
 
     protected buildQueryParams(requestNode: ProcessQueryCloudRequestModel): any {
-        const queryParam = {};
+        const queryParam = { /* empty */ };
 
         for (const property in requestNode) {
             if (

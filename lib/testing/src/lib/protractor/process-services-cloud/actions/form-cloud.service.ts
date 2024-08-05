@@ -31,7 +31,7 @@ export class FormCloudService {
             const path = '/' + appName + '/form/v1/forms/' + formId + '/submit';
             const method = 'POST';
 
-            const queryParams = {};
+            const queryParams = { /* empty */ };
             const postBody = {
                 values,
                 taskId,
@@ -51,8 +51,8 @@ export class FormCloudService {
             const path = '/' + appName + '/form/v1/forms';
             const method = 'GET';
 
-            const queryParams = {};
-            const postBody = {};
+            const queryParams = { /* empty */ };
+            const postBody = { /* empty */ };
 
             return this.api.performBpmOperation(path, method, queryParams, postBody);
 

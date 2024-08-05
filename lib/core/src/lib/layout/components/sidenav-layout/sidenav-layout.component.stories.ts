@@ -224,7 +224,7 @@ const template: StoryFn<SidenavLayoutComponent> = (args) => ({
     </adf-sidenav-layout>`
 });
 
-export const SidenavLayout = template.bind({});
+export const SidenavLayout = template.bind({ /* empty */ });
 SidenavLayout.args = {
     sidenavMin: 85,
     sidenavMax: 250,

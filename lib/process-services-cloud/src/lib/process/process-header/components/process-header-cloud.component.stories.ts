@@ -58,25 +58,25 @@ const template: StoryFn<ProcessHeaderCloudComponent> = (args) => ({
     props: args
 });
 
-export const DefaultProcessHeaderCloud = template.bind({});
+export const DefaultProcessHeaderCloud = template.bind({ /* empty */ });
 DefaultProcessHeaderCloud.args = {
     appName: 'app',
     processInstanceId: 'mock-process-id'
 };
 
-export const NoParentAndBusinessAndName = template.bind({});
+export const NoParentAndBusinessAndName = template.bind({ /* empty */ });
 NoParentAndBusinessAndName.args = {
     appName: 'app-placeholders',
     processInstanceId: 'mock-process-id'
 };
 
-export const InvalidOrMissingAppName = template.bind({});
+export const InvalidOrMissingAppName = template.bind({ /* empty */ });
 InvalidOrMissingAppName.args = {
     appName: undefined,
     processInstanceId: 'mock-process-id'
 };
 
-export const InvalidOrMissingProcessInstanceID = template.bind({});
+export const InvalidOrMissingProcessInstanceID = template.bind({ /* empty */ });
 InvalidOrMissingProcessInstanceID.args = {
     appName: 'app',
     processInstanceId: undefined

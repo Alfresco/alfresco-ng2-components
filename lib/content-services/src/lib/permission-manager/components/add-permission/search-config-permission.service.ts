@@ -30,7 +30,7 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
         @Optional()
         @Inject(SEARCH_QUERY_TOKEN)
         private queryProvider: QueryProvider
-    ) {}
+    ) { /* empty */ }
 
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
         return {

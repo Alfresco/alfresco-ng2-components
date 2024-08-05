@@ -32,7 +32,7 @@ export class CommentProcessService implements CommentsService {
         return this._commentsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private peopleProcessService: PeopleProcessService) {}
+    constructor(private apiService: AlfrescoApiService, private peopleProcessService: PeopleProcessService) { /* empty */ }
 
     /**
      * Gets all comments that have been added to a process instance.

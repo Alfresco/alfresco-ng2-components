@@ -95,5 +95,5 @@ const template: StoryFn<EditJsonDialogStorybookComponent> = (args) => ({
     props: args
 });
 
-export const EditJSONDialog = template.bind({});
+export const EditJSONDialog = template.bind({ /* empty */ });
 EditJSONDialog.parameters = { layout: 'centered' };

@@ -320,7 +320,7 @@ describe('UploadButtonComponent', () => {
 
         beforeEach(() => {
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
-            fakeNodeWithNoPermission = {};
+            fakeNodeWithNoPermission = { /* empty */ };
         });
 
         it('should not call uploadFiles for node without permission', () => {

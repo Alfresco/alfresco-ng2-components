@@ -76,7 +76,7 @@ describe('ContentNodeDialogService', () => {
         afterOpenObservable = new Subject<any>();
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => afterOpenObservable,
-            afterClosed: () => of({}),
+            afterClosed: () => of({ /* empty */ }),
             componentInstance: {
                 error: new Subject<any>()
             }
@@ -90,7 +90,7 @@ describe('ContentNodeDialogService', () => {
         } as Node;
 
         service.openLockNodeDialog(testNode).subscribe(
-            () => {},
+            () => { /* empty */ },
             (error) => {
                 expect(error).toBe('OPERATION.FAIL.NODE.NO_PERMISSION');
             }
@@ -104,7 +104,7 @@ describe('ContentNodeDialogService', () => {
 
     it('should NOT be able to open the dialog when node has NOT permission', () => {
         service.openCopyMoveDialog(NodeAction.CHOOSE, fakeNode, 'noperm').subscribe(
-            () => {},
+            () => { /* empty */ },
             (error) => {
                 expect(spyOnDialogOpen).not.toHaveBeenCalled();
                 expect(JSON.parse(error.message).error.statusCode).toBe(403);
@@ -114,7 +114,7 @@ describe('ContentNodeDialogService', () => {
 
     it('should be able to open the dialog using a folder id', fakeAsync(() => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
-        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe(() => {});
+        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe(() => { /* empty */ });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
@@ -122,7 +122,7 @@ describe('ContentNodeDialogService', () => {
     it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
-        service.openFileBrowseDialogBySite().subscribe(() => {});
+        service.openFileBrowseDialogBySite().subscribe(() => { /* empty */ });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
@@ -130,7 +130,7 @@ describe('ContentNodeDialogService', () => {
     it('should be able to open the dialog for folder using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
-        service.openFolderBrowseDialogBySite().subscribe(() => {});
+        service.openFolderBrowseDialogBySite().subscribe(() => { /* empty */ });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
@@ -188,7 +188,7 @@ describe('ContentNodeDialogService', () => {
         beforeEach(() => {
             spyOnDialogOpen.and.callFake((_: any, config: any) => {
                 testContentNodeSelectorComponentData = config.data;
-                return { componentInstance: {}, afterClosed: () => of(null) };
+                return { componentInstance: { /* empty */ }, afterClosed: () => of(null) };
             });
             service.openCopyMoveDialog(NodeAction.CHOOSE, fakeNode, '!update');
         });

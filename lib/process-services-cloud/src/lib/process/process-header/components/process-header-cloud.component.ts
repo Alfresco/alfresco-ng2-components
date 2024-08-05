@@ -60,7 +60,7 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy
         private processCloudService: ProcessCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.dateFormat = this.appConfig.get('adf-cloud-process-header.defaultDateFormat');

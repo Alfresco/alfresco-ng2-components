@@ -35,7 +35,7 @@ export class TaskFormService {
         return this._taskFormsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Saves a task form.
@@ -118,9 +118,9 @@ export class TaskFormService {
      */
     toJson(res: any) {
         if (res) {
-            return res || {};
+            return res || { /* empty */ };
         }
-        return {};
+        return { /* empty */ };
     }
 
     /**

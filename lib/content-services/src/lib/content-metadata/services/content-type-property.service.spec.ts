@@ -142,7 +142,7 @@ describe('ContentTypePropertyService', () => {
             nodeType: 'fk:nodeType',
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
-            properties: {}
+            properties: { /* empty */ }
         } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(false);
         service.getContentTypeCardItem(fakeNode).subscribe((items: CardViewItem[]) => {
@@ -165,7 +165,7 @@ describe('ContentTypePropertyService', () => {
             nodeType: 'fn:fakenode',
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
-            properties: {}
+            properties: { /* empty */ }
         } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContent));
@@ -190,7 +190,7 @@ describe('ContentTypePropertyService', () => {
             nodeType: 'fn:fakenode',
             createdByUser: { displayName: 'test-user' },
             modifiedByUser: { displayName: 'test-user-modified' },
-            properties: {}
+            properties: { /* empty */ }
         } as Node;
         spyOn(versionCompatibilityService, 'isVersionSupported').and.returnValue(true);
         spyOn(contentTypeService, 'getContentTypeByPrefix').and.returnValue(of(mockContentWithProperties));

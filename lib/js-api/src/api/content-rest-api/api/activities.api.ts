@@ -46,7 +46,7 @@ export class ActivitiesApi extends BaseApi {
             ContentFieldsQuery
     ): Promise<ActivityPaging> {
         throwIfNotDefined(personId, 'personId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             personId

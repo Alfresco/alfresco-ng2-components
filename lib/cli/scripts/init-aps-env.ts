@@ -277,11 +277,11 @@ async function updateLicense(opts: InitApsEnvArgs) {
         await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${opts.host}/activiti-app/api/enterprise/license`,
             'POST',
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             { file: fileContent },
-            {},
+            { /* empty */ },
             ['multipart/form-data'],
             ['application/json']
         );
@@ -364,11 +364,11 @@ async function hasLicense(opts: InitApsEnvArgs): Promise<boolean> {
         const license = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${opts.host}/activiti-app/api/enterprise/license`,
             'GET',
-            {},
-            {},
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             ['application/json'],
             ['application/json']
         );
@@ -394,11 +394,11 @@ async function getDefaultApsUsersFromRealm(opts: InitApsEnvArgs) {
         const users: any[] = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${opts.host}/auth/admin/realms/alfresco/users`,
             'GET',
-            {},
+            { /* empty */ },
             { max: 1000 },
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             ['application/json'],
             ['application/json']
         );
@@ -424,11 +424,11 @@ async function isContentRepoPresent(opts: InitApsEnvArgs, tenantId: number, cont
         const contentRepos = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${opts.host}/activiti-app/app/rest/integration/alfresco?tenantId=${tenantId}`,
             'GET',
-            {},
-            {},
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             ['application/json'],
             ['application/json']
         );
@@ -464,10 +464,10 @@ async function addContentRepoWithBasic(opts: InitApsEnvArgs, tenantId: number, n
         const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${opts.host}/activiti-app/api/enterprise/integration/alfresco`,
             'POST',
-            {},
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             body,
             ['application/json'],
             ['application/json']
@@ -491,11 +491,11 @@ async function authorizeUserToContentRepo(opts: InitApsEnvArgs, user: any) {
         const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${opts.host}/activiti-app/app/rest/integration/alfresco`,
             'GET',
-            {},
-            {},
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             ['application/json'],
             ['application/json']
         );
@@ -527,10 +527,10 @@ async function authorizeUserToContentWithBasic(opts: InitApsEnvArgs, username: s
         const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
             `${opts.host}/activiti-app/api/enterprise/integration/alfresco/${contentId}/account`,
             'POST',
-            {},
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             body,
             ['application/json'],
             ['application/json']
@@ -569,5 +569,5 @@ async function downloadLicenseFile(apsLicensePath: string) {
  */
 function sleep(delay: number) {
     const start = new Date().getTime();
-    while (new Date().getTime() < start + delay) {}
+    while (new Date().getTime() < start + delay) { /* empty */ }
 }

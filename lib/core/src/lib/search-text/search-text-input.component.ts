@@ -268,7 +268,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     toggleSearchBar() {
         if (this.toggleSearch) {
-            this.toggleSearch.next({});
+            this.toggleSearch.next({ /* empty */ });
         }
     }
 

@@ -34,7 +34,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     providers: [NotificationService]
 })
 class ProvidesNotificationServiceComponent {
-    constructor(public notificationService: NotificationService) {}
+    constructor(public notificationService: NotificationService) { /* empty */ }
 
     sendMessageWithoutConfig() {
         return this.notificationService.openSnackMessage('Test notification', 1000);

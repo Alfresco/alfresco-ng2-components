@@ -112,7 +112,7 @@ export class DiagramComponent implements OnChanges {
 
     diagram: DiagramModel;
 
-    constructor(private diagramColorService: DiagramColorService, private raphaelService: RaphaelService, private diagramsService: DiagramsService) {}
+    constructor(private diagramColorService: DiagramColorService, private raphaelService: RaphaelService, private diagramsService: DiagramsService) { /* empty */ }
 
     ngOnChanges() {
         this.reset();

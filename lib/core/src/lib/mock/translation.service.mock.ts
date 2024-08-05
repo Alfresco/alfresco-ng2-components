@@ -35,13 +35,13 @@ export class TranslationMock implements TranslationService {
         onLangChange: new EventEmitter<LangChangeEvent>()
     };
 
-    addTranslationFolder() {}
+    addTranslationFolder() { /* empty */ }
 
-    onTranslationChanged() {}
+    onTranslationChanged() { /* empty */ }
 
-    use(): any {}
+    use(): any { /* empty */ }
 
-    loadTranslation() {}
+    loadTranslation() { /* empty */ }
 
     get(key: string | Array<string>): Observable<string | any> {
         return of(key);

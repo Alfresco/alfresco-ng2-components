@@ -293,7 +293,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         public dialog: MatDialog,
         private viewUtilsService: ViewUtilService,
         private appConfigService: AppConfigService
-    ) {}
+    ) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         const { blobFile, urlFile } = changes;

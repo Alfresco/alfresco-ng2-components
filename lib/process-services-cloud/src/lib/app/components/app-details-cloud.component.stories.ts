@@ -55,4 +55,4 @@ const template: StoryFn<AppDetailsCloudComponent> = (args) => ({
     props: args
 });
 
-export const AppDetailsCloud = template.bind({});
+export const AppDetailsCloud = template.bind({ /* empty */ });

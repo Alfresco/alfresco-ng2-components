@@ -565,7 +565,7 @@ export const fakeSiteNodeResponse: any = {
             skipCount: 0,
             maxItems: 100
         },
-        context: {},
+        context: { /* empty */ },
         entries: [
             {
                 entry: {
@@ -657,7 +657,7 @@ export const fakeEmptyResponse: any = {
             skipCount: 0,
             maxItems: 100
         },
-        context: {},
+        context: { /* empty */ },
         entries: []
     }
 };

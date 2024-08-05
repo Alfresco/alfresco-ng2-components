@@ -44,7 +44,7 @@ export class ConfirmDialogComponent {
     htmlContent: string;
 
     constructor(@Inject(MAT_DIALOG_DATA) data: ConfirmDialogComponentProps, private sanitizer: DomSanitizer) {
-        data = data || {};
+        data = data || { /* empty */ };
         this.title = data.title || 'ADF_CONFIRM_DIALOG.TITLE';
         this.message = data.message || 'ADF_CONFIRM_DIALOG.MESSAGE';
         this.yesLabel = data.yesLabel || 'ADF_CONFIRM_DIALOG.YES_LABEL';

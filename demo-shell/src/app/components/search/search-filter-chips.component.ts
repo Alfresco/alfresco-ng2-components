@@ -184,7 +184,7 @@ export class AppSearchFilterChipsComponent implements OnInit, OnDestroy {
     }
 
     private updateSetting(field) {
-        field.settings = field.settings ?? {};
+        field.settings = field.settings ?? { /* empty */ };
         field.settings.allowUpdateOnChange = false;
         field.settings.hideDefaultAction = true;
     }

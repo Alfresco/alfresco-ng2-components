@@ -65,7 +65,7 @@ export class PropertyGroupTranslatorService {
 
     public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues, definition: Definition): CardViewGroup[] {
         return propertyGroups.map((propertyGroup) => {
-            const translatedPropertyGroup: any = Object.assign({}, propertyGroup);
+            const translatedPropertyGroup: any = Object.assign({ /* empty */ }, propertyGroup);
             translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues, definition);
             translatedPropertyGroup.editable = translatedPropertyGroup.properties.some((property) => property.editable);
             return translatedPropertyGroup;

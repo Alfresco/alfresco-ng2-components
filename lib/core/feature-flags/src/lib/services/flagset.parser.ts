@@ -34,7 +34,7 @@ export class FlagSetParser {
                     fictive: flags[key].fictive
                 }
             }),
-            {}
+            { /* empty */ }
         );
     }
 
@@ -45,10 +45,10 @@ export class FlagSetParser {
                 [key]: {
                     current: serializedFlags[key].current,
                     previous: null,
-                    ...(serializedFlags[key].fictive ? { fictive: true } : {})
+                    ...(serializedFlags[key].fictive ? { fictive: true } : { /* empty */ })
                 }
             }),
-            {}
+            { /* empty */ }
         );
     }
 }

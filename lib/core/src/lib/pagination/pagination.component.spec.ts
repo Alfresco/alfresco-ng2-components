@@ -259,10 +259,10 @@ describe('PaginationComponent', () => {
 
     describe('with paginated component', () => {
         it('should take pagination from the external component', () => {
-            const pagination: PaginationModel = {};
+            const pagination: PaginationModel = { /* empty */ };
 
             const customComponent = {
-                pagination: new BehaviorSubject<PaginationModel>({})
+                pagination: new BehaviorSubject<PaginationModel>({ /* empty */ })
             } as PaginatedComponent;
 
             component.target = customComponent;
@@ -273,11 +273,11 @@ describe('PaginationComponent', () => {
         });
 
         it('should update pagination by subscription', () => {
-            const pagination1: PaginationModel = {};
-            const pagination2: PaginationModel = {};
+            const pagination1: PaginationModel = { /* empty */ };
+            const pagination2: PaginationModel = { /* empty */ };
 
             const customComponent = {
-                pagination: new BehaviorSubject<PaginationModel>({})
+                pagination: new BehaviorSubject<PaginationModel>({ /* empty */ })
             } as PaginatedComponent;
 
             component.target = customComponent;
@@ -292,8 +292,8 @@ describe('PaginationComponent', () => {
 
         it('should send pagination event to paginated component', () => {
             const customComponent = {
-                pagination: new BehaviorSubject<PaginationModel>({}),
-                updatePagination: () => {},
+                pagination: new BehaviorSubject<PaginationModel>({ /* empty */ }),
+                updatePagination: () => { /* empty */ },
                 supportedPageSizes: [],
                 rows: []
             } as PaginatedComponent;
@@ -312,8 +312,8 @@ describe('PaginationComponent', () => {
 
         it('should go to previous page if current page has 0 items', () => {
             const customComponent = {
-                updatePagination: () => {},
-                pagination: new BehaviorSubject<PaginationModel>({}),
+                updatePagination: () => { /* empty */ },
+                pagination: new BehaviorSubject<PaginationModel>({ /* empty */ }),
                 rows: []
             } as PaginatedComponent;
 
@@ -338,7 +338,7 @@ describe('PaginationComponent', () => {
         });
 
         it('should not show pagination when external component count is zero', () => {
-            const pagination: PaginationModel = {};
+            const pagination: PaginationModel = { /* empty */ };
             const customComponent = {
                 pagination: new BehaviorSubject<PaginationModel>({ count: 0, maxItems: 5, totalItems: 5 })
             } as PaginatedComponent;

@@ -40,7 +40,7 @@ export class EditJsonDialogComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) private settings: EditJsonDialogSettings
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         if (this.settings) {

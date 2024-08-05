@@ -33,7 +33,7 @@ export class AttachFileWidgetDialogService {
     @Output()
     error = new EventEmitter<any>();
 
-    private externalApis: { [key: string]: AlfrescoApiService } = {};
+    private externalApis: { [key: string]: AlfrescoApiService } = { /* empty */ };
 
     constructor(private dialog: MatDialog,
                 private translation: TranslationService) {

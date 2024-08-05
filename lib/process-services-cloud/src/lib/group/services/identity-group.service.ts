@@ -32,7 +32,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     constructor(
         private oAuth2Service: OAuth2Service,
         private appConfigService: AppConfigService
-    ) {}
+    ) { /* empty */ }
 
     public search(name: string, filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
         if (name.trim() === '') {

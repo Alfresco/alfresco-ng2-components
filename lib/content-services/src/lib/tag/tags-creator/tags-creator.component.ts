@@ -176,7 +176,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @ViewChild('tagNameInput')
     private tagNameInputElement: ElementRef;
 
-    constructor(private tagService: TagService, private notificationService: NotificationService) {}
+    constructor(private tagService: TagService, private notificationService: NotificationService) { /* empty */ }
 
     ngOnInit(): void {
         this.tagNameControl.valueChanges
@@ -374,7 +374,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private validateSpecialCharacters(tagNameControl: FormControl<string>): TagNameControlErrors | null {
-        const specialSymbolsRegex = /[{}()^':"\\|<>/?]/;
+        const specialSymbolsRegex = /[{ /* empty */ }()^':"\\|<>/?]/;
         return tagNameControl.value.length && specialSymbolsRegex.test(tagNameControl.value) ? { specialCharacters: true } : null;
     }
 

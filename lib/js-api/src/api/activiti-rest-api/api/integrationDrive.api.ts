@@ -26,7 +26,7 @@ export class IntegrationDriveApi extends BaseApi {
      * Drive Authorization
      * Returns Drive OAuth HTML Page
      *
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     confirmAuthorisation(): Promise<any> {
         return this.get({

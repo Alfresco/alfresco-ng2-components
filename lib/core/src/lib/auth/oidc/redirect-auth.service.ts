@@ -116,7 +116,7 @@ export class RedirectAuthService extends AuthService {
     if (currentUrl) {
         const randomValue = window.crypto.getRandomValues(new Uint32Array(1))[0];
         stateKey = `auth_state_${randomValue}${Date.now()}`;
-        this._oauthStorage.setItem(stateKey, JSON.stringify(currentUrl || {}));
+        this._oauthStorage.setItem(stateKey, JSON.stringify(currentUrl || { /* empty */ }));
     }
 
     // initLoginFlow will initialize the login flow in either code or implicit depending on the configuration
@@ -205,7 +205,7 @@ export class RedirectAuthService extends AuthService {
         });
 
     const originalSilentRefresh = this.oauthService.silentRefresh.bind(this.oauthService);
-    this.oauthService.silentRefresh = async (params: any = {}, noPrompt = true): Promise<OAuthEvent> =>
+    this.oauthService.silentRefresh = async (params: any = { /* empty */ }, noPrompt = true): Promise<OAuthEvent> =>
         navigator.locks.request(`silent_refresh_${location.origin}`, async (): Promise<OAuthEvent> => {
             if (lastUpdatedAccessToken !== this.oauthService.getAccessToken()) {
                 (this.oauthService as any).eventsSubject.next(new OAuthSuccessEvent('token_received'));

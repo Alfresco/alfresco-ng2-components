@@ -43,7 +43,7 @@ export class NodeLockDirective implements AfterViewInit {
         private renderer: Renderer2,
         private contentService: ContentService,
         private contentNodeDialogService: ContentNodeDialogService
-    ) {}
+    ) { /* empty */ }
 
     ngAfterViewInit() {
         const hasAllowableOperations = this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.LOCK);

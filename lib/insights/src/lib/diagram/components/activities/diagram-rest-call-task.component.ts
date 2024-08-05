@@ -28,4 +28,4 @@ import { DiagramIconRestCallTaskComponent } from '../icons/diagram-icon-rest-cal
     imports: [DiagramTaskComponent, DiagramIconRestCallTaskComponent],
     templateUrl: './diagram-rest-call-task.component.html'
 })
-export class DiagramRestCallTaskComponent extends DiagramElement {}
+export class DiagramRestCallTaskComponent extends DiagramElement { /* empty */ }

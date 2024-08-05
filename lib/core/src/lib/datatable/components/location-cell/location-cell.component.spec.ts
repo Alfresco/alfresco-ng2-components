@@ -89,7 +89,7 @@ describe('LocationCellComponent', () => {
     });
 
     it('should not setup cell when path has no data', (done) => {
-        rowData.path = {};
+        rowData.path = { /* empty */ };
 
         fixture.detectChanges();
 

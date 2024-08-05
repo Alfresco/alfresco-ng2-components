@@ -43,7 +43,7 @@ export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private nodesApiService: NodesApiService) {}
+    constructor(private nodesApiService: NodesApiService) { /* empty */ }
 
     ngOnInit() {
         this.updateValue();

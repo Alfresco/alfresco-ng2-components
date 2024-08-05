@@ -89,4 +89,4 @@ import { MatTabsModule } from '@angular/material/tabs';
         MatExpansionModule
     ]
 })
-export class MaterialModule {}
+export class MaterialModule { /* empty */ }

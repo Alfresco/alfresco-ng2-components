@@ -64,7 +64,7 @@ export class BreadcrumbComponent implements AfterContentInit, OnChanges {
 
     selectedBreadcrumbs: Array<TemplateRef<unknown>> = [];
 
-    constructor(private cdr: ChangeDetectorRef) {}
+    constructor(private cdr: ChangeDetectorRef) { /* empty */ }
 
     ngAfterContentInit() {
         this.breadcrumbItems.changes

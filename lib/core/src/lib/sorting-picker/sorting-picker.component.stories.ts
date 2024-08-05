@@ -100,7 +100,7 @@ const template: StoryFn<SortingPickerComponent> = (args) => ({
     props: args
 });
 
-export const SortingPicker = template.bind({});
+export const SortingPicker = template.bind({ /* empty */ });
 SortingPicker.args = {
     options: initialSortingTypes
 };

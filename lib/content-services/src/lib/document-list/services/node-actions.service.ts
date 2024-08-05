@@ -43,7 +43,7 @@ export class NodeActionsService {
         private apiService?: AlfrescoApiService,
         private dialog?: MatDialog,
         private downloadService?: DownloadService
-    ) {}
+    ) { /* empty */ }
 
     downloadNode(node: NodeEntry) {
         new NodeDownloadDirective(this.apiService, this.downloadService, this.dialog).downloadNode(node);

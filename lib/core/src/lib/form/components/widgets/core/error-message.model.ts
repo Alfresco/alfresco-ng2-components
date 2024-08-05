@@ -31,7 +31,7 @@ export class ErrorMessageModel {
     }
 
     getAttributesAsJsonObj() {
-        const result = {};
+        const result = { /* empty */ };
         if (this.attributes.size > 0) {
             this.attributes.forEach((value, key) => {
                 result[key] = typeof value === 'string' ? value : JSON.stringify(value);

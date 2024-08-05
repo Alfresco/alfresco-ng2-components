@@ -43,7 +43,7 @@ export class ProcessCloudContentService {
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private downloadService: DownloadService
-    ) {}
+    ) { /* empty */ }
 
     createTemporaryRawRelatedContent(file: File, nodeId: string): Observable<Node> {
         return from(this.uploadApi.uploadFile(file, '', nodeId, null, { overwrite: true })).pipe(

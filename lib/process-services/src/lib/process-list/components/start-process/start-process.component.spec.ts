@@ -278,7 +278,7 @@ describe('StartProcessComponent', () => {
             });
 
             it('if values in input is a node should be linked in the process service', async () => {
-                component.values = {};
+                component.values = { /* empty */ };
                 component.values['file'] = {
                     isFile: true,
                     name: 'example-file'
@@ -294,7 +294,7 @@ describe('StartProcessComponent', () => {
             });
 
             it('if values in input is a collection of nodes should be linked in the process service', async () => {
-                component.values = {};
+                component.values = { /* empty */ };
                 component.values['file'] = [
                     {
                         isFile: true,
@@ -396,7 +396,7 @@ describe('StartProcessComponent', () => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([testProcessDef]));
                 component.appId = 123;
                 component.showSelectProcessDropdown = false;
-                component.ngOnChanges({});
+                component.ngOnChanges({ /* empty */ });
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -411,7 +411,7 @@ describe('StartProcessComponent', () => {
                 component.appId = 123;
                 component.processDefinitionName = 'My Process 2';
                 component.showSelectProcessDropdown = true;
-                component.ngOnChanges({});
+                component.ngOnChanges({ /* empty */ });
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -427,7 +427,7 @@ describe('StartProcessComponent', () => {
                 getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
                 component.appId = 123;
                 component.processDefinitionName = 'My Process 2';
-                component.ngOnChanges({});
+                component.ngOnChanges({ /* empty */ });
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -499,7 +499,7 @@ describe('StartProcessComponent', () => {
         it('should call service to start process with the variables setted', async () => {
             const inputProcessVariable: RestVariable[] = [];
 
-            const variable: RestVariable = {};
+            const variable: RestVariable = { /* empty */ };
             variable.name = 'nodeId';
             variable.value = 'id';
 
