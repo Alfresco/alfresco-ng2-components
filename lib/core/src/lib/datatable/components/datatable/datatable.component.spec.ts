@@ -930,7 +930,7 @@ describe('DataTable', () => {
         );
         const rows = dataTable.data.getRows();
         const event = new MouseEvent('click');
-        Object.defineProperty(event, 'target', { value: { tagName: 'label', closest: () => null} });
+        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => null} });
         spyOn(dataTable, 'onRowClick');
 
         dataTable.onCheckboxLabelClick(rows[0], event);
@@ -941,8 +941,13 @@ describe('DataTable', () => {
         const data = new ObjectDataTableAdapter([{}, {}], []);
         const rows = data.getRows();
         const event = new MouseEvent('click');
-        // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
-        Object.defineProperty(event, 'target', { value: { tagName: 'MAT-CHECKBOX', closest: () => null} });
+        Object.defineProperty(event, 'target', {
+            value: {
+                getAttribute: (attr: string) => attr === 'data-adf-datatable-row-checkbox' ? 'data-adf-datatable-row-checkbox' : null,
+                hasAttribute: (attr: string) => attr === 'data-adf-datatable-row-checkbox',
+                closest: () => null
+            }
+        });
         spyOn(dataTable, 'onRowClick');
 
         dataTable.onCheckboxLabelClick(rows[0], event);
@@ -953,7 +958,7 @@ describe('DataTable', () => {
         const data = new ObjectDataTableAdapter([{}, {}], []);
         const rows = data.getRows();
         const event = new MouseEvent('click');
-        Object.defineProperty(event, 'target', { value: { tagName: 'div', closest: () => 'element'} });
+        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => 'element'} });
         spyOn(dataTable, 'onRowClick');
 
         dataTable.onCheckboxLabelClick(rows[0], event);
