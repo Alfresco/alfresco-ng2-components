@@ -518,6 +518,58 @@ describe('DropdownCloudWidgetComponent', () => {
                 { id: 'opt_4', name: 'option_4' }
             ]);
         });
+
+        it('should fail (display error) for multiple type dropdown with zero selection', async () => {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
+                type: FormFieldTypes.DROPDOWN,
+                value: [{ id: 'id_cat', name: 'Cat' }],
+                required: true,
+                selectionType: 'multiple',
+                hasEmptyValue: false,
+                options: [
+                    { id: 'id_cat', name: 'Cat' },
+                    { id: 'id_dog', name: 'Dog' }
+                ]
+            });
+
+            const validateBeforeUnselect = widget.dropdownControl.valid;
+
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.clickOptions({ selector: '[id="id_cat"]' });
+
+            const validateAfterUnselect = widget.dropdownControl.valid;
+
+            expect(validateBeforeUnselect).toBe(true);
+            expect(validateAfterUnselect).toBe(false);
+        });
+
+        it('should fail (display error) for dropdown with null value', () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                value: null,
+                required: true,
+                options: [{ id: 'one', name: 'one' }],
+                selectionType: 'multiple'
+            });
+
+            widget.ngOnInit();
+
+            expect(widget.dropdownControl.valid).toBe(false);
+        });
+
+        it('should fail (display error) for dropdown with empty object', () => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DROPDOWN,
+                value: {},
+                required: true,
+                options: [{ id: 'one', name: 'one' }],
+                selectionType: 'multiple'
+            });
+
+            widget.ngOnInit();
+
+            expect(widget.dropdownControl.valid).toBe(false);
+        });
     });
 
     describe('Linked Dropdown', () => {
