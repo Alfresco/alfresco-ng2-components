@@ -59,4 +59,4 @@ const template: StoryFn<FormDefinitionSelectorCloudComponent> = (args) => ({
     props: args
 });
 
-export const FormDefinitionSelectorCloud = template.bind({});
+export const FormDefinitionSelectorCloud = template.bind({ /* empty */ });

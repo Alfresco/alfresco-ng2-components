@@ -85,7 +85,7 @@ export default function main(_args: string[], workingDir: string) {
                 projVersion: packageJson.version,
                 projName: packageJson.name
             },
-            {},
+            { /* empty */ },
             (err: any, mdText: string) => {
                 if (err) {
                     console.error(err);

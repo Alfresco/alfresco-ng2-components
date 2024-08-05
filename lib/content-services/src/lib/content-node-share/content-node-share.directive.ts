@@ -50,7 +50,7 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
         return this._nodesApi;
     }
 
-    constructor(private dialog: MatDialog, private zone: NgZone, private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private dialog: MatDialog, private zone: NgZone, private alfrescoApiService: AlfrescoApiService) { /* empty */ }
 
     ngOnDestroy() {
         this.onDestroy$.next(true);

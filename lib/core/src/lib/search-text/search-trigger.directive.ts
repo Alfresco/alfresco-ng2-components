@@ -62,16 +62,16 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
 
-    onChange: (value: any) => void = () => {};
+    onChange: (value: any) => void = () => { /* empty */ };
 
-    onTouched = () => {};
+    onTouched = () => { /* empty */ };
 
     constructor(
         private element: ElementRef,
         private ngZone: NgZone,
         private changeDetectorRef: ChangeDetectorRef,
         @Optional() @Inject(DOCUMENT) private document: any
-    ) {}
+    ) { /* empty */ }
 
     ngOnDestroy() {
         this.onDestroy$.next(true);

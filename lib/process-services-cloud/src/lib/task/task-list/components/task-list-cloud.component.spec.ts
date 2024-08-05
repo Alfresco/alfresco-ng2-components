@@ -75,7 +75,7 @@ class CustomTaskListComponent {
         </adf-cloud-task-list>
     `
 })
-class EmptyTemplateComponent {}
+class EmptyTemplateComponent { /* empty */ }
 @Component({
     template: ` <adf-cloud-task-list>
         <data-columns>
@@ -96,8 +96,8 @@ describe('TaskListCloudComponent', () => {
     let appConfig: AppConfigService;
     let taskListCloudService: TaskListCloudServiceInterface;
     const preferencesService: PreferenceCloudServiceInterface = jasmine.createSpyObj('preferencesService', {
-        getPreferences: of({}),
-        updatePreference: of({})
+        getPreferences: of({ /* empty */ }),
+        updatePreference: of({ /* empty */ })
     });
 
     beforeEach(() => {
@@ -208,7 +208,7 @@ describe('TaskListCloudComponent', () => {
         fixture.detectChanges();
 
         const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
-        mainMenuButton.triggerEventHandler('click', {});
+        mainMenuButton.triggerEventHandler('click', { /* empty */ });
         fixture.detectChanges();
 
         const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
@@ -667,7 +667,7 @@ describe('TaskListCloudComponent: Copy cell content directive from app.config sp
         expect(
             component.replacePriorityValues(
                 {
-                    obj: {},
+                    obj: { /* empty */ },
                     isSelected: false,
                     hasValue: () => false,
                     getValue: () => undefined

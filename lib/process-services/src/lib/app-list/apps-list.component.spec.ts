@@ -45,7 +45,7 @@ describe('AppsListComponent', () => {
             </adf-apps>
         `
     })
-    class CustomEmptyAppListTemplateComponent {}
+    class CustomEmptyAppListTemplateComponent { /* empty */ }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -147,7 +147,7 @@ describe('AppsListComponent', () => {
 
     it('should emit an error when an error occurs loading apps', () => {
         const emitSpy = spyOn(component.error, 'emit');
-        getAppsSpy.and.returnValue(throwError({}));
+        getAppsSpy.and.returnValue(throwError({ /* empty */ }));
         fixture.detectChanges();
         expect(emitSpy).toHaveBeenCalled();
     });

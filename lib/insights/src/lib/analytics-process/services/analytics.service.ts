@@ -46,7 +46,7 @@ export class AnalyticsService {
         return this._processDefinitionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Retrieve all the Deployed app
@@ -198,7 +198,7 @@ export class AnalyticsService {
     }
 
     createDefaultReports(): Observable<any> {
-        return from(this.reportApi.createDefaultReports()).pipe(map((res) => res || {}));
+        return from(this.reportApi.createDefaultReports()).pipe(map((res) => res || { /* empty */ }));
     }
 
     updateReport(reportId: string, name: string): Observable<any> {

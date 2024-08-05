@@ -21,7 +21,7 @@ import { CommentsService } from '../interfaces/comments-service.interface';
 
 export class CommentsServiceMock implements Partial<CommentsService> {
 
-    constructor() {}
+    constructor() { /* empty */ }
 
     get(_id: string): Observable<CommentModel[]> {
         return commentsResponseMock.getComments();

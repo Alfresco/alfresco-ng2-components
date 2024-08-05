@@ -64,7 +64,7 @@ export class PermissionListService {
         private nodePermissionDialogService: NodePermissionDialogService,
         private contentService: ContentService,
         private notificationService: NotificationService
-    ) {}
+    ) { /* empty */ }
 
     fetchPermission(nodeId: string) {
         this.loading$.next(true);

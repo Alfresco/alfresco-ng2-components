@@ -34,7 +34,7 @@ describe('NameColumnComponent', () => {
 
         context = {
             row: {
-                node: { entry: {} },
+                node: { entry: { /* empty */ } },
                 getValue: (key) => key
             }
         };

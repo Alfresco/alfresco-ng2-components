@@ -82,7 +82,7 @@ export class FileViewComponent implements OnInit {
         private contentServices: ContentService,
         private preview: PreviewService,
         private notificationService: NotificationService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.route.params.subscribe((params) => {

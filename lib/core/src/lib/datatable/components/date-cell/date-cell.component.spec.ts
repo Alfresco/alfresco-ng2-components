@@ -112,7 +112,7 @@ describe('DateCellComponent', () => {
     });
     //eslint-disable-next-line
     xit('should display date and tooltip with based on appConfig values if dateConfig is NOT provided', () => {
-        const mockDateConfig: DateConfig = {};
+        const mockDateConfig: DateConfig = { /* empty */ };
         const expectedDate = 'Oct 25, 2023';
         const expectedTooltip = 'October 25, 2023 at 12:00:00 AM GMT+0';
 
@@ -127,9 +127,9 @@ describe('DateCellComponent', () => {
 
     it('should display date and tooltip with defaules values if NO dateConfig or appConfig is provided', () => {
         appConfigService.config = {
-            dateValues: {}
+            dateValues: { /* empty */ }
         };
-        const mockDateConfig: DateConfig = {};
+        const mockDateConfig: DateConfig = { /* empty */ };
 
         const expectedDate = 'Oct 25, 2023, 12:00:00 AM';
         const expectedTooltip = expectedDate;

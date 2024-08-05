@@ -29,7 +29,7 @@ import { FileUploadErrorEvent } from '../../../common/events/file.event';
     selector: 'adf-upload-button-test',
     template: 'test component'
 })
-export class UploadTestComponent extends UploadBase {}
+export class UploadTestComponent extends UploadBase { /* empty */ }
 
 const file = { name: 'bigFile.png', size: 1000 } as File;
 

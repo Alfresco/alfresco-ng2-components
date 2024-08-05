@@ -49,7 +49,7 @@ export class PeopleProcessService {
         return this._profileApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Gets information about the current user.

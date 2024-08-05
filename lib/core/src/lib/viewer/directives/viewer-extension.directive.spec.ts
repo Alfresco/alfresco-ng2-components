@@ -44,7 +44,7 @@ describe('ExtensionViewerDirective', () => {
                 {
                     provide: ChangeDetectorRef,
                     useValue: {
-                        detectChanges: () => {}
+                        detectChanges: () => { /* empty */ }
                     }
                 }
             ]

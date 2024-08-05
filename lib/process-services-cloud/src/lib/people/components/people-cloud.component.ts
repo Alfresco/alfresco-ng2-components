@@ -190,7 +190,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
     constructor(
         @Inject(IDENTITY_USER_SERVICE_TOKEN)
         private identityUserService: IdentityUserServiceInterface
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit(): void {
         this.initSearch();

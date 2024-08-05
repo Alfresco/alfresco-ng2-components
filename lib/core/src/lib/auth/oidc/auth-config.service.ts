@@ -38,7 +38,7 @@ export class AuthConfigService {
     constructor(
         private appConfigService: AppConfigService,
         @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig
-    ) {}
+    ) { /* empty */ }
 
     private _authConfig!: AuthConfig;
     get authConfig(): AuthConfig {
@@ -53,7 +53,7 @@ export class AuthConfigService {
         const oauth2 = this.appConfigService.oauth2;
         const origin = this.getLocationOrigin();
         const redirectUri = this.getRedirectUri();
-        const customQueryParams = oauth2.audience ? { audience: oauth2.audience } : {};
+        const customQueryParams = oauth2.audience ? { audience: oauth2.audience } : { /* empty */ };
 
         return new AuthConfig({
             ...oauth2,

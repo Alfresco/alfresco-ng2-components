@@ -41,7 +41,7 @@ export class NodePermissionService {
         private searchApiService: SearchService,
         private nodeService: NodesApiService,
         private translation: TranslationService
-    ) {}
+    ) { /* empty */ }
 
     /**
      * Gets a list of roles for the current node.

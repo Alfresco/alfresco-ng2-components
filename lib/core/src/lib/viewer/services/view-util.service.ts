@@ -56,7 +56,7 @@ export class ViewUtilService {
         return this.viewerExtensions.map((ext) => ext.fileExtension);
     }
 
-    constructor(private extensionService: AppExtensionService) {}
+    constructor(private extensionService: AppExtensionService) { /* empty */ }
 
     /**
      * get File name from url

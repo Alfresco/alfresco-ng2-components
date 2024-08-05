@@ -69,7 +69,7 @@ describe('CardViewItemDispatcherComponent', () => {
         component.displayEmpty = true;
 
         fixture.detectChanges();
-        component.ngOnChanges({});
+        component.ngOnChanges({ /* empty */ });
     });
 
     afterEach(() => {
@@ -84,9 +84,9 @@ describe('CardViewItemDispatcherComponent', () => {
         });
 
         it('should load the CardViewShinyCustomElementItemComponent only ONCE', () => {
-            component.ngOnChanges({});
-            component.ngOnChanges({});
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
+            component.ngOnChanges({ /* empty */ });
+            component.ngOnChanges({ /* empty */ });
             fixture.detectChanges();
 
             const shinyCustomElementItemComponent = fixture.debugElement.queryAll(By.css('whatever-you-want-to-have'));
@@ -105,7 +105,7 @@ describe('CardViewItemDispatcherComponent', () => {
         it('should update the subcomponent input parameters', () => {
             const expectedEditable = false;
             const expectedDisplayEmpty = true;
-            const expectedProperty = {};
+            const expectedProperty = { /* empty */ };
             const expectedCustomInput = 1;
             const expectedDisplayNoneOption = false;
             const expectedDisplayClearAction = false;
@@ -152,9 +152,9 @@ describe('CardViewItemDispatcherComponent', () => {
 
         it('should call through the life-cycle methods', () => {
             lifeCycleMethods.forEach((lifeCycleMethod) => {
-                shinyCustomElementItemComponent[lifeCycleMethod] = () => {};
+                shinyCustomElementItemComponent[lifeCycleMethod] = () => { /* empty */ };
                 spyOn(shinyCustomElementItemComponent, lifeCycleMethod);
-                const param = {};
+                const param = { /* empty */ };
 
                 component[lifeCycleMethod].call(component, param);
 
@@ -163,7 +163,7 @@ describe('CardViewItemDispatcherComponent', () => {
         });
 
         it('should NOT call through the life-cycle methods if the method does not exist (no error should be thrown)', () => {
-            const param = {};
+            const param = { /* empty */ };
             lifeCycleMethods.forEach((lifeCycleMethod) => {
                 shinyCustomElementItemComponent[lifeCycleMethod] = undefined;
 

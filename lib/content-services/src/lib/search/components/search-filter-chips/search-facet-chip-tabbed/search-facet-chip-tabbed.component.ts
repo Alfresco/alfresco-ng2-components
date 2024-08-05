@@ -65,7 +65,7 @@ export class SearchFacetChipTabbedComponent {
     chipIcon = 'keyboard_arrow_down';
     isPopulated = false;
 
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory, private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory, private changeDetectorRef: ChangeDetectorRef) { /* empty */ }
 
     onMenuOpen() {
         if (this.menuContainer && !this.focusTrap) {

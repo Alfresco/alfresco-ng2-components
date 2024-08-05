@@ -106,7 +106,7 @@ describe('DataTable', () => {
         dataTable.data = new ObjectDataTableAdapter(data, [new ObjectDataColumn({ key: 'name' })]);
         const rows = dataTable.data.getRows();
 
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         if (done) {
             fixture.detectChanges();
 
@@ -122,9 +122,9 @@ describe('DataTable', () => {
     const testDoubleClickCount = (tickTime = 490, rowClickNumber = 1) => {
         let doubleClickCount = 0;
 
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         fixture.detectChanges();
 
         dataTable.rowDblClick.subscribe(() => {
@@ -512,7 +512,7 @@ describe('DataTable', () => {
             metaKey: true
         });
 
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         dataTable.onEnterKeyPressed(rows[0], event);
         dataTable.onEnterKeyPressed(rows[1], event);
 
@@ -524,7 +524,7 @@ describe('DataTable', () => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
         const rows = dataTable.data.getRows();
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         fixture.detectChanges();
         dataTable.onRowClick(rows[0], new MouseEvent('click'));
         dataTable.rowClick.pipe(take(1)).subscribe(() => {
@@ -545,7 +545,7 @@ describe('DataTable', () => {
         const rows = dataTable.data.getRows();
         rows[0].isSelected = true;
 
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         fixture.detectChanges();
         dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeFalsy();
@@ -554,7 +554,7 @@ describe('DataTable', () => {
 
         dataTable.onRowClick(rows[0], {
             metaKey: true,
-            preventDefault: () => {},
+            preventDefault: () => { /* empty */ },
             composedPath: () => []
         } as any);
     });
@@ -607,7 +607,7 @@ describe('DataTable', () => {
             metaKey: true
         });
         dataTable.selection.push(rows[0]);
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         fixture.detectChanges();
         dataTable.rowClick.subscribe(() => {
             expect(rows[0].isSelected).toBeTruthy();
@@ -661,7 +661,7 @@ describe('DataTable', () => {
     it('should initialize default adapter', () => {
         const table = TestBed.createComponent(DataTableComponent).componentInstance;
         expect(table.data).toBeUndefined();
-        table.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        table.ngOnChanges({ data: new SimpleChange('123', { /* empty */ }, true) });
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
@@ -673,7 +673,7 @@ describe('DataTable', () => {
     });
 
     it('should emit row click event', (done) => {
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
 
         dataTable.rowClick.subscribe((e) => {
@@ -681,7 +681,7 @@ describe('DataTable', () => {
             done();
         });
 
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         fixture.detectChanges();
         dataTable.onRowClick(row, new MouseEvent('click'));
     });
@@ -695,11 +695,11 @@ describe('DataTable', () => {
     }));
 
     it('should emit single click if there are two single click in more than 250ms', fakeAsync(() => {
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         let clickCount = 0;
 
         dataTable.data = new ObjectDataTableAdapter([], []);
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         fixture.detectChanges();
 
         dataTable.rowClick.subscribe(() => {
@@ -718,7 +718,7 @@ describe('DataTable', () => {
     }));
 
     it('should emit row-click dom event', (done) => {
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
 
         fixture.nativeElement.addEventListener('row-click', (e) => {
@@ -726,20 +726,20 @@ describe('DataTable', () => {
             done();
         });
 
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         fixture.detectChanges();
         dataTable.onRowClick(row, new MouseEvent('click'));
     });
 
     it('should emit row-dblclick dom event', (done) => {
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         dataTable.data = new ObjectDataTableAdapter([], []);
 
         fixture.nativeElement.addEventListener('row-dblclick', (e) => {
             expect(e.detail.value).toBe(row);
             done();
         });
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         fixture.detectChanges();
         dataTable.onRowClick(row, new MouseEvent('click'));
         dataTable.onRowClick(row, new MouseEvent('click'));
@@ -755,7 +755,7 @@ describe('DataTable', () => {
 
     it('should prevent default behaviour on row double-click event', () => {
         const e = jasmine.createSpyObj('event', ['preventDefault']);
-        dataTable.ngOnChanges({});
+        dataTable.ngOnChanges({ /* empty */ });
         dataTable.ngAfterContentInit();
         dataTable.onRowDblClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
@@ -857,7 +857,7 @@ describe('DataTable', () => {
     });
 
     it('should update rows on "select all" click', () => {
-        const data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const data = new ObjectDataTableAdapter([{ /* empty */ }, { /* empty */ }, { /* empty */ }], []);
         const rows = data.getRows();
 
         dataTable.data = data;
@@ -879,7 +879,7 @@ describe('DataTable', () => {
 
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', { /* empty */ }, true) });
 
         dataTable.onSelectAllClick({ checked: true } as MatCheckboxChange);
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -905,7 +905,7 @@ describe('DataTable', () => {
     });
 
     it('should allow select row when multi-select enabled', () => {
-        const data = new ObjectDataTableAdapter([{}, {}], []);
+        const data = new ObjectDataTableAdapter([{ /* empty */ }, { /* empty */ }], []);
         const rows = data.getRows();
 
         dataTable.multiselect = true;
@@ -966,7 +966,7 @@ describe('DataTable', () => {
     });
 
     it('should require multiselect option to toggle row state', () => {
-        const data = new ObjectDataTableAdapter([{}, {}, {}], []);
+        const data = new ObjectDataTableAdapter([{ /* empty */ }, { /* empty */ }, { /* empty */ }], []);
         const rows = data.getRows();
 
         dataTable.data = data;
@@ -982,8 +982,8 @@ describe('DataTable', () => {
 
     it('should require row and column for icon value check', () => {
         expect(dataTable.isIconValue(null, null)).toBeFalsy();
-        expect(dataTable.isIconValue({} as DataRow, null)).toBeFalsy();
-        expect(dataTable.isIconValue(null, {} as DataColumn)).toBeFalsy();
+        expect(dataTable.isIconValue({ /* empty */ } as DataRow, null)).toBeFalsy();
+        expect(dataTable.isIconValue(null, { /* empty */ } as DataColumn)).toBeFalsy();
     });
 
     it('should use special material url scheme', () => {
@@ -1032,18 +1032,18 @@ describe('DataTable', () => {
 
     it('should require column and direction to evaluate sorting state', () => {
         expect(dataTable.isColumnSorted(null, null)).toBeFalsy();
-        expect(dataTable.isColumnSorted({} as DataColumn, null)).toBeFalsy();
+        expect(dataTable.isColumnSorted({ /* empty */ } as DataColumn, null)).toBeFalsy();
         expect(dataTable.isColumnSorted(null, 'asc')).toBeFalsy();
     });
 
     it('should require adapter sorting to evaluate sorting state', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', { /* empty */ }, true) });
         spyOn(dataTable.data, 'getSorting').and.returnValue(null);
-        expect(dataTable.isColumnSorted({} as DataColumn, 'asc')).toBeFalsy();
+        expect(dataTable.isColumnSorted({ /* empty */ } as DataColumn, 'asc')).toBeFalsy();
     });
 
     it('should evaluate column sorting state', () => {
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', { /* empty */ }, true) });
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc'));
         expect(dataTable.isColumnSorted({ key: 'column_1' } as DataColumn, 'asc')).toBeTruthy();
         expect(dataTable.isColumnSorted({ key: 'column_2' } as DataColumn, 'desc')).toBeFalsy();
@@ -1080,13 +1080,13 @@ describe('DataTable', () => {
     });
 
     it('should not get cell tooltip when column is not provided', () => {
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         expect(dataTable.getCellTooltip(row, null)).toBeNull();
     });
 
     it('should not get cell tooltip when formatter is not provided', () => {
         const col = { key: 'name', type: 'text' } as DataColumn;
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         expect(dataTable.getCellTooltip(row, col)).toBeNull();
     });
 
@@ -1097,7 +1097,7 @@ describe('DataTable', () => {
             type: 'text',
             formatTooltip: () => tooltip
         } as DataColumn;
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         expect(dataTable.getCellTooltip(row, col)).toBe(tooltip);
     });
 
@@ -1107,7 +1107,7 @@ describe('DataTable', () => {
             type: 'text',
             formatTooltip: () => null
         } as DataColumn;
-        const row = {} as DataRow;
+        const row = { /* empty */ } as DataRow;
         expect(dataTable.getCellTooltip(row, col)).toBeNull();
     });
 
@@ -1117,13 +1117,13 @@ describe('DataTable', () => {
             emitted++;
         });
 
-        const column = {} as any;
+        const column = { /* empty */ } as any;
         const row: any = {
             getValue: () => 'id'
         };
 
         dataTable.getRowActions(row, column);
-        dataTable.ngOnChanges({ data: new SimpleChange('123', {}, true) });
+        dataTable.ngOnChanges({ data: new SimpleChange('123', { /* empty */ }, true) });
         dataTable.getRowActions(row, column);
 
         expect(emitted).toBe(2);
@@ -1778,7 +1778,7 @@ describe('Show/hide columns', () => {
                 }
             ] as DataRow[];
             spyOn(dataTable.data, 'getRows').and.returnValue(rows);
-            dataTable.markRowAsContextMenuSource({} as DataRow);
+            dataTable.markRowAsContextMenuSource({ /* empty */ } as DataRow);
             rows.forEach((row) => expect(row.isContextMenuSource).toBeFalse());
         });
 

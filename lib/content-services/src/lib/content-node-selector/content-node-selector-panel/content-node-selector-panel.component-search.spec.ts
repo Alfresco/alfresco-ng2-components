@@ -132,7 +132,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     of(
                         new NodePaging({
                             list: {
-                                pagination: {},
+                                pagination: { /* empty */ },
                                 entries: [],
                                 source: new Node()
                             }
@@ -241,7 +241,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should update the breadcrumb when changing to a custom site', async () => {
-                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: { /* empty */ } } as Node;
 
                 component.siteChanged({ entry: { guid: '-mysites-', title: 'My Sites' } } as SiteEntry);
 
@@ -266,7 +266,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should create the query with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
                 component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
-                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: { /* empty */ } } as Node;
                 fixture.detectChanges();
 
                 typeToSearchBox('search-term');
@@ -291,7 +291,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {
-                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: { /* empty */ } } as Node;
 
                 typeToSearchBox('vegeta');
 
@@ -304,7 +304,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should get the corresponding node ids on search when a known alias is selected from CUSTOM dropdown', fakeAsync(() => {
                 component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
-                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: { /* empty */ } } as Node;
 
                 fixture.detectChanges();
 
@@ -666,7 +666,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     fixture.whenStable().then(() => {
                         const clearButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-clear"]'));
                         expect(clearButton).not.toBeNull();
-                        clearButton.triggerEventHandler('click', {});
+                        clearButton.triggerEventHandler('click', { /* empty */ });
                         fixture.detectChanges();
 
                         const documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));

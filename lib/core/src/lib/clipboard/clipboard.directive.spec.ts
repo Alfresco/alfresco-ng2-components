@@ -34,7 +34,7 @@ import { MatButtonModule } from '@angular/material/button';
         <input #ref />
     `
 })
-class TestTargetClipboardComponent {}
+class TestTargetClipboardComponent { /* empty */ }
 
 describe('ClipboardDirective', () => {
     let fixture: ComponentFixture<TestTargetClipboardComponent>;

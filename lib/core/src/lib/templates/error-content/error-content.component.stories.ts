@@ -28,7 +28,7 @@ export default {
     decorators: [
         moduleMetadata({
             imports: [ErrorContentComponent],
-            providers: [{ provide: ActivatedRoute, useValue: { params: of({}) } }]
+            providers: [{ provide: ActivatedRoute, useValue: { params: of({ /* empty */ }) } }]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -80,5 +80,5 @@ const template: StoryFn<ErrorContentComponent> = (args: ErrorContentComponent & 
     </adf-error-content>`
 });
 
-export const ErrorContent = template.bind({});
+export const ErrorContent = template.bind({ /* empty */ });
 ErrorContent.parameters = { layout: 'centered' };

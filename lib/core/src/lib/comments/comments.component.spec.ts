@@ -65,7 +65,7 @@ describe('CommentsComponent', () => {
 
     it('should emit an error when an error occurs loading comments', () => {
         const emitSpy = spyOn(component.error, 'emit');
-        getCommentSpy.and.returnValue(throwError({}));
+        getCommentSpy.and.returnValue(throwError({ /* empty */ }));
 
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ id: change });
@@ -144,7 +144,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should not fetch new comments when empty changeset made', () => {
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
             expect(getCommentSpy).not.toHaveBeenCalled();
         });
 
@@ -239,14 +239,14 @@ describe('CommentsComponent', () => {
 
         it('should emit an error when an error occurs adding the comment', () => {
             const emitSpy = spyOn(component.error, 'emit');
-            addCommentSpy.and.returnValue(throwError({}));
+            addCommentSpy.and.returnValue(throwError({ /* empty */ }));
             component.message = 'Test comment';
             component.addComment();
             expect(emitSpy).toHaveBeenCalled();
         });
 
         it('should set beingAdded variable back to false when an error occurs adding the comment', () => {
-            addCommentSpy.and.returnValue(throwError({}));
+            addCommentSpy.and.returnValue(throwError({ /* empty */ }));
             component.addComment();
             expect(component.beingAdded).toBeFalse();
         });

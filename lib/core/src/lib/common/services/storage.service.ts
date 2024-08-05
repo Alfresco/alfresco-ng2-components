@@ -21,7 +21,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class StorageService {
-    private memoryStore: { [key: string]: any } = {};
+    private memoryStore: { [key: string]: any } = { /* empty */ };
     private readonly useLocalStorage: boolean = false;
     private _prefix: string = '';
 
@@ -70,7 +70,7 @@ export class StorageService {
         if (this.useLocalStorage) {
             localStorage.clear();
         } else {
-            this.memoryStore = {};
+            this.memoryStore = { /* empty */ };
         }
     }
 

@@ -35,10 +35,10 @@ export class DisplayModeService {
         {
             displayMode: FormCloudDisplayMode.fullScreen,
             options: {
-                onDisplayModeOn: () => { },
+                onDisplayModeOn: () => {/** empty */ },
                 onDisplayModeOff: (id: string) => DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
                 onCompleteTask: (id: string) => DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
-                onSaveTask: () => { },
+                onSaveTask: () => { /** empty */ },
                 displayToolbar: true
             }
         }

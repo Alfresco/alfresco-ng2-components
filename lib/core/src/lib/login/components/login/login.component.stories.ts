@@ -177,4 +177,4 @@ const template: StoryFn<LoginComponent> = (args) => ({
     props: args
 });
 
-export const Login = template.bind({});
+export const Login = template.bind({ /* empty */ });

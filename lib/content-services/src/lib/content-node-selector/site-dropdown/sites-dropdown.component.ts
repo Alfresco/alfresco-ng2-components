@@ -95,7 +95,7 @@ export class DropdownSitesComponent implements OnInit {
         private sitesService: SitesService,
         private liveAnnouncer: LiveAnnouncer,
         private translateService: TranslateService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         if (!this.siteList) {

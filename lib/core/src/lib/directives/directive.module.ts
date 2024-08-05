@@ -37,4 +37,5 @@ export const CORE_DIRECTIVES = [
     imports: [...CORE_DIRECTIVES],
     exports: [...CORE_DIRECTIVES]
 })
-export class DirectiveModule {}
+/** @deprecated This module is deprecated and will be removed in a future release. Please consider importing standalone components and directives directly. */
+export class DirectiveModule { /* empty */ }

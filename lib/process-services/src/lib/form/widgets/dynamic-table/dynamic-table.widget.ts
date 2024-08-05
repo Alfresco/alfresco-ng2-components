@@ -145,7 +145,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
             this.editRow = {
                 isNew: true,
                 selected: false,
-                value: {}
+                value: { /* empty */ }
             };
             this.editMode = true;
             return true;
@@ -203,7 +203,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         let result = obj;
 
         if (typeof obj === 'object' && obj !== null && obj !== undefined) {
-            result = Object.assign({}, obj);
+            result = Object.assign({ /* empty */ }, obj);
             Object.keys(obj).forEach((key) => {
                 if (typeof obj[key] === 'object') {
                     result[key] = this.copyObject(obj[key]);

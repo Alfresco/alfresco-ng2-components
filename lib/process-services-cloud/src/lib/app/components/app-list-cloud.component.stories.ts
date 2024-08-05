@@ -57,4 +57,4 @@ const template: StoryFn<AppListCloudComponent> = (args) => ({
     props: args
 });
 
-export const AppListCloud = template.bind({});
+export const AppListCloud = template.bind({ /* empty */ });

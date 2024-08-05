@@ -314,7 +314,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     private click$: Observable<DataRowEvent>;
 
     private differ: any;
-    private rowMenuCache: any = {};
+    private rowMenuCache: any = { /* empty */ };
 
     private subscriptions: Subscription[] = [];
     private singleClickStreamSub: Subscription;
@@ -506,7 +506,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
         this.setTableSorting(this.sorting);
         this.resetSelection();
-        this.rowMenuCache = {};
+        this.rowMenuCache = { /* empty */ };
     }
 
     isTableEmpty(): boolean {

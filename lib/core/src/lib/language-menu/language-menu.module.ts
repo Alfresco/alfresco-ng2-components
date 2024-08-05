@@ -26,4 +26,4 @@ export const LANGUAGE_MENU_DIRECTIVES = [LanguageMenuComponent, LanguagePickerCo
     imports: [...LANGUAGE_MENU_DIRECTIVES],
     exports: [...LANGUAGE_MENU_DIRECTIVES]
 })
-export class LanguageMenuModule {}
+export class LanguageMenuModule { /* empty */ }

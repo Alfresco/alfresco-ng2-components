@@ -37,7 +37,7 @@ export class ContentLinkModel {
     constructor(obj?: any) {
         this.contentAvailable = obj?.contentAvailable;
         this.created = obj?.created;
-        this.createdBy = obj?.createdBy || {};
+        this.createdBy = obj?.createdBy || { /* empty */ };
         this.id = obj?.id;
         this.link = obj?.link;
         this.mimeType = obj?.mimeType;

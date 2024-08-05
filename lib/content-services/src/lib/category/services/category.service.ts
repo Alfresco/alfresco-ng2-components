@@ -48,7 +48,7 @@ export class CategoryService {
         private apiService: AlfrescoApiService,
         private userPreferencesService: UserPreferencesService,
         private appConfigService: AppConfigService
-    ) {}
+    ) { /* empty */ }
 
     /**
      * Get subcategories of a given parent category
@@ -85,7 +85,7 @@ export class CategoryService {
      * @returns Observable<CategoryPaging | CategoryEntry>
      */
     createSubcategories(parentCategoryId: string, payload: CategoryBody[]): Observable<CategoryPaging | CategoryEntry> {
-        return from(this.categoriesApi.createSubcategories(parentCategoryId, payload, {}));
+        return from(this.categoriesApi.createSubcategories(parentCategoryId, payload, { /* empty */ }));
     }
 
     /**
@@ -96,7 +96,7 @@ export class CategoryService {
      * @returns Observable<CategoryEntry>
      */
     updateCategory(categoryId: string, payload: CategoryBody): Observable<CategoryEntry> {
-        return from(this.categoriesApi.updateCategory(categoryId, payload, {}));
+        return from(this.categoriesApi.updateCategory(categoryId, payload, { /* empty */ }));
     }
 
     /**

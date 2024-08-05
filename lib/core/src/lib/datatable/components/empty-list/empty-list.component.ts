@@ -24,22 +24,22 @@ import { Component, Directive, ViewEncapsulation } from '@angular/core';
     templateUrl: './empty-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class EmptyListComponent {}
+export class EmptyListComponent { /* empty */ }
 
 @Directive({
     selector: '[adf-empty-list-header]',
     standalone: true
 })
-export class EmptyListHeaderDirective {}
+export class EmptyListHeaderDirective { /* empty */ }
 
 @Directive({
     selector: '[adf-empty-list-body]',
     standalone: true
 })
-export class EmptyListBodyDirective {}
+export class EmptyListBodyDirective { /* empty */ }
 
 @Directive({
     selector: '[adf-empty-list-footer]',
     standalone: true
 })
-export class EmptyListFooterDirective {}
+export class EmptyListFooterDirective { /* empty */ }

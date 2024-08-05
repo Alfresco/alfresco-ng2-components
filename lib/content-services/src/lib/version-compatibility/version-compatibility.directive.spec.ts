@@ -36,7 +36,7 @@ import { VersionCompatibilityDirective } from '@alfresco/adf-content-services';
         <div *adf-acs-version="'6'" class="visible-content-3">My visible content 3</div>
     `
 })
-class TestComponent {}
+class TestComponent { /* empty */ }
 
 describe('VersionCompatibilityDirective', () => {
     let fixture: ComponentFixture<TestComponent>;

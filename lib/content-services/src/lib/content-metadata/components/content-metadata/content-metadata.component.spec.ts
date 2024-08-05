@@ -86,7 +86,7 @@ describe('ContentMetadataComponent', () => {
 
     const category1 = new Category({ id: 'test', name: 'testCat' });
     const category2 = new Category({ id: 'test2', name: 'testCat2' });
-    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [{ entry: category1 }, { entry: category2 }] } };
+    const categoryPagingResponse: CategoryPaging = { list: { pagination: { /* empty */ }, entries: [{ entry: category1 }, { entry: category2 }] } };
 
     const findTagElements = async (): Promise<string[]> => {
         const matChipHarnessList = await TestbedHarnessEnvironment.loader(fixture).getAllHarnesses(
@@ -227,18 +227,18 @@ describe('ContentMetadataComponent', () => {
             id: 'node-id',
             aspectNames: [],
             nodeType: 'cm:node',
-            content: {},
-            properties: {},
-            createdByUser: {},
-            modifiedByUser: {}
+            content: { /* empty */ },
+            properties: { /* empty */ },
+            createdByUser: { /* empty */ },
+            modifiedByUser: { /* empty */ }
         } as Node;
 
         folderNode = {
             id: 'folder-id',
             aspectNames: [],
             nodeType: '',
-            createdByUser: {},
-            modifiedByUser: {}
+            createdByUser: { /* empty */ },
+            modifiedByUser: { /* empty */ }
         } as Node;
 
         component.node = node;
@@ -314,7 +314,7 @@ describe('ContentMetadataComponent', () => {
                 ])
             );
             updateService.itemUpdated$.next({
-                changed: {}
+                changed: { /* empty */ }
             } as UpdateNotification);
             component.ngOnInit();
             tick(500);
@@ -369,7 +369,7 @@ describe('ContentMetadataComponent', () => {
             component.ngOnInit();
             component.readOnly = false;
             spyOn(tagService, 'removeTag').and.returnValue(of(undefined));
-            spyOn(tagService, 'assignTagsToNode').and.returnValue(of({}));
+            spyOn(tagService, 'assignTagsToNode').and.returnValue(of({ /* empty */ }));
 
             updateService.update(property, 'updated-value');
 
@@ -465,7 +465,7 @@ describe('ContentMetadataComponent', () => {
         it('should retrigger the load of the properties when the content type has changed', fakeAsync(() => {
             component.readOnly = false;
             const property = { key: 'nodeType', value: 'ft:sbiruli' } as CardViewBaseItemModel;
-            const expectedNode = Object.assign({}, node, { nodeType: 'ft:sbiruli' });
+            const expectedNode = Object.assign({ /* empty */ }, node, { nodeType: 'ft:sbiruli' });
             spyOn(contentMetadataService, 'openConfirmDialog').and.returnValue(of(true));
             spyOn(updateService, 'updateNodeAspect');
             spyOn(nodesApiService, 'updateNode').and.returnValue(of(expectedNode));
@@ -1198,7 +1198,7 @@ describe('ContentMetadataComponent', () => {
     describe('events', () => {
         it('should not propagate the event on left arrows press', () => {
             fixture.detectChanges();
-            const event = { keyCode: 37, stopPropagation: () => {} };
+            const event = { keyCode: 37, stopPropagation: () => { /* empty */ } };
             spyOn(event, 'stopPropagation').and.stub();
             const element = fixture.debugElement.query(By.css('adf-card-view'));
             element.triggerEventHandler('keydown', event);
@@ -1207,7 +1207,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should not propagate the event on right arrows press', () => {
             fixture.detectChanges();
-            const event = { keyCode: 39, stopPropagation: () => {} };
+            const event = { keyCode: 39, stopPropagation: () => { /* empty */ } };
             spyOn(event, 'stopPropagation').and.stub();
             const element = fixture.debugElement.query(By.css('adf-card-view'));
             element.triggerEventHandler('keydown', event);
@@ -1216,7 +1216,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should propagate the event on other keys press', () => {
             fixture.detectChanges();
-            const event = { keyCode: 40, stopPropagation: () => {} };
+            const event = { keyCode: 40, stopPropagation: () => { /* empty */ } };
             spyOn(event, 'stopPropagation').and.stub();
             const element = fixture.debugElement.query(By.css('adf-card-view'));
             element.triggerEventHandler('keydown', event);
@@ -1294,7 +1294,7 @@ describe('ContentMetadataComponent', () => {
 
         it('should not render tags after loading tags in ngOnChanges if node is not changed', async () => {
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
 
             expandTagsPanel();
             fixture.detectChanges();
@@ -1321,7 +1321,7 @@ describe('ContentMetadataComponent', () => {
             fixture.detectChanges();
             toggleEditModeForTags();
             TestBed.inject(CardViewContentUpdateService).itemUpdated$.next({
-                changed: {}
+                changed: { /* empty */ }
             } as UpdateNotification);
             tick(500);
             fixture.detectChanges();
@@ -1393,7 +1393,7 @@ describe('ContentMetadataComponent', () => {
             const tagPaging = mockTagPaging();
             spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(tagPaging));
             component.ngOnInit();
-            spyOn(tagService, 'removeTag').and.returnValue(throwError({}));
+            spyOn(tagService, 'removeTag').and.returnValue(throwError({ /* empty */ }));
             spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
             const tagName1 = tagPaging.list.entries[0].entry.tag;
             const tagName2 = 'New tag 3';
@@ -1503,7 +1503,7 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should not reload categories in ngOnChanges if node is not changed', () => {
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
             fixture.detectChanges();
 
             expandCategoriesPanel();
@@ -1514,7 +1514,7 @@ describe('ContentMetadataComponent', () => {
             component.readOnly = false;
             fixture.detectChanges();
             TestBed.inject(CardViewContentUpdateService).itemUpdated$.next({
-                changed: {}
+                changed: { /* empty */ }
             } as UpdateNotification);
             tick(500);
             fixture.detectChanges();
@@ -1593,7 +1593,7 @@ describe('ContentMetadataComponent', () => {
             spyOn(tagService, 'removeTag').and.returnValue(EMPTY);
             spyOn(tagService, 'assignTagsToNode').and.returnValue(EMPTY);
             spyOn(categoryService, 'unlinkNodeFromCategory').and.returnValue(EMPTY);
-            spyOn(categoryService, 'linkNodeToCategory').and.returnValue(throwError({}));
+            spyOn(categoryService, 'linkNodeToCategory').and.returnValue(throwError({ /* empty */ }));
 
             updateService.update(property, 'updated-value');
 

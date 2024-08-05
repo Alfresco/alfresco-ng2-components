@@ -94,7 +94,7 @@ describe('FolderCreateDirective', () => {
         });
 
         it('should emit success event with node if the folder creation was successful', async () => {
-            const testNode = {};
+            const testNode = { /* empty */ };
 
             element.triggerEventHandler('click', event);
             dialogRefMock.componentInstance.success.next(testNode);

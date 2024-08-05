@@ -187,7 +187,7 @@ export const fakeStartForm = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -251,7 +251,7 @@ export const fakeStartFormNotValid = {
                 }
             ],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -310,6 +310,6 @@ export const fakeFormModelJson = {
         }
     ],
     outcomes: [],
-    metadata: {},
+    metadata: { /* empty */ },
     variables: []
 };

@@ -377,7 +377,7 @@ describe('UploadService', () => {
         });
 
         it('should not use "versioningEnabled" if not explicitly provided', () => {
-            const model = new FileModel({ name: 'file-name', size: 10 } as File, {});
+            const model = new FileModel({ name: 'file-name', size: 10 } as File, { /* empty */ });
 
             service.addToQueue(model);
             service.uploadFilesInTheQueue();
@@ -483,7 +483,7 @@ describe('UploadService', () => {
     });
 
     it('should skip files if they are in an excluded folder when path is in options', () => {
-        const file1: any = { name: 'readmetoo.md', file: {}, options: { path: '/rollingPanda/' } };
+        const file1: any = { name: 'readmetoo.md', file: { /* empty */ }, options: { path: '/rollingPanda/' } };
         const file2: any = { name: 'readme.md', file: { webkitRelativePath: '/test/' } };
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);

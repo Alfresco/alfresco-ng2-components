@@ -68,7 +68,7 @@ export class FlagsComponent implements OnDestroy {
     inputValue = '';
     inputValue$ = new BehaviorSubject<string>('');
     showPlusButton$!: Observable<boolean>;
-    writableFlagChangeset: WritableFlagChangeset = {};
+    writableFlagChangeset: WritableFlagChangeset = { /* empty */ };
 
     constructor(
         @Inject(FeaturesServiceToken)

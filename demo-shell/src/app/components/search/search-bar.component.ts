@@ -30,7 +30,7 @@ import { SearchControlComponent } from '@alfresco/adf-content-services';
     styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent {
-    constructor(public router: Router, private preview: PreviewService) {}
+    constructor(public router: Router, private preview: PreviewService) { /* empty */ }
 
     /**
      * Called when the user submits the search, e.g. hits enter or clicks submit

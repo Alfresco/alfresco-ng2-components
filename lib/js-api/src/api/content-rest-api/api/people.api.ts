@@ -60,7 +60,7 @@ export class PeopleApi extends BaseApi {
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
      *
      * @param personId The identifier of a person.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteAvatarImage(personId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -212,7 +212,7 @@ export class PeopleApi extends BaseApi {
      *
      * @param personId The identifier of a person.
      * @param clientBody The client name to send email with app-specific url.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     requestPasswordReset(personId: string, clientBody: ClientBody): Promise<any> {
         throwIfNotDefined(personId, 'personId');
@@ -237,7 +237,7 @@ export class PeopleApi extends BaseApi {
      *
      * @param personId The identifier of a person.
      * @param passwordResetBody The reset password details
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     resetPassword(personId: string, passwordResetBody: PasswordResetBody): Promise<any> {
         throwIfNotDefined(personId, 'personId');
@@ -270,7 +270,7 @@ export class PeopleApi extends BaseApi {
      *
      * @param personId The identifier of a person.
      * @param contentBodyUpdate The binary content
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     updateAvatarImage(personId: string, contentBodyUpdate: string): Promise<any> {
         throwIfNotDefined(personId, 'personId');

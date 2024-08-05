@@ -88,7 +88,7 @@ describe('AddPermissionPanelComponent', () => {
 
         const listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
         expect(listElement).toBeTruthy();
-        listElement.triggerEventHandler('click', {});
+        listElement.triggerEventHandler('click', { /* empty */ });
     });
 
     it('should show the icon related on the nodeType', async () => {
@@ -114,7 +114,7 @@ describe('AddPermissionPanelComponent', () => {
 
         const clearButton = fixture.debugElement.query(By.css('#adf-permission-clear-input'));
         expect(clearButton).toBeTruthy();
-        clearButton.triggerEventHandler('click', {});
+        clearButton.triggerEventHandler('click', { /* empty */ });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -131,13 +131,13 @@ describe('AddPermissionPanelComponent', () => {
         expect(listElement).toBeTruthy();
         expect(selectedUserIcon).toBeFalsy();
 
-        listElement.triggerEventHandler('click', {});
+        listElement.triggerEventHandler('click', { /* empty */ });
         fixture.detectChanges();
 
         selectedUserIcon = fixture.debugElement.query(By.css('.adf-people-select-icon'));
         expect(selectedUserIcon).toBeTruthy();
 
-        listElement.triggerEventHandler('click', {});
+        listElement.triggerEventHandler('click', { /* empty */ });
         fixture.detectChanges();
 
         selectedUserIcon = fixture.debugElement.query(By.css('.adf-people-select-icon'));
@@ -197,12 +197,12 @@ describe('AddPermissionPanelComponent', () => {
 
         let listElement: DebugElement = fixture.debugElement.query(By.css('#result_option_0'));
         expect(listElement).not.toBeNull();
-        listElement.triggerEventHandler('click', {});
+        listElement.triggerEventHandler('click', { /* empty */ });
         fixture.detectChanges();
 
         const clearButton = fixture.debugElement.query(By.css('#adf-permission-clear-input'));
         expect(clearButton).not.toBeNull();
-        clearButton.triggerEventHandler('click', {});
+        clearButton.triggerEventHandler('click', { /* empty */ });
         fixture.detectChanges();
 
         await typeWordIntoSearchInput('abc');
@@ -210,7 +210,7 @@ describe('AddPermissionPanelComponent', () => {
         listElement = fixture.debugElement.query(By.css('#result_option_0'));
         expect(listElement).not.toBeNull();
 
-        listElement.triggerEventHandler('click', {});
+        listElement.triggerEventHandler('click', { /* empty */ });
         expect(searchAttempt).toBe(2);
     });
 });

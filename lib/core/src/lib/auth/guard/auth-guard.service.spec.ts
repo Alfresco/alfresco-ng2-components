@@ -50,7 +50,7 @@ describe('AuthGuardService', () => {
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
-                        ssoLogin: () => {},
+                        ssoLogin: () => { /* empty */ },
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false
                     }
@@ -66,8 +66,8 @@ describe('AuthGuardService', () => {
         authGuard = TestBed.inject(AuthGuard);
         appConfigService = TestBed.inject(AppConfigService);
 
-        appConfigService.config.auth = {};
-        appConfigService.config.oauth2 = {};
+        appConfigService.config.auth = { /* empty */ };
+        appConfigService.config.oauth2 = { /* empty */ };
         storageService = TestBed.inject(StorageService);
     });
 

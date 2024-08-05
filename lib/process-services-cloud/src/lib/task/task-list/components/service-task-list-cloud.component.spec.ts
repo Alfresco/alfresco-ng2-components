@@ -56,7 +56,7 @@ class CustomTaskListComponent {
         </adf-cloud-service-task-list>
     `
 })
-class EmptyTemplateComponent {}
+class EmptyTemplateComponent { /* empty */ }
 @Component({
     template: ` <adf-cloud-service-task-list>
         <data-columns>

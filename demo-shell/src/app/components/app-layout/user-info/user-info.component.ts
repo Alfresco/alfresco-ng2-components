@@ -60,7 +60,7 @@ export class UserInfoComponent implements OnInit {
         private identityUserService: IdentityUserService,
         private basicAlfrescoAuthService: BasicAlfrescoAuthService,
         private authService: AuthenticationService
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.getUserInfo();

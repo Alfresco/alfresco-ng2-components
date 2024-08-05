@@ -152,10 +152,10 @@ export const formDefinitionTwoTextFields: any = {
     javascriptEvents: [],
     className: '',
     style: '',
-    customFieldTemplates: {},
-    metadata: {},
+    customFieldTemplates: { /* empty */ },
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: false,
     globalDateFormat: 'D-M-YYYY'
 };
@@ -274,10 +274,10 @@ export const formDefinitionDropdownField: any = {
     javascriptEvents: [],
     className: '',
     style: '',
-    customFieldTemplates: {},
-    metadata: {},
+    customFieldTemplates: { /* empty */ },
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: false,
     globalDateFormat: 'D-M-YYYY'
 };
@@ -396,10 +396,10 @@ export const formDefinitionRequiredField: any = {
     javascriptEvents: [],
     className: '',
     style: '',
-    customFieldTemplates: {},
-    metadata: {},
+    customFieldTemplates: { /* empty */ },
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: false,
     globalDateFormat: 'D-M-YYYY'
 };

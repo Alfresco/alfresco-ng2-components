@@ -30,7 +30,7 @@ export class NoTaskDetailsTemplateDirective implements AfterContentInit {
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private activitiTaskDetails: TaskDetailsComponent) {}
+    constructor(private activitiTaskDetails: TaskDetailsComponent) { /* empty */ }
 
     ngAfterContentInit() {
         this.activitiTaskDetails.noTaskDetailsTemplateComponent = this.template;

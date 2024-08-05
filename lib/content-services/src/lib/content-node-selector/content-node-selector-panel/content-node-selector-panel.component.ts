@@ -313,7 +313,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         private uploadService: UploadService,
         private sitesService: SitesService,
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
-    ) {}
+    ) { /* empty */ }
 
     set chosenNode(value: Node[]) {
         this._chosenNode = value;

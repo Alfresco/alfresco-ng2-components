@@ -35,7 +35,7 @@ export class ProcessFilterService {
         return this._userFiltersApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Gets all filters defined for a Process App.

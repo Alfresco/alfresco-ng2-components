@@ -27,7 +27,7 @@ export class PeopleMock extends BaseMock {
                     firstName: 'chewbacca',
                     lastName: 'Chewbe',
                     emailNotificationsEnabled: true,
-                    company: {},
+                    company: { /* empty */ },
                     id: 'chewbe',
                     enabled: true,
                     email: 'chewbe@millenniumfalcon.com'
@@ -54,7 +54,7 @@ export class PeopleMock extends BaseMock {
                                 lastName: '3PhtPlBO',
                                 jobTitle: 'N/A',
                                 emailNotificationsEnabled: true,
-                                company: {},
+                                company: { /* empty */ },
                                 id: '0jl2FBTc',
                                 enabled: true,
                                 email: 'owAwLISy'
@@ -66,7 +66,7 @@ export class PeopleMock extends BaseMock {
                                 lastName: '748zEwJV',
                                 jobTitle: 'N/A',
                                 emailNotificationsEnabled: true,
-                                company: {},
+                                company: { /* empty */ },
                                 id: '0kd3jA3b',
                                 enabled: true,
                                 email: 'm1ooPRIu'
@@ -78,7 +78,7 @@ export class PeopleMock extends BaseMock {
                                 lastName: 'GZK6IenG',
                                 jobTitle: 'N/A',
                                 emailNotificationsEnabled: true,
-                                company: {},
+                                company: { /* empty */ },
                                 id: '1BJSWj5u',
                                 enabled: true,
                                 email: 'UtKzKjje'
@@ -90,7 +90,7 @@ export class PeopleMock extends BaseMock {
                                 lastName: 'OiLjkq9z',
                                 jobTitle: 'N/A',
                                 emailNotificationsEnabled: true,
-                                company: {},
+                                company: { /* empty */ },
                                 id: '1pvBqbmT',
                                 enabled: true,
                                 email: '72GemSCB'
@@ -102,7 +102,7 @@ export class PeopleMock extends BaseMock {
                                 lastName: 'IHb5JiaR',
                                 jobTitle: 'N/A',
                                 emailNotificationsEnabled: true,
-                                company: {},
+                                company: { /* empty */ },
                                 id: '2fOamhbL',
                                 enabled: true,
                                 email: 'hhhQHpmZ'

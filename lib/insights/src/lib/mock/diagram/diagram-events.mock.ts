@@ -22,7 +22,7 @@ export const startEvent = {
     height: 30,
     x: 15,
     y: 48.5,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startEventActive = {
@@ -34,7 +34,7 @@ export const startEventActive = {
     height: 30,
     x: 15,
     y: 48.5,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startEventCompleted = {
@@ -46,7 +46,7 @@ export const startEventCompleted = {
     height: 30,
     x: 15,
     y: 48.5,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startTimeEvent = {
@@ -57,7 +57,7 @@ export const startTimeEvent = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'timer'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startTimeEventActive = {
@@ -70,7 +70,7 @@ export const startTimeEventActive = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'timer'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startTimeEventCompleted = {
@@ -83,7 +83,7 @@ export const startTimeEventCompleted = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'timer'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startSignalEvent = {
@@ -94,7 +94,7 @@ export const startSignalEvent = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'signal'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startSignalEventActive = {
@@ -107,7 +107,7 @@ export const startSignalEventActive = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'signal'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startSignalEventCompleted = {
@@ -120,7 +120,7 @@ export const startSignalEventCompleted = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'signal'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startMessageEvent = {
@@ -131,7 +131,7 @@ export const startMessageEvent = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'message'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startMessageEventActive = {
@@ -144,7 +144,7 @@ export const startMessageEventActive = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'message'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startMessageEventCompleted = {
@@ -157,7 +157,7 @@ export const startMessageEventCompleted = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'message'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startErrorEvent = {
@@ -168,7 +168,7 @@ export const startErrorEvent = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'error'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startErrorEventActive = {
@@ -181,7 +181,7 @@ export const startErrorEventActive = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'error'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const startErrorEventCompleted = {
@@ -194,7 +194,7 @@ export const startErrorEventCompleted = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'error'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const endEvent = {
@@ -204,7 +204,7 @@ export const endEvent = {
     height: 28,
     x: 15,
     y: 48.5,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const endEventActive = {
@@ -216,7 +216,7 @@ export const endEventActive = {
     height: 28,
     x: 15,
     y: 48.5,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const endEventCompleted = {
@@ -228,7 +228,7 @@ export const endEventCompleted = {
     height: 28,
     x: 15,
     y: 48.5,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const endErrorEvent = {
@@ -239,7 +239,7 @@ export const endErrorEvent = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'error'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const endErrorEventActive = {
@@ -252,7 +252,7 @@ export const endErrorEventActive = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'error'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const endErrorEventCompleted = {
@@ -265,5 +265,5 @@ export const endErrorEventCompleted = {
     x: 15,
     y: 48.5,
     eventDefinition: {type: 'error'},
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };

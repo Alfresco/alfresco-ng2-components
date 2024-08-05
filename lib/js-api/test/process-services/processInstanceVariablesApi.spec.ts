@@ -130,7 +130,7 @@ describe('Activiti Process Instance Variables Api', () => {
             const variableName = 'var1';
             variablesMock.addUpdateProcessInstanceVariable200Response(processInstanceId, variableName);
 
-            processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {}).then(() => {
+            processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, { /* empty */ }).then(() => {
                 done();
             });
         });
@@ -140,7 +140,7 @@ describe('Activiti Process Instance Variables Api', () => {
             const variableName = 'var1';
             variablesMock.addUpdateProcessInstanceVariable500Response(processInstanceId, variableName);
 
-            processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, {}).then(NOOP, (error) => {
+            processInstanceVariablesApi.updateProcessInstanceVariable(processInstanceId, variableName, { /* empty */ }).then(NOOP, (error) => {
                 assert.equal(error.status, 500);
                 assert.equal(error.message, '{"messageKey":"UNKNOWN","message":"Unknown error"}');
                 done();

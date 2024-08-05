@@ -37,7 +37,7 @@ export class EcmModelService {
         return this._customModelApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {
@@ -199,7 +199,7 @@ export class EcmModelService {
     }
 
     toJson(res: any) {
-        return res || {};
+        return res || { /* empty */ };
     }
 
     private handleError(err: any): any {

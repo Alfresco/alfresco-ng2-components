@@ -31,7 +31,7 @@ import { tap } from 'rxjs/operators';
 export class UnsavedChangesGuard  {
     unsaved = false;
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog) { /* empty */ }
 
     /**
      * Allows to deactivate route when there is no unsaved changes, otherwise displays dialog to confirm discarding changes.

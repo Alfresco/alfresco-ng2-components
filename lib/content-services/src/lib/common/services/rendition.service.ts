@@ -72,7 +72,7 @@ export class RenditionService {
         return this._versionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private translateService: TranslationService, private viewUtilsService: ViewUtilService) {}
+    constructor(private apiService: AlfrescoApiService, private translateService: TranslationService, private viewUtilsService: ViewUtilService) { /* empty */ }
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
         return renditionExists && type !== RenditionService.ContentGroup.IMAGE
@@ -114,7 +114,7 @@ export class RenditionService {
                 try {
                     await this.renditionsApi.createRendition(nodeId, { id: renditionId });
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
-                } catch {}
+                } catch { /* empty */ }
             }
         }
         return new Promise<RenditionEntry>((resolve) => resolve(rendition));
@@ -292,6 +292,6 @@ export class RenditionService {
                         : type;
                 this.printFile(url, printType);
             })
-            .catch(() => {});
+            .catch(() => { /* empty */ });
     }
 }

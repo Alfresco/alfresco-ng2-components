@@ -54,7 +54,7 @@ export class AddPermissionComponent implements OnInit {
     currentNode: Node;
     currentNodeRoles: RoleModel[];
 
-    constructor(private nodePermissionService: NodePermissionService, private contentService: ContentService) {}
+    constructor(private nodePermissionService: NodePermissionService, private contentService: ContentService) { /* empty */ }
 
     ngOnInit(): void {
         this.nodePermissionService.getNodeWithRoles(this.nodeId).subscribe(({ node, roles }) => {

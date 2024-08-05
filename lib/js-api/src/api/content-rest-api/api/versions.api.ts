@@ -35,7 +35,7 @@ export class VersionsApi extends BaseApi {
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @param renditionBodyCreate The rendition \"id\".
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     createVersionRendition(nodeId: string, versionId: string, renditionBodyCreate: RenditionBodyCreate): Promise<any> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -73,7 +73,7 @@ export class VersionsApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteVersion(nodeId: string, versionId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');
@@ -242,7 +242,7 @@ export class VersionsApi extends BaseApi {
         throwIfNotDefined(versionId, 'versionId');
         throwIfNotDefined(renditionId, 'renditionId');
 
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             nodeId,

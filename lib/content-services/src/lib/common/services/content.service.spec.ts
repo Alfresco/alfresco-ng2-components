@@ -46,7 +46,7 @@ describe('ContentService', () => {
 
     describe('AllowableOperations', () => {
         it('should hasAllowableOperations be false if allowableOperation is not present in the node', () => {
-            const permissionNode = new Node({});
+            const permissionNode = new Node({ /* empty */ });
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeFalsy();
         });
 
@@ -79,7 +79,7 @@ describe('ContentService', () => {
 
     describe('Permissions', () => {
         it('should havePermission be false if allowableOperation is not present in the node', () => {
-            const permissionNode = new Node({});
+            const permissionNode = new Node({ /* empty */ });
             expect(contentService.hasPermissions(permissionNode, 'manager')).toBeFalsy();
         });
 

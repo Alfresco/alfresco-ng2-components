@@ -112,7 +112,7 @@ describe('FormCloudComponent', () => {
             providers: [
                 {
                     provide: VersionCompatibilityService,
-                    useValue: {}
+                    useValue: { /* empty */ }
                 },
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]
@@ -395,7 +395,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formCloudService, 'getForm').and.returnValue(of({ formRepresentation: {} } as any));
+        spyOn(formCloudService, 'getForm').and.returnValue(of({ formRepresentation: { /* empty */ } } as any));
         const formId = '123';
         const appName = 'test-app';
 
@@ -574,7 +574,7 @@ describe('FormCloudComponent', () => {
         const appName = 'test-app';
         const taskId = '456';
 
-        spyOn(formCloudService, 'getTask').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTask').and.returnValue(of({ /* empty */ }));
         spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formCloudService, 'getTaskForm').and.returnValue(of({ taskId, selectedOutcome: 'custom-outcome' }));
 
@@ -594,7 +594,7 @@ describe('FormCloudComponent', () => {
     it('should handle error when getting form by task id', (done) => {
         const error = 'Some error';
 
-        spyOn(formCloudService, 'getTask').and.returnValue(of({}));
+        spyOn(formCloudService, 'getTask').and.returnValue(of({ /* empty */ }));
         spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formComponent, 'handleError').and.stub();
         spyOn(formCloudService, 'getTaskForm').and.callFake(() => throwError(error));
@@ -1235,7 +1235,7 @@ describe('FormCloudComponent', () => {
          */
         async function loadForm(form?: any): Promise<void> {
             formComponent.ngOnChanges({
-                form: { currentValue: formComponent.parseForm(form || {}), firstChange: true, isFirstChange: () => true, previousValue: undefined }
+                form: { currentValue: formComponent.parseForm(form || { /* empty */ }), firstChange: true, isFirstChange: () => true, previousValue: undefined }
             });
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1390,10 +1390,10 @@ describe('FormCloudComponent', () => {
                     {
                         displayMode: FormCloudDisplayMode.fullScreen,
                         options: {
-                            onCompleteTask: () => {},
-                            onDisplayModeOff: () => {},
-                            onDisplayModeOn: () => {},
-                            onSaveTask: () => {},
+                            onCompleteTask: () => { /* empty */ },
+                            onDisplayModeOff: () => { /* empty */ },
+                            onDisplayModeOn: () => { /* empty */ },
+                            onSaveTask: () => { /* empty */ },
                             displayToolbar: false
                         }
                     }
@@ -1545,7 +1545,7 @@ describe('retrieve metadata on submit', () => {
                 provideTranslations('app', 'resources'),
                 {
                     provide: VersionCompatibilityService,
-                    useValue: {}
+                    useValue: { /* empty */ }
                 }
             ]
         });
@@ -1561,7 +1561,7 @@ describe('retrieve metadata on submit', () => {
     });
 
     it('should set values when updateFormValuesRequested is updated', async () => {
-        formComponent.form.values['pfx_property_three'] = {};
+        formComponent.form.values['pfx_property_three'] = { /* empty */ };
         formComponent.form.values['pfx_property_four'] = 'empty';
         formComponent.form.values['pfx_property_five'] = 'green';
 
@@ -1634,7 +1634,7 @@ describe('retrieve metadata on submit', () => {
     it('should enable save button when form field value changed', () => {
         formComponent.disableSaveButton = true;
 
-        formService.formFieldValueChanged.next({} as FormFieldEvent);
+        formService.formFieldValueChanged.next({ /* empty */ } as FormFieldEvent);
 
         expect(formComponent.disableSaveButton).toBeFalse();
     });

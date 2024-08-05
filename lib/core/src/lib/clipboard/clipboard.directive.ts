@@ -38,7 +38,7 @@ export class ClipboardDirective {
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('clipboard-notification') message: string;
 
-    constructor(private clipboardService: ClipboardService, public viewContainerRef: ViewContainerRef) {}
+    constructor(private clipboardService: ClipboardService, public viewContainerRef: ViewContainerRef) { /* empty */ }
 
     @HostListener('mouseenter')
     showTooltip() {

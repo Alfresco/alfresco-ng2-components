@@ -28,7 +28,7 @@ import { LogService } from './log.service';
     providers: [LogService]
 })
 class ProvidesLogComponent {
-    constructor(public logService: LogService) {}
+    constructor(public logService: LogService) { /* empty */ }
 
     error() {
         this.logService.error('Test message');

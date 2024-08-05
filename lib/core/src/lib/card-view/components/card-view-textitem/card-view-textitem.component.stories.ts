@@ -96,7 +96,7 @@ const template: StoryFn<CardViewTextItemComponent> = (args) => ({
     props: args
 });
 
-export const ClickableCardViewTextItem = template.bind({});
+export const ClickableCardViewTextItem = template.bind({ /* empty */ });
 ClickableCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Clickable template',
@@ -110,7 +110,7 @@ ClickableCardViewTextItem.args = {
 };
 ClickableCardViewTextItem.parameters = { layout: 'centered' };
 
-export const ChipsCardViewTextItem = template.bind({});
+export const ChipsCardViewTextItem = template.bind({ /* empty */ });
 ChipsCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Chips template',
@@ -126,7 +126,7 @@ ChipsCardViewTextItem.args = {
 };
 ChipsCardViewTextItem.parameters = { layout: 'centered' };
 
-export const EmptyCardViewTextItem = template.bind({});
+export const EmptyCardViewTextItem = template.bind({ /* empty */ });
 EmptyCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Empty template',
@@ -141,7 +141,7 @@ EmptyCardViewTextItem.args = {
 };
 EmptyCardViewTextItem.parameters = { layout: 'centered' };
 
-export const DefaultCardViewTextItem = template.bind({});
+export const DefaultCardViewTextItem = template.bind({ /* empty */ });
 DefaultCardViewTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Default template',
@@ -156,7 +156,7 @@ DefaultCardViewTextItem.args = {
 };
 DefaultCardViewTextItem.parameters = { layout: 'centered' };
 
-export const DisplayLabelForChipsCardTextItem = template.bind({});
+export const DisplayLabelForChipsCardTextItem = template.bind({ /* empty */ });
 DisplayLabelForChipsCardTextItem.args = {
     property: new CardViewTextItemModel({
         label: 'CardView Text Item - Multi-Valued Chips template',

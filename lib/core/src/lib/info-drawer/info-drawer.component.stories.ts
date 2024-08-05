@@ -249,7 +249,7 @@ const singleLayoutTemplate: StoryFn<InfoDrawerComponent> = (args) => ({
         </adf-info-drawer>`
 });
 
-export const TabLayoutWithTextLabels = tabLayoutTemplate.bind({});
+export const TabLayoutWithTextLabels = tabLayoutTemplate.bind({ /* empty */ });
 TabLayoutWithTextLabels.args = {
     title: 'Activities',
     label1: 'Activity',
@@ -264,7 +264,7 @@ TabLayoutWithTextLabels.parameters = {
     controls: { exclude: ['cardText'] }
 };
 
-export const TabLayoutWithIconLabels = tabLayoutTemplate.bind({});
+export const TabLayoutWithIconLabels = tabLayoutTemplate.bind({ /* empty */ });
 TabLayoutWithIconLabels.args = {
     title: 'Activities',
     icon1: 'people',
@@ -279,7 +279,7 @@ TabLayoutWithIconLabels.parameters = {
     controls: { exclude: ['cardText'] }
 };
 
-export const SingleLayout = singleLayoutTemplate.bind({});
+export const SingleLayout = singleLayoutTemplate.bind({ /* empty */ });
 SingleLayout.args = {
     title: 'Single Activities',
     cardText: mockCardText,

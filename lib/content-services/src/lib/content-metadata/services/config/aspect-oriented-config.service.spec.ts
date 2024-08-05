@@ -45,7 +45,7 @@ describe('AspectOrientedConfigService', () => {
         const testCases: TestCase[] = [
             {
                 name: 'Empty config',
-                config: {},
+                config: { /* empty */ },
                 expectations: []
             },
             {

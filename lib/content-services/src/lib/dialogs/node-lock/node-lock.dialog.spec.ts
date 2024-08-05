@@ -58,7 +58,7 @@ describe('NodeLockDialogComponent', () => {
                         ['cm:expiryDate']: expiryDate
                     }
                 },
-                onError: () => {}
+                onError: () => { /* empty */ }
             };
             fixture.detectChanges();
         });
@@ -72,7 +72,7 @@ describe('NodeLockDialogComponent', () => {
         });
 
         it('should call dialog to close with form data when submit is successfully', fakeAsync(() => {
-            const node: any = { entry: {} };
+            const node: any = { entry: { /* empty */ } };
             spyOn(component.nodesApi, 'lockNode').and.returnValue(Promise.resolve(node));
 
             component.submit();

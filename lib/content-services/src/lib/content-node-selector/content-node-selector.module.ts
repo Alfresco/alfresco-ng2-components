@@ -33,4 +33,4 @@ export const CONTENT_NODE_SELECTOR_DIRECTIVES = [
     imports: [...CONTENT_NODE_SELECTOR_DIRECTIVES],
     exports: [...CONTENT_NODE_SELECTOR_DIRECTIVES]
 })
-export class ContentNodeSelectorModule {}
+export class ContentNodeSelectorModule { /* empty */ }

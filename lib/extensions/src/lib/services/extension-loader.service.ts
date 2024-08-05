@@ -148,7 +148,7 @@ export class ExtensionLoaderService {
     }
 
     protected getMetadata(config: ExtensionConfig): ExtensionRef {
-        const result: any = {};
+        const result: any = { /* empty */ };
 
         Object
             .keys(config)

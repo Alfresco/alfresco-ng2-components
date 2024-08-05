@@ -61,7 +61,7 @@ describe('Form Cloud service', () => {
 
         it('should parse valid form json ', () => {
             const formId = 'form-id';
-            const json = { formRepresentation: { id: formId, name: 'task-form', taskId: 'task-id', formDefinition: {} } };
+            const json = { formRepresentation: { id: formId, name: 'task-form', taskId: 'task-id', formDefinition: { /* empty */ } } };
 
             const result = service.parseForm(json);
             expect(result).toBeDefined();
@@ -186,7 +186,7 @@ describe('Form Cloud service', () => {
                 of({
                     formRepresentation: {
                         name: 'task-form',
-                        formDefinition: {}
+                        formDefinition: { /* empty */ }
                     }
                 } as any)
             );
@@ -204,7 +204,7 @@ describe('Form Cloud service', () => {
             requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
             const formId = 'form-id';
 
-            service.saveTaskForm(appName, taskId, processInstanceId, formId, {}).subscribe((result: any) => {
+            service.saveTaskForm(appName, taskId, processInstanceId, formId, { /* empty */ }).subscribe((result: any) => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');
@@ -218,7 +218,7 @@ describe('Form Cloud service', () => {
             requestSpy.and.returnValue(Promise.resolve(mockTaskResponseBody));
             const formId = 'form-id';
 
-            service.completeTaskForm(appName, taskId, processInstanceId, formId, {}, '', 1).subscribe((result: any) => {
+            service.completeTaskForm(appName, taskId, processInstanceId, formId, { /* empty */ }, '', 1).subscribe((result: any) => {
                 expect(result).toBeDefined();
                 expect(result.id).toBe('id');
                 expect(result.name).toBe('name');

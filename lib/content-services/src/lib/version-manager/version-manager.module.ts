@@ -33,4 +33,4 @@ export const CONTENT_VERSION_DIRECTIVES = [
     imports: [...CONTENT_VERSION_DIRECTIVES],
     exports: [...CONTENT_VERSION_DIRECTIVES]
 })
-export class VersionManagerModule {}
+export class VersionManagerModule { /* empty */ }

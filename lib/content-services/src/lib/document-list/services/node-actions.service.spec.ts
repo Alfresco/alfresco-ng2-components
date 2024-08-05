@@ -93,7 +93,7 @@ describe('NodeActionsService', () => {
         spyOn(documentListService, 'copyNode').and.returnValue(throwError('FAKE-KO'));
 
         service.copyFolder(fakeNode, '!allowed').subscribe(
-            () => {},
+            () => { /* empty */ },
             (error) => {
                 expect(error).toBe('FAKE-KO');
             }

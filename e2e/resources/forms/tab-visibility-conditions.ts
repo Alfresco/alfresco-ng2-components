@@ -126,7 +126,7 @@ const createTabVisibilityJson = (
             tabs,
             fields,
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables
         }
     }

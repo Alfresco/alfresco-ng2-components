@@ -147,7 +147,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     @ViewChild('categoryNameInput')
     private categoryNameInputElement: ElementRef;
 
-    constructor(private categoryService: CategoryService) {}
+    constructor(private categoryService: CategoryService) { /* empty */ }
 
     ngOnInit() {
         this.categoryNameControl.valueChanges

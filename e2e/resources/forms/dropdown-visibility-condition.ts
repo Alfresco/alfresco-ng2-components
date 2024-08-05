@@ -142,7 +142,7 @@ export const dropdownVisibilityFormFieldJson = {
                 }
             }],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: []
         }
     }
@@ -226,7 +226,7 @@ export const dropdownVisibilityFormVariableJson = {
                 }
             }],
             outcomes: [],
-            metadata: {},
+            metadata: { /* empty */ },
             variables: [{
                 id: '74cdd5d3-120b-4926-995e-89e929a16c8f',
                 name: 'name',

@@ -43,7 +43,7 @@ export class InheritPermissionDirective {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private nodeService: NodesApiService, private contentService: ContentService) {}
+    constructor(private nodeService: NodesApiService, private contentService: ContentService) { /* empty */ }
 
     onInheritPermissionClicked() {
         this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {

@@ -31,7 +31,7 @@ export class ContentVersionService {
         return this._contentApi;
     }
 
-    constructor(private alfrescoApi: AlfrescoApiService) {}
+    constructor(private alfrescoApi: AlfrescoApiService) { /* empty */ }
 
     /**
      * Get content URL for the given nodeId and specific version.

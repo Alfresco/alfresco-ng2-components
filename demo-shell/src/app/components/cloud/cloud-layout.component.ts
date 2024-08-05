@@ -59,7 +59,7 @@ export class CloudLayoutComponent implements OnInit {
     appName: string;
     filterName: string;
 
-    constructor(private router: Router, private route: ActivatedRoute, private cloudLayoutService: CloudLayoutService) {}
+    constructor(private router: Router, private route: ActivatedRoute, private cloudLayoutService: CloudLayoutService) { /* empty */ }
 
     ngOnInit() {
         let root: string = '';

@@ -56,7 +56,7 @@ export class FolderCreateDirective {
         this.openDialog();
     }
 
-    constructor(public dialogRef: MatDialog, public content: ContentService) {}
+    constructor(public dialogRef: MatDialog, public content: ContentService) { /* empty */ }
 
     private get dialogConfig() {
         const { parentNodeId, title: createTitle, nodeType } = this;

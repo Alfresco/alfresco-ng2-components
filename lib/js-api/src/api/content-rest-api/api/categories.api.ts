@@ -127,7 +127,7 @@ export class CategoriesApi extends BaseApi {
      * You must have admin rights to delete a category.
      *
      * @param categoryId The identifier of a category.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteCategory(categoryId: string): Promise<void> {
         throwIfNotDefined(categoryId, 'categoryId');
@@ -147,7 +147,7 @@ export class CategoriesApi extends BaseApi {
      *
      * @param nodeId The identifier of a node.
      * @param categoryId The identifier of a category.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     unlinkNodeFromCategory(nodeId: string, categoryId: string): Promise<void> {
         throwIfNotDefined(nodeId, 'nodeId');

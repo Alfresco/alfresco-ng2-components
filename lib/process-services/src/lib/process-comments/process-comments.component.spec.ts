@@ -49,7 +49,7 @@ describe('ProcessCommentsComponent', () => {
 
     it('should emit an error when an error occurs loading comments', () => {
         const emitSpy = spyOn(component.error, 'emit');
-        getCommentsSpy.and.returnValue(throwError({}));
+        getCommentsSpy.and.returnValue(throwError({ /* empty */ }));
 
         const change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ processInstanceId: change });

@@ -27,7 +27,7 @@ import { HostSettingsComponent } from './host-settings.component';
     templateUrl: './settings.component.html'
 })
 export class SettingsComponent {
-    constructor(private router: Router) {}
+    constructor(private router: Router) { /* empty */ }
 
     onCancel() {
         this.router.navigate(['/login']);

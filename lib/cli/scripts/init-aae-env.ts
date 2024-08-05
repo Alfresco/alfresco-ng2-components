@@ -57,11 +57,11 @@ export const AAE_MICROSERVICES = ['deployment-service', 'modeling-service', 'dmn
 async function healthCheck(nameService: string) {
     const url = `${args.host}/${nameService}/actuator/health`;
 
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
+    const pathParams = { /* empty */ };
+    const queryParams = { /* empty */ };
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
+    const bodyParam = { /* empty */ };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
 
@@ -98,11 +98,11 @@ async function healthCheck(nameService: string) {
 async function getApplications(): Promise<{ list: { entries: any[] } }> {
     const url = `${args.host}/deployment-service/v1/applications`;
 
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
+    const pathParams = { /* empty */ };
+    const queryParams = { /* empty */ };
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
+    const bodyParam = { /* empty */ };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
 
@@ -139,11 +139,11 @@ async function getApplications(): Promise<{ list: { entries: any[] } }> {
 function getDescriptors() {
     const url = `${args.host}/deployment-service/v1/descriptors`;
 
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
+    const pathParams = { /* empty */ };
+    const queryParams = { /* empty */ };
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
+    const bodyParam = { /* empty */ };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
 
@@ -174,11 +174,11 @@ function getDescriptors() {
 function getProjects() {
     const url = `${args.host}/modeling-service/v1/projects`;
 
-    const pathParams = {};
+    const pathParams = { /* empty */ };
     const queryParams = { maxItems: 1000 };
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
+    const bodyParam = { /* empty */ };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
 
@@ -210,11 +210,11 @@ function getProjects() {
 function getProjectRelease(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
+    const pathParams = { /* empty */ };
+    const queryParams = { /* empty */ };
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
+    const bodyParam = { /* empty */ };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
 
@@ -245,11 +245,11 @@ function getProjectRelease(projectId: string) {
 async function releaseProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
+    const pathParams = { /* empty */ };
+    const queryParams = { /* empty */ };
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
+    const bodyParam = { /* empty */ };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
 
@@ -281,11 +281,11 @@ async function releaseProject(projectId: string) {
 function deleteProject(projectId: string) {
     const url = `${args.host}/modeling-service/v1/projects/${projectId}`;
 
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
+    const pathParams = { /* empty */ };
+    const queryParams = { /* empty */ };
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
+    const bodyParam = { /* empty */ };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
 
@@ -320,11 +320,11 @@ async function importAndReleaseProject(absoluteFilePath: string) {
         const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(
             `${args.host}/modeling-service/v1/projects/import`,
             'POST',
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             { file: fileContent },
-            {},
+            { /* empty */ },
             ['multipart/form-data'],
             ['application/json']
         );
@@ -334,11 +334,11 @@ async function importAndReleaseProject(absoluteFilePath: string) {
         return await alfrescoJsApiModeler.oauth2Auth.callCustomApi(
             `${args.host}/modeling-service/v1/projects/${project.entry.id}/releases`,
             'POST',
-            {},
-            {},
-            {},
-            {},
-            {},
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
+            { /* empty */ },
             ['application/json'],
             ['application/json']
         );
@@ -358,11 +358,11 @@ async function importAndReleaseProject(absoluteFilePath: string) {
 function deleteDescriptor(name: string) {
     const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
 
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
-    const bodyParam = {};
+    const pathParams = { /* empty */ };
+    const queryParams = { /* empty */ };
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
+    const bodyParam = { /* empty */ };
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];
 
@@ -394,10 +394,10 @@ function deleteDescriptor(name: string) {
 function deploy(model: any) {
     const url = `${args.host}/deployment-service/v1/applications`;
 
-    const pathParams = {};
-    const queryParams = {};
-    const headerParams = {};
-    const formParams = {};
+    const pathParams = { /* empty */ };
+    const queryParams = { /* empty */ };
+    const headerParams = { /* empty */ };
+    const formParams = { /* empty */ };
     const bodyParam = model;
     const contentTypes = ['application/json'];
     const accepts = ['application/json'];

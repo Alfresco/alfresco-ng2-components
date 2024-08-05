@@ -32,7 +32,7 @@ describe('RedirectAuthService', () => {
     const mockOauthService: Partial<OAuthService> = {
         clearHashAfterLogin: false,
         events: oauthEvents$,
-        configure: () => {},
+        configure: () => { /* empty */ },
         hasValidAccessToken: jasmine.createSpy().and.returnValue(true),
         setupAutomaticSilentRefresh: () => {
             mockOauthService.silentRefresh();
@@ -46,8 +46,8 @@ describe('RedirectAuthService', () => {
                 RedirectAuthService,
                 { provide: OAuthService, useValue: mockOauthService },
                 { provide: OAuthStorage, useValue: mockOAuthStorage },
-                { provide: AUTH_CONFIG, useValue: {} },
-                { provide: AUTH_MODULE_CONFIG, useValue: {} }
+                { provide: AUTH_CONFIG, useValue: { /* empty */ } },
+                { provide: AUTH_MODULE_CONFIG, useValue: { /* empty */ } }
             ]
         });
 
@@ -81,11 +81,11 @@ describe('RedirectAuthService', () => {
 
         mockOauthService.refreshToken = async () => {
             refreshTokenCalled = true;
-            return Promise.resolve({} as TokenResponse);
+            return Promise.resolve({ /* empty */ } as TokenResponse);
         };
         mockOauthService.silentRefresh = async () => {
             silentRefreshCalled = true;
-            return Promise.resolve({} as OAuthEvent);
+            return Promise.resolve({ /* empty */ } as OAuthEvent);
         };
 
         await service.init();

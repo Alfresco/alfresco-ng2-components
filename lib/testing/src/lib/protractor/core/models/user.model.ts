@@ -32,7 +32,7 @@ export class UserModel {
     company?: string;
     id: number;
 
-    constructor(details: any = {}) {
+    constructor(details: any = { /* empty */ }) {
         const EMAIL_DOMAIN = browser.params?.testConfig?.emailDomain ? browser.params.testConfig.emailDomain : 'example.com';
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;

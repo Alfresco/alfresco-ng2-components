@@ -58,7 +58,7 @@ export class FeaturesDirective implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this.destroy$.next({});
+        this.destroy$.next({ /* empty */ });
         this.destroy$.complete();
     }
 }

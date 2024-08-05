@@ -155,7 +155,7 @@ describe('SecurityControlsService', () => {
                 }
             })
         );
-        const opts = {};
+        const opts = { /* empty */ };
         const response = await service.updateSecurityGroup(securityGroupId, securityGroupBody, opts);
         expect(response.entry.groupName).toEqual('TestGroup');
         expect(response.entry.groupType).toEqual('HIERARCHICAL');

@@ -26,4 +26,4 @@ export const CONTEXT_MENU_DIRECTIVES = [ContextMenuListComponent, ContextMenuDir
     imports: [...CONTEXT_MENU_DIRECTIVES],
     exports: [...CONTEXT_MENU_DIRECTIVES]
 })
-export class ContextMenuModule {}
+export class ContextMenuModule { /* empty */ }

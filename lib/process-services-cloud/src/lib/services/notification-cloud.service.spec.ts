@@ -27,7 +27,7 @@ describe('NotificationCloudService', () => {
     let apolloSubscribeSpy: jasmine.Spy;
 
     const useMock: any = {
-        subscribe: () => {}
+        subscribe: () => { /* empty */ }
     };
 
     const queryMock = `

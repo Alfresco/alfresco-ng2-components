@@ -23,4 +23,4 @@ import { TreeViewComponent } from './components/tree-view.component';
     imports: [TreeViewComponent],
     exports: [TreeViewComponent]
 })
-export class TreeViewModule {}
+export class TreeViewModule { /* empty */ }

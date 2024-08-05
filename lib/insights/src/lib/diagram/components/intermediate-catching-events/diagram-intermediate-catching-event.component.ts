@@ -31,7 +31,7 @@ import { DiagramTooltipComponent } from '../tooltip/diagram-tooltip.component';
     templateUrl: './diagram-intermediate-catching-event.component.html'
 })
 export class DiagramIntermediateCatchingEventComponent extends DiagramElement implements OnInit {
-    center: any = {};
+    center: any = { /* empty */ };
     options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1 };
 
     circleRadiusInner: number;

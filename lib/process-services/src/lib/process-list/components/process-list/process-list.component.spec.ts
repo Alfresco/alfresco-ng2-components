@@ -298,7 +298,7 @@ describe('ProcessInstanceListComponent', () => {
 
         it('should NOT reload the process list when no parameters changed', () => {
             expect(component.isListEmpty()).toBeTruthy();
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
             expect(component.isListEmpty()).toBeTruthy();
         });
 
@@ -488,7 +488,7 @@ describe('CustomProcessListComponent', () => {
         </adf-process-instance-list>
     `
 })
-class EmptyTemplateComponent {}
+class EmptyTemplateComponent { /* empty */ }
 describe('Process List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
     let processService: ProcessService;

@@ -60,7 +60,7 @@ export class SearchFacetChipComponent {
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
 
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory) {}
+    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory) { /* empty */ }
 
     onMenuOpen() {
         if (this.menuContainer && !this.focusTrap) {

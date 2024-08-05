@@ -368,7 +368,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     parseForm(formCloudRepresentationJSON?: any): FormModel | null {
         if (formCloudRepresentationJSON) {
-            const formValues: FormValues = {};
+            const formValues: FormValues = { /* empty */ };
             (this.data || []).forEach((variable) => {
                 formValues[variable.name] = variable.value;
             });
@@ -457,7 +457,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         return !args.defaultPrevented;
     }
 
-    protected storeFormAsMetadata() {}
+    protected storeFormAsMetadata() { /* empty */ }
 
     ngOnDestroy() {
         this.onDestroy$.next(true);

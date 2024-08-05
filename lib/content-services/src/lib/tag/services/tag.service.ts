@@ -39,7 +39,7 @@ export class TagService {
         private apiService: AlfrescoApiService,
         private userPreferencesService: UserPreferencesService,
         private appConfigService: AppConfigService
-    ) {}
+    ) { /* empty */ }
 
     /**
      * Gets a list of tags added to a node.

@@ -34,7 +34,7 @@ export class ModelService {
         return this._modelsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Create a Form.

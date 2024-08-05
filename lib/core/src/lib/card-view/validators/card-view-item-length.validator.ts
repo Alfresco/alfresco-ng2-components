@@ -25,7 +25,7 @@ export interface LengthValidatorParams {
 export class CardViewItemLengthValidator implements CardViewItemValidator {
     message = 'CORE.CARDVIEW.VALIDATORS.LENGTH_VALIDATION_ERROR';
 
-    constructor(private minLength: number, private maxLength: number) {}
+    constructor(private minLength: number, private maxLength: number) { /* empty */ }
 
     isValid(value: string | string[]): boolean {
         if (Array.isArray(value)) {

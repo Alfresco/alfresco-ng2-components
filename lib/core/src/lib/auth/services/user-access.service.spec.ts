@@ -67,7 +67,7 @@ describe('UserAccessService', () => {
     }
 
     it('should return true when no roles to check are passed in global access', () => {
-        spyRealmAccess(['MOCK_USER_ROLE'], {});
+        spyRealmAccess(['MOCK_USER_ROLE'], { /* empty */ });
         userAccessService.fetchUserAccess();
         const hasGlobalAccess = userAccessService.hasGlobalAccess([]);
 
@@ -84,7 +84,7 @@ describe('UserAccessService', () => {
 
     describe('Access present in realm_access', () => {
         it('should return true when the user has one of the global roles', () => {
-            spyRealmAccess(['MOCK_USER_ROLE', 'MOCK_USER_ROLE_2'], {});
+            spyRealmAccess(['MOCK_USER_ROLE', 'MOCK_USER_ROLE_2'], { /* empty */ });
             userAccessService.fetchUserAccess();
             const hasGlobalAccess = userAccessService.hasGlobalAccess(['MOCK_USER_ROLE']);
 
@@ -100,7 +100,7 @@ describe('UserAccessService', () => {
         });
 
         it('should return false when the user has none of the global roles', () => {
-            spyRealmAccess(['MOCK_USER_ROLE'], {});
+            spyRealmAccess(['MOCK_USER_ROLE'], { /* empty */ });
             userAccessService.fetchUserAccess();
             const hasGlobalAccess = userAccessService.hasGlobalAccess(['MOCK_USER_ROLE_2']);
 
@@ -156,7 +156,7 @@ describe('UserAccessService', () => {
 
     it('should return false when access is neither in realm_access or hxp_authorization', () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ mock_access: {} });
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ mock_access: { /* empty */ } });
         userAccessService.fetchUserAccess();
         const hasGlobalAccess = userAccessService.hasGlobalAccess(['mock_role']);
 

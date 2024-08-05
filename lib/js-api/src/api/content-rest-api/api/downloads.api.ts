@@ -38,7 +38,7 @@ export class DownloadsApi extends BaseApi {
      * The cancel operation is done asynchronously.
      *
      * @param downloadId The identifier of a download node.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     cancelDownload(downloadId: string): Promise<any> {
         throwIfNotDefined(downloadId, 'downloadId');

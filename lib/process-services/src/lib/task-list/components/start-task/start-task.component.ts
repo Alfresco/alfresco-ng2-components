@@ -95,7 +95,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private taskService: TaskListService, private formBuilder: UntypedFormBuilder) {}
+    constructor(private taskService: TaskListService, private formBuilder: UntypedFormBuilder) { /* empty */ }
 
     ngOnInit() {
         if (this.name) {

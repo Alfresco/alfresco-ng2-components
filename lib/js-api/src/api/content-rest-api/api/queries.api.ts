@@ -129,7 +129,7 @@ export class QueriesApi extends BaseApi {
      */
     findPeople(term: string, opts?: FindQuery): Promise<PersonPaging> {
         throwIfNotDefined(term, 'term');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const queryParams = {
             term,

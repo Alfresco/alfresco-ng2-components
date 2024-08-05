@@ -49,7 +49,7 @@ export class ClassificationReasonsApi extends BaseApi {
      * There must be at least one classification reason.
      *
      * @param classificationReasonId The identifier for the classification reason
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteClassificationReason(classificationReasonId: string): Promise<void> {
         throwIfNotDefined(classificationReasonId, 'classificationReasonId');

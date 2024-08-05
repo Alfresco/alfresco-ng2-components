@@ -30,4 +30,4 @@ import { ViewerComponent } from '../viewer.component';
         </adf-viewer>
     `
 })
-export class ViewerWithCustomToolbarComponent {}
+export class ViewerWithCustomToolbarComponent { /* empty */ }

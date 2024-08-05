@@ -46,7 +46,7 @@ describe('SearchFacetFiltersService', () => {
 
     it('should subscribe to query builder executed event', () => {
         spyOn(searchFacetFiltersService, 'onDataLoaded').and.stub();
-        const data = { list: {} };
+        const data = { list: { /* empty */ } };
         queryBuilder.executed.next(data);
 
         expect(searchFacetFiltersService.onDataLoaded).toHaveBeenCalledWith(data);

@@ -37,7 +37,7 @@ const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 })
 export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent implements OnDestroy {
     @Input()
-    queryParams: { [key: string]: any } = {};
+    queryParams: { [key: string]: any } = { /* empty */ };
 
     private onDestroyServiceTaskList$ = new Subject<boolean>();
 

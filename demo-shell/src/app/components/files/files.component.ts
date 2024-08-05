@@ -271,7 +271,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         private contentMetadataService: ContentMetadataService,
         private dialogAspectListService: DialogAspectListService,
         private nodeService: NodesApiService
-    ) {}
+    ) { /* empty */ }
 
     showFile(event) {
         const entry = event.value.entry;
@@ -545,7 +545,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     navigateToFilter(activeFilters: FilterSearch[]) {
-        const objectFromMap = {};
+        const objectFromMap = { /* empty */ };
         activeFilters.forEach((filter: FilterSearch) => {
             let paramValue = null;
             if (filter.value?.from && filter.value.to) {

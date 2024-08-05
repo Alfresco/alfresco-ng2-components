@@ -36,7 +36,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
     constructor(
         private oAuth2Service: OAuth2Service,
         private appConfigService: AppConfigService
-    ) {}
+    ) { /* empty */ }
 
     private get identityHost(): string {
         return `${this.appConfigService.get('identityHost')}`;

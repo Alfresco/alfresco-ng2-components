@@ -87,4 +87,4 @@ export const DATATABLE_DIRECTIVES = [
     imports: [...DATATABLE_DIRECTIVES],
     exports: [...DATATABLE_DIRECTIVES]
 })
-export class DataTableModule {}
+export class DataTableModule { /* empty */ }

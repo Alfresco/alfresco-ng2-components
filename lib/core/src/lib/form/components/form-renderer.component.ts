@@ -79,7 +79,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         private formRulesManager: FormRulesManager<T>,
         @Inject(FORM_FIELD_MODEL_RENDER_MIDDLEWARE)
         private middlewareServices: FormFieldModelRenderMiddleware[]
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit(): void {
         this.runMiddlewareServices();

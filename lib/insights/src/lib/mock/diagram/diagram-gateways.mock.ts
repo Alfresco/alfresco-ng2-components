@@ -22,7 +22,7 @@ export const exclusiveGateway = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const exclusiveGatewayActive = {
@@ -34,7 +34,7 @@ export const exclusiveGatewayActive = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const exclusiveGatewayCompleted = {
@@ -46,7 +46,7 @@ export const exclusiveGatewayCompleted = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const inclusiveGateway = {
@@ -56,7 +56,7 @@ export const inclusiveGateway = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const inclusiveGatewayActive = {
@@ -68,7 +68,7 @@ export const inclusiveGatewayActive = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const inclusiveGatewayCompleted = {
@@ -80,7 +80,7 @@ export const inclusiveGatewayCompleted = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const parallelGateway = {
@@ -90,7 +90,7 @@ export const parallelGateway = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const parallelGatewayActive = {
@@ -102,7 +102,7 @@ export const parallelGatewayActive = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const parallelGatewayCompleted = {
@@ -114,7 +114,7 @@ export const parallelGatewayCompleted = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const eventGateway = {
@@ -124,7 +124,7 @@ export const eventGateway = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const eventGatewayActive = {
@@ -136,7 +136,7 @@ export const eventGatewayActive = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };
 
 export const eventGatewayCompleted = {
@@ -148,5 +148,5 @@ export const eventGatewayCompleted = {
     height: 40,
     x: 40,
     y: 30,
-    properties: [{}]
+    properties: [{ /* empty */ }]
 };

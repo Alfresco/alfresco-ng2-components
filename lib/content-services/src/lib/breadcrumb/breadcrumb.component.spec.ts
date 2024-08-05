@@ -176,7 +176,7 @@ describe('Breadcrumb', () => {
     });
 
     it('should not parse the route when node has no path', () => {
-        const node: any = {};
+        const node: any = { /* empty */ };
         expect(component.parseRoute(node)).toEqual([]);
     });
 

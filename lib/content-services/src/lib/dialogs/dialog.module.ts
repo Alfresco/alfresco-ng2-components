@@ -35,4 +35,4 @@ export const CONTENT_DIALOG_DIRECTIVES = [
     imports: [...CONTENT_DIALOG_DIRECTIVES],
     exports: [...CONTENT_DIALOG_DIRECTIVES]
 })
-export class DialogModule {}
+export class DialogModule { /* empty */ }

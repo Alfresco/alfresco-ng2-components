@@ -34,7 +34,7 @@ export class NewVersionUploaderService {
         return this._versionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private dialog: MatDialog, private overlayContainer: OverlayContainer) {}
+    constructor(private apiService: AlfrescoApiService, private dialog: MatDialog, private overlayContainer: OverlayContainer) { /* empty */ }
 
     /**
      * Open a dialog NewVersionUploaderDialogComponent to display:

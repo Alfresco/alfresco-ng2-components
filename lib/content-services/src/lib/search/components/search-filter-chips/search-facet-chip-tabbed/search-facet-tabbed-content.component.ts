@@ -61,8 +61,8 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnC
 
     reset$ = this.resetSubject$.asObservable();
     chipIcon = 'keyboard_arrow_down';
-    autocompleteOptions = {};
-    selectedOptions = {};
+    autocompleteOptions = { /* empty */ };
+    selectedOptions = { /* empty */ };
 
     ngOnInit() {
         this.tabbedFacet.fields.forEach((field) => {

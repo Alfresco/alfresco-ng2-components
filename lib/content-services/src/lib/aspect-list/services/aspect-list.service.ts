@@ -31,7 +31,7 @@ export class AspectListService {
         return this._aspectsApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService, private appConfigService: AppConfigService) {}
+    constructor(private alfrescoApiService: AlfrescoApiService, private appConfigService: AppConfigService) { /* empty */ }
 
     getAspects(): Observable<AspectEntry[]> {
         const visibleAspectList = this.getVisibleAspects();

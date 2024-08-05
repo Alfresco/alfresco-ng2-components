@@ -108,7 +108,7 @@ describe('FileUploadingListComponent', () => {
         });
 
         it('should call uploadService when there are uploading files', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(of({}));
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(of({ /* empty */ }));
 
             component.files[0].status = FileUploadStatus.Progress;
             component.cancelAllFiles();

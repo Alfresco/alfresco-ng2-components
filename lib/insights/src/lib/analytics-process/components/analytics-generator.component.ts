@@ -82,7 +82,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
             ],
             xAxes: [
                 {
-                    ticks: {},
+                    ticks: { /* empty */ },
                     stacked: true
                 }
             ]

@@ -160,7 +160,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         private appsProcessService: AppsProcessService,
         private appConfig: AppConfigService,
         private datePipe: LocalizedDatePipe
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.processNameInput = new UntypedFormControl('', [
@@ -408,7 +408,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.resetSelectedProcessDefinition();
         this.name = '';
         if (this.startForm) {
-            this.startForm.data = {};
+            this.startForm.data = { /* empty */ };
         }
     }
 

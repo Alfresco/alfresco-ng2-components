@@ -47,8 +47,8 @@ export class PropertyDescriptorsService {
     }
 
     private convertToObject(propertyGroupsArray: PropertyGroup[]): PropertyGroupContainer {
-        return propertyGroupsArray.reduce((propertyGroups, propertyGroup) => Object.assign({}, propertyGroups, {
+        return propertyGroupsArray.reduce((propertyGroups, propertyGroup) => Object.assign({ /* empty */ }, propertyGroups, {
             [propertyGroup.name]: propertyGroup
-        }), {});
+        }), { /* empty */ });
     }
 }

@@ -49,7 +49,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
         @Optional()
         @Inject(EXTENDIBLE_COMPONENT)
         private parentComponent?: NodeAllowableOperationSubject
-    ) {}
+    ) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.nodes && !changes.nodes.firstChange) {

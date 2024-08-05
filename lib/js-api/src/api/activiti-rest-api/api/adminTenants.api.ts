@@ -43,7 +43,7 @@ export class AdminTenantsApi extends BaseApi {
      * Delete a tenant
      *
      * @param tenantId tenantId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     deleteTenant(tenantId: number): Promise<void> {
         throwIfNotDefined(tenantId, 'tenantId');
@@ -82,7 +82,7 @@ export class AdminTenantsApi extends BaseApi {
      * Get a tenant's logo
      *
      * @param tenantId tenantId
-     * @return Promise<{}>
+     * @return Promise<{ /* empty */ }>
      */
     getTenantLogo(tenantId: number): Promise<any> {
         throwIfNotDefined(tenantId, 'tenantId');

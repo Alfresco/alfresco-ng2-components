@@ -183,7 +183,7 @@ describe('AppConfigService', () => {
 
     it('should execute callback function if is passed to the load method', async () => {
         const fakeCallBack = jasmine.createSpy('fakeCallBack');
-        fakeCallBack.and.returnValue(() => {});
+        fakeCallBack.and.returnValue(() => { /* empty */ });
 
         await appConfigService.load(fakeCallBack);
 

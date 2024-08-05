@@ -23,4 +23,4 @@ import { IdentityUserInfoComponent } from './identity-user-info.component';
     imports: [IdentityUserInfoComponent],
     exports: [IdentityUserInfoComponent]
 })
-export class IdentityUserInfoModule {}
+export class IdentityUserInfoModule { /* empty */ }

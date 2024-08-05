@@ -75,7 +75,7 @@ describe('TooltipCardDirective', () => {
         expect(tooltipCard).toBeNull();
 
         const span = fixture.debugElement.query(By.css('span.test-component'));
-        span.triggerEventHandler('mouseenter', {});
+        span.triggerEventHandler('mouseenter', { /* empty */ });
         fixture.detectChanges();
         tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
 
@@ -95,13 +95,13 @@ describe('TooltipCardDirective', () => {
     it('should hide tooltip-card on mouse leave', () => {
         fixture.detectChanges();
         const span = fixture.debugElement.query(By.css('span.test-component'));
-        span.triggerEventHandler('mouseenter', {});
+        span.triggerEventHandler('mouseenter', { /* empty */ });
         fixture.detectChanges();
         let tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
 
         expect(tooltipCard).not.toBeNull();
 
-        span.triggerEventHandler('mouseleave', {});
+        span.triggerEventHandler('mouseleave', { /* empty */ });
         fixture.detectChanges();
         tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
 
@@ -111,7 +111,7 @@ describe('TooltipCardDirective', () => {
     it('should hide tooltip-card on destroy', () => {
         fixture.detectChanges();
         const span = fixture.debugElement.query(By.css('span.test-component'));
-        span.triggerEventHandler('mouseenter', {});
+        span.triggerEventHandler('mouseenter', { /* empty */ });
         fixture.detectChanges();
         let tooltipCard = overlay.querySelector<HTMLElement>('div.adf-tooltip-card');
 

@@ -36,7 +36,7 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     @Input()
     dateConfig: DateConfig;
 
-    config: DateConfig = {};
+    config: DateConfig = { /* empty */ };
 
     private readonly appConfig: AppConfigService = inject(AppConfigService);
 

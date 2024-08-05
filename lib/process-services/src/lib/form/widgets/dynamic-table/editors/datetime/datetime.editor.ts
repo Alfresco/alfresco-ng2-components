@@ -64,7 +64,7 @@ export class DateTimeEditorComponent implements OnInit {
     minDate: Date;
     maxDate: Date;
 
-    constructor(private dateAdapter: DateAdapter<Date>) {}
+    constructor(private dateAdapter: DateAdapter<Date>) { /* empty */ }
 
     ngOnInit() {
         const momentDateAdapter = this.dateAdapter as AdfDateFnsAdapter;

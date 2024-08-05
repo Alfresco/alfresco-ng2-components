@@ -59,7 +59,7 @@ export class UserIconColumnComponent implements OnInit {
         return this.context?.row?.isSelected || this.selected;
     }
 
-    constructor(private nodePermissionService: NodePermissionService) {}
+    constructor(private nodePermissionService: NodePermissionService) { /* empty */ }
 
     ngOnInit() {
         if (this.context) {

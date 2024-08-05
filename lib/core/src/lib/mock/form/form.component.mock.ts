@@ -266,10 +266,10 @@ export const fakeForm: any = {
     javascriptEvents: [],
     className: '',
     style: '',
-    customFieldTemplates: {},
-    metadata: {},
+    customFieldTemplates: { /* empty */ },
+    metadata: { /* empty */ },
     variables: [],
-    customFieldsValueInfo: {},
+    customFieldsValueInfo: { /* empty */ },
     gridsterForm: false,
     globalDateFormat: 'D-M-YYYY'
 };

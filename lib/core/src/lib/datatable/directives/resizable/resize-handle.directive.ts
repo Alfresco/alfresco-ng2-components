@@ -35,7 +35,7 @@ export class ResizeHandleDirective implements OnInit, OnDestroy {
 
     private destroy$ = new Subject<void>();
 
-    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) {}
+    constructor(private readonly renderer: Renderer2, private readonly element: ElementRef, private readonly zone: NgZone) { /* empty */ }
 
     ngOnInit(): void {
         this.zone.runOutsideAngular(() => {

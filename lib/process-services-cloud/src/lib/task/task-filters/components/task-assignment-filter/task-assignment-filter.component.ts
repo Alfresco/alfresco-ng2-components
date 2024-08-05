@@ -49,7 +49,7 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
     groupForm = new FormControl('');
     assignmentTypeOptions: DropdownOption[];
 
-    constructor(private identityUserService: IdentityUserService) {}
+    constructor(private identityUserService: IdentityUserService) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes?.status?.currentValue !== changes?.status?.previousValue) {

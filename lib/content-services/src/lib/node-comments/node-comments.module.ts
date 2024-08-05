@@ -23,4 +23,4 @@ import { NodeCommentsComponent } from './node-comments.component';
     imports: [NodeCommentsComponent],
     exports: [NodeCommentsComponent]
 })
-export class NodeCommentsModule {}
+export class NodeCommentsModule { /* empty */ }

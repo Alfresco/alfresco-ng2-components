@@ -76,7 +76,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     enableChangeUpdate: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
-    constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
+    constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) { /* empty */ }
 
     getFromValidationMessage(): string {
         return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)

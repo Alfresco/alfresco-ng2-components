@@ -23,4 +23,4 @@ import { CategoriesManagementComponent } from './categories-management/categorie
     imports: [CategoriesManagementComponent],
     exports: [CategoriesManagementComponent]
 })
-export class CategoriesModule {}
+export class CategoriesModule { /* empty */ }

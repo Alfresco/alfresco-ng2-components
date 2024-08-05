@@ -36,7 +36,7 @@ export class DiagramEventComponent extends DiagramElement implements OnInit {
     @Input()
     iconFillColor: any;
 
-    center: any = {};
+    center: any = { /* empty */ };
 
     ngOnInit() {
         this.center.x = this.data.x + this.data.width / 2;

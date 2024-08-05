@@ -78,7 +78,7 @@ describe('BooleanPipe', () => {
         });
 
         it('object', () => {
-            expect(pipe.transform({})).toBe('');
+            expect(pipe.transform({ /* empty */ })).toBe('');
             expect(pipe.transform({ value: 'true'})).toBe('');
         });
     });

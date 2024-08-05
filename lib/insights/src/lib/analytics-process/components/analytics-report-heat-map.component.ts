@@ -42,14 +42,14 @@ export class AnalyticsReportHeatMapComponent implements OnInit {
     @Output()
     error = new EventEmitter();
 
-    field: any = {};
+    field: any = { /* empty */ };
 
     metricForm: UntypedFormGroup;
     currentMetric: string;
     currentMetricColors: any;
     metricType: string;
 
-    constructor(private analyticsService: AnalyticsService, private formBuilder: UntypedFormBuilder) {}
+    constructor(private analyticsService: AnalyticsService, private formBuilder: UntypedFormBuilder) { /* empty */ }
 
     ngOnInit() {
         this.initForm();

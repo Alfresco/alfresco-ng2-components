@@ -23,7 +23,7 @@ import { TranslationService } from '../translation/translation.service';
     standalone: true
 })
 export class LocalizedRolePipe implements PipeTransform {
-    constructor(private translationService: TranslationService) {}
+    constructor(private translationService: TranslationService) { /* empty */ }
 
     transform(value: string): any {
         if (value) {

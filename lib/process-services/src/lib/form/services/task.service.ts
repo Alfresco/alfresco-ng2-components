@@ -34,7 +34,7 @@ export class TaskService {
         return this._taskApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private apiService: AlfrescoApiService) { /* empty */ }
 
     /**
      * Gets a task.
@@ -57,9 +57,9 @@ export class TaskService {
      */
     toJson(res: any) {
         if (res) {
-            return res || {};
+            return res || { /* empty */ };
         }
-        return {};
+        return { /* empty */ };
     }
 
     /**

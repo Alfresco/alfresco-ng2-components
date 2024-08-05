@@ -89,8 +89,8 @@ describe('SearchCheckListComponent', () => {
 
         component.id = 'checklist';
         component.context = {
-            queryFragments: {},
-            update: () => {}
+            queryFragments: { /* empty */ },
+            update: () => { /* empty */ }
         } as any;
 
         component.ngOnInit();
@@ -124,7 +124,7 @@ describe('SearchCheckListComponent', () => {
             queryFragments: {
                 checklist: 'query'
             },
-            update: () => {}
+            update: () => { /* empty */ }
         } as any;
         spyOn(component.context, 'update').and.stub();
 
@@ -147,7 +147,7 @@ describe('SearchCheckListComponent', () => {
                 queryFragments: {
                     checklist: 'query'
                 },
-                update: () => {}
+                update: () => { /* empty */ }
             } as any;
             component.settings = { options: sizeOptions } as any;
 
@@ -167,7 +167,7 @@ describe('SearchCheckListComponent', () => {
                 queryFragments: {
                     checklist: 'query'
                 },
-                update: () => {}
+                update: () => { /* empty */ }
             } as any;
             component.settings = { pageSize: 15, options: sizeOptions } as any;
             component.ngOnInit();
@@ -187,7 +187,7 @@ describe('SearchCheckListComponent', () => {
             queryFragments: {
                 checklist: 'query'
             },
-            update: () => {}
+            update: () => { /* empty */ }
         } as any;
         component.settings = { options: sizeOptions } as any;
         spyOn(component, 'submitValues').and.stub();
@@ -200,7 +200,7 @@ describe('SearchCheckListComponent', () => {
         expect(component.submitValues).toHaveBeenCalled();
 
         const clearAllElement = fixture.debugElement.query(By.css('button[title="SEARCH.FILTER.ACTIONS.CLEAR-ALL"]'));
-        clearAllElement.triggerEventHandler('click', {});
+        clearAllElement.triggerEventHandler('click', { /* empty */ });
         fixture.detectChanges();
 
         expect(await checkbox.isChecked()).toBe(false);

@@ -135,7 +135,7 @@ const template: StoryFn<HeaderLayoutComponent> = (args) => ({
     props: args
 });
 
-export const header = template.bind({});
+export const header = template.bind({ /* empty */ });
 header.args = {
     title: 'Hello from Header!',
     tooltip: 'Default Tooltip text'

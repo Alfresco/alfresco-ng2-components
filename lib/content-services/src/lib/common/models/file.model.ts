@@ -113,7 +113,7 @@ export class FileModel {
         };
 
         this.options = Object.assign(
-            {},
+            { /* empty */ },
             {
                 newVersion: false
             },

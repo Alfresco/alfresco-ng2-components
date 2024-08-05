@@ -37,8 +37,8 @@ export class QueryService {
                 const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
                 const method = 'GET';
 
-                const queryParams = {};
-                const postBody = {};
+                const queryParams = { /* empty */ };
+                const postBody = { /* empty */ };
 
                 return this.api.performBpmOperation(path, method, queryParams, postBody);
             } catch (error) {
@@ -57,8 +57,8 @@ export class QueryService {
                 const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId;
                 const method = 'GET';
 
-                const queryParams = {};
-                const postBody = {};
+                const queryParams = { /* empty */ };
+                const postBody = { /* empty */ };
 
                 return this.api.performBpmOperation(path, method, queryParams, postBody);
             } catch (error) {
@@ -77,8 +77,8 @@ export class QueryService {
                 const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
                 const method = 'GET';
 
-                const queryParams = {};
-                const postBody = {};
+                const queryParams = { /* empty */ };
+                const postBody = { /* empty */ };
 
                 return this.api.performBpmOperation(path, method, queryParams, postBody);
             } catch (error) {
@@ -97,8 +97,8 @@ export class QueryService {
                 const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
                 const method = 'GET';
 
-                const queryParams = {};
-                const postBody = {};
+                const queryParams = { /* empty */ };
+                const postBody = { /* empty */ };
 
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 return data.list?.entries.length && data.list.entries.find(task => task.entry.name === taskName && task.entry.status === status);
@@ -118,8 +118,8 @@ export class QueryService {
                 const path = `/${appName}/query/v1/tasks?standalone=${standalone}&status=${status}&maxItems=1000&skipCount=0&sort=createdDate`;
                 const method = 'GET';
 
-                const queryParams = {};
-                const postBody = {};
+                const queryParams = { /* empty */ };
+                const postBody = { /* empty */ };
 
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 // eslint-disable-next-line @typescript-eslint/prefer-for-of
@@ -145,8 +145,8 @@ export class QueryService {
                 const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
                 const method = 'GET';
 
-                const queryParams = {};
-                const postBody = {};
+                const queryParams = { /* empty */ };
+                const postBody = { /* empty */ };
 
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 // eslint-disable-next-line @typescript-eslint/prefer-for-of
@@ -168,8 +168,8 @@ export class QueryService {
         const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
         const method = 'GET';
 
-        const queryParams = {};
-        const postBody = {};
+        const queryParams = { /* empty */ };
+        const postBody = { /* empty */ };
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
         // eslint-disable-next-line @typescript-eslint/prefer-for-of
@@ -210,7 +210,7 @@ export class QueryService {
                 const path = '/' + appName + '/query/v1/process-instances';
                 const method = 'GET';
                 const queryParams = { name: processName };
-                const postBody = {};
+                const postBody = { /* empty */ };
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
             } catch (error) {
@@ -234,7 +234,7 @@ export class QueryService {
                 } else {
                     queryParams = { name: processName };
                 }
-                const postBody = {};
+                const postBody = { /* empty */ };
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 return data.list.entries ?? null;
             } catch (error) {

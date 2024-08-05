@@ -74,7 +74,7 @@ describe('TaskFormComponent', () => {
         taskService = TestBed.inject(TaskService);
 
         getTaskDetailsSpy = spyOn(taskListService, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
-        completeTaskSpy = spyOn(taskListService, 'completeTask').and.returnValue(of({}));
+        completeTaskSpy = spyOn(taskListService, 'completeTask').and.returnValue(of({ /* empty */ }));
         spyOn(taskFormService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
         spyOn(taskService, 'getTask').and.returnValue(of(taskDetailsMock));
@@ -128,7 +128,7 @@ describe('TaskFormComponent', () => {
             );
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
-            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({ /* empty */ }));
             component.taskId = '123';
             component.ngOnInit();
             fixture.detectChanges();
@@ -247,13 +247,13 @@ describe('TaskFormComponent', () => {
 
         it('Should emit an error event when form error occurs', () => {
             const formErrorSpy: jasmine.Spy = spyOn(component.formError, 'emit');
-            component.onFormError({});
+            component.onFormError({ /* empty */ });
             expect(formErrorSpy).toHaveBeenCalled();
         });
 
         it('Should emit an error event when form services fails', () => {
             const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
-            component.onError({});
+            component.onError({ /* empty */ });
             expect(errorSpy).toHaveBeenCalled();
         });
     });
@@ -469,7 +469,7 @@ describe('TaskFormComponent', () => {
     describe('Form with visibility', () => {
         beforeEach(async () => {
             component.taskId = '123';
-            spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
+            spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({ /* empty */ }));
             taskDetailsMock.formKey = '4';
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             fixture.detectChanges();
@@ -556,7 +556,7 @@ describe('TaskFormComponent', () => {
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
 
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
-            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({ /* empty */ }));
             component.taskId = '123';
             component.ngOnInit();
 
@@ -584,7 +584,7 @@ describe('TaskFormComponent', () => {
                 })
             );
             const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
-            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({ /* empty */ }));
             getTaskDetailsSpy.and.returnValue(of(initiatorCanCompleteTaskDetailsMock));
 
             component.taskId = '123';
@@ -632,7 +632,7 @@ describe('TaskFormComponent', () => {
                     email: 'wilbur@app.activiti.com'
                 })
             );
-            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({}));
+            const completeTaskFormSpy = spyOn(taskFormService, 'completeTaskForm').and.returnValue(of({ /* empty */ }));
             getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
 
             component.taskId = '123';
@@ -816,7 +816,7 @@ describe('TaskFormComponent', () => {
     describe('Involved user task', () => {
         beforeEach(() => {
             component.taskId = '20259';
-            spyOn(taskFormService, 'saveTaskForm').and.returnValue(of({}));
+            spyOn(taskFormService, 'saveTaskForm').and.returnValue(of({ /* empty */ }));
         });
 
         it('[T14599423] Form in unassigned task is read-only', async () => {

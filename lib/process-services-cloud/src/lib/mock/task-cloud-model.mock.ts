@@ -17,7 +17,7 @@
 
 import { TaskCloudModel } from '../models/task-cloud.model';
 
-export const getTaskCloudModelMock = (cloudModel: Partial<TaskCloudModel> = {}): TaskCloudModel => ({
+export const getTaskCloudModelMock = (cloudModel: Partial<TaskCloudModel> = { /* empty */ }): TaskCloudModel => ({
     id: '1',
     appName: 'app',
     appVersion: 'version',

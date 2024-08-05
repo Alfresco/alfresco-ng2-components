@@ -44,13 +44,13 @@ export class SharedLinksApiService {
      * @param options Options supported by JS-API
      * @returns List of shared links
      */
-    getSharedLinks(options: any = {}): Observable<NodePaging> {
+    getSharedLinks(options: any = { /* empty */ }): Observable<NodePaging> {
         const defaultOptions = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
             include: ['properties', 'allowableOperations']
         };
-        const queryOptions = Object.assign({}, defaultOptions, options);
+        const queryOptions = Object.assign({ /* empty */ }, defaultOptions, options);
         const promise = this.sharedLinksApi.listSharedLinks(queryOptions);
 
         return from(promise).pipe(
@@ -66,7 +66,7 @@ export class SharedLinksApiService {
      * @param options Options supported by JS-API
      * @returns The shared link just created
      */
-    createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate, options: any = {}): Observable<SharedLinkEntry> {
+    createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate, options: any = { /* empty */ }): Observable<SharedLinkEntry> {
         const promise = this.sharedLinksApi.createSharedLink(sharedLinkWithExpirySettings? sharedLinkWithExpirySettings : { nodeId }, options);
 
         return from(promise).pipe(

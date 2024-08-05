@@ -38,7 +38,7 @@ declare const pdfjsLib: any;
 export class PdfPasswordDialogComponent implements OnInit {
     passwordFormControl: UntypedFormControl;
 
-    constructor(private dialogRef: MatDialogRef<PdfPasswordDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+    constructor(private dialogRef: MatDialogRef<PdfPasswordDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { /* empty */ }
 
     ngOnInit() {
         this.passwordFormControl = new UntypedFormControl('', [Validators.required]);

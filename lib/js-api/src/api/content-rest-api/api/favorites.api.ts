@@ -109,7 +109,7 @@ export class FavoritesApi extends BaseApi {
      *
      * @param personId The identifier of a person.
      * @param favoriteId The identifier of a favorite.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteFavorite(personId: string, favoriteId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -136,7 +136,7 @@ export class FavoritesApi extends BaseApi {
      *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     deleteSiteFavorite(personId: string, siteId: string): Promise<void> {
         throwIfNotDefined(personId, 'personId');
@@ -286,7 +286,7 @@ export class FavoritesApi extends BaseApi {
             ContentFieldsQuery
     ): Promise<FavoritePaging> {
         throwIfNotDefined(personId, 'personId');
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const pathParams = {
             personId

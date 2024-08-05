@@ -76,7 +76,7 @@ export class FormFieldModel extends FormWidgetModel {
     hasEmptyValue: boolean;
     className: string;
     optionType: FieldOptionType;
-    params: FormFieldMetadata = {};
+    params: FormFieldMetadata = {/* empty */};
     hyperlinkUrl: string;
     displayText: string;
     isVisible: boolean = true;
@@ -202,7 +202,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.hasEmptyValue = json?.hasEmptyValue ?? !!this.emptyOption;
             this.className = json.className;
             this.optionType = json.optionType;
-            this.params = json.params || {};
+            this.params = json.params || { /* empty */ };
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = json.visibilityCondition ? new WidgetVisibilityModel(json.visibilityCondition) : undefined;

@@ -34,7 +34,7 @@ describe('PropertyDescriptorLoaderService', () => {
     });
 
     it('should load the groups passed by paramter', (done) => {
-        spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve({}));
+        spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve({ /* empty */ }));
 
         service.load(['exif:exif', 'cm:content', 'custom:custom'])
             .subscribe(() => {

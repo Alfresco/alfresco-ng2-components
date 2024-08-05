@@ -114,7 +114,7 @@ export class SimpleSearchTestComponent {
     maxResults: number = 5;
     searchNode: SearchRequest;
 
-    constructor() {}
+    constructor() { /* empty */ }
 
     showSearchResult(event: any) {
         this.message = event;

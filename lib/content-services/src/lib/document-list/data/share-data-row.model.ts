@@ -23,7 +23,7 @@ import { ContentService } from './../../common/services/content.service';
 export const ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
 
 export class ShareDataRow implements DataRow {
-    cache: { [key: string]: any } = {};
+    cache: { [key: string]: any } = { /* empty */ };
     isSelected: boolean = false;
     isDropTarget: boolean;
     cssClass: string = '';
@@ -35,7 +35,7 @@ export class ShareDataRow implements DataRow {
 
     set node(value: NodeEntry) {
         this.obj = value;
-        this.cache = {};
+        this.cache = { /* empty */ };
     }
 
     constructor(

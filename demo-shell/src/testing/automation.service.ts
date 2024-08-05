@@ -31,10 +31,10 @@ export class CoreAutomationService {
         private userPreferencesService: UserPreferencesService,
         private storageService: StorageService,
         private auth: AuthenticationService
-    ) {}
+    ) { /* empty */ }
 
     setup() {
-        const adfProxy = window['adf'] || {};
+        const adfProxy = window['adf'] || { /* empty */ };
 
         adfProxy.getConfigField = (field: string): any => this.appConfigService.get(field);
 

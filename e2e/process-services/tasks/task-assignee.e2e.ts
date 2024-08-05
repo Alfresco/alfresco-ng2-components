@@ -65,7 +65,7 @@ describe('Task Assignee', () => {
                     tenantId: user.tenantId,
                     type: 1
                 });
-            } catch {}
+            } catch { /* empty */ }
 
             await apiService.login(user.username, user.password);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
@@ -147,7 +147,7 @@ describe('Task Assignee', () => {
                         lastName: app.candidate.lastName
                     })
                 );
-            } catch (e) {}
+            } catch (e) { /* empty */ }
 
             await apiService.login(user.username, user.password);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });

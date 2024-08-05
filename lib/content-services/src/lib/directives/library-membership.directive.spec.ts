@@ -70,7 +70,7 @@ describe('LibraryMembershipDirective', () => {
         });
 
         it('should not check membership requests if no entry is selected', fakeAsync(() => {
-            const selection = {};
+            const selection = { /* empty */ };
             const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({ selection: change });
             tick();
@@ -78,7 +78,7 @@ describe('LibraryMembershipDirective', () => {
         }));
 
         it('should check if a membership request exists for the selected library', fakeAsync(() => {
-            const selection = { entry: {} };
+            const selection = { entry: { /* empty */ } };
             const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({ selection: change });
             tick();
@@ -117,7 +117,7 @@ describe('LibraryMembershipDirective', () => {
         });
 
         it('should do nothing if there is no selected library ', fakeAsync(() => {
-            const selection = {};
+            const selection = { /* empty */ };
             const change = new SimpleChange(null, selection, true);
             directive.ngOnChanges({ selection: change });
             tick();
@@ -161,7 +161,7 @@ describe('LibraryMembershipDirective', () => {
         }));
 
         it('should call API to add user to library if admin user', fakeAsync(() => {
-            const createSiteMembershipSpy = spyOn(sitesService, 'createSiteMembership').and.returnValue(of({} as any));
+            const createSiteMembershipSpy = spyOn(sitesService, 'createSiteMembership').and.returnValue(of({ /* empty */ } as any));
             const selection = { entry: { id: 'no-membership-requested' } };
             const selectionChange = new SimpleChange(null, selection, true);
             directive.isAdmin = true;

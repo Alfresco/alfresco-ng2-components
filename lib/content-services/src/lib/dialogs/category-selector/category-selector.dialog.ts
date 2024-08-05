@@ -45,7 +45,7 @@ export class CategorySelectorDialogComponent implements OnInit {
     constructor(
         private dialog: MatDialogRef<CategorySelectorDialogComponent, boolean>,
         @Inject(MAT_DIALOG_DATA) private options: CategorySelectorDialogOptions
-    ) {}
+    ) { /* empty */ }
 
     ngOnInit() {
         this.multiSelect = this.options.multiSelect ?? true;

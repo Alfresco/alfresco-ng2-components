@@ -106,7 +106,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
 
     _isOpen: boolean = false;
     keyPressedStream = new Subject<string>();
-    _classList: { [key: string]: boolean } = {};
+    _classList: { [key: string]: boolean } = { /* empty */ };
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private searchService: SearchService, private _elementRef: ElementRef) {
@@ -146,7 +146,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
 
     private cleanResults() {
         if (this.results) {
-            this.results = {};
+            this.results = { /* empty */ };
         }
     }
 

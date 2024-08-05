@@ -43,4 +43,4 @@ export const ABOUT_DIRECTIVES = [
     imports: [...ABOUT_DIRECTIVES],
     exports: [...ABOUT_DIRECTIVES]
 })
-export class AboutModule {}
+export class AboutModule { /* empty */ }

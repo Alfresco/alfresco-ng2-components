@@ -44,14 +44,14 @@ describe('FormCloud', () => {
         const formRepresentation = {
             id: '<id>',
             name: '<name>',
-            formDefinition: {}
+            formDefinition: { /* empty */ }
         };
         const form = new FormModel(formRepresentation);
         expect(form.taskName).toBe(formRepresentation.name);
     });
 
     it('should set readonly state from params', () => {
-        const form = new FormModel({}, null, true);
+        const form = new FormModel({ /* empty */ }, null, true);
         expect(form.readOnly).toBeTruthy();
     });
 

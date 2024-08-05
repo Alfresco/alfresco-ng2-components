@@ -65,7 +65,7 @@ export class ContentWidgetComponent implements OnChanges {
         private downloadService: DownloadService,
         private urlService: UrlService,
         private processContentService: ProcessContentService
-    ) {}
+    ) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges) {
         const contentId = changes['id'];

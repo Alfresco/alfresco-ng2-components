@@ -20,11 +20,11 @@ import { isConstructor, getQueryParamsWithCustomEncoder, removeNilValues } from 
 describe('AlfrescoApiUtils', () => {
 
     describe('isConstructor', () => {
-        class MockClass {}
+        class MockClass { /* empty */ }
         /**
          * Mock function for tests
          */
-        function mockFUnction() {}
+        function mockFUnction() { /* empty */ }
 
         it('should return true for class and functions', () => {
             expect(isConstructor(MockClass)).toBe(true);
@@ -37,7 +37,7 @@ describe('AlfrescoApiUtils', () => {
         });
 
         it('should return false for object', () => {
-            expect(isConstructor({})).toBe(false);
+            expect(isConstructor({ /* empty */ })).toBe(false);
         });
 
         it('should return false for primitive types', () => {

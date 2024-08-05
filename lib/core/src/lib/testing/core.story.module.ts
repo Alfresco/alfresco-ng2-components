@@ -26,4 +26,4 @@ import { AuthModule } from '../auth/oidc/auth.module';
     imports: [AuthModule.forRoot(), TranslateModule.forRoot(), CoreModule.forRoot()],
     providers: [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations()]
 })
-export class CoreStoryModule {}
+export class CoreStoryModule { /* empty */ }

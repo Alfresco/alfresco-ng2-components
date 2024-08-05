@@ -62,9 +62,9 @@ describe('OidcAuthenticationService', () => {
                 OidcAuthenticationService,
                 { provide: AppConfigService, useClass: MockAppConfigService },
                 { provide: OAuthService, useClass: MockOAuthService },
-                { provide: OAuthStorage, useValue: {} },
-                { provide: AUTH_MODULE_CONFIG, useValue: {} },
-                { provide: AuthService, useValue: {} }
+                { provide: OAuthStorage, useValue: { /* empty */ } },
+                { provide: AUTH_MODULE_CONFIG, useValue: { /* empty */ } },
+                { provide: AuthService, useValue: { /* empty */ } }
             ]
         });
         service = TestBed.inject(OidcAuthenticationService);
@@ -111,7 +111,7 @@ describe('OidcAuthenticationService', () => {
 
             service.logout();
 
-            expect(oauthService.logOut).toHaveBeenCalledWith({});
+            expect(oauthService.logOut).toHaveBeenCalledWith({ /* empty */ });
         });
 
         it('should ignore undefined parameters', () => {

@@ -32,7 +32,7 @@ export class NodeCommentsService implements CommentsService {
         return this._commentsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private contentService: ContentService) {}
+    constructor(private apiService: AlfrescoApiService, private contentService: ContentService) { /* empty */ }
 
     /**
      * Gets all comments that have been added to a task.

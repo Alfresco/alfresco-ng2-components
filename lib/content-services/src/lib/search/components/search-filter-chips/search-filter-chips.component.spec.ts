@@ -202,7 +202,7 @@ describe('SearchFilterChipsComponent', () => {
         queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
         const data = {
             list: {
-                context: {}
+                context: { /* empty */ }
             }
         };
         fixture.detectChanges();
@@ -320,7 +320,7 @@ describe('SearchFilterChipsComponent', () => {
             expect(lessButton).toEqual(null);
             expect(moreButton).not.toEqual(null);
 
-            moreButton.triggerEventHandler('click', {});
+            moreButton.triggerEventHandler('click', { /* empty */ });
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
@@ -334,7 +334,7 @@ describe('SearchFilterChipsComponent', () => {
             expect(lessButton).toBeDefined();
             expect(moreButton).not.toEqual(null);
 
-            moreButton.triggerEventHandler('click', {});
+            moreButton.triggerEventHandler('click', { /* empty */ });
             fixture.detectChanges();
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
             for (const item of stepThree) {
@@ -347,7 +347,7 @@ describe('SearchFilterChipsComponent', () => {
             expect(lessButton).not.toEqual(null);
             expect(moreButton).toEqual(null);
 
-            lessButton.triggerEventHandler('click', {});
+            lessButton.triggerEventHandler('click', { /* empty */ });
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
@@ -361,7 +361,7 @@ describe('SearchFilterChipsComponent', () => {
             expect(lessButton).not.toEqual(null);
             expect(moreButton).not.toEqual(null);
 
-            lessButton.triggerEventHandler('click', {});
+            lessButton.triggerEventHandler('click', { /* empty */ });
             fixture.detectChanges();
 
             sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));

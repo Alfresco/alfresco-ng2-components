@@ -40,7 +40,7 @@ import { ViewerComponent } from './viewer.component';
     selector: 'adf-dialog-dummy',
     template: ``
 })
-class DummyDialogComponent {}
+class DummyDialogComponent { /* empty */ }
 
 describe('ViewerComponent', () => {
     let component: ViewerComponent<any>;

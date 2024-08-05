@@ -61,10 +61,10 @@ describe('ShareDialogComponent', () => {
                 {
                     provide: MatDialogRef,
                     useValue: {
-                        close: () => {}
+                        close: () => { /* empty */ }
                     }
                 },
-                { provide: MAT_DIALOG_DATA, useValue: {} }
+                { provide: MAT_DIALOG_DATA, useValue: { /* empty */ } }
             ]
         });
         fixture = TestBed.createComponent(ShareDialogComponent);
@@ -86,7 +86,7 @@ describe('ShareDialogComponent', () => {
                 modifiedByUser: null,
                 createdAt: null,
                 createdByUser: null,
-                properties: {}
+                properties: { /* empty */ }
             }
         };
 
@@ -199,7 +199,7 @@ describe('ShareDialogComponent', () => {
     it('should unshare file when confirmation dialog returns true', async () => {
         const dialog = fixture.debugElement.injector.get(MatDialog);
         spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(true) } as any);
-        spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
+        spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({ /* empty */ }));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
         component.data = {
@@ -252,7 +252,7 @@ describe('ShareDialogComponent', () => {
 
     it('should delete the current link generated with expiry date and generate a new link without expiry date when toggle is unchecked', async () => {
         spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of());
-        spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
+        spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({ /* empty */ }));
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         node.entry.properties['qshare:sharedId'] = '2017-04-15T18:31:37+00:00';
@@ -318,7 +318,7 @@ describe('ShareDialogComponent', () => {
     describe('datetimepicker type', () => {
         beforeEach(() => {
             spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of());
-            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
+            spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({ /* empty */ }));
 
             node.entry.properties['qshare:sharedId'] = 'sharedId';
             node.entry.allowableOperations = ['update'];

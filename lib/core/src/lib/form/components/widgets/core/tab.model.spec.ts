@@ -66,7 +66,7 @@ describe('TabModel', () => {
     });
 
     it('should store original json', () => {
-        const json = {};
+        const json = { /* empty */ };
         const model = new TabModel(null, json);
         expect(model.json).toBe(json);
     });

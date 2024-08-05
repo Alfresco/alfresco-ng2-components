@@ -20,5 +20,5 @@ export class LoginSuccessEvent {
         public token: any,
         public username: string,
         public password: string
-    ) {}
+    ) { /* empty */ }
 }

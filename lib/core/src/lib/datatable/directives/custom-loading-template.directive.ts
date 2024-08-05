@@ -21,4 +21,4 @@ import { Directive } from '@angular/core';
     selector: 'adf-custom-loading-content-template',
     standalone: true
 })
-export class CustomLoadingContentTemplateDirective {}
+export class CustomLoadingContentTemplateDirective { /* empty */ }

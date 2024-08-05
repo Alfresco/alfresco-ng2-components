@@ -57,4 +57,4 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ],
     exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
 })
-export class TaskFiltersCloudModule {}
+export class TaskFiltersCloudModule { /* empty */ }

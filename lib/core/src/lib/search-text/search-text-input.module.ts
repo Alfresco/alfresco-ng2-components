@@ -26,4 +26,4 @@ export const SEARCH_TEXT_INPUT_DIRECTIVES = [SearchTextInputComponent, SearchTri
     imports: [...SEARCH_TEXT_INPUT_DIRECTIVES],
     exports: [...SEARCH_TEXT_INPUT_DIRECTIVES]
 })
-export class SearchTextModule {}
+export class SearchTextModule { /* empty */ }

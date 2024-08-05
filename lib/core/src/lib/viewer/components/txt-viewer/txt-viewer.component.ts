@@ -36,7 +36,7 @@ export class TxtViewerComponent implements OnChanges {
 
     content: string | ArrayBuffer;
 
-    constructor(private http: HttpClient, private appConfigService: AppConfigService) {}
+    constructor(private http: HttpClient, private appConfigService: AppConfigService) { /* empty */ }
 
     ngOnChanges(changes: SimpleChanges): Promise<void> {
         const blobFile = changes['blobFile'];

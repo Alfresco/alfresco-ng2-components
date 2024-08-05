@@ -44,7 +44,7 @@ export class UsersApi extends BaseApi {
      *
      * @param userId userId
      * @param actionRequest actionRequest
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     executeAction(userId: number, actionRequest: UserActionRepresentation): Promise<any> {
         throwIfNotDefined(userId, 'userId');
@@ -65,7 +65,7 @@ export class UsersApi extends BaseApi {
      * Stream user profile picture
      *
      * @param userId userId
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     getUserProfilePictureUrl(userId: string): string {
         return this.apiClient.basePath + '/app/rest/users/' + userId + '/picture';
@@ -100,7 +100,7 @@ export class UsersApi extends BaseApi {
      * @returns Promise<ResultListDataRepresentationLightUserRepresentation>
      */
     getUsers(opts?: GetUsersQuery): Promise<ResultListDataRepresentationLightUserRepresentation> {
-        opts = opts || {};
+        opts = opts || { /* empty */ };
 
         const queryParams = {
             filter: opts['filter'],
@@ -123,7 +123,7 @@ export class UsersApi extends BaseApi {
      * Request a password reset
      *
      * @param resetPassword resetPassword
-     * @returns Promise<{}>
+     * @returns Promise<{ /* empty */ }>
      */
     requestPasswordReset(resetPassword: ResetPasswordRepresentation): Promise<any> {
         throwIfNotDefined(resetPassword, 'resetPassword');

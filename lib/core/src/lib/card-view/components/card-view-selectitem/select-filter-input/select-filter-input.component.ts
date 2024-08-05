@@ -44,7 +44,7 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
     previousSelected: any[];
     private onDestroy$ = new Subject<void>();
 
-    constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
+    constructor(@Inject(MatSelect) private matSelect: MatSelect) { /* empty */ }
 
     onModelChange(value: string) {
         this.change.next(value);

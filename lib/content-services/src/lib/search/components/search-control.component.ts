@@ -113,7 +113,7 @@ export class SearchControlComponent implements OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public authService: AuthenticationService, private thumbnailService: ThumbnailService) {}
+    constructor(public authService: AuthenticationService, private thumbnailService: ThumbnailService) { /* empty */ }
 
     isNoSearchTemplatePresent(): boolean {
         return !!this.emptySearchTemplate;

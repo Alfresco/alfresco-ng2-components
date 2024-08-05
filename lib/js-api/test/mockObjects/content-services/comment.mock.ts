@@ -24,7 +24,7 @@ const adminUser = {
     aspectNames: ['cm:ownable'],
     firstName: 'Administrator',
     emailNotificationsEnabled: true,
-    company: {},
+    company: { /* empty */ },
     id: 'admin',
     enabled: true,
     email: 'admin@alfresco.com',

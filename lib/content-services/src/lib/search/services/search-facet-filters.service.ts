@@ -141,7 +141,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             const tabbedFacetField: TabbedFacetField = {
                 fields: ['creator', 'modifier'],
                 label: 'SEARCH.FILTER.PEOPLE',
-                facets: {}
+                facets: { /* empty */ }
             };
             this.extractCreatorAndModifier(tabbedFacetField, fields);
         }
@@ -173,7 +173,7 @@ export class SearchFacetFiltersService implements OnDestroy {
     }
 
     private parseFacetQueries(context: ResultSetContext) {
-        const facetQuerySetting = this.queryBuilder.config.facetQueries?.settings || {};
+        const facetQuerySetting = this.queryBuilder.config.facetQueries?.settings || { /* empty */ };
         const configFacetQueries = this.queryBuilder.config.facetQueries?.queries || [];
         const configGroups = configFacetQueries.reduce((acc, query) => {
             const group = this.queryBuilder.getQueryGroup(query);
@@ -243,7 +243,7 @@ export class SearchFacetFiltersService implements OnDestroy {
 
     private getResponseQueryBuckets(responseField: GenericFacetResponse, configGroup: any): FacetFieldBucket[] {
         return (configGroup || []).map((query) => {
-            const respBucket = (responseField?.buckets || []).find((bucket) => bucket.label === query.label) || {};
+            const respBucket = (responseField?.buckets || []).find((bucket) => bucket.label === query.label) || { /* empty */ };
 
             respBucket['count'] = this.getCountValue(respBucket);
             return {
@@ -320,7 +320,7 @@ export class SearchFacetFiltersService implements OnDestroy {
     }
 
     private findFacet(context: ResultSetContext, itemType: string, fieldLabel: string): GenericFacetResponse {
-        return (context.facets || []).find((response) => response.type === itemType && response.label === fieldLabel) || {};
+        return (context.facets || []).find((response) => response.type === itemType && response.label === fieldLabel) || { /* empty */ };
     }
 
     private findResponseFacet(itemType: string, fieldLabel: string): FacetField {
@@ -439,7 +439,7 @@ export class SearchFacetFiltersService implements OnDestroy {
     }
 
     resetQueryFragments() {
-        this.queryBuilder.queryFragments = {};
+        this.queryBuilder.queryFragments = { /* empty */ };
         this.queryBuilder.resetToDefaults();
     }
 

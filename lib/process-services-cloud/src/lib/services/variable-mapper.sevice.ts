@@ -48,7 +48,7 @@ export class VariableMapperService {
 
                     return variableAccumulator;
                 },
-                {}
+                { /* empty */ }
             );
 
             return {
@@ -70,7 +70,7 @@ export class VariableMapperService {
                     columnsByVariable[key] = column.id;
                 });
                 return columnsByVariable;
-            }, {});
+            }, { /* empty */ });
 
         return columnsByVariables;
     }

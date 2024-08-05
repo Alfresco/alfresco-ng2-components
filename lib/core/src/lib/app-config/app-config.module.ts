@@ -23,4 +23,4 @@ import { AppConfigPipe } from './app-config.pipe';
     exports: [AppConfigPipe]
 })
 /** @deprecated This module is deprecated, consider importing AppConfigPipe directly */
-export class AppConfigModule {}
+export class AppConfigModule { /* empty */ }

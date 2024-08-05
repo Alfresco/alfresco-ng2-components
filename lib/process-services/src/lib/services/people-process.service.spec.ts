@@ -106,13 +106,13 @@ describe('PeopleProcessService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: {}
+                responseText: { /* empty */ }
             });
         }));
 
         it('getWorkflowUsers catch errors call', fakeAsync(() => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
-                () => {},
+                () => { /* empty */ },
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }
@@ -136,7 +136,7 @@ describe('PeopleProcessService', () => {
 
         it('involveUserWithTask catch errors call', fakeAsync(() => {
             service.involveUserWithTask('fake-task-id', 'fake-user-id').subscribe(
-                () => {},
+                () => { /* empty */ },
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }
@@ -160,7 +160,7 @@ describe('PeopleProcessService', () => {
 
         it('removeInvolvedUser catch errors call', fakeAsync(() => {
             service.removeInvolvedUser('fake-task-id', 'fake-user-id').subscribe(
-                () => {},
+                () => { /* empty */ },
                 (error) => {
                     expect(error).toEqual(errorResponse);
                 }

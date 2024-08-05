@@ -63,7 +63,7 @@ describe('DynamicExtensionComponent', () => {
             component.data = { foo: 'bar' };
 
             fixture.detectChanges();
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
         });
 
         afterEach(() => {
@@ -101,7 +101,7 @@ describe('DynamicExtensionComponent', () => {
             component.id = 'test-component';
 
             fixture.detectChanges();
-            component.ngOnChanges({});
+            component.ngOnChanges({ /* empty */ });
             testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
         });
 
@@ -111,7 +111,7 @@ describe('DynamicExtensionComponent', () => {
         });
 
         it('should call through the ngOnChanges', () => {
-            const params = {};
+            const params = { /* empty */ };
 
             component.ngOnChanges(params);
 
@@ -120,7 +120,7 @@ describe('DynamicExtensionComponent', () => {
 
         it('should NOT call through the ngOnChanges if the method does not exist (no error should be thrown)', () => {
             testComponent.ngOnChanges = undefined;
-            const params = {};
+            const params = { /* empty */ };
             const execution = () => {
                 component.ngOnChanges(params);
             };

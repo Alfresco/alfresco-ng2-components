@@ -21,4 +21,4 @@ import { PathElement } from '../../content-rest-api';
  * An ordered list of ancestors starting with the classification guide and ending with the parent of this topic.
  * This field is only returned when requested.
  */
-export interface Path extends Array<PathElement> {}
+export interface Path extends Array<PathElement> { /* empty */ }

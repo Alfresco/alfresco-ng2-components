@@ -113,7 +113,7 @@ export class ProcessUtil {
     }
 
     async getProcessTaskId(processId: string): Promise<TaskRepresentation> {
-        const taskList = await this.tasksApi.listTasks({});
+        const taskList = await this.tasksApi.listTasks({ /* empty */ });
         let wantedTask;
 
         taskList.data.forEach((task) => {

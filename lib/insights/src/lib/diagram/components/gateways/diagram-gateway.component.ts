@@ -30,7 +30,7 @@ import { RaphaelRhombusDirective } from '../raphael/raphael-rhombus.component';
     templateUrl: './diagram-gateway.component.html'
 })
 export class DiagramGatewayComponent extends DiagramElement implements OnInit {
-    center: any = {};
+    center: any = { /* empty */ };
     width: any;
     height: any;
     options: any = { stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 2 };

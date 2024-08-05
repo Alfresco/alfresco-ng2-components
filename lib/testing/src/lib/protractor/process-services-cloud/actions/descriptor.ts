@@ -44,7 +44,7 @@ export class Descriptor {
 
     async delete(name: string): Promise<void> {
         const isDescriptorDeleted = (response: any) => {
-            if (JSON.stringify(response) === '{}') {
+            if (JSON.stringify(response) === '{ /* empty */ }') {
                 Logger.info(`[Descriptor] Descriptor was deleted successfully`);
                 return true;
             } else {

@@ -58,7 +58,7 @@ export class ProcessAuditDirective implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private downloadService: DownloadService, private processListService: ProcessService) {}
+    constructor(private downloadService: DownloadService, private processListService: ProcessService) { /* empty */ }
 
     ngOnChanges(): void {
         if (!this.isValidType()) {

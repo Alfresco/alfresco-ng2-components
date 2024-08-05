@@ -65,7 +65,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     attachFormControl: UntypedFormControl;
 
-    constructor(private taskService: TaskListService, private modelService: ModelService, private taskFormService: TaskFormService) {}
+    constructor(private taskService: TaskListService, private modelService: ModelService, private taskFormService: TaskFormService) { /* empty */ }
 
     ngOnInit() {
         this.attachFormControl = new UntypedFormControl('', Validators.required);

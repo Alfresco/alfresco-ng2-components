@@ -69,9 +69,9 @@ describe('Form Rules', () => {
 
         it('should send the form loaded event when initialized', () => {
             const rulesManager = new CustomRuleManager(formService);
-            const getRulesSpy = spyOn<any>(rulesManager, 'getRules').and.returnValue({});
+            const getRulesSpy = spyOn<any>(rulesManager, 'getRules').and.returnValue({ /* empty */ });
             const handleRuleEventSpy = spyOn<any>(rulesManager, 'handleRuleEvent');
-            const formModel = new FormModel({ id: 'mock' }, {}, false);
+            const formModel = new FormModel({ id: 'mock' }, { /* empty */ }, false);
             const formEvent = new FormEvent(formModel);
             const event = new FormRulesEvent('formLoaded', formEvent);
 
@@ -79,14 +79,14 @@ describe('Form Rules', () => {
             getTestScheduler().flush();
 
             expect(getRulesSpy).toHaveBeenCalled();
-            expect(handleRuleEventSpy).toHaveBeenCalledWith(event, {});
+            expect(handleRuleEventSpy).toHaveBeenCalledWith(event, { /* empty */ });
         });
 
         it('should not receive the form event when event has no form', () => {
             const rulesManager = new CustomRuleManager(formService);
-            spyOn<any>(rulesManager, 'getRules').and.returnValue({});
+            spyOn<any>(rulesManager, 'getRules').and.returnValue({ /* empty */ });
             const handleRuleEventSpy = spyOn<any>(rulesManager, 'handleRuleEvent');
-            const formModel = new FormModel({ id: 'mock' }, {}, false);
+            const formModel = new FormModel({ id: 'mock' }, { /* empty */ }, false);
             const formEvent = new FormEvent(new FormModel(null));
             const event = new FormRulesEvent('formLoaded', formEvent);
 
@@ -119,7 +119,7 @@ describe('Form Rules', () => {
         });
 
         it('should get rules when form is not readonly', () => {
-            formModel = new FormModel({}, {}, false);
+            formModel = new FormModel({ /* empty */ }, { /* empty */ }, false);
 
             rulesManager.initialize(formModel);
 
@@ -127,7 +127,7 @@ describe('Form Rules', () => {
         });
 
         it('should not get rules when form is readonly', () => {
-            formModel = new FormModel({}, {}, true);
+            formModel = new FormModel({ /* empty */ }, { /* empty */ }, true);
 
             rulesManager.initialize(formModel);
 

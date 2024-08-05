@@ -52,7 +52,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
                     Object.keys(properties).map((propertyName) => this.setReadOnlyProperty(properties[propertyName]));
                 }
 
-                return Object.assign({}, propertyGroup, {
+                return Object.assign({ /* empty */ }, propertyGroup, {
                     properties: Object.keys(properties).map((propertyName) => {
                         if (this.isPropertyReadOnly(propertyName)) {
                             this.setReadOnlyProperty(properties[propertyName]);

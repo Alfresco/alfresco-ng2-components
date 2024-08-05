@@ -30,5 +30,5 @@ import { NodeDownloadDirective } from '../../../directives/node-download.directi
     templateUrl: './file-auto-download.component.html'
 })
 export class FileAutoDownloadComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) public node: NodeEntry) {}
+    constructor(@Inject(MAT_DIALOG_DATA) public node: NodeEntry) { /* empty */ }
 }

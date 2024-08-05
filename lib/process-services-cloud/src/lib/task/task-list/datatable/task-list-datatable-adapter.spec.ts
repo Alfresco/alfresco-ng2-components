@@ -41,7 +41,7 @@ describe('TasksListDatatableAdapter', () => {
         };
 
         const row: DataRow = {
-            getValue: () => {},
+            getValue: () => { /* empty */ },
             hasValue: () => true,
             isSelected: false,
             obj: viewModel

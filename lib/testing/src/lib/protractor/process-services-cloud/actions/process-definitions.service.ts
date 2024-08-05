@@ -30,10 +30,10 @@ export class ProcessDefinitionsService {
         const path = '/' + appName + '/rb/v1/process-definitions';
         const method = 'GET';
 
-        const queryParams = {};
+        const queryParams = { /* empty */ };
 
         try {
-            return this.api.performBpmOperation(path, method, queryParams, {});
+            return this.api.performBpmOperation(path, method, queryParams, { /* empty */ });
         } catch (error) {
             if (error.status === 404) {
                 Logger.error(`${appName} not present`);

@@ -51,7 +51,7 @@ export class FormDefinitionModel extends FormSaveRepresentation {
                 }],
                 gridsterForm: false,
                 javascriptEvents: [],
-                metadata: {},
+                metadata: { /* empty */ },
                 outcomes: [],
                 className: '',
                 style: '',
