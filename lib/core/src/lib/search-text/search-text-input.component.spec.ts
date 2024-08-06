@@ -65,7 +65,7 @@ describe('SearchTextInputComponent', () => {
             component.expandable = false;
         });
 
-        it('search button should be hide', () => {
+        it('search button should be hidden', () => {
             fixture.detectChanges();
             const searchButton: any = element.querySelector('#adf-search-button');
             expect(searchButton).toBe(null);
@@ -79,12 +79,15 @@ describe('SearchTextInputComponent', () => {
     });
 
     describe('search button', () => {
-        it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
+        let searchButton: DebugElement;
+        beforeEach(() => {
             fixture.detectChanges();
-
             tick(100);
 
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+            searchButton = debugElement.query(By.css('#adf-search-button'));
+        });
+
+        it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
             component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
 
@@ -104,11 +107,6 @@ describe('SearchTextInputComponent', () => {
         }));
 
         it('click on the search button should open the input box when is close', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             searchButton.triggerEventHandler('click', null);
 
             tick(100);
@@ -121,11 +119,6 @@ describe('SearchTextInputComponent', () => {
         }));
 
         it('Search button should not change the input state too often', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
 
@@ -150,10 +143,6 @@ describe('SearchTextInputComponent', () => {
         }));
 
         it('Search bar should close when user press ESC button', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
