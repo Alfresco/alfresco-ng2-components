@@ -11,7 +11,7 @@
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
     "docbuild": "(cd ./tools/doc; npm i) && node tools/doc/node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.doc.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
     "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
-    "affected:libs": "nx affected:libs",
+    "affected:libs": "nx show projects --affected",
     "coverage": "./lib/config/create-coverage-index.sh && lite-server -c ./lib/config/proxy-coverage.json",
     "03": "echo -------------------------------------------- Lint  -----------------------------------------------",
     "affected:lint": "nx affected:lint",

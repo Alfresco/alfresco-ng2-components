@@ -26,8 +26,8 @@ if [ ${AFFECTED_LIB} == true ]; then
 
     if [ "${GITHUB_EVENT_NAME}" == "pull_request" ]; then
         echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
-        echo "npx nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain"
-        AFFECTED_LIBS="$(npx nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain || exit 1)"
+        echo "nx show projects --affected --base=$BASE_HASH --head=$HEAD_HASH --plain"
+        AFFECTED_LIBS="$(nx show projects --affected --base=$BASE_HASH --head=$HEAD_HASH --plain || exit 1)"
         echo "Affected libs ${AFFECTED_LIBS}"
         AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $GITHUB_BASE_REF -f "e2e/$FOLDER")";
         echo "Affected e2e ${AFFECTED_E2E}"
