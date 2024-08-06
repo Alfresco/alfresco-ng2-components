@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { BulkAssignHoldResponse, Hold, HoldEntry, HoldPaging } from '@alfresco/js-api';
+import { BulkAssignHoldResponse, Hold, HoldEntry, HoldPaging, SEARCH_LANGUAGE } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
     let service: LegalHoldService;
@@ -157,7 +157,7 @@ describe('LegalHoldsService', () => {
         it('should add nodes to hold based on search query results', (done) => {
             const nodeId = 'mockNodeId';
             const query = 'mockQuery';
-            const language = 'afts';
+            const language = SEARCH_LANGUAGE.AFTS;
             const mockResponse: BulkAssignHoldResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
 
             spyOn(service.legalHoldApi, 'bulkAssignHold').and.returnValue(Promise.resolve(mockResponse));
@@ -174,7 +174,7 @@ describe('LegalHoldsService', () => {
         it('should add nodes to hold based on search query results', (done) => {
             const nodeId = 'mockNodeId';
             const folderId = 'mockFolderId';
-            const language = 'afts';
+            const language = SEARCH_LANGUAGE.AFTS;
             const mockQuery = `ANCESTOR:'workspace://SpacesStore/${folderId}' and TYPE:content`;
             const mockResponse: BulkAssignHoldResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
 

@@ -287,7 +287,7 @@ legalHoldApi.createHolds('-filePlan-', holds).then(
 
 # **bulkAssignHold**
 
-> BulkAssignHoldResponse bulkAssignHold(holdId, query, language)
+> BulkAssignHoldResponse bulkAssignHold(holdId, query)
 
 Start the asynchronous bulk process for a hold with id `holdId` based on search query results.
 
@@ -304,7 +304,7 @@ this.alfrescoApi.setConfig({
 
 const legalHoldApi = new LegalHoldApi(this.alfrescoApi);
 
-legalHoldApi.bulkAssignHold('holdId', 'SITE:swsdp and TYPE:content', 'afts').then(
+legalHoldApi.bulkAssignHold('holdId', { query: 'SITE:swsdp and TYPE:content', language: 'afts' }).then(
     (data) => {
         console.log('API called successfully. Returned data: ' + data);
     },
@@ -319,8 +319,7 @@ legalHoldApi.bulkAssignHold('holdId', 'SITE:swsdp and TYPE:content', 'afts').the
 | Name         | Type       | Default value | Description              |
 | ------------ | ---------- | ------------- | ------------------------ |
 | **holdId**   | **string** |               | The identifier of a hold |
-| **query**    | **string** |               | Search query.            |
-| **language** | **string** |               | Language.                |
+| **query**    | **RequestQuery** |               | Search query.            |
 
 ### Return type
 
