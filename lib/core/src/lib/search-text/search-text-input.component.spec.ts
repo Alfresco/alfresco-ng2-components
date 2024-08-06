@@ -206,7 +206,7 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
             tick(100);
 
-            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(95%)' });
+            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(85%)' });
             discardPeriodicTasks();
         }));
 
@@ -237,7 +237,7 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
             tick(100);
 
-            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(-95%)' });
+            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(-85%)' });
             discardPeriodicTasks();
         }));
 

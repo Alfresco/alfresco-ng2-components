@@ -1,7 +1,7 @@
 <div class="adf-search-container" [attr.state]="subscriptAnimationState.value">
     <div class="adf-search-container-transition"
-        [@transitionMessages]="subscriptAnimationState"
-        (@transitionMessages.done)="applySearchFocus($event)">
+         [@transitionMessages]="subscriptAnimationState"
+         (@transitionMessages.done)="applySearchFocus($event)">
         <button mat-icon-button
                 *ngIf="expandable"
                 id="adf-search-button"
