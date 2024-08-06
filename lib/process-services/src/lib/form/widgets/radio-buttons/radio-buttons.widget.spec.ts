@@ -74,7 +74,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
         formService = new FormService();
         widget = new RadioButtonsWidgetComponent(formService, taskFormService, processDefinitionService);
-        widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
+        widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>', optionType: 'rest' });
     });
 
     it('should request field values from service', () => {
@@ -87,7 +87,8 @@ describe('RadioButtonsWidgetComponent', () => {
 
         widget.field = new FormFieldModel(form, {
             id: fieldId,
-            restUrl: '<url>'
+            restUrl: '<url>',
+            optionType: 'rest'
         });
 
         spyOn(taskFormService, 'getRestFieldValues').and.returnValue(
@@ -110,7 +111,8 @@ describe('RadioButtonsWidgetComponent', () => {
 
         widget.field = new FormFieldModel(form, {
             id: fieldId,
-            restUrl: '<url>'
+            restUrl: '<url>',
+            optionType: 'rest'
         });
         const field = widget.field;
         spyOn(field, 'updateForm').and.stub();
@@ -135,7 +137,8 @@ describe('RadioButtonsWidgetComponent', () => {
 
         widget.field = new FormFieldModel(form, {
             id: fieldId,
-            restUrl: '<url>'
+            restUrl: '<url>',
+            optionType: 'rest'
         });
         spyOn(taskFormService, 'getRestFieldValues').and.returnValue(
             new Observable((observer) => {
@@ -364,7 +367,8 @@ describe('RadioButtonsWidgetComponent', () => {
                     id: 'radio-id',
                     name: 'radio-name',
                     type: FormFieldTypes.RADIO_BUTTONS,
-                    restUrl: 'rest-url'
+                    restUrl: 'rest-url',
+                    optionType: 'rest'
                 });
                 radioButtonWidget.field.isVisible = true;
                 const fakeContainer = new ContainerModel(radioButtonWidget.field);
@@ -427,7 +431,8 @@ describe('RadioButtonsWidgetComponent', () => {
                     id: 'radio-id',
                     name: 'radio-name',
                     type: FormFieldTypes.RADIO_BUTTONS,
-                    restUrl: 'rest-url'
+                    restUrl: 'rest-url',
+                    optionType: 'rest'
                 });
                 spyOn(processDefinitionService, 'getRestFieldValuesByProcessId').and.returnValue(of(restOption));
                 radioButtonWidget.field.isVisible = true;

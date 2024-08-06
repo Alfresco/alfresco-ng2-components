@@ -75,15 +75,21 @@ describe('DropdownCloudWidgetComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should require field with restUrl', () => {
-            spyOn(formCloudService, 'getRestWidgetData');
-            widget.field = new FormFieldModel(new FormModel());
+        it('should call rest api only when url is present and field type is rest', () => {
+            const getFieldConfig = (optionType: string, restUrl: string) => new FormFieldModel(new FormModel(), { optionType, restUrl });
+            spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(fakeOptionList));
+
+            widget.field = getFieldConfig('manual', 'fake-rest-url');
             widget.ngOnInit();
             expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
 
-            widget.field = new FormFieldModel(null, { restUrl: null });
+            widget.field = getFieldConfig('rest', null);
             widget.ngOnInit();
             expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
+
+            widget.field = getFieldConfig('rest', 'fake-rest-url');
+            widget.ngOnInit();
+            expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
         });
 
         it('should select the default value when an option is chosen as default', async () => {

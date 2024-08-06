@@ -65,6 +65,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         widget.field = new FormFieldModel(form, {
             id: fieldId,
+            optionType: 'rest',
             restUrl: '<url>'
         });
         const field = widget.field;
@@ -72,6 +73,23 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
         fixture.detectChanges();
         expect(field.updateForm).toHaveBeenCalled();
+    });
+
+    it('should call rest api only when url is present and field type is rest', () => {
+        const getFieldConfig = (optionType: string, restUrl: string) => new FormFieldModel(new FormModel(), { optionType, restUrl });
+        spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of([]));
+
+        widget.field = getFieldConfig('manual', 'fake-rest-url');
+        widget.ngOnInit();
+        expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
+
+        widget.field = getFieldConfig('rest', null);
+        widget.ngOnInit();
+        expect(formCloudService.getRestWidgetData).not.toHaveBeenCalled();
+
+        widget.field = getFieldConfig('rest', 'fake-rest-url');
+        widget.ngOnInit();
+        expect(formCloudService.getRestWidgetData).toHaveBeenCalled();
     });
 
     it('should update the field value when an option is selected', () => {
