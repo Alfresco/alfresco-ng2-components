@@ -205,6 +205,7 @@ jobs:
       - name: install
         run: |
           npm ci
+          npx nx run js-api:bundle
           npx nx run cli:bundle
           npx nx run testing:bundle
       - run: npx nx print-affected $NX_CALCULATION_FLAGS
