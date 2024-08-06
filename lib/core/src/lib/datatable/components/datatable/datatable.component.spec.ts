@@ -923,6 +923,48 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBe(true);
     });
 
+    it('should call onRowClick when checkbox label clicked and target is not checkbox', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }, { name: '2' }],
+            [new ObjectDataColumn({ key: 'name', sortable: false }), new ObjectDataColumn({ key: 'other', sortable: false })]
+        );
+        const rows = dataTable.data.getRows();
+        const event = new MouseEvent('click');
+        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => null} });
+        spyOn(dataTable, 'onRowClick');
+
+        dataTable.onCheckboxLabelClick(rows[0], event);
+        expect(dataTable.onRowClick).toHaveBeenCalledWith(rows[0], event);
+    });
+
+    it('should not call onRowClick when checkbox label clicked and target is checkbox', () => {
+        const data = new ObjectDataTableAdapter([{}, {}], []);
+        const rows = data.getRows();
+        const event = new MouseEvent('click');
+        Object.defineProperty(event, 'target', {
+            value: {
+                getAttribute: (attr: string) => attr === 'data-adf-datatable-row-checkbox' ? 'data-adf-datatable-row-checkbox' : null,
+                hasAttribute: (attr: string) => attr === 'data-adf-datatable-row-checkbox',
+                closest: () => null
+            }
+        });
+        spyOn(dataTable, 'onRowClick');
+
+        dataTable.onCheckboxLabelClick(rows[0], event);
+        expect(dataTable.onRowClick).not.toHaveBeenCalled();
+    });
+
+    it('should not call onRowClick when checkbox label clicked and target is inside checkbox', () => {
+        const data = new ObjectDataTableAdapter([{}, {}], []);
+        const rows = data.getRows();
+        const event = new MouseEvent('click');
+        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => 'element'} });
+        spyOn(dataTable, 'onRowClick');
+
+        dataTable.onCheckboxLabelClick(rows[0], event);
+        expect(dataTable.onRowClick).not.toHaveBeenCalled();
+    });
+
     it('should require multiselect option to toggle row state', () => {
         const data = new ObjectDataTableAdapter([{}, {}, {}], []);
         const rows = data.getRows();

@@ -712,6 +712,13 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         }
     }
 
+    onCheckboxLabelClick(row: DataRow, event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        if (!(target.hasAttribute('data-adf-datatable-row-checkbox') || target.closest('[data-adf-datatable-row-checkbox]'))) {
+            this.onRowClick(row, event);
+        }
+    }
+
     onCheckboxChange(row: DataRow, event: MatCheckboxChange) {
         const newValue = event.checked;
 
