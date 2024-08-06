@@ -1,6 +1,7 @@
 <div class="adf-search-container" [attr.state]="subscriptAnimationState.value">
-    <div [@transitionMessages]="subscriptAnimationState"
-         (@transitionMessages.done)="applySearchFocus($event)">
+    <div class="adf-search-container-transition"
+        [@transitionMessages]="subscriptAnimationState"
+        (@transitionMessages.done)="applySearchFocus($event)">
         <button mat-icon-button
                 *ngIf="expandable"
                 id="adf-search-button"
@@ -27,10 +28,16 @@
                    (ngModelChange)="inputChange($event)"
                    [searchAutocomplete]="searchAutocomplete ? searchAutocomplete : null"
                    (keyup.enter)="searchSubmit($event)">
-                <mat-icon *ngIf="canShowClearSearch()" matSuffix
+                <button mat-icon-button
+                    *ngIf="canShowClearSearch()"
+                    matSuffix
                     data-automation-id="adf-clear-search-button"
                     class="adf-clear-search-button"
-                    (mousedown)="resetSearch()">clear</mat-icon>
+                    [title]="'SEARCH.FILTER.BUTTONS.CLOSE' | translate"
+                    (click)="resetSearch()"
+                    (keyup.enter)="resetSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
         </mat-form-field>
     </div>
 </div>

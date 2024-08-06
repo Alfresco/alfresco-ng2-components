@@ -301,21 +301,22 @@ describe('SearchTextInputComponent', () => {
                 tick(200);
             }));
 
+            const getClearSearchButton = (): HTMLButtonElement =>
+                fixture.debugElement.query(By.css('[data-automation-id="adf-clear-search-button"]'))?.nativeElement;
+
             it('should clear button be visible when showClearButton is set to true', async () => {
                 component.showClearButton = true;
                 fixture.detectChanges();
                 await fixture.whenStable();
-                const clearButton = fixture.debugElement.query(By.css('[data-automation-id="adf-clear-search-button"]'));
 
-                expect(clearButton).not.toBeNull();
+                expect(getClearSearchButton()).toBeDefined();
             });
 
             it('should clear button not be visible when showClearButton is set to false', () => {
                 component.showClearButton = false;
                 fixture.detectChanges();
-                const clearButton = fixture.debugElement.query(By.css('[data-automation-id="adf-clear-search-button"]'));
 
-                expect(clearButton).toBeNull();
+                expect(getClearSearchButton()).toBeUndefined();
             });
 
             it('should reset the search when clicking the clear button', async () => {
@@ -327,8 +328,7 @@ describe('SearchTextInputComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const clearButton = fixture.debugElement.query(By.css('[data-automation-id="adf-clear-search-button"]'));
-                clearButton.nativeElement.dispatchEvent(new MouseEvent('mousedown'));
+                getClearSearchButton().click();
                 fixture.detectChanges();
                 await fixture.whenStable();
 

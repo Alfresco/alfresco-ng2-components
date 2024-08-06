@@ -64,8 +64,20 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         return this.field.readOnly;
     }
 
+    private get isRestType(): boolean {
+        return this.field?.optionType === 'rest';
+    }
+
+    private get hasRestUrl(): boolean {
+        return !!this.field?.restUrl;
+    }
+
+    private get isValidRestConfig(): boolean {
+        return this.isRestType && this.hasRestUrl;
+    }
+
     ngOnInit() {
-        if (this.field?.restUrl && !this.isReadOnlyForm()) {
+        if (this.isValidRestConfig && !this.isReadOnlyForm()) {
             if (this.field.form.taskId) {
                 this.getValuesByTaskId();
             } else {

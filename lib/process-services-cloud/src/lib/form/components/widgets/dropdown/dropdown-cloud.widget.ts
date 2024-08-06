@@ -108,11 +108,15 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private get hasRestUrl(): boolean {
-        return !!this.field.restUrl;
+        return !!this.field?.restUrl;
     }
 
-    private get isValidRestType(): boolean {
-        return this.field.optionType === 'rest' && this.hasRestUrl;
+    private get isValidRestConfig(): boolean {
+        return this.isRestOptionType && this.hasRestUrl;
+    }
+
+    private get isRestOptionType(): boolean {
+        return this.field?.optionType === 'rest';
     }
 
     private get isVariableOptionType(): boolean {
@@ -217,7 +221,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         switch (true) {
             case this.isReadOnlyForm:
                 break;
-            case this.hasRestUrl && !this.isLinkedWidget:
+            case this.isValidRestConfig && !this.isLinkedWidget:
                 this.persistFieldOptionsFromRestApi();
                 break;
 
@@ -320,7 +324,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     private persistFieldOptionsFromRestApi() {
-        if (this.isValidRestType) {
+        if (this.isValidRestConfig) {
             this.resetRestApiErrorMessage();
             const bodyParam = this.buildBodyParam();
             this.formCloudService
@@ -374,7 +378,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
     private parentValueChanged(value: string) {
         if (value && !this.isNoneValueSelected(value)) {
-            this.isValidRestType ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
+            this.isValidRestConfig ? this.persistFieldOptionsFromRestApi() : this.persistFieldOptionsFromManualList(value);
         } else if (this.isNoneValueSelected(value)) {
             this.resetRestApiErrorMessage();
             this.resetOptions();

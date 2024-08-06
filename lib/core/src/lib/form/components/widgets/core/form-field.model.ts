@@ -31,6 +31,10 @@ import { DataColumn } from '../../../../datatable/data/data-column.model';
 import { DateFnsUtils } from '../../../../common';
 import { isValid as isValidDate } from 'date-fns';
 
+export type FieldOptionType = 'rest' | 'manual' | 'variable';
+export type FieldSelectionType = 'single' | 'multiple';
+export type FieldAlignmentType = 'vertical' | 'horizontal';
+
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
     private _value: string;
@@ -71,7 +75,7 @@ export class FormFieldModel extends FormWidgetModel {
     restLabelProperty: string;
     hasEmptyValue: boolean;
     className: string;
-    optionType: 'rest' | 'manual' | 'variable';
+    optionType: FieldOptionType;
     params: FormFieldMetadata = {};
     hyperlinkUrl: string;
     displayText: string;
@@ -80,8 +84,8 @@ export class FormFieldModel extends FormWidgetModel {
     enableFractions: boolean = false;
     currency: string = null;
     dateDisplayFormat: string = this.defaultDateFormat;
-    selectionType: 'single' | 'multiple' = null;
-    alignmentType: 'vertical' | 'horizontal' = null;
+    selectionType: FieldSelectionType;
+    alignmentType: FieldAlignmentType;
     rule?: FormFieldRule;
     selectLoggedUser: boolean;
     groupsRestriction: string[];
@@ -193,7 +197,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.maxDateRangeValue = json.maxDateRangeValue;
             this.dynamicDateRangeSelection = json.dynamicDateRangeSelection;
             this.regexPattern = json.regexPattern;
-            this.options = this.parseValidOptions(json.options);
+            this.options = this.parseOptions(json.options, json.optionType);
             this.emptyOption = this.getEmptyOption(this.options);
             this.hasEmptyValue = json?.hasEmptyValue ?? !!this.emptyOption;
             this.className = json.className;
@@ -422,10 +426,9 @@ export class FormFieldModel extends FormWidgetModel {
                         break;
                     }
 
-                    const entry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
-                    if (entry.length > 0) {
-                        this.form.values[this.id] = entry[0];
-                    }
+                    const matchingOption: FormFieldOption = this.options.find((opt) => opt.id === this.value);
+
+                    this.form.values[this.id] = matchingOption || null;
                 }
                 break;
             }
@@ -565,6 +568,10 @@ export class FormFieldModel extends FormWidgetModel {
 
     private parseValidOptions(options: any): FormFieldOption[] {
         return Array.isArray(options) ? options.filter((option) => this.isValidOption(option)) : [];
+    }
+
+    private parseOptions(options: any, optionType: FieldOptionType): FormFieldOption[] {
+        return optionType === 'rest' ? [] : this.parseValidOptions(options);
     }
 
     private isValidOption(option: any): boolean {
