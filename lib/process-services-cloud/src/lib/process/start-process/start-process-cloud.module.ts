@@ -21,21 +21,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material.module';
 import { FormCloudModule } from '../../form/form-cloud.module';
 import { StartProcessCloudComponent } from './components/start-process-cloud.component';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 @NgModule({
-    imports: [
-        FormsModule,
-        CommonModule,
-        FormCloudModule,
-        MaterialModule,
-        ReactiveFormsModule,
-        CoreModule
-    ],
-    declarations: [
-        StartProcessCloudComponent
-    ],
-    exports: [
-        StartProcessCloudComponent
-    ]
+    imports: [FormsModule, CommonModule, FormCloudModule, MaterialModule, ReactiveFormsModule, CoreLegacyModule],
+    declarations: [StartProcessCloudComponent],
+    exports: [StartProcessCloudComponent]
 })
-export class StartProcessCloudModule { }
+export class StartProcessCloudModule {}

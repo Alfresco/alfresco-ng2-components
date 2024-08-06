@@ -20,7 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TaskFiltersCloudComponent } from './components/task-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
 import { ProcessCommonModule } from '../../common/process-common.module';
@@ -41,7 +41,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         CommonModule,
         MaterialModule,
         AppListCloudModule,
-        CoreModule,
+        CoreLegacyModule,
         GroupCloudModule,
         ProcessCommonModule,
         PeopleCloudModule,

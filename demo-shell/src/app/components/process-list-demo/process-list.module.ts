@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { ProcessListDemoComponent } from './process-list-demo.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 import { ProcessModule } from '@alfresco/adf-process-services';
 
 const routes: Routes = [
@@ -34,7 +34,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [CommonModule, RouterModule.forChild(routes), CoreModule, ProcessModule],
+    imports: [CommonModule, RouterModule.forChild(routes), CoreLegacyModule, ProcessModule],
     declarations: [ProcessListDemoComponent]
 })
 export class AppProcessListModule {}

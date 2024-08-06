@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule } from '../core.module';
+import { CoreLegacyModule } from '../core-legacy.module';
 import { AuthModule } from '../auth';
 
 declare let jasmine: any;
@@ -30,14 +30,8 @@ describe('TranslateLoader', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                AuthModule.forRoot({ useHash: true }),
-                TranslateModule.forRoot(),
-                CoreModule.forRoot()
-            ],
-            providers: [
-                TranslationService
-            ]
+            imports: [AuthModule.forRoot({ useHash: true }), TranslateModule.forRoot(), CoreLegacyModule.forRoot()],
+            providers: [TranslationService]
         });
         translationService = TestBed.inject(TranslationService);
         customLoader = translationService.translate.currentLoader as TranslateLoaderService;

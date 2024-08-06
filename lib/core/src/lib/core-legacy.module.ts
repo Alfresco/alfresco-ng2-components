@@ -142,10 +142,10 @@ import { IconComponent } from './icon';
         DynamicChipListModule
     ]
 })
-export class CoreModule {
-    static forRoot(): ModuleWithProviders<CoreModule> {
+export class CoreLegacyModule {
+    static forRoot(): ModuleWithProviders<CoreLegacyModule> {
         return {
-            ngModule: CoreModule,
+            ngModule: CoreLegacyModule,
             providers: [
                 TranslateStore,
                 TranslateService,
@@ -184,9 +184,13 @@ export class CoreModule {
         };
     }
 
-    static forChild(): ModuleWithProviders<CoreModule> {
+    /**
+     * @deprecated this api is deprecated, import `CoreLegacyModule` instead
+     * @returns ModuleWithProviders<CoreLegacyModule>
+     */
+    static forChild(): ModuleWithProviders<CoreLegacyModule> {
         return {
-            ngModule: CoreModule
+            ngModule: CoreLegacyModule
         };
     }
 

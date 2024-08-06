@@ -16,14 +16,14 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule } from '../core.module';
+import { CoreLegacyModule } from '../core-legacy.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideTranslations } from '../translation/translation.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AuthModule } from '../auth/oidc/auth.module';
 
 @NgModule({
-    imports: [AuthModule.forRoot(), TranslateModule.forRoot(), CoreModule.forRoot()],
+    imports: [AuthModule.forRoot(), TranslateModule.forRoot(), CoreLegacyModule.forRoot()],
     providers: [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations()]
 })
 export class CoreStoryModule {}

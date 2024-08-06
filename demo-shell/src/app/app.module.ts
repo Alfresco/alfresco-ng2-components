@@ -22,7 +22,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppConfigService, DebugAppConfigService, CoreModule, AuthModule, provideTranslations } from '@alfresco/adf-core';
+import { AppConfigService, DebugAppConfigService, CoreLegacyModule, AuthModule, provideTranslations } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
@@ -82,7 +82,7 @@ import { CoreAutomationService } from '../testing/automation.service';
         HttpClientModule,
         MaterialModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot(),
+        CoreLegacyModule.forRoot(),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),

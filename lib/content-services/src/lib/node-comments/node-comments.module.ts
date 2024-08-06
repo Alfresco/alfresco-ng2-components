@@ -18,10 +18,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NodeCommentsComponent } from './node-comments.component';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [CommonModule, CoreModule],
+    imports: [CommonModule, CoreLegacyModule],
     declarations: [NodeCommentsComponent],
     exports: [NodeCommentsComponent]
 })

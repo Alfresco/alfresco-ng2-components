@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
+import { CoreLegacyModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
 import { MaterialModule } from './material.module';
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
 import { DocumentListModule } from './document-list/document-list.module';
@@ -51,7 +51,7 @@ import { TreeViewComponent } from './tree-view';
 @NgModule({
     imports: [
         ...CONTENT_PIPES,
-        CoreModule,
+        CoreLegacyModule,
         ...CONTENT_TAG_DIRECTIVES,
         CommonModule,
         FormsModule,

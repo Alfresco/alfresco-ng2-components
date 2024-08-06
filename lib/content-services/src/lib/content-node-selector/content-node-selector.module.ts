@@ -23,7 +23,7 @@ import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { BREADCRUMB_DIRECTIVES } from '../breadcrumb/breadcrumb.module';
 import { SearchModule } from '../search/search.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
 import { CONTENT_UPLOAD_DIRECTIVES } from '../upload/upload.module';
@@ -35,7 +35,7 @@ import { DropdownSitesComponent } from './site-dropdown/sites-dropdown.component
     imports: [
         FormsModule,
         ReactiveFormsModule,
-        CoreModule,
+        CoreLegacyModule,
         CommonModule,
         MaterialModule,
         DropdownSitesComponent,

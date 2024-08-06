@@ -16,21 +16,13 @@
  */
 
 import { NgModule } from '@angular/core';
-import { AuthModule, CoreModule, provideTranslations } from '@alfresco/adf-core';
+import { AuthModule, CoreLegacyModule, provideTranslations } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServicesCloudModule } from '../process-services-cloud.module';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 @NgModule({
-    imports: [
-        AuthModule.forRoot(),
-        TranslateModule.forRoot(),
-        CoreModule.forRoot(),
-        ProcessServicesCloudModule.forRoot()
-    ],
-    providers: [
-        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
-        provideAnimations()
-    ]
+    imports: [AuthModule.forRoot(), TranslateModule.forRoot(), CoreLegacyModule.forRoot(), ProcessServicesCloudModule.forRoot()],
+    providers: [provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'), provideAnimations()]
 })
-export class ProcessServicesCloudStoryModule { }
+export class ProcessServicesCloudStoryModule {}

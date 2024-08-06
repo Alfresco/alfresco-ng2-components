@@ -22,19 +22,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        CoreModule,
-        MatDialogModule,
-        MatInputModule,
-        MatSelectModule,
-        MatSlideToggleModule
-    ],
-    declarations: [ CloudSettingsComponent ],
-    exports: [ CommonModule, CloudSettingsComponent]
+    imports: [CommonModule, CoreLegacyModule, MatDialogModule, MatInputModule, MatSelectModule, MatSlideToggleModule],
+    declarations: [CloudSettingsComponent],
+    exports: [CommonModule, CloudSettingsComponent]
 })
-
 export class AppCloudSharedModule {}

@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ContentTestingModule } from '../testing/content.testing.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 import { NodeSharedDirective } from '@alfresco/adf-content-services';
 
 @Component({
@@ -53,7 +53,7 @@ describe('NodeSharedDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot(), ContentTestingModule, NodeShareTestComponent]
+            imports: [CoreLegacyModule.forRoot(), ContentTestingModule, NodeShareTestComponent]
         });
         fixture = TestBed.createComponent(NodeShareTestComponent);
         document = TestBed.inject(DOCUMENT);

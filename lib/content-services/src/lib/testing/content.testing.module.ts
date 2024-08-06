@@ -19,7 +19,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-    CoreModule,
+    CoreLegacyModule,
     AlfrescoApiService,
     AppConfigService,
     TranslationService,
@@ -42,7 +42,7 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
         NoopAnimationsModule,
         RouterTestingModule,
         TranslateModule.forRoot(),
-        CoreModule,
+        CoreLegacyModule,
         ContentModule,
         MatIconTestingModule
     ],
@@ -58,6 +58,6 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
             multi: true
         }
     ],
-    exports: [NoopAnimationsModule, TranslateModule, CoreModule, ContentModule]
+    exports: [NoopAnimationsModule, TranslateModule, CoreLegacyModule, ContentModule]
 })
 export class ContentTestingModule {}

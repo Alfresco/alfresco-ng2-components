@@ -21,7 +21,7 @@ import { VersionCompatibilityService } from '@alfresco/adf-content-services';
 import {
     AlfrescoApiService,
     ContentLinkModel,
-    CoreModule,
+    CoreLegacyModule,
     FormFieldModel,
     FormFieldTypes,
     FormModel,
@@ -1470,7 +1470,7 @@ describe('Multilingual Form', () => {
                 AuthModule.forRoot({ useHash: true }),
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
-                CoreModule.forRoot(),
+                CoreLegacyModule.forRoot(),
                 ProcessServicesCloudModule.forRoot()
             ],
             providers: [provideTranslations('app', 'resources')]
@@ -1540,7 +1540,13 @@ describe('retrieve metadata on submit', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot(), FormCloudModule],
+            imports: [
+                AuthModule.forRoot({ useHash: true }),
+                NoopAnimationsModule,
+                TranslateModule.forRoot(),
+                CoreLegacyModule.forRoot(),
+                FormCloudModule
+            ],
             providers: [
                 provideTranslations('app', 'resources'),
                 {

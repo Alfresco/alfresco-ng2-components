@@ -19,23 +19,18 @@ import { NgModule } from '@angular/core';
 import { LoginComponent } from './login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 import { ContentModule } from '@alfresco/adf-content-services';
 
 const routes: Routes = [
     {
-      path: '',
-      component: LoginComponent
+        path: '',
+        component: LoginComponent
     }
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        CoreModule,
-        RouterModule.forChild(routes),
-        ContentModule.forChild()
-    ],
+    imports: [CommonModule, CoreLegacyModule, RouterModule.forChild(routes), ContentModule.forChild()],
     declarations: [LoginComponent]
 })
 export class AppLoginModule {}

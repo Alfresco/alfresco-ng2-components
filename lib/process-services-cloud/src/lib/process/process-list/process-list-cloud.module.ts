@@ -19,22 +19,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProcessListCloudComponent } from './components/process-list-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 import { LocalPreferenceCloudService } from '../../services/local-preference-cloud.service';
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../services/cloud-token.service';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule
-
+    imports: [CommonModule, MaterialModule, CoreLegacyModule],
+    providers: [
+        {
+            provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
+            useClass: LocalPreferenceCloudService
+        }
     ],
-    providers: [{
-        provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
-        useClass: LocalPreferenceCloudService
-    }],
     declarations: [ProcessListCloudComponent],
     exports: [ProcessListCloudComponent]
 })
-export class ProcessListCloudModule { }
+export class ProcessListCloudModule {}

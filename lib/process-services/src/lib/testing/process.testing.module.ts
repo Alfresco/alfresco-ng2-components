@@ -25,7 +25,7 @@ import {
     AppConfigServiceMock,
     TranslationService,
     TranslationMock,
-    CoreModule,
+    CoreLegacyModule,
     FormRenderingService,
     AuthModule
 } from '@alfresco/adf-core';
@@ -38,7 +38,7 @@ import { RouterTestingModule } from '@angular/router/testing';
         AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot(),
+        CoreLegacyModule.forRoot(),
         ProcessModule.forRoot(),
         RouterTestingModule
     ],
@@ -49,6 +49,6 @@ import { RouterTestingModule } from '@angular/router/testing';
         FormRenderingService,
         { provide: FormRenderingService, useClass: ProcessFormRenderingService }
     ],
-    exports: [NoopAnimationsModule, TranslateModule, CoreModule, ProcessModule]
+    exports: [NoopAnimationsModule, TranslateModule, CoreLegacyModule, ProcessModule]
 })
 export class ProcessTestingModule {}

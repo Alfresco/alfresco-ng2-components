@@ -19,28 +19,19 @@ import { NgModule } from '@angular/core';
 import { SettingsComponent } from './settings.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HostSettingsComponent } from './host-settings.component';
 
 const routes: Routes = [
     {
-      path: '',
-      component: SettingsComponent
+        path: '',
+        component: SettingsComponent
     }
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        CoreModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
-    declarations: [
-        SettingsComponent,
-        HostSettingsComponent
-    ]
+    imports: [CommonModule, RouterModule.forChild(routes), CoreLegacyModule, FormsModule, ReactiveFormsModule],
+    declarations: [SettingsComponent, HostSettingsComponent]
 })
 export class AppSettingsModule {}

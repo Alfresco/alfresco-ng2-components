@@ -20,7 +20,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 
-import { CoreModule, SearchTextModule } from '@alfresco/adf-core';
+import { CoreLegacyModule, SearchTextModule } from '@alfresco/adf-core';
 
 import { SearchControlComponent } from './components/search-control.component';
 import { SearchComponent } from './components/search.component';
@@ -66,7 +66,7 @@ export const CONTENT_SEARCH_DIRECTIVES = [SearchCheckListComponent, SearchChipAu
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        CoreModule,
+        CoreLegacyModule,
         SearchTextModule,
         SearchInputComponent
     ],

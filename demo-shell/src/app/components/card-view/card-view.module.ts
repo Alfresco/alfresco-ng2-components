@@ -19,21 +19,17 @@ import { NgModule } from '@angular/core';
 import { CardViewComponent } from './card-view.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 
 const routes: Routes = [
     {
-      path: '',
-      component: CardViewComponent
+        path: '',
+        component: CardViewComponent
     }
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        CoreModule,
-        RouterModule.forChild(routes)
-    ],
+    imports: [CommonModule, CoreLegacyModule, RouterModule.forChild(routes)],
     declarations: [CardViewComponent]
 })
 export class AppCardViewModule {}

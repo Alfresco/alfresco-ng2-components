@@ -18,17 +18,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreLegacyModule } from '@alfresco/adf-core';
 import { ProcessHeaderCloudComponent } from './components/process-header-cloud.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule
-
-    ],
+    imports: [CommonModule, MaterialModule, CoreLegacyModule],
     declarations: [ProcessHeaderCloudComponent],
     exports: [ProcessHeaderCloudComponent]
 })
-export class ProcessHeaderCloudModule { }
+export class ProcessHeaderCloudModule {}

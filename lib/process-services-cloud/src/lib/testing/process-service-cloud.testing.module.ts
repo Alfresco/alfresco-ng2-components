@@ -25,7 +25,8 @@ import {
     AppConfigServiceMock,
     TranslationService,
     TranslationMock,
-    CoreModule, AuthModule
+    CoreLegacyModule,
+    AuthModule
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServicesCloudModule } from '../process-services-cloud.module';
@@ -38,7 +39,7 @@ import { RouterTestingModule } from '@angular/router/testing';
         NoopAnimationsModule,
         RouterTestingModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot(),
+        CoreLegacyModule.forRoot(),
         ProcessServicesCloudModule.forRoot()
     ],
     providers: [
@@ -46,11 +47,6 @@ import { RouterTestingModule } from '@angular/router/testing';
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock }
     ],
-    exports: [
-        NoopAnimationsModule,
-        TranslateModule,
-        CoreModule,
-        ProcessServicesCloudModule
-    ]
+    exports: [NoopAnimationsModule, TranslateModule, CoreLegacyModule, ProcessServicesCloudModule]
 })
 export class ProcessServiceCloudTestingModule {}

@@ -180,7 +180,7 @@ A new input parameter processDefinitionId has been added to the Tasklist and the
 ### Lazy loading improvements
 
 You can now use ADF libraries with the lazy-loaded feature modules. Every ADF library now supports "forRoot" and "forChild" semantics for the main modules.
-For example, you should use ["CoreModule](lib/core/src/lib/core.module.ts).forRoot()" in the main application module, and ["CoreModule](lib/core/src/lib/core.module.ts).forChild()" in the lazy modules.
+For example, you should use ["CoreLegacyModule](lib/core/src/lib/core.module.ts).forRoot()" in the main application module, and ["CoreLegacyModule](lib/core/src/lib/core.module.ts).forChild()" in the lazy modules.
 
 ### Localization
 

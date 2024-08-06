@@ -20,23 +20,11 @@ import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { AppDetailsCloudComponent } from './components/app-details-cloud.component';
 import { AppListCloudComponent } from './components/app-list-cloud.component';
-import { TemplateModule, CoreModule } from '@alfresco/adf-core';
+import { TemplateModule, CoreLegacyModule } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TemplateModule,
-        MaterialModule,
-        CoreModule
-    ],
-    declarations: [
-        AppListCloudComponent,
-        AppDetailsCloudComponent
-    ],
-    exports: [
-        AppListCloudComponent,
-        AppDetailsCloudComponent
-    ]
+    imports: [CommonModule, TemplateModule, MaterialModule, CoreLegacyModule],
+    declarations: [AppListCloudComponent, AppDetailsCloudComponent],
+    exports: [AppListCloudComponent, AppDetailsCloudComponent]
 })
-export class AppListCloudModule {
-}
+export class AppListCloudModule {}

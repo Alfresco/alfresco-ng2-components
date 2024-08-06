@@ -17,7 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CoreModule, EditJsonDialogModule } from '@alfresco/adf-core';
+import { CoreLegacyModule, EditJsonDialogModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload/upload.module';
@@ -39,7 +39,7 @@ import { NodeNameTooltipPipe } from '../pipes';
 
 @NgModule({
     imports: [
-        CoreModule,
+        CoreLegacyModule,
         CommonModule,
         MaterialModule,
         UploadModule,

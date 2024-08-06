@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule, FormatSpacePipe, ToolbarModule } from '@alfresco/adf-core';
+import { CoreLegacyModule, FormatSpacePipe, ToolbarModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -56,7 +56,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule,
+        CoreLegacyModule,
         ContentNodeSelectorModule,
         PeopleCloudModule,
         GroupCloudModule,

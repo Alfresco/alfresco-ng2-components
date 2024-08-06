@@ -49,9 +49,9 @@ This document lists all the deprecated ADF v2.x components that were removed for
     -   `analytics-report-list` is now `adf-analytics-report-list`.
     -   `analytics-report-parameters` is now `adf-analytics-report-parameters`.
     -   `CommentProcessModel` was moved into the Core library with the name [`CommentModel`](../../lib/core/src/lib/models/comment.model.ts) in v2.3.0. Now you
-        can only import it from [`CoreModule`](../../lib/core/src/lib/core.module.ts).
+        can only import it from [`CoreLegacyModule`](../../lib/core/src/lib/core.module.ts).
     -   [`CommentsModule`](../../lib/core/src/lib/comments/comments.module.ts), [`CommentListComponent`](../core/components/comment-list.component.md), and [`CommentsComponent`](../core/components/comments.component.md) are no longer exported from
-        [`ProcessModule`](../../lib/process-services/src/lib/process.module.ts) but now from [`CoreModule`](../../lib/core/src/lib/core.module.ts). The old usage was deprecated in v2.3.0.
+        [`ProcessModule`](../../lib/process-services/src/lib/process.module.ts) but now from [`CoreLegacyModule`](../../lib/core/src/lib/core.module.ts). The old usage was deprecated in v2.3.0.
     -   `<adf-upload-drag-area>`:  The `parentId` input has been renamed as `rootFolderId`. The old
         name was deprecated in v2.4.0.
     -   The `createFolder` event of the [`UploadBase`](../../lib/content-services/src/lib/upload/components/base-upload/upload-base.ts) class (emitted when a folder was

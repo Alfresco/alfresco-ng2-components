@@ -19,7 +19,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { CoreModule } from '../core.module';
+import { CoreLegacyModule } from '../core-legacy.module';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
@@ -42,7 +42,7 @@ import { EMPTY, of } from 'rxjs';
         RouterTestingModule,
         HttpClientModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot()
+        CoreLegacyModule.forRoot()
     ],
     providers: [
         DatePipe,
@@ -58,6 +58,6 @@ import { EMPTY, of } from 'rxjs';
         },
         { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {}, onTokenReceived: of() } }
     ],
-    exports: [NoopAnimationsModule, CoreModule, TranslateModule, RouterTestingModule]
+    exports: [NoopAnimationsModule, CoreLegacyModule, TranslateModule, RouterTestingModule]
 })
 export class CoreTestingModule {}
