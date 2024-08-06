@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { filter, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -111,7 +111,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
 
     private initFormControl() {
         if (this.field?.required) {
-            this.dropdownControl.addValidators([Validators.required]);
+            this.dropdownControl.addValidators([this.customRequiredValidator(this.field)]);
         }
 
         if (this.field?.readOnly || this.readOnly) {
@@ -125,15 +125,9 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
             )
             .subscribe((value) => {
                 this.setOptionValue(value, this.field);
+                this.handleErrors();
                 this.onFieldChanged(this.field);
             });
-
-        this.dropdownControl.statusChanges
-            .pipe(
-                filter(() => !!this.field),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(() => this.handleErrors());
 
         this.dropdownControl.setValue(this.getOptionValue(this.field?.value), { emitEvent: false });
         this.handleErrors();
@@ -177,5 +171,18 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         }
 
         return value as FormFieldOption | undefined;
+    }
+
+    private customRequiredValidator(field: FormFieldModel): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const isEmptyInputValue = (value: any) => value == null || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
+            const isEqualToEmptyValue = (value: any) =>
+                field.hasEmptyValue &&
+                (value === field.emptyOption.id ||
+                    value === field.emptyOption.name ||
+                    (value.id === field.emptyOption.id && value.name === field.emptyOption.name));
+
+            return isEmptyInputValue(control.value) || isEqualToEmptyValue(control.value) ? { required: true } : null;
+        };
     }
 }
