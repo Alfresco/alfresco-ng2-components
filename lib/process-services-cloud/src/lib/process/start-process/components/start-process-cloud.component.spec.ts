@@ -35,6 +35,7 @@ import {
     fakeStartForm,
     fakeStartFormNotValid,
     fakeProcessInstance,
+    fakeProcessWithFormInstance,
     fakeNoNameProcessDefinitions,
     fakeSingleProcessDefinition,
     fakeSingleProcessDefinitionWithoutForm,
@@ -43,6 +44,7 @@ import {
 } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
+import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
@@ -62,6 +64,7 @@ describe('StartProcessCloudComponent', () => {
     let formCloudService: FormCloudService;
     let getDefinitionsSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
+    let startProcessWithFormSpy: jasmine.Spy;
     let formDefinitionSpy: jasmine.Spy;
     let getStartEventFormStaticValuesMappingSpy: jasmine.Spy;
 
@@ -107,6 +110,7 @@ describe('StartProcessCloudComponent', () => {
         formDefinitionSpy = spyOn(formCloudService, 'getForm');
         spyOn(processService, 'updateProcess').and.returnValue(of());
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(fakeProcessInstance));
+        startProcessWithFormSpy = spyOn(processService, 'startProcessWithForm').and.returnValue(of(fakeProcessWithFormInstance));
         getStartEventFormStaticValuesMappingSpy = spyOn(processService, 'getStartEventFormStaticValuesMapping').and.returnValue(of([]));
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
@@ -716,16 +720,22 @@ describe('StartProcessCloudComponent', () => {
             expect(component.hasForm).toBeTruthy();
             expect(processForm).not.toBeNull();
 
-            const payload: ProcessPayloadCloud = new ProcessPayloadCloud({
-                name: component.processInstanceName.value,
+            const payload: ProcessWithFormPayloadCloud = new ProcessWithFormPayloadCloud({
+                processName: component.processInstanceName.value,
                 processDefinitionKey: fakeProcessDefinitions[2].key,
-                variables: Object.assign({}, component.formCloud.values)
+                variables: {},
+                values: component.formCloud.values
             });
             const startButton = fixture.debugElement.query(By.css('#button-start'));
             expect(startButton).not.toBeNull();
 
             startButton.triggerEventHandler('click', null);
-            expect(startProcessSpy).toHaveBeenCalledWith(component.appName, payload);
+            expect(startProcessWithFormSpy).toHaveBeenCalledWith(
+                component.appName,
+                component.processDefinitionCurrent.formKey,
+                component.processDefinitionCurrent.version,
+                payload
+            );
         });
 
         it('should output start event when process started successfully', () => {

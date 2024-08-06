@@ -24,7 +24,6 @@ import { HttpErrorResponse, HttpClientModule } from '@angular/common/http';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('StartProcessCloudService', () => {
-
     let service: StartProcessCloudService;
     let adfHttpClient: AdfHttpClient;
 
@@ -38,67 +37,71 @@ describe('StartProcessCloudService', () => {
 
     it('should be able to create a new process', (done) => {
         spyOn(service, 'startProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
-        service.startProcess('appName1', fakeProcessPayload)
-            .subscribe(
-                (res) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual('fake-id');
-                    expect(res.name).toEqual('fake-name');
-                    done();
-                }
-            );
+        service.startProcess('appName1', fakeProcessPayload).subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res.id).toEqual('fake-id');
+            expect(res.name).toEqual('fake-name');
+            done();
+        });
+    });
+
+    it('should be able to create a new process with form', (done) => {
+        spyOn(service, 'startProcessWithForm').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
+        service.startProcessWithForm('appName1', 'mockFormId', 1, fakeProcessPayload).subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res.id).toEqual('fake-id');
+            expect(res.name).toEqual('fake-name');
+            done();
+        });
     });
 
     it('Should not be able to create a process if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
             error: 'Mock Error',
-            status: 404, statusText: 'Not Found'
+            status: 404,
+            statusText: 'Not Found'
         });
 
         spyOn(service, 'startProcess').and.returnValue(throwError(errorResponse));
-        service.startProcess('appName1', fakeProcessPayload)
-            .subscribe(
-                () => {
-                    fail('expected an error, not applications');
-                },
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('Mock Error');
-                }
-            );
+        service.startProcess('appName1', fakeProcessPayload).subscribe(
+            () => {
+                fail('expected an error, not applications');
+            },
+            (error) => {
+                expect(error.status).toEqual(404);
+                expect(error.statusText).toEqual('Not Found');
+                expect(error.error).toEqual('Mock Error');
+            }
+        );
     });
 
     it('should be able to get all the process definitions', (done) => {
         spyOn(service, 'getProcessDefinitions').and.returnValue(of([new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })]));
-        service.getProcessDefinitions('appName1')
-            .subscribe(
-                (res: ProcessDefinitionCloud[]) => {
-                    expect(res).toBeDefined();
-                    expect(res[0].id).toEqual('fake-id');
-                    expect(res[0].name).toEqual('fake-name');
-                    done();
-                }
-            );
+        service.getProcessDefinitions('appName1').subscribe((res: ProcessDefinitionCloud[]) => {
+            expect(res).toBeDefined();
+            expect(res[0].id).toEqual('fake-id');
+            expect(res[0].name).toEqual('fake-name');
+            done();
+        });
     });
 
     it('should not be able to get all the process definitions if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
             error: 'Mock Error',
-            status: 404, statusText: 'Not Found'
+            status: 404,
+            statusText: 'Not Found'
         });
         spyOn(service, 'getProcessDefinitions').and.returnValue(throwError(errorResponse));
-        service.getProcessDefinitions('appName1')
-            .subscribe(
-                () => {
-                    fail('expected an error, not applications');
-                },
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('Mock Error');
-                }
-            );
+        service.getProcessDefinitions('appName1').subscribe(
+            () => {
+                fail('expected an error, not applications');
+            },
+            (error) => {
+                expect(error.status).toEqual(404);
+                expect(error.statusText).toEqual('Not Found');
+                expect(error.error).toEqual('Mock Error');
+            }
+        );
     });
 
     it('should transform the response into task variables', (done) => {
