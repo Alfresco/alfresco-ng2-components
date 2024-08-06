@@ -26,7 +26,7 @@ runs:
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@76affd16a4dd9a440cf66bf42656b1d826e8dfc2 # v5.34.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@9d00215f539f669b41c7fabf7b88ccc8f316926c # v6.0.1
 # CACHE
       - name: Node Modules cache
         id: node-modules-cache

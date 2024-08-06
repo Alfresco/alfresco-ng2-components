@@ -692,6 +692,61 @@ describe('EditProcessFilterCloudComponent', () => {
         expect(await options[0].getText()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME');
     });
 
+    it('should not reset process definitions instance after filter update', () => {
+        const getProcessDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(
+            of([new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })])
+        );
+        component.filterProperties = ['processDefinitionName'];
+
+        const processFilterIdChange = new SimpleChange(null, 'changed-mock-process-filter-id', true);
+        component.ngOnChanges({ id: processFilterIdChange });
+        fixture.detectChanges();
+
+        const formerProcessDefinitions = component.processDefinitionNames;
+        const processFilterIdChange2 = new SimpleChange(null, 'changed-mock-process-filter-id', true);
+        component.ngOnChanges({ id: processFilterIdChange2 });
+        fixture.detectChanges();
+
+        expect(getProcessDefinitionsSpy).toHaveBeenCalledTimes(2);
+        expect(component.processDefinitionNames).toBeTruthy();
+        expect(component.processDefinitionNames).toBe(formerProcessDefinitions);
+    });
+
+    it('should not reset application names instance after filter update', () => {
+        component.filterProperties = ['appName'];
+
+        const processFilterIdChange = new SimpleChange(null, 'changed-mock-process-filter-id', true);
+        component.ngOnChanges({ id: processFilterIdChange });
+        fixture.detectChanges();
+
+        const formerProcessDefinitions = component.applicationNames;
+        const processFilterIdChange2 = new SimpleChange(null, 'changed-mock-process-filter-id', true);
+        component.ngOnChanges({ id: processFilterIdChange2 });
+        fixture.detectChanges();
+
+        expect(getRunningApplicationsSpy).toHaveBeenCalledTimes(2);
+        expect(component.applicationNames).toBeTruthy();
+        expect(component.applicationNames).toBe(formerProcessDefinitions);
+    });
+
+    it('should not reset application versions instance after filter update', () => {
+        const getApplicationVersionsSpy = spyOn(processService, 'getApplicationVersions').and.returnValue(of(mockAppVersions));
+        component.filterProperties = ['appVersionMultiple'];
+
+        const processFilterIdChange = new SimpleChange(null, 'changed-mock-process-filter-id', true);
+        component.ngOnChanges({ id: processFilterIdChange });
+        fixture.detectChanges();
+
+        const formerProcessDefinitions = component.appVersionOptions;
+        const processFilterIdChange2 = new SimpleChange(null, 'changed-mock-process-filter-id', true);
+        component.ngOnChanges({ id: processFilterIdChange2 });
+        fixture.detectChanges();
+
+        expect(getApplicationVersionsSpy).toHaveBeenCalledTimes(2);
+        expect(component.appVersionOptions).toBeTruthy();
+        expect(component.appVersionOptions).toBe(formerProcessDefinitions);
+    });
+
     describe('edit filter actions', () => {
         beforeEach(() => {
             const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);

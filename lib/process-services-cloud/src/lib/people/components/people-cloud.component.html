@@ -16,7 +16,7 @@
                     cancel
                 </mat-icon>
             </mat-chip-row>
-            <input [disabled]="isReadonly()" matInput
+            <input matInput
                    #chipInput
                    [formControl]="searchUserCtrl"
                    [matAutocomplete]="auto"
@@ -28,6 +28,7 @@
                    class="adf-cloud-input"
                    data-automation-id="adf-people-cloud-search-input" #userInput>
         </mat-chip-grid>
+
 
         <mat-autocomplete autoActiveFirstOption class="adf-people-cloud-list"
                           #auto="matAutocomplete"

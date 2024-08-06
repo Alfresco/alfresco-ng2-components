@@ -275,7 +275,7 @@ async function updateLicense(opts: InitApsEnvArgs) {
 
     try {
         await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${opts.host}/activiti-app/app/rest/license`,
+            `${opts.host}/activiti-app/api/enterprise/license`,
             'POST',
             {},
             {},
@@ -362,7 +362,7 @@ async function deployApp(appDefinitionId: number) {
 async function hasLicense(opts: InitApsEnvArgs): Promise<boolean> {
     try {
         const license = await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${opts.host}/activiti-app/app/rest/license`,
+            `${opts.host}/activiti-app/api/enterprise/license`,
             'GET',
             {},
             {},
@@ -462,7 +462,7 @@ async function addContentRepoWithBasic(opts: InitApsEnvArgs, tenantId: number, n
 
     try {
         const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${opts.host}/activiti-app/app/rest/integration/alfresco`,
+            `${opts.host}/activiti-app/api/enterprise/integration/alfresco`,
             'POST',
             {},
             {},
@@ -525,7 +525,7 @@ async function authorizeUserToContentWithBasic(opts: InitApsEnvArgs, username: s
     try {
         const body = { username, password: 'password' };
         const content = await alfrescoJsApi.oauth2Auth.callCustomApi(
-            `${opts.host}/activiti-app/app/rest/integration/alfresco/${contentId}/account`,
+            `${opts.host}/activiti-app/api/enterprise/integration/alfresco/${contentId}/account`,
             'POST',
             {},
             {},
