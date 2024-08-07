@@ -3,6 +3,7 @@
   "description": "Alfresco ADF testing page and utils",
   "version": "6.9.0",
   "author": "Hyland Software, Inc. and its affiliates",
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
