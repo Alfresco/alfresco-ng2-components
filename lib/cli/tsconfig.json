@@ -16,7 +16,7 @@
     "rootDir": ".",
     "skipLibCheck": true,
     "strictNullChecks": false,
-    "target": "es2018",
+    "target": "ES2019",
     "lib": ["es2018", "dom"],
     "baseUrl": ".",
     "typeRoots": ["node_modules/@types", "../../node_modules/@types"],
