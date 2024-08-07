@@ -35,6 +35,10 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | roles | `string[]` |  | Role names of the users to be listed. |
 | searchUserCtrl | `FormControl<any>` |  | FormControl to search the user |
 | title | `string` |  | Placeholder translation key |
+| hideInputOnSingleSelection | `boolean` | false | Hide the input field when a user is selected in single selection mode. The input will be shown again when the user is removed using the icon on the chip. |
+| formFieldAppearance | [`MatFormFieldAppearance`](https://material.angular.io/components/form-field/api#MatFormFieldAppearance) | "fill" | Material form field appearance (fill / outline). |
+| formFieldSubscriptSizing | [`SubscriptSizing`](https://material.angular.io/components/form-field/api#SubscriptSizing) | "fixed" | Material form field subscript sizing (fixed / dynamic). |
+| showErrors | `boolean` | true | Show errors under the form field. |
 | userChipsCtrl | `UntypedFormControl` |  | FormControl to list of users |
 | validate | `boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the identity service to verify the validity of the information passed as input. Otherwise, no check will be done. |
 

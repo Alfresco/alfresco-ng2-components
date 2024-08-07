@@ -55,7 +55,7 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
     }
 
     ngOnInit() {
-        if (this.field?.restUrl && !this.field?.form?.readOnly) {
+        if (this.isValidRestConfig() && !this.isReadOnlyForm()) {
             if (this.field.form.taskId) {
                 this.getOptionsByTaskId();
             } else {
@@ -83,5 +83,21 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
     onOptionClick(optionSelected: any) {
         this.field.value = optionSelected;
         this.fieldChanged.emit(this.field);
+    }
+
+    private isRestType(): boolean {
+        return this.field?.optionType === 'rest';
+    }
+
+    private isReadOnlyForm(): boolean {
+        return !!this.field?.form?.readOnly;
+    }
+
+    private hasRestUrl(): boolean {
+        return !!this.field?.restUrl;
+    }
+
+    private isValidRestConfig(): boolean {
+        return this.isRestType() && this.hasRestUrl();
     }
 }

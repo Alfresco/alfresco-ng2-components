@@ -1,5 +1,11 @@
 <form>
-    <mat-form-field [floatLabel]="'auto'" class="adf-people-cloud" [class.adf-invalid]="hasError() && isDirty()">
+    <mat-form-field
+        [appearance]="formFieldAppearance"
+        [subscriptSizing]="formFieldSubscriptSizing"
+        [floatLabel]="'auto'"
+        class="adf-people-cloud"
+        [class.adf-invalid]="hasError() && isDirty()"
+    >
         <ng-content select="[label]"></ng-content>
         <mat-chip-grid #userMultipleChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-people-chip-list">
             <mat-chip-row
@@ -58,7 +64,7 @@
         mode="indeterminate">
     </mat-progress-bar>
 
-    <div class="adf-error-container">
+    <div class="adf-error-container" *ngIf="showErrors">
         <mat-error *ngIf="hasPreselectError() && !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
             <mat-icon class="adf-error-icon">error_outline</mat-icon>
             <div class="adf-error-text">{{ 'ADF_CLOUD_USERS.ERROR.NOT_FOUND' | translate : { userName : validateUsersMessage } }}</div>
