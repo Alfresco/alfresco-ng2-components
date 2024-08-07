@@ -15,17 +15,9 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
-
-@NgModule({
-    declarations: [],
-    imports: [MatDialogModule, TranslateModule, MatButtonModule, MatIconModule, CommonModule, UnsavedChangesDialogComponent],
-    exports: [UnsavedChangesDialogComponent]
-})
-export class UnsavedChangesDialogModule {}
+export interface UnsavedChangesDialogData {
+    checkboxText?: string;
+    confirmButtonText?: string;
+    descriptionText?: string;
+    headerText?: string;
+}
