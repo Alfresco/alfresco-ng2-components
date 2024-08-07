@@ -180,36 +180,47 @@ describe('SearchTextInputComponent', () => {
             tick(100);
         }
 
-        it('should have margin-left set when active and direction is ltr', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'ltr');
+        /**
+         * Runs a test for ltr/rtl margin values
+         *
+         * @param isLtr sets ltr or rtl value to test
+         */
+        function testMarginValue(isLtr: boolean): void {
+            userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
             clickSearchButton();
-            expect(component.subscriptAnimationState.params).toEqual({ 'margin-left': 13 });
+            const expectedResult = isLtr ? { 'margin-left': 13 } : { 'margin-right': 13 };
+            expect(component.subscriptAnimationState.params).toEqual(expectedResult);
             discardPeriodicTasks();
-        }));
+        }
 
-        it('should have positive transform translateX set when inactive and direction is ltr', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'ltr');
-            component.subscriptAnimationState.value = 'active';
-            clickSearchButton();
-            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(85%)' });
-            discardPeriodicTasks();
+        it('should have margin-left set when active and direction is ltr', fakeAsync(() => {
+            testMarginValue(true);
         }));
 
         it('should have margin-right set when active and direction is rtl', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'rtl');
+            testMarginValue(false);
+        }));
+
+        /**
+         * Runs a test for ltr/rtl transform values
+         *
+         * @param isLtr sets ltr or rtl value to test
+         */
+        function testTransformValue(isLtr: boolean): void {
+            userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
+            component.subscriptAnimationState.value = 'active';
             clickSearchButton();
-            expect(component.subscriptAnimationState.params).toEqual({ 'margin-right': 13 });
+            const expectedValue = isLtr ? 'translateX(85%)' : 'translateX(-85%)';
+            expect(component.subscriptAnimationState.params).toEqual({ transform: expectedValue });
             discardPeriodicTasks();
+        }
+
+        it('should have positive transform translateX set when inactive and direction is ltr', fakeAsync(() => {
+            testTransformValue(true);
         }));
 
         it('should have negative transform translateX set when inactive and direction is rtl', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'rtl');
-            component.subscriptAnimationState.value = 'active';
-
-            clickSearchButton();
-
-            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(-85%)' });
-            discardPeriodicTasks();
+            testTransformValue(false);
         }));
 
         it('should set browser autocomplete to on when configured', async () => {
