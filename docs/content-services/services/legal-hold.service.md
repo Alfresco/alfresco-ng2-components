@@ -25,7 +25,7 @@ Manages holds for nodes.
     -   _hold_: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md) - Hold that should be created
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldEntry.md)`>` - Hold entry<br/>
 
--   **createHolds**(filePlanId: `string`, holds: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>`<br/>
+-   **createHolds**(filePlanId: `string`, holds: [`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldPaging`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldPaging.md)`[]>`<br/>
     Create new holds in File Plan.
     -   _filePlanId_: `string` - The identifier of a file plan. You can also use the -filePlan- alias
     -   _holds_: `<`[`Hold`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`[]>` - Array of holds that should be created
@@ -47,15 +47,15 @@ Manages holds for nodes.
     Assign a node to a hold.
     -   _holdId_: `string` - The hold Id
     -   _nodeId_: `string` - The Id of the node which is unassigned
-    -   **Returns** [`void`] <br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>` <br/>
 
--   **bulkAssignHold**(holdId: `string`, query: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)<br/>
+-   **bulkAssignHold**(holdId: `string`, query: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>`<br/>
     Assign multiple files to a hold.
     -   _holdId_: `string` - The hold id
     -   _query_: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md) - Search query
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>` - Bulk status <br/>
 
--   **bulkAssignHoldToFolder**(holdId: `string`, folderId: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)<br/>
+-   **bulkAssignHoldToFolder**(holdId: `string`, folderId: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>`<br/>
     Assign a folder to a hold.
     -   _holdId_: `string` - The hold id
     -   _folderId_: `string` - The folder id
