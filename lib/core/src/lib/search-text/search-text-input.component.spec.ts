@@ -168,17 +168,21 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should have margin-left set when active and direction is ltr', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'ltr');
+        /**
+         * function which finds Search Button and clicks it
+         */
+        function clickSearchButton(): void {
             fixture.detectChanges();
-
             const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
             searchButton.triggerEventHandler('click', null);
             tick(100);
             fixture.detectChanges();
             tick(100);
+        }
 
+        it('should have margin-left set when active and direction is ltr', fakeAsync(() => {
+            userPreferencesService.setWithoutStore('textOrientation', 'ltr');
+            clickSearchButton();
             expect(component.subscriptAnimationState.params).toEqual({ 'margin-left': 13 });
             discardPeriodicTasks();
         }));
@@ -186,30 +190,14 @@ describe('SearchTextInputComponent', () => {
         it('should have positive transform translateX set when inactive and direction is ltr', fakeAsync(() => {
             userPreferencesService.setWithoutStore('textOrientation', 'ltr');
             component.subscriptAnimationState.value = 'active';
-
-            fixture.detectChanges();
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-            searchButton.triggerEventHandler('click', null);
-            tick(100);
-            fixture.detectChanges();
-            tick(100);
-
+            clickSearchButton();
             expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(85%)' });
             discardPeriodicTasks();
         }));
 
         it('should have margin-right set when active and direction is rtl', fakeAsync(() => {
             userPreferencesService.setWithoutStore('textOrientation', 'rtl');
-            fixture.detectChanges();
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-            searchButton.triggerEventHandler('click', null);
-            tick(100);
-            fixture.detectChanges();
-            tick(100);
-
+            clickSearchButton();
             expect(component.subscriptAnimationState.params).toEqual({ 'margin-right': 13 });
             discardPeriodicTasks();
         }));
@@ -218,13 +206,7 @@ describe('SearchTextInputComponent', () => {
             userPreferencesService.setWithoutStore('textOrientation', 'rtl');
             component.subscriptAnimationState.value = 'active';
 
-            fixture.detectChanges();
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-            searchButton.triggerEventHandler('click', null);
-            tick(100);
-            fixture.detectChanges();
-            tick(100);
+            clickSearchButton();
 
             expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(-85%)' });
             discardPeriodicTasks();
