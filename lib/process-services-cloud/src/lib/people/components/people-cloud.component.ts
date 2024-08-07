@@ -28,7 +28,8 @@ import {
     OnDestroy,
     ViewChild,
     ElementRef,
-    Inject
+    Inject,
+    AfterViewInit
 } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, takeUntil } from 'rxjs/operators';
@@ -38,6 +39,7 @@ import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
 import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
+import { MatFormFieldAppearance, SubscriptSizing } from '@angular/material/form-field';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -52,7 +54,7 @@ import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.t
     providers: [FullNamePipe],
     encapsulation: ViewEncapsulation.None
 })
-export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
     appName: string;
@@ -122,6 +124,31 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     title: string;
 
+    /**
+     * Hide the matInput associated with the chip grid when a single user is selected in single selection mode.
+     * The input will be shown again when the user is removed using the icon on the chip.
+     */
+    @Input()
+    hideInputOnSingleSelection = false;
+
+    /**
+     * Material form field appearance (fill / outline)
+     */
+    @Input()
+    formFieldAppearance: MatFormFieldAppearance = 'fill';
+
+    /**
+     * Material form field subscript sizing (fixed / dynamic)
+     */
+    @Input()
+    formFieldSubscriptSizing: SubscriptSizing = 'fixed';
+
+    /**
+     * Show errors under the form field
+     */
+    @Input()
+    showErrors: boolean = true;
+
     /** Emitted when a user is selected. */
     @Output()
     selectUser = new EventEmitter<IdentityUserModel>();
@@ -187,6 +214,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             this.searchUserCtrl.disable();
         } else if (!this.isReadonly() && this.searchUserCtrl.disabled) {
             this.searchUserCtrl.enable();
+        }
+    }
+
+    ngAfterViewInit(): void {
+        if (this.hideInputOnSingleSelection) {
+            if (this.selectedUsers.length === 1 && this.isSingleMode() && this.userInput) {
+                this.userInput.nativeElement.style.display = 'none';
+            }
         }
     }
 
@@ -341,6 +376,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
             } else {
                 this.invalidUsers = [];
                 this.selectedUsers = [user];
+                if (this.hideInputOnSingleSelection) {
+                    this.userInput.nativeElement.style.display = 'none';
+                }
             }
 
             this.userInput.nativeElement.value = '';
@@ -358,6 +396,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.changedUsers.emit(this.selectedUsers);
         if (this.selectedUsers.length === 0) {
             this.userChipsControlValue('');
+            if (this.hideInputOnSingleSelection) {
+                this.userInput.nativeElement.style.display = 'block';
+            }
         } else {
             this.userChipsControlValue(this.selectedUsers[0].username);
         }
