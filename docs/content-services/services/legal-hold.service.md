@@ -49,13 +49,13 @@ Manages holds for nodes.
     -   _nodeId_: `string` - The Id of the node which is unassigned
     -   **Returns** [`void`] <br/>
 
--   **bulkAssignHold**(holdId: `string`, query: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+-   **bulkAssignHold**(holdId: `string`, query: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)<br/>
     Assign multiple files to a hold.
     -   _holdId_: `string` - The hold id
     -   _query_: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md) - Search query
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>` - Bulk status <br/>
 
--   **bulkAssignHoldToFolder**(holdId: `string`, folderId: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`void`]`>`<br/>
+-   **bulkAssignHoldToFolder**(holdId: `string`, folderId: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)<br/>
     Assign a folder to a hold.
     -   _holdId_: `string` - The hold id
     -   _folderId_: `string` - The folder id
