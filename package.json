@@ -25,7 +25,7 @@
     "e2e": "./scripts/test-e2e-lib.sh -host 'localhost:4200' -dev --folder demo-shell",
     "e2e-lib": "nx e2e lib-e2e-test --port=4200",
     "lite-server-e2e": "lite-server --baseDir='dist/demo-shell/' -c ./e2e/lite-server-proxy.js",
-    "postbuild:ci": "node -r esm ./scripts/app-config-replace.js",
+    "postbuild:ci": "node ./scripts/app-config-replace.js",
     "06": "echo -------------------------------------------- Clean ----------------------------------------------",
     "clean": "rimraf dist node_modules dist/libs",
     "playwright": "npx playwright test --config='e2e-playwright/playwright.config.ts'",
