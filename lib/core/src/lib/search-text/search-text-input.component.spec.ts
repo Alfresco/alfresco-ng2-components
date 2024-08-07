@@ -80,12 +80,12 @@ describe('SearchTextInputComponent', () => {
 
     describe('search button', () => {
         let searchButton: DebugElement;
-        beforeEach(() => {
+        beforeEach(fakeAsync(() => {
             fixture.detectChanges();
             tick(100);
 
             searchButton = debugElement.query(By.css('#adf-search-button'));
-        });
+        }));
 
         it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
             component.subscriptAnimationState.value = 'active';
