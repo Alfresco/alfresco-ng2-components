@@ -3,6 +3,7 @@
   "description": "Alfresco ADF cli and utils",
   "version": "6.9.0",
   "author": "Hyland Software, Inc. and its affiliates",
+  "type": "module",
   "bin": {
     "adf-cli": "bin/adf-cli",
     "adf": "bin/adf-cli"
