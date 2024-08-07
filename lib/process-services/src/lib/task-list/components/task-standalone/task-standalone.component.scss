@@ -4,6 +4,7 @@
     width: 60%;
     box-sizing: border-box;
     margin: 16px auto;
+    padding: 8px 8px 0;
 
     .adf-no-form-mat-card-actions {
         border-top: solid 1px var(--adf-theme-background-status-bar-color);
@@ -43,7 +44,7 @@
             display: flex;
             justify-content: space-between;
 
-            & .mat-mdc-button {
+            & button {
                 text-transform: uppercase;
                 border-radius: 5px;
             }
