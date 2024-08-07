@@ -45,7 +45,8 @@ import {
     TranslationService,
     UpdateNotification,
     PredictionService,
-    PredictionStatusUpdate
+    PredictionStatusUpdate,
+    CONTENT_ENRICHMENT
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { EMPTY, of, throwError, Subject } from 'rxjs';
@@ -70,6 +71,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
+import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -239,7 +241,8 @@ describe('ContentMetadataComponent', () => {
                         getPredictions: () => EMPTY,
                         predictionStatusUpdated$: new Subject<PredictionStatusUpdate>()
                     }
-                }
+                },
+                provideMockFeatureFlags({[CONTENT_ENRICHMENT.EXPERIENCE_INSIGHT]: true})
             ]
         });
         fixture = TestBed.createComponent(ContentMetadataComponent);
@@ -1807,7 +1810,9 @@ describe('ContentMetadataComponent', () => {
         });
 
         it('should call onPredictionStatusChanged when prediction status has changed', () => {
-            const onPredictionStatusChangedSpy = spyOn(updateService, 'onPredictionStatusChanged');
+            const updatedNode = { ...node, name: 'new test name' };
+            const onPredictionStatusChangedSpy = spyOn(updateService, 'onPredictionStatusChanged').and.stub();
+            spyOn(nodesApiService, 'getNode').and.returnValue(of(updatedNode));
             const notification = { key: 'test:test', previousValue: 'previous value' };
             component.ngOnInit();
             predictionService.predictionStatusUpdated$.next(notification);

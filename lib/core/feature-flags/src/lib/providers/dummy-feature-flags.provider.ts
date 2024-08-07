@@ -18,7 +18,7 @@
 import { IsFlagsOverrideOn } from '../guards/is-flags-override-on.guard';
 import { IsFeatureOn } from '../guards/is-feature-on.guard';
 import { IsFeatureOff } from '../guards/is-feature-off.guard';
-import { FeaturesServiceToken, FlagsOverrideToken } from '../interfaces/features.interface';
+import { FeaturesServiceToken, FlagsOverrideToken, OverridableFeaturesServiceToken } from '../interfaces/features.interface';
 import { DummyFeaturesService } from '../services/dummy-features.service';
 
 /**
@@ -28,7 +28,8 @@ import { DummyFeaturesService } from '../services/dummy-features.service';
  */
 export function provideDummyFeatureFlags() {
     return [
-        { provide: FeaturesServiceToken, useClass: DummyFeaturesService },
+        { provide: OverridableFeaturesServiceToken, useClass: DummyFeaturesService },
+        { provide: FeaturesServiceToken, useExisting: OverridableFeaturesServiceToken },
         { provide: FlagsOverrideToken, useValue: false },
         IsFeatureOn,
         IsFeatureOff,

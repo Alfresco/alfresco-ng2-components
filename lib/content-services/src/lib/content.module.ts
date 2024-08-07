@@ -47,6 +47,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader';
 import { VersionCompatibilityDirective } from './version-compatibility';
 import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
 import { TreeViewComponent } from './tree-view';
+import { provideDebugFeatureFlags, provideDummyFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 @NgModule({
     imports: [
@@ -109,7 +110,9 @@ import { TreeViewComponent } from './tree-view';
     ]
 })
 export class ContentModule {
-    static forRoot(): ModuleWithProviders<ContentModule> {
+    static forRoot(
+        devTools = false
+    ): ModuleWithProviders<ContentModule> {
         return {
             ngModule: ContentModule,
             providers: [
@@ -126,7 +129,13 @@ export class ContentModule {
                     useFactory: contentAuthLoaderFactory,
                     deps: [ContentAuthLoaderService],
                     multi: true
-                }
+                },
+                ...provideDummyFeatureFlags(),
+                ...(devTools
+                    ? provideDebugFeatureFlags({
+                        storageKey: 'content-feature-flags'
+                    })
+                    : [])
             ]
         };
     }

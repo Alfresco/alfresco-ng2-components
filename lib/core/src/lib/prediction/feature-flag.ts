@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-export interface Dictionary<T> {
-    [key: string]: T;
+export enum CONTENT_ENRICHMENT {
+    EXPERIENCE_INSIGHT = 'content-enrichment-with-experience-insight'
 }
-
-export type Constructor<T> = new (...args: any[]) => T;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging, Prediction, ReviewStatus } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
@@ -26,8 +26,10 @@ import {
     NotificationService,
     PredictionService,
     TranslationService,
-    UpdateNotification
+    UpdateNotification,
+    CONTENT_ENRICHMENT
 } from '@alfresco/adf-core';
+import { FeaturesServiceToken, IFeaturesService } from '@alfresco/adf-core/feature-flags';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel, ContentMetadataPanel } from '../../interfaces/content-metadata.interfaces';
 import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
@@ -161,6 +163,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     changedProperties = {};
     hasMetadataChanged = false;
+    isContentEnrichmentFlagOn = false;
     assignedCategories: Category[] = [];
     categories: Category[] = [];
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
@@ -182,7 +185,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private categoryService: CategoryService,
         private contentService: ContentService,
         private notificationService: NotificationService,
-        private predictionService: PredictionService
+        private predictionService: PredictionService,
+        @Inject(FeaturesServiceToken) private readonly featuresService: IFeaturesService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -190,6 +194,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.featuresService.isOn$(CONTENT_ENRICHMENT.EXPERIENCE_INSIGHT).pipe(
+            takeUntil(this.onDestroy$)
+        ).subscribe((isOn) => {
+            this.isContentEnrichmentFlagOn = isOn;
+        });
+
         this.cardViewContentUpdateService.itemUpdated$
             .pipe(debounceTime(500), takeUntil(this.onDestroy$))
             .subscribe((updatedNode: UpdateNotification) => {
@@ -203,7 +213,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             this.loadProperties(node);
         });
 
-        if (this.displayPredictions) {
+        if (this.isContentEnrichmentFlagOn && this.displayPredictions) {
             this.predictionService.predictionStatusUpdated$.pipe(takeUntil(this.onDestroy$)).subscribe(({ key, previousValue }) => {
                 this.cardViewContentUpdateService.onPredictionStatusChanged([{ key, previousValue }]);
                 this.nodesApiService
@@ -424,7 +434,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             )
             .subscribe((result: any) => {
                 if (result) {
-                    if (this.displayPredictions) {
+                    if (this.isContentEnrichmentFlagOn && this.displayPredictions) {
                         this.cardViewContentUpdateService.onPredictionStatusChanged(
                             Object.keys(this.changedProperties['properties']).map((key) => ({ key }))
                         );
@@ -471,7 +481,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 requests['groupedProperties'] = this.contentMetadataService.getGroupedProperties(node, this.preset);
             }
 
-            if (this.displayPredictions) {
+            if (this.isContentEnrichmentFlagOn && this.displayPredictions) {
                 requests['predictions'] = this.loadPredictionsForNode(this.node.id);
             }
 

@@ -16,13 +16,14 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldModel, FormModel } from '@alfresco/adf-core';
+import { CONTENT_ENRICHMENT, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import { PropertiesViewerWidgetComponent } from './properties-viewer.widget';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { fakeNodeWithProperties } from '../../../mocks/attach-file-cloud-widget.mock';
 import { PropertiesViewerWrapperComponent } from './properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
+import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let widget: PropertiesViewerWidgetComponent;
@@ -49,7 +50,11 @@ describe('PropertiesViewerWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule],
             declarations: [PropertiesViewerWrapperComponent],
-            providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
+            providers: [
+                NodesApiService,
+                { provide: BasicPropertiesService, useValue: { getProperties: () => [] } },
+                provideMockFeatureFlags({[CONTENT_ENRICHMENT.EXPERIENCE_INSIGHT]: false})
+            ]
         });
         fixture = TestBed.createComponent(PropertiesViewerWidgetComponent);
         nodesApiService = TestBed.inject(NodesApiService);
