@@ -65,7 +65,7 @@ describe('SearchTextInputComponent', () => {
             component.expandable = false;
         });
 
-        it('search button should be hide', () => {
+        it('search button should be hidden', () => {
             fixture.detectChanges();
             const searchButton: any = element.querySelector('#adf-search-button');
             expect(searchButton).toBe(null);
@@ -79,12 +79,15 @@ describe('SearchTextInputComponent', () => {
     });
 
     describe('search button', () => {
-        it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
+        let searchButton: DebugElement;
+        beforeEach(fakeAsync(() => {
             fixture.detectChanges();
-
             tick(100);
 
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+            searchButton = debugElement.query(By.css('#adf-search-button'));
+        }));
+
+        it('should NOT display a autocomplete list control when configured not to', fakeAsync(() => {
             component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
 
@@ -104,11 +107,6 @@ describe('SearchTextInputComponent', () => {
         }));
 
         it('click on the search button should open the input box when is close', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             searchButton.triggerEventHandler('click', null);
 
             tick(100);
@@ -121,11 +119,6 @@ describe('SearchTextInputComponent', () => {
         }));
 
         it('Search button should not change the input state too often', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
 
@@ -150,10 +143,6 @@ describe('SearchTextInputComponent', () => {
         }));
 
         it('Search bar should close when user press ESC button', fakeAsync(() => {
-            fixture.detectChanges();
-
-            tick(100);
-
             const inputDebugElement = debugElement.query(By.css('#adf-control-input'));
             component.subscriptAnimationState.value = 'active';
             fixture.detectChanges();
@@ -179,66 +168,59 @@ describe('SearchTextInputComponent', () => {
             fixture.detectChanges();
         });
 
+        /**
+         * function which finds Search Button and clicks it
+         */
+        function clickSearchButton(): void {
+            fixture.detectChanges();
+            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
+            searchButton.triggerEventHandler('click', null);
+            tick(100);
+            fixture.detectChanges();
+            tick(100);
+        }
+
+        /**
+         * Runs a test for ltr/rtl margin values
+         *
+         * @param isLtr sets ltr or rtl value to test
+         */
+        function testMarginValue(isLtr: boolean): void {
+            userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
+            clickSearchButton();
+            const expectedResult = isLtr ? { 'margin-left': 13 } : { 'margin-right': 13 };
+            expect(component.subscriptAnimationState.params).toEqual(expectedResult);
+            discardPeriodicTasks();
+        }
+
         it('should have margin-left set when active and direction is ltr', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'ltr');
-            fixture.detectChanges();
-
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-            searchButton.triggerEventHandler('click', null);
-            tick(100);
-            fixture.detectChanges();
-            tick(100);
-
-            expect(component.subscriptAnimationState.params).toEqual({ 'margin-left': 13 });
-            discardPeriodicTasks();
-        }));
-
-        it('should have positive transform translateX set when inactive and direction is ltr', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'ltr');
-            component.subscriptAnimationState.value = 'active';
-
-            fixture.detectChanges();
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-            searchButton.triggerEventHandler('click', null);
-            tick(100);
-            fixture.detectChanges();
-            tick(100);
-
-            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(95%)' });
-            discardPeriodicTasks();
+            testMarginValue(true);
         }));
 
         it('should have margin-right set when active and direction is rtl', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'rtl');
-            fixture.detectChanges();
+            testMarginValue(false);
+        }));
 
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-            searchButton.triggerEventHandler('click', null);
-            tick(100);
-            fixture.detectChanges();
-            tick(100);
-
-            expect(component.subscriptAnimationState.params).toEqual({ 'margin-right': 13 });
+        /**
+         * Runs a test for ltr/rtl transform values
+         *
+         * @param isLtr sets ltr or rtl value to test
+         */
+        function testTransformValue(isLtr: boolean): void {
+            userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
+            component.subscriptAnimationState.value = 'active';
+            clickSearchButton();
+            const expectedValue = isLtr ? 'translateX(85%)' : 'translateX(-85%)';
+            expect(component.subscriptAnimationState.params).toEqual({ transform: expectedValue });
             discardPeriodicTasks();
+        }
+
+        it('should have positive transform translateX set when inactive and direction is ltr', fakeAsync(() => {
+            testTransformValue(true);
         }));
 
         it('should have negative transform translateX set when inactive and direction is rtl', fakeAsync(() => {
-            userPreferencesService.setWithoutStore('textOrientation', 'rtl');
-            component.subscriptAnimationState.value = 'active';
-
-            fixture.detectChanges();
-            const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
-
-            searchButton.triggerEventHandler('click', null);
-            tick(100);
-            fixture.detectChanges();
-            tick(100);
-
-            expect(component.subscriptAnimationState.params).toEqual({ transform: 'translateX(-95%)' });
-            discardPeriodicTasks();
+            testTransformValue(false);
         }));
 
         it('should set browser autocomplete to on when configured', async () => {
