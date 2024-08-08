@@ -178,7 +178,8 @@ module.exports = {
                         ' * limitations under the License.',
                         ' */'
                     ]
-                ]
+                ],
+                '@nx/dependency-checks': 'warn'
             }
         },
         {
