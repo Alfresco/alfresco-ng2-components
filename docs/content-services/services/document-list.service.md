@@ -27,6 +27,8 @@ import { DocumentListService } from '@alfresco/adf-core';
 
 ### Methods
 
+- **reload**(): `void`<br/>
+    Reloads the document list.
 -   **copyNode**(nodeId: `string`, targetParentId: `string`): `Observable<NodeEntry>`<br/>
     Copy a node to destination node
     -   _nodeId:_ `string`  - The id of the node to be copied
