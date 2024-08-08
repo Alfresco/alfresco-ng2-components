@@ -25,11 +25,16 @@
         flex: 0 0;
     }
 
-    /* stylelint-disable-next-line selector-class-pattern */
     #{$mat-drawer-content} {
         @include flex-column;
 
         position: unset;
         overflow: auto;
+    }
+
+    .adf-layout-container-sidenav {
+        #{$mat-icon} {
+            vertical-align: sub;
+        }
     }
 }

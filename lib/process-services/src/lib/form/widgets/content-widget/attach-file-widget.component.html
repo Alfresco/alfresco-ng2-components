@@ -7,7 +7,7 @@
         <div id="adf-attach-widget-simple-upload" *ngIf="isSimpleUploadButton() && isUploadButtonVisible()">
             <a mat-raised-button color="primary">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
-                <mat-icon>file_upload</mat-icon>d
+                <mat-icon>file_upload</mat-icon>
                 <input #uploadFiles [multiple]="multipleOption" type="file" [id]="field.id" (change)="onAttachFileChanged($event)" />
             </a>
         </div>
