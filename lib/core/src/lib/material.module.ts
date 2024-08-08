@@ -44,10 +44,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
+import { CommonModule } from '@angular/common';
 
 /** @deprecated This module is deprecated and will be removed in a future release. */
 @NgModule({
     imports: [
+        CommonModule,
         FormsModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
@@ -82,6 +84,7 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatFormFieldModule
     ],
     exports: [
+        CommonModule,
         FormsModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
