@@ -517,6 +517,11 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         if (this.columnsPresetKey) {
             this.setPresetKey(this.columnsPresetKey);
         }
+
+        this.documentListService.reload$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.resetSelection();
+            this.reload();
+        });
     }
 
     ngAfterContentInit() {

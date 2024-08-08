@@ -5,57 +5,71 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Document List service](../../../lib/content-services/src/lib/document-list/services/document-list.service.ts "Defined in document-list.service.ts")
+# Document List Service
 
-Implements node operations used by the [Document List component](../components/document-list.component.md).
+`service`
 
-## Class members
+Implements operations used by the [Document List component](../components/document-list.component.md).
+
+## Usage
+
+```typescript
+import { DocumentListService } from '@alfresco/adf-core';
+```
+
+## API
+
+### Events
+
+| Name      | Description                                     |
+|-----------|-------------------------------------------------|
+| `reload$` | Emits when the document list should be reloaded |
 
 ### Methods
 
--   **copyNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+-   **copyNode**(nodeId: `string`, targetParentId: `string`): `Observable<NodeEntry>`<br/>
     Copy a node to destination node
     -   _nodeId:_ `string`  - The id of the node to be copied
     -   _targetParentId:_ `string`  - The id of the folder where the node will be copied
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - NodeEntry for the copied node
--   **deleteNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    -   **Returns** `Observable<NodeEntry>` - NodeEntry for the copied node
+-   **deleteNode**(nodeId: `string`): `Observable<any>`<br/>
     Deletes a node.
     -   _nodeId:_ `string`  - ID of the node to delete
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty response when the operation is complete
--   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+    -   **Returns** `Observable<any>` - Empty response when the operation is complete
+-   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): `Observable<NodePaging>`<br/>
     Gets the folder node with the specified relative name path below the root node.
     -   _folder:_ `string`  - Path to folder.
     -   _opts:_ `any`  - (Optional) Options.
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - Details of the folder
--   **getFolderNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    -   **Returns** `Observable<NodePaging>` - Details of the folder
+-   **getFolderNode**(nodeId: `string`, includeFields: `string[]` = `[]`): `Observable<NodeEntry>`<br/>
     Gets a folder node via its node ID.
     -   _nodeId:_ `string`  - ID of the folder node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
--   **getNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
+    -   **Returns** `Observable<NodeEntry>` - Details of the folder
+-   **getNode**(nodeId: `string`, includeFields: `string[]` = `[]`): `Observable<MinimalNode>`<br/>
     Gets a node via its node ID.
     -   _nodeId:_ `string`  - ID of the target node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the folder
+    -   **Returns** `Observable<MinimalNode>` - Details of the folder
 -   **isCustomSourceService**(nodeId: `any`): `boolean`<br/>
 
     -   _nodeId:_ `any`  - 
     -   **Returns** `boolean` - 
 
--   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/src/lib/models/pagination.model.ts), includeFields: `string[]`, where?: `string`, orderBy?: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>`<br/>
+-   **loadFolderByNodeId**(nodeId: `string`, pagination: `PaginationModel`, includeFields: `string[]`, where?: `string`, orderBy?: `string[]`): `Observable<DocumentLoaderNode>`<br/>
     Load a folder by Node Id.
     -   _nodeId:_ `string`  - ID of the folder node
-    -   _pagination:_ [`PaginationModel`](../../../lib/core/src/lib/models/pagination.model.ts)  - 
+    -   _pagination:_ `PaginationModel` - pagination model
     -   _includeFields:_ `string[]`  - List of data field names to include in the results
     -   _where:_ `string`  - (Optional) Optionally filter the list
     -   _orderBy:_ `string[]`  - (Optional) order by node property
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DocumentLoaderNode`](../../../lib/content-services/src/lib/document-list/models/document-folder.model.ts)`>` - Details of the folder
--   **moveNode**(nodeId: `string`, targetParentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    -   **Returns** `Observable<DocumentLoaderNode>` - Details of the folder
+-   **moveNode**(nodeId: `string`, targetParentId: `string`): `Observable<NodeEntry>`<br/>
     Moves a node to destination node.
     -   _nodeId:_ `string`  - The id of the node to be moved
     -   _targetParentId:_ `string`  - The id of the folder where the node will be moved
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - NodeEntry for the moved node
+    -   **Returns** `Observable<NodeEntry>` - NodeEntry for the moved node
 
 ## Details
 
