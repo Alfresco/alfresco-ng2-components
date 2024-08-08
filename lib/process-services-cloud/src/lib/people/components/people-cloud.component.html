@@ -6,7 +6,8 @@
         class="adf-people-cloud"
         [class.adf-invalid]="hasError() && isDirty()"
     >
-        <mat-label>{{ title | translate }}</mat-label>
+        <ng-content *ngIf="!title" select="[label]"></ng-content>
+        <mat-label *ngIf="title">{{ title | translate }}</mat-label>
         <mat-chip-grid #userMultipleChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-people-chip-list">
             <mat-chip-row
                 *ngFor="let user of selectedUsers"
