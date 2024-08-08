@@ -147,6 +147,23 @@ describe('DocumentList', () => {
         expect(documentList.reload).not.toHaveBeenCalled();
     });
 
+    it('should reset selection when resetSelection$ is emitted', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentListService.resetSelection();
+
+        expect(documentList.resetSelection).toHaveBeenCalled();
+    });
+
+    it('should not reset selection after component is destroyed', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentList.ngOnDestroy();
+        documentListService.resetSelection();
+
+        expect(documentList.resetSelection).not.toHaveBeenCalled();
+    });
+
     describe('presets', () => {
         const validatePreset = (keys: string[]) => {
             const columns = documentList.data.getColumns();

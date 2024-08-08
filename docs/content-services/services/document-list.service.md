@@ -21,14 +21,17 @@ import { DocumentListService } from '@alfresco/adf-core';
 
 ### Events
 
-| Name      | Description                                     |
-|-----------|-------------------------------------------------|
-| `reload$` | Emits when the document list should be reloaded |
+| Name              | Description                                     |
+|-------------------|-------------------------------------------------|
+| `reload$`         | Emits when the document list should be reloaded |
+| `resetSelection$` | Emits when the selection should be reset        |
 
 ### Methods
 
 - **reload**(): `void`<br/>
     Reloads the document list.
+- **resetSelection**(): `void`<br/>
+    Resets the selection.
 -   **copyNode**(nodeId: `string`, targetParentId: `string`): `Observable<NodeEntry>`<br/>
     Copy a node to destination node
     -   _nodeId:_ `string`  - The id of the node to be copied

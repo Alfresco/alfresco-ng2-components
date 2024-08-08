@@ -42,13 +42,22 @@ export class DocumentListService implements DocumentListLoader {
     }
 
     private _reload = new Subject<void>();
+    private _resetSelection = new Subject<void>();
 
     /** Gets an observable that emits when the document list should be reloaded. */
     reload$ = this._reload.asObservable();
 
+    /** Gets an observable that emits when the selection should be reset. */
+    resetSelection$ = this._resetSelection.asObservable();
+
     /** Reloads the document list. */
     reload() {
         this._reload.next();
+    }
+
+    /** Resets the selection. */
+    resetSelection() {
+        this._resetSelection.next();
     }
 
     /**

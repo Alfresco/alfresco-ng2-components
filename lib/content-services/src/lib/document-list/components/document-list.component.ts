@@ -522,6 +522,10 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.resetSelection();
             this.reload();
         });
+
+        this.documentListService.resetSelection$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.resetSelection();
+        });
     }
 
     ngAfterContentInit() {
