@@ -6,7 +6,7 @@
         class="adf-people-cloud"
         [class.adf-invalid]="hasError() && isDirty()"
     >
-        <ng-content select="[label]"></ng-content>
+        <mat-label>{{ title | translate }}</mat-label>
         <mat-chip-grid #userMultipleChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-people-chip-list">
             <mat-chip-row
                 *ngFor="let user of selectedUsers"
@@ -27,7 +27,6 @@
                    [formControl]="searchUserCtrl"
                    [matAutocomplete]="auto"
                    [matChipInputFor]="userMultipleChipList"
-                   [placeholder]="title | translate"
                    [required]="required"
                    (focus)="setFocus(true)"
                    (blur)="setFocus(false); markAsTouched()"
