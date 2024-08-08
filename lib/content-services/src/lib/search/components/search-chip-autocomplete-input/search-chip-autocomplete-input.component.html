@@ -36,6 +36,7 @@
             <mat-option
                 *ngFor="let option of filteredOptions"
                 [value]="option"
+                (mousedown)=$event.preventDefault()
                 [disabled]="isOptionSelected(option)"
                 [attr.data-automation-id]="'option-' + option.value"
                 [title]="option.fullPath ? ('SEARCH.RESULTS.WILL_CONTAIN' | translate : { searchTerm: option.fullPath || option.value }) : undefined"
