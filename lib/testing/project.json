@@ -6,14 +6,22 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@nx/webpack:webpack",
       "options": {
-        "tsConfig": "lib/testing/tsconfig.lib.json",
-        "project": "lib/testing/ng-package.json"
+        "projectRoot": "lib/testing",
+        "outputPath": "dist/libs/testing",
+        "main": "lib/testing/index.ts",
+        "generatePackageJson": true,
+        "tsConfig": "lib/testing/tsconfig.prod.json",
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {
-          "project": "lib/testing/ng-package.json",
+          "projectRoot": "lib/testing",
+          "outputPath": "dist/libs/testing",
+          "main": "lib/testing/index.ts",
+          "generatePackageJson": true,
           "tsConfig": "lib/testing/tsconfig.prod.json"
         }
       },
