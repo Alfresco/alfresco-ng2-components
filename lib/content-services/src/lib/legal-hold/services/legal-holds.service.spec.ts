@@ -18,14 +18,17 @@
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { BulkHoldAddResponse, Hold, HoldEntry, HoldPaging } from '@alfresco/js-api';
+import { BulkAssignHoldResponse, Hold, HoldEntry, HoldPaging, RequestQuery, SEARCH_LANGUAGE } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
     let service: LegalHoldService;
     let legalHolds: HoldPaging;
     let legalHoldEntry: HoldEntry;
     let returnedHolds: Hold[];
-    const mockId = 'mockId';
+    const filePlanId = 'mockId';
+    const nodeId = 'mockNodeId';
+    const holdId = 'holdId';
+    const mockBulkResponse: BulkAssignHoldResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -41,7 +44,7 @@ describe('LegalHoldsService', () => {
 
         legalHoldEntry = {
             entry: {
-                id: mockId,
+                id: holdId,
                 name: 'some name',
                 reason: 'some reason',
                 description: 'some description'
@@ -50,10 +53,12 @@ describe('LegalHoldsService', () => {
 
         returnedHolds = [
             {
-                id: mockId,
+                id: holdId,
                 name: 'some name'
             }
         ];
+
+        spyOn(service.legalHoldApi, 'bulkAssignHold').and.returnValue(Promise.resolve(mockBulkResponse));
     });
 
     it('should be created', () => {
@@ -64,9 +69,9 @@ describe('LegalHoldsService', () => {
         it('should return array of Hold interface', (done) => {
             spyOn(service.legalHoldApi, 'getHolds').and.returnValue(Promise.resolve(legalHolds));
 
-            service.getHolds(mockId).subscribe((holds) => {
+            service.getHolds(filePlanId).subscribe((holds) => {
                 expect(holds).toEqual(returnedHolds);
-                expect(service.legalHoldApi.getHolds).toHaveBeenCalledWith(mockId, undefined);
+                expect(service.legalHoldApi.getHolds).toHaveBeenCalledWith(filePlanId, undefined);
                 done();
             });
         });
@@ -74,8 +79,6 @@ describe('LegalHoldsService', () => {
 
     describe('assignHold', () => {
         it('should assign node to existing hold', (done) => {
-            const nodeId = 'qwe';
-            const holdId = 'foo';
             const mockResponse = { entry: { id: holdId } };
             spyOn(service.legalHoldApi, 'assignHold').and.returnValue(Promise.resolve(mockResponse));
 
@@ -90,7 +93,6 @@ describe('LegalHoldsService', () => {
     describe('assignHolds', () => {
         it('should assign nodes to existing hold', (done) => {
             const nodeIds = [{ id: 'qwe' }, { id: 'abc' }];
-            const holdId = 'foo';
             spyOn(service.legalHoldApi, 'assignHolds').and.returnValue(Promise.resolve(legalHolds));
 
             service.assignHolds(nodeIds, holdId).subscribe((holds) => {
@@ -103,9 +105,6 @@ describe('LegalHoldsService', () => {
 
     describe('unassignHold', () => {
         it('should unassign node from existing hold', (done) => {
-            const nodeId = 'qwe';
-            const holdId = 'foo';
-
             spyOn(service.legalHoldApi, 'unassignHold').and.returnValue(Promise.resolve(undefined));
 
             service.unassignHold(holdId, nodeId).subscribe(() => {
@@ -123,9 +122,9 @@ describe('LegalHoldsService', () => {
             };
             spyOn(service.legalHoldApi, 'createHold').and.returnValue(Promise.resolve(legalHoldEntry));
 
-            service.createHold(mockId, mockHold).subscribe((hold) => {
+            service.createHold(filePlanId, mockHold).subscribe((hold) => {
                 expect(hold).toEqual(legalHoldEntry);
-                expect(service.legalHoldApi.createHold).toHaveBeenCalledWith(mockId, mockHold);
+                expect(service.legalHoldApi.createHold).toHaveBeenCalledWith(filePlanId, mockHold);
                 done();
             });
         });
@@ -145,26 +144,40 @@ describe('LegalHoldsService', () => {
             ];
             spyOn(service.legalHoldApi, 'createHolds').and.returnValue(Promise.resolve(legalHolds));
 
-            service.createHolds(mockId, mockHolds).subscribe((holds) => {
+            service.createHolds(filePlanId, mockHolds).subscribe((holds) => {
                 expect(holds).toEqual(legalHolds);
-                expect(service.legalHoldApi.createHolds).toHaveBeenCalledWith(mockId, mockHolds);
+                expect(service.legalHoldApi.createHolds).toHaveBeenCalledWith(filePlanId, mockHolds);
                 done();
             });
         });
     });
 
-    describe('bulkHold', () => {
+    describe('bulkAssignHold', () => {
         it('should add nodes to hold based on search query results', (done) => {
-            const nodeId = 'mockNodeId';
-            const query = 'mockQuery';
-            const language = 'afts';
-            const mockResponse: BulkHoldAddResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
+            const query: RequestQuery = {
+                query: 'mockQuery',
+                language: SEARCH_LANGUAGE.AFTS
+            };
 
-            spyOn(service.legalHoldApi, 'bulkHold').and.returnValue(Promise.resolve(mockResponse));
+            service.bulkAssignHold(nodeId, query).subscribe((response) => {
+                expect(response).toEqual(mockBulkResponse);
+                expect(service.legalHoldApi.bulkAssignHold).toHaveBeenCalledWith(nodeId, query);
+                done();
+            });
+        });
+    });
 
-            service.bulkHold(nodeId, query, language).subscribe((response) => {
-                expect(response).toEqual(mockResponse);
-                expect(service.legalHoldApi.bulkHold).toHaveBeenCalledWith(nodeId, query, language);
+    describe('bulkAssignHoldToFolder', () => {
+        it('should add nodes to hold based on search query results', (done) => {
+            const folderId = 'mockFolderId';
+            const query: RequestQuery = {
+                query: `ANCESTOR:'workspace://SpacesStore/${folderId}' and TYPE:content`,
+                language: SEARCH_LANGUAGE.AFTS
+            };
+
+            service.bulkAssignHoldToFolder(nodeId, folderId, SEARCH_LANGUAGE.AFTS).subscribe((response) => {
+                expect(response).toEqual(mockBulkResponse);
+                expect(service.legalHoldApi.bulkAssignHold).toHaveBeenCalledWith(nodeId, query);
                 done();
             });
         });

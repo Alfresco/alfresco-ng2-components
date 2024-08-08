@@ -15,7 +15,4 @@
  * limitations under the License.
  */
 
-export interface BulkHoldAddResponse {
-    bulkStatusId: string;
-    totalItems: number;
-}
+export * from './language.constants';

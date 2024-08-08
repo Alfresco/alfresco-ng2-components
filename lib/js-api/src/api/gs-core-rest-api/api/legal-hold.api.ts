@@ -19,7 +19,8 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ContentPagingQuery } from '../../content-rest-api';
 import { HoldBody, HoldEntry, HoldPaging } from './../model';
-import { BulkHoldAddResponse } from '../model/bulkHoldAddResponse';
+import { BulkAssignHoldResponse } from '../model/bulkAssignHoldResponse';
+import { RequestQuery } from '../../search-rest-api';
 
 /**
  * Legal Holds service.
@@ -160,22 +161,17 @@ export class LegalHoldApi extends BaseApi {
      *
      * @param holdId The identifier of a hold
      * @param query Search query
-     * @param language Language code
-     * @returns Promise<BulkHoldAddResponse>
+     * @returns Promise<BulkAssignHoldResponse>
      */
-    bulkHold(holdId: string, query: string, language: string): Promise<BulkHoldAddResponse> {
+    bulkAssignHold(holdId: string, query: RequestQuery): Promise<BulkAssignHoldResponse> {
         throwIfNotDefined(holdId, 'holdId');
         throwIfNotDefined(query, 'query');
-        throwIfNotDefined(language, 'language');
 
         return this.post({
             path: `/holds/{holdId}/bulk`,
             pathParams: { holdId },
             bodyParam: {
-                query: {
-                    query,
-                    language
-                },
+                query,
                 op: 'ADD'
             }
         });
