@@ -1,14 +1,14 @@
 @use '../../../src/lib/styles/flex' as flex;
 
 $adf-pagination-height: 48px !default;
-$adf-pagination-icon-button-size: 32px !default;
 $adf-pagination-border: none !default;
+$adf-pagination-line-height: 20px;
 
 .adf-pagination {
     display: flex;
     border-top: $adf-pagination-border;
     height: $adf-pagination-height;
-    line-height: 20px;
+    line-height: $adf-pagination-line-height;
     color: var(--adf-theme-foreground-text-color);
 
     &__block {
@@ -81,6 +81,6 @@ $adf-pagination-border: none !default;
     }
 
     button[mat-icon-button] {
-        line-height: $adf-pagination-icon-button-size;
+        line-height: $adf-pagination-line-height;
     }
 }
