@@ -60,6 +60,7 @@ import { SortingPickerComponent } from './sorting-picker';
 import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
+import { MaterialModule } from './material.module';
 
 @NgModule({
     imports: [
@@ -95,7 +96,8 @@ import { UnsavedChangesDialogComponent } from './dialogs';
         HttpClientXsrfModule.withOptions({
             cookieName: 'CSRF-TOKEN',
             headerName: 'X-CSRF-TOKEN'
-        })
+        }),
+        MaterialModule
     ],
     providers: [...CORE_PIPES],
     exports: [

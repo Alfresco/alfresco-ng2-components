@@ -44,9 +44,11 @@ import { TreeViewComponent } from './tree-view';
 import { NodeCommentsComponent } from './node-comments';
 import { AlfrescoViewerComponent } from './viewer';
 import { ContentTypeDialogComponent } from './content-type';
+import { MaterialModule } from './material.module';
 
 @NgModule({
     imports: [
+        MaterialModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         ...CONTENT_PIPES,
