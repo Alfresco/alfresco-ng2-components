@@ -269,7 +269,7 @@ describe('AttachFileWidgetComponent', () => {
         await fixture.whenStable();
 
         fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
-        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeNode, isLink: true }, undefined, 'alfresco-1000-SHAREME');
+        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeNode, isLink: true }, undefined, 'alfresco-1000-SHAREMEAlfresco');
     });
 
     it('should isLink property of the selected node become false when the widget has link disabled', async () => {
@@ -294,7 +294,7 @@ describe('AttachFileWidgetComponent', () => {
         await fixture.whenStable();
 
         fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
-        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeNode, isLink: false }, undefined, 'alfresco-1000-SHAREME');
+        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeNode, isLink: false }, undefined, 'alfresco-1000-SHAREMEAlfresco');
     });
 
     it('should be able to upload files coming from content node selector', async () => {
@@ -617,7 +617,7 @@ describe('AttachFileWidgetComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(openLoginSpy).toHaveBeenCalledWith(fakeRepositoryListAnswer[2], undefined, 'alfresco-2000-external');
+        expect(openLoginSpy).toHaveBeenCalledWith(fakeRepositoryListAnswer[2], undefined, 'alfresco-2000-externalAlfresco');
     });
 
     it('should open fileBrowserDialog if devMode flag is on', async () => {
