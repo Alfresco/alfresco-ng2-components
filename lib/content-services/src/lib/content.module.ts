@@ -76,6 +76,7 @@ import { MaterialModule } from './material.module';
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
+        MaterialModule,
         ...CONTENT_PIPES,
         ...CONTENT_TAG_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,

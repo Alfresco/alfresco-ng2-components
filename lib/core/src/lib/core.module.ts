@@ -128,7 +128,8 @@ import { MaterialModule } from './material.module';
         ...SEARCH_TEXT_INPUT_DIRECTIVES,
         BlankPageComponent,
         UnsavedChangesDialogComponent,
-        DynamicChipListComponent
+        DynamicChipListComponent,
+        MaterialModule
     ]
 })
 export class CoreModule {
