@@ -129,8 +129,6 @@ describe('SearchAiService', () => {
             translateService = TestBed.inject(TranslateService);
             spyOn(translateService, 'instant').and.callFake((key) => {
                 switch (key) {
-                    case 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NO_FILES_SELECTED':
-                        return noFilesSelectedError;
                     case 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED':
                         return tooManyFilesSelectedError;
                     case 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NON_TEXT_FILE_SELECTED':
