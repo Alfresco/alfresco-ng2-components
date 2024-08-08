@@ -99,7 +99,7 @@ describe('Form Field Component - JSON Widget', () => {
         await jsonWidget.clickJsonButton(formWithJson.widgets.displayJsonWidgetId);
 
         await editJsonDialog.checkDialogIsDisplayed();
-        expect(await editJsonDialog.getDialogContent()).toBe('{ /* empty */ }');
+        expect(await editJsonDialog.getDialogContent()).toBe('{}');
         await editJsonDialog.clickCloseButton();
         await editJsonDialog.checkDialogIsNotDisplayed();
     });
