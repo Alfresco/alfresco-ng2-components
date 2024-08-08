@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -75,7 +75,8 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         MatExpansionModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatFormFieldModule
     ],
     exports: [
         MatAutocompleteModule,
