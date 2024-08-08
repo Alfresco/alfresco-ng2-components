@@ -93,6 +93,14 @@ export class AgentService {
                                   description:
                                       'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
                               }
+                          },
+                          {
+                              entry: {
+                                  id: '3',
+                                  name: 'Rules & Rates Agent',
+                                  description:
+                                      'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
+                              }
                           }
                       ]
                   }

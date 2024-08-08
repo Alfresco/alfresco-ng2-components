@@ -133,11 +133,6 @@ export class SearchAiService {
             key: string;
             [parameter: string]: number | string;
         }[] = [];
-        if (selectedNodesState.count === 0) {
-            messages.push({
-                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NO_FILES_SELECTED'
-            });
-        }
         if (selectedNodesState.count > maxSelectedNodes) {
             messages.push({
                 key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED',
