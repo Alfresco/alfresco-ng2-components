@@ -31,7 +31,8 @@ import {
     TrashcanApi,
     NodesApi,
     SitePaging,
-    ResultSetPaging
+    ResultSetPaging,
+    SEARCH_LANGUAGE
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
@@ -136,7 +137,7 @@ export class CustomResourcesService {
                     const query: SearchRequest = {
                         query: {
                             query: '*',
-                            language: 'afts'
+                            language: SEARCH_LANGUAGE.AFTS
                         },
                         filterQueries,
                         include: ['path', 'properties', 'allowableOperations', 'aspectNames'],

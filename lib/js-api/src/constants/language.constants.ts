@@ -15,27 +15,8 @@
  * limitations under the License.
  */
 
-import { SEARCH_LANGUAGE, SearchRequest } from '@alfresco/js-api';
-
-export const mockSearchRequest = {
-    query: {
-        query: '(search-term*)',
-        language: SEARCH_LANGUAGE.AFTS
-    },
-    include: ['path', 'allowableOperations'],
-    paging: {
-        maxItems: 25,
-        skipCount: 0
-    },
-    fields: undefined,
-    filterQueries: [],
-    facetQueries: null,
-    facetIntervals: null,
-    facetFields: null,
-    sort: [],
-    scope: {
-        locations: 'nodes'
-    },
-    highlight: null,
-    facetFormat: 'V2'
-} as SearchRequest;
+export const SEARCH_LANGUAGE = {
+    AFTS: 'afts',
+    LUCENE: 'lucene',
+    CMIS: 'cmis'
+};

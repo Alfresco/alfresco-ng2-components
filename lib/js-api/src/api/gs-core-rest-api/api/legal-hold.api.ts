@@ -19,6 +19,8 @@ import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ContentPagingQuery } from '../../content-rest-api';
 import { HoldBody, HoldEntry, HoldPaging } from './../model';
+import { BulkAssignHoldResponse } from '../model/bulkAssignHoldResponse';
+import { RequestQuery } from '../../search-rest-api';
 
 /**
  * Legal Holds service.
@@ -151,6 +153,27 @@ export class LegalHoldApi extends BaseApi {
             pathParams,
             bodyParam: holds,
             returnType: HoldPaging
+        });
+    }
+
+    /**
+     * Start the asynchronous bulk process for a hold with id holdId based on search query results.
+     *
+     * @param holdId The identifier of a hold
+     * @param query Search query
+     * @returns Promise<BulkAssignHoldResponse>
+     */
+    bulkAssignHold(holdId: string, query: RequestQuery): Promise<BulkAssignHoldResponse> {
+        throwIfNotDefined(holdId, 'holdId');
+        throwIfNotDefined(query, 'query');
+
+        return this.post({
+            path: `/holds/{holdId}/bulk`,
+            pathParams: { holdId },
+            bodyParam: {
+                query,
+                op: 'ADD'
+            }
         });
     }
 }
