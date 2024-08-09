@@ -4,9 +4,9 @@
 
 ```ts
 export interface Hold {
+    id: string;
     name: string;
-    id?: string;
-    reason?: string;
+    reason: string;
     description?: string;
     selected?: string;
 }
@@ -14,9 +14,9 @@ export interface Hold {
 
 ## Properties
 
-Name | Type | Default value | Description
------------- | ------------- | ------------- | -------------
-**id** | **string** |  | Hold id
-**name** | **string** |  | Hold name
-**reason** | **string** |  | Hold reason
-**description** | **string** |  | Additional information for a hold
+| Name            | Type       | Default value | Description                       |
+|-----------------|------------|---------------|-----------------------------------|
+| **id**          | **string** |               | Hold id                           |
+| **name**        | **string** |               | Hold name                         |
+| **reason**      | **string** |               | Hold reason                       |
+| **description** | **string** |               | Additional information for a hold |
