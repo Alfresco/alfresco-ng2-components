@@ -206,7 +206,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe((selections: Node[]) => {
                 if (selections.length) {
                     this.tempFilesList.push(...selections);
-                    this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}`);
+                    this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}Alfresco`);
                 }
             });
         }
@@ -227,7 +227,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
     private uploadFileFromExternalCS(repository: AlfrescoEndpointRepresentation, currentFolderId?: string) {
-        const accountIdentifier = `alfresco-${repository.id}-${repository.name}`;
+        const accountIdentifier = `alfresco-${repository.id}-${repository.name}Alfresco`;
         this.attachDialogService.openLogin(repository, currentFolderId, accountIdentifier).subscribe((selections) => {
             selections.forEach((node) => (node['isExternal'] = true));
             this.tempFilesList.push(...selections);
