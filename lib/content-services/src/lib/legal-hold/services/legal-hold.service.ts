@@ -41,14 +41,7 @@ export class LegalHoldService {
      * @returns List of holds Observable<Hold[]>
      */
     getHolds(filePlanId: string, options?: ContentPagingQuery): Observable<Hold[]> {
-        return from(this.legalHoldApi.getHolds(filePlanId, options)).pipe(
-            map(({ list }) =>
-                list.entries?.map(({ entry }) => ({
-                    id: entry.id,
-                    name: entry.name
-                }))
-            )
-        );
+        return from(this.legalHoldApi.getHolds(filePlanId, options)).pipe(map(({ list }) => list.entries?.map(({ entry }) => entry)));
     }
 
     /**
