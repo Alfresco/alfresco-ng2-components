@@ -126,6 +126,44 @@ describe('DocumentList', () => {
         fixture.destroy();
     });
 
+    it('should reset selection and reload on documentListService reload$', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+        spyOn(documentList, 'reload').and.callThrough();
+
+        documentListService.reload();
+
+        expect(documentList.resetSelection).toHaveBeenCalled();
+        expect(documentList.reload).toHaveBeenCalled();
+    });
+
+    it('should not reset selection or reload after component is destroyed', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+        spyOn(documentList, 'reload').and.callThrough();
+
+        documentList.ngOnDestroy();
+        documentListService.reload();
+
+        expect(documentList.resetSelection).not.toHaveBeenCalled();
+        expect(documentList.reload).not.toHaveBeenCalled();
+    });
+
+    it('should reset selection when resetSelection$ is emitted', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentListService.resetSelection();
+
+        expect(documentList.resetSelection).toHaveBeenCalled();
+    });
+
+    it('should not reset selection after component is destroyed', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentList.ngOnDestroy();
+        documentListService.resetSelection();
+
+        expect(documentList.resetSelection).not.toHaveBeenCalled();
+    });
+
     describe('presets', () => {
         const validatePreset = (keys: string[]) => {
             const columns = documentList.data.getColumns();
