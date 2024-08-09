@@ -43,7 +43,10 @@ export class NodesApiService {
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private preferences: UserPreferencesService
+    ) {}
 
     private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;
@@ -164,80 +167,8 @@ export class NodesApiService {
      * @param nodeId ID of the target node
      * @returns Node metadata
      */
-    public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
+    getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
         return from(this.nodesApi.getNode(nodeId)).pipe(map(this.cleanMetadataFromSemicolon));
-    }
-
-    /**
-     * Create a new Node from form metadata.
-     *
-     * @param nodeType Node type
-     * @param nameSpace Namespace for properties
-     * @param data Property data to store in the node under namespace
-     * @param path Path to the node
-     * @param name Node name
-     * @returns The created node
-     */
-    public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
-        const properties = {};
-        for (const key in data) {
-            if (data[key]) {
-                properties[nameSpace + ':' + key] = data[key];
-            }
-        }
-
-        return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
-    }
-
-    private randomNodeName(): string {
-        return `node_${Date.now()}`;
-    }
-
-    /**
-     * Gets content for the given node.
-     *
-     * @param nodeId ID of the target node
-     * @returns Content data
-     */
-    getNodeContent(nodeId: string): Observable<any> {
-        return from(this.nodesApi.getNodeContent(nodeId)).pipe(catchError((err) => throwError(err)));
-    }
-
-    /**
-     * Create a new Node inside `-root-` folder
-     *
-     * @param name Node name
-     * @param nodeType Node type
-     * @param properties Node body properties
-     * @param path Path to the node
-     * @returns The created node
-     */
-    public createNodeInsideRoot(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
-        const body = {
-            name,
-            nodeType,
-            properties,
-            relativePath: path
-        };
-        return from(this.nodesApi.createNode('-root-', body, {}));
-    }
-
-    private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
-        const metadata = {};
-
-        if (nodeEntry?.entry.properties) {
-            for (const key in nodeEntry.entry.properties) {
-                if (key) {
-                    if (key.indexOf(':') !== -1) {
-                        metadata[key.split(':')[1]] = nodeEntry.entry.properties[key];
-                    } else {
-                        metadata[key] = nodeEntry.entry.properties[key];
-                    }
-                }
-            }
-        }
-
-        return new NodeMetadata(metadata, nodeEntry.entry.nodeType);
     }
 
     /**
@@ -265,5 +196,77 @@ export class NodesApiService {
                 }))
             )
         );
+    }
+
+    /**
+     * Gets content for the given node.
+     *
+     * @param nodeId ID of the target node
+     * @returns Content data
+     */
+    getNodeContent(nodeId: string): Observable<any> {
+        return from(this.nodesApi.getNodeContent(nodeId)).pipe(catchError((err) => throwError(err)));
+    }
+
+    /**
+     * Create a new Node inside `-root-` folder
+     *
+     * @param name Node name
+     * @param nodeType Node type
+     * @param properties Node body properties
+     * @param path Path to the node
+     * @returns The created node
+     */
+    createNodeInsideRoot(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
+        const body = {
+            name,
+            nodeType,
+            properties,
+            relativePath: path
+        };
+        return from(this.nodesApi.createNode('-root-', body, {}));
+    }
+
+    /**
+     * Create a new Node from form metadata.
+     *
+     * @param nodeType Node type
+     * @param nameSpace Namespace for properties
+     * @param data Property data to store in the node under namespace
+     * @param path Path to the node
+     * @param name Node name
+     * @returns The created node
+     */
+    createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
+        const properties = {};
+        for (const key in data) {
+            if (data[key]) {
+                properties[nameSpace + ':' + key] = data[key];
+            }
+        }
+
+        return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
+    }
+
+    private randomNodeName(): string {
+        return `node_${Date.now()}`;
+    }
+
+    private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
+        const metadata = {};
+
+        if (nodeEntry?.entry.properties) {
+            for (const key in nodeEntry.entry.properties) {
+                if (key) {
+                    if (key.indexOf(':') !== -1) {
+                        metadata[key.split(':')[1]] = nodeEntry.entry.properties[key];
+                    } else {
+                        metadata[key] = nodeEntry.entry.properties[key];
+                    }
+                }
+            }
+        }
+
+        return new NodeMetadata(metadata, nodeEntry.entry.nodeType);
     }
 }
