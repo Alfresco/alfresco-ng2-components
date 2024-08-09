@@ -8,108 +8,62 @@
 >
     {{ property.label | translate }}
 </label>
-<div class="adf-property-value" [ngClass]="{ 'adf-property-value-editable': editable, 'adf-property-readonly-value': isReadonlyProperty }">
-    <span *ngIf="!isEditable && !property.multivalued" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
-        <span
-            *ngIf="showProperty"
-            [attr.data-automation-id]="'card-dateitem-' + property.key"
-            (dblclick)="copyToClipboard(property.displayValue)"
-            matTooltipShowDelay="1000"
-            [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-            >{{ property.displayValue }}</span
-        >
-    </span>
-    <div *ngIf="isEditable && !property.multivalued" class="adf-dateitem-editable">
-        <div class="adf-dateitem-editable-controls">
+<div class="adf-property-value-wrapper">
+    <adf-content-enrichment-menu matPrefix *ngIf="hasContentEnrichment" [prediction]="property.prediction"></adf-content-enrichment-menu>
+    <div class="adf-property-value" [ngClass]="{ 'adf-property-value-editable': editable, 'adf-property-readonly-value': isReadonlyProperty }">
+        <span *ngIf="!isEditable && !property.multivalued" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
             <span
-                class="adf-datepicker-toggle"
-                [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
-                (click)="showDatePicker()"
-                tabindex="0"
-                role="button"
-                (keyup.enter)="showDatePicker()"
+                *ngIf="showProperty"
+                [attr.data-automation-id]="'card-dateitem-' + property.key"
+                (dblclick)="copyToClipboard(property.displayValue)"
+                matTooltipShowDelay="1000"
+                [title]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                >{{ property.displayValue }}</span
             >
-                <span *ngIf="showProperty; else elseEmptyValueBlock" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
-                    {{ property.displayValue }}</span
+        </span>
+        <div *ngIf="isEditable && !property.multivalued" class="adf-dateitem-editable">
+            <div class="adf-dateitem-editable-controls">
+                <span
+                    class="adf-datepicker-toggle"
+                    [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
+                    (click)="showDatePicker()"
+                    tabindex="0"
+                    role="button"
+                    (keyup.enter)="showDatePicker()"
                 >
-            </span>
+                    <span *ngIf="showProperty; else elseEmptyValueBlock" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
+                        {{ property.displayValue }}</span
+                    >
+                </span>
 
-            <mat-icon
-                *ngIf="showClearAction"
-                class="adf-date-reset-icon"
-                (click)="onDateClear()"
-                [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
-                [attr.data-automation-id]="'datepicker-date-clear-' + property.key"
-            >
-                clear
-            </mat-icon>
+                <mat-icon
+                    *ngIf="showClearAction"
+                    class="adf-date-reset-icon"
+                    (click)="onDateClear()"
+                    [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
+                    [attr.data-automation-id]="'datepicker-date-clear-' + property.key"
+                >
+                    clear
+                </mat-icon>
 
-            <mat-datetimepicker-toggle
-                [attr.tabindex]="-1"
-                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                [attr.data-automation-id]="'datepickertoggle-' + property.key"
-                [for]="datetimePicker"
-            >
-            </mat-datetimepicker-toggle>
-        </div>
+                <mat-datetimepicker-toggle
+                    [attr.tabindex]="-1"
+                    [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                    [attr.data-automation-id]="'datepickertoggle-' + property.key"
+                    [for]="datetimePicker"
+                >
+                </mat-datetimepicker-toggle>
+            </div>
 
-        <input
-            class="adf-invisible-date-input"
-            [attr.tabIndex]="-1"
-            [matDatetimepicker]="datetimePicker"
-            [value]="valueDate"
-            (dateChange)="onDateChanged($event)"
-            [attr.id]="'card-view-dateitem-' + property.key"
-        />
-
-        <mat-datetimepicker
-            #datetimePicker
-            [type]="$any(property).type"
-            [timeInterval]="5"
-            [attr.data-automation-id]="'datepicker-' + property.key"
-            [startAt]="valueDate"
-        >
-        </mat-datetimepicker>
-    </div>
-    <ng-template #elseEmptyValueBlock>
-        {{ property.default | translate }}
-    </ng-template>
-
-    <div *ngIf="property.multivalued"
-         class="adf-property-field adf-dateitem-chip-list-container adf-dateitem-editable">
-        <mat-chip-listbox #chipList class="adf-textitem-chip-list">
-            <mat-chip-option
-                *ngFor="let propertyValue of property.displayValue; let idx = index"
-                [removable]="isEditable"
-                (removed)="removeValueFromList(idx)">
-                {{ propertyValue }}
-                <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
-            </mat-chip-option>
-        </mat-chip-listbox>
-
-        <div
-            *ngIf="isEditable"
-            class="adf-property-field adf-dateitem-editable-controls"
-            (click)="showDatePicker()"
-            tabindex="0"
-            role="button"
-            (keyup.enter)="showDatePicker()"
-        >
             <input
                 class="adf-invisible-date-input"
                 [attr.tabIndex]="-1"
                 [matDatetimepicker]="datetimePicker"
-                (dateChange)="addDateToList($event)"
+                [value]="valueDate"
+                (dateChange)="onDateChanged($event)"
                 [attr.id]="'card-view-dateitem-' + property.key"
             />
-            <mat-datetimepicker-toggle
-                [attr.tabindex]="-1"
-                matSuffix
-                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                [attr.data-automation-id]="'datepickertoggle-' + property.key"
-                [for]="datetimePicker"
-            >
-            </mat-datetimepicker-toggle>
+
             <mat-datetimepicker
                 #datetimePicker
                 [type]="$any(property).type"
@@ -118,6 +72,55 @@
                 [startAt]="valueDate"
             >
             </mat-datetimepicker>
+        </div>
+        <ng-template #elseEmptyValueBlock>
+            {{ property.default | translate }}
+        </ng-template>
+
+        <div *ngIf="property.multivalued" class="adf-property-field adf-dateitem-chip-list-container adf-dateitem-editable">
+            <mat-chip-listbox #chipList class="adf-textitem-chip-list">
+                <mat-chip-option
+                    *ngFor="let propertyValue of property.displayValue; let idx = index"
+                    [removable]="isEditable"
+                    (removed)="removeValueFromList(idx)"
+                >
+                    {{ propertyValue }}
+                    <mat-icon *ngIf="isEditable" matChipRemove>cancel</mat-icon>
+                </mat-chip-option>
+            </mat-chip-listbox>
+
+            <div
+                *ngIf="isEditable"
+                class="adf-property-field adf-dateitem-editable-controls"
+                (click)="showDatePicker()"
+                tabindex="0"
+                role="button"
+                (keyup.enter)="showDatePicker()"
+            >
+                <input
+                    class="adf-invisible-date-input"
+                    [attr.tabIndex]="-1"
+                    [matDatetimepicker]="datetimePicker"
+                    (dateChange)="addDateToList($event)"
+                    [attr.id]="'card-view-dateitem-' + property.key"
+                />
+                <mat-datetimepicker-toggle
+                    [attr.tabindex]="-1"
+                    matSuffix
+                    [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                    [attr.data-automation-id]="'datepickertoggle-' + property.key"
+                    [for]="datetimePicker"
+                >
+                </mat-datetimepicker-toggle>
+                <mat-datetimepicker
+                    #datetimePicker
+                    [type]="$any(property).type"
+                    [timeInterval]="5"
+                    [attr.data-automation-id]="'datepicker-' + property.key"
+                    [startAt]="valueDate"
+                >
+                </mat-datetimepicker>
+            </div>
         </div>
     </div>
 </div>

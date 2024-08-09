@@ -21,6 +21,8 @@ import { ProcessServiceCloudTestingModule } from '../../../../../testing/process
 import { of } from 'rxjs';
 import { fakeNodeWithProperties } from '../../../../mocks/attach-file-cloud-widget.mock';
 import { NodesApiService, BasicPropertiesService } from '@alfresco/adf-content-services';
+import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
+import { CONTENT_ENRICHMENT } from '@alfresco/adf-core';
 
 describe('PropertiesViewerWidgetComponent', () => {
     let component: PropertiesViewerWrapperComponent;
@@ -30,7 +32,11 @@ describe('PropertiesViewerWidgetComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule],
-            providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
+            providers: [
+                NodesApiService,
+                { provide: BasicPropertiesService, useValue: { getProperties: () => [] } },
+                provideMockFeatureFlags({[CONTENT_ENRICHMENT.EXPERIENCE_INSIGHT]: false})
+            ]
         });
         fixture = TestBed.createComponent(PropertiesViewerWrapperComponent);
         component = fixture.componentInstance;

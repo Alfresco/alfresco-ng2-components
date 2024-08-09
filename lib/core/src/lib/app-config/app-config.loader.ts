@@ -45,4 +45,4 @@ export function loadAppConfig(
         });
     };
     return () => appConfigService.load(init);
-};
+}

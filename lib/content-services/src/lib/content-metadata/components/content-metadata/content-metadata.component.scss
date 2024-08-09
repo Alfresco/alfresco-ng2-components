@@ -34,6 +34,10 @@ $panel-properties-height: 56px !default;
                     font-size: 19px;
                     line-height: 20px;
                 }
+
+                adf-content-enrichment-menu button.adf-ai-button {
+                    margin-left: -10px;
+                }
             }
         }
 

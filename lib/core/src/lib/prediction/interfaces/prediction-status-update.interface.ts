@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-export interface Dictionary<T> {
-    [key: string]: T;
+export interface PredictionStatusUpdate {
+    key: string;
+    previousValue?: any;
 }
-
-export type Constructor<T> = new (...args: any[]) => T;

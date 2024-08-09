@@ -16,3 +16,5 @@
  */
 
 export * from './services';
+export * from './interfaces/prediction-status-update.interface';
+export * from './feature-flag';

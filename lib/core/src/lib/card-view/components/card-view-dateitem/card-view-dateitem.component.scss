@@ -6,15 +6,14 @@
         padding-bottom: 6px;
         line-height: 20px;
         color: var(--adf-metadata-property-panel-title-color);
-        border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
         margin-top: 10px;
 
         &.adf-property-value-editable {
             display: flex;
             align-items: center;
             border-radius: 6px;
-            border-bottom: inherit;
             margin-bottom: 18px;
+            width: 100%;
         }
 
         &.adf-property-readonly-value {

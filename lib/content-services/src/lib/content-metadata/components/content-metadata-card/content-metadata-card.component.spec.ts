@@ -26,7 +26,7 @@ import { NodeAspectService } from '../../../aspect-list/services/node-aspect.ser
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { of } from 'rxjs';
-import { AlfrescoApiService, AlfrescoApiServiceMock, AuthModule, PipeModule, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, AuthModule, PipeModule, TranslationMock, TranslationService, CONTENT_ENRICHMENT } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { versionCompatibilityFactory } from '../../../version-compatibility/version-compatibility-factory';
@@ -37,6 +37,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CategoryService } from '../../../category';
 import { TagService } from '../../../tag';
 import { PropertyDescriptorsService } from '../../public-api';
+import { provideMockFeatureFlags } from '@alfresco/adf-core/feature-flags';
 
 describe('ContentMetadataCardComponent', () => {
     let component: ContentMetadataCardComponent;
@@ -72,7 +73,8 @@ describe('ContentMetadataCardComponent', () => {
                     useFactory: versionCompatibilityFactory,
                     deps: [VersionCompatibilityService],
                     multi: true
-                }
+                },
+                provideMockFeatureFlags({[CONTENT_ENRICHMENT.EXPERIENCE_INSIGHT]: true})
             ]
         });
         fixture = TestBed.createComponent(ContentMetadataCardComponent);

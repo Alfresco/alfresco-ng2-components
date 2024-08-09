@@ -38,10 +38,13 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     @Input() options$: Observable<CardViewSelectItemOption<string | number>[]>;
 
     @Input()
-    displayNoneOption: boolean = true;
+    displayNoneOption = true;
 
     @Input()
-    displayEmpty: boolean = true;
+    displayEmpty = true;
+
+    @Input()
+    hasContentEnrichment = false;
 
     value: string | number;
     filter$ = new BehaviorSubject<string>('');
@@ -50,6 +53,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     ngOnChanges(): void {
         this.value = this.property.value;
+        this.property.setValue(this.property.value);
     }
 
     ngOnInit() {

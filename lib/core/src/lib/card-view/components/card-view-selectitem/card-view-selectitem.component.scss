@@ -47,6 +47,18 @@
         padding: 6px 0;
         border-bottom: 1px solid var(--adf-metadata-property-panel-border-color);
         color: var(--adf-metadata-property-panel-title-color);
+
+        adf-content-enrichment-menu.adf-content-enrichment-trigger {
+            display: inline-block;
+            height: 17px;
+            margin-left: -3px;
+            margin-right: -7px;
+        }
+    }
+
+    .adf-property-editable {
+        display: flex;
+        align-items: center;
     }
 
     #{$mat-line-ripple} {

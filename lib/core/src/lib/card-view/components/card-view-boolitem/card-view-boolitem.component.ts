@@ -25,16 +25,21 @@ import { BaseCardView } from '../base-card-view';
     templateUrl: './card-view-boolitem.component.html',
     styles: [
         `
-                    .adf-property-value {
-                        padding: 15px 0;
-                    }
-                `
+            .adf-property-value {
+                padding: 15px 0;
+                display: flex;
+                align-content: center;
+            }
+        `
     ]
 })
 
 export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemModel> {
     @Input()
     editable: boolean;
+
+    @Input()
+    hasContentEnrichment = false;
 
     changed(change: MatCheckboxChange) {
         this.cardViewUpdateService.update({ ...this.property } as CardViewBoolItemModel, change.checked );

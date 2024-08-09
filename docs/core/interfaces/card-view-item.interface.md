@@ -2,7 +2,7 @@
 Title: Card View Item interface
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-08
+Last reviewed: 2024-06-11
 ---
 
 # [Card View Item interface](../../../lib/core/src/lib/card-view/interfaces/card-view-item.interface.ts "Defined in card-view-item.interface.ts")
@@ -22,6 +22,7 @@ export interface CardViewItem {
     editable?: boolean;
     icon?: string;
     data?: any;
+    prediction?: Prediction;
 }
 ```
 
@@ -38,6 +39,7 @@ export interface CardViewItem {
 | clickable | boolean | false | Toggles whether the item is clickable |
 | icon | string |  | The material icon to show beside clickable items |
 | data | any | null | Any custom data which is needed to be provided and stored in the model for any reason. During an update or a click event this can be a container of any custom data which can be useful for 3rd party codes. |
+| prediction | Prediction | null | Property prediction. |
 
 ## Details
 

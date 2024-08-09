@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Prediction } from '@alfresco/js-api';
+
 export interface CardViewItem {
     label: string;
     value: any;
@@ -24,4 +26,5 @@ export interface CardViewItem {
     displayValue: any;
     editable?: boolean;
     icon?: string;
+    prediction?: Prediction;
 }

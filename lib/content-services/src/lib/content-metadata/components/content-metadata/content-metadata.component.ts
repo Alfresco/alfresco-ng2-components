@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging, Prediction, ReviewStatus } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
     AppConfigService,
@@ -24,9 +24,12 @@ import {
     CardViewItem,
     CardViewModule,
     NotificationService,
+    PredictionService,
     TranslationService,
-    UpdateNotification
+    UpdateNotification,
+    CONTENT_ENRICHMENT
 } from '@alfresco/adf-core';
+import { FeaturesServiceToken, IFeaturesService } from '@alfresco/adf-core/feature-flags';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel, ContentMetadataPanel } from '../../interfaces/content-metadata.interfaces';
 import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
@@ -89,14 +92,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Toggles whether to display empty values in the card view */
     @Input()
-    displayEmpty: boolean = false;
+    displayEmpty = false;
 
     /**
      * Toggles between expanded (ie, full information) and collapsed
      * (ie, reduced information) in the display
      */
     @Input()
-    expanded: boolean = false;
+    expanded = false;
 
     /** The multi parameter of the underlying material expansion panel, set to true to allow multi accordion to be expanded at the same time */
     @Input()
@@ -108,19 +111,23 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     /** Toggles whether the metadata properties should be shown */
     @Input()
-    displayDefaultProperties: boolean = true;
+    displayDefaultProperties = true;
 
     /** (optional) shows the given aspect in the expanded  card */
     @Input()
     displayAspect: string = null;
 
-    /** Toggles whether or not to enable copy to clipboard action. */
+    /** Toggles whether to enable copy to clipboard action. */
     @Input()
-    copyToClipboardAction: boolean = true;
+    copyToClipboardAction = true;
 
-    /** Toggles whether or not to enable chips for multivalued properties. */
+    /** Toggles whether AI predictions should be shown. */
     @Input()
-    useChipsForMultiValueProperty: boolean = true;
+    displayPredictions = false;
+
+    /** Toggles whether to enable chips for multivalued properties. */
+    @Input()
+    useChipsForMultiValueProperty = true;
 
     /** True if tags should be displayed, false otherwise */
     @Input()
@@ -156,6 +163,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     changedProperties = {};
     hasMetadataChanged = false;
+    isContentEnrichmentFlagOn = false;
     assignedCategories: Category[] = [];
     categories: Category[] = [];
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
@@ -176,7 +184,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private tagService: TagService,
         private categoryService: CategoryService,
         private contentService: ContentService,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+        private predictionService: PredictionService,
+        @Inject(FeaturesServiceToken) private readonly featuresService: IFeaturesService
     ) {
         this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
         this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || DEFAULT_SEPARATOR;
@@ -184,6 +194,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.featuresService.isOn$(CONTENT_ENRICHMENT.EXPERIENCE_INSIGHT).pipe(
+            takeUntil(this.onDestroy$)
+        ).subscribe((isOn) => {
+            this.isContentEnrichmentFlagOn = isOn;
+        });
+
         this.cardViewContentUpdateService.itemUpdated$
             .pipe(debounceTime(500), takeUntil(this.onDestroy$))
             .subscribe((updatedNode: UpdateNotification) => {
@@ -196,6 +212,18 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             this.node.aspectNames = node?.aspectNames;
             this.loadProperties(node);
         });
+
+        if (this.isContentEnrichmentFlagOn && this.displayPredictions) {
+            this.predictionService.predictionStatusUpdated$.pipe(takeUntil(this.onDestroy$)).subscribe(({ key, previousValue }) => {
+                this.cardViewContentUpdateService.onPredictionStatusChanged([{ key, previousValue }]);
+                this.nodesApiService
+                    .getNode(this.node.id)
+                    .pipe(takeUntil(this.onDestroy$))
+                    .subscribe((node) => {
+                        Object.assign(this.node, node);
+                    });
+            });
+        }
 
         this.loadProperties(this.node);
         this.verifyAllowableOperations();
@@ -384,8 +412,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     keyDown(event: KeyboardEvent) {
-        if (event.keyCode === 37 || event.keyCode === 39) {
-            // ArrowLeft && ArrowRight
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
             event.stopPropagation();
         }
     }
@@ -407,6 +434,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             )
             .subscribe((result: any) => {
                 if (result) {
+                    if (this.isContentEnrichmentFlagOn && this.displayPredictions) {
+                        this.cardViewContentUpdateService.onPredictionStatusChanged(
+                            Object.keys(this.changedProperties['properties']).map((key) => ({ key }))
+                        );
+                    }
                     this.updateUndefinedNodeProperties(result.updatedNode);
                     if (this.hasContentTypeChanged(this.changedProperties)) {
                         this.cardViewContentUpdateService.updateNodeAspect(this.node);
@@ -439,12 +471,48 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     private loadProperties(node: Node, loadBasicProps = true, loadGroupedProps = true, loadTags = true, loadCategories = true) {
         if (node) {
+            const requests = {};
+
             if (loadBasicProps) {
-                this.basicProperties$ = this.getProperties(node);
+                requests['properties'] = this.getProperties(node);
             }
+
             if (loadGroupedProps) {
-                this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
+                requests['groupedProperties'] = this.contentMetadataService.getGroupedProperties(node, this.preset);
             }
+
+            if (this.isContentEnrichmentFlagOn && this.displayPredictions) {
+                requests['predictions'] = this.loadPredictionsForNode(this.node.id);
+            }
+
+            forkJoin(requests).subscribe(
+                ({
+                    predictions,
+                    properties,
+                    groupedProperties
+                }: {
+                    predictions: Prediction[];
+                    properties: CardViewItem[];
+                    groupedProperties: CardViewGroup[];
+                }) => {
+                    if (loadBasicProps && properties) {
+                        this.basicProperties$ = predictions
+                            ? of(properties.map((property) => this.mapPredictionsToProperty(property, predictions)))
+                            : of(properties);
+                    }
+
+                    if (loadGroupedProps && groupedProperties) {
+                        this.groupedProperties$ = predictions
+                            ? of(
+                                  groupedProperties.map((group) => {
+                                      group.properties = group.properties.map((property) => this.mapPredictionsToProperty(property, predictions));
+                                      return group;
+                                  })
+                              )
+                            : of(groupedProperties);
+                    }
+                }
+            );
 
             if (this.displayTags && loadTags) {
                 this.loadTagsForNode(node.id);
@@ -462,7 +530,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private getProperties(node: Node) {
+    private getProperties(node: Node): Observable<CardViewItem[]> {
         const properties$ = this.contentMetadataService.getBasicProperties(node);
         const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node);
         return zip(properties$, contentTypeProperty$).pipe(
@@ -539,5 +607,24 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             }
         }
         return observables;
+    }
+
+    private mapPredictionsToProperty(property: CardViewItem, predictions: Prediction[]): CardViewItem {
+        const propertyKey = property.key.split('.')[1];
+        const filteredPrediction = predictions.find(
+            (prediction) =>
+                prediction.property === propertyKey &&
+                prediction.reviewStatus === ReviewStatus.UNREVIEWED &&
+                prediction.predictionValue === property.value
+        );
+
+        property.prediction = filteredPrediction || null;
+        return property;
+    }
+
+    private loadPredictionsForNode(nodeId: string): Observable<Prediction[]> {
+        return this.predictionService
+            .getPredictions(nodeId)
+            .pipe(map((predictionPaging) => predictionPaging.list.entries.map((predictionEntry) => predictionEntry.entry)));
     }
 }
