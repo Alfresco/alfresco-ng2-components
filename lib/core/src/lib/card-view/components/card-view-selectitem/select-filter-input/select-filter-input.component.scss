@@ -8,7 +8,6 @@ $select-filter-height: 4em !default;
 
     .adf-select-filter-input-container {
         width: 100%;
-        display: flex;
         z-index: 100;
         font-size: var(--theme-body-1-font-size);
         color: var(--adf-theme-foreground-text-color-087);
@@ -21,10 +20,14 @@ $select-filter-height: 4em !default;
     #{$mat-form-field} {
         width: 100%;
     }
+
+    .adf-select-filter-clear-button {
+        padding: 0;
+    }
 }
 
 #{$mat-select-panel}.adf-select-filter {
-    transform: none !important;
-    overflow-x: hidden !important;
+    transform: none;
+    overflow-x: hidden;
     max-height: calc(256px + #{$select-filter-height});
 }

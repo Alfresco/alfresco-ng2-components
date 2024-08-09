@@ -15,6 +15,7 @@
         <button
             matSuffix
             mat-icon-button
+            class="adf-select-filter-clear-button"
             [attr.aria-label]="'SELECT_FILTER.BUTTON.ARIA_LABEL' | translate"
             *ngIf="term"
             (keydown.enter)="reset($event)"
