@@ -109,6 +109,7 @@
         &-page-selector {
             padding-left: 10px;
             padding-right: 10px;
+            white-space: nowrap;
             font-size: var(--theme-body-1-font-size);
 
             & > input {
