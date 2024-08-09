@@ -17,16 +17,16 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, FormFieldOption, WidgetComponent, ErrorWidgetComponent, ErrorMessageModel, FormFieldModel } from '@alfresco/adf-core';
-import { ProcessDefinitionService } from '../../services/process-definition.service';
-import { TaskFormService } from '../../services/task-form.service';
+import { ErrorMessageModel, ErrorWidgetComponent, FormFieldModel, FormFieldOption, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { AbstractControl, FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { AbstractControl, FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { filter, Subject, takeUntil } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { ProcessDefinitionService, TaskFormService } from '../../services';
 
 @Component({
     selector: 'dropdown-widget',
