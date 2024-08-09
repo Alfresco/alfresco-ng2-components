@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi, SearchApi } from '../src';
+import { AlfrescoApi, SEARCH_LANGUAGE, SearchApi } from '../src';
 import { EcmAuthMock, SearchMock } from './mockObjects';
 
 describe('Search', () => {
@@ -50,7 +50,7 @@ describe('Search', () => {
             .search({
                 query: {
                     query: 'select * from cmis:folder',
-                    language: 'cmis'
+                    language: SEARCH_LANGUAGE.CMIS
                 }
             })
             .then((data) => {
