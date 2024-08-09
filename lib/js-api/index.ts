@@ -42,3 +42,4 @@ export * from './src/to-deprecate/alfresco-api-type';
 export * from './src/api-clients/api-client';
 export * from './src/api-clients/http-client.interface';
 export * from './src/utils';
+export * from './src/constants';

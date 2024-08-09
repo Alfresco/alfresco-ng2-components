@@ -24,7 +24,8 @@ import {
     ResultSetPaging,
     RequestHighlight,
     RequestScope,
-    SearchApi
+    SearchApi,
+    SEARCH_LANGUAGE
 } from '@alfresco/js-api';
 import { SearchCategory } from '../models/search-category.interface';
 import { FilterQuery } from '../models/filter-query.interface';
@@ -86,7 +87,10 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    protected constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
+    protected constructor(
+        protected appConfig: AppConfigService,
+        protected alfrescoApiService: AlfrescoApiService
+    ) {
         this.resetToDefaults();
     }
 
@@ -342,7 +346,7 @@ export abstract class BaseQueryBuilderService {
             const result: SearchRequest = {
                 query: {
                     query,
-                    language: 'afts'
+                    language: SEARCH_LANGUAGE.AFTS
                 },
                 include,
                 paging: this.paging,
@@ -456,9 +460,9 @@ export abstract class BaseQueryBuilderService {
                                         end: set.end,
                                         startInclusive: set.startInclusive,
                                         endInclusive: set.endInclusive
-                                    } as any)
+                                    }) as any
                             )
-                        } as any)
+                        }) as any
                 )
             };
         }
@@ -517,7 +521,7 @@ export abstract class BaseQueryBuilderService {
                             limit: facet.limit,
                             offset: facet.offset,
                             prefix: facet.prefix
-                        } as any)
+                        }) as any
                 )
             };
         }
