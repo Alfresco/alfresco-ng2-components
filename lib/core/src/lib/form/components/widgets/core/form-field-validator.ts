@@ -33,6 +33,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.NUMBER,
         FormFieldTypes.BOOLEAN,
         FormFieldTypes.TYPEAHEAD,
+        FormFieldTypes.DROPDOWN,
         FormFieldTypes.PEOPLE,
         FormFieldTypes.FUNCTIONAL_GROUP,
         FormFieldTypes.RADIO_BUTTONS,
@@ -50,6 +51,22 @@ export class RequiredFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.isVisible) {
+            if (field.type === FormFieldTypes.DROPDOWN) {
+                if (field.hasMultipleValues) {
+                    return Array.isArray(field.value) && !!field.value.length;
+                }
+
+                if (field.hasEmptyValue && field.emptyOption) {
+                    if (field.value === field.emptyOption.id) {
+                        return false;
+                    }
+                }
+
+                if (field.required && field.value && typeof field.value === 'object' && !Object.keys(field.value).length) {
+                    return false;
+                }
+            }
+
             if (field.type === FormFieldTypes.RADIO_BUTTONS) {
                 const option = field.options.find((opt) => opt.id === field.value);
                 return !!option;

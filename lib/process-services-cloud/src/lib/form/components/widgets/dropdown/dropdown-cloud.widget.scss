@@ -1,5 +1,3 @@
-@import 'styles/mat-selectors';
-
 .adf {
     &-dropdown-widget {
         width: 100%;
@@ -25,10 +23,6 @@
 
         &-dropdown-failed-message .adf-error-container {
             margin-top: 1px;
-        }
-
-        #{$mat-select-arrow-wrapper} {
-            height: auto;
         }
     }
 }

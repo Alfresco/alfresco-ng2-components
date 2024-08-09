@@ -54,7 +54,7 @@ export class FormFieldTypes {
 
     static VALIDATABLE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 
-    static REACTIVE_TYPES: string[] = [FormFieldTypes.DATE, FormFieldTypes.DATETIME, FormFieldTypes.DROPDOWN];
+    static REACTIVE_TYPES: string[] = [FormFieldTypes.DATE, FormFieldTypes.DATETIME];
 
     static CONSTANT_VALUE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 
