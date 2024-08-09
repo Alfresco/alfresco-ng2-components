@@ -29,6 +29,7 @@ import {
     CONTENT_UPLOAD_DIRECTIVES,
     ContentNodeSelectorModule
 } from '@alfresco/adf-content-services';
+import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
@@ -72,6 +73,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
+        DropdownCloudWidgetComponent,
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
@@ -88,6 +90,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
+        DropdownCloudWidgetComponent,
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
