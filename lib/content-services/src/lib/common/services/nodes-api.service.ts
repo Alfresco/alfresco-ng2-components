@@ -43,10 +43,7 @@ export class NodesApiService {
         return this._nodesApi;
     }
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService
-    ) {}
+    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
     private getEntryFromEntity(entity: NodeEntry): Node {
         return entity.entry;
@@ -190,10 +187,13 @@ export class NodesApiService {
 
         return from(this.nodesApi.listParents(nodeId, queryOptions)).pipe(
             map(({ list }) =>
-                list.entries?.map(({ entry }) => ({
-                    id: entry.id,
-                    name: entry.name
-                }))
+                list.entries?.map(
+                    ({ entry }) =>
+                        ({
+                            id: entry.id,
+                            name: entry.name
+                        } as Hold)
+                )
             )
         );
     }
