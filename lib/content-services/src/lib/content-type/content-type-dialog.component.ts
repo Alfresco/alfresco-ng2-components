@@ -17,18 +17,24 @@
 
 import { TypeEntry } from '@alfresco/js-api';
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ContentTypeDialogComponentData } from './content-type-metadata.interface';
 import { ContentTypeService } from './content-type.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-content-type-dialog',
+    standalone: true,
+    imports: [CommonModule, MatDialogModule, TranslateModule, MatExpansionModule, MatTableModule, MatButtonModule],
     templateUrl: './content-type-dialog.component.html',
     styleUrls: ['./content-type-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ContentTypeDialogComponent implements OnInit {
-
     title: string;
     description: string;
     nodeType: string;
@@ -39,9 +45,11 @@ export class ContentTypeDialogComponent implements OnInit {
 
     propertyColumns: string[] = ['name', 'title', 'dataType'];
 
-    constructor(private dialog: MatDialogRef<ContentTypeDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: ContentTypeDialogComponentData,
-                private contentTypeService: ContentTypeService) {
+    constructor(
+        private dialog: MatDialogRef<ContentTypeDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: ContentTypeDialogComponentData,
+        private contentTypeService: ContentTypeService
+    ) {
         this.title = data.title;
         this.description = data.description;
         this.confirmMessage = data.confirmMessage;
@@ -49,7 +57,9 @@ export class ContentTypeDialogComponent implements OnInit {
 
         this.contentTypeService.getContentTypeByPrefix(this.nodeType).subscribe((contentTypeEntry) => {
             this.currentContentType = contentTypeEntry;
-            this.typeProperties = this.currentContentType.entry.properties.filter((property) => property.id.startsWith(this.currentContentType.entry.model.namespacePrefix));
+            this.typeProperties = this.currentContentType.entry.properties.filter((property) =>
+                property.id.startsWith(this.currentContentType.entry.model.namespacePrefix)
+            );
         });
     }
 

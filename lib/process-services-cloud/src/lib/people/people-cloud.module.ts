@@ -23,9 +23,10 @@ import { CoreModule, FullNamePipe, InitialUsernamePipe } from '@alfresco/adf-cor
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdentityUserService } from './services/identity-user.service';
 import { IDENTITY_USER_SERVICE_TOKEN } from './services/identity-user-service.token';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
-    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, FullNamePipe, InitialUsernamePipe],
+    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, FullNamePipe, InitialUsernamePipe, MatProgressBarModule],
     declarations: [PeopleCloudComponent],
     exports: [PeopleCloudComponent],
     providers: [{ provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }]

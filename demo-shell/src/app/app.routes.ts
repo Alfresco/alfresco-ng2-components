@@ -27,7 +27,7 @@ import { FormNodeViewerComponent } from './components/process-service/form-node-
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { FilesComponent } from './components/files/files.component';
-import { FormComponent } from './components/form/form.component';
+import { AppFormComponent } from './components/form/app-form.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { AppComponent } from './app.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
@@ -42,14 +42,20 @@ import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-det
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
+import { AppSearchFilterChipsComponent } from './components/search/search-filter-chips.component';
+import { FileViewComponent } from './components/file-view/file-view.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { AppLoginComponent } from './components/login/login.component';
+import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
+import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
+import { AppCardViewComponent } from './components/card-view/card-view.component';
 
 export const appRoutes: Routes = [
-    { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
+    { path: 'login', component: AppLoginComponent },
     { path: 'logout', component: LogoutComponent },
     {
         path: 'settings',
-        loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
+        component: SettingsComponent
     },
     {
         path: 'files/:nodeId/view',
@@ -57,7 +63,12 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm],
         canActivateChild: [AuthGuardEcm],
         outlet: 'overlay',
-        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
+        children: [
+            {
+                path: '',
+                component: FileViewComponent
+            }
+        ]
     },
     {
         path: 'files/:nodeId/:versionId/view',
@@ -65,14 +76,24 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm],
         canActivateChild: [AuthGuardEcm],
         outlet: 'overlay',
-        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
+        children: [
+            {
+                path: '',
+                component: FileViewComponent
+            }
+        ]
     },
     {
         path: 'preview/blob',
         component: AppComponent,
         outlet: 'overlay',
         pathMatch: 'full',
-        loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
+        children: [
+            {
+                path: '',
+                component: FileViewComponent
+            }
+        ]
     },
     {
         path: '',
@@ -86,7 +107,12 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'card-view',
-                loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
+                children: [
+                    {
+                        path: '',
+                        component: AppCardViewComponent
+                    }
+                ]
             },
             {
                 path: '',
@@ -146,14 +172,13 @@ export const appRoutes: Routes = [
                                 path: 'process-details/:processInstanceId',
                                 component: ProcessDetailsCloudDemoComponent
                             }
-
                         ]
                     }
                 ]
             },
             {
                 path: 'settings-layout',
-                loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
+                component: SettingsComponent
             },
             {
                 path: 'files',
@@ -177,7 +202,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'search-filter-chips',
-                component: SearchFilterChipsComponent,
+                component: AppSearchFilterChipsComponent,
                 canActivate: [AuthGuardEcm]
             },
             {
@@ -245,16 +270,34 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             { path: 'form-cloud', component: FormCloudDemoComponent },
-            { path: 'form', component: FormComponent },
+            { path: 'form', component: AppFormComponent },
             {
                 path: 'task-list',
                 canActivate: [AuthGuardBpm],
-                loadChildren: () => import('./components/task-list-demo/task-list.module').then(m => m.AppTaskListModule)
+                children: [
+                    {
+                        path: '',
+                        component: TaskListDemoComponent
+                    },
+                    {
+                        path: ':id',
+                        component: TaskListDemoComponent
+                    }
+                ]
             },
             {
                 path: 'process-list',
                 canActivate: [AuthGuardBpm],
-                loadChildren: () => import('./components/process-list-demo/process-list.module').then(m => m.AppProcessListModule)
+                children: [
+                    {
+                        path: '',
+                        component: ProcessListDemoComponent
+                    },
+                    {
+                        path: ':id',
+                        component: ProcessListDemoComponent
+                    }
+                ]
             },
             {
                 path: 'error/no-authorization',

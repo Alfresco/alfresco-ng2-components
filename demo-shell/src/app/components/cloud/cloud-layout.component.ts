@@ -16,11 +16,41 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import {
+    SidebarActionMenuComponent,
+    SidenavLayoutComponent,
+    SidenavLayoutContentDirective,
+    SidenavLayoutHeaderDirective,
+    SidenavLayoutNavigationDirective
+} from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { CloudFiltersDemoComponent } from './cloud-filters-demo.component';
+import { CloudSettingsComponent } from './shared/cloud-settings.component';
 
 @Component({
     selector: 'app-cloud-layout',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatTabsModule,
+        SidenavLayoutComponent,
+        TranslateModule,
+        SidenavLayoutHeaderDirective,
+        SidenavLayoutNavigationDirective,
+        SidebarActionMenuComponent,
+        MatIconModule,
+        MatMenuModule,
+        SidenavLayoutContentDirective,
+        RouterOutlet,
+        CloudFiltersDemoComponent,
+        CloudSettingsComponent
+    ],
     templateUrl: './cloud-layout.component.html',
     styleUrls: ['./cloud-layout.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -33,3 +33,4 @@ export * from './validators/card-view.validators';
 export * from './models/card-view.models';
 export * from './services/card-view.services';
 export * from './card-view.module';
+export * from './components/card-view-item-dispatcher/card-view-item-dispatcher.component';

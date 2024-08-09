@@ -18,9 +18,13 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
+import { CommonModule } from '@angular/common';
+import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 
 @Component({
     selector: 'adf-trashcan-name-column',
+    standalone: true,
+    imports: [CommonModule, NodeNameTooltipPipe],
     template: `
         <ng-container *ngIf="!isLibrary">
             <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}">{{ displayText }}</span>

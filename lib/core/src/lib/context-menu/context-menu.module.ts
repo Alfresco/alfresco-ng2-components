@@ -19,8 +19,11 @@ import { NgModule } from '@angular/core';
 import { ContextMenuDirective } from './context-menu.directive';
 import { ContextMenuListComponent } from './context-menu-list.component';
 
+export const CONTEXT_MENU_DIRECTIVES = [ContextMenuListComponent, ContextMenuDirective] as const;
+
+/** @deprecated use `...CONTEXT_MENU_DIRECTIVES` or import standalone directives */
 @NgModule({
-    imports: [ContextMenuListComponent, ContextMenuDirective],
-    exports: [ContextMenuListComponent, ContextMenuDirective]
+    imports: [...CONTEXT_MENU_DIRECTIVES],
+    exports: [...CONTEXT_MENU_DIRECTIVES]
 })
 export class ContextMenuModule {}

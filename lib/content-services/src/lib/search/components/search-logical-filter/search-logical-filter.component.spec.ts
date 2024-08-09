@@ -26,8 +26,7 @@ describe('SearchLogicalFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchLogicalFilterComponent],
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, SearchLogicalFilterComponent]
         });
 
         fixture = TestBed.createComponent(SearchLogicalFilterComponent);

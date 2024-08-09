@@ -19,8 +19,11 @@ import { NgModule } from '@angular/core';
 import { SearchTextInputComponent } from './search-text-input.component';
 import { SearchTriggerDirective } from './search-trigger.directive';
 
+export const SEARCH_TEXT_INPUT_DIRECTIVES = [SearchTextInputComponent, SearchTriggerDirective] as const;
+
+/** @deprecated use `...SEARCH_TEXT_INPUT_DIRECTIVES` or import the individual directives */
 @NgModule({
-    imports: [SearchTextInputComponent, SearchTriggerDirective],
-    exports: [SearchTextInputComponent, SearchTriggerDirective]
+    imports: [...SEARCH_TEXT_INPUT_DIRECTIVES],
+    exports: [...SEARCH_TEXT_INPUT_DIRECTIVES]
 })
 export class SearchTextModule {}

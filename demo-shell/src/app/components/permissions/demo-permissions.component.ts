@@ -17,18 +17,19 @@
 
 import { Component, OnInit, Optional } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { PermissionListComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-permissions',
+    standalone: true,
+    imports: [PermissionListComponent],
     templateUrl: './demo-permissions.component.html',
     styleUrls: ['./demo-permissions.component.scss']
 })
 export class DemoPermissionComponent implements OnInit {
-
     nodeId: string;
 
-    constructor(@Optional() private route: ActivatedRoute) {
-    }
+    constructor(@Optional() private route: ActivatedRoute) {}
 
     ngOnInit() {
         if (this.route) {

@@ -60,8 +60,7 @@ describe('SearchPropertiesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchPropertiesComponent],
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, SearchPropertiesComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(SearchPropertiesComponent);

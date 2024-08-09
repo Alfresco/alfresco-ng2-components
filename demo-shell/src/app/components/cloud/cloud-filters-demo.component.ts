@@ -20,15 +20,18 @@ import { Observable } from 'rxjs';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CloudProcessFiltersService } from './services/cloud-process-filters.service';
-import { ProcessFilterCloudModel } from '@alfresco/adf-process-services-cloud';
+import { ProcessFilterCloudModel, ProcessFiltersCloudModule, TaskFiltersCloudModule } from '@alfresco/adf-process-services-cloud';
+import { CommonModule } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
 @Component({
     selector: 'app-cloud-filters-demo',
+    standalone: true,
+    imports: [CommonModule, MatExpansionModule, TaskFiltersCloudModule, ProcessFiltersCloudModule],
     templateUrl: './cloud-filters-demo.component.html',
     styleUrls: ['./cloud-filters-demo.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class CloudFiltersDemoComponent implements OnInit {
-
     @Input()
     appName: string;
 
@@ -67,17 +70,17 @@ export class CloudFiltersDemoComponent implements OnInit {
 
     onTaskFilterSelected(filter) {
         if (filter) {
-            this.router.navigate([`/cloud/${this.appName}/tasks/`], {queryParams: filter});
+            this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: filter });
         }
     }
 
     onProcessFilterSelected(filter: ProcessFilterCloudModel) {
         if (filter) {
-            const {appName} = this;
-            const {id} = filter;
+            const { appName } = this;
+            const { id } = filter;
 
             const queryParams = this.cloudProcessFiltersService.writeQueryParams(filter, appName, id);
-            this.router.navigate([`/cloud/${appName}/processes/`], {queryParams});
+            this.router.navigate([`/cloud/${appName}/processes/`], { queryParams });
         }
     }
 

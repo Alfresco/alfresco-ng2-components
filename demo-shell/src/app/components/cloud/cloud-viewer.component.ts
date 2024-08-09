@@ -17,17 +17,18 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-cloud-viewer',
+    standalone: true,
+    imports: [AlfrescoViewerComponent],
     templateUrl: './cloud-viewer.component.html'
 })
 export class CloudViewerComponent implements OnInit {
-
     nodeId: string;
 
-    constructor(private route: ActivatedRoute) {
-    }
+    constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {

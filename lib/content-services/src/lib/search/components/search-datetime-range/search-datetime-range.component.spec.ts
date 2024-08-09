@@ -32,7 +32,7 @@ describe('SearchDatetimeRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, SearchDatetimeRangeComponent]
         });
         fixture = TestBed.createComponent(SearchDatetimeRangeComponent);
         component = fixture.componentInstance;

@@ -18,12 +18,21 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
 import { BaseCardView } from '../base-card-view';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'adf-card-view-arrayitem',
-  templateUrl: './card-view-arrayitem.component.html',
-  styleUrls: ['./card-view-arrayitem.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-card-view-arrayitem',
+    standalone: true,
+    imports: [CommonModule, MatChipsModule, TranslateModule, MatIconModule, MatMenuModule, MatCardModule, MatButtonModule],
+    templateUrl: './card-view-arrayitem.component.html',
+    styleUrls: ['./card-view-arrayitem.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {
     clicked(): void {

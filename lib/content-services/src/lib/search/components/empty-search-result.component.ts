@@ -19,6 +19,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-empty-search-result',
+    standalone: true,
     templateUrl: './empty-search-result.component.html',
     encapsulation: ViewEncapsulation.None
 })

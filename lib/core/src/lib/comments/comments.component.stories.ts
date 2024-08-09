@@ -18,7 +18,6 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { CommentsComponent } from './comments.component';
-import { CommentsModule } from './comments.module';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { commentsStoriesData } from './mocks/comments.stories.mock';
 import { CommentsServiceStoriesMock } from './mocks/comments.service.stories.mock';
@@ -29,7 +28,7 @@ export default {
     title: 'Core/Comments/Comment',
     decorators: [
         moduleMetadata({
-            imports: [CommentsModule],
+            imports: [CommentsComponent],
             providers: [
                 { provide: CommentsServiceStoriesMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
                 { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }

@@ -158,37 +158,37 @@ const template: StoryFn<SidenavLayoutComponent> = (args) => ({
                 <ng-template>
                     <mat-nav-list class="app-sidenav-linklist">
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListIcon>home</mat-icon>
+                            <mat-icon matListItemIcon>home</mat-icon>
                             <span matLine>Home</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListIcon>device_hub</mat-icon>
+                            <mat-icon matListItemIcon>device_hub</mat-icon>
                             <span matLine>Content Processes</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListIcon>folder_open</mat-icon>
+                            <mat-icon matListItemIcon>folder_open</mat-icon>
                             <span matLine>Files</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListIcon>rowing</mat-icon>
+                            <mat-icon matListItemIcon>rowing</mat-icon>
                             <span matLine>Quick Search</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListIcon>cloud</mat-icon>
+                            <mat-icon matListItemIcon>cloud</mat-icon>
                             <span matLine>Cloud</span>
                         </mat-list-item>
 
                         <mat-list-item class="app-sidenav-link">
-                            <mat-icon matListIcon>settings</mat-icon>
+                            <mat-icon matListItemIcon>settings</mat-icon>
                             <span matLine>Settings</span>
                         </mat-list-item>
 
                         <mat-list-item adf-logout class="app-sidenav-link" data-automation-id="Logout">
-                            <mat-icon matListIcon>exit_to_app</mat-icon>
+                            <mat-icon matListItemIcon>exit_to_app</mat-icon>
                             <span matLine>Logout</span>
                         </mat-list-item>
                     </mat-nav-list>

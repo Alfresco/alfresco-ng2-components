@@ -22,7 +22,8 @@ import {
     FormFieldValidator,
     FormModel,
     FormOutcomeEvent,
-    InfoDrawerModule,
+    InfoDrawerComponent,
+    InfoDrawerTabComponent,
     UpdateNotification
 } from '@alfresco/adf-core';
 import {
@@ -53,6 +54,7 @@ import { TaskHeaderComponent } from '../task-header/task-header.component';
 import { TaskCommentsComponent } from '../../../task-comments';
 import { ChecklistComponent } from '../checklist/checklist.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'adf-task-details',
@@ -62,14 +64,16 @@ import { MatButtonModule } from '@angular/material/button';
         TranslateModule,
         TaskFormComponent,
         AttachFormComponent,
-        InfoDrawerModule,
         PeopleSearchComponent,
         TaskHeaderComponent,
         PeopleComponent,
         TaskCommentsComponent,
         ChecklistComponent,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        InfoDrawerTabComponent,
+        InfoDrawerComponent,
+        MatCardModule
     ],
     templateUrl: './task-details.component.html',
     styleUrls: ['./task-details.component.scss'],

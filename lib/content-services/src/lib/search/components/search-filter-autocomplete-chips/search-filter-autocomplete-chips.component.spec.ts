@@ -30,8 +30,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchFilterAutocompleteChipsComponent],
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, SearchFilterAutocompleteChipsComponent],
             providers: [
                 {
                     provide: TagService,

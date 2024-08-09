@@ -34,7 +34,8 @@ describe('ProcessNameCloudPipe', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule],
+            providers: [LocalizedDatePipe]
         });
         const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNameCloudPipe(localizedDatePipe);

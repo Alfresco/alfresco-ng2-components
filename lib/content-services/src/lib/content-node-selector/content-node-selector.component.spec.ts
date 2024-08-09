@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
@@ -28,7 +28,6 @@ import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
-import { UploadModule } from '../upload';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
 import { NodeAction } from '../document-list/models/node-action.enum';
 import { SitesService } from '../common/services/sites.service';
@@ -60,7 +59,7 @@ describe('ContentNodeSelectorComponent', () => {
         };
 
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule, UploadModule],
+            imports: [ContentTestingModule, ContentNodeSelectorComponent],
             providers: [
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 {

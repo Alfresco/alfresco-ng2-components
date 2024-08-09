@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../../testing/core.story.module';
 import { NotificationHistoryComponent } from './notification-history.component';
-import { NotificationHistoryModule } from '../notification-history.module';
+import { NOTIFICATION_HISTORY_DIRECTIVES } from '../notification-history.module';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
@@ -26,7 +26,7 @@ export default {
     title: 'Core/Notification History/Notification History',
     decorators: [
         moduleMetadata({
-            imports: [CoreStoryModule, NotificationHistoryModule]
+            imports: [CoreStoryModule, ...NOTIFICATION_HISTORY_DIRECTIVES]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]

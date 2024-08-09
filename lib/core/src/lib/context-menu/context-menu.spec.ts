@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { ContextMenuModule } from './context-menu.module';
+import { CONTEXT_MENU_DIRECTIVES } from './context-menu.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
@@ -103,7 +103,7 @@ describe('ContextMenuDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ContextMenuModule],
+            imports: [CoreTestingModule, CONTEXT_MENU_DIRECTIVES],
             declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);

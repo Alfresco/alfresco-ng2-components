@@ -19,13 +19,9 @@ import { NgModule } from '@angular/core';
 
 import { BlankPageComponent } from './blank-page.component';
 
+/** @deprecated import standalone `BlankPageComponent` instead */
 @NgModule({
-    declarations: [
-        BlankPageComponent
-    ],
-    exports: [
-        BlankPageComponent
-    ]
+    imports: [BlankPageComponent],
+    exports: [BlankPageComponent]
 })
-export class BlankPageModule {
-}
+export class BlankPageModule {}

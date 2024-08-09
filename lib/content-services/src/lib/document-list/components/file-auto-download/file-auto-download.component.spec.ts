@@ -23,7 +23,7 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
-import { NodeDownloadDirective } from '../../../directives';
+import { NodeDownloadDirective } from '../../../directives/node-download.directive';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 const mockDialog = {
@@ -37,8 +37,14 @@ describe('FileAutoDownloadComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TranslateModule.forRoot(), MatDialogModule, MatButtonModule, NodeDownloadDirective],
-            declarations: [FileAutoDownloadComponent],
+            imports: [
+                HttpClientTestingModule,
+                TranslateModule.forRoot(),
+                MatDialogModule,
+                MatButtonModule,
+                NodeDownloadDirective,
+                FileAutoDownloadComponent
+            ],
             providers: [
                 { provide: MatDialogRef, useValue: mockDialog },
                 { provide: MAT_DIALOG_DATA, useValue: null },

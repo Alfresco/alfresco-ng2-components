@@ -18,14 +18,31 @@
 import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { FacetField } from '../../../models/facet-field.interface';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { SearchFacetFieldComponent } from '../../search-facet-field/search-facet-field.component';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'adf-search-facet-chip',
-  templateUrl: './search-facet-chip.component.html',
-  styleUrls: ['./search-facet-chip.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-search-facet-chip',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatChipsModule,
+        MatMenuModule,
+        TranslateModule,
+        MatIconModule,
+        SearchFilterMenuCardComponent,
+        MatButtonModule,
+        SearchFacetFieldComponent
+    ],
+    templateUrl: './search-facet-chip.component.html',
+    styleUrls: ['./search-facet-chip.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchFacetChipComponent {
     @Input()

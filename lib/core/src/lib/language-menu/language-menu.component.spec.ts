@@ -47,7 +47,7 @@ describe('LanguageMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, LanguageMenuComponent]
         });
 
         fixture = TestBed.createComponent(LanguageMenuComponent);

@@ -16,16 +16,18 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { FormService, WidgetComponent } from '@alfresco/adf-core';
+import { ErrorWidgetComponent, FormService, WidgetComponent } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'custom-editor-widget',
-    template: `
-        <div style="color: green">
-            ADF version of custom form widget
-        </div>
-    `
+    standalone: true,
+    template: ` <div style="color: green">ADF version of custom form widget</div> `
 })
 export class CustomEditorComponent extends WidgetComponent {
     constructor() {
@@ -35,32 +37,35 @@ export class CustomEditorComponent extends WidgetComponent {
 
 @Component({
     selector: 'app-sample-widget',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, ErrorWidgetComponent],
     template: `
         <div style="color: red">
             <p *ngIf="field.readOnly || readOnly">
-                <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
-                <span>{{field.value}}</span>
+                <label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+                <span>{{ field.value }}</span>
             </p>
 
             <mat-form-field *ngIf="!(field.readOnly || readOnly)">
-                <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
-                <input matInput
-                       class="adf-input"
-                       type="text"
-                       [id]="field.id"
-                       [required]="isRequired()"
-                       [value]="field.value"
-                       [(ngModel)]="field.value"
-                       (ngModelChange)="onFieldChanged(field)">
-                <mat-hint>{{field.placeholder}}</mat-hint>
+                <label class="adf-label" [attr.for]="field.id">{{ field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+                <input
+                    matInput
+                    class="adf-input"
+                    type="text"
+                    [id]="field.id"
+                    [required]="isRequired()"
+                    [value]="field.value"
+                    [(ngModel)]="field.value"
+                    (ngModelChange)="onFieldChanged(field)"
+                />
+                <mat-hint>{{ field.placeholder }}</mat-hint>
             </mat-form-field>
             <error-widget [error]="field.validationSummary"></error-widget>
             <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
         </div>
     `
 })
-export class CustomWidgetComponent extends WidgetComponent  implements OnInit {
-
+export class CustomWidgetComponent extends WidgetComponent implements OnInit {
     constructor(public formService: FormService) {
         super(formService);
     }

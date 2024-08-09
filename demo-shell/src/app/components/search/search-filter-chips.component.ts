@@ -18,18 +18,43 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pagination, ResultSetPaging } from '@alfresco/js-api';
-import { SearchConfiguration, SearchQueryBuilderService, SearchService } from '@alfresco/adf-content-services';
+import {
+    ResetSearchDirective,
+    SearchConfiguration,
+    SearchFilterChipsComponent,
+    SearchFormComponent,
+    SearchQueryBuilderService,
+    SearchService,
+    SearchSortingPickerComponent
+} from '@alfresco/adf-content-services';
 import { ShowHeaderMode, UserPreferencesService } from '@alfresco/adf-core';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { FilesComponent } from '../files/files.component';
 
 @Component({
     selector: 'app-search-filter-chips',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatProgressBarModule,
+        SearchFormComponent,
+        MatDividerModule,
+        MatIconModule,
+        ResetSearchDirective,
+        SearchSortingPickerComponent,
+        FilesComponent,
+        SearchFilterChipsComponent
+    ],
     templateUrl: './search-filter-chips.component.html',
     styleUrls: ['./search-filter-chips.component.scss'],
     providers: [SearchService]
 })
-export class SearchFilterChipsComponent implements OnInit, OnDestroy {
+export class AppSearchFilterChipsComponent implements OnInit, OnDestroy {
     queryParamName = 'q';
     searchedWord = '';
     data: ResultSetPaging;

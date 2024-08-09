@@ -16,5 +16,3 @@
  */
 
 export * from './content-user-info.component';
-
-export * from './content-user-info.module';

@@ -17,23 +17,32 @@
 
 import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService, FormRenderingService } from '@alfresco/adf-core';
-import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
+import { FormComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CoreAutomationService } from '../../../testing/automation.service';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-form',
-    templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
+    standalone: true,
+    imports: [CommonModule, MatTabsModule, FormComponent, MonacoEditorModule, MatButtonModule, FormsModule, TranslateModule, MatIconModule],
+    templateUrl: './app-form.component.html',
+    styleUrls: ['./app-form.component.scss'],
     providers: [
         { provide: FormService, useClass: InMemoryFormService },
         { provide: FormRenderingService, useClass: ProcessFormRenderingService }
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class FormComponent implements OnInit, OnDestroy {
+export class AppFormComponent implements OnInit, OnDestroy {
     private formService = inject(FormService);
     private notificationService = inject(NotificationService);
     private automationService = inject(CoreAutomationService);

@@ -18,8 +18,8 @@
       <div class="adf-version-list-table">
         <adf-version-list
           [node]="data.node"
-          [showComments]="'adf-version-manager.allowComments' | adfAppConfig: true"
-          [allowDownload]="'adf-version-manager.allowDownload' | adfAppConfig: true"
+          [showComments]="data.showComments"
+          [allowDownload]="data.allowDownload"
           (deleted)="refresh($event)"
           (restored)="refresh($event)"
           (viewVersion)="onViewingVersion($event)"

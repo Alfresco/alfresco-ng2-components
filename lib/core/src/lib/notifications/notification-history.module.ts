@@ -19,8 +19,11 @@ import { NgModule } from '@angular/core';
 import { NotificationHistoryComponent } from './components/notification-history.component';
 import { AddNotificationStorybookComponent } from './components/add-notification.stories.component';
 
+export const NOTIFICATION_HISTORY_DIRECTIVES = [NotificationHistoryComponent, AddNotificationStorybookComponent] as const;
+
+/** @deprecated use `...NOTIFICATION_HISTORY_DIRECTIVES` or import the individual directives */
 @NgModule({
-    imports: [NotificationHistoryComponent, AddNotificationStorybookComponent],
-    exports: [NotificationHistoryComponent, AddNotificationStorybookComponent]
+    imports: [...NOTIFICATION_HISTORY_DIRECTIVES],
+    exports: [...NOTIFICATION_HISTORY_DIRECTIVES]
 })
 export class NotificationHistoryModule {}

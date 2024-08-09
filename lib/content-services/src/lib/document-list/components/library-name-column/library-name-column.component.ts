@@ -22,9 +22,13 @@ import { NodesApiService } from '../../../common/services/nodes-api.service';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-library-name-column',
+    standalone: true,
+    imports: [CommonModule, TranslateModule],
     template: `
         <span
             role="link"

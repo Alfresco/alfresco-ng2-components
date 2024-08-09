@@ -17,18 +17,20 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormComponent } from '@alfresco/adf-process-services';
 
 @Component({
     selector: 'app-form-viewer',
+    standalone: true,
+    imports: [CommonModule, FormComponent],
     templateUrl: './form-viewer.component.html',
     styleUrls: ['./form-viewer.component.css']
 })
 export class FormViewerComponent implements OnInit {
-
     taskId: string;
 
-    constructor(private route: ActivatedRoute) {
-    }
+    constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {

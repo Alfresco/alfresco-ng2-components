@@ -56,10 +56,7 @@
             </ng-template>
         </mat-autocomplete>
     </mat-form-field>
-    <mat-progress-bar
-        *ngIf="validationLoading"
-        mode="indeterminate">
-    </mat-progress-bar>
+    <mat-progress-bar *ngIf="validationLoading" mode="indeterminate"></mat-progress-bar>
 
     <div class="adf-error-container">
         <mat-error *ngIf="hasPreselectError() &&  !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">
