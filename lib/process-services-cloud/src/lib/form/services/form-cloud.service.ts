@@ -27,20 +27,211 @@ import { FormContent } from '../../services/form-fields.interfaces';
 import { FormCloudServiceInterface } from './form-cloud.service.interface';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
+const mockPoCFormDefinition = {
+    tabs: [],
+    fields: [
+        {
+            id: '1b93af77-9837-4d29-a957-866fa76e1f77',
+            name: 'Label',
+            type: 'container',
+            tab: null,
+            numberOfColumns: 2,
+            fields: {
+                1: [
+                    {
+                        id: 'DisplayText1',
+                        name: 'Display text',
+                        type: 'readonly-text',
+                        readOnly: false,
+                        value: 'Display Text 1',
+                        colspan: 1,
+                        rowspan: 1,
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 },
+                        style: 'my-custom-display-text'
+                    }
+                ],
+                2: [
+                    {
+                        id: 'DisplayText2',
+                        name: 'Display text',
+                        type: 'readonly-text',
+                        readOnly: false,
+                        value: 'Display Text 2',
+                        colspan: 1,
+                        rowspan: 1,
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 },
+                        style: 'my-custom-display-text2'
+                    }
+                ]
+            }
+        },
+        {
+            id: '11c122aa-620a-46c2-ac15-07567622a747',
+            name: 'Label',
+            type: 'container',
+            tab: null,
+            numberOfColumns: 2,
+            fields: {
+                1: [
+                    {
+                        id: 'Text0qkxkp',
+                        name: 'Text',
+                        type: 'text',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        placeholder: null,
+                        minLength: 0,
+                        maxLength: 0,
+                        regexPattern: null,
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                2: [
+                    {
+                        id: 'Dropdown0vf1tp',
+                        name: 'Dropdown',
+                        type: 'dropdown',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        optionType: 'manual',
+                        options: [],
+                        authName: null,
+                        restUrl: null,
+                        restResponsePath: null,
+                        restIdProperty: null,
+                        restLabelProperty: null,
+                        selectionType: 'single',
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 },
+                        rule: null
+                    }
+                ]
+            }
+        },
+        {
+            id: 'ac31ff57-d5d9-4f27-9562-177203c48802',
+            name: 'Label',
+            type: 'container',
+            tab: null,
+            numberOfColumns: 2,
+            fields: {
+                1: [
+                    {
+                        id: 'DisplayText3',
+                        name: 'Display text',
+                        type: 'readonly-text',
+                        readOnly: false,
+                        value: 'Display text 3',
+                        colspan: 1,
+                        rowspan: 1,
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    },
+                    {
+                        id: 'Radiobuttons07ivv4',
+                        name: 'Radio buttons',
+                        type: 'radio-buttons',
+                        readOnly: false,
+                        required: false,
+                        colspan: 1,
+                        rowspan: 1,
+                        optionType: 'manual',
+                        options: [
+                            { id: 'Id_1', name: 'Label 1' },
+                            { id: 'Id_2', name: 'Label 2' },
+                            { id: 'Id_3', name: 'Label 3' },
+                            { id: 'Id_4', name: 'Label 4' }
+                        ],
+                        authName: null,
+                        restUrl: null,
+                        restResponsePath: null,
+                        restIdProperty: null,
+                        restLabelProperty: null,
+                        alignmentType: 'vertical',
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ],
+                2: [
+                    {
+                        id: 'DisplayText4',
+                        name: 'Display text',
+                        type: 'readonly-text',
+                        readOnly: false,
+                        value: 'Display text 4',
+                        colspan: 1,
+                        rowspan: 1,
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    },
+                    {
+                        id: 'Checkbox0mz7t4',
+                        name: 'Checkbox 1',
+                        type: 'boolean',
+                        readOnly: false,
+                        required: true,
+                        colspan: 1,
+                        rowspan: 1,
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 },
+                        value: true
+                    },
+                    {
+                        id: 'Checkbox0c5piw',
+                        name: 'Checkbox 2',
+                        type: 'boolean',
+                        readOnly: false,
+                        required: true,
+                        colspan: 1,
+                        rowspan: 1,
+                        visibilityCondition: null,
+                        params: { existingColspan: 1, maxColspan: 2 }
+                    }
+                ]
+            }
+        }
+    ],
+    outcomes: [],
+    metadata: {},
+    variables: [],
+    theme: {
+        form: {
+            '--adf-form-label-font-size': '10px',
+            '--adf-form-label-color': 'blue'
+        },
+        widgets: {
+            'readonly-text': {
+                'my-custom-display-text': {
+                    '--adf-readonly-text-font-size': '28px',
+                    '--adf-readonly-text-font-weight': 'bold'
+                },
+                'my-custom-display-text2': {
+                    '--adf-readonly-text-font-size': '15px',
+                    '--adf-readonly-text-color': 'green'
+                }
+            }
+        }
+    }
+};
+
 @Injectable({
     providedIn: 'root'
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
-
     private _uploadApi: UploadApi;
     get uploadApi(): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
     }
 
-    constructor(
-        adfHttpClient: AdfHttpClient
-    ) {
+    constructor(adfHttpClient: AdfHttpClient) {
         super(adfHttpClient);
     }
 
@@ -54,20 +245,22 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      */
     getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
-            switchMap(task => this.getForm(appName, task.formKey, version).pipe(
-                map((form: FormContent) => {
-                    const flattenForm = {
-                        ...form.formRepresentation,
-                        ...form.formRepresentation.formDefinition,
-                        taskId: task.id,
-                        taskName: task.name,
-                        processDefinitionId: task.processDefinitionId,
-                        processInstanceId: task.processInstanceId
-                    };
-                    delete flattenForm.formDefinition;
-                    return flattenForm;
-                })
-            ))
+            switchMap((task) =>
+                this.getForm(appName, task.formKey, version).pipe(
+                    map((form: FormContent) => {
+                        const flattenForm = {
+                            ...form.formRepresentation,
+                            ...form.formRepresentation.formDefinition,
+                            taskId: task.id,
+                            taskName: task.name,
+                            processDefinitionId: task.processDefinitionId,
+                            processInstanceId: task.processInstanceId
+                        };
+                        delete flattenForm.formDefinition;
+                        return flattenForm;
+                    })
+                )
+            )
         );
     }
 
@@ -89,26 +282,15 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             processInstanceId
         };
 
-        return this.post(apiUrl, saveFormRepresentation).pipe(
-            map((res: any) => res.entry)
-        );
+        return this.post(apiUrl, saveFormRepresentation).pipe(map((res: any) => res.entry));
     }
 
     createTemporaryRawRelatedContent(file: any, nodeId: string, contentHost: string): Observable<any> {
-
         const changedConfig = this.apiService.lastConfig;
         changedConfig.provider = 'ALL';
         changedConfig.hostEcm = contentHost.replace('/alfresco', '');
         this.apiService.getInstance().setConfig(changedConfig);
-        return from(this.uploadApi.uploadFile(
-            file,
-            '',
-            nodeId,
-            null,
-            { overwrite: true }
-        )).pipe(
-            map((res: any) => res.entry)
-        );
+        return from(this.uploadApi.uploadFile(file, '', nodeId, null, { overwrite: true })).pipe(map((res: any) => res.entry));
     }
 
     /**
@@ -123,7 +305,15 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      * @param version of the form
      * @returns Updated task details
      */
-    completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
+    completeTaskForm(
+        appName: string,
+        taskId: string,
+        processInstanceId: string,
+        formId: string,
+        formValues: FormValues,
+        outcome: string,
+        version: number
+    ): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
         const completeFormRepresentation = {
             values: formValues,
@@ -135,9 +325,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             completeFormRepresentation.outcome = outcome;
         }
 
-        return this.post(apiUrl, completeFormRepresentation).pipe(
-            map((res: any) => res.entry)
-        );
+        return this.post(apiUrl, completeFormRepresentation).pipe(map((res: any) => res.entry));
     }
 
     /**
@@ -150,9 +338,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
-        return this.get(apiUrl).pipe(
-            map((res: any) => res.entry)
-        );
+        return this.get(apiUrl).pipe(map((res: any) => res.entry));
     }
 
     /**
@@ -170,10 +356,12 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return this.get(apiUrl, { maxItems, skipCount }).pipe(
             expand((res: any) => {
                 skipCount += maxItems;
-                return res.list.pagination.hasMoreItems ? this.get(apiUrl, {
-                    maxItems,
-                    skipCount
-                }) : EMPTY;
+                return res.list.pagination.hasMoreItems
+                    ? this.get(apiUrl, {
+                          maxItems,
+                          skipCount
+                      })
+                    : EMPTY;
             }),
             map((res: any) => res.list.entries.map((variable) => new TaskVariableCloud(variable.entry))),
             reduce((acc, res) => acc.concat(res), [])
@@ -195,7 +383,16 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             url += `/versions/${version}`;
         }
 
-        return this.get(url);
+        // modified for PoC purpose
+        return this.get<any>(url).pipe(
+            map((res) => ({
+                ...res,
+                formRepresentation: {
+                    ...res.formRepresentation,
+                    formDefinition: mockPoCFormDefinition
+                }
+            }))
+        );
     }
 
     getRestWidgetData(formName: string, widgetId: string, body: any = {}): Observable<FormFieldOption[]> {
@@ -221,7 +418,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             delete flattenForm.formDefinition;
 
             const formValues: FormValues = {};
-            (data || []).forEach(variable => {
+            (data || []).forEach((variable) => {
                 formValues[variable.name] = variable.value;
             });
 

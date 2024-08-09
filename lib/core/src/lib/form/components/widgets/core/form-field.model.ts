@@ -93,6 +93,7 @@ export class FormFieldModel extends FormWidgetModel {
     variableConfig: VariableConfig;
     schemaDefinition: DataColumn[];
     externalProperty?: string;
+    style?: string;
 
     // container model members
     numberOfColumns: number = 1;
@@ -221,6 +222,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.precision = json.precision;
             this.externalProperty = json.externalProperty;
             this._value = this.parseValue(json);
+            this.style = json.style;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;

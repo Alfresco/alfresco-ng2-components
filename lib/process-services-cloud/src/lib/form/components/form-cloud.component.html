@@ -3,7 +3,7 @@
     </ng-content>
 </div>
 
-<div *ngIf="hasForm()" class="adf-cloud-form-container adf-cloud-form-{{displayMode?.toLowerCase() || 'inline'}}-container">
+<div *ngIf="hasForm()" class="adf-cloud-form-container adf-cloud-form-{{displayMode?.toLowerCase() || 'inline'}}-container" [style]="style">
     <div class="adf-cloud-form-content"
         [cdkTrapFocus]="displayMode === 'fullScreen'"
         cdkTrapFocusAutoCapture>

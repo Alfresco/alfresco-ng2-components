@@ -20,6 +20,7 @@ import {
     Component,
     ComponentFactory,
     ComponentRef,
+    inject,
     Input,
     NgModule,
     OnDestroy,
@@ -29,6 +30,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormRenderingService } from '../../services/form-rendering.service';
+import { FormStyleService } from '../../services/form-style.service';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
 import { FormFieldModel } from '../widgets';
 
@@ -56,8 +58,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     componentRef: ComponentRef<any>;
 
     focus: boolean = false;
+    style = '';
 
-    constructor(private formRenderingService: FormRenderingService, private visibilityService: WidgetVisibilityService, private compiler: Compiler) {}
+    private readonly widgetStyleService = inject(FormStyleService);
+    private readonly formRenderingService = inject(FormRenderingService);
+    private readonly visibilityService = inject(WidgetVisibilityService);
+    private readonly compiler = inject(Compiler);
 
     ngOnInit() {
         const w: any = window;
@@ -88,6 +94,8 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                     });
                 }
             }
+
+            this.style = this.widgetStyleService.getFieldStyle(originalField.type, originalField.style, originalField.form.theme);
         }
     }
 

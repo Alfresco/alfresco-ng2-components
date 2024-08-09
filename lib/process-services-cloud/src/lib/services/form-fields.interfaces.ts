@@ -35,6 +35,19 @@ export interface FormTab {
     visibilityCondition: VisibilityCondition | null;
 }
 
+export interface FormTheme {
+    form: {
+        [key: string]: string;
+    };
+    widgets: {
+        [key: string]: {
+            [key: string]: {
+                [key: string]: string;
+            };
+        };
+    };
+}
+
 export interface FormOutcome {
     id: string;
     name: string;
@@ -46,6 +59,7 @@ export interface FormDefinition {
     outcomes: FormOutcome[];
     metadata: any;
     variables: any[];
+    theme?: FormTheme;
 }
 
 export interface Container {
@@ -59,8 +73,19 @@ export interface Container {
     };
 }
 
-export type FormFieldRepresentation = (DateField | DateTimeField | TextField | AttachFileField | DropDownField |
-    RadioField | TypeaheadField | PeopleField | AmountField | NumberField | CheckboxField | HyperlinkField);
+export type FormFieldRepresentation =
+    | DateField
+    | DateTimeField
+    | TextField
+    | AttachFileField
+    | DropDownField
+    | RadioField
+    | TypeaheadField
+    | PeopleField
+    | AmountField
+    | NumberField
+    | CheckboxField
+    | HyperlinkField;
 
 export interface AttachFileField extends FormField {
     required: boolean;
@@ -125,6 +150,7 @@ export interface FormField {
         [anyKey: string]: any;
     };
     visibilityCondition: null | VisibilityCondition;
+    style?: string;
 }
 
 export interface FormOption {
@@ -241,21 +267,21 @@ export interface FormCloudDisplayModeConfigurationOptions {
     onDisplayModeOn(id?: string): void;
     onDisplayModeOff(id?: string): void;
     [key: string]: any;
-};
+}
 
 export interface FormCloudDisplayModeConfiguration {
     displayMode: FormCloudDisplayMode;
     options?: FormCloudDisplayModeConfigurationOptions;
     default?: boolean;
-};
+}
 
 // eslint-disable-next-line no-shadow
 export enum FormCloudDisplayMode {
     inline = 'inline',
     fullScreen = 'fullScreen'
-};
+}
 
 export interface FormCloudDisplayModeChange {
     displayMode: FormCloudDisplayMode;
     id?: string;
-};
+}

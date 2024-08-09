@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 export abstract class FormWidgetModel {
-
     readonly fieldType: string;
     readonly id: string;
     readonly name: string;
     readonly type: string;
     readonly tab: string;
+    readonly style?: string;
 
     readonly form: any;
     readonly json: any;
@@ -40,6 +40,7 @@ export abstract class FormWidgetModel {
             this.type = json.type;
             this.tab = json.tab;
             this.field = json.field;
+            this.style = json.style;
         }
     }
 }
