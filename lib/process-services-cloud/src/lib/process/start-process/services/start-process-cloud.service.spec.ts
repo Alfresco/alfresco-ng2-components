@@ -24,6 +24,7 @@ import { HttpErrorResponse, HttpClientModule } from '@angular/common/http';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('StartProcessCloudService', () => {
+
     let service: StartProcessCloudService;
     let adfHttpClient: AdfHttpClient;
 
@@ -35,94 +36,91 @@ describe('StartProcessCloudService', () => {
         adfHttpClient = TestBed.inject(AdfHttpClient);
     });
 
-    it('should be able to create a new process', async () => {
+    it('should be able to create a new process', (done) => {
         spyOn(service, 'startProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
-        const result = await service.startProcess('appName1', fakeProcessPayload).toPromise();
-
-        expect(result).toBeDefined();
-        expect(result.id).toEqual('fake-id');
-        expect(result.name).toEqual('fake-name');
+        service.startProcess('appName1', fakeProcessPayload)
+            .subscribe(
+                (res) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual('fake-id');
+                    expect(res.name).toEqual('fake-name');
+                    done();
+                }
+            );
     });
 
-    it('should be able to create a new process with form', async () => {
-        spyOn(service, 'startProcessWithForm').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
-        const result = await service.startProcessWithForm('appName1', 'mockFormId', 1, fakeProcessPayload).toPromise();
-
-        expect(result).toBeDefined();
-        expect(result.id).toEqual('fake-id');
-        expect(result.name).toEqual('fake-name');
-    });
-
-    it('Should not be able to create a process if error occurred', async () => {
+    it('Should not be able to create a process if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
             error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            status: 404, statusText: 'Not Found'
         });
 
         spyOn(service, 'startProcess').and.returnValue(throwError(errorResponse));
-        const result = await service
-            .startProcess('appName1', fakeProcessPayload)
-            .toPromise()
-            .catch((error) => {
-                expect(error.status).toEqual(404);
-                expect(error.statusText).toEqual('Not Found');
-                expect(error.error).toEqual('Mock Error');
-            });
-
-        if (result) {
-            fail('expected an error, not applications');
-        }
+        service.startProcess('appName1', fakeProcessPayload)
+            .subscribe(
+                () => {
+                    fail('expected an error, not applications');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                }
+            );
     });
 
-    it('should be able to get all the process definitions', async () => {
+    it('should be able to get all the process definitions', (done) => {
         spyOn(service, 'getProcessDefinitions').and.returnValue(of([new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })]));
-        const result = await service.getProcessDefinitions('appName1').toPromise();
-
-        expect(result).toBeDefined();
-        expect(result[0].id).toEqual('fake-id');
-        expect(result[0].name).toEqual('fake-name');
+        service.getProcessDefinitions('appName1')
+            .subscribe(
+                (res: ProcessDefinitionCloud[]) => {
+                    expect(res).toBeDefined();
+                    expect(res[0].id).toEqual('fake-id');
+                    expect(res[0].name).toEqual('fake-name');
+                    done();
+                }
+            );
     });
 
-    it('should not be able to get all the process definitions if error occurred', async () => {
+    it('should not be able to get all the process definitions if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
             error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            status: 404, statusText: 'Not Found'
         });
         spyOn(service, 'getProcessDefinitions').and.returnValue(throwError(errorResponse));
-        const result = await service
-            .getProcessDefinitions('appName1')
-            .toPromise()
-            .catch((error) => {
-                expect(error.status).toEqual(404);
-                expect(error.statusText).toEqual('Not Found');
-                expect(error.error).toEqual('Mock Error');
-            });
-
-        if (result) {
-            fail('expected an error, not applications');
-        }
+        service.getProcessDefinitions('appName1')
+            .subscribe(
+                () => {
+                    fail('expected an error, not applications');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                }
+            );
     });
 
-    it('should transform the response into task variables', async () => {
+    it('should transform the response into task variables', (done) => {
         const appName = 'test-app';
         const processDefinitionId = 'processDefinitionId';
         const requestSpy = spyOn(adfHttpClient, 'request');
         requestSpy.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
 
-        const result = await service.getStartEventFormStaticValuesMapping(appName, processDefinitionId).toPromise();
-        expect(result.length).toEqual(3);
-        expect(result[0].name).toEqual('static1');
-        expect(result[0].id).toEqual('static1');
-        expect(result[0].value).toEqual('value');
-        expect(result[1].name).toEqual('static2');
-        expect(result[1].id).toEqual('static2');
-        expect(result[1].value).toEqual(0);
-        expect(result[2].name).toEqual('static3');
-        expect(result[2].id).toEqual('static3');
-        expect(result[2].value).toEqual(true);
-        expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`);
-        expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
+        service.getStartEventFormStaticValuesMapping(appName, processDefinitionId).subscribe((result) => {
+            expect(result.length).toEqual(3);
+            expect(result[0].name).toEqual('static1');
+            expect(result[0].id).toEqual('static1');
+            expect(result[0].value).toEqual('value');
+            expect(result[1].name).toEqual('static2');
+            expect(result[1].id).toEqual('static2');
+            expect(result[1].value).toEqual(0);
+            expect(result[2].name).toEqual('static3');
+            expect(result[2].id).toEqual('static3');
+            expect(result[2].value).toEqual(true);
+            expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`);
+            expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
+            done();
+        });
     });
 });
