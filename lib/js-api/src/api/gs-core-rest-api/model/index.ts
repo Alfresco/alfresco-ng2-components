@@ -79,4 +79,5 @@ export * from './holdBody';
 export * from './holdEntry';
 export * from './holdPaging';
 export * from './holdPagingList';
+export * from './nodeAssignedHold';
 export * from './bulkAssignHoldResponse';
