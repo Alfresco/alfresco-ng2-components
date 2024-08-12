@@ -212,7 +212,8 @@ export const materialLocators = {
                 class: '.mat-expansion-panel-header',
                 root: 'mat-expansion-panel-header'
             },
-            title: '.mat-expansion-panel-header-title'
+            title: '.mat-expansion-panel-header-title',
+            expanded: '.mat-expanded'
         },
         indicator: '.mat-expansion-indicator'
     },
