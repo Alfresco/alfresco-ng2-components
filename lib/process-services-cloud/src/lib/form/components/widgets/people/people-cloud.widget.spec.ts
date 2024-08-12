@@ -24,8 +24,7 @@ import { IdentityUserService } from '../../../../people/services/identity-user.s
 import { mockShepherdsPie, mockYorkshirePudding } from '../../../../people/mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatChipRowHarness } from '@angular/material/chips/testing';
 
 describe('PeopleCloudWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleCloudWidgetComponent>;
@@ -174,12 +173,8 @@ describe('PeopleCloudWidgetComponent', () => {
                 value: mockSpaghetti
             });
 
-            fixture.detectChanges();
+            const peopleChip = await loader.getHarness(MatChipRowHarness);
 
-            const formField = await loader.getHarness(MatFormFieldHarness);
-            expect(await formField.isDisabled()).toBeTrue();
-
-            const peopleChip = await loader.getHarness(MatChipHarness);
             expect(await peopleChip.isDisabled()).toBeTrue();
         });
 
@@ -194,11 +189,7 @@ describe('PeopleCloudWidgetComponent', () => {
                 value: mockSpaghetti
             });
 
-            fixture.detectChanges();
-            const formField = await loader.getHarness(MatFormFieldHarness);
-            expect(await formField.isDisabled()).toBeTrue();
-
-            const peopleChip = await loader.getAllHarnesses(MatChipHarness);
+            const peopleChip = await loader.getAllHarnesses(MatChipRowHarness);
             expect(await peopleChip[0].isDisabled()).toBeTrue();
             expect(await peopleChip[1].isDisabled()).toBeTrue();
         });
