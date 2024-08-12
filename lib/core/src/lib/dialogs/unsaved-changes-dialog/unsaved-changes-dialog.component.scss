@@ -1,33 +1,60 @@
-adf-unsaved-changes-dialog {
-    margin-top: -4px;
-    display: block;
-
+.adf-unsaved-changes-dialog {
     .adf-unsaved-changes-dialog {
-        &-title {
+        &-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            height: 24px;
+
+            &-close-button {
+                margin-right: -16px;
+                margin-bottom: 2px;
+            }
+
+            &::before {
+                display: none;
+            }
         }
 
-        &-cancel-button {
-            background-color: var(--adf-secondary-button-background);
-            margin-right: 4px;
+        &-content {
+            padding: 0 8px 0 0;
+            overflow: unset;
+            color: var(--adf-secondary-modal-text-color);
+
+            &-checkbox {
+                margin-top: 20px;
+
+                label {
+                    color: var(--adf-secondary-modal-text-color);
+                }
+            }
         }
 
-        &-discard-changes-button {
-            color: var(--theme-warn-color-default-contrast);
-            background-color: var(--adf-error-color);
-            min-width: 143px;
-        }
+        &-actions {
+            margin-top: 18px;
+            margin-bottom: 4px;
+            padding: 0;
 
-        &-cancel-button,
-        &-discard-changes-button {
-            padding: 4px 14px;
-            height: 32px;
-            display: flex;
-            align-items: center;
+            &-cancel-button {
+                background-color: var(--adf-secondary-button-background);
+                margin-right: 4px;
+            }
+
+            &-discard-changes-button {
+                color: white;
+                background-color: var(--adf-error-color);
+            }
+
+            &-cancel-button,
+            &-discard-changes-button {
+                padding: 4px 12px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+            }
         }
     }
 }
