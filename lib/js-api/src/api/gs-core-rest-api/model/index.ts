@@ -77,7 +77,6 @@ export * from './unfiledRecordFolderChildAssociation';
 export * from './hold';
 export * from './holdBody';
 export * from './holdEntry';
-export * from './holdItem';
 export * from './holdPaging';
 export * from './holdPagingList';
 export * from './bulkAssignHoldResponse';
