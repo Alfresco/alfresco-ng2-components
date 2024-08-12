@@ -4,11 +4,11 @@ Added: 6.0.0
 Status: Active
 ---
 
-# [Alfresco Viewer component](../../../lib/content-services/src/lib/viewer/components/alfresco-viewer.component.ts "Defined in alfresco-viewer.component.ts")
+# Alfresco Viewer Component
+
+`component`, `standalone`
 
 Displays content from an ACS repository.
-
-See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
 ## Contents
 
@@ -29,6 +29,12 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 -   [See also](#see-also)
 
 ## Basic usage
+
+Use the following standalone component import:
+
+```typescript
+import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
+```
 
 Using with node id:
 
@@ -53,65 +59,66 @@ Note that if you have a URL which contains a shared link ID, you should extract 
 ID portion and use it with the `sharedLinkId` property rather than using the whole
 URL with `urlFile`.
 
-### [Transclusions](../../user-guide/transclusion.md)
+### Transclusions
 
-The [Alfresco Viewer component](viewer.component.md) lets you transclude content for the toolbar (and toolbar buttons),
+The viewer lets you transclude content for the toolbar (and toolbar buttons),
 the sidebar, thumbnails, and the "Open with" and "More actions" menus.
-See the [Custom layout](#custom-layout) section for full details of all available tranclusions.
+
+See [Transclusion](../../user-guide/transclusion.md) for more details.  
+See the [Custom layout](#custom-layout) section for full details of all available transclusions.  
 
 ## Class members
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| allowDownload | `boolean` | true | Toggles downloading. |
-| allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
-| allowGoBack | `boolean` | true | Allows `back` navigation. |
-| closeButtonPosition | `CloseButtonPosition` | `left` | Set close button position right/left. |
-| hideInfoButton | `boolean` | false | Toggles Info button. |
-| allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
-| allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
-| allowPrint | `boolean` | false | Toggles printing. |
-| allowRightSidebar | `boolean` | false | Allow the right sidebar. |
-| canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
-| canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
-| maxRetries | `number` | 30 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
-| nodeId | `string` | null | Node Id of the file to load. |
-| overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
-| sharedLinkId | `string` | null | Shared link id (to display shared file). |
-| showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
-| showRightSidebar | `boolean` | false | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. |
-| showToolbar | `boolean` | true | Hide or show the toolbar |
-| showViewer | `boolean` | true | Hide or show the viewer |
-| sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
-| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the right sidebar. The template context contains the loaded node data. |
-| versionId | `string` | null | Version Id of the file to load. |
+| Name                 | Type                  | Default value | Description                                                                                                                 |
+|----------------------|-----------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------|
+| allowDownload        | `boolean`             | true          | Toggles downloading.                                                                                                        |
+| allowFullScreen      | `boolean`             | true          | Toggles the 'Full Screen' feature.                                                                                          |
+| allowGoBack          | `boolean`             | true          | Allows `back` navigation.                                                                                                   |
+| closeButtonPosition  | `CloseButtonPosition` | `left`        | Set close button position right/left.                                                                                       |
+| hideInfoButton       | `boolean`             | false         | Toggles Info button.                                                                                                        |
+| allowLeftSidebar     | `boolean`             | false         | Allow the left the sidebar.                                                                                                 |
+| allowNavigate        | `boolean`             | false         | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection.              |
+| allowPrint           | `boolean`             | false         | Toggles printing.                                                                                                           |
+| allowRightSidebar    | `boolean`             | false         | Allow the right sidebar.                                                                                                    |
+| canNavigateBefore    | `boolean`             | true          | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled.                                               |
+| canNavigateNext      | `boolean`             | true          | Toggles the next (">") button. Requires `allowNavigate` to be enabled.                                                      |
+| maxRetries           | `number`              | 30            | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
+| nodeId               | `string`              | null          | Node Id of the file to load.                                                                                                |
+| overlayMode          | `boolean`             | false         | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div.                |
+| sharedLinkId         | `string`              | null          | Shared link id (to display shared file).                                                                                    |
+| showLeftSidebar      | `boolean`             | false         | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`.                                           |
+| showRightSidebar     | `boolean`             | false         | Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`.                                         |
+| showToolbar          | `boolean`             | true          | Hide or show the toolbar                                                                                                    |
+| showViewer           | `boolean`             | true          | Hide or show the viewer                                                                                                     |
+| sidebarLeftTemplate  | `TemplateRef<any>`    | null          | The template for the left sidebar. The template context contains the loaded node data.                                      |
+| sidebarRightTemplate | `TemplateRef<any>`    | null          | The template for the right sidebar. The template context contains the loaded node data.                                     |
+| versionId            | `string`              | null          | Version Id of the file to load.                                                                                             |
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the shared link used is not valid. |
-| navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
-| navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer close |
+| Name              | Type                                        | Description                                                 |
+|-------------------|---------------------------------------------|-------------------------------------------------------------|
+| invalidSharedLink | `EventEmitter<any>`                         | Emitted when the shared link used is not valid.             |
+| navigateBefore    | `EventEmitter<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
+| navigateNext      | `EventEmitter<KeyboardEvent \| MouseEvent>` | Emitted when user clicks 'Navigate Next' (">") button.      |
+| showViewerChange  | `EventEmitter<boolean>`                     | Emitted when the viewer close                               |
 
 ## Keyboard shortcuts
 
-| Name | Description |
-| ---- | ----------- |
-| Esc | Close the viewer (overlay mode only). |
-| Left | Invoke 'Navigate before' action. |
-| Right | Invoke 'Navigate next' action. |
-| Ctrl+F | Activate full-screen mode. |
+| Name   | Description                           |
+|--------|---------------------------------------|
+| Esc    | Close the viewer (overlay mode only). |
+| Left   | Invoke 'Navigate before' action.      |
+| Right  | Invoke 'Navigate next' action.        |
+| Ctrl+F | Activate full-screen mode.            |
 
 ## Details
 
 ### Integrating with the Document List component
 
-Below is the most simple integration of the Viewer and
-[Document List](../../content-services/components/document-list.component.md) components within your custom component:
+Integrating Viewer and [Document List](./document-list.component.md) components within your custom component:
 
 ```html
 <adf-document-list
@@ -147,7 +154,7 @@ export class OverlayViewerComponent {
 
 ### Supported file formats
 
-The [Alfresco Viewer component](viewer.component.md) consists of separate Views that handle particular file types or type families based on either a file extension or a mime type:
+The viewer component consists of separate Views that handle particular file types or type families based on either a file extension or a mime type:
 
 -   PDF View
     -   application/pdf
@@ -199,13 +206,12 @@ For the full list of supported types please refer to: [File types that support p
 
 Configure your webpack-enabled application with the PDF.js library as follows.
 
-1.  Install pdfjs-dist
+- Install pdfjs-dist
 
 ```sh
 npm install pdfjs-dist
 ```
-
-2.  Update `vendors.ts` by appending the following code. This will enable the [Alfresco Viewer component](viewer.component.md)
+- Update `vendors.ts` by appending the following code. This will enable the viewer component
     and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
     library to render PDF files in the background:
 
@@ -217,7 +223,7 @@ pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
 require('pdfjs-dist/web/pdf_viewer.js');
 ```
 
-3.  Update the `plugins` section of the `webpack.common.js` file with the following lines:
+- Update the `plugins` section of the `webpack.common.js` file with the following lines:
 
 ```js
 new CopyWebpackPlugin([
@@ -233,12 +239,12 @@ new CopyWebpackPlugin([
 
 #### Internal extension mechanism
 
-The Viewer supports dynamically-loaded viewer preview extensions, to know more about it [Preview Extension component](../../extensions/components/preview-extension.component.md). This 
+The Viewer supports dynamically-loaded viewer preview extensions, to know more about it [Preview Extension component](../../extensions/components/preview-extension.component.md). 
 
-#### Code extension mechanism]
+#### Code extension mechanism
 
 You can define your own custom handler to override supported file formats or handle other file formats that are not yet supported by
-the [Alfresco Viewer component](viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
+the component. Below is an example that shows how to use the `adf-viewer-extension`
 to handle 3D data files:
 
 ```html
@@ -256,7 +262,7 @@ to handle 3D data files:
 </adf-alfresco-viewer> 
 ```
 
-Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
+> this example requires `ng2-3d-editor` dependency
 
 You need to keep all instances of `adf-viewer-extension` inside `viewerExtensions` template, also you can define multiple `adf-viewer-extension` templates if required:
 
@@ -284,7 +290,7 @@ You need to keep all instances of `adf-viewer-extension` inside `viewerExtension
 
 ### Custom layout
 
-The [Alfresco Viewer Component](viewer.component.md) lets you transclude custom content in several different places as
+The viewer component lets you transclude custom content in several different places as
 explained in the sections below.
 
 #### Custom toolbar
@@ -329,7 +335,7 @@ The result should look like this:
 
 #### Custom sidebar
 
-The [Alfresco Viewer Component](viewer.component.md) also supports custom sidebar components and layouts.
+The viewer component also supports custom sidebar components and layouts.
 Set the `allowRightSidebar` property to `true` to enable this feature.
 
 The custom sidebar can be injected in two different ways. The first way is to use
@@ -372,8 +378,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CustomThumbnailsComponent {
     @Input() pdfViewer: any;
-
-    ...
 }
 ```
 
@@ -445,15 +449,23 @@ You can enable a custom "More actions" menu by providing at least one action ins
 You can set a default zoom scaling value for pdf viewer by adding the following code in `app.config.json`.
 Note: For the pdf viewer the value has to be within the range of 25 - 1000.
 
-"adf-alfresco-viewer": {
-"pdf-viewer-scaling": 150
+```json
+{
+    "adf-alfresco-viewer": {
+        "pdf-viewer-scaling": 150
+    }
 }
+```
 
 In the same way you can set a default zoom scaling value for the image viewer by adding the following code in `app.config.json`.
 
-"adf-alfresco-viewer": {
-"image-viewer-scaling": 150
+```json
+{
+    "adf-alfresco-viewer": {
+        "image-viewer-scaling": 150
+    }
 }
+```
 
 By default the viewer's zoom scaling is set to 100%.
 
@@ -465,7 +477,6 @@ true.
 
 ```html
 <adf-alfresco-viewer [allowPrint]="true">
-    ...
 </adf-alfresco-viewer>
 ```
 

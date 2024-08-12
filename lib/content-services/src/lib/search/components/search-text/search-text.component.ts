@@ -20,16 +20,24 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-text',
+    standalone: true,
+    imports: [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, MatButtonModule, FormsModule, MatIconModule],
     templateUrl: './search-text.component.html',
     styleUrls: ['./search-text.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-text' }
 })
 export class SearchTextComponent implements SearchWidget, OnInit {
-
     /** The content of the text box. */
     @Input()
     value = '';
@@ -46,8 +54,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         if (this.context && this.settings && this.settings.pattern) {
             const pattern = new RegExp(this.settings.pattern, 'g');
             const match = pattern.exec(this.context.queryFragments[this.id] || '');
-            if (this.settings.allowUpdateOnChange !== undefined &&
-                this.settings.allowUpdateOnChange !== null) {
+            if (this.settings.allowUpdateOnChange !== undefined && this.settings.allowUpdateOnChange !== null) {
                 this.enableChangeUpdate = this.settings.allowUpdateOnChange;
             }
 
@@ -115,5 +122,4 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     private getSearchSuffix(): string {
         return this.settings.searchSuffix ? this.settings.searchSuffix : '';
     }
-
 }

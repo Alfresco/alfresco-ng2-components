@@ -33,15 +33,14 @@ import {
 import { ContentLinkModel, FORM_FIELD_VALIDATORS, FormFieldValidator, FormModel } from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
-import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
+import { Subject } from 'rxjs';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
+import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
+import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -331,39 +330,29 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     startProcess() {
         this.isProcessStarting = true;
-
-        const action = this.hasForm
-            ? this.startProcessCloudService.startProcessWithForm(
-                  this.appName,
-                  this.processDefinitionCurrent.formKey,
-                  this.processDefinitionCurrent.version,
-                  new ProcessWithFormPayloadCloud({
-                      processName: this.processInstanceName.value,
-                      processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
-                      variables: this.variables ?? {},
-                      values: this.formCloud.values
-                  })
-              )
-            : this.startProcessCloudService.startProcess(
-                  this.appName,
-                  new ProcessPayloadCloud({
-                      name: this.processInstanceName.value,
-                      processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
-                      variables: this.variables ?? {}
-                  })
-              );
-
-        action.subscribe({
-            next: (res) => {
+        let payloadVariables = {};
+        if (this.variables) {
+            payloadVariables = this.variables;
+        }
+        if (this.hasForm) {
+            payloadVariables = Object.assign(payloadVariables, this.formCloud.values);
+        }
+        const createPayload = new ProcessPayloadCloud({
+            name: this.processInstanceName.value,
+            processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
+            variables: payloadVariables
+        });
+        this.startProcessCloudService.startProcess(this.appName, createPayload).subscribe(
+            (res) => {
                 this.success.emit(res);
                 this.isProcessStarting = false;
             },
-            error: (err) => {
+            (err) => {
                 this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
                 this.error.emit(err);
                 this.isProcessStarting = false;
             }
-        });
+        );
     }
 
     cancelStartProcess() {

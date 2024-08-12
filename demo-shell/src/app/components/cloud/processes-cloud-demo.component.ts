@@ -21,18 +21,23 @@ import {
     PROCESS_FILTER_ACTION_SAVE,
     PROCESS_FILTER_ACTION_SAVE_AS,
     ProcessFilterAction,
-    ProcessFilterCloudModel
+    ProcessFilterCloudModel,
+    ProcessFiltersCloudModule,
+    ProcessListCloudModule
 } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataCellEvent, UserPreferencesService } from '@alfresco/adf-core';
+import { DataCellEvent, PaginationComponent, UserPreferencesService } from '@alfresco/adf-core';
 import { CloudLayoutService, CloudServiceSettings } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Pagination } from '@alfresco/js-api';
 import { CloudProcessFiltersService } from './services/cloud-process-filters.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-processes-cloud-demo',
+    standalone: true,
+    imports: [CommonModule, ProcessFiltersCloudModule, ProcessListCloudModule, PaginationComponent],
     templateUrl: './processes-cloud-demo.component.html',
     styleUrls: ['./processes-cloud-demo.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -50,8 +55,8 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     actionMenu: boolean;
     contextMenu: boolean;
     actions: any[] = [];
-    selectedAction: { id: number; name: string; actionType: string};
-    selectedContextAction: { id: number; name: string; actionType: string};
+    selectedAction: { id: number; name: string; actionType: string };
+    selectedContextAction: { id: number; name: string; actionType: string };
 
     filterProperties: string[];
     filterSortProperties: string[];
@@ -69,8 +74,8 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
         private router: Router,
         private cloudLayoutService: CloudLayoutService,
         private cloudProcessFiltersService: CloudProcessFiltersService,
-        private userPreference: UserPreferencesService) {
-    }
+        private userPreference: UserPreferencesService
+    ) {}
 
     ngOnInit() {
         this.filterProperties = this.cloudProcessFiltersService.filterProperties;
@@ -87,9 +92,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
             this.loadFilter(model);
         });
 
-        this.cloudLayoutService.settings$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(settings => this.setCurrentSettings(settings));
+        this.cloudLayoutService.settings$.pipe(takeUntil(this.onDestroy$)).subscribe((settings) => this.setCurrentSettings(settings));
         this.performContextActions();
     }
 
@@ -129,7 +132,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
             ...this.cloudProcessFiltersService.writeQueryParams(filter, this.appName, filter.id),
             filterId: filter.id
         };
-        this.router.navigate([`/cloud/${this.appName}/processes/`], {queryParams});
+        this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams });
     }
 
     onProcessFilterAction(filterAction: ProcessFilterAction) {
@@ -155,33 +158,30 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
     onShowRowContextMenu(event: DataCellEvent) {
         event.value.actions = this.actions.map((action) => ({
-                data: event.value.row['obj'],
-                model: action,
-                subject: this.performAction$
-
+            data: event.value.row['obj'],
+            model: action,
+            subject: this.performAction$
         }));
     }
 
     onExecuteRowAction(row: any) {
         const value = row.value.row['obj'].entry;
         const action = row.value.action;
-        this.selectedAction = {id: value.id, name: value.name, actionType: action.title};
+        this.selectedAction = { id: value.id, name: value.name, actionType: action.title };
     }
 
     performContextActions() {
-        this.performAction$
-          .pipe(takeUntil(this.onDestroy$))
-          .subscribe((action: any) => {
+        this.performAction$.pipe(takeUntil(this.onDestroy$)).subscribe((action: any) => {
             if (action) {
-              this.onExecuteContextAction(action);
+                this.onExecuteContextAction(action);
             }
-          });
+        });
     }
 
     onExecuteContextAction(contextAction: any) {
         const value = contextAction.data.entry;
         const action = contextAction.model;
-        this.selectedContextAction = {id: value.id, name: value.name, actionType: action.title};
+        this.selectedContextAction = { id: value.id, name: value.name, actionType: action.title };
     }
 
     private loadFilter(model: ProcessFilterCloudModel) {

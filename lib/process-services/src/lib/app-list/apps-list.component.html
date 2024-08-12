@@ -1,7 +1,7 @@
 <div class="menu-container" *ngIf="!isEmpty()">
     <mat-list *ngIf="isList()" class="adf-app-list">
         <mat-list-item class="adf-app-list-item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
-            <mat-icon matListIcon>touch_app</mat-icon>
+            <mat-icon matListItemIcon>touch_app</mat-icon>
             <span matLine>{{getAppName(app) | translate}}</span>
         </mat-list-item>
     </mat-list>

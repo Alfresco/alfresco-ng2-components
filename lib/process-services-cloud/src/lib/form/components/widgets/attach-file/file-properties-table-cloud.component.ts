@@ -49,16 +49,16 @@ export class FilePropertiesTableCloudComponent {
     mimeTypeIcon;
 
     @Output()
-    rowClick: EventEmitter<Node> = new EventEmitter<Node>();
+    rowClick = new EventEmitter<Node>();
 
     @Output()
-    attachFileClick: EventEmitter<any> = new EventEmitter<any>();
+    attachFileClick = new EventEmitter<any>();
 
     @Output()
-    downloadFile: EventEmitter<Node> = new EventEmitter<Node>();
+    downloadFile = new EventEmitter<Node>();
 
     @Output()
-    uploadNewFileVersion: EventEmitter<NewVersionUploaderDialogData> = new EventEmitter<NewVersionUploaderDialogData>();
+    uploadNewFileVersion = new EventEmitter<NewVersionUploaderDialogData>();
 
     @Output()
     contentModelFileHandler: EventEmitter<any> = new EventEmitter<Node>();
@@ -80,10 +80,12 @@ export class FilePropertiesTableCloudComponent {
         this.downloadFile.emit(file);
     }
 
-    onUploadNewFileVersion(customEvent: any, node: Node){
+    onUploadNewFileVersion(customEvent: any, node: Node) {
         const newVersionUploaderDialogData: NewVersionUploaderDialogData = {
             file: customEvent.detail.files[0].file,
-            node
+            node,
+            showComments: true,
+            allowDownload: true
         };
         this.uploadNewFileVersion.emit(newVersionUploaderDialogData);
     }
@@ -102,12 +104,12 @@ export class FilePropertiesTableCloudComponent {
 
     getColumnValue(file, displayableCMProperty): string {
         if (!file.properties[displayableCMProperty.prefixedName]) {
-            const fieldProperty = this.field.params.displayableCMProperties?.find(property => property.name === displayableCMProperty.name);
-            return fieldProperty.defaultValue ? this.checkDateTypeAndTransform(displayableCMProperty.dataType, fieldProperty.defaultValue) : '--' ;
+            const fieldProperty = this.field.params.displayableCMProperties?.find((property) => property.name === displayableCMProperty.name);
+            return fieldProperty.defaultValue ? this.checkDateTypeAndTransform(displayableCMProperty.dataType, fieldProperty.defaultValue) : '--';
         }
-        return file.properties[displayableCMProperty.prefixedName] ?
-            this.checkDateTypeAndTransform(displayableCMProperty.dataType, file.properties[displayableCMProperty.prefixedName]) :
-            '--' ;
+        return file.properties[displayableCMProperty.prefixedName]
+            ? this.checkDateTypeAndTransform(displayableCMProperty.dataType, file.properties[displayableCMProperty.prefixedName])
+            : '--';
     }
 
     checkDateTypeAndTransform(dataType, value): string {

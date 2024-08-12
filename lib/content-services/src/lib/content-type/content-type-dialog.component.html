@@ -1,7 +1,7 @@
 <div class="adf-content-type-dialog">
     <h2 mat-dialog-title class="adf-content-type-dialog-title" data-automation-id="content-type-dialog-title">{{title |
         translate}}</h2>
-    <mat-dialog-content class="mat-typography" class="adf-content-type-dialog-content"
+    <mat-dialog-content class="mat-typography adf-content-type-dialog-content"
         data-automation-id="content-type-dialog-content">
         <h4 data-automation-id="content-type-dialog-description">{{description | translate}}</h4>
         <p data-automation-id="content-type-dialog-confirm-message">{{confirmMessage | translate}}</p>
@@ -39,7 +39,7 @@
         <button mat-button mat-dialog-close
             id="content-type-dialog-actions-cancel">{{'CORE.METADATA.CONTENT_TYPE.DIALOG.CANCEL' | translate }}</button>
         <button mat-button class="adf-content-type-dialog-apply-button" id="content-type-dialog-apply-button"
-            [mat-dialog-close]="true" cdkFocusInitial (click)="onApply()">{{'CORE.METADATA.CONTENT_TYPE.DIALOG.APPLY' |
+            [mat-dialog-close]="true" (click)="onApply()">{{'CORE.METADATA.CONTENT_TYPE.DIALOG.APPLY' |
             translate}}</button>
     </mat-dialog-actions>
 </div>

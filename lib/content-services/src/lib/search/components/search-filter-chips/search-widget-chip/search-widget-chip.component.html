@@ -1,8 +1,8 @@
 <mat-chip [attr.data-automation-id]="'search-filter-chip-' + category.name"
-          disableRipple
+          [disableRipple]="true"
           class="adf-search-filter-chip"
           [class.adf-search-toggle-chip]="(widget.getDisplayValue() | async) || menuTrigger.menuOpen"
-          tabIndex="0"
+          tabindex="0"
           role="button"
           [matMenuTriggerFor]="menu"
           (menuOpened)="onMenuOpen()"

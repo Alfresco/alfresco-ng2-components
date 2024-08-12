@@ -35,7 +35,7 @@ describe('CommentsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot()],
+            imports: [NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot(), CommentsComponent],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,

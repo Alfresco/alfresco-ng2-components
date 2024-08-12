@@ -30,6 +30,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('PeopleCloudComponent', () => {
     let loader: HarnessLoader;
@@ -92,21 +93,21 @@ describe('PeopleCloudComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
-    it('should populate placeholder when title is present', () => {
+    it('should populate label when title is present', async () => {
         component.title = 'TITLE_KEY';
         fixture.detectChanges();
 
-        const inputElement = element.querySelector<HTMLInputElement>('[data-automation-id="adf-people-cloud-search-input"]');
+        const inputField = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-people-cloud' }));
 
-        expect(inputElement.placeholder).toEqual('TITLE_KEY');
+        expect(await inputField.getLabel()).toEqual('TITLE_KEY');
     });
 
-    it('should not populate placeholder when title is not present', () => {
+    it('should not populate label when title is not present', async () => {
         fixture.detectChanges();
 
-        const inputElement = element.querySelector<HTMLInputElement>('[data-automation-id="adf-people-cloud-search-input"]');
+        const inputField = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-people-cloud' }));
 
-        expect(inputElement.placeholder).toEqual('');
+        expect(await inputField.getLabel()).toBeNull();
     });
 
     describe('Search user', () => {

@@ -19,7 +19,7 @@ import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AlfrescoApiService, LoginDialogPanelComponent, TranslationService, AuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { DocumentListService, SitesService, SearchService, ContentNodeSelectorModule } from '@alfresco/adf-content-services';
+import { DocumentListService, SitesService, SearchService, ContentNodeSelectorPanelComponent } from '@alfresco/adf-content-services';
 import { ExternalAlfrescoApiService } from '../../services/external-alfresco-api.service';
 import { Node } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
     selector: 'adf-attach-file-widget-dialog',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, LoginDialogPanelComponent, ContentNodeSelectorModule, MatButtonModule, TranslateModule],
+    imports: [CommonModule, MatDialogModule, LoginDialogPanelComponent, MatButtonModule, TranslateModule, ContentNodeSelectorPanelComponent],
     templateUrl: './attach-file-widget-dialog.component.html',
     styleUrls: ['./attach-file-widget-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,

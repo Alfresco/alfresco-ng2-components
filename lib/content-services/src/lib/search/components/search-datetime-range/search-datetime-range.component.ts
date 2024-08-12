@@ -16,16 +16,20 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Subject } from 'rxjs';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
+import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { isValid, isBefore, startOfMinute, endOfMinute } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface DatetimeRangeValue {
     from: string;
@@ -41,6 +45,8 @@ export const DEFAULT_DATETIME_FORMAT: string = 'dd/MM/yyyy HH:mm';
 
 @Component({
     selector: 'adf-search-datetime-range',
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslateModule, MatDatetimepickerModule],
     templateUrl: './search-datetime-range.component.html',
     styleUrls: ['./search-datetime-range.component.scss'],
     providers: [
@@ -70,8 +76,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     enableChangeUpdate: boolean;
     displayValue$: Subject<string> = new Subject<string>();
 
-    constructor(private dateAdapter: DateAdapter<Date>,
-        private dateTimeAdapter: DatetimeAdapter<Date>) {}
+    constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
 
     getFromValidationMessage(): string {
         return this.from.hasError('invalidOnChange') || this.hasParseError(this.from)
@@ -235,7 +240,6 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     }
 
     setFromMaxDatetime() {
-        this.fromMaxDatetime =
-            !this.to.value || (this.maxDatetime && isBefore(this.maxDatetime, this.to.value)) ? this.maxDatetime : this.to.value;
+        this.fromMaxDatetime = !this.to.value || (this.maxDatetime && isBefore(this.maxDatetime, this.to.value)) ? this.maxDatetime : this.to.value;
     }
 }

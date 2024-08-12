@@ -16,22 +16,28 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-number-range',
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, TranslateModule, MatButtonModule],
     templateUrl: './search-number-range.component.html',
     styleUrls: ['./search-number-range.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-number-range' }
 })
 export class SearchNumberRangeComponent implements SearchWidget, OnInit {
-
     from: UntypedFormControl;
     to: UntypedFormControl;
 
@@ -53,17 +59,12 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     displayValue$: Subject<string> = new Subject<string>();
 
     ngOnInit(): void {
-
         if (this.settings) {
             this.field = this.settings.field;
             this.format = this.settings.format || '[{FROM} TO {TO}]';
         }
 
-        this.validators = Validators.compose([
-            Validators.required,
-            Validators.pattern(/^-?(0|[1-9]\d*)?$/),
-            Validators.min(0)
-        ]);
+        this.validators = Validators.compose([Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.min(0)]);
 
         if (this.startValue) {
             this.from = new UntypedFormControl(this.startValue['from'], this.validators);
@@ -73,17 +74,20 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             this.to = new UntypedFormControl('', this.validators);
         }
 
-        this.form = new UntypedFormGroup({
-            from: this.from,
-            to: this.to
-        }, this.formValidator);
+        this.form = new UntypedFormGroup(
+            {
+                from: this.from,
+                to: this.to
+            },
+            this.formValidator
+        );
 
         this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
         this.updateDisplayValue();
     }
 
     formValidator(formGroup: UntypedFormGroup) {
-        return parseInt(formGroup.get('from').value, 10) < parseInt(formGroup.get('to').value, 10) ? null : {mismatch: true};
+        return parseInt(formGroup.get('from').value, 10) < parseInt(formGroup.get('to').value, 10) ? null : { mismatch: true };
     }
 
     apply(model: { from: string; to: string }, isValid: boolean) {

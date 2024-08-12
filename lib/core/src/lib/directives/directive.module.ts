@@ -23,9 +23,18 @@ import { TooltipCardComponent } from './tooltip-card/tooltip-card.component';
 import { TooltipCardDirective } from './tooltip-card/tooltip-card.directive';
 import { UploadDirective } from './upload.directive';
 
+export const CORE_DIRECTIVES = [
+    HighlightDirective,
+    LogoutDirective,
+    UploadDirective,
+    TooltipCardDirective,
+    TooltipCardComponent,
+    InfiniteSelectScrollDirective
+];
+
+/** @deprecated use `...CORE_DIRECTIVES` or import standalone directives directly  */
 @NgModule({
-    imports: [HighlightDirective, LogoutDirective, UploadDirective, TooltipCardDirective, TooltipCardComponent, InfiniteSelectScrollDirective],
-    exports: [HighlightDirective, LogoutDirective, UploadDirective, TooltipCardDirective, TooltipCardComponent, InfiniteSelectScrollDirective]
+    imports: [...CORE_DIRECTIVES],
+    exports: [...CORE_DIRECTIVES]
 })
-/** @deprecated This module is deprecated and will be removed in a future release. Please consider importing standalone components and directives directly. */
 export class DirectiveModule {}

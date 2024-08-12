@@ -54,7 +54,8 @@ describe('CardViewComponent', () => {
                 MatDialogModule,
                 MatDatepickerModule,
                 MatSelectModule,
-                HttpClientTestingModule
+                HttpClientTestingModule,
+                CardViewComponent
             ],
             providers: [{ provide: TranslationService, useClass: TranslationMock }]
         }).compileComponents();

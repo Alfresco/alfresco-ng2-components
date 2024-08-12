@@ -42,23 +42,6 @@ export const fakeProcessInstance: ProcessInstanceCloud = {
     processDefinitionKey: 'BasicProcess'
 };
 
-export const fakeProcessWithFormInstance: ProcessInstanceCloud = {
-    appName: 'simple-app',
-    appVersion: '1',
-    serviceName: 'rb',
-    serviceFullName: 'rb',
-    serviceType: 'runtime-bundle',
-    serviceVersion: '',
-    id: '9a846781-53e1-11ef-8e97-7a3367d98fa2',
-    name: 'My Process With Form Name',
-    startDate: new Date('2024-08-06T10:49:49.689+0000'),
-    initiator: 'usermock',
-    status: 'RUNNING',
-    processDefinitionId: 'Process_TwzKUfeG:1:5518ac74-53de-11ef-8e97-7a3367d98fa2',
-    processDefinitionKey: 'Process_TwzKUfeG',
-    processDefinitionName: 'my-process'
-};
-
 export const fakeCreatedProcessInstance: ProcessInstanceCloud = {
     appName: 'simple-app',
     id: 'd0b30377-dc5a-11e8-ae24-0a58646001fa',

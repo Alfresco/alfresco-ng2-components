@@ -17,12 +17,17 @@
 
 import { Component, ContentChildren, QueryList, ViewEncapsulation } from '@angular/core';
 import { SearchFilterTabDirective } from './search-filter-tab.directive';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'adf-search-filter-tabbed',
-  templateUrl: './search-filter-tabbed.component.html',
-  styleUrls: ['./search-filter-tabbed.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-search-filter-tabbed',
+    standalone: true,
+    imports: [CommonModule, MatTabsModule, TranslateModule],
+    templateUrl: './search-filter-tabbed.component.html',
+    styleUrls: ['./search-filter-tabbed.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterTabbedComponent {
     @ContentChildren(SearchFilterTabDirective)

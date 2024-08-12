@@ -16,20 +16,43 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { set } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { TaskListComponent } from '@alfresco/adf-process-services';
+import { DataColumnComponent, DataColumnListComponent, FullNamePipe, LocalizedDatePipe, PaginationComponent } from '@alfresco/adf-core';
 
 const DEFAULT_SIZE = 20;
 
 @Component({
     selector: 'app-task-list-demo',
+    standalone: true,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatButtonModule,
+        TaskListComponent,
+        DataColumnListComponent,
+        DataColumnComponent,
+        FullNamePipe,
+        LocalizedDatePipe,
+        PaginationComponent
+    ],
     templateUrl: './task-list-demo.component.html',
     styleUrls: [`./task-list-demo.component.scss`]
 })
-
 export class TaskListDemoComponent implements OnInit, OnDestroy {
     taskListForm: UntypedFormGroup;
 
@@ -54,33 +77,31 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
     includeProcessInstance: boolean;
 
     assignmentOptions = [
-        {value: 'assignee', title: 'Assignee'},
-        {value: 'candidate', title: 'Candidate'}
+        { value: 'assignee', title: 'Assignee' },
+        { value: 'candidate', title: 'Candidate' }
     ];
 
     includeProcessInstanceOptions = [
-        {value: 'include', title: 'Include'},
-        {value: 'exclude', title: 'Exclude'}
+        { value: 'include', title: 'Include' },
+        { value: 'exclude', title: 'Exclude' }
     ];
 
     stateOptions = [
-        {value: 'all', title: 'All'},
-        {value: 'active', title: 'Active'},
-        {value: 'completed', title: 'Completed'}
+        { value: 'all', title: 'All' },
+        { value: 'active', title: 'Active' },
+        { value: 'completed', title: 'Completed' }
     ];
 
     sortOptions = [
-        {value: 'created-asc', title: 'Created (asc)'},
-        {value: 'created-desc', title: 'Created (desc)'},
-        {value: 'due-asc', title: 'Due (asc)'},
-        {value: 'due-desc', title: 'Due (desc)'}
+        { value: 'created-asc', title: 'Created (asc)' },
+        { value: 'created-desc', title: 'Created (desc)' },
+        { value: 'due-asc', title: 'Due (asc)' },
+        { value: 'due-desc', title: 'Due (desc)' }
     ];
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private route: ActivatedRoute,
-                private formBuilder: UntypedFormBuilder) {
-    }
+    constructor(private route: ActivatedRoute, private formBuilder: UntypedFormBuilder) {}
 
     ngOnInit() {
         if (this.route) {
@@ -120,16 +141,11 @@ export class TaskListDemoComponent implements OnInit, OnDestroy {
             taskIncludeProcessInstance: new UntypedFormControl()
         });
 
-        this.taskListForm.valueChanges
-            .pipe(
-                debounceTime(500),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(taskFilter => {
-                if (this.isFormValid()) {
-                    this.filterTasks(taskFilter);
-                }
-            });
+        this.taskListForm.valueChanges.pipe(debounceTime(500), takeUntil(this.onDestroy$)).subscribe((taskFilter) => {
+            if (this.isFormValid()) {
+                this.filterTasks(taskFilter);
+            }
+        });
     }
 
     filterTasks(taskFilter: any) {

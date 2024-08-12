@@ -16,12 +16,16 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { AppConfigPipe, LoginComponent } from '@alfresco/adf-core';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-login',
+    standalone: true,
+    imports: [MatIconModule, LoginComponent, AppConfigPipe, RouterLink],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent {
-}
+export class AppLoginComponent {}

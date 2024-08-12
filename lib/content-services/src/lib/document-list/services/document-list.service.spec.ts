@@ -74,6 +74,20 @@ describe('DocumentListService', () => {
         jasmine.Ajax.install();
     });
 
+    it('should emit resetSelection$ when resetSelection is called', (done) => {
+        service.resetSelection$.subscribe(() => {
+            done();
+        });
+        service.resetSelection();
+    });
+
+    it('should emit reload$ when reload is called', (done) => {
+        service.reload$.subscribe(() => {
+            done();
+        });
+        service.reload();
+    });
+
     afterEach(() => {
         jasmine.Ajax.uninstall();
     });

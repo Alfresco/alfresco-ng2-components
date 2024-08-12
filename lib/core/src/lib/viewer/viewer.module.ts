@@ -56,6 +56,7 @@ export const VIEWER_DIRECTIVES = [
     DownloadPromptDialogComponent
 ] as const;
 
+/** @deprecated use `...VIEWER_DIRECTIVES` or import standalone directives */
 @NgModule({
     imports: [...VIEWER_DIRECTIVES],
     exports: [...VIEWER_DIRECTIVES]

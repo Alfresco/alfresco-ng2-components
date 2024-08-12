@@ -16,27 +16,26 @@
  */
 
 import { CommentModel } from '../models/comment.model';
-import {
-    Component,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { CommentListComponent } from './comment-list';
 
 @Component({
     selector: 'adf-comments',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, CommentListComponent],
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class CommentsComponent implements OnChanges {
-
     /** The numeric ID of the task. */
     @Input()
     id: string;
@@ -96,19 +95,18 @@ export class CommentsComponent implements OnChanges {
 
         this.beingAdded = true;
 
-        this.commentsService.add(this.id, this.message)
-            .subscribe(
-                (res: CommentModel) => {
-                    this.addToComments(res);
-                    this.resetMessage();
-                },
-                (err) => {
-                    this.error.emit(err);
-                },
-                () => {
-                    this.beingAdded = false;
-                }
-            );
+        this.commentsService.add(this.id, this.message).subscribe(
+            (res: CommentModel) => {
+                this.addToComments(res);
+                this.resetMessage();
+            },
+            (err) => {
+                this.error.emit(err);
+            },
+            () => {
+                this.beingAdded = false;
+            }
+        );
     }
 
     clearMessage(event: Event): void {

@@ -19,9 +19,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NodeEntry } from '@alfresco/js-api';
 import { PreviewService } from '../../services/preview.service';
+import { CommonModule } from '@angular/common';
+import { SearchControlComponent } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'app-search-bar',
+    standalone: true,
+    imports: [CommonModule, SearchControlComponent],
     templateUrl: './search-bar.component.html',
     styleUrls: ['./search-bar.component.scss']
 })

@@ -28,7 +28,8 @@ import {
     UserPreferenceValues,
     AlfrescoApiService,
     UserPreferencesService,
-    NotificationService
+    NotificationService,
+    SidebarActionMenuComponent
 } from '@alfresco/adf-core';
 import {
     ProcessFiltersComponent,
@@ -40,12 +41,23 @@ import {
     ProcessFormRenderingService,
     APP_LIST_LAYOUT_LIST,
     ValidateDynamicTableRowEvent,
-    DynamicTableRow
+    DynamicTableRow,
+    TaskDetailsComponent,
+    TaskAuditDirective,
+    StartTaskComponent,
+    ProcessInstanceDetailsComponent,
+    ProcessAuditDirective
 } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { TaskAttachmentsComponent } from './task-attachments.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ProcessAttachmentsComponent } from './process-attachments.component';
 
 const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
@@ -56,6 +68,28 @@ const REPORT_ROUTE = 2;
 
 @Component({
     selector: 'app-process-service',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatTabsModule,
+        SidebarActionMenuComponent,
+        MatIconModule,
+        MatMenuModule,
+        TaskFiltersComponent,
+        TaskListComponent,
+        PaginationComponent,
+        TaskDetailsComponent,
+        TaskAuditDirective,
+        TaskAttachmentsComponent,
+        StartTaskComponent,
+        ProcessFiltersComponent,
+        ProcessInstanceListComponent,
+        ProcessInstanceDetailsComponent,
+        ProcessAuditDirective,
+        MatButtonModule,
+        ProcessAttachmentsComponent,
+        StartProcessInstanceComponent
+    ],
     templateUrl: './process-service.component.html',
     styleUrls: ['./process-service.component.scss'],
     encapsulation: ViewEncapsulation.None,

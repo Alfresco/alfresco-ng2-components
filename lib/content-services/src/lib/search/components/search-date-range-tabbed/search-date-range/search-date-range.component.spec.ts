@@ -36,8 +36,7 @@ describe('SearchDateRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchDateRangeComponent],
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, SearchDateRangeComponent]
         });
 
         fixture = TestBed.createComponent(SearchDateRangeComponent);

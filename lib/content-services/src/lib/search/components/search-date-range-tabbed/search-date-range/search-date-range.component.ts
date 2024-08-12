@@ -23,22 +23,40 @@ import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns
 import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRange } from './search-date-range';
-import { FormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { MatRadioModule } from '@angular/material/radio';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
     selector: 'adf-search-date-range',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        TranslateModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule
+    ],
     templateUrl: './search-date-range.component.html',
     styleUrls: ['./search-date-range.component.scss'],
     providers: [
-        { provide: DateAdapter, useClass: DateFnsAdapter, deps: [ MAT_DATE_LOCALE ] },
+        { provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
     ],
     encapsulation: ViewEncapsulation.None,
-    host: {class: 'adf-search-date-range'}
+    host: { class: 'adf-search-date-range' }
 })
 export class SearchDateRangeComponent implements OnInit, OnDestroy {
     @Input()
@@ -74,12 +92,14 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;
 
-    constructor(private formBuilder: FormBuilder,
-                private userPreferencesService: UserPreferencesService,
-                private dateAdapter: DateAdapter<DateFnsAdapter>,
-                @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private userPreferencesService: UserPreferencesService,
+        private dateAdapter: DateAdapter<DateFnsAdapter>,
+        @Inject(MAT_DATE_FORMATS) private dateFormatConfig: MatDateFormats
+    ) {}
 
-    readonly endDateValidator = (formControl: UntypedFormControl): ({ [key: string]: boolean } | null) => {
+    readonly endDateValidator = (formControl: UntypedFormControl): { [key: string]: boolean } | null => {
         if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
             return {
                 invalidDate: true
@@ -90,16 +110,15 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.dateFormatConfig.display.dateInput = this.dateFormat;
-        this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ?
-            parse(this.maxDate, this.dateFormat, new Date()) : new Date());
+        this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ? parse(this.maxDate, this.dateFormat, new Date()) : new Date());
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.destroy$))
-            .subscribe(locale => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
-        this.form.controls.dateRangeType.valueChanges.pipe(takeUntil(this.destroy$))
+            .subscribe((locale) => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
+        this.form.controls.dateRangeType.valueChanges
+            .pipe(takeUntil(this.destroy$))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));
-        this.form.valueChanges.pipe(takeUntil(this.destroy$))
-            .subscribe(() => this.onChange());
+        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onChange());
     }
 
     ngOnDestroy() {
@@ -108,7 +127,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     }
 
     private updateValidators(dateRangeType: DateRangeType) {
-        switch(dateRangeType) {
+        switch (dateRangeType) {
             case DateRangeType.BETWEEN:
                 this.betweenStartDateFormControl.setValidators(Validators.required);
                 this.betweenEndDateFormControl.setValidators([Validators.required, this.endDateValidator]);
@@ -140,7 +159,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     dateChanged(event: Event, formControl: UntypedFormControl) {
         if (event?.target['value']?.trim()) {
             const date = parse(event.target['value'], this.dateFormat, new Date());
-            if(!isValid(date)) {
+            if (!isValid(date)) {
                 formControl.setErrors({
                     ...formControl.errors,
                     required: false,
@@ -165,7 +184,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     }
 
     preventIncorrectNumberCharacters(event: KeyboardEvent): boolean {
-        switch(event.key) {
+        switch (event.key) {
             case '.':
             case '-':
             case 'e':

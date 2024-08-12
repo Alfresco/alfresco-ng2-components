@@ -21,6 +21,7 @@
 import {
     AlfrescoApiService,
     AppConfigService,
+    ColumnsSelectorComponent,
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
     CustomNoPermissionTemplateDirective,
@@ -33,6 +34,11 @@ import {
     DataTableComponent,
     DataTableSchema,
     DataTableService,
+    EmptyListComponent,
+    LoadingContentTemplateDirective,
+    MainMenuDataTableTemplateDirective,
+    NoContentTemplateDirective,
+    NoPermissionTemplateDirective,
     PaginatedComponent,
     PaginationModel,
     RequestPaginationModel,
@@ -75,11 +81,31 @@ import { LockService } from '../services/lock.service';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from './document-list.token';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
+import { CommonModule } from '@angular/common';
+import { FilterHeaderComponent } from './filter-header/filter-header.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
 @Component({
     selector: 'adf-document-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        DataTableComponent,
+        FilterHeaderComponent,
+        NoContentTemplateDirective,
+        EmptyListComponent,
+        TranslateModule,
+        NoPermissionTemplateDirective,
+        MatIconModule,
+        LoadingContentTemplateDirective,
+        MatProgressSpinnerModule,
+        MainMenuDataTableTemplateDirective,
+        ColumnsSelectorComponent
+    ],
     templateUrl: './document-list.component.html',
     styleUrls: ['./document-list.component.scss'],
     providers: [
@@ -517,6 +543,15 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         if (this.columnsPresetKey) {
             this.setPresetKey(this.columnsPresetKey);
         }
+
+        this.documentListService.reload$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.resetSelection();
+            this.reload();
+        });
+
+        this.documentListService.resetSelection$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.resetSelection();
+        });
     }
 
     ngAfterContentInit() {

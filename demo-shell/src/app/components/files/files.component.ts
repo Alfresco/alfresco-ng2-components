@@ -31,7 +31,23 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NodeEntry, NodePaging, Pagination, Node, SearchEntry } from '@alfresco/js-api';
-import { NotificationService, UserPreferencesService, PaginationComponent, ShowHeaderMode, FormRenderingService } from '@alfresco/adf-core';
+import {
+    NotificationService,
+    UserPreferencesService,
+    PaginationComponent,
+    ShowHeaderMode,
+    FormRenderingService,
+    ToolbarTitleComponent,
+    ToolbarComponent,
+    ToolbarDividerComponent,
+    DataColumnComponent,
+    HighlightPipe,
+    DataColumnListComponent,
+    CustomEmptyContentTemplateDirective,
+    InfoDrawerTabComponent,
+    InfoDrawerComponent,
+    InfoDrawerLayoutComponent
+} from '@alfresco/adf-core';
 import {
     ContentService,
     FolderCreatedEvent,
@@ -42,18 +58,82 @@ import {
     FilterSearch,
     DialogAspectListService,
     FileUploadEvent,
-    NodesApiService
+    NodesApiService,
+    UploadDragAreaComponent,
+    CheckAllowableOperationDirective,
+    BreadcrumbComponent,
+    DropdownBreadcrumbComponent,
+    NodeDownloadDirective,
+    NodeDeleteDirective,
+    NodeLockDirective,
+    ContentActionListComponent,
+    ContentActionComponent,
+    ContentMetadataComponent,
+    VersionManagerComponent,
+    UploadButtonComponent
 } from '@alfresco/adf-content-services';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { takeUntil, debounceTime, scan } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FolderCreateDirective } from '../../folder-directive';
+import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
 @Component({
     selector: 'app-files-component',
+    standalone: true,
+    imports: [
+        CommonModule,
+        UploadDragAreaComponent,
+        MatButtonModule,
+        MatIconModule,
+        CheckAllowableOperationDirective,
+        ToolbarTitleComponent,
+        ToolbarComponent,
+        BreadcrumbComponent,
+        DropdownBreadcrumbComponent,
+        DocumentListComponent,
+        FolderCreateDirective,
+        NodeDownloadDirective,
+        NodeDeleteDirective,
+        ToolbarDividerComponent,
+        MatMenuModule,
+        TranslateModule,
+        DataColumnComponent,
+        NodeLockDirective,
+        ContentActionListComponent,
+        ContentActionComponent,
+        PaginationComponent,
+        ContentMetadataComponent,
+        VersionManagerComponent,
+        MatSlideToggleModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        UploadButtonComponent,
+        MatCheckboxModule,
+        MatSelectModule,
+        HighlightPipe,
+        DataColumnListComponent,
+        CustomEmptyContentTemplateDirective,
+        VersionManagerDialogAdapterComponent,
+        InfoDrawerTabComponent,
+        InfoDrawerComponent,
+        InfoDrawerLayoutComponent
+    ],
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss'],
     encapsulation: ViewEncapsulation.None,

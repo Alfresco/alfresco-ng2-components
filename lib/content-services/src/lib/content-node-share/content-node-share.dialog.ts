@@ -23,7 +23,7 @@ import { Subject } from 'rxjs';
 import { ContentService } from '../common/services/content.service';
 import { SharedLinksApiService } from './services/shared-links-api.service';
 import { SharedLinkBodyCreate } from '@alfresco/js-api';
-import { ClipboardModule, ConfirmDialogComponent } from '@alfresco/adf-core';
+import { ClipboardDirective, ConfirmDialogComponent } from '@alfresco/adf-core';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { RenditionService } from '../common/services/rendition.service';
 import { format, add, endOfDay, isBefore } from 'date-fns';
@@ -53,8 +53,8 @@ interface SharedDialogFormProps {
         MatFormFieldModule,
         MatDatepickerModule,
         MatInputModule,
-        ClipboardModule,
-        MatButtonModule
+        MatButtonModule,
+        ClipboardDirective
     ],
     templateUrl: './content-node-share.dialog.html',
     styleUrls: ['./content-node-share.dialog.scss'],

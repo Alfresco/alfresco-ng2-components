@@ -18,14 +18,17 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     TaskFilterCloudModel,
+    TaskFiltersCloudModule,
     TaskListCloudComponent,
+    TaskListCloudModule,
     TaskListCloudSortingModel
 } from '@alfresco/adf-process-services-cloud';
-import { AppConfigService, DataCellEvent, UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigService, DataCellEvent, PaginationComponent, UserPreferencesService } from '@alfresco/adf-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 const ACTION_SAVE_AS = 'saveAs';
 const ACTION_DELETE = 'delete';
@@ -33,6 +36,8 @@ const TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
 @Component({
     selector: 'app-tasks-cloud-demo',
+    standalone: true,
+    imports: [CommonModule, TaskFiltersCloudModule, TaskListCloudModule, PaginationComponent],
     templateUrl: './tasks-cloud-demo.component.html',
     styleUrls: ['./tasks-cloud-demo.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -49,7 +54,7 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
 
     sortArray: TaskListCloudSortingModel[];
     editedFilter: TaskFilterCloudModel;
-    taskFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
+    taskFilterProperties: any = { filterProperties: [], sortProperties: [], actions: [] };
 
     filterId;
     multiselect: boolean;
@@ -57,8 +62,8 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
     actionMenu: boolean;
     contextMenu: boolean;
     actions: any[] = [];
-    selectedAction: { id: number; name: string; actionType: string};
-    selectedContextAction: { id: number; name: string; actionType: string};
+    selectedAction: { id: number; name: string; actionType: string };
+    selectedContextAction: { id: number; name: string; actionType: string };
     testingMode: boolean;
     selectionMode: string;
     taskDetailsRedirection: boolean;
@@ -71,8 +76,8 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private userPreference: UserPreferencesService,
-        private appConfig: AppConfigService) {
-
+        private appConfig: AppConfigService
+    ) {
         const properties = this.appConfig.get<Array<any>>(TASK_FILTER_PROPERTY_KEYS);
         if (properties) {
             this.taskFilterProperties = properties;
@@ -91,9 +96,7 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
             this.filterId = params.id;
         });
 
-        this.cloudLayoutService.settings$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(settings => this.setCurrentSettings(settings));
+        this.cloudLayoutService.settings$.pipe(takeUntil(this.onDestroy$)).subscribe((settings) => this.setCurrentSettings(settings));
         this.performContextActions();
     }
 
@@ -139,7 +142,6 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onTaskFilterAction(filterAction: any) {
-
         if (filterAction.actionType === ACTION_DELETE) {
             this.cloudLayoutService.setCurrentTaskFilterParam({ index: 0 });
         } else {
@@ -157,32 +159,29 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
 
     onShowRowContextMenu(event: DataCellEvent) {
         event.value.actions = this.actions.map((action) => ({
-                data: event.value.row['obj'],
-                model: action,
-                subject: this.performAction$
-
+            data: event.value.row['obj'],
+            model: action,
+            subject: this.performAction$
         }));
     }
 
     onExecuteRowAction(row: any) {
         const value = row.value.row['obj'].entry;
         const action = row.value.action;
-        this.selectedAction = {id: value.id, name: value.name, actionType: action.title};
+        this.selectedAction = { id: value.id, name: value.name, actionType: action.title };
     }
 
     performContextActions() {
-        this.performAction$
-          .pipe(takeUntil(this.onDestroy$))
-          .subscribe((action: any) => {
+        this.performAction$.pipe(takeUntil(this.onDestroy$)).subscribe((action: any) => {
             if (action) {
-              this.onExecuteContextAction(action);
+                this.onExecuteContextAction(action);
             }
-          });
+        });
     }
 
     onExecuteContextAction(contextAction: any) {
         const value = contextAction.data.entry;
         const action = contextAction.model;
-        this.selectedContextAction = {id: value.id, name: value.name, actionType: action.title};
+        this.selectedContextAction = { id: value.id, name: value.name, actionType: action.title };
     }
 }
