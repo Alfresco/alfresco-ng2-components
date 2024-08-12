@@ -32,7 +32,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslationMock } from '../../../mock';
 import { TranslationService } from '../../../translation';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -53,7 +52,7 @@ describe('CardViewDateItemComponent', () => {
                 MatSnackBarModule,
                 MatDatepickerModule,
                 MatDialogModule,
-                MatTooltipModule
+                CardViewDateItemComponent
             ],
             providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }]
         });

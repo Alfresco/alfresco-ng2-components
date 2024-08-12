@@ -33,11 +33,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslationService } from '../../../translation';
 import { TranslationMock } from '../../../mock';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSelectModule } from '@angular/material/select';
 
 describe('CardViewComponent', () => {
     let loader: HarnessLoader;
@@ -50,10 +48,8 @@ describe('CardViewComponent', () => {
                 TranslateModule.forRoot(),
                 NoopAnimationsModule,
                 MatSnackBarModule,
-                MatTooltipModule,
                 MatDialogModule,
                 MatDatepickerModule,
-                MatSelectModule,
                 HttpClientTestingModule,
                 CardViewComponent
             ],
