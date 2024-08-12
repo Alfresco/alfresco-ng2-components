@@ -8,12 +8,13 @@
     >
         <ng-content *ngIf="!title" select="[label]"></ng-content>
         <mat-label *ngIf="title">{{ title | translate }}</mat-label>
-        <mat-chip-grid #userMultipleChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-people-chip-list">
+        <mat-chip-grid #userMultipleChipList data-automation-id="adf-cloud-people-chip-list">
             <mat-chip-row
                 *ngFor="let user of selectedUsers"
                 [removable]="!(user.readonly)"
                 [attr.data-automation-id]="'adf-people-cloud-chip-' + user.username"
                 (removed)="onRemove(user)"
+                [disabled]="isReadonly() || isValidationLoading()"
                 title="{{ (user.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
                 {{user | fullName}}
                 <mat-icon
@@ -34,7 +35,6 @@
                    class="adf-cloud-input"
                    data-automation-id="adf-people-cloud-search-input" #userInput>
         </mat-chip-grid>
-
 
         <mat-autocomplete autoActiveFirstOption class="adf-people-cloud-list"
                           #auto="matAutocomplete"
