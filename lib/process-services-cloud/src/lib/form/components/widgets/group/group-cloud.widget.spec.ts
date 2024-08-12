@@ -23,7 +23,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
-import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('GroupCloudWidgetComponent', () => {
     let fixture: ComponentFixture<GroupCloudWidgetComponent>;
@@ -145,12 +144,6 @@ describe('GroupCloudWidgetComponent', () => {
                 value: mockSpaghetti
             });
 
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const formField = await loader.getHarness(MatFormFieldHarness);
-            expect(await formField.isDisabled()).toBeTrue();
-
             const groupChip = await loader.getHarness(MatChipHarness);
             expect(await groupChip.isDisabled()).toBeTrue();
         });
@@ -165,12 +158,6 @@ describe('GroupCloudWidgetComponent', () => {
                 type: FormFieldTypes.GROUP,
                 value: mockSpaghetti
             });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const formField = await loader.getHarness(MatFormFieldHarness);
-            expect(await formField.isDisabled()).toBeTrue();
 
             const groupChips = await loader.getAllHarnesses(MatChipHarness);
             expect(await groupChips[0].isDisabled()).toBeTrue();

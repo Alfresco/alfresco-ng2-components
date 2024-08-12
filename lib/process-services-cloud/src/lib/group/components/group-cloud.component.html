@@ -1,12 +1,13 @@
 <form>
     <mat-form-field class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
         <ng-content select="[label]"></ng-content>
-        <mat-chip-grid #groupChipList [disabled]="isReadonly() || isValidationLoading()" data-automation-id="adf-cloud-group-chip-list">
+        <mat-chip-grid #groupChipList data-automation-id="adf-cloud-group-chip-list">
             <mat-chip-row
                 *ngFor="let group of selectedGroups"
                 [removable]="!(group.readonly)"
                 [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name"
                 (removed)="onRemove(group)"
+                [disabled]="isReadonly() || isValidationLoading()"
                 title="{{ (group.readonly ? 'ADF_CLOUD_GROUPS.MANDATORY' : '') | translate }}">
                 {{group.name}}
                 <mat-icon
