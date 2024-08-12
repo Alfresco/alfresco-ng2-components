@@ -20,9 +20,7 @@
                                   (success)="onSuccessTaskFilterList()" #activitiFilter>
                 </adf-task-filters>
             </div>
-            <div
-                class="app-grid-item app-tasks-list"
-                *ngIf="taskFilter && !isStartTaskMode()">
+            <div *ngIf="taskFilter && !isStartTaskMode()" class="app-grid-item app-tasks-list">
                 <adf-tasklist
                     [appId]="taskFilter?.appId"
                     [presetColumn]="presetColumn"

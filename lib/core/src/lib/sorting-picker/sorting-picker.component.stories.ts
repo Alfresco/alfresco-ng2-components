@@ -17,17 +17,23 @@
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
-import { SortingPickerModule } from './sorting-picker.module';
 import { SortingPickerComponent } from './sorting-picker.component';
-import { initialOptionKeys, initialSortingTypes } from './mock/sorting-picker.mock';
 import { importProvidersFrom } from '@angular/core';
+
+const initialSortingTypes: Array<{ key: string; label: string }> = [
+    { key: 'sortByFirstName', label: 'First Name' },
+    { key: 'sortByLastName', label: 'Last Name' },
+    { key: 'sortByBirthDate', label: 'Birth Date' }
+];
+
+const initialOptionKeys = [...initialSortingTypes.map((type) => type.key.toString())];
 
 export default {
     component: SortingPickerComponent,
     title: 'Core/Sorting Picker/Sorting Picker',
     decorators: [
         moduleMetadata({
-            imports: [SortingPickerModule]
+            imports: [SortingPickerComponent]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]
@@ -90,7 +96,7 @@ export default {
     }
 } as Meta<SortingPickerComponent>;
 
-const template: StoryFn<SortingPickerModule> = (args) => ({
+const template: StoryFn<SortingPickerComponent> = (args) => ({
     props: args
 });
 

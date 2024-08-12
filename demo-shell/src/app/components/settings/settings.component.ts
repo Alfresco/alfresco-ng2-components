@@ -17,9 +17,13 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { HostSettingsComponent } from './host-settings.component';
 
 @Component({
     selector: 'app-settings',
+    standalone: true,
+    imports: [CommonModule, HostSettingsComponent],
     templateUrl: './settings.component.html'
 })
 export class SettingsComponent {

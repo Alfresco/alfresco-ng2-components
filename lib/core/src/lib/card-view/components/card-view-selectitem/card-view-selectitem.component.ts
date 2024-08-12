@@ -19,13 +19,19 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, inject, ViewEncapsulati
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { takeUntil, map } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SelectFilterInputComponent } from './select-filter-input/select-filter-input.component';
 
 @Component({
     selector: 'adf-card-view-selectitem',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, SelectFilterInputComponent],
     templateUrl: './card-view-selectitem.component.html',
     styleUrls: ['./card-view-selectitem.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -71,13 +77,10 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     getList(): Observable<CardViewSelectItemOption<string | number>[]> {
-        return combineLatest([this.getOptions(), this.filter$])
-            .pipe(
-                map(([items, filter]) => items.filter((item) =>
-                    filter ? item.label.toLowerCase().includes(filter.toLowerCase())
-                        : true)),
-                takeUntil(this.destroy$)
-            );
+        return combineLatest([this.getOptions(), this.filter$]).pipe(
+            map(([items, filter]) => items.filter((item) => (filter ? item.label.toLowerCase().includes(filter.toLowerCase()) : true))),
+            takeUntil(this.destroy$)
+        );
     }
 
     onChange(event: MatSelectChange): void {

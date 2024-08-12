@@ -19,8 +19,11 @@ import { NgModule } from '@angular/core';
 import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginationComponent } from './pagination.component';
 
+export const PAGINATION_DIRECTIVES = [InfinitePaginationComponent, PaginationComponent];
+
+/** @deprecated use `...PAGINATION_DIRECTIVES` or import standalone components */
 @NgModule({
-    imports: [InfinitePaginationComponent, PaginationComponent],
-    exports: [InfinitePaginationComponent, PaginationComponent]
+    imports: [...PAGINATION_DIRECTIVES],
+    exports: [...PAGINATION_DIRECTIVES]
 })
 export class PaginationModule {}

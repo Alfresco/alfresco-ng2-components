@@ -17,12 +17,30 @@
 
 import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
 import { Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { SearchFacetTabbedContentComponent } from './search-facet-tabbed-content.component';
+import { MatButtonModule } from '@angular/material/button';
+import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
 
 @Component({
     selector: 'adf-search-facet-chip-tabbed',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatChipsModule,
+        MatMenuModule,
+        TranslateModule,
+        MatIconModule,
+        SearchFacetTabbedContentComponent,
+        MatButtonModule,
+        SearchFilterMenuCardComponent
+    ],
     templateUrl: './search-facet-chip-tabbed.component.html',
     styleUrls: ['./search-facet-chip-tabbed.component.scss'],
     encapsulation: ViewEncapsulation.None

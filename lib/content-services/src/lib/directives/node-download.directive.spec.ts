@@ -21,18 +21,20 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { NodeDownloadDirective } from './node-download.directive';
-import { ContentDirectiveModule } from '@alfresco/adf-content-services';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ContentApi } from '@alfresco/js-api';
 
 @Component({
+    standalone: true,
+    imports: [NodeDownloadDirective],
     template: '<div [adfNodeDownload]="selection" [version]="version"></div>'
 })
 class TestComponent {
     @ViewChild(NodeDownloadDirective, { static: true })
     downloadDirective: NodeDownloadDirective;
 
-    selection;
-    version;
+    selection: any[];
+    version: any;
 }
 
 describe('NodeDownloadDirective', () => {
@@ -41,8 +43,9 @@ describe('NodeDownloadDirective', () => {
     let element: DebugElement;
     let dialog: MatDialog;
     let apiService: AlfrescoApiService;
-    let contentService;
-    let dialogSpy;
+    let contentService: ContentApi;
+    let dialogSpy: jasmine.Spy;
+
     const mockOauth2Auth: any = {
         oauth2Auth: {
             callCustomApi: () => Promise.resolve()
@@ -53,8 +56,7 @@ describe('NodeDownloadDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentDirectiveModule, HttpClientTestingModule, MatDialogModule],
-            declarations: [TestComponent],
+            imports: [HttpClientTestingModule, MatDialogModule, TestComponent],
             providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         fixture = TestBed.createComponent(TestComponent);
@@ -62,7 +64,7 @@ describe('NodeDownloadDirective', () => {
         element = fixture.debugElement.query(By.directive(NodeDownloadDirective));
         dialog = TestBed.inject(MatDialog);
         apiService = TestBed.inject(AlfrescoApiService);
-        contentService = component.downloadDirective['contentApi'];
+        contentService = component.downloadDirective.contentApi;
         dialogSpy = spyOn(dialog, 'open');
     });
 

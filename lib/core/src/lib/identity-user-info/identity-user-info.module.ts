@@ -16,29 +16,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTabsModule } from '@angular/material/tabs';
-import { TranslateModule } from '@ngx-translate/core';
-import { PipeModule } from '../pipes/pipe.module';
-import { FullNamePipe, InitialUsernamePipe } from '../pipes';
 
+/** @deprecated import `IdentityUserInfoComponent` directly */
 @NgModule({
-    declarations: [IdentityUserInfoComponent],
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatMenuModule,
-        MatTabsModule,
-        MatCardModule,
-        TranslateModule,
-        PipeModule,
-        InitialUsernamePipe,
-        FullNamePipe
-    ],
+    imports: [IdentityUserInfoComponent],
     exports: [IdentityUserInfoComponent]
 })
 export class IdentityUserInfoModule {}

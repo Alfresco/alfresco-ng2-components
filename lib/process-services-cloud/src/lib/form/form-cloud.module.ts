@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule, FormatSpacePipe, ToolbarModule } from '@alfresco/adf-core';
+import { CoreModule, FormatSpacePipe, TOOLBAR_DIRECTIVES } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -29,6 +29,7 @@ import {
     CONTENT_UPLOAD_DIRECTIVES,
     ContentNodeSelectorModule
 } from '@alfresco/adf-content-services';
+import { DropdownCloudWidgetComponent } from './components/widgets/dropdown/dropdown-cloud.widget';
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
@@ -60,7 +61,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         PeopleCloudModule,
         GroupCloudModule,
         RichTextEditorModule,
-        ToolbarModule,
+        ...TOOLBAR_DIRECTIVES,
         A11yModule,
         FormatSpacePipe,
         AlfrescoViewerComponent,
@@ -72,6 +73,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
+        DropdownCloudWidgetComponent,
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
@@ -88,6 +90,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
+        DropdownCloudWidgetComponent,
         RadioButtonsCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,

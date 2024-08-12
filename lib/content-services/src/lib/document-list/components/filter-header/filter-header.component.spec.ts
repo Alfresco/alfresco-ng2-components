@@ -48,7 +48,7 @@ describe('FilterHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, FilterHeaderComponent],
             providers: [
                 { provide: ADF_DOCUMENT_PARENT_COMPONENT, useExisting: DocumentListComponent },
                 { provide: SearchService, useValue: searchMock },

@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewArrayItemModel, CardViewModule } from '../../public-api';
+import { CardViewArrayItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { of } from 'rxjs';
 import { importProvidersFrom } from '@angular/core';
 
@@ -27,7 +27,7 @@ export default {
     title: 'Core/Card View/Card View Array Item',
     decorators: [
         moduleMetadata({
-            imports: [CardViewModule]
+            imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]

@@ -34,7 +34,7 @@ import {
     TranslationService,
     ViewUtilService,
     ViewerComponent,
-    ViewerModule,
+    VIEWER_DIRECTIVES,
     ViewerSidebarComponent
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
@@ -159,7 +159,7 @@ describe('AlfrescoViewerComponent', () => {
                 MatIconModule,
                 MatDialogModule,
                 HttpClientTestingModule,
-                ViewerModule
+                ...VIEWER_DIRECTIVES
             ],
             declarations: [
                 ViewerWithCustomToolbarComponent,

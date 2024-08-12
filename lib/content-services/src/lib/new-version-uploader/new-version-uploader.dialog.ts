@@ -20,15 +20,24 @@ import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation } fr
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NewVersionUploaderDialogData, NewVersionUploaderData, NewVersionUploaderDataAction } from './models';
 import { CommonModule } from '@angular/common';
-import { VersionManagerModule } from '../version-manager';
-import { AppConfigPipe } from '@alfresco/adf-core';
+import { VersionComparisonComponent } from '../version-manager/version-comparison.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
+import { VersionUploadComponent } from '../version-manager/version-upload.component';
+import { VersionListComponent } from '../version-manager/version-list.component';
 
 @Component({
     selector: 'adf-new-version-uploader-dialog',
     standalone: true,
-    imports: [CommonModule, VersionManagerModule, MatDialogModule, AppConfigPipe, TranslateModule, MatButtonModule],
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        TranslateModule,
+        MatButtonModule,
+        VersionComparisonComponent,
+        VersionUploadComponent,
+        VersionListComponent
+    ],
     templateUrl: './new-version-uploader.dialog.html',
     styleUrls: ['./new-version-uploader.dialog.scss'],
     encapsulation: ViewEncapsulation.None

@@ -18,11 +18,11 @@
 import {
     AppConfigService,
     AuthenticationService,
+    CustomLoadingContentTemplateDirective,
     DataColumn,
     DataColumnComponent,
     DataColumnListComponent,
     DataTableComponent,
-    DataTableModule,
     ObjectDataTableAdapter,
     ShowHeaderMode,
     ThumbnailService
@@ -56,13 +56,13 @@ import { ImageResolver } from '../data/image-resolver.model';
 import { RowFilter } from '../data/row-filter.model';
 import { ShareDataRow } from '../data/share-data-row.model';
 import { ShareDataTableAdapter } from '../data/share-datatable-adapter';
-import { DocumentListModule } from '../document-list.module';
 import { ContentActionModel } from '../models/content-action.model';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { MatDialog } from '@angular/material/dialog';
 import { FileAutoDownloadComponent } from './file-auto-download/file-auto-download.component';
 import { DocumentListComponent } from './document-list.component';
 import { CustomResourcesService, DocumentListService } from '../public-api';
+import { CommonModule } from '@angular/common';
 
 const mockDialog = {
     open: jasmine.createSpy('open')
@@ -87,7 +87,7 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, DocumentListComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [{ provide: MatDialog, useValue: mockDialog }]
         });
@@ -109,7 +109,7 @@ describe('DocumentList', () => {
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
         spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: new Node() })));
-        spyOn(documentList['nodesApi'], 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node() })));
+        spyOn(documentList.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node() })));
 
         documentList.ngOnInit();
         documentList.currentFolderId = 'no-node';
@@ -124,6 +124,44 @@ describe('DocumentList', () => {
 
     afterEach(() => {
         fixture.destroy();
+    });
+
+    it('should reset selection and reload on documentListService reload$', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+        spyOn(documentList, 'reload').and.callThrough();
+
+        documentListService.reload();
+
+        expect(documentList.resetSelection).toHaveBeenCalled();
+        expect(documentList.reload).toHaveBeenCalled();
+    });
+
+    it('should not reset selection or reload after component is destroyed', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+        spyOn(documentList, 'reload').and.callThrough();
+
+        documentList.ngOnDestroy();
+        documentListService.reload();
+
+        expect(documentList.resetSelection).not.toHaveBeenCalled();
+        expect(documentList.reload).not.toHaveBeenCalled();
+    });
+
+    it('should reset selection when resetSelection$ is emitted', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentListService.resetSelection();
+
+        expect(documentList.resetSelection).toHaveBeenCalled();
+    });
+
+    it('should not reset selection after component is destroyed', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentList.ngOnDestroy();
+        documentListService.resetSelection();
+
+        expect(documentList.resetSelection).not.toHaveBeenCalled();
     });
 
     describe('presets', () => {
@@ -1570,6 +1608,9 @@ describe('DocumentList', () => {
     });
 
     it('should display fileAutoDownload dialog if node size exceeds appConfig.viewer.fileAutoDownloadSizeThresholdInMB', async () => {
+        const dialog = fixture.debugElement.injector.get(MatDialog);
+        spyOn(dialog, 'open').and.stub();
+
         appConfigService.config = {
             ...appConfigService.config,
             viewer: {
@@ -1592,7 +1633,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(mockDialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { disableClose: true, data: node });
+        expect(dialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { disableClose: true, data: node });
     });
 
     describe('Preselect nodes', () => {
@@ -1832,6 +1873,8 @@ describe('DocumentList', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [CommonModule, DocumentListComponent, CustomLoadingContentTemplateDirective],
     template: `
         <adf-document-list #customDocumentList>
             <adf-custom-loading-content-template>
@@ -1858,8 +1901,7 @@ describe('DocumentListComponent rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [CustomTemplateComponent],
-            imports: [ContentTestingModule, DataTableModule, DocumentListModule]
+            imports: [ContentTestingModule, CustomTemplateComponent]
         });
         fixture = TestBed.createComponent(CustomTemplateComponent);
         component = fixture.componentInstance;

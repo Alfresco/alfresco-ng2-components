@@ -16,9 +16,12 @@
  */
 
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-logout',
+    standalone: true,
+    imports: [MatButtonModule],
     templateUrl: './logout.component.html',
     styleUrls: ['./logout.component.scss']
 })

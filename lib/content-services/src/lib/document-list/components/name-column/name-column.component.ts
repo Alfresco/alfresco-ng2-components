@@ -21,9 +21,14 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 
 @Component({
     selector: 'adf-name-column',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, NodeNameTooltipPipe],
     template: `
         <span
             role="link"

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AuthenticationService, ThumbnailService, SearchTextInputComponent } from '@alfresco/adf-core';
+import { AuthenticationService, ThumbnailService, SearchTextInputComponent, HighlightPipe } from '@alfresco/adf-core';
 import {
     Component,
     EventEmitter,
@@ -32,11 +32,16 @@ import {
 import { NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
-import { MatListItem } from '@angular/material/list';
+import { MatListItem, MatListModule } from '@angular/material/list';
 import { EmptySearchResultComponent } from './empty-search-result.component';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-search-control',
+    standalone: true,
+    imports: [CommonModule, SearchTextInputComponent, SearchComponent, MatListModule, MatIconModule, HighlightPipe, TranslateModule],
     templateUrl: './search-control.component.html',
     styleUrls: ['./search-control.component.scss'],
     encapsulation: ViewEncapsulation.None,

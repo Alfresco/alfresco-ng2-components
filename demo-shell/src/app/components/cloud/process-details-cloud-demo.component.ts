@@ -17,15 +17,19 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ProcessHeaderCloudModule, TaskListCloudModule } from '@alfresco/adf-process-services-cloud';
 
 @Component({
     selector: 'app-process-details-cloud-demo',
+    standalone: true,
+    imports: [MatIconModule, MatButtonModule, TaskListCloudModule, ProcessHeaderCloudModule],
     templateUrl: './process-details-cloud-demo.component.html',
     styleUrls: ['./process-details-cloud-demo.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessDetailsCloudDemoComponent {
-
     processInstanceId: string;
     appName: string;
 

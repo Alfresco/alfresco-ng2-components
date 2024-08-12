@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { TagService } from './services/tag.service';
+import { TagService } from '../services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

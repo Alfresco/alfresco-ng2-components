@@ -16,7 +16,5 @@
  */
 
 export * from './node-comments.component';
-
 export * from './services/node-comments.service';
-
 export * from './node-comments.module';

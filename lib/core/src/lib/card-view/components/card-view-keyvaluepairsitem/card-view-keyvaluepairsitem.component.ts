@@ -18,17 +18,24 @@
 import { Component, OnChanges, ViewEncapsulation } from '@angular/core';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BaseCardView } from '../base-card-view';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-card-view-key-value-pairs-item',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatTableModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule],
     templateUrl: './card-view-keyvaluepairsitem.component.html',
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-card-view-key-value-pairs-item' }
 })
-
 export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {
     values: CardViewKeyValuePairsItemType[];
     matTableValues: MatTableDataSource<CardViewKeyValuePairsItemType>;

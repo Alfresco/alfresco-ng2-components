@@ -17,10 +17,10 @@
 
 import { AlfrescoApiService, PaginationModel } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Node, NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { Observable, from, forkJoin } from 'rxjs';
+import { Observable, from, forkJoin, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DocumentListLoader } from '../interfaces/document-list-loader.interface';
 import { CustomResourcesService } from './custom-resources.service';
@@ -31,17 +31,34 @@ const ROOT_ID = '-root-';
     providedIn: 'root'
 })
 export class DocumentListService implements DocumentListLoader {
+    private nodesApiService = inject(NodesApiService);
+    private apiService = inject(AlfrescoApiService);
+    private customResourcesService = inject(CustomResourcesService);
+
     private _nodesApi: NodesApi;
     get nodes(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    constructor(
-        private nodesApiService: NodesApiService,
-        private apiService: AlfrescoApiService,
-        private customResourcesService: CustomResourcesService
-    ) {}
+    private _reload = new Subject<void>();
+    private _resetSelection = new Subject<void>();
+
+    /** Gets an observable that emits when the document list should be reloaded. */
+    reload$ = this._reload.asObservable();
+
+    /** Gets an observable that emits when the selection should be reset. */
+    resetSelection$ = this._resetSelection.asObservable();
+
+    /** Reloads the document list. */
+    reload() {
+        this._reload.next();
+    }
+
+    /** Resets the selection. */
+    resetSelection() {
+        this._resetSelection.next();
+    }
 
     /**
      * Deletes a node.

@@ -26,6 +26,7 @@ import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.com
 
 @Component({
     selector: 'whatever-you-want-to-have',
+    standalone: true,
     template: '<div data-automation-id="found-me">Hey I am shiny!</div>'
 })
 export class CardViewShinyCustomElementItemComponent {
@@ -43,7 +44,7 @@ describe('CardViewItemDispatcherComponent', () => {
         cardItemTypeService.setComponentTypeResolver('shiny-custom-element', () => CardViewShinyCustomElementItemComponent);
 
         TestBed.configureTestingModule({
-            declarations: [CardViewItemDispatcherComponent, CardViewShinyCustomElementItemComponent],
+            imports: [CardViewItemDispatcherComponent, CardViewShinyCustomElementItemComponent],
             providers: [{ provide: CardItemTypeService, useValue: cardItemTypeService }]
         });
 

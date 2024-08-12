@@ -2,10 +2,6 @@
     padding: 10px;
 }
 
-.app-main-content {
-    padding: 0 15px;
-}
-
 .app-card-view {
     width: 30%;
     display: inline-block;
@@ -31,7 +27,8 @@
     }
 }
 
-.main-content {
+.app-main-content {
+    padding: 0 15px;
 
     .adf-form-config-editor {
         height: 500px;

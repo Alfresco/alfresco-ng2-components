@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewDateItemModel, CardViewDatetimeItemModel, CardViewModule } from '../../public-api';
+import { CardViewDateItemModel, CardViewDatetimeItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
@@ -26,7 +26,7 @@ export default {
     title: 'Core/Card View/Card View Date Item',
     decorators: [
         moduleMetadata({
-            imports: [CardViewModule]
+            imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]

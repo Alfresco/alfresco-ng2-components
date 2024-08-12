@@ -16,11 +16,18 @@
  */
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AspectListDialogComponentData } from './aspect-list-dialog-data.interface';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { AspectListComponent } from './aspect-list.component';
+import { AutoFocusDirective } from '../directives/auto-focus.directive';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-aspect-list-dialog',
+    standalone: true,
+    imports: [CommonModule, MatDialogModule, TranslateModule, MatButtonModule, AspectListComponent, AutoFocusDirective],
     templateUrl: './aspect-list-dialog.component.html',
     styleUrls: ['./aspect-list-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None

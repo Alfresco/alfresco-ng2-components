@@ -16,5 +16,3 @@
  */
 
 export * from './folder-create.directive';
-
-export * from './folder-directive.module';

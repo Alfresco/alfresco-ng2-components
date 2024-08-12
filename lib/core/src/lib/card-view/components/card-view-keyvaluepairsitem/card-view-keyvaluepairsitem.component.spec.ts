@@ -21,10 +21,7 @@ import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluep
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
 
 describe('CardViewKeyValuePairsItemComponent', () => {
     let fixture: ComponentFixture<CardViewKeyValuePairsItemComponent>;
@@ -35,9 +32,8 @@ describe('CardViewKeyValuePairsItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, TranslateModule.forRoot(), MatIconModule, MatTableModule, FormsModule],
-            providers: [CardViewUpdateService],
-            declarations: [CardViewKeyValuePairsItemComponent]
+            imports: [NoopAnimationsModule, TranslateModule.forRoot(), CardViewKeyValuePairsItemComponent],
+            providers: [CardViewUpdateService]
         });
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);

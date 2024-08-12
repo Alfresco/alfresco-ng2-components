@@ -17,16 +17,32 @@
 
 import { Component, Input, Output, OnInit, EventEmitter, ViewEncapsulation, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
-import { DataColumn, TranslationService } from '@alfresco/adf-core';
+import { DataColumn, IconComponent, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { SearchCategory } from '../../models/search-category.interface';
 import { Subject } from 'rxjs';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { FilterSearch } from '../../models/filter-search.interface';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
     selector: 'adf-search-filter-container',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatMenuModule,
+        IconComponent,
+        MatBadgeModule,
+        SearchWidgetContainerComponent,
+        TranslateModule,
+        MatDialogModule
+    ],
     templateUrl: './search-filter-container.component.html',
     styleUrls: ['./search-filter-container.component.scss'],
     encapsulation: ViewEncapsulation.None

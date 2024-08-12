@@ -15,14 +15,20 @@
  * limitations under the License.
  */
 
-import { IdentityUserModel, UserInfoMode } from '@alfresco/adf-core';
+import { FullNamePipe, IdentityUserModel, InitialUsernamePipe, UserInfoMode } from '@alfresco/adf-core';
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { EcmUserModel, PeopleContentService } from '@alfresco/adf-content-services';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-content-user-info',
+    standalone: true,
+    imports: [CommonModule, FullNamePipe, MatMenuModule, MatButtonModule, InitialUsernamePipe, MatCardModule, TranslateModule],
     templateUrl: './content-user-info.component.html',
     styleUrls: ['./content-user-info.component.scss'],
     encapsulation: ViewEncapsulation.None

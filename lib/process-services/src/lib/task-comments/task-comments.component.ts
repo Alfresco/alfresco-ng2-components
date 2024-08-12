@@ -16,14 +16,14 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { ADF_COMMENTS_SERVICE, CommentsModule } from '@alfresco/adf-core';
+import { ADF_COMMENTS_SERVICE, CommentsComponent } from '@alfresco/adf-core';
 import { TaskCommentsService } from '../services/task-comments.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-task-comments',
     standalone: true,
-    imports: [CommonModule, CommentsModule],
+    imports: [CommonModule, CommentsComponent],
     templateUrl: './task-comments.component.html',
     encapsulation: ViewEncapsulation.None,
     providers: [

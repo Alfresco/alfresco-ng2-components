@@ -17,9 +17,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TagNodeListComponent } from './tag-node-list.component';
-import { TagService } from './services/tag.service';
+import { TagService } from '../services/tag.service';
 import { Observable, of, Subject } from 'rxjs';
-import { ContentTestingModule } from '../testing/content.testing.module';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 import { Tag, TagEntry, TagPaging } from '@alfresco/js-api';
 import { DynamicChipListComponent } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
