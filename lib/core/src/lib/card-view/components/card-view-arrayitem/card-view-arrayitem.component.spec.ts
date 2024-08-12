@@ -26,10 +26,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness, MatChipListboxHarness } from '@angular/material/chips/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 describe('CardViewArrayItemComponent', () => {
     let loader: HarnessLoader;
@@ -54,7 +51,7 @@ describe('CardViewArrayItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), MatMenuModule, MatButtonModule, MatChipsModule]
+            imports: [CoreTestingModule, CardViewArrayItemComponent]
         });
         fixture = TestBed.createComponent(CardViewArrayItemComponent);
         service = TestBed.inject(CardViewUpdateService);
