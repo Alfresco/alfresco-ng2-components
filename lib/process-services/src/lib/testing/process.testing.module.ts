@@ -32,11 +32,13 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessFormRenderingService } from '../form/process-form-rendering.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @NgModule({
     imports: [
         AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
+        HttpClientTestingModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ProcessModule.forRoot(),

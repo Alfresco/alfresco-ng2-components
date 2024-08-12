@@ -26,11 +26,6 @@ import { ProcessContentService } from '../../form/services/process-content.servi
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatMenuModule } from '@angular/material/menu';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskAttachmentList', () => {
     let component: TaskAttachmentListComponent;
@@ -45,8 +40,7 @@ describe('TaskAttachmentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatMenuModule, NoopAnimationsModule, TaskAttachmentListComponent],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            imports: [ProcessTestingModule, TaskAttachmentListComponent]
         });
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
