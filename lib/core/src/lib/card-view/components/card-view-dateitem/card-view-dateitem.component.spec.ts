@@ -22,20 +22,14 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { CardViewDatetimeItemModel } from '../../models/card-view-datetimeitem.model';
-import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslationMock } from '../../../mock';
-import { TranslationService } from '../../../translation';
-import { MatDialogModule } from '@angular/material/dialog';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { addMinutes } from 'date-fns';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -45,16 +39,7 @@ describe('CardViewDateItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                NoopAnimationsModule,
-                HttpClientTestingModule,
-                MatSnackBarModule,
-                MatDatepickerModule,
-                MatDialogModule,
-                CardViewDateItemComponent
-            ],
-            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }]
+            imports: [CoreTestingModule, MatSnackBarModule, CardViewDateItemComponent]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {
