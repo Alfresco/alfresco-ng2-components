@@ -1,5 +1,5 @@
 <h1 mat-dialog-title class="adf-unsaved-changes-dialog-header">
-    {{ (data?.headerText ? data.headerText : 'CORE.DIALOG.UNSAVED_CHANGES.TITLE') | translate }}
+    {{ dialogData.headerText | translate }}
     <button
         data-automation-id="adf-unsaved-changes-dialog-close-button"
         class="adf-unsaved-changes-dialog-header-close-button"
@@ -10,11 +10,11 @@
     </button>
 </h1>
 <mat-dialog-content class="adf-unsaved-changes-dialog-content">
-    {{ (data?.descriptionText ? data.descriptionText : 'CORE.DIALOG.UNSAVED_CHANGES.DESCRIPTION') | translate }}
-    <div class="adf-unsaved-changes-dialog-content-checkbox" *ngIf="data?.checkboxText?.length">
+    {{ dialogData.descriptionText | translate }}
+    <div class="adf-unsaved-changes-dialog-content-checkbox" *ngIf="dialogData.checkboxText.length">
         <mat-checkbox data-automation-id="adf-unsaved-changes-dialog-content-checkbox"
                       (change)="onToggleCheckboxPreferences($event)"
-        >{{ (data?.checkboxText | translate) }}</mat-checkbox>
+        >{{ dialogData.checkboxText | translate }}</mat-checkbox>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="adf-unsaved-changes-dialog-actions">
@@ -30,6 +30,6 @@
         mat-button
         [mat-dialog-close]="true"
         class="adf-unsaved-changes-dialog-actions-discard-changes-button">
-        {{ (data?.confirmButtonText ? data.confirmButtonText : 'CORE.DIALOG.UNSAVED_CHANGES.DISCARD_CHANGES_BUTTON') | translate }}
+        {{ dialogData.confirmButtonText | translate }}
     </button>
 </mat-dialog-actions>

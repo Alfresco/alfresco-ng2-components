@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
@@ -25,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { StorageService } from '../../common';
+import { AppConfigValues } from '../../app-config';
 
 /**
  * Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding.
@@ -43,10 +44,19 @@ import { StorageService } from '../../common';
     host: { class: 'adf-unsaved-changes-dialog' },
     imports: [MatDialogModule, TranslateModule, MatButtonModule, MatIconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule]
 })
-export class UnsavedChangesDialogComponent {
-    public static readonly UNSAVED_CHANGES_MODAL_HIDDEN = 'unsaved_changes__modal_hidden';
+export class UnsavedChangesDialogComponent implements OnInit {
+    dialogData: UnsavedChangesDialogData;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData, private storageService: StorageService) {}
+
+    ngOnInit() {
+        this.dialogData = {
+            headerText: this.data?.headerText ?? 'CORE.DIALOG.UNSAVED_CHANGES.TITLE',
+            descriptionText: this.data?.descriptionText ?? 'CORE.DIALOG.UNSAVED_CHANGES.DESCRIPTION',
+            confirmButtonText: this.data?.confirmButtonText ?? 'CORE.DIALOG.UNSAVED_CHANGES.DISCARD_CHANGES_BUTTON',
+            checkboxText: this.data?.checkboxText ?? ''
+        };
+    }
 
     /**
      * Sets 'unsaved_ai_changes__modal_visible' checked state (true or false string) as new item in local storage.
@@ -54,6 +64,6 @@ export class UnsavedChangesDialogComponent {
      * @param savePreferences - MatCheckboxChange object with information about checkbox state.
      */
     onToggleCheckboxPreferences(savePreferences: MatCheckboxChange) {
-        this.storageService.setItem(UnsavedChangesDialogComponent.UNSAVED_CHANGES_MODAL_HIDDEN, savePreferences.checked.toString());
+        this.storageService.setItem(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, savePreferences.checked.toString());
     }
 }

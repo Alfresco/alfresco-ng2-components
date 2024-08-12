@@ -22,7 +22,7 @@ import { DebugElement } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
 
-describe('UnsavedAiChangesDialog', () => {
+describe('UnsavedChangesDialog', () => {
     let fixture: ComponentFixture<UnsavedChangesDialogComponent>;
     let storageServiceMock: any;
     let savePreferenceCheckbox: DebugElement;
