@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { HoldBody } from './holdBody';
-
-export interface Hold extends HoldBody {
+export interface NodeAssignedHold {
     id: string;
+    name: string;
 }

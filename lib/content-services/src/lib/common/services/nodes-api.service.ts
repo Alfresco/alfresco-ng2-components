@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging, NodesApi, TrashcanApi, Node, Hold, ContentPagingQuery, NodesIncludeQuery } from '@alfresco/js-api';
-import { Subject, from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { ContentPagingQuery, Node, NodeAssignedHold, NodeEntry, NodePaging, NodesApi, NodesIncludeQuery, TrashcanApi } from '@alfresco/js-api';
+import { Injectable } from '@angular/core';
+import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
 
@@ -182,18 +182,15 @@ export class NodesApiService {
             includeSource?: boolean;
         } & NodesIncludeQuery &
             ContentPagingQuery
-    ): Observable<Hold[]> {
+    ): Observable<NodeAssignedHold[]> {
         const queryOptions = Object.assign({ where: `(assocType='rma:frozenContent')` }, options);
 
         return from(this.nodesApi.listParents(nodeId, queryOptions)).pipe(
             map(({ list }) =>
-                list.entries?.map(
-                    ({ entry }) =>
-                        ({
-                            id: entry.id,
-                            name: entry.name
-                        } as Hold)
-                )
+                list.entries?.map(({ entry }) => ({
+                    id: entry.id,
+                    name: entry.name
+                }))
             )
         );
     }
