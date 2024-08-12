@@ -15,22 +15,57 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { StorageService } from '../../common';
+import { AppConfigValues } from '../../app-config';
 
 /**
  * Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding.
+ * Can be customized with data object - UnsavedChangesDialogData.
+ * If data.checkboxText is provided, checkbox will be displayed with the checkbox description.
+ * If data.confirmButtonText is provided, it will be displayed on the confirm button.
+ * If data.headerText is provided, it will be displayed as the header.
+ * If data.descriptionText is provided, it will be displayed as dialog content.
  */
 @Component({
+    standalone: true,
     selector: 'adf-unsaved-changes-dialog',
     standalone: true,
     imports: [CommonModule, MatDialogModule, TranslateModule, MatButtonModule, MatIconModule],
     encapsulation: ViewEncapsulation.None,
     templateUrl: './unsaved-changes-dialog.component.html',
-    styleUrls: ['./unsaved-changes-dialog.component.scss']
+    styleUrls: ['./unsaved-changes-dialog.component.scss'],
+    host: { class: 'adf-unsaved-changes-dialog' },
+    imports: [MatDialogModule, TranslateModule, MatButtonModule, MatIconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule]
 })
-export class UnsavedChangesDialogComponent {}
+export class UnsavedChangesDialogComponent implements OnInit {
+    dialogData: UnsavedChangesDialogData;
+
+    constructor(@Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData, private storageService: StorageService) {}
+
+    ngOnInit() {
+        this.dialogData = {
+            headerText: this.data?.headerText ?? 'CORE.DIALOG.UNSAVED_CHANGES.TITLE',
+            descriptionText: this.data?.descriptionText ?? 'CORE.DIALOG.UNSAVED_CHANGES.DESCRIPTION',
+            confirmButtonText: this.data?.confirmButtonText ?? 'CORE.DIALOG.UNSAVED_CHANGES.DISCARD_CHANGES_BUTTON',
+            checkboxText: this.data?.checkboxText ?? ''
+        };
+    }
+
+    /**
+     * Sets 'unsaved_ai_changes__modal_visible' checked state (true or false string) as new item in local storage.
+     *
+     * @param savePreferences - MatCheckboxChange object with information about checkbox state.
+     */
+    onToggleCheckboxPreferences(savePreferences: MatCheckboxChange) {
+        this.storageService.setItem(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, savePreferences.checked.toString());
+    }
+}
