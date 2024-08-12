@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { HoldBody } from './holdBody';
+import { Hold } from './hold';
 
-export interface Hold extends HoldBody {
-    id: string;
+export interface HoldItem extends Hold {
+    selected?: boolean;
 }

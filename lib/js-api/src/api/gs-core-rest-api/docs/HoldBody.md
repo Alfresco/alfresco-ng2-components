@@ -1,15 +1,5 @@
 # HoldBody
 
-## Basic usage
-
-```ts
-export interface HoldBody {
-    name: string;
-    reason: string;
-    description?: string;
-}
-```
-
 ## Properties
 
 | Name            | Type       | Default value | Description                                  |

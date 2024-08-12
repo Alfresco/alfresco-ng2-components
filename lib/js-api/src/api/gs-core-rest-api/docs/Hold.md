@@ -1,17 +1,5 @@
 # Hold
 
-## Basic usage
-
-```ts
-export interface Hold {
-    id: string;
-    name: string;
-    reason: string;
-    description?: string;
-    selected?: string;
-}
-```
-
 ## Properties
 
 | Name            | Type       | Default value | Description                       |
