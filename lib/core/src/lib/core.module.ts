@@ -99,7 +99,6 @@ import { MaterialModule } from './material.module';
         }),
         MaterialModule
     ],
-    providers: [...CORE_PIPES],
     exports: [
         ...ABOUT_DIRECTIVES,
         ...VIEWER_DIRECTIVES,

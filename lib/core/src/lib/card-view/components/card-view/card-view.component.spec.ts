@@ -20,7 +20,6 @@ import { By } from '@angular/platform-browser';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewComponent } from './card-view.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { of } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view-selectitem-properties.interface';
@@ -29,36 +28,19 @@ import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/ca
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslationService } from '../../../translation';
-import { TranslationMock } from '../../../mock';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSelectModule } from '@angular/material/select';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 describe('CardViewComponent', () => {
     let loader: HarnessLoader;
     let fixture: ComponentFixture<CardViewComponent>;
     let component: CardViewComponent;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                NoopAnimationsModule,
-                MatSnackBarModule,
-                MatTooltipModule,
-                MatDialogModule,
-                MatDatepickerModule,
-                MatSelectModule,
-                HttpClientTestingModule,
-                CardViewComponent
-            ],
-            providers: [{ provide: TranslationService, useClass: TranslationMock }]
-        }).compileComponents();
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [CoreTestingModule, MatSnackBarModule, MatDialogModule, CardViewComponent]
+        });
 
         fixture = TestBed.createComponent(CardViewComponent);
         component = fixture.componentInstance;

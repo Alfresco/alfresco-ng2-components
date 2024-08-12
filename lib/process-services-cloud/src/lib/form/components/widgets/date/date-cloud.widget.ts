@@ -38,21 +38,11 @@ import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'date-widget',
     standalone: true,
-    imports: [
-        NgIf,
-        TranslateModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatTooltipModule,
-        ReactiveFormsModule,
-        ErrorWidgetComponent
-    ],
+    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent],
     providers: [
         { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
         { provide: DateAdapter, useClass: AdfDateFnsAdapter }
