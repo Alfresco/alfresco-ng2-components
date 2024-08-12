@@ -28,7 +28,7 @@ import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.t
 import { mockFoodUsers, mockKielbasaSausage, mockShepherdsPie, mockYorkshirePudding, mockPreselectedFoodUsers } from '../mock/people-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
@@ -406,9 +406,7 @@ describe('PeopleCloudComponent', () => {
 
                 const chips = await loader.getAllHarnesses(MatChipHarness);
                 expect(chips.length).toBe(1);
-
-                const chipList = await loader.getHarness(MatChipGridHarness);
-                expect(await chipList.isDisabled()).toBe(true);
+                expect(await chips[0].isDisabled()).toBe(true);
             });
 
             it('should chip list be disabled and show mat chips for all the preselected users - multiple mode', async () => {
@@ -421,9 +419,8 @@ describe('PeopleCloudComponent', () => {
 
                 const chips = await loader.getAllHarnesses(MatChipHarness);
                 expect(chips.length).toBe(2);
-
-                const chipList = await loader.getHarness(MatChipGridHarness);
-                expect(await chipList.isDisabled()).toBe(true);
+                expect(await chips[0].isDisabled()).toBe(true);
+                expect(await chips[1].isDisabled()).toBe(true);
             });
         });
     });
