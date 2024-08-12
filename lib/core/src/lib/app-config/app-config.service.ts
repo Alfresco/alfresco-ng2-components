@@ -47,7 +47,8 @@ export enum AppConfigValues {
     STORAGE_PREFIX = 'application.storagePrefix',
     NOTIFY_DURATION = 'notificationDefaultDuration',
     CONTENT_TICKET_STORAGE_LABEL = 'ticket-ECM',
-    PROCESS_TICKET_STORAGE_LABEL = 'ticket-BPM'
+    PROCESS_TICKET_STORAGE_LABEL = 'ticket-BPM',
+    UNSAVED_CHANGES_MODAL_HIDDEN = 'unsaved_changes__modal_hidden'
 }
 
 // eslint-disable-next-line no-shadow
@@ -63,7 +64,6 @@ export enum Status {
     providedIn: 'root'
 })
 export class AppConfigService {
-
     config: any = {
         application: {
             name: 'Alfresco ADF Application'
@@ -97,11 +97,10 @@ export class AppConfigService {
      * @returns Property value, when loaded
      */
     select(property: string): Observable<any> {
-        return this.onLoadSubject
-            .pipe(
-                map((config) => ObjectUtils.getValue(config, property)),
-                distinctUntilChanged()
-            );
+        return this.onLoadSubject.pipe(
+            map((config) => ObjectUtils.getValue(config, property)),
+            distinctUntilChanged()
+        );
     }
 
     /**
@@ -170,9 +169,7 @@ export class AppConfigService {
     protected onDataLoaded() {
         this.onLoadSubject.next(this.config);
 
-        this.extensionService.setup$
-            .pipe(take(1))
-            .subscribe((config) => this.onExtensionsLoaded(config));
+        this.extensionService.setup$.pipe(take(1)).subscribe((config) => this.onExtensionsLoaded(config));
     }
 
     protected onExtensionsLoaded(config: ExtensionConfig) {
@@ -227,20 +224,18 @@ export class AppConfigService {
      * @param hostIdp host address
      * @returns Discovery configuration
      */
-     loadWellKnown(hostIdp: string): Promise<OpenidConfiguration> {
+    loadWellKnown(hostIdp: string): Promise<OpenidConfiguration> {
         return new Promise((resolve, reject) => {
-            this.http
-                .get<OpenidConfiguration>(`${hostIdp}/.well-known/openid-configuration`)
-                .subscribe({
-                    next: (res: OpenidConfiguration) => {
-                        resolve(res);
-                    },
-                    error: (err: any) => {
-                        // eslint-disable-next-line no-console
-                        console.error('hostIdp not correctly configured or unreachable');
-                        reject(err);
-                    }
-                });
+            this.http.get<OpenidConfiguration>(`${hostIdp}/.well-known/openid-configuration`).subscribe({
+                next: (res: OpenidConfiguration) => {
+                    resolve(res);
+                },
+                error: (err: any) => {
+                    // eslint-disable-next-line no-console
+                    console.error('hostIdp not correctly configured or unreachable');
+                    reject(err);
+                }
+            });
         });
     }
 
@@ -273,5 +268,4 @@ export class AppConfigService {
 
         return result;
     }
-
 }
