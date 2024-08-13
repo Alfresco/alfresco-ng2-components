@@ -17,7 +17,7 @@
       },
       "configurations": {
         "test": {
-          "outputPath": "dist/libs/js-api",
+          "outputPath": "dist/tmp/libs/js-api",
           "tsConfig": "lib/js-api/tsconfig.spec.json",
           "assets": ["lib/js-api/test/mockObjects/assets/**/*"]
         }
@@ -108,7 +108,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "commands": ["nx run js-api:build:test", "mocha --full-trace --config lib/js-api/.mocharc.json", "rm -fr dist/libs/js-api"],
+        "commands": ["nx run js-api:build:test", "mocha --full-trace --config lib/js-api/.mocharc.json", "rm -fr dist/tmp/libs/js-api"],
         "parallel": false
       },
       "configurations": {
