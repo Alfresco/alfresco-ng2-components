@@ -290,7 +290,9 @@ describe('Content Services Viewer', () => {
 
             await viewerPage.checkZoomInButtonIsNotDisplayed();
             await viewerPage.checkUnknownFormatIsDisplayed();
-            expect(await viewerPage.getUnknownFormatMessage()).toBe(`Couldn't load preview. Unknown format.`);
+            expect(await viewerPage.getUnknownFormatMessage()).toBe(
+                `Couldn't load preview. Unsupported file type or loading error. Please try refreshing the page.`
+            );
 
             await viewerPage.clickCloseButton();
         });
