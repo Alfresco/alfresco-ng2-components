@@ -56,7 +56,7 @@ describe('LegalHoldsService', () => {
                 id: holdId,
                 name: 'some name'
             }
-        ];
+        ] as Hold[];
 
         spyOn(service.legalHoldApi, 'bulkAssignHold').and.returnValue(Promise.resolve(mockBulkResponse));
     });
@@ -79,7 +79,7 @@ describe('LegalHoldsService', () => {
 
     describe('assignHold', () => {
         it('should assign node to existing hold', (done) => {
-            const mockResponse = { entry: { id: holdId } };
+            const mockResponse = { entry: { id: holdId } } as HoldEntry;
             spyOn(service.legalHoldApi, 'assignHold').and.returnValue(Promise.resolve(mockResponse));
 
             service.assignHold(nodeId, holdId).subscribe((holds) => {
