@@ -120,9 +120,7 @@ describe('SearchAiService', () => {
     describe('checkSearchAvailability', () => {
         let translateService: TranslateService;
 
-        const noFilesSelectedError = 'Please select some file.';
         const tooManyFilesSelectedError = 'Please select no more than 100 files.';
-        const nonTextFileSelectedError = 'Only text related files are compatible with AI Agents.';
         const folderSelectedError = 'Folders are not compatible with AI Agents.';
 
         beforeEach(() => {
@@ -131,8 +129,6 @@ describe('SearchAiService', () => {
                 switch (key) {
                     case 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED':
                         return tooManyFilesSelectedError;
-                    case 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NON_TEXT_FILE_SELECTED':
-                        return nonTextFileSelectedError;
                     case 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.FOLDER_SELECTED':
                         return folderSelectedError;
                     default:
@@ -141,7 +137,7 @@ describe('SearchAiService', () => {
             });
         });
 
-        it('should return error for no selected nodes', () => {
+        it('should not return error if user did not select any files', () => {
             expect(
                 service.checkSearchAvailability({
                     count: 0,
@@ -149,7 +145,7 @@ describe('SearchAiService', () => {
                     libraries: [],
                     isEmpty: true
                 })
-            ).toBe(noFilesSelectedError);
+            ).toEqual('');
         });
 
         it('should return error for too many files selected', () => {
@@ -167,29 +163,24 @@ describe('SearchAiService', () => {
             });
         });
 
-        it('should return error for non text file selected if non text file is selected and it is not a folder', () => {
+        it('should return error for folder selected', () => {
             expect(
                 service.checkSearchAvailability({
                     count: 1,
                     nodes: [
                         {
                             entry: {
-                                isFolder: false,
-                                content: {
-                                    mimeType: 'image/jpeg',
-                                    mimeTypeName: 'image/jpeg',
-                                    sizeInBytes: 100
-                                }
+                                isFolder: true
                             } as Node
                         }
                     ],
                     libraries: [],
                     isEmpty: false
                 })
-            ).toBe(nonTextFileSelectedError);
+            ).toBe(folderSelectedError);
         });
 
-        it('should not return error for non text file selected if non text mime type node is selected and it is a folder', () => {
+        it('should return error for folder and if non text mime type node is selected', () => {
             expect(
                 service.checkSearchAvailability({
                     count: 1,
@@ -208,23 +199,6 @@ describe('SearchAiService', () => {
                     libraries: [],
                     isEmpty: false
                 })
-            ).not.toBe(nonTextFileSelectedError);
-        });
-
-        it('should return error for folder selected if', () => {
-            expect(
-                service.checkSearchAvailability({
-                    count: 1,
-                    nodes: [
-                        {
-                            entry: {
-                                isFolder: true
-                            } as Node
-                        }
-                    ],
-                    libraries: [],
-                    isEmpty: false
-                })
             ).toBe(folderSelectedError);
         });
 
@@ -235,7 +209,7 @@ describe('SearchAiService', () => {
                     nodes: [
                         {
                             entry: {
-                                isFolder: false,
+                                isFolder: true,
                                 content: {
                                     mimeType: 'image/jpeg',
                                     mimeTypeName: 'image/jpeg',
@@ -247,7 +221,7 @@ describe('SearchAiService', () => {
                     libraries: [],
                     isEmpty: false
                 })
-            ).toBe(`${tooManyFilesSelectedError} ${nonTextFileSelectedError}`);
+            ).toBe(`${tooManyFilesSelectedError} ${folderSelectedError}`);
         });
     });
 });
