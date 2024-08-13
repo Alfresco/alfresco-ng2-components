@@ -54,7 +54,9 @@ describe('LegalHoldsService', () => {
         returnedHolds = [
             {
                 id: holdId,
-                name: 'some name'
+                name: 'some name',
+                reason: 'some reason',
+                description: 'some description'
             }
         ] as Hold[];
 
