@@ -8,7 +8,7 @@
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": ["build-esm5", "build-esm2015", "build-cjs"],
+      "dependsOn": ["build-esm5"],
       "options": {
         "outputPath": "dist/libs/js-api/typings",
         "main": "lib/js-api/src/index.ts",
@@ -17,10 +17,30 @@
       },
       "configurations": {
         "test": {
-          "outputPath": "dist/tmp/libs/js-api",
+          "outputPath": "dist/libs/js-api",
           "tsConfig": "lib/js-api/tsconfig.spec.json",
           "assets": ["lib/js-api/test/mockObjects/assets/**/*"]
         }
+      }
+    },
+    "build-esm5": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["build-esm2015"],
+      "options": {
+        "outputPath": "dist/libs/js-api/esm5",
+        "main": "lib/js-api/src/index.ts",
+        "tsConfig": "lib/js-api/tsconfig/tsconfig.esm5.json"
+      }
+    },
+    "build-esm2015": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["build-cjs"],
+      "options": {
+        "outputPath": "dist/libs/js-api/esm2015",
+        "main": "lib/js-api/src/index.ts",
+        "tsConfig": "lib/js-api/tsconfig/tsconfig.esm2015.json"
       }
     },
     "build-cjs": {
@@ -31,24 +51,6 @@
         "main": "lib/js-api/src/index.ts",
         "tsConfig": "lib/js-api/tsconfig/tsconfig.cjs.json",
         "assets": ["lib/js-api/*.md", "lib/js-api/LICENSE.txt"]
-      }
-    },
-    "build-esm5": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/js-api/esm5",
-        "main": "lib/js-api/src/index.ts",
-        "tsConfig": "lib/js-api/tsconfig/tsconfig.esm5.json"
-      }
-    },
-    "build-esm2015": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/js-api/esm2015",
-        "main": "lib/js-api/src/index.ts",
-        "tsConfig": "lib/js-api/tsconfig/tsconfig.esm2015.json"
       }
     },
     "build-types": {
@@ -106,7 +108,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "commands": ["nx run js-api:build:test", "mocha --full-trace --config lib/js-api/.mocharc.json", "rm -fr dist/tmp/libs/js-api"],
+        "commands": ["nx run js-api:build:test", "mocha --full-trace --config lib/js-api/.mocharc.json", "rm -fr dist/libs/js-api"],
         "parallel": false
       },
       "configurations": {
