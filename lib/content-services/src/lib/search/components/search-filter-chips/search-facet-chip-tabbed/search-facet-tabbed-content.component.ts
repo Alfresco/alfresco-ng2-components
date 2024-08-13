@@ -24,9 +24,15 @@ import { AutocompleteOption } from '../../../models/autocomplete-option.interfac
 import { takeUntil } from 'rxjs/operators';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
 import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
+import { CommonModule } from '@angular/common';
+import { SearchChipAutocompleteInputComponent } from '../../search-chip-autocomplete-input';
+import { SearchFilterTabbedComponent } from '../../search-filter-tabbed/search-filter-tabbed.component';
+import { SearchFilterTabDirective } from '../../search-filter-tabbed';
 
 @Component({
     selector: 'adf-search-facet-tabbed-content',
+    standalone: true,
+    imports: [CommonModule, SearchChipAutocompleteInputComponent, SearchFilterTabbedComponent, SearchFilterTabDirective],
     templateUrl: './search-facet-tabbed-content.component.html',
     encapsulation: ViewEncapsulation.None
 })

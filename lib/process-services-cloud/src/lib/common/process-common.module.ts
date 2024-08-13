@@ -21,19 +21,12 @@ import { DateRangeFilterComponent } from './date-range-filter/date-range-filter.
 import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { DateRangeFilterService } from './date-range-filter/date-range-filter.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [ DateRangeFilterComponent ],
-    imports: [
-        CommonModule,
-        CoreModule,
-        MaterialModule
-    ],
-    exports: [
-        DateRangeFilterComponent
-    ],
-    providers: [
-        DateRangeFilterService
-    ]
+    declarations: [DateRangeFilterComponent],
+    imports: [CommonModule, CoreModule, MaterialModule, ReactiveFormsModule],
+    exports: [DateRangeFilterComponent],
+    providers: [DateRangeFilterService]
 })
 export class ProcessCommonModule {}

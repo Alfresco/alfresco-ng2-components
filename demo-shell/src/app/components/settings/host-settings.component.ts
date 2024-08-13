@@ -16,16 +16,33 @@
  */
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 export const HOST_REGEX = '^(http|https)://.*[^/]$';
 
 @Component({
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'always' } }],
     selector: 'adf-host-settings',
+    standalone: true,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatInputModule,
+        MatSlideToggleModule,
+        MatButtonModule
+    ],
     templateUrl: 'host-settings.component.html',
     host: { class: 'adf-host-settings' },
     styleUrls: ['./host-settings.component.scss'],
@@ -161,7 +178,10 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private createIdentityFormControl(): UntypedFormControl {
-        return new UntypedFormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [Validators.required, Validators.pattern(HOST_REGEX)]);
+        return new UntypedFormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [
+            Validators.required,
+            Validators.pattern(HOST_REGEX)
+        ]);
     }
 
     private createECMFormControl(): UntypedFormControl {
@@ -203,7 +223,7 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private saveOAuthValues(values: any) {
-        if (values.oauthConfig.publicUrls && (typeof values.oauthConfig.publicUrls === 'string')) {
+        if (values.oauthConfig.publicUrls && typeof values.oauthConfig.publicUrls === 'string') {
             values.oauthConfig.publicUrls = values.oauthConfig.publicUrls.split(',');
         }
 
@@ -278,5 +298,4 @@ export class HostSettingsComponent implements OnInit {
     get oauthConfig(): UntypedFormControl {
         return this.form.get('oauthConfig') as UntypedFormControl;
     }
-
 }

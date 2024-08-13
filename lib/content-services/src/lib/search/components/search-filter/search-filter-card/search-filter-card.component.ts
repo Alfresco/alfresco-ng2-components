@@ -18,9 +18,14 @@
 import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';
 import { SearchCategory } from '../../../models/search-category.interface';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-filter-card',
+    standalone: true,
+    imports: [CommonModule, SearchWidgetContainerComponent, TranslateModule, MatButtonModule],
     templateUrl: './search-filter-card.component.html',
     encapsulation: ViewEncapsulation.None
 })

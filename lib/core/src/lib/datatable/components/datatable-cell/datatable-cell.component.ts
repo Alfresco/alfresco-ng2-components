@@ -23,12 +23,12 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataTableService } from '../../services/datatable.service';
 import { CommonModule } from '@angular/common';
-import { ClipboardModule } from '../../../clipboard';
+import { ClipboardDirective } from '../../../clipboard/clipboard.directive';
 
 @Component({
     selector: 'adf-datatable-cell',
     standalone: true,
-    imports: [CommonModule, ClipboardModule],
+    imports: [CommonModule, ClipboardDirective],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>

@@ -22,13 +22,11 @@ import {
     AppConfigServiceMock,
     FormRenderingService,
     LocalizedDatePipe,
-    PipeModule,
-    TemplateModule,
     TranslationMock,
     TranslationService
 } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatSelectChange } from '@angular/material/select';
 import { ProcessService } from '../../services/process.service';
 import {
     newProcess,
@@ -45,11 +43,7 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RestVariable } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
@@ -74,20 +68,7 @@ describe('StartProcessComponent', () => {
 
     beforeEach(() => {
         getTestBed().configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                TemplateModule,
-                NoopAnimationsModule,
-                ReactiveFormsModule,
-                FormsModule,
-                HttpClientTestingModule,
-                MatInputModule,
-                MatIconModule,
-                MatSelectModule,
-                MatAutocompleteModule,
-                PipeModule,
-                StartProcessInstanceComponent
-            ],
+            imports: [TranslateModule.forRoot(), NoopAnimationsModule, HttpClientTestingModule, StartProcessInstanceComponent],
             providers: [
                 LocalizedDatePipe,
                 ActivitiContentService,

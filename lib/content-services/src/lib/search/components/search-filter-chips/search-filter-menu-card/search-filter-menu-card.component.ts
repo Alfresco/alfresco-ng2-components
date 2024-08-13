@@ -16,12 +16,19 @@
  */
 
 import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
-  selector: 'adf-search-filter-menu-card',
-  templateUrl: './search-filter-menu-card.component.html',
-  styleUrls: ['./search-filter-menu-card.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-search-filter-menu-card',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule, MatDividerModule],
+    templateUrl: './search-filter-menu-card.component.html',
+    styleUrls: ['./search-filter-menu-card.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchFilterMenuCardComponent {
     @Output()

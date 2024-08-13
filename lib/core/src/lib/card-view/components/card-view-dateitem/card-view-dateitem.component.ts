@@ -17,7 +17,13 @@
 
 import { Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerComponent, MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
+import {
+    DatetimeAdapter,
+    MAT_DATETIME_FORMATS,
+    MatDatetimepickerComponent,
+    MatDatetimepickerInputEvent,
+    MatDatetimepickerModule
+} from '@mat-datetimepicker/core';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { UserPreferencesService, UserPreferenceValues } from '../../../common/services/user-preferences.service';
 import { takeUntil } from 'rxjs/operators';
@@ -28,6 +34,11 @@ import { ADF_DATE_FORMATS, AdfDateFnsAdapter } from '../../../common/utils/date-
 import { ADF_DATETIME_FORMATS, AdfDateTimeFnsAdapter } from '../../../common/utils/datetime-fns-adapter';
 import { isValid } from 'date-fns';
 import { DateFnsUtils } from '../../../common/utils/date-fns-utils';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     providers: [
@@ -37,6 +48,8 @@ import { DateFnsUtils } from '../../../common/utils/date-fns-utils';
         { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
     ],
     selector: 'adf-card-view-dateitem',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatIconModule, MatDatetimepickerModule, MatChipsModule, MatFormFieldModule],
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -102,7 +115,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
                 this.property.value = new Date(event.value);
                 this.valueDate = new Date(event.value);
                 if (this.property.type === 'date') {
-                    this.property.value =  DateFnsUtils.forceUtc(event.value);
+                    this.property.value = DateFnsUtils.forceUtc(event.value);
                     this.valueDate = DateFnsUtils.forceLocal(event.value);
                 }
                 this.update();
@@ -162,9 +175,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         }
         if (Array.isArray(this.property.value) && this.property.value.length > 0) {
             this.property.value = this.property.value.map((date: Date | string) => new Date(date));
-            this.valueDate = this.property.type === 'date'
-                ? DateFnsUtils.forceLocal(this.property.value[0])
-                : this.property.value[0];
+            this.valueDate = this.property.type === 'date' ? DateFnsUtils.forceLocal(this.property.value[0]) : this.property.value[0];
         }
     }
 }

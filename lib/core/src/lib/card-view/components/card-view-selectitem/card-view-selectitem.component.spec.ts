@@ -25,10 +25,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatSelectModule } from '@angular/material/select';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -62,7 +59,7 @@ describe('CardViewSelectItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, TranslateModule.forRoot(), HttpClientTestingModule, MatSelectModule]
+            imports: [CoreTestingModule, CardViewSelectItemComponent]
         });
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;

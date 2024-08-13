@@ -16,15 +16,20 @@
  */
 
 import { Component, inject, Input, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { TaskAttachmentListComponent, TaskListService, TaskUploadService } from '@alfresco/adf-process-services';
-import { UploadService } from '@alfresco/adf-content-services';
+import { AttachmentComponent, TaskAttachmentListComponent, TaskListService, TaskUploadService } from '@alfresco/adf-process-services';
+import { UploadDragAreaComponent, UploadService } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TaskRepresentation } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { EmptyListComponent } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-task-attachments',
+    standalone: true,
+    imports: [CommonModule, UploadDragAreaComponent, TaskAttachmentListComponent, EmptyListComponent, TranslateModule, AttachmentComponent],
     templateUrl: './task-attachments.component.html',
     styleUrls: ['./task-attachments.component.css'],
     encapsulation: ViewEncapsulation.None,

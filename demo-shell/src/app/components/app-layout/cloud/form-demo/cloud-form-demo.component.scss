@@ -33,9 +33,9 @@
 }
 
 .app-form-editor-buttons {
-    & > #{$mat-raised-button} {
-        margin-right: 5px;
-    }
+    display: flex;
+    flex-direction: row;
+    column-gap: 4px;
 }
 
 .app-upload-config-button {

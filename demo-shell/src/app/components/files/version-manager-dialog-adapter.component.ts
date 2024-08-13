@@ -16,14 +16,20 @@
  */
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
 import { PreviewService } from '../../services/preview.service';
 import { NotificationService } from '@alfresco/adf-core';
-import { FileUploadErrorEvent } from '@alfresco/adf-content-services';
+import { FileUploadErrorEvent, VersionListComponent, VersionManagerComponent } from '@alfresco/adf-content-services';
+import { CommonModule } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     templateUrl: './version-manager-dialog-adapter.component.html',
+    standalone: true,
+    imports: [CommonModule, MatDialogModule, MatSlideToggleModule, FormsModule, VersionManagerComponent, VersionListComponent, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class VersionManagerDialogAdapterComponent {

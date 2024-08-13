@@ -25,7 +25,7 @@ import { CardViewItemFloatValidator } from '../../validators/card-view-item-floa
 import { CardViewItemIntValidator } from '../../validators/card-view-item-int.validator';
 import { CardViewIntItemModel } from '../../models/card-view-intitem.model';
 import { CardViewFloatItemModel } from '../../models/card-view-floatitem.model';
-import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
@@ -111,7 +111,7 @@ describe('CardViewTextItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatChipsModule]
+            imports: [CoreTestingModule, CardViewTextItemComponent]
         });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;

@@ -18,7 +18,7 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CoreStoryModule } from './../../../testing/core.story.module';
-import { CardViewBoolItemModel, CardViewModule } from '../../public-api';
+import { CardViewBoolItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
@@ -26,7 +26,7 @@ export default {
     title: 'Core/Card View/Card View Bool Item',
     decorators: [
         moduleMetadata({
-            imports: [CardViewModule]
+            imports: [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]

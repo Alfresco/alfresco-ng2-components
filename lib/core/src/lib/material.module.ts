@@ -16,8 +16,9 @@
  */
 
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -43,10 +44,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
+import { CommonModule } from '@angular/common';
 
 /** @deprecated This module is deprecated and will be removed in a future release. */
 @NgModule({
     imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -75,9 +80,13 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
         MatExpansionModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatFormFieldModule
     ],
     exports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,

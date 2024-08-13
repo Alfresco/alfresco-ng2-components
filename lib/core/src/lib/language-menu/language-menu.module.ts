@@ -15,35 +15,15 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-
 import { LanguageMenuComponent } from './language-menu.component';
 import { LanguagePickerComponent } from './language-picker.component';
 
+export const LANGUAGE_MENU_DIRECTIVES = [LanguageMenuComponent, LanguagePickerComponent] as const;
+
+/** @deprecated use `...LANGUAGE_MENU_DIRECTIVES` or import components directly instead. */
 @NgModule({
-    imports: [
-        CommonModule,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule,
-        TranslateModule
-    ],
-    declarations: [
-        LanguageMenuComponent,
-        LanguagePickerComponent
-    ],
-    exports: [
-        LanguageMenuComponent,
-        LanguagePickerComponent,
-        MatMenuModule,
-        MatIconModule,
-        MatButtonModule
-    ]
+    imports: [...LANGUAGE_MENU_DIRECTIVES],
+    exports: [...LANGUAGE_MENU_DIRECTIVES]
 })
 export class LanguageMenuModule {}

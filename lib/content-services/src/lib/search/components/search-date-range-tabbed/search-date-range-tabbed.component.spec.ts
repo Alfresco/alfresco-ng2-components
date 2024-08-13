@@ -61,8 +61,7 @@ describe('SearchDateRangeTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SearchDateRangeTabbedComponent, SearchFilterTabbedComponent, SearchDateRangeComponent],
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchDateRangeTabbedComponent],
             providers: [
                 { provide: SearchFilterTabbedComponent, useClass: MockSearchFilterTabbedComponent },
                 { provide: SearchDateRangeComponent, useClass: MockSearchDateRangeComponent }

@@ -17,7 +17,6 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,62 +24,23 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService, DebugAppConfigService, CoreModule, AuthModule, provideTranslations } from '@alfresco/adf-core';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
-import { MaterialModule } from './material.module';
-import { LogoutComponent } from './components/logout/logout.component';
-import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { SearchBarComponent } from './components/search/search-bar.component';
-import { SearchResultComponent } from './components/search/search-result.component';
-import { FormComponent } from './components/form/form.component';
-import { ProcessServiceComponent } from './components/process-service/process-service.component';
-import { ShowDiagramComponent } from './components/process-service/show-diagram.component';
-import { FormViewerComponent } from './components/process-service/form-viewer.component';
-import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
-import { AppsViewComponent } from './components/process-service/apps-view.component';
-import { FilesComponent } from './components/files/files.component';
-import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { appRoutes } from './app.routes';
-import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
-import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
-import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
-import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
-import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
-import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
-import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
-import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
-import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
-import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
-import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
-import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
-import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
-import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
-import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
-import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { RouterModule } from '@angular/router';
-import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import { CustomEditorComponent, CustomWidgetComponent } from './components/cloud/custom-form-components/custom-editor.component';
-import { SearchFilterChipsComponent } from './components/search/search-filter-chips.component';
-import { UserInfoComponent } from './components/app-layout/user-info/user-info.component';
-import { FolderDirectiveModule } from './folder-directive';
-import { ContentUserInfoModule } from './components/app-layout/user-info/content-user-info';
-import { PROCESS_USER_INFO_DIRECTIVES } from './components/app-layout/user-info/process-user-info';
 import { CoreAutomationService } from '../testing/automation.service';
 
 @NgModule({
     imports: [
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
-        ReactiveFormsModule,
         RouterModule.forRoot(appRoutes, { useHash: true }),
         AuthModule.forRoot({ useHash: true }),
-        FormsModule,
         HttpClientModule,
-        MaterialModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ContentModule.forRoot(),
@@ -89,47 +49,9 @@ import { CoreAutomationService } from '../testing/automation.service';
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
         NgChartsModule,
-        AppCloudSharedModule,
-        MonacoEditorModule.forRoot(),
-        FolderDirectiveModule,
-        ShowDiagramComponent,
-        ContentUserInfoModule,
-        ...PROCESS_USER_INFO_DIRECTIVES
+        MonacoEditorModule.forRoot()
     ],
-    declarations: [
-        AppComponent,
-        LogoutComponent,
-        AppLayoutComponent,
-        UserInfoComponent,
-        SearchBarComponent,
-        SearchResultComponent,
-        ProcessServiceComponent,
-        FormViewerComponent,
-        FormNodeViewerComponent,
-        AppsViewComponent,
-        FilesComponent,
-        FormComponent,
-        VersionManagerDialogAdapterComponent,
-        TaskAttachmentsComponent,
-        ProcessAttachmentsComponent,
-        DemoPermissionComponent,
-        DemoErrorComponent,
-        CloudLayoutComponent,
-        AppsCloudDemoComponent,
-        TasksCloudDemoComponent,
-        ProcessesCloudDemoComponent,
-        TaskDetailsCloudDemoComponent,
-        CloudViewerComponent,
-        ProcessDetailsCloudDemoComponent,
-        StartTaskCloudDemoComponent,
-        StartProcessCloudDemoComponent,
-        CloudFiltersDemoComponent,
-        FormCloudDemoComponent,
-        CustomEditorComponent,
-        CustomWidgetComponent,
-        ProcessCloudLayoutComponent,
-        SearchFilterChipsComponent
-    ],
+    declarations: [AppComponent],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         provideTranslations('app', 'resources')

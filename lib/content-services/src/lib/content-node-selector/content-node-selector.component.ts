@@ -16,8 +16,8 @@
  */
 
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslationService, NotificationService } from '@alfresco/adf-core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TranslationService, NotificationService, ToolbarTitleComponent, ToolbarComponent, EmptyListComponent } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
 import { ContentService } from '../common/services/content.service';
@@ -28,9 +28,38 @@ import { NodeAction } from '../document-list/models/node-action.enum';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
+import { DropdownBreadcrumbComponent } from '../breadcrumb/dropdown-breadcrumb.component';
+import { NodeCounterDirective } from '../directives/node-counter.directive';
+import { MatIconModule } from '@angular/material/icon';
+import { UploadDragAreaComponent } from '../upload/components/upload-drag-area.component';
+import { FileUploadingDialogComponent } from '../upload/components/file-uploading-dialog.component';
+import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
+import { UploadButtonComponent } from '../upload/components/upload-button.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-content-node-selector',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatTabsModule,
+        TranslateModule,
+        ToolbarTitleComponent,
+        ToolbarComponent,
+        DropdownBreadcrumbComponent,
+        NodeCounterDirective,
+        MatIconModule,
+        UploadDragAreaComponent,
+        FileUploadingDialogComponent,
+        EmptyListComponent,
+        ContentNodeSelectorPanelComponent,
+        UploadButtonComponent,
+        MatButtonModule
+    ],
     templateUrl: './content-node-selector.component.html',
     styleUrls: ['./content-node-selector.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -19,10 +19,33 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActionMenuModel, CloudLayoutService } from '../services/cloud-layout.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-cloud-settings',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        FormsModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatChipsModule,
+        MatIconModule
+    ],
     templateUrl: './cloud-settings.component.html',
     styleUrls: ['./cloud-settings.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -51,15 +74,12 @@ export class CloudSettingsComponent implements OnInit, OnDestroy {
         icon: new UntypedFormControl(''),
         visible: new UntypedFormControl(true),
         disabled: new UntypedFormControl(false)
-      });
+    });
 
-    constructor(private cloudLayoutService: CloudLayoutService) { }
+    constructor(private cloudLayoutService: CloudLayoutService) {}
 
     ngOnInit() {
-        this.cloudLayoutService
-            .settings$
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(settings => this.setCurrentSettings(settings));
+        this.cloudLayoutService.settings$.pipe(takeUntil(this.onDestroy$)).subscribe((settings) => this.setCurrentSettings(settings));
     }
 
     ngOnDestroy() {

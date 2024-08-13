@@ -227,8 +227,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.processCloudContentService.downloadFile(file.id);
     }
 
-    onUploadNewFileVersion(node: NewVersionUploaderDialogData): void {
-        this.newVersionUploaderService.openUploadNewVersionDialog(node).subscribe(
+    onUploadNewFileVersion(config: NewVersionUploaderDialogData): void {
+        this.newVersionUploaderService.openUploadNewVersionDialog(config).subscribe(
             (newVersionUploaderData) => {
                 if (newVersionUploaderData.action === NewVersionUploaderDataAction.upload) {
                     this.replaceOldFileVersionWithNew(newVersionUploaderData as VersionManagerUploadData);

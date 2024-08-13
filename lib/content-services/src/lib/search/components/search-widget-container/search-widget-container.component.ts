@@ -15,24 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    ViewChild,
-    ViewContainerRef,
-    OnInit,
-    OnDestroy,
-    ComponentRef,
-    SimpleChanges,
-    OnChanges,
-    Injector
-} from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, SimpleChanges, OnChanges, Injector } from '@angular/core';
 import { SearchFilterService } from '../../services/search-filter.service';
 import { Observable } from 'rxjs';
-import {SearchHeaderQueryBuilderService, SearchQueryBuilderService} from '../../services';
+import { SearchHeaderQueryBuilderService, SearchQueryBuilderService } from '../../services';
 
 @Component({
     selector: 'adf-search-widget-container',
+    standalone: true,
     template: '<div #content></div>'
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChanges {
@@ -59,8 +49,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
 
     componentRef: ComponentRef<any>;
 
-    constructor(private searchFilterService: SearchFilterService, private injector: Injector) {
-    }
+    constructor(private searchFilterService: SearchFilterService, private injector: Injector) {}
 
     ngOnInit() {
         const componentType = this.searchFilterService.widgets[this.selector];

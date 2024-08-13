@@ -85,7 +85,9 @@ describe('NewVersionUploaderService', () => {
                 );
                 mockNewVersionUploaderDialogData = {
                     node: mockNode,
-                    file: mockFile
+                    file: mockFile,
+                    showComments: true,
+                    allowDownload: true
                 };
             });
 
@@ -170,7 +172,9 @@ describe('NewVersionUploaderService', () => {
                 const mockNewVersionUploaderDialogDataWithVersionsOnly = {
                     node: mockNode,
                     file: mockFile,
-                    showVersionsOnly: true
+                    showVersionsOnly: true,
+                    showComments: true,
+                    allowDownload: true
                 };
                 service.openUploadNewVersionDialog(mockNewVersionUploaderDialogDataWithVersionsOnly).toPromise();
                 tick();

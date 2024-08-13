@@ -16,9 +16,9 @@
  */
 
 import { NgModule } from '@angular/core';
-import { TagActionsComponent } from './tag-actions.component';
-import { TagListComponent } from './tag-list.component';
-import { TagNodeListComponent } from './tag-node-list.component';
+import { TagActionsComponent } from './tag-actions/tag-actions.component';
+import { TagListComponent } from './tag-list/tag-list.component';
+import { TagNodeListComponent } from './tag-node-list/tag-node-list.component';
 import { TagsCreatorComponent } from './tags-creator/tags-creator.component';
 
 export const CONTENT_TAG_DIRECTIVES = [TagsCreatorComponent, TagActionsComponent, TagListComponent, TagNodeListComponent] as const;

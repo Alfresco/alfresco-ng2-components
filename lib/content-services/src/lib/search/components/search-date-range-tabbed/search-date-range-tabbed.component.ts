@@ -25,14 +25,20 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { InLastDateType } from './search-date-range/in-last-date-type';
 import { TranslationService } from '@alfresco/adf-core';
 import { endOfDay, endOfToday, format, formatISO, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
+import { SearchDateRangeComponent } from './search-date-range/search-date-range.component';
+import { SearchFilterTabDirective } from '../search-filter-tabbed/search-filter-tab.directive';
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
-  selector: 'adf-search-date-range-tabbed',
-  templateUrl: './search-date-range-tabbed.component.html',
-  styleUrls: [ './search-date-range-tabbed.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-search-date-range-tabbed',
+    standalone: true,
+    imports: [CommonModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchFilterTabDirective],
+    templateUrl: './search-date-range-tabbed.component.html',
+    styleUrls: ['./search-date-range-tabbed.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     displayValue$ = new Subject<string>();

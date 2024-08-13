@@ -18,9 +18,16 @@
 import { Component, EventEmitter, inject, Output, ViewEncapsulation } from '@angular/core';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchForm } from '../../models/search-form.interface';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-search-form',
+    standalone: true,
+    imports: [CommonModule, MatButtonModule, TranslateModule, MatMenuModule, MatIconModule],
     templateUrl: './search-form.component.html',
     styleUrls: ['./search-form.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -15,81 +15,75 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, SearchTextModule, provideTranslations } from '@alfresco/adf-core';
-import { MaterialModule } from './material.module';
+import { provideTranslations } from '@alfresco/adf-core';
+import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { CONTENT_TAG_DIRECTIVES } from './tag/tag.module';
-import { DocumentListModule } from './document-list/document-list.module';
-import { SearchModule } from './search/search.module';
+import { DOCUMENT_LIST_DIRECTIVES } from './document-list/document-list.module';
+import { CONTENT_SEARCH_DIRECTIVES } from './search/search.module';
 import { BREADCRUMB_DIRECTIVES } from './breadcrumb/breadcrumb.module';
 import { CONTENT_VERSION_DIRECTIVES } from './version-manager/version-manager.module';
-import { ContentNodeSelectorModule } from './content-node-selector/content-node-selector.module';
+import { CONTENT_NODE_SELECTOR_DIRECTIVES } from './content-node-selector/content-node-selector.module';
 import { CONTENT_NODE_SHARE_DIRECTIVES } from './content-node-share/content-node-share.module';
 import { CONTENT_DIRECTIVES } from './directives/content-directive.module';
 import { CONTENT_DIALOG_DIRECTIVES } from './dialogs/dialog.module';
 import { CONTENT_METADATA_DIRECTIVES } from './content-metadata/content-metadata.module';
 import { CONTENT_PERMISSION_MANAGER_DIRECTIVES } from './permission-manager/permission-manager.module';
-import { ContentTypeModule } from './content-type/content-type.module';
-import { AspectListModule } from './aspect-list/aspect-list.module';
+import { ASPECT_LIST_DIRECTIVES } from './aspect-list/aspect-list.module';
 import { versionCompatibilityFactory } from './version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from './version-compatibility/version-compatibility.service';
 import { CONTENT_PIPES } from './pipes/content-pipe.module';
-import { NodeCommentsModule } from './node-comments/node-comments.module';
-import { AlfrescoViewerModule } from './viewer/alfresco-viewer.module';
 import { contentAuthLoaderFactory } from './auth-loader/content-auth-loader-factory';
 import { ContentAuthLoaderService } from './auth-loader/content-auth-loader.service';
-import { DropdownSitesComponent } from './content-node-selector/site-dropdown/sites-dropdown.component';
 import { CategoriesManagementComponent } from './category';
 import { TreeComponent } from './tree';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader';
 import { VersionCompatibilityDirective } from './version-compatibility';
 import { CONTENT_UPLOAD_DIRECTIVES } from './upload';
 import { TreeViewComponent } from './tree-view';
+import { NodeCommentsComponent } from './node-comments';
+import { AlfrescoViewerComponent } from './viewer';
+import { ContentTypeDialogComponent } from './content-type';
+import { MaterialModule } from './material.module';
 
 @NgModule({
     imports: [
-        ...CONTENT_PIPES,
-        CoreModule,
-        ...CONTENT_TAG_DIRECTIVES,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ...CONTENT_DIALOG_DIRECTIVES,
-        SearchModule,
-        DocumentListModule,
-        ...CONTENT_UPLOAD_DIRECTIVES,
         MaterialModule,
-        DropdownSitesComponent,
+        MatDatetimepickerModule,
+        MatNativeDatetimeModule,
+        ...CONTENT_PIPES,
+        ...CONTENT_TAG_DIRECTIVES,
+        ...CONTENT_DIALOG_DIRECTIVES,
+        ...CONTENT_SEARCH_DIRECTIVES,
+        ...DOCUMENT_LIST_DIRECTIVES,
+        ...CONTENT_UPLOAD_DIRECTIVES,
         ...BREADCRUMB_DIRECTIVES,
-        ContentNodeSelectorModule,
+        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIRECTIVES,
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES,
         TreeViewComponent,
-        ContentTypeModule,
-        AspectListModule,
+        ContentTypeDialogComponent,
+        ...ASPECT_LIST_DIRECTIVES,
         VersionCompatibilityDirective,
-        NodeCommentsModule,
+        NodeCommentsComponent,
         TreeComponent,
-        SearchTextModule,
-        AlfrescoViewerModule,
+        AlfrescoViewerComponent,
         CategoriesManagementComponent,
         NewVersionUploaderDialogComponent
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
+        MaterialModule,
         ...CONTENT_PIPES,
         ...CONTENT_TAG_DIRECTIVES,
-        DocumentListModule,
+        ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTENT_UPLOAD_DIRECTIVES,
-        SearchModule,
-        DropdownSitesComponent,
+        ...CONTENT_SEARCH_DIRECTIVES,
         ...BREADCRUMB_DIRECTIVES,
-        ContentNodeSelectorModule,
+        ...CONTENT_NODE_SELECTOR_DIRECTIVES,
         ...CONTENT_NODE_SHARE_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
         ...CONTENT_DIALOG_DIRECTIVES,
@@ -97,13 +91,12 @@ import { TreeViewComponent } from './tree-view';
         ...CONTENT_PERMISSION_MANAGER_DIRECTIVES,
         ...CONTENT_VERSION_DIRECTIVES,
         TreeViewComponent,
-        AspectListModule,
-        ContentTypeModule,
+        ...ASPECT_LIST_DIRECTIVES,
+        ContentTypeDialogComponent,
         VersionCompatibilityDirective,
-        NodeCommentsModule,
+        NodeCommentsComponent,
         TreeComponent,
-        SearchTextModule,
-        AlfrescoViewerModule,
+        AlfrescoViewerComponent,
         CategoriesManagementComponent,
         NewVersionUploaderDialogComponent
     ]
@@ -131,6 +124,10 @@ export class ContentModule {
         };
     }
 
+    /**
+     * @deprecated use `ContentModule` instead
+     * @returns ModuleWithProviders<ContentModule>
+     */
     static forChild(): ModuleWithProviders<ContentModule> {
         return {
             ngModule: ContentModule

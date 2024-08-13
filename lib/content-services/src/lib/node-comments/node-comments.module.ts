@@ -16,13 +16,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { NodeCommentsComponent } from './node-comments.component';
-import { CoreModule } from '@alfresco/adf-core';
 
+/** @deprecated import NodeCommentsComponent standalone component directly */
 @NgModule({
-    imports: [CommonModule, CoreModule],
-    declarations: [NodeCommentsComponent],
+    imports: [NodeCommentsComponent],
     exports: [NodeCommentsComponent]
 })
 export class NodeCommentsModule {}

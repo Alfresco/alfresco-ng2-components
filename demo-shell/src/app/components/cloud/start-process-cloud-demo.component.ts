@@ -20,28 +20,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, AppConfigService, FormRenderingService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { PreviewService } from '../../services/preview.service';
-import { CloudFormRenderingService } from '@alfresco/adf-process-services-cloud';
+import { CloudFormRenderingService, StartProcessCloudModule } from '@alfresco/adf-process-services-cloud';
 
 @Component({
+    standalone: true,
+    imports: [StartProcessCloudModule],
     templateUrl: './start-process-cloud-demo.component.html',
-    providers: [
-        { provide: FormRenderingService, useClass: CloudFormRenderingService }
-    ]
+    providers: [{ provide: FormRenderingService, useClass: CloudFormRenderingService }]
 })
 export class StartProcessCloudDemoComponent implements OnInit {
-
     appName;
     processName: string;
     formValues: any;
     variables: any;
 
-    constructor(private appConfig: AppConfigService,
-                private cloudLayoutService: CloudLayoutService,
-                private route: ActivatedRoute,
-                private previewService: PreviewService,
-                private notificationService: NotificationService,
-                private router: Router) {
-    }
+    constructor(
+        private appConfig: AppConfigService,
+        private cloudLayoutService: CloudLayoutService,
+        private route: ActivatedRoute,
+        private previewService: PreviewService,
+        private notificationService: NotificationService,
+        private router: Router
+    ) {}
 
     ngOnInit() {
         this.route.parent.params.subscribe((params) => {

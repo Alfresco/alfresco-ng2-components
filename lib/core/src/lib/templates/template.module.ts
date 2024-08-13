@@ -19,12 +19,14 @@ import { NgModule } from '@angular/core';
 import { ErrorContentComponent } from './error-content/error-content.component';
 import { EmptyContentComponent } from './empty-content/empty-content.component';
 
+export const TEMPLATE_DIRECTIVES = [ErrorContentComponent, EmptyContentComponent] as const;
+
 /**
  * @deprecated this Module is deprecated and should no longer be used.
- * Consider importing components directly instead.
+ * Consider using `...TEMPLATE_DIRECTIVES` or importing components directly instead.
  */
 @NgModule({
-    imports: [ErrorContentComponent, EmptyContentComponent],
-    exports: [ErrorContentComponent, EmptyContentComponent]
+    imports: [...TEMPLATE_DIRECTIVES],
+    exports: [...TEMPLATE_DIRECTIVES]
 })
 export class TemplateModule {}

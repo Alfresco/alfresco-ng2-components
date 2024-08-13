@@ -16,12 +16,19 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * Dialog which informs about unsaved changes. Allows discard them and proceed or close dialog and stop proceeding.
  */
 @Component({
     selector: 'adf-unsaved-changes-dialog',
+    standalone: true,
+    imports: [CommonModule, MatDialogModule, TranslateModule, MatButtonModule, MatIconModule],
     encapsulation: ViewEncapsulation.None,
     templateUrl: './unsaved-changes-dialog.component.html',
     styleUrls: ['./unsaved-changes-dialog.component.scss']

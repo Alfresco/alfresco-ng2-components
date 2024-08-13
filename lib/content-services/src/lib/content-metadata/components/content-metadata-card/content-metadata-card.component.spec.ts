@@ -26,14 +26,13 @@ import { NodeAspectService } from '../../../aspect-list/services/node-aspect.ser
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { of } from 'rxjs';
-import { AlfrescoApiService, AlfrescoApiServiceMock, AuthModule, PipeModule, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, AuthModule, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { versionCompatibilityFactory } from '../../../version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from '../../../version-compatibility';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { CategoryService } from '../../../category';
 import { TagService } from '../../../tag';
 import { PropertyDescriptorsService } from '../../public-api';
@@ -59,9 +58,7 @@ describe('ContentMetadataCardComponent', () => {
                 AuthModule.forRoot({ useHash: true }),
                 HttpClientModule,
                 MatDialogModule,
-                PipeModule,
                 MatSnackBarModule,
-                MatTooltipModule,
                 ContentMetadataCardComponent
             ],
             providers: [

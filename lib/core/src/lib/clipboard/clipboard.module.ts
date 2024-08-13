@@ -15,23 +15,14 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClipboardDirective, ClipboardComponent } from './clipboard.directive';
-import { TranslateModule } from '@ngx-translate/core';
 
+export const CLIPBOARD_DIRECTIVES = [ClipboardDirective, ClipboardComponent] as const;
+
+/** @deprecated use `...CLIPBOARD_DIRECTIVES` or import standalone directives */
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule
-    ],
-    declarations: [
-        ClipboardDirective,
-        ClipboardComponent
-    ],
-    exports: [
-        ClipboardDirective
-    ]
+    imports: [...CLIPBOARD_DIRECTIVES],
+    exports: [...CLIPBOARD_DIRECTIVES]
 })
-
 export class ClipboardModule {}

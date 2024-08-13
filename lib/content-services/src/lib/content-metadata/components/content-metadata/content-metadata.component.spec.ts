@@ -27,7 +27,6 @@ import {
     CardViewBaseItemModel,
     CardViewComponent,
     NotificationService,
-    PipeModule,
     TranslationMock,
     TranslationService,
     UpdateNotification
@@ -51,8 +50,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 
@@ -193,9 +190,6 @@ describe('ContentMetadataComponent', () => {
                 HttpClientModule,
                 MatDialogModule,
                 MatSnackBarModule,
-                MatProgressBarModule,
-                MatTooltipModule,
-                PipeModule,
                 ContentMetadataComponent
             ],
             providers: [

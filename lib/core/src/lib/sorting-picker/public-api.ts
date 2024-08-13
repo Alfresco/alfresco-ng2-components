@@ -16,4 +16,3 @@
  */
 
 export * from './sorting-picker.component';
-export * from './sorting-picker.module';

@@ -18,18 +18,18 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
+import { AppListCloudModule } from '@alfresco/adf-process-services-cloud';
 
 @Component({
+    standalone: true,
+    imports: [AppListCloudModule],
     templateUrl: './apps-cloud-demo.component.html'
 })
-
 export class AppsCloudDemoComponent {
-
-    constructor(private router: Router, private cloudLayoutService: CloudLayoutService) {
-    }
+    constructor(private router: Router, private cloudLayoutService: CloudLayoutService) {}
 
     onAppClick(app) {
-        this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
+        this.cloudLayoutService.setCurrentTaskFilterParam({ key: 'my-tasks' });
         this.router.navigate([`/cloud/${app.name}`]);
     }
 }
