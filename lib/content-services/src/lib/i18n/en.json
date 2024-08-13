@@ -706,7 +706,6 @@
     "SEARCH": {
       "WARNINGS": {
         "TOO_MANY_FILES_SELECTED": "Please select no more than {{ maxFiles }} files.",
-        "NON_TEXT_FILE_SELECTED": "Only text related files are compatible with AI Agents.",
         "FOLDER_SELECTED": "Folders are not compatible with AI Agents."
       }
     }
