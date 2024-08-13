@@ -28,15 +28,6 @@ import { SearchAiInputState } from '../models/search-ai-input-state';
     providedIn: 'root'
 })
 export class SearchAiService {
-    private readonly textFileMimeTypes = [
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/vnd.oasis.opendocument.text',
-        'application/rtf',
-        'text/plain',
-        'application/pdf'
-    ];
-
     private toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
         active: false
     });
@@ -137,11 +128,6 @@ export class SearchAiService {
             messages.push({
                 key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED',
                 maxFiles: maxSelectedNodes
-            });
-        }
-        if (selectedNodesState.nodes.some((node) => !node.entry.isFolder && !this.textFileMimeTypes.includes(node.entry.content.mimeType))) {
-            messages.push({
-                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.NON_TEXT_FILE_SELECTED'
             });
         }
         if (selectedNodesState.nodes.some((node) => node.entry.isFolder)) {
