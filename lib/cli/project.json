@@ -26,9 +26,7 @@
           }
         ]
       },
-      "dependsOn": [
-        "copyToNodeModules"
-      ]
+      "dependsOn": ["copyToNodeModules"]
     },
     "copyToNodeModules": {
       "executor": "nx:run-commands",
@@ -39,9 +37,7 @@
           }
         ]
       },
-      "dependsOn": [
-        "installDeps", "build"
-      ]
+      "dependsOn": ["installDeps", "build"]
     },
     "installDeps": {
       "executor": "nx:run-commands",
@@ -52,24 +48,17 @@
           }
         ]
       },
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "lib/cli/**/*.ts",
-          "lib/cli/**/*.html"
-        ]
+        "lintFilePatterns": ["lib/cli/**/*.ts", "lib/cli/**/*.html"]
       }
     },
     "npm-publish": {
       "executor": "nx:run-commands",
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "options": {
         "cwd": "dist/libs/cli",
         "commands": [
