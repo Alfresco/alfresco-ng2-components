@@ -61,6 +61,7 @@ export const CORE_PIPES = [
  */
 @NgModule({
     imports: [...CORE_PIPES],
+    providers: [...CORE_PIPES],
     exports: [...CORE_PIPES]
 })
 export class PipeModule {}
