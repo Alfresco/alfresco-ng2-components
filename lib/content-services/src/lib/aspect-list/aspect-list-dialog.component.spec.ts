@@ -27,7 +27,8 @@ import { AspectEntry, Node } from '@alfresco/js-api';
 import { NodesApiService } from '../common/services/nodes-api.service';
 import { By } from '@angular/platform-browser';
 import { AspectListComponent } from './aspect-list.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const aspectListMock: AspectEntry[] = [
     {
@@ -114,19 +115,21 @@ describe('AspectListDialogComponent', () => {
             excludedAspects: []
         };
         await TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ContentTestingModule, MatDialogModule],
-            providers: [
-                { provide: MAT_DIALOG_DATA, useValue: data },
-                {
-                    provide: MatDialogRef,
-                    useValue: {
-                        keydownEvents: () => of(event),
-                        backdropClick: () => of(null),
-                        close: jasmine.createSpy('close')
-                    }
-                }
-            ]
-        }).compileComponents();
+    imports: [ContentTestingModule, MatDialogModule],
+    providers: [
+        { provide: MAT_DIALOG_DATA, useValue: data },
+        {
+            provide: MatDialogRef,
+            useValue: {
+                keydownEvents: () => of(event),
+                backdropClick: () => of(null),
+                close: jasmine.createSpy('close')
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
         fixture = TestBed.createComponent(AspectListDialogComponent);
     });
 

@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
     mockIdentityUser1,
@@ -35,7 +35,7 @@ import { IdentityRoleModel } from '../models/identity-role.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdfHttpClient } from '../../../../api/src';
 import { StorageService } from '../../common/services/storage.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('IdentityUserService', () => {
     const mockRoles = [
@@ -53,9 +53,9 @@ describe('IdentityUserService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
-            providers: [StorageService, AdfHttpClient]
-        });
+    imports: [TranslateModule.forRoot()],
+    providers: [StorageService, AdfHttpClient, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         storageService = TestBed.inject(StorageService);
         service = TestBed.inject(IdentityUserService);
         adfHttpClient = TestBed.inject(AdfHttpClient);

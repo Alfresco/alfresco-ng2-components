@@ -23,7 +23,8 @@ import { RepositoryInfo } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 declare let jasmine: any;
 
@@ -36,19 +37,21 @@ describe('UploadService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AppConfigModule, HttpClientTestingModule],
-            providers: [
-                UploadService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                {
-                    provide: DiscoveryApiService,
-                    useValue: {
-                        ecmProductInfo$: mockProductInfo
-                    }
-                }
-            ]
-        });
+    imports: [AppConfigModule],
+    providers: [
+        UploadService,
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
+        {
+            provide: DiscoveryApiService,
+            useValue: {
+                ecmProductInfo$: mockProductInfo
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {
             ecmHost: 'http://localhost:9876/ecm',

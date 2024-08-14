@@ -44,8 +44,9 @@ import { throwError } from 'rxjs';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -152,39 +153,38 @@ describe('AlfrescoViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                AuthModule.forRoot({ useHash: true }),
-                TranslateModule.forRoot(),
-                MatButtonModule,
-                MatIconModule,
-                MatDialogModule,
-                HttpClientTestingModule,
-                ...VIEWER_DIRECTIVES
-            ],
-            declarations: [
-                ViewerWithCustomToolbarComponent,
-                ViewerWithCustomSidebarComponent,
-                ViewerWithCustomOpenWithComponent,
-                ViewerWithCustomMoreActionsComponent,
-                ViewerWithCustomToolbarActionsComponent
-            ],
-            providers: [
-                ContentService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: TranslationService, useClass: TranslationMock },
-                {
-                    provide: RenditionService,
-                    useValue: {
-                        getNodeRendition: () => throwError('thrown'),
-                        generateMediaTracksRendition: () => {}
-                    }
-                },
-                { provide: Location, useClass: SpyLocation },
-                MatDialog,
-                ViewerSidebarComponent
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        });
+    declarations: [
+        ViewerWithCustomToolbarComponent,
+        ViewerWithCustomSidebarComponent,
+        ViewerWithCustomOpenWithComponent,
+        ViewerWithCustomMoreActionsComponent,
+        ViewerWithCustomToolbarActionsComponent
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [AuthModule.forRoot({ useHash: true }),
+        TranslateModule.forRoot(),
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        ...VIEWER_DIRECTIVES],
+    providers: [
+        ContentService,
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: TranslationService, useClass: TranslationMock },
+        {
+            provide: RenditionService,
+            useValue: {
+                getNodeRendition: () => throwError('thrown'),
+                generateMediaTracksRendition: () => { }
+            }
+        },
+        { provide: Location, useClass: SpyLocation },
+        MatDialog,
+        ViewerSidebarComponent,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         fixture = TestBed.createComponent(AlfrescoViewerComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;

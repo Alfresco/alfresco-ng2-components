@@ -2,15 +2,15 @@
 @use '@angular/material' as mat;
 
 @mixin adf-breadcrumb-theme($theme) {
-    $config: mat.get-color-config($theme);
+    $config: mat.m2-get-color-config($theme);
     $foreground-palette: map.get($config, foreground);
     $primary-palette: map.get($config, primary);
-    $text-color: mat.get-color-from-palette($foreground-palette, text);
-    $primary: mat.get-color-from-palette($primary-palette, text);
+    $text-color: mat.m2-get-color-from-palette($foreground-palette, text);
+    $primary: mat.m2-get-color-from-palette($primary-palette, text);
 
     adf-breadcrumb {
         .adf-breadcrumb__show-all-button-icon--rotate {
-            color: mat.get-color-from-palette($primary-palette, 500);
+            color: mat.m2-get-color-from-palette($primary-palette, 500);
         }
 
         .adf-breadcrumb__item-wrapper {

@@ -24,7 +24,7 @@ import { PaginationModel } from '../models/pagination.model';
 import { TranslationService } from '../translation/translation.service';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatMenuModule } from '@angular/material/menu';
 
 class FakePaginationInput implements PaginationModel {
@@ -46,18 +46,16 @@ describe('PaginationComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                HttpClientModule,
-                MatMenuModule,
-                TranslateModule.forRoot({
-                    loader: {provide: TranslateLoader, useClass: TranslateFakeLoader}
-                })
-            ],
-            providers:[
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        });
+    imports: [NoopAnimationsModule,
+        MatMenuModule,
+        TranslateModule.forRoot({
+            loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })],
+    providers: [
+        { provide: TranslationService, useClass: TranslationMock },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

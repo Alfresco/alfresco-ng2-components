@@ -25,7 +25,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import {MatSnackBarHarness} from '@angular/material/snack-bar/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslationMock } from '../../mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -94,11 +94,13 @@ describe('NotificationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, HttpClientModule, MatSnackBarModule],
-            declarations: [ProvidesNotificationServiceComponent],
-            providers:[
-            { provide: TranslationService, useClass: TranslationMock }]
-        });
+    declarations: [ProvidesNotificationServiceComponent],
+    imports: [TranslateModule.forRoot(), NoopAnimationsModule, MatSnackBarModule],
+    providers: [
+        { provide: TranslationService, useClass: TranslationMock },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
         translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
         fixture.detectChanges();

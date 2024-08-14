@@ -17,10 +17,7 @@
 
 import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import {
-  HttpHandler, HttpInterceptor, HttpRequest,
-  HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpHeaders
-} from '@angular/common/http';
+import { HttpHandler, HttpInterceptor, HttpRequest, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpHeaders } from '@angular/common/http';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 

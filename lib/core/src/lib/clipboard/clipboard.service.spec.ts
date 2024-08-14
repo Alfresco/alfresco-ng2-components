@@ -20,9 +20,10 @@ import { TestBed } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslationService } from '../translation';
 import { TranslationMock } from '../mock';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
@@ -31,9 +32,9 @@ describe('ClipboardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule],
-            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }]
-        });
+    imports: [TranslateModule.forRoot(), MatSnackBarModule],
+    providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         clipboardService = TestBed.inject(ClipboardService);
         notificationService = TestBed.inject(NotificationService);
         inputElement = document.createElement('input');

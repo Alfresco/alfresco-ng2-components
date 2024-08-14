@@ -19,7 +19,8 @@ import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AspectListService } from './aspect-list.service';
 import { AspectPaging, AspectsApi, AspectEntry } from '@alfresco/js-api';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const stdAspect1: AspectEntry = { entry: { id: 'std:standardAspectOne', description: 'Standard Aspect One', title: 'StandardAspectOne' } };
 const stdAspect2: AspectEntry = { entry: { id: 'std:standardAspectTwo', description: 'Standard Aspect Two', title: 'StandardAspectTwo' } };
@@ -38,8 +39,9 @@ describe('AspectListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule]
-        });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         aspectListService = TestBed.inject(AspectListService);
         apiService = TestBed.inject(AlfrescoApiService);

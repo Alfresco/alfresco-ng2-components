@@ -22,7 +22,7 @@ import { AspectOrientedConfigService } from './aspect-oriented-config.service';
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
 import { ContentMetadataConfigFactory } from './content-metadata-config.factory';
 import { ContentMetadataConfig } from '../../interfaces/content-metadata.interfaces';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ContentMetadataConfigFactory', () => {
 
@@ -32,17 +32,16 @@ describe('ContentMetadataConfigFactory', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule
-            ],
-            providers: [
-                {
-                    provide: LogService, useValue: {
-                        error: () => {}
-                    }
-                }
-            ]
-        });
+    imports: [],
+    providers: [
+        {
+            provide: LogService, useValue: {
+                error: () => { }
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
         factory = TestBed.inject(ContentMetadataConfigFactory);
         appConfig = TestBed.inject(AppConfigService);
     });

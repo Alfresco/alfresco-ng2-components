@@ -17,7 +17,7 @@
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { IdentityGroupService } from './identity-group.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
     mockIdentityRoles,
@@ -29,7 +29,7 @@ import {
 } from '../mock/identity-group.mock';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdfHttpClient } from '../../../../api/src';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
@@ -38,9 +38,9 @@ describe('IdentityGroupService', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
-            providers: [AdfHttpClient]
-        });
+    imports: [TranslateModule.forRoot()],
+    providers: [AdfHttpClient, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
         requestSpy = spyOn(adfHttpClient, 'request');

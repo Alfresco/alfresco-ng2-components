@@ -47,7 +47,7 @@ import {
 } from '@alfresco/adf-content-services';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -183,35 +183,33 @@ describe('ContentMetadataComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                NoopAnimationsModule,
-                AuthModule.forRoot({ useHash: true }),
-                HttpClientModule,
-                MatDialogModule,
-                MatSnackBarModule,
-                ContentMetadataComponent
-            ],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock },
-                {
-                    provide: TagService,
-                    useValue: {
-                        getTagsByNodeId: () => EMPTY,
-                        removeTag: () => EMPTY,
-                        assignTagsToNode: () => EMPTY
-                    }
-                },
-                {
-                    provide: CategoryService,
-                    useValue: {
-                        getCategoryLinksForNode: () => EMPTY,
-                        linkNodeToCategory: () => EMPTY,
-                        unlinkNodeFromCategory: () => EMPTY
-                    }
-                }
-            ]
-        });
+    imports: [TranslateModule.forRoot(),
+        NoopAnimationsModule,
+        AuthModule.forRoot({ useHash: true }),
+        MatDialogModule,
+        MatSnackBarModule,
+        ContentMetadataComponent],
+    providers: [
+        { provide: TranslationService, useClass: TranslationMock },
+        {
+            provide: TagService,
+            useValue: {
+                getTagsByNodeId: () => EMPTY,
+                removeTag: () => EMPTY,
+                assignTagsToNode: () => EMPTY
+            }
+        },
+        {
+            provide: CategoryService,
+            useValue: {
+                getCategoryLinksForNode: () => EMPTY,
+                linkNodeToCategory: () => EMPTY,
+                unlinkNodeFromCategory: () => EMPTY
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
         contentMetadataService = TestBed.inject(ContentMetadataService);

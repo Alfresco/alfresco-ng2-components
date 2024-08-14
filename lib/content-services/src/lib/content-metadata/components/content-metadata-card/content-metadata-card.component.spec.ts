@@ -28,7 +28,7 @@ import { AllowableOperationsEnum } from '../../../common/models/allowable-operat
 import { of } from 'rxjs';
 import { AlfrescoApiService, AlfrescoApiServiceMock, AuthModule, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { versionCompatibilityFactory } from '../../../version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from '../../../version-compatibility';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -52,26 +52,24 @@ describe('ContentMetadataCardComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                NoopAnimationsModule,
-                AuthModule.forRoot({ useHash: true }),
-                HttpClientModule,
-                MatDialogModule,
-                MatSnackBarModule,
-                ContentMetadataCardComponent
-            ],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: TranslationService, useClass: TranslationMock },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: versionCompatibilityFactory,
-                    deps: [VersionCompatibilityService],
-                    multi: true
-                }
-            ]
-        });
+    imports: [TranslateModule.forRoot(),
+        NoopAnimationsModule,
+        AuthModule.forRoot({ useHash: true }),
+        MatDialogModule,
+        MatSnackBarModule,
+        ContentMetadataCardComponent],
+    providers: [
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: TranslationService, useClass: TranslationMock },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: versionCompatibilityFactory,
+            deps: [VersionCompatibilityService],
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         contentMetadataService = TestBed.inject(ContentMetadataService);
         tagService = TestBed.inject(TagService);

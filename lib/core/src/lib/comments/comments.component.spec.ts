@@ -24,7 +24,8 @@ import { of, throwError } from 'rxjs';
 import { ADF_COMMENTS_SERVICE } from './interfaces/comments.token';
 import { CommentsService } from './interfaces/comments-service.interface';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CommentsComponent', () => {
     let component: CommentsComponent;
@@ -35,14 +36,16 @@ describe('CommentsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot(), CommentsComponent],
-            providers: [
-                {
-                    provide: ADF_COMMENTS_SERVICE,
-                    useClass: CommentsServiceMock
-                }
-            ]
-        });
+    imports: [NoopAnimationsModule, TranslateModule.forRoot(), CommentsComponent],
+    providers: [
+        {
+            provide: ADF_COMMENTS_SERVICE,
+            useClass: CommentsServiceMock
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         fixture = TestBed.createComponent(CommentsComponent);
         component = fixture.componentInstance;
 

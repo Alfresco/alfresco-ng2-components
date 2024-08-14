@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
     AlfrescoApiService,
     AlfrescoApiServiceMock,
@@ -31,26 +31,20 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServicesCloudModule } from '../process-services-cloud.module';
 import { RouterTestingModule } from '@angular/router/testing';
 
-@NgModule({
-    imports: [
-        AuthModule.forRoot({ useHash: true }),
-        HttpClientModule,
-        NoopAnimationsModule,
-        RouterTestingModule,
-        TranslateModule.forRoot(),
-        CoreModule.forRoot(),
-        ProcessServicesCloudModule.forRoot()
-    ],
-    providers: [
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock }
-    ],
-    exports: [
+@NgModule({ exports: [
         NoopAnimationsModule,
         TranslateModule,
         CoreModule,
         ProcessServicesCloudModule
-    ]
-})
+    ], imports: [AuthModule.forRoot({ useHash: true }),
+        NoopAnimationsModule,
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        CoreModule.forRoot(),
+        ProcessServicesCloudModule.forRoot()], providers: [
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
+        { provide: TranslationService, useClass: TranslationMock },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class ProcessServiceCloudTestingModule {}

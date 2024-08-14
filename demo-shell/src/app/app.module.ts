@@ -18,7 +18,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgChartsModule } from 'ng2-charts';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService, DebugAppConfigService, CoreModule, AuthModule, provideTranslations } from '@alfresco/adf-core';
@@ -34,13 +34,11 @@ import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud
 import { RouterModule } from '@angular/router';
 import { CoreAutomationService } from '../testing/automation.service';
 
-@NgModule({
-    imports: [
-        BrowserModule,
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, { useHash: true }),
         AuthModule.forRoot({ useHash: true }),
-        HttpClientModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ContentModule.forRoot(),
@@ -49,15 +47,11 @@ import { CoreAutomationService } from '../testing/automation.service';
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
         NgChartsModule,
-        MonacoEditorModule.forRoot()
-    ],
-    declarations: [AppComponent],
-    providers: [
+        MonacoEditorModule.forRoot()], providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
-        provideTranslations('app', 'resources')
-    ],
-    bootstrap: [AppComponent]
-})
+        provideTranslations('app', 'resources'),
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
     constructor(automationService: CoreAutomationService) {
         automationService.setup();

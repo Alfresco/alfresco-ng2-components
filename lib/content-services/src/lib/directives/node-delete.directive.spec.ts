@@ -19,11 +19,12 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { RedirectAuthService, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { EMPTY, of } from 'rxjs';
 import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
     standalone: true,
@@ -85,12 +86,14 @@ describe('NodeDeleteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TranslateModule.forRoot(), TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
-            ]
-        });
+    imports: [TranslateModule.forRoot(), TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent],
+    providers: [
+        { provide: TranslationService, useClass: TranslationMock },
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         fixture = TestBed.createComponent(TestComponent);
         fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);
         fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);

@@ -24,7 +24,8 @@ import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService, AppConfigServiceMock, TranslationMock, TranslationService } from '@alfresco/adf-core';
 import { CategoriesManagementComponent } from '../../category';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('Category selector dialog component', () => {
     let fixture: ComponentFixture<CategorySelectorDialogComponent>;
@@ -51,20 +52,19 @@ describe('Category selector dialog component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                MatDialogModule,
-                HttpClientTestingModule,
-                CategoriesManagementComponent,
-                CategorySelectorDialogComponent
-            ],
-            providers: [
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: options },
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        });
+    imports: [TranslateModule.forRoot(),
+        MatDialogModule,
+        CategoriesManagementComponent,
+        CategorySelectorDialogComponent],
+    providers: [
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
+        { provide: MatDialogRef, useValue: dialogRef },
+        { provide: MAT_DIALOG_DATA, useValue: options },
+        { provide: TranslationService, useClass: TranslationMock },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(CategorySelectorDialogComponent);
         component = fixture.componentInstance;

@@ -40,7 +40,8 @@ import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 declare let jasmine: any;
 
@@ -105,13 +106,15 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, MatProgressSpinnerModule, HttpClientTestingModule, TaskListComponent],
-            providers: [
-                TaskListService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
-            ]
-        });
+    imports: [TranslateModule.forRoot(), NoopAnimationsModule, MatProgressSpinnerModule, TaskListComponent],
+    providers: [
+        TaskListService,
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 

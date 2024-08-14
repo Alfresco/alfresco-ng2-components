@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { HttpClientModule, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { IdentityRoleResponseModel, IdentityRoleService } from './identity-role.service';
@@ -50,10 +50,9 @@ describe('IdentityRoleService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule
-            ]
-        });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi())]
+});
         service = TestBed.inject(IdentityRoleService);
     });
 

@@ -32,25 +32,21 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessFormRenderingService } from '../form/process-form-rendering.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-@NgModule({
-    imports: [
-        AuthModule.forRoot({ useHash: true }),
+@NgModule({ exports: [NoopAnimationsModule, TranslateModule, CoreModule, ProcessModule], imports: [AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
-        HttpClientTestingModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ProcessModule.forRoot(),
-        RouterTestingModule
-    ],
-    providers: [
+        RouterTestingModule], providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
         FormRenderingService,
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
-    ],
-    exports: [NoopAnimationsModule, TranslateModule, CoreModule, ProcessModule]
-})
+        { provide: FormRenderingService, useClass: ProcessFormRenderingService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ] })
 export class ProcessTestingModule {}

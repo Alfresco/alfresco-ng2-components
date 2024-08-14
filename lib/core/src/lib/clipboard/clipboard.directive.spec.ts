@@ -20,11 +20,12 @@ import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testin
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
 import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslationService } from '../translation';
 import { TranslationMock } from '../mock';
 import { MatButtonModule } from '@angular/material/button';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
     selector: 'adf-test-component',
@@ -42,10 +43,10 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule, MatButtonModule, ClipboardDirective],
-            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }],
-            declarations: [TestTargetClipboardComponent]
-        });
+    declarations: [TestTargetClipboardComponent],
+    imports: [TranslateModule.forRoot(), MatSnackBarModule, MatButtonModule, ClipboardDirective],
+    providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
         fixture.detectChanges();
@@ -86,10 +87,10 @@ describe('CopyClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule, ClipboardDirective],
-            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }],
-            declarations: [TestCopyClipboardComponent]
-        });
+    declarations: [TestCopyClipboardComponent],
+    imports: [TranslateModule.forRoot(), MatSnackBarModule, ClipboardDirective],
+    providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
         element = fixture.debugElement.nativeElement;
         fixture.detectChanges();

@@ -19,8 +19,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AppConfigServiceMock } from '../../common';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 const aboutGithubDetails = {
     url: 'https://github.com/componany/repository/commits/',
@@ -38,9 +39,9 @@ describe('AboutServerSettingsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
-            providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }]
-        });
+    imports: [TranslateModule.forRoot()],
+    providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         fixture = TestBed.createComponent(AboutServerSettingsComponent);
         component = fixture.componentInstance;
         appConfigService = TestBed.inject(AppConfigService);

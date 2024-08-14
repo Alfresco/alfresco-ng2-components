@@ -23,7 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { commentUserNoPictureDefined, commentUserPictureDefined, mockCommentOne, testUser } from './mocks/comment-list.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CommentListComponent', () => {
     let commentList: CommentListComponent;
@@ -32,14 +33,16 @@ describe('CommentListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
-            providers: [
-                {
-                    provide: ADF_COMMENTS_SERVICE,
-                    useClass: CommentListServiceMock
-                }
-            ]
-        });
+    imports: [TranslateModule.forRoot()],
+    providers: [
+        {
+            provide: ADF_COMMENTS_SERVICE,
+            useClass: CommentListServiceMock
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         fixture = TestBed.createComponent(CommentListComponent);
         commentList = fixture.componentInstance;
 

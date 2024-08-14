@@ -20,7 +20,7 @@ import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from './start-process-cloud.service';
 import { fakeProcessPayload } from '../mock/start-process.component.mock';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { HttpErrorResponse, HttpClientModule } from '@angular/common/http';
+import { HttpErrorResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 describe('StartProcessCloudService', () => {
@@ -30,8 +30,9 @@ describe('StartProcessCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule]
-        });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi())]
+});
         service = TestBed.inject(StartProcessCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
     });

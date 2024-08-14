@@ -19,7 +19,8 @@ import { SimpleChange } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
 import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('NodeFavoriteDirective', () => {
     let directive: NodeFavoriteDirective;
@@ -27,12 +28,14 @@ describe('NodeFavoriteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
-            ]
-        });
+    imports: [],
+    providers: [
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         directive = new NodeFavoriteDirective(alfrescoApiService);
     });

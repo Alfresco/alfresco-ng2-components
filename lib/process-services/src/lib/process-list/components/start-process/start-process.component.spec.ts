@@ -43,7 +43,7 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {} from '@angular/common/http/testing';
 import { RestVariable } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
 import { AppsProcessService } from '../../../services/apps-process.service';

@@ -20,9 +20,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { TranslationMock, TranslationService } from '@alfresco/adf-core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { TrashcanApi } from '@alfresco/js-api';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
     standalone: true,
@@ -46,9 +47,9 @@ describe('NodeRestoreDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TranslateModule.forRoot(), TestComponent],
-            providers: [{ provide: TranslationService, useClass: TranslationMock }]
-        });
+    imports: [TranslateModule.forRoot(), TestComponent],
+    providers: [{ provide: TranslationService, useClass: TranslationMock }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeRestoreDirective));

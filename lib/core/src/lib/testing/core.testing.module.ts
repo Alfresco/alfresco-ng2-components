@@ -29,22 +29,17 @@ import { TranslationMock } from '../mock/translation.service.mock';
 import { DatePipe } from '@angular/common';
 import { CookieService } from '../common/services/cookie.service';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
 import { DirectionalityConfigService } from '../common/services/directionality-config.service';
 import { AuthModule, RedirectAuthService } from '../auth';
 import { EMPTY, of } from 'rxjs';
 
-@NgModule({
-    imports: [
-        AuthModule.forRoot({ useHash: true }),
+@NgModule({ exports: [NoopAnimationsModule, CoreModule, TranslateModule, RouterTestingModule], imports: [AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
         RouterTestingModule,
-        HttpClientModule,
         TranslateModule.forRoot(),
-        CoreModule.forRoot()
-    ],
-    providers: [
+        CoreModule.forRoot()], providers: [
         DatePipe,
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
@@ -56,8 +51,7 @@ import { EMPTY, of } from 'rxjs';
             deps: [DirectionalityConfigService],
             multi: true
         },
-        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {}, onTokenReceived: of() } }
-    ],
-    exports: [NoopAnimationsModule, CoreModule, TranslateModule, RouterTestingModule]
-})
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => { }, onTokenReceived: of() } },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class CoreTestingModule {}

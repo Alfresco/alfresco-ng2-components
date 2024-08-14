@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -35,21 +35,19 @@ describe('TranslationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule,
-                TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
-                    }
-                })
-            ],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                provideTranslations('@alfresco/adf-core', 'assets/ng2-alfresco-core')
-            ]
-        });
+    imports: [TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useClass: TranslateLoaderService
+            }
+        })],
+    providers: [
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
+        provideTranslations('@alfresco/adf-core', 'assets/ng2-alfresco-core'),
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
 
         jasmine.Ajax.install();
 

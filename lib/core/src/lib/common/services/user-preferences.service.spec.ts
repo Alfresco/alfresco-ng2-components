@@ -23,8 +23,9 @@ import { UserPreferencesService, UserPreferenceValues } from '../../common/servi
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock, TranslationMock } from '../../mock';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslationService } from '../../translation';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserPreferencesService', () => {
     const supportedPaginationSize = [5, 10, 15, 20];
@@ -36,15 +37,17 @@ describe('UserPreferencesService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
-            providers: [
-                UserPreferencesService,
-                StorageService,
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
-            ]
-        });
+    imports: [TranslateModule.forRoot()],
+    providers: [
+        UserPreferencesService,
+        StorageService,
+        { provide: TranslationService, useClass: TranslationMock },
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: AppConfigService, useClass: AppConfigServiceMock },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config = {
             pagination: {

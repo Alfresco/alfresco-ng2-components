@@ -20,8 +20,9 @@ import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService } from 
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
 import { PersonPaging } from '@alfresco/js-api';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 export const fakeEcmUser2 = {
     id: 'another-fake-id',
@@ -68,13 +69,15 @@ describe('PeopleContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                PeopleContentService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
-            ]
-        });
+    imports: [],
+    providers: [
+        PeopleContentService,
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
 
         peopleContentService = TestBed.inject(PeopleContentService);
     });

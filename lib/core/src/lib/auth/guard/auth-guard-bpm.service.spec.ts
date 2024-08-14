@@ -23,10 +23,11 @@ import { RouterStateSnapshot, Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuthGuardService BPM', () => {
     let authGuard: AuthGuardBpm;
@@ -39,20 +40,22 @@ describe('AuthGuardService BPM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule],
-            providers: [
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
-                {
-                    provide: OidcAuthenticationService,
-                    useValue: {
-                        ssoLogin: () => {},
-                        isPublicUrl: () => false,
-                        hasValidIdToken: () => false,
-                        isLoggedIn: () => false
-                    }
-                }
-            ]
-        });
+    imports: [TranslateModule.forRoot(), MatDialogModule],
+    providers: [
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+        {
+            provide: OidcAuthenticationService,
+            useValue: {
+                ssoLogin: () => { },
+                isPublicUrl: () => false,
+                hasValidIdToken: () => false,
+                isLoggedIn: () => false
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         localStorage.clear();
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
         oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);

@@ -30,8 +30,9 @@ import {
 } from '@alfresco/js-api';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CategoryService } from './category.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CategoryService', () => {
     let categoryService: CategoryService;
@@ -47,9 +48,9 @@ describe('CategoryService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TranslateModule.forRoot()],
-            providers: [CategoryService, UserPreferencesService, { provide: TranslationService, useClass: TranslationMock }]
-        });
+    imports: [TranslateModule.forRoot()],
+    providers: [CategoryService, UserPreferencesService, { provide: TranslationService, useClass: TranslationMock }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         categoryService = TestBed.inject(CategoryService);
         userPreferencesService = TestBed.inject(UserPreferencesService);

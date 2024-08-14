@@ -22,9 +22,10 @@ import { DownloadZipService } from './services/download-zip.service';
 import { DownloadEntry, FileDownloadStatus } from '@alfresco/js-api';
 import { EMPTY, Observable, of } from 'rxjs';
 import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService, TranslationMock, TranslationService } from '@alfresco/adf-core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DownloadZipDialogComponent', () => {
     let fixture: ComponentFixture<DownloadZipDialogComponent>;
@@ -41,16 +42,18 @@ describe('DownloadZipDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TranslateModule.forRoot(), MatDialogModule, NoopAnimationsModule],
-            providers: [
-                DownloadZipService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: dataMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
-            ]
-        });
+    imports: [TranslateModule.forRoot(), MatDialogModule, NoopAnimationsModule],
+    providers: [
+        DownloadZipService,
+        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        { provide: TranslationService, useClass: TranslationMock },
+        { provide: MatDialogRef, useValue: dialogRef },
+        { provide: MAT_DIALOG_DATA, useValue: dataMock },
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(DownloadZipDialogComponent);
         downloadZipService = TestBed.inject(DownloadZipService);

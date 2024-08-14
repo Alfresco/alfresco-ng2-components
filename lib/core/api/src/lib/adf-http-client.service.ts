@@ -17,15 +17,7 @@
 
 import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
 import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient } from '@alfresco/js-api';
-import {
-    HttpClient,
-    HttpContext,
-    HttpErrorResponse,
-    HttpEvent,
-    HttpHeaders,
-    HttpParams,
-    HttpResponse
-} from '@angular/common/http';
+import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';

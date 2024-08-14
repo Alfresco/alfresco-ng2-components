@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { TaskFiltersCloudComponent } from './components/task-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
 import { ProcessCommonModule } from '../../common/process-common.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
@@ -33,21 +33,7 @@ import { TaskAssignmentFilterCloudComponent } from './components/task-assignment
 import { GroupCloudModule } from '../../group/group-cloud.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-@NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        CommonModule,
-        MaterialModule,
-        AppListCloudModule,
-        CoreModule,
-        GroupCloudModule,
-        ProcessCommonModule,
-        PeopleCloudModule,
-        MatProgressSpinnerModule
-    ],
-    declarations: [
+@NgModule({ declarations: [
         TaskFiltersCloudComponent,
         ServiceTaskFiltersCloudComponent,
         EditTaskFilterCloudComponent,
@@ -55,6 +41,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         TaskFilterDialogCloudComponent,
         TaskAssignmentFilterCloudComponent
     ],
-    exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
-})
+    exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent], imports: [FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        MaterialModule,
+        AppListCloudModule,
+        CoreModule,
+        GroupCloudModule,
+        ProcessCommonModule,
+        PeopleCloudModule,
+        MatProgressSpinnerModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class TaskFiltersCloudModule {}

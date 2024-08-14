@@ -28,8 +28,9 @@ import {
 } from '@alfresco/adf-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -54,15 +55,17 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), FileViewerWidgetComponent, HttpClientTestingModule],
-            providers: [
-                { provide: FormService, useValue: formServiceStub },
-                { provide: TranslationService, useClass: TranslationMock },
-                AuthenticationService,
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        });
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [TranslateModule.forRoot(), FileViewerWidgetComponent],
+    providers: [
+        { provide: FormService, useValue: formServiceStub },
+        { provide: TranslationService, useClass: TranslationMock },
+        AuthenticationService,
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
 
         formServiceStub = TestBed.inject(FormService);
         fixture = TestBed.createComponent(FileViewerWidgetComponent);

@@ -44,7 +44,7 @@ import { DirectionalityConfigService } from './common/services/directionality-co
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
-import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXsrfConfiguration } from '@angular/common/http';
 import { AuthenticationService } from './auth/services/authentication.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { loadAppConfig } from './app-config/app-config.loader';
@@ -62,9 +62,37 @@ import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
 import { MaterialModule } from './material.module';
 
-@NgModule({
-    imports: [
+@NgModule({ exports: [
+        ...ABOUT_DIRECTIVES,
+        ...VIEWER_DIRECTIVES,
+        ...LAYOUT_DIRECTIVES,
+        ...CORE_PIPES,
+        ...CORE_DIRECTIVES,
+        ...CLIPBOARD_DIRECTIVES,
+        IdentityUserInfoComponent,
+        AppConfigPipe,
+        ...PAGINATION_DIRECTIVES,
+        ...TOOLBAR_DIRECTIVES,
+        ...CONTEXT_MENU_DIRECTIVES,
+        ...CARD_VIEW_DIRECTIVES,
+        FormBaseModule,
+        CommentsComponent,
+        CommentListComponent,
+        ...LOGIN_DIRECTIVES,
+        ...LANGUAGE_MENU_DIRECTIVES,
+        ...INFO_DRAWER_DIRECTIVES,
+        ...DATATABLE_DIRECTIVES,
         TranslateModule,
+        ...TEMPLATE_DIRECTIVES,
+        SortingPickerComponent,
+        IconComponent,
+        ...NOTIFICATION_HISTORY_DIRECTIVES,
+        ...SEARCH_TEXT_INPUT_DIRECTIVES,
+        BlankPageComponent,
+        UnsavedChangesDialogComponent,
+        DynamicChipListComponent,
+        MaterialModule
+    ], imports: [TranslateModule,
         ...ABOUT_DIRECTIVES,
         ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
@@ -92,45 +120,10 @@ import { MaterialModule } from './material.module';
         BlankPageComponent,
         UnsavedChangesDialogComponent,
         DynamicChipListComponent,
-        HttpClientModule,
-        HttpClientXsrfModule.withOptions({
+        MaterialModule], providers: [provideHttpClient(withInterceptorsFromDi(), withXsrfConfiguration({
             cookieName: 'CSRF-TOKEN',
             headerName: 'X-CSRF-TOKEN'
-        }),
-        MaterialModule
-    ],
-    exports: [
-        ...ABOUT_DIRECTIVES,
-        ...VIEWER_DIRECTIVES,
-        ...LAYOUT_DIRECTIVES,
-        ...CORE_PIPES,
-        ...CORE_DIRECTIVES,
-        ...CLIPBOARD_DIRECTIVES,
-        IdentityUserInfoComponent,
-        AppConfigPipe,
-        ...PAGINATION_DIRECTIVES,
-        ...TOOLBAR_DIRECTIVES,
-        ...CONTEXT_MENU_DIRECTIVES,
-        ...CARD_VIEW_DIRECTIVES,
-        FormBaseModule,
-        CommentsComponent,
-        CommentListComponent,
-        ...LOGIN_DIRECTIVES,
-        ...LANGUAGE_MENU_DIRECTIVES,
-        ...INFO_DRAWER_DIRECTIVES,
-        ...DATATABLE_DIRECTIVES,
-        TranslateModule,
-        ...TEMPLATE_DIRECTIVES,
-        SortingPickerComponent,
-        IconComponent,
-        ...NOTIFICATION_HISTORY_DIRECTIVES,
-        ...SEARCH_TEXT_INPUT_DIRECTIVES,
-        BlankPageComponent,
-        UnsavedChangesDialogComponent,
-        DynamicChipListComponent,
-        MaterialModule
-    ]
-})
+        }))] })
 export class CoreModule {
     static forRoot(): ModuleWithProviders<CoreModule> {
         return {

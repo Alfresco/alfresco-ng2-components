@@ -31,8 +31,9 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TreeComponent', () => {
     let fixture: ComponentFixture<TreeComponent<TreeNode>>;
@@ -64,9 +65,9 @@ describe('TreeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot(), TreeComponent],
-            providers: [UserPreferencesService, { provide: TreeService, useClass: TreeServiceMock }]
-        });
+    imports: [NoopAnimationsModule, TranslateModule.forRoot(), TreeComponent],
+    providers: [UserPreferencesService, { provide: TreeService, useClass: TreeServiceMock }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
 
         fixture = TestBed.createComponent(TreeComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);

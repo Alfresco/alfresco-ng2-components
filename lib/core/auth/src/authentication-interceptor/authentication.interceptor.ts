@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    HttpContextToken,
-    HttpHandler,
-    HttpHeaderResponse,
-    HttpHeaders,
-    HttpInterceptor,
-    HttpProgressEvent,
-    HttpRequest,
-    HttpResponse,
-    HttpSentEvent,
-    HttpUserEvent
-} from '@angular/common/http';
+import { HttpContextToken, HttpHandler, HttpHeaderResponse, HttpHeaders, HttpInterceptor, HttpProgressEvent, HttpRequest, HttpResponse, HttpSentEvent, HttpUserEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';

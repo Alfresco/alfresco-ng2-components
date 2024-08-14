@@ -23,8 +23,9 @@ import { VersionCompatibilityService } from './version-compatibility.service';
 import { VersionInfo } from '@alfresco/js-api';
 import { RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, of } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { VersionCompatibilityDirective } from '@alfresco/adf-content-services';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
     template: `
@@ -51,10 +52,10 @@ describe('VersionCompatibilityDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [VersionCompatibilityDirective, HttpClientTestingModule],
-            declarations: [TestComponent],
-            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
-        });
+    declarations: [TestComponent],
+    imports: [VersionCompatibilityDirective],
+    providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         fixture = TestBed.createComponent(TestComponent);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
         spyOn(versionCompatibilityService, 'getAcsVersion').and.returnValue(acsResponseMock);

@@ -22,7 +22,7 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { AuthModule } from '../oidc/auth.module';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CookieServiceMock } from '../../mock';
 import { AppConfigServiceMock } from '../../common';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
@@ -42,18 +42,19 @@ xdescribe('AuthenticationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), AuthModule.forRoot({ useHash: true }), HttpClientModule],
-            providers: [
-                {
-                    provide: CookieService,
-                    useClass: CookieServiceMock
-                },
-                {
-                    provide: AppConfigService,
-                    useClass: AppConfigServiceMock
-                }
-            ]
-        });
+    imports: [TranslateModule.forRoot(), AuthModule.forRoot({ useHash: true })],
+    providers: [
+        {
+            provide: CookieService,
+            useClass: CookieServiceMock
+        },
+        {
+            provide: AppConfigService,
+            useClass: AppConfigServiceMock
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
 
         sessionStorage.clear();
         localStorage.clear();

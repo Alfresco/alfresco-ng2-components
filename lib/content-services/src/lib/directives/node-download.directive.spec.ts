@@ -21,8 +21,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { NodeDownloadDirective } from './node-download.directive';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ContentApi } from '@alfresco/js-api';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
     standalone: true,
@@ -56,9 +57,9 @@ describe('NodeDownloadDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, MatDialogModule, TestComponent],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
-        });
+    imports: [MatDialogModule, TestComponent],
+    providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeDownloadDirective));

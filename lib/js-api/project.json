@@ -4,9 +4,10 @@
   "sourceRoot": "lib/js-api",
   "projectType": "library",
   "prefix": "adf",
+  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "dependsOn": ["build-esm5"],
       "options": {
@@ -24,7 +25,7 @@
       }
     },
     "build-esm5": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "dependsOn": ["build-esm2015"],
       "options": {
@@ -34,7 +35,7 @@
       }
     },
     "build-esm2015": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "dependsOn": ["build-cjs"],
       "options": {
@@ -44,7 +45,7 @@
       }
     },
     "build-cjs": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/js-api",
@@ -54,7 +55,7 @@
       }
     },
     "build-types": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/js-api/typings",
@@ -118,6 +119,5 @@
         }
       }
     }
-  },
-  "tags": []
+  }
 }

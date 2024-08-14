@@ -26,9 +26,10 @@ import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuthGuardService', () => {
     let state;
@@ -42,21 +43,23 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule, RouterTestingModule],
-            providers: [
-                AppConfigService,
-                StorageService,
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
-                {
-                    provide: OidcAuthenticationService,
-                    useValue: {
-                        ssoLogin: () => {},
-                        isPublicUrl: () => false,
-                        hasValidIdToken: () => false
-                    }
-                }
-            ]
-        });
+    imports: [TranslateModule.forRoot(), MatDialogModule, RouterTestingModule],
+    providers: [
+        AppConfigService,
+        StorageService,
+        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+        {
+            provide: OidcAuthenticationService,
+            useValue: {
+                ssoLogin: () => { },
+                isPublicUrl: () => false,
+                hasValidIdToken: () => false
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         localStorage.clear();
         state = { url: '' };
         authService = TestBed.inject(AuthenticationService);

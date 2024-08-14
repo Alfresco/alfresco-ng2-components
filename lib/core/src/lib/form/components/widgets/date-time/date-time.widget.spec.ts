@@ -29,7 +29,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DateTimeWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -40,17 +41,15 @@ describe('DateTimeWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                HttpClientTestingModule,
-                NoopAnimationsModule,
-                MatDialogModule,
-                MatNativeDatetimeModule,
-                MatDatepickerModule,
-                MatDatetimepickerModule,
-                DateTimeWidgetComponent
-            ]
-        });
+    imports: [TranslateModule.forRoot(),
+        NoopAnimationsModule,
+        MatDialogModule,
+        MatNativeDatetimeModule,
+        MatDatepickerModule,
+        MatDatetimepickerModule,
+        DateTimeWidgetComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
 
         element = fixture.nativeElement;

@@ -30,12 +30,13 @@ import {
 } from '../mock/task-filters-cloud.mock';
 import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { ApolloModule } from 'apollo-angular';
 import { StorageService } from '@alfresco/adf-core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -50,15 +51,14 @@ describe('TaskFilterCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule,
-                ProcessServiceCloudTestingModule,
-                ApolloModule
-            ],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
-            ]
-        });
+    imports: [ProcessServiceCloudTestingModule,
+        ApolloModule],
+    providers: [
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         service = TestBed.inject(TaskFilterCloudService);
         notificationCloudService = TestBed.inject(NotificationCloudService);
 
@@ -249,11 +249,13 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-            ]
-        });
+    imports: [ProcessServiceCloudTestingModule, ApolloModule],
+    providers: [
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
         service = TestBed.inject(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;
         identityUserService = TestBed.inject(IdentityUserService);
