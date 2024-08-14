@@ -43,4 +43,7 @@ export interface ThemeModel {
         };
         // define other supported widgets here
     };
+    defaults: {
+        [widgetType in SupportedWidgetType]?: string; // default styleName
+    };
 }

@@ -95,7 +95,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                 }
             }
 
-            this.style = this.widgetStyleService.getFieldStyle(originalField.type, originalField.style, originalField.form.theme);
+            this.style = this.widgetStyleService.getFieldStyle(originalField.type, originalField.style, originalField.form?.theme);
         }
     }
 
