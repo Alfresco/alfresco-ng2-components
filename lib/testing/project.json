@@ -11,8 +11,8 @@
         "projectRoot": "lib/testing",
         "outputPath": "dist/libs/testing",
         "main": "lib/testing/index.ts",
-        "generatePackageJson": true,
         "tsConfig": "lib/testing/tsconfig.lib.prod.json",
+        "webpackConfig": "lib/testing/webpack.config.js",
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         },
@@ -24,7 +24,6 @@
           "projectRoot": "lib/testing",
           "outputPath": "dist/libs/testing",
           "main": "lib/testing/index.ts",
-          "generatePackageJson": true,
           "tsConfig": "lib/testing/tsconfig.lib.prod.json"
         }
       },
