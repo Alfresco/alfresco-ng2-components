@@ -3,7 +3,7 @@
 @import '../variables/font-family';
 
 @function get-mat-typography($base-font-size, $font-family) {
-    $custom-typography: mat.define-legacy-typography-configmat.define-typography-config(
+    $custom-typography: mat.define-legacy-typography-config(
         $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',
         $headline-1: mat.define-typography-level(112px, 112px, 300),
         $headline-2: mat.define-typography-level(56px, 56px, 400),
@@ -21,7 +21,7 @@
     );
 
     @if $base-font-size {
-        $custom-typography: mat.define-legacy-typography-configmat.define-typography-config(
+        $custom-typography: mat.define-legacy-typography-config(
             $headline-1: mat.define-typography-level(8rem, 8rem, 300),
             $headline-2: mat.define-typography-level(4rem, 4rem, 400),
             $headline-3: mat.define-typography-level(3.21rem, 3.21rem, 400),
@@ -34,23 +34,24 @@
             $body-2: mat.define-typography-level(1rem, 1.42rem, 400),
             $caption: mat.define-typography-level(0.86rem, 1.42rem, 400),
             $button: mat.define-typography-level(1rem, 1rem, 500),
-            $font-family: $default-font-family,
+            $font-family: $default-font-family
         );
     }
 
     @if $font-family {
         @each $key, $level in $custom-typography {
+            /* stylelint-disable-next-line scss/no-global-function-names */
             @if type-of($level) == 'map' {
                 $new-level: map.merge(
                     $level,
                     (
-                        font-family: $font-family,
+                        font-family: $font-family
                     )
                 );
                 $custom-typography: map.merge(
                     $custom-typography,
                     (
-                        $key: $new-level,
+                        $key: $new-level
                     )
                 );
             }
@@ -59,7 +60,7 @@
         $custom-typography: map.merge(
             $custom-typography,
             (
-                font-family: $font-family,
+                font-family: $font-family
             )
         );
     }
