@@ -19,7 +19,6 @@
     "superagent": "^9.0.1",
     "tslib": "^2.6.1"
   },
-  "main": "./index.js",
   "typings": "./typings/index.d.ts",
   "module": "./esm5/index.js",
   "es2015": "./esm2015/index.js"
