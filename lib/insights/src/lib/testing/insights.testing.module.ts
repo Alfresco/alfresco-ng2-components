@@ -26,17 +26,17 @@ import {
     AppConfigServiceMock,
     TranslationService,
     TranslationMock,
-    CoreModule,
     AuthModule
 } from '@alfresco/adf-core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @NgModule({
-    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), InsightsModule],
+    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot(), InsightsModule],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock }
     ],
-    exports: [NoopAnimationsModule, TranslateModule, CoreModule, InsightsModule]
+    exports: [NoopAnimationsModule, TranslateModule, InsightsModule]
 })
 export class InsightsTestingModule {}
