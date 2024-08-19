@@ -43,10 +43,10 @@ export class BooleanCellComponent extends DataTableCellComponent implements OnIn
     }
 
     private transformBoolean(value: any): string {
-        if (value === true || value === 'true') {
+        if (value || value === 'true') {
             return 'true';
         }
-        if (value === false || value === 'false') {
+        if (!value || value === 'false') {
             return 'false';
         }
         return '';
