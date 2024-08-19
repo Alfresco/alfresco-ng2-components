@@ -60,7 +60,7 @@ describe('BooleanCellComponent', () => {
             nextSpy = spyOn(component.value$, 'next');
         });
 
-        it('should setup inital value', () => {
+        it('should setup initial value', () => {
             component.column = dataTableAdapter.getColumns()[0];
             component.row = dataTableAdapter.getRows()[0];
             component.data = dataTableAdapter;
@@ -70,7 +70,7 @@ describe('BooleanCellComponent', () => {
             expect(nextSpy).toHaveBeenCalledOnceWith(rowData.value);
         });
 
-        it('should NOT setup inital value', () => {
+        it('should NOT setup initial value', () => {
             fixture.detectChanges();
 
             expect(nextSpy).not.toHaveBeenCalled();
