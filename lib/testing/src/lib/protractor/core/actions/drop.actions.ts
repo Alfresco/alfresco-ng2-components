@@ -25,23 +25,27 @@ const JS_BIND_INPUT = (target) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.style.display = 'none';
-    input.addEventListener('change', () => {
-        target.scrollIntoView(true);
+    input.addEventListener(
+        'change',
+        () => {
+            target.scrollIntoView(true);
 
-        const rect = target.getBoundingClientRect();
-        const x = rect.left + (rect.width >> 1);
-        const y = rect.top + (rect.height >> 1);
-        const data = { files: input.files };
+            const rect = target.getBoundingClientRect();
+            const x = rect.left + (rect.width >> 1);
+            const y = rect.top + (rect.height >> 1);
+            const data = { files: input.files };
 
-        ['dragenter', 'dragover', 'drop'].forEach((name) => {
-            const mouseEvent: any = document.createEvent('MouseEvent');
-            mouseEvent.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);
-            mouseEvent.dataTransfer = data;
-            target.dispatchEvent(mouseEvent);
-        });
+            ['dragenter', 'dragover', 'drop'].forEach((name) => {
+                const mouseEvent: any = document.createEvent('MouseEvent');
+                mouseEvent.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);
+                mouseEvent.dataTransfer = data;
+                target.dispatchEvent(mouseEvent);
+            });
 
-        document.body.removeChild(input);
-    }, false);
+            document.body.removeChild(input);
+        },
+        false
+    );
 
     document.body.appendChild(input);
     return input;
@@ -53,45 +57,39 @@ const JS_BIND_INPUT_FOLDER = (target) => {
     input.style.display = 'none';
     input.multiple = true;
     input.webkitdirectory = true;
-    input.addEventListener('change', () => {
-        target.scrollIntoView(true);
+    input.addEventListener(
+        'change',
+        () => {
+            target.scrollIntoView(true);
 
-        const rect = target.getBoundingClientRect();
-        const x = rect.left + (rect.width >> 1);
-        const y = rect.top + (rect.height >> 1);
-        const data = { files: input.files };
+            const rect = target.getBoundingClientRect();
+            const x = rect.left + (rect.width >> 1);
+            const y = rect.top + (rect.height >> 1);
+            const data = { files: input.files };
 
-        ['dragenter', 'dragover', 'drop'].forEach((name) => {
-            const mouseEvent: any = document.createEvent('MouseEvent');
-            mouseEvent.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);
-            mouseEvent.dataTransfer = data;
-            target.dispatchEvent(mouseEvent);
-        });
+            ['dragenter', 'dragover', 'drop'].forEach((name) => {
+                const mouseEvent: any = document.createEvent('MouseEvent');
+                mouseEvent.initMouseEvent(name, !0, !0, window, 0, 0, 0, x, y, !1, !1, !1, !1, 0, null);
+                mouseEvent.dataTransfer = data;
+                target.dispatchEvent(mouseEvent);
+            });
 
-        document.body.removeChild(input);
-    }, false);
+            document.body.removeChild(input);
+        },
+        false
+    );
 
     document.body.appendChild(input);
     return input;
 };
 
 export class DropActions {
-
     static async dropFile(dropArea, filePath) {
         const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, filePath));
 
         fs.accessSync(absolutePath, fs.constants.F_OK);
         const elem = await dropArea.getWebElement();
         const input: any = await browser.executeScript(JS_BIND_INPUT, elem);
-        return input.sendKeys(absolutePath);
-    }
-
-    static async dropFolder(dropArea, folderPath) {
-        const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, folderPath));
-        fs.accessSync(absolutePath, fs.constants.F_OK);
-
-        const elem = await dropArea.getWebElement();
-        const input: any = await browser.executeScript(JS_BIND_INPUT_FOLDER, elem);
         return input.sendKeys(absolutePath);
     }
 
