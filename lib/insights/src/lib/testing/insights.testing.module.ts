@@ -31,7 +31,7 @@ import {
 } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot(), InsightsModule],
+    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), InsightsModule],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },

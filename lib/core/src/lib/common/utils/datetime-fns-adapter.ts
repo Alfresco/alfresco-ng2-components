@@ -58,7 +58,7 @@ function range<T>(length: number, valueFunction: (index: number) => T): T[] {
     return valuesArray;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AdfDateTimeFnsAdapter extends DatetimeAdapter<Date> {
     private _displayFormat?: string = null;
 
