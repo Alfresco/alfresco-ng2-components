@@ -3,7 +3,7 @@
 @import '../variables/font-family';
 
 @function get-mat-typography($base-font-size, $font-family) {
-    $custom-typography: mat.define-legacy-typography-config(
+    $custom-typography: mat.define-typography-config(
         $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',
         $headline-1: mat.define-typography-level(112px, 112px, 300),
         $headline-2: mat.define-typography-level(56px, 56px, 400),
@@ -21,7 +21,7 @@
     );
 
     @if $base-font-size {
-        $custom-typography: mat.define-legacy-typography-config(
+        $custom-typography: mat.define-typography-config(
             $headline-1: mat.define-typography-level(8rem, 8rem, 300),
             $headline-2: mat.define-typography-level(4rem, 4rem, 400),
             $headline-3: mat.define-typography-level(3.21rem, 3.21rem, 400),
