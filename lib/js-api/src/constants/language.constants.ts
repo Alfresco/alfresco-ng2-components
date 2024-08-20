@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 
-export * from './types';
-export * from './filePlans.api';
-export * from './files.api';
-export * from './gsSites.api';
-export * from './recordCategories.api';
-export * from './recordFolders.api';
-export * from './records.api';
-export * from './transferContainers.api';
-export * from './transfers.api';
-export * from './unfiledContainers.api';
-export * from './unfiledRecordFolders.api';
-export * from './legal-hold.api';
+export const SEARCH_LANGUAGE = {
+    AFTS: 'afts',
+    LUCENE: 'lucene',
+    CMIS: 'cmis'
+};

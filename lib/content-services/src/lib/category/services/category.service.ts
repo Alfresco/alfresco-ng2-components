@@ -17,7 +17,16 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-import { CategoriesApi, CategoryBody, CategoryEntry, CategoryLinkBody, CategoryPaging, ResultSetPaging, SearchApi } from '@alfresco/js-api';
+import {
+    CategoriesApi,
+    CategoryBody,
+    CategoryEntry,
+    CategoryLinkBody,
+    CategoryPaging,
+    ResultSetPaging,
+    SearchApi,
+    SEARCH_LANGUAGE
+} from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -113,7 +122,7 @@ export class CategoryService {
         return from(
             this.searchApi.search({
                 query: {
-                    language: 'afts',
+                    language: SEARCH_LANGUAGE.AFTS,
                     query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
                 },
                 paging: {
@@ -163,6 +172,6 @@ export class CategoryService {
      * @returns boolean true if categories plugin is enabled, false otherwise.
      */
     areCategoriesEnabled(): boolean {
-         return this.appConfigService.get('plugins.categoriesEnabled', true);
+        return this.appConfigService.get('plugins.categoriesEnabled', true);
     }
 }

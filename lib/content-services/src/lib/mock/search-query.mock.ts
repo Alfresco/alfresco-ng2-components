@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { SearchRequest } from '@alfresco/js-api';
+import { SEARCH_LANGUAGE, SearchRequest } from '@alfresco/js-api';
 
 export const mockSearchRequest = {
     query: {
         query: '(search-term*)',
-        language: 'afts'
+        language: SEARCH_LANGUAGE.AFTS
     },
     include: ['path', 'allowableOperations'],
     paging: {

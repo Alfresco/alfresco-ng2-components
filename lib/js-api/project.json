@@ -8,7 +8,7 @@
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": ["build-esm5", "build-esm2015", "build-cjs"],
+      "dependsOn": ["build-esm5"],
       "options": {
         "outputPath": "dist/libs/js-api/typings",
         "main": "lib/js-api/src/index.ts",
@@ -23,19 +23,10 @@
         }
       }
     },
-    "build-cjs": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/js-api",
-        "main": "lib/js-api/src/index.ts",
-        "tsConfig": "lib/js-api/tsconfig/tsconfig.cjs.json",
-        "assets": ["lib/js-api/*.md", "lib/js-api/LICENSE.txt"]
-      }
-    },
     "build-esm5": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["build-esm2015"],
       "options": {
         "outputPath": "dist/libs/js-api/esm5",
         "main": "lib/js-api/src/index.ts",
@@ -45,10 +36,21 @@
     "build-esm2015": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["build-cjs"],
       "options": {
         "outputPath": "dist/libs/js-api/esm2015",
         "main": "lib/js-api/src/index.ts",
         "tsConfig": "lib/js-api/tsconfig/tsconfig.esm2015.json"
+      }
+    },
+    "build-cjs": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/js-api",
+        "main": "lib/js-api/src/index.ts",
+        "tsConfig": "lib/js-api/tsconfig/tsconfig.cjs.json",
+        "assets": ["lib/js-api/*.md", "lib/js-api/LICENSE.txt"]
       }
     },
     "build-types": {
