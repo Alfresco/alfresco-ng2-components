@@ -106,7 +106,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     /** Emitted when an error occurs. */
     @Output()
-    error = new EventEmitter<ProcessInstanceCloud>();
+    error = new EventEmitter<any>();
 
     /** Emitted when form content is clicked. */
     @Output()
@@ -360,10 +360,22 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             },
             error: (err) => {
                 this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
+                this.unifyErrorResponse(err);
                 this.error.emit(err);
                 this.isProcessStarting = false;
             }
         });
+    }
+
+    private unifyErrorResponse(err: any) {
+        if (err.response.body.status && err.response.body.message) {
+            err.response.body = {
+                entry: {
+                    code: err.response.body.status,
+                    message: err.response.body.message
+                }
+            };
+        }
     }
 
     cancelStartProcess() {
