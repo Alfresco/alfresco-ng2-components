@@ -38,8 +38,6 @@ import { AppConfigValues } from '../../app-config';
 @Component({
     standalone: true,
     selector: 'adf-unsaved-changes-dialog',
-    standalone: true,
-    imports: [CommonModule, MatDialogModule, TranslateModule, MatButtonModule, MatIconModule],
     encapsulation: ViewEncapsulation.None,
     templateUrl: './unsaved-changes-dialog.component.html',
     styleUrls: ['./unsaved-changes-dialog.component.scss'],
@@ -49,7 +47,10 @@ import { AppConfigValues } from '../../app-config';
 export class UnsavedChangesDialogComponent implements OnInit {
     dialogData: UnsavedChangesDialogData;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData, private storageService: StorageService) {}
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData,
+        private storageService: StorageService
+    ) {}
 
     ngOnInit() {
         this.dialogData = {
