@@ -12,9 +12,9 @@
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" (focusout)="markAsTouched()" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id" class="adf-attach-widget__menu-trigger">
-                {{ 'FORM.FIELD.UPLOAD' | translate }}
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
                 <mat-icon>attach_file</mat-icon>
+                {{ 'FORM.FIELD.UPLOAD' | translate }}
             </button>
             <mat-menu #menu="matMenu" class="adf-attach-widget__menu-content">
                 <button mat-menu-item (click)="uploadFile.click()" id="attach-local-file" *ngIf="isAllFileSourceSelected()">
@@ -35,17 +35,17 @@
                     id="attach-{{ field.params?.fileSource?.name }}"
                     (click)="openSelectDialogFromFileSource()"
                 >
-                    {{ field.params?.fileSource?.name }}
                     <mat-icon>
-                        <img alt="alfresco" class="adf-attach-widget__image-logo" src="../../../assets/images/alfresco-flower.svg" />
+                        <img alt="alfresco" src="../../../assets/images/alfresco-flower.svg" />
                     </mat-icon>
+                    {{ field.params?.fileSource?.name }}
                 </button>
                 <div *ngIf="!isDefinedSourceFolder()">
                     <button mat-menu-item *ngFor="let repo of repositoryList" id="attach-{{ repo?.name }}" (click)="openSelectDialog(repo)">
-                        {{ repo.name }}
                         <mat-icon>
-                            <img alt="alfresco" class="adf-attach-widget__image-logo" src="../../../assets/images/alfresco-flower.svg" />
+                            <img alt="alfresco" src="../../../assets/images/alfresco-flower.svg" />
                         </mat-icon>
+                        {{ repo.name }}
                     </button>
                 </div>
             </mat-menu>
