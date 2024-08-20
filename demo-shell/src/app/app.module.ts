@@ -27,7 +27,6 @@ import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ContentModule } from '@alfresco/adf-content-services';
-import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { environment } from '../environments/environment';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
@@ -44,7 +43,6 @@ import { CoreAutomationService } from '../testing/automation.service';
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ContentModule.forRoot(),
-        InsightsModule.forRoot(),
         ProcessModule.forRoot(),
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
@@ -54,7 +52,8 @@ import { CoreAutomationService } from '../testing/automation.service';
     declarations: [AppComponent],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
-        provideTranslations('app', 'resources')
+        provideTranslations('app', 'resources'),
+        provideTranslations('adf-insights', 'assets/adf-insights')
     ],
     bootstrap: [AppComponent]
 })
