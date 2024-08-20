@@ -101,7 +101,6 @@
                 </button>
                 <button
                     *ngIf="!field.readOnly"
-                    id="{{ 'file-' + file.id + '-remove-file' }}"
                     mat-menu-item
                     [id]="'file-' + file.id + '-remove'"
                     (click)="onRemoveAttachFile(file)"
