@@ -18,26 +18,39 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { CommonModule } from '@angular/common';
-import { BooleanPipe } from '../../../pipes/boolean.pipe';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, BooleanPipe],
+    imports: [CommonModule],
     selector: 'adf-boolean-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container *ngIf="value$ | async | adfBoolean as value">
-            <span [title]="tooltip">
-                {{ value }}
-            </span>
-        </ng-container>
+        <span [title]="tooltip">
+            {{ boolValue }}
+        </span>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell' }
 })
 export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
+    boolValue = '';
 
     ngOnInit() {
         super.ngOnInit();
+
+        this.value$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
+            this.boolValue = this.transformBoolean(value);
+        });
+    }
+
+    private transformBoolean(value: any): string {
+        if (value === true || value === 'true') {
+            return 'true';
+        }
+        if (value === false || value === 'false') {
+            return 'false';
+        }
+        return '';
     }
 }

@@ -23,17 +23,12 @@ import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 describe('BooleanCellComponent', () => {
     let component: BooleanCellComponent;
     let fixture: ComponentFixture<BooleanCellComponent>;
-    const getBooleanCell = () => fixture.debugElement.nativeElement.querySelector('span');
-    const renderAndCheckResult = (value: any, expectedOccurrence: boolean, expectedLabel?: string) => {
+    let valueEl: HTMLElement;
+
+    const renderAndGetResult = async (value: any) => {
         component.value$.next(value);
         fixture.detectChanges();
-
-        const booleanCell = getBooleanCell();
-
-        expectedOccurrence ? expect(booleanCell).toBeTruthy() : expect(booleanCell).toBeFalsy();
-        if (expectedLabel) {
-            expect(booleanCell.textContent.trim()).toBe(expectedLabel);
-        }
+        return valueEl.textContent.trim();
     };
 
     beforeEach(() => {
@@ -42,6 +37,7 @@ describe('BooleanCellComponent', () => {
         });
         fixture = TestBed.createComponent(BooleanCellComponent);
         component = fixture.componentInstance;
+        valueEl = fixture.nativeElement.querySelector('span');
     });
 
     describe('Initialization', () => {
@@ -60,7 +56,7 @@ describe('BooleanCellComponent', () => {
             nextSpy = spyOn(component.value$, 'next');
         });
 
-        it('should setup inital value', () => {
+        it('should setup initial value', () => {
             component.column = dataTableAdapter.getColumns()[0];
             component.row = dataTableAdapter.getRows()[0];
             component.data = dataTableAdapter;
@@ -70,7 +66,7 @@ describe('BooleanCellComponent', () => {
             expect(nextSpy).toHaveBeenCalledOnceWith(rowData.value);
         });
 
-        it('should NOT setup inital value', () => {
+        it('should NOT setup initial value', () => {
             fixture.detectChanges();
 
             expect(nextSpy).not.toHaveBeenCalled();
@@ -79,52 +75,63 @@ describe('BooleanCellComponent', () => {
 
     describe('UI', () => {
         describe('should render "true" inside cell when', () => {
-            it('boolean value is true', () => {
-                renderAndCheckResult(true, true, 'true');
+            it('boolean value is true', async () => {
+                const result = await renderAndGetResult(true);
+                expect(result).toBe('true');
             });
 
-            it('exact string is provided', () => {
-                renderAndCheckResult('true', true, 'true');
+            it('exact string is provided', async () => {
+                const result = await renderAndGetResult('true');
+                expect(result).toBe('true');
             });
         });
 
         describe('should render "false" inside cell when', () => {
-            it('boolean value is false', () => {
-                renderAndCheckResult(false, true, 'false');
+            it('boolean value is false', async () => {
+                const result = await renderAndGetResult(false);
+                expect(result).toBe('false');
             });
 
-            it('exact string is provided', () => {
-                renderAndCheckResult('false', true, 'false');
+            it('exact string is provided', async () => {
+                const result = await renderAndGetResult('false');
+                expect(result).toBe('false');
             });
         });
 
         describe('should NOT render value inside cell in case of', () => {
-            it('invalid string', () => {
-                renderAndCheckResult('tru', false);
+            it('invalid string', async () => {
+                const result = await renderAndGetResult('tru');
+                expect(result).toBe('');
             });
 
-            it('number', () => {
-                renderAndCheckResult(0, false);
+            it('number', async () => {
+                const result = await renderAndGetResult(0);
+                expect(result).toBe('');
             });
 
-            it('object', () => {
-                renderAndCheckResult({}, false);
+            it('object', async () => {
+                const result = await renderAndGetResult({});
+                expect(result).toBe('');
             });
 
-            it('null', () => {
-                renderAndCheckResult(null, false);
+            it('null', async () => {
+                const result = await renderAndGetResult(null);
+                expect(result).toBe('');
             });
 
-            it('undefined', () => {
-                renderAndCheckResult(undefined, false);
+            it('undefined', async () => {
+                const result = await renderAndGetResult(undefined);
+                expect(result).toBe('');
             });
 
-            it('empty string', () => {
-                renderAndCheckResult('', false);
+            it('empty string', async () => {
+                const result = await renderAndGetResult('');
+                expect(result).toBe('');
             });
 
-            it('NaN', () => {
-                renderAndCheckResult(NaN, false);
+            it('NaN', async () => {
+                const result = await renderAndGetResult(NaN);
+                expect(result).toBe('');
             });
         });
     });
