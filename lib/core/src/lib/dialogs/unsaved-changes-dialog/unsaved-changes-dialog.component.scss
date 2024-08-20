@@ -34,9 +34,10 @@
         }
 
         &-actions {
-            margin-top: 18px;
-            margin-bottom: 4px;
+            margin-top: 11px;
+            margin-bottom: 1px;
             padding: 0;
+            align-items: flex-end;
 
             &-cancel-button {
                 background-color: var(--adf-secondary-button-background);
