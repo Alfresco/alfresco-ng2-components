@@ -36,14 +36,14 @@
                     (click)="openSelectDialogFromFileSource()"
                 >
                     <mat-icon>
-                        <img alt="alfresco" src="../../../assets/images/alfresco-flower.svg" />
+                        <adf-alfresco-icon></adf-alfresco-icon>
                     </mat-icon>
                     {{ field.params?.fileSource?.name }}
                 </button>
                 <div *ngIf="!isDefinedSourceFolder()">
                     <button mat-menu-item *ngFor="let repo of repositoryList" id="attach-{{ repo?.name }}" (click)="openSelectDialog(repo)">
                         <mat-icon>
-                            <img alt="alfresco" src="../../../assets/images/alfresco-flower.svg" />
+                            <adf-alfresco-icon></adf-alfresco-icon>
                         </mat-icon>
                         {{ repo.name }}
                     </button>
