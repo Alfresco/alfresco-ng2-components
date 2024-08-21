@@ -22,7 +22,6 @@ import { TestElement } from '../../../test-element';
 import { materialLocators } from '../../public-api';
 
 export class AttachFileWidgetPage {
-
     formFields = new FormFields();
     alfrescoTypeUploadLocator = 'button[id="attachfile"]';
     localStorageButton = $('input[id="attachfile"]');
@@ -165,6 +164,6 @@ export class AttachFileWidgetPage {
 
     private async getFileAttachedNotAttachedLocator(fieldId: string, name: string) {
         const widget = await this.formFields.getWidget(fieldId);
-        return widget.$(this.filesListLocator).element(by.cssContainingText(`${materialLocators.List.item.root} span span span`, name));
+        return widget.$(this.filesListLocator).element(by.cssContainingText(`.adf-attach-widget__label span`, name));
     }
 }

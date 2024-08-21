@@ -12,9 +12,9 @@
             </a>
         </div>
         <div class="adf-attach-widget__menu-upload" (focusout)="markAsTouched()" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id" class="adf-attach-widget__menu-trigger">
-                {{ 'FORM.FIELD.UPLOAD' | translate }}
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
                 <mat-icon>attach_file</mat-icon>
+                {{ 'FORM.FIELD.UPLOAD' | translate }}
             </button>
             <mat-menu #menu="matMenu" class="adf-attach-widget__menu-content">
                 <button mat-menu-item (click)="uploadFile.click()" id="attach-local-file" *ngIf="isAllFileSourceSelected()">
@@ -35,17 +35,17 @@
                     id="attach-{{ field.params?.fileSource?.name }}"
                     (click)="openSelectDialogFromFileSource()"
                 >
-                    {{ field.params?.fileSource?.name }}
                     <mat-icon>
-                        <img alt="alfresco" class="adf-attach-widget__image-logo" src="../../../assets/images/alfresco-flower.svg" />
+                        <adf-alfresco-icon></adf-alfresco-icon>
                     </mat-icon>
+                    {{ field.params?.fileSource?.name }}
                 </button>
                 <div *ngIf="!isDefinedSourceFolder()">
                     <button mat-menu-item *ngFor="let repo of repositoryList" id="attach-{{ repo?.name }}" (click)="openSelectDialog(repo)">
-                        {{ repo.name }}
                         <mat-icon>
-                            <img alt="alfresco" class="adf-attach-widget__image-logo" src="../../../assets/images/alfresco-flower.svg" />
+                            <adf-alfresco-icon></adf-alfresco-icon>
                         </mat-icon>
+                        {{ repo.name }}
                     </button>
                 </div>
             </mat-menu>
@@ -56,20 +56,30 @@
 <div data-automation-id="adf-attach-widget-readonly-list">
     <mat-list *ngIf="hasFile">
         <mat-list-item class="adf-attach-files-row" *ngFor="let file of field.value; index as i">
-            <img matListItemLine class="adf-attach-widget__icon"
-                 [id]="'file-'+file.id+'-icon'"
-                 [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)"
-                 [alt]="mimeTypeIcon"
-                 (click)="onAttachFileClicked(file)"
-                 (keyup.enter)="onAttachFileClicked(file)"
-                 [attr.aria-label]="file.name"
-                 [tabindex]="i"/>
-            <span matLine id="{{'file-'+file.id}}" (click)="onAttachFileClicked(file)" [title]="file.name" (keyup.enter)="onAttachFileClicked(file)"
-                 [tabindex]="i" class="adf-file">{{file.name}}</span>
-            <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
-                    [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
-                <mat-icon>more_vert</mat-icon>
-            </button>
+            <mat-icon matListItemIcon>
+                <img class="adf-attach-widget__icon"
+                     [id]="'file-'+file.id+'-icon'"
+                     [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)"
+                     [alt]="mimeTypeIcon"
+                     (click)="onAttachFileClicked(file)"
+                     (keyup.enter)="onAttachFileClicked(file)"
+                     [attr.aria-label]="file.name"
+                     [tabindex]="i"/>
+            </mat-icon>
+
+            <div matListItemLine class="adf-attach-widget__label">
+                <span id="{{'file-'+file.id}}"
+                      (click)="onAttachFileClicked(file)"
+                      [title]="file.name"
+                      (keyup.enter)="onAttachFileClicked(file)"
+                      [tabindex]="i" class="adf-file">
+                    {{file.name}}
+                </span>
+                <button id="{{'file-'+file.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu"
+                        [attr.aria-label]="'ADF_PROCESS_LIST.DETAILS.BUTTON.FILE_OPTION_MENU' | translate">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </div>
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
                 <button
                     id="{{ 'file-' + file.id + '-show-file' }}"
@@ -91,7 +101,6 @@
                 </button>
                 <button
                     *ngIf="!field.readOnly"
-                    id="{{ 'file-' + file.id + '-remove-file' }}"
                     mat-menu-item
                     [id]="'file-' + file.id + '-remove'"
                     (click)="onRemoveAttachFile(file)"

@@ -45,6 +45,7 @@ import { NodeCommentsComponent } from './node-comments';
 import { AlfrescoViewerComponent } from './viewer';
 import { ContentTypeDialogComponent } from './content-type';
 import { MaterialModule } from './material.module';
+import { AlfrescoIconComponent } from './alfresco-icon/alfresco-icon.component';
 
 @NgModule({
     imports: [
@@ -72,7 +73,8 @@ import { MaterialModule } from './material.module';
         TreeComponent,
         AlfrescoViewerComponent,
         CategoriesManagementComponent,
-        NewVersionUploaderDialogComponent
+        NewVersionUploaderDialogComponent,
+        AlfrescoIconComponent
     ],
     providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
     exports: [
@@ -98,7 +100,8 @@ import { MaterialModule } from './material.module';
         TreeComponent,
         AlfrescoViewerComponent,
         CategoriesManagementComponent,
-        NewVersionUploaderDialogComponent
+        NewVersionUploaderDialogComponent,
+        AlfrescoIconComponent
     ]
 })
 export class ContentModule {
