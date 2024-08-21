@@ -17,4 +17,3 @@
 
 export * from './document-list.page';
 export * from './breadcrumb/public-api';
-export * from './search/public-api';

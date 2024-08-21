@@ -33,4 +33,3 @@ export * from './moment-datetime.pipe';
 export * from './date-time.pipe';
 export * from './filter-string.pipe';
 export * from './filter-out-every-object-by-prop.pipe';
-export * from './boolean.pipe';
