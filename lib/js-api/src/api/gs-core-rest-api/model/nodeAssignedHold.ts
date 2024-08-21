@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-export * from './search-categories.page';
-export * from './number-range-filter.page';
-export * from './search-check-list.page';
-export * from './search-radio.page';
-export * from './search-slider.page';
-export * from './search-sorting-picker.page';
-export * from './search-text.page';
+export interface NodeAssignedHold {
+    id: string;
+    name: string;
+}

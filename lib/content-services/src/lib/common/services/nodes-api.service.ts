@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging, NodesApi, TrashcanApi, Node } from '@alfresco/js-api';
-import { Subject, from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { ContentPagingQuery, Node, NodeAssignedHold, NodeEntry, NodePaging, NodesApi, NodesIncludeQuery, TrashcanApi } from '@alfresco/js-api';
+import { Injectable } from '@angular/core';
+import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
 
@@ -164,33 +164,35 @@ export class NodesApiService {
      * @param nodeId ID of the target node
      * @returns Node metadata
      */
-    public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
+    getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
         return from(this.nodesApi.getNode(nodeId)).pipe(map(this.cleanMetadataFromSemicolon));
     }
 
     /**
-     * Create a new Node from form metadata.
+     * Gets the list of holds assigned to the node.
      *
-     * @param nodeType Node type
-     * @param nameSpace Namespace for properties
-     * @param data Property data to store in the node under namespace
-     * @param path Path to the node
-     * @param name Node name
-     * @returns The created node
+     * @param nodeId ID of the target node
+     * @param options Optional parameters supported by JS-API
+     * @param options.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
+     * @returns List of assigned holds Observable<Hold[]>
      */
-    public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
-        const properties = {};
-        for (const key in data) {
-            if (data[key]) {
-                properties[nameSpace + ':' + key] = data[key];
-            }
-        }
+    getNodeAssignedHolds(
+        nodeId: string,
+        options?: {
+            includeSource?: boolean;
+        } & NodesIncludeQuery &
+            ContentPagingQuery
+    ): Observable<NodeAssignedHold[]> {
+        const queryOptions = Object.assign({ where: `(assocType='rma:frozenContent')` }, options);
 
-        return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
-    }
-
-    private randomNodeName(): string {
-        return `node_${Date.now()}`;
+        return from(this.nodesApi.listParents(nodeId, queryOptions)).pipe(
+            map(({ list }) =>
+                list.entries?.map(({ entry }) => ({
+                    id: entry.id,
+                    name: entry.name
+                }))
+            )
+        );
     }
 
     /**
@@ -212,7 +214,7 @@ export class NodesApiService {
      * @param path Path to the node
      * @returns The created node
      */
-    public createNodeInsideRoot(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
+    createNodeInsideRoot(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
         const body = {
             name,
             nodeType,
@@ -220,6 +222,31 @@ export class NodesApiService {
             relativePath: path
         };
         return from(this.nodesApi.createNode('-root-', body, {}));
+    }
+
+    /**
+     * Create a new Node from form metadata.
+     *
+     * @param nodeType Node type
+     * @param nameSpace Namespace for properties
+     * @param data Property data to store in the node under namespace
+     * @param path Path to the node
+     * @param name Node name
+     * @returns The created node
+     */
+    createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
+        const properties = {};
+        for (const key in data) {
+            if (data[key]) {
+                properties[nameSpace + ':' + key] = data[key];
+            }
+        }
+
+        return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
+    }
+
+    private randomNodeName(): string {
+        return `node_${Date.now()}`;
     }
 
     private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {

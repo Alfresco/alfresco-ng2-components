@@ -15,22 +15,7 @@
  * limitations under the License.
  */
 
-import { protractor, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '../../../core/utils/browser-visibility';
-import { BrowserActions } from '../../../core/utils/browser-actions';
-
-export class SearchTextPage {
-
-    filter: ElementFinder;
-    inputBy = 'input';
-
-    constructor(filter: ElementFinder) {
-        this.filter = filter;
-    }
-
-    async searchByName(name: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        await BrowserActions.clearSendKeys(this.filter.$(this.inputBy), name);
-        await this.filter.$(this.inputBy).sendKeys(protractor.Key.ENTER);
-    }
+export interface BulkAssignHoldResponse {
+    bulkStatusId: string;
+    totalItems: number;
 }

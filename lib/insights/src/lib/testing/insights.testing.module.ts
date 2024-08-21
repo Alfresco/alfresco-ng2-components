@@ -18,7 +18,6 @@
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { InsightsModule } from '../insights.module';
 import {
     AlfrescoApiService,
     AlfrescoApiServiceMock,
@@ -26,17 +25,17 @@ import {
     AppConfigServiceMock,
     TranslationService,
     TranslationMock,
-    CoreModule,
     AuthModule
 } from '@alfresco/adf-core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @NgModule({
-    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot(), InsightsModule],
+    imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot()],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock }
     ],
-    exports: [NoopAnimationsModule, TranslateModule, CoreModule, InsightsModule]
+    exports: [NoopAnimationsModule, TranslateModule]
 })
 export class InsightsTestingModule {}

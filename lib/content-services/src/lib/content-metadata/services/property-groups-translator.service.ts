@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
     CardViewItemProperties,
     CardViewItem,
@@ -30,7 +30,8 @@ import {
     MultiValuePipe,
     AppConfigService,
     DecimalNumberPipe,
-    LogService
+    LogService,
+    UserPreferencesService
 } from '@alfresco/adf-core';
 import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { of } from 'rxjs';
@@ -52,14 +53,13 @@ export const RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT
     providedIn: 'root'
 })
 export class PropertyGroupTranslatorService {
+    private userPreferenceService = inject(UserPreferencesService);
+    private appConfig = inject(AppConfigService);
+    private logService = inject(LogService);
+
     valueSeparator: string;
 
-    constructor(
-        private multiValuePipe: MultiValuePipe,
-        private decimalNumberPipe: DecimalNumberPipe,
-        private appConfig: AppConfigService,
-        private logService: LogService
-    ) {
+    constructor() {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
@@ -137,7 +137,7 @@ export class PropertyGroupTranslatorService {
                     cardViewItemProperty = new CardViewIntItemModel(
                         Object.assign(propertyDefinition, {
                             multivalued: isMultiValued,
-                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -146,7 +146,7 @@ export class PropertyGroupTranslatorService {
                     cardViewItemProperty = new CardViewLongItemModel(
                         Object.assign(propertyDefinition, {
                             multivalued: isMultiValued,
-                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -156,7 +156,10 @@ export class PropertyGroupTranslatorService {
                     cardViewItemProperty = new CardViewFloatItemModel(
                         Object.assign(propertyDefinition, {
                             multivalued: isMultiValued,
-                            pipes: [{ pipe: this.decimalNumberPipe }, { pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                            pipes: [
+                                { pipe: new DecimalNumberPipe(this.userPreferenceService, this.appConfig) },
+                                { pipe: new MultiValuePipe(), params: [this.valueSeparator] }
+                            ]
                         })
                     );
                     break;
@@ -165,7 +168,7 @@ export class PropertyGroupTranslatorService {
                     cardViewItemProperty = new CardViewDateItemModel(
                         Object.assign(propertyDefinition, {
                             multivalued: isMultiValued,
-                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -174,7 +177,7 @@ export class PropertyGroupTranslatorService {
                     cardViewItemProperty = new CardViewDatetimeItemModel(
                         Object.assign(propertyDefinition, {
                             multivalued: isMultiValued,
-                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -189,7 +192,7 @@ export class PropertyGroupTranslatorService {
                         Object.assign(propertyDefinition, {
                             multivalued: isMultiValued,
                             multiline: isMultiValued,
-                            pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator] }]
+                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
                         })
                     );
             }

@@ -26,3 +26,4 @@ export * from './transferContainers.api';
 export * from './transfers.api';
 export * from './unfiledContainers.api';
 export * from './unfiledRecordFolders.api';
+export * from './legal-hold.api';

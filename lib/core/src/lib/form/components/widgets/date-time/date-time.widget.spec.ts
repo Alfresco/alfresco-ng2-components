@@ -20,17 +20,13 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormFieldTypes } from '../core/form-field-types';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { addMinutes } from 'date-fns';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -49,13 +45,10 @@ describe('DateTimeWidgetComponent', () => {
                 HttpClientTestingModule,
                 NoopAnimationsModule,
                 MatDialogModule,
-                MatMenuModule,
-                MatFormFieldModule,
                 MatNativeDatetimeModule,
                 MatDatepickerModule,
-                MatButtonModule,
                 MatDatetimepickerModule,
-                MatTooltipModule
+                DateTimeWidgetComponent
             ]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);

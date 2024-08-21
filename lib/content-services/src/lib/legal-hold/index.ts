@@ -15,19 +15,4 @@
  * limitations under the License.
  */
 
-import { FormFields } from '../form-fields';
-import { by, Locator } from 'protractor';
-
-export class DocumentWidgetPage {
-
-    formFields: FormFields = new FormFields();
-    fileLocator: Locator = by.css(`div [class*='upload-widget__content-text']`);
-
-    getFieldText(fieldId): Promise<string> {
-        return this.formFields.getFieldText(fieldId, this.fileLocator);
-    }
-
-    getFileName(fieldId): Promise<string> {
-        return this.formFields.getFieldText(fieldId, this.fileLocator);
-    }
-}
+export * from './public-api';

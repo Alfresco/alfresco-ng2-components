@@ -17,6 +17,7 @@
 
 import nock from 'nock';
 import { BaseMock } from '../base.mock';
+import { SEARCH_LANGUAGE } from '@alfresco/js-api';
 
 export class SearchMock extends BaseMock {
     get200Response(): void {
@@ -24,7 +25,7 @@ export class SearchMock extends BaseMock {
             .post('/alfresco/api/-default-/public/search/versions/1/search', {
                 query: {
                     query: 'select * from cmis:folder',
-                    language: 'cmis'
+                    language: SEARCH_LANGUAGE.CMIS
                 }
             })
             .reply(200, {

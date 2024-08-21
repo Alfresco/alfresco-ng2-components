@@ -15,21 +15,4 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
-
-@Pipe({
-    name: 'adfBoolean',
-    standalone: true
-})
-export class BooleanPipe implements PipeTransform {
-    transform(value: any): string {
-        if (typeof value === 'boolean') {
-            return value ? 'true' : 'false';
-        }
-        return this.isRecognizedAsBoolean(value) ? value : '';
-    }
-
-    private isRecognizedAsBoolean(value: any): boolean {
-        return value === 'true' || value === 'false';
-    }
-}
+export * from './language.constants';
