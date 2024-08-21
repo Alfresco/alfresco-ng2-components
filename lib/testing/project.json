@@ -5,9 +5,8 @@
   "projectType": "library",
   "prefix": "adf",
   "targets": {
-
     "build": {
-      "executor": "@nx/webpack:webpack",
+      "executor": "@angular-devkit/build-angular:ng-packagr",
       "options": {
         "tsConfig": "lib/testing/tsconfig.lib.json",
         "project": "lib/testing/ng-package.json"
