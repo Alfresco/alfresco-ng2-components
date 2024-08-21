@@ -15,370 +15,366 @@
  * limitations under the License.
  */
 
-
 /**
  * Provides resources used throughout the application
  *
  * @class util.Resources
  */
-var path = require('path');
+const path = require('path');
 const ACTIVITI_CLOUD_APPS = require('../../dist/libs/testing');
 
 const RESOURCES = {
     ...ACTIVITI_CLOUD_APPS,
     Files: {
-
         APP_WITH_DATE_FIELD_FORM: {
-            file_location: "/resources/apps/TestDate.zip",
+            file_location: '/resources/apps/TestDate.zip',
             file_path: path.join(__dirname, '../resources/apps/TestDate.zip'),
-            title: "TestDate",
-            process_title: "TestDateField",
+            title: 'TestDate',
+            process_title: 'TestDateField',
             id: -1,
             form_fields: {
-                testDate_field: "activiti-testdate",
+                testDate_field: 'activiti-testdate',
                 completed_task_date_field: "span[ng-if*='field.dateDisplayFormat']"
             }
         },
 
         APP_WITH_PROCESSES: {
-            file_location: "/resources/apps/App_with_processes.zip",
+            file_location: '/resources/apps/App_with_processes.zip',
             file_path: path.join(__dirname, '../resources/apps/App_with_processes.zip'),
-            title: "App_with_processes",
-            description: "Description for app",
-            process_se_name: "process_with_se",
-            process_wse_name: "process_without_se",
-            task_name: "Task Test 2"
+            title: 'App_with_processes',
+            description: 'Description for app',
+            process_se_name: 'process_with_se',
+            process_wse_name: 'process_without_se',
+            task_name: 'Task Test 2'
         },
 
         APP_DYNAMIC_TABLE_DROPDOWN: {
-            file_location: "/resources/apps/AppDynamicTableDropdown.zip",
+            file_location: '/resources/apps/AppDynamicTableDropdown.zip',
             file_path: path.join(__dirname, '../resources/apps/AppDynamicTableDropdown.zip'),
-            title: "App3576",
-            description: "Description for app",
-            processName: "Process3576"
+            title: 'App3576',
+            description: 'Description for app',
+            processName: 'Process3576'
         },
         START_PROCESS_ATTACH_FILE: {
-            file_location: "/resources/apps/Start_process_attach_file.zip",
+            file_location: '/resources/apps/Start_process_attach_file.zip',
             file_path: path.join(__dirname, '../resources/apps/Start_process_attach_file.zip'),
-            title: "start process app",
-            description: "Description for app",
-            processName: "start process file"
+            title: 'start process app',
+            description: 'Description for app',
+            processName: 'start process file'
         },
 
         TEST_ASSIGNEE: {
-            file_location: "/resources/apps/Assignee.zip",
+            file_location: '/resources/apps/Assignee.zip',
             file_path: path.join(__dirname, '../resources/apps/Assignee.zip'),
-            title: "Assignee",
-            description: "Description for app",
-            processNames: ["simple", "candidate-task"],
+            title: 'Assignee',
+            description: 'Description for app',
+            processNames: ['simple', 'candidate-task'],
             userTasks: {
-                "simple": {one: 'Candidate Task', two: 'User Task'},
-                "candidateTask": "Human step"
+                simple: { one: 'Candidate Task', two: 'User Task' },
+                candidateTask: 'Human step'
             },
-            candidateGroup: "candidates",
-            adminGroup: "admin",
+            candidateGroup: 'candidates',
+            adminGroup: 'admin',
             adminCapabilities: ['tenant-admin'],
-            candidate: {firstName: 'Candidate', lastName: 'User', email: 'candidateuser@actviti.com'}
+            candidate: { firstName: 'Candidate', lastName: 'User', email: 'candidateuser@actviti.com' }
         },
 
         APP_WITH_USER_WIDGET: {
-            file_location: "/resources/apps/appWithUser.zip",
+            file_location: '/resources/apps/appWithUser.zip',
             file_path: path.join(__dirname, '../resources/apps/appWithUser.zip'),
-            title: "appWithUser",
-            description: "Description for app",
-            processName: "ProcessWithUser",
-            startForm: "user",
-            taskForm: "displayUser",
-            peopleWidgetId: "label1"
+            title: 'appWithUser',
+            description: 'Description for app',
+            processName: 'ProcessWithUser',
+            startForm: 'user',
+            taskForm: 'displayUser',
+            peopleWidgetId: 'label1'
         },
 
         NO_FORM_APP: {
-            file_location: "/resources/apps/No form app.zip",
+            file_location: '/resources/apps/No form app.zip',
             file_path: path.join(__dirname, '../resources/apps/No form app.zip'),
-            title: "No form app",
-            taskName: "No form task"
+            title: 'No form app',
+            taskName: 'No form task'
         },
 
         SIMPLE_APP_WITH_USER_FORM: {
-            file_location: "/resources/apps/Simple App with User Form.zip",
+            file_location: '/resources/apps/Simple App with User Form.zip',
             file_path: path.join(__dirname, '../resources/apps/Simple App with User Form.zip'),
-            title: "Simple App with User Form",
-            description: "Simple app with a process having a User task with a form attached.",
-            processName: "Simple Process",
+            title: 'Simple App with User Form',
+            description: 'Simple app with a process having a User task with a form attached.',
+            processName: 'Simple Process',
             processDiagramFileLocation: '/resources/apps/SimpleAppWithUserForm.png',
             processThumbnail: '/resources/processes/Simple Process Thumbnail.png',
-            formName: "Simple form",
+            formName: 'Simple form',
             id: -19,
-            taskName: "User Task",
+            taskName: 'User Task',
             form_fields: {
-                text_field: "activiti-textfield",
-                form_fieldId: "textfield",
-                text_field_value: "Hi tester, from Rest call"
+                text_field: 'activiti-textfield',
+                form_fieldId: 'textfield',
+                text_field_value: 'Hi tester, from Rest call'
             },
             visibilityProcess: {
                 name: 'VisibilityProcess',
-                formName: "visibilityTabWithFields",
+                formName: 'visibilityTabWithFields',
                 taskName: 'No name'
             }
         },
 
         WIDGETS_SMOKE_TEST: {
-            file_location: "/resources/apps/Widgets smoke test.zip",
+            file_location: '/resources/apps/Widgets smoke test.zip',
             file_path: path.join(__dirname, '../resources/apps/Widgets smoke test.zip'),
-            title: "Widgets smoke test",
-            formName: "Widgets smoke test",
+            title: 'Widgets smoke test',
+            formName: 'Widgets smoke test',
             form_fields: {
-                text_id: "text",
-                header_id: "header",
-                number_id: "number",
-                amount_id: "amount",
-                people_id: "people",
-                group_id: "groupofpeople",
-                multiline_id: "multilinetext",
-                typeAhead_id: "typeahead",
-                displayText_id: "displaytext",
-                displayValue_id: "displayvalue",
-                hyperlink_id: "hyperlink",
-                attachFolder_id: "attachfolder",
-                attachFile_id: "attachfile",
-                date_id: "date",
-                dateTime_id: "dateandtime",
-                checkbox_id: "checkbox",
-                dropdown_id: "dropdown",
+                text_id: 'text',
+                header_id: 'header',
+                number_id: 'number',
+                amount_id: 'amount',
+                people_id: 'people',
+                group_id: 'groupofpeople',
+                multiline_id: 'multilinetext',
+                typeAhead_id: 'typeahead',
+                displayText_id: 'displaytext',
+                displayValue_id: 'displayvalue',
+                hyperlink_id: 'hyperlink',
+                attachFolder_id: 'attachfolder',
+                attachFile_id: 'attachfile',
+                date_id: 'date',
+                dateTime_id: 'dateandtime',
+                checkbox_id: 'checkbox',
+                dropdown_id: 'dropdown',
                 drofpdown_value: "mat-select[id='dropdown'] span span",
-                radioButtons_id: "radiobuttons",
-                dynamicTable_id: "dynamictable"
+                radioButtons_id: 'radiobuttons',
+                dynamicTable_id: 'dynamictable'
             }
         },
 
         FORM_ADF: {
-            file_location: "/resources/apps/Test-ADF.zip",
+            file_location: '/resources/apps/Test-ADF.zip',
             file_path: path.join(__dirname, '../resources/apps/Test-ADF.zip'),
-            title: "Test App",
-            formName: "test-1",
+            title: 'Test App',
+            formName: 'test-1',
             form_fields: {
-                text_id: "label",
-                displayText_id: "label1",
-                displayValue_id: "labeldisplayusingvariable"
+                text_id: 'label',
+                displayText_id: 'label1',
+                displayValue_id: 'labeldisplayusingvariable'
             }
         },
 
         FILE_FORM_ADF: {
-            file_location: "/resources/apps/App_file_form.zip",
+            file_location: '/resources/apps/App_file_form.zip',
             file_path: path.join(__dirname, '../resources/apps/App_file_form.zip'),
-            attached_file: "generatedDocument.docx",
-            title: "ADF-180-test",
-            formName: "ADF-180-test",
+            attached_file: 'generatedDocument.docx',
+            title: 'ADF-180-test',
+            formName: 'ADF-180-test',
             form_fields: {
-                container_id: "1504783671016"
+                container_id: '1504783671016'
             }
         },
 
         WIDGET_CHECK_APP: {
-
-            file_location: "/resources/apps/WidgetApps.zip",
+            file_location: '/resources/apps/WidgetApps.zip',
             file_path: path.join(__dirname, '../resources/apps/WidgetApps.zip'),
 
             TEXT: {
-                formName: "TextWidgetForm",
-                title: "TextWidgetForm",
-                processName: "TextWidgetProcess",
+                formName: 'TextWidgetForm',
+                title: 'TextWidgetForm',
+                processName: 'TextWidgetProcess',
                 FIELD: {
-                    simpleText: "textsimple",
-                    textMinMax: "textminmax",
-                    textMask: "textmask",
-                    textMaskReversed: "textmaskreversed",
-                    textRegexp: "textregexp",
-                    showHiddenText: "showhiddentext",
-                    textHidden: "texthidden"
+                    simpleText: 'textsimple',
+                    textMinMax: 'textminmax',
+                    textMask: 'textmask',
+                    textMaskReversed: 'textmaskreversed',
+                    textRegexp: 'textregexp',
+                    showHiddenText: 'showhiddentext',
+                    textHidden: 'texthidden'
                 }
             },
 
             MULTILINE_TEXT: {
-                formName: "MultiWidgetProcess",
-                title: "MultiWidgetProcess",
-                processName: "MultiWidgetProcess",
+                formName: 'MultiWidgetProcess',
+                title: 'MultiWidgetProcess',
+                processName: 'MultiWidgetProcess',
                 FIELD: {
-                    multiSimple: "multisimple",
-                    multiMinMax: "multiminmax",
-                    multiRegexp: "multiregexp",
-                    showMultiHidden: "showmultihidden",
-                    multiVisible: "multivisible"
+                    multiSimple: 'multisimple',
+                    multiMinMax: 'multiminmax',
+                    multiRegexp: 'multiregexp',
+                    showMultiHidden: 'showmultihidden',
+                    multiVisible: 'multivisible'
                 }
             },
 
             CHECKBOX: {
-                formName: "CheckboxVisibilityProcess",
-                title: "CheckboxVisibilityProcess",
-                processName: "CheckboxVisibilityProcess",
+                formName: 'CheckboxVisibilityProcess',
+                title: 'CheckboxVisibilityProcess',
+                processName: 'CheckboxVisibilityProcess',
                 FIELD: {
-                    number_input_id: "label",
-                    checkbox_field_id: "label1",
-                    checkbox_id: "field-checkbox_input-container",
-                    checkbox_input_id: "label1",
-                    checkbox_label: "Label1"
+                    number_input_id: 'label',
+                    checkbox_field_id: 'label1',
+                    checkbox_id: 'field-checkbox_input-container',
+                    checkbox_input_id: 'label1',
+                    checkbox_label: 'Label1'
                 }
             },
 
             DATE: {
-                formName: "DateWidgetProcess",
-                title: "DateWidgetProcess",
-                processName: "DateWidgetProcess",
+                formName: 'DateWidgetProcess',
+                title: 'DateWidgetProcess',
+                processName: 'DateWidgetProcess',
                 FIELD: {
-                    date_input: "date_standard",
-                    date_between_input: "betweendate"
+                    date_input: 'date_standard',
+                    date_between_input: 'betweendate'
                 }
             },
 
             DATETIME: {
-                formName: "DateTimeProcess",
-                title: "DateTimeProcess",
-                processName: "DateTimeProcess",
+                formName: 'DateTimeProcess',
+                title: 'DateTimeProcess',
+                processName: 'DateTimeProcess',
                 FIELD: {
-                    date_time_input: "datetimegeneral",
-                    date_time_between_input: "dateandtimeadvance"
+                    date_time_input: 'datetimegeneral',
+                    date_time_between_input: 'dateandtimeadvance'
                 }
             },
 
             DROPDOWN: {
-                formName: "DropdownProcess",
-                title: "DropdownProcess",
-                processName: "DropdownProcess",
+                formName: 'DropdownProcess',
+                title: 'DropdownProcess',
+                processName: 'DropdownProcess',
                 FIELD: {
-                    general_dropdown: "dropdown",
-                    dropdown_visible: "dropdownvisibility",
-                    checkbox_id: "clickcheckbox",
-                    option_0: "empty",
-                    option_1: "option_1",
-                    option_2: "option_2"
+                    general_dropdown: 'dropdown',
+                    dropdown_visible: 'dropdownvisibility',
+                    checkbox_id: 'clickcheckbox',
+                    option_0: 'empty',
+                    option_1: 'option_1',
+                    option_2: 'option_2'
                 }
             },
 
             NUMBER: {
-                formName: "NumberProcess",
-                title: "NumberProcess",
-                processName: "NumberProcess",
+                formName: 'NumberProcess',
+                title: 'NumberProcess',
+                processName: 'NumberProcess',
                 FIELD: {
-                    number_general: "numbergeneral",
-                    number_visible: "number",
-                    checkbox_id: "check"
+                    number_general: 'numbergeneral',
+                    number_visible: 'number',
+                    checkbox_id: 'check'
                 }
             },
 
             VISIBILITY: {
-                formName: "visibility-process",
-                title: "visibility-process",
-                processName: "visibility-process"
+                formName: 'visibility-process',
+                title: 'visibility-process',
+                processName: 'visibility-process'
             },
 
             AMOUNT: {
-                formName: "AmountProcess",
-                title: "AmountProcess",
-                processName: "AmountProcess",
+                formName: 'AmountProcess',
+                title: 'AmountProcess',
+                processName: 'AmountProcess',
                 FIELD: {
-                    amount_input_id: "amunt_widget",
-                    checkbox_id: "check"
+                    amount_input_id: 'amunt_widget',
+                    checkbox_id: 'check'
                 }
             },
 
             RADIO_BUTTONS: {
-                formName: "RadioButtonsWidgetProcess",
-                title: "RadioButtonsWidgetProcess",
-                processName: "RadioButtonsWidgetProcess",
+                formName: 'RadioButtonsWidgetProcess',
+                title: 'RadioButtonsWidgetProcess',
+                processName: 'RadioButtonsWidgetProcess',
                 FIELD: {
-                    radio_buttons_id: "RockFM",
-                    checkbox_id: "Dollars"
+                    radio_buttons_id: 'RockFM',
+                    checkbox_id: 'Dollars'
                 }
             },
 
             HYPERLINK: {
-                formName: "HyperlinkProcess",
-                title: "HyperlinkProcess",
-                processName: "HyperlinkProcess",
+                formName: 'HyperlinkProcess',
+                title: 'HyperlinkProcess',
+                processName: 'HyperlinkProcess',
                 FIELD: {
-                    hyperlink_id: "hyperlink_automation",
-                    checkbox_id: "check"
+                    hyperlink_id: 'hyperlink_automation',
+                    checkbox_id: 'check'
                 }
             },
 
             DYNAMIC_TABLE: {
-                formName: "DynamicTableProcess",
-                title: "DynamicTableProcess",
-                processName: "DynamicTableProcess",
+                formName: 'DynamicTableProcess',
+                title: 'DynamicTableProcess',
+                processName: 'DynamicTableProcess',
                 FIELD: {
-                    dynamic_table_age_id: "label2",
-                    dynamic_table_date_id: "label",
-                    checkbox_id: "viewtable",
-                    dateTime_input_id: "datetime",
-                    row: "label-row-0"
+                    dynamic_table_age_id: 'label2',
+                    dynamic_table_date_id: 'label',
+                    checkbox_id: 'viewtable',
+                    dateTime_input_id: 'datetime',
+                    row: 'label-row-0'
                 }
             },
 
             DYNAMIC_TABLE_USERS: {
-                formName: "ALL_WIDGETS",
-                title: "ALL_WIDGETS",
-                processName: "ALL_WIDGETS",
+                formName: 'ALL_WIDGETS',
+                title: 'ALL_WIDGETS',
+                processName: 'ALL_WIDGETS',
                 FIELD: {
-                    dynamic_table_id: "dynamictable",
-                    dynamic_table_age_id: "label2",
-                    dynamic_table_date_id: "label",
-                    checkbox_id: "viewtable",
-                    dateTime_input_id: "datetime",
-                    row: "label-row-0"
-
+                    dynamic_table_id: 'dynamictable',
+                    dynamic_table_age_id: 'label2',
+                    dynamic_table_date_id: 'label',
+                    checkbox_id: 'viewtable',
+                    dateTime_input_id: 'datetime',
+                    row: 'label-row-0'
                 }
             },
 
             HEADER: {
-                formName: "HeaderProcess",
-                title: "HeaderProcess",
-                processName: "HeaderProcess",
+                formName: 'HeaderProcess',
+                title: 'HeaderProcess',
+                processName: 'HeaderProcess',
                 FIELD: {
-                    header_id: "Happy",
-                    checkbox_id: "check"
+                    header_id: 'Happy',
+                    checkbox_id: 'check'
                 }
             },
 
             ATTACH_FOLDER: {
-                formName: "UploadFolderProcess",
-                title: "UploadFolderProcess",
-                processName: "UploadFolderProcess",
+                formName: 'UploadFolderProcess',
+                title: 'UploadFolderProcess',
+                processName: 'UploadFolderProcess',
                 FIELD: {
-                    checkbox_id: "check",
-                    upload_button_id: "Upload"
+                    checkbox_id: 'check',
+                    upload_button_id: 'Upload'
                 }
             },
 
             ADD_PEOPLE: {
-                formName: "AddPeopleProcess",
-                title: "AddPeopleProcess",
-                processName: "AddPeopleProcess",
+                formName: 'AddPeopleProcess',
+                title: 'AddPeopleProcess',
+                processName: 'AddPeopleProcess',
                 FIELD: {
-                    widget_id: "Finally",
-                    user_id: "adf-people-search-input",
-                    checkbox_id: "check"
+                    widget_id: 'Finally',
+                    user_id: 'adf-people-search-input',
+                    checkbox_id: 'check'
                 }
             },
 
             CUSTOM_VALIDATOR: {
-                formName: "dynamic-table-custom-validation",
-                title: "dynamic-table-custom-validation",
-                processName: "dynamic-table-custom-validation",
+                formName: 'dynamic-table-custom-validation',
+                title: 'dynamic-table-custom-validation',
+                processName: 'dynamic-table-custom-validation',
                 FIELD: {
-                    NAME: "name",
-                    ID: "id",
-                    NUM: "num",
-                    ADDRESS: "address",
-                    ROW: "label-row-0"
+                    NAME: 'name',
+                    ID: 'id',
+                    NUM: 'num',
+                    ADDRESS: 'address',
+                    ROW: 'label-row-0'
                 }
             },
 
             TYPE_AHEAD_WIDGET: {
-                formName: "Type ahead widget",
-                title: "type-ahead-process",
-                processName: "type-ahead-process",
+                formName: 'Type ahead widget',
+                title: 'type-ahead-process',
+                processName: 'type-ahead-process',
                 FIELD: {
-                    widget_id: "Label"
+                    widget_id: 'Label'
                 },
                 case1: {
                     searchTerm: 'Customer',
@@ -396,29 +392,29 @@ const RESOURCES = {
             },
 
             UPLOAD_FOLDER_FORM_CS: {
-                formName: "upload-folder-cs",
+                formName: 'upload-folder-cs',
                 FIELD: {
-                    widget_id: 'attachfolder',
+                    widget_id: 'attachfolder'
                 }
             },
 
             UPLOAD_FILE_FORM_CS: {
-                formName: "Upload multiple files",
+                formName: 'Upload multiple files',
                 FIELD: {
-                    widget_id: 'attachfile',
+                    widget_id: 'attachfile'
                 }
             }
         },
 
         MORE_WIDGETS: {
-            file_location: "/resources/apps/More Widgets.zip",
+            file_location: '/resources/apps/More Widgets.zip',
             file_path: path.join(__dirname, '../resources/apps/More Widgets.zip'),
-            title: "More Widgets",
-            group: {name: "Users", subgroup: [{name: "Heros"}, {name: "Villains"}]},
-            subGroupUser: {firstName: "Hero", lastName: "User"},
+            title: 'More Widgets',
+            group: { name: 'Users', subgroup: [{ name: 'Heros' }, { name: 'Villains' }] },
+            subGroupUser: { firstName: 'Hero', lastName: 'User' },
             groupUser: [
-                {firstName: "Hero", lastName: "Audience"},
-                {firstName: "Villain", lastName: "Audience"},
+                { firstName: 'Hero', lastName: 'Audience' },
+                { firstName: 'Villain', lastName: 'Audience' }
             ],
 
             ADD_PEOPLE_AND_GROUP_RESTRICTION: {
@@ -431,7 +427,7 @@ const RESOURCES = {
             },
 
             ADD_GROUP_VISIBILITY: {
-                formName: "Group widget - visibility",
+                formName: 'Group widget - visibility',
                 FIELD: {
                     widget_id: 'Dreamteam',
                     checkbox_id: 'check'
@@ -440,7 +436,7 @@ const RESOURCES = {
             },
 
             ADD_GROUP_AND_SUBGROUP_RESTRICTION: {
-                formName: "Group widget - subgroup restriction",
+                formName: 'Group widget - subgroup restriction',
                 FIELD: {
                     widget_id: 'Dreamteam',
                     checkbox_id: 'check'
@@ -449,249 +445,242 @@ const RESOURCES = {
             }
         },
 
-        STENCIL_PROCESS: {
-            file_location: "/resources/apps/Stencil_app.zip",
-            file_path: path.join(__dirname, '../resources/apps/Stencil_app.zip'),
-            processName: 'stencil_process',
-            taskName: 'stencil task'
-        },
-
         DYNAMIC_TABLE_APP: {
-            file_location: "/resources/apps/Dynamic Table App.zip",
+            file_location: '/resources/apps/Dynamic Table App.zip',
             file_path: path.join(__dirname, '../resources/apps/Dynamic Table App.zip'),
-            title: "Dynamic Table App",
-            formName: "Dynamic Table App",
-            process_se_name: "DynamicTableProcess"
+            title: 'Dynamic Table App',
+            formName: 'Dynamic Table App',
+            process_se_name: 'DynamicTableProcess'
         },
 
         ADF_DOCUMENTS: {
             JS: {
-                file_location: "/resources/adf/a_js_file.js",
+                file_location: '/resources/adf/a_js_file.js',
                 file_path: path.join(__dirname, '../resources/adf/a_js_file.js'),
-                file_name: "a_js_file.js"
+                file_name: 'a_js_file.js'
             },
             PDF: {
-                file_location: "/resources/adf/allFileTypes/a_file_supported.pdf",
+                file_location: '/resources/adf/allFileTypes/a_file_supported.pdf',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_file_supported.pdf'),
-                file_name: "a_file_supported.pdf",
-                short_file_name: "a_file",
-                first_page_text: "one",
-                second_page_text: "two",
-                last_page_text: "eight",
-                last_page_number: "8"
+                file_name: 'a_file_supported.pdf',
+                short_file_name: 'a_file',
+                first_page_text: 'one',
+                second_page_text: 'two',
+                last_page_text: 'eight',
+                last_page_number: '8'
             },
             PDF_B: {
-                file_location: "/resources/adf/allFileTypes/b_file_supported.pdf",
+                file_location: '/resources/adf/allFileTypes/b_file_supported.pdf',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/b_file_supported.pdf'),
-                file_name: "b_file_supported.pdf"
+                file_name: 'b_file_supported.pdf'
             },
             PDF_ALL: {
-                file_location: "/resources/adf/allFileTypes/pdf_all_properties.pdf",
+                file_location: '/resources/adf/allFileTypes/pdf_all_properties.pdf',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/pdf_all_properties.pdf'),
-                file_name: "pdf_all_properties.pdf"
+                file_name: 'pdf_all_properties.pdf'
             },
             PDF_PROTECTED: {
-                file_location: "/resources/adf/allFileTypes/a_file_protected.pdf",
+                file_location: '/resources/adf/allFileTypes/a_file_protected.pdf',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_file_protected.pdf'),
-                file_name: "a_file_protected.pdf",
-                first_page_text: "A Journey into Test Frameworks",
-                second_page_text: "After looking into Spock’s GitHub",
-                last_page_text: "and provide feedback. The main advantages being the readability of the te",
-                last_page_number: "8",
-                password: "1q2w3e4r"
+                file_name: 'a_file_protected.pdf',
+                first_page_text: 'A Journey into Test Frameworks',
+                second_page_text: 'After looking into Spock’s GitHub',
+                last_page_text: 'and provide feedback. The main advantages being the readability of the te',
+                last_page_number: '8',
+                password: '1q2w3e4r'
             },
             LARGE_FILE: {
-                file_location: "/resources/adf/BigFile.zip",
+                file_location: '/resources/adf/BigFile.zip',
                 file_path: path.join(__dirname, '../resources/adf/BigFile.zip'),
-                file_name: "BigFile.zip"
+                file_name: 'BigFile.zip'
             },
             MEDIUM_FILE: {
-                file_location: "/resources/adf/MediumFile.zip",
+                file_location: '/resources/adf/MediumFile.zip',
                 file_path: path.join(__dirname, '../resources/adf/MediumFile.zip'),
-                file_name: "MediumFile.zip"
+                file_name: 'MediumFile.zip'
             },
             EXCEL: {
-                file_location: "/resources/adf/allFileTypes/a_excel_file.xlsx",
+                file_location: '/resources/adf/allFileTypes/a_excel_file.xlsx',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_excel_file.xlsx'),
-                file_name: "a_excel_file.xlsx"
+                file_name: 'a_excel_file.xlsx'
             },
             DOCX: {
-                file_location: "/resources/adf/allFileTypes/a_file_supported.docx",
+                file_location: '/resources/adf/allFileTypes/a_file_supported.docx',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_file_supported.docx'),
-                file_name: "a_file_supported.docx",
-                first_page_text: "A Journey into Test Frameworks",
-                second_page_text: "After looking into Spock’s GitHub",
-                last_page_text: "and provide feedback. The main advantages being the readability of the te",
-                last_page_number: "8"
+                file_name: 'a_file_supported.docx',
+                first_page_text: 'A Journey into Test Frameworks',
+                second_page_text: 'After looking into Spock’s GitHub',
+                last_page_text: 'and provide feedback. The main advantages being the readability of the te',
+                last_page_number: '8'
             },
             FOLDER_ONE: {
-                folder_location: "/resources/adf/folderOne",
+                folder_location: '/resources/adf/folderOne',
                 folder_path: path.join(__dirname, '../resources/adf/folderOne'),
-                folder_name: "folderOne"
+                folder_name: 'folderOne'
             },
             FOLDER_TWO: {
-                folder_location: "/resources/adf/folderTwo",
+                folder_location: '/resources/adf/folderTwo',
                 folder_path: path.join(__dirname, '../resources/adf/folderTwo'),
-                folder_name: "folderTwo"
+                folder_name: 'folderTwo'
             },
             FOLDER_EXCLUDED: {
-                folder_location: "/resources/adf/folderExcluded",
+                folder_location: '/resources/adf/folderExcluded',
                 folder_path: path.join(__dirname, '../resources/adf/folderExcluded'),
-                folder_name: "folderExcluded"
+                folder_name: 'folderExcluded'
             },
             FILE_INSIDE_FOLDER_ONE: {
-                file_location: "/resources/adf/folderOne/share_profile_pic.png",
+                file_location: '/resources/adf/folderOne/share_profile_pic.png',
                 file_path: path.join(__dirname, '../resources/adf/folderOne/share_profile_pic.png'),
-                file_name: "share_profile_pic.png"
+                file_name: 'share_profile_pic.png'
             },
             FILE_INSIDE_FOLDER_TWO: {
-                file_location: "/resources/adf/folderOne/a_file.txt",
+                file_location: '/resources/adf/folderOne/a_file.txt',
                 file_path: path.join(__dirname, '../resources/adf/folderOne/a_file.txt'),
-                file_name: "a_file.txt"
+                file_name: 'a_file.txt'
             },
             JPG: {
-                file_location: "/resources/adf/allFileTypes/a_jpg_file.jpg",
+                file_location: '/resources/adf/allFileTypes/a_jpg_file.jpg',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_jpg_file.jpg'),
-                file_name: "a_jpg_file.jpg"
+                file_name: 'a_jpg_file.jpg'
             },
             MP4: {
-                file_location: "/resources/adf/allFileTypes/a_mp4_file.mp4",
+                file_location: '/resources/adf/allFileTypes/a_mp4_file.mp4',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_mp4_file.mp4'),
-                file_name: "a_mp4_file.mp4"
+                file_name: 'a_mp4_file.mp4'
             },
             MP4_B: {
-                file_location: "/resources/adf/allFileTypes/b_mp4_file.mp4",
+                file_location: '/resources/adf/allFileTypes/b_mp4_file.mp4',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/b_mp4_file.mp4'),
-                file_name: "b_mp4_file.mp4"
+                file_name: 'b_mp4_file.mp4'
             },
             PNG: {
-                file_location: "/resources/adf/allFileTypes/a_png_file.png",
+                file_location: '/resources/adf/allFileTypes/a_png_file.png',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_png_file.png'),
-                file_name: "a_png_file.png"
+                file_name: 'a_png_file.png'
             },
             PNG_B: {
-                file_location: "/resources/adf/allFileTypes/b_png_file.png",
+                file_location: '/resources/adf/allFileTypes/b_png_file.png',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/b_png_file.png'),
-                file_name: "b_png_file.png"
+                file_name: 'b_png_file.png'
             },
             PNG_C: {
-                file_location: "/resources/adf/allFileTypes/c_png_file.png",
+                file_location: '/resources/adf/allFileTypes/c_png_file.png',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/c_png_file.png'),
-                file_name: "c_png_file.png"
+                file_name: 'c_png_file.png'
             },
             PNG_D: {
-                file_location: "/resources/adf/allFileTypes/d_png_file.png",
+                file_location: '/resources/adf/allFileTypes/d_png_file.png',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/d_png_file.png'),
-                file_name: "d_png_file.png"
+                file_name: 'd_png_file.png'
             },
             PPT: {
-                file_location: "/resources/adf/allFileTypes/a_ppt_file.pptx",
+                file_location: '/resources/adf/allFileTypes/a_ppt_file.pptx',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_ppt_file.pptx'),
-                file_name: "a_ppt_file.pptx",
-                first_page_text: "PPTX test file"
+                file_name: 'a_ppt_file.pptx',
+                first_page_text: 'PPTX test file'
             },
             TEST: {
-                file_location: "/resources/adf/allFileTypes/testExtension.test",
+                file_location: '/resources/adf/allFileTypes/testExtension.test',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/testExtension.test'),
-                file_name: "testExtension.test"
+                file_name: 'testExtension.test'
             },
             TXT: {
-                file_location: "/resources/adf/allFileTypes/a_txt_file.rtf",
+                file_location: '/resources/adf/allFileTypes/a_txt_file.rtf',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_txt_file.rtf'),
-                file_name: "a_txt_file.rtf"
+                file_name: 'a_txt_file.rtf'
             },
             TXT_400B: {
-                file_location: "/resources/adf/allFileTypes/file400Bytes.txt",
+                file_location: '/resources/adf/allFileTypes/file400Bytes.txt',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/file400Bytes.txt'),
-                file_name: "file400Bytes.txt"
+                file_name: 'file400Bytes.txt'
             },
             TXT_0B: {
-                file_location: "/resources/adf/allFileTypes/zeroBytesFile.txt",
+                file_location: '/resources/adf/allFileTypes/zeroBytesFile.txt',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/zeroBytesFile.txt'),
-                file_name: "zeroBytesFile.txt"
+                file_name: 'zeroBytesFile.txt'
             },
             PAGES: {
-                file_location: "/resources/adf/allFileTypes/file_unsupported.pages",
+                file_location: '/resources/adf/allFileTypes/file_unsupported.pages',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/file_unsupported.pages'),
-                file_name: "file_unsupported.pages"
+                file_name: 'file_unsupported.pages'
             },
             UNSUPPORTED: {
-                file_location: "/resources/adf/allFileTypes/file_unsupported.3DS",
+                file_location: '/resources/adf/allFileTypes/file_unsupported.3DS',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/file_unsupported.3DS'),
-                file_name: "file_unsupported.3DS"
+                file_name: 'file_unsupported.3DS'
             },
             INI: {
-                file_location: "/resources/adf/allFileTypes/desktop.ini",
+                file_location: '/resources/adf/allFileTypes/desktop.ini',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/desktop.ini'),
-                file_name: "desktop.ini"
+                file_name: 'desktop.ini'
             },
             ARCHIVE_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/documents/archive",
+                folder_location: '/resources/adf/allFileTypes/documents/archive',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/archive'),
-                folder_name: "archive"
+                folder_name: 'archive'
             },
             EXCEL_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/documents/excel",
+                folder_location: '/resources/adf/allFileTypes/documents/excel',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/excel'),
-                folder_name: "excel"
+                folder_name: 'excel'
             },
             OTHER_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/documents/other",
+                folder_location: '/resources/adf/allFileTypes/documents/other',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/other'),
-                folder_name: "other"
+                folder_name: 'other'
             },
             PPT_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/documents/ppt",
+                folder_location: '/resources/adf/allFileTypes/documents/ppt',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/ppt'),
-                folder_name: "ppt"
+                folder_name: 'ppt'
             },
             TEXT_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/documents/text",
+                folder_location: '/resources/adf/allFileTypes/documents/text',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/text'),
-                folder_name: "text"
+                folder_name: 'text'
             },
             FILE_ACCEPTED_INSIDE_TEXT_FOLDER: {
-                file_location: "/resources/adf/allFileTypes/documents/text/a_odt_file.odt",
+                file_location: '/resources/adf/allFileTypes/documents/text/a_odt_file.odt',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/text/a_odt_file.odt'),
-                file_name: "a_odt_file.odt"
+                file_name: 'a_odt_file.odt'
             },
             FILE_EXCLUDED_INSIDE_TEXT_FOLDER: {
-                file_location: "/resources/adf/allFileTypes/documents/text/a_cpio_file.cpio",
+                file_location: '/resources/adf/allFileTypes/documents/text/a_cpio_file.cpio',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/text/a_cpio_file.cpio'),
-                file_name: "a_cpio_file.cpio"
+                file_name: 'a_cpio_file.cpio'
             },
             WORD_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/documents/word",
+                folder_location: '/resources/adf/allFileTypes/documents/word',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/word'),
-                folder_name: "word"
+                folder_name: 'word'
             },
             IMG_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/images",
+                folder_location: '/resources/adf/allFileTypes/images',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/images'),
-                folder_name: "images"
+                folder_name: 'images'
             },
             IMG_RENDITION_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/images-rendition",
+                folder_location: '/resources/adf/allFileTypes/images-rendition',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/images-rendition'),
-                folder_name: "images-rendition"
+                folder_name: 'images-rendition'
             },
             ADF_FOLDER: {
-                folder_location: "/resources/adf/allFileTypes/images",
+                folder_location: '/resources/adf/allFileTypes/images',
                 folder_path: path.join(__dirname, '../resources/adf/allFileTypes/images'),
-                folder_name: "images"
-            },
+                folder_name: 'images'
+            }
         },
 
         PROFILE_IMAGES: {
             ECM: {
-                file_location: "/resources/adf/share_profile_pic.jpg",
+                file_location: '/resources/adf/share_profile_pic.jpg',
                 file_path: path.join(__dirname, '../resources/adf/share_profile_pic.jpg'),
-                file_name: "share_profile_pic.jpg"
+                file_name: 'share_profile_pic.jpg'
             },
             BPM: {
-                file_location: "/resources/adf/activiti_profile_pic.png",
+                file_location: '/resources/adf/activiti_profile_pic.png',
                 file_path: path.join(__dirname, '../resources/adf/activiti_profile_pic.png'),
-                file_name: "activiti_profile_pic.png"
+                file_name: 'activiti_profile_pic.png'
             }
         }
     }
