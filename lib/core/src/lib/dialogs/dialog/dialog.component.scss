@@ -1,3 +1,5 @@
+@import 'styles/mat-selectors';
+
 $dialog-large-l-width: 1075px;
 $dialog-large-l-height: 907px;
 
@@ -166,6 +168,10 @@ $dialog-padding: 24px;
 
     .adf-dialog-header::after {
         bottom: 0;
+    }
+
+    #{$mat-dialog-title}::before {
+        display: none;
     }
 
     .adf-dialog-actions {
