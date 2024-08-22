@@ -33,7 +33,7 @@ export class LogLevelsEnum extends Number {
     static SILENT: number = 0;
 }
 
-export const logLevels: { level: LogLevelsEnum; name: LOG_LEVEL }[] = [
+export const logLevels: { level: number; name: LOG_LEVEL }[] = [
     { level: LogLevelsEnum.TRACE, name: 'TRACE' },
     { level: LogLevelsEnum.DEBUG, name: 'DEBUG' },
     { level: LogLevelsEnum.INFO, name: 'INFO' },
@@ -51,11 +51,10 @@ export interface LoggerLike {
 
 /* eslint-disable no-console */
 export class GenericLogger implements LoggerLike {
-
-    private level: LogLevelsEnum;
+    private level: number;
 
     constructor(logLevel: string) {
-        this.level = logLevels.find(({name}) => name === logLevel)?.level || LogLevelsEnum.ERROR;
+        this.level = logLevels.find(({ name }) => name === logLevel)?.level || LogLevelsEnum.ERROR;
     }
 
     info(...messages: string[]): void {
