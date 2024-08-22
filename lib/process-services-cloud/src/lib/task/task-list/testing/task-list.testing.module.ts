@@ -17,24 +17,14 @@
 
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { TaskListCloudModule } from '../task-list-cloud.module';
-import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    AppConfigService,
-    AppConfigServiceMock,
-    TranslationService,
-    TranslationMock,
-    CONTEXT_MENU_DIRECTIVES
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [HttpClientModule, NoopAnimationsModule, TaskListCloudModule, ...CONTEXT_MENU_DIRECTIVES],
+    imports: [NoopTranslateModule, NoopAnimationsModule, TaskListCloudModule],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock }
+        { provide: AppConfigService, useClass: AppConfigServiceMock }
     ]
 })
 export class TaskListTestingModule {}
