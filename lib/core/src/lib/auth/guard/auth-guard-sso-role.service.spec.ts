@@ -52,35 +52,29 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate be true if the Role is present int the JWT token', async () => {
         spyUserAccess(['MOCK_USER_ROLE'], {});
-        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(router, state);
-        });
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        route.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeTruthy();
     });
 
     it('Should canActivate be true if case of empty roles to check', async () => {
         spyUserAccess([], {});
-        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: [] };
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        route.data = { roles: [] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(router, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeTruthy();
     });
 
     it('Should canActivate be false if the Role is not present int the JWT token', async () => {
         spyUserAccess(['MOCK_ROOT_USER_ROLE'], {});
-        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        route.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(router, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeFalsy();
     });
@@ -89,12 +83,10 @@ describe('Auth Guard SSO role service', () => {
         spyUserAccess(['MOCK_USER_ROLE'], {});
         spyOn(routerService, 'navigate').and.stub();
 
-        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        route.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(router, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeTruthy();
         expect(routerService.navigate).not.toHaveBeenCalled();
@@ -102,11 +94,9 @@ describe('Auth Guard SSO role service', () => {
 
     it('Should canActivate return false if the data Role to check is empty', async () => {
         spyUserAccess(['MOCK_USER_ROLE', 'MOCK_ROOT_USER_ROLE'], {});
-        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(router, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeFalsy();
     });
@@ -115,12 +105,10 @@ describe('Auth Guard SSO role service', () => {
         spyUserAccess([], {});
         spyOn(routerService, 'navigate').and.stub();
 
-        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], redirectUrl: 'no-role-url' };
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        route.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], redirectUrl: 'no-role-url' };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(router, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeFalsy();
         expect(routerService.navigate).toHaveBeenCalledWith(['/no-role-url']);
@@ -130,12 +118,10 @@ describe('Auth Guard SSO role service', () => {
         spyUserAccess([], {});
         spyOn(routerService, 'navigate').and.stub();
 
-        const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-        router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
+        const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+        route.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(router, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeFalsy();
         expect(routerService.navigate).not.toHaveBeenCalled();
@@ -148,9 +134,7 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(route, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeFalsy();
     });
@@ -162,9 +146,7 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['mockApp'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(route, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeFalsy();
     });
@@ -176,9 +158,7 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(route, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeTruthy();
     });
@@ -190,9 +170,7 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(route, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeFalsy();
     });
@@ -208,9 +186,7 @@ describe('Auth Guard SSO role service', () => {
         route.params = { appName: 'mockApp' };
         route.data = { clientRoles: ['appName'], roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'] };
 
-        const authGuard = TestBed.runInInjectionContext(() => {
-            return AuthGuardSsoRoleService(route, state);
-        });
+        const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
         expect(authGuard).toBeFalsy();
         expect(materialDialog.closeAll).toHaveBeenCalled();
@@ -220,12 +196,10 @@ describe('Auth Guard SSO role service', () => {
         it('Should canActivate be false when the user has one of the excluded roles', async () => {
             spyUserAccess(['MOCK_USER_ROLE'], {});
 
-            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { roles: ['MOCK_ANOTHER_ROLE'], excludedRoles: ['MOCK_USER_ROLE'] };
+            const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            route.data = { roles: ['MOCK_ANOTHER_ROLE'], excludedRoles: ['MOCK_USER_ROLE'] };
 
-            const authGuard = TestBed.runInInjectionContext(() => {
-                return AuthGuardSsoRoleService(router, state);
-            });
+            const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
             expect(authGuard).toBe(false);
         });
@@ -233,12 +207,10 @@ describe('Auth Guard SSO role service', () => {
         it('Should canActivate be true when the user has none of the excluded roles', async () => {
             spyUserAccess(['MOCK_ADMIN_ROLE'], {});
 
-            const router: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
-            router.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], excludedRoles: ['MOCK_ROOT_USER_ROLE'] };
+            const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
+            route.data = { roles: ['MOCK_USER_ROLE', 'MOCK_ADMIN_ROLE'], excludedRoles: ['MOCK_ROOT_USER_ROLE'] };
 
-            const authGuard = TestBed.runInInjectionContext(() => {
-                return AuthGuardSsoRoleService(router, state);
-            });
+            const authGuard = TestBed.runInInjectionContext(() => AuthGuardSsoRoleService(route, state));
 
             expect(authGuard).toBeTruthy();
         });
