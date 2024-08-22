@@ -89,6 +89,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | tracks | [`Track`](../../../lib/core/src/lib/viewer/models/viewer.model.ts)`[]` | \[] | media subtitles for the media player |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 | viewerExtensions | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. |
+| nodeId | `string` | null | Identifier of a node opened by a viewer. |
 
 ### Events
 

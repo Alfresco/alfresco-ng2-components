@@ -110,6 +110,10 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     tracks: Track[] = [];
 
+    /** Identifier of a node that is opened by the viewer. */
+    @Input()
+    nodeId: string = null;
+
     /** Template containing ViewerExtensionDirective instances providing different viewer extensions based on supported file extension. */
     @Input()
     viewerTemplateExtensions: TemplateRef<any>;

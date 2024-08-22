@@ -31,6 +31,10 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     id: string;
 
+    /** Identifier of a node that is opened by the viewer. */
+    @Input()
+    nodeId: string = null;
+
     /** URL of the content in the repository. */
     @Input()
     url: string;
@@ -73,6 +77,7 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
 
             instance.url = this.url;
             instance.extension = this.extension;
+            instance.nodeId = this.nodeId;
         }
     }
 }
