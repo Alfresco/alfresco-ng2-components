@@ -19,7 +19,7 @@
     "target": "es2018",
     "lib": ["es2018", "dom"],
     "baseUrl": ".",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": ["node_modules/@types", "../../node_modules/@types"],
     "types": ["node"],
     "paths": {
       "@alfresco/js-api": ["../../dist/libs/js-api"],
