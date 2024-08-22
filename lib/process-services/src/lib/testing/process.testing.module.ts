@@ -23,34 +23,29 @@ import {
     AlfrescoApiServiceMock,
     AppConfigService,
     AppConfigServiceMock,
-    TranslationService,
-    TranslationMock,
     CoreModule,
     FormRenderingService,
-    AuthModule
+    AuthModule,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
 import { ProcessFormRenderingService } from '../form/process-form-rendering.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @NgModule({
     imports: [
         AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ProcessModule.forRoot(),
-        RouterTestingModule
+        RouterTestingModule,
+        NoopTranslateModule
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock },
         FormRenderingService,
         { provide: FormRenderingService, useClass: ProcessFormRenderingService }
     ],
-    exports: [NoopAnimationsModule, TranslateModule, CoreModule, ProcessModule]
+    exports: [NoopAnimationsModule, CoreModule, ProcessModule]
 })
 export class ProcessTestingModule {}
