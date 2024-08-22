@@ -23,7 +23,7 @@ import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
-import { ComponentFixture, getTestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('MultilineTextWidgetComponentComponent', () => {
@@ -33,10 +33,10 @@ describe('MultilineTextWidgetComponentComponent', () => {
     let element: HTMLElement;
 
     beforeEach(() => {
-        getTestBed().configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule]
+        TestBed.configureTestingModule({
+            imports: [NoopTranslateModule, NoopAnimationsModule, MultilineTextWidgetComponentComponent]
         });
-        fixture = getTestBed().createComponent(MultilineTextWidgetComponentComponent);
+        fixture = TestBed.createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
