@@ -24,9 +24,7 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
 import { ComponentFixture, getTestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { TranslationService } from '../../../../translation/translation.service';
-import { TranslationMock } from '../../../../mock/translation.service.mock';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('MultilineTextWidgetComponentComponent', () => {
     let loader: HarnessLoader;
@@ -36,8 +34,7 @@ describe('MultilineTextWidgetComponentComponent', () => {
 
     beforeEach(() => {
         getTestBed().configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule],
-            providers: [{ provide: TranslationService, useClass: TranslationMock }]
+            imports: [NoopTranslateModule, NoopAnimationsModule]
         });
         fixture = getTestBed().createComponent(MultilineTextWidgetComponentComponent);
         widget = fixture.componentInstance;
