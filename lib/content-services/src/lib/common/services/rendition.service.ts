@@ -115,7 +115,9 @@ export class RenditionService {
                 try {
                     await this.renditionsApi.createRendition(nodeId, { id: renditionId });
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
-                } catch {}
+                } catch {
+                    return null;
+                }
             }
         }
         return new Promise<RenditionEntry>((resolve) => resolve(rendition));
