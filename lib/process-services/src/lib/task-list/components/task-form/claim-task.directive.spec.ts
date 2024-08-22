@@ -20,11 +20,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { ClaimTaskDirective } from '@alfresco/adf-process-services';
 
 describe('ClaimTaskDirective', () => {
-
     @Component({
-        selector:  'adf-claim-test-component',
+        standalone: true,
+        imports: [ClaimTaskDirective],
+        selector: 'adf-claim-test-component',
         template: '<button adf-claim-task [taskId]="taskId" (success)="onClaim($event)">Claim</button>'
     })
     class TestComponent {
@@ -43,12 +45,7 @@ describe('ClaimTaskDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ProcessTestingModule
-            ],
-            declarations: [
-                TestComponent
-            ]
+            imports: [ProcessTestingModule, TestComponent]
         });
         taskListService = TestBed.inject(TaskListService);
         fixture = TestBed.createComponent(TestComponent);
@@ -78,30 +75,27 @@ describe('ClaimTaskDirective', () => {
 });
 
 describe('Claim Task Directive validation errors', () => {
-
     @Component({
-        selector:  'adf-claim-no-fields-validation-component',
+        standalone: true,
+        imports: [ClaimTaskDirective],
+        selector: 'adf-claim-no-fields-validation-component',
         template: '<button adf-claim-task></button>'
     })
-    class ClaimTestMissingInputDirectiveComponent { }
+    class ClaimTestMissingInputDirectiveComponent {}
 
     @Component({
-        selector:  'adf-claim-no-taskid-validation-component',
+        standalone: true,
+        imports: [ClaimTaskDirective],
+        selector: 'adf-claim-no-taskid-validation-component',
         template: '<button adf-claim-task [taskId]=""></button>'
     })
-    class ClaimTestMissingTaskIdDirectiveComponent { }
+    class ClaimTestMissingTaskIdDirectiveComponent {}
 
     let fixture: ComponentFixture<any>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ProcessTestingModule
-            ],
-            declarations: [
-                ClaimTestMissingTaskIdDirectiveComponent,
-                ClaimTestMissingInputDirectiveComponent
-            ]
+            imports: [ProcessTestingModule, ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
         });
         fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
     });
@@ -115,6 +109,6 @@ describe('Claim Task Directive validation errors', () => {
     it('should throw error when taskId is not set', () => {
         fixture = TestBed.createComponent(ClaimTestMissingTaskIdDirectiveComponent);
 
-        expect( () => fixture.detectChanges()).toThrowError('Attribute taskId is required');
+        expect(() => fixture.detectChanges()).toThrowError('Attribute taskId is required');
     });
 });

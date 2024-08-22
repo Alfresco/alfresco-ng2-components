@@ -18,7 +18,14 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    CustomEmptyContentTemplateDirective,
+    DataColumnComponent,
+    DataColumnListComponent,
+    DataRowEvent,
+    ObjectDataRow
+} from '@alfresco/adf-core';
 import { ServiceTaskListCloudComponent } from './service-task-list-cloud.component';
 import { fakeServiceTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
@@ -29,8 +36,11 @@ import { ServiceTaskListCloudService } from '../services/service-task-list-cloud
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { TaskListCloudModule } from '@alfresco/adf-process-services-cloud';
 
 @Component({
+    standalone: true,
+    imports: [TaskListCloudModule, DataColumnListComponent, DataColumnComponent],
     template: ` <adf-cloud-service-task-list #taskListCloud>
         <data-columns>
             <data-column
@@ -47,7 +57,10 @@ class CustomTaskListComponent {
     @ViewChild(ServiceTaskListCloudComponent)
     taskList: ServiceTaskListCloudComponent;
 }
+
 @Component({
+    standalone: true,
+    imports: [CustomEmptyContentTemplateDirective, TaskListCloudModule],
     template: `
         <adf-cloud-service-task-list>
             <adf-custom-empty-content-template>
@@ -57,7 +70,10 @@ class CustomTaskListComponent {
     `
 })
 class EmptyTemplateComponent {}
+
 @Component({
+    standalone: true,
+    imports: [TaskListCloudModule, DataColumnListComponent, DataColumnComponent],
     template: ` <adf-cloud-service-task-list>
         <data-columns>
             <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
@@ -79,8 +95,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [EmptyTemplateComponent]
+            imports: [ProcessServiceCloudTestingModule, EmptyTemplateComponent]
         });
         appConfig = TestBed.inject(AppConfigService);
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);
@@ -356,8 +371,7 @@ describe('ServiceTaskListCloudComponent: Injecting custom columns for task list 
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
+            imports: [ProcessServiceCloudTestingModule, CustomTaskListComponent, CustomCopyContentTaskListComponent]
         });
 
         serviceTaskListCloudService = TestBed.inject(ServiceTaskListCloudService);

@@ -26,7 +26,10 @@ import {
     ObjectDataColumn,
     AppConfigServiceMock,
     AlfrescoApiServiceMock,
-    AlfrescoApiService
+    AlfrescoApiService,
+    DataColumnComponent,
+    DataColumnListComponent,
+    FullNamePipe
 } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
@@ -41,6 +44,7 @@ import { MatMenuItemHarness } from '@angular/material/menu/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CommonModule } from '@angular/common';
 
 declare let jasmine: any;
 
@@ -667,7 +671,7 @@ describe('CustomTaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
+            imports: [ProcessTestingModule, CustomTaskListComponent],
             declarations: [CustomTaskListComponent]
         });
         fixture = TestBed.createComponent(CustomTaskListComponent);
@@ -733,6 +737,8 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [CommonModule, TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
     template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
@@ -795,8 +801,7 @@ describe('TaskListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), MatProgressSpinnerModule, ProcessTestingModule],
-            declarations: [TaskListContextMenuComponent]
+            imports: [ProcessTestingModule, TaskListContextMenuComponent]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
