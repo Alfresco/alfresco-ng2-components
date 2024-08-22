@@ -75,7 +75,9 @@ export class TaskDetailsCloudDemoComponent {
         try {
             errorMessage = JSON.parse(error).message || JSON.parse(error).entry?.message;
             errorMessage = JSON.parse(errorMessage).message;
-        } catch {}
+        } catch {
+            /* empty */
+        }
         this.notificationService.showError(errorMessage || error);
     }
 }
