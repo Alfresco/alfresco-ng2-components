@@ -17,13 +17,12 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
-import { TranslateModule } from '@ngx-translate/core';
 import { FlagsComponent } from './flags.component';
 import { FeaturesDirective } from '../../directives/features.directive';
 import { WritableFeaturesServiceToken } from '../../interfaces/features.interface';
 import { provideMockFeatureFlags } from '../../mocks/features-service-mock.factory';
 import { StorageFeaturesService } from '../../services/storage-features.service';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('FlagsComponent', () => {
     let component: FlagsComponent;
@@ -31,7 +30,7 @@ describe('FlagsComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [FlagsComponent, TranslateModule.forRoot(), FeaturesDirective, NoopAnimationsModule],
+            imports: [FlagsComponent, NoopTranslateModule, FeaturesDirective, NoopAnimationsModule],
             providers: [
                 { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
                 provideMockFeatureFlags({

@@ -20,13 +20,13 @@ import { FormFieldModel } from '../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { FormBaseModule } from '../../../form-base.module';
 import { FormFieldTypes } from '../core/form-field-types';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormModel } from '../core/form.model';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('AmountWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -36,7 +36,7 @@ describe('AmountWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormBaseModule]
+            imports: [NoopTranslateModule, NoopAnimationsModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -135,7 +135,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormBaseModule]
+            imports: [NoopTranslateModule, NoopAnimationsModule, FormBaseModule]
         });
         fixture = TestBed.createComponent(AmountWidgetComponent);
         widget = fixture.componentInstance;
@@ -331,7 +331,7 @@ describe('AmountWidgetComponent settings', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormBaseModule],
+            imports: [NoopTranslateModule, NoopAnimationsModule, FormBaseModule],
             providers: [
                 {
                     provide: ADF_AMOUNT_SETTINGS,

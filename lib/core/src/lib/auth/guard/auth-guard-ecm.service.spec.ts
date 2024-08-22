@@ -21,13 +21,12 @@ import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { RouterStateSnapshot, Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('AuthGuardService ECM', () => {
     let authGuard: AuthGuardEcm;
@@ -39,7 +38,7 @@ describe('AuthGuardService ECM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, RouterTestingModule, MatDialogModule],
+            imports: [NoopTranslateModule, RouterTestingModule, MatDialogModule],
             providers: [
                 BasicAlfrescoAuthService,
                 AppConfigService,

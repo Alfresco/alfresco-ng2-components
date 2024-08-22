@@ -20,15 +20,14 @@ import { Router, RouterStateSnapshot } from '@angular/router';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from '../services/authentication.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { StorageService } from '../../common/services/storage.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('AuthGuardService', () => {
     let state;
@@ -42,7 +41,7 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule, RouterTestingModule],
+            imports: [NoopTranslateModule, MatDialogModule, RouterTestingModule],
             providers: [
                 AppConfigService,
                 StorageService,

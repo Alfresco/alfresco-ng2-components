@@ -29,21 +29,20 @@ import {
     AlfrescoApiService,
     DataColumnComponent,
     DataColumnListComponent,
-    FullNamePipe
+    FullNamePipe,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../testing/mock';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CommonModule } from '@angular/common';
 
 declare let jasmine: any;
@@ -109,7 +108,7 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, MatProgressSpinnerModule, HttpClientTestingModule, TaskListComponent],
+            imports: [NoopTranslateModule, NoopAnimationsModule, TaskListComponent],
             providers: [
                 TaskListService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

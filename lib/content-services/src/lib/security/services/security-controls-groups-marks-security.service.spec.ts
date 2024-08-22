@@ -21,8 +21,7 @@ import { fakeAuthorityClearanceApiResponse } from './mock/security-authorities.m
 import { fakeGroupsApiResponse, createNewSecurityGroupMock } from './mock/security-groups.mock';
 import { fakeMarksApiResponse, createNewSecurityMarkMock } from './mock/security-marks.mock';
 import { SecurityGroupBody, SecurityMarkBody, SecurityMarkEntry } from '@alfresco/js-api';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('SecurityControlsService', () => {
     let service: SecurityControlsService;
@@ -39,7 +38,7 @@ describe('SecurityControlsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule]
+            imports: [NoopTranslateModule]
         });
 
         service = TestBed.inject(SecurityControlsService);
