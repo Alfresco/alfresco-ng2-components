@@ -127,15 +127,15 @@ jobs:
         run: |
           set -u;
           ./scripts/update-version.sh -gnu || exit 1;
-          npx nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
-          npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
+          npx nx affected:build --base=origin/develop --head=HEAD --prod --exclude="demoshell" --skip-nx-cache
+          npx nx affected --base=origin/develop --head=HEAD --target=pretheme
       - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@alfresco'
-      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=branch|| exit 1
+      - run: npx nx affected --target=npm-publish --base=origin/develop --head=HEAD --tag=branch|| exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
       - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
@@ -144,7 +144,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://${{ vars.NPM_REGISTRY_ADDRESS }}'
           scope: '@alfresco'
-      - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=branch || exit 1
+      - run: npx nx affected --target=npm-publish --base=origin/develop --head=HEAD --tag=branch || exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
