@@ -25,7 +25,6 @@ import { TreeViewService } from '../services/tree-view.service';
 
 @Injectable()
 export class TreeViewDataSource {
-
     treeNodes: TreeBaseNode[];
     dataChange = new BehaviorSubject<TreeBaseNode[]>([]);
     childrenSubscription = null;
@@ -40,15 +39,13 @@ export class TreeViewDataSource {
         this.dataChange.next(value);
     }
 
-    constructor(private treeControl: FlatTreeControl<TreeBaseNode>,
-                private treeViewService: TreeViewService) {
-        this.dataChange.subscribe((treeNodes) => this.treeNodes = treeNodes);
+    constructor(private treeControl: FlatTreeControl<TreeBaseNode>, private treeViewService: TreeViewService) {
+        this.dataChange.subscribe((treeNodes) => (this.treeNodes = treeNodes));
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TreeBaseNode[]> {
         this.changeSubscription = this.treeControl.expansionModel.changed.subscribe((change) => {
-            if ((change as SelectionChange<TreeBaseNode>).added &&
-                (change as SelectionChange<TreeBaseNode>).added.length > 0) {
+            if ((change as SelectionChange<TreeBaseNode>).added && (change as SelectionChange<TreeBaseNode>).added.length > 0) {
                 this.expandTreeNodes(change as SelectionChange<TreeBaseNode>);
             } else if ((change as SelectionChange<TreeBaseNode>).removed) {
                 this.reduceTreeNodes(change as SelectionChange<TreeBaseNode>);
@@ -71,33 +68,35 @@ export class TreeViewDataSource {
     }
 
     private reduceTreeNodes(change: SelectionChange<TreeBaseNode>) {
-        change.removed.slice().reverse().forEach((node) => this.toggleNode(node));
+        change.removed
+            .slice()
+            .reverse()
+            .forEach((node) => this.toggleNode(node));
     }
 
     private expandNode(node: TreeBaseNode) {
-        this.childrenSubscription = this.treeViewService.getTreeNodes(node.nodeId)
-            .subscribe((children) => {
-                const index = this.data.indexOf(node);
-                if (!children || index < 0) {
-                    node.expandable = false;
-                    return;
-                }
-                const nodes = children.map((actualNode) => {
-                    actualNode.level = node.level + 1;
-                    return actualNode;
-                });
-                this.data.splice(index + 1, 0, ...nodes);
-                this.dataChange.next(this.data);
+        this.childrenSubscription = this.treeViewService.getTreeNodes(node.nodeId).subscribe((children) => {
+            const index = this.data.indexOf(node);
+            if (!children || index < 0) {
+                node.expandable = false;
+                return;
+            }
+            const nodes = children.map((actualNode) => {
+                actualNode.level = node.level + 1;
+                return actualNode;
             });
+            this.data.splice(index + 1, 0, ...nodes);
+            this.dataChange.next(this.data);
+        });
     }
 
     toggleNode(node: TreeBaseNode) {
         const index = this.data.indexOf(node);
         let count = 0;
-        for (let i = index + 1; i < this.data.length
-            && this.data[i].level > node.level; i++ , count++) { }
+        for (let i = index + 1; i < this.data.length && this.data[i].level > node.level; i++, count++) {
+            /* empty */
+        }
         this.data.splice(index + 1, count);
         this.dataChange.next(this.data);
     }
-
 }
