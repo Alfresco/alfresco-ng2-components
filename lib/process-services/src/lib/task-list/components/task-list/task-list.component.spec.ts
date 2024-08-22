@@ -30,7 +30,8 @@ import {
     DataColumnComponent,
     DataColumnListComponent,
     FullNamePipe,
-    NoopTranslateModule
+    NoopTranslateModule,
+    CustomEmptyContentTemplateDirective
 } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
@@ -647,6 +648,8 @@ describe('TaskListComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [DataColumnComponent, DataColumnListComponent, TaskListComponent, FullNamePipe],
     template: ` <adf-tasklist #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3"></data-column>
@@ -670,8 +673,7 @@ describe('CustomTaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomTaskListComponent],
-            declarations: [CustomTaskListComponent]
+            imports: [ProcessTestingModule, CustomTaskListComponent, CustomTaskListComponent]
         });
         fixture = TestBed.createComponent(CustomTaskListComponent);
         fixture.detectChanges();
@@ -693,6 +695,8 @@ describe('CustomTaskListComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [CustomEmptyContentTemplateDirective, TaskListComponent],
     template: `
         <adf-tasklist [appId]="1">
             <adf-custom-empty-content-template>
@@ -710,8 +714,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [EmptyTemplateComponent]
+            imports: [ProcessTestingModule, EmptyTemplateComponent]
         });
         translateService = TestBed.inject(TranslateService);
         taskListService = TestBed.inject(TaskListService);

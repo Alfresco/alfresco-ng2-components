@@ -503,8 +503,7 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [EmptyTemplateComponent]
+            imports: [ProcessTestingModule, EmptyTemplateComponent]
         });
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         processService = TestBed.inject(ProcessService);
