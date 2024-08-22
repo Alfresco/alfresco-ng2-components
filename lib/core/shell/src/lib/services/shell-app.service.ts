@@ -16,23 +16,23 @@
  */
 
 import { InjectionToken } from '@angular/core';
-import { CanActivate, CanActivateChild } from '@angular/router';
+import { CanActivateFn, CanActivateChildFn } from '@angular/router';
 import { Observable } from 'rxjs';
 
 export interface ShellPreferencesService {
-  set(preferenceKey: string, value: any): void;
-  get(preferenceKey: string, defaultValue: string): string;
+    set(preferenceKey: string, value: any): void;
+    get(preferenceKey: string, defaultValue: string): string;
 }
 
 export interface ShellAppService {
-  pageHeading$: Observable<string>;
-  hideSidenavConditions: string[];
-  minimizeSidenavConditions: string[];
-  preferencesService: ShellPreferencesService;
+    pageHeading$: Observable<string>;
+    hideSidenavConditions: string[];
+    minimizeSidenavConditions: string[];
+    preferencesService: ShellPreferencesService;
 }
 
 export const SHELL_APP_SERVICE = new InjectionToken<ShellAppService>('SHELL_APP_SERVICE');
 
-export const SHELL_AUTH_TOKEN = new InjectionToken<CanActivate & CanActivateChild>('SHELL_AUTH_TOKEN');
+export const SHELL_AUTH_TOKEN = new InjectionToken<CanActivateFn | CanActivateChildFn>('SHELL_AUTH_TOKEN');
 export const SHELL_NAVBAR_MIN_WIDTH = new InjectionToken<number>('SHELL_NAVBAR_MIN_WIDTH');
 export const SHELL_NAVBAR_MAX_WIDTH = new InjectionToken<number>('SHELL_NAVBAR_MAX_WIDTH');
