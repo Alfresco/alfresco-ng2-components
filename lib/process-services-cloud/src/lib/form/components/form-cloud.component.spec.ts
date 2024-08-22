@@ -46,7 +46,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, of, throwError } from 'rxjs';
 import { FormCloudModule } from '../form-cloud.module';
 import {
@@ -1470,7 +1470,7 @@ describe('Multilingual Form', () => {
             imports: [
                 AuthModule.forRoot({ useHash: true }),
                 NoopAnimationsModule,
-                NoopTranslateModule,
+                TranslateModule.forRoot(),
                 CoreModule.forRoot(),
                 ProcessServicesCloudModule.forRoot()
             ],
