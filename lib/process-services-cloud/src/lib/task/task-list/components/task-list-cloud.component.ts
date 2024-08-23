@@ -16,16 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, Input, Inject, OnDestroy } from '@angular/core';
-import {
-    AppConfigService,
-    ColumnsSelectorComponent,
-    DataTableComponent,
-    EmptyContentComponent,
-    LoadingContentTemplateDirective,
-    MainMenuDataTableTemplateDirective,
-    NoContentTemplateDirective,
-    UserPreferencesService
-} from '@alfresco/adf-core';
+import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -40,26 +31,11 @@ import { TaskCloudModel } from '../../../models/task-cloud.model';
 import { PaginatedEntries } from '@alfresco/js-api';
 import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
 import { TasksListDatatableAdapter } from '../datatable/task-list-datatable-adapter';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
 @Component({
     selector: 'adf-cloud-task-list',
-    standalone: true,
-    imports: [
-        CommonModule,
-        TranslateModule,
-        DataTableComponent,
-        MatProgressSpinnerModule,
-        EmptyContentComponent,
-        NoContentTemplateDirective,
-        LoadingContentTemplateDirective,
-        ColumnsSelectorComponent,
-        MainMenuDataTableTemplateDirective
-    ],
     templateUrl: './base-task-list-cloud.component.html',
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

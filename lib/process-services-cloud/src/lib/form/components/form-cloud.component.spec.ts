@@ -33,8 +33,7 @@ import {
     WidgetVisibilityService,
     provideTranslations,
     AuthModule,
-    FormFieldEvent,
-    NoopTranslateModule
+    FormFieldEvent
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -1541,7 +1540,7 @@ describe('retrieve metadata on submit', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule, CoreModule.forRoot(), FormCloudModule],
+            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot(), FormCloudModule],
             providers: [
                 provideTranslations('app', 'resources'),
                 {

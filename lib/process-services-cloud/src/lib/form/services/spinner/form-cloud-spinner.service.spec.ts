@@ -18,8 +18,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormCloudSpinnerService } from './form-cloud-spinner.service';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { FormService, FormSpinnerEvent, NoopTranslateModule } from '@alfresco/adf-core';
+import { FormService, FormSpinnerEvent } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { Component } from '@angular/core';
 import { FormSpinnerComponent } from '../../components/spinner/form-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -57,7 +58,7 @@ describe('FormCloudSpinnerService', () => {
                     }
                 }
             ],
-            imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, NoopTranslateModule]
+            imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, TranslateModule.forRoot()]
         });
 
         fixture = TestBed.createComponent(SpinnerTestComponent);

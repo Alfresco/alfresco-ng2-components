@@ -23,8 +23,6 @@ import {
     ColumnsSelectorComponent,
     CustomEmptyContentTemplateDirective,
     DataColumn,
-    DataColumnComponent,
-    DataColumnListComponent,
     DataRowEvent,
     getDataColumnMock,
     ObjectDataRow,
@@ -40,14 +38,13 @@ import { ProcessListCloudSortingModel } from '../models/process-list-sorting.mod
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
-import { PreferenceCloudServiceInterface, ProcessListCloudModule } from '@alfresco/adf-process-services-cloud';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
-    standalone: true,
-    imports: [DataColumnComponent, ProcessListCloudModule, DataColumnListComponent],
     template: ` <adf-cloud-process-list #processListCloud>
         <data-columns>
             <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3"></data-column>
@@ -593,7 +590,8 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, CustomTaskListComponent]
+            imports: [ProcessServiceCloudTestingModule],
+            declarations: [CustomTaskListComponent]
         });
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
         fixtureCustom.detectChanges();
@@ -616,8 +614,6 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
 describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
     @Component({
-        standalone: true,
-        imports: [CustomEmptyContentTemplateDirective, ProcessListCloudModule],
         template: `
             <adf-cloud-process-list #processListCloud>
                 <adf-custom-empty-content-template>
@@ -639,9 +635,9 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, EmptyTemplateComponent],
+            imports: [ProcessServiceCloudTestingModule, MatProgressSpinnerModule, CustomEmptyContentTemplateDirective],
             providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
-            declarations: [ProcessListCloudComponent]
+            declarations: [EmptyTemplateComponent, ProcessListCloudComponent]
         });
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
         fixtureEmpty.detectChanges();

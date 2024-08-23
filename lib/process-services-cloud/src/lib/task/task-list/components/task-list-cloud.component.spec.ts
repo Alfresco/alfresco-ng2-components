@@ -18,17 +18,7 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    AppConfigService,
-    DataRowEvent,
-    ObjectDataRow,
-    User,
-    DataColumn,
-    ColumnsSelectorComponent,
-    CustomEmptyContentTemplateDirective,
-    DataColumnComponent,
-    DataColumnListComponent
-} from '@alfresco/adf-core';
+import { AppConfigService, DataRowEvent, ObjectDataRow, User, DataColumn, ColumnsSelectorComponent } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTasks, fakeCustomSchema, fakeGlobalTask } from '../mock/fake-task-response.mock';
@@ -45,8 +35,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
-    standalone: true,
-    imports: [DataColumnComponent, DataColumnListComponent, TaskListCloudModule],
     template: ` <adf-cloud-task-list #taskListCloud>
         <data-columns>
             <data-column
@@ -78,10 +66,7 @@ class CustomTaskListComponent {
         return `${person.firstName} ${person.lastName}`;
     }
 }
-
 @Component({
-    standalone: true,
-    imports: [CustomEmptyContentTemplateDirective, TaskListCloudModule],
     template: `
         <adf-cloud-task-list>
             <adf-custom-empty-content-template>
@@ -91,10 +76,7 @@ class CustomTaskListComponent {
     `
 })
 class EmptyTemplateComponent {}
-
 @Component({
-    standalone: true,
-    imports: [DataColumnComponent, DataColumnListComponent, TaskListCloudModule],
     template: ` <adf-cloud-task-list>
         <data-columns>
             <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
@@ -518,7 +500,8 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, CustomTaskListComponent, CustomCopyContentTaskListComponent]
+            imports: [ProcessServiceCloudTestingModule],
+            declarations: [CustomTaskListComponent, CustomCopyContentTaskListComponent]
         });
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
@@ -544,8 +527,7 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
         expect(componentCustom.taskList.columns.length).toEqual(3);
     });
 
-    // eslint-disable-next-line ban/ban
-    xit('it should show copy tooltip when key is present in data-column', () => {
+    it('it should show copy tooltip when key is present in data-column', () => {
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
@@ -555,8 +537,7 @@ describe('TaskListCloudComponent: Injecting custom colums for tasklist - CustomT
         expect(copyFixture.debugElement.query(By.css('.adf-copy-tooltip'))).not.toBeNull();
     });
 
-    // eslint-disable-next-line ban/ban
-    xit('it should not show copy tooltip when key is not present in data-column', () => {
+    it('it should not show copy tooltip when key is not present in data-column', () => {
         customCopyComponent.taskList.reload();
         copyFixture.detectChanges();
 
@@ -573,7 +554,7 @@ describe('TaskListCloudComponent: Creating an empty custom template - EmptyTempl
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, EmptyTemplateComponent]
+            imports: [ProcessServiceCloudTestingModule, TaskListCloudModule]
         });
         taskListCloudService = TestBed.inject(TASK_LIST_CLOUD_TOKEN);
         const emptyList = { list: { entries: [] } };
