@@ -49,19 +49,26 @@ Manages holds for nodes.
     -   _nodeId_: `string` - The Id of the node which is unassigned
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`
 
--   **bulkAssignHold**(holdId: `string`, query: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>`<br/>
+-   **bulkAssignHold**(holdId: `string`, query: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponseEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponseEntry.md)`>`<br/>
     Assign multiple files to a hold.
     -   _holdId_: `string` - The hold id
     -   _query_: [`RequestQuery`](../../../lib/js-api/src/api/search-rest-api/docs/RequestQuery.md) - Search query
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>` - Bulk status <br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponseEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponseEntry.md)`>` - Bulk operation description <br/>
 
--   **bulkAssignHoldToFolder**(holdId: `string`, folderId: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>`<br/>
+-   **bulkAssignHoldToFolder**(holdId: `string`, folderId: `string`, language: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponseEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponseEntry.md)`>`<br/>
     Assign a folder to a hold.
     -   _holdId_: `string` - The hold id
     -   _folderId_: `string` - The folder id
     -   _language_: `string` - Language code. `afts` can be used for search query
 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponse`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponse.md)`>` - Bulk status <br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BulkAssignHoldResponseEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/BulkAssignHoldResponseEntry.md)`>` - Bulk operation description <br/>
+
+-   **getBulkOperationStatus**(bulkStatusId: `string`, holdId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldBulkStatusEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldBulkStatusEntry.md)`>`<br/>
+    Get current status of bulk operation.
+    -   _bulkStatusId_: `string` - The bulk operation id
+    -   _holdId_: `string` - The hold id
+
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`HoldBulkStatusEntry`](../../../lib/js-api/src/api/gs-core-rest-api/docs/HoldBulkStatusEntry.md)`>` - Current status of bulk operation <br/>
 
 
 ## Details
