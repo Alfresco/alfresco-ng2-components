@@ -1,15 +1,37 @@
 {
   "name": "alfresco-ng2-components",
+  "commit": "b644b39d17396330d2a67509f58c5b9e890b9b13",
   "description": "Alfresco Angular components",
   "version": "6.9.0",
   "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
     "prepare": "husky install",
+    "ng": "nx",
+    "00": "echo -------------------------------------------- DOC  -----------------------------------------------",
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
     "docbuild": "(cd ./tools/doc; npm i) && node tools/doc/node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.doc.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
+    "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "affected:libs": "nx affected:libs",
+    "coverage": "./lib/config/create-coverage-index.sh && lite-server -c ./lib/config/proxy-coverage.json",
+    "03": "echo -------------------------------------------- Lint  -----------------------------------------------",
     "affected:lint": "nx affected:lint",
-    "clean": "rimraf dist node_modules dist/libs"
+    "04": "echo -------------------------------------------- Demo Shell -----------------------------------------------",
+    "start": "nx serve demoshell --open",
+    "start:prod": "nx serve demoshell --configuration production --open",
+    "build": "nx build demoshell",
+    "build:prod": "node --max-old-space-size=12000 node_modules/@angular/cli/bin/nx build demoshell --configuration production",
+    "test": "nx test demoshell --watch=false",
+    "05": "echo -------------------------------------------- E2e -----------------------------------------------",
+    "e2e": "./scripts/test-e2e-lib.sh -host 'localhost:4200' -dev --folder demo-shell",
+    "e2e-lib": "nx e2e lib-e2e-test --port=4200",
+    "lite-server-e2e": "lite-server --baseDir='dist/demo-shell/' -c ./e2e/lite-server-proxy.js",
+    "postbuild:ci": "node ./scripts/app-config-replace.js",
+    "06": "echo -------------------------------------------- Clean ----------------------------------------------",
+    "clean": "rimraf dist node_modules dist/libs",
+    "playwright": "npx playwright test --config='e2e-playwright/playwright.config.ts'",
+    "postinstall": "npm run update-webdriver",
+    "update-webdriver": "./scripts/webdriver-update-newest/update-to-newest-webdriver.sh",
+    "update-webdriver:windows": "powershell  -executionPolicy bypass ./scripts/update-webdriver.ps1"
   },
   "repository": {
     "type": "git",
@@ -40,29 +62,25 @@
     "@angular/platform-browser": "16.2.9",
     "@angular/platform-browser-dynamic": "16.2.9",
     "@angular/router": "16.2.9",
-    "@apollo/client": "^3.10.2",
+    "@apollo/client": "3.11.4",
     "@cspell/eslint-plugin": "^7.3.6",
     "@mat-datetimepicker/core": "12.0.1",
     "@ngx-translate/core": "^14.0.0",
-    "@storybook/core-server": "^8.2.7",
-    "@storybook/theming": "^8.2.7",
+    "@storybook/core-server": "^8.2.9",
+    "@storybook/theming": "^8.2.9",
     "angular-oauth2-oidc": "^13.0.1",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "apollo-angular": "^5.0.2",
-    "chart.js": "^4.3.0",
+    "chart.js": "4.4.4",
     "cropperjs": "1.6.2",
     "date-fns": "^2.30.0",
     "dotenv-expand": "^5.1.0",
     "event-emitter": "^0.3.5",
     "material-icons": "^1.13.12",
     "minimatch-browser": "1.0.0",
-<<<<<<< HEAD
-    "ng2-charts": "^4.1.1",
-=======
     "monaco-editor": "0.41.0",
     "ng2-charts": "^4.1.1",
     "ngx-monaco-editor-v2": "16.0.1",
->>>>>>> 937f0e746b (NG-16 - migration step 1)
     "pdfjs-dist": "3.3.122",
     "raphael": "2.3.0",
     "rxjs": "7.8.1",
@@ -70,7 +88,8 @@
     "superagent": "^9.0.1",
     "ts-morph": "^20.0.0",
     "tslib": "^2.6.2",
-    "zone.js": "0.13.3"
+    "zone.js": "0.13.3",
+    "@storybook/addon-interactions": "^8.2.9"
   },
   "devDependencies": {
     "@alfresco/eslint-plugin-eslint-angular": "file:lib/eslint-angular",
@@ -83,24 +102,25 @@
     "@angular-eslint/template-parser": "16.0.3",
     "@angular/cli": "~16.2.0",
     "@angular/compiler-cli": "16.2.9",
-    "@chromatic-com/storybook": "^1.6.1",
+    "@chromatic-com/storybook": "1.7.0",
     "@editorjs/code": "2.9.0",
-    "@editorjs/editorjs": "^2.29.0",
+    "@editorjs/editorjs": "2.30.5",
     "@editorjs/header": "2.8.1",
     "@editorjs/inline-code": "1.5.0",
     "@editorjs/list": "1.9.0",
     "@editorjs/marker": "1.4.0",
     "@editorjs/underline": "1.1.0",
     "@nx/js": "16.10.0",
-    "@nx/storybook": "^19.5.6",
+    "@nx/storybook": "19.6.2",
     "@nx/workspace": "16.10.0",
     "@paperist/types-remark": "0.1.3",
+    "@playwright/test": "1.46.1",
     "@quanzo/change-font-size": "1.0.0",
     "@schematics/angular": "16.2.9",
-    "@storybook/addon-essentials": "^8.2.7",
-    "@storybook/angular": "^8.2.7",
-    "@storybook/core-server": "^8.2.7",
-    "@storybook/manager-api": "^8.2.7",
+    "@storybook/addon-essentials": "^8.2.9",
+    "@storybook/angular": "^8.2.9",
+    "@storybook/core-server": "^8.2.9",
+    "@storybook/manager-api": "^8.2.9",
     "@types/ejs": "^3.1.5",
     "@types/event-emitter": "^0.3.3",
     "@types/jasmine": "4.0.3",
@@ -108,8 +128,9 @@
     "@types/jsdom": "^21.1.5",
     "@types/minimatch": "^3.0.3",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.10.0",
+    "@types/node": "20.16.1",
     "@types/pdfjs-dist": "^2.10.378",
+    "@types/selenium-webdriver": "4.1.25",
     "@types/shelljs": "^0.8.15",
     "@types/superagent": "^4.1.22",
     "@typescript-eslint/eslint-plugin": "5.59.8",
@@ -140,9 +161,10 @@
     "jasmine-core": "4.6.0",
     "jasmine-marbles": "^0.9.2",
     "jasmine-reporters": "^2.5.2",
+    "jasmine-spec-reporter": "7.0.0",
     "js-yaml": "^4.0.0",
     "jsdom": "^24.0.0",
-    "karma": "^6.4.1",
+    "karma": "6.4.4",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "5.0.1",
@@ -150,48 +172,73 @@
     "karma-jasmine-html-reporter": "^2.1.0",
     "karma-mocha-reporter": "2.2.5",
     "license-checker": "^25.0.1",
-    "lint-staged": "^15.2.2",
-    "mini-css-extract-plugin": "^2.7.6",
-    "mocha": "^10.2.0",
+    "lint-staged": "15.2.9",
+    "lite-server": "^2.6.1",
+    "mini-css-extract-plugin": "2.9.1",
+    "mocha": "10.7.3",
     "moment": "^2.29.4",
     "ng-packagr": "16.2.3",
-    "nock": "^13.3.8",
-<<<<<<< HEAD
-    "nx": "15.9.7",
-=======
+    "nock": "13.5.5",
     "npm-run-all": "^4.1.5",
     "nx": "16.10.0",
->>>>>>> 937f0e746b (NG-16 - migration step 1)
-    "postcss": "^8.4.31",
+    "postcss": "8.4.41",
     "postcss-sass": "^0.5.0",
     "prettier": "2.8.8",
     "protractor": "^7.0.0",
-    "rimraf": "^5.0.5",
+    "protractor-retry-angular-cli": "^2.0.3",
+    "protractor-screenshoter-plugin": "0.10.3",
+    "protractor-smartrunner": "^2.0.0-beta6",
+    "rimraf": "5.0.10",
     "sass-loader": "13.3.2",
+    "selenium-webdriver": "^4.14.0",
     "shelljs": "^0.8.5",
     "spdx-license-list": "^6.9.0",
-    "storybook": "^8.2.7",
-    "stylelint": "^16.3.1",
+    "storybook": "^8.2.9",
+    "stylelint": "16.8.2",
     "stylelint-config-standard-scss": "^13.1.0",
     "ts-node": "^10.9.2",
-<<<<<<< HEAD
-    "typescript": "4.9.5",
-    "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4"
-=======
     "tsconfig-paths": "^4.1.1",
     "typescript": "5.1.6",
     "webdriver-manager": "12.1.9",
-    "webpack": "^5.90.3",
+    "webpack": "5.94.0",
     "webpack-cli": "^5.1.4",
     "@nx/eslint-plugin": "16.10.0",
     "@nx/node": "16.10.0",
     "@nx/angular": "16.10.0"
->>>>>>> 937f0e746b (NG-16 - migration step 1)
   },
   "license": "Apache-2.0",
+  "bundlesize": [
+    {
+      "path": "./dist/libs/content-services/bundles/adf-content-services.umd.min.js",
+      "maxSize": "85 kb"
+    },
+    {
+      "path": "./dist/libs/process-services/bundles/adf-process-services.umd.min.js",
+      "maxSize": "62 kb"
+    },
+    {
+      "path": "./dist/libs/insights/bundles/adf-insights.umd.min.js",
+      "maxSize": "50 kb"
+    },
+    {
+      "path": "./dist/libs/core/bundles/adf-core.umd.min.js",
+      "maxSize": "165 kb"
+    },
+    {
+      "path": "./dist/libs/process-services-cloud/bundles/adf-process-services-cloud.umd.min.js",
+      "maxSize": "60 kb"
+    },
+    {
+      "path": "./dist/libs/extensions/bundles/adf-extensions.umd.min.js",
+      "maxSize": "10 kb"
+    },
+    {
+      "path": "./dist/libs/testing/bundles/adf-testing.umd.min.js",
+      "maxSize": "50 kb"
+    }
+  ],
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=6.0.0"
   },
   "module": "./index.js",
   "typings": "./index.d.ts"
