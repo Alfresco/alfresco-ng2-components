@@ -16,7 +16,7 @@
         {{ 'TAG.TAGS_CREATOR.NO_TAGS_CREATED' | translate }}
     </p>
     <div class="adf-tags-list" [class.adf-tags-list-fixed]="!tagNameControlVisible" #tagsList>
-        <mat-chip-listbox *ngIf="tags.length > 0" class="adf-tags-chips-container">
+        <mat-chip-listbox *ngIf="tags.length > 0">
             <mat-chip-option *ngFor="let tag of tags" [disableRipple]="true" [title]="tag" class="adf-tags-chip">
                 {{ tag }}
                 <button
