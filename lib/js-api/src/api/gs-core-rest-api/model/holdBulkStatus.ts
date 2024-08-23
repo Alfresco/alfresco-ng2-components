@@ -23,10 +23,10 @@ export class HoldBulkStatus {
     errorsCount: number;
     holdBulkOperation: HoldBulkOperation;
     processedItems: number;
-    startTime: Date;
-    endTime?: Date;
     status: string;
     totalItems: number;
+    startTime: Date;
+    endTime?: Date;
 
     constructor(input?: Partial<HoldBulkStatus>) {
         if (input) {
