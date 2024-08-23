@@ -58,7 +58,7 @@ describe('AuthGuardService', () => {
             ]
         });
         localStorage.clear();
-        state = { url: '' } as RouterStateSnapshot;
+        state = { url: 'some-url' } as RouterStateSnapshot;
         authService = TestBed.inject(AuthenticationService);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
         oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);
@@ -68,10 +68,10 @@ describe('AuthGuardService', () => {
         appConfigService.config.auth = {};
         appConfigService.config.oauth2 = {};
         storageService = TestBed.inject(StorageService);
+        spyOn(router, 'navigateByUrl');
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async () => {
-        spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isLoggedIn').and.returnValue(true);
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
@@ -81,8 +81,6 @@ describe('AuthGuardService', () => {
     });
 
     it('if the alfresco js api is NOT logged in should canActivate be false', async () => {
-        state.url = 'some-url';
-        spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
@@ -94,7 +92,6 @@ describe('AuthGuardService', () => {
     it('if the alfresco js api is configured with withCredentials true should canActivate be true', async () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
-        state = { url: 'some-url' } as RouterStateSnapshot;
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
 
@@ -103,8 +100,6 @@ describe('AuthGuardService', () => {
 
     it('should not redirect to login', async () => {
         storageService.setItem('loginFragment', 'login');
-
-        spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isLoggedIn').and.returnValue(true);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
@@ -116,7 +111,6 @@ describe('AuthGuardService', () => {
     });
 
     it('should redirect url if the User is NOT logged in and isOAuthWithoutSilentLogin', async () => {
-        spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
@@ -128,7 +122,6 @@ describe('AuthGuardService', () => {
     });
 
     it('should redirect url if the User is NOT logged in and isOAuth but no silentLogin configured', async () => {
-        spyOn(router, 'navigateByUrl').and.stub();
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = undefined;
@@ -152,10 +145,7 @@ describe('AuthGuardService', () => {
     });
 
     it('should set redirect url', async () => {
-        state.url = 'some-url';
         appConfigService.config.loginRoute = 'login';
-
-        spyOn(router, 'navigateByUrl');
         spyOn(basicAlfrescoAuthService, 'setRedirect');
 
         await TestBed.runInInjectionContext(() => AuthGuard(route, state));
@@ -171,8 +161,6 @@ describe('AuthGuardService', () => {
         state.url = 'some-url;q=query';
         appConfigService.config.loginRoute = 'login';
         appConfigService.config.provider = 'ALL';
-
-        spyOn(router, 'navigateByUrl');
         spyOn(basicAlfrescoAuthService, 'setRedirect');
 
         await TestBed.runInInjectionContext(() => AuthGuard(route, state));
@@ -185,10 +173,7 @@ describe('AuthGuardService', () => {
     });
 
     it('should get redirect url from config if there is one configured', async () => {
-        state.url = 'some-url';
         appConfigService.config.loginRoute = 'fakeLoginRoute';
-
-        spyOn(router, 'navigateByUrl');
         spyOn(basicAlfrescoAuthService, 'setRedirect');
 
         await TestBed.runInInjectionContext(() => AuthGuard(route, state));
@@ -202,8 +187,6 @@ describe('AuthGuardService', () => {
 
     it('should pass actual redirect when no state segments exists', async () => {
         state.url = '/';
-
-        spyOn(router, 'navigateByUrl');
         spyOn(basicAlfrescoAuthService, 'setRedirect');
 
         await TestBed.runInInjectionContext(() => AuthGuard(route, state));
