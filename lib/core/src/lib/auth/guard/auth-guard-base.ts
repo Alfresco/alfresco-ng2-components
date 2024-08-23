@@ -103,4 +103,10 @@ export class AuthGuardBaseService {
         const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
         return this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin;
     }
+
+    isSilentLogin(): boolean {
+        const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+
+        return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
+    }
 }
