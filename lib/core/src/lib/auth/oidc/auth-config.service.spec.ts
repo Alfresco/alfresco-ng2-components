@@ -37,11 +37,7 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
         redirectUri: '/',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSubfolderRedirectUri: OauthConfigModel = {
@@ -54,11 +50,7 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/subfolder/assets/silent-refresh.html',
         redirectUri: '/subfolder',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSubfolder2RedirectUri: OauthConfigModel = {
@@ -71,11 +63,7 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
         redirectUri: '/subfolder2',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSlashRedirectUri: OauthConfigModel = {
@@ -88,11 +76,7 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
         redirectUri: '/',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigCodeFlow = {
@@ -106,19 +90,13 @@ describe('AuthConfigService', () => {
         redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
         redirectUri: '/',
         redirectUriLogout: '#/logout',
-        publicUrls: [
-            '**/preview/s/*',
-            '**/settings',
-            '**/logout'
-        ]
+        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [
-                { provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }
-            ]
+            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }]
         });
         service = TestBed.inject(AuthConfigService);
         spyOn<any>(service, 'getLocationOrigin').and.returnValue('http://localhost:3000');
@@ -193,6 +171,54 @@ describe('AuthConfigService', () => {
             const expectedUri = 'http://localhost:3000/subfolder2/assets/silent-refresh.html';
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigSubfolder2RedirectUri);
             expect(service.loadAppConfig().silentRefreshRedirectUri).toBe(expectedUri);
+        });
+    });
+
+    describe('postLogoutRedirectUri', () => {
+        const getConfig = (config: Partial<OauthConfigModel>): OauthConfigModel => {
+            const defaultConfig = {
+                host: 'http://localhost:3000/auth/realms/alfresco',
+                clientId: 'fakeClientId',
+                scope: 'openid profile email',
+                secret: '',
+                implicitFlow: true,
+                silentLogin: true,
+                redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
+                redirectUri: '/',
+                redirectUriLogout: '/',
+                publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
+            };
+
+            return {
+                ...defaultConfig,
+                ...config
+            };
+        };
+        it('should return proper postLogoutRedirectUri when the redirectUriLogout is "/"', () => {
+            const testConfig = getConfig({
+                redirectUriLogout: '/'
+            });
+
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(testConfig);
+            expect(service.loadAppConfig().postLogoutRedirectUri).toBe('http://localhost:3000/');
+        });
+
+        it('should return proper postLogoutRedirectUri when the redirectUriLogout is empty', () => {
+            const testConfig = getConfig({
+                redirectUriLogout: undefined
+            });
+
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(testConfig);
+            expect(service.loadAppConfig().postLogoutRedirectUri).toBe('http://localhost:3000/');
+        });
+
+        it('should return proper postLogoutRedirectUri when the redirectUriLogout starts with slash', () => {
+            const testConfig = getConfig({
+                redirectUriLogout: '/asd'
+            });
+
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue(testConfig);
+            expect(service.loadAppConfig().postLogoutRedirectUri).toBe('http://localhost:3000/asd');
         });
     });
 });
