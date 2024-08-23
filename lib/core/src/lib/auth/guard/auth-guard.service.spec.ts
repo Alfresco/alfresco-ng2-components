@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from '../services/authentication.service';
@@ -30,14 +30,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('AuthGuardService', () => {
-    let state;
+    let state: RouterStateSnapshot;
     let authService: AuthenticationService;
     let router: Router;
-    let authGuard: AuthGuard;
+    let authGuard: Promise<boolean>;
     let storageService: StorageService;
     let appConfigService: AppConfigService;
     let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let oidcAuthenticationService: OidcAuthenticationService;
+    const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -57,12 +58,11 @@ describe('AuthGuardService', () => {
             ]
         });
         localStorage.clear();
-        state = { url: '' };
+        state = { url: '' } as RouterStateSnapshot;
         authService = TestBed.inject(AuthenticationService);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
         oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);
         router = TestBed.inject(Router);
-        authGuard = TestBed.inject(AuthGuard);
         appConfigService = TestBed.inject(AppConfigService);
 
         appConfigService.config.auth = {};
@@ -74,7 +74,9 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isLoggedIn').and.returnValue(true);
 
-        expect(await authGuard.canActivate(null, state)).toBeTruthy();
+        authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
+
+        expect(await authGuard).toBeTruthy();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
@@ -83,17 +85,20 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(authService, 'isLoggedIn').and.returnValue(false);
 
-        expect(await authGuard.canActivate(null, state)).toBeFalsy();
+        authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
+
+        expect(await authGuard).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     });
 
     it('if the alfresco js api is configured with withCredentials true should canActivate be true', async () => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
         appConfigService.config.auth.withCredentials = true;
+        state = { url: 'some-url' } as RouterStateSnapshot;
 
-        const route = { url: 'some-url' } as RouterStateSnapshot;
+        authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
 
-        expect(await authGuard.canActivate(null, route)).toBeTruthy();
+        expect(await authGuard).toBeTruthy();
     });
 
     it('should not redirect to login', async () => {
@@ -104,7 +109,9 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
 
-        expect(await authGuard.canActivate(null, state)).toBeTruthy();
+        authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
+
+        expect(await authGuard).toBeTruthy();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
@@ -114,7 +121,9 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = false;
 
-        expect(await authGuard.canActivate(null, state)).toBeFalsy();
+        authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
+
+        expect(await authGuard).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     });
 
@@ -124,7 +133,9 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = undefined;
 
-        expect(await authGuard.canActivate(null, state)).toBeFalsy();
+        authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
+
+        expect(await authGuard).toBeFalsy();
         expect(router.navigateByUrl).toHaveBeenCalled();
     });
 
@@ -134,7 +145,9 @@ describe('AuthGuardService', () => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         appConfigService.config.oauth2.silentLogin = true;
 
-        expect(await authGuard.canActivate(null, state)).toBeFalsy();
+        authGuard = TestBed.runInInjectionContext(() => AuthGuard(route, state)) as Promise<boolean>;
+
+        expect(await authGuard).toBeFalsy();
         expect(oidcAuthenticationService.ssoLogin).toHaveBeenCalledTimes(1);
     });
 
@@ -145,7 +158,7 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(basicAlfrescoAuthService, 'setRedirect');
 
-        await authGuard.canActivate(null, state);
+        await TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'ALL',
@@ -162,7 +175,7 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(basicAlfrescoAuthService, 'setRedirect');
 
-        await authGuard.canActivate(null, state);
+        await TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'ALL',
@@ -178,7 +191,7 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(basicAlfrescoAuthService, 'setRedirect');
 
-        await authGuard.canActivate(null, state);
+        await TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'ALL',
@@ -193,7 +206,7 @@ describe('AuthGuardService', () => {
         spyOn(router, 'navigateByUrl');
         spyOn(basicAlfrescoAuthService, 'setRedirect');
 
-        await authGuard.canActivate(null, state);
+        await TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
             provider: 'ALL',

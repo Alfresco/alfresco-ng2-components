@@ -15,69 +15,51 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
+import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthGuardBase } from './auth-guard-base';
+import { AuthGuardBaseService } from './auth-guard-base';
 import { JwtHelperService } from '../services/jwt-helper.service';
-import { MatDialog } from '@angular/material/dialog';
-import { StorageService } from '../../common/services/storage.service';
-import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class AuthGuard extends AuthGuardBase {
-    ticketChangeBind: any;
+export const AuthGuard: CanActivateFn = async (_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
+    const router = inject(Router);
+    const jwtHelperService = inject(JwtHelperService);
+    const authGuardBaseService = inject(AuthGuardBaseService);
+    const authenticationService = inject(AuthenticationService);
 
-    constructor(
-        private jwtHelperService: JwtHelperService,
-        authenticationService: AuthenticationService,
-        basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        oidcAuthenticationService: OidcAuthenticationService,
-        router: Router,
-        appConfigService: AppConfigService,
-        dialog: MatDialog,
-        storageService: StorageService
-    ) {
-        super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
-        this.ticketChangeBind = this.ticketChange.bind(this);
-
-        window.addEventListener('storage', this.ticketChangeBind);
-    }
-
-    ticketChange(event: StorageEvent) {
+    window.addEventListener('storage', (event: StorageEvent) => {
         if (event.key.includes('ticket-ECM') && event.newValue !== event.oldValue) {
-            this.ticketChangeRedirect(event);
+            if (event.newValue) {
+                authGuardBaseService.navigate(router.url);
+            } else {
+                window.location.reload();
+            }
         }
 
         if (event.key.includes('ticket-BPM') && event.newValue !== event.oldValue) {
-            this.ticketChangeRedirect(event);
+            if (event.newValue) {
+                authGuardBaseService.navigate(router.url);
+            } else {
+                window.location.reload();
+            }
         }
 
         if (
             event.key.endsWith(JwtHelperService.USER_ACCESS_TOKEN) &&
-            this.jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
-                this.jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)
+            jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
+                jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)
         ) {
-            this.ticketChangeRedirect(event);
+            if (event.newValue) {
+                authGuardBaseService.navigate(router.url);
+            } else {
+                window.location.reload();
+            }
         }
+    });
+
+    if (authenticationService.isLoggedIn() || authGuardBaseService.withCredentials) {
+        return true;
     }
 
-    private ticketChangeRedirect(event: StorageEvent) {
-        if (event.newValue) {
-            this.navigate(this.router.url);
-        } else {
-            window.location.reload();
-        }
-    }
-
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
-        if (this.authenticationService.isLoggedIn() || this.withCredentials) {
-            return true;
-        }
-        return this.redirectToUrl(redirectUrl);
-    }
-}
+    return authGuardBaseService.redirectToUrl(state.url);
+};

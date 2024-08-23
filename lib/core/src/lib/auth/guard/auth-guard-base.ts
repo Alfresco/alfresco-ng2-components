@@ -15,55 +15,35 @@
  * limitations under the License.
  */
 
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
-import { Observable } from 'rxjs';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { Injectable } from '@angular/core';
 
-export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
-    protected get withCredentials(): boolean {
-        return this.appConfigService.get<boolean>('auth.withCredentials', false);
-    }
-
+@Injectable({
+    providedIn: 'root'
+})
+export class AuthGuardBaseService {
     constructor(
-        protected authenticationService: AuthenticationService,
-        protected basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        protected oidcAuthenticationService: OidcAuthenticationService,
-        protected router: Router,
-        protected appConfigService: AppConfigService,
-        protected dialog: MatDialog,
+        private authenticationService: AuthenticationService,
+        private basicAlfrescoAuthService: BasicAlfrescoAuthService,
+        private oidcAuthenticationService: OidcAuthenticationService,
+        private router: Router,
+        private appConfigService: AppConfigService,
+        private dialog: MatDialog,
         private storageService: StorageService
     ) {}
 
-    abstract checkLogin(
-        activeRoute: ActivatedRouteSnapshot,
-        redirectUrl: string
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
-
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (this.authenticationService.isLoggedIn() && this.authenticationService.isOauth() && this.isLoginFragmentPresent()) {
-            return this.redirectSSOSuccessURL();
-        }
-
-        return this.checkLogin(route, state.url);
+    get withCredentials(): boolean {
+        return this.appConfigService.get<boolean>('auth.withCredentials', false);
     }
 
-    canActivateChild(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this.canActivate(route, state);
-    }
-
-    protected async redirectSSOSuccessURL(): Promise<boolean | UrlTree> {
+    async redirectSSOSuccessURL(): Promise<boolean> {
         const redirectFragment = this.storageService.getItem('loginFragment');
 
         if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
@@ -75,11 +55,11 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return true;
     }
 
-    protected isLoginFragmentPresent(): boolean {
+    isLoginFragmentPresent(): boolean {
         return !!this.storageService.getItem('loginFragment');
     }
 
-    protected async redirectToUrl(url: string): Promise<boolean | UrlTree> {
+    async redirectToUrl(url: string): Promise<boolean> {
         let urlToRedirect = `/${this.getLoginRoute()}`;
 
         if (!this.authenticationService.isOauth()) {
@@ -101,32 +81,26 @@ export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
         return false;
     }
 
-    protected async navigate(url: string): Promise<boolean> {
+    async navigate(url: string): Promise<boolean> {
         this.dialog.closeAll();
         await this.router.navigateByUrl(this.router.parseUrl(url));
         return false;
     }
 
-    protected getOauthConfig(): OauthConfigModel {
-        return this.appConfigService && this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+    private getOauthConfig(): OauthConfigModel {
+        return this.appConfigService?.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
     }
 
-    protected getLoginRoute(): string {
+    private getLoginRoute(): string {
         return this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE, 'login');
     }
 
-    protected getProvider(): string {
+    private getProvider(): string {
         return this.appConfigService.get<string>(AppConfigValues.PROVIDERS, 'ALL');
     }
 
-    protected isOAuthWithoutSilentLogin(): boolean {
+    isOAuthWithoutSilentLogin(): boolean {
         const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
         return this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin;
-    }
-
-    protected isSilentLogin(): boolean {
-        const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-
-        return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }
 }

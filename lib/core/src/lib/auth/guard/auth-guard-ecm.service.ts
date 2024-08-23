@@ -15,37 +15,22 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthGuardBase } from './auth-guard-base';
-import { MatDialog } from '@angular/material/dialog';
-import { StorageService } from '../../common/services/storage.service';
-import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
-import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { AuthGuardBaseService } from './auth-guard-base';
+import { inject } from '@angular/core';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class AuthGuardEcm extends AuthGuardBase {
-    constructor(
-        authenticationService: AuthenticationService,
-        basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        oidcAuthenticationService: OidcAuthenticationService,
-        router: Router,
-        appConfigService: AppConfigService,
-        dialog: MatDialog,
-        storageService: StorageService
-    ) {
-        super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
+export const AuthGuardEcm: CanActivateFn = async (_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
+    const authGuardBaseService = inject(AuthGuardBaseService);
+    const authenticationService = inject(AuthenticationService);
+
+    if (authenticationService.isLoggedIn() && authenticationService.isOauth() && authGuardBaseService.isLoginFragmentPresent()) {
+        return authGuardBaseService.redirectSSOSuccessURL();
     }
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
-        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
-            return true;
-        }
-
-        return this.redirectToUrl(redirectUrl);
+    if (authenticationService.isEcmLoggedIn() || authGuardBaseService.withCredentials) {
+        return true;
     }
-}
+
+    return authGuardBaseService.redirectToUrl(state.url);
+};
