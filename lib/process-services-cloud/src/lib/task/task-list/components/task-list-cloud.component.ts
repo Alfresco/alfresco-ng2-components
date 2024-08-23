@@ -16,7 +16,16 @@
  */
 
 import { Component, ViewEncapsulation, Input, Inject, OnDestroy } from '@angular/core';
-import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
+import {
+    AppConfigService,
+    ColumnsSelectorComponent,
+    DataTableComponent,
+    EmptyContentComponent,
+    LoadingContentTemplateDirective,
+    MainMenuDataTableTemplateDirective,
+    NoContentTemplateDirective,
+    UserPreferencesService
+} from '@alfresco/adf-core';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -31,11 +40,26 @@ import { TaskCloudModel } from '../../../models/task-cloud.model';
 import { PaginatedEntries } from '@alfresco/js-api';
 import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
 import { TasksListDatatableAdapter } from '../datatable/task-list-datatable-adapter';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
 @Component({
     selector: 'adf-cloud-task-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        DataTableComponent,
+        MatProgressSpinnerModule,
+        EmptyContentComponent,
+        NoContentTemplateDirective,
+        LoadingContentTemplateDirective,
+        ColumnsSelectorComponent,
+        MainMenuDataTableTemplateDirective
+    ],
     templateUrl: './base-task-list-cloud.component.html',
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -151,20 +175,18 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     dataAdapter: TasksListDatatableAdapter | undefined;
 
     private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
-    isLoading$ = combineLatest([
-        this.isLoadingPreferences$,
-        this.isReloadingSubject$
-    ]).pipe(
+    isLoading$ = combineLatest([this.isLoadingPreferences$, this.isReloadingSubject$]).pipe(
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    constructor(@Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
-                appConfigService: AppConfigService,
-                taskCloudService: TaskCloudService,
-                userPreferences: UserPreferencesService,
-                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface,
-                private viewModelCreator: VariableMapperService
-            ) {
+    constructor(
+        @Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
+        appConfigService: AppConfigService,
+        taskCloudService: TaskCloudService,
+        userPreferences: UserPreferencesService,
+        @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface,
+        private viewModelCreator: VariableMapperService
+    ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
@@ -176,31 +198,33 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     reload() {
         this.isReloadingSubject$.next(true);
 
-        this.isColumnSchemaCreated$.pipe(
-            switchMap(() => of(this.createRequestNode())),
-            tap((requestNode) => this.requestNode = requestNode),
-            switchMap((requestNode) => this.taskListCloudService.getTaskByRequest(requestNode)),
-            takeUntil(this.onDestroyTaskList$)
-        ).subscribe((tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
-            const tasksWithVariables = tasks.list.entries.map((task) => ({
-                ...task,
-                variables: task.processVariables
-            }));
+        this.isColumnSchemaCreated$
+            .pipe(
+                switchMap(() => of(this.createRequestNode())),
+                tap((requestNode) => (this.requestNode = requestNode)),
+                switchMap((requestNode) => this.taskListCloudService.getTaskByRequest(requestNode)),
+                takeUntil(this.onDestroyTaskList$)
+            )
+            .subscribe(
+                (tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
+                    const tasksWithVariables = tasks.list.entries.map((task) => ({
+                        ...task,
+                        variables: task.processVariables
+                    }));
 
-            this.rows = this.viewModelCreator.mapVariablesByColumnTitle(
-                tasksWithVariables,
-                this.columns
+                    this.rows = this.viewModelCreator.mapVariablesByColumnTitle(tasksWithVariables, this.columns);
+
+                    this.dataAdapter = new TasksListDatatableAdapter(this.rows, this.columns);
+
+                    this.success.emit(tasks);
+                    this.isReloadingSubject$.next(false);
+                    this.pagination.next(tasks.list.pagination);
+                },
+                (error) => {
+                    this.error.emit(error);
+                    this.isReloadingSubject$.next(false);
+                }
             );
-
-            this.dataAdapter = new TasksListDatatableAdapter(this.rows, this.columns);
-
-            this.success.emit(tasks);
-            this.isReloadingSubject$.next(false);
-            this.pagination.next(tasks.list.pagination);
-        }, (error) => {
-            this.error.emit(error);
-            this.isReloadingSubject$.next(false);
-        });
     }
 
     createRequestNode(): TaskQueryCloudRequestModel {
@@ -242,11 +266,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
 
     private getRequestNodeVariables(): string[] | undefined {
         const displayedVariableColumns: string[] = (this.columns ?? [])
-            .filter(column =>
-                column.customData?.columnType === 'process-variable-column' &&
-                column.isHidden !== true
-            )
-            .map(column => {
+            .filter((column) => column.customData?.columnType === 'process-variable-column' && column.isHidden !== true)
+            .map((column) => {
                 const variableDefinitionsPayload = column.customData.variableDefinitionsPayload;
                 return variableDefinitionsPayload;
             })

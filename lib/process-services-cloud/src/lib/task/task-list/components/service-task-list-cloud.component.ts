@@ -17,7 +17,14 @@
 
 import { Component, ViewEncapsulation, Input, Inject, OnDestroy } from '@angular/core';
 import {
-    AppConfigService, UserPreferencesService
+    AppConfigService,
+    ColumnsSelectorComponent,
+    DataTableComponent,
+    EmptyContentComponent,
+    LoadingContentTemplateDirective,
+    MainMenuDataTableTemplateDirective,
+    NoContentTemplateDirective,
+    UserPreferencesService
 } from '@alfresco/adf-core';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
@@ -26,11 +33,26 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { Subject, combineLatest, BehaviorSubject } from 'rxjs';
 import { PreferenceCloudServiceInterface, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/public-api';
 import { map, takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
 @Component({
     selector: 'adf-cloud-service-task-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        DataTableComponent,
+        MatProgressSpinnerModule,
+        EmptyContentComponent,
+        NoContentTemplateDirective,
+        LoadingContentTemplateDirective,
+        ColumnsSelectorComponent,
+        MainMenuDataTableTemplateDirective
+    ],
     templateUrl: './base-task-list-cloud.component.html',
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -42,19 +64,17 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
     private onDestroyServiceTaskList$ = new Subject<boolean>();
 
     private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
-    isLoading$ = combineLatest([
-        this.isLoadingPreferences$,
-        this.isReloadingSubject$
-    ]).pipe(
+    isLoading$ = combineLatest([this.isLoadingPreferences$, this.isReloadingSubject$]).pipe(
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
-                appConfigService: AppConfigService,
-                taskCloudService: TaskCloudService,
-                userPreferences: UserPreferencesService,
-                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface
-            ) {
+    constructor(
+        private serviceTaskListCloudService: ServiceTaskListCloudService,
+        appConfigService: AppConfigService,
+        taskCloudService: TaskCloudService,
+        userPreferences: UserPreferencesService,
+        @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface
+    ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
@@ -69,22 +89,20 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
         this.requestNode = this.createRequestNode();
 
         if (this.requestNode.appName || this.requestNode.appName === '') {
-
-            combineLatest([
-                this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode),
-                this.isColumnSchemaCreated$
-            ]).pipe(
-                takeUntil(this.onDestroyServiceTaskList$)
-            ).subscribe(
-                ([tasks]) => {
-                    this.rows = tasks.list.entries;
-                    this.success.emit(tasks);
-                    this.pagination.next(tasks.list.pagination);
-                    this.isReloadingSubject$.next(false);
-                }, (error) => {
-                    this.error.emit(error);
-                    this.isReloadingSubject$.next(false);
-                });
+            combineLatest([this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode), this.isColumnSchemaCreated$])
+                .pipe(takeUntil(this.onDestroyServiceTaskList$))
+                .subscribe(
+                    ([tasks]) => {
+                        this.rows = tasks.list.entries;
+                        this.success.emit(tasks);
+                        this.pagination.next(tasks.list.pagination);
+                        this.isReloadingSubject$.next(false);
+                    },
+                    (error) => {
+                        this.error.emit(error);
+                        this.isReloadingSubject$.next(false);
+                    }
+                );
         } else {
             this.rows = [];
         }
