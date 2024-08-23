@@ -22,7 +22,6 @@ import { ApiService } from '../../../shared/api/api.service';
 import { ApiUtil } from '../../../shared/api/api.util';
 
 export class Application {
-
     requestApiHelper: E2eRequestApiHelper;
     endPoint = `/deployment-service/v1/applications/`;
 
@@ -57,6 +56,7 @@ export class Application {
                 return this.requestApiHelper.delete(`${this.endPoint}${applicationName}`);
             } catch (error) {
                 Logger.error(`[Application] Undeploy application ${applicationName} failed with error: ${error.message}`);
+                return null;
             }
         };
         return ApiUtil.waitForApi(apiCall, isApplicationUndeployed, 10, 3000);
