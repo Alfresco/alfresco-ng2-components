@@ -188,7 +188,7 @@
     "protractor-screenshoter-plugin": "0.10.3",
     "protractor-smartrunner": "^2.0.0-beta6",
     "rimraf": "^5.0.5",
-    "sass-loader": "13.3.2",
+    "sass-loader": "16.0.1",
     "selenium-webdriver": "^4.14.0",
     "shelljs": "^0.8.5",
     "spdx-license-list": "^6.9.0",
