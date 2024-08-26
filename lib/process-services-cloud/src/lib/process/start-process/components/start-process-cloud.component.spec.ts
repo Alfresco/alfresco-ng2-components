@@ -122,6 +122,56 @@ describe('StartProcessCloudComponent', () => {
         TestBed.resetTestingModule();
     });
 
+    /**
+     * Setup the component with the given start event information.
+     * @param values the values for the form
+     * @param staticValues the static values retrieved from the API for the form
+     * @param constantValues the constant values retrieved from the API for customising the buttons
+     * @returns the start and cancel buttons HTML elements
+     */
+    function loadWithStartEventInformation(
+        values?: TaskVariableCloud[],
+        staticValues?: TaskVariableCloud[] | Error,
+        constantValues?: TaskVariableCloud[] | Error
+    ): {
+        startButton: any;
+        cancelButton: any;
+    } {
+        if (values) {
+            component.values = values;
+        }
+        if (staticValues) {
+            if (staticValues instanceof Error) {
+                getStartEventConstantSpy.and.returnValue(throwError(() => staticValues));
+            } else {
+                getStartEventFormStaticValuesMappingSpy.and.returnValue(of(staticValues));
+            }
+        }
+        if (constantValues) {
+            if (constantValues instanceof Error) {
+                getStartEventConstantSpy.and.returnValue(throwError(() => constantValues));
+            } else {
+                getStartEventConstantSpy.and.returnValue(of(constantValues));
+            }
+        }
+
+        component.name = 'My new process';
+        component.processDefinitionName = 'processwithoutform2';
+        getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+        fixture.detectChanges();
+
+        const change = new SimpleChange(null, 'MyApp', true);
+        component.ngOnChanges({ appName: change });
+        fixture.detectChanges();
+        tick(550);
+        fixture.detectChanges();
+
+        const startButton = fixture.nativeElement.querySelector('#button-start');
+        const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+
+        return { startButton, cancelButton };
+    }
+
     describe('start a process without start form', () => {
         beforeEach(() => {
             component.name = 'My formless new process';
@@ -199,17 +249,9 @@ describe('StartProcessCloudComponent', () => {
                 new TaskVariableCloud({ name: 'static2', value: 0 }),
                 new TaskVariableCloud({ name: 'static3', value: true })
             ];
-            component.name = 'My new process';
-            component.processDefinitionName = 'processwithoutform2';
-            component.values = values;
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
-            getStartEventFormStaticValuesMappingSpy.and.returnValue(of(staticInputs));
-            fixture.detectChanges();
 
-            const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ appName: change });
-            fixture.detectChanges();
-            tick(550);
+            loadWithStartEventInformation(values, staticInputs);
+
             expect(component.resolvedValues).toEqual(staticInputs.concat(values));
         }));
 
@@ -219,21 +261,8 @@ describe('StartProcessCloudComponent', () => {
                     new TaskVariableCloud({ name: 'startEnabled', value: 'false' }),
                     new TaskVariableCloud({ name: 'cancelEnabled', value: 'false' })
                 ];
-                getStartEventConstantSpy.and.returnValue(of(constants));
 
-                component.name = 'My new process';
-                component.processDefinitionName = 'processwithoutform2';
-                getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
-
-                const change = new SimpleChange(null, 'MyApp', true);
-                component.ngOnChanges({ appName: change });
-                fixture.detectChanges();
-                tick(550);
-
-                fixture.detectChanges();
-
-                const startButton = fixture.nativeElement.querySelector('#button-start');
-                const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+                const { startButton, cancelButton } = loadWithStartEventInformation(null, null, constants);
 
                 expect(startButton).toBeNull();
                 expect(cancelButton).toBeNull();
@@ -246,43 +275,14 @@ describe('StartProcessCloudComponent', () => {
                     new TaskVariableCloud({ name: 'cancelEnabled', value: 'true' }),
                     new TaskVariableCloud({ name: 'cancelLabel', value: 'Cancel' })
                 ];
-                getStartEventConstantSpy.and.returnValue(of(constants));
-
-                component.name = 'My new process';
-                component.processDefinitionName = 'processwithoutform2';
-                getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
-                fixture.detectChanges();
-
-                const change = new SimpleChange(null, 'MyApp', true);
-                component.ngOnChanges({ appName: change });
-                fixture.detectChanges();
-                tick(550);
-
-                fixture.detectChanges();
-
-                const startButton = fixture.nativeElement.querySelector('#button-start');
-                const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+                const { startButton, cancelButton } = loadWithStartEventInformation(null, null, constants);
 
                 expect(startButton.textContent?.trim()).toEqual('Start');
                 expect(cancelButton.textContent?.trim()).toEqual('Cancel');
             }));
 
             it('should load with default values when retrieving the constants fails', fakeAsync(() => {
-                getStartEventConstantSpy.and.returnValue(throwError(() => new Error('test')));
-                component.name = 'My new process';
-                component.processDefinitionName = 'processwithoutform2';
-                getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
-                fixture.detectChanges();
-
-                const change = new SimpleChange(null, 'MyApp', true);
-                component.ngOnChanges({ appName: change });
-                fixture.detectChanges();
-                tick(550);
-
-                fixture.detectChanges();
-
-                const startButton = fixture.nativeElement.querySelector('#button-start');
-                const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+                const { startButton, cancelButton } = loadWithStartEventInformation(null, null, new Error('test'));
 
                 expect(startButton).not.toBeNull();
                 expect(cancelButton).not.toBeNull();
