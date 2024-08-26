@@ -85,6 +85,8 @@ describe('UnsavedChangesDialog', () => {
     });
 
     describe('when data is present in dialog', () => {
+        const UNSAVED_CHANGES_KEY = 'GUEST__unsaved_changes__modal_hidden';
+
         beforeEach(() => {
             setupBeforeEach({
                 headerText: 'headerText',
@@ -106,13 +108,13 @@ describe('UnsavedChangesDialog', () => {
         it('should update storageService to true when checkbox is checked', () => {
             const event = { checked: true };
             savePreferenceCheckbox.triggerEventHandler('change', event);
-            expect(storageServiceMock.setItem).toHaveBeenCalledWith(UnsavedChangesDialogComponent.UNSAVED_CHANGES_MODAL_HIDDEN, 'true');
+            expect(storageServiceMock.setItem).toHaveBeenCalledWith(UNSAVED_CHANGES_KEY, 'true');
         });
 
         it('should update storageService to false when checkbox is unchecked', () => {
             const event = { checked: false };
             savePreferenceCheckbox.triggerEventHandler('change', event);
-            expect(storageServiceMock.setItem).toHaveBeenCalledWith(UnsavedChangesDialogComponent.UNSAVED_CHANGES_MODAL_HIDDEN, 'false');
+            expect(storageServiceMock.setItem).toHaveBeenCalledWith(UNSAVED_CHANGES_KEY, 'false');
         });
     });
 });
