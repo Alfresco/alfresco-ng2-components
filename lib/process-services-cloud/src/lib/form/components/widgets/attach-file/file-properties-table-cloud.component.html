@@ -70,7 +70,7 @@
                         <span>{{ 'ADF_CLOUD_FORM_COMPONENT.RETRIEVE_METADATA' | translate }}</span>
                     </button>
                     <button *ngIf="!field.readOnly && displayMenuOption('remove')"
-                            id="{{'file-'+element?.id+'-remove-file'}}" mat-menu-item
+                            mat-menu-item
                             [id]="'file-'+element?.id+'-remove'"
                             (click)="onRemoveAttachFile(element);" (keyup.enter)="onRemoveAttachFile(element);">
                         <mat-icon class="mat-24">highlight_off</mat-icon>

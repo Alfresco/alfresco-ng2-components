@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './lib/alfresco-icon/alfresco-icon.component';
 export * from './lib/directives/index';
 export * from './lib/tag/index';
 export * from './lib/document-list/index';
