@@ -176,7 +176,6 @@ describe('SearchDateRangeComponent', () => {
         expect(component.form.controls.betweenEndDate.errors.invalidDate).toBeTrue();
     });
 
-    // eslint-disable-next-line ban/ban
     it('should not be able to select a date after the max date when selecting the BETWEEN option', async () => {
         component.form.controls.dateRangeType.setValue(component.DateRangeType.BETWEEN);
         component.maxDate = 'today';
