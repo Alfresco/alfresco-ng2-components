@@ -119,4 +119,26 @@ export class StartProcessCloudService extends BaseCloudService {
             })
         );
     }
+
+    /**
+     * Gets the constants mapped to the start form of a process definition.
+     *
+     * @param appName Name of the app
+     * @param processDefinitionId ID of the target process definition
+     * @returns Constants values for the start event
+     */
+    getStartEventConstants(appName: string, processDefinitionId: string): Observable<TaskVariableCloud[]> {
+        const apiUrl = `${this.getBasePath(appName)}/rb/v1/process-definitions/${processDefinitionId}/constant-values`;
+        return this.get(apiUrl).pipe(
+            map((res: { [key: string]: any }) => {
+                const result = [];
+                if (res) {
+                    Object.keys(res).forEach((constant) =>
+                        result.push(new TaskVariableCloud({ name: constant, value: res[constant], type: 'string' }))
+                    );
+                }
+                return result;
+            })
+        );
+    }
 }

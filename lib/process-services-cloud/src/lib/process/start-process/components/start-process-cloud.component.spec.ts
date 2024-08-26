@@ -67,6 +67,7 @@ describe('StartProcessCloudComponent', () => {
     let startProcessWithFormSpy: jasmine.Spy;
     let formDefinitionSpy: jasmine.Spy;
     let getStartEventFormStaticValuesMappingSpy: jasmine.Spy;
+    let getStartEventConstantSpy: jasmine.Spy;
 
     const firstChange = new SimpleChange(undefined, 'myApp', true);
 
@@ -112,6 +113,7 @@ describe('StartProcessCloudComponent', () => {
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(fakeProcessInstance));
         startProcessWithFormSpy = spyOn(processService, 'startProcessWithForm').and.returnValue(of(fakeProcessWithFormInstance));
         getStartEventFormStaticValuesMappingSpy = spyOn(processService, 'getStartEventFormStaticValuesMapping').and.returnValue(of([]));
+        getStartEventConstantSpy = spyOn(processService, 'getStartEventConstants').and.returnValue(of([]));
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
@@ -210,6 +212,84 @@ describe('StartProcessCloudComponent', () => {
             tick(550);
             expect(component.resolvedValues).toEqual(staticInputs.concat(values));
         }));
+
+        describe('start event constants', () => {
+            it('should not display the buttons when they are disabled by the constants', fakeAsync(() => {
+                const constants: TaskVariableCloud[] = [
+                    new TaskVariableCloud({ name: 'startEnabled', value: 'false' }),
+                    new TaskVariableCloud({ name: 'cancelEnabled', value: 'false' })
+                ];
+                getStartEventConstantSpy.and.returnValue(of(constants));
+
+                component.name = 'My new process';
+                component.processDefinitionName = 'processwithoutform2';
+                getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+
+                const change = new SimpleChange(null, 'MyApp', true);
+                component.ngOnChanges({ appName: change });
+                fixture.detectChanges();
+                tick(550);
+
+                fixture.detectChanges();
+
+                const startButton = fixture.nativeElement.querySelector('#button-start');
+                const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+
+                expect(startButton).toBeNull();
+                expect(cancelButton).toBeNull();
+            }));
+
+            it('should display the customised button labels when they are set in the constants', fakeAsync(() => {
+                const constants: TaskVariableCloud[] = [
+                    new TaskVariableCloud({ name: 'startEnabled', value: 'true' }),
+                    new TaskVariableCloud({ name: 'startLabel', value: 'Start' }),
+                    new TaskVariableCloud({ name: 'cancelEnabled', value: 'true' }),
+                    new TaskVariableCloud({ name: 'cancelLabel', value: 'Cancel' })
+                ];
+                getStartEventConstantSpy.and.returnValue(of(constants));
+
+                component.name = 'My new process';
+                component.processDefinitionName = 'processwithoutform2';
+                getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+                fixture.detectChanges();
+
+                const change = new SimpleChange(null, 'MyApp', true);
+                component.ngOnChanges({ appName: change });
+                fixture.detectChanges();
+                tick(550);
+
+                fixture.detectChanges();
+
+                const startButton = fixture.nativeElement.querySelector('#button-start');
+                const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+
+                expect(startButton.textContent?.trim()).toEqual('Start');
+                expect(cancelButton.textContent?.trim()).toEqual('Cancel');
+            }));
+
+            it('should load with default values when retrieving the constants fails', fakeAsync(() => {
+                getStartEventConstantSpy.and.returnValue(throwError(() => new Error('test')));
+                component.name = 'My new process';
+                component.processDefinitionName = 'processwithoutform2';
+                getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+                fixture.detectChanges();
+
+                const change = new SimpleChange(null, 'MyApp', true);
+                component.ngOnChanges({ appName: change });
+                fixture.detectChanges();
+                tick(550);
+
+                fixture.detectChanges();
+
+                const startButton = fixture.nativeElement.querySelector('#button-start');
+                const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+
+                expect(startButton).not.toBeNull();
+                expect(cancelButton).not.toBeNull();
+                expect(startButton.textContent?.trim()).toEqual(component.defaultStartProcessButtonLabel);
+                expect(cancelButton.textContent?.trim()).toEqual(component.defaultCancelProcessButtonLabel);
+            }));
+        });
     });
 
     describe('start a process with start form', () => {
