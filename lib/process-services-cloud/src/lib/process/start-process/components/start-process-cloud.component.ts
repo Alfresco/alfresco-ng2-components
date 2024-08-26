@@ -186,10 +186,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     constructor(private translateService: TranslationService) {
-        this.startProcessButtonLabel = this.translateService
-            .instant('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.START')
-            .toUpperCase();
-        this.cancelButtonLabel = this.translateService.instant('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL').toUpperCase();
+        this.startProcessButtonLabel = this.defaultStartProcessButtonLabel;
+        this.cancelButtonLabel = this.defaultCancelProcessButtonLabel;
     }
 
     ngOnInit() {
