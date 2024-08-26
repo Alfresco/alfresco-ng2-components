@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LegalHoldService } from './legal-hold.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
-import { BulkAssignHoldResponse, Hold, HoldEntry, HoldPaging, RequestQuery, SEARCH_LANGUAGE } from '@alfresco/js-api';
+import { BulkAssignHoldResponseEntry, Hold, HoldBulkStatusEntry, HoldEntry, HoldPaging, RequestQuery, SEARCH_LANGUAGE } from '@alfresco/js-api';
 
 describe('LegalHoldsService', () => {
     let service: LegalHoldService;
@@ -28,7 +28,29 @@ describe('LegalHoldsService', () => {
     const filePlanId = 'mockId';
     const nodeId = 'mockNodeId';
     const holdId = 'holdId';
-    const mockBulkResponse: BulkAssignHoldResponse = { totalItems: 3, bulkStatusId: 'bulkStatus' };
+    const mockBulkResponse: BulkAssignHoldResponseEntry = {
+        entry: {
+            totalItems: 3,
+            bulkStatusId: 'bulkStatus'
+        }
+    };
+    const mockBulkStatusResponse: HoldBulkStatusEntry = {
+        entry: {
+            bulkStatusId: 'bulkStatus',
+            status: 'IN_PROGRESS',
+            totalItems: 3,
+            processedItems: 2,
+            errorsCount: 0,
+            startTime: new Date('2024'),
+            holdBulkOperation: {
+                op: 'ADD',
+                query: {
+                    query: 'mockQuery',
+                    language: SEARCH_LANGUAGE.AFTS
+                }
+            }
+        }
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -180,6 +202,19 @@ describe('LegalHoldsService', () => {
             service.bulkAssignHoldToFolder(nodeId, folderId, SEARCH_LANGUAGE.AFTS).subscribe((response) => {
                 expect(response).toEqual(mockBulkResponse);
                 expect(service.legalHoldApi.bulkAssignHold).toHaveBeenCalledWith(nodeId, query);
+                done();
+            });
+        });
+    });
+
+    describe('getBulkOperationStatus', () => {
+        it('should get bulk operation status based on bulkStatusId and nodeId', (done) => {
+            spyOn(service.legalHoldApi, 'getBulkStatus').and.returnValue(Promise.resolve(mockBulkStatusResponse));
+            const bulkStatusId = 'mockBulkStatusId';
+
+            service.getBulkOperationStatus(bulkStatusId, nodeId).subscribe((response) => {
+                expect(response).toEqual(mockBulkStatusResponse);
+                expect(service.legalHoldApi.getBulkStatus).toHaveBeenCalledWith(bulkStatusId, nodeId);
                 done();
             });
         });

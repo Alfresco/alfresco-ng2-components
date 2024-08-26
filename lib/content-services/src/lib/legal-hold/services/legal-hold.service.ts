@@ -16,7 +16,17 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { BulkAssignHoldResponse, ContentPagingQuery, Hold, HoldBody, HoldEntry, HoldPaging, LegalHoldApi, RequestQuery } from '@alfresco/js-api';
+import {
+    BulkAssignHoldResponseEntry,
+    ContentPagingQuery,
+    Hold,
+    HoldBody,
+    HoldBulkStatusEntry,
+    HoldEntry,
+    HoldPaging,
+    LegalHoldApi,
+    RequestQuery
+} from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -104,9 +114,9 @@ export class LegalHoldService {
      *
      * @param holdId The identifier of a hold
      * @param query Search query
-     * @returns Observable<BulkAssignHoldResponse>
+     * @returns Observable<BulkAssignHoldResponseEntry>
      */
-    bulkAssignHold(holdId: string, query: RequestQuery): Observable<BulkAssignHoldResponse> {
+    bulkAssignHold(holdId: string, query: RequestQuery): Observable<BulkAssignHoldResponseEntry> {
         return from(this.legalHoldApi.bulkAssignHold(holdId, query));
     }
 
@@ -116,14 +126,25 @@ export class LegalHoldService {
      * @param holdId The identifier of a hold
      * @param folderId The identifier of a folder
      * @param language Language code
-     * @returns Observable<BulkAssignHoldResponse>
+     * @returns Observable<BulkAssignHoldResponseEntry>
      */
-    bulkAssignHoldToFolder(holdId: string, folderId: string, language: string): Observable<BulkAssignHoldResponse> {
+    bulkAssignHoldToFolder(holdId: string, folderId: string, language: string): Observable<BulkAssignHoldResponseEntry> {
         const query: RequestQuery = {
             query: `ANCESTOR:'workspace://SpacesStore/${folderId}' and TYPE:content`,
             language
         };
 
         return from(this.legalHoldApi.bulkAssignHold(holdId, query));
+    }
+
+    /**
+     * Get status of bulk operation with **bulkStatusId** for **holdId**.
+     *
+     * @param bulkStatusId The identifier of a bulk status
+     * @param holdId The identifier of a hold
+     * @returns Promise<HoldsBulkStatusEntry>
+     */
+    getBulkOperationStatus(bulkStatusId: string, holdId: string): Observable<HoldBulkStatusEntry> {
+        return from(this.legalHoldApi.getBulkStatus(bulkStatusId, holdId));
     }
 }
