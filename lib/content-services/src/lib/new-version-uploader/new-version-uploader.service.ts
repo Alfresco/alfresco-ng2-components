@@ -52,7 +52,9 @@ export class NewVersionUploaderService {
         config?: MatDialogConfig,
         selectorAutoFocusedOnClose?: string
     ): Observable<NewVersionUploaderData> {
-        const { file, node, showVersionsOnly, showComments, allowDownload } = data;
+        const { file, node, showVersionsOnly } = data;
+        const allowDownload = data.allowDownload ?? true;
+        const showComments = data.showComments ?? true;
 
         return new Observable((observer) => {
             this.versionsApi.listVersionHistory(node.id).then((versionPaging) => {
