@@ -13,9 +13,8 @@ Manages agents in Content Services.
 
 ### Methods
 
--   **getAgents**(mocked?: `boolean`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AgentPaging`](../../../lib/js-api/src/api/content-rest-api/docs/AgentsApi.md#agentpaging)`>`<br/>
+-   **getAgents**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AgentPaging`](../../../lib/js-api/src/api/content-rest-api/docs/AgentsApi.md#agentpaging)`>`<br/>
     Gets all agents.
-    -   _mocked:_ `boolean` - (Optional) Temporary parameter to mock agents. Should be removed when backend implemented. True by default.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AgentPaging`](../../../lib/js-api/src/api/content-rest-api/docs/AgentsApi.md#agentpaging)`>` - AgentPaging object containing the agents.
 
 ## Details

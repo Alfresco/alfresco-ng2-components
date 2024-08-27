@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-import { RestrictionQuery } from './restrictionQuery';
-
-export interface QuestionModel {
-    questionId: string;
-    question: string;
-    restrictionQuery: RestrictionQuery;
+export interface RestrictionQuery {
+    nodesIds: string[];
 }
