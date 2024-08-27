@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, StorageService, UnsavedChangesDialogComponent } from '@alfresco/adf-core';
+import { AppConfigValues, CoreTestingModule, UnsavedChangesDialogComponent, UserPreferencesService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
@@ -24,19 +24,13 @@ import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
 
 describe('UnsavedChangesDialog', () => {
     let fixture: ComponentFixture<UnsavedChangesDialogComponent>;
-    let storageServiceMock: any;
+    let userPreferencesService: UserPreferencesService;
     let savePreferenceCheckbox: DebugElement;
 
     const setupBeforeEach = (unsavedChangesDialogData?: UnsavedChangesDialogData) => {
-        storageServiceMock = {
-            getItem: jasmine.createSpy('getItem'),
-            setItem: jasmine.createSpy('setItem')
-        };
-
         TestBed.configureTestingModule({
             imports: [CoreTestingModule],
             providers: [
-                { provide: StorageService, useValue: storageServiceMock },
                 {
                     provide: MAT_DIALOG_DATA,
                     useValue: unsavedChangesDialogData ?? {}
@@ -44,6 +38,7 @@ describe('UnsavedChangesDialog', () => {
             ]
         });
 
+        userPreferencesService = TestBed.inject(UserPreferencesService);
         fixture = TestBed.createComponent(UnsavedChangesDialogComponent);
         fixture.detectChanges();
         savePreferenceCheckbox = fixture.debugElement.query(By.css('[data-automation-id="adf-unsaved-changes-dialog-content-checkbox"]'));
@@ -85,6 +80,8 @@ describe('UnsavedChangesDialog', () => {
     });
 
     describe('when data is present in dialog', () => {
+        let userPreferencesServiceSetSpy: jasmine.Spy<(property: string, value: any) => void>;
+
         beforeEach(() => {
             setupBeforeEach({
                 headerText: 'headerText',
@@ -92,6 +89,7 @@ describe('UnsavedChangesDialog', () => {
                 confirmButtonText: 'confirmButtonText',
                 checkboxText: 'checkboxText'
             });
+            userPreferencesServiceSetSpy = spyOn(userPreferencesService, 'set');
             fixture.detectChanges();
         });
 
@@ -103,16 +101,16 @@ describe('UnsavedChangesDialog', () => {
             expect(discardChangesButton.textContent).toContain('confirmButtonText');
         });
 
-        it('should update storageService to true when checkbox is checked', () => {
+        it('should call UserPreferences Service and update it to true when checkbox is checked', () => {
             const event = { checked: true };
             savePreferenceCheckbox.triggerEventHandler('change', event);
-            expect(storageServiceMock.setItem).toHaveBeenCalledWith(UnsavedChangesDialogComponent.UNSAVED_CHANGES_MODAL_HIDDEN, 'true');
+            expect(userPreferencesServiceSetSpy).toHaveBeenCalledWith(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, 'true');
         });
 
-        it('should update storageService to false when checkbox is unchecked', () => {
+        it('should call UserPreferences Service and update it to false when checkbox is unchecked', () => {
             const event = { checked: false };
             savePreferenceCheckbox.triggerEventHandler('change', event);
-            expect(storageServiceMock.setItem).toHaveBeenCalledWith(UnsavedChangesDialogComponent.UNSAVED_CHANGES_MODAL_HIDDEN, 'false');
+            expect(userPreferencesServiceSetSpy).toHaveBeenCalledWith(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, 'false');
         });
     });
 });
