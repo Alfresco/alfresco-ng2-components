@@ -20,7 +20,7 @@ import { CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
 
 /**
@@ -48,7 +48,10 @@ export class UnsavedChangesGuard implements CanDeactivate<any> {
                       data: this.data
                   })
                   .afterClosed()
-                  .pipe(tap((confirmed) => (this.unsaved = !confirmed)))
+                  .pipe(
+                      tap((confirmed) => (this.unsaved = !confirmed)),
+                      map((confirmed) => !!confirmed)
+                  )
             : true;
     }
 }
