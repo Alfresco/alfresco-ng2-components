@@ -376,7 +376,7 @@ describe('TagsCreatorComponent', () => {
             }));
 
             it('should show error for prohibited characters', fakeAsync(() => {
-                typeTag('tag*"<>\\/?:|{}()^');
+                typeTag('tag*"<>\\/?:|{}()^.');
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
                 const error = getFirstError();
