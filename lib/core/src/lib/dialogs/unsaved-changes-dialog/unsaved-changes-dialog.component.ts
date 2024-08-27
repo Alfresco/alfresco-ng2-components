@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { StorageService } from '../../common';
+import { UserPreferencesService } from '../../common';
 import { AppConfigValues } from '../../app-config';
 
 /**
@@ -47,10 +47,7 @@ import { AppConfigValues } from '../../app-config';
 export class UnsavedChangesDialogComponent implements OnInit {
     dialogData: UnsavedChangesDialogData;
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData,
-        private storageService: StorageService
-    ) {}
+    constructor(@Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData, private userPreferencesService: UserPreferencesService) {}
 
     ngOnInit() {
         this.dialogData = {
@@ -67,6 +64,6 @@ export class UnsavedChangesDialogComponent implements OnInit {
      * @param savePreferences - MatCheckboxChange object with information about checkbox state.
      */
     onToggleCheckboxPreferences(savePreferences: MatCheckboxChange) {
-        this.storageService.setItem(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, savePreferences.checked.toString());
+        this.userPreferencesService.set(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, savePreferences.checked.toString());
     }
 }
