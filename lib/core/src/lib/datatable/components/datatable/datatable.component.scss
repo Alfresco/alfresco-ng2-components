@@ -277,6 +277,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         padding: 0;
         align-items: center;
         display: flex;
+        align-self: stretch;
 
         &:first-child {
             margin-left: 15px;
