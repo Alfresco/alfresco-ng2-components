@@ -37,7 +37,7 @@
           }
         ]
       },
-      "dependsOn": ["installDeps", "build"]
+      "dependsOn": ["build"]
     },
     "installDeps": {
       "executor": "nx:run-commands",
