@@ -36,10 +36,6 @@ describe('UserRoleColumnComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     it('should emit roleChanged event when a new role is selected', () => {
         spyOn(component.roleChanged, 'emit');
         const role: RoleModel = { role: 'admin', label: 'Admin' };
