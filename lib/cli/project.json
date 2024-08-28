@@ -47,8 +47,7 @@
             "command": "cd lib/cli && npm i"
           }
         ]
-      },
-      "dependsOn": ["build"]
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
