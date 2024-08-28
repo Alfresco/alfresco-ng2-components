@@ -23,6 +23,7 @@ import {
     ElementRef,
     EventEmitter,
     HostListener,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -52,7 +53,7 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
 import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
-import { MimeTypeIconPipe } from '../../pipes';
+import { ThumbnailService } from '../../common';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
     enableDownloadPrompt: false,
@@ -83,12 +84,13 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         ViewerToolbarComponent,
         ViewerSidebarComponent,
         ViewerToolbarActionsComponent,
-        ViewerToolbarCustomActionsComponent,
-        MimeTypeIconPipe
+        ViewerToolbarCustomActionsComponent
     ],
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
+    private thumbnailService = inject(ThumbnailService);
+
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
 
@@ -291,6 +293,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private isDialogVisible: boolean = false;
     public downloadPromptTimer: number;
     public downloadPromptReminderTimer: number;
+
+    get mimeTypeIconUrl(): string {
+        return this.thumbnailService.getMimeTypeIcon(this.originalMimeType || this.mimeType);
+    }
 
     constructor(
         private el: ElementRef,
