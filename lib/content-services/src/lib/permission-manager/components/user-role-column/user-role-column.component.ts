@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { RoleModel } from '../../models/role.model';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
-import { LocalizedRolePipe } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-user-role-column',
     standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslateModule, LocalizedRolePipe],
+    imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslateModule],
     template: `
         <mat-form-field class="adf-role-selector-field" *ngIf="!readonly">
             <mat-select
+                class="adf-role-selector"
                 (click)="$event.stopPropagation()"
                 [placeholder]="placeholder | translate"
                 [value]="value"
@@ -38,13 +38,13 @@ import { LocalizedRolePipe } from '@alfresco/adf-core';
                 (keyup.arrowup)="$event.stopPropagation()"
             >
                 <mat-option *ngFor="let role of roles" [value]="role.role">
-                    {{ role.label | adfLocalizedRole }}
+                    {{ i18nRoleValue(role.label) | translate }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <span class="adf-datatable-cell-value adf-readonly-role" [title]="value | adfLocalizedRole" *ngIf="readonly">
-            {{ value | adfLocalizedRole }}
+        <span class="adf-datatable-cell-value adf-readonly-role" [title]="i18nValue | translate" *ngIf="readonly">
+            {{ i18nValue | translate }}
         </span>
     `,
     host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },
@@ -66,7 +66,7 @@ import { LocalizedRolePipe } from '@alfresco/adf-core';
         `
     ]
 })
-export class UserRoleColumnComponent {
+export class UserRoleColumnComponent implements OnChanges {
     @Input()
     roles: RoleModel[];
 
@@ -80,10 +80,25 @@ export class UserRoleColumnComponent {
     placeholder: string = 'PERMISSION_MANAGER.LABELS.SELECT-ROLE';
 
     @Output()
-    roleChanged: EventEmitter<string> = new EventEmitter<string>();
+    roleChanged = new EventEmitter<string>();
+
+    i18nValue: string;
 
     onRoleChanged(newRole: string) {
         this.value = newRole;
         this.roleChanged.emit(newRole);
+    }
+
+    i18nRoleValue(value: string): string {
+        if (value) {
+            return `ADF.ROLES.${value.toUpperCase()}`;
+        }
+        return value;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.value) {
+            this.i18nValue = this.i18nRoleValue(changes.value.currentValue);
+        }
     }
 }
