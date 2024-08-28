@@ -37,7 +37,7 @@
           }
         ]
       },
-      "dependsOn": ["build"]
+      "dependsOn": ["installDeps", "build"]
     },
     "installDeps": {
       "executor": "nx:run-commands",
@@ -47,8 +47,7 @@
             "command": "cd lib/cli && npm i"
           }
         ]
-      },
-      "dependsOn": ["build"]
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
