@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
-import { browser, $, $$ } from 'protractor';
+import { BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { browser, $ } from 'protractor';
 
 export class TasksListPage {
     taskList = $('adf-tasklist');
-    selectedTab = $('[data-automation-id="navigation-bar"] .mdc-tab--active .mdc-tab__text-label');
-    taskTab = $$('[data-automation-id="navigation-bar"] .mdc-tab__text-label').first();
-    noTasksFound = $$('.adf-empty-content__title').first();
     dataTable = new DataTableComponentPage(this.taskList);
 
     getDataTable(): DataTableComponentPage {
@@ -37,10 +34,6 @@ export class TasksListPage {
         await this.dataTable.checkContentIsNotDisplayed(column, taskName);
     }
 
-    async checkRowIsSelected(taskName: string): Promise<void> {
-        await this.dataTable.checkRowIsSelected('Task Name', taskName);
-    }
-
     async selectRow(taskName: string): Promise<void> {
         await this.dataTable.selectRow('Task Name', taskName);
         await browser.sleep(1000);
@@ -48,16 +41,5 @@ export class TasksListPage {
 
     async checkTaskListIsLoaded(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
-    }
-
-    getNoTasksFoundMessage(): Promise<string> {
-        return BrowserActions.getText(this.noTasksFound);
-    }
-
-    async selectTaskTab() {
-        const currentTab = await BrowserActions.getText(this.selectedTab);
-        if (currentTab && currentTab.toLowerCase().trim() !== 'tasks') {
-            await BrowserActions.click(this.taskTab);
-        }
     }
 }

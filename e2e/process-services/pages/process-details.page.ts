@@ -21,9 +21,7 @@ import { ProcessInstanceHeaderPage, TestElement, materialLocators } from '@alfre
 export class ProcessDetailsPage {
     processInstanceHeaderPage = new ProcessInstanceHeaderPage();
     processTitle = TestElement.byCss(materialLocators.Card.title.class);
-    processDetailsMessage = TestElement.byCss('adf-process-instance-details div');
     showDiagramButtonDisabled = TestElement.byCss('button[id="show-diagram-button"][disabled]');
-    propertiesList = TestElement.byCss('.adf-property-list');
     showDiagramButton = TestElement.byId('show-diagram-button');
     diagramCanvas = TestElement.byCss('svg[xmlns="http://www.w3.org/2000/svg"]');
     backButton = TestElement.byCss('#btn-diagram-back');
@@ -36,10 +34,6 @@ export class ProcessDetailsPage {
 
     checkProcessTitleIsDisplayed(): Promise<string> {
         return this.processTitle.getText();
-    }
-
-    checkProcessDetailsMessage(): Promise<string> {
-        return this.processDetailsMessage.getText();
     }
 
     async checkProcessHeaderDetailsAreVisible(): Promise<void> {

@@ -17,7 +17,6 @@
 
 import { StartTaskDialogPage } from './dialog/start-task-dialog.page';
 import { TaskDetailsPage } from './task-details.page';
-
 import { FiltersPage } from './filters.page';
 import { ChecklistDialog } from './dialog/create-checklist-dialog.page';
 import { TasksListPage } from './tasks-list.page';
@@ -139,13 +138,5 @@ export class TasksPage {
         const elem = this.getRowsName(name);
         const row = elem.element(this.rowByRowName);
         await BrowserVisibility.waitUntilElementIsNotVisible(row.$(materialLocators.Icon.root));
-    }
-
-    async clickSortByNameAsc(): Promise<any> {
-        return this.tasksListPage().getDataTable().sortByColumn('ASC', 'name');
-    }
-
-    async clickSortByNameDesc(): Promise<any> {
-        return this.tasksListPage().getDataTable().sortByColumn('DESC', 'name');
     }
 }

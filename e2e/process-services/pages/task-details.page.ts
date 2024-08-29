@@ -41,10 +41,8 @@ export class TaskDetailsPage {
     addPeopleField = $('input[data-automation-id="adf-people-search-input"]');
     addInvolvedUserButton = $('button[id="add-people"]');
     taskDetailsSection = $('div[data-automation-id="app-tasks-details"]');
-    taskDetailsEmptySection = $('div[data-automation-id="adf-tasks-details--empty"]');
     completeTask = $('button[id="adf-no-form-complete-button"]');
     completeFormTask = $('button[id="adf-form-complete"]');
-    taskDetailsTitle = $('.adf-activiti-task-details__header span');
     auditLogButton = $('button[adf-task-audit]');
     noPeopleInvolved = $('#no-people-label');
     cancelInvolvePeopleButton = $('#close-people-search');
@@ -54,7 +52,6 @@ export class TaskDetailsPage {
     noFormMessage = $('span[id*="no-form-message"]');
     attachFormButton = $('#adf-no-form-attach-form-button');
     removeAttachForm = $('#adf-attach-form-remove-button');
-    emptyTaskDetails = $('adf-task-details > div > div');
     priority = $('[data-automation-id*="card-textitem-value-priority"]');
     editableAssignee = $('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]');
     claimElement = $('[data-automation-id="header-claim-button"]');
@@ -75,10 +72,6 @@ export class TaskDetailsPage {
     async checkDueDatePickerButtonIsNotDisplayed(): Promise<void> {
         const dueDatePickerButton = $('[data-automation-id="datepickertoggle-dueDate"]');
         await BrowserVisibility.waitUntilElementIsNotVisible(dueDatePickerButton);
-    }
-
-    getTaskDetailsTitle(): Promise<string> {
-        return BrowserActions.getText(this.taskDetailsTitle);
     }
 
     async checkSelectedForm(formName: string): Promise<void> {
@@ -331,10 +324,6 @@ export class TaskDetailsPage {
         return BrowserActions.getText(this.peopleTitle);
     }
 
-    checkTaskDetailsEmpty(): Promise<string> {
-        return BrowserActions.getText(this.taskDetailsEmptySection);
-    }
-
     async checkTaskDetailsDisplayed(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsSection);
         await BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
@@ -352,10 +341,6 @@ export class TaskDetailsPage {
         return BrowserActions.getText(this.taskDetailsSection);
     }
 
-    async clickCompleteTask(): Promise<void> {
-        await BrowserActions.click(this.completeTask);
-    }
-
     async checkCompleteFormButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.completeFormTask);
     }
@@ -370,10 +355,6 @@ export class TaskDetailsPage {
 
     async clickCompleteFormTask(): Promise<void> {
         await BrowserActions.click(this.completeFormTask);
-    }
-
-    async getEmptyTaskDetailsMessage(): Promise<string> {
-        return BrowserActions.getText(this.emptyTaskDetails);
     }
 
     async isCompleteButtonWithFormEnabled(): Promise<boolean> {

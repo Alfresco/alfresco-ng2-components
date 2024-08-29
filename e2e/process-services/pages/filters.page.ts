@@ -19,7 +19,6 @@ import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfr
 import { $ } from 'protractor';
 
 export class FiltersPage {
-
     activeFilter = $('.adf-active');
     dataTable: DataTableComponentPage = new DataTableComponentPage();
 
@@ -32,14 +31,6 @@ export class FiltersPage {
         const filter = $(`button[data-automation-id="${filterName}_filter"]`);
         await BrowserActions.click(filter);
         await this.dataTable.waitTillContentLoaded();
-    }
-
-    async sortByName(sortOrder: string): Promise<void> {
-        await this.dataTable.sortByColumn(sortOrder, 'name');
-    }
-
-    async getAllRowsNameColumn(): Promise<string[]> {
-        return this.dataTable.getAllRowsColumnValues('Task Name');
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {
