@@ -517,6 +517,19 @@ describe('AttachFileWidgetComponent', () => {
             await fixture.whenStable();
         });
 
+        it('should raise formContentClicked event when file has sourceId', async () => {
+            const testFile = {
+                sourceId: '12345',
+                id: '12345',
+                contentAvailable: true
+            };
+            formService.formContentClicked.subscribe((file) => {
+                expect(file).not.toBeNull();
+                expect(file).toBe(testFile);
+            });
+            fixture.componentInstance.onAttachFileClicked(testFile);
+        });
+
         it('should not display the show button file when is an external file', async () => {
             fakePngAnswer.isExternal = true;
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(fakePngAnswer));
