@@ -28,7 +28,6 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { SearchResultComponent } from './components/search/search-result.component';
 import { FilesComponent } from './components/files/files.component';
 import { AppFormComponent } from './components/form/app-form.component';
-import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { AppComponent } from './app.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
@@ -263,11 +262,6 @@ export const appRoutes: Routes = [
                 path: 'activiti/tasksnode/:id',
                 component: FormNodeViewerComponent,
                 canActivate: [AuthGuardBpm]
-            },
-            {
-                path: 'permissions/:id',
-                component: DemoPermissionComponent,
-                canActivate: [AuthGuardEcm]
             },
             { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: AppFormComponent },

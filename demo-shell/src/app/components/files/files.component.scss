@@ -2,14 +2,6 @@
     margin: 10px;
 }
 
-.app-error-message {
-    text-align: left;
-}
-
-.app-error-message--text {
-    color: var(--theme-warn-color);
-}
-
 .app-document-list-container {
     min-height: 400px;
 
@@ -17,29 +9,13 @@
         min-height: 400px;
     }
 
-    adf-upload-drag-area {
-        margin-right: 16px;
-
-        adf-toolbar-title {
-            flex: 0 1 auto;
-        }
-
-        .app-document-action-buttons {
-            flex: 0 0 auto;
-        }
+    adf-toolbar-title {
+        flex: 0 1 auto;
     }
 
-    &:not(.app-document-list-container-in-upload-drag-area) {
-        display: flex;
-        place-content: stretch flex-start;
-        align-items: stretch;
-        max-height: 100%;
+    .app-document-action-buttons {
+        flex: 0 0 auto;
     }
-}
-
-.adf-datatable-card .app-lock-button {
-    top: -10px;
-    position: absolute;
 }
 
 .app-empty_template {

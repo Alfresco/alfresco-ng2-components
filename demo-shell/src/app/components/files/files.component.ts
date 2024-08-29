@@ -28,9 +28,8 @@ import {
     Output,
     ViewEncapsulation
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { NodeEntry, NodePaging, Pagination, Node, SearchEntry } from '@alfresco/js-api';
+import { NodePaging, Pagination, Node, SearchEntry } from '@alfresco/js-api';
 import {
     NotificationService,
     UserPreferencesService,
@@ -59,15 +58,9 @@ import {
     DropdownBreadcrumbComponent,
     NodeDownloadDirective,
     NodeDeleteDirective,
-    NodeLockDirective,
-    ContentActionListComponent,
-    ContentActionComponent,
-    ContentMetadataComponent,
-    VersionManagerComponent,
-    UploadButtonComponent
+    NodeLockDirective
 } from '@alfresco/adf-content-services';
 import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
-import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { takeUntil, debounceTime, scan } from 'rxjs/operators';
@@ -77,10 +70,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { FolderCreateDirective } from '../../folder-directive';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -106,16 +95,7 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
         TranslateModule,
         DataColumnComponent,
         NodeLockDirective,
-        ContentActionListComponent,
-        ContentActionComponent,
         PaginationComponent,
-        ContentMetadataComponent,
-        VersionManagerComponent,
-        MatSlideToggleModule,
-        FormsModule,
-        MatInputModule,
-        UploadButtonComponent,
-        MatSelectModule,
         HighlightPipe,
         DataColumnListComponent,
         CustomEmptyContentTemplateDirective
@@ -128,7 +108,6 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
 export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     protected onDestroy$ = new Subject<boolean>();
 
-    errorMessage: string = null;
     nodeId: any;
     showViewer = false;
     allowDropFiles = true;
@@ -233,13 +212,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     stickyHeader: boolean;
-    displayEmptyMetadata = false;
 
     constructor(
         private notificationService: NotificationService,
         private uploadService: UploadService,
         private contentService: ContentService,
-        private dialog: MatDialog,
         private router: Router,
         private preference: UserPreferencesService,
         private preview: PreviewService,
@@ -318,22 +295,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         } as Pagination;
     }
 
-    getCurrentDocumentListNode(): NodeEntry[] {
-        if (this.documentList.folderNode) {
-            return [{ entry: this.documentList.folderNode }];
-        } else {
-            return [];
-        }
-    }
-
     onNavigationError(error: any) {
         if (error) {
             this.router.navigate(['/error', error.status]);
         }
-    }
-
-    resetError() {
-        this.errorMessage = null;
     }
 
     onFolderCreated(event: FolderCreatedEvent) {
@@ -352,53 +317,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.router.navigate([this.navigationRoute, $event.value.id]);
     }
 
-    handlePermissionError(event: any) {
-        this.notificationService.showError('PERMISSION.LACKOF', null, {
-            permission: event.permission,
-            action: event.action,
-            type: event.type
-        });
-    }
-
     openSnackMessageError(error: any) {
         this.notificationService.showError(error.value || error);
     }
 
-    openSnackMessageInfo(message: string) {
-        this.notificationService.showInfo(message);
-    }
-
     emitReadyEvent(event: NodePaging) {
         this.documentListReady.emit(event);
-    }
-
-    onContentActionError(errors: any) {
-        const errorStatusCode = JSON.parse(errors.message).error.statusCode;
-        let message: string;
-
-        switch (errorStatusCode) {
-            case 403:
-                message = 'OPERATION.ERROR.PERMISSION';
-                break;
-            case 409:
-                message = 'OPERATION.ERROR.CONFLICT';
-                break;
-            default:
-                message = 'OPERATION.ERROR.UNKNOWN';
-        }
-
-        this.openSnackMessageError(message);
-    }
-
-    onDeleteActionSuccess(message: string) {
-        this.uploadService.fileDeleted.next(message);
-        this.deleteElementSuccess.emit();
-        this.documentList.reload();
-        this.openSnackMessageInfo(message);
-    }
-
-    onPermissionRequested(node: any) {
-        this.router.navigate(['/permissions', node.value.entry.id]);
     }
 
     hasSelection(selection: Array<any>): boolean {
@@ -435,33 +359,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.pagination.maxItems = event.maxItems;
         this.pagination.skipCount = event.skipCount;
         this.turnedPreviousPage.emit(event);
-    }
-
-    onUploadNewVersion(ev) {
-        const contentEntry = ev.detail.data.node.entry;
-        const showComments = true;
-        const allowDownload = this.allowVersionDownload;
-        const newFileVersion = ev.detail.files[0].file;
-
-        if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
-            this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: {
-                    contentEntry,
-                    showComments,
-                    allowDownload,
-                    newFileVersion,
-                    showComparison: true
-                },
-                panelClass: 'adf-version-manager-dialog',
-                width: '630px'
-            });
-        } else {
-            this.openSnackMessageError('OPERATION.ERROR.PERMISSION');
-        }
-    }
-
-    getFileFiltering(): string {
-        return this.acceptedFilesTypeShow ? this.acceptedFilesType : '*';
     }
 
     searchResultsHighlight(search: SearchEntry): string {

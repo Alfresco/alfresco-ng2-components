@@ -2,20 +2,6 @@
     <div
         id="document-list-container"
         class="app-document-list-container">
-        <adf-upload-drag-area
-                              [disabled]="disableDragArea"
-                              [acceptedFilesType]="getFileFiltering()"
-                              [rootFolderId]="currentFolderId"
-                              [versioning]="versioning"
-                              [adf-check-allowable-operation]="'create'"
-                              [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
-                              (updateFileVersion)="onUploadNewVersion($event)">
-            <div *ngIf="errorMessage" class="app-error-message">
-                <button (click)="resetError()" mat-icon-button>
-                    <mat-icon>highlight_off</mat-icon>
-                </button>
-                <span class="app-error-message--text">{{errorMessage}}</span>
-            </div>
             <adf-toolbar *ngIf="!disableDragArea" class="app-files-toolbar">
                 <adf-toolbar-title>
                     <adf-breadcrumb root="Personal Files" [target]="documentList">
@@ -39,16 +25,6 @@
                             [adfNodeDownload]="documentList.selection">
                         <mat-icon>get_app</mat-icon>
                     </button>
-                    <button mat-icon-button
-                            data-automation-id="delete-toolbar-button"
-                            adf-check-allowable-operation="delete"
-                            [permanent]="true"
-                            [adf-nodes]="documentList.selection"
-                            title="Delete"
-                            (delete)="onDeleteActionSuccess($event)"
-                            [adf-delete]="documentList.selection">
-                        <mat-icon>delete</mat-icon>
-                    </button>
                 </div>
             </adf-toolbar>
 
@@ -70,11 +46,9 @@
                     [headerFilters]="headerFilters"
                     [filterValue]="paramValues"
                     (error)="onNavigationError($event)"
-                    (success)="resetError()"
                     (ready)="emitReadyEvent($event)"
                     (preview)="showFile($event)"
                     (folderChange)="onFolderChange($event)"
-                    (permissionError)="handlePermissionError($event)"
                     (name-click)="documentList.onNodeDblClick($any($event).detail?.node)"
                     (filterSelection)="onFilterSelected($event)">
 
@@ -138,6 +112,5 @@
                 (nextPage)="onNextPage($event)"
                 (prevPage)="onPrevPage($event)">
             </adf-pagination>
-        </adf-upload-drag-area>
     </div>
 </div>
