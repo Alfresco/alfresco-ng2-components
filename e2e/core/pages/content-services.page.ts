@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DropActions, BrowserActions, BrowserVisibility, DocumentListPage, DropdownPage, Logger, materialLocators } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DocumentListPage, DropdownPage, Logger, materialLocators } from '@alfresco/adf-testing';
 import { $$, browser, protractor, $ } from 'protractor';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
@@ -33,7 +33,6 @@ export class ContentServicesPage {
     contentList = new DocumentListPage($$('adf-upload-drag-area adf-document-list').first());
     createFolderDialog = new FolderDialogPage();
     uploadBorder = $('#document-list-container');
-    currentFolder = $('div[class*="adf-breadcrumb-item adf-active"] div');
     createFolderButton = $('button[data-automation-id="create-new-folder"]');
     uploadFileButton = $('.adf-upload-button-file-container label');
     uploadFileButtonInput = $('input[data-automation-id="upload-single-file"]');
@@ -106,10 +105,6 @@ export class ContentServicesPage {
 
     async numberOfResultsDisplayed(): Promise<number> {
         return this.contentList.dataTablePage().numberOfRows();
-    }
-
-    async currentFolderName(): Promise<string> {
-        return BrowserActions.getText(this.currentFolder);
     }
 
     async getAllRowsNameColumn(): Promise<any> {
@@ -265,18 +260,9 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.dragAndDrop);
     }
 
-    async dragAndDropFile(file: string): Promise<void> {
-        await this.checkDragAndDropDIsDisplayed();
-        await DropActions.dropFile(this.dragAndDrop, file);
-    }
-
     async checkLockIsDisplayedForElement(name: string): Promise<void> {
         const lockButton = $(`div.adf-datatable-cell[data-automation-id="${name}"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(lockButton);
-    }
-
-    async getColumnValueForRow(file: string, columnName: string): Promise<string> {
-        return this.contentList.dataTablePage().getColumnValueForRow(this.columns.name, file, columnName);
     }
 
     async checkEmptyFolderTextToBe(text: string): Promise<void> {
