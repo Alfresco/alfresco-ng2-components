@@ -211,7 +211,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     urlFileContent: string;
     fileName: string;
     mimeType: string;
-    originalMimeType: string;
     nodeEntry: NodeEntry;
     tracks: Track[] = [];
     readOnly: boolean = true;
@@ -344,8 +343,10 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             }
             if (nodeRendition) {
                 urlFileContent = nodeRendition.url;
-                mimeType = nodeRendition.mimeType;
-                this.originalMimeType = nodeData?.content?.mimeType;
+
+                const nodeMimeType = nodeData?.content?.mimeType;
+                const renditionMimeType = nodeRendition.mimeType;
+                mimeType = nodeMimeType || renditionMimeType;
             }
         } else if (viewerType === 'media') {
             this.tracks = await this.renditionService.generateMediaTracksRendition(this.nodeId);
