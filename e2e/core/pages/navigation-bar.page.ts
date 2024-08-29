@@ -16,7 +16,7 @@
  */
 
 import { AppListCloudPage, BrowserActions, BrowserVisibility, Logger } from '@alfresco/adf-testing';
-import { $, browser, ElementFinder } from 'protractor';
+import { $, ElementFinder } from 'protractor';
 import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 
 export class NavigationBarPage {
@@ -100,9 +100,5 @@ export class NavigationBarPage {
         } catch (error) {
             Logger.log('Logout section NOT found');
         }
-    }
-
-    async openContentServicesFolder(folderId): Promise<void> {
-        await BrowserActions.getUrl(`${browser.baseUrl}/files/${folderId}`);
     }
 }

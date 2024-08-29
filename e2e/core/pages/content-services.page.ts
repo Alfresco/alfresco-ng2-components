@@ -16,9 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
-import { $$, browser, $ } from 'protractor';
-import { NavigationBarPage } from './navigation-bar.page';
-import * as path from 'path';
+import { $$, $ } from 'protractor';
 
 export class ContentServicesPage {
     columns = {
@@ -31,8 +29,6 @@ export class ContentServicesPage {
 
     contentList = new DocumentListPage($$('adf-upload-drag-area adf-document-list').first());
     uploadBorder = $('#document-list-container');
-    uploadFileButton = $('.adf-upload-button-file-container label');
-    uploadFileButtonInput = $('input[data-automation-id="upload-single-file"]');
     deleteContentElement = $('button[data-automation-id="Delete"]');
     downloadContent = $('button[data-automation-id="Download"]');
     downloadButton = $('button[title="Download"]');
@@ -48,19 +44,11 @@ export class ContentServicesPage {
         await this.checkContentIsNotDisplayed(content);
     }
 
-    // @deprecated prefer waitTillContentLoaded
     async checkAcsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
     }
 
-    // @deprecated prefer waitTillContentLoaded
     async waitForTableBody(): Promise<void> {
-        await this.contentList.dataTablePage().waitTillContentLoaded();
-    }
-
-    async goToDocumentList(): Promise<void> {
-        const navigationBarPage = new NavigationBarPage();
-        await navigationBarPage.navigateToContentServices();
         await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
@@ -75,16 +63,6 @@ export class ContentServicesPage {
 
     async checkContentIsNotDisplayed(content: string): Promise<void> {
         await this.contentList.dataTablePage().checkContentIsNotDisplayed(this.columns.name, content);
-    }
-
-    async uploadFile(fileLocation: string): Promise<void> {
-        await this.checkUploadButton();
-        await this.uploadFileButtonInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
-        await this.checkUploadButton();
-    }
-
-    async checkUploadButton(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
     }
 
     async clickDownloadButton(): Promise<void> {
