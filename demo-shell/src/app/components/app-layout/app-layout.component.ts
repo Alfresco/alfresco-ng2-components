@@ -66,8 +66,6 @@ export class AppLayoutComponent {
     links: Array<any> = [
         { href: '/home', title: 'Home' },
         { href: '/files', title: 'Content Services' },
-        { href: '/card-view', title: 'CardView' },
-        { href: '/task-list', title: 'Task List' },
         {
             href: '/cloud',
             title: 'Process Cloud',

@@ -43,9 +43,7 @@ import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-la
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AppLoginComponent } from './components/login/login.component';
-import { TaskListDemoComponent } from './components/task-list-demo/task-list-demo.component';
 import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
-import { AppCardViewComponent } from './components/card-view/card-view.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: AppLoginComponent },
@@ -101,15 +99,6 @@ export const appRoutes: Routes = [
                 path: '',
                 redirectTo: `/home`,
                 pathMatch: 'full'
-            },
-            {
-                path: 'card-view',
-                children: [
-                    {
-                        path: '',
-                        component: AppCardViewComponent
-                    }
-                ]
             },
             {
                 path: '',
@@ -248,20 +237,6 @@ export const appRoutes: Routes = [
             },
             { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: AppFormComponent },
-            {
-                path: 'task-list',
-                canActivate: [AuthGuardBpm],
-                children: [
-                    {
-                        path: '',
-                        component: TaskListDemoComponent
-                    },
-                    {
-                        path: ':id',
-                        component: TaskListDemoComponent
-                    }
-                ]
-            },
             {
                 path: 'process-list',
                 canActivate: [AuthGuardBpm],

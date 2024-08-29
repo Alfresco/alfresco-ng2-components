@@ -19,7 +19,6 @@ import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfr
 import { browser, $, $$ } from 'protractor';
 
 export class TasksListPage {
-
     taskList = $('adf-tasklist');
     selectedTab = $('[data-automation-id="navigation-bar"] .mdc-tab--active .mdc-tab__text-label');
     taskTab = $$('[data-automation-id="navigation-bar"] .mdc-tab__text-label').first();
@@ -28,10 +27,6 @@ export class TasksListPage {
 
     getDataTable(): DataTableComponentPage {
         return this.dataTable;
-    }
-
-    getRowsDisplayedWithSameName(taskName: string, column = 'Task Name'): Promise<string> {
-        return this.dataTable.getRowsWithSameColumnValues(column, taskName);
     }
 
     async checkContentIsDisplayed(taskName: string, column = 'Task Name'): Promise<void> {
@@ -51,10 +46,6 @@ export class TasksListPage {
         await browser.sleep(1000);
     }
 
-    getAllRowsNameColumn(column = 'Task Name'): Promise<string[]> {
-        return this.dataTable.getAllRowsColumnValues(column);
-    }
-
     async checkTaskListIsLoaded(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
     }
@@ -65,9 +56,8 @@ export class TasksListPage {
 
     async selectTaskTab() {
         const currentTab = await BrowserActions.getText(this.selectedTab);
-        if(currentTab && currentTab.toLowerCase().trim() !== 'tasks') {
+        if (currentTab && currentTab.toLowerCase().trim() !== 'tasks') {
             await BrowserActions.click(this.taskTab);
         }
     }
-
 }

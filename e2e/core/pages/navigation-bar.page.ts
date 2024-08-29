@@ -16,7 +16,7 @@
  */
 
 import { AppListCloudPage, BrowserActions, BrowserVisibility, Logger } from '@alfresco/adf-testing';
-import { $, ElementFinder } from 'protractor';
+import { $ } from 'protractor';
 import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 
 export class NavigationBarPage {
@@ -27,23 +27,6 @@ export class NavigationBarPage {
     logoutSection = $('[data-automation-id="adf-logout-section"]');
 
     getMenuItemLocator = (title: string) => $(`.app-sidenav-link[data-automation-id="${title}"]`);
-
-    async clickNavigationBarItem(title: string, untilElementIsVisible?: ElementFinder): Promise<void> {
-        Logger.log(`clickNavigationBarItem ${title}`);
-
-        const menu = $(`.app-sidenav-link[data-automation-id="${title}"]`);
-        await BrowserActions.closeMenuAndDialogs();
-
-        if (untilElementIsVisible) {
-            await BrowserActions.clickUntilIsNotVisible(menu, untilElementIsVisible);
-        } else {
-            await BrowserActions.click(menu);
-        }
-    }
-
-    async clickTaskListButton(): Promise<void> {
-        await this.clickNavigationBarItem('Task List');
-    }
 
     async clickProcessCloudButton() {
         await BrowserActions.closeMenuAndDialogs();
