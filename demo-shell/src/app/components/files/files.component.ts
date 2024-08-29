@@ -43,10 +43,7 @@ import {
     DataColumnComponent,
     HighlightPipe,
     DataColumnListComponent,
-    CustomEmptyContentTemplateDirective,
-    InfoDrawerTabComponent,
-    InfoDrawerComponent,
-    InfoDrawerLayoutComponent
+    CustomEmptyContentTemplateDirective
 } from '@alfresco/adf-core';
 import {
     ContentService,
@@ -54,11 +51,8 @@ import {
     UploadService,
     DocumentListComponent,
     PermissionStyleModel,
-    ContentMetadataService,
     FilterSearch,
-    DialogAspectListService,
     FileUploadEvent,
-    NodesApiService,
     UploadDragAreaComponent,
     CheckAllowableOperationDirective,
     BreadcrumbComponent,
@@ -85,9 +79,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
@@ -121,18 +113,12 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
         VersionManagerComponent,
         MatSlideToggleModule,
         FormsModule,
-        MatFormFieldModule,
         MatInputModule,
         UploadButtonComponent,
-        MatCheckboxModule,
         MatSelectModule,
         HighlightPipe,
         DataColumnListComponent,
-        CustomEmptyContentTemplateDirective,
-        VersionManagerDialogAdapterComponent,
-        InfoDrawerTabComponent,
-        InfoDrawerComponent,
-        InfoDrawerLayoutComponent
+        CustomEmptyContentTemplateDirective
     ],
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss'],
@@ -145,15 +131,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     errorMessage: string = null;
     nodeId: any;
     showViewer = false;
-    showVersions = false;
     allowDropFiles = true;
     includeFields = ['isFavorite', 'isLocked', 'aspectNames', 'definition'];
-
-    selectionModes = [
-        { value: 'none', viewValue: 'None' },
-        { value: 'single', viewValue: 'Single' },
-        { value: 'multiple', viewValue: 'Multiple' }
-    ];
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
@@ -164,9 +143,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input()
     sortingMode: 'server' | 'client' = 'server';
-
-    @Input()
-    showSettingsPanel = true;
 
     @Input()
     showHeader = ShowHeaderMode.Always;
@@ -267,10 +243,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         private router: Router,
         private preference: UserPreferencesService,
         private preview: PreviewService,
-        @Optional() private route: ActivatedRoute,
-        private contentMetadataService: ContentMetadataService,
-        private dialogAspectListService: DialogAspectListService,
-        private nodeService: NodesApiService
+        @Optional() private route: ActivatedRoute
     ) {}
 
     showFile(event) {
@@ -313,10 +286,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.contentService.folderCreate.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.onFolderAction(value));
 
         this.contentService.folderEdit.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.onFolderAction(value));
-
-        this.contentMetadataService.error.pipe(takeUntil(this.onDestroy$)).subscribe((err: { message: string }) => {
-            this.notificationService.showError(err.message);
-        });
     }
 
     onFileUploadEvent(event: FileUploadEvent) {
@@ -432,42 +401,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.router.navigate(['/permissions', node.value.entry.id]);
     }
 
-    onManageVersions(event: any) {
-        const contentEntry = event.value.entry;
-        const showComments = true;
-        const allowDownload = this.allowVersionDownload;
-
-        if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
-            this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry, showComments, allowDownload },
-                panelClass: 'adf-version-manager-dialog',
-                width: '630px'
-            });
-        } else {
-            this.openSnackMessageError('OPERATION.ERROR.PERMISSION');
-        }
-    }
-
-    onAspectUpdate(event: any) {
-        this.dialogAspectListService.openAspectListDialog(event.value.entry.id).subscribe((aspectList) => {
-            this.nodeService.updateNode(event.value.entry.id, { aspectNames: [...aspectList] }).subscribe(() => {
-                this.openSnackMessageInfo('Node Aspects Updated');
-            });
-        });
-    }
-
     hasSelection(selection: Array<any>): boolean {
         return selection && selection.length > 0;
-    }
-
-    hasOneFileSelected(): boolean {
-        const selection = this.documentList.selection;
-        return selection && selection.length === 1 && selection[0].entry.isFile;
-    }
-
-    userHasPermissionToManageVersions(): boolean {
-        const selection = this.documentList.selection;
-        return this.contentService.hasAllowableOperations(selection[0].entry, 'update');
     }
 
     canCreateContent(parentNode: Node): boolean {

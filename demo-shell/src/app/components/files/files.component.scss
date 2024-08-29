@@ -42,25 +42,6 @@
     position: absolute;
 }
 
-.app-content-service-settings {
-    padding: 16px;
-}
-
-.app-manage-versions-sidebar {
-    flex: 0 0 auto;
-
-    &.adf-info-drawer-layout {
-        width: 360px;
-    }
-}
-
-.app-no-result__empty_doc_lib {
-    width: 565px;
-    height: 161px;
-    object-fit: contain;
-    margin-top: 17px;
-}
-
 .app-empty_template {
     text-align: center;
     margin-top: 20px;

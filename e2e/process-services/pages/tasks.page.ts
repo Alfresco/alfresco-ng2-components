@@ -25,7 +25,7 @@ import { $, by, element } from 'protractor';
 import { BrowserActions, BrowserVisibility, FormFields, materialLocators } from '@alfresco/adf-testing';
 
 export class TasksPage {
-    createButton = $('button[data-automation-id="create-button"');
+    createButton = $('button[data-automation-id="create-button"]');
     addChecklistButton = $('button[class*="adf-add-to-checklist-button"]');
     rowByRowName = by.xpath(`ancestor::${materialLocators.Chip.list.option.class}`);
     checklistContainer = $('div[class*="checklist-menu"]');
