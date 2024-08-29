@@ -15,19 +15,16 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, TabsPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 import { $, $$ } from 'protractor';
 
 export class CommentsPage {
-
-    tabsPage = new TabsPage();
     numberOfComments = $('#comment-header');
     commentUserIcon = $$('.adf-comment-img-container');
     commentUserName = $$('.adf-comment-user-name');
     commentMessage = $$('.adf-comment-message');
     commentTime = $$('.adf-comment-message-time');
     commentInput = $('#comment-input');
-    addCommentButton = $('[data-automation-id=\'comments-input-add\']');
 
     async getTotalNumberOfComments(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementHasText(this.numberOfComments, text);
@@ -43,7 +40,6 @@ export class CommentsPage {
 
     getMessage(position: number): Promise<string> {
         return BrowserActions.getText(this.commentMessage.get(position));
-
     }
 
     getTime(position: number): Promise<string> {
@@ -52,18 +48,5 @@ export class CommentsPage {
 
     async checkCommentInputIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.commentInput);
-    }
-
-    async addComment(comment: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.commentInput, comment);
-        await BrowserActions.click(this.addCommentButton);
-    }
-
-    async checkCommentsTabIsSelected(): Promise<void> {
-        await this.tabsPage.checkTabIsSelectedByTitle('Comments');
-    }
-
-    async checkCommentInputIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
     }
 }
