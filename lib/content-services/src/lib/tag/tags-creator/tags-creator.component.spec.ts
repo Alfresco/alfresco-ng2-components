@@ -28,7 +28,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { MatChipOptionHarness } from '@angular/material/chips/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
@@ -105,7 +105,7 @@ describe('TagsCreatorComponent', () => {
      * @returns list of tags
      */
     async function getAddedTags(): Promise<string[]> {
-        const matChipHarness = await loader.getAllHarnesses(MatChipOptionHarness.with({ selector: '.adf-tags-chip' }));
+        const matChipHarness = await loader.getAllHarnesses(MatChipHarness.with({ selector: '.adf-tags-chip' }));
         const tagElements = [];
         for (const matChip of matChipHarness) {
             tagElements.push(await matChip.getText());
@@ -395,6 +395,23 @@ describe('TagsCreatorComponent', () => {
                     })
                 );
                 typeTag(tag);
+
+                const error = getFirstError();
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
+            }));
+
+            it('should show error when duplicated already existing tag with spaces', fakeAsync(() => {
+                const tag = 'Some tag';
+
+                spyOn(tagService, 'findTagByName').and.returnValue(
+                    of({
+                        entry: {
+                            tag,
+                            id: 'tag-1'
+                        }
+                    })
+                );
+                typeTag(tag + ' ');
 
                 const error = getFirstError();
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');

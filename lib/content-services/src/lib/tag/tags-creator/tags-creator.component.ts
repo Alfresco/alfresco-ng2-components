@@ -182,7 +182,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tagNameControl.valueChanges
             .pipe(
                 map((name: string) => name.trim()),
-                distinctUntilChanged(),
+                distinctUntilChanged((previous, current) => {
+                    const valueNotChanged = previous === current;
+                    if (valueNotChanged) {
+                        this.exactTagSet$.next();
+                    }
+                    return valueNotChanged;
+                }),
                 tap((name: string) => {
                     this._typing = true;
                     if (name) {
