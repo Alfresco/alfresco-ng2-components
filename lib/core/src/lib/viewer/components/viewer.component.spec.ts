@@ -99,24 +99,6 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('originalMimeType', () => {
-        const getMimeTypeIconElement = () => fixture.nativeElement.querySelector('.adf-viewer__mimeicon');
-
-        it('should set src attribute based on originalMimeType when originalMimeType is provided', () => {
-            component.originalMimeType = 'image';
-            fixture.detectChanges();
-            const srcAttribute: string = getMimeTypeIconElement().getAttribute('src');
-            expect(srcAttribute).toContain('image');
-        });
-
-        it('should set src attribute based on mimeType when originalMimeType is not provided', () => {
-            component.mimeType = 'image';
-            fixture.detectChanges();
-            const srcAttribute: string = getMimeTypeIconElement().getAttribute('src');
-            expect(srcAttribute).toContain('image');
-        });
-    });
-
     describe('File Name Test', () => {
         it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
             component.fileName = '';

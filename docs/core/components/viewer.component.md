@@ -121,7 +121,6 @@ You can provide custom file parameters, for example a value for the `mimeType` o
     [fileName]="fileName"
     [allowGoBack]="false"
     [mimeType]="mimeType"
-    [originalMimeType]="originalMimeType"
     [urlFile]="fileUrl">
 </adf-viewer>
 ```
