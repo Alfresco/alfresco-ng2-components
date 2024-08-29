@@ -619,6 +619,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             this.selection = [];
         }
         this.isSelectAllChecked = false;
+        this.isSelectAllIndeterminate = false;
+        this.selectedItemsCountChanged.emit(0);
     }
 
     onRowDblClick(row: DataRow, event?: Event) {

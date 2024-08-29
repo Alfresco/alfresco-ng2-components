@@ -423,6 +423,7 @@ describe('DataTable', () => {
     describe('Selection reset', () => {
         beforeEach(() => {
             spyOn(dataTable, 'resetSelection').and.callThrough();
+            spyOn(dataTable.selectedItemsCountChanged, 'emit');
 
             dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
             const rows = dataTable.data.getRows();
@@ -440,6 +441,9 @@ describe('DataTable', () => {
             });
 
             expect(dataTable.selection).toEqual([]);
+            expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(0);
+            expect(dataTable.isSelectAllIndeterminate).toBe(false);
+            expect(dataTable.isSelectAllChecked).toBe(false);
         });
 
         it('should reset selection on multiselect change', () => {
@@ -448,6 +452,9 @@ describe('DataTable', () => {
             });
 
             expect(dataTable.selection).toEqual([]);
+            expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(0);
+            expect(dataTable.isSelectAllIndeterminate).toBe(false);
+            expect(dataTable.isSelectAllChecked).toBe(false);
         });
     });
 
@@ -930,7 +937,7 @@ describe('DataTable', () => {
         );
         const rows = dataTable.data.getRows();
         const event = new MouseEvent('click');
-        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => null} });
+        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => null } });
         spyOn(dataTable, 'onRowClick');
 
         dataTable.onCheckboxLabelClick(rows[0], event);
@@ -943,7 +950,7 @@ describe('DataTable', () => {
         const event = new MouseEvent('click');
         Object.defineProperty(event, 'target', {
             value: {
-                getAttribute: (attr: string) => attr === 'data-adf-datatable-row-checkbox' ? 'data-adf-datatable-row-checkbox' : null,
+                getAttribute: (attr: string) => (attr === 'data-adf-datatable-row-checkbox' ? 'data-adf-datatable-row-checkbox' : null),
                 hasAttribute: (attr: string) => attr === 'data-adf-datatable-row-checkbox',
                 closest: () => null
             }
@@ -958,7 +965,7 @@ describe('DataTable', () => {
         const data = new ObjectDataTableAdapter([{}, {}], []);
         const rows = data.getRows();
         const event = new MouseEvent('click');
-        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => 'element'} });
+        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => 'element' } });
         spyOn(dataTable, 'onRowClick');
 
         dataTable.onCheckboxLabelClick(rows[0], event);
