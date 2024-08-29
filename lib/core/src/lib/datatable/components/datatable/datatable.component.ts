@@ -984,7 +984,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     onResizing({ rectangle: { width } }: ResizeEvent, colIndex: number): void {
         const timeoutId = setTimeout(() => {
-            const allColumns = this.data.getColumns().filter((column) => !column.isHidden);
+            const allColumns = this.getVisibleColumns();
             allColumns[colIndex].width = width;
             this.data.setColumns(allColumns);
 
