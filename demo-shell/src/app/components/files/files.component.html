@@ -2,7 +2,7 @@
     <div
         id="document-list-container"
         class="app-document-list-container">
-            <adf-toolbar *ngIf="!disableDragArea" class="app-files-toolbar">
+            <adf-toolbar class="app-files-toolbar">
                 <adf-toolbar-title>
                     <adf-breadcrumb root="Personal Files" [target]="documentList">
                     </adf-breadcrumb>
@@ -52,11 +52,6 @@
                     (name-click)="documentList.onNodeDblClick($any($event).detail?.node)"
                     (filterSelection)="onFilterSelected($event)">
 
-                    <adf-custom-empty-content-template *ngIf="disableDragArea">
-                        <div class="app-empty_template">
-                            <div class="app-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
-                        </div>
-                    </adf-custom-empty-content-template>
                     <data-columns>
                         <data-column
                             key="$thumbnail"

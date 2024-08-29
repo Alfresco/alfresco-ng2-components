@@ -25,7 +25,6 @@ import { ShowDiagramComponent } from './components/process-service/show-diagram.
 import { FormViewerComponent } from './components/process-service/form-viewer.component';
 import { FormNodeViewerComponent } from './components/process-service/form-node-viewer.component';
 import { AppsViewComponent } from './components/process-service/apps-view.component';
-import { SearchResultComponent } from './components/search/search-result.component';
 import { FilesComponent } from './components/files/files.component';
 import { AppFormComponent } from './components/form/app-form.component';
 import { AppComponent } from './app.component';
@@ -41,7 +40,6 @@ import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-det
 import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import { AppSearchFilterChipsComponent } from './components/search/search-filter-chips.component';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AppLoginComponent } from './components/login/login.component';
@@ -187,21 +185,6 @@ export const appRoutes: Routes = [
             {
                 path: 'files/:id',
                 component: FilesComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'files/:id/display/:mode',
-                component: FilesComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'search',
-                component: SearchResultComponent,
-                canActivate: [AuthGuardEcm]
-            },
-            {
-                path: 'search-filter-chips',
-                component: AppSearchFilterChipsComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

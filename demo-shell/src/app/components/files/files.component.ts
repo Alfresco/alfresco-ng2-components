@@ -166,9 +166,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     pagination: Pagination;
 
     @Input()
-    disableDragArea = false;
-
-    @Input()
     searchTerm = '';
 
     @Input()

@@ -25,7 +25,6 @@ import {
     SidenavLayoutHeaderDirective,
     SidenavLayoutNavigationDirective
 } from '@alfresco/adf-core';
-import { SearchBarComponent } from '../search/search-bar.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
@@ -43,7 +42,6 @@ import { AlfrescoApiService, FileUploadingDialogComponent } from '@alfresco/adf-
         SidenavLayoutComponent,
         SidenavLayoutHeaderDirective,
         HeaderLayoutComponent,
-        SearchBarComponent,
         UserInfoComponent,
         AvatarComponent,
         MatMenuModule,
