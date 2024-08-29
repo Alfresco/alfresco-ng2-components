@@ -23,6 +23,7 @@ import {
     ElementRef,
     EventEmitter,
     HostListener,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -52,6 +53,8 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.component';
 import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
+import { IconComponent } from '../../icon';
+import { ThumbnailService } from '../../common';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
     enableDownloadPrompt: false,
@@ -82,11 +85,14 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         ViewerToolbarComponent,
         ViewerSidebarComponent,
         ViewerToolbarActionsComponent,
-        ViewerToolbarCustomActionsComponent
+        ViewerToolbarCustomActionsComponent,
+        IconComponent
     ],
     providers: [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
+    private thumbnailService = inject(ThumbnailService);
+
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
 
@@ -285,6 +291,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private isDialogVisible: boolean = false;
     public downloadPromptTimer: number;
     public downloadPromptReminderTimer: number;
+    public mimeTypeIconUrl: string;
 
     constructor(
         private el: ElementRef,
@@ -294,7 +301,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     ) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        const { blobFile, urlFile } = changes;
+        const { blobFile, urlFile, mimeType } = changes;
 
         if (blobFile?.currentValue) {
             this.mimeType = blobFile.currentValue.type;
@@ -302,6 +309,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
         if (urlFile?.currentValue) {
             this.fileName ||= this.viewUtilsService.getFilenameFromUrl(urlFile.currentValue);
+        }
+
+        if (mimeType?.currentValue) {
+            this.mimeTypeIconUrl = this.thumbnailService.getMimeTypeIcon(mimeType.currentValue);
         }
     }
 
