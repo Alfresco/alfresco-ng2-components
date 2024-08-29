@@ -22,6 +22,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 
+export interface RoleModelOption {
+    label: string;
+    role: string;
+}
+
 @Component({
     selector: 'adf-user-role-column',
     standalone: true,
@@ -37,8 +42,8 @@ import { TranslateModule } from '@ngx-translate/core';
                 (keyup.arrowdown)="$event.stopPropagation()"
                 (keyup.arrowup)="$event.stopPropagation()"
             >
-                <mat-option *ngFor="let role of roles" [value]="role.role">
-                    {{ i18nRoleValue(role.label) | translate }}
+                <mat-option *ngFor="let option of options" [value]="option.role">
+                    {{ option.label | translate }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -84,12 +89,15 @@ export class UserRoleColumnComponent implements OnChanges {
 
     i18nValue: string;
 
+    /* dropdown options, including i18n support */
+    options: RoleModelOption[] = [];
+
     onRoleChanged(newRole: string) {
         this.value = newRole;
         this.roleChanged.emit(newRole);
     }
 
-    i18nRoleValue(value: string): string {
+    private i18nRoleValue(value: string): string {
         if (value) {
             return `ADF.ROLES.${value.toUpperCase()}`;
         }
@@ -99,6 +107,11 @@ export class UserRoleColumnComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.value) {
             this.i18nValue = this.i18nRoleValue(changes.value.currentValue);
+        }
+
+        if (changes.roles) {
+            const roles: RoleModel[] = changes.roles.currentValue || [];
+            this.options = roles.map((role) => ({ label: this.i18nRoleValue(role.label), role: role.role }));
         }
     }
 }
