@@ -43,7 +43,6 @@ export class MetadataViewPage {
     saveMetadataButton = $(`[data-automation-id='save-metadata']`);
     saveGeneralMetadataButton = $(`[data-automation-id='save-general-info-metadata']`);
     resetMetadataButton = $(`[data-automation-id='reset-metadata']`);
-    informationButton = $(`button[data-automation-id='meta-data-card-toggle-expand']`);
 
     private getMetadataGroupLocator = async (groupName: string): Promise<ElementFinder> =>
         $(`[data-automation-id="adf-metadata-group-${groupName}"]`);
@@ -116,10 +115,6 @@ export class MetadataViewPage {
     async clickOnPropertiesTab(): Promise<void> {
         const propertiesTab = element(by.cssContainingText(`.adf-info-drawer-layout-content ${materialLocators.Tab.labels.class}`, `Properties`));
         await BrowserActions.click(propertiesTab);
-    }
-
-    async getEditIconTooltip(): Promise<string> {
-        return BrowserActions.getAttribute(this.editIcon, 'title');
     }
 
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
@@ -251,7 +246,7 @@ export class MetadataViewPage {
         await TestElement.byCss('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]').waitNotVisible();
     }
 
-    async typeAspectName(aspectName): Promise<void> {
+    async typeAspectName(aspectName: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.displayAspect, aspectName);
     }
 
@@ -269,13 +264,5 @@ export class MetadataViewPage {
 
     async clickSaveGeneralMetadata(): Promise<void> {
         await BrowserActions.click(this.saveGeneralMetadataButton);
-    }
-
-    async informationButtonIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsClickable(this.informationButton);
-    }
-
-    async informationButtonIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.informationButton);
     }
 }
