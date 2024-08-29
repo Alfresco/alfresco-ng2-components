@@ -15,23 +15,13 @@
  * limitations under the License.
  */
 
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '@alfresco/adf-testing';
 import { $ } from 'protractor';
 
 export class ProcessListPage {
     processListTitle = $('.adf-empty-content__title');
-    processInstanceList = $('adf-process-instance-list');
 
     getDisplayedProcessListTitle(): Promise<string> {
         return BrowserActions.getText(this.processListTitle);
-    }
-
-    async isProcessListDisplayed(): Promise<boolean> {
-        try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceList);
-            return true;
-        } catch (error) {
-            return false;
-        }
     }
 }

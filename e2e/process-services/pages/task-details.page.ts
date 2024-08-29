@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage, materialLocators } from '@alfresco/adf-testing';
-import { browser, by, element, Key, $, $$ } from 'protractor';
+import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
+import { browser, by, element, $, $$ } from 'protractor';
 
 export class TaskDetailsPage {
     formContent = $('adf-form');
@@ -40,7 +40,6 @@ export class TaskDetailsPage {
     involvePeopleButton = $('div[class*="add-people"]');
     addPeopleField = $('input[data-automation-id="adf-people-search-input"]');
     addInvolvedUserButton = $('button[id="add-people"]');
-    taskDetailsSection = $('div[data-automation-id="app-tasks-details"]');
     completeTask = $('button[id="adf-no-form-complete-button"]');
     completeFormTask = $('button[id="adf-form-complete"]');
     auditLogButton = $('button[adf-task-audit]');
@@ -55,7 +54,6 @@ export class TaskDetailsPage {
     priority = $('[data-automation-id*="card-textitem-value-priority"]');
     editableAssignee = $('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]');
     claimElement = $('[data-automation-id="header-claim-button"]');
-    releaseElement = $('[data-automation-id="header-unclaim-button"]');
     saveFormButton = $('button[id="adf-form-save"]');
 
     attachFormDropdown = new DropdownPage($('.adf-attach-form-row'));
@@ -132,10 +130,6 @@ export class TaskDetailsPage {
         return BrowserActions.getInputValue(this.assigneeField);
     }
 
-    isAssigneeClickable(): Promise<string> {
-        return BrowserVisibility.waitUntilElementIsVisible(this.editableAssignee);
-    }
-
     getStatus(): Promise<string> {
         return BrowserActions.getInputValue(this.statusField);
     }
@@ -172,38 +166,12 @@ export class TaskDetailsPage {
         return BrowserActions.getInputValue(this.descriptionField);
     }
 
-    async getDescriptionPlaceholder(): Promise<string> {
-        return BrowserActions.getAttribute(this.descriptionField, 'placeholder');
-    }
-
     getDueDate(): Promise<string> {
         return BrowserActions.getText(this.dueDateField);
     }
 
     getPriority(): Promise<string> {
         return BrowserActions.getInputValue(this.priority);
-    }
-
-    async updatePriority(priority?: string): Promise<void> {
-        await BrowserActions.click(this.priority);
-        await BrowserActions.clearWithBackSpace(this.priority);
-        await BrowserActions.clearSendKeys($('input[data-automation-id="card-textitem-value-priority"]'), priority, 500);
-        await this.priority.sendKeys(Key.TAB);
-        await browser.sleep(1000);
-    }
-
-    async updateDueDate(): Promise<void> {
-        await BrowserActions.click(this.dueDateField);
-        await BrowserActions.click($$(materialLocators.DatetimePicker.calendar.body.cell.class).first());
-        await browser.sleep(1000);
-    }
-
-    async updateDescription(description?: string): Promise<void> {
-        await BrowserActions.click(this.descriptionField);
-        await BrowserActions.clearWithBackSpace(this.descriptionField);
-        await BrowserActions.clearSendKeys($('[data-automation-id="card-textitem-value-description"]'), description ? description : '');
-        await this.descriptionField.sendKeys(Key.TAB);
-        await browser.sleep(1000);
     }
 
     async updateAssignee(fullName: string): Promise<void> {
@@ -238,11 +206,6 @@ export class TaskDetailsPage {
     async checkCommentIsDisplayed(comment: string): Promise<void> {
         const row = element(by.cssContainingText('div.adf-comment-message', comment));
         await BrowserVisibility.waitUntilElementIsVisible(row);
-    }
-
-    async checkIsEmptyCommentListDisplayed(): Promise<void> {
-        const emptyList = element(by.cssContainingText('div[id="comment-header"]', '(0)'));
-        await BrowserVisibility.waitUntilElementIsVisible(emptyList);
     }
 
     async clickInvolvePeopleButton(): Promise<void> {
@@ -324,23 +287,6 @@ export class TaskDetailsPage {
         return BrowserActions.getText(this.peopleTitle);
     }
 
-    async checkTaskDetailsDisplayed(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskDetailsSection);
-        await BrowserVisibility.waitUntilElementIsVisible(this.formNameField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.statusField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.categoryField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.parentNameField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.createdField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.idField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.priority);
-        await BrowserVisibility.waitUntilElementIsVisible(this.activitiesTitle);
-
-        return BrowserActions.getText(this.taskDetailsSection);
-    }
-
     async checkCompleteFormButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.completeFormTask);
     }
@@ -361,20 +307,8 @@ export class TaskDetailsPage {
         return this.completeFormTask.isEnabled();
     }
 
-    async checkClaimEnabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.claimElement);
-    }
-
-    async checkReleaseEnabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.releaseElement);
-    }
-
     async claimTask(): Promise<void> {
         await BrowserActions.click(this.claimElement);
-    }
-
-    async releaseTask(): Promise<void> {
-        await BrowserActions.click(this.releaseElement);
     }
 
     async saveTaskForm(): Promise<void> {

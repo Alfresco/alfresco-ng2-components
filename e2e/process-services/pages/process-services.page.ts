@@ -17,7 +17,7 @@
 
 import { ProcessServiceTabBarPage } from './process-service-tab-bar.page';
 
-import { browser, $, ElementFinder } from 'protractor';
+import { $, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions, materialLocators } from '@alfresco/adf-testing';
 import { TasksPage } from './tasks.page';
 
@@ -43,13 +43,6 @@ export class ProcessServicesPage {
         const taskAppLocator = this.getApplicationNameLocator('Task App');
         await BrowserActions.click(taskAppLocator);
         return new ProcessServiceTabBarPage();
-    }
-
-    async goToAppByAppId(appId: string | number): Promise<void> {
-        const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${appId}/tasks/`;
-        await BrowserActions.getUrl(urlToNavigateTo);
-        const taskPage = new TasksPage();
-        await taskPage.tasksListPage().checkTaskListIsLoaded();
     }
 
     async getDescription(applicationName: string): Promise<string> {

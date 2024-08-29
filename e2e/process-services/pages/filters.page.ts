@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { BrowserActions, DataTableComponentPage } from '@alfresco/adf-testing';
 import { $ } from 'protractor';
 
 export class FiltersPage {
@@ -31,10 +31,5 @@ export class FiltersPage {
         const filter = $(`button[data-automation-id="${filterName}_filter"]`);
         await BrowserActions.click(filter);
         await this.dataTable.waitTillContentLoaded();
-    }
-
-    async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const highlightedFilter = $(`.adf-active [data-automation-id='${filterName}_filter']`);
-        await BrowserVisibility.waitUntilElementIsVisible(highlightedFilter);
     }
 }
