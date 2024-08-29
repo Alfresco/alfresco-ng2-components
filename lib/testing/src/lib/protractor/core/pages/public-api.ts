@@ -18,7 +18,6 @@
 export * from './bread-crumb.page';
 export * from './header.page';
 export * from './user-info.page';
-export * from './settings.page';
 export * from './login.page';
 
 export { LoginPage as LoginSSOPage } from './login.page';

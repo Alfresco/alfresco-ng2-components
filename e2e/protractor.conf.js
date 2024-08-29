@@ -12,7 +12,8 @@ const smartRunnerFactory = require('./smartrunner-factory');
 const { uploadScreenshot } = require('./protractor/save-remote');
 const argv = require('yargs').argv;
 
-const width = 1657, height = 1657;
+const width = 1657,
+    height = 1657;
 
 const ENV_FILE = process.env.ENV_FILE;
 const GROUP_SUFFIX = process.env.PREFIX || process.env.GH_BUILD_NUMBER || 'adf';
@@ -28,7 +29,7 @@ const SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 const MAXINSTANCES = process.env.MAXINSTANCES || 1;
 const MAX_RETRIES = process.env.MAX_RETRIES || 4;
 const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
-const SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT === 'true');
+const SAVE_SCREENSHOT = process.env.SAVE_SCREENSHOT === 'true';
 const LIST_SPECS = process.env.LIST_SPECS || [];
 const LOG = !!process.env.LOG;
 
@@ -98,32 +99,17 @@ let specExists = function (listSpecs) {
 specs();
 
 exports.config = {
-
     allScriptsTimeout: 30000,
 
     specs: arraySpecs,
 
     suites: {
-        smokeTestCore: [
-            "./core/login-sso/login-sso.e2e.ts",
-            "./core/viewer/**/*.e2e.ts"
-        ],
-        smokeTestCsSearch: [
-            "./content-services/document-list/**/*.e2e.ts",
-            "./content-services/metadata/**/*.e2e.ts",
-            "./search/components/**/*.e2e.ts"
-        ],
-        smokeTestPs: [
-            "./process-services/process/**/*.e2e.ts",
-            "./process-services/form/**/*.e2e.ts",
-            "./process-services-cloud/process/**/*.e2e.ts"
-        ]
+        smokeTestPs: ['./process-services/process/**/*.e2e.ts', './process-services/form/**/*.e2e.ts', './process-services-cloud/process/**/*.e2e.ts']
     },
 
     useAllAngular2AppRoots: true,
 
     capabilities: {
-
         loggingPrefs: {
             browser: 'ALL' // "OFF", "SEVERE", "WARNING", "INFO", "CONFIG", "FINE", "FINER", "FINEST", "ALL".
         },
@@ -136,16 +122,16 @@ exports.config = {
 
         chromeOptions: {
             prefs: {
-                'credentials_enable_service': false,
-                'download': {
-                    'prompt_for_download': false,
-                    'directory_upgrade': true,
-                    'default_directory': downloadFolder
+                credentials_enable_service: false,
+                download: {
+                    prompt_for_download: false,
+                    directory_upgrade: true,
+                    default_directory: downloadFolder
                 },
-                'browser': {
-                    'setDownloadBehavior': {
-                        'behavior': 'allow',
-                        'downloadPath': downloadFolder
+                browser: {
+                    setDownloadBehavior: {
+                        behavior: 'allow',
+                        downloadPath: downloadFolder
                     }
                 }
             },
@@ -156,7 +142,8 @@ exports.config = {
                 '--disable-web-security',
                 '--disable-browser-side-navigation',
                 '--allow-running-insecure-content',
-                ...(BROWSER_RUN === true ? [] : ['--headless'])]
+                ...(BROWSER_RUN === true ? [] : ['--headless'])
+            ]
         }
     },
 
@@ -181,8 +168,7 @@ exports.config = {
         showColors: true,
         defaultTimeoutInterval: 180000,
         includeStackTrace: true,
-        print: () => {
-        },
+        print: () => {},
         ...(process.env.CI ? smartRunnerFactory.applyExclusionFilter() : {})
     },
 
@@ -194,17 +180,19 @@ exports.config = {
 
     SELENIUM_PROMISE_MANAGER: false,
 
-    plugins: [{
-        package: 'protractor-screenshoter-plugin',
-        screenshotPath: path.resolve(__dirname, '../e2e-output/'),
-        screenshotOnExpect: 'failure',
-        withLogs: true,
-        writeReportFreq: 'end',
-        imageToAscii: 'none',
-        htmlOnExpect: 'none',
-        htmlOnSpec: 'none',
-        clearFoldersBeforeTest: false
-    }],
+    plugins: [
+        {
+            package: 'protractor-screenshoter-plugin',
+            screenshotPath: path.resolve(__dirname, '../e2e-output/'),
+            screenshotOnExpect: 'failure',
+            withLogs: true,
+            writeReportFreq: 'end',
+            imageToAscii: 'none',
+            htmlOnExpect: 'none',
+            htmlOnSpec: 'none',
+            clearFoldersBeforeTest: false
+        }
+    ],
 
     onCleanUp(results) {
         if (process.env.CI) {
@@ -249,7 +237,8 @@ exports.config = {
         );
 
         function disableCSSAnimation() {
-            const css = '* {' +
+            const css =
+                '* {' +
                 '-webkit-transition-duration: 0s !important;' +
                 'transition-duration: 0s !important;' +
                 '-webkit-animation-duration: 0s !important;' +
@@ -293,7 +282,6 @@ exports.config = {
             }
 
             await LocalStorageUtil.apiReset();
-
         } catch (error) {
             Logger.error(`====== Demo shell not able to start ======`);
             Logger.error(error);
@@ -310,7 +298,7 @@ exports.config = {
                 retryCount = ++argv.retry;
             }
             try {
-                await uploadScreenshot(retryCount, (process.env.FOLDER || ''));
+                await uploadScreenshot(retryCount, process.env.FOLDER || '');
             } catch (error) {
                 console.error('Error saving screenshot', error);
             }
@@ -322,21 +310,23 @@ exports.config = {
     },
 
     onComplete: async function () {
-        browser.manage().logs().get('browser').then(function (browserLog) {
-            if (browserLog.length) {
-                browserLog = browserLog.filter((log) => {
-                    return log.level.name_ === 'SEVERE';
-                })
+        browser
+            .manage()
+            .logs()
+            .get('browser')
+            .then(function (browserLog) {
                 if (browserLog.length) {
-                    console.error('\x1b[31m', '============ Browser console error ===========');
+                    browserLog = browserLog.filter((log) => {
+                        return log.level.name_ === 'SEVERE';
+                    });
+                    if (browserLog.length) {
+                        console.error('\x1b[31m', '============ Browser console error ===========');
 
-                    browserLog.forEach((log) => {
-                        console.error('\x1b[31m', log.message);
-                    })
-
+                        browserLog.forEach((log) => {
+                            console.error('\x1b[31m', log.message);
+                        });
+                    }
                 }
-            }
-        });
+            });
     }
-
 };

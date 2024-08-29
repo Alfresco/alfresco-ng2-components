@@ -25,7 +25,6 @@ export class NavigationBarPage {
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Home"]');
     formButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Form"]');
     logoutSection = $('[data-automation-id="adf-logout-section"]');
-    personalFiles = $('div [title="Personal Files"]');
 
     getMenuItemLocator = (title: string) => $(`.app-sidenav-link[data-automation-id="${title}"]`);
 
@@ -44,10 +43,6 @@ export class NavigationBarPage {
 
     async clickHomeButton(): Promise<void> {
         await this.clickNavigationBarItem('Home');
-    }
-
-    async navigateToContentServices(): Promise<void> {
-        await this.clickNavigationBarItem('Content Services', this.personalFiles);
     }
 
     async clickTaskListButton(): Promise<void> {
@@ -82,12 +77,6 @@ export class NavigationBarPage {
         await BrowserActions.click(this.processServicesNestedButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new ProcessServicesPage();
-    }
-
-    async navigateToProcessServicesFormPage(): Promise<void> {
-        await this.clickProcessServicesButton();
-        await BrowserActions.click(this.formButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     async clickLogoutButton(): Promise<void> {

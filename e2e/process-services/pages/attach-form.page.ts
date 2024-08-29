@@ -19,9 +19,7 @@ import { $ } from 'protractor';
 import { BrowserVisibility, BrowserActions, DropdownPage, materialLocators } from '@alfresco/adf-testing';
 
 export class AttachFormPage {
-    noFormMessage = $('.adf-empty-content__title');
     attachFormButton = $('#adf-attach-form-attach-button');
-    completeButton = $('#adf-attach-form-complete-button');
     formDropdown = $('#form_id');
     cancelButton = $('#adf-attach-form-cancel-button');
     defaultTitle = $(materialLocators.Card.title.class);
