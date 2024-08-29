@@ -105,8 +105,4 @@ export class NavigationBarPage {
     async openContentServicesFolder(folderId): Promise<void> {
         await BrowserActions.getUrl(`${browser.baseUrl}/files/${folderId}`);
     }
-
-    async goToSite(site): Promise<void> {
-        await BrowserActions.getUrl(browser.baseUrl + `/files/${site.entry.guid}/display/list`);
-    }
 }
