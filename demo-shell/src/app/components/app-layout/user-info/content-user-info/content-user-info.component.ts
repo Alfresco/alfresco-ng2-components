@@ -52,14 +52,6 @@ export class ContentUserInfoComponent implements OnDestroy {
     @Input()
     mode: UserInfoMode = UserInfoMode.CONTENT;
 
-    /** Custom path for the background banner image for ACS users. */
-    @Input()
-    ecmBackgroundImage: string = './resources/images/ecm-background.png';
-
-    /** Custom path for the background banner image for APS users. */
-    @Input()
-    bpmBackgroundImage: string = './resources/images/bpm-background.png';
-
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
     menuPositionX: MenuPositionX = 'after';
@@ -98,10 +90,6 @@ export class ContentUserInfoComponent implements OnDestroy {
         if ($event.keyCode === 27) {
             this.trigger.closeMenu();
         }
-    }
-
-    stopClosing(event: Event) {
-        event.stopPropagation();
     }
 
     getEcmAvatar(avatarId: string): string {

@@ -41,7 +41,7 @@
     <mat-menu #menu="matMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY"
               [overlapTrigger]="false" class="adf-userinfo-menu">
         <mat-card appearance="outlined" *ngIf="mode === userInfoMode.CONTENT" class="adf-userinfo-card adf-content-userinfo-card">
-            <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
+            <mat-card-header class="adf-userinfo-card-header">
                 <div *ngIf="ecmUser.avatarId; else initialTemplate"
                      class="adf-userinfo-profile-container adf-hide-small">
                     <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
@@ -72,8 +72,7 @@
             </mat-card-content>
         </mat-card>
         <mat-card appearance="outlined" *ngIf="mode === userInfoMode.CONTENT_SSO" class="adf-userinfo-card adf-content-userinfo-card">
-            <mat-card-header class="adf-userinfo-card-header"
-                             [style.background-image]="'url(' + bpmBackgroundImage + ')'">
+            <mat-card-header class="adf-userinfo-card-header">
                 <div *ngIf="ecmUser.avatarId; else initialTemplate"
                      class="adf-userinfo-profile-container adf-hide-small">
                     <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"

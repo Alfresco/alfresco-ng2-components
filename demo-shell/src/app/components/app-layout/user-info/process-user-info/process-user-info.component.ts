@@ -55,14 +55,6 @@ export class ProcessUserInfoComponent implements OnDestroy {
     @Input()
     mode: UserInfoMode = UserInfoMode.PROCESS;
 
-    /** Custom path for the background banner image for APS users. */
-    @Input()
-    bpmBackgroundImage: string = './resources/images/bpm-background.png';
-
-    /** Custom path for the background banner image for ACS users. */
-    @Input()
-    ecmBackgroundImage: string = './resources/images/ecm-background.png';
-
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */
     @Input()
     menuPositionX: MenuPositionX = 'after';

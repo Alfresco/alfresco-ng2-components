@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './public-api';
+export * from './content-user-info.component';
