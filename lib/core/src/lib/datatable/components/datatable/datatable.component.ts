@@ -50,7 +50,6 @@ import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
 import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
-
 import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
@@ -63,7 +62,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ResizeEvent } from '../../directives/resizable/types';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { FileTypePipe, FilterOutArrayObjectsByPropPipe, LocalizedDatePipe } from '../../../pipes';
+import { FileTypePipe, LocalizedDatePipe } from '../../../pipes';
 import { DropZoneDirective } from '../../directives/drop-zone.directive';
 import { ResizableDirective } from '../../directives/resizable/resizable.directive';
 import { IconComponent } from '../../../icon';
@@ -97,7 +96,6 @@ export enum ShowHeaderMode {
         CdkDropList,
         TranslateModule,
         MatCheckboxModule,
-        FilterOutArrayObjectsByPropPipe,
         CdkDrag,
         DropZoneDirective,
         ResizableDirective,
@@ -405,6 +403,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
             return false;
         }
         return column.key === this.data.getSorting().key;
+    }
+
+    getVisibleColumns(): DataColumn[] {
+        return this.data.getColumns().filter((column) => !column.isHidden);
     }
 
     onDropHeaderColumn(event: CdkDragDrop<unknown>): void {
