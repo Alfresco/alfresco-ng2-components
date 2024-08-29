@@ -156,6 +156,41 @@ describe('DataTable', () => {
         fixture.destroy();
     });
 
+    it('should return only visible columns', () => {
+        const columns = [
+            { key: 'col1', isHidden: false },
+            { key: 'col2', isHidden: true },
+            { key: 'col3', isHidden: false }
+        ] as DataColumn[];
+        dataTable.data = new ObjectDataTableAdapter([], columns);
+        fixture.detectChanges();
+
+        const visibleColumns = dataTable.getVisibleColumns();
+        expect(visibleColumns.length).toBe(2);
+        expect(visibleColumns[0].key).toBe('col1');
+        expect(visibleColumns[1].key).toBe('col3');
+    });
+
+    it('should return an empty array if all columns are hidden', () => {
+        const columns = [
+            { key: 'col1', isHidden: true },
+            { key: 'col2', isHidden: true }
+        ] as DataColumn[];
+        dataTable.data = new ObjectDataTableAdapter([], columns);
+        fixture.detectChanges();
+
+        const visibleColumns = dataTable.getVisibleColumns();
+        expect(visibleColumns.length).toBe(0);
+    });
+
+    it('should return an empty array if there are no columns', () => {
+        dataTable.data = new ObjectDataTableAdapter([], []);
+        fixture.detectChanges();
+
+        const visibleColumns = dataTable.getVisibleColumns();
+        expect(visibleColumns.length).toBe(0);
+    });
+
     it('should preserve the historical selection order', () => {
         spyOn(dataTable.selectedItemsCountChanged, 'emit');
         dataTable.data = new ObjectDataTableAdapter([{ id: 0 }, { id: 1 }, { id: 2 }], [new ObjectDataColumn({ key: 'id' })]);

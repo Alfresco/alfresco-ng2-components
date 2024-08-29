@@ -28,7 +28,7 @@
             <div
                 class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header adf-datatable-cell-data"
                  *ngFor="
-                    let col of (data.getColumns() | filterOutEvery:'isHidden':true);
+                    let col of getVisibleColumns();
                     let columnIndex = index
                     let lastColumn = last"
                  [attr.data-automation-id]="'auto_id_' + col.key"
@@ -202,9 +202,7 @@
                         {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </label>
-                <div *ngFor="
-                let col of (data.getColumns() | filterOutEvery:'isHidden':true),
-                let lastColumn = last;"
+                <div *ngFor="let col of getVisibleColumns(); let lastColumn = last;"
                      role="gridcell"
                      class="adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-data"
                      [attr.title]="col.title | translate"
