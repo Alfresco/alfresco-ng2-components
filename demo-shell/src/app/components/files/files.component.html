@@ -2,55 +2,24 @@
     <div
         id="document-list-container"
         class="app-document-list-container">
-            <adf-toolbar class="app-files-toolbar">
+            <adf-toolbar>
                 <adf-toolbar-title>
                     <adf-breadcrumb root="Personal Files" [target]="documentList">
                     </adf-breadcrumb>
                 </adf-toolbar-title>
-
-                <div class="app-document-action-buttons">
-                    <button
-                        data-automation-id="create-new-folder"
-                        mat-icon-button
-                        [disabled]="!canCreateContent(documentList.folderNode)"
-                        title="New folder"
-                        (error)="openSnackMessageError($event)"
-                        (success)="documentList.reload()"
-                        [adf-create-folder]="currentFolderId">
-                        <mat-icon>create_new_folder</mat-icon>
-                    </button>
-                    <button mat-icon-button
-                            [disabled]="!hasSelection(documentList.selection)"
-                            title="Download"
-                            [adfNodeDownload]="documentList.selection">
-                        <mat-icon>get_app</mat-icon>
-                    </button>
-                </div>
             </adf-toolbar>
 
-            <div class="app-document-list-container-in-upload-drag-area app-document-list-container" [ngClass]="{'adf-sticky-document-list': stickyHeader }">
+            <div class="app-document-list-container-in-upload-drag-area app-document-list-container">
                 <adf-document-list
                     #documentList
                     class="app-file-list-container"
-                    [permissionsStyle]="permissionsStyle"
                     [currentFolderId]="currentFolderId"
-                    [allowDropFiles]="allowDropFiles"
-                    [selectionMode]="selectionMode"
-                    [multiselect]="multiselect"
                     [node]="nodeResult"
-                    [includeFields]="includeFields"
                     [sorting]="sorting"
-                    [sortingMode]="sortingMode"
-                    [showHeader]="showHeader"
-                    [stickyHeader]="stickyHeader"
-                    [headerFilters]="headerFilters"
-                    [filterValue]="paramValues"
+                    [sortingMode]="'server'"
                     (error)="onNavigationError($event)"
-                    (ready)="emitReadyEvent($event)"
                     (preview)="showFile($event)"
-                    (folderChange)="onFolderChange($event)"
-                    (name-click)="documentList.onNodeDblClick($any($event).detail?.node)"
-                    (filterSelection)="onFilterSelected($event)">
+                    (folderChange)="onFolderChange($event)">
 
                     <data-columns>
                         <data-column
@@ -70,16 +39,6 @@
                             type="fileSize"
                             sortingKey="sizeInBytes"
                             class="adf-ellipsis-cell">
-                        </data-column>
-                        <data-column
-                            *ngIf="searchTerm"
-                            key="search"
-                            title="Search"
-                            class="adf-expand-cell-3">
-                            <ng-template let-entry="$implicit">
-                                <div [innerHTML]="searchResultsHighlight(entry.row.node.entry.search) | highlight:searchTerm">
-                                </div>
-                            </ng-template>
                         </data-column>
 
                         <data-column

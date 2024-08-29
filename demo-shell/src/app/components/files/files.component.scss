@@ -1,7 +1,3 @@
-.app-container:has(.app-document-list-container) {
-    margin: 10px;
-}
-
 .app-document-list-container {
     min-height: 400px;
 
@@ -16,18 +12,4 @@
     .app-document-action-buttons {
         flex: 0 0 auto;
     }
-}
-
-.app-empty_template {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.app-no-result-message {
-    height: 32px;
-    opacity: 0.26;
-    font-size: var(--theme-headline-font-size);
-    line-height: 1.33;
-    letter-spacing: -1px;
 }
