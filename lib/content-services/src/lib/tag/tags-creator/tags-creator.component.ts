@@ -374,7 +374,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private validateSpecialCharacters(tagNameControl: FormControl<string>): TagNameControlErrors | null {
-        const specialSymbolsRegex = /[{}()^':"\\|<>/?]/;
+        const specialSymbolsRegex = /[{}()^':"\\|<>/?.*]/;
         return tagNameControl.value.length && specialSymbolsRegex.test(tagNameControl.value) ? { specialCharacters: true } : null;
     }
 
