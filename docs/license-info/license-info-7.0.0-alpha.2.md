@@ -1,8 +1,8 @@
 ---
-Title: License info, alfresco-ng2-components 7.0.0-alpha.1+angular.15
+Title: License info, alfresco-ng2-components 7.0.0-alpha.2
 ---
 
-# License information for alfresco-ng2-components 7.0.0-alpha.1+angular.15
+# License information for alfresco-ng2-components 7.0.0-alpha.2
 
 This page lists all third party libraries the project depends on.
 
