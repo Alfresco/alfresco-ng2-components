@@ -65,6 +65,13 @@ export class StartProcessCloudService extends BaseCloudService {
         return this.post(url, payload).pipe(map((result: any) => result.entry));
     }
 
+    startProcessWithForm(appName: string, formId: string, version: number, payload: any): Observable<ProcessInstanceCloud> {
+        const url = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
+        payload.payloadType = 'StartProcessPayload';
+
+        return this.post(url, payload);
+    }
+
     /**
      * Update an existing process instance
      *
