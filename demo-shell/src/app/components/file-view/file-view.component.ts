@@ -17,60 +17,26 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, PRIMARY_OUTLET, Router } from '@angular/router';
-import { InfoDrawerComponent, InfoDrawerTabComponent, NotificationService, ViewerComponent } from '@alfresco/adf-core';
-import {
-    AlfrescoViewerComponent,
-    AllowableOperationsEnum,
-    ContentMetadataComponent,
-    ContentService,
-    FileUploadErrorEvent,
-    NodeCommentsComponent,
-    NodesApiService,
-    PermissionsEnum,
-    VersionManagerComponent
-} from '@alfresco/adf-content-services';
+import { ViewerComponent } from '@alfresco/adf-core';
+import { AlfrescoViewerComponent, AllowableOperationsEnum, ContentService, NodesApiService, PermissionsEnum } from '@alfresco/adf-content-services';
 import { PreviewService } from '../../services/preview.service';
 import { CommonModule } from '@angular/common';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-file-view',
     standalone: true,
-    imports: [
-        CommonModule,
-        AlfrescoViewerComponent,
-        ViewerComponent,
-        NodeCommentsComponent,
-        ContentMetadataComponent,
-        MatSlideToggleModule,
-        MatFormFieldModule,
-        MatButtonModule,
-        MatInputModule,
-        FormsModule,
-        VersionManagerComponent,
-        InfoDrawerTabComponent,
-        InfoDrawerComponent
-    ],
+    imports: [CommonModule, AlfrescoViewerComponent, ViewerComponent],
     templateUrl: './file-view.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class FileViewComponent implements OnInit {
     nodeId: string = null;
     versionId: string = null;
-    displayEmptyMetadata = false;
     expanded: boolean;
     multi = false;
     isReadOnly = false;
-    isPreset = false;
-    customPreset: string = null;
     displayDefaultProperties = true;
     isCommentEnabled = false;
-    desiredAspect: string = null;
-    showAspect: string = null;
     name: string;
     fileName: string;
     blobFile: Blob;
@@ -80,8 +46,7 @@ export class FileViewComponent implements OnInit {
         private route: ActivatedRoute,
         private nodeApiService: NodesApiService,
         private contentServices: ContentService,
-        private preview: PreviewService,
-        private notificationService: NotificationService
+        private preview: PreviewService
     ) {}
 
     ngOnInit() {
@@ -109,50 +74,8 @@ export class FileViewComponent implements OnInit {
         });
     }
 
-    onViewVersion(versionId: string) {
-        this.preview.showResource(this.nodeId, versionId);
-    }
-
     onViewerClosed() {
         const primaryUrl = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].toString();
         this.router.navigateByUrl(primaryUrl);
-    }
-
-    onUploadError(event: FileUploadErrorEvent) {
-        this.notificationService.showError(event.error);
-    }
-
-    toggleEmptyMetadata() {
-        this.displayEmptyMetadata = !this.displayEmptyMetadata;
-    }
-
-    toggleMulti() {
-        this.multi = !this.multi;
-    }
-
-    toggleReadOnly() {
-        this.isReadOnly = !this.isReadOnly;
-    }
-
-    toggleDisplayProperties() {
-        this.displayDefaultProperties = !this.displayDefaultProperties;
-    }
-
-    togglePreset() {
-        this.isPreset = !this.isPreset;
-        if (!this.isPreset) {
-            this.customPreset = null;
-        }
-    }
-
-    applyCustomPreset() {
-        this.isPreset = false;
-        setTimeout(() => {
-            this.isPreset = true;
-        }, 100);
-    }
-
-    applyAspect() {
-        this.showAspect = this.desiredAspect;
     }
 }

@@ -41,10 +41,6 @@ export class NavigationBarPage {
         }
     }
 
-    async clickHomeButton(): Promise<void> {
-        await this.clickNavigationBarItem('Home');
-    }
-
     async clickTaskListButton(): Promise<void> {
         await this.clickNavigationBarItem('Task List');
     }

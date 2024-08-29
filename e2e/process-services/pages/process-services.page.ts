@@ -22,9 +22,7 @@ import { BrowserVisibility, BrowserActions, materialLocators } from '@alfresco/a
 import { TasksPage } from './tasks.page';
 
 export class ProcessServicesPage {
-
     apsAppsContainer = $('.adf-app-listgrid');
-    iconTypeLocator = `${materialLocators.Icon.root}[class*="card-logo-icon"]`;
     descriptionLocator = `${materialLocators.Card.subtitle.root}[class*="subtitle"]`;
 
     getApplicationNameLocator = (name: string): ElementFinder => $(`${materialLocators.Card.root}[title="${name}"]`);
@@ -54,33 +52,10 @@ export class ProcessServicesPage {
         await taskPage.tasksListPage().checkTaskListIsLoaded();
     }
 
-    async getAppIconType(applicationName: string): Promise<string> {
-        const app = this.getApplicationNameLocator(applicationName);
-        await BrowserVisibility.waitUntilElementIsVisible(app);
-        const iconType = await app.$(this.iconTypeLocator);
-        return BrowserActions.getText(iconType);
-    }
-
-    async getBackgroundColor(applicationName: string): Promise<string> {
-        const app = this.getApplicationNameLocator(applicationName);
-        await BrowserVisibility.waitUntilElementIsVisible(app);
-        return app.getCssValue('background-color');
-    }
-
     async getDescription(applicationName: string): Promise<string> {
         const app = this.getApplicationNameLocator(applicationName);
         await BrowserVisibility.waitUntilElementIsVisible(app);
         const description = await app.$(this.descriptionLocator);
         return BrowserActions.getText(description);
-    }
-
-    async checkAppIsNotDisplayed(applicationName: string): Promise<void> {
-        const app = this.getApplicationNameLocator(applicationName);
-        await BrowserVisibility.waitUntilElementIsNotVisible(app);
-    }
-
-    async checkAppIsDisplayed(applicationName: string): Promise<void> {
-        const app = this.getApplicationNameLocator(applicationName);
-        await BrowserVisibility.waitUntilElementIsVisible(app);
     }
 }

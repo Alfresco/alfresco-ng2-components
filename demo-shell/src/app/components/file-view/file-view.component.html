@@ -3,9 +3,7 @@
         (showViewerChange)="onViewerClosed()"
         [nodeId]="nodeId"
         [versionId]="versionId"
-        [showToolbar]="true"
-        [allowRightSidebar]="true"
-        [sidebarRightTemplate]="sidebarRightTemplate">
+        [showToolbar]="true">
     </adf-alfresco-viewer>
 </ng-container>
 
@@ -14,103 +12,6 @@
         [blobFile]="blobFile"
         [fileName]="fileName"
         [showToolbar]="true"
-        [allowRightSidebar]="true"
-        (showViewerChange)="onViewerClosed()"
-        [sidebarRightTemplate]="sidebarRightTemplate">
+        (showViewerChange)="onViewerClosed()">
     </adf-viewer>
 </ng-container>
-
-<ng-template let-node="node" #sidebarRightTemplate>
-    <adf-info-drawer title="Details">
-
-        <adf-info-drawer-tab label="Comments">
-            <adf-node-comments [nodeId]="nodeId" [readOnly]="!isCommentEnabled">
-            </adf-node-comments>
-        </adf-info-drawer-tab>
-
-        <adf-info-drawer-tab label="Properties">
-            <adf-content-metadata
-                [node]="node"
-                [multi]="multi"
-                [preset]="isPreset ? customPreset : null"
-                [readOnly]="isReadOnly"
-                [displayAspect]="showAspect"
-                [displayDefaultProperties]="displayDefaultProperties"
-                [displayTags]="false"
-                [displayCategories]="false"
-                [displayEmpty]="displayEmptyMetadata">
-            </adf-content-metadata>
-
-            <p class="toggle">
-                <mat-slide-toggle
-                    id="adf-metadata-default-properties"
-                    (change)="toggleDisplayProperties()"
-                    [checked]="displayDefaultProperties">
-                    Display Default Properties
-                </mat-slide-toggle>
-            </p>
-
-            <p class="toggle">
-                <mat-slide-toggle
-                    id="adf-metadata-empty"
-                    (change)="toggleEmptyMetadata()"
-                    [checked]="displayEmptyMetadata">
-                    Display Empty Metadata
-                </mat-slide-toggle>
-            </p>
-
-            <p class="toggle">
-                <mat-slide-toggle
-                    id="adf-metadata-multi"
-                    (change)="toggleMulti()"
-                    [checked]="multi">
-                    Multi accordion
-                </mat-slide-toggle>
-            </p>
-
-            <p class="toggle">
-                <mat-slide-toggle
-                    id="adf-metadata-readonly"
-                    (change)="toggleReadOnly()"
-                    [checked]="isReadOnly">
-                    Read Only
-                </mat-slide-toggle>
-            </p>
-
-            <p class="toggle">
-                <mat-slide-toggle
-                    id="adf-toggle-custom-preset"
-                    (change)="togglePreset()"
-                    [checked]="isPreset">
-                    Custom preset
-                </mat-slide-toggle>
-            </p>
-
-            <p class="toggle">
-
-                <mat-form-field floatPlaceholder="float">
-                    <input matInput placeholder="Display Aspect" [(ngModel)]="desiredAspect">
-                </mat-form-field>
-
-                <button mat-raised-button (click)="applyAspect()">Apply Aspect</button>
-            </p>
-
-            <p class="toggle">
-                <ng-container *ngIf="isPreset">
-                    <mat-form-field floatPlaceholder="float">
-                        <input matInput placeholder="Custom Preset" [(ngModel)]="customPreset" data-automation-id="adf-text-custom-preset">
-                    </mat-form-field>
-                    <button mat-raised-button id="adf-metadata-aplly" (click)="applyCustomPreset()">Apply</button>
-                </ng-container>
-            </p>
-
-        </adf-info-drawer-tab>
-
-        <adf-info-drawer-tab label="Versions">
-            <adf-version-manager [node]="node"
-                                 (uploadError)="onUploadError($event)"
-                                 (viewVersion)="onViewVersion($event)">
-            </adf-version-manager>
-        </adf-info-drawer-tab>
-    </adf-info-drawer>
-</ng-template>
