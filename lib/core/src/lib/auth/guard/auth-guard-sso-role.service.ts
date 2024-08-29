@@ -15,63 +15,48 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UserAccessService } from '../services/user-access.service';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class AuthGuardSsoRoleService implements CanActivate {
-    constructor(private userAccessService: UserAccessService,
-                private router: Router,
-                private dialog: MatDialog) {
-    }
+export const AuthGuardSsoRoleService: CanActivateFn = (route: ActivatedRouteSnapshot): boolean => {
+    const userAccessService = inject(UserAccessService);
+    userAccessService.fetchUserAccess();
 
-    canActivate(route: ActivatedRouteSnapshot): boolean {
-        this.userAccessService.fetchUserAccess();
-        let hasRealmRole = false;
-        let hasClientRole = true;
-        if (route.data) {
-            if (route.data['roles']) {
-                const rolesToCheck: string[] = route.data['roles'];
-                if (rolesToCheck.length === 0) {
-                    hasRealmRole = true;
-                } else {
-                    const excludedRoles = route.data['excludedRoles'] || [];
-                    hasRealmRole = this.validateRoles(rolesToCheck, excludedRoles);
+    let hasRealmRole = false;
+    let hasClientRole = true;
+    if (route.data) {
+        if (route.data['roles']) {
+            const rolesToCheck: string[] = route.data['roles'];
+            if (rolesToCheck.length === 0) {
+                hasRealmRole = true;
+            } else {
+                const excludedRoles = route.data['excludedRoles'] || [];
+                if (excludedRoles?.length > 0) {
+                    hasRealmRole = userAccessService.hasGlobalAccess(rolesToCheck) && !userAccessService.hasGlobalAccess(excludedRoles);
                 }
-            }
-
-            if (route.data['clientRoles']) {
-                const clientRoleName = route.params[route.data['clientRoles']];
-                const rolesToCheck = route.data['roles'];
-                hasClientRole = this.userAccessService.hasApplicationAccess(clientRoleName, rolesToCheck);
+                hasRealmRole = userAccessService.hasGlobalAccess(rolesToCheck);
             }
         }
-        const hasRole = hasRealmRole && hasClientRole;
 
-        if (!hasRole && route?.data && route.data['redirectUrl']) {
-            this.router.navigate(['/' + route.data['redirectUrl']]);
+        if (route.data['clientRoles']) {
+            const clientRoleName = route.params[route.data['clientRoles']];
+            const rolesToCheck = route.data['roles'];
+            hasClientRole = userAccessService.hasApplicationAccess(clientRoleName, rolesToCheck);
         }
+    }
+    const hasRole = hasRealmRole && hasClientRole;
 
-        if (!hasRole) {
-            this.dialog.closeAll();
-        }
-
-        return hasRole;
+    if (!hasRole && route?.data && route.data['redirectUrl']) {
+        const router = inject(Router);
+        router.navigate(['/' + route.data['redirectUrl']]);
     }
 
-    private validateRoles(rolesToCheck: string[], excludedRoles?: string[]): boolean {
-        if (excludedRoles?.length > 0) {
-            return this.hasRoles(rolesToCheck) && !this.hasRoles(excludedRoles);
-        }
-        return this.hasRoles(rolesToCheck);
+    if (!hasRole) {
+        const dialog = inject(MatDialog);
+        dialog.closeAll();
     }
 
-    private hasRoles(roles: string[] = []): boolean {
-        return this.userAccessService.hasGlobalAccess(roles);
-    }
-
-}
+    return hasRole;
+};
