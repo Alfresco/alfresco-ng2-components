@@ -64,31 +64,29 @@ import { AlfrescoApiService, FileUploadingDialogComponent } from '@alfresco/adf-
 })
 export class AppLayoutComponent {
     links: Array<any> = [
-        { href: '/home', icon: 'home', title: 'Home' },
-        { href: '/files', icon: 'folder_open', title: 'Content Services' },
-        { href: '/card-view', icon: 'view_headline', title: 'CardView' },
-        { href: '/task-list', icon: 'assignment', title: 'Task List' },
+        { href: '/home', title: 'Home' },
+        { href: '/files', title: 'Content Services' },
+        { href: '/card-view', title: 'CardView' },
+        { href: '/task-list', title: 'Task List' },
         {
             href: '/cloud',
-            icon: 'cloud',
             title: 'Process Cloud',
             children: [
-                { href: '/cloud/', icon: 'cloud', title: 'Home' },
-                { href: '/form-cloud', icon: 'poll', title: 'Form' }
+                { href: '/cloud/', title: 'Home' },
+                { href: '/form-cloud', title: 'Form' }
             ]
         },
         {
             href: '/activiti',
-            icon: 'device_hub',
             title: 'Process Services',
             children: [
-                { href: '/activiti', icon: 'vpn_key', title: 'App' },
-                { href: '/process-list', icon: 'assignment', title: 'Process List' },
-                { href: '/form', icon: 'poll', title: 'Form' }
+                { href: '/activiti', title: 'App' },
+                { href: '/process-list', title: 'Process List' },
+                { href: '/form', title: 'Form' }
             ]
         },
-        { href: '/login', icon: 'vpn_key', title: 'Login' },
-        { href: '/settings-layout', icon: 'settings', title: 'Settings' }
+        { href: '/login', title: 'Login' },
+        { href: '/settings-layout', title: 'Settings' }
     ];
 
     enableRedirect = true;

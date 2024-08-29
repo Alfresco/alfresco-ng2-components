@@ -38,10 +38,9 @@
                 <ng-container *ngFor="let link of links">
                     <ng-container *ngIf="link.children">
                         <mat-list-item (click)="trigger.openMenu()" [attr.data-automation-id]="link.title | translate" class="app-sidenav-link">
-                            <mat-icon matListItemIcon>{{link.icon}}</mat-icon>
                             <span matLine>{{ link.title | translate }}</span>
                             <mat-icon class="app-sidenav-link__expand-button" [matMenuTriggerData]="{links: link.children}"
-                                rippleTrigger mat-icon-button #trigger="matMenuTrigger"
+                                 #trigger="matMenuTrigger"
                                 [matMenuTriggerFor]="nestedMenu">arrow_right</mat-icon>
                         </mat-list-item>
                     </ng-container>
@@ -50,14 +49,12 @@
                         <mat-list-item [routerLink]="link.href"
                             routerLinkActive="app-sidenav-link--active" [routerLinkActiveOptions]="{ exact: true }"
                             [attr.data-automation-id]="link.title | translate" class="app-sidenav-link">
-                            <mat-icon matListItemIcon >{{link.icon}}</mat-icon>
                             <span matLine>{{link.title | translate }}</span>
                         </mat-list-item>
                     </ng-container>
                 </ng-container>
 
                 <mat-list-item adf-logout [enableRedirect]="enableRedirect" redirectUri="/logout" class="app-sidenav-link" data-automation-id="Logout" >
-                    <mat-icon matListItemIcon>exit_to_app</mat-icon>
                     <span matLine>Logout</span>
                 </mat-list-item>
             </mat-nav-list>
@@ -82,7 +79,6 @@
             [routerLink]="link.href"
             [routerLinkActiveOptions]="{ exact: true }">
 
-            <mat-icon matListItemIcon>{{link.icon}}</mat-icon>
             {{ link.title | translate }}
         </button>
     </ng-template>
