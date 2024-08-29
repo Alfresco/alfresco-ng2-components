@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldTypes } from '../core/form-field-types';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -29,7 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('DateTimeWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -41,8 +40,7 @@ describe('DateTimeWidgetComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TranslateModule.forRoot(),
-                HttpClientTestingModule,
+                NoopTranslateModule,
                 NoopAnimationsModule,
                 MatDialogModule,
                 MatNativeDatetimeModule,

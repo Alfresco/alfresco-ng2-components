@@ -20,8 +20,7 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('Auth Guard SSO role service', () => {
     let authGuard: AuthGuardSsoRoleService;
@@ -30,7 +29,7 @@ describe('Auth Guard SSO role service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatDialogModule]
+            imports: [NoopTranslateModule, MatDialogModule]
         });
         localStorage.clear();
         authGuard = TestBed.inject(AuthGuardSsoRoleService);

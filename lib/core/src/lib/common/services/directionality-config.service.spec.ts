@@ -17,18 +17,17 @@
 
 import { TestBed } from '@angular/core/testing';
 import { UserPreferencesService } from './user-preferences.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DirectionalityConfigService } from './directionality-config.service';
 import { directionalityConfigFactory } from './directionality-config-factory';
 import { APP_INITIALIZER } from '@angular/core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('DirectionalityConfigService', () => {
     let userPreferencesService: UserPreferencesService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            imports: [NoopTranslateModule],
             providers: [
                 UserPreferencesService,
                 {

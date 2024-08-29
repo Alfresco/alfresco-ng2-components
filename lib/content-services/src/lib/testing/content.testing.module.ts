@@ -22,16 +22,14 @@ import {
     CoreModule,
     AlfrescoApiService,
     AppConfigService,
-    TranslationService,
     CookieService,
     AlfrescoApiServiceMock,
     AppConfigServiceMock,
-    TranslationMock,
     CookieServiceMock,
-    AuthModule
+    AuthModule,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { ContentModule } from '../content.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { versionCompatibilityFactory } from '../version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from '../version-compatibility/version-compatibility.service';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
@@ -41,15 +39,14 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
         AuthModule.forRoot({ useHash: true }),
         NoopAnimationsModule,
         RouterTestingModule,
-        TranslateModule.forRoot(),
         CoreModule,
+        NoopTranslateModule,
         ContentModule,
         MatIconTestingModule
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock },
         { provide: CookieService, useClass: CookieServiceMock },
         {
             provide: APP_INITIALIZER,
@@ -58,6 +55,6 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
             multi: true
         }
     ],
-    exports: [NoopAnimationsModule, TranslateModule, CoreModule, ContentModule]
+    exports: [NoopAnimationsModule, CoreModule, ContentModule]
 })
 export class ContentTestingModule {}

@@ -18,9 +18,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppConfigServiceMock } from '../../common';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 const aboutGithubDetails = {
     url: 'https://github.com/componany/repository/commits/',
@@ -38,7 +37,7 @@ describe('AboutServerSettingsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            imports: [NoopTranslateModule],
             providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }]
         });
         fixture = TestBed.createComponent(AboutServerSettingsComponent);

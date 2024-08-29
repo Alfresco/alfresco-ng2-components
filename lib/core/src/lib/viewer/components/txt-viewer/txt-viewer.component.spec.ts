@@ -19,6 +19,8 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TxtViewerComponent } from './txt-viewer.component';
 import { CoreTestingModule } from '../../../testing';
+import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
 
 describe('Text View component', () => {
     let component: TxtViewerComponent;
@@ -27,41 +29,42 @@ describe('Text View component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, TxtViewerComponent]
         });
         fixture = TestBed.createComponent(TxtViewerComponent);
+
+        const httpClient = TestBed.inject(HttpClient);
+        spyOn(httpClient, 'get').and.returnValue(of('example'));
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
     });
 
     describe('View', () => {
-        it('Should text container be present with urlFile', (done) => {
+        it('Should text container be present with urlFile', async () => {
             fixture.detectChanges();
             const urlFile = './fake-test-file.txt';
             const change = new SimpleChange(null, urlFile, true);
 
-            component.ngOnChanges({ urlFile: change }).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
-                    done();
-                });
-            });
+            await component.ngOnChanges({ urlFile: change });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
         });
 
-        it('Should text container be present with Blob file', (done) => {
+        it('Should text container be present with Blob file', async () => {
             const blobFile = new Blob(['text example'], { type: 'text/txt' });
 
             const change = new SimpleChange(null, blobFile, true);
 
-            component.ngOnChanges({ blobFile: change }).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
-                    done();
-                });
-            });
+            await component.ngOnChanges({ blobFile: change });
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
         });
     });
 });

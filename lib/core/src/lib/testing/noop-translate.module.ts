@@ -15,18 +15,14 @@
  * limitations under the License.
  */
 
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { EventEmitter, NgModule } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { TranslationService } from '../translation/translation.service';
+import { LangChangeEvent } from '../mock';
+import { Observable, of } from 'rxjs';
 
-export interface LangChangeEvent {
-    lang: string;
-    translations: any;
-}
-
-/** @deprecated use `NoopTranslateModule` instead */
-@Injectable()
-export class TranslationMock implements TranslationService {
+export class NoopTranslationService implements TranslationService {
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
@@ -36,11 +32,8 @@ export class TranslationMock implements TranslationService {
     };
 
     addTranslationFolder() {}
-
     onTranslationChanged() {}
-
     use(): any {}
-
     loadTranslation() {}
 
     get(key: string | Array<string>): Observable<string | any> {
@@ -51,3 +44,10 @@ export class TranslationMock implements TranslationService {
         return key;
     }
 }
+
+@NgModule({
+    imports: [HttpClientTestingModule, TranslateModule.forRoot()],
+    providers: [{ provide: TranslationService, useClass: NoopTranslationService }],
+    exports: [TranslateModule]
+})
+export class NoopTranslateModule {}

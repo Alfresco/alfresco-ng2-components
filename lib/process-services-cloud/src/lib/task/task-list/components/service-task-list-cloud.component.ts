@@ -16,9 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, Input, Inject, OnDestroy } from '@angular/core';
-import {
-    AppConfigService, UserPreferencesService
-} from '@alfresco/adf-core';
+import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { ServiceTaskQueryCloudRequestModel } from '../models/service-task-cloud.model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { ServiceTaskListCloudService } from '../services/service-task-list-cloud.service';
@@ -42,19 +40,17 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
     private onDestroyServiceTaskList$ = new Subject<boolean>();
 
     private isReloadingSubject$ = new BehaviorSubject<boolean>(false);
-    isLoading$ = combineLatest([
-        this.isLoadingPreferences$,
-        this.isReloadingSubject$
-    ]).pipe(
+    isLoading$ = combineLatest([this.isLoadingPreferences$, this.isReloadingSubject$]).pipe(
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    constructor(private serviceTaskListCloudService: ServiceTaskListCloudService,
-                appConfigService: AppConfigService,
-                taskCloudService: TaskCloudService,
-                userPreferences: UserPreferencesService,
-                @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface
-            ) {
+    constructor(
+        private serviceTaskListCloudService: ServiceTaskListCloudService,
+        appConfigService: AppConfigService,
+        taskCloudService: TaskCloudService,
+        userPreferences: UserPreferencesService,
+        @Inject(TASK_LIST_PREFERENCES_SERVICE_TOKEN) cloudPreferenceService: PreferenceCloudServiceInterface
+    ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
@@ -69,22 +65,20 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
         this.requestNode = this.createRequestNode();
 
         if (this.requestNode.appName || this.requestNode.appName === '') {
-
-            combineLatest([
-                this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode),
-                this.isColumnSchemaCreated$
-            ]).pipe(
-                takeUntil(this.onDestroyServiceTaskList$)
-            ).subscribe(
-                ([tasks]) => {
-                    this.rows = tasks.list.entries;
-                    this.success.emit(tasks);
-                    this.pagination.next(tasks.list.pagination);
-                    this.isReloadingSubject$.next(false);
-                }, (error) => {
-                    this.error.emit(error);
-                    this.isReloadingSubject$.next(false);
-                });
+            combineLatest([this.serviceTaskListCloudService.getServiceTaskByRequest(this.requestNode), this.isColumnSchemaCreated$])
+                .pipe(takeUntil(this.onDestroyServiceTaskList$))
+                .subscribe(
+                    ([tasks]) => {
+                        this.rows = tasks.list.entries;
+                        this.success.emit(tasks);
+                        this.pagination.next(tasks.list.pagination);
+                        this.isReloadingSubject$.next(false);
+                    },
+                    (error) => {
+                        this.error.emit(error);
+                        this.isReloadingSubject$.next(false);
+                    }
+                );
         } else {
             this.rows = [];
         }

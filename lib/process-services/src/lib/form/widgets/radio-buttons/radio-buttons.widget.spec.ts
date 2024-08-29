@@ -24,26 +24,18 @@ import {
     FormFieldOption,
     FormFieldModel,
     FormModel,
-    ErrorWidgetComponent,
-    TranslationMock,
     AlfrescoApiServiceMock,
     AppConfigServiceMock,
     AppConfigService,
     AlfrescoApiService,
-    TranslationService
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
-import { MatIconModule } from '@angular/material/icon';
-import { MatRadioModule } from '@angular/material/radio';
-import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { TaskFormService } from '../../services/task-form.service';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RadioButtonsWidgetComponent', () => {
     let formService: FormService;
@@ -53,18 +45,8 @@ describe('RadioButtonsWidgetComponent', () => {
 
     beforeEach(() => {
         getTestBed().configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                MatRadioModule,
-                MatButtonModule,
-                FormsModule,
-                HttpClientTestingModule,
-                MatIconModule,
-                ErrorWidgetComponent,
-                RadioButtonsWidgetComponent
-            ],
+            imports: [NoopTranslateModule, RadioButtonsWidgetComponent],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]

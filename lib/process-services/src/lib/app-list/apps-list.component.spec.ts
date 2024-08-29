@@ -27,6 +27,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
+import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
 
 describe('AppsListComponent', () => {
     let loader: HarnessLoader;
@@ -37,6 +38,8 @@ describe('AppsListComponent', () => {
     let getAppsSpy: jasmine.Spy;
 
     @Component({
+        standalone: true,
+        imports: [CustomEmptyContentTemplateDirective, AppsListComponent],
         template: `
             <adf-apps>
                 <adf-custom-empty-content-template>
@@ -49,8 +52,7 @@ describe('AppsListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [CustomEmptyAppListTemplateComponent]
+            imports: [ProcessTestingModule, CustomEmptyAppListTemplateComponent]
         });
         fixture = TestBed.createComponent(AppsListComponent);
         component = fixture.componentInstance;

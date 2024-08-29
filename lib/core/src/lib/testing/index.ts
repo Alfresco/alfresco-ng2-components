@@ -18,3 +18,4 @@
 export * from './setup-test-bed';
 export * from './core.testing.module';
 export * from './core.story.module';
+export * from './noop-translate.module';

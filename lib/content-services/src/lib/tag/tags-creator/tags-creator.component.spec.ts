@@ -17,9 +17,8 @@
 
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { TagsCreatorComponent } from './tags-creator.component';
-import { NotificationService } from '@alfresco/adf-core';
+import { NoopTranslateModule, NotificationService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { MatError } from '@angular/material/form-field';
 import { TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 import { EMPTY, of, throwError } from 'rxjs';
@@ -39,7 +38,7 @@ describe('TagsCreatorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, TranslateModule.forRoot(), TagsCreatorComponent],
+            imports: [NoopAnimationsModule, NoopTranslateModule, TagsCreatorComponent],
             providers: [
                 {
                     provide: TagService,

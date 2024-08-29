@@ -27,9 +27,8 @@ import {
     mockIdentityGroups,
     roleMappingMock
 } from '../mock/identity-group.mock';
-import { TranslateModule } from '@ngx-translate/core';
 import { AdfHttpClient } from '../../../../api/src';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
@@ -38,7 +37,7 @@ describe('IdentityGroupService', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            imports: [NoopTranslateModule],
             providers: [AdfHttpClient]
         });
         service = TestBed.inject(IdentityGroupService);
