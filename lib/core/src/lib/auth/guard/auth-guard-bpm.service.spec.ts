@@ -25,7 +25,7 @@ import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.serv
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
-import { AuthGuardBaseService } from './auth-guard-base';
+import { AuthGuardService } from './auth-guard.service';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 describe('AuthGuardService BPM', () => {
@@ -43,7 +43,7 @@ describe('AuthGuardService BPM', () => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule, MatDialogModule],
             providers: [
-                AuthGuardBaseService,
+                AuthGuardService,
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
                 {
                     provide: OidcAuthenticationService,

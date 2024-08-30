@@ -18,10 +18,10 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { AuthGuardBaseService } from './auth-guard-base';
+import { AuthGuardService } from './auth-guard.service';
 
 export const AuthGuardBpm: CanActivateFn = async (_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> => {
-    const authGuardBaseService = inject(AuthGuardBaseService);
+    const authGuardBaseService = inject(AuthGuardService);
     const authenticationService = inject(AuthenticationService);
 
     if (authenticationService.isLoggedIn() && authenticationService.isOauth() && authGuardBaseService.isLoginFragmentPresent()) {

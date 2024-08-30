@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthGuard } from './auth-guard.service';
+import { AuthGuard } from './auth-guard';
 import { AuthenticationService } from '../services/authentication.service';
 import { StorageService } from '../../common/services/storage.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
@@ -27,7 +27,7 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 describe('AuthGuardService', () => {
     let state: RouterStateSnapshot;
