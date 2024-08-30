@@ -17,8 +17,8 @@
 
 export * from './authentication-interceptor/auth-bearer.interceptor';
 
-export * from './guard/auth-guard-base';
 export * from './guard/auth-guard.service';
+export * from './guard/auth-guard';
 export * from './guard/auth-guard-ecm.service';
 export * from './guard/auth-guard-bpm.service';
 export * from './guard/auth-guard-sso-role.service';

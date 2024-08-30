@@ -113,7 +113,7 @@
         "activiti-alfresco.service": "ActivitiContentService",
         "auth-guard-bpm.service": "AuthGuardBpm",
         "auth-guard-ecm.service": "AuthGuardEcm",
-        "auth-guard.service": "AuthGuard",
+        "auth-guard": "AuthGuard",
         "card-item-types.service": "CardItemTypeService",
         "card-view-item.interface": "CardViewItem",
         "confirm.dialog": "ConfirmDialogComponent",
