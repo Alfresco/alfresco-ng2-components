@@ -49,7 +49,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     context?: SearchQueryBuilderService;
     options: SearchFilterList<SearchListOption>;
     operator: string = 'OR';
-    startValue: SearchListOption = null;
+    startValue: string;
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
@@ -72,6 +72,10 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
         if (this.startValue) {
             this.setValue(this.startValue);
+        } else {
+            if (this.id && this.context) {
+                this.context.queryFragments[this.id] = '';
+            }
         }
     }
 
