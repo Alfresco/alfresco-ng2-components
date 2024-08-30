@@ -17,7 +17,6 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
@@ -46,7 +45,6 @@ import { CoreAutomationService } from '../testing/automation.service';
         ProcessModule.forRoot(),
         ProcessServicesCloudModule.forRoot(),
         ExtensionsModule.forRoot(),
-        NgChartsModule,
         MonacoEditorModule.forRoot()
     ],
     declarations: [AppComponent],
