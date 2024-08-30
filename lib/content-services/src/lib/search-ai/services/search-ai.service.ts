@@ -70,6 +70,11 @@ export class SearchAiService {
         return from(this.searchAiApi.getAnswer(questionId));
     }
 
+    /**
+     * Get the knowledge retrieval configuration.
+     *
+     * @returns KnowledgeRetrievalConfigEntry object containing the configuration.
+     */
     getConfig(): Observable<KnowledgeRetrievalConfigEntry> {
         return from(this.searchAiApi.getConfig());
     }

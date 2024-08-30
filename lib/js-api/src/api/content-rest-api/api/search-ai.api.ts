@@ -51,6 +51,11 @@ export class SearchAiApi extends BaseApi {
         });
     }
 
+    /**
+     * Get the knowledge retrieval configuration.
+     *
+     * @returns KnowledgeRetrievalConfigEntry object containing the configuration.
+     */
     getConfig(): Promise<KnowledgeRetrievalConfigEntry> {
         return this.get({
             path: '/config/-default-'
