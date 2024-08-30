@@ -21,12 +21,9 @@ import { Subject } from 'rxjs';
 import { Category } from '@alfresco/js-api';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
-import { AppConfigService, AppConfigServiceMock, TranslationMock, TranslationService } from '@alfresco/adf-core';
-import { CategoriesManagementComponent } from '../../category';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
 
-describe('Category selector dialog component', () => {
+describe('CategorySelectorDialogComponent', () => {
     let fixture: ComponentFixture<CategorySelectorDialogComponent>;
     let component: CategorySelectorDialogComponent;
     let selectButton: HTMLButtonElement;
@@ -51,18 +48,11 @@ describe('Category selector dialog component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                MatDialogModule,
-                HttpClientTestingModule,
-                CategoriesManagementComponent,
-                CategorySelectorDialogComponent
-            ],
+            imports: [NoopTranslateModule, MatDialogModule, CategorySelectorDialogComponent],
             providers: [
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: options },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: MAT_DIALOG_DATA, useValue: options }
             ]
         });
         dialogRef.close.calls.reset();

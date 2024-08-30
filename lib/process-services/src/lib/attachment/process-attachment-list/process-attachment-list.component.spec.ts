@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SimpleChange, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
@@ -26,6 +26,7 @@ import { ProcessContentService } from '../../form/services/process-content.servi
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatMenuHarness } from '@angular/material/menu/testing';
+import { EmptyListComponent, EmptyListHeaderDirective } from '@alfresco/adf-core';
 
 describe('ProcessAttachmentListComponent', () => {
     let loader: HarnessLoader;
@@ -239,6 +240,8 @@ describe('ProcessAttachmentListComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [EmptyListHeaderDirective, EmptyListComponent, ProcessAttachmentListComponent],
     template: `
         <adf-process-attachment-list>
             <adf-empty-list>
@@ -254,9 +257,7 @@ describe('Custom CustomEmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [CustomEmptyTemplateComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [ProcessTestingModule, CustomEmptyTemplateComponent]
         });
         fixture = TestBed.createComponent(CustomEmptyTemplateComponent);
         fixture.detectChanges();

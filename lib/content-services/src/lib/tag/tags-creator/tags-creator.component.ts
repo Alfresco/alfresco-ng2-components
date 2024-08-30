@@ -182,7 +182,13 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.tagNameControl.valueChanges
             .pipe(
                 map((name: string) => name.trim()),
-                distinctUntilChanged(),
+                distinctUntilChanged((previous, current) => {
+                    const valueNotChanged = previous === current;
+                    if (valueNotChanged) {
+                        this.exactTagSet$.next();
+                    }
+                    return valueNotChanged;
+                }),
                 tap((name: string) => {
                     this._typing = true;
                     if (name) {
@@ -374,7 +380,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     private validateSpecialCharacters(tagNameControl: FormControl<string>): TagNameControlErrors | null {
-        const specialSymbolsRegex = /[{}()^':"\\|<>/?]/;
+        const specialSymbolsRegex = /[{}()^':"\\|<>/?.*]/;
         return tagNameControl.value.length && specialSymbolsRegex.test(tagNameControl.value) ? { specialCharacters: true } : null;
     }
 

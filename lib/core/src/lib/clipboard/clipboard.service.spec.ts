@@ -19,20 +19,16 @@ import { NotificationService } from '../notifications/services/notification.serv
 import { TestBed } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslationService } from '../translation';
-import { TranslationMock } from '../mock';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
     let notificationService: NotificationService;
-    let inputElement;
+    let inputElement: HTMLInputElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule],
-            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }]
+            imports: [NoopTranslateModule, MatSnackBarModule]
         });
         clipboardService = TestBed.inject(ClipboardService);
         notificationService = TestBed.inject(NotificationService);

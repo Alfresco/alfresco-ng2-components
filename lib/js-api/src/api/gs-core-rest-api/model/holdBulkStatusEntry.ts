@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-import { TaskListCloudModule } from './task-list-cloud.module';
+import { HoldBulkStatus } from './holdBulkStatus';
 
-describe('TaskListCloudModule', () => {
-  let taskListCloudModule: TaskListCloudModule;
+export class HoldBulkStatusEntry {
+    entry: HoldBulkStatus;
 
-  beforeEach(() => {
-    taskListCloudModule = new TaskListCloudModule();
-  });
-
-  it('should create an instance', () => {
-    expect(taskListCloudModule).toBeTruthy();
-  });
-});
+    constructor(input?: Partial<HoldBulkStatusEntry>) {
+        if (input) {
+            Object.assign(this, input);
+        }
+    }
+}

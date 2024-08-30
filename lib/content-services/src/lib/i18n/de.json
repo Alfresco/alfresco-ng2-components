@@ -242,7 +242,7 @@
     "MESSAGES": {
       "UPLOAD_CANCELED": "Hochladen abgebrochen",
       "UPLOAD_PROGRESS": "Hochgeladen: {{ completed }} / {{ total }}",
-      "UPLOAD_ERROR": "{{ total }} erfolgreich hochgeladen",
+      "UPLOAD_ERROR": "{{ total }} nicht erfolgreich hochgeladen",
       "UPLOAD_ERRORS": "{{ total }} nicht erfolgreich hochgeladen",
       "PROGRESS": "Hochladen läuft...",
       "FOLDER_ALREADY_EXIST": "Den Ordner {0} gibt es bereits",

@@ -22,9 +22,12 @@ import { ProcessService } from '../../services/process.service';
 import { DownloadService } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { ProcessInstanceAuditInfoRepresentation } from '@alfresco/js-api';
+import { ProcessAuditDirective } from '@alfresco/adf-process-services';
 
 @Component({
     selector: 'adf-basic-button',
+    standalone: true,
+    imports: [ProcessAuditDirective],
     template: ` <button
         id="auditButton"
         adf-process-audit
@@ -79,8 +82,7 @@ describe('ProcessAuditDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [BasicButtonComponent]
+            imports: [ProcessTestingModule, BasicButtonComponent]
         });
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;

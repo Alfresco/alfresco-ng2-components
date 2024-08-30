@@ -176,9 +176,7 @@ describe('SearchDateRangeComponent', () => {
         expect(component.form.controls.betweenEndDate.errors.invalidDate).toBeTrue();
     });
 
-    // TODO: very flaky test, to be refactored
-    // eslint-disable-next-line ban/ban
-    xit('should not be able to select a date after the max date when selecting the BETWEEN option', async () => {
+    it('should not be able to select a date after the max date when selecting the BETWEEN option', async () => {
         component.form.controls.dateRangeType.setValue(component.DateRangeType.BETWEEN);
         component.maxDate = 'today';
         fixture.detectChanges();
@@ -188,7 +186,7 @@ describe('SearchDateRangeComponent', () => {
 
         const calendar = await loader.getHarness(MatCalendarHarness);
 
-        const afterDate = format(addDays(new Date(), 1), 'MMM d, yyyy');
+        const afterDate = format(addDays(new Date().getTime(), 1), 'MMM d, yyyy');
         const cell = await calendar.getCells({ disabled: true });
         expect(await cell[0].getAriaLabel()).toEqual(afterDate);
     });

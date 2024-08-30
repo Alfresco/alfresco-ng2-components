@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { TranslationMock } from '@alfresco/adf-core';
+import { NoopTranslationService } from '@alfresco/adf-core';
 import { FileUploadErrorPipe } from './file-upload-error.pipe';
 
 describe('FileUploadErrorPipe', () => {
-
     let pipe: FileUploadErrorPipe;
 
     beforeEach(() => {
-        pipe = new FileUploadErrorPipe(new TranslationMock());
+        pipe = new FileUploadErrorPipe(new NoopTranslationService());
     });
 
     it('should return generic message when error code is null', () => {

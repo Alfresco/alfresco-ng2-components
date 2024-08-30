@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { BulkAssignHoldResponse } from './bulkAssignHoldResponse';
 
-@Pipe({
-    name: 'filterOutEvery',
-    standalone: true
-})
-export class FilterOutArrayObjectsByPropPipe<T> implements PipeTransform {
-    transform(values: T[], filterKey: string, filterValue: any): T[] {
-        return (values ?? []).filter((value) => value[filterKey] !== filterValue);
-    }
+export interface BulkAssignHoldResponseEntry {
+    entry: BulkAssignHoldResponse;
 }

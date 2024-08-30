@@ -18,14 +18,11 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
-import { TranslationService } from '../translation/translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
 import { DatePipe } from '@angular/common';
 import { CookieService } from '../common/services/cookie.service';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
@@ -34,6 +31,7 @@ import { directionalityConfigFactory } from '../common/services/directionality-c
 import { DirectionalityConfigService } from '../common/services/directionality-config.service';
 import { AuthModule, RedirectAuthService } from '../auth';
 import { EMPTY, of } from 'rxjs';
+import { NoopTranslateModule } from './noop-translate.module';
 
 @NgModule({
     imports: [
@@ -41,14 +39,13 @@ import { EMPTY, of } from 'rxjs';
         NoopAnimationsModule,
         RouterTestingModule,
         HttpClientModule,
-        TranslateModule.forRoot(),
-        CoreModule.forRoot()
+        CoreModule.forRoot(),
+        NoopTranslateModule
     ],
     providers: [
         DatePipe,
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock },
         { provide: CookieService, useClass: CookieServiceMock },
         {
             provide: APP_INITIALIZER,
@@ -58,6 +55,6 @@ import { EMPTY, of } from 'rxjs';
         },
         { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {}, onTokenReceived: of() } }
     ],
-    exports: [NoopAnimationsModule, CoreModule, TranslateModule, RouterTestingModule]
+    exports: [NoopAnimationsModule, CoreModule, RouterTestingModule]
 })
 export class CoreTestingModule {}

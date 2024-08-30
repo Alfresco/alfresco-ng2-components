@@ -20,12 +20,15 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from '../../services/tasklist.service';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TaskAuditDirective } from '@alfresco/adf-process-services';
 
 declare let jasmine: any;
 
 describe('TaskAuditDirective', () => {
     @Component({
         selector: 'adf-basic-button',
+        standalone: true,
+        imports: [TaskAuditDirective],
         template: ` <button
             id="auditButton"
             adf-task-audit
@@ -71,8 +74,7 @@ describe('TaskAuditDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [BasicButtonComponent]
+            imports: [ProcessTestingModule, BasicButtonComponent]
         });
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;

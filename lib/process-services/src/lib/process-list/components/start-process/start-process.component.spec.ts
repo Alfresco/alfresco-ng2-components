@@ -17,14 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, getTestBed } from '@angular/core/testing';
-import {
-    AppConfigService,
-    AppConfigServiceMock,
-    FormRenderingService,
-    LocalizedDatePipe,
-    TranslationMock,
-    TranslationService
-} from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock, FormRenderingService, LocalizedDatePipe, NoopTranslateModule } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessService } from '../../services/process.service';
@@ -37,19 +30,15 @@ import {
     testProcessDefinitions
 } from '../../../testing/mock';
 import { StartProcessInstanceComponent } from './start-process.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RestVariable } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
-
 import { ProcessFormRenderingService } from '../../../form';
-import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from 'lib/core/src/lib/form/components/middlewares/middleware';
 import { deployedApps } from '../../../testing/mock/apps-list.mock';
 
 describe('StartProcessComponent', () => {
@@ -68,17 +57,11 @@ describe('StartProcessComponent', () => {
 
     beforeEach(() => {
         getTestBed().configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, HttpClientTestingModule, StartProcessInstanceComponent],
+            imports: [NoopTranslateModule, NoopAnimationsModule, StartProcessInstanceComponent],
             providers: [
                 LocalizedDatePipe,
-                ActivitiContentService,
-                ProcessService,
-                AppsProcessService,
-                FormRenderingService,
                 { provide: FormRenderingService, useClass: ProcessFormRenderingService },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE, useValue: [] }
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         });
     });

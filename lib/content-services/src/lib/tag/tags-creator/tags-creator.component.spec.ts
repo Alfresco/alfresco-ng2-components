@@ -17,9 +17,8 @@
 
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { TagsCreatorComponent } from './tags-creator.component';
-import { NotificationService } from '@alfresco/adf-core';
+import { NoopTranslateModule, NotificationService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { MatError } from '@angular/material/form-field';
 import { TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
 import { EMPTY, of, throwError } from 'rxjs';
@@ -28,7 +27,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { MatChipOptionHarness } from '@angular/material/chips/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
@@ -39,7 +38,7 @@ describe('TagsCreatorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, TranslateModule.forRoot(), TagsCreatorComponent],
+            imports: [NoopAnimationsModule, NoopTranslateModule, TagsCreatorComponent],
             providers: [
                 {
                     provide: TagService,
@@ -105,7 +104,7 @@ describe('TagsCreatorComponent', () => {
      * @returns list of tags
      */
     async function getAddedTags(): Promise<string[]> {
-        const matChipHarness = await loader.getAllHarnesses(MatChipOptionHarness.with({ selector: '.adf-tags-chip' }));
+        const matChipHarness = await loader.getAllHarnesses(MatChipHarness.with({ selector: '.adf-tags-chip' }));
         const tagElements = [];
         for (const matChip of matChipHarness) {
             tagElements.push(await matChip.getText());
@@ -376,7 +375,7 @@ describe('TagsCreatorComponent', () => {
             }));
 
             it('should show error for prohibited characters', fakeAsync(() => {
-                typeTag('tag*"<>\\/?:|{}()^');
+                typeTag('tag*"<>\\/?:|{}()^.');
                 component.tagNameControl.markAsTouched();
                 fixture.detectChanges();
                 const error = getFirstError();
@@ -395,6 +394,23 @@ describe('TagsCreatorComponent', () => {
                     })
                 );
                 typeTag(tag);
+
+                const error = getFirstError();
+                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
+            }));
+
+            it('should show error when duplicated already existing tag with spaces', fakeAsync(() => {
+                const tag = 'Some tag';
+
+                spyOn(tagService, 'findTagByName').and.returnValue(
+                    of({
+                        entry: {
+                            tag,
+                            id: 'tag-1'
+                        }
+                    })
+                );
+                typeTag(tag + ' ');
 
                 const error = getFirstError();
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');

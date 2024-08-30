@@ -19,12 +19,8 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
-import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TranslationService } from '../translation';
-import { TranslationMock } from '../mock';
-import { MatButtonModule } from '@angular/material/button';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-test-component',
@@ -42,8 +38,7 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule, MatButtonModule, ClipboardDirective],
-            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }],
+            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
             declarations: [TestTargetClipboardComponent]
         });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
@@ -86,8 +81,7 @@ describe('CopyClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule, MatSnackBarModule, ClipboardDirective],
-            providers: [ClipboardService, { provide: TranslationService, useClass: TranslationMock }],
+            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
             declarations: [TestCopyClipboardComponent]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);

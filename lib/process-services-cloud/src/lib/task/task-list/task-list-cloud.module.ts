@@ -26,19 +26,9 @@ import { TaskListCloudService } from './services/task-list-cloud.service';
 import { LocalPreferenceCloudService } from '../../services/local-preference-cloud.service';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        CoreModule
-    ],
-    declarations: [
-        TaskListCloudComponent,
-        ServiceTaskListCloudComponent
-    ],
-    exports: [
-        TaskListCloudComponent,
-        ServiceTaskListCloudComponent
-    ],
+    imports: [CommonModule, MaterialModule, CoreModule],
+    declarations: [TaskListCloudComponent, ServiceTaskListCloudComponent],
+    exports: [TaskListCloudComponent, ServiceTaskListCloudComponent],
     providers: [
         {
             provide: TASK_LIST_CLOUD_TOKEN,
@@ -50,4 +40,4 @@ import { LocalPreferenceCloudService } from '../../services/local-preference-clo
         }
     ]
 })
-export class TaskListCloudModule { }
+export class TaskListCloudModule {}

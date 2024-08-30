@@ -17,18 +17,8 @@
 
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    FormModel,
-    FormService,
-    FormFieldModel,
-    TranslationService,
-    TranslationMock,
-    AuthenticationService,
-    RedirectAuthService
-} from '@alfresco/adf-core';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormModel, FormService, FormFieldModel, RedirectAuthService, NoopTranslateModule } from '@alfresco/adf-core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
 
 describe('FileViewerWidgetComponent', () => {
@@ -54,11 +44,9 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), FileViewerWidgetComponent, HttpClientTestingModule],
+            imports: [NoopTranslateModule, FileViewerWidgetComponent],
             providers: [
                 { provide: FormService, useValue: formServiceStub },
-                { provide: TranslationService, useClass: TranslationMock },
-                AuthenticationService,
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]

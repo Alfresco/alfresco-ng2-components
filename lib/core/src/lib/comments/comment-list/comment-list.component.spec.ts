@@ -19,11 +19,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentModel } from '../../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 import { commentUserNoPictureDefined, commentUserPictureDefined, mockCommentOne, testUser } from './mocks/comment-list.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('CommentListComponent', () => {
     let commentList: CommentListComponent;
@@ -32,7 +31,7 @@ describe('CommentListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
+            imports: [NoopTranslateModule],
             providers: [
                 {
                     provide: ADF_COMMENTS_SERVICE,

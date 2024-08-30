@@ -39,6 +39,8 @@ import { TaskFormService } from './services/task-form.service';
 import { TaskService } from './services/task.service';
 import { EditorService } from './services/editor.service';
 import { ModelService } from './services/model.service';
+import { FormCustomOutcomesComponent } from '@alfresco/adf-process-services';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('FormComponent', () => {
     let fixture: ComponentFixture<FormComponent>;
@@ -981,6 +983,8 @@ describe('FormComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [FormCustomOutcomesComponent, MatButtonModule, FormComponent],
     selector: 'adf-form-with-custom-outcomes',
     template: ` <adf-form #adfForm>
         <adf-form-custom-outcomes>
@@ -1005,8 +1009,7 @@ describe('FormWithCustomOutComesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [FormWithCustomOutComesComponent]
+            imports: [ProcessTestingModule, FormWithCustomOutComesComponent]
         });
         fixture = TestBed.createComponent(FormWithCustomOutComesComponent);
         customComponent = fixture.componentInstance;

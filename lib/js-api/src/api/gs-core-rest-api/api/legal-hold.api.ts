@@ -18,9 +18,9 @@
 import { BaseApi } from './base.api';
 import { throwIfNotDefined } from '../../../assert';
 import { ContentPagingQuery } from '../../content-rest-api';
-import { HoldBody, HoldEntry, HoldPaging } from './../model';
-import { BulkAssignHoldResponse } from '../model/bulkAssignHoldResponse';
+import { BulkAssignHoldResponseEntry, HoldBody, HoldEntry, HoldPaging } from './../model';
 import { RequestQuery } from '../../search-rest-api';
+import { HoldBulkStatusEntry } from '../model/holdBulkStatusEntry';
 
 /**
  * Legal Holds service.
@@ -161,9 +161,9 @@ export class LegalHoldApi extends BaseApi {
      *
      * @param holdId The identifier of a hold
      * @param query Search query
-     * @returns Promise<BulkAssignHoldResponse>
+     * @returns Promise<BulkAssignHoldResponseEntry>
      */
-    bulkAssignHold(holdId: string, query: RequestQuery): Promise<BulkAssignHoldResponse> {
+    bulkAssignHold(holdId: string, query: RequestQuery): Promise<BulkAssignHoldResponseEntry> {
         throwIfNotDefined(holdId, 'holdId');
         throwIfNotDefined(query, 'query');
 
@@ -174,6 +174,24 @@ export class LegalHoldApi extends BaseApi {
                 query,
                 op: 'ADD'
             }
+        });
+    }
+
+    /**
+     * Get status of bulk operation with **bulkStatusId** for **holdId**.
+     *
+     * @param bulkStatusId The identifier of a bulk status
+     * @param holdId The identifier of a hold
+     * @returns Promise<HoldsBulkStatusEntry>
+     */
+    getBulkStatus(bulkStatusId: string, holdId: string): Promise<HoldBulkStatusEntry> {
+        throwIfNotDefined(holdId, 'holdId');
+        throwIfNotDefined(bulkStatusId, 'bulkStatusId');
+
+        return this.get({
+            path: `/holds/{holdId}/bulk-statuses/{bulkStatusId}`,
+            pathParams: { holdId, bulkStatusId },
+            returnType: HoldBulkStatusEntry
         });
     }
 }

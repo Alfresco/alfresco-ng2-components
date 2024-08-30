@@ -2,15 +2,16 @@
 
 All URIs are relative to _https://localhost/alfresco/api/-default-/public/gs/versions/1_
 
-| Method                                           | HTTP request                                 | Description                   |
-| ------------------------------------------------ | -------------------------------------------- | ----------------------------- |
-| [**getHolds**](LegalHoldApi.md#getHolds)         | **GET** /file-plans/{filePlanId}/holds       | Get legal holds list          |
-| [**assignHold**](LegalHoldApi.md#assignHold)     | **POST** /holds/{holdId}/children            | Assign node to legal hold     |
-| [**assignHolds**](LegalHoldApi.md#assignHolds)   | **POST** /holds/{holdId}/children            | Assign nodes to legal hold    |
-| [**unassignHold**](LegalHoldApi.md#unassignHold) | **DELETE** /holds/{holdId}/children/{nodeId} | Unassign node from legal hold |
-| [**createHold**](LegalHoldApi.md#createHold)     | **POST** /file-plans/{filePlanId}/holds      | Create one hold               |
-| [**createHolds**](LegalHoldApi.md#createHolds)   | **POST** /file-plans/{filePlanId}/holds      | Create list of holds          |
-| [**bulkAssignHold**](LegalHoldApi.md#bulkAssignHold)         | **POST** /holds/{holdId}/bulk                | Bulk add of nodes to the hold |
+| Method                                               | HTTP request                                         | Description                          |
+| ---------------------------------------------------- | ---------------------------------------------------- | ------------------------------------ |
+| [**getHolds**](LegalHoldApi.md#getHolds)             | **GET** /file-plans/{filePlanId}/holds               | Get legal holds list                 |
+| [**assignHold**](LegalHoldApi.md#assignHold)         | **POST** /holds/{holdId}/children                    | Assign node to legal hold            |
+| [**assignHolds**](LegalHoldApi.md#assignHolds)       | **POST** /holds/{holdId}/children                    | Assign nodes to legal hold           |
+| [**unassignHold**](LegalHoldApi.md#unassignHold)     | **DELETE** /holds/{holdId}/children/{nodeId}         | Unassign node from legal hold        |
+| [**createHold**](LegalHoldApi.md#createHold)         | **POST** /file-plans/{filePlanId}/holds              | Create one hold                      |
+| [**createHolds**](LegalHoldApi.md#createHolds)       | **POST** /file-plans/{filePlanId}/holds              | Create list of holds                 |
+| [**bulkAssignHold**](LegalHoldApi.md#bulkAssignHold) | **POST** /holds/{holdId}/bulk                        | Bulk add of nodes to the hold        |
+| [**getBulkStatus**](LegalHoldApi.md#getBulkStatus)   | **GET** /holds/{holdId}/bulk-statuses/{bulkStatusId} | Get current status of bulk operation |
 
 <a name="getHolds"></a>
 
@@ -324,3 +325,43 @@ legalHoldApi.bulkAssignHold('holdId', { query: 'SITE:swsdp and TYPE:content', la
 ### Return type
 
 [**BulkAssignHoldResponse**](./BulkAssignHoldResponse.md)
+
+# **getBulkStatus**
+
+> HoldBulkStatusEntry getBulkStatus(holdId, bulkOperationId)
+
+Get current status of asynchronous bulk operations with `bulkStatusId` happening for hold with `holdId`
+
+### Example
+
+```javascript
+import LegalHoldApi from 'LegalHoldApi';
+import { AlfrescoApi } from '@alfresco/js-api';
+
+this.alfrescoApi = new AlfrescoApi();
+this.alfrescoApi.setConfig({
+    hostEcm: 'http://127.0.0.1:8080'
+});
+
+const legalHoldApi = new LegalHoldApi(this.alfrescoApi);
+
+legalHoldApi.bulkAssignHold('holdId', 'bulkOperationId').then(
+    (data) => {
+        console.log('API called successfully. Returned data: ' + data);
+    },
+    function (error) {
+        console.error(error);
+    }
+);
+```
+
+### Parameters
+
+| Name                | Type       | Default value | Description                        |
+| ------------------- | ---------- | ------------- | ---------------------------------- |
+| **holdId**          | **string** |               | The identifier of a hold           |
+| **bulkOperationId** | **string** |               | The identifies of a bulk operation |
+
+### Return type
+
+[**HoldBulkStatusEntry**](./HoldBulkStatusEntry.md)

@@ -28,7 +28,11 @@ import {
     ObjectDataRow,
     ObjectDataTableAdapter,
     DataCellEvent,
-    ObjectDataColumn
+    ObjectDataColumn,
+    DataColumnComponent,
+    DataColumnListComponent,
+    FullNamePipe,
+    CustomEmptyContentTemplateDirective
 } from '@alfresco/adf-core';
 import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessColumnSchema } from '../../../testing/mock';
 import { ProcessService } from '../../services/process.service';
@@ -438,6 +442,8 @@ describe('ProcessInstanceListComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [ProcessInstanceListComponent, DataColumnListComponent, DataColumnComponent, FullNamePipe],
     template: ` <adf-process-instance-list #processListComponentInstance>
         <data-columns>
             <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3"></data-column>
@@ -461,8 +467,7 @@ describe('CustomProcessListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [CustomProcessListComponent]
+            imports: [ProcessTestingModule, CustomProcessListComponent]
         });
         fixture = TestBed.createComponent(CustomProcessListComponent);
         fixture.detectChanges();
@@ -480,6 +485,8 @@ describe('CustomProcessListComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [CustomEmptyContentTemplateDirective, ProcessInstanceListComponent],
     template: `
         <adf-process-instance-list [appId]="1">
             <adf-custom-empty-content-template>
@@ -489,14 +496,14 @@ describe('CustomProcessListComponent', () => {
     `
 })
 class EmptyTemplateComponent {}
+
 describe('Process List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
     let processService: ProcessService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [EmptyTemplateComponent]
+            imports: [ProcessTestingModule, EmptyTemplateComponent]
         });
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         processService = TestBed.inject(ProcessService);
@@ -521,6 +528,8 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [ProcessInstanceListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
     template: ` <adf-process-instance-list
         [appId]="appId"
         [showContextMenu]="true"
@@ -591,8 +600,7 @@ describe('ProcessListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [ProcessListContextMenuComponent]
+            imports: [ProcessTestingModule, ProcessListContextMenuComponent]
         });
         fixture = TestBed.createComponent(ProcessListContextMenuComponent);
         customComponent = fixture.componentInstance;

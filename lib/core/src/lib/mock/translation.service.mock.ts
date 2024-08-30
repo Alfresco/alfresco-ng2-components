@@ -24,9 +24,9 @@ export interface LangChangeEvent {
     translations: any;
 }
 
+/** @deprecated use `NoopTranslateModule` instead */
 @Injectable()
 export class TranslationMock implements TranslationService {
-
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
@@ -50,5 +50,4 @@ export class TranslationMock implements TranslationService {
     instant(key: string | Array<string>): string | any {
         return key;
     }
-
 }

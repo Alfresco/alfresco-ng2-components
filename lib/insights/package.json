@@ -1,7 +1,7 @@
 {
   "name": "@alfresco/adf-insights",
   "description": "Alfresco ADF insights",
-  "version": "6.9.0",
+  "version": "7.0.0-alpha.2",
   "author": "Hyland Software, Inc. and its affiliates",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "dependencies": {
-    "@alfresco/adf-core": ">=6.9.0",
+    "@alfresco/adf-core": ">=7.0.0-alpha.2",
     "@ngx-translate/core": ">=14.0.0",
     "chart.js": "^4.3.0",
     "ng2-charts": "^4.1.1",

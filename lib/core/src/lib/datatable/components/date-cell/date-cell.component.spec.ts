@@ -20,11 +20,10 @@ import { DateCellComponent } from './date-cell.component';
 import { DataColumn, DateConfig } from '../../data/data-column.model';
 import { BehaviorSubject } from 'rxjs';
 import { AppConfigService } from '../../../app-config';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePL from '@angular/common/locales/pl';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 let component: DateCellComponent;
 let appConfigService: AppConfigService;
@@ -62,11 +61,7 @@ const checkDisplayedTooltip = (expectedTooltip: string) => {
 
 const configureTestingModule = (providers: any[]) => {
     TestBed.configureTestingModule({
-        imports: [
-            DateCellComponent,
-            HttpClientTestingModule,
-            TranslateModule.forRoot()
-        ],
+        imports: [DateCellComponent, NoopTranslateModule],
         providers
     });
     fixture = TestBed.createComponent(DateCellComponent);

@@ -16,16 +16,13 @@
  */
 
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { provideRouter, Routes } from '@angular/router';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
 import { OidcAuthGuard } from './oidc-auth.guard';
 
-const routes: Routes = [
-  { path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent, canActivate: [OidcAuthGuard]}
-];
+const routes: Routes = [{ path: 'view/authentication-confirmation', component: AuthenticationConfirmationComponent, canActivate: [OidcAuthGuard] }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    providers: [provideRouter(routes)]
 })
 export class AuthRoutingModule {}
