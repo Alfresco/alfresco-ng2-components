@@ -29,7 +29,6 @@ export class ProcessDetailsPage {
     auditLogButton = TestElement.byCss('button[adf-process-audit]');
     cancelProcessButton = TestElement.byCss('div[data-automation-id="header-status"] > button');
     activeTask = TestElement.byCss('div[data-automation-id="active-tasks"]');
-    completedTask = TestElement.byCss('div[data-automation-id="completed-tasks"]');
     taskTitle = TestElement.byCss('.adf-activiti-task-details__header');
 
     checkProcessTitleIsDisplayed(): Promise<string> {
