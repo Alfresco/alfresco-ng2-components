@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { QuestionModel } from '../model/questionModel';
+import { QuestionModel, QuestionRequest, AiAnswerEntry, KnowledgeRetrievalConfigEntry } from '../model';
 import { BaseApi } from '../../hxi-connector-api/api/base.api';
-import { QuestionRequest } from '../model/questionRequest';
-import { AiAnswerEntry } from '../model';
 
 /**
  * Search AI API.
@@ -50,6 +48,12 @@ export class SearchAiApi extends BaseApi {
     getAnswer(questionId: string): Promise<AiAnswerEntry> {
         return this.get({
             path: `questions/${questionId}/answers/-default-`
+        });
+    }
+
+    getConfig(): Promise<KnowledgeRetrievalConfigEntry> {
+        return this.get({
+            path: '/config/-default-'
         });
     }
 }

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AiAnswerEntry, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
+import { AiAnswerEntry, KnowledgeRetrievalConfigEntry, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { SelectionState } from '@alfresco/adf-extensions';
@@ -68,6 +68,10 @@ export class SearchAiService {
      */
     getAnswer(questionId: string): Observable<AiAnswerEntry> {
         return from(this.searchAiApi.getAnswer(questionId));
+    }
+
+    getConfig(): Observable<KnowledgeRetrievalConfigEntry> {
+        return from(this.searchAiApi.getConfig());
     }
 
     /**
