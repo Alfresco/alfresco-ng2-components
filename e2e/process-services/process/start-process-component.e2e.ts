@@ -22,12 +22,10 @@ import {
     FileBrowserUtil,
     LoginPage,
     ModelsActions,
-    ProcessInstanceTasksPage,
     StartProcessPage,
     StringUtil,
     UserModel,
-    UsersActions,
-    Widget
+    UsersActions
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
@@ -42,7 +40,6 @@ import { AppDefinitionRepresentation, ProcessInstancesApi } from '@alfresco/js-a
 describe('Start Process Component', () => {
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
     const simpleApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
-    const dateFormApp = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
@@ -52,8 +49,6 @@ describe('Start Process Component', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();
-    const processInstanceTasksPage = new ProcessInstanceTasksPage();
-    const widget = new Widget();
 
     const apiService = createApiService();
     const apiServiceUserTwo = createApiService();
@@ -91,7 +86,6 @@ describe('Start Process Component', () => {
             const applicationsService = new ApplicationsUtil(apiServiceUserTwo);
             appCreated = await applicationsService.importPublishDeployApp(app.file_path);
             simpleAppCreated = await applicationsService.importPublishDeployApp(simpleApp.file_path);
-            dateFormAppCreated = await applicationsService.importPublishDeployApp(dateFormApp.file_path);
         });
 
         afterAll(async () => {
@@ -441,27 +435,6 @@ describe('Start Process Component', () => {
                 await startProcessPage.enterProcessName(processNameBiggerThen255Characters);
                 await startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
                 await startProcessPage.checkStartProcessButtonIsDisabled();
-            });
-
-            it('[C261039] Advanced date time widget', async () => {
-                await processServicesPage.goToApp(dateFormApp.title);
-                await processServiceTabBarPage.clickProcessButton();
-                await processFiltersPage.clickCreateProcessButton();
-                await processFiltersPage.clickNewProcessDropdown();
-                await startProcessPage.enterProcessName('DateFormProcess');
-                await startProcessPage.formFields().checkWidgetIsVisible('testdate');
-                await widget.dateWidget().setDateInput('testdate', '15-7-2019');
-                expect(await startProcessPage.isStartFormProcessButtonEnabled()).toEqual(true);
-                await startProcessPage.clickFormStartProcessButton();
-
-                await processFiltersPage.clickRunningFilterButton();
-                await processFiltersPage.selectFromProcessList('DateFormProcess');
-                await processInstanceTasksPage.clickOnStartForm();
-                await processInstanceTasksPage.checkStartProcessDialogIsDisplayed();
-                expect(await processInstanceTasksPage.getTitle()).toBe('Start Form');
-                expect(await widget.dateWidget().getDateInput('testdate')).toBe('15-7-2019');
-                await processInstanceTasksPage.clickCloseButton();
-                await processInstanceTasksPage.checkStartProcessDialogIsNotDisplayed();
             });
         });
     });

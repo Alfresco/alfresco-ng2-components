@@ -26,18 +26,6 @@ const ACTIVITI_CLOUD_APPS = require('../../dist/libs/testing');
 const RESOURCES = {
     ...ACTIVITI_CLOUD_APPS,
     Files: {
-        APP_WITH_DATE_FIELD_FORM: {
-            file_location: '/resources/apps/TestDate.zip',
-            file_path: path.join(__dirname, '../resources/apps/TestDate.zip'),
-            title: 'TestDate',
-            process_title: 'TestDateField',
-            id: -1,
-            form_fields: {
-                testDate_field: 'activiti-testdate',
-                completed_task_date_field: "span[ng-if*='field.dateDisplayFormat']"
-            }
-        },
-
         APP_WITH_PROCESSES: {
             file_location: '/resources/apps/App_with_processes.zip',
             file_path: path.join(__dirname, '../resources/apps/App_with_processes.zip'),
@@ -165,19 +153,6 @@ const RESOURCES = {
                 file_location: '/resources/adf/allFileTypes/desktop.ini',
                 file_path: path.join(__dirname, '../resources/adf/allFileTypes/desktop.ini'),
                 file_name: 'desktop.ini'
-            }
-        },
-
-        PROFILE_IMAGES: {
-            ECM: {
-                file_location: '/resources/adf/share_profile_pic.jpg',
-                file_path: path.join(__dirname, '../resources/adf/share_profile_pic.jpg'),
-                file_name: 'share_profile_pic.jpg'
-            },
-            BPM: {
-                file_location: '/resources/adf/activiti_profile_pic.png',
-                file_path: path.join(__dirname, '../resources/adf/activiti_profile_pic.png'),
-                file_name: 'activiti_profile_pic.png'
             }
         }
     }
