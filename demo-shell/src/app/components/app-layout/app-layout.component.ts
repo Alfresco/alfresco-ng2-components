@@ -69,19 +69,12 @@ export class AppLayoutComponent {
         {
             href: '/cloud',
             title: 'Process Cloud',
-            children: [
-                { href: '/cloud/', title: 'Home' },
-                { href: '/form-cloud', title: 'Form' }
-            ]
+            children: [{ href: '/cloud/', title: 'Home' }]
         },
         {
             href: '/activiti',
             title: 'Process Services',
-            children: [
-                { href: '/activiti', title: 'App' },
-                { href: '/process-list', title: 'Process List' },
-                { href: '/form', title: 'Form' }
-            ]
+            children: [{ href: '/activiti', title: 'App' }]
         },
         { href: '/login', title: 'Login' },
         { href: '/settings-layout', title: 'Settings' }

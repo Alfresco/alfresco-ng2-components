@@ -36,13 +36,11 @@ import { StartProcessCloudDemoComponent } from './components/cloud/start-process
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
 import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
-import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AppLoginComponent } from './components/login/login.component';
-import { ProcessListDemoComponent } from './components/process-list-demo/process-list-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: AppLoginComponent },
@@ -233,21 +231,6 @@ export const appRoutes: Routes = [
                 path: 'activiti/tasksnode/:id',
                 component: FormNodeViewerComponent,
                 canActivate: [AuthGuardBpm]
-            },
-            { path: 'form-cloud', component: FormCloudDemoComponent },
-            {
-                path: 'process-list',
-                canActivate: [AuthGuardBpm],
-                children: [
-                    {
-                        path: '',
-                        component: ProcessListDemoComponent
-                    },
-                    {
-                        path: ':id',
-                        component: ProcessListDemoComponent
-                    }
-                ]
             },
             {
                 path: 'error/no-authorization',
