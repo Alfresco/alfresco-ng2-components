@@ -15,39 +15,12 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatLineModule } from '@angular/material/core';
-import { FormsModule } from '@angular/forms';
-import { PipeModule } from '../pipes/pipe.module';
-import { CommentListModule } from './comment-list/comment-list.module';
-
 import { CommentsComponent } from './comments.component';
 
+/** @deprecated import standalone `CommentsComponent` directly */
 @NgModule({
-    imports: [
-        PipeModule,
-        FormsModule,
-        CommonModule,
-        TranslateModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatListModule,
-        MatLineModule,
-        CommentListModule
-    ],
-    declarations: [
-        CommentsComponent
-    ],
-    exports: [
-        CommentsComponent
-    ]
+    imports: [CommentsComponent],
+    exports: [CommentsComponent]
 })
-export class CommentsModule {
-}
+export class CommentsModule {}

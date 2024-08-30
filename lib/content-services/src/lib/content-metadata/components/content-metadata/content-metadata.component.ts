@@ -21,8 +21,8 @@ import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
     AppConfigService,
     CardViewBaseItemModel,
+    CardViewComponent,
     CardViewItem,
-    CardViewModule,
     NotificationService,
     TranslationService,
     UpdateNotification
@@ -68,12 +68,12 @@ enum DefaultPanels {
         MatButtonModule,
         TranslateModule,
         MatIconModule,
-        CardViewModule,
         MatChipsModule,
         CategoriesManagementComponent,
         DynamicExtensionComponent,
         MatProgressBarModule,
-        TagsCreatorComponent
+        TagsCreatorComponent,
+        CardViewComponent
     ],
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],

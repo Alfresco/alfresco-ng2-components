@@ -42,19 +42,11 @@ adf-tags-creator {
     }
 
     .adf-tags-list {
-        padding-right: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
+        margin-top: 8px;
     }
 
-    .adf-tags-chips-container {
-        margin-top: 8px;
-
-        .adf-tags-chip {
-            background: var(--adf-metadata-buttons-background-color);
-            height: unset;
-        }
+    .adf-tags-chip {
+        height: auto;
     }
 
     .adf-existing-tags-panel {
@@ -106,6 +98,17 @@ adf-tags-creator {
             }
         }
     }
+
+    // TODO: bug open https://github.com/angular/components/issues/26584
+    /* stylelint-disable selector-class-pattern */
+    .mdc-evolution-chip-set .mat-mdc-standard-chip {
+        .mdc-evolution-chip__cell--primary,
+        .mdc-evolution-chip__action--primary,
+        .mat-mdc-chip-action-label {
+            overflow: hidden;
+        }
+    }
+    /* stylelint-enable selector-class-pattern */
 
     [hidden] {
         visibility: hidden;

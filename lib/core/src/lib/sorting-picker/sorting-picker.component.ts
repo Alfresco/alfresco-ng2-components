@@ -16,19 +16,25 @@
  */
 
 import { Component, ViewEncapsulation, Input, EventEmitter, Output } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'adf-sorting-picker',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatIconModule],
     templateUrl: './sorting-picker.component.html',
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-sorting-picker' }
 })
 export class SortingPickerComponent {
-
     /** Available sorting options */
     @Input()
-    options: Array<{key: string; label: string}> = [];
+    options: Array<{ key: string; label: string }> = [];
 
     /** Currently selected option key */
     @Input()

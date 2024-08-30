@@ -24,9 +24,15 @@ import { SearchFilterList } from '../../models/search-filter-list.model';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { AutocompleteField, AutocompleteOption } from '../../models/autocomplete-option.interface';
+import { CommonModule } from '@angular/common';
+import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
+    standalone: true,
+    imports: [CommonModule, SearchChipAutocompleteInputComponent, TranslateModule, MatButtonModule],
     templateUrl: './search-filter-autocomplete-chips.component.html',
     encapsulation: ViewEncapsulation.None
 })
@@ -98,19 +104,17 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     }
 
     optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
-        return option1.id
-            ? option1.id.toUpperCase() === option2.id.toUpperCase()
-            : option1.value.toUpperCase() === option2.value.toUpperCase();
+        return option1.id ? option1.id.toUpperCase() === option2.id.toUpperCase() : option1.value.toUpperCase() === option2.value.toUpperCase();
     }
 
     private updateQuery() {
-        this.displayValue$.next(this.selectedOptions.map(option => option.value).join(', '));
+        this.displayValue$.next(this.selectedOptions.map((option) => option.value).join(', '));
         if (this.context && this.settings && this.settings.field) {
             let queryFragments;
             if (this.settings.field === AutocompleteField.CATEGORIES) {
-                queryFragments = this.selectedOptions.map(val => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
+                queryFragments = this.selectedOptions.map((val) => `${this.settings.field}:"workspace://SpacesStore/${val.id}"`);
             } else {
-                queryFragments = this.selectedOptions.map(val => val.query ?? `${this.settings.field}:"${val.value}"`);
+                queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.value}"`);
             }
             this.context.queryFragments[this.id] = queryFragments.join(' OR ');
             this.context.update();
@@ -120,10 +124,12 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     private setOptions() {
         switch (this.settings.field) {
             case AutocompleteField.TAG:
-                this.tagService.getAllTheTags().subscribe(tagPaging => {
-                    this.autocompleteOptionsSubject$.next(tagPaging.list.entries.map(tag => ({
-                        value: tag.entry.tag
-                    })));
+                this.tagService.getAllTheTags().subscribe((tagPaging) => {
+                    this.autocompleteOptionsSubject$.next(
+                        tagPaging.list.entries.map((tag) => ({
+                            value: tag.entry.tag
+                        }))
+                    );
                 });
                 break;
             case AutocompleteField.CATEGORIES:
@@ -136,11 +142,13 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
 
     private searchForExistingCategories(searchTerm: string) {
         this.categoryService.searchCategories(searchTerm, 0, 15).subscribe((existingCategoriesResult) => {
-            this.autocompleteOptionsSubject$.next(existingCategoriesResult.list.entries.map((rowEntry) => {
-                const path = rowEntry.entry.path.name.split('/').splice(3).join('/');
-                const fullPath = path ? `${path}/${rowEntry.entry.name}` : rowEntry.entry.name;
-                return {id: rowEntry.entry.id, value: rowEntry.entry.name, fullPath};
-            }));
+            this.autocompleteOptionsSubject$.next(
+                existingCategoriesResult.list.entries.map((rowEntry) => {
+                    const path = rowEntry.entry.path.name.split('/').splice(3).join('/');
+                    const fullPath = path ? `${path}/${rowEntry.entry.name}` : rowEntry.entry.name;
+                    return { id: rowEntry.entry.id, value: rowEntry.entry.name, fullPath };
+                })
+            );
         });
     }
 }

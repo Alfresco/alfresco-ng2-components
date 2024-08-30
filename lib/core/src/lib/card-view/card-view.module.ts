@@ -15,24 +15,7 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTableModule } from '@angular/material/table';
-import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
-import { TranslateModule } from '@ngx-translate/core';
-
 import { CardViewComponent } from './components/card-view/card-view.component';
 import { CardViewBoolItemComponent } from './components/card-view-boolitem/card-view-boolitem.component';
 import { CardViewDateItemComponent } from './components/card-view-dateitem/card-view-dateitem.component';
@@ -44,49 +27,22 @@ import { CardViewSelectItemComponent } from './components/card-view-selectitem/c
 import { CardViewArrayItemComponent } from './components/card-view-arrayitem/card-view-arrayitem.component';
 import { SelectFilterInputComponent } from './components/card-view-selectitem/select-filter-input/select-filter-input.component';
 
+export const CARD_VIEW_DIRECTIVES = [
+    CardViewComponent,
+    CardViewBoolItemComponent,
+    CardViewDateItemComponent,
+    CardViewMapItemComponent,
+    CardViewTextItemComponent,
+    CardViewKeyValuePairsItemComponent,
+    CardViewSelectItemComponent,
+    CardViewItemDispatcherComponent,
+    CardViewArrayItemComponent,
+    SelectFilterInputComponent
+] as const;
+
+/** @deprecated use `...CARD_VIEW_DIRECTIVES` or import standalone components directly */
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCheckboxModule,
-        MatInputModule,
-        MatTableModule,
-        MatIconModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatChipsModule,
-        MatMenuModule,
-        MatCardModule,
-        MatDatetimepickerModule,
-        MatNativeDatetimeModule,
-        MatSlideToggleModule
-    ],
-    declarations: [
-        CardViewComponent,
-        CardViewBoolItemComponent,
-        CardViewDateItemComponent,
-        CardViewMapItemComponent,
-        CardViewTextItemComponent,
-        CardViewKeyValuePairsItemComponent,
-        CardViewSelectItemComponent,
-        CardViewItemDispatcherComponent,
-        CardViewArrayItemComponent,
-        SelectFilterInputComponent
-    ],
-    exports: [
-        CardViewComponent,
-        CardViewBoolItemComponent,
-        CardViewDateItemComponent,
-        CardViewMapItemComponent,
-        CardViewTextItemComponent,
-        CardViewSelectItemComponent,
-        CardViewKeyValuePairsItemComponent,
-        CardViewArrayItemComponent,
-        SelectFilterInputComponent
-    ]
+    imports: [...CARD_VIEW_DIRECTIVES],
+    exports: [...CARD_VIEW_DIRECTIVES]
 })
 export class CardViewModule {}

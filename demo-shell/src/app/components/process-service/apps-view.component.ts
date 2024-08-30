@@ -18,9 +18,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
+import { AppsListComponent } from '@alfresco/adf-process-services';
 
 @Component({
     selector: 'app-process-list-view',
+    standalone: true,
+    imports: [AppsListComponent],
     templateUrl: './apps-view.component.html'
 })
 export class AppsViewComponent {

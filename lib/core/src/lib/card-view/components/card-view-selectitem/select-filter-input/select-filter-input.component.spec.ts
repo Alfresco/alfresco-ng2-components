@@ -16,10 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { SelectFilterInputComponent } from './select-filter-input.component';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('SelectFilterInputComponent', () => {
     let fixture: ComponentFixture<SelectFilterInputComponent>;
@@ -28,7 +28,7 @@ describe('SelectFilterInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, TranslateModule.forRoot(), MatSelectModule],
+            imports: [NoopAnimationsModule, NoopTranslateModule, MatSelectModule],
             providers: [MatSelect]
         });
 

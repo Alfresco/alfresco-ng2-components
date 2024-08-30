@@ -238,6 +238,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Input()
     viewerExtensions: TemplateRef<any>;
 
+    /** Identifier of a node that is opened by the viewer. */
+    @Input()
+    nodeId: string = null;
+
     /**
      * Enable dialog box to allow user to download the previewed file, in case the preview is not responding for a set period of time.
      */

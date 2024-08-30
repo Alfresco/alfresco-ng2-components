@@ -26,6 +26,8 @@ import { ContentService } from '@alfresco/adf-content-services';
 import { ContentTestingModule } from 'lib/content-services/src/lib/testing/content.testing.module';
 
 @Component({
+    standalone: true,
+    imports: [FolderCreateDirective],
     template: ` <div [adf-create-folder]="parentNode" (success)="success($event)" title="create-title" [nodeType]="'cm:my-little-pony'"></div>`
 })
 class TestTypeComponent {
@@ -38,6 +40,8 @@ class TestTypeComponent {
 }
 
 @Component({
+    standalone: true,
+    imports: [FolderCreateDirective],
     template: `<div [adf-create-folder]="parentNode"></div>`
 })
 class TestComponent {
@@ -56,8 +60,7 @@ describe('FolderCreateDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestTypeComponent, TestComponent]
+            imports: [ContentTestingModule, TestTypeComponent, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderCreateDirective));

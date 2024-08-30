@@ -20,8 +20,6 @@ import { SpyLocation } from '@angular/common/testing';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoViewerComponent, ContentService, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
 import {
@@ -30,12 +28,11 @@ import {
     AuthModule,
     CloseButtonPosition,
     EventMock,
-    TranslationMock,
-    TranslationService,
     ViewUtilService,
     ViewerComponent,
-    ViewerModule,
-    ViewerSidebarComponent
+    VIEWER_DIRECTIVES,
+    ViewerSidebarComponent,
+    NoopTranslateModule
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -44,8 +41,6 @@ import { throwError } from 'rxjs';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -100,7 +95,7 @@ class DummyDialogComponent {}
                     <mat-icon>dialpad</mat-icon>
                     <span>Option 1</span>
                 </button>
-                <button mat-menu-item disabled>
+                <button mat-menu-item [disabled]="true">
                     <mat-icon>voicemail</mat-icon>
                     <span>Option 2</span>
                 </button>
@@ -123,7 +118,7 @@ class ViewerWithCustomOpenWithComponent {}
                     <mat-icon>dialpad</mat-icon>
                     <span>Action One</span>
                 </button>
-                <button mat-menu-item disabled>
+                <button mat-menu-item [disabled]="true">
                     <mat-icon>voicemail</mat-icon>
                     <span>Action Two</span>
                 </button>
@@ -152,15 +147,7 @@ describe('AlfrescoViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                AuthModule.forRoot({ useHash: true }),
-                TranslateModule.forRoot(),
-                MatButtonModule,
-                MatIconModule,
-                MatDialogModule,
-                HttpClientTestingModule,
-                ViewerModule
-            ],
+            imports: [AuthModule.forRoot({ useHash: true }), MatDialogModule, NoopTranslateModule, ...VIEWER_DIRECTIVES],
             declarations: [
                 ViewerWithCustomToolbarComponent,
                 ViewerWithCustomSidebarComponent,
@@ -171,7 +158,6 @@ describe('AlfrescoViewerComponent', () => {
             providers: [
                 ContentService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: TranslationService, useClass: TranslationMock },
                 {
                     provide: RenditionService,
                     useValue: {

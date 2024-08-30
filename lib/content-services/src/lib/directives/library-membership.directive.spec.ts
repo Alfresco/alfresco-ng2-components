@@ -20,7 +20,6 @@ import { LibraryMembershipDirective } from './library-membership.directive';
 import { SimpleChange } from '@angular/core';
 import { of, throwError, Subject } from 'rxjs';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
-import { ContentDirectiveModule } from './content-directive.module';
 import { SitesService } from '../common/services/sites.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -38,7 +37,7 @@ describe('LibraryMembershipDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ContentDirectiveModule],
+            imports: [HttpClientTestingModule],
             providers: [SitesService, { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
 

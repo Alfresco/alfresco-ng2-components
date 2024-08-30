@@ -32,7 +32,6 @@ import { LocalizedRolePipe } from './localized-role.pipe';
 import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
 import { FilterStringPipe } from './filter-string.pipe';
-import { FilterOutArrayObjectsByPropPipe } from './filter-out-every-object-by-prop.pipe';
 import { DateTimePipe } from './date-time.pipe';
 
 export const CORE_PIPES = [
@@ -51,7 +50,6 @@ export const CORE_PIPES = [
     MomentDateTimePipe,
     DateTimePipe,
     FilterStringPipe,
-    FilterOutArrayObjectsByPropPipe,
     InitialUsernamePipe
 ] as const;
 
@@ -61,7 +59,6 @@ export const CORE_PIPES = [
  */
 @NgModule({
     imports: [...CORE_PIPES],
-    providers: [...CORE_PIPES],
     exports: [...CORE_PIPES]
 })
 export class PipeModule {}

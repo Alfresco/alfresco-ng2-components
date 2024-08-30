@@ -27,7 +27,7 @@ describe('NameColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule, NameColumnComponent]
         });
 
         fixture = TestBed.createComponent(NameColumnComponent);

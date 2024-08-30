@@ -17,7 +17,7 @@
 
 import { TreeComponent } from './tree.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContextMenuDirective, UserPreferencesService } from '@alfresco/adf-core';
+import { ContextMenuDirective, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
 import { TreeNode, TreeNodeType } from '../models/tree-node.interface';
 import { singleNode, treeNodesChildrenMockExpanded, treeNodesMock, treeNodesMockExpanded, treeNodesNoChildrenMock } from '../mock/tree-node.mock';
 import { of, Subject } from 'rxjs';
@@ -30,8 +30,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('TreeComponent', () => {
@@ -64,7 +62,7 @@ describe('TreeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, HttpClientTestingModule, TranslateModule.forRoot(), TreeComponent],
+            imports: [NoopAnimationsModule, NoopTranslateModule, TreeComponent],
             providers: [UserPreferencesService, { provide: TreeService, useClass: TreeServiceMock }]
         });
 

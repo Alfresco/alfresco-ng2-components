@@ -3,9 +3,7 @@
     <form [formGroup]="taskListForm">
         <mat-form-field>
             <mat-label>App Id</mat-label>
-            <input
-                matInput
-                [formControl]="taskAppId" data-automation-id="appId input">
+            <input matInput [formControl]="taskAppId" data-automation-id="appId input">
             <mat-error *ngIf="taskAppId.hasError('pattern')">
                 App ID must be a number
             </mat-error>
@@ -13,16 +11,12 @@
 
         <mat-form-field>
             <mat-label>Task Name</mat-label>
-            <input
-                matInput
-                [formControl]="taskName" data-automation-id="task name">
+            <input matInput [formControl]="taskName" data-automation-id="task name">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Task Id</mat-label>
-            <input
-                matInput
-                [formControl]="taskId" data-automation-id="task id">
+            <input matInput [formControl]="taskId" data-automation-id="task id">
         </mat-form-field>
 
         <mat-form-field>
@@ -182,8 +176,6 @@
         </data-columns>
     </adf-tasklist>
 
-    <adf-pagination
-        [target]="taskList">
-    </adf-pagination>
+    <adf-pagination [target]="taskList"></adf-pagination>
 </div>
 

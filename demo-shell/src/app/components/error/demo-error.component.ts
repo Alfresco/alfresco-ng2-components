@@ -17,17 +17,19 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ErrorContentComponent } from '@alfresco/adf-core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-demo-error',
+    standalone: true,
+    imports: [ErrorContentComponent, MatButtonModule],
     templateUrl: './demo-error.component.html'
 })
 export class DemoErrorComponent implements OnInit {
-
     errorCode: string = '';
 
-    constructor(private route: ActivatedRoute, private router: Router) {
-    }
+    constructor(private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
         if (this.route) {
@@ -42,5 +44,4 @@ export class DemoErrorComponent implements OnInit {
     onReturnButton() {
         this.router.navigate(['/']);
     }
-
 }

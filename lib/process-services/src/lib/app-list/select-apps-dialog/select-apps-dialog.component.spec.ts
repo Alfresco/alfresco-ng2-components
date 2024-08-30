@@ -27,6 +27,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 @Component({
     selector: 'adf-dialog-test',
+    standalone: true,
     template: ''
 })
 export class DialogSelectAppTestComponent {
@@ -57,8 +58,7 @@ describe('Select app dialog', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [DialogSelectAppTestComponent],
+            imports: [ProcessTestingModule, DialogSelectAppTestComponent],
             providers: [
                 {
                     provide: OverlayContainer,

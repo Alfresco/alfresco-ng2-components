@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './lib/alfresco-icon/alfresco-icon.component';
 export * from './lib/directives/index';
 export * from './lib/tag/index';
 export * from './lib/document-list/index';
@@ -43,6 +44,8 @@ export * from './lib/viewer/index';
 export * from './lib/security/index';
 export * from './lib/infinite-scroll-datasource';
 export * from './lib/prediction/index';
+export * from './lib/legal-hold/index';
 
 export * from './lib/content.module';
+export * from './lib/material.module';
 export * from './lib/testing/content.testing.module';

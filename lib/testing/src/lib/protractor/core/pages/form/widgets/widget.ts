@@ -33,14 +33,11 @@ import { AmountWidgetPage } from './amount-widget.page';
 import { ContainerWidgetPage } from './container-widget.page';
 import { PeopleWidgetPage } from './people-widget.page';
 import { TabPage } from './tab.page';
-import { DocumentWidgetPage } from './document-widget.page';
 import { GroupWidgetPage } from './group-widget.page';
-import { TypeaheadWidgetPage } from './typeahead-widget.page';
 import { AttachFolderWidgetPage } from './attach-folder-widget.page';
 import { JsonWidgetPage } from './json-widget.page';
 
 export class Widget {
-
     multilineTextWidget(): MultilineTextWidgetPage {
         return new MultilineTextWidgetPage();
     }
@@ -85,10 +82,6 @@ export class Widget {
         return new TextWidgetPage();
     }
 
-    documentWidget(): DocumentWidgetPage {
-        return new DocumentWidgetPage();
-    }
-
     checkboxWidget(): CheckboxWidgetPage {
         return new CheckboxWidgetPage();
     }
@@ -119,10 +112,6 @@ export class Widget {
 
     groupWidget(): GroupWidgetPage {
         return new GroupWidgetPage();
-    }
-
-    typeahedWidget(): TypeaheadWidgetPage {
-        return new TypeaheadWidgetPage();
     }
 
     tab(): TabPage {

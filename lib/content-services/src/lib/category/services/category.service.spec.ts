@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppConfigService, TranslationMock, TranslationService, UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigService, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
 import {
     CategoryBody,
     CategoryEntry,
@@ -25,12 +25,11 @@ import {
     ResultNode,
     ResultSetPaging,
     ResultSetPagingList,
-    ResultSetRowEntry
+    ResultSetRowEntry,
+    SEARCH_LANGUAGE
 } from '@alfresco/js-api';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CategoryService } from './category.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('CategoryService', () => {
     let categoryService: CategoryService;
@@ -46,8 +45,7 @@ describe('CategoryService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TranslateModule.forRoot()],
-            providers: [CategoryService, UserPreferencesService, { provide: TranslationService, useClass: TranslationMock }]
+            imports: [NoopTranslateModule]
         });
 
         categoryService = TestBed.inject(CategoryService);
@@ -122,7 +120,7 @@ describe('CategoryService', () => {
             categoryService.searchCategories(name, skipCount, maxItems);
             expect(categoryService.searchApi.search).toHaveBeenCalledWith({
                 query: {
-                    language: 'afts',
+                    language: SEARCH_LANGUAGE.AFTS,
                     query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
                 },
                 paging: {
@@ -139,7 +137,7 @@ describe('CategoryService', () => {
             categoryService.searchCategories(name);
             expect(categoryService.searchApi.search).toHaveBeenCalledWith({
                 query: {
-                    language: 'afts',
+                    language: SEARCH_LANGUAGE.AFTS,
                     query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
                 },
                 paging: {

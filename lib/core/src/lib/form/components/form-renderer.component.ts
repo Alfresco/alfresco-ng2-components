@@ -16,7 +16,7 @@
  */
 
 import { JsonPipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet, UpperCasePipe } from '@angular/common';
-import { Component, Inject, Injector, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, Injector, Input, OnDestroy, OnInit, Optional, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -77,8 +77,9 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     constructor(
         public formService: FormService,
         private formRulesManager: FormRulesManager<T>,
+        @Optional()
         @Inject(FORM_FIELD_MODEL_RENDER_MIDDLEWARE)
-        private middlewareServices: FormFieldModelRenderMiddleware[]
+        private middlewareServices?: FormFieldModelRenderMiddleware[]
     ) {}
 
     ngOnInit(): void {
@@ -161,14 +162,16 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
     }
 
     private runMiddlewareServices(): void {
-        const formFields = this.formDefinition.getFormFields();
+        if (this.middlewareServices && this.middlewareServices.length > 0) {
+            const formFields = this.formDefinition.getFormFields();
 
-        formFields.forEach((field) => {
-            this.middlewareServices.forEach((middlewareService) => {
-                if (middlewareService.type === field.type) {
-                    field = middlewareService.getParsedField(field);
-                }
+            formFields.forEach((field) => {
+                this.middlewareServices.forEach((middlewareService) => {
+                    if (middlewareService.type === field.type) {
+                        field = middlewareService.getParsedField(field);
+                    }
+                });
             });
-        });
+        }
     }
 }

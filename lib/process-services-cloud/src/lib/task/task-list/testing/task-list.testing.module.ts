@@ -26,16 +26,11 @@ import {
     AppConfigServiceMock,
     TranslationService,
     TranslationMock,
-    ContextMenuModule
+    CONTEXT_MENU_DIRECTIVES
 } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [
-        HttpClientModule,
-        NoopAnimationsModule,
-        TaskListCloudModule,
-        ContextMenuModule
-    ],
+    imports: [HttpClientModule, NoopAnimationsModule, TaskListCloudModule, ...CONTEXT_MENU_DIRECTIVES],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },

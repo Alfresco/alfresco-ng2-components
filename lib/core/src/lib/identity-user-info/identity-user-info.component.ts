@@ -16,18 +16,24 @@
  */
 
 import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
 import { Subject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FullNamePipe, InitialUsernamePipe } from '../pipes';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-identity-user-info',
+    standalone: true,
+    imports: [CommonModule, FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslateModule],
     templateUrl: './identity-user-info.component.html',
     styleUrls: ['./identity-user-info.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class IdentityUserInfoComponent implements OnDestroy {
-
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     /** Is the user logged in */

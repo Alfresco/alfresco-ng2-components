@@ -18,11 +18,28 @@
 import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SearchCategory } from '../../../models/search-category.interface';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { SearchWidgetContainerComponent } from '../../search-widget-container/search-widget-container.component';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-search-widget-chip',
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatChipsModule,
+        MatMenuModule,
+        TranslateModule,
+        MatIconModule,
+        SearchFilterMenuCardComponent,
+        SearchWidgetContainerComponent,
+        MatButtonModule
+    ],
     templateUrl: './search-widget-chip.component.html',
     styles: [
         `

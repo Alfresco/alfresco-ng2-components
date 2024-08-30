@@ -19,7 +19,7 @@
 
 import { Component, isDevMode, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
-import { ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
+import { AlfrescoIconComponent, ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
 import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, of, Subject, zip } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
@@ -37,7 +37,16 @@ import { MatListModule } from '@angular/material/list';
 @Component({
     selector: 'attach-widget',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatIconModule, MatButtonModule, MatMenuModule, MatListModule, ErrorWidgetComponent],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatIconModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatListModule,
+        ErrorWidgetComponent,
+        AlfrescoIconComponent
+    ],
     templateUrl: './attach-file-widget.component.html',
     styleUrls: ['./attach-file-widget.component.scss'],
     host: {
@@ -161,7 +170,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (file.isExternal || !file.contentAvailable) {
             return;
         }
-        if (this.isTemporaryFile(file)) {
+        if (this.isTemporaryFile(file) || file.sourceId) {
             this.formService.formContentClicked.next(file);
         } else {
             this.fileClicked(file);

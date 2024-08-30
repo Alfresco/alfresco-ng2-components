@@ -19,13 +19,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
-import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { PaginationModel } from '../models/pagination.model';
-import { TranslationService } from '../translation/translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { MatMenuModule } from '@angular/material/menu';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;
@@ -46,17 +42,7 @@ describe('PaginationComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                HttpClientModule,
-                MatMenuModule,
-                TranslateModule.forRoot({
-                    loader: {provide: TranslateLoader, useClass: TranslateFakeLoader}
-                })
-            ],
-            providers:[
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
+            imports: [NoopAnimationsModule, NoopTranslateModule, PaginationComponent]
         });
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
@@ -68,7 +54,7 @@ describe('PaginationComponent', () => {
     });
 
     it('should have an "empty" class if no items present', async () => {
-       fixture.detectChanges();
+        fixture.detectChanges();
         await fixture.whenStable();
 
         expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();

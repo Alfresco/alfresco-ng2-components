@@ -1,9 +1,9 @@
 <mat-chip-option [attr.data-automation-id]="'search-filter-chip-tabbed-' + tabbedFacet.label"
-          disableRipple
+          [disableRipple]="true"
           class="adf-search-filter-chip-tabbed"
           [class.adf-search-toggle-chip]="displayValue || menuTrigger.menuOpen"
           [disabled]="!isPopulated"
-          tabIndex="0"
+          tabindex="0"
           role="button"
           [matMenuTriggerFor]="menu"
           (menuOpened)="onMenuOpen()"

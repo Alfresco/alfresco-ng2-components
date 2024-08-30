@@ -18,7 +18,6 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { CoreStoryModule } from '../testing/core.story.module';
 import { IdentityUserInfoComponent } from './identity-user-info.component';
-import { IdentityUserInfoModule } from './identity-user-info.module';
 import { importProvidersFrom } from '@angular/core';
 
 const fakeIdentityUser = {
@@ -33,7 +32,7 @@ export default {
     title: 'Core/Identity User Info/Identity User Info',
     decorators: [
         moduleMetadata({
-            imports: [IdentityUserInfoModule]
+            imports: [IdentityUserInfoComponent]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]

@@ -24,6 +24,7 @@
                                        [id]="externalViewer.component"
                                        [url]="urlFile"
                                        [extension]="externalViewer.fileExtension"
+                                       [nodeId]="nodeId"
                                        [attr.data-automation-id]="externalViewer.component">
                 </adf-preview-extension>
             </ng-container>
@@ -75,6 +76,7 @@
                                            [id]="ext.component"
                                            [url]="urlFile"
                                            [extension]="extension"
+                                           [nodeId]="nodeId"
                                            [attr.data-automation-id]="ext.component">
                     </adf-preview-extension>
                 </ng-container>

@@ -19,20 +19,22 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
+import { StartTaskCloudModule } from '@alfresco/adf-process-services-cloud';
 
 @Component({
+    standalone: true,
+    imports: [StartTaskCloudModule],
     templateUrl: './start-task-cloud-demo.component.html'
 })
 export class StartTaskCloudDemoComponent implements OnInit {
-
     appName;
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
         private route: ActivatedRoute,
         private notificationService: NotificationService,
-        private router: Router) {
-    }
+        private router: Router
+    ) {}
 
     ngOnInit() {
         this.route.parent.params.subscribe((params) => {

@@ -21,7 +21,6 @@ import { CommentListComponent } from './comment-list.component';
 import { commentsTaskData, commentsNodeData } from '../mocks/comments.stories.mock';
 import { CommentListServiceMock } from './mocks/comment-list.service.mock';
 import { importProvidersFrom } from '@angular/core';
-import { CommentListModule } from './comment-list.module';
 import { CommentsServiceStoriesMock } from '../mocks/comments.service.stories.mock';
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
@@ -30,7 +29,7 @@ export default {
     title: 'Core/Comments/Comment List',
     decorators: [
         moduleMetadata({
-            imports: [CommentListModule],
+            imports: [CommentListComponent],
             providers: [
                 { provide: CommentListServiceMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
                 { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }

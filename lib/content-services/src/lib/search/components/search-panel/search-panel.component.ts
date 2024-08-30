@@ -18,9 +18,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentNodeSelectorPanelService } from '../../../content-node-selector/content-node-selector-panel/content-node-selector-panel.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
+import { CommonModule } from '@angular/common';
+import { SearchFilterComponent } from '../search-filter';
 
 @Component({
     selector: 'adf-search-panel',
+    standalone: true,
+    imports: [CommonModule, SearchFilterComponent],
     templateUrl: './search-panel.component.html',
     styleUrls: ['./search-panel.component.scss'],
     encapsulation: ViewEncapsulation.None,

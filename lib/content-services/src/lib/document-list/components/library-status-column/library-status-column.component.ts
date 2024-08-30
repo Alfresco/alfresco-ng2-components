@@ -21,9 +21,13 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { Site, SiteEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { takeUntil } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-library-status-column',
+    standalone: true,
+    imports: [CommonModule, TranslateModule],
     template: `
         <span class="adf-datatable-cell-value" title="{{ displayText$ | async | translate }}">
             {{ displayText$ | async | translate }}

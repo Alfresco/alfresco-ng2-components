@@ -18,9 +18,8 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
-import { VersionPaging, VersionsApi } from '@alfresco/js-api';
+import { VersionsApi } from '@alfresco/js-api';
 import { NewVersionUploaderData, NewVersionUploaderDialogData } from './models';
 import { Observable } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -54,17 +53,20 @@ export class NewVersionUploaderService {
         selectorAutoFocusedOnClose?: string
     ): Observable<NewVersionUploaderData> {
         const { file, node, showVersionsOnly } = data;
-        const showComments = true;
-        const allowDownload = true;
+        const allowDownload = data.allowDownload ?? true;
+        const showComments = data.showComments ?? true;
 
         return new Observable((observer) => {
-            this.versionsApi.listVersionHistory(node.id).then((versionPaging: VersionPaging) => {
-                const dialogRef = this.dialog.open(NewVersionUploaderDialogComponent, {
-                    data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly },
-                    panelClass: this.composePanelClass(showVersionsOnly),
-                    width: '630px',
-                    ...(config && Object.keys(config).length > 0 && config)
-                });
+            this.versionsApi.listVersionHistory(node.id).then((versionPaging) => {
+                const dialogRef = this.dialog.open<NewVersionUploaderDialogComponent, NewVersionUploaderDialogData>(
+                    NewVersionUploaderDialogComponent,
+                    {
+                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly },
+                        panelClass: this.composePanelClass(showVersionsOnly),
+                        width: '630px',
+                        ...(config && Object.keys(config).length > 0 && config)
+                    }
+                );
                 dialogRef.componentInstance.dialogAction.asObservable().subscribe((newVersionUploaderData) => {
                     observer.next(newVersionUploaderData);
                 });

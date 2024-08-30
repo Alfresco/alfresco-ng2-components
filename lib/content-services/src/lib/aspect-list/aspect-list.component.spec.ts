@@ -119,7 +119,7 @@ describe('AspectListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, AspectListComponent],
             providers: [AspectListService]
         });
     });

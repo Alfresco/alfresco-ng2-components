@@ -19,7 +19,6 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { AuthModule } from '../oidc/auth.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,6 +29,7 @@ import { OAuthEvent } from 'angular-oauth2-oidc';
 import { Subject } from 'rxjs';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { Injector } from '@angular/core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 declare let jasmine: any;
 // eslint-disable-next-line
@@ -42,7 +42,7 @@ xdescribe('AuthenticationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), AuthModule.forRoot({ useHash: true }), HttpClientModule],
+            imports: [NoopTranslateModule, AuthModule.forRoot({ useHash: true }), HttpClientModule],
             providers: [
                 {
                     provide: CookieService,

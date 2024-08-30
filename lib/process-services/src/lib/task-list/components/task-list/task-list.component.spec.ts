@@ -26,21 +26,25 @@ import {
     ObjectDataColumn,
     AppConfigServiceMock,
     AlfrescoApiServiceMock,
-    AlfrescoApiService
+    AlfrescoApiService,
+    DataColumnComponent,
+    DataColumnListComponent,
+    FullNamePipe,
+    NoopTranslateModule,
+    CustomEmptyContentTemplateDirective
 } from '@alfresco/adf-core';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { fakeGlobalTask, fakeEmptyTask, paginatedTask, fakeColumnSchema, fakeCustomSchema } from '../../../testing/mock';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CommonModule } from '@angular/common';
 
 declare let jasmine: any;
 
@@ -105,7 +109,7 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), NoopAnimationsModule, MatProgressSpinnerModule, HttpClientTestingModule, TaskListComponent],
+            imports: [NoopTranslateModule, NoopAnimationsModule, TaskListComponent],
             providers: [
                 TaskListService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
@@ -644,6 +648,8 @@ describe('TaskListComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [DataColumnComponent, DataColumnListComponent, TaskListComponent, FullNamePipe],
     template: ` <adf-tasklist #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3"></data-column>
@@ -667,8 +673,7 @@ describe('CustomTaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [CustomTaskListComponent]
+            imports: [ProcessTestingModule, CustomTaskListComponent, CustomTaskListComponent]
         });
         fixture = TestBed.createComponent(CustomTaskListComponent);
         fixture.detectChanges();
@@ -690,6 +695,8 @@ describe('CustomTaskListComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [CustomEmptyContentTemplateDirective, TaskListComponent],
     template: `
         <adf-tasklist [appId]="1">
             <adf-custom-empty-content-template>
@@ -707,8 +714,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            declarations: [EmptyTemplateComponent]
+            imports: [ProcessTestingModule, EmptyTemplateComponent]
         });
         translateService = TestBed.inject(TranslateService);
         taskListService = TestBed.inject(TaskListService);
@@ -733,6 +739,8 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [CommonModule, TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
     template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
@@ -795,8 +803,7 @@ describe('TaskListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), MatProgressSpinnerModule, ProcessTestingModule],
-            declarations: [TaskListContextMenuComponent]
+            imports: [ProcessTestingModule, TaskListContextMenuComponent]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;

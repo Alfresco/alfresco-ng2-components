@@ -19,13 +19,13 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeDeleteDirective } from './node-delete.directive';
-import { ContentDirectiveModule } from './content-directive.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { RedirectAuthService, TranslationMock, TranslationService } from '@alfresco/adf-core';
+import { NoopTranslateModule, RedirectAuthService } from '@alfresco/adf-core';
 import { EMPTY, of } from 'rxjs';
+import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 
 @Component({
+    standalone: true,
+    imports: [NodeDeleteDirective],
     template: `<div id="delete-component" [adf-delete]="selection" (delete)="onDelete()"></div>`
 })
 class TestComponent {
@@ -38,10 +38,12 @@ class TestComponent {
 }
 
 @Component({
-    template: `<div id="delete-component" [adf-check-allowable-operation]="selection" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
+    standalone: true,
+    imports: [NodeDeleteDirective, CheckAllowableOperationDirective],
+    template: `<div id="delete-component" [adf-check-allowable-operation]="'delete'" [adf-delete]="selection" (delete)="onDelete($event)"></div>`
 })
 class TestWithPermissionsComponent {
-    selection = [];
+    selection: any[] = [];
 
     @ViewChild(NodeDeleteDirective, { static: true })
     deleteDirective: NodeDeleteDirective;
@@ -50,6 +52,8 @@ class TestWithPermissionsComponent {
 }
 
 @Component({
+    standalone: true,
+    imports: [NodeDeleteDirective],
     template: ` delete permanent
         <div id="delete-permanent" [adf-delete]="selection" [permanent]="permanent" (delete)="onDelete($event)"></div>`
 })
@@ -79,12 +83,8 @@ describe('NodeDeleteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentDirectiveModule, HttpClientTestingModule, TranslateModule.forRoot()],
-            providers: [
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
-            ],
-            declarations: [TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent]
+            imports: [NoopTranslateModule, TestComponent, TestWithPermissionsComponent, TestDeletePermanentComponent],
+            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
         });
         fixture = TestBed.createComponent(TestComponent);
         fixtureWithPermissions = TestBed.createComponent(TestWithPermissionsComponent);

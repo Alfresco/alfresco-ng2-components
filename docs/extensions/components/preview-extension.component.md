@@ -20,6 +20,7 @@ an example of a real working viewer extension project.
 | ---- | ---- | ------------- | ----------- |
 | extension | `string` |  | File extension (.jpg, .png, etc) for the viewer. |
 | id | `string` |  | ID string of the component to preview. |
+| nodeId | `string` | null | Identifier of a node opened by a viewer. |
 | url | `string` |  | URL of the content in the repository. |
 
 ## Details

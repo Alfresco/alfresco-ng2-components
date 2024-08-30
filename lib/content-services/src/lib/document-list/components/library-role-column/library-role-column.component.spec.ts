@@ -26,7 +26,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
+            imports: [ContentTestingModule, LibraryRoleColumnComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(LibraryRoleColumnComponent);

@@ -156,6 +156,41 @@ describe('DataTable', () => {
         fixture.destroy();
     });
 
+    it('should return only visible columns', () => {
+        const columns = [
+            { key: 'col1', isHidden: false },
+            { key: 'col2', isHidden: true },
+            { key: 'col3', isHidden: false }
+        ] as DataColumn[];
+        dataTable.data = new ObjectDataTableAdapter([], columns);
+        fixture.detectChanges();
+
+        const visibleColumns = dataTable.getVisibleColumns();
+        expect(visibleColumns.length).toBe(2);
+        expect(visibleColumns[0].key).toBe('col1');
+        expect(visibleColumns[1].key).toBe('col3');
+    });
+
+    it('should return an empty array if all columns are hidden', () => {
+        const columns = [
+            { key: 'col1', isHidden: true },
+            { key: 'col2', isHidden: true }
+        ] as DataColumn[];
+        dataTable.data = new ObjectDataTableAdapter([], columns);
+        fixture.detectChanges();
+
+        const visibleColumns = dataTable.getVisibleColumns();
+        expect(visibleColumns.length).toBe(0);
+    });
+
+    it('should return an empty array if there are no columns', () => {
+        dataTable.data = new ObjectDataTableAdapter([], []);
+        fixture.detectChanges();
+
+        const visibleColumns = dataTable.getVisibleColumns();
+        expect(visibleColumns.length).toBe(0);
+    });
+
     it('should preserve the historical selection order', () => {
         spyOn(dataTable.selectedItemsCountChanged, 'emit');
         dataTable.data = new ObjectDataTableAdapter([{ id: 0 }, { id: 1 }, { id: 2 }], [new ObjectDataColumn({ key: 'id' })]);
@@ -423,6 +458,7 @@ describe('DataTable', () => {
     describe('Selection reset', () => {
         beforeEach(() => {
             spyOn(dataTable, 'resetSelection').and.callThrough();
+            spyOn(dataTable.selectedItemsCountChanged, 'emit');
 
             dataTable.data = new ObjectDataTableAdapter([{ name: '1' }, { name: '2' }], [new ObjectDataColumn({ key: 'name' })]);
             const rows = dataTable.data.getRows();
@@ -440,6 +476,9 @@ describe('DataTable', () => {
             });
 
             expect(dataTable.selection).toEqual([]);
+            expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(0);
+            expect(dataTable.isSelectAllIndeterminate).toBe(false);
+            expect(dataTable.isSelectAllChecked).toBe(false);
         });
 
         it('should reset selection on multiselect change', () => {
@@ -448,6 +487,9 @@ describe('DataTable', () => {
             });
 
             expect(dataTable.selection).toEqual([]);
+            expect(dataTable.selectedItemsCountChanged.emit).toHaveBeenCalledWith(0);
+            expect(dataTable.isSelectAllIndeterminate).toBe(false);
+            expect(dataTable.isSelectAllChecked).toBe(false);
         });
     });
 
@@ -930,7 +972,7 @@ describe('DataTable', () => {
         );
         const rows = dataTable.data.getRows();
         const event = new MouseEvent('click');
-        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => null} });
+        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => null } });
         spyOn(dataTable, 'onRowClick');
 
         dataTable.onCheckboxLabelClick(rows[0], event);
@@ -943,7 +985,7 @@ describe('DataTable', () => {
         const event = new MouseEvent('click');
         Object.defineProperty(event, 'target', {
             value: {
-                getAttribute: (attr: string) => attr === 'data-adf-datatable-row-checkbox' ? 'data-adf-datatable-row-checkbox' : null,
+                getAttribute: (attr: string) => (attr === 'data-adf-datatable-row-checkbox' ? 'data-adf-datatable-row-checkbox' : null),
                 hasAttribute: (attr: string) => attr === 'data-adf-datatable-row-checkbox',
                 closest: () => null
             }
@@ -958,7 +1000,7 @@ describe('DataTable', () => {
         const data = new ObjectDataTableAdapter([{}, {}], []);
         const rows = data.getRows();
         const event = new MouseEvent('click');
-        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => 'element'} });
+        Object.defineProperty(event, 'target', { value: { hasAttribute: () => null, closest: () => 'element' } });
         spyOn(dataTable, 'onRowClick');
 
         dataTable.onCheckboxLabelClick(rows[0], event);

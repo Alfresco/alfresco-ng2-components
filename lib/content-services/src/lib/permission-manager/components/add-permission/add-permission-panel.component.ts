@@ -29,7 +29,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
-import { SearchModule } from '../../../search';
 import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
 
 @Component({
@@ -42,9 +41,9 @@ import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.co
         TranslateModule,
         ReactiveFormsModule,
         MatIconModule,
-        SearchModule,
         MatListModule,
-        UserIconColumnComponent
+        UserIconColumnComponent,
+        SearchComponent
     ],
     templateUrl: './add-permission-panel.component.html',
     styleUrls: ['./add-permission-panel.component.scss'],

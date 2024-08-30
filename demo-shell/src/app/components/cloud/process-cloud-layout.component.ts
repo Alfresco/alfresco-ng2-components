@@ -19,15 +19,15 @@ import { Component } from '@angular/core';
 import { FormRenderingService } from '@alfresco/adf-core';
 import { CloudFormRenderingService } from '@alfresco/adf-process-services-cloud';
 import { CustomEditorComponent, CustomWidgetComponent } from './custom-form-components/custom-editor.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
     template: `<router-outlet></router-outlet>`,
-    providers: [
-        { provide: FormRenderingService, useClass: CloudFormRenderingService }
-    ]
+    standalone: true,
+    imports: [RouterOutlet],
+    providers: [{ provide: FormRenderingService, useClass: CloudFormRenderingService }]
 })
 export class ProcessCloudLayoutComponent {
-
     constructor(private formRenderingService: FormRenderingService) {
         this.formRenderingService.register({
             'custom-editor': () => CustomEditorComponent,

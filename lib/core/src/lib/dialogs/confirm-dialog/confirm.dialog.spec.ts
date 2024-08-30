@@ -20,7 +20,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('Confirm Dialog Component', () => {
     let fixture: ComponentFixture<ConfirmDialogComponent>;
@@ -39,7 +39,7 @@ describe('Confirm Dialog Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, NoopAnimationsModule, TranslateModule.forRoot()],
+            imports: [MatDialogModule, NoopAnimationsModule, NoopTranslateModule],
             providers: [
                 { provide: MatDialogRef, useValue: dialogRef },
                 { provide: MAT_DIALOG_DATA, useValue: data }

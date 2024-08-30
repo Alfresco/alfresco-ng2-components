@@ -15,69 +15,98 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { AppConfigService } from '../../app-config/app-config.service';
-import { AuthGuardBase } from './auth-guard-base';
-import { JwtHelperService } from '../services/jwt-helper.service';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
+import { OauthConfigModel } from '../models/oauth-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { StorageService } from '../../common/services/storage.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard extends AuthGuardBase {
-    ticketChangeBind: any;
-
+export class AuthGuardService {
     constructor(
-        private jwtHelperService: JwtHelperService,
-        authenticationService: AuthenticationService,
-        basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        oidcAuthenticationService: OidcAuthenticationService,
-        router: Router,
-        appConfigService: AppConfigService,
-        dialog: MatDialog,
-        storageService: StorageService
-    ) {
-        super(authenticationService, basicAlfrescoAuthService, oidcAuthenticationService, router, appConfigService, dialog, storageService);
-        this.ticketChangeBind = this.ticketChange.bind(this);
+        private authenticationService: AuthenticationService,
+        private basicAlfrescoAuthService: BasicAlfrescoAuthService,
+        private oidcAuthenticationService: OidcAuthenticationService,
+        private router: Router,
+        private appConfigService: AppConfigService,
+        private dialog: MatDialog,
+        private storageService: StorageService
+    ) {}
 
-        window.addEventListener('storage', this.ticketChangeBind);
+    get withCredentials(): boolean {
+        return this.appConfigService.get<boolean>('auth.withCredentials', false);
     }
 
-    ticketChange(event: StorageEvent) {
-        if (event.key.includes('ticket-ECM') && event.newValue !== event.oldValue) {
-            this.ticketChangeRedirect(event);
+    async redirectSSOSuccessURL(): Promise<boolean> {
+        const redirectFragment = this.storageService.getItem('loginFragment');
+
+        if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
+            await this.navigate(redirectFragment);
+            this.storageService.removeItem('loginFragment');
+            return false;
         }
 
-        if (event.key.includes('ticket-BPM') && event.newValue !== event.oldValue) {
-            this.ticketChangeRedirect(event);
-        }
-
-        if (
-            event.key.endsWith(JwtHelperService.USER_ACCESS_TOKEN) &&
-            this.jwtHelperService.getValueFromToken(event.newValue, JwtHelperService.USER_PREFERRED_USERNAME) !==
-                this.jwtHelperService.getValueFromToken(event.oldValue, JwtHelperService.USER_PREFERRED_USERNAME)
-        ) {
-            this.ticketChangeRedirect(event);
-        }
+        return true;
     }
 
-    private ticketChangeRedirect(event: StorageEvent) {
-        if (event.newValue) {
-            this.navigate(this.router.url);
+    isLoginFragmentPresent(): boolean {
+        return !!this.storageService.getItem('loginFragment');
+    }
+
+    async redirectToUrl(url: string): Promise<boolean> {
+        let urlToRedirect = `/${this.getLoginRoute()}`;
+
+        if (!this.authenticationService.isOauth()) {
+            this.basicAlfrescoAuthService.setRedirect({
+                provider: this.getProvider(),
+                url
+            });
+
+            urlToRedirect = `${urlToRedirect}?redirectUrl=${url}`;
+            return this.navigate(urlToRedirect);
+        } else if (this.getOauthConfig().silentLogin && !this.oidcAuthenticationService.isPublicUrl()) {
+            if (!this.oidcAuthenticationService.hasValidIdToken() || !this.oidcAuthenticationService.hasValidAccessToken()) {
+                this.oidcAuthenticationService.ssoLogin(url);
+            }
         } else {
-            window.location.reload();
+            return this.navigate(urlToRedirect);
         }
+
+        return false;
     }
 
-    async checkLogin(_: ActivatedRouteSnapshot, redirectUrl: string): Promise<boolean | UrlTree> {
-        if (this.authenticationService.isLoggedIn() || this.withCredentials) {
-            return true;
-        }
-        return this.redirectToUrl(redirectUrl);
+    async navigate(url: string): Promise<boolean> {
+        this.dialog.closeAll();
+        await this.router.navigateByUrl(this.router.parseUrl(url));
+        return false;
+    }
+
+    private getOauthConfig(): OauthConfigModel {
+        return this.appConfigService?.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+    }
+
+    private getLoginRoute(): string {
+        return this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE, 'login');
+    }
+
+    private getProvider(): string {
+        return this.appConfigService.get<string>(AppConfigValues.PROVIDERS, 'ALL');
+    }
+
+    isOAuthWithoutSilentLogin(): boolean {
+        const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+        return this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin;
+    }
+
+    isSilentLogin(): boolean {
+        const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+
+        return this.authenticationService.isOauth() && oauth && oauth.silentLogin;
     }
 }

@@ -83,7 +83,12 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeId:_ `string`  - ID of the target node
     -   _nodeBody:_ `any`  - New data for the node
     -   _options:_ `any`  - Optional parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Updated node information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Updated node information<br/>
+-   **getNodeAssignedHolds**(nodeId: `string`, options: `{ includeSource?: boolean; } & NodesIncludeQuery & ContentPagingQuery`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold[]`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>`<br/>
+    Gets legal holds assigned to a node.
+    -   _nodeId:_ `string` - ID of the target node
+    -   _options:_ `{ includeSource?: boolean; } & NodesIncludeQuery & ContentPagingQuery` - Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Hold[]`](../../../lib/js-api/src/api/gs-core-rest-api/docs/Hold.md)`>` - List of assigned holds
 
 ## Details
 

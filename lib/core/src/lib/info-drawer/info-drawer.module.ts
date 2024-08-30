@@ -15,41 +15,27 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { InfoDrawerLayoutComponent, InfoDrawerTitleDirective, InfoDrawerButtonsDirective, InfoDrawerContentDirective } from './info-drawer-layout.component';
+import {
+    InfoDrawerLayoutComponent,
+    InfoDrawerTitleDirective,
+    InfoDrawerButtonsDirective,
+    InfoDrawerContentDirective
+} from './info-drawer-layout.component';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
 
+export const INFO_DRAWER_DIRECTIVES = [
+    InfoDrawerLayoutComponent,
+    InfoDrawerTabComponent,
+    InfoDrawerComponent,
+    InfoDrawerTitleDirective,
+    InfoDrawerButtonsDirective,
+    InfoDrawerContentDirective
+] as const;
+
+/** @deprecated use `...INFO_DRAWER_DIRECTIVES` or import standalone directives directly */
 @NgModule({
-    imports: [
-        CommonModule,
-        MatTabsModule,
-        MatIconModule,
-        MatCardModule,
-        TranslateModule
-    ],
-    declarations: [
-        InfoDrawerLayoutComponent,
-        InfoDrawerTabComponent,
-        InfoDrawerComponent,
-        InfoDrawerTitleDirective,
-        InfoDrawerButtonsDirective,
-        InfoDrawerContentDirective
-    ],
-    exports: [
-        InfoDrawerLayoutComponent,
-        InfoDrawerTabComponent,
-        InfoDrawerComponent,
-        InfoDrawerTitleDirective,
-        InfoDrawerButtonsDirective,
-        InfoDrawerContentDirective,
-        MatTabsModule,
-        MatCardModule,
-        MatIconModule
-    ]
+    imports: [...INFO_DRAWER_DIRECTIVES],
+    exports: [...INFO_DRAWER_DIRECTIVES]
 })
 export class InfoDrawerModule {}

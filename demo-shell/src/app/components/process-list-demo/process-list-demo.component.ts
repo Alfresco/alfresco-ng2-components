@@ -16,15 +16,35 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ProcessInstanceQueryRepresentationSort, ProcessInstanceQueryRepresentationState } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { ProcessInstanceListComponent } from '@alfresco/adf-process-services';
+import { DataColumnComponent, DataColumnListComponent, PaginationComponent } from '@alfresco/adf-core';
 
 const DEFAULT_SIZE = 20;
 
 @Component({
+    standalone: true,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatButtonModule,
+        ProcessInstanceListComponent,
+        DataColumnListComponent,
+        DataColumnComponent,
+        PaginationComponent
+    ],
     templateUrl: './process-list-demo.component.html',
     styleUrls: [`./process-list-demo.component.scss`]
 })

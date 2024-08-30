@@ -28,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatLineModule } from '@angular/material/core';
 
 const DEFAULT_TASKS_APP_NAME: string = 'ADF_TASK_LIST.APPS.TASK_APP_NAME';
 const DEFAULT_TASKS_APP_THEME: string = 'theme-2';
@@ -39,7 +40,16 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
 @Component({
     selector: 'adf-apps',
     standalone: true,
-    imports: [CommonModule, MatListModule, MatIconModule, MatCardModule, MatProgressSpinnerModule, TranslateModule, EmptyContentComponent],
+    imports: [
+        CommonModule,
+        MatListModule,
+        MatIconModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        TranslateModule,
+        EmptyContentComponent,
+        MatLineModule
+    ],
     templateUrl: './apps-list.component.html',
     styleUrls: ['./apps-list.component.scss'],
     encapsulation: ViewEncapsulation.None,

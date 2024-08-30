@@ -26,15 +26,12 @@ import {
     AuthModule,
     CardViewBaseItemModel,
     CardViewComponent,
+    NoopTranslateModule,
     NotificationService,
-    PipeModule,
-    TranslationMock,
-    TranslationService,
     UpdateNotification
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { EMPTY, of, throwError } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
@@ -48,11 +45,8 @@ import {
 } from '@alfresco/adf-content-services';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 
@@ -187,19 +181,14 @@ describe('ContentMetadataComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                TranslateModule.forRoot(),
                 NoopAnimationsModule,
+                NoopTranslateModule,
                 AuthModule.forRoot({ useHash: true }),
-                HttpClientModule,
                 MatDialogModule,
                 MatSnackBarModule,
-                MatProgressBarModule,
-                MatTooltipModule,
-                PipeModule,
                 ContentMetadataComponent
             ],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
                 {
                     provide: TagService,
                     useValue: {

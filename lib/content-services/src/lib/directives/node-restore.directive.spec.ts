@@ -19,16 +19,16 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeRestoreDirective } from './node-restore.directive';
-import { TranslationMock, TranslationService } from '@alfresco/adf-core';
-import { ContentDirectiveModule } from './content-directive.module';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { NoopTranslateModule, TranslationService } from '@alfresco/adf-core';
+import { TrashcanApi } from '@alfresco/js-api';
 
 @Component({
+    standalone: true,
+    imports: [NodeRestoreDirective],
     template: ` <div [adf-restore]="selection" (restore)="doneSpy()"></div>`
 })
 class TestComponent {
-    selection = [];
+    selection: any[] = [];
 
     doneSpy = jasmine.createSpy('doneSpy');
 }
@@ -37,25 +37,23 @@ describe('NodeRestoreDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let element: DebugElement;
     let component: TestComponent;
-    let trashcanApi;
-    let directiveInstance;
+    let trashcanApi: TrashcanApi;
+    let directiveInstance: NodeRestoreDirective;
     let restoreNodeSpy: any;
     let translationService: TranslationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentDirectiveModule, HttpClientTestingModule, TranslateModule.forRoot()],
-            providers: [{ provide: TranslationService, useClass: TranslationMock }],
-            declarations: [TestComponent]
+            imports: [NoopTranslateModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeRestoreDirective));
         directiveInstance = element.injector.get(NodeRestoreDirective);
 
-        trashcanApi = directiveInstance['trashcanApi'];
+        trashcanApi = directiveInstance.trashcanApi;
 
-        restoreNodeSpy = spyOn(trashcanApi, 'restoreDeletedNode').and.returnValue(Promise.resolve());
+        restoreNodeSpy = spyOn(trashcanApi, 'restoreDeletedNode').and.returnValue(Promise.resolve({} as any));
         spyOn(trashcanApi, 'listDeletedNodes').and.returnValue(
             Promise.resolve({
                 list: { entries: [] }
@@ -113,16 +111,6 @@ describe('NodeRestoreDirective', () => {
                 expect(directiveInstance.selection.length).toBe(1);
                 element.triggerEventHandler('click', null);
             });
-        });
-
-        it('should reset status', () => {
-            directiveInstance.restoreProcessStatus.fail = [{}];
-            directiveInstance.restoreProcessStatus.success = [{}];
-
-            directiveInstance.restoreProcessStatus.reset();
-
-            expect(directiveInstance.restoreProcessStatus.fail).toEqual([]);
-            expect(directiveInstance.restoreProcessStatus.success).toEqual([]);
         });
 
         it('should emit event on finish', (done) => {
