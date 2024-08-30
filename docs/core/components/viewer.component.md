@@ -74,7 +74,6 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
 | fileName | `string` |  | Override Content filename. |
 | mimeType | `string` |  | Overload mimeType |
-| originalMimeType | `string` |  | Overload originalMimeType |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
 | readOnly | `boolean` | true | Enable when where is possible the editing functionalities |
 | allowedEditActions | `{ [key: string]: boolean }` | `{ rotate: true, crop: true }` | Controls which editing actions are enabled when not in read-only mode. Allows granular control over actions like rotation and cropping. |
