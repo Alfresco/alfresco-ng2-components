@@ -80,7 +80,6 @@
     "minimatch-browser": "1.0.0",
     "monaco-editor": "0.34.1",
     "ng2-charts": "^4.1.1",
-    "ngx-monaco-editor-v2": "15.0.1",
     "pdfjs-dist": "3.3.122",
     "raphael": "2.3.0",
     "rxjs": "7.8.1",
