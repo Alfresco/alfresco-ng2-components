@@ -5,6 +5,12 @@ adf-layout-container {
     width: 100%;
     height: 100%;
     overflow: hidden;
+
+    .adf-layout-container-sidenav {
+        overflow: hidden;
+        border-right: 1px solid var(--adf-theme-foreground-text-color-007);
+        background-color: var(--theme-background-color);
+    }
 }
 
 .adf-container-full-width {
@@ -25,13 +31,6 @@ adf-layout-container {
     overflow: hidden;
 }
 
-.adf-layout-container-sidenav {
-    overflow: hidden;
-    border-right: 1px solid var(--adf-theme-foreground-text-color-007);
-    background-color: var(--theme-background-color);
-}
-
-/* stylelint-disable selector-class-pattern */
 #{$mat-sidenav-content},
 #{$mat-drawer-transition} #{$mat-drawer-content} {
     margin-left: 0 !important;
