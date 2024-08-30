@@ -23,7 +23,6 @@ export class NavigationBarPage {
     linkMenuChildrenContainer = $('.nestedMenu');
     processServicesNestedButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="App"]');
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Home"]');
-    formButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Form"]');
     logoutSection = $('[data-automation-id="adf-logout-section"]');
 
     getMenuItemLocator = (title: string) => $(`.app-sidenav-link[data-automation-id="${title}"]`);
@@ -38,12 +37,6 @@ export class NavigationBarPage {
         await BrowserActions.click(this.processServicesCloudHomeButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new AppListCloudPage();
-    }
-
-    async navigateToFormCloudPage(): Promise<void> {
-        await this.clickProcessCloudButton();
-        await BrowserActions.click(this.formButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
     private async clickProcessServicesButton() {

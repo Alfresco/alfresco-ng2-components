@@ -28,7 +28,6 @@ export * from './form/public-api';
 export * from './material/public-api';
 export * from './card-view/public-api';
 export * from './viewer.page';
-export * from './config-editor-page';
 export * from './snackbar.page';
 export * from './data-table/public-api';
 export * from './context-menu.page';

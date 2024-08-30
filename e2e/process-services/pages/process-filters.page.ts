@@ -29,12 +29,6 @@ export class ProcessFiltersPage {
 
     getButtonFilterLocatorByName = (name: string) => $(`button[data-automation-id='${name}_filter']`);
 
-    async startProcess(): Promise<StartProcessPage> {
-        await this.clickCreateProcessButton();
-        await this.clickNewProcessDropdown();
-        return new StartProcessPage();
-    }
-
     async clickRunningFilterButton(): Promise<void> {
         await BrowserActions.click(await this.getButtonFilterLocatorByName('Running'));
     }
