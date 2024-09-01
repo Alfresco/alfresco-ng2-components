@@ -208,7 +208,7 @@ jobs:
           npx nx run js-api:bundle
           npx nx run cli:bundle
           npx nx run testing:bundle
-      - run: npx nx print-affected $NX_CALCULATION_FLAGS
+      - run: npx npx nx show projects --affected $NX_CALCULATION_FLAGS
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   unit-tests:
