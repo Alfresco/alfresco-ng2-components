@@ -13,6 +13,7 @@
         "main": "lib/eslint-angular/index.ts",
         "generatePackageJson": true,
         "tsConfig": "lib/eslint-angular/tsconfig.lib.prod.json",
+        "webpackConfig": "lib/eslint-angular/webpack.config.js",
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         },
@@ -31,7 +32,7 @@
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint:eslint",
       "options": {
         "lintFilePatterns": ["lib/eslint-angular/**/*.ts"]
       }

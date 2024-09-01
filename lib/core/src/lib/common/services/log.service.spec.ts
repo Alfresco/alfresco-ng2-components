@@ -17,7 +17,7 @@
 
 /* eslint-disable no-console */
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
@@ -61,9 +61,9 @@ describe('LogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule],
             declarations: [ProvidesLogComponent],
-            providers: [LogService, AppConfigService]
+            imports: [],
+            providers: [LogService, AppConfigService, provideHttpClient(withInterceptorsFromDi())]
         });
         appConfigService = TestBed.inject(AppConfigService);
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
@@ -166,11 +166,9 @@ describe('LogService', () => {
     it('message Observable', fakeAsync(() => {
         appConfigService.config['logLevel'] = 'trace';
 
-        providesLogComponent.componentInstance.logService.onMessage.subscribe(
-            (message) => {
-                expect(message).toEqual({ text: 'Test message', type: 'LOG' });
-            }
-        );
+        providesLogComponent.componentInstance.logService.onMessage.subscribe((message) => {
+            expect(message).toEqual({ text: 'Test message', type: 'LOG' });
+        });
 
         providesLogComponent.componentInstance.log();
     }));

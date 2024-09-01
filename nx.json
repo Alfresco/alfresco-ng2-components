@@ -1,25 +1,28 @@
 {
-  "npmScope": "adf",
   "defaultProject": "demoshell",
-  "affected": {
-    "defaultBase": "develop"
-  },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production"],
+      "cache": true
     },
     "build-storybook": {
       "inputs": ["default", "^production", "{projectRoot}/.storybook/**/*", "{projectRoot}/tsconfig.storybook.json"]
+    },
+    "lint": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "stylelint": {
+      "cache": true
     }
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "stylelint"],
-        "cacheDirectory": "nxcache",
         "runtimeCacheInputs": ["node -v"]
       }
     }
@@ -41,5 +44,8 @@
       "!{projectRoot}/karma.conf.js",
       "!{projectRoot}/tsconfig.storybook.json"
     ]
-  }
+  },
+  "cacheDirectory": "nxcache",
+  "useInferencePlugins": false,
+  "defaultBase": "develop"
 }

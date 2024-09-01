@@ -19,7 +19,8 @@ import { Component, ViewChild } from '@angular/core';
 import { LibraryFavoriteDirective } from './library-favorite.directive';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
     standalone: true,
@@ -41,7 +42,8 @@ describe('LibraryFavoriteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TestComponent, LibraryFavoriteDirective]
+            imports: [TestComponent, LibraryFavoriteDirective],
+            providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

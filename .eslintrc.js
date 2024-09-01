@@ -44,6 +44,7 @@ module.exports = {
             rules: {
                 // Uncomment this to enable prettier checks as part of the ESLint
                 // 'prettier/prettier': 'error',
+
                 'ban/ban': [
                     'error',
                     { name: 'eval', message: 'Calls to eval is not allowed.' },
@@ -74,6 +75,7 @@ module.exports = {
                 '@angular-eslint/no-input-prefix': 'error',
                 '@typescript-eslint/consistent-type-definitions': 'error',
                 '@typescript-eslint/dot-notation': 'off',
+                '@typescript-eslint/no-empty-function': 'off',
                 '@typescript-eslint/explicit-member-accessibility': [
                     'off',
                     {

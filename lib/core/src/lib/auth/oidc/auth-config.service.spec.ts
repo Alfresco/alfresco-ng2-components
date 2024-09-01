@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { EMPTY } from 'rxjs';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
 import { AuthConfigService } from './auth-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuthConfigService', () => {
     let service: AuthConfigService;
@@ -95,8 +96,12 @@ describe('AuthConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }]
+            imports: [],
+            providers: [
+                { provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } },
+                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
         service = TestBed.inject(AuthConfigService);
         spyOn<any>(service, 'getLocationOrigin').and.returnValue('http://localhost:3000');
