@@ -28,7 +28,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+<<<<<<< HEAD
 import { NoopTranslateModule } from '@alfresco/adf-core';
+=======
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+>>>>>>> dda0cdf98 ([MIGRATION] - Build fix and lint skipped rule)
 
 describe('DateTimeWidgetComponent', () => {
     let loader: HarnessLoader;
@@ -40,14 +45,19 @@ describe('DateTimeWidgetComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+<<<<<<< HEAD
                 NoopTranslateModule,
+=======
+                TranslateModule.forRoot(),
+>>>>>>> dda0cdf98 ([MIGRATION] - Build fix and lint skipped rule)
                 NoopAnimationsModule,
                 MatDialogModule,
                 MatNativeDatetimeModule,
                 MatDatepickerModule,
                 MatDatetimepickerModule,
                 DateTimeWidgetComponent
-            ]
+            ],
+            providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
         });
         fixture = TestBed.createComponent(DateTimeWidgetComponent);
 

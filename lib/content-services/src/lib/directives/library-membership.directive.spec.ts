@@ -21,7 +21,8 @@ import { SimpleChange } from '@angular/core';
 import { of, throwError, Subject } from 'rxjs';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { SitesService } from '../common/services/sites.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryMembershipDirective', () => {
     let alfrescoApiService: AlfrescoApiService;
@@ -37,8 +38,13 @@ describe('LibraryMembershipDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [SitesService, { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            imports: [],
+            providers: [
+                SitesService,
+                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClientTesting()
+            ]
         });
 
         testSiteEntry = {

@@ -15,6 +15,7 @@
         "@typescript-eslint/consistent-type-assertions": "warn",
         "@typescript-eslint/prefer-for-of": "off",
         "@typescript-eslint/member-ordering": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "no-underscore-dangle": [
           "error",
           {

@@ -22,25 +22,24 @@ import { AspectOrientedConfigService } from './aspect-oriented-config.service';
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
 import { ContentMetadataConfigFactory } from './content-metadata-config.factory';
 import { ContentMetadataConfig } from '../../interfaces/content-metadata.interfaces';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ContentMetadataConfigFactory', () => {
-
     let factory: ContentMetadataConfigFactory;
     let appConfig: AppConfigService;
     let config: ContentMetadataConfig;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule
-            ],
+            imports: [],
             providers: [
                 {
-                    provide: LogService, useValue: {
+                    provide: LogService,
+                    useValue: {
                         error: () => {}
                     }
-                }
+                },
+                provideHttpClient(withInterceptorsFromDi())
             ]
         });
         factory = TestBed.inject(ContentMetadataConfigFactory);
@@ -48,7 +47,6 @@ describe('ContentMetadataConfigFactory', () => {
     });
 
     describe('get', () => {
-
         let logService: LogService;
 
         beforeEach(() => {
@@ -57,7 +55,6 @@ describe('ContentMetadataConfigFactory', () => {
         });
 
         describe('get', () => {
-
             it('should get back to default preset if no preset is provided as parameter', () => {
                 config = factory.get();
 
@@ -85,7 +82,6 @@ describe('ContentMetadataConfigFactory', () => {
         });
 
         describe('set', () => {
-
             const setConfig = (presetName: string, presetConfig: any) => {
                 appConfig.config['content-metadata'] = {
                     presets: {
@@ -118,5 +114,5 @@ describe('ContentMetadataConfigFactory', () => {
                 expect(config).toEqual(jasmine.any(LayoutOrientedConfigService));
             });
         });
-   });
+    });
 });
