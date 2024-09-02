@@ -203,7 +203,7 @@ export class ExtensionService {
      * @param ids Array of ID value to look for
      * @returns Array of auth guards or empty array if none were found
      */
-    getAuthGuards(ids: string[]): Array<Type<any>> {
+    getAuthGuards(ids: string[]): Array<unknown> {
         return (ids || []).map((id) => this.authGuards[id]).filter((guard) => guard);
     }
 
