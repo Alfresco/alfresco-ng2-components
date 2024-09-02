@@ -39,8 +39,6 @@ import { throwError } from 'rxjs';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
 
