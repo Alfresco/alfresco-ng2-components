@@ -17,7 +17,6 @@
 
 import {
     AppConfigService,
-    CardViewModule,
     ErrorMessageModel,
     ErrorWidgetComponent,
     FormFieldEvent,
@@ -26,6 +25,7 @@ import {
     FormFieldTypes,
     FormService,
     RuleEntry,
+    SelectFilterInputComponent,
     WidgetComponent
 } from '@alfresco/adf-core';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
@@ -62,7 +62,7 @@ export const HIDE_FILTER_LIMIT = 5;
         MatSelectModule,
         ErrorWidgetComponent,
         TranslateModule,
-        CardViewModule // imported for adf-select-filter-input
+        SelectFilterInputComponent
     ]
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
