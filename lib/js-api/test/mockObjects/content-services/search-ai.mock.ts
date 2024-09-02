@@ -85,4 +85,14 @@ export class SearchAiMock extends BaseMock {
                 }
             });
     }
+
+    mockGetConfig200Response(): void {
+        nock(this.host, { encodedQueryParams: true })
+            .get('/alfresco/api/-default-/private/hxi/versions/1/config/-default-')
+            .reply(200, {
+                entry: {
+                    knowledgeRetrievalUrl: 'https://some-url'
+                }
+            });
+    }
 }

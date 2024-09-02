@@ -91,4 +91,19 @@ describe('SearchAiApi', () => {
             });
         });
     });
+
+    describe('getConfig', () => {
+        it('should load knowledge retrieval configuration', (done) => {
+            searchAiMock.mockGetConfig200Response();
+
+            searchAiApi.getConfig().then((config) => {
+                assert.deepStrictEqual(config, {
+                    entry: {
+                        knowledgeRetrievalUrl: 'https://some-url'
+                    }
+                });
+                done();
+            });
+        });
+    });
 });
