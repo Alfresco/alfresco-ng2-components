@@ -180,15 +180,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             )
             .subscribe((value) => {
                 this.setOptionValue(value, this.field);
+                this.handleErrors();
                 this.selectionChangedForField(this.field);
             });
-
-        this.dropdownControl.statusChanges
-            .pipe(
-                filter(() => !!this.field),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(() => this.handleErrors());
 
         this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
         this.handleErrors();
