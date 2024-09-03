@@ -19,7 +19,7 @@ import { Inject, Injectable, inject } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 
@@ -53,6 +53,21 @@ export class RedirectAuthService extends AuthService {
 
   private authConfig!: AuthConfig | Promise<AuthConfig>;
 
+  private readonly AUTH_STORAGE_ITEMS: string[] = [
+    'access_token',
+    'access_token_stored_at',
+    'expires_at',
+    'granted_scopes',
+    'id_token',
+    'id_token_claims_obj',
+    'id_token_expires_at',
+    'id_token_stored_at',
+    'nonce',
+    'PKCE_verifier',
+    'refresh_token',
+    'session_state'
+  ];
+
   constructor(
     private oauthService: OAuthService,
     private _oauthStorage: OAuthStorage,
@@ -68,6 +83,13 @@ export class RedirectAuthService extends AuthService {
       distinctUntilChanged(),
       shareReplay(1)
     );
+
+    this.oauthService.events.pipe(take(1)).subscribe(() => {
+        if(this.oauthService.getAccessToken() && !this.authenticated){
+            this.AUTH_STORAGE_ITEMS.map((item: string) => { this._oauthStorage.removeItem(item); });
+            this.reloadPage();
+        }
+    });
 
     this.onLogin = this.authenticated$.pipe(
         filter((authenticated) => authenticated),
@@ -223,4 +245,9 @@ export class RedirectAuthService extends AuthService {
   updateIDPConfiguration(config: AuthConfig) {
     this.oauthService.configure(config);
   }
+
+  reloadPage() {
+    window.location.reload();
+  }
+
 }
