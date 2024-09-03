@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AgentPaging, AgentsApi, AgentWithAvatar } from '@alfresco/js-api';
+import { AgentsApi, AgentWithAvatar } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -26,16 +26,11 @@ import { switchMap } from 'rxjs/operators';
 })
 export class AgentService {
     private _agentsApi: AgentsApi;
-    private _mocked = true;
     private agents = new BehaviorSubject<AgentWithAvatar[]>([]);
 
     get agentsApi(): AgentsApi {
         this._agentsApi = this._agentsApi ?? new AgentsApi(this.apiService.getInstance());
         return this._agentsApi;
-    }
-
-    set mocked(mocked: boolean) {
-        this._mocked = mocked;
     }
 
     agents$ = this.agents.asObservable();
@@ -53,12 +48,13 @@ export class AgentService {
                 if (agentsList.length) {
                     return of(agentsList);
                 }
-                return this.getMockedAgents().pipe(
+                return from(this.agentsApi.getAgents()).pipe(
                     switchMap((paging) => {
                         const agents = paging.list.entries.map((agentEntry) => agentEntry.entry);
-                        return forkJoin([of(agents), ...agents.map((agent) => this.getAgentAvatar(agent.id))]);
+                        // TODO: fetch avatars https://hyland.atlassian.net/browse/ACS-8695
+                        return forkJoin({ agents: of(agents), avatars: forkJoin(agents.map(() => of(``))) });
                     }),
-                    switchMap(([agents, ...avatars]: [AgentWithAvatar[], string]) => {
+                    switchMap(({ agents, avatars }) => {
                         const agentsWithAvatar = agents.map((agent, index) => ({ ...agent, avatar: avatars[index] }));
                         this.agents.next(agentsWithAvatar);
                         return of(agentsWithAvatar);
@@ -69,54 +65,12 @@ export class AgentService {
     }
 
     /**
-     * Gets all agents.
-     *
-     * @returns AgentPaging object containing the agents.
-     */
-    private getMockedAgents(): Observable<AgentPaging> {
-        return this._mocked
-            ? of({
-                  list: {
-                      entries: [
-                          {
-                              entry: {
-                                  id: '1',
-                                  name: 'HR Agent',
-                                  description:
-                                      'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
-                              }
-                          },
-                          {
-                              entry: {
-                                  id: '2',
-                                  name: 'Policy Agent',
-                                  description:
-                                      'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
-                              }
-                          },
-                          {
-                              entry: {
-                                  id: '3',
-                                  name: 'Rules & Rates Agent',
-                                  description:
-                                      'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
-                              }
-                          }
-                      ]
-                  }
-              })
-            : from(this.agentsApi.getAgents());
-    }
-
-    /**
      * Gets agent avatar by agent id.
      *
      * @param agentId agent unique id.
      * @returns string with an image.
      */
     getAgentAvatar(agentId: string): Observable<string> {
-        return this._mocked
-            ? of('https://res.cloudinary.com/hyld/image/upload/f_auto,c_fill,g_auto,w_1400,h_730/v1/h2/hero/blue-shirt-woman')
-            : from(this._agentsApi.getAgentAvatar(agentId));
+        return from(this._agentsApi.getAgentAvatar(agentId));
     }
 }

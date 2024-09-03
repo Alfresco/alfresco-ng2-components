@@ -18,8 +18,7 @@
 import { Injectable } from '@angular/core';
 import { AiAnswerPaging, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { BehaviorSubject, from, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 import { SelectionState } from '@alfresco/adf-extensions';
 import { TranslateService } from '@ngx-translate/core';
 import { SearchAiInputState } from '../models/search-ai-input-state';
@@ -32,23 +31,15 @@ export class SearchAiService {
         active: false
     });
     private _searchAiApi: SearchAiApi;
-    private _mocked = true;
 
     get searchAiApi(): SearchAiApi {
         this._searchAiApi = this._searchAiApi ?? new SearchAiApi(this.apiService.getInstance());
         return this._searchAiApi;
     }
 
-    set mocked(mocked: boolean) {
-        this._mocked = mocked;
-    }
-
     toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private translateService: TranslateService
-    ) {}
+    constructor(private apiService: AlfrescoApiService, private translateService: TranslateService) {}
 
     /**
      * Update the state of the search AI input.
@@ -66,13 +57,7 @@ export class SearchAiService {
      * @returns QuestionModel object containing information about questions.
      */
     ask(question: QuestionRequest): Observable<QuestionModel> {
-        return this._mocked
-            ? of({
-                  question: 'Some question',
-                  questionId: 'some id',
-                  restrictionQuery: 'Some restriction query'
-              })
-            : from(this.searchAiApi.ask([question])).pipe(map((questions) => questions[0]));
+        return from(this.searchAiApi.ask([question]));
     }
 
     /**
@@ -82,37 +67,7 @@ export class SearchAiService {
      * @returns AiAnswerPaging object containing the answer.
      */
     getAnswer(questionId: string): Observable<AiAnswerPaging> {
-        return this._mocked
-            ? of({
-                  list: {
-                      pagination: {
-                          count: 1,
-                          hasMoreItems: false,
-                          totalItems: 1,
-                          skipCount: 0,
-                          maxItems: 100
-                      },
-                      entries: [
-                          {
-                              entry: {
-                                  answer: 'Some answer',
-                                  questionId: 'some id',
-                                  references: [
-                                      {
-                                          referenceId: '45a84919-d654-4669-a849-19d6548669e9',
-                                          referenceText: 'some type'
-                                      },
-                                      {
-                                          referenceId: '45a84919-d654-4669-a849-19d6548669e9',
-                                          referenceText: 'some type'
-                                      }
-                                  ]
-                              }
-                          }
-                      ]
-                  }
-              })
-            : from(this.searchAiApi.getAnswer(questionId));
+        return from(this.searchAiApi.getAnswer(questionId));
     }
 
     /**

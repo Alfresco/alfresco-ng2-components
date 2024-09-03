@@ -30,7 +30,6 @@ describe('SearchAiService', () => {
             imports: [ContentTestingModule]
         });
         service = TestBed.inject(SearchAiService);
-        service.mocked = false;
     });
 
     describe('ask', () => {
@@ -38,12 +37,13 @@ describe('SearchAiService', () => {
             const question: QuestionModel = {
                 question: 'some question',
                 questionId: 'some id',
-                restrictionQuery: 'node id1,node id 2'
+                restrictionQuery: { nodesIds: ['nodeId1', 'nodeId2'] }
             };
-            spyOn(service.searchAiApi, 'ask').and.returnValue(Promise.resolve([question]));
+            spyOn(service.searchAiApi, 'ask').and.returnValue(Promise.resolve(question));
             const questionRequest: QuestionRequest = {
                 question: 'some question',
-                nodeIds: ['node id1', 'node id 2']
+                nodeIds: ['nodeId1', 'nodeId2'],
+                agentId: 'some id'
             };
 
             service.ask(questionRequest).subscribe((questionResponse) => {

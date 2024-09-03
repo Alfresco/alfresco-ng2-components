@@ -45,7 +45,7 @@ const agentPagingObjectMock: AgentPaging = {
     }
 };
 
-const avatarAgentMock = 'https://res.cloudinary.com/hyld/image/upload/f_auto,c_fill,g_auto,w_1400,h_730/v1/h2/hero/blue-shirt-woman';
+const avatarAgentMock = '';
 
 const agentWithAvatarListMock: AgentWithAvatar[] = [
     {
@@ -71,7 +71,6 @@ describe('AgentService', () => {
         agentService = TestBed.inject(AgentService);
         apiService = TestBed.inject(AlfrescoApiService);
         agentsApi = new AgentsApi(apiService.getInstance());
-        agentService.mocked = false;
 
         spyOn(agentsApi, 'getAgentAvatar').and.returnValue(Promise.resolve(avatarAgentMock));
         spyOn(agentService.agentsApi, 'getAgentAvatar').and.returnValue(Promise.resolve(avatarAgentMock));
