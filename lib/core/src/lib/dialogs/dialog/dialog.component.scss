@@ -1,5 +1,3 @@
-@import 'styles/mat-selectors';
-
 $dialog-large-l-width: 1075px;
 $dialog-large-l-height: 907px;
 
@@ -28,6 +26,8 @@ $dialog-padding: 24px;
 .adf-medium-dialog-panel,
 .adf-alert-dialog-panel {
     min-width: calc(269px - $dialog-padding * 2);
+    border-radius: 8px;
+    overflow: hidden;
 
     @media screen and (max-width: $xxs-screen) {
         .adf-additional-actions {
@@ -185,6 +185,12 @@ $dialog-padding: 24px;
         padding-top: $dialog-padding;
         text-transform: capitalize;
         min-height: auto;
+
+        .adf-main-actions-container,
+        .adf-additional-actions-container {
+            display: flex;
+            column-gap: 8px;
+        }
     }
 
     &.adf-large {
@@ -279,12 +285,4 @@ $dialog-padding: 24px;
 
 .adf-additional-actions {
     color: var(--theme-primary-color);
-}
-
-#{$mat-dialog-actions} #{$mat-button-base} + #{$mat-button-base} {
-    margin-left: 16px;
-}
-
-#{$mat-dialog-container} #{$mat-dialog-surface} {
-    border-radius: 8px;
 }

@@ -45,8 +45,7 @@
         class="adf-dialog-actions"
         [ngClass]="{ 'adf-additional-actions': data.actionsTemplate || additionalActionButtons }"
     >
-        <div>
-
+        <div class="adf-additional-actions-container">
             <ng-container *ngIf="!additionalActionButtons && data.actionsTemplate">
                 <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
             </ng-container>
@@ -64,7 +63,7 @@
             </ng-container>
         </div>
 
-        <div>
+        <div class="adf-main-actions-container">
             <button
                 *ngIf="!isCancelButtonHidden"
                 mat-stroked-button
