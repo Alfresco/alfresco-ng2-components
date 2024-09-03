@@ -18,4 +18,5 @@
 export interface QuestionRequest {
     question: string;
     nodeIds: string[];
+    agentId: string;
 }

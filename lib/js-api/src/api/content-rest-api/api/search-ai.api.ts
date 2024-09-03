@@ -27,17 +27,18 @@ export class SearchAiApi extends BaseApi {
     /**
      * Ask a question to the AI.
      *
-     * @param questions The questions to ask.
+     * @param questions QuestionRequest array containing questions to ask.
      * @returns QuestionModel object containing information about questions.
      */
-    ask(questions: QuestionRequest[]): Promise<QuestionModel[]> {
-        return this.get({
-            path: 'questions',
+    ask(questions: QuestionRequest[]): Promise<QuestionModel> {
+        const agentId = questions[0].agentId;
+        return this.post({
+            path: `agents/${agentId}/questions`,
             bodyParam: questions.map((questionRequest) => ({
                 question: questionRequest.question,
-                restrictionQuery: questionRequest.nodeIds.join(',')
+                restrictionQuery: { nodesIds: questionRequest.nodeIds }
             }))
-        });
+        }).then((response) => response.entry);
     }
 
     /**
@@ -48,10 +49,7 @@ export class SearchAiApi extends BaseApi {
      */
     getAnswer(questionId: string): Promise<AiAnswerPaging> {
         return this.get({
-            path: 'answers',
-            queryParams: {
-                questionId
-            }
+            path: `questions/${questionId}/answers`
         });
     }
 }
