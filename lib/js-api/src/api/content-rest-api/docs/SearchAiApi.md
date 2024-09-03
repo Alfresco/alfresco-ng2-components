@@ -30,7 +30,8 @@ const searchAiApi = new SearchAiApi(alfrescoApi);
 
 searchAiApi.ask([{
     question: 'Some question',
-    restrictionQuery: 'Some restriction query'
+    restrictionQuery: 'Some restriction query',
+    agentId: 'Some agent id'
 }]).then((questionInformation) => {
   console.log('API called successfully. Returned data: ' + questionInformation);
 });
@@ -146,11 +147,19 @@ searchAiApi.getAnswer('some question id').then((answer) => {
 
 **Properties**
 
-| Name                 | Type   |
-|----------------------|--------|
-| **question**         | string |
-| **questionId**       | string |
-| **restrictionQuery** | string |
+| Name                 | Type             |
+|----------------------|------------------|
+| **question**         | string           |
+| **questionId**       | string           |
+| **restrictionQuery** | RestrictionQuery |
+
+## RestrictionQuery
+
+**Properties**
+
+| Name         | Type     |
+|--------------|----------|
+| **nodesIds** | string[] |
 
 ## QuestionRequest
 
@@ -160,3 +169,4 @@ searchAiApi.getAnswer('some question id').then((answer) => {
 |--------------|----------|
 | **question** | string   |
 | **nodeIds**  | string[] |
+| **agentId**  | string   |
