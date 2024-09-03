@@ -35,7 +35,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
  */
 export function extensionJsonsFactory() {
     return [];
-};
+}
 
 export const EXTENSION_JSONS = new InjectionToken<string[][]>('extension-jsons', {
     providedIn: 'root',
@@ -60,7 +60,7 @@ export function provideExtensionConfig(jsons: string[]) {
         useValue: jsons,
         multi: true
     };
-};
+}
 
 /**
  * Provides the extension json raw values for the angular modules
@@ -74,7 +74,7 @@ export function provideExtensionConfigValues(extensionConfigValue: ExtensionConf
         useValue: extensionConfigValue,
         multi: true
     };
-};
+}
 
 @Injectable({
     providedIn: 'root'
@@ -86,7 +86,7 @@ export class ExtensionService {
     routes: Array<RouteRef> = [];
     actions: Array<ActionRef> = [];
     features: Array<any> = [];
-    authGuards: { [key: string]: Type<any> } = {};
+    authGuards: Record<string, unknown> = {};
 
     setup$: Observable<ExtensionConfig>;
 
@@ -109,12 +109,7 @@ export class ExtensionService {
      * @returns The loaded config data
      */
     async load(): Promise<ExtensionConfig> {
-        const config = await this.loader.load(
-            this.configPath,
-            this.pluginsPath,
-            this.extensionJsons.flat(),
-            this.extensionJsonValues.flat()
-        );
+        const config = await this.loader.load(this.configPath, this.pluginsPath, this.extensionJsons.flat(), this.extensionJsonValues.flat());
 
         this.setup(config);
         return config;
@@ -177,7 +172,7 @@ export class ExtensionService {
      *
      * @param values The new auth guards to add
      */
-    setAuthGuards(values: { [key: string]: Type<any> }) {
+    setAuthGuards(values: Record<string, unknown>) {
         if (values) {
             this.authGuards = Object.assign({}, this.authGuards, values);
         }
@@ -208,10 +203,8 @@ export class ExtensionService {
      * @param ids Array of ID value to look for
      * @returns Array of auth guards or empty array if none were found
      */
-    getAuthGuards(ids: string[]): Array<Type<any>> {
-        return (ids || [])
-            .map((id) => this.authGuards[id])
-            .filter((guard) => guard);
+    getAuthGuards(ids: string[]): Array<unknown> {
+        return (ids || []).map((id) => this.authGuards[id]).filter((guard) => guard);
     }
 
     /**
@@ -272,12 +265,12 @@ export class ExtensionService {
      * @param context Parameter object for the expression with details of app state
      * @returns Result of evaluated expression, if found, or the literal value otherwise
      */
-    runExpression(value: string | any , context?: any) {
-        if (typeof value === 'string' ) {
+    runExpression(value: string | any, context?: any) {
+        if (typeof value === 'string') {
             return this.evaluateExpression(value, context);
         } else {
             const duplicate = Object.assign({}, value);
-            Object.keys(duplicate).forEach( (key) => {
+            Object.keys(duplicate).forEach((key) => {
                 duplicate[key] = this.evaluateExpression(duplicate[key], context);
             });
             return duplicate;
