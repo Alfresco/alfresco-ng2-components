@@ -22,7 +22,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @Component({
     selector: 'test-component',
@@ -48,8 +48,8 @@ describe('DynamicExtensionComponent', () => {
         componentRegister.setComponents({ 'test-component': TestComponent });
 
         TestBed.configureTestingModule({
-            imports: [HttpClientModule, DynamicExtensionComponent, TestComponent],
-            providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
+            imports: [DynamicExtensionComponent, TestComponent],
+            providers: [{ provide: ComponentRegisterService, useValue: componentRegister }, provideHttpClient(withInterceptorsFromDi())]
         });
 
         TestBed.compileComponents();

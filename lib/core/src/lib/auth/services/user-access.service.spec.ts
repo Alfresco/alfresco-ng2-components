@@ -19,7 +19,8 @@ import { TestBed } from '@angular/core/testing';
 import { UserAccessService } from './user-access.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { AppConfigService } from '../../app-config';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserAccessService', () => {
     let userAccessService: UserAccessService;
@@ -28,8 +29,8 @@ describe('UserAccessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [UserAccessService]
+            imports: [],
+            providers: [UserAccessService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
         });
         userAccessService = TestBed.inject(UserAccessService);
         jwtHelperService = TestBed.inject(JwtHelperService);

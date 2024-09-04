@@ -26,7 +26,8 @@ import {
 } from '../mock/identity-group.service.mock';
 import { mockFoodGroups } from '../mock/group-cloud.mock';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
@@ -35,8 +36,8 @@ describe('IdentityGroupService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
-            providers: [IdentityGroupService]
+            imports: [TranslateModule.forRoot()],
+            providers: [IdentityGroupService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
         });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);

@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { TaskFiltersCloudComponent } from './components/task-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
 import { ProcessCommonModule } from '../../common/process-common.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
@@ -34,10 +34,18 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
+    declarations: [
+        TaskFiltersCloudComponent,
+        ServiceTaskFiltersCloudComponent,
+        EditTaskFilterCloudComponent,
+        EditServiceTaskFilterCloudComponent,
+        TaskFilterDialogCloudComponent,
+        TaskAssignmentFilterCloudComponent
+    ],
+    exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent],
     imports: [
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         CommonModule,
         MaterialModule,
         AppListCloudModule,
@@ -47,14 +55,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         PeopleCloudModule,
         MatProgressSpinnerModule
     ],
-    declarations: [
-        TaskFiltersCloudComponent,
-        ServiceTaskFiltersCloudComponent,
-        EditTaskFilterCloudComponent,
-        EditServiceTaskFilterCloudComponent,
-        TaskFilterDialogCloudComponent,
-        TaskAssignmentFilterCloudComponent
-    ],
-    exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
+    providers: [provideHttpClient(withInterceptorsFromDi())]
 })
 export class TaskFiltersCloudModule {}

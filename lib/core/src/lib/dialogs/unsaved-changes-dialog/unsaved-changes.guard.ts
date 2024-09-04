@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { CanDeactivate } from '@angular/router';
+
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
@@ -28,7 +28,7 @@ import { tap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class UnsavedChangesGuard implements CanDeactivate<any> {
+export class UnsavedChangesGuard  {
     unsaved = false;
 
     constructor(private dialog: MatDialog) {}

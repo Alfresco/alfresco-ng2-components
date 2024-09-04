@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -36,7 +36,6 @@ describe('TranslationService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpClientModule,
                 TranslateModule.forRoot({
                     loader: {
                         provide: TranslateLoader,
@@ -47,7 +46,8 @@ describe('TranslationService', () => {
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                provideTranslations('@alfresco/adf-core', 'assets/ng2-alfresco-core')
+                provideTranslations('@alfresco/adf-core', 'assets/ng2-alfresco-core'),
+                provideHttpClient(withInterceptorsFromDi())
             ]
         });
 
@@ -70,7 +70,7 @@ describe('TranslationService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({TEST: 'This is a test', TEST2: 'This is another test'})
+            responseText: JSON.stringify({ TEST: 'This is a test', TEST2: 'This is another test' })
         });
     });
 
@@ -82,7 +82,7 @@ describe('TranslationService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'application/json',
-            responseText: JSON.stringify({TEST: 'This is a test', TEST2: 'This is another test'})
+            responseText: JSON.stringify({ TEST: 'This is a test', TEST2: 'This is another test' })
         });
     });
 

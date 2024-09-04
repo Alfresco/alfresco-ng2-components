@@ -33,7 +33,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint:eslint",
       "options": {
         "lintFilePatterns": ["lib/content-services/**/*.ts", "lib/content-services/**/*.html"]
       }

@@ -12,7 +12,7 @@ module.exports = {
         '**/docs'
     ],
 
-    plugins: ['@nrwl/nx'],
+    plugins: ['@nx'],
 
     overrides: [
         {
@@ -22,11 +22,10 @@ module.exports = {
                 createDefaultProgram: true
             },
             extends: [
-                'plugin:@nrwl/nx/typescript',
-                'plugin:@nrwl/nx/angular',
+                'plugin:@nx/typescript',
+                'plugin:@nx/angular',
                 'plugin:@cspell/recommended',
-                'plugin:@angular-eslint/ng-cli-compat',
-                'plugin:@angular-eslint/ng-cli-compat--formatting-add-on',
+                'plugin:@angular-eslint/recommended',
                 'plugin:@angular-eslint/template/process-inline-templates',
                 'plugin:jsdoc/recommended-typescript-error'
             ],
@@ -45,6 +44,7 @@ module.exports = {
             rules: {
                 // Uncomment this to enable prettier checks as part of the ESLint
                 // 'prettier/prettier': 'error',
+
                 'ban/ban': [
                     'error',
                     { name: 'eval', message: 'Calls to eval is not allowed.' },
@@ -75,6 +75,7 @@ module.exports = {
                 '@angular-eslint/no-input-prefix': 'error',
                 '@typescript-eslint/consistent-type-definitions': 'error',
                 '@typescript-eslint/dot-notation': 'off',
+                '@typescript-eslint/no-empty-function': 'off',
                 '@typescript-eslint/explicit-member-accessibility': [
                     'off',
                     {

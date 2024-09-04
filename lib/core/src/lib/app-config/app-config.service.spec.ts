@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from './app-config.service';
 import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
@@ -49,8 +49,8 @@ describe('AppConfigService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule],
-            providers: [{ provide: ExtensionService, useClass: TestExtensionService }]
+            imports: [],
+            providers: [{ provide: ExtensionService, useClass: TestExtensionService }, provideHttpClient(withInterceptorsFromDi())]
         });
     });
 

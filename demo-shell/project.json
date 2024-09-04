@@ -173,26 +173,26 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "demoshell:build",
         "host": "0.0.0.0",
         "port": 3000,
         "proxyConfig": "demo-shell/proxy.conf.js",
-        "disableHostCheck": true
+        "disableHostCheck": true,
+        "buildTarget": "demoshell:build"
       },
       "configurations": {
         "production": {
-          "browserTarget": "demoshell:build:production"
+          "buildTarget": "demoshell:build:production"
         },
         "canary": {
-          "browserTarget": "demoshell:build:canary"
+          "buildTarget": "demoshell:build:canary"
         },
         "e2e": {
-          "browserTarget": "demoshell:build:e2e"
+          "buildTarget": "demoshell:build:e2e"
         }
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["demo-shell/**/*.ts", "demo-shell/**/*.html"]
       }

@@ -24,7 +24,7 @@ import { of, Subject } from 'rxjs';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { CommonModule } from '@angular/common';
 import { ShellAppService, SHELL_APP_SERVICE } from '../../services/shell-app.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -58,10 +58,10 @@ describe('AppLayoutComponent', () => {
         };
 
         TestBed.configureTestingModule({
+            schemas: [NO_ERRORS_SCHEMA],
             imports: [
                 CommonModule,
                 NoopAnimationsModule,
-                HttpClientModule,
                 ...LAYOUT_DIRECTIVES,
                 ExtensionsModule,
                 RouterModule.forChild([]),
@@ -76,9 +76,9 @@ describe('AppLayoutComponent', () => {
                 {
                     provide: SHELL_APP_SERVICE,
                     useValue: shellService
-                }
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
+                },
+                provideHttpClient(withInterceptorsFromDi())
+            ]
         });
 
         fixture = TestBed.createComponent(ShellLayoutComponent);

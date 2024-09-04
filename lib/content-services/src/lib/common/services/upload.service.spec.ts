@@ -23,7 +23,8 @@ import { RepositoryInfo } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
 import { DiscoveryApiService } from '../../common/services/discovery-api.service';
 import { FileModel, FileUploadStatus } from '../../common/models/file.model';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 declare let jasmine: any;
 
@@ -36,7 +37,7 @@ describe('UploadService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AppConfigModule, HttpClientTestingModule],
+            imports: [AppConfigModule],
             providers: [
                 UploadService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
@@ -46,7 +47,9 @@ describe('UploadService', () => {
                     useValue: {
                         ecmProductInfo$: mockProductInfo
                     }
-                }
+                },
+                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClientTesting()
             ]
         });
         appConfigService = TestBed.inject(AppConfigService);

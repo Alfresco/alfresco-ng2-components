@@ -15,27 +15,37 @@
  * limitations under the License.
  */
 
-import { HttpClientModule, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { IdentityRoleResponseModel, IdentityRoleService } from './identity-role.service';
 
 export const mockIdentityRole1 = {
-    id: 'mock-id-1', name: 'Mock_Role_1', description: 'Mock desc1',  clientRole: true, composite: false
+    id: 'mock-id-1',
+    name: 'Mock_Role_1',
+    description: 'Mock desc1',
+    clientRole: true,
+    composite: false
 };
 
 export const mockIdentityRole2 = {
-    id: 'mock-id-2', name: 'Mock_Role_2', description: 'Mock desc2', clientRole: false, composite: true
+    id: 'mock-id-2',
+    name: 'Mock_Role_2',
+    description: 'Mock desc2',
+    clientRole: false,
+    composite: true
 };
 
 export const mockIdentityRole3 = {
-    id: 'mock-id-3', name: 'Mock_Role_3', description: 'Mock desc3', clientRole: false, composite: false
+    id: 'mock-id-3',
+    name: 'Mock_Role_3',
+    description: 'Mock desc3',
+    clientRole: false,
+    composite: false
 };
 
 export const mockIdentityRoles = {
-    entries: [
-      mockIdentityRole1,  mockIdentityRole2, mockIdentityRole3
-    ],
+    entries: [mockIdentityRole1, mockIdentityRole2, mockIdentityRole3],
     pagination: {
         skipCount: 1,
         maxItems: 5,
@@ -50,9 +60,8 @@ describe('IdentityRoleService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule
-            ]
+            imports: [],
+            providers: [provideHttpClient(withInterceptorsFromDi())]
         });
         service = TestBed.inject(IdentityRoleService);
     });
@@ -75,31 +84,29 @@ describe('IdentityRoleService', () => {
             statusText: 'Created'
         });
         spyOn(service, 'addRole').and.returnValue(of(response));
-        service.addRole(mockIdentityRole1).subscribe(
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res.status).toEqual(201);
-                expect(res.statusText).toEqual('Created');
-                done();
-            }
-        );
+        service.addRole(mockIdentityRole1).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res.status).toEqual(201);
+            expect(res.statusText).toEqual('Created');
+            done();
+        });
     });
 
     it('Should not add role if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
             error: 'test 404 error',
-            status: 404, statusText: 'Not Found'
+            status: 404,
+            statusText: 'Not Found'
         });
         spyOn(service, 'addRole').and.returnValue(throwError(errorResponse));
-        service.addRole(mockIdentityRole1)
-            .subscribe(
-                () => fail('expected an error'),
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('test 404 error');
-                }
-            );
+        service.addRole(mockIdentityRole1).subscribe(
+            () => fail('expected an error'),
+            (error) => {
+                expect(error.status).toEqual(404);
+                expect(error.statusText).toEqual('Not Found');
+                expect(error.error).toEqual('test 404 error');
+            }
+        );
     });
 
     it('should be able to delete role', (done) => {
@@ -109,30 +116,28 @@ describe('IdentityRoleService', () => {
             statusText: 'No Content'
         });
         spyOn(service, 'deleteRole').and.returnValue(of(response));
-        service.deleteRole(mockIdentityRole1).subscribe(
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res.status).toEqual(204);
-                expect(res.statusText).toEqual('No Content');
-                done();
-            }
-        );
+        service.deleteRole(mockIdentityRole1).subscribe((res: any) => {
+            expect(res).toBeDefined();
+            expect(res.status).toEqual(204);
+            expect(res.statusText).toEqual('No Content');
+            done();
+        });
     });
 
     it('Should not delete role if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
             error: 'test 404 error',
-            status: 404, statusText: 'Not Found'
+            status: 404,
+            statusText: 'Not Found'
         });
         spyOn(service, 'deleteRole').and.returnValue(throwError(errorResponse));
-        service.deleteRole(mockIdentityRole1)
-            .subscribe(
-                () => fail('expected an error'),
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('test 404 error');
-                }
-            );
+        service.deleteRole(mockIdentityRole1).subscribe(
+            () => fail('expected an error'),
+            (error) => {
+                expect(error.status).toEqual(404);
+                expect(error.statusText).toEqual('Not Found');
+                expect(error.error).toEqual('test 404 error');
+            }
+        );
     });
 });

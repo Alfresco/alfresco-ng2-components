@@ -18,7 +18,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgChartsModule } from 'ng2-charts';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppConfigService, DebugAppConfigService, CoreModule, AuthModule, provideTranslations } from '@alfresco/adf-core';
@@ -34,12 +34,13 @@ import { RouterModule } from '@angular/router';
 import { CoreAutomationService } from '../testing/automation.service';
 
 @NgModule({
+    declarations: [AppComponent],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, { useHash: true }),
         AuthModule.forRoot({ useHash: true }),
-        HttpClientModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ContentModule.forRoot(),
@@ -49,13 +50,12 @@ import { CoreAutomationService } from '../testing/automation.service';
         NgChartsModule,
         MonacoEditorModule.forRoot()
     ],
-    declarations: [AppComponent],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         provideTranslations('app', 'resources'),
-        provideTranslations('adf-insights', 'assets/adf-insights')
-    ],
-    bootstrap: [AppComponent]
+        provideTranslations('adf-insights', 'assets/adf-insights'),
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class AppModule {
     constructor(automationService: CoreAutomationService) {
