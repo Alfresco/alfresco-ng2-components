@@ -30,9 +30,9 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormRenderingService } from '../../services/form-rendering.service';
-import { FormStyleService } from '../../services/form-style.service';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
-import { FormFieldModel } from '../widgets';
+import { FormFieldModel } from '../widgets/core/form-field.model';
+import { FieldStylePipe } from '../pipes/field-style.pipe';
 
 declare const adf: any;
 
@@ -40,7 +40,8 @@ declare const adf: any;
     selector: 'adf-form-field',
     standalone: true,
     templateUrl: './form-field.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    imports: [FieldStylePipe]
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
     @ViewChild('container', { read: ViewContainerRef, static: true })
@@ -60,7 +61,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     focus: boolean = false;
     style = '';
 
-    private readonly widgetStyleService = inject(FormStyleService);
     private readonly formRenderingService = inject(FormRenderingService);
     private readonly visibilityService = inject(WidgetVisibilityService);
     private readonly compiler = inject(Compiler);
@@ -94,8 +94,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                     });
                 }
             }
-
-            this.style = this.widgetStyleService.getFieldStyle(originalField.type, originalField.style, originalField.form?.theme);
         }
     }
 

@@ -11,6 +11,9 @@
     padding-bottom: 10px;
     cursor: default;
     user-select: none;
+    font-size: var(--adf-header-font-size);
+    font-weight: var(--adf-header-font-weight);
+    color: var(--adf-header-color);
 
     &.adf-collapsible {
         cursor: pointer;
