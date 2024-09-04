@@ -11,3 +11,4 @@ docs/**/*.md
 lib/js-api/docs/**/*.md
 webpack.config.js
 .storybook
+**/*.stories.ts
