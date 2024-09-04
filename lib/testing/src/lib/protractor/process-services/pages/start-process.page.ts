@@ -31,7 +31,7 @@ export class StartProcessPage {
     cancelProcessButton = $('#cancel_process');
     formStartProcessButton = $('button[data-automation-id="adf-form-start process"]');
     startProcessButton = $('button[data-automation-id="btn-start"]');
-    startProcessButtonDisabled = $('button[data-automation-id="btn-start"][disabled="true"]');
+    startProcessButtonDisabled = $('button[data-automation-id="btn-start"][disabled]');
     noProcess = $('.adf-empty-content__title');
     processDefinition = $('input[id="processDefinitionName"]');
     processDefinitionOptionsPanel = $(`div[class*="${materialLocators.Autocomplete.panel.root}"]`);
@@ -131,8 +131,8 @@ export class StartProcessPage {
     }
 
     async isStartProcessButtonEnabled() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.startProcessButtonDisabled);
-        return this.startProcessButton.isDisplayed();
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.startProcessButtonDisabled);
+        return this.startProcessButton.isEnabled();
     }
 
     async checkStartProcessButtonIsDisabled() {
