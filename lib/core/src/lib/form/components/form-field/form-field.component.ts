@@ -59,7 +59,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     componentRef: ComponentRef<any>;
 
     focus: boolean = false;
-    style = '';
 
     private readonly formRenderingService = inject(FormRenderingService);
     private readonly visibilityService = inject(WidgetVisibilityService);
