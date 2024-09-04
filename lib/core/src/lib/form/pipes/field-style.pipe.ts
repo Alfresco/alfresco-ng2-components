@@ -15,18 +15,24 @@
  * limitations under the License.
  */
 
-import { inject, Pipe, PipeTransform } from '@angular/core';
-import { FormFieldModel } from '../widgets/core/form-field.model';
-import { FormStyleService } from '../../services/form-style.service';
+import { Pipe, PipeTransform } from '@angular/core';
+import { FormFieldModel } from '../components/widgets/core/form-field.model';
 
 @Pipe({
     name: 'adfFieldStyle',
     standalone: true
 })
 export class FieldStylePipe implements PipeTransform {
-    private readonly widgetStyleService = inject(FormStyleService);
-
     transform(field: FormFieldModel): string {
-        return this.widgetStyleService.getFieldStyle(field.type, field.style, field.form?.theme);
+        const theme = field.form?.theme?.widgets[field.type];
+        const style = field.style && theme?.[field.style];
+
+        return style ? this.flattenStyles(style) : '';
+    }
+
+    private flattenStyles(styles: { [key: string]: string }): string {
+        return Object.entries(styles)
+            .map(([key, value]) => `${key}: ${value}`)
+            .join(';');
     }
 }

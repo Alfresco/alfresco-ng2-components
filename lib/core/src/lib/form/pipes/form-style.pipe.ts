@@ -15,23 +15,16 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { ThemeModel } from '../components/widgets/core/theme.model';
 
-@Injectable({
-    providedIn: 'root'
+@Pipe({
+    name: 'adfFormStyle',
+    standalone: true
 })
-export class FormStyleService {
-    getFieldStyle(fieldType: string, styleName?: string, formTheme?: ThemeModel): string {
-        const theme = formTheme?.widgets[fieldType];
-        const style = styleName && theme?.[styleName];
-
-        return style ? this.flattenStyles(style) : '';
-    }
-
-    getFormStyle(formTheme?: ThemeModel): string {
+export class FormStylePipe implements PipeTransform {
+    transform(formTheme?: ThemeModel): string {
         const theme = formTheme?.form;
-
         return theme ? this.flattenStyles(theme) : '';
     }
 

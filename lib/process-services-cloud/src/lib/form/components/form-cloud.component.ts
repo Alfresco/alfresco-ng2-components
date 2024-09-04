@@ -44,8 +44,7 @@ import {
     ContentLinkModel,
     UploadWidgetContentLinkModel,
     FormEvent,
-    ConfirmDialogComponent,
-    FormStyleService
+    ConfirmDialogComponent
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -145,7 +144,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected spinnerService = inject(FormCloudSpinnerService);
     protected displayModeService = inject(DisplayModeService);
     protected changeDetector = inject(ChangeDetectorRef);
-    private formStyleService = inject(FormStyleService);
 
     constructor() {
         super();
@@ -434,7 +432,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 this.displayMode,
                 this.displayModeConfigurations
             );
-            this.style = this.formStyleService.getFormStyle(form.theme);
+
             this.displayModeOn.emit(this.displayModeService.findConfiguration(this.displayMode, this.displayModeConfigurations));
         }
 

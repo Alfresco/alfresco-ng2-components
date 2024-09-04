@@ -24,10 +24,10 @@ export type RadioButtonsThemeVariable = '--adf-radio-buttons-font-size' | '--adf
 export type SupportedWidgetType = 'radio-buttons' | 'group' | 'readonly-text';
 
 export interface ThemeModel {
-    form: {
+    form?: {
         [variable in FormThemeVariable]?: string;
     };
-    widgets: {
+    widgets?: {
         ['readonly-text']?: {
             [styleName: string]: {
                 [variable in ReadonlyTextThemeVariable]?: string;
@@ -44,7 +44,7 @@ export interface ThemeModel {
             };
         };
     };
-    defaults: {
+    defaults?: {
         [widgetType in SupportedWidgetType]?: string;
     };
 }

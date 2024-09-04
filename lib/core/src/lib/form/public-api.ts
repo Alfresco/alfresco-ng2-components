@@ -28,7 +28,8 @@ export * from './services/form-rendering.service';
 export * from './services/form.service';
 export * from './services/form-validation-service.interface';
 export * from './services/widget-visibility.service';
-export * from './services/form-style.service';
+
+export * from './pipes';
 
 export * from './events';
 
