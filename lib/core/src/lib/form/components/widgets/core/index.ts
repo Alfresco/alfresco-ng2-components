@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 export * from './form-field-metadata';
 export * from './form-values';
@@ -44,3 +44,5 @@ export * from './form-field-file-source';
 export * from './form-field-rule';
 export * from './form-field-utils';
 export * from './form-field-variable-options';
+export * from './widget-schema.model';
+export * from './theme.model';
