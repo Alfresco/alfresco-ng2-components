@@ -11,7 +11,7 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "dependencies": {
-    "@alfresco/adf-core": ">=7.0.0-alpha.2",
+    "@alfresco/adf-core": ">=7.0.0-alpha.2-0",
     "@ngx-translate/core": ">=14.0.0",
     "chart.js": "^4.3.0",
     "ng2-charts": "^4.1.1",

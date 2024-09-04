@@ -121,6 +121,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.filters.map((filter) => {
             if (this.isFilterPresent(filter, filterNotification)) {
                 this.addToUpdatedCounters(filter.key);
+                this.updatedFilter.emit(filter.key);
             }
         });
     }

@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { AppConfigService } from '@alfresco/adf-core';
-import { of, throwError } from 'rxjs';
+import { first, of, throwError } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
@@ -26,7 +26,7 @@ import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
-import { fakeGlobalFilter, defaultTaskFiltersMock, taskNotifications } from '../mock/task-filters-cloud.mock';
+import { fakeGlobalFilter, defaultTaskFiltersMock, taskNotifications, fakeFilter, fakeFilterNotification } from '../mock/task-filters-cloud.mock';
 
 describe('TaskFiltersCloudComponent', () => {
     let taskFilterService: TaskFilterCloudService;
@@ -39,13 +39,8 @@ describe('TaskFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ProcessServiceCloudTestingModule,
-                TaskFiltersCloudModule
-            ],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-            ]
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);
         getTaskFilterCounterSpy = spyOn(taskFilterService, 'getTaskFilterCounter').and.returnValue(of(11));
@@ -334,8 +329,38 @@ describe('TaskFiltersCloudComponent', () => {
         expect(getTaskFilterCounterSpy).toHaveBeenCalledWith(fakeGlobalFilter[0]);
     });
 
-    describe('Highlight Selected Filter', () => {
+    it('should emit filter key when counter is updated', (done) => {
+        component.appName = 'my-app-1';
+        component.showIcons = true;
+        const testKey = 'my-tasks';
+        component.updatedCounters = [];
+        fixture.detectChanges();
 
+        component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
+            expect(updatedFilter).toBe(testKey);
+            done();
+        });
+
+        component.addToUpdatedCounters(testKey);
+        fixture.detectChanges();
+    });
+
+    it('should emit filter key when filter counter is checked', (done) => {
+        component.appName = 'my-app-1';
+        component.showIcons = true;
+        component.filters = [fakeFilter];
+        fixture.detectChanges();
+
+        component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
+            expect(updatedFilter).not.toBe(fakeFilter.key);
+            done();
+        });
+
+        component.checkFilterCounter(fakeFilterNotification);
+        fixture.detectChanges();
+    });
+
+    describe('Highlight Selected Filter', () => {
         const assignedTasksFilterKey = defaultTaskFiltersMock[1].key;
         const queuedTasksFilterKey = defaultTaskFiltersMock[0].key;
         const completedTasksFilterKey = defaultTaskFiltersMock[2].key;

@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges, inject } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+    ViewEncapsulation,
+    SimpleChanges,
+    OnInit,
+    OnDestroy,
+    OnChanges,
+    inject,
+    ChangeDetectorRef
+} from '@angular/core';
 import {
     WidgetVisibilityService,
     FormService,
@@ -64,6 +76,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     protected visibilityService = inject(WidgetVisibilityService);
     protected ecmModelService = inject(EcmModelService);
     protected nodeService = inject(NodesApiService);
+    private cdRef = inject(ChangeDetectorRef);
 
     /** Underlying form model instance. */
     @Input()
@@ -131,6 +144,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         this.formService.validateForm.pipe(takeUntil(this.onDestroy$)).subscribe((validateFormEvent) => {
             if (validateFormEvent.errorsField.length > 0) {
                 this.formError.next(validateFormEvent.errorsField);
+                this.cdRef.detectChanges();
             }
         });
     }

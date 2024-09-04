@@ -139,9 +139,12 @@ describe('DropdownWidgetComponent', () => {
     describe('when is required', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
+                id: 'dropdown-id',
                 type: FormFieldTypes.DROPDOWN,
                 required: true
             });
+
+            widget.ngOnInit();
         });
 
         it('should be able to display label with asterisk', async () => {
@@ -157,8 +160,9 @@ describe('DropdownWidgetComponent', () => {
         it('should be invalid if no default option after interaction', async () => {
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
-            const dropdownSelect = element.querySelector('.adf-select');
-            dropdownSelect.dispatchEvent(new Event('blur'));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+            await dropdown.focus();
+            await dropdown.blur();
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -186,12 +190,14 @@ describe('DropdownWidgetComponent', () => {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
-                    readOnly: 'false',
+                    readOnly: false,
                     restUrl: 'fake-rest-url',
                     optionType: 'rest'
                 });
                 widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
                 widget.field.isVisible = true;
+                widget.ngOnInit();
+
                 fixture.detectChanges();
             });
 
@@ -213,9 +219,8 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const dropDownElement: any = element.querySelector('#dropdown-id');
-                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
-                expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                expect(await dropdown.getValueText()).toBe('option_2');
             });
 
             it('should select the empty value when no default is chosen', async () => {
@@ -224,8 +229,9 @@ describe('DropdownWidgetComponent', () => {
 
                 await (await loader.getHarness(MatSelectHarness)).open();
 
-                const dropDownElement: any = element.querySelector('#dropdown-id');
-                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                expect(await dropdown.getValueText()).toBe('Choose one...');
+                expect(await widget.field.value).toBe('empty');
             });
         });
 
@@ -237,7 +243,7 @@ describe('DropdownWidgetComponent', () => {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
-                    readOnly: 'false',
+                    readOnly: false,
                     restUrl: 'fake-rest-url',
                     optionType: 'rest'
                 });
@@ -264,9 +270,8 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const dropDownElement: any = element.querySelector('#dropdown-id');
-                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
-                expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                expect(await dropdown.getValueText()).toBe('option_2');
             });
 
             it('should select the empty value when no default is chosen', async () => {
@@ -274,8 +279,9 @@ describe('DropdownWidgetComponent', () => {
                 widget.ngOnInit();
                 await (await loader.getHarness(MatSelectHarness)).open();
 
-                const dropDownElement: any = element.querySelector('#dropdown-id');
-                expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                expect(await dropdown.getValueText()).toBe('Choose one...');
+                expect(await widget.field.value).toBe('empty');
             });
 
             it('should be disabled when the field is readonly', async () => {
@@ -283,9 +289,10 @@ describe('DropdownWidgetComponent', () => {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
-                    readOnly: 'true',
+                    readOnly: true,
                     restUrl: 'fake-rest-url'
                 });
+                widget.ngOnInit();
 
                 fixture.detectChanges();
                 await fixture.whenStable();
@@ -304,10 +311,13 @@ describe('DropdownWidgetComponent', () => {
                     readOnly: true,
                     params: { field: { name: 'date-name', type: 'dropdown' } }
                 });
+                widget.ngOnInit();
 
-                const select = await loader.getHarness(MatSelectHarness);
+                fixture.detectChanges();
+                await fixture.whenStable();
 
-                expect(await select.getValueText()).toEqual('FakeValue');
+                const dropdown = await loader.getHarness(MatSelectHarness);
+                expect(await dropdown.getValueText()).toEqual('FakeValue');
             });
         });
     });

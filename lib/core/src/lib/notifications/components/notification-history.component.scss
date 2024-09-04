@@ -63,6 +63,8 @@ $notification-item-height: 72px;
         .adf-notification-history-menu-item {
             cursor: pointer;
             height: $notification-item-height;
+            align-items: center;
+            padding-left: 16px;
         }
 
         .adf-notification-history-menu-item:focus {
