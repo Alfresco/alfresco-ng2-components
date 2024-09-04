@@ -15,21 +15,13 @@
  * limitations under the License.
  */
 
-export type FormThemeVariable =
-    | '--adf-form-label-font-size'
-    | '--adf-form-label-font-family'
-    | '--adf-form-label-font-weight'
-    | '--adf-form-text-decoration'
-    | '--adf-form-label-color';
+export type FormThemeVariable = '--adf-form-label-font-size' | '--adf-form-label-font-weight' | '--adf-form-label-color';
 
-export type ReadonlyTextThemeVariable =
-    | '--adf-readonly-text-font-size'
-    | '--adf-readonly-text-font-family'
-    | '--adf-readonly-text-font-weight'
-    | '--adf-readonly-text-text-decoration'
-    | '--adf-readonly-text-color';
+export type ReadonlyTextThemeVariable = '--adf-readonly-text-font-size' | '--adf-readonly-text-font-weight' | '--adf-readonly-text-color';
+export type HeaderThemeVariable = '--adf-header-font-size' | '--adf-header-font-weight' | '--adf-header-color';
+export type RadioButtonsThemeVariable = '--adf-radio-buttons-font-size' | '--adf-radio-buttons-font-weight' | '--adf-radio-buttons-color';
 
-export type SupportedWidgetType = 'readonly-text';
+export type SupportedWidgetType = 'radio-buttons' | 'group' | 'readonly-text';
 
 export interface ThemeModel {
     form: {
@@ -41,9 +33,18 @@ export interface ThemeModel {
                 [variable in ReadonlyTextThemeVariable]?: string;
             };
         };
-        // define other supported widgets here
+        ['group']?: {
+            [styleName: string]: {
+                [variable in HeaderThemeVariable]?: string;
+            };
+        };
+        ['radio-buttons']?: {
+            [styleName: string]: {
+                [variable in RadioButtonsThemeVariable]?: string;
+            };
+        };
     };
     defaults: {
-        [widgetType in SupportedWidgetType]?: string; // default styleName
+        [widgetType in SupportedWidgetType]?: string;
     };
 }

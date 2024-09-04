@@ -1,8 +1,6 @@
 .adf-display-text-widget {
     white-space: pre-wrap;
     font-size: var(--adf-readonly-text-font-size, var(--adf-form-label-font-size, var(--theme-body-1-font-size)));
-    font-family: var(--adf-readonly-text-font-family, var(--adf-form-label-font-family, var(--theme-font-family)));
     font-weight: var(--adf-readonly-text-font-weight, var(--adf-form-label-font-weight, var(--theme-font-weight)));
-    text-decoration: var(--adf-readonly-text-text-decoration, var(--adf-form-label-text-decoration, none));
     color: var(--adf-readonly-text-color, var(--adf-form-label-color, var(--theme-text-color)));
 }

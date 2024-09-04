@@ -15,39 +15,75 @@
  * limitations under the License.
  */
 
-export const displayTextSchema = {
-    // proposition:
-    // general: [
-    // {
-    //     name: 'ADV_FORM_EDITOR.FIELD_PROPERTIES.LABEL',
-    //     type: 'string'
-    // }
-    // ],
-    theme: [
+import { ReadonlyTextThemeVariable } from '../core/theme.model';
+import { WidgetSchemaModel } from '../core/widget-schema.model';
+
+export const displayTextSchema: WidgetSchemaModel<ReadonlyTextThemeVariable> = {
+    themeProperties: [
         {
-            name: 'Font size', // todo - translation key
+            name: 'FORM.FIELD_STYLE.FONT_SIZE',
+            cssPropertyName: 'font-size',
             fieldVariableName: '--adf-readonly-text-font-size',
-            formVariableName: '--adf-form-label-font-size'
+            formVariableName: '--adf-form-label-font-size',
+            type: 'number',
+            unit: 'px',
+            defaultValue: '16px'
         },
         {
-            name: 'Font family', // todo - translation key
-            fieldVariableName: '--adf-readonly-text-font-family',
-            formVariableName: '--adf-form-label-font-family'
-        },
-        {
-            name: 'Font weight', // todo - translation key
+            name: 'FORM.FIELD_STYLE.FONT_WEIGHT',
+            cssPropertyName: 'font-weight',
             fieldVariableName: '--adf-readonly-text-font-weight',
-            formVariableName: '--adf-form-label-font-weight'
+            formVariableName: '--adf-form-label-font-weight',
+            type: 'options',
+            options: [
+                {
+                    name: 'FORM.FIELD_STYLE.REGULAR',
+                    value: 'normal'
+                },
+                {
+                    name: 'FORM.FIELD_STYLE.BOLD',
+                    value: 'bold'
+                }
+            ],
+            defaultValue: 'normal'
         },
         {
-            name: 'Text decoration', // todo - translation key
-            fieldVariableName: '--adf-readonly-text-text-decoration',
-            formVariableName: '--adf-form-label-text-decoration'
-        },
-        {
-            name: 'Text color', // todo - translation key
+            name: 'FORM.FIELD_STYLE.FONT_COLOR',
+            cssPropertyName: 'color',
             fieldVariableName: '--adf-readonly-text-color',
-            formVariableName: '--adf-form-label-color'
+            formVariableName: '--adf-form-label-color',
+            type: 'colorOptions',
+            options: [
+                {
+                    name: 'FORM.FIELD_STYLE.SYSTEM_COLOR',
+                    value: 'inherit'
+                },
+                {
+                    name: 'FORM.FIELD_STYLE.BLACK',
+                    value: '#000000'
+                },
+                {
+                    name: 'FORM.FIELD_STYLE.GREY',
+                    value: '#9CA3AF'
+                },
+                {
+                    name: 'FORM.FIELD_STYLE.RED',
+                    value: '#DA1500'
+                },
+                {
+                    name: 'FORM.FIELD_STYLE.GREEN',
+                    value: '#04A003'
+                },
+                {
+                    name: 'FORM.FIELD_STYLE.BLUE',
+                    value: '#0A60CE'
+                },
+                {
+                    name: 'FORM.FIELD_STYLE.YELLOW',
+                    value: '#FACC15'
+                }
+            ],
+            defaultValue: 'inherit'
         }
     ]
 };

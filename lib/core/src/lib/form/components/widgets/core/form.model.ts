@@ -59,6 +59,7 @@ export interface FormRepresentationModel {
         fields?: any[];
     };
     displayMode: string;
+    theme?: ThemeModel;
 }
 export class FormModel implements ProcessFormModel {
     static UNSET_TASK_NAME: string = 'Nameless task';

@@ -44,7 +44,6 @@ export * from './decimal/decimal.component';
 export * from './checkbox/checkbox.widget';
 export * from './multiline-text/multiline-text.widget';
 export * from './hyperlink/hyperlink.widget';
-export * from './display-text/display-text.widget';
 export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './error/error.component';
@@ -52,6 +51,9 @@ export * from './date-time/date-time.widget';
 export * from './json/json.widget';
 export * from './base-viewer/base-viewer.widget';
 export * from './text/text-mask.component';
+
+// widgets with schema
+export * from './display-text';
 
 export const WIDGET_DIRECTIVES: any[] = [
     UnknownWidgetComponent,
@@ -70,6 +72,4 @@ export const WIDGET_DIRECTIVES: any[] = [
     BaseViewerWidgetComponent
 ];
 
-export const MASK_DIRECTIVE: any[] = [
-    InputMaskDirective
-];
+export const MASK_DIRECTIVE: any[] = [InputMaskDirective];
