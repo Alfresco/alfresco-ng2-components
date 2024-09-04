@@ -15,7 +15,13 @@
  * limitations under the License.
  */
 
-export type FormThemeVariable = '--adf-form-label-font-size' | '--adf-form-label-font-weight' | '--adf-form-label-color';
+export type FormThemeVariable =
+    | '--adf-form-label-font-size'
+    | '--adf-form-label-font-weight'
+    | '--adf-form-label-color'
+    | '--adf-header-font-size'
+    | '--adf-header-font-weight'
+    | '--adf-header-color';
 
 export type ReadonlyTextThemeVariable = '--adf-readonly-text-font-size' | '--adf-readonly-text-font-weight' | '--adf-readonly-text-color';
 export type HeaderThemeVariable = '--adf-header-font-size' | '--adf-header-font-weight' | '--adf-header-color';

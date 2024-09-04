@@ -1,0 +1,13 @@
+.adf-container-widget-header__text {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.87);
+    padding-bottom: 10px;
+    cursor: default;
+    user-select: none;
+    font-size: var(--adf-header-font-size);
+    font-weight: var(--adf-header-font-weight);
+    color: var(--adf-header-color);
+
+    &.adf-collapsible {
+        cursor: pointer;
+    }
+}

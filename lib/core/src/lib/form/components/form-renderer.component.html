@@ -21,25 +21,7 @@
              [id]="'field-' + currentRootElement?.id + '-container'"
              class="adf-container-widget"
              [hidden]="!currentRootElement?.isVisible">
-            <div [hidden]="!currentRootElement?.isGroup()" [style]="currentRootElement | adfFieldStyle" class="adf-container-widget__header">
-                <h4 class="adf-container-widget__header-text" id="container-header"
-                    [class.adf-collapsible]="currentRootElement?.isCollapsible()">
-                    <button *ngIf="currentRootElement?.isCollapsible()"
-                            mat-icon-button
-                            class="mdl-button--icon"
-                            (click)="onExpanderClicked(currentRootElement)">
-                        <mat-icon>{{ currentRootElement?.isExpanded ? 'expand_more' : 'expand_less' }}</mat-icon>
-                    </button>
-                    <span (click)="onExpanderClicked(currentRootElement)"
-                          role="button"
-                          tabindex="0"
-                          (keyup.enter)="onExpanderClicked(currentRootElement)"
-                          [id]="'container-header-label-' + currentRootElement?.id">
-                        {{ currentRootElement.name | translate }}
-                    </span>
-                </h4>
-            </div>
-
+            <adf-header-widget [element]="currentRootElement"></adf-header-widget>
             <div *ngIf="currentRootElement?.form?.enableFixedSpace; else fixingTemplate">
                 <div class="adf-grid-list"
                      [ngStyle]="{ 'grid-template-columns': 'repeat(' + getNumberOfColumns(currentRootElement) + ', 1fr)' }"
