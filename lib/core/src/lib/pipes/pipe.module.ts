@@ -28,7 +28,6 @@ import { FileTypePipe } from './file-type.pipe';
 import { MultiValuePipe } from './multi-value.pipe';
 import { LocalizedDatePipe } from './localized-date.pipe';
 import { DecimalNumberPipe } from './decimal-number.pipe';
-import { LocalizedRolePipe } from './localized-role.pipe';
 import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
 import { FilterStringPipe } from './filter-string.pipe';
@@ -45,7 +44,6 @@ export const CORE_PIPES = [
     FileTypePipe,
     MultiValuePipe,
     DecimalNumberPipe,
-    LocalizedRolePipe,
     MomentDatePipe,
     MomentDateTimePipe,
     DateTimePipe,
