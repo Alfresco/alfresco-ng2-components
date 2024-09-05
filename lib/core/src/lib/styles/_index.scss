@@ -71,7 +71,6 @@
         // typography
         --theme-font-family: mat.font-family($typography),
         --theme-font-weight: mat.font-weight($typography),
-        // not working - check it
         --theme-body-1-font-size: mat.font-size($typography, body-2),
         --theme-body-2-font-size: mat.font-size($typography, subtitle-2),
         --theme-body-1-line-height: mat.line-height($typography, body-2),
