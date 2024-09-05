@@ -1,3 +1,1 @@
-<div [title]="field.tooltip" class="adf-display-text-widget {{ field.className }}">
-    {{ field.value | translate }}
-</div>
+<div [title]="field.tooltip" [class]="'adf-display-text-widget '+ field.className">{{ field.value | translate }}</div>

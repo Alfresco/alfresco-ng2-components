@@ -20,6 +20,7 @@ import {
     Component,
     ComponentFactory,
     ComponentRef,
+    inject,
     Input,
     NgModule,
     OnDestroy,
@@ -30,7 +31,8 @@ import {
 } from '@angular/core';
 import { FormRenderingService } from '../../services/form-rendering.service';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
-import { FormFieldModel } from '../widgets';
+import { FormFieldModel } from '../widgets/core/form-field.model';
+import { FieldStylePipe } from '../../pipes/field-style.pipe';
 
 declare const adf: any;
 
@@ -38,7 +40,8 @@ declare const adf: any;
     selector: 'adf-form-field',
     standalone: true,
     templateUrl: './form-field.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    imports: [FieldStylePipe]
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
     @ViewChild('container', { read: ViewContainerRef, static: true })
@@ -57,7 +60,9 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     focus: boolean = false;
 
-    constructor(private formRenderingService: FormRenderingService, private visibilityService: WidgetVisibilityService, private compiler: Compiler) {}
+    private readonly formRenderingService = inject(FormRenderingService);
+    private readonly visibilityService = inject(WidgetVisibilityService);
+    private readonly compiler = inject(Compiler);
 
     ngOnInit() {
         const w: any = window;

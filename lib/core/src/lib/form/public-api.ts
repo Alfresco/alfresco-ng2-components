@@ -29,6 +29,8 @@ export * from './services/form.service';
 export * from './services/form-validation-service.interface';
 export * from './services/widget-visibility.service';
 
+export * from './pipes';
+
 export * from './events';
 
 export * from './form-base.module';

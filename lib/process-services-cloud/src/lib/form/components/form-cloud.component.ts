@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, HostListener, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    OnDestroy,
+    HostListener,
+    OnInit,
+    ChangeDetectorRef,
+    inject
+} from '@angular/core';
 import { Observable, of, forkJoin, Subject, Subscription } from 'rxjs';
 import { switchMap, takeUntil, map, filter } from 'rxjs/operators';
 import {
@@ -123,16 +135,17 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     readonly id: string;
     displayMode: FormCloudDisplayMode;
+    style: string = '';
 
-    constructor(
-        protected formCloudService: FormCloudService,
-        protected formService: FormService,
-        private dialog: MatDialog,
-        protected visibilityService: WidgetVisibilityService,
-        private readonly displayModeService: DisplayModeService,
-        private spinnerService: FormCloudSpinnerService,
-        private readonly changeDetector: ChangeDetectorRef
-    ) {
+    protected formCloudService = inject(FormCloudService);
+    protected formService = inject(FormService);
+    protected visibilityService = inject(WidgetVisibilityService);
+    protected dialog = inject(MatDialog);
+    protected spinnerService = inject(FormCloudSpinnerService);
+    protected displayModeService = inject(DisplayModeService);
+    protected changeDetector = inject(ChangeDetectorRef);
+
+    constructor() {
         super();
 
         this.spinnerService.initSpinnerHandling(this.onDestroy$);
@@ -419,6 +432,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 this.displayMode,
                 this.displayModeConfigurations
             );
+
             this.displayModeOn.emit(this.displayModeService.findConfiguration(this.displayMode, this.displayModeConfigurations));
         }
 

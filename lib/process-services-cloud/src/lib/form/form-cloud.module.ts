@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule, FormatSpacePipe, TOOLBAR_DIRECTIVES } from '@alfresco/adf-core';
+import { CoreModule, FormatSpacePipe, TOOLBAR_DIRECTIVES, FormStylePipe } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -65,7 +65,8 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         FormatSpacePipe,
         AlfrescoViewerComponent,
         ...CONTENT_UPLOAD_DIRECTIVES,
-        ...CONTENT_METADATA_DIRECTIVES
+        ...CONTENT_METADATA_DIRECTIVES,
+        FormStylePipe
     ],
     declarations: [
         FormCloudComponent,

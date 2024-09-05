@@ -33,6 +33,7 @@ import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model
 import { FormValidationService } from '../../../services/form-validation-service.interface';
 import { ProcessFormModel } from './process-form-model.interface';
 import { WidgetTypeEnum, WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import { ThemeModel } from './theme.model';
 
 export interface ConfirmMessage {
     show: boolean;
@@ -58,6 +59,7 @@ export interface FormRepresentationModel {
         fields?: any[];
     };
     displayMode: string;
+    theme?: ThemeModel;
 }
 export class FormModel implements ProcessFormModel {
     static UNSET_TASK_NAME: string = 'Nameless task';
@@ -85,6 +87,7 @@ export class FormModel implements ProcessFormModel {
     outcomes: FormOutcomeModel[] = [];
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
     customFieldTemplates: FormFieldTemplates = {};
+    theme?: ThemeModel;
 
     className: string;
     readOnly = false;
@@ -116,6 +119,7 @@ export class FormModel implements ProcessFormModel {
             this.enableFixedSpace = enableFixedSpace;
             this.confirmMessage = json.confirmMessage || {};
             this.displayMode = json.displayMode;
+            this.theme = json.theme;
 
             this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));
 

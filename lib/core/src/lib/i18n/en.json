@@ -70,6 +70,20 @@
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Nameless task"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Font size",
+      "FONT_WEIGHT": "Font weight",
+      "FONT_COLOR": "Font color",
+      "REGULAR": "Regular",
+      "BOLD": "Bold",
+      "SYSTEM_COLOR": "System color",
+      "BLACK": "Black",
+      "GREY": "Grey",
+      "RED": "Red",
+      "GREEN": "Green",
+      "BLUE": "Blue",
+      "YELLOW": "Yellow"
     }
   },
   "CORE": {

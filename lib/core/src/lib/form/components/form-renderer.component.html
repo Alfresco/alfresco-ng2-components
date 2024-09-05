@@ -21,7 +21,7 @@
              [id]="'field-' + currentRootElement?.id + '-container'"
              class="adf-container-widget"
              [hidden]="!currentRootElement?.isVisible">
-            <div [hidden]="!currentRootElement?.isGroup()" class="adf-container-widget__header">
+            <div [hidden]="!currentRootElement?.isGroup()" [style]="currentRootElement | adfFieldStyle" class="adf-container-widget__header">
                 <h4 class="adf-container-widget__header-text" id="container-header"
                     [class.adf-collapsible]="currentRootElement?.isCollapsible()">
                     <button *ngIf="currentRootElement?.isCollapsible()"
