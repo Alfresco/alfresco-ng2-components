@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { TaskDetailsCloudModel } from '@alfresco/adf-process-services-cloud';
 import { assignedTaskDetailsCloudMock } from '../../task-header/mocks/task-details-cloud.mock';
 import { TaskFilterCloudModel, ServiceTaskFilterCloudModel, AssignmentType, TaskStatusFilter } from '../models/filter-cloud.model';
 
@@ -321,3 +322,8 @@ export const defaultTaskFiltersMock = [
         order: 'DESC'
     }
 ];
+
+export const fakeFilterNotification: TaskDetailsCloudModel = {
+    status: TaskStatusFilter.ASSIGNED,
+    assignee: 'AssignedTaskUser'
+} as TaskDetailsCloudModel;

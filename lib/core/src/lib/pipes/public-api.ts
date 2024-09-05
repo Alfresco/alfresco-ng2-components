@@ -26,7 +26,6 @@ export * from './multi-value.pipe';
 export * from './text-highlight.pipe';
 export * from './time-ago.pipe';
 export * from './user-initial.pipe';
-export * from './localized-role.pipe';
 export * from './pipe.module';
 export * from './moment-date.pipe';
 export * from './moment-datetime.pipe';

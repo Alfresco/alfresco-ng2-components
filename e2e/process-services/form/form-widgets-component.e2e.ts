@@ -145,7 +145,7 @@ describe('Form widgets', () => {
         });
 
         it('[C272783] Should display displayText and displayValue in form', async () => {
-            const expected0 = ' ' + formInstance.getWidgetBy('id', appFields.displayText_id).value;
+            const expected0 = formInstance.getWidgetBy('id', appFields.displayText_id).value;
             const expected1 = (formInstance.getWidgetBy('id', appFields.displayValue_id).value as string) || 'Display value';
             const expected2 = (formInstance.getWidgetBy('id', appFields.displayValue_id).value as string) || '';
 

@@ -85,6 +85,10 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     ngOnInit() {
         super.ngOnInit();
 
+        if (Array.isArray(this.field.value) && this.isFileSourceConfigured()) {
+            this.tempFilesList.push(...this.field.value);
+        }
+
         this.activitiContentService.getAlfrescoRepositories().subscribe((repoList) => {
             this.repositoryList = repoList;
         });
@@ -170,7 +174,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         if (file.isExternal || !file.contentAvailable) {
             return;
         }
-        if (this.isTemporaryFile(file) || file.sourceId) {
+        if (this.isTemporaryFile(file)) {
             this.formService.formContentClicked.next(file);
         } else {
             this.fileClicked(file);

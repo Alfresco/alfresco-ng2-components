@@ -172,6 +172,16 @@ describe('AttachFileWidgetComponent', () => {
         fixture.destroy();
     });
 
+    it('should add file to tempFilesList when form has value and file source is configured', () => {
+        spyOn(widget, 'isFileSourceConfigured').and.returnValue(true);
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.UPLOAD,
+            value: [fakePngAnswer]
+        });
+        fixture.detectChanges();
+        expect(widget.isTemporaryFile(fakePngAnswer)).toBeTrue();
+    });
+
     it('should show up as simple upload when is configured for only local files', async () => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(null));
         widget.field = new FormFieldModel(new FormModel(), {
@@ -515,19 +525,6 @@ describe('AttachFileWidgetComponent', () => {
             showOption.click();
             fixture.detectChanges();
             await fixture.whenStable();
-        });
-
-        it('should raise formContentClicked event when file has sourceId', async () => {
-            const testFile = {
-                sourceId: '12345',
-                id: '12345',
-                contentAvailable: true
-            };
-            formService.formContentClicked.subscribe((file) => {
-                expect(file).not.toBeNull();
-                expect(file).toBe(testFile);
-            });
-            fixture.componentInstance.onAttachFileClicked(testFile);
         });
 
         it('should not display the show button file when is an external file', async () => {
