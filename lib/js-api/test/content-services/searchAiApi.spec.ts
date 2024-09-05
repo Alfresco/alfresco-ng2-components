@@ -53,18 +53,13 @@ describe('SearchAiApi', () => {
                     }
                 ])
                 .then((questions) => {
-                    assert.deepStrictEqual(questions, [
-                        {
-                            questionId: 'some id 1',
-                            question: 'some question 1',
-                            restrictionQuery: 'some node id 1'
-                        },
-                        {
-                            questionId: 'some id 2',
-                            question: 'some question 2',
-                            restrictionQuery: 'some node id 2,some node id 3'
+                    assert.deepStrictEqual(questions, {
+                        questionId: 'some id 1',
+                        question: 'some question 1',
+                        restrictionQuery: {
+                            nodesIds: ['some node id 1']
                         }
-                    ]);
+                    });
                     done();
                 });
         });
