@@ -17,13 +17,14 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
+import { ContainerModel } from '../components/widgets/core/container.model';
 
 @Pipe({
     name: 'adfFieldStyle',
     standalone: true
 })
 export class FieldStylePipe implements PipeTransform {
-    transform(field: FormFieldModel): string {
+    transform(field: FormFieldModel | ContainerModel): string {
         const theme = field.form?.theme?.widgets[field.type];
         const style = field.style && theme?.[field.style];
 

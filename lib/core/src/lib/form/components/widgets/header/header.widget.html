@@ -1,0 +1,18 @@
+<div [hidden]="!element?.isGroup()" [style]="element | adfFieldStyle" class="adf-container-widget-header">
+    <h4 class="adf-container-widget-header__text" id="container-header"
+        [class.adf-collapsible]="element?.isCollapsible()">
+        <button *ngIf="element?.isCollapsible()"
+                mat-icon-button
+                class="mdl-button--icon"
+                (click)="onExpanderClicked(element)">
+            <mat-icon>{{ element?.isExpanded ? 'expand_more' : 'expand_less' }}</mat-icon>
+        </button>
+        <span (click)="onExpanderClicked(element)"
+              role="button"
+              tabindex="0"
+              (keyup.enter)="onExpanderClicked(element)"
+              [id]="'container-header-label-' + element?.id">
+            {{ element.name | translate }}
+        </span>
+    </h4>
+</div>
