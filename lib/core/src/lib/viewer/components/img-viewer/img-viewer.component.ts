@@ -81,46 +81,7 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
     isSaving = new EventEmitter<boolean>();
 
     @ViewChild('image', { static: false })
-    public imageElement: ElementRef;
-
-    public scale: number = 1.0;
-    public cropper: Cropper;
-    public isEditing: boolean = false;
-
-    get currentScaleText(): string {
-        return Math.round(this.scale * 100) + '%';
-    }
-
-    constructor(private appConfigService: AppConfigService, private urlService: UrlService) {
-        this.initializeScaling();
-    }
-
-    initializeScaling() {
-        const scaling = this.appConfigService.get<number>('adf-viewer-render.image-viewer-scaling', undefined) / 100;
-        if (scaling) {
-            this.scale = scaling;
-        }
-    }
-
-    ngAfterViewInit() {
-        this.cropper = new Cropper(this.imageElement.nativeElement, {
-            autoCrop: false,
-            dragMode: 'move',
-            background: false,
-            scalable: true,
-            zoomOnWheel: true,
-            toggleDragModeOnDblclick: false,
-            viewMode: 1,
-            checkCrossOrigin: false,
-            ready: () => {
-                this.updateCanvasContainer();
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        this.cropper.destroy();
-    }
+    imageElement: ElementRef;
 
     @HostListener('document:keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
@@ -161,6 +122,18 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
+    scale: number = 1.0;
+    cropper: Cropper;
+    isEditing: boolean = false;
+
+    get currentScaleText(): string {
+        return Math.round(this.scale * 100) + '%';
+    }
+
+    constructor(private appConfigService: AppConfigService, private urlService: UrlService) {
+        this.initializeScaling();
+    }
+
     ngOnChanges(changes: SimpleChanges) {
         const blobFile = changes['blobFile'];
         if (blobFile?.currentValue) {
@@ -176,6 +149,34 @@ export class ImgViewerComponent implements AfterViewInit, OnChanges, OnDestroy {
 
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');
+        }
+    }
+
+    ngAfterViewInit() {
+        this.cropper = new Cropper(this.imageElement.nativeElement, {
+            autoCrop: false,
+            checkOrientation: false,
+            dragMode: 'move',
+            background: false,
+            scalable: true,
+            zoomOnWheel: true,
+            toggleDragModeOnDblclick: false,
+            viewMode: 1,
+            checkCrossOrigin: false,
+            ready: () => {
+                this.updateCanvasContainer();
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.cropper.destroy();
+    }
+
+    initializeScaling() {
+        const scaling = this.appConfigService.get<number>('adf-viewer-render.image-viewer-scaling', undefined) / 100;
+        if (scaling) {
+            this.scale = scaling;
         }
     }
 
