@@ -37,11 +37,11 @@ export const headerSchema: WidgetSchemaModel<HeaderThemeVariable> = {
             type: 'options',
             options: [
                 {
-                    name: 'FORM.FIELD_STYLE.REGULAR',
+                    name: 'FORM.FIELD_STYLE.FONT_WEIGHTS.REGULAR',
                     value: 'normal'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.BOLD',
+                    name: 'FORM.FIELD_STYLE.FONT_WEIGHTS.BOLD',
                     value: 'bold'
                 }
             ],
@@ -55,35 +55,61 @@ export const headerSchema: WidgetSchemaModel<HeaderThemeVariable> = {
             type: 'colorOptions',
             options: [
                 {
-                    name: 'FORM.FIELD_STYLE.SYSTEM_COLOR',
+                    name: 'FORM.FIELD_STYLE.COLORS.SYSTEM_COLOR',
                     value: 'inherit'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.BLACK',
+                    name: 'FORM.FIELD_STYLE.COLORS.BLACK',
                     value: '#000000'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.GREY',
+                    name: 'FORM.FIELD_STYLE.COLORS.GREY',
                     value: '#9CA3AF'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.RED',
+                    name: 'FORM.FIELD_STYLE.COLORS.RED',
                     value: '#DA1500'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.GREEN',
+                    name: 'FORM.FIELD_STYLE.COLORS.GREEN',
                     value: '#04A003'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.BLUE',
+                    name: 'FORM.FIELD_STYLE.COLORS.BLUE',
                     value: '#0A60CE'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.YELLOW',
+                    name: 'FORM.FIELD_STYLE.COLORS.YELLOW',
                     value: '#FACC15'
                 }
             ],
             defaultValue: 'inherit'
+        }
+    ],
+    predefinedFieldStyles: [
+        {
+            name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.NORMAL',
+            style: {
+                '--adf-header-font-size': '16px',
+                '--adf-header-font-weight': 'normal',
+                '--adf-header-color': 'inherit'
+            }
+        },
+        {
+            name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.HEADING',
+            style: {
+                '--adf-header-font-size': '20px',
+                '--adf-header-font-weight': 'normal',
+                '--adf-header-color': 'inherit'
+            }
+        },
+        {
+            name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.TITLE',
+            style: {
+                '--adf-header-font-size': '24px',
+                '--adf-header-font-weight': 'normal',
+                '--adf-header-color': 'inherit'
+            }
         }
     ]
 };
