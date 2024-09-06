@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AiAnswerPaging, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
+import { AiAnswerEntry, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { SelectionState } from '@alfresco/adf-extensions';
@@ -64,9 +64,9 @@ export class SearchAiService {
      * Get an answer to specific question.
      *
      * @param questionId The ID of the question to get an answer for.
-     * @returns AiAnswerPaging object containing the answer.
+     * @returns AiAnswerEntry object containing the answer.
      */
-    getAnswer(questionId: string): Observable<AiAnswerPaging> {
+    getAnswer(questionId: string): Observable<AiAnswerEntry> {
         return from(this.searchAiApi.getAnswer(questionId));
     }
 

@@ -34,8 +34,6 @@ export * from './agentPaging';
 export * from './agentPagingList';
 export * from './aiAnswer';
 export * from './aiAnswerEntry';
-export * from './aiAnswerPaging';
-export * from './aiAnswerPagingList';
 export * from './aiAnswerReference';
 export * from './association';
 export * from './associationBody';
