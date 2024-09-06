@@ -27,7 +27,6 @@ import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 /**
  * The default extensions factory
  *
@@ -47,7 +46,6 @@ export const EXTENSION_JSON_VALUES = new InjectionToken<string[][]>('extension-j
     factory: extensionJsonsFactory
 });
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 /**
  * Provides the extension json values for the angular modules
  *
