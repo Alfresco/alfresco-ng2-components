@@ -35,18 +35,21 @@ export interface ThemeModel {
     };
     widgets?: {
         ['readonly-text']?: {
-            [styleName: string]: {
-                [variable in ReadonlyTextThemeVariable]?: string;
+            [styleKey: string]: {
+                name: string;
+                styles: { [variable in ReadonlyTextThemeVariable]?: string };
             };
         };
         ['group']?: {
-            [styleName: string]: {
-                [variable in HeaderThemeVariable]?: string;
+            [styleKey: string]: {
+                name: string;
+                styles: { [variable in HeaderThemeVariable]?: string };
             };
         };
         ['radio-buttons']?: {
-            [styleName: string]: {
-                [variable in RadioButtonsThemeVariable]?: string;
+            [styleKey: string]: {
+                name: string;
+                styles: { [variable in RadioButtonsThemeVariable]?: string };
             };
         };
     };
@@ -56,8 +59,9 @@ export interface ThemeModel {
 }
 
 export interface WidgetSchemaPredefinedStyle<TFieldVariable extends string> {
-    [styleName: string]: {
-        [key in TFieldVariable]?: string;
+    [styleKey: string]: {
+        name: string;
+        styles: { [key in TFieldVariable]?: string };
     };
 }
 

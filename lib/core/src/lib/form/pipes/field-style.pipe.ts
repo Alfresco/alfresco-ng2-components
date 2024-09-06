@@ -30,9 +30,11 @@ export class FieldStylePipe implements PipeTransform {
             return '';
         }
 
-        const style = field.form?.theme?.widgets[field.type]?.[field.style] || predefinedTheme.widgets[field.type]?.[field.style];
+        const themeStyle = field.form?.theme?.widgets[field.type]?.[field.style];
+        const predefinedThemeStyle = predefinedTheme.widgets[field.type]?.[field.style];
+        const styles = (themeStyle || predefinedThemeStyle)?.styles;
 
-        return style ? this.flattenStyles(style) : '';
+        return styles ? this.flattenStyles(styles) : '';
     }
 
     private flattenStyles(styles: { [key: string]: string }): string {

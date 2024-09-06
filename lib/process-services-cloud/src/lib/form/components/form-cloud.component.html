@@ -53,8 +53,8 @@
                                 <mat-icon>refresh</mat-icon>
                             </button>
                         </div>
-                        <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title" [title]="form.taskName">
-                            {{form.taskName}}
+                        <span *ngIf="isTitleEnabled()" class="adf-cloud-form-title" [title]="form.taskName"
+                            >{{form.taskName}}
                             <ng-container *ngIf="!form.taskName">
                                 {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
                             </ng-container>

@@ -20,64 +20,97 @@ import { PredefinedThemeModel } from './theme.model';
 export const predefinedTheme: PredefinedThemeModel = {
     widgets: {
         'readonly-text': {
-            'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.NORMAL': {
-                '--adf-readonly-text-font-size': '16px',
-                '--adf-readonly-text-font-weight': 'normal',
-                '--adf-readonly-text-color': 'inherit'
+            normal: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.NORMAL',
+                styles: {
+                    '--adf-readonly-text-font-size': '16px',
+                    '--adf-readonly-text-font-weight': 'normal',
+                    '--adf-readonly-text-color': 'inherit'
+                }
             },
-            'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.STRONG': {
-                '--adf-readonly-text-font-size': '16px',
-                '--adf-readonly-text-font-weight': 'bold',
-                '--adf-readonly-text-color': 'inherit'
+            strong: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.STRONG',
+                styles: {
+                    '--adf-readonly-text-font-size': '16px',
+                    '--adf-readonly-text-font-weight': 'bold',
+                    '--adf-readonly-text-color': 'inherit'
+                }
             },
-            'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.HEADING': {
-                '--adf-readonly-text-font-size': '20px',
-                '--adf-readonly-text-font-weight': 'normal',
-                '--adf-readonly-text-color': 'inherit'
+            heading: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.HEADING',
+                styles: {
+                    '--adf-readonly-text-font-size': '20px',
+                    '--adf-readonly-text-font-weight': 'normal',
+                    '--adf-readonly-text-color': 'inherit'
+                }
             },
-            'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.TITLE': {
-                '--adf-readonly-text-font-size': '24px',
-                '--adf-readonly-text-font-weight': 'no rmal',
-                '--adf-readonly-text-color': 'inherit'
+            title: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.TITLE',
+                styles: {
+                    '--adf-readonly-text-font-size': '24px',
+                    '--adf-readonly-text-font-weight': 'normal',
+                    '--adf-readonly-text-color': 'inherit'
+                }
             },
-            'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.ANNOTATION': {
-                '--adf-readonly-text-font-size': '12px',
-                '--adf-readonly-text-font-weight': 'normal',
-                '--adf-readonly-text-color': 'inherit'
+            annotation: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.ANNOTATION',
+                styles: {
+                    '--adf-readonly-text-font-size': '12px',
+                    '--adf-readonly-text-font-weight': 'normal',
+                    '--adf-readonly-text-color': 'inherit'
+                }
             }
         },
         group: {
-            'FORM.FIELD_STYLE.PREDEFINED.HEADER.NORMAL': {
-                '--adf-header-font-size': '16px',
-                '--adf-header-font-weight': 'normal',
-                '--adf-header-color': 'inherit'
+            normal: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.NORMAL',
+                styles: {
+                    '--adf-header-font-size': '16px',
+                    '--adf-header-font-weight': 'normal',
+                    '--adf-header-color': 'inherit'
+                }
             },
-            'FORM.FIELD_STYLE.PREDEFINED.HEADER.HEADING': {
-                '--adf-header-font-size': '20px',
-                '--adf-header-font-weight': 'normal',
-                '--adf-header-color': 'inherit'
+            heading: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.HEADING',
+                styles: {
+                    '--adf-header-font-size': '20px',
+                    '--adf-header-font-weight': 'normal',
+                    '--adf-header-color': 'inherit'
+                }
             },
-            'FORM.FIELD_STYLE.PREDEFINED.HEADER.TITLE': {
-                '--adf-header-font-size': '24px',
-                '--adf-header-font-weight': 'normal',
-                '--adf-header-color': 'inherit'
+            title: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.TITLE',
+                styles: {
+                    '--adf-header-font-size': '24px',
+                    '--adf-header-font-weight': 'normal',
+                    '--adf-header-color': 'inherit'
+                }
             }
         },
         'radio-buttons': {
-            'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.NORMAL': {
-                '--adf-radio-buttons-font-size': '16px',
-                '--adf-radio-buttons-font-weight': 'normal',
-                '--adf-radio-buttons-color': 'inherit'
+            normal: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.NORMAL',
+                styles: {
+                    '--adf-radio-buttons-font-size': '16px',
+                    '--adf-radio-buttons-font-weight': 'normal',
+                    '--adf-radio-buttons-color': 'inherit'
+                }
             },
-            'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.STRONG': {
-                '--adf-radio-buttons-font-size': '16px',
-                '--adf-radio-buttons-font-weight': 'bold',
-                '--adf-radio-buttons-color': 'inherit'
+            strong: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.STRONG',
+                styles: {
+                    '--adf-radio-buttons-font-size': '16px',
+                    '--adf-radio-buttons-font-weight': 'bold',
+                    '--adf-radio-buttons-color': 'inherit'
+                }
             },
-            'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.HEADING': {
-                '--adf-radio-buttons-font-size': '20px',
-                '--adf-radio-buttons-font-weight': 'normal',
-                '--adf-radio-buttons-color': 'inherit'
+            heading: {
+                name: 'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.HEADING',
+                styles: {
+                    '--adf-radio-buttons-font-size': '20px',
+                    '--adf-radio-buttons-font-weight': 'normal',
+                    '--adf-radio-buttons-color': 'inherit'
+                }
             }
         }
     }

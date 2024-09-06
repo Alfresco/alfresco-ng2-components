@@ -89,23 +89,23 @@
         "YELLOW": "Yellow"
       },
       "PREDEFINED": {
-        "HEADER": {
-          "NORMAL": "Normal",
-          "HEADING": "Heading",
-          "TITLE": "Title"
-        },
-        "RADIO_BUTTONS": {
-          "NORMAL": "Normal",
-          "STRONG": "Strong",
-          "HEADING": "Heading"
-        },
-        "READONLY_TEXT": {
-          "NORMAL": "Normal",
-          "STRONG": "Strong",
-          "HEADING": "Heading",
-          "TITLE": "Title",
-          "ANNOTATION": "Annotation"
-        }
+          "HEADER": {
+            "NORMAL": "normal",
+            "HEADING": "heading",
+            "TITLE": "title"
+          },
+          "RADIO_BUTTONS": {
+            "NORMAL": "normal",
+            "STRONG": "strong",
+            "HEADING": "heading"
+          },
+          "READONLY_TEXT": {
+            "NORMAL": "normal",
+            "STRONG": "strong",
+            "HEADING": "heading",
+            "TITLE": "title",
+            "ANNOTATION": "annotation"
+          }
       }
     }
   },
