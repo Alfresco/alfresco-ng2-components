@@ -18,7 +18,7 @@
 import { QuestionModel } from '../model/questionModel';
 import { BaseApi } from '../../hxi-connector-api/api/base.api';
 import { QuestionRequest } from '../model/questionRequest';
-import { AiAnswerPaging } from '../model/aiAnswerPaging';
+import { AiAnswerEntry } from '../model';
 
 /**
  * Search AI API.
@@ -45,11 +45,11 @@ export class SearchAiApi extends BaseApi {
      * Get an answer to specific question.
      *
      * @param questionId The ID of the question to get an answer for.
-     * @returns AiAnswerPaging object containing the answer.
+     * @returns AiAnswerEntry object containing the answer.
      */
-    getAnswer(questionId: string): Promise<AiAnswerPaging> {
+    getAnswer(questionId: string): Promise<AiAnswerEntry> {
         return this.get({
-            path: `questions/${questionId}/answers`
+            path: `questions/${questionId}/answers/-default-`
         });
     }
 }

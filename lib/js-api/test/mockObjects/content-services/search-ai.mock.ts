@@ -47,7 +47,7 @@ export class SearchAiMock extends BaseMock {
 
     mockGetAnswer200Response(): void {
         nock(this.host, { encodedQueryParams: true })
-            .get('/alfresco/api/-default-/private/hxi/versions/1/answers?questionId=id1')
+            .get('/alfresco/api/-default-/private/hxi/versions/1/answers/-default-?questionId=id1')
             .reply(200, {
                 list: {
                     pagination: {
