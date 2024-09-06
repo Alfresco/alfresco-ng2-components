@@ -20,10 +20,10 @@ Manages search AI in Content Services.
     Ask a question to the AI.
     -   _question:_ [`QuestionRequest`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#questionrequest) - The question to ask.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`QuestionModel`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#questionmodel)`>` - QuestionModel object containing information about questions.
--   **getAnswer**(questionId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AiAnswerPaging`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#aianswerpaging)`>`<br/>
+-   **getAnswer**(questionId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AiAnswerEntry`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#aianswerentry)`>`<br/>
     Get an answer to specific question.
     -   _questionId:_ `string` - The ID of the question to get an answer for.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AiAnswerPaging`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#aianswerpaging)`>` - AiAnswerPaging object containing the answer.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AiAnswerEntry`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#aianswerentry)`>` - AiAnswerEntry object containing the answer.
 -   **checkSearchAvailability**(selectedNodesState: `SelectionState`, maxSelectedNodes: `number`): `string`<br/>
     Check if using of search is possible (if all conditions are met).
     -   _selectedNodesState:_ `SelectionState` - information about selected nodes.

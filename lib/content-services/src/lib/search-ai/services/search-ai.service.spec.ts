@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AiAnswerPaging, Node, QuestionModel, QuestionRequest } from '@alfresco/js-api';
+import { AiAnswerEntry, Node, QuestionModel, QuestionRequest } from '@alfresco/js-api';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchAiService } from './search-ai.service';
 import { SearchAiInputState } from '../models/search-ai-input-state';
@@ -57,38 +57,14 @@ describe('SearchAiService', () => {
     describe('getAnswer', () => {
         it('should load information about question', (done) => {
             const questionId = 'some id';
-            const answer: AiAnswerPaging = {
-                list: {
-                    pagination: {
-                        count: 2,
-                        hasMoreItems: false,
-                        skipCount: 0,
-                        maxItems: 100
-                    },
-                    entries: [
+            const answer: AiAnswerEntry = {
+                entry: {
+                    answer: 'Some answer 1',
+                    questionId,
+                    references: [
                         {
-                            entry: {
-                                answer: 'Some answer 1',
-                                questionId,
-                                references: [
-                                    {
-                                        referenceId: 'some reference id 1',
-                                        referenceText: 'some reference text 1'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            entry: {
-                                answer: 'Some answer 2',
-                                questionId,
-                                references: [
-                                    {
-                                        referenceId: 'some reference id 2',
-                                        referenceText: 'some reference text 2'
-                                    }
-                                ]
-                            }
+                            referenceId: 'some reference id 1',
+                            referenceText: 'some reference text 1'
                         }
                     ]
                 }

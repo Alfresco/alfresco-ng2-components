@@ -1,9 +1,9 @@
 # SearchAiApi
 
-| Method                  | HTTP request       | Description                         |
-|-------------------------|--------------------|-------------------------------------|
-| [ask](#ask)             | **GET** /questions | Ask a question to the AI.           |
-| [getAnswer](#getAnswer) | **GET** /answers   | Get an answer to specific question. |
+| Method                  | HTTP request               | Description                         |
+|-------------------------|----------------------------|-------------------------------------|
+| [ask](#ask)             | **GET** /questions         | Ask a question to the AI.           |
+| [getAnswer](#getAnswer) | **GET** /answers/-default- | Get an answer to specific question. |
 
 ## ask
 
@@ -95,26 +95,9 @@ searchAiApi.getAnswer('some question id').then((answer) => {
 |----------------|--------|----------------------------------------------|
 | **questionId** | string | The ID of the question to get an answer for. | 
 
-**Return type**: [AiAnswerPaging](#AiAnswerPaging)
+**Return type**: [AiAnswerEntry](#AiAnswerEntry)
 
 # Models
-
-## AiAnswerPaging
-
-**Properties**
-
-| Name | Type                                      |
-|------|-------------------------------------------|
-| list | [AiAnswerPagingList](#AiAnswerPagingList) |
-
-## AiAnswerPagingList
-
-**Properties**
-
-| Name           | Type                              |
-|----------------|-----------------------------------|
-| **pagination** | [Pagination](Pagination.md)       |
-| **entries**    | [AiAnswerEntry[]](#AiAnswerEntry) |
 
 ## AiAnswerEntry
 
