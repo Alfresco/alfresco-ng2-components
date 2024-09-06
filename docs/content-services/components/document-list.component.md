@@ -66,7 +66,7 @@ Displays the documents from a repository.
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
 | currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
-| displayCheckboxesOnHover | `boolean` | false | Enables checkboxes in datatable rows being displayed on hover only. | 
+| displayCheckboxesOnHover | `boolean` | false | Enables checkboxes in datatable rows being displayed on hover only. |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
 | filterValue | `any` |  | Initial value for filter. |
 | headerFilters | `boolean` | false | Toggles the header filters mode. |
@@ -152,7 +152,7 @@ the other DOM events that the [Document List component](document-list.component.
 Below is a basic example of handling DOM events in the parent elements.
 
 ```html
-<div (node-click)="onNodeClicked($event)" 
+<div (node-click)="onNodeClicked($event)"
 (node-dblclick)="onNodeDblClicked($event)">
     <div>
         <adf-upload-drag-area ...>
@@ -195,7 +195,7 @@ The Document List by default supports 2 types of pagination:  [Pagination compon
 ```html
 <adf-document-list #documentList ...></adf-document-list>
 
-<adf-infinite-pagination 
+<adf-infinite-pagination
     [target]="documentList"
     [loading]="documentList.infiniteLoading">
 </adf-infinite-pagination>
@@ -363,7 +363,7 @@ points you should pay attention to:
 
 ```ts
 import { ChangeDetectorRef } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
 export class FilesComponent implements OnInit {
 
@@ -408,7 +408,7 @@ It is useful for examining other information that you can access if necessary:
 Typically you will bind Document List properties to your application/component class properties:
 
 ```html
-<adf-document-list 
+<adf-document-list
     [currentFolderId]="myStartFolder">
 </adf-document-list>
 ```
@@ -420,7 +420,7 @@ Typically you will bind Document List properties to your application/component c
 export class MyAppComponent {
 
     myStartFolder: string = '-my-';
-    
+
 }
 ```
 
@@ -432,7 +432,7 @@ section of the Angular docs for more information.
 Below is an example of getting a reference:
 
 ```html
-<adf-document-list 
+<adf-document-list
     #documentList
     [currentFolderId]="myStartFolder">
 </adf-document-list>
@@ -448,7 +448,7 @@ import { DocumentListComponent } from '@alfresco/adf-content-services';
 export class MyAppComponent implements AfterViewInit {
 
     myStartFolder: string = '-my-';
-    
+
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
@@ -498,7 +498,7 @@ Here's a short example:
         <data-column key="$thumbnail" type="image"></data-column>
         <data-column title="Name" key="name" class="full-width ellipsis-cell"></data-column>
         <data-column
-            title="Created By" 
+            title="Created By"
             key="createdByUser.displayName">
         </data-column>
     </data-columns>
@@ -517,21 +517,21 @@ A custom set of columns might look like the following:
     <data-columns>
         <data-column key="$thumbnail" type="image"></data-column>
         <data-column
-            title="Name" 
-            key="name" 
+            title="Name"
+            key="name"
             sortable="true"
             class="full-width ellipsis-cell">
         </data-column>
         <data-column
-            title="Created By" 
+            title="Created By"
             key="createdByUser.displayName"
             sortable="true"
             class="desktop-only">
         </data-column>
         <data-column
-            title="Created On" 
-            key="createdAt" 
-            type="date" 
+            title="Created On"
+            key="createdAt"
+            type="date"
             format="medium"
             sortable="true"
             class="desktop-only">
@@ -692,7 +692,7 @@ may be sometimes be useful.
 The following example switches navigation to single clicks:
 
 ```html
-<adf-document-list 
+<adf-document-list
     [navigationMode]="'click'">
 </adf-document-list>
 ```
@@ -702,8 +702,8 @@ The following example switches navigation to single clicks:
 You can enable Header filters in your document list simply setting to true its `headerFilters` input.
 
 ```html
-<adf-document-list 
-    currentFolderId="-my-" 
+<adf-document-list
+    currentFolderId="-my-"
     [headerFilters]="true">
 </adf-document-list>
 ```
@@ -788,11 +788,11 @@ This will give the following output:
 
 ### File Auto downloading
 
-In case of files exceeding a predefined file size, the [document list component](../../content-services/components/document-list.component.md) can be configured to automatically download those file when trying to preview them. 
+In case of files exceeding a predefined file size, the [document list component](../../content-services/components/document-list.component.md) can be configured to automatically download those file when trying to preview them.
 This can help in reducing server load, and ensuring quick access to such files. After turning this feature on, whenever the user tries to preview a file with a large
 file size, the [Document List component](../../content-services/components/document-list.component.md) will first preview a dialog, asking for confirmation from the user on whether they want to download the file, or cancel the preview altogether.
 
-In order to configure the Document List to automatically download the files, the following environment variables would need to be set up in app.config.json - 
+In order to configure the Document List to automatically download the files, the following environment variables would need to be set up in app.config.json -
 
 ```
 "viewer": {

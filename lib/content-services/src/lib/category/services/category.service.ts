@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
+import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import {
     CategoriesApi,
     CategoryBody,
@@ -27,6 +27,7 @@ import {
     SearchApi,
     SEARCH_LANGUAGE
 } from '@alfresco/js-api';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

@@ -20,8 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { StorageService } from './storage.service';
-import { distinctUntilChanged, map, filter } from 'rxjs/operators';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { LanguageItem } from './language-item.interface';
 
 // eslint-disable-next-line no-shadow
@@ -48,13 +47,17 @@ export class UserPreferencesService {
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
-    constructor(public translate: TranslateService,
+    constructor(
+        public translate: TranslateService,
         private appConfig: AppConfigService,
-        private storage: StorageService,
-        private alfrescoApiService: AlfrescoApiService) {
-        this.alfrescoApiService.alfrescoApiInitialized.pipe(filter(status => status)).subscribe(this.initUserPreferenceStatus.bind(this));
+        private storage: StorageService
+    ) {
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
+
+        this.appConfig.onLoad.subscribe(() => {
+            this.initUserPreferenceStatus();
+        });
     }
 
     private initUserPreferenceStatus() {
@@ -168,7 +171,7 @@ export class UserPreferencesService {
      *
      * @param value Name of the prefix
      */
-    setStoragePrefix(value: string) {
+    setStoragePrefix(value: string | null) {
         this.storage.setItem('USER_PROFILE', value || 'GUEST');
         this.initUserPreferenceStatus();
     }

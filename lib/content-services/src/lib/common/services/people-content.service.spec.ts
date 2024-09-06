@@ -16,12 +16,14 @@
  */
 
 import { fakeEcmUser } from '../mocks/ecm-user.service.mock';
-import { AlfrescoApiService, AlfrescoApiServiceMock, RedirectAuthService } from '@alfresco/adf-core';
+import { RedirectAuthService } from '@alfresco/adf-core';
 import { PeopleContentQueryRequestModel, PeopleContentService } from './people-content.service';
 import { TestBed } from '@angular/core/testing';
 import { PersonPaging } from '@alfresco/js-api';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
+import { AlfrescoApiService } from '../../services';
+import { AlfrescoApiServiceMock } from '../../mock';
 
 export const fakeEcmUser2 = {
     id: 'another-fake-id',

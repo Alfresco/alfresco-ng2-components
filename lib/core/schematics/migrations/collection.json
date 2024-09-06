@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "move-out-alfresco-api": {
+      "description": "Update alfresco-api imports",
+      "version": "7.0.0",
+      "factory": "./7_0_0/index#updateAlfrescoApiImports"
+    }
+  },
+  "packageJsonUpdates": {
+    "move-out-alfresco-api": {
+      "version": "7.0.0",
+      "packages": {
+        "ts-morph": {
+          "version": "^20.0.0",
+          "alwaysAddToPackageJson": true,
+          "addToPackageJson": "devDependencies"
+        },
+        "@alfresco/adf-content-services": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/adf-extensions": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/adf-process-services-cloud": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/adf-process-services": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/eslint-plugin-eslint-angular": {
+          "version": "7.0.0",
+          "alwaysAddToPackageJson": false
+        },
+        "@alfresco/js-api": {
+          "version": "8.0.0",
+          "alwaysAddToPackageJson": false
+        }
+      }
+    }
+  }
+}

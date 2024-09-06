@@ -25,7 +25,7 @@ import { NodeAspectService } from '../../../aspect-list/services/node-aspect.ser
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { of } from 'rxjs';
-import { AlfrescoApiService, AlfrescoApiServiceMock, AuthModule, NoopTranslateModule } from '@alfresco/adf-core';
+import { AuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { versionCompatibilityFactory } from '../../../version-compatibility/version-compatibility-factory';
 import { VersionCompatibilityService } from '../../../version-compatibility';
@@ -34,6 +34,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CategoryService } from '../../../category';
 import { TagService } from '../../../tag';
 import { PropertyDescriptorsService } from '../../public-api';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../../../mock/alfresco-api.service.mock';
 
 describe('ContentMetadataCardComponent', () => {
     let component: ContentMetadataCardComponent;

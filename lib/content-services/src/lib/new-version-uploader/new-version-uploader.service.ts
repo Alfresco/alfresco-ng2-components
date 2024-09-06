@@ -17,7 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 import { VersionsApi } from '@alfresco/js-api';
 import { NewVersionUploaderData, NewVersionUploaderDialogData } from './models';

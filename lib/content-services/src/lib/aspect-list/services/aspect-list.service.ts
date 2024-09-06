@@ -16,7 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService  } from '../../services/alfresco-api.service';
+import { AppConfigService } from '@alfresco/adf-core';
 import { from, Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';

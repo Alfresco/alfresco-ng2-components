@@ -19,9 +19,10 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { LibraryMembershipDirective } from './library-membership.directive';
 import { SimpleChange } from '@angular/core';
 import { of, throwError, Subject } from 'rxjs';
-import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { SitesService } from '../common/services/sites.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 describe('LibraryMembershipDirective', () => {
     let alfrescoApiService: AlfrescoApiService;

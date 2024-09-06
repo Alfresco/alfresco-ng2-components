@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, ConfirmDialogComponent } from '@alfresco/adf-core';
+import { ConfirmDialogComponent } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { VersionsApi, Node, VersionEntry, NodesApi, NodeEntry, ContentApi, ContentPagingQuery } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';

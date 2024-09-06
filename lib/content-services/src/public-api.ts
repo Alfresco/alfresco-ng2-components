@@ -42,9 +42,13 @@ export * from './lib/tree/index';
 export * from './lib/category/index';
 export * from './lib/viewer/index';
 export * from './lib/security/index';
+export * from './lib/api-factories';
+export * from './lib/services/index';
 export * from './lib/infinite-scroll-datasource';
 export * from './lib/prediction/index';
 export * from './lib/legal-hold/index';
+export * from './lib/api-factories';
+export * from './lib/mock/alfresco-api.service.mock';
 
 export * from './lib/content.module';
 export * from './lib/material.module';

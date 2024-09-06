@@ -17,7 +17,7 @@
 
 import { Directive, HostListener, Input, OnChanges, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FavoriteBodyCreate, FavoritesApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
 
 @Directive({

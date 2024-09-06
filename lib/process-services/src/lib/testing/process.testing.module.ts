@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProcessModule } from '../process.module';
 import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
     AppConfigService,
     AppConfigServiceMock,
     CoreModule,

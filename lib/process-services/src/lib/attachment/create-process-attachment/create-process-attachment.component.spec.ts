@@ -18,8 +18,8 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateProcessAttachmentComponent } from './create-process-attachment.component';
-import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 declare let jasmine: any;
 

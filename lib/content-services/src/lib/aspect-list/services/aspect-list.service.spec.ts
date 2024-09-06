@@ -16,10 +16,10 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AspectListService } from './aspect-list.service';
 import { AspectPaging, AspectsApi, AspectEntry } from '@alfresco/js-api';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AlfrescoApiService } from '../../services';
 
 const stdAspect1: AspectEntry = { entry: { id: 'std:standardAspectOne', description: 'Standard Aspect One', title: 'StandardAspectOne' } };
 const stdAspect2: AspectEntry = { entry: { id: 'std:standardAspectTwo', description: 'Standard Aspect Two', title: 'StandardAspectTwo' } };

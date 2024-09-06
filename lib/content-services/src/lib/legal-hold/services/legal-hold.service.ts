@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import {
     BulkAssignHoldResponseEntry,
     ContentPagingQuery,
@@ -30,6 +29,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'

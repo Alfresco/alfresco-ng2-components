@@ -35,20 +35,16 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
-import {
-    CategoriesManagementComponent,
-    CategoriesManagementMode,
-    CategoryService,
-    TagsCreatorComponent,
-    TagsCreatorMode,
-    TagService
-} from '@alfresco/adf-content-services';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
+import { TagService } from '../../../tag/services/tag.service';
+import { CategoryService } from '../../../category/services/category.service';
+import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
+import { CategoriesManagementComponent, CategoriesManagementMode } from '../../../category';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;

@@ -19,9 +19,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomplete-chips.component';
-import { TagService } from '@alfresco/adf-content-services';
 import { EMPTY, of } from 'rxjs';
 import { AutocompleteField } from '../../models/autocomplete-option.interface';
+import { TagService } from '../../../tag/services/tag.service';
 
 describe('SearchFilterAutocompleteChipsComponent', () => {
     let component: SearchFilterAutocompleteChipsComponent;

@@ -173,6 +173,7 @@ describe('AttachFileWidgetComponent', () => {
     });
 
     it('should add file to tempFilesList when form has value and file source is configured', () => {
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(widget, 'isFileSourceConfigured').and.returnValue(true);
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,

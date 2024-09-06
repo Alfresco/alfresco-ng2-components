@@ -18,8 +18,9 @@
 import { Injectable } from '@angular/core';
 import { NodePaging, SharedLinkBodyCreate, SharedLinkEntry, SharedlinksApi } from '@alfresco/js-api';
 import { Observable, from, of, Subject } from 'rxjs';
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService } from '@alfresco/adf-core';
 import { catchError } from 'rxjs/operators';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'

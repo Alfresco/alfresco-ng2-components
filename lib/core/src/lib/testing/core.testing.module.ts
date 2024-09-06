@@ -19,8 +19,6 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '../core.module';
-import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
 import { DatePipe } from '@angular/common';
@@ -32,6 +30,7 @@ import { DirectionalityConfigService } from '../common/services/directionality-c
 import { AuthModule, RedirectAuthService } from '../auth';
 import { EMPTY, of } from 'rxjs';
 import { NoopTranslateModule } from './noop-translate.module';
+import { UserPreferencesService } from '../common/services/user-preferences.service';
 
 @NgModule({
     imports: [
@@ -44,7 +43,7 @@ import { NoopTranslateModule } from './noop-translate.module';
     ],
     providers: [
         DatePipe,
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+        UserPreferencesService,
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: CookieService, useClass: CookieServiceMock },
         {

@@ -17,11 +17,12 @@
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { CategoryService } from '../services/category.service';
-import { CategoryNode, CategoryTreeDatasourceService } from '@alfresco/adf-content-services';
 import { CategoryServiceMock } from '../mock/category-mock.service';
 import { TreeNodeType, TreeResponse } from '../../tree';
 import { EMPTY, of } from 'rxjs';
 import { Pagination } from '@alfresco/js-api';
+import { CategoryTreeDatasourceService } from './category-tree-datasource.service';
+import { CategoryNode } from '../models/category-node.interface';
 
 describe('CategoryTreeDatasourceService', () => {
     let categoryTreeDatasourceService: CategoryTreeDatasourceService;

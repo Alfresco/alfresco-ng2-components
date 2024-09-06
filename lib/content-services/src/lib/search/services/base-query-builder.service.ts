@@ -16,7 +16,7 @@
  */
 
 import { Subject, Observable, from, ReplaySubject } from 'rxjs';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService } from '@alfresco/adf-core';
 import {
     SearchRequest,
     RequestFacetFields,
@@ -36,6 +36,7 @@ import { SearchSortingDefinition } from '../models/search-sorting-definition.int
 import { FacetField } from '../models/facet-field.interface';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { SearchForm } from '../models/search-form.interface';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 export abstract class BaseQueryBuilderService {
     private _searchApi: SearchApi;

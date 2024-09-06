@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, PaginationModel } from '@alfresco/adf-core';
+import { PaginationModel } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { inject, Injectable } from '@angular/core';
 import { Node, NodeEntry, NodePaging, NodesApi } from '@alfresco/js-api';
@@ -24,6 +24,7 @@ import { Observable, from, forkJoin, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DocumentListLoader } from '../interfaces/document-list-loader.interface';
 import { CustomResourcesService } from './custom-resources.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 const ROOT_ID = '-root-';
 

@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { PredictionsApi, PredictionPaging, ReviewStatus } from '@alfresco/js-api';
 import { from, Observable } from 'rxjs';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class PredictionService {

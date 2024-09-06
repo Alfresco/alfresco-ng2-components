@@ -18,6 +18,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { SearchComponent } from '../search/components/search.component';
 import { SearchRequest, ResultSetPaging, ResultSetRowEntry, ContentInfo, UserInfo, ResultNode } from '@alfresco/js-api';
+import { SearchModule } from '../search';
+import { CommonModule } from '@angular/common';
 
 const entryItem = new ResultSetRowEntry({
     entry: new ResultNode({
@@ -103,7 +105,9 @@ export const noResult = {
             </ng-template>
         </adf-search>
         <span id="component-result-message">{{ message }}</span>
-    `
+    `,
+    standalone: true,
+    imports: [SearchModule, CommonModule]
 })
 export class SimpleSearchTestComponent {
     @ViewChild('search', { static: true })

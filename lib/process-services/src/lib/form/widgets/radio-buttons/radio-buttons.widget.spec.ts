@@ -24,10 +24,8 @@ import {
     FormFieldOption,
     FormFieldModel,
     FormModel,
-    AlfrescoApiServiceMock,
     AppConfigServiceMock,
     AppConfigService,
-    AlfrescoApiService,
     NoopTranslateModule
 } from '@alfresco/adf-core';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
@@ -36,6 +34,7 @@ import { ProcessDefinitionService } from '../../services/process-definition.serv
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 describe('RadioButtonsWidgetComponent', () => {
     let formService: FormService;

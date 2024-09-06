@@ -16,7 +16,6 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
 import { DownloadZipDialogStorybookComponent } from './download-zip.dialog.stories.component';
 import { AlfrescoApiServiceMock, ContentApiMock, DownloadZipMockService, NodesApiMock } from './mock/download-zip-service.mock';
@@ -27,6 +26,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { importProvidersFrom } from '@angular/core';
 import { CoreStoryModule } from '../../../../../core/src/public-api';
+import { AlfrescoApiService } from '../../services';
 
 export default {
     component: DownloadZipDialogStorybookComponent,
