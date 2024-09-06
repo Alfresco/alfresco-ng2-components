@@ -43,11 +43,13 @@ describe('SearchAiApi', () => {
                 .ask([
                     {
                         question: 'some question 1',
-                        nodeIds: ['some node id 1']
+                        nodeIds: ['some node id 1'],
+                        agentId: 'some id 1'
                     },
                     {
                         question: 'some question 2',
-                        nodeIds: ['some node id 2', 'some node id 3']
+                        nodeIds: ['some node id 2', 'some node id 3'],
+                        agentId: 'some id 2'
                     }
                 ])
                 .then((questions) => {
@@ -74,37 +76,13 @@ describe('SearchAiApi', () => {
 
             searchAiApi.getAnswer('id1').then((answer) => {
                 assert.deepStrictEqual(answer, {
-                    list: {
-                        pagination: {
-                            count: 2,
-                            hasMoreItems: false,
-                            skipCount: 0,
-                            maxItems: 100
-                        },
-                        entries: [
+                    entry: {
+                        answer: 'Some answer 1',
+                        questionId: 'some id 1',
+                        references: [
                             {
-                                entry: {
-                                    answer: 'Some answer 1',
-                                    questionId: 'some id 1',
-                                    references: [
-                                        {
-                                            referenceId: 'some reference id 1',
-                                            referenceText: 'some reference text 1'
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                entry: {
-                                    answer: 'Some answer 2',
-                                    questionId: 'some id 2',
-                                    references: [
-                                        {
-                                            referenceId: 'some reference id 2',
-                                            referenceText: 'some reference text 2'
-                                        }
-                                    ]
-                                }
+                                referenceId: 'some reference id 1',
+                                referenceText: 'some reference text 1'
                             }
                         ]
                     }
