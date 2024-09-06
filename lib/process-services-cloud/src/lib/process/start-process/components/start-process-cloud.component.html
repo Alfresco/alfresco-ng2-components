@@ -100,7 +100,7 @@
 <ng-template #taskFormCloudButtons>
     <div class="adf-start-process-cloud-actions">
         <button
-            *ngIf="showCancelButton && displayCancelButton"
+            *ngIf="showCancelButton"
             mat-button
             (click)="cancelStartProcess()"
             id="cancel_process"
@@ -108,7 +108,7 @@
             {{ cancelButtonLabel }}
         </button>
         <button
-            *ngIf="displayStartProcessButton"
+            *ngIf="showStartProcessButton"
             color="primary"
             mat-raised-button
             [disabled]="disableStartButton || !isProcessFormValid"

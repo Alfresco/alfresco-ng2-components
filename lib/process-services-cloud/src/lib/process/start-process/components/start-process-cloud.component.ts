@@ -131,8 +131,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     isFormCloudLoading = false;
     processDefinitionLoaded = false;
 
-    displayStartProcessButton = true;
-    displayCancelButton = true;
+    showStartProcessButton = true;
     startProcessButtonLabel: string;
     cancelButtonLabel: string;
 
@@ -268,14 +267,14 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             const cancelLabel = constants?.find((constant) => constant.name === 'cancelLabel');
 
             if (displayStart) {
-                this.displayStartProcessButton = displayStart?.value === 'true';
+                this.showStartProcessButton = displayStart?.value === 'true';
             }
             if (startLabel) {
                 this.startProcessButtonLabel = startLabel?.value?.trim()?.length > 0 ? startLabel.value.trim() : this.defaultStartProcessButtonLabel;
             }
 
             if (displayCancel) {
-                this.displayCancelButton = displayCancel?.value === 'true';
+                this.showCancelButton = displayCancel?.value === 'true' && this.showCancelButton;
             }
             if (cancelLabel) {
                 this.cancelButtonLabel = cancelLabel?.value?.trim()?.length > 0 ? cancelLabel.value.trim() : this.defaultCancelProcessButtonLabel;
