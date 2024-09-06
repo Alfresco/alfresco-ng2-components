@@ -18,6 +18,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
 import { ContainerModel } from '../components/widgets/core/container.model';
+import { predefinedTheme } from '../components/widgets/core/predefined-theme';
 
 @Pipe({
     name: 'adfFieldStyle',
@@ -25,15 +26,18 @@ import { ContainerModel } from '../components/widgets/core/container.model';
 })
 export class FieldStylePipe implements PipeTransform {
     transform(field: FormFieldModel | ContainerModel): string {
-        const theme = field.form?.theme?.widgets[field.type];
-        const style = field.style && theme?.[field.style];
+        if (!field.style) {
+            return '';
+        }
+
+        const style = field.form?.theme?.widgets[field.type]?.[field.style] || predefinedTheme.widgets[field.type]?.[field.style];
 
         return style ? this.flattenStyles(style) : '';
     }
 
     private flattenStyles(styles: { [key: string]: string }): string {
         return Object.entries(styles)
-            .map(([key, value]) => `${key}: ${value}`)
-            .join(';');
+            .map(([key, value]) => `${key}:${value};`)
+            .join('');
     }
 }

@@ -85,47 +85,5 @@ export const displayTextSchema: WidgetSchemaModel<ReadonlyTextThemeVariable> = {
             ],
             defaultValue: 'inherit'
         }
-    ],
-    predefinedFieldStyles: [
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.NORMAL',
-            style: {
-                '--adf-readonly-text-font-size': '16px',
-                '--adf-readonly-text-font-weight': 'normal',
-                '--adf-readonly-text-color': 'inherit'
-            }
-        },
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.STRONG',
-            style: {
-                '--adf-readonly-text-font-size': '16px',
-                '--adf-readonly-text-font-weight': 'bold',
-                '--adf-readonly-text-color': 'inherit'
-            }
-        },
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.HEADING',
-            style: {
-                '--adf-readonly-text-font-size': '20px',
-                '--adf-readonly-text-font-weight': 'normal',
-                '--adf-readonly-text-color': 'inherit'
-            }
-        },
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.TITLE',
-            style: {
-                '--adf-readonly-text-font-size': '24px',
-                '--adf-readonly-text-font-weight': 'normal',
-                '--adf-readonly-text-color': 'inherit'
-            }
-        },
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.READONLY_TEXT.ANNOTATION',
-            style: {
-                '--adf-readonly-text-font-size': '12px',
-                '--adf-readonly-text-font-weight': 'normal',
-                '--adf-readonly-text-color': 'inherit'
-            }
-        }
     ]
 };

@@ -54,3 +54,17 @@ export interface ThemeModel {
         [widgetType in SupportedWidgetType]?: string;
     };
 }
+
+export interface WidgetSchemaPredefinedStyle<TFieldVariable extends string> {
+    [styleName: string]: {
+        [key in TFieldVariable]?: string;
+    };
+}
+
+export interface PredefinedThemeModel {
+    widgets?: {
+        ['readonly-text']?: WidgetSchemaPredefinedStyle<ReadonlyTextThemeVariable>;
+        ['group']?: WidgetSchemaPredefinedStyle<HeaderThemeVariable>;
+        ['radio-buttons']?: WidgetSchemaPredefinedStyle<RadioButtonsThemeVariable>;
+    };
+}

@@ -85,31 +85,5 @@ export const headerSchema: WidgetSchemaModel<HeaderThemeVariable> = {
             ],
             defaultValue: 'inherit'
         }
-    ],
-    predefinedFieldStyles: [
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.NORMAL',
-            style: {
-                '--adf-header-font-size': '16px',
-                '--adf-header-font-weight': 'normal',
-                '--adf-header-color': 'inherit'
-            }
-        },
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.HEADING',
-            style: {
-                '--adf-header-font-size': '20px',
-                '--adf-header-font-weight': 'normal',
-                '--adf-header-color': 'inherit'
-            }
-        },
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.HEADER.TITLE',
-            style: {
-                '--adf-header-font-size': '24px',
-                '--adf-header-font-weight': 'normal',
-                '--adf-header-color': 'inherit'
-            }
-        }
     ]
 };

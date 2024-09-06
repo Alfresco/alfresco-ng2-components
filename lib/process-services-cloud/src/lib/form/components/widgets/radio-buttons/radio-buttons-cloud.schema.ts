@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { WidgetSchemaModel, RadioButtonsThemeVariable } from '@alfresco/adf-core';
+import { RadioButtonsThemeVariable, WidgetSchemaModel } from '@alfresco/adf-core';
 
 export const radioButtonsSchema: WidgetSchemaModel<RadioButtonsThemeVariable> = {
     themeProperties: [
@@ -83,32 +83,6 @@ export const radioButtonsSchema: WidgetSchemaModel<RadioButtonsThemeVariable> = 
                 }
             ],
             defaultValue: 'inherit'
-        }
-    ],
-    predefinedFieldStyles: [
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.NORMAL',
-            style: {
-                '--adf-radio-buttons-font-size': '16px',
-                '--adf-radio-buttons-font-weight': 'normal',
-                '--adf-radio-buttons-color': 'inherit'
-            }
-        },
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.STRONG',
-            style: {
-                '--adf-radio-buttons-font-size': '16px',
-                '--adf-radio-buttons-font-weight': 'bold',
-                '--adf-radio-buttons-color': 'inherit'
-            }
-        },
-        {
-            name: 'FORM.FIELD_STYLE.PREDEFINED.RADIO_BUTTONS.HEADING',
-            style: {
-                '--adf-radio-buttons-font-size': '20px',
-                '--adf-radio-buttons-font-weight': 'normal',
-                '--adf-radio-buttons-color': 'inherit'
-            }
         }
     ]
 };

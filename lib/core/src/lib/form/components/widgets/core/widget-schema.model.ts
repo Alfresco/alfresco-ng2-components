@@ -21,7 +21,6 @@ export type WidgetStylePropertySelector = 'number' | 'options' | 'colorOptions';
 
 export interface WidgetSchemaModel<TFieldVariable extends string, TFormVariable = FormThemeVariable> {
     themeProperties: WidgetSchemaThemeProperty<TFieldVariable, TFormVariable>[];
-    predefinedFieldStyles?: WidgetSchemaPredefinedStyle<TFieldVariable>[];
 }
 
 export interface WidgetSchemaThemeProperty<TFieldVariable, TFormVariable = FormThemeVariable> {
@@ -36,11 +35,4 @@ export interface WidgetSchemaThemeProperty<TFieldVariable, TFormVariable = FormT
     }[];
     unit?: string;
     defaultValue: string;
-}
-
-export interface WidgetSchemaPredefinedStyle<TFieldVariable extends string> {
-    name: string;
-    style: {
-        [key in TFieldVariable]?: string;
-    };
 }
