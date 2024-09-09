@@ -42,39 +42,15 @@ export class SearchAiMock extends BaseMock {
 
     mockGetAnswer200Response(): void {
         nock(this.host, { encodedQueryParams: true })
-            .get('/alfresco/api/-default-/private/hxi/versions/1/answers/-default-?questionId=id1')
+            .get('/alfresco/api/-default-/private/hxi/versions/1/questions/id1/answers/-default-')
             .reply(200, {
-                list: {
-                    pagination: {
-                        count: 2,
-                        hasMoreItems: false,
-                        skipCount: 0,
-                        maxItems: 100
-                    },
-                    entries: [
+                entry: {
+                    answer: 'Some answer 1',
+                    questionId: 'some id 1',
+                    references: [
                         {
-                            entry: {
-                                answer: 'Some answer 1',
-                                questionId: 'some id 1',
-                                references: [
-                                    {
-                                        referenceId: 'some reference id 1',
-                                        referenceText: 'some reference text 1'
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            entry: {
-                                answer: 'Some answer 2',
-                                questionId: 'some id 2',
-                                references: [
-                                    {
-                                        referenceId: 'some reference id 2',
-                                        referenceText: 'some reference text 2'
-                                    }
-                                ]
-                            }
+                            referenceId: 'some reference id 1',
+                            referenceText: 'some reference text 1'
                         }
                     ]
                 }

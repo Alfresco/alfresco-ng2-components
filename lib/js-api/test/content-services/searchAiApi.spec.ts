@@ -44,12 +44,7 @@ describe('SearchAiApi', () => {
                     {
                         question: 'some question 1',
                         nodeIds: ['some node id 1'],
-                        agentId: 'some id 1'
-                    },
-                    {
-                        question: 'some question 2',
-                        nodeIds: ['some node id 2', 'some node id 3'],
-                        agentId: 'some id 2'
+                        agentId: 'id1'
                     }
                 ])
                 .then((questions) => {
