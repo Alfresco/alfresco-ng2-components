@@ -107,32 +107,6 @@ jobs:
           npx nx run testing:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  release-demoshell:
-    needs: [setup]
-    timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          fetch-depth: 1
-      - run: git fetch --all
-      - id: set-dryrun
-        uses: ./.github/actions/enable-dryrun
-        with:
-          dry-run-flag: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/setup
-        with:
-          enable-cache: false
-          enable-node-modules-cache: false
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: release Demoshell docker
-        run: |
-          npx nx build demoshell --configuration production
-          . ./scripts/github/release/docker-tag.sh
-          ./scripts/github/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
-
   release-storybook:
     needs: [setup]
     timeout-minutes: 15
@@ -250,7 +224,7 @@ jobs:
       if: always()
       runs-on: ubuntu-latest
       name: Final Results
-      needs: [release-demoshell, release-storybook, release-npm, npm-check-bundle]
+      needs: [release-storybook, release-npm, npm-check-bundle]
       steps:
 
         - uses: slackapi/slack-github-action@37ebaef184d7626c5f204ab8d3baff4262dd30f0 # v1.27.0
