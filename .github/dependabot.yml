@@ -31,18 +31,6 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
-    directory: "/.github/actions/artifact-append"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/artifact-extract"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
-    directory: "/.github/actions/artifact-initialize"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
     directory: "/.github/actions/before-install"
     schedule:
       interval: "weekly"

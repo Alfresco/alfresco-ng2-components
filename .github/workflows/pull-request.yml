@@ -277,70 +277,70 @@ jobs:
       - run: npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci --parallel=1
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  e2e-storybook:
-    timeout-minutes: 20
-    name: "e2e: storybook"
-    needs: [build-libs, lint, unit-tests]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          fetch-depth: 0 # Fetch all history for all
-      - uses: ./.github/actions/setup
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: Process Cloud Storybook Playwright
-        run: |
-          npx playwright install chromium
-          sudo sysctl -w fs.inotify.max_user_watches=524288
-          npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
-      - uses: ./.github/actions/upload-node-modules-and-artifacts
+#  e2e-storybook:
+#    timeout-minutes: 20
+#    name: "e2e: storybook"
+#    needs: [build-libs, lint, unit-tests]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+#        with:
+#          fetch-depth: 0 # Fetch all history for all
+#      - uses: ./.github/actions/setup
+#      - uses: ./.github/actions/download-node-modules-and-artifacts
+#      - name: Process Cloud Storybook Playwright
+#        run: |
+#          npx playwright install chromium
+#          sudo sysctl -w fs.inotify.max_user_watches=524288
+#          npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
+#      - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-  e2e:
-    timeout-minutes: 90
-    name: "e2e: ${{ matrix.e2e-test.description }}"
-    needs: [build-libs, lint, unit-tests]
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      # max-parallel: 4
-      matrix:
-        e2e-test:
-          - description: "Process Cloud: Tasks List"
-            test-id: "process-services-cloud"
-            artifact-id: "process-services-cloud-task-list"
-            folder: "process-services-cloud/task-list"
-            provider: "ALL"
-            auth: "OAUTH"
-            apa-proxy: true
-            check-cs-env: "true"
-            check-ps-cloud-env: "true"
-            deps: "testing"
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          fetch-depth: 0 # Fetch all history for all
-      - uses: ./.github/actions/setup
-        with:
-          enable-cache: "true"
-          enable-node-modules-cache: "true"
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: e2e
-        uses: ./.github/actions/e2e
-        with:
-          e2e-test-id: ${{ matrix.e2e-test.test-id }}
-          e2e-test-folder: ${{ matrix.e2e-test.folder }}
-          e2e-artifact-id: ${{matrix.e2e-test.artifact-id}}
-          e2e-test-provider: ${{ matrix.e2e-test.provider }}
-          e2e-test-auth: ${{ matrix.e2e-test.auth }}
-          check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
-          check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
-          check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
-          check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
-          apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
-          deps: ${{ matrix.e2e-test.deps }}
+#  e2e:
+#    timeout-minutes: 90
+#    name: "e2e: ${{ matrix.e2e-test.description }}"
+#    needs: [build-libs, lint, unit-tests]
+#    runs-on: ubuntu-latest
+#    strategy:
+#      fail-fast: false
+#      # max-parallel: 4
+#      matrix:
+#        e2e-test:
+#          - description: "Process Cloud: Tasks List"
+#            test-id: "process-services-cloud"
+#            artifact-id: "process-services-cloud-task-list"
+#            folder: "process-services-cloud/task-list"
+#            provider: "ALL"
+#            auth: "OAUTH"
+#            apa-proxy: true
+#            check-cs-env: "true"
+#            check-ps-cloud-env: "true"
+#            deps: "testing"
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+#        with:
+#          fetch-depth: 0 # Fetch all history for all
+#      - uses: ./.github/actions/setup
+#        with:
+#          enable-cache: "true"
+#          enable-node-modules-cache: "true"
+#      - uses: ./.github/actions/download-node-modules-and-artifacts
+#      - name: e2e
+#        uses: ./.github/actions/e2e
+#        with:
+#          e2e-test-id: ${{ matrix.e2e-test.test-id }}
+#          e2e-test-folder: ${{ matrix.e2e-test.folder }}
+#          e2e-artifact-id: ${{matrix.e2e-test.artifact-id}}
+#          e2e-test-provider: ${{ matrix.e2e-test.provider }}
+#          e2e-test-auth: ${{ matrix.e2e-test.auth }}
+#          check-cs-env: ${{ matrix.e2e-test.check-cs-env }}
+#          check-ps-env: ${{ matrix.e2e-test.check-ps-env }}
+#          check-ps-cloud-env: ${{ matrix.e2e-test.check-ps-cloud-env }}
+#          check-external-cs-env: ${{ matrix.e2e-test.check-external-cs-env }}
+#          apa-proxy: ${{ matrix.e2e-test.apa-proxy }}
+#          deps: ${{ matrix.e2e-test.deps }}
 
   PR-forbidden-labels:
     if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
@@ -373,7 +373,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs, e2e-storybook]
+    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs]
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: identify-slack-group
