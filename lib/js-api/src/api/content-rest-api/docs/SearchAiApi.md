@@ -1,9 +1,10 @@
 # SearchAiApi
 
-| Method                  | HTTP request               | Description                         |
-|-------------------------|----------------------------|-------------------------------------|
-| [ask](#ask)             | **GET** /questions         | Ask a question to the AI.           |
-| [getAnswer](#getAnswer) | **GET** /answers/-default- | Get an answer to specific question. |
+| Method                  | HTTP request               | Description                                |
+|-------------------------|----------------------------|--------------------------------------------|
+| [ask](#ask)             | **GET** /questions         | Ask a question to the AI.                  |
+| [getAnswer](#getAnswer) | **GET** /answers/-default- | Get an answer to specific question.        |
+| [getConfig](#getConfig) | **GET** /config/-default-  | Get the knowledge retrieval configuration. |
 
 ## ask
 
@@ -97,6 +98,33 @@ searchAiApi.getAnswer('some question id').then((answer) => {
 
 **Return type**: [AiAnswerEntry](#AiAnswerEntry)
 
+## getConfig
+
+Get the knowledge retrieval configuration. For example:
+
+```json
+{
+    "entry": {
+        "knowledgeRetrievalUrl": "https://some-url"
+    }
+}
+```
+
+**Example**
+
+```javascript
+import { AlfrescoApi, AgentsApi } from '@alfresco/js-api';
+
+const alfrescoApi = new AlfrescoApi(/*..*/);
+const searchAiApi = new SearchAiApi(alfrescoApi);
+
+searchAiApi.getConfig().then((answer) => {
+  console.log('API called successfully. Returned data: ', answer.entry.knowledgeRetrievalUrl);
+});
+```
+
+**Return type**: [KnowledgeRetrievalConfigEntry](#KnowledgeRetrievalConfigEntry)
+
 # Models
 
 ## AiAnswerEntry
@@ -153,3 +181,19 @@ searchAiApi.getAnswer('some question id').then((answer) => {
 | **question** | string   |
 | **nodeIds**  | string[] |
 | **agentId**  | string   |
+
+## KnowledgeRetrievalConfigEntry
+
+**Properties**
+
+| Name  | Type                                                  |
+|-------|-------------------------------------------------------|
+| entry | [KnowledgeRetrievalConfig](#KnowledgeRetrievalConfig) |
+
+## KnowledgeRetrievalConfig
+
+**Properties**
+
+| Name                  | Type   |
+|-----------------------|--------|
+| knowledgeRetrievalUrl | string |

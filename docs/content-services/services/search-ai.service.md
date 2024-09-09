@@ -24,6 +24,9 @@ Manages search AI in Content Services.
     Get an answer to specific question.
     -   _questionId:_ `string` - The ID of the question to get an answer for.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`AiAnswerEntry`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#aianswerentry)`>` - AiAnswerEntry object containing the answer.
+-   **getConfig**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`KnowledgeRetrievalConfigEntry`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#knowledgeretrievalconfigentry)`>`<br/>
+    Get the knowledge retrieval configuration.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`KnowledgeRetrievalConfigEntry`](../../../lib/js-api/src/api/content-rest-api/docs/SearchAiApi.md#knowledgeretrievalconfigentry)`>` - KnowledgeRetrievalConfigEntry object containing the configuration.
 -   **checkSearchAvailability**(selectedNodesState: `SelectionState`, maxSelectedNodes: `number`): `string`<br/>
     Check if using of search is possible (if all conditions are met).
     -   _selectedNodesState:_ `SelectionState` - information about selected nodes.

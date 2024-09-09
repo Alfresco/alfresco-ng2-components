@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AiAnswerEntry, Node, QuestionModel, QuestionRequest } from '@alfresco/js-api';
+import { AiAnswerEntry, KnowledgeRetrievalConfigEntry, Node, QuestionModel, QuestionRequest } from '@alfresco/js-api';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { SearchAiService } from './search-ai.service';
 import { SearchAiInputState } from '../models/search-ai-input-state';
@@ -74,6 +74,23 @@ describe('SearchAiService', () => {
             service.getAnswer(questionId).subscribe((answerResponse) => {
                 expect(answerResponse).toBe(answer);
                 expect(service.searchAiApi.getAnswer).toHaveBeenCalledWith(questionId);
+                done();
+            });
+        });
+    });
+
+    describe('getConfig', () => {
+        it('should load knowledge retrieval configuration', (done) => {
+            const config: KnowledgeRetrievalConfigEntry = {
+                entry: {
+                    knowledgeRetrievalUrl: 'https://some-url'
+                }
+            };
+            spyOn(service.searchAiApi, 'getConfig').and.returnValue(Promise.resolve(config));
+
+            service.getConfig().subscribe((configResponse) => {
+                expect(configResponse).toBe(config);
+                expect(service.searchAiApi.getConfig).toHaveBeenCalled();
                 done();
             });
         });
