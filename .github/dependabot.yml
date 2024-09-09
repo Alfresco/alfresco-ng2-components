@@ -63,10 +63,6 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
-    directory: "/.github/actions/setup-chrome"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
     directory: "/.github/actions/slack-group-area"
     schedule:
       interval: "weekly"
