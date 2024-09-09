@@ -17,11 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { AiAnswerEntry, KnowledgeRetrievalConfigEntry, QuestionModel, QuestionRequest, SearchAiApi } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { SelectionState } from '@alfresco/adf-extensions';
 import { TranslateService } from '@ngx-translate/core';
 import { SearchAiInputState } from '../models/search-ai-input-state';
+import { AlfrescoApiService } from '../../services';
 
 @Injectable({
     providedIn: 'root'
@@ -39,7 +39,10 @@ export class SearchAiService {
 
     toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
 
-    constructor(private apiService: AlfrescoApiService, private translateService: TranslateService) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private translateService: TranslateService
+    ) {}
 
     /**
      * Update the state of the search AI input.

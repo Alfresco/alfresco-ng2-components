@@ -16,9 +16,10 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule } from '@alfresco/adf-core';
 import { Agent, AgentPaging, AgentsApi, AgentWithAvatar } from '@alfresco/js-api';
-import { AgentService } from '@alfresco/adf-content-services';
+import { AgentService } from './agent.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 const agent1: Agent = {
     id: '1',

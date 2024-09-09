@@ -17,9 +17,9 @@
 
 import { Injectable } from '@angular/core';
 import { AgentsApi, AgentWithAvatar } from '@alfresco/js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
 import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { AlfrescoApiService } from '../../services';
 
 @Injectable({
     providedIn: 'root'
