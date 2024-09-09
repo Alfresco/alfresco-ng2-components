@@ -28,7 +28,6 @@ e2e-output*/
 coverage/
 /desktop.ini
 out-tsc
-!/.protractor-smartrunner/
 /reports/
 e2e-result-*
 licenses.txt
