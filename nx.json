@@ -34,7 +34,8 @@
   },
   "namedInputs": {
     "default": [
-      "{projectRoot}/**/*"
+      "{projectRoot}/**/*",
+      "sharedGlobals"
     ],
     "production": [
       "default",

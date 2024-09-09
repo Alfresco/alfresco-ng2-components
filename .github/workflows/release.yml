@@ -22,9 +22,18 @@ concurrency:
 
 env:
   BASE_REF: ${{ github.base_ref }}
+  HEAD_REF: ${{ github.head_ref }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  GITHUB_BRANCH: ${{ github.ref_name }}
   GH_BUILD_DIR: ${{ github.workspace }}
   GH_COMMIT: ${{ github.sha }}
+  BUILD_ID: ${{ github.run_id }}
+  GH_RUN_NUMBER: ${{ github.run_attempt }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
+  JOB_ID: ${{ github.run_id }}
+  E2E_ADMIN_EMAIL_IDENTITY: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
+  E2E_ADMIN_PASSWORD_IDENTITY: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
   LOG_LEVEL: "ERROR"
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
@@ -33,7 +42,10 @@ env:
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
   GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+  REPO_OWNER: "Alfresco"
+  REPO_NAME: "alfresco-ng2-components"
   STORYBOOK_DIR: "./dist/storybook/stories"
+  BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
   REDIRECT_URI: /
 
