@@ -42,34 +42,7 @@ env:
   GH_RUN_NUMBER: ${{ github.run_attempt }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${{ github.run_id }}
-  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
-  E2E_IDENTITY_HOST_APA: ${{ secrets.E2E_IDENTITY_HOST_APA }}
-  E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
-  E2E_HOST: ${{ secrets.E2E_HOST }}
-  E2E_USERNAME: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
-  E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
-  E2E_ADMIN_EMAIL_IDENTITY: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
-  E2E_ADMIN_PASSWORD_IDENTITY: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
-  USERNAME_ADF: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
-  PASSWORD_ADF: ${{ secrets.E2E_PASSWORD }}
-  URL_HOST_ADF: "http://localhost:4200"
-  IDENTITY_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
-  IDENTITY_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
-  AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
-  HOST_SSO: ${{ secrets.HOST_SSO }}
   LOG_LEVEL: "ERROR"
-  E2E_LOG_LEVEL: "ERROR"
-  E2E_MODELER_USERNAME: ${{ secrets.E2E_MODELER_USERNAME }}
-  E2E_MODELER_PASSWORD: ${{ secrets.E2E_MODELER_PASSWORD }}
-  EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
-  E2E_DEVOPS_USERNAME: ${{ secrets.E2E_DEVOPS_USERNAME }}
-  E2E_DEVOPS_PASSWORD: ${{ secrets.E2E_DEVOPS_PASSWORD }}
-  USERNAME_SUPER_ADMIN_ADF: ${{ secrets.USERNAME_SUPER_ADMIN_ADF }}
-  PASSWORD_SUPER_ADMIN_ADF: ${{ secrets.PASSWORD_SUPER_ADMIN_ADF }}
-  HR_USER: ${{ secrets.HR_USER }}
-  HR_USER_PASSWORD: ${{ secrets.HR_USER_PASSWORD }}
-  SMART_RUNNER_PATH: ".protractor-smartrunner"
-  S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
   DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
@@ -79,19 +52,10 @@ env:
   DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  DEMO_SHELL_DIR: "./dist/demo-shell"
   STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
-  SMART_RUNNER_DIRECTORY: ".protractor-smartrunner"
-  SAVE_SCREENSHOT: true
   REDIRECT_URI: /
-  BROWSER_RUN: false
-  MAXINSTANCES: 2
-  PLAYWRIGHT_WORKERS: 2
-  PLAYWRIGHT_STORYBOOK_E2E_HOST: http://localhost
-  PLAYWRIGHT_STORYBOOK_E2E_PORT: 4400
-  PROXY_HOST_ECM: ${{ secrets.E2E_HOST }}
 
 jobs:
   pre-checks:
