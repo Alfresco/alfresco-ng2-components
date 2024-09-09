@@ -10,10 +10,7 @@ node_modules
 scripts
 src
 lib
-integration
 tools
-demo-shell/src/
-demo-shell/resources/
 /angular.json
 /desktop.ini
 /cspell.json
@@ -21,5 +18,4 @@ demo-shell/resources/
 /.stylelintignore
 /ALFRESCOCORS.md
 /CONTRIBUTING.md
-/appveyor.yml
 /BROWSER-SUPPORT.md

@@ -15,8 +15,6 @@
           "includePaths": ["lib", "lib/core/src/lib"]
         },
         "styles": [
-          "demo-shell/src/styles.scss",
-          "demo-shell/src/custom-style-dev.scss",
           "node_modules/cropperjs/dist/cropper.min.css",
           "node_modules/pdfjs-dist/web/pdf_viewer.css"
         ]
@@ -35,8 +33,6 @@
         "outputDir": "dist/storybook/stories",
         "compodoc": false,
         "styles": [
-          "demo-shell/src/styles.scss",
-          "demo-shell/src/custom-style-dev.scss",
           "node_modules/cropperjs/dist/cropper.min.css",
           "node_modules/pdfjs-dist/web/pdf_viewer.css"
         ],

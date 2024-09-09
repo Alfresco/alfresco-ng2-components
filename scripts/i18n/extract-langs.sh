@@ -29,7 +29,6 @@ COMPONENTS_ROOT="$DIR/../../lib"
 
 # Find all directories in $COMPONENTS_ROOT called i18n and add the demo-shell manually
 COMPONENTS=(`find $COMPONENTS_ROOT -type d -name i18n -not \( -name '*.*' -o -path '**/node_modules*'  -o -path '**/bundles*' \)`)
-COMPONENTS+=("$DIR/../../demo-shell/resources/i18n")
 
 # Loop the individual components
 for COMPONENT_DIR in "${COMPONENTS[@]}"

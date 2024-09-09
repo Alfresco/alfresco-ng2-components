@@ -1,6 +1,5 @@
 {
   "npmScope": "adf",
-  "defaultProject": "demoshell",
   "affected": {
     "defaultBase": "develop"
   },
@@ -37,12 +36,6 @@
     "default": [
       "{projectRoot}/**/*",
       "sharedGlobals"
-    ],
-    "sharedGlobals": [
-      "{workspaceRoot}/angular.json",
-      "{workspaceRoot}/demo-shell/src/index.html",
-      "{workspaceRoot}/e2e/protractor.excludes.json",
-      "{workspaceRoot}/e2e/protractor.conf.js"
     ],
     "production": [
       "default",

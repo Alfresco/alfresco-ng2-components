@@ -56,7 +56,6 @@
     "event-emitter": "^0.3.5",
     "material-icons": "^1.13.12",
     "minimatch-browser": "1.0.0",
-    "monaco-editor": "0.34.1",
     "ng2-charts": "^4.1.1",
     "pdfjs-dist": "3.3.122",
     "raphael": "2.3.0",

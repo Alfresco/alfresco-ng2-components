@@ -1,9 +1,0 @@
-app-task-attachments adf-create-task-attachment button {
-    float: right;
-}
-
-@media screen and (max-width: 960px) {
-    app-task-attachments .app-empty-list-drag_drop, app-task-attachments .app-empty-list__any-files-here-to-add {
-        display: none;
-    }
-}

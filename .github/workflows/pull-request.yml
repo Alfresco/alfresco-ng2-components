@@ -49,7 +49,6 @@ env:
   DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_REPOSITORY_USER }}
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
-  DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
   STORYBOOK_DIR: "./dist/storybook/stories"
@@ -237,7 +236,6 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
       - run: npx nx affected:build $NX_CALCULATION_FLAGS --prod
-      - run: npx nx build demoshell --configuration production
       - run: npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci --parallel=1
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 

@@ -5,7 +5,7 @@ Status: Deprecated
 Last reviewed: 2018-11-20
 ---
 
-# [Context Menu directive](../../../lib/core/src/lib/context-menu/context-menu.directive.ts "Defined in context-menu.directive.ts")
+# Context Menu Directive
 
 Adds a context menu to a component.
 
@@ -52,7 +52,6 @@ export class MyComponent implements OnInit {
 | enabled | `boolean` | false | Is the menu enabled? |
 | links | `any[]` |  | Items for the menu. |
 
-## Details
+## See Also
 
-See the [Demo Shell](../../../demo-shell/README.md)
-or [Document List component](../../content-services/components/document-list.component.md) implementation for more details and use cases.
+- [Document List component](../../content-services/components/document-list.component.md)

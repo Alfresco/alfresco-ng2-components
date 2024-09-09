@@ -181,9 +181,3 @@ fi
 
 # bump root package.json
 npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
-
-echo "====== UPDATE DEMO SHELL ======"
-
-DESTDIR="$DIR/../demo-shell/"
-cd $DESTDIR
-npm version --allow-same-version --no-git-tag-version --force --loglevel=error $VERSION
