@@ -15,40 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    TaskFiltersCloudComponentPage,
-    EditTaskFilterCloudComponentPage,
-    TaskListCloudComponentPage,
-    BrowserActions,
-    TestElement,
-    DataTableComponentPage,
-    materialLocators
-} from '@alfresco/adf-testing';
+import { TaskFiltersCloudComponentPage, TaskListCloudComponentPage, TestElement, materialLocators } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
-    createButton = TestElement.byCss('button[data-automation-id="create-button"');
-    newTaskButton = TestElement.byCss('button[data-automation-id="btn-start-task"]');
     spinner = TestElement.byTag(materialLocators.Progress.spinner.root);
 
-    editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
     taskFilterCloudComponent = new TaskFiltersCloudComponentPage();
-    dataTableComponentPage = new DataTableComponentPage();
 
     taskListCloudComponent(): TaskListCloudComponentPage {
         return new TaskListCloudComponentPage();
-    }
-
-    async openNewTaskForm(): Promise<void> {
-        await this.createButton.click();
-        await BrowserActions.clickExecuteScript('button[data-automation-id="btn-start-task"]');
-    }
-
-    async clickStartNewTaskButton() {
-        await this.createButton.click();
-        await this.newTaskButton.click();
-    }
-
-    async waitTillContentLoaded(): Promise<void> {
-        await this.dataTableComponentPage.waitTillContentLoaded();
     }
 }

@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { AppListCloudPage, BrowserActions, BrowserVisibility, Logger } from '@alfresco/adf-testing';
+import { AppListCloudPage, BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 import { $ } from 'protractor';
 
 export class NavigationBarPage {
     linkMenuChildrenContainer = $('.nestedMenu');
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Home"]');
-    logoutSection = $('[data-automation-id="adf-logout-section"]');
 
     getMenuItemLocator = (title: string) => $(`.app-sidenav-link[data-automation-id="${title}"]`);
 
@@ -35,17 +34,5 @@ export class NavigationBarPage {
         await BrowserActions.click(this.processServicesCloudHomeButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new AppListCloudPage();
-    }
-
-    async clickLogoutButton(): Promise<void> {
-        Logger.log('Logout');
-        try {
-            await BrowserActions.closeMenuAndDialogs();
-            await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
-
-            await BrowserVisibility.waitUntilElementIsPresent(this.logoutSection);
-        } catch (error) {
-            Logger.log('Logout section NOT found');
-        }
     }
 }

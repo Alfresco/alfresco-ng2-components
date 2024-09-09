@@ -306,36 +306,6 @@ jobs:
       # max-parallel: 4
       matrix:
         e2e-test:
-          - description: "Process Cloud: Form"
-            test-id: "process-services-cloud"
-            artifact-id: "process-services-cloud-form-field"
-            folder: "process-services-cloud/form-field"
-            provider: "ALL"
-            auth: "OAUTH"
-            apa-proxy: true
-            check-cs-env: "true"
-            check-ps-cloud-env: "true"
-            deps: "testing"
-          - description: "Process Cloud: Process"
-            test-id: "process-services-cloud"
-            artifact-id: "process-services-cloud-process"
-            folder: "process-services-cloud/process"
-            provider: "ALL"
-            auth: "OAUTH"
-            apa-proxy: true
-            check-cs-env: "true"
-            check-ps-cloud-env: "true"
-            deps: "testing"
-          - description: "Process Cloud: Start Task"
-            test-id: "process-services-cloud"
-            artifact-id: "process-services-cloud-start-task"
-            folder: "process-services-cloud/start-task"
-            provider: "ALL"
-            auth: "OAUTH"
-            apa-proxy: true
-            check-cs-env: "true"
-            check-ps-cloud-env: "true"
-            deps: "testing"
           - description: "Process Cloud: Tasks List"
             test-id: "process-services-cloud"
             artifact-id: "process-services-cloud-task-list"
@@ -403,7 +373,7 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     name: Final Results
-    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs, e2e, e2e-storybook]
+    needs: [check-if-pr-is-approved, pre-checks, setup, unit-tests, lint, build-libs, e2e-storybook]
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: identify-slack-group

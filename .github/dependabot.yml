@@ -51,10 +51,6 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
-    directory: "/.github/actions/e2e"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "github-actions"
     directory: "/.github/actions/enable-dryrun"
     schedule:
       interval: "weekly"
