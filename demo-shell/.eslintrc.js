@@ -6,11 +6,7 @@ module.exports = {
         {
             files: ['*.ts'],
             parserOptions: {
-                project: [
-                    path.join(__dirname, 'tsconfig.app.json'),
-                    path.join(__dirname, 'src/tsconfig.spec.json'),
-                    path.join(__dirname, 'e2e/tsconfig.e2e.json')
-                ],
+                project: [path.join(__dirname, 'tsconfig.app.json')],
                 createDefaultProgram: true
             },
             plugins: ['eslint-plugin-unicorn', 'eslint-plugin-rxjs'],

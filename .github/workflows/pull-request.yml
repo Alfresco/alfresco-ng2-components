@@ -277,25 +277,6 @@ jobs:
       - run: npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci --parallel=1
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
-#  e2e-storybook:
-#    timeout-minutes: 20
-#    name: "e2e: storybook"
-#    needs: [build-libs, lint, unit-tests]
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-#        with:
-#          fetch-depth: 0 # Fetch all history for all
-#      - uses: ./.github/actions/setup
-#      - uses: ./.github/actions/download-node-modules-and-artifacts
-#      - name: Process Cloud Storybook Playwright
-#        run: |
-#          npx playwright install chromium
-#          sudo sysctl -w fs.inotify.max_user_watches=524288
-#          npx nx affected --target=e2e-playwright $NX_CALCULATION_FLAGS || exit 1
-#      - uses: ./.github/actions/upload-node-modules-and-artifacts
-
   PR-forbidden-labels:
     if: ${{ inputs.cron-run == '' || inputs.cron-run == 'false' }}
     runs-on: ubuntu-latest
