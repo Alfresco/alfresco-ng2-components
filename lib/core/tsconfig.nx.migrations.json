@@ -21,7 +21,8 @@
       "sourceMap": true,
       "strictNullChecks": true,
       "target": "es2015",
-      "types": []
+      "typeRoots": ["node_modules/@types"],
+      "types": ["node"]
     },
     "include": [
       "migrations/**/*"
