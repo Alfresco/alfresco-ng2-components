@@ -17,11 +17,9 @@
 
 import { AppListCloudPage, BrowserActions, BrowserVisibility, Logger } from '@alfresco/adf-testing';
 import { $ } from 'protractor';
-import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 
 export class NavigationBarPage {
     linkMenuChildrenContainer = $('.nestedMenu');
-    processServicesNestedButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="App"]');
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.$('.app-sidenav-link[data-automation-id="Home"]');
     logoutSection = $('[data-automation-id="adf-logout-section"]');
 
@@ -37,18 +35,6 @@ export class NavigationBarPage {
         await BrowserActions.click(this.processServicesCloudHomeButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
         return new AppListCloudPage();
-    }
-
-    private async clickProcessServicesButton() {
-        await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickUntilIsNotVisible(this.getMenuItemLocator('Process Services'), this.linkMenuChildrenContainer);
-    }
-
-    async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {
-        await this.clickProcessServicesButton();
-        await BrowserActions.click(this.processServicesNestedButton);
-        await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-        return new ProcessServicesPage();
     }
 
     async clickLogoutButton(): Promise<void> {
