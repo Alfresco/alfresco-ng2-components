@@ -24,13 +24,13 @@
       "defaultConfiguration": "production"
     },
     "build-schematics": {
-      "executor": "nx:run-commands",
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "commands": [
-          {
-            "command": "npx tsc -p lib/core/tsconfig.schematics.json && cp lib/core/schematics/migrations/collection.json dist/libs/core/schematics/migrations/collection.json"
-          }
-        ]
+        "outputPath": "dist/libs/core/schematics/migrations",
+        "main": "lib/core/schematics/migrations/index.ts",
+        "tsConfig": "lib/core/tsconfig.schematics.json",
+        "externalBuildTargets": ["build-schematics"]
       }
     },
     "test": {
