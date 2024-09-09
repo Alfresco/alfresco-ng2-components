@@ -1,6 +1,5 @@
 {
   "name": "alfresco-ng2-components",
-  "commit": "b644b39d17396330d2a67509f58c5b9e890b9b13",
   "description": "Alfresco Angular components",
   "version": "7.0.0-alpha.2",
   "author": "Hyland Software, Inc. and its affiliates",
@@ -170,38 +169,8 @@
     "webpack-cli": "^5.1.4"
   },
   "license": "Apache-2.0",
-  "bundlesize": [
-    {
-      "path": "./dist/libs/content-services/bundles/adf-content-services.umd.min.js",
-      "maxSize": "85 kb"
-    },
-    {
-      "path": "./dist/libs/process-services/bundles/adf-process-services.umd.min.js",
-      "maxSize": "62 kb"
-    },
-    {
-      "path": "./dist/libs/insights/bundles/adf-insights.umd.min.js",
-      "maxSize": "50 kb"
-    },
-    {
-      "path": "./dist/libs/core/bundles/adf-core.umd.min.js",
-      "maxSize": "165 kb"
-    },
-    {
-      "path": "./dist/libs/process-services-cloud/bundles/adf-process-services-cloud.umd.min.js",
-      "maxSize": "60 kb"
-    },
-    {
-      "path": "./dist/libs/extensions/bundles/adf-extensions.umd.min.js",
-      "maxSize": "10 kb"
-    },
-    {
-      "path": "./dist/libs/testing/bundles/adf-testing.umd.min.js",
-      "maxSize": "50 kb"
-    }
-  ],
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=18.0.0"
   },
   "module": "./index.js",
   "typings": "./index.d.ts"
