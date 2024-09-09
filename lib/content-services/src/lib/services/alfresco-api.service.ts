@@ -57,7 +57,7 @@ export class AlfrescoApiService {
             await this.mapAlfrescoApiOpenIdConfig();
         }
 
-        this.initAlfrescoApiWithConfig();
+        this.initAlfrescoApi();
         this.alfrescoApiInitialized.next(true);
     }
 
