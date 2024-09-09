@@ -86,7 +86,7 @@ export class RedirectAuthService extends AuthService {
 
     this.oauthService.events.pipe(take(1)).subscribe(() => {
         if(this.oauthService.getAccessToken() && !this.authenticated){
-            this.AUTH_STORAGE_ITEMS.map((item: string) => { this._oauthStorage.removeItem(item); });
+            this.AUTH_STORAGE_ITEMS.map((item: string) => this._oauthStorage.removeItem(item));
             this.reloadPage();
         }
     });
