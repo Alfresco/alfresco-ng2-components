@@ -119,7 +119,7 @@ const alfrescoApi = new AlfrescoApi(/*..*/);
 const searchAiApi = new SearchAiApi(alfrescoApi);
 
 searchAiApi.getConfig().then((answer) => {
-  console.log('API called successfully. Returned data: ' + answer);
+  console.log('API called successfully. Returned data: ', answer.entry.knowledgeRetrievalUrl);
 });
 ```
 
