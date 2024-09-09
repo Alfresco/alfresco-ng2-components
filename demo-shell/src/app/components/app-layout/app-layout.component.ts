@@ -33,7 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatLineModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { FileUploadingDialogComponent } from '@alfresco/adf-content-services';
+import { AlfrescoApiService, FileUploadingDialogComponent } from '@alfresco/adf-content-services';
 
 @Component({
     standalone: true,
