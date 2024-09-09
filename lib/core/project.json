@@ -30,7 +30,8 @@
         "outputPath": "dist/libs/core/schematics/migrations",
         "main": "lib/core/schematics/migrations/index.ts",
         "tsConfig": "lib/core/tsconfig.schematics.json",
-        "externalBuildTargets": ["build-schematics"]
+        "externalBuildTargets": ["build-schematics"],
+        "assets": ["lib/core/schematics/migrations/collection.json"]
       }
     },
     "test": {

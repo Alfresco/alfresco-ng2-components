@@ -20,7 +20,6 @@
       "sourceMap": true,
       "strictNullChecks": true,
       "target": "es2015",
-      "typeRoots": ["node_modules/@types"],
       "types": ["node"]
     },
     "include": [
