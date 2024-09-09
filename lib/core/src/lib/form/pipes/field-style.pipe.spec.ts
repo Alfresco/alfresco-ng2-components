@@ -23,20 +23,30 @@ const mockTheme: ThemeModel = {
     widgets: {
         'readonly-text': {
             'my-custom-display-text': {
-                '--adf-readonly-text-font-size': '12px',
-                '--adf-readonly-text-font-weight': 'normal',
-                '--adf-readonly-text-color': '#000000'
+                name: 'My Custom Display Text',
+                styles: {
+                    '--adf-readonly-text-font-size': '12px',
+                    '--adf-readonly-text-font-weight': 'normal',
+                    '--adf-readonly-text-color': '#000000'
+                }
             },
             'my-custom-display-text2': {
-                '--adf-readonly-text-font-size': '15px',
-                '--adf-readonly-text-color': 'green'
+                name: 'My Custom Display Text 2',
+                styles: {
+                    '--adf-readonly-text-font-size': '15px',
+                    '--adf-readonly-text-font-weight': 'normal',
+                    '--adf-readonly-text-color': 'green'
+                }
             }
         },
         'radio-buttons': {
-            'my-custom-radio-buttons2': {
-                '--adf-radio-buttons-font-size': '15px',
-                '--adf-radio-buttons-font-weight': 'normal',
-                '--adf-radio-buttons-color': 'green'
+            'my-custom-radio-buttons': {
+                name: 'My Custom Radio Buttons',
+                styles: {
+                    '--adf-radio-buttons-font-size': '12px',
+                    '--adf-radio-buttons-font-weight': 'normal',
+                    '--adf-radio-buttons-color': '#000000'
+                }
             }
         }
     }
@@ -59,7 +69,7 @@ describe('FieldStylePipe', () => {
         };
 
         const result = pipe.transform(field as FormFieldModel);
-        expect(result).toEqual('--adf-readonly-text-font-size: 12px;--adf-readonly-text-font-weight: normal;--adf-readonly-text-color: #000000');
+        expect(result).toEqual('--adf-readonly-text-font-size:12px;--adf-readonly-text-font-weight:normal;--adf-readonly-text-color:#000000;');
     });
 
     it('should return empty string when style name is not provided', () => {

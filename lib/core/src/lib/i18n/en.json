@@ -75,15 +75,38 @@
       "FONT_SIZE": "Font size",
       "FONT_WEIGHT": "Font weight",
       "FONT_COLOR": "Font color",
-      "REGULAR": "Regular",
-      "BOLD": "Bold",
-      "SYSTEM_COLOR": "System color",
-      "BLACK": "Black",
-      "GREY": "Grey",
-      "RED": "Red",
-      "GREEN": "Green",
-      "BLUE": "Blue",
-      "YELLOW": "Yellow"
+      "FONT_WEIGHTS": {
+        "REGULAR": "Regular",
+        "BOLD": "Bold"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "System color",
+        "BLACK": "Black",
+        "GREY": "Grey",
+        "RED": "Red",
+        "GREEN": "Green",
+        "BLUE": "Blue",
+        "YELLOW": "Yellow"
+      },
+      "PREDEFINED": {
+          "HEADER": {
+            "NORMAL": "normal",
+            "HEADING": "heading",
+            "TITLE": "title"
+          },
+          "RADIO_BUTTONS": {
+            "NORMAL": "normal",
+            "STRONG": "strong",
+            "HEADING": "heading"
+          },
+          "READONLY_TEXT": {
+            "NORMAL": "normal",
+            "STRONG": "strong",
+            "HEADING": "heading",
+            "TITLE": "title",
+            "ANNOTATION": "annotation"
+          }
+      }
     }
   },
   "CORE": {

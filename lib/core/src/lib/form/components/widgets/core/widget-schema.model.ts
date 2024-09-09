@@ -19,7 +19,7 @@ import { FormThemeVariable } from './theme.model';
 
 export type WidgetStylePropertySelector = 'number' | 'options' | 'colorOptions';
 
-export interface WidgetSchemaModel<TFieldVariable = string, TFormVariable = FormThemeVariable> {
+export interface WidgetSchemaModel<TFieldVariable extends string, TFormVariable = FormThemeVariable> {
     themeProperties: WidgetSchemaThemeProperty<TFieldVariable, TFormVariable>[];
 }
 

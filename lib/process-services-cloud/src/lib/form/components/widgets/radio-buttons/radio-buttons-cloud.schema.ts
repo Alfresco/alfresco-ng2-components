@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { WidgetSchemaModel, RadioButtonsThemeVariable } from '@alfresco/adf-core';
+import { RadioButtonsThemeVariable, WidgetSchemaModel } from '@alfresco/adf-core';
 
-export const displayTextSchema: WidgetSchemaModel<RadioButtonsThemeVariable> = {
+export const radioButtonsSchema: WidgetSchemaModel<RadioButtonsThemeVariable> = {
     themeProperties: [
         {
             name: 'FORM.FIELD_STYLE.FONT_SIZE',
@@ -36,11 +36,11 @@ export const displayTextSchema: WidgetSchemaModel<RadioButtonsThemeVariable> = {
             type: 'options',
             options: [
                 {
-                    name: 'FORM.FIELD_STYLE.REGULAR',
+                    name: 'FORM.FIELD_STYLE.FONT_WEIGHTS.REGULAR',
                     value: 'normal'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.BOLD',
+                    name: 'FORM.FIELD_STYLE.FONT_WEIGHTS.BOLD',
                     value: 'bold'
                 }
             ],
@@ -54,31 +54,31 @@ export const displayTextSchema: WidgetSchemaModel<RadioButtonsThemeVariable> = {
             type: 'colorOptions',
             options: [
                 {
-                    name: 'FORM.FIELD_STYLE.SYSTEM_COLOR',
+                    name: 'FORM.FIELD_STYLE.COLORS.SYSTEM_COLOR',
                     value: 'inherit'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.BLACK',
+                    name: 'FORM.FIELD_STYLE.COLORS.BLACK',
                     value: '#000000'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.GREY',
+                    name: 'FORM.FIELD_STYLE.COLORS.GREY',
                     value: '#9CA3AF'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.RED',
+                    name: 'FORM.FIELD_STYLE.COLORS.RED',
                     value: '#DA1500'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.GREEN',
+                    name: 'FORM.FIELD_STYLE.COLORS.GREEN',
                     value: '#04A003'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.BLUE',
+                    name: 'FORM.FIELD_STYLE.COLORS.BLUE',
                     value: '#0A60CE'
                 },
                 {
-                    name: 'FORM.FIELD_STYLE.YELLOW',
+                    name: 'FORM.FIELD_STYLE.COLORS.YELLOW',
                     value: '#FACC15'
                 }
             ],

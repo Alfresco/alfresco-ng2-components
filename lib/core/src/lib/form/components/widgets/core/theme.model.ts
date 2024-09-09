@@ -35,22 +35,40 @@ export interface ThemeModel {
     };
     widgets?: {
         ['readonly-text']?: {
-            [styleName: string]: {
-                [variable in ReadonlyTextThemeVariable]?: string;
+            [styleKey: string]: {
+                name: string;
+                styles: { [variable in ReadonlyTextThemeVariable]?: string };
             };
         };
         ['group']?: {
-            [styleName: string]: {
-                [variable in HeaderThemeVariable]?: string;
+            [styleKey: string]: {
+                name: string;
+                styles: { [variable in HeaderThemeVariable]?: string };
             };
         };
         ['radio-buttons']?: {
-            [styleName: string]: {
-                [variable in RadioButtonsThemeVariable]?: string;
+            [styleKey: string]: {
+                name: string;
+                styles: { [variable in RadioButtonsThemeVariable]?: string };
             };
         };
     };
     defaults?: {
         [widgetType in SupportedWidgetType]?: string;
+    };
+}
+
+export interface WidgetSchemaPredefinedStyle<TFieldVariable extends string> {
+    [styleKey: string]: {
+        name: string;
+        styles: { [key in TFieldVariable]?: string };
+    };
+}
+
+export interface PredefinedThemeModel {
+    widgets?: {
+        ['readonly-text']?: WidgetSchemaPredefinedStyle<ReadonlyTextThemeVariable>;
+        ['group']?: WidgetSchemaPredefinedStyle<HeaderThemeVariable>;
+        ['radio-buttons']?: WidgetSchemaPredefinedStyle<RadioButtonsThemeVariable>;
     };
 }
