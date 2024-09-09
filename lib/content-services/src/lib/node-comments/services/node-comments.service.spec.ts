@@ -16,11 +16,13 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, AlfrescoApiServiceMock, CommentModel, RedirectAuthService } from '@alfresco/adf-core';
+import { CommentModel, RedirectAuthService } from '@alfresco/adf-core';
 import { fakeContentComment, fakeContentComments } from '../mocks/node-comments.mock';
 import { NodeCommentsService } from './node-comments.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
+import { AlfrescoApiService } from '../../services';
+import { AlfrescoApiServiceMock } from '../../mock';
 
 declare let jasmine: any;
 

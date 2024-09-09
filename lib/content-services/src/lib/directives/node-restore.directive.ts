@@ -21,8 +21,9 @@ import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { TrashcanApi, DeletedNodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { tap, mergeMap, map, catchError } from 'rxjs/operators';
-import { AlfrescoApiService, TranslationService } from '@alfresco/adf-core';
+import { TranslationService } from '@alfresco/adf-core';
 import { RestoreMessageModel } from '../interfaces/restore-message-model.interface';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Directive({
     standalone: true,

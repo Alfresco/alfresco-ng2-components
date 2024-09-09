@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, NotificationService } from '@alfresco/adf-core';
+import { NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
-import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction } from '@alfresco/adf-content-services';
+import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData, NodeAction, AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Node, NodeEntry, NodesApi } from '@alfresco/js-api';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, mapTo } from 'rxjs/operators';

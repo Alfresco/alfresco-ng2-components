@@ -18,8 +18,10 @@
 import { SimpleChange } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NodeFavoriteDirective } from './node-favorite.directive';
-import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AlfrescoApiService } from '../services';
+import { AlfrescoApiServiceMock } from '../mock';
 
 describe('NodeFavoriteDirective', () => {
     let directive: NodeFavoriteDirective;

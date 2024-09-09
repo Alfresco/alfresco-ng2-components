@@ -125,4 +125,29 @@ describe('StartProcessCloudService', () => {
         expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/process-definitions/${processDefinitionId}/static-values`);
         expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
     });
+
+    it('should transform the response into task variables when retrieving the constant values for the start event', async () => {
+        const appName = 'test-app';
+        const processDefinitionId = 'processDefinitionId';
+        const requestSpy = spyOn(adfHttpClient, 'request');
+        requestSpy.and.returnValue(Promise.resolve({ constant1: 'value', constant2: '0', constant3: 'true' }));
+
+        const result = await service.getStartEventConstants(appName, processDefinitionId).toPromise();
+
+        expect(result.length).toEqual(3);
+        expect(result[0].name).toEqual('constant1');
+        expect(result[0].id).toEqual('constant1');
+        expect(result[0].value).toEqual('value');
+        expect(result[0].type).toEqual('string');
+        expect(result[1].name).toEqual('constant2');
+        expect(result[1].id).toEqual('constant2');
+        expect(result[1].value).toEqual('0');
+        expect(result[1].type).toEqual('string');
+        expect(result[2].name).toEqual('constant3');
+        expect(result[2].id).toEqual('constant3');
+        expect(result[2].value).toEqual('true');
+        expect(result[2].type).toEqual('string');
+        expect(requestSpy.calls.mostRecent().args[0]).toContain(`${appName}/rb/v1/process-definitions/${processDefinitionId}/constant-values`);
+        expect(requestSpy.calls.mostRecent().args[1].httpMethod).toBe('GET');
+    });
 });

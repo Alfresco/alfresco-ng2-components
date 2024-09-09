@@ -18,9 +18,10 @@
 import { Injectable } from '@angular/core';
 import { ContentApi, Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
-import { AlfrescoApiService, AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
+import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
+import { AlfrescoApiService  } from '../../services/alfresco-api.service';
 
 export interface FolderCreatedEvent {
     name: string;

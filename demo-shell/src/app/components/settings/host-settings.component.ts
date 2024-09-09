@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Output, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { Validators, UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
-import { AppConfigService, AppConfigValues, StorageService, AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigValues, StorageService, AuthenticationService } from '@alfresco/adf-core';
 import { ENTER } from '@angular/cdk/keycodes';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
 export const HOST_REGEX = '^(http|https)://.*[^/]$';
 

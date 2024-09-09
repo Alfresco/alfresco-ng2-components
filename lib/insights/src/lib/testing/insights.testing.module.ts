@@ -18,13 +18,12 @@
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
     AppConfigService,
     AppConfigServiceMock,
     AuthModule,
     NoopTranslateModule
 } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 @NgModule({
     imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, NoopTranslateModule],

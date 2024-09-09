@@ -50,7 +50,6 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { loadAppConfig } from './app-config/app-config.loader';
 import { AppConfigService } from './app-config/app-config.service';
 import { StorageService } from './common/services/storage.service';
-import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
 import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AppConfigPipe, StoragePrefixFactory } from './app-config';
 import { IconComponent } from './icon';
@@ -159,12 +158,6 @@ export class CoreModule {
                     useValue: {
                         duration: 10000
                     }
-                },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: createAlfrescoApiInstance,
-                    deps: [AlfrescoApiLoaderService],
-                    multi: true
                 }
             ]
         };

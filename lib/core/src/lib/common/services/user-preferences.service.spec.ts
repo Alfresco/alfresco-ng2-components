@@ -21,8 +21,6 @@ import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../common/services/user-preferences.service';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../../mock';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('UserPreferencesService', () => {
@@ -30,14 +28,12 @@ describe('UserPreferencesService', () => {
     let preferences: UserPreferencesService;
     let storage: StorageService;
     let appConfig: AppConfigServiceMock;
-    let alfrescoApiService: AlfrescoApiServiceMock;
     let translate: TranslateService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule],
             providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         });
@@ -53,7 +49,6 @@ describe('UserPreferencesService', () => {
         storage = TestBed.inject(StorageService);
         storage.clear();
         translate = TestBed.inject(TranslateService);
-        alfrescoApiService = TestBed.inject(AlfrescoApiService) as AlfrescoApiServiceMock;
     });
 
     afterEach(() => {
@@ -103,7 +98,7 @@ describe('UserPreferencesService', () => {
         });
 
         it('should null value return default prefix', () => {
-            storage.setItem('paginationSize', null);
+            storage.setItem('paginationSize', '');
             const paginationSize = preferences.getPropertyKey('paginationSize');
             expect(preferences.get(paginationSize, 'default')).toBe('default');
         });
@@ -172,7 +167,7 @@ describe('UserPreferencesService', () => {
                 }
             ];
             appConfig.config.locale = 'fake-locale-config';
-            alfrescoApiService.initialize();
+            appConfig.load();
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe('ltr');
         });
@@ -185,7 +180,7 @@ describe('UserPreferencesService', () => {
                 }
             ];
             appConfig.config.locale = 'fake-locale-config';
-            alfrescoApiService.initialize();
+            appConfig.load();
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe('rtl');
         });
@@ -196,7 +191,6 @@ describe('UserPreferencesService', () => {
                     key: 'fake-locale-browser'
                 }
             ];
-            alfrescoApiService.initialize();
 
             const textOrientation = preferences.getPropertyKey('textOrientation');
             expect(storage.getItem(textOrientation)).toBe(null);
@@ -210,7 +204,7 @@ describe('UserPreferencesService', () => {
                 }
             ];
             spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locale-browser');
-            alfrescoApiService.initialize();
+            appConfig.load();
 
             let lastValue;
 

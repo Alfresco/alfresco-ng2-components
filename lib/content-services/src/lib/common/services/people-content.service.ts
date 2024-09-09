@@ -17,11 +17,12 @@
 
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
-import { AlfrescoApiService, AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService } from '@alfresco/adf-core';
 import { map, tap } from 'rxjs/operators';
 import { Pagination, PeopleApi, PersonBodyCreate, PersonBodyUpdate } from '@alfresco/js-api';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { ContentService } from './content.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 export interface PeopleContentQueryResponse {
     pagination: Pagination;

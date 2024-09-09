@@ -25,8 +25,6 @@ import {
     DataCellEvent,
     ObjectDataColumn,
     AppConfigServiceMock,
-    AlfrescoApiServiceMock,
-    AlfrescoApiService,
     DataColumnComponent,
     DataColumnListComponent,
     FullNamePipe,
@@ -44,6 +42,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
 
 declare let jasmine: any;

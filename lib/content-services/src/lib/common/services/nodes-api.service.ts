@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService } from '@alfresco/adf-core';
 import { ContentPagingQuery, Node, NodeAssignedHold, NodeEntry, NodePaging, NodesApi, NodesIncludeQuery, TrashcanApi } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { NodeMetadata } from '../models/node-metadata.model';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'

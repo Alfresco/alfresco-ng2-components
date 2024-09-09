@@ -30,7 +30,6 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {
-    AlfrescoApiService,
     CloseButtonPosition,
     Track,
     ViewerComponent,
@@ -42,6 +41,7 @@ import {
     ViewerToolbarComponent,
     ViewUtilService
 } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Subject } from 'rxjs';
 import { ContentApi, Node, NodeEntry, NodesApi, RenditionEntry, SharedlinksApi, Version, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';

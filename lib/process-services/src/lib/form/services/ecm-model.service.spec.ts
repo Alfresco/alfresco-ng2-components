@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
 import { FormModel, CoreTestingModule } from '@alfresco/adf-core';
 import { EcmModelService } from './ecm-model.service';
 import { TestBed } from '@angular/core/testing';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 declare let jasmine: any;
 
@@ -27,7 +28,8 @@ describe('EcmModelService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(EcmModelService);
         jasmine.Ajax.install();

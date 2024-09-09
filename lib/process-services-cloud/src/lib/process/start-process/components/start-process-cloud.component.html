@@ -105,9 +105,10 @@
             (click)="cancelStartProcess()"
             id="cancel_process"
         >
-            {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
+            {{ cancelButtonLabel }}
         </button>
         <button
+            *ngIf="showStartProcessButton"
             color="primary"
             mat-raised-button
             [disabled]="disableStartButton || !isProcessFormValid"
@@ -116,7 +117,7 @@
             id="button-start"
             class="adf-btn-start"
         >
-                {{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
+                {{ startProcessButtonLabel }}
         </button>
     </div>
 </ng-template>

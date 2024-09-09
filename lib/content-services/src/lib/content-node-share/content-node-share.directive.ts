@@ -21,7 +21,7 @@ import { NodeEntry, NodesApi } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { Observable, from, Subject } from 'rxjs';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({

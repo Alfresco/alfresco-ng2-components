@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-17
 ---
 
-# [Alfresco Api Service](../../../lib/core/src/lib/services/alfresco-api.service.ts "Defined in alfresco-api.service.ts")
+# [Alfresco Api Service](lib/content-services/src/lib/services/alfresco-api.service.ts "Defined in alfresco-api.service.ts")
 
 Provides access to an initialized **AlfrescoJSApi** instance.
 

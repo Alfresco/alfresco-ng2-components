@@ -18,21 +18,15 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, throwError, Subject } from 'rxjs';
 import { catchError, map, switchMap, filter, take } from 'rxjs/operators';
-import {
-    RepositoryInfo,
-    SystemPropertiesRepresentation,
-    DiscoveryApi,
-    AboutApi,
-    SystemPropertiesApi
-} from '@alfresco/js-api';
+import { RepositoryInfo, SystemPropertiesRepresentation, DiscoveryApi, AboutApi, SystemPropertiesApi } from '@alfresco/js-api';
 
-import { AlfrescoApiService, BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DiscoveryApiService {
-
     private _discoveryApi: DiscoveryApi;
     get discoveryApi(): DiscoveryApi {
         this._discoveryApi = this._discoveryApi ?? new DiscoveryApi(this.alfrescoApiService.getInstance());
@@ -44,21 +38,17 @@ export class DiscoveryApiService {
      */
     ecmProductInfo$ = new Subject<RepositoryInfo>();
 
-    constructor(
-        private authenticationService: AuthenticationService,
-        private alfrescoApiService: AlfrescoApiService
-    ) {
+    constructor(private authenticationService: AuthenticationService, private alfrescoApiService: AlfrescoApiService) {
         this.authenticationService.onLogin.subscribe(() => {
-            this.alfrescoApiService.alfrescoApiInitialized.pipe(
-                filter(() => this.authenticationService.isEcmLoggedIn()),
-                take(1),
-                switchMap(() => this.getEcmProductInfo())
-            )
+            this.alfrescoApiService.alfrescoApiInitialized
+                .pipe(
+                    filter(() => this.authenticationService.isEcmLoggedIn()),
+                    take(1),
+                    switchMap(() => this.getEcmProductInfo())
+                )
                 .subscribe((info) => this.ecmProductInfo$.next(info));
-
         });
     }
-
 
     /**
      * Gets product information for Content Services.
@@ -66,12 +56,10 @@ export class DiscoveryApiService {
      * @returns ProductVersionModel containing product details
      */
     getEcmProductInfo(): Observable<RepositoryInfo> {
-
-        return from(this.discoveryApi.getRepositoryInformation())
-            .pipe(
-                map((res) => res.entry.repository),
-                catchError((err) => throwError(err))
-            );
+        return from(this.discoveryApi.getRepositoryInformation()).pipe(
+            map((res) => res.entry.repository),
+            catchError((err) => throwError(err))
+        );
     }
 
     /**
@@ -82,25 +70,23 @@ export class DiscoveryApiService {
     getBpmProductInfo(): Observable<BpmProductVersionModel> {
         const aboutApi = new AboutApi(this.alfrescoApiService.getInstance());
 
-        return from(aboutApi.getAppVersion())
-            .pipe(
-                map((res) => new BpmProductVersionModel(res)),
-                catchError((err) => throwError(err))
-            );
+        return from(aboutApi.getAppVersion()).pipe(
+            map((res) => new BpmProductVersionModel(res)),
+            catchError((err) => throwError(err))
+        );
     }
 
     getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
         const systemPropertiesApi = new SystemPropertiesApi(this.alfrescoApiService.getInstance());
 
-        return from(systemPropertiesApi.getProperties())
-            .pipe(
-                map((res: any) => {
-                    if ('string' === typeof (res)) {
-                        throw new Error('Not valid response');
-                    }
-                    return res;
-                }),
-                catchError((err) => throwError(err.error))
-            );
+        return from(systemPropertiesApi.getProperties()).pipe(
+            map((res: any) => {
+                if ('string' === typeof res) {
+                    throw new Error('Not valid response');
+                }
+                return res;
+            }),
+            catchError((err) => throwError(err.error))
+        );
     }
 }

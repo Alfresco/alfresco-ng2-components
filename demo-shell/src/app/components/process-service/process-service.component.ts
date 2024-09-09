@@ -18,6 +18,7 @@
 // eslint-disable-next-line
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { Pagination, UserProcessInstanceFilterRepresentation, ScriptFilesApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS,
@@ -26,7 +27,6 @@ import {
     AppConfigService,
     PaginationComponent,
     UserPreferenceValues,
-    AlfrescoApiService,
     UserPreferencesService,
     NotificationService,
     SidebarActionMenuComponent

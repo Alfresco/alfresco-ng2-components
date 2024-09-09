@@ -37,7 +37,8 @@
     "@alfresco/adf-extensions": ">=7.0.0-alpha.2-0",
     "@ngx-translate/core": ">=14.0.0",
     "minimatch-browser": ">=1.0.0",
-    "pdfjs-dist": ">=3.3.122"
+    "pdfjs-dist": ">=3.3.122",
+    "ts-morph": "^20.0.0"
   },
   "keywords": [
     "core",
@@ -45,5 +46,11 @@
     "angular",
     "components"
   ],
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "ng-update": {
+    "migrations": "./schematics/migrations/collection.json"
+  },
+  "nx-migrations": {
+    "migrations": "./schematics/migrations/collection.json"
+  }
 }

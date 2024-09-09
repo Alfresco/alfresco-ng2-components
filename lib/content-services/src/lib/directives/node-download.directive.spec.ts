@@ -19,10 +19,11 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { NodeDownloadDirective } from './node-download.directive';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ContentApi } from '@alfresco/js-api';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
 @Component({
     standalone: true,

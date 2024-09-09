@@ -19,6 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ProcessContentService } from './process-content.service';
 import { CoreTestingModule } from '@alfresco/adf-core';
+import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 declare let jasmine: any;
 
@@ -66,7 +67,8 @@ describe('ProcessContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule],
+            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(ProcessContentService);
     });

@@ -17,9 +17,9 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PopOverDirective } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { PopOverDirective } from './pop-over.directive';
 
 @Component({
     standalone: true,

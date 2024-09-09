@@ -17,8 +17,9 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { AlfrescoApiService, GroupModel } from '@alfresco/adf-core';
+import { GroupModel } from '@alfresco/adf-core';
 import { map } from 'rxjs/operators';
+import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { TaskActionsApi, UsersApi, ActivitiGroupsApi, UserProfileApi, UserRepresentation, LightUserRepresentation } from '@alfresco/js-api';
 
 @Injectable({

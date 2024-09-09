@@ -21,7 +21,7 @@ import { Directive, EventEmitter, HostListener, Input, OnChanges, Output, Simple
 import { FavoriteBodyCreate, NodeEntry, SharedLinkEntry, Node, SharedLink, FavoritesApi } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Directive({
     standalone: true,
