@@ -29,7 +29,6 @@
     "06": "echo -------------------------------------------- Clean ----------------------------------------------",
     "clean": "rimraf dist node_modules dist/libs",
     "playwright": "npx playwright test --config='e2e-playwright/playwright.config.ts'",
-    "postinstall": "npm run update-webdriver",
     "update-webdriver": "./scripts/webdriver-update-newest/update-to-newest-webdriver.sh",
     "update-webdriver:windows": "powershell  -executionPolicy bypass ./scripts/update-webdriver.ps1"
   },
