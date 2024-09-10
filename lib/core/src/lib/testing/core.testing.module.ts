@@ -19,38 +19,22 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '../core.module';
-import { AppConfigService } from '../app-config/app-config.service';
-import { AppConfigServiceMock } from '../common/mock/app-config.service.mock';
 import { DatePipe } from '@angular/common';
-import { CookieService } from '../common/services/cookie.service';
-import { CookieServiceMock } from '../mock/cookie.service.mock';
-import { HttpClientModule } from '@angular/common/http';
 import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
 import { DirectionalityConfigService } from '../common/services/directionality-config.service';
-import { AuthModule, RedirectAuthService } from '../auth';
-import { EMPTY, of } from 'rxjs';
 import { NoopTranslateModule } from './noop-translate.module';
+import { NoopAuthModule } from './noop-auth.module';
 
 @NgModule({
-    imports: [
-        AuthModule.forRoot({ useHash: true }),
-        NoopAnimationsModule,
-        RouterTestingModule,
-        HttpClientModule,
-        CoreModule.forRoot(),
-        NoopTranslateModule
-    ],
+    imports: [NoopAnimationsModule, CoreModule.forRoot(), NoopTranslateModule, NoopAuthModule],
     providers: [
         DatePipe,
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: CookieService, useClass: CookieServiceMock },
         {
             provide: APP_INITIALIZER,
             useFactory: directionalityConfigFactory,
             deps: [DirectionalityConfigService],
             multi: true
-        },
-        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {}, onTokenReceived: of() } }
+        }
     ],
     exports: [NoopAnimationsModule, CoreModule, RouterTestingModule]
 })

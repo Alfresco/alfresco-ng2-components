@@ -15,21 +15,39 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
 import { AuthModule, RedirectAuthService } from '../auth';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppConfigService } from '../app-config';
-import { AppConfigServiceMock, CookieService } from '../common';
+import { AppConfigService, StoragePrefixFactory } from '../app-config';
+import { AppConfigServiceMock, CookieService, StorageService } from '../common';
 import { CookieServiceMock } from '../mock';
 import { EMPTY, of } from 'rxjs';
+import { loadAppConfig } from '../app-config/app-config.loader';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
+
+@Injectable({ providedIn: 'root' })
+export class NoopRedirectAuthService extends RedirectAuthService {
+    onLogin = EMPTY;
+    onTokenReceived = of();
+
+    init(): Promise<boolean> {
+        return Promise.resolve(true);
+    }
+}
 
 @NgModule({
     imports: [AuthModule.forRoot({ useHash: true }), HttpClientTestingModule, RouterTestingModule],
     providers: [
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: CookieService, useClass: CookieServiceMock },
-        { provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => {}, onTokenReceived: of() } }
+        { provide: RedirectAuthService, useClass: NoopRedirectAuthService },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: loadAppConfig,
+            deps: [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
+            multi: true
+        }
     ]
 })
 export class NoopAuthModule {}
