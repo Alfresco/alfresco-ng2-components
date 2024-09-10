@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AgentsApi, AgentWithAvatar } from '@alfresco/js-api';
-import { BehaviorSubject, forkJoin, from, Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Agent, AgentsApi } from '@alfresco/js-api';
+import { BehaviorSubject, from, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services';
 
 @Injectable({
@@ -26,7 +26,7 @@ import { AlfrescoApiService } from '../../services';
 })
 export class AgentService {
     private _agentsApi: AgentsApi;
-    private agents = new BehaviorSubject<AgentWithAvatar[]>([]);
+    private agents = new BehaviorSubject<Agent[]>([]);
 
     get agentsApi(): AgentsApi {
         this._agentsApi = this._agentsApi ?? new AgentsApi(this.apiService.getInstance());
@@ -42,35 +42,20 @@ export class AgentService {
      *
      * @returns AgentWithAvatar[] list containing agents.
      */
-    getAgents(): Observable<AgentWithAvatar[]> {
+    getAgents(): Observable<Agent[]> {
         return this.agents$.pipe(
             switchMap((agentsList) => {
                 if (agentsList.length) {
                     return of(agentsList);
                 }
                 return from(this.agentsApi.getAgents()).pipe(
-                    switchMap((paging) => {
-                        const agents = paging.list.entries.map((agentEntry) => agentEntry.entry);
-                        // TODO: fetch avatars https://hyland.atlassian.net/browse/ACS-8695
-                        return forkJoin({ agents: of(agents), avatars: forkJoin(agents.map(() => of(``))) });
-                    }),
-                    switchMap(({ agents, avatars }) => {
-                        const agentsWithAvatar = agents.map((agent, index) => ({ ...agent, avatar: avatars[index] }));
-                        this.agents.next(agentsWithAvatar);
-                        return of(agentsWithAvatar);
+                    map((paging) => {
+                        const agentEntries = paging.list.entries.map((agentEntry) => agentEntry.entry);
+                        this.agents.next(agentEntries);
+                        return agentEntries;
                     })
                 );
             })
         );
-    }
-
-    /**
-     * Gets agent avatar by agent id.
-     *
-     * @param agentId agent unique id.
-     * @returns string with an image.
-     */
-    getAgentAvatar(agentId: string): Observable<string> {
-        return from(this._agentsApi.getAgentAvatar(agentId));
     }
 }

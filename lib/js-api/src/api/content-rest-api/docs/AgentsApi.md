@@ -3,7 +3,6 @@
 | Method                            | HTTP request                                 | Description              |
 |-----------------------------------|----------------------------------------------|--------------------------|
 | [getAgents](#getAgents)           | **GET** /agents                              | Gets all agents.         |
-| [getAgentAvatar](#getAgentAvatar) | **GET** /agents/${agentId}/avatars/-default- | Gets agent avatar by id. |
 
 ## getAgents
 
@@ -46,31 +45,6 @@ agentsApi.getAgents().then((agents) => {
 ```
 
 **Return type**: [AgentPaging](#AgentPaging)
-
-## getAgentAvatar
-
-Gets agent avatar by agent id.
-
-**Parameters**
-
-| Name          | Type     |
-|---------------|----------|
-| **agentId**   | string   |
-
-**Example**
-
-```javascript
-import { AlfrescoApi, AgentsApi } from '@alfresco/js-api';
-
-const alfrescoApi = new AlfrescoApi(/*..*/);
-const agentsApi = new AgentsApi(alfrescoApi);
-
-agentsApi.getAgentAvatar('agentId').then((agentAvatarImage) => {
-  console.log('API called successfully. Returned data: ' + agentAvatarImage);
-});
-```
-
-**Return type**: String
 
 # Models
 

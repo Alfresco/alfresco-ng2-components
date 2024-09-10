@@ -17,20 +17,21 @@
 
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '@alfresco/adf-core';
-import { Agent, AgentPaging, AgentsApi, AgentWithAvatar } from '@alfresco/js-api';
 import { AgentService } from './agent.service';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { Agent, AgentPaging } from '@alfresco/js-api';
 
 const agent1: Agent = {
     id: '1',
     name: 'HR Agent',
-    description: 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
+    description: 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.',
+    avatarUrl: ''
 };
 
 const agent2: Agent = {
     id: '2',
     name: 'Policy Agent',
-    description: 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.'
+    description: 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.',
+    avatarUrl: ''
 };
 
 const agentPagingObjectMock: AgentPaging = {
@@ -46,23 +47,10 @@ const agentPagingObjectMock: AgentPaging = {
     }
 };
 
-const avatarAgentMock = '';
-
-const agentWithAvatarListMock: AgentWithAvatar[] = [
-    {
-        ...agent1,
-        avatar: avatarAgentMock
-    },
-    {
-        ...agent2,
-        avatar: avatarAgentMock
-    }
-];
+const agentWithAvatarListMock: Agent[] = [agent1, agent2];
 
 describe('AgentService', () => {
     let agentService: AgentService;
-    let apiService: AlfrescoApiService;
-    let agentsApi: AgentsApi;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -70,11 +58,6 @@ describe('AgentService', () => {
         });
 
         agentService = TestBed.inject(AgentService);
-        apiService = TestBed.inject(AlfrescoApiService);
-        agentsApi = new AgentsApi(apiService.getInstance());
-
-        spyOn(agentsApi, 'getAgentAvatar').and.returnValue(Promise.resolve(avatarAgentMock));
-        spyOn(agentService.agentsApi, 'getAgentAvatar').and.returnValue(Promise.resolve(avatarAgentMock));
     });
 
     it('should load agents', (done) => {
@@ -83,14 +66,6 @@ describe('AgentService', () => {
         agentService.getAgents().subscribe((pagingResponse) => {
             expect(pagingResponse).toEqual(agentWithAvatarListMock);
             expect(agentService.agentsApi.getAgents).toHaveBeenCalled();
-            done();
-        });
-    });
-
-    it('should get agent avatar', (done) => {
-        agentService.getAgentAvatar('avatarId').subscribe((response) => {
-            expect(response).toEqual(avatarAgentMock);
-            expect(agentService.agentsApi.getAgentAvatar).toHaveBeenCalledWith('avatarId');
             done();
         });
     });
