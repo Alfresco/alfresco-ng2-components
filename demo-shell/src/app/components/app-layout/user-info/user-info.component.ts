@@ -71,7 +71,7 @@ export class UserInfoComponent implements OnInit {
             this.loadIdentityUserInfo();
             this.mode = UserInfoMode.SSO;
 
-            if (this.authService.isECMProvider() && this.authService.isEcmLoggedIn()) {
+            if (this.authService.isECMProvider() && this.authService.isLoggedIn()) {
                 this.mode = UserInfoMode.CONTENT_SSO;
                 this.loadEcmUserInfo();
             }

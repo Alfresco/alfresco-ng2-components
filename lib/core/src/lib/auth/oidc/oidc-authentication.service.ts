@@ -45,6 +45,10 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         super(appConfig, cookie);
     }
 
+    /**
+     * @deprecated use `isLoggedIn` instead
+     * @returns true if the ECM provider is logged in
+     */
     isEcmLoggedIn(): boolean {
         if (this.isECMProvider() || this.isALLProvider()) {
             return this.isLoggedIn();
@@ -52,6 +56,10 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         return false;
     }
 
+    /**
+     * @deprecated use `isLoggedIn` instead
+     * @returns true if the BPM provider is logged in
+     */
     isBpmLoggedIn(): boolean {
         if (this.isBPMProvider() || this.isALLProvider()) {
             return this.isLoggedIn();
@@ -69,16 +77,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
 
     hasValidIdToken(): boolean {
         return this.oauthService.hasValidIdToken();
-    }
-
-    isImplicitFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.implicitFlow;
-    }
-
-    isAuthCodeFlow() {
-        const oauth2: OauthConfigModel = Object.assign({}, this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null));
-        return !!oauth2?.codeFlow;
     }
 
     login(username: string, password: string): Observable<{ type: string; ticket: any }> {
@@ -114,12 +112,17 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
         });
     }
 
+    /**
+     * Gets the username of the authenticated user.
+     *
+     * @returns the logged username
+     */
     getUsername() {
         return this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
     }
 
     /**
-     * @deprecated
+     * @deprecated use `getUsername` instead
      * @returns the logged username
      */
     getEcmUsername(): string {
@@ -127,7 +130,7 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     }
 
     /**
-     * @deprecated
+     * @deprecated use `getUsername` instead
      * @returns the logged username
      */
     getBpmUsername(): string {
@@ -136,10 +139,6 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
 
     ssoLogin(redirectUrl?: string) {
         this.auth.login(redirectUrl);
-    }
-
-    ssoCodeFlowLogin() {
-        this.oauthService.initCodeFlow();
     }
 
     isRememberMeSet(): boolean {
