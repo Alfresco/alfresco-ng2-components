@@ -16,16 +16,15 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { ToolbarComponent } from './toolbar.component';
-import { TOOLBAR_DIRECTIVES } from './toolbar.module';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('ToolbarComponent', () => {
     let fixture: ComponentFixture<ToolbarComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ...TOOLBAR_DIRECTIVES]
+            imports: [NoopTranslateModule, ToolbarComponent]
         });
 
         fixture = TestBed.createComponent(ToolbarComponent);
