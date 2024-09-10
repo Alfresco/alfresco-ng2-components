@@ -455,8 +455,8 @@ describe('AlfrescoViewerComponent', () => {
         //
     });
 
-    describe('originalMimeType', () => {
-        it('should set originalMimeType based on nodeData content', async () => {
+    describe('mimeType', () => {
+        it('should set mime type based on nodeData content', async () => {
             const defaultNode: Node = {
                 id: 'mock-id',
                 name: 'Mock Node',
@@ -488,7 +488,7 @@ describe('AlfrescoViewerComponent', () => {
             } as Node);
 
             await fixture.whenStable();
-            expect(component.originalMimeType).toEqual('application/msWord');
+            expect(component.mimeType).toEqual('application/msWord');
         });
     });
 

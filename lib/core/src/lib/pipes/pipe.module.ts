@@ -18,7 +18,6 @@
 import { NgModule } from '@angular/core';
 
 import { FileSizePipe } from './file-size.pipe';
-import { MimeTypeIconPipe } from './mime-type-icon.pipe';
 import { HighlightPipe } from './text-highlight.pipe';
 import { TimeAgoPipe } from './time-ago.pipe';
 import { InitialUsernamePipe } from './user-initial.pipe';
@@ -38,7 +37,6 @@ export const CORE_PIPES = [
     TimeAgoPipe,
     FileSizePipe,
     HighlightPipe,
-    MimeTypeIconPipe,
     FullNamePipe,
     FormatSpacePipe,
     FileTypePipe,

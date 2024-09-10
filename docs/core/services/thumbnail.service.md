@@ -49,11 +49,14 @@ and icons is shown in the table below:
 All the ADF icons for MIME types are now registered into the [`MatIconRegistry`](https://material.angular.io/components/icon/api), so you can use all
 the icons via the &lt;mat-icon> tag:
 
-```javascript
+```typescript
 import { ThumbnailService } from '@alfresco/adf-core';
 
-constructor(public thumbnailService: ThumbnailService) {
-}‍‍‍‍‍‍‍‍
+class MyComponent {
+    constructor(public thumbnailService: ThumbnailService) {
+        
+    }
+}
 ```
 
 ```html
@@ -62,7 +65,3 @@ PDF <mat-icon svgIcon="application/pdf"></mat-icon>
 GIF <mat-icon svgIcon="image/gif"></mat-icon>
 .....
 ```
-
-## See also
-
--   [Mime type icon pipe](../pipes/mime-type-icon.pipe.md)

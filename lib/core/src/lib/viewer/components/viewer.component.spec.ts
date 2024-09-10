@@ -99,38 +99,6 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('originalMimeType', () => {
-        const getMimeTypeIconElement = () => fixture.nativeElement.querySelector('.adf-viewer__mimeicon');
-
-        it('should set alt attribute to originalMimeType when originalMimeType is provided', () => {
-            component.originalMimeType = 'image/png';
-            fixture.detectChanges();
-            const altAttribute: string = getMimeTypeIconElement().getAttribute('alt');
-            expect(altAttribute).toBe('image/png');
-        });
-
-        it('should set src attribute based on originalMimeType when originalMimeType is provided', () => {
-            component.originalMimeType = 'image';
-            fixture.detectChanges();
-            const srcAttribute: string = getMimeTypeIconElement().getAttribute('src');
-            expect(srcAttribute).toContain('image');
-        });
-
-        it('should set alt attribute to mimeType when originalMimeType is not provided', () => {
-            component.mimeType = 'application/pdf';
-            fixture.detectChanges();
-            const altAttribute: string = getMimeTypeIconElement().getAttribute('alt');
-            expect(altAttribute).toBe('application/pdf');
-        });
-
-        it('should set src attribute based on mimeType when originalMimeType is not provided', () => {
-            component.mimeType = 'image';
-            fixture.detectChanges();
-            const srcAttribute: string = getMimeTypeIconElement().getAttribute('src');
-            expect(srcAttribute).toContain('image');
-        });
-    });
-
     describe('File Name Test', () => {
         it('should fileName be set by urlFile input if the fileName is not provided as Input', () => {
             component.fileName = '';

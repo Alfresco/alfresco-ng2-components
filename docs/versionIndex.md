@@ -576,7 +576,6 @@ backend services have been tested with each released version of ADF.
 -   [Log service](core/services/log.service.md)
 -   [Login component](core/components/login.component.md)
 -   [Logout directive](core/directives/logout.directive.md)
--   [Mime type icon pipe](core/pipes/mime-type-icon.pipe.md)
 -   [Node delete directive](content-services/directives/node-delete.directive.md)
 -   [Node favorite directive](content-services/directives/node-favorite.directive.md)
 -   [Node name tooltip pipe](core/pipes/node-name-tooltip.pipe.md)

@@ -436,6 +436,7 @@
       "WAIT": "Wait"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "File type icon",
       "PREVIOUS_PAGE": "Previous page",
       "NEXT_PAGE": "Next page",
       "ZOOM_IN": "Zoom in",

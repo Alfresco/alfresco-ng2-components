@@ -43,8 +43,8 @@
                         <mat-icon>navigate_before</mat-icon>
                     </button>
                     <img class="adf-viewer__mimeicon"
-                         [alt]="originalMimeType || mimeType"
-                         [src]="(originalMimeType || mimeType) | adfMimeTypeIcon"
+                         [alt]="'ADF_VIEWER.ARIA.MIME_TYPE_ICON' | translate"
+                         [src]="mimeTypeIconUrl"
                          data-automation-id="adf-file-thumbnail">
                     <span class="adf-viewer__display-name"
                           id="adf-viewer-display-name">{{ fileName }}</span>
