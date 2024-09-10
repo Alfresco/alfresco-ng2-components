@@ -20,16 +20,18 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { CoreTestingModule } from '../../../testing';
+import { NoopTranslateModule } from '../../../testing';
 import { RenderingQueueServices } from '../../services/rendering-queue.services';
 import { ViewerRenderComponent } from './viewer-render.component';
+import { ViewerExtensionDirective } from '@alfresco/adf-core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
     selector: 'adf-double-viewer',
+    standalone: true,
+    imports: [ViewerExtensionDirective, ViewerRenderComponent],
     template: `
         <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions" #viewer1></adf-viewer-render>
         <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2></adf-viewer-render>
@@ -70,8 +72,7 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatButtonModule, MatIconModule],
-            declarations: [DoubleViewerComponent],
+            imports: [NoopTranslateModule, NoopAnimationsModule, MatDialogModule, ViewerRenderComponent, DoubleViewerComponent],
             providers: [RenderingQueueServices, { provide: Location, useClass: SpyLocation }, MatDialog]
         });
         fixture = TestBed.createComponent(ViewerRenderComponent);
