@@ -17,7 +17,6 @@
 
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '../core.module';
 import { DatePipe } from '@angular/common';
 import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
@@ -36,6 +35,6 @@ import { NoopAuthModule } from './noop-auth.module';
             multi: true
         }
     ],
-    exports: [NoopAnimationsModule, CoreModule, RouterTestingModule]
+    exports: [CoreModule]
 })
 export class CoreTestingModule {}
