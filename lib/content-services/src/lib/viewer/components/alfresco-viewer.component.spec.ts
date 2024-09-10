@@ -23,7 +23,6 @@ import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extension
 import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { AlfrescoViewerComponent, ContentService, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
 import {
-    AuthModule,
     CloseButtonPosition,
     EventMock,
     ViewUtilService,
@@ -34,7 +33,8 @@ import {
     ViewerToolbarComponent,
     ViewerOpenWithComponent,
     ViewerMoreActionsComponent,
-    ViewerToolbarActionsComponent
+    ViewerToolbarActionsComponent,
+    NoopAuthModule
 } from '@alfresco/adf-core';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
@@ -43,8 +43,6 @@ import { throwError } from 'rxjs';
 import { Component } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService } from '../../services';
-import { AlfrescoApiServiceMock } from '../../mock';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -82,7 +80,7 @@ class ViewerWithCustomToolbarActionsComponent {}
     standalone: true,
     imports: [ViewerSidebarComponent, AlfrescoViewerComponent],
     template: `
-        <adf-alfresco-viewer>
+        <adf-alfresco-viewer [allowRightSidebar]="true" [showRightSidebar]="true" [nodeId]="'1'">
             <adf-viewer-sidebar>
                 <div class="custom-sidebar"></div>
             </adf-viewer-sidebar>
@@ -161,7 +159,7 @@ describe('AlfrescoViewerComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                AuthModule.forRoot({ useHash: true }),
+                NoopAuthModule,
                 MatDialogModule,
                 NoopTranslateModule,
                 ...VIEWER_DIRECTIVES,
@@ -173,7 +171,6 @@ describe('AlfrescoViewerComponent', () => {
             ],
             providers: [
                 ContentService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 {
                     provide: RenditionService,
                     useValue: {
@@ -394,33 +391,39 @@ describe('AlfrescoViewerComponent', () => {
             });
         });
 
-        it('should stop propagation on sidebar keydown event [keydown]', fakeAsync(() => {
+        it('should stop propagation on sidebar keydown event [keydown]', async () => {
             const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
             const customElement: HTMLElement = customFixture.nativeElement;
             const escapeKeyboardEvent = new KeyboardEvent('keydown', { key: ESCAPE.toString() });
             const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
 
             customFixture.detectChanges();
-            const viewerSidebarElement = customElement.querySelector('adf-viewer-sidebar');
+            await customFixture.whenStable();
+
+            const viewerSidebarElement = customElement.querySelector('.adf-viewer-sidebar');
 
             viewerSidebarElement.dispatchEvent(escapeKeyboardEvent);
+            customFixture.detectChanges();
 
             expect(stopPropagationSpy).toHaveBeenCalled();
-        }));
+        });
 
-        it('should stop propagation on sidebar keyup event [keyup]', fakeAsync(() => {
+        it('should stop propagation on sidebar keyup event [keyup]', async () => {
             const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
             const customElement: HTMLElement = customFixture.nativeElement;
             const escapeKeyboardEvent = new KeyboardEvent('keyup', { key: ESCAPE.toString() });
             const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
 
             customFixture.detectChanges();
-            const viewerSidebarElement = customElement.querySelector('adf-viewer-sidebar');
+            await customFixture.whenStable();
+
+            const viewerSidebarElement = customElement.querySelector('.adf-viewer-sidebar');
 
             viewerSidebarElement.dispatchEvent(escapeKeyboardEvent);
+            await customFixture.whenStable();
 
             expect(stopPropagationSpy).toHaveBeenCalled();
-        }));
+        });
     });
 
     describe('error handling', () => {
