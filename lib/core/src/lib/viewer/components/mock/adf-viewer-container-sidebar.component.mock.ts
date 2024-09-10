@@ -17,11 +17,12 @@
 
 import { Component } from '@angular/core';
 import { ViewerComponent } from '../viewer.component';
+import { ViewerSidebarComponent } from '../viewer-sidebar.component';
 
 @Component({
     selector: 'adf-viewer-container-sidebar',
     standalone: true,
-    imports: [ViewerComponent],
+    imports: [ViewerComponent, ViewerSidebarComponent],
     template: `
         <adf-viewer>
             <adf-viewer-sidebar>
