@@ -30,7 +30,7 @@ import {
 import { FlagSetParser } from './flagset.parser';
 import { StorageService } from '@alfresco/adf-core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StorageFeaturesService implements IFeaturesService, IWritableFeaturesService {
     private currentFlagState: WritableFlagChangeset = {};
     private flags = new BehaviorSubject<WritableFlagChangeset>({});
