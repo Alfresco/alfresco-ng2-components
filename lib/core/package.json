@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "cropperjs": "^1.5.13",
-    "angular-oauth2-oidc": "^13.0.1",
+    "angular-oauth2-oidc": "^15.0.1",
     "angular-oauth2-oidc-jwks": "^17.0.2"
   },
   "peerDependencies": {

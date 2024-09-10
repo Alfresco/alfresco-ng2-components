@@ -34,6 +34,7 @@ describe('RedirectAuthService', () => {
         events: oauthEvents$,
         configure: () => {},
         hasValidAccessToken: jasmine.createSpy().and.returnValue(true),
+        hasValidIdToken: jasmine.createSpy().and.returnValue(true),
         setupAutomaticSilentRefresh: () => {
             mockOauthService.silentRefresh();
             mockOauthService.refreshToken();
@@ -53,6 +54,7 @@ describe('RedirectAuthService', () => {
 
         TestBed.inject(OAuthService);
         service = TestBed.inject(RedirectAuthService);
+        spyOn(service, 'reloadPage').and.callFake(() => {});
         spyOn(service, 'ensureDiscoveryDocument').and.resolveTo(true);
         mockOauthService.getAccessToken = () => 'access-token';
     });
@@ -93,4 +95,25 @@ describe('RedirectAuthService', () => {
         expect(refreshTokenCalled).toBe(true);
         expect(silentRefreshCalled).toBe(true);
     });
+
+    it('should remove all auth items from the storage if access token is set and is not authenticated', () => {
+        mockOauthService.getAccessToken = () => 'access-token';
+        spyOnProperty(service, 'authenticated', 'get').and.returnValue(false);
+        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token_stored_at');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('expires_at');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('granted_scopes');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('id_token');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('id_token_claims_obj');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('id_token_expires_at');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('id_token_stored_at');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('nonce');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('PKCE_verifier');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('refresh_token');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('session_state');
+        expect(service.reloadPage).toHaveBeenCalledOnceWith();
+    });
+
 });

@@ -221,4 +221,63 @@ describe('AuthConfigService', () => {
             expect(service.loadAppConfig().postLogoutRedirectUri).toBe('http://localhost:3000/asd');
         });
     });
+
+    describe('clockSkewInSec', () => {
+        it('should return clockSkewInSec equal to 0', () => {
+            const expectedClockSkewInSec = 0;
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ clockSkewInSec: 0 } as any);
+            expect(service.loadAppConfig().clockSkewInSec).toBe(expectedClockSkewInSec);
+        });
+        it('should not return clockSkewInSec if is not defined', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({} as any);
+            expect(service.loadAppConfig().clockSkewInSec).toBeUndefined();
+        });
+
+        it('should not return clockSkewInSec if is undefined', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ clockSkewInSec: undefined } as any);
+            expect(service.loadAppConfig().clockSkewInSec).toBeUndefined();
+        });
+
+        it('should return empty object if clockSkewInSec is null', () => {
+            const mockOauth2Value = { clockSkewInSec: null } as any;
+            expect(service.getClockSkewInSec(mockOauth2Value)).toEqual({});
+        });
+
+        it('should return empty object if clockSkewInSec is a string', () => {
+            const mockOauth2Value = { clockSkewInSec: 'null' } as any;
+            expect(service.getClockSkewInSec(mockOauth2Value)).toEqual({});
+        });
+    });
+
+    describe('sessionChecksEnabled', () => {
+        it('should return sessionChecksEnabled equal to true', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ sessionChecksEnabled: true } as any);
+            expect(service.loadAppConfig().sessionChecksEnabled).toBeTrue();
+        });
+
+        it('should return sessionChecksEnabled equal to false', () => {
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ sessionChecksEnabled: false } as any);
+            expect(service.loadAppConfig().sessionChecksEnabled).toBeFalse();
+        });
+
+        it('should not return sessionChecksEnabled if is not defined', () => {
+            expect(service.getSessionCheckEnabled({} as any)).toEqual({});
+        });
+
+        it('should not return sessionChecksEnabled if is a string', () => {
+            expect(service.getSessionCheckEnabled({ sessionChecksEnabled: 'fake' } as any)).toEqual({});
+        });
+
+        it('should not return sessionChecksEnabled if is undefined', () => {
+            expect(service.getSessionCheckEnabled({ sessionChecksEnabled: undefined } as any)).toEqual({});
+        });
+
+        it('should not return sessionChecksEnabled if is null', () => {
+            expect(service.getSessionCheckEnabled({ sessionChecksEnabled: null } as any)).toEqual({});
+        });
+
+        it('should not return sessionChecksEnabled if is a number', () => {
+            expect(service.getSessionCheckEnabled({ sessionChecksEnabled: 666 } as any)).toEqual({});
+        });
+    });
 });

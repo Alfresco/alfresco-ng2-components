@@ -20,6 +20,7 @@ import { AuthConfig } from 'angular-oauth2-oidc';
 import { take } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
 /**
  * Create auth configuration factory
@@ -51,6 +52,8 @@ export class AuthConfigService {
         const origin = this.getLocationOrigin();
         const redirectUri = this.getRedirectUri();
         const customQueryParams = oauth2.audience ? { audience: oauth2.audience } : {};
+        const clockSkewInSec = this.getClockSkewInSec(oauth2);
+        const sessionChecksEnabled = this.getSessionCheckEnabled(oauth2);
 
         return new AuthConfig({
             ...oauth2,
@@ -65,8 +68,18 @@ export class AuthConfigService {
             dummyClientSecret: oauth2.secret || '',
             logoutUrl: oauth2.logoutUrl,
             customQueryParams,
-            ...(oauth2.codeFlow && { responseType: 'code' })
+            ...(oauth2.codeFlow && { responseType: 'code' }),
+            ...clockSkewInSec,
+            ...sessionChecksEnabled
         });
+    }
+
+    getSessionCheckEnabled(oauth2: OauthConfigModel) {
+        return typeof oauth2.sessionChecksEnabled === 'boolean' ? { sessionChecksEnabled: oauth2.sessionChecksEnabled } : {};
+    }
+
+    getClockSkewInSec(oauth2: OauthConfigModel) {
+        return typeof oauth2.clockSkewInSec === 'number' ? { clockSkewInSec: oauth2.clockSkewInSec } : {};
     }
 
     getRedirectUri(): string {
