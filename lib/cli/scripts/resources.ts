@@ -223,6 +223,23 @@ export const ACTIVITI_CLOUD_APPS: any = {
                 ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
             }
         }
+    },
+    UAT_BE_DEFAULT_APP: {
+        name: 'uat-be-default-app',
+        file_location: (TAG = 'develop') =>
+            `https://github.com/Alfresco/alfresco-ng2-components/blob/${TAG}/e2e/resources/activiti7/uat-be-default-app.zip?raw=true`,
+        processes: {
+            'script-acs-process': 'script-acs-process'
+        },
+        security: [
+            { role: 'ACTIVITI_ADMIN', groups: [], users: ['processadminuser'] },
+            { role: 'ACTIVITI_USER', groups: ['sales', 'testgroup'], users: ['hruser', 'salesuser', 'testadmin', 'testuser'] }
+        ],
+        variables: {
+            'process-runtime-service': {
+                ALFRESCO_PROCESS_TASKEMAIL_ENABLED: false
+            }
+        }
     }
 };
 
