@@ -18,13 +18,10 @@
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '../core.module';
-import { DatePipe } from '@angular/common';
 import { NoopTranslateModule } from './noop-translate.module';
 import { NoopAuthModule } from './noop-auth.module';
 
 @NgModule({
-    imports: [NoopAnimationsModule, CoreModule.forRoot(), NoopTranslateModule, NoopAuthModule],
-    providers: [DatePipe],
-    exports: [CoreModule]
+    imports: [NoopAnimationsModule, CoreModule.forRoot(), NoopTranslateModule, NoopAuthModule]
 })
 export class CoreTestingModule {}
