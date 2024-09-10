@@ -30,7 +30,6 @@ import { DirectionalityConfigService } from '../common/services/directionality-c
 import { AuthModule, RedirectAuthService } from '../auth';
 import { EMPTY, of } from 'rxjs';
 import { NoopTranslateModule } from './noop-translate.module';
-import { UserPreferencesService } from '../common/services/user-preferences.service';
 
 @NgModule({
     imports: [
@@ -43,7 +42,6 @@ import { UserPreferencesService } from '../common/services/user-preferences.serv
     ],
     providers: [
         DatePipe,
-        UserPreferencesService,
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: CookieService, useClass: CookieServiceMock },
         {
