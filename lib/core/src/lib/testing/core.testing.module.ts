@@ -15,26 +15,16 @@
  * limitations under the License.
  */
 
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '../core.module';
 import { DatePipe } from '@angular/common';
-import { directionalityConfigFactory } from '../common/services/directionality-config-factory';
-import { DirectionalityConfigService } from '../common/services/directionality-config.service';
 import { NoopTranslateModule } from './noop-translate.module';
 import { NoopAuthModule } from './noop-auth.module';
 
 @NgModule({
     imports: [NoopAnimationsModule, CoreModule.forRoot(), NoopTranslateModule, NoopAuthModule],
-    providers: [
-        DatePipe,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: directionalityConfigFactory,
-            deps: [DirectionalityConfigService],
-            multi: true
-        }
-    ],
+    providers: [DatePipe],
     exports: [CoreModule]
 })
 export class CoreTestingModule {}
