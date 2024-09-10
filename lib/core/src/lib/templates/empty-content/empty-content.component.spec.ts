@@ -20,8 +20,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { EmptyContentComponent } from '@alfresco/adf-core';
+import { EmptyContentComponent, NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-test-component',
@@ -43,7 +42,7 @@ describe('EmptyContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, TestComponent]
+            imports: [NoopTranslateModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         translateService = TestBed.inject(TranslateService);
