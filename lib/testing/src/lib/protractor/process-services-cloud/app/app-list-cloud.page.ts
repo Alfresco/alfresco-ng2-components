@@ -21,10 +21,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { materialLocators } from '../../public-api';
 
 export class AppListCloudPage {
-
     apsAppsContainer = $('adf-cloud-app-list');
-    allApps = $$('adf-cloud-app-details');
-    nameOfAllApps = $$('adf-cloud-app-details div[class*="item-card-title"] h1');
     firstApp = $$('adf-cloud-app-details div[class*="item-card-title"] h1').first();
 
     getAppNameLocatorByAppName = (appName: string): ElementFinder => $(`${materialLocators.Card.root}[title="${appName}"]`);
@@ -38,17 +35,8 @@ export class AppListCloudPage {
         await BrowserActions.clickExecuteScript(`${materialLocators.Card.root}[title="` + applicationName + `"]`);
     }
 
-    async countAllApps(): Promise<number> {
-        return this.allApps.count();
-    }
-
-    async getNameOfTheApplications(): Promise<string> {
-        return BrowserActions.getArrayText(this.nameOfAllApps);
-    }
-
     async checkAppIsDisplayed(applicationName: string): Promise<void> {
         const app = this.getAppNameLocatorByAppName(applicationName);
         await BrowserVisibility.waitUntilElementIsVisible(app);
     }
-
 }

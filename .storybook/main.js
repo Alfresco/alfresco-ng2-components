@@ -3,7 +3,7 @@ module.exports = {
         name: '@storybook/angular',
         options: {}
     },
-    staticDirs: [{ from: '../../../demo-shell/src/app.config.json', to: 'app.config.json' }],
+    staticDirs: [],
     docs: {},
     stories: [],
     addons: []

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2021-06-26
 ---
 
-# [Search Filter chip component](../../../lib/content-services/src/lib/search/components/search-filter-chips/search-filter-chips.component.ts "Defined in search-filter-chips.component.ts")
+# Search Filter Chip Component
 
 Represents a chip based container component for custom search and faceted search settings.
 
@@ -21,9 +21,9 @@ Represents a chip based container component for custom search and faceted search
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| showContextFacets | `boolean` | true | Toggles whether to show or not the context facet filters |
+| Name              | Type      | Default value | Description                                              |
+|-------------------|-----------|---------------|----------------------------------------------------------|
+| showContextFacets | `boolean` | true          | Toggles whether to show or not the context facet filters |
 
 ## Details
 
@@ -35,11 +35,9 @@ Configured widgets(`categories, facetQueries, facetIntervals, facetFields`) shou
 
 ```json
 {
-    ...
     "settings": {
         "allowUpdateOnChange": false,
-        "hideDefaultAction": true,
-        ...
+        "hideDefaultAction": true
     }
 }
 ```
@@ -47,22 +45,18 @@ Configured widgets(`categories, facetQueries, facetIntervals, facetFields`) shou
 ### Migrate from expansion card layout
 
 Here are the steps to move from expansion layout to chip layout
- 1\. Use this component to render the new layout `<adf-search-filter-chips></adf-search-filter-chips>`
- 2\. Add the following settings to old configured widgets(`categories, facetQueries, facetIntervals, facetFields`) i.e
+
+ 1. Use this component to render the new layout `<adf-search-filter-chips></adf-search-filter-chips>`
+ 2. Add the following settings to old configured widgets(`categories, facetQueries, facetIntervals, facetFields`) i.e
 
 ```json
 {
-    ...
     "settings": {
         "allowUpdateOnChange": false,
-        "hideDefaultAction": true,
-        ...
+        "hideDefaultAction": true
     }
-
 }
 ```
-
-here is the [example configuration](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/demo-shell/src/app.config.json#L373)
 
 ## See also
 

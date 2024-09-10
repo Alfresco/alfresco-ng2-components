@@ -276,4 +276,30 @@ describe('AppsListComponent', () => {
             expect(title[0].nativeElement.innerText).toBe('No Apps');
         });
     });
+
+    describe('getAppName', () => {
+        it('should return the default app name when app is the default app', () => {
+            const appDataMock: AppDefinitionRepresentation = {
+                defaultAppId: 'tasks',
+                name: null
+            };
+            expect(component.getAppName(appDataMock)).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
+        });
+
+        it('should return the app name when it is provided', () => {
+            const appDataMock: AppDefinitionRepresentation = {
+                defaultAppId: 'uiu',
+                name: 'the-name'
+            };
+            expect(component.getAppName(appDataMock)).toBe('the-name');
+        });
+
+        it('should return the defaultAppId when name is not provided and app is not the default app', () => {
+            const appDataMock: AppDefinitionRepresentation = {
+                defaultAppId: 'uiu',
+                name: null
+            };
+            expect(component.getAppName(appDataMock)).toBe('uiu');
+        });
+    });
 });

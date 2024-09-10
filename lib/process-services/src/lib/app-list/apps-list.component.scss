@@ -1,29 +1,6 @@
 @import 'styles/flex';
 @import 'styles/mat-selectors';
 
-/* stylelint-disable scss/no-global-function-names */
-@mixin adf-line-clamp($line-height: 1.25, $lines: 3) {
-    position: relative;
-    line-height: $line-height;
-    padding: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    /* stylelint-disable */
-    @supports (-webkit-line-clamp: 1) {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: $lines;
-        height: calc(0.99em * #{$line-height} * #{$lines});
-    }
-
-    @supports not (-webkit-line-clamp: 1) {
-        white-space: nowrap;
-        width: 100%;
-    }
-    /* stylelint-enable */
-}
-
 .adf-app-list-item {
     cursor: pointer;
 }
@@ -128,7 +105,6 @@ $tile-themes: (
                     z-index: 9999;
 
                     h1 {
-                        color: white;
                         width: 80%;
                         font-size: var(--theme-headline-font-size);
                         margin: 0;
@@ -140,13 +116,16 @@ $tile-themes: (
                 }
 
                 &-subtitle {
-                    color: white;
                     z-index: 9999;
                     padding: 16px;
                     flex: 1 0 auto;
 
                     .adf-line-clamp {
-                        @include adf-line-clamp(1.25, 3);
+                        position: relative;
+                        line-height: 1.25;
+                        padding: 0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                 }
 

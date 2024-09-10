@@ -15,7 +15,6 @@ USER 101
 ARG PROJECT_NAME
 
 COPY docker/default.conf.template /etc/nginx/templates/
-COPY docker/docker-entrypoint.d/* /docker-entrypoint.d/
 
 COPY dist/$PROJECT_NAME /usr/share/nginx/html/
 COPY dist/$PROJECT_NAME/app.config.json /etc/nginx/templates/app.config.json.template

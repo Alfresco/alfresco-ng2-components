@@ -35,9 +35,7 @@ export class StartProcessPage {
     noProcess = $('.adf-empty-content__title');
     processDefinition = $('input[id="processDefinitionName"]');
     processDefinitionOptionsPanel = $(`div[class*="${materialLocators.Autocomplete.panel.root}"]`);
-
     processDefinitionDropdown = new DropdownPage($('#adf-select-process-dropdown'));
-    applicationDropdown = new DropdownPage($(`[data-automation-id*="start-process-app"] ${materialLocators.Select.arrow.class}`));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
@@ -83,11 +81,6 @@ export class StartProcessPage {
         }
     }
 
-    async selectFromApplicationDropdown(name): Promise<void> {
-        await this.applicationDropdown.clickDropdown();
-        await this.applicationDropdown.selectOption(name);
-    }
-
     async clickProcessDropdownArrow(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.selectProcessDropdownArrow);
         await BrowserActions.click(this.selectProcessDropdownArrow);
@@ -117,17 +110,8 @@ export class StartProcessPage {
         await BrowserActions.click(this.cancelProcessButton);
     }
 
-    async isCancelProcessButtonEnabled(): Promise<boolean> {
-        return this.cancelProcessButton.isEnabled();
-    }
-
     async clickFormStartProcessButton(): Promise<void> {
         await BrowserActions.click(this.formStartProcessButton);
-    }
-
-    async isStartFormProcessButtonEnabled() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.formStartProcessButton);
-        return this.formStartProcessButton.isEnabled();
     }
 
     async isStartProcessButtonEnabled() {
@@ -157,10 +141,6 @@ export class StartProcessPage {
         await locator.sendKeys(Key.TAB);
     }
 
-    async clearField(locator): Promise<void> {
-        await BrowserActions.clearWithBackSpace(locator);
-    }
-
     formFields(): FormFields {
         return new FormFields();
     }
@@ -173,19 +153,5 @@ export class StartProcessPage {
         await this.selectFromProcessDropdown(processName);
         await this.enterProcessName(name);
         await this.clickStartProcessButton();
-    }
-
-    async startProcessWithApplication(name: string, applicationName: string, processName: string) {
-        await this.enterProcessName(name);
-        await this.selectFromApplicationDropdown(applicationName);
-        await this.checkProcessDefinitionDropdownIsEnabled();
-        await this.selectFromProcessDropdown(processName);
-        await this.clickStartProcessButton();
-    }
-
-    async selectApplicationAndProcess(applicationName: string, processName: string) {
-        await this.selectFromApplicationDropdown(applicationName);
-        await this.checkProcessDefinitionDropdownIsEnabled();
-        await this.selectFromProcessDropdown(processName);
     }
 }

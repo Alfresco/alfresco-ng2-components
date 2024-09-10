@@ -117,7 +117,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     getAppName(app: AppDefinitionRepresentation): string {
-        return this.isDefaultApp(app) ? DEFAULT_TASKS_APP_NAME : app.name;
+        return this.isDefaultApp(app) ? DEFAULT_TASKS_APP_NAME : app.name || app.defaultAppId;
     }
 
     /**

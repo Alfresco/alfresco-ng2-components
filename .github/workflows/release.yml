@@ -32,57 +32,22 @@ env:
   GH_RUN_NUMBER: ${{ github.run_attempt }}
   GH_BUILD_NUMBER: ${{ github.run_id }}
   JOB_ID: ${{ github.run_id }}
-  PROXY_HOST_BPM: ${{ secrets.E2E_HOST }}
-  E2E_IDENTITY_HOST_APA: ${{ secrets.E2E_IDENTITY_HOST_APA }}
-  E2E_HOST_APA: ${{ secrets.E2E_HOST_APA }}
-  E2E_HOST: ${{ secrets.E2E_HOST }}
-  E2E_USERNAME: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
-  E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
   E2E_ADMIN_EMAIL_IDENTITY: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
   E2E_ADMIN_PASSWORD_IDENTITY: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
-  #USERNAME_ADF: ${{ secrets.E2E_USERNAME }}
-  USERNAME_ADF: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
-  PASSWORD_ADF: ${{ secrets.E2E_PASSWORD }}
-  URL_HOST_ADF: "http://localhost:4200"
-  IDENTITY_ADMIN_EMAIL: ${{ secrets.E2E_ADMIN_EMAIL_IDENTITY }}
-  IDENTITY_ADMIN_PASSWORD: ${{ secrets.E2E_ADMIN_PASSWORD_IDENTITY }}
-  AWS_S3_BUCKET_ACTIVITI_LICENSE: ${{ secrets.AWS_S3_BUCKET_ACTIVITI_LICENSE }}
-  HOST_SSO: ${{ secrets.HOST_SSO }}
   LOG_LEVEL: "ERROR"
-  E2E_LOG_LEVEL: "ERROR"
-  E2E_MODELER_USERNAME: ${{ secrets.E2E_MODELER_USERNAME }}
-  E2E_MODELER_PASSWORD: ${{ secrets.E2E_MODELER_PASSWORD }}
-  EXTERNAL_ACS_HOST: ${{ secrets.EXTERNAL_ACS_HOST }}
-  E2E_DEVOPS_USERNAME: ${{ secrets.E2E_DEVOPS_USERNAME }}
-  E2E_DEVOPS_PASSWORD: ${{ secrets.E2E_DEVOPS_PASSWORD }}
-  USERNAME_SUPER_ADMIN_ADF: ${{ secrets.USERNAME_SUPER_ADMIN_ADF }}
-  PASSWORD_SUPER_ADMIN_ADF: ${{ secrets.PASSWORD_SUPER_ADMIN_ADF }}
-  HR_USER: ${{ secrets.HR_USER }}
-  HR_USER_PASSWORD: ${{ secrets.HR_USER_PASSWORD }}
-  SMART_RUNNER_PATH: ".protractor-smartrunner"
-  S3_DBP_PATH:  ${{ secrets.S3_DBP_PATH }}
   S3_BUILD_BUCKET_SHORT_NAME: ${{ secrets.S3_BUILD_BUCKET_SHORT_NAME }}
   NODE_OPTIONS: "--max-old-space-size=5120"
   DOCKER_REPOSITORY_DOMAIN: ${{ secrets.DOCKER_REPOSITORY_DOMAIN }}
   DOCKER_REPOSITORY_USER: ${{ secrets.DOCKER_REPOSITORY_USER }}
   DOCKER_REPOSITORY_PASSWORD: ${{ secrets.DOCKER_REPOSITORY_PASSWORD }}
   DOCKER_REPOSITORY_STORYBOOK: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/storybook"
-  DOCKER_REPOSITORY: "${{ secrets.DOCKER_REPOSITORY_DOMAIN }}/alfresco/demo-shell"
   GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
   REPO_OWNER: "Alfresco"
   REPO_NAME: "alfresco-ng2-components"
-  DEMO_SHELL_DIR: "./dist/demo-shell"
   STORYBOOK_DIR: "./dist/storybook/stories"
   BUILT_LIBS_DIR: "./dist/libs"
   NODE_MODULES_DIR: "./node_modules"
-  SMART_RUNNER_DIRECTORY: ".protractor-smartrunner"
-  SAVE_SCREENSHOT: true
   REDIRECT_URI: /
-  BROWSER_RUN: false
-  MAXINSTANCES: 2
-  PLAYWRIGHT_WORKERS: 2
-  PLAYWRIGHT_STORYBOOK_E2E_HOST: http://localhost
-  PLAYWRIGHT_STORYBOOK_E2E_PORT: 4400
 
 jobs:
   setup:
@@ -106,32 +71,6 @@ jobs:
           npx nx run cli:bundle
           npx nx run testing:bundle
       - uses: ./.github/actions/upload-node-modules-and-artifacts
-
-  release-demoshell:
-    needs: [setup]
-    timeout-minutes: 15
-    if: github.event.pull_request.merged == true || github.ref_name == 'master' || github.ref_name == 'master-patch-*'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          fetch-depth: 1
-      - run: git fetch --all
-      - id: set-dryrun
-        uses: ./.github/actions/enable-dryrun
-        with:
-          dry-run-flag: ${{ inputs.dry-run-flag }}
-      - uses: ./.github/actions/setup
-        with:
-          enable-cache: false
-          enable-node-modules-cache: false
-      - uses: ./.github/actions/download-node-modules-and-artifacts
-      - name: release Demoshell docker
-        run: |
-          npx nx build demoshell --configuration production
-          . ./scripts/github/release/docker-tag.sh
-          ./scripts/github/release/release-demoshell-docker.sh ${{ steps.set-dryrun.outputs.dryrun }}
 
   release-storybook:
     needs: [setup]
@@ -194,7 +133,7 @@ jobs:
             setMigrations();
       - name: build libraries
         run: |
-          npx nx affected:build $NX_CALCULATION_FLAGS --prod --exclude="demoshell" --skip-nx-cache
+          npx nx affected:build $NX_CALCULATION_FLAGS --prod --skip-nx-cache
           npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
           npx nx affected $NX_CALCULATION_FLAGS --target=build-schematics
       - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
@@ -250,7 +189,7 @@ jobs:
       if: always()
       runs-on: ubuntu-latest
       name: Final Results
-      needs: [release-demoshell, release-storybook, release-npm, npm-check-bundle]
+      needs: [release-storybook, release-npm, npm-check-bundle]
       steps:
 
         - uses: slackapi/slack-github-action@37ebaef184d7626c5f204ab8d3baff4262dd30f0 # v1.27.0

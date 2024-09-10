@@ -28,6 +28,7 @@ You can find the sources for all ADF components in the [`lib`](/lib) folder.
 ## Libraries
 
 ADF Libraries list:
+
 - [Content services](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/content-services)
 - [Core](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/core)
 - [Extensions](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/extensions)
@@ -36,24 +37,13 @@ ADF Libraries list:
 - [Process service](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/process-services)
 - [Stories](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/lib/stories)
 
-## Demo Application
-
-A separate application showcasing integration of components can be found
-[here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/demo-shell).
-The app has examples of basic interaction for both APS and ACS components.
-
-## Application generator for Yeoman
-
-To speed up the development, you can use the
-[Generator for Yeoman](https://github.com/Alfresco/generator-ng2-alfresco-app).
-
 ## Browser Support
 
 All components are supported in the following browsers:
 
-|**Browser** |**Version** |
-|--- |--- |
-| Chrome | Latest |
-| Safari | Latest |
-| Firefox | Latest |
-| Edge | Latest |
+| **Browser** | **Version** |
+|-------------|-------------|
+| Chrome      | Latest      |
+| Safari      | Latest      |
+| Firefox     | Latest      |
+| Edge        | Latest      |

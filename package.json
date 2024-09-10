@@ -1,37 +1,15 @@
 {
   "name": "alfresco-ng2-components",
-  "commit": "b644b39d17396330d2a67509f58c5b9e890b9b13",
   "description": "Alfresco Angular components",
   "version": "7.0.0-alpha.2",
   "author": "Hyland Software, Inc. and its affiliates",
   "scripts": {
     "prepare": "husky install",
-    "ng": "nx",
-    "00": "echo -------------------------------------------- DOC  -----------------------------------------------",
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
     "docbuild": "(cd ./tools/doc; npm i) && node tools/doc/node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.doc.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
-    "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "affected:libs": "nx affected:libs",
-    "coverage": "./lib/config/create-coverage-index.sh && lite-server -c ./lib/config/proxy-coverage.json",
-    "03": "echo -------------------------------------------- Lint  -----------------------------------------------",
     "affected:lint": "nx affected:lint",
-    "04": "echo -------------------------------------------- Demo Shell -----------------------------------------------",
-    "start": "nx serve demoshell --open",
-    "start:prod": "nx serve demoshell --configuration production --open",
-    "build": "nx build demoshell",
-    "build:prod": "node --max-old-space-size=12000 node_modules/@angular/cli/bin/nx build demoshell --configuration production",
-    "test": "nx test demoshell --watch=false",
-    "05": "echo -------------------------------------------- E2e -----------------------------------------------",
-    "e2e": "./scripts/test-e2e-lib.sh -host 'localhost:4200' -dev --folder demo-shell",
-    "e2e-lib": "nx e2e lib-e2e-test --port=4200",
-    "lite-server-e2e": "lite-server --baseDir='dist/demo-shell/' -c ./e2e/lite-server-proxy.js",
-    "postbuild:ci": "node ./scripts/app-config-replace.js",
-    "06": "echo -------------------------------------------- Clean ----------------------------------------------",
-    "clean": "rimraf dist node_modules dist/libs",
-    "playwright": "npx playwright test --config='e2e-playwright/playwright.config.ts'",
-    "postinstall": "npm run update-webdriver",
-    "update-webdriver": "./scripts/webdriver-update-newest/update-to-newest-webdriver.sh",
-    "update-webdriver:windows": "powershell  -executionPolicy bypass ./scripts/update-webdriver.ps1"
+    "clean": "rimraf dist node_modules dist/libs"
   },
   "repository": {
     "type": "git",
@@ -78,9 +56,7 @@
     "event-emitter": "^0.3.5",
     "material-icons": "^1.13.12",
     "minimatch-browser": "1.0.0",
-    "monaco-editor": "0.34.1",
     "ng2-charts": "^4.1.1",
-    "ngx-monaco-editor-v2": "15.0.1",
     "pdfjs-dist": "3.3.122",
     "raphael": "2.3.0",
     "rxjs": "7.8.1",
@@ -115,7 +91,6 @@
     "@nrwl/storybook": "15.9.3",
     "@nrwl/workspace": "15.9.3",
     "@paperist/types-remark": "0.1.3",
-    "@playwright/test": "^1.35.1",
     "@quanzo/change-font-size": "1.0.0",
     "@schematics/angular": "15.2.10",
     "@storybook/addon-essentials": "8.2.6",
@@ -130,7 +105,6 @@
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.10.0",
     "@types/pdfjs-dist": "^2.10.378",
-    "@types/selenium-webdriver": "^4.1.17",
     "@types/shelljs": "^0.8.15",
     "@types/superagent": "^4.1.22",
     "@typescript-eslint/eslint-plugin": "5.59.8",
@@ -161,7 +135,6 @@
     "jasmine-core": "4.6.0",
     "jasmine-marbles": "^0.9.2",
     "jasmine-reporters": "^2.5.2",
-    "jasmine-spec-reporter": "7.0.0",
     "js-yaml": "^4.0.0",
     "jsdom": "^24.0.0",
     "karma": "^6.4.1",
@@ -173,68 +146,30 @@
     "karma-mocha-reporter": "2.2.5",
     "license-checker": "^25.0.1",
     "lint-staged": "^15.2.2",
-    "lite-server": "^2.6.1",
     "mini-css-extract-plugin": "^2.7.6",
     "mocha": "^10.2.0",
     "moment": "^2.29.4",
     "ng-packagr": "15.2.2",
     "nock": "^13.3.8",
-    "npm-run-all": "^4.1.5",
     "nx": "15.9.7",
     "postcss": "^8.4.31",
     "postcss-sass": "^0.5.0",
     "prettier": "2.8.8",
     "protractor": "^7.0.0",
-    "protractor-retry-angular-cli": "^2.0.3",
-    "protractor-screenshoter-plugin": "0.10.3",
-    "protractor-smartrunner": "^2.0.0-beta6",
     "rimraf": "^5.0.5",
     "sass-loader": "13.3.2",
-    "selenium-webdriver": "^4.14.0",
     "shelljs": "^0.8.5",
     "spdx-license-list": "^6.9.0",
     "stylelint": "^16.3.1",
     "stylelint-config-standard-scss": "^13.1.0",
     "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.1.1",
     "typescript": "4.9.5",
-    "webdriver-manager": "12.1.9",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4"
   },
   "license": "Apache-2.0",
-  "bundlesize": [
-    {
-      "path": "./dist/libs/content-services/bundles/adf-content-services.umd.min.js",
-      "maxSize": "85 kb"
-    },
-    {
-      "path": "./dist/libs/process-services/bundles/adf-process-services.umd.min.js",
-      "maxSize": "62 kb"
-    },
-    {
-      "path": "./dist/libs/insights/bundles/adf-insights.umd.min.js",
-      "maxSize": "50 kb"
-    },
-    {
-      "path": "./dist/libs/core/bundles/adf-core.umd.min.js",
-      "maxSize": "165 kb"
-    },
-    {
-      "path": "./dist/libs/process-services-cloud/bundles/adf-process-services-cloud.umd.min.js",
-      "maxSize": "60 kb"
-    },
-    {
-      "path": "./dist/libs/extensions/bundles/adf-extensions.umd.min.js",
-      "maxSize": "10 kb"
-    },
-    {
-      "path": "./dist/libs/testing/bundles/adf-testing.umd.min.js",
-      "maxSize": "50 kb"
-    }
-  ],
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=18.0.0"
   },
   "module": "./index.js",
   "typings": "./index.d.ts"

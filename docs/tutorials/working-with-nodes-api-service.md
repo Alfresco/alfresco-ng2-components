@@ -43,8 +43,10 @@ if (node.isFile) {
 Now add the `myOnNodeDoubleClick` method as described below and save the file:
 
 ```ts
-myOnNodeDoubleClick(nodeId) {
-    console.log("You ckicked on the node '" + nodeId + "'.");
+class MyComponent {
+    myOnNodeDoubleClick(nodeId) {
+        console.log("You ckicked on the node '" + nodeId + "'.");
+    }
 }
 ```
 
@@ -60,7 +62,7 @@ The Alfresco Example Content app is now set up to demonstrate the usage of the [
 
 For a first look at the [`NodesApiService`](../core/services/nodes-api.service.md), let's check the `FileComponent` component stored in
 `src/app/components/files/files.component.ts`. In the source code, you can see the `nodesApi`
-property that represents the [`NodesApiService`](../core/services/nodes-api.service.md) in the [`FilesComponent`](../../demo-shell/src/app/components/files/files.component.ts). See the `fetchNode` and
+property that represents the [`NodesApiService`](../core/services/nodes-api.service.md). See the `fetchNode` and
 `fetchNodes` methods for some very basic examples.
 
 ## About the NodesApiService
@@ -81,37 +83,40 @@ You "subscribe" to the asynchronous messaging using the following syntax:
 
 ```ts
 this.nodesApi.getNode(nodeId).subscribe(
-    (node) => { ... },
-    error => { ... }
+    (node) => { /*...*/ },
+    error => { /*...*/ }
 );
 ```
 
 ### MinimalNode
 
-All the methods that manage content nodes return an [`Observable`](http://reactivex.io/documentation/observable.html) of the [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)
-class. [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) is used to represent the node's content. See the
-[official documentation](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)
-for further details.
+All the methods that manage content nodes return an `Observable` of the `MinimalNode`class. 
+The `MinimalNode` is used to represent the node's content. 
+
+See the [official documentation](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) for further details.
 
 ### NodePaging
 
-When a method returns a list of nodes rather than a single node, it usually returns an [`Observable`](http://reactivex.io/documentation/observable.html) of the [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) class. See the
-[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)
-docs for further details.
+When a method returns a list of nodes rather than a single node, it usually returns an `Observable` of the `NodePaging` class.
+See the [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) docs for further details.
 
 ## Retrieving info and metadata from a node
 
 As a first example of the usage of the [`NodesApiService`](../core/services/nodes-api.service.md), let's retrieve the properties of a content node using its identifier. Edit the `myOnNodeDoubleClick` method in `src/app/components/files/files.component.ts`, as shown below:
 
 ```ts
-myOnNodeDoubleClick(nodeId) {
-    this.nodesApi.getNode(nodeId)
-    .subscribe(
-        (node) => {
-            console.log(node.properties);
-        },
-        error => { console.log("Ouch, an error happened!"); }
-    );
+class MyComponent {
+    myOnNodeDoubleClick(nodeId) {
+        this.nodesApi.getNode(nodeId)
+            .subscribe(
+                (node) => {
+                    console.log(node.properties);
+                },
+                error => {
+                    console.log("Ouch, an error happened!");
+                }
+            );
+    }
 }
 ```
 
@@ -138,14 +143,18 @@ to match the source code below:
 Now add the `myOnFolderNodeDoubleClick` method as shown below and save the file:
 
 ```ts
-myOnFolderNodeDoubleClick(nodeId) {
-    this.nodesApi.getNodeChildren(nodeId)
-    .subscribe(
-        (nodePaging) => {
-            console.log(nodePaging.list);
-        },
-        error => { console.log("Ouch, an error happened!"); }
-    );
+class MyComponent {
+    myOnFolderNodeDoubleClick(nodeId) {
+        this.nodesApi.getNodeChildren(nodeId)
+            .subscribe(
+                (nodePaging) => {
+                    console.log(nodePaging.list);
+                },
+                error => {
+                    console.log("Ouch, an error happened!");
+                }
+            );
+    }
 }
 ```
 
@@ -165,14 +174,18 @@ a subfolder of the double clicked folder and also how to delete it.
 To create a subfolder, change the `myOnFolderNodeDoubleClick` method as described below and save the Typescript file.
 
 ```ts
-myOnFolderNodeDoubleClick(nodeId) {
-    this.nodesApi.createFolder(nodeId, { "name": "My new subfolder" })
-    .subscribe(
-        (node) => {
-            console.log("Subfolder created with name '" + node.name + "' (id:'" + node.id + "').");
-        },
-        error => { console.log("Ouch, an error happened!"); }
-    );
+class MyComponent {
+    myOnFolderNodeDoubleClick(nodeId) {
+        this.nodesApi.createFolder(nodeId, { "name": "My new subfolder" })
+            .subscribe(
+                (node) => {
+                    console.log("Subfolder created with name '" + node.name + "' (id:'" + node.id + "').");
+                },
+                error => {
+                    console.log("Ouch, an error happened!");
+                }
+            );
+    }
 }
 ```
 
@@ -187,7 +200,7 @@ Alfresco Share client or by replacing the content of the `myOnFolderNodeDoubleCl
 with:
 
 ```ts
-this.navigate(nodeId);`
+this.navigate(nodeId);
 ```
 
 ...and then saving and navigating to the `Shared` folder.
@@ -205,14 +218,18 @@ with the same name in the same parent folder, which is not permitted by Alfresco
 To delete a folder, change the `myOnFolderNodeDoubleClick` method as described below and save the Typescript file.
 
 ```ts
-myOnFolderNodeDoubleClick(nodeId) {
-    this.nodesApi.deleteNode(nodeId)
-    .subscribe(
-        success => {
-            alert("Node deleted! Click on a folder into the left menu.");
-        },
-        error => { console.log("Ouch, an error happened!"); }
-    );
+class MyComponent {
+    myOnFolderNodeDoubleClick(nodeId) {
+        this.nodesApi.deleteNode(nodeId)
+            .subscribe(
+                success => {
+                    alert("Node deleted! Click on a folder into the left menu.");
+                },
+                error => {
+                    console.log("Ouch, an error happened!");
+                }
+            );
+    }
 }
 ```
 
