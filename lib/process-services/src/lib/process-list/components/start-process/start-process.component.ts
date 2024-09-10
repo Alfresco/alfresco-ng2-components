@@ -170,7 +170,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         ]);
         this.processDefinitionInput = new UntypedFormControl();
 
-        this.load();
+        this.load(this.appId);
 
         this.filteredProcessesDefinitions$ = this.processDefinitionInput.valueChanges.pipe(
             map((value) => this._filter(value)),
