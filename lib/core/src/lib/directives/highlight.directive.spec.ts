@@ -20,21 +20,22 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HighlightTransformService } from '../common/services/highlight-transform.service';
 import { HighlightDirective } from './highlight.directive';
-import { CoreTestingModule } from '../testing/core.testing.module';
 
 /* spellchecker: disable */
-const template: string = `
-<div id="outerDiv1" adf-highlight adf-highlight-selector=".highlightable" adf-highlight-class="highlight-for-free-willy">
-    <div id="innerDiv11" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
-    <div id="innerDiv12">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
-    <div id="innerDiv13" class="highlightable">consectetur adipiscing elit</div>
-    <div id="innerDiv14" class="highlightable">sed do eiusmod salana-eyong-aysis tempor incididunt</div>
-</div>
-<div id="outerDiv2" adf-highlight adf-highlight-selector=".highlightable">
-    <div id="innerDiv21" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
-</div>`;
-
-@Component({ selector: 'adf-test-component', template })
+@Component({
+    selector: 'adf-test-component',
+    standalone: true,
+    imports: [HighlightDirective],
+    template: ` <div id="outerDiv1" adf-highlight adf-highlight-selector=".highlightable" adf-highlight-class="highlight-for-free-willy">
+            <div id="innerDiv11" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
+            <div id="innerDiv12">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
+            <div id="innerDiv13" class="highlightable">consectetur adipiscing elit</div>
+            <div id="innerDiv14" class="highlightable">sed do eiusmod salana-eyong-aysis tempor incididunt</div>
+        </div>
+        <div id="outerDiv2" adf-highlight adf-highlight-selector=".highlightable">
+            <div id="innerDiv21" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
+        </div>`
+})
 class TestComponent {
     @ViewChildren(HighlightDirective) public highlightDirectives;
 }
@@ -45,8 +46,7 @@ describe('HighlightDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [TestComponent]
+            imports: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
