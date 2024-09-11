@@ -192,7 +192,6 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     rows: any[] = [];
     sorting: any[] = ['created', 'desc'];
     pagination: BehaviorSubject<PaginationModel>;
-    selectedInstances: ObjectDataRow[];
 
     constructor(private processService: ProcessService, private userPreferences: UserPreferencesService, appConfig: AppConfigService) {
         super(appConfig, PRESET_KEY, processPresetsDefaultModel);
@@ -281,14 +280,8 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         this.rowClick.emit(this.currentInstanceId);
     }
 
-    onRowSelect(event: CustomEvent) {
-        this.selectedInstances = [...event.detail.selection];
-        this.rowsSelected.emit(this.selectedInstances);
-    }
-
-    onRowUnselect(event: CustomEvent) {
-        this.selectedInstances = [...event.detail.selection];
-        this.rowsSelected.emit(this.selectedInstances);
+    onRowCheckboxToggle(event: CustomEvent) {
+        this.rowsSelected.emit([...event.detail.selection]);
     }
 
     /**

@@ -14,8 +14,8 @@
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (rowClick)="onRowClick($event)"
     (row-keyup)="onRowKeyUp($any($event))"
-    (row-select)="onRowSelect($any($event))"
-    (row-unselect)="onRowUnselect($any($event))"
+    (row-select)="onRowCheckboxToggle($any($event))"
+    (row-unselect)="onRowCheckboxToggle($any($event))"
 >
     <adf-loading-content-template>
         <ng-template>
