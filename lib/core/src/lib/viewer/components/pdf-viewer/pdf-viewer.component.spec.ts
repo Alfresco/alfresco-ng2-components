@@ -33,11 +33,14 @@ declare const pdfjsLib: any;
 
 @Component({
     selector: 'adf-test-dialog-component',
+    standalone: true,
     template: ''
 })
 class TestDialogComponent {}
 
 @Component({
+    standalone: true,
+    imports: [PdfViewerComponent],
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"></adf-pdf-viewer> `
 })
 class UrlTestComponent {
@@ -52,6 +55,8 @@ class UrlTestComponent {
 }
 
 @Component({
+    standalone: true,
+    imports: [PdfViewerComponent],
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"></adf-pdf-viewer> `
 })
 class UrlTestPasswordComponent {
@@ -66,6 +71,8 @@ class UrlTestPasswordComponent {
 }
 
 @Component({
+    standalone: true,
+    imports: [PdfViewerComponent],
     template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile"></adf-pdf-viewer> `
 })
 class BlobTestComponent {
@@ -105,10 +112,9 @@ describe('Test PdfViewer component', () => {
     let change: any;
     let dialog: MatDialog;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [TestDialogComponent, UrlTestComponent, UrlTestPasswordComponent, BlobTestComponent],
+            imports: [CoreTestingModule, UrlTestComponent, TestDialogComponent, UrlTestPasswordComponent, BlobTestComponent],
             providers: [
                 {
                     provide: MatDialog,
@@ -129,9 +135,7 @@ describe('Test PdfViewer component', () => {
         component.inputPage('1');
 
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            done();
-        });
+        await fixture.whenStable();
     });
 
     describe('User interaction', () => {
@@ -425,14 +429,13 @@ describe('Test PdfViewer component', () => {
                 document.body.removeChild(elementUrlTestComponent);
             });
 
-            it('should use the custom zoom if it is present in the app.config', (done) => {
+            it('should use the custom zoom if it is present in the app.config', async () => {
                 spyOn(componentUrlTestComponent.pdfViewerComponent.pdfViewer, 'forceRendering').and.callFake(() => {});
 
                 fixtureUrlTestComponent.detectChanges();
-                fixtureUrlTestComponent.whenStable().then(() => {
-                    expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.8);
-                    done();
-                });
+                await fixtureUrlTestComponent.whenStable();
+
+                expect(componentUrlTestComponent.pdfViewerComponent.pdfViewer.currentScale).toBe(0.8);
             });
         });
 
