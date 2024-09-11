@@ -21,7 +21,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
-import { AlfrescoViewerComponent, ContentService, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
+import { AlfrescoViewerComponent, ContentService, ContentTestingModule, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
 import {
     CloseButtonPosition,
     EventMock,
@@ -159,6 +159,7 @@ describe('AlfrescoViewerComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                ContentTestingModule,
                 NoopAuthModule,
                 MatDialogModule,
                 NoopTranslateModule,
@@ -174,7 +175,7 @@ describe('AlfrescoViewerComponent', () => {
                 {
                     provide: RenditionService,
                     useValue: {
-                        getNodeRendition: () => throwError('thrown'),
+                        getNodeRendition: () => throwError(() => new Error('thrown')),
                         generateMediaTracksRendition: () => {}
                     }
                 },
