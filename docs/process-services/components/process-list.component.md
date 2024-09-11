@@ -77,7 +77,7 @@ when the process list is empty:
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
 | showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/src/lib/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
-| rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emmitted when rows is selected or unselected. |
+| rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ObjectDataRow[]`](../../../lib/core/src/lib/datatable/data/object-datarow.model.ts)`>` | Emmitted when rows is selected or unselected. |
 
 ## Details
 
