@@ -4,6 +4,7 @@
             font-size: var(--adf-radio-buttons-font-size, var(--adf-form-label-font-size, var(--theme-caption-font-size)));
             font-weight: var(--adf-radio-buttons-font-weight, var(--adf-form-label-font-weight, var(--theme-font-weight)));
             color: var(--adf-radio-buttons-color, var(--adf-form-label-color, var(--adf-theme-foreground-secondary-text-color)));
+            line-height: normal;
         }
     }
 

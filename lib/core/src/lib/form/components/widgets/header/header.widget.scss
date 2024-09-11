@@ -6,6 +6,7 @@
     font-size: var(--adf-header-font-size);
     font-weight: var(--adf-header-font-weight);
     color: var(--adf-header-color);
+    line-height: normal;
 
     &.adf-collapsible {
         cursor: pointer;
