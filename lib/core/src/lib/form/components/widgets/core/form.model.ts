@@ -119,7 +119,7 @@ export class FormModel implements ProcessFormModel {
             this.enableFixedSpace = enableFixedSpace;
             this.confirmMessage = json.confirmMessage || {};
             this.displayMode = json.displayMode;
-            this.theme = json.theme;
+            this.theme = json.theme || json.formDefinition?.theme;
 
             this.tabs = (json.tabs || []).map((tabJson) => new TabModel(this, tabJson));
 
