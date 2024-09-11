@@ -184,7 +184,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /** Emitted when rows are selected/unselected */
     @Output()
-    rowsSelected = new EventEmitter<any[]>();
+    rowsSelected = new EventEmitter<ObjectDataRow[]>();
 
     requestNode: ProcessInstanceQueryRepresentation;
     currentInstanceId: string;
