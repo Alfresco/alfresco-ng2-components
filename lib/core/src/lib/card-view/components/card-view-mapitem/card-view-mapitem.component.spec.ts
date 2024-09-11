@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { CoreTestingModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('CardViewMapItemComponent', () => {
     let service: CardViewUpdateService;
@@ -33,7 +33,7 @@ describe('CardViewMapItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, CardViewMapItemComponent]
+            imports: [NoopTranslateModule, CardViewMapItemComponent]
         });
         fixture = TestBed.createComponent(CardViewMapItemComponent);
         service = TestBed.inject(CardViewUpdateService);

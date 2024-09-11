@@ -28,8 +28,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatChipHarness } from '@angular/material/chips/testing';
 import { addMinutes } from 'date-fns';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CoreTestingModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('CardViewDateItemComponent', () => {
     let loader: HarnessLoader;
@@ -39,7 +38,7 @@ describe('CardViewDateItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatSnackBarModule, CardViewDateItemComponent]
+            imports: [NoopTranslateModule, CardViewDateItemComponent]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {

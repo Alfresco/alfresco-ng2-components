@@ -30,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -52,7 +53,8 @@ const templateTypes = {
         MatChipsModule,
         MatIconModule,
         FormsModule,
-        MatButtonModule
+        MatButtonModule,
+        MatSnackBarModule
     ],
     templateUrl: './card-view-textitem.component.html',
     styleUrls: ['./card-view-textitem.component.scss'],
