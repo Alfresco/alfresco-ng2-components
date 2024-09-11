@@ -20,10 +20,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProcessModule } from '../process.module';
 import { CoreModule, FormRenderingService, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 import { ProcessFormRenderingService } from '../form/process-form-rendering.service';
-import { ContentModule } from '@alfresco/adf-content-services';
 
 @NgModule({
-    imports: [CoreModule.forRoot(), ProcessModule.forRoot(), ContentModule.forRoot(), NoopAuthModule, NoopAnimationsModule, NoopTranslateModule],
+    imports: [CoreModule.forRoot(), ProcessModule.forRoot(), NoopAuthModule, NoopAnimationsModule, NoopTranslateModule],
     providers: [{ provide: FormRenderingService, useClass: ProcessFormRenderingService }],
     exports: [CoreModule, ProcessModule]
 })
