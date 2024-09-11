@@ -245,10 +245,12 @@ export class UserPreferencesService {
     }
 
     private getLanguageByKey(key: string): LanguageItem {
-        return (
-            this.appConfig
-                .get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY, [{ key: 'en' } as LanguageItem])
-                .find((language) => key.includes(language.key)) || ({ key: 'en' } as LanguageItem)
-        );
+        const defaultLanguage = { key: 'en' } as LanguageItem;
+
+        const registeredLanguages = this.appConfig.get<Array<LanguageItem>>(AppConfigValues.APP_CONFIG_LANGUAGES_KEY);
+        if (registeredLanguages && Array.isArray(registeredLanguages)) {
+            return registeredLanguages.find((language) => key.includes(language.key)) || defaultLanguage;
+        }
+        return defaultLanguage;
     }
 }
