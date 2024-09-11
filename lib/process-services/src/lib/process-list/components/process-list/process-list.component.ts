@@ -32,7 +32,8 @@ import {
     EmptyContentComponent,
     DataTableComponent,
     LoadingContentTemplateDirective,
-    NoContentTemplateDirective
+    NoContentTemplateDirective,
+    ObjectDataRow
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessService } from '../../services/process.service';
@@ -181,12 +182,17 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     @Output()
     error = new EventEmitter<any>();
 
+    /** Emitted when rows are selected/unselected */
+    @Output()
+    rowsSelected = new EventEmitter<any[]>();
+
     requestNode: ProcessInstanceQueryRepresentation;
     currentInstanceId: string;
     isLoading: boolean = true;
     rows: any[] = [];
     sorting: any[] = ['created', 'desc'];
     pagination: BehaviorSubject<PaginationModel>;
+    selectedInstances: ObjectDataRow[];
 
     constructor(private processService: ProcessService, private userPreferences: UserPreferencesService, appConfig: AppConfigService) {
         super(appConfig, PRESET_KEY, processPresetsDefaultModel);
@@ -273,6 +279,16 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
+    }
+
+    onRowSelect(event: CustomEvent) {
+        this.selectedInstances = [...event.detail.selection];
+        this.rowsSelected.emit(this.selectedInstances);
+    }
+
+    onRowUnselect(event: CustomEvent) {
+        this.selectedInstances = [...event.detail.selection];
+        this.rowsSelected.emit(this.selectedInstances);
     }
 
     /**
