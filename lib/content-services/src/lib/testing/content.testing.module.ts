@@ -17,16 +17,7 @@
 
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-import {
-    CoreModule,
-    AppConfigService,
-    CookieService,
-    AppConfigServiceMock,
-    CookieServiceMock,
-    AuthModule,
-    NoopTranslateModule
-} from '@alfresco/adf-core';
+import { CoreModule, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 import { ContentModule } from '../content.module';
 import { versionCompatibilityFactory } from '../version-compatibility/version-compatibility-factory';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -35,19 +26,9 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { AlfrescoApiServiceMock } from '../mock';
 
 @NgModule({
-    imports: [
-        AuthModule.forRoot({ useHash: true }),
-        NoopAnimationsModule,
-        RouterTestingModule,
-        CoreModule,
-        NoopTranslateModule,
-        ContentModule,
-        MatIconTestingModule
-    ],
+    imports: [NoopAnimationsModule, CoreModule, NoopAuthModule, NoopTranslateModule, ContentModule, MatIconTestingModule],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: CookieService, useClass: CookieServiceMock },
         {
             provide: APP_INITIALIZER,
             useFactory: versionCompatibilityFactory,
