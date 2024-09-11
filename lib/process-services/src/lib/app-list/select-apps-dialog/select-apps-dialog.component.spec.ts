@@ -42,7 +42,7 @@ export class DialogSelectAppTestComponent {
         });
 
         this.dialogRef.afterClosed().subscribe((selectedProcess) => {
-            this.processId = selectedProcess.id;
+            this.processId = selectedProcess?.id;
         });
     }
 }

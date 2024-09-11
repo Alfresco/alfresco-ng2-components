@@ -15,36 +15,16 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProcessModule } from '../process.module';
-import {
-    AppConfigService,
-    AppConfigServiceMock,
-    CoreModule,
-    FormRenderingService,
-    AuthModule,
-    NoopTranslateModule
-} from '@alfresco/adf-core';
+import { CoreModule, FormRenderingService, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 import { ProcessFormRenderingService } from '../form/process-form-rendering.service';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ContentModule } from '@alfresco/adf-content-services';
 
 @NgModule({
-    imports: [
-        AuthModule.forRoot({ useHash: true }),
-        NoopAnimationsModule,
-        CoreModule.forRoot(),
-        ProcessModule.forRoot(),
-        RouterTestingModule,
-        NoopTranslateModule
-    ],
-    providers: [
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        FormRenderingService,
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
-    ],
-    exports: [NoopAnimationsModule, CoreModule, ProcessModule]
+    imports: [CoreModule.forRoot(), ProcessModule.forRoot(), ContentModule.forRoot(), NoopAuthModule, NoopAnimationsModule, NoopTranslateModule],
+    providers: [{ provide: FormRenderingService, useClass: ProcessFormRenderingService }],
+    exports: [CoreModule, ProcessModule]
 })
 export class ProcessTestingModule {}
