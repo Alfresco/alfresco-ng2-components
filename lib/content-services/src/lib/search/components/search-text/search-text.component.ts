@@ -64,6 +64,10 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
             if (this.startValue) {
                 this.setValue(this.startValue);
+            } else {
+                if (this.context?.queryFragments) {
+                    this.context.queryFragments[this.id] = '';
+                }
             }
         }
     }

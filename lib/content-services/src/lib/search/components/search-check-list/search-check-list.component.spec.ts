@@ -204,4 +204,40 @@ describe('SearchCheckListComponent', () => {
         const checkedElements = await loader.getAllHarnesses(MatCheckboxHarness.with({ checked: true }));
         expect(checkedElements.length).toBe(0);
     });
+
+    it('should update query with startValue on init, if provided', () => {
+        component.id = 'checkList';
+        component.options = new SearchFilterList<SearchListOption>([
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
+        ]);
+        component.startValue = `TYPE:'cm:folder'`;
+        component.context = {
+            queryFragments: {},
+            update: jasmine.createSpy()
+        } as any;
+        fixture.detectChanges();
+
+        expect(component.context.queryFragments[component.id]).toBe(`TYPE:'cm:folder'`);
+        expect(component.context.update).toHaveBeenCalled();
+    });
+
+    it('should set query context as blank and not call query update, if no start value was provided', () => {
+        component.id = 'checkList';
+        component.options = new SearchFilterList<SearchListOption>([
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: true },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
+        ]);
+        component.startValue = undefined;
+        component.context = {
+            queryFragments: {
+                checkList: `TYPE:'cm:folder'`
+            },
+            update: jasmine.createSpy()
+        } as any;
+        fixture.detectChanges();
+
+        expect(component.context.queryFragments[component.id]).toBe('');
+        expect(component.context.update).not.toHaveBeenCalled();
+    });
 });

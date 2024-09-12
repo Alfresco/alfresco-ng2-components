@@ -119,4 +119,25 @@ describe('SearchTextComponent', () => {
         expect(component.value).toBe('');
         expect(component.context.queryFragments[component.id]).toBe('');
     });
+
+    it('should update query with startValue on init, if provided', () => {
+        spyOn(component.context, 'update');
+        component.startValue = 'mock-start-value';
+        fixture.detectChanges();
+
+        expect(component.context.queryFragments[component.id]).toBe(`cm:name:'mock-start-value'`);
+        expect(component.value).toBe('mock-start-value');
+        expect(component.context.update).toHaveBeenCalled();
+    });
+
+    it('should parse value and set query context as blank, and not call query update, if no start value was provided', () => {
+        component.context.queryFragments[component.id] = `cm:name:'secret.pdf'`;
+        spyOn(component.context, 'update');
+        component.startValue = undefined;
+        fixture.detectChanges();
+
+        expect(component.context.queryFragments[component.id]).toBe('');
+        expect(component.value).toBe('secret.pdf');
+        expect(component.context.update).not.toHaveBeenCalled();
+    });
 });
