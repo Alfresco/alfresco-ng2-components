@@ -146,17 +146,6 @@ describe('PeopleComponent', () => {
             expect(peopleComponent.error.emit).toHaveBeenCalledWith('Impossible to involve user with task');
         });
 
-        // it('should involve people', () => {
-        //     spyOn(peopleProcessService, 'involveUserWithTask').and.returnValue(EMPTY);
-        //     peopleComponent.involveUser(fakeUser);
-        //
-        //     fixture.detectChanges();
-        //
-        //     const gatewayElement = element.querySelector('#assignment-people-list .adf-datatable-body');
-        //     expect(gatewayElement).not.toBeNull();
-        //     expect(gatewayElement.children.length).toBe(3);
-        // });
-
         it('should return an observable with user search results', (done) => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(
                 of([
