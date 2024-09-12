@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
 import { AppConfigService, TranslationService } from '@alfresco/adf-core';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
@@ -44,10 +44,15 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     @Output()
     filterCounterUpdated: EventEmitter<TaskCloudEngineEvent[]> = new EventEmitter<TaskCloudEngineEvent[]>();
 
+    /** Emitted when filter is updated. */
+    @Output()
+    updatedFilter: EventEmitter<string> = new EventEmitter<string>();
+
     filters$: Observable<TaskFilterCloudModel[]>;
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
     enableNotifications: boolean;
+    currentFiltersValues = {};
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
     private readonly translationService = inject(TranslationService);
@@ -97,7 +102,11 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     updateFilterCounter(filter: TaskFilterCloudModel) {
         if (filter?.showCounter) {
-            this.counters$[filter.key] = this.taskFilterCloudService.getTaskFilterCounter(filter);
+            this.counters$[filter.key] = this.taskFilterCloudService.getTaskFilterCounter(filter).pipe(
+                tap((filterCounter) => {
+                    this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
+                })
+            );
         }
     }
 
@@ -121,7 +130,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.filters.map((filter) => {
             if (this.isFilterPresent(filter, filterNotification)) {
                 this.addToUpdatedCounters(filter.key);
-                this.updatedFilter.emit(filter.key);
             }
         });
     }
@@ -203,5 +211,16 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
+    }
+
+    checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number) {
+        if (!this.currentFiltersValues[filterKey]) {
+            this.currentFiltersValues[filterKey] = filterValue;
+            return;
+        }
+        if (this.currentFiltersValues[filterKey] !== filterValue) {
+            this.currentFiltersValues[filterKey] = filterValue;
+            this.updatedFilter.emit(filterKey);
+        }
     }
 }

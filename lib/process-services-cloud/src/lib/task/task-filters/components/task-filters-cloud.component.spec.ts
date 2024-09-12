@@ -26,7 +26,7 @@ import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
-import { fakeGlobalFilter, defaultTaskFiltersMock, taskNotifications, fakeFilter, fakeFilterNotification } from '../mock/task-filters-cloud.mock';
+import { fakeGlobalFilter, defaultTaskFiltersMock, taskNotifications } from '../mock/task-filters-cloud.mock';
 
 describe('TaskFiltersCloudComponent', () => {
     let taskFilterService: TaskFilterCloudService;
@@ -329,34 +329,60 @@ describe('TaskFiltersCloudComponent', () => {
         expect(getTaskFilterCounterSpy).toHaveBeenCalledWith(fakeGlobalFilter[0]);
     });
 
-    it('should emit filter key when counter is updated', (done) => {
-        component.appName = 'my-app-1';
-        component.showIcons = true;
-        const testKey = 'my-tasks';
-        component.updatedCounters = [];
+    it('should not emit filter key when filter counter is set for first time', () => {
+        component.currentFiltersValues = {};
+        const fakeFilterKey = 'testKey';
+        const fakeFilterValue = 10;
+        const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
+        component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
         fixture.detectChanges();
 
+        expect(component.currentFiltersValues).not.toEqual({});
+        expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
+        expect(updatedFilterSpy).not.toHaveBeenCalled();
+    });
+
+    it('should not emit filter key when filter counter has not changd', () => {
+        component.currentFiltersValues = {};
+        const fakeFilterKey = 'testKey';
+        const fakeFilterValue = 10;
+        const updatedFilterSpy = spyOn(component.updatedFilter, 'emit');
+        component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
+        fixture.detectChanges();
+
+        expect(component.currentFiltersValues).not.toEqual({});
+        expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
+
+        component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, fakeFilterValue);
+        expect(component.currentFiltersValues[fakeFilterKey]).toBe(fakeFilterValue);
+        expect(updatedFilterSpy).not.toHaveBeenCalled();
+    });
+
+    it('should emit filter key when filter counter is increased', (done) => {
+        component.currentFiltersValues = {};
+        const fakeFilterKey = 'testKey';
+        component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
+
         component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
-            expect(updatedFilter).toBe(testKey);
+            expect(updatedFilter).toBe(fakeFilterKey);
+            expect(component.currentFiltersValues[fakeFilterKey]).toBe(20);
             done();
         });
-
-        component.addToUpdatedCounters(testKey);
+        component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 20);
         fixture.detectChanges();
     });
 
-    it('should emit filter key when filter counter is checked', (done) => {
-        component.appName = 'my-app-1';
-        component.showIcons = true;
-        component.filters = [fakeFilter];
-        fixture.detectChanges();
+    it('should emit filter key when filter counter is decreased', (done) => {
+        component.currentFiltersValues = {};
+        const fakeFilterKey = 'testKey';
+        component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 10);
 
         component.updatedFilter.pipe(first()).subscribe((updatedFilter: string) => {
-            expect(updatedFilter).not.toBe(fakeFilter.key);
+            expect(updatedFilter).toBe(fakeFilterKey);
             done();
         });
 
-        component.checkFilterCounter(fakeFilterNotification);
+        component.checkIfFilterValuesHasBeenUpdated(fakeFilterKey, 5);
         fixture.detectChanges();
     });
 

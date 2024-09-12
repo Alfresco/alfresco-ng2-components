@@ -45,10 +45,6 @@ export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when filter is updated. */
-    @Output()
-    updatedFilter: EventEmitter<string> = new EventEmitter<string>();
-
     counters$: { [key: string]: Observable<number> } = {};
     updatedCounters: string[] = [];
 
@@ -66,7 +62,6 @@ export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
     addToUpdatedCounters(filterKey: string) {
         if (!this.updatedCounters.includes(filterKey)) {
             this.updatedCounters.push(filterKey);
-            this.updatedFilter.emit(filterKey);
         }
     }
 
