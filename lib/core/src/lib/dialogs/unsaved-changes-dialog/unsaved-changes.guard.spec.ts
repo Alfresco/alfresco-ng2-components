@@ -16,8 +16,8 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreTestingModule, UnsavedChangesDialogComponent, UnsavedChangesGuard } from '@alfresco/adf-core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { UnsavedChangesDialogComponent, UnsavedChangesGuard } from '@alfresco/adf-core';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 
 describe('UnsavedChangesGuard', () => {
@@ -25,7 +25,7 @@ describe('UnsavedChangesGuard', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [MatDialogModule]
         });
         guard = TestBed.inject(UnsavedChangesGuard);
     });

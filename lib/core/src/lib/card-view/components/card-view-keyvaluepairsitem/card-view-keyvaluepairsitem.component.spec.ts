@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view-keyvaluepairs.model';
 import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsitem.component';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { CoreTestingModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('CardViewKeyValuePairsItemComponent', () => {
     let fixture: ComponentFixture<CardViewKeyValuePairsItemComponent>;
@@ -31,7 +31,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, CardViewKeyValuePairsItemComponent]
+            imports: [NoopTranslateModule, CardViewKeyValuePairsItemComponent]
         });
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
         cardViewUpdateService = TestBed.inject(CardViewUpdateService);

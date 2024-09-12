@@ -16,16 +16,8 @@
  */
 
 import { DataColumnComponent } from './data-column.component';
-import { CoreTestingModule } from '../../testing/core.testing.module';
-import { TestBed } from '@angular/core/testing';
 
 describe('DataColumnListComponent', () => {
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
-        });
-    });
-
     it('should setup screen reader title for thumbnails', () => {
         const component = new DataColumnComponent();
         component.key = '$thumbnail';

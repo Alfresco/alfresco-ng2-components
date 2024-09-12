@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
-import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { JsonCellComponent } from './json-cell.component';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -34,7 +33,7 @@ describe('JsonCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [JsonCellComponent]
         });
         fixture = TestBed.createComponent(JsonCellComponent);
         component = fixture.componentInstance;
