@@ -28,7 +28,6 @@ export * from './activityEntry';
 export * from './activityPaging';
 export * from './activityPagingList';
 export * from './agent';
-export * from './agentWithAvatar';
 export * from './agentEntry';
 export * from './agentPaging';
 export * from './agentPagingList';

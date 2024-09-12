@@ -3,7 +3,6 @@
 | Method                            | HTTP request                                 | Description              |
 |-----------------------------------|----------------------------------------------|--------------------------|
 | [getAgents](#getAgents)           | **GET** /agents                              | Gets all agents.         |
-| [getAgentAvatar](#getAgentAvatar) | **GET** /agents/${agentId}/avatars/-default- | Gets agent avatar by id. |
 
 ## getAgents
 
@@ -24,7 +23,9 @@ A paginated list is returned in the response body. For example:
       {
         "entry": {
             "id": "Some id",
-            "name": "Some name"
+            "name": "Some name",
+            "description": "Some description",
+            "avatarUrl": "Some avatar url"
         }
       }
     ]
@@ -46,31 +47,6 @@ agentsApi.getAgents().then((agents) => {
 ```
 
 **Return type**: [AgentPaging](#AgentPaging)
-
-## getAgentAvatar
-
-Gets agent avatar by agent id.
-
-**Parameters**
-
-| Name          | Type     |
-|---------------|----------|
-| **agentId**   | string   |
-
-**Example**
-
-```javascript
-import { AlfrescoApi, AgentsApi } from '@alfresco/js-api';
-
-const alfrescoApi = new AlfrescoApi(/*..*/);
-const agentsApi = new AgentsApi(alfrescoApi);
-
-agentsApi.getAgentAvatar('agentId').then((agentAvatarImage) => {
-  console.log('API called successfully. Returned data: ' + agentAvatarImage);
-});
-```
-
-**Return type**: String
 
 # Models
 
@@ -103,8 +79,9 @@ agentsApi.getAgentAvatar('agentId').then((agentAvatarImage) => {
 
 **Properties**
 
-| Name            | Type   |
-|-----------------|--------|
-| **id**          | string |
-| **name**        | string |
-| **description** | string |
+| Name            | Type      | Description                   |
+|-----------------|-----------|-------------------------------|
+| **id**          | string    | Agent id                      |    
+| **name**        | string    | Agent name                    |
+| **description** | string    | Agent description             |
+| **avatarUrl**   | string    | (optional) Agent avatar image |

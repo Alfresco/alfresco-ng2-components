@@ -1,5 +1,5 @@
 <div class="adf-avatar">
-    <img *ngIf="src; else initialsTemplate" class="adf-avatar__image" [src]="src" [alt]="initials" [title]="tooltip" />
+    <img (error)="src = ''" *ngIf="src; else initialsTemplate" class="adf-avatar__image" [src]="src" [alt]="initials" [title]="tooltip" />
 </div>
 
 <ng-template #initialsTemplate>
