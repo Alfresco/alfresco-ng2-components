@@ -20,22 +20,17 @@ import { By } from '@angular/platform-browser';
 import { Node } from '@alfresco/js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
-import { APP_INITIALIZER, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { NodeAspectService } from '../../../aspect-list/services/node-aspect.service';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { of } from 'rxjs';
-import { AuthModule, NoopTranslateModule } from '@alfresco/adf-core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { versionCompatibilityFactory } from '../../../version-compatibility/version-compatibility-factory';
-import { VersionCompatibilityService } from '../../../version-compatibility';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CategoryService } from '../../../category';
 import { TagService } from '../../../tag';
 import { PropertyDescriptorsService } from '../../public-api';
-import { AlfrescoApiService } from '../../../services/alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../../../mock/alfresco-api.service.mock';
+import { ContentTestingModule } from '@alfresco/adf-content-services';
 
 describe('ContentMetadataCardComponent', () => {
     let component: ContentMetadataCardComponent;
@@ -52,23 +47,7 @@ describe('ContentMetadataCardComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                NoopTranslateModule,
-                AuthModule.forRoot({ useHash: true }),
-                MatDialogModule,
-                MatSnackBarModule,
-                ContentMetadataCardComponent
-            ],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: versionCompatibilityFactory,
-                    deps: [VersionCompatibilityService],
-                    multi: true
-                }
-            ]
+            imports: [ContentTestingModule, MatDialogModule, MatSnackBarModule, ContentMetadataCardComponent]
         });
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         contentMetadataService = TestBed.inject(ContentMetadataService);
