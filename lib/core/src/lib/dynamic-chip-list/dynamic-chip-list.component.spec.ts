@@ -182,7 +182,7 @@ describe('DynamicChipListComponent', () => {
             element.style.maxWidth = '309px';
         });
 
-        afterEach(() =>{
+        afterEach(() => {
             fixture.destroy();
         });
 
@@ -316,6 +316,16 @@ describe('DynamicChipListComponent', () => {
             resizeCallback([], null);
             fixture.detectChanges();
             expect(viewMoreButton.hidden).toBeTrue();
+        }));
+
+        it('should not render View more button if there are no chips', fakeAsync(() => {
+            renderChips();
+            component.chips = [];
+            tick();
+            fixture.detectChanges();
+
+            expect(component.chipsToDisplay).toEqual([]);
+            expect(findViewMoreButton().hidden).toBeTrue();
         }));
     });
 });
