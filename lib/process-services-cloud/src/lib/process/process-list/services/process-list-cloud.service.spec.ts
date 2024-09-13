@@ -36,9 +36,7 @@ describe('ProcessListCloudService', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [
-                ProcessServiceCloudTestingModule
-            ]
+            imports: [ProcessServiceCloudTestingModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(ProcessListCloudService);
@@ -71,8 +69,14 @@ describe('ProcessListCloudService', () => {
 
     it('should concat the sorting to append as parameters', (done) => {
         const processRequest = {
-            appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
-            sorting: [{ orderBy: 'NAME', direction: 'DESC' }, { orderBy: 'TITLE', direction: 'ASC' }]
+            appName: 'fakeName',
+            skipCount: 0,
+            maxItems: 20,
+            service: 'fake-service',
+            sorting: [
+                { orderBy: 'NAME', direction: 'DESC' },
+                { orderBy: 'TITLE', direction: 'ASC' }
+            ]
         } as ProcessQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallQueryParameters);
         service.getProcessByRequest(processRequest).subscribe((res) => {
@@ -87,7 +91,7 @@ describe('ProcessListCloudService', () => {
         const processRequest = { appName: null } as ProcessQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallUrl);
         service.getProcessByRequest(processRequest).subscribe(
-            () => { },
+            () => {},
             (error) => {
                 expect(error).toBe('Appname not configured');
                 done();
@@ -95,8 +99,20 @@ describe('ProcessListCloudService', () => {
         );
     });
 
-    describe('getAdminProcessRequest', () => {
+    it('should return number of total items of processes ', (done) => {
+        const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 1, service: 'fake-service' } as ProcessQueryCloudRequestModel;
+        requestSpy.and.callFake(returnCallQueryParameters);
+        service.getProcessByRequest(processRequest).subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.skipCount).toBe(0);
+            expect(res.maxItems).toBe(1);
+            expect(res.service).toBe('fake-service');
+            done();
+        });
+    });
 
+    describe('getAdminProcessRequest', () => {
         it('should append to the call all the parameters', async () => {
             const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
@@ -121,8 +137,14 @@ describe('ProcessListCloudService', () => {
 
         it('should concat the sorting to append as parameters', async () => {
             const processRequest = {
-                appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
-                sorting: [{ orderBy: 'NAME', direction: 'DESC' }, { orderBy: 'TITLE', direction: 'ASC' }]
+                appName: 'fakeName',
+                skipCount: 0,
+                maxItems: 20,
+                service: 'fake-service',
+                sorting: [
+                    { orderBy: 'NAME', direction: 'DESC' },
+                    { orderBy: 'TITLE', direction: 'ASC' }
+                ]
             } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
             const request = await service.getAdminProcessByRequest(processRequest).toPromise();
@@ -140,7 +162,7 @@ describe('ProcessListCloudService', () => {
                 await service.getAdminProcessByRequest(processRequest).toPromise();
 
                 fail('Should have thrown error');
-            } catch(error) {
+            } catch (error) {
                 expect(error).toBe('Appname not configured');
             }
         });
@@ -155,7 +177,13 @@ describe('ProcessListCloudService', () => {
         });
 
         it('should not have variable keys as part of query parameters', async () => {
-            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service', variableKeys: ['test-one', 'test-two'] } as ProcessQueryCloudRequestModel;
+            const processRequest = {
+                appName: 'fakeName',
+                skipCount: 0,
+                maxItems: 20,
+                service: 'fake-service',
+                variableKeys: ['test-one', 'test-two']
+            } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
             const requestParams = await service.getAdminProcessByRequest(processRequest).toPromise();
 
@@ -165,7 +193,13 @@ describe('ProcessListCloudService', () => {
         });
 
         it('should send right variable keys as post body', async () => {
-            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service', variableKeys: ['test-one', 'test-two'] } as ProcessQueryCloudRequestModel;
+            const processRequest = {
+                appName: 'fakeName',
+                skipCount: 0,
+                maxItems: 20,
+                service: 'fake-service',
+                variableKeys: ['test-one', 'test-two']
+            } as ProcessQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallBody);
             const requestBodyParams = await service.getAdminProcessByRequest(processRequest).toPromise();
 

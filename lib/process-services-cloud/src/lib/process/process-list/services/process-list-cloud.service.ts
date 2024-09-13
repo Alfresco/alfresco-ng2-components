@@ -68,6 +68,48 @@ export class ProcessListCloudService extends BaseCloudService {
     }
 
     /**
+     * Finds a process using an object with optional query properties.
+     *
+     * @param appName app name
+     * @param status filter status
+     * @returns Total items
+     */
+    getProcessCounter(appName: string, status: string): Observable<any> {
+        const callback = (url: string, queryParams: any) => this.get(url, queryParams);
+        let queryUrl: string;
+        const defaultQueryUrl = 'query/v1/process-instances';
+        const requestNode: ProcessQueryCloudRequestModel = {
+            appName,
+            appVersion: '',
+            initiator: null,
+            id: '',
+            name: null,
+            processDefinitionId: '',
+            processDefinitionName: null,
+            processDefinitionKey: '',
+            status,
+            businessKey: '',
+            startFrom: null,
+            startTo: null,
+            completedFrom: null,
+            completedTo: null,
+            suspendedFrom: null,
+            suspendedTo: null,
+            completedDate: '',
+            maxItems: 1,
+            skipCount: 0,
+            sorting: [
+                {
+                    orderBy: 'startDate',
+                    direction: 'DESC'
+                }
+            ]
+        };
+
+        return this.getProcess(callback, defaultQueryUrl, requestNode, queryUrl).pipe(map((tasks) => tasks?.list?.pagination?.totalItems));
+    }
+
+    /**
      * Finds a process using an object with optional query properties in admin app.
      *
      * @param requestNode Query object

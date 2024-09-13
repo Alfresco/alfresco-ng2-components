@@ -26,10 +26,12 @@ import {
     fakeProcessCloudFilterEntries,
     fakeProcessCloudFilters,
     fakeProcessCloudFilterWithDifferentEntries,
-    fakeProcessFilter
+    fakeProcessFilter,
+    processCloudEngineEventsMock
 } from '../mock/process-filters-cloud.mock';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
+import { NotificationCloudService } from '@alfresco/adf-process-services-cloud';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -38,6 +40,7 @@ describe('ProcessFilterCloudService', () => {
     let updatePreferenceSpy: jasmine.Spy;
     let createPreferenceSpy: jasmine.Spy;
     let getCurrentUserInfoSpy: jasmine.Spy;
+    let notificationCloudService: NotificationCloudService;
 
     const identityUserMock = {
         username: 'mock-username',
@@ -55,6 +58,7 @@ describe('ProcessFilterCloudService', () => {
 
         const preferenceCloudService = TestBed.inject(PROCESS_FILTERS_SERVICE_TOKEN);
         const identityUserService = TestBed.inject(IdentityUserService);
+        notificationCloudService = TestBed.inject(NotificationCloudService);
 
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeProcessCloudFilters));
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeProcessCloudFilters));
@@ -235,5 +239,16 @@ describe('ProcessFilterCloudService', () => {
         await service.resetProcessFilterToDefaults('mock-appName', changedFilter).toPromise();
 
         expect(updatePreferenceSpy).toHaveBeenCalledWith('mock-appName', 'process-filters-mock-appName-mock-username', fakeProcessCloudFilters);
+    });
+
+    it('should return engine event task subscription', (done) => {
+        spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(of(processCloudEngineEventsMock));
+
+        service.getProcessNotificationSubscription('testApp').subscribe((res) => {
+            expect(res.length).toBe(1);
+            expect(res[0].eventType).toBe('PROCESS_CREATED');
+            expect(res[0].entity.status).toBe('CREATED');
+            done();
+        });
     });
 });
