@@ -39,6 +39,20 @@ export default {
             table: {
                 type: { summary: 'OutputData' }
             }
+        },
+        placeholder: {
+            control: 'text',
+            description: 'Placeholder text.',
+            table: {
+                type: { summary: 'string' }
+            }
+        },
+        autoFocus: {
+            control: 'boolean',
+            description: 'Focus on the editor when it is loaded.',
+            table: {
+                type: { summary: 'boolean' }
+            }
         }
     }
 } as Meta<RichTextEditorComponent>;
@@ -46,7 +60,7 @@ export default {
 const template: StoryFn<RichTextEditorComponent> = (args) => ({
     props: args,
     template: `
-    <adf-cloud-rich-text-editor [data]=data #editor>
+    <adf-cloud-rich-text-editor [data]=data [placeholder]=placeholder [autofocus]=autofocus #editor>
     </adf-cloud-rich-text-editor>
     <hr/>
     <h3>Output data from editor:</h3>
@@ -80,5 +94,7 @@ DefaultRichTextEditor.args = {
             }
         ],
         version: '2.29.0'
-    }
+    },
+    placeholder: 'Type something here...',
+    autoFocus: true
 };
