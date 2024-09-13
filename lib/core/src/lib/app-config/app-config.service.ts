@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../common/utils/object-utils';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
@@ -77,17 +77,14 @@ export class AppConfigService {
     };
 
     status: Status = Status.INIT;
-    protected onLoadSubject: ReplaySubject<any>;
-    onLoad: Observable<any>;
+    protected readonly onLoadSubject = new ReplaySubject<any>();
+    onLoad = this.onLoadSubject.asObservable();
 
     get isLoaded() {
         return this.status === Status.LOADED;
     }
 
     constructor() {
-        this.onLoadSubject = new ReplaySubject();
-        this.onLoad = this.onLoadSubject.asObservable();
-
         this.extensionService.setup$.subscribe((config) => {
             this.onExtensionsLoaded(config);
         });

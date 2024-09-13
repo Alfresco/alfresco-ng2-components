@@ -71,12 +71,23 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
         ee(this);
     }
 
-    /** @deprecated not used anywhere */
+    /**
+     * Update the default security options
+     *
+     * @param options security options
+     * @deprecated not used anywhere
+     */
     setDefaultSecurityOption(options: any) {
         this.defaultSecurityOptions = this.merge(this.defaultSecurityOptions, options);
     }
 
-    /** @deprecated not used anywhere */
+    /**
+     * Merge objects
+     *
+     * @param objects objects to merge
+     * @deprecated not used anywhere
+     * @returns merged object
+     */
     merge(...objects): any {
         const result = {};
 
@@ -228,6 +239,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
             )
             .toPromise();
 
+        /* eslint-disable @typescript-eslint/space-before-function-paren */
         (promise as any).abort = function () {
             eventEmitter.emit('abort');
             abort$.next();

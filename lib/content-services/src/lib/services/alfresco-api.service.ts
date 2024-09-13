@@ -31,7 +31,7 @@ export class AlfrescoApiService {
     protected appConfig = inject(AppConfigService);
     protected storageService = inject(StorageService);
     protected alfrescoApiFactory = inject<AlfrescoApiFactory>(ALFRESCO_API_FACTORY, { optional: true });
-    protected adfHttpClient = inject(AdfHttpClient);
+    protected adfHttpClient = inject(AdfHttpClient, { optional: true });
 
     alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
 
