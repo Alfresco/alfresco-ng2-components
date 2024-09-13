@@ -28,24 +28,21 @@ export const reportDefParamNumber = {
     id: 2005,
     name: 'Fake Process instances overview',
     created: '2016-10-05T15:39:40.222+0000',
-    definition: '{ "parameters"' +
-    ' :[{"id":"slowProcessInstanceInteger","name":null,"nameKey":null,"type":"integer","value":10,"dependsOn":null}]}'
+    definition: '{ "parameters"' + ' :[{"id":"slowProcessInstanceInteger","name":null,"nameKey":null,"type":"integer","value":10,"dependsOn":null}]}'
 };
 
 export const reportDefParamDuration = {
     id: 2005,
     name: 'Fake Task service level agreement',
     created: '2016-10-05T15:39:40.222+0000',
-    definition: '{ "parameters"' +
-    ' :[{"id":"duration","name":null,"nameKey":null,"type":"duration","value":null,"dependsOn":null}]}'
+    definition: '{ "parameters"' + ' :[{"id":"duration","name":null,"nameKey":null,"type":"duration","value":null,"dependsOn":null}]}'
 };
 
 export const reportDefParamCheck = {
     id: 2005,
     name: 'Fake Task service level agreement',
     created: '2016-10-05T15:39:40.222+0000',
-    definition: '{ "parameters"' +
-    ' :[{"id":"typeFiltering","name":null,"nameKey":null,"type":"boolean","value":true,"dependsOn":null}]}'
+    definition: '{ "parameters"' + ' :[{"id":"typeFiltering","name":null,"nameKey":null,"type":"boolean","value":true,"dependsOn":null}]}'
 };
 
 export const reportDefParamDateRange = {
@@ -93,7 +90,10 @@ export const reportDefParamProcessDefOptionsNoApp = [
 ];
 
 export const reportDefParamProcessDefOptions = {
-    size: 4, total: 4, start: 0, data: [
+    size: 4,
+    total: 4,
+    start: 0,
+    data: [
         {
             id: 'FakeProcessTest 1:1:1',
             name: 'Fake Process Test 1 Name ',
@@ -118,7 +118,10 @@ export const reportDefParamProcessDefOptions = {
 };
 
 export const reportDefParamProcessDefOptionsApp = {
-    size: 2, total: 2, start: 2, data: [
+    size: 2,
+    total: 2,
+    start: 2,
+    data: [
         {
             id: 'FakeProcessTest 1:1:1',
             name: 'Fake Process Test 1 Name ',
@@ -148,10 +151,8 @@ export const reportNoParameterDefinitions = {
 
 export const reportDefParamTaskOptions = ['Fake task name 1', 'Fake task name 2'];
 
-export const fieldProcessDef = new ReportParameterDetailsModel(
-    {
-        id: 'processDefinitionId',
-        type: 'processDefinition',
-        value: 'fake-process-name:1:15027'
-    }
-);
+export const fieldProcessDef = new ReportParameterDetailsModel({
+    id: 'processDefinitionId',
+    type: 'processDefinition',
+    value: 'fake-process-name:1:15027'
+});

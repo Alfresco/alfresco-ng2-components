@@ -23,7 +23,7 @@ export class PieChart extends Chart {
 
         if (obj.values) {
             obj.values.forEach((value: any) => {
-                this.add(value.key, value.y);
+                this.add(value.key.toString(), value.y.toString());
             });
         }
     }
