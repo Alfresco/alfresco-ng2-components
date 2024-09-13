@@ -271,6 +271,29 @@ describe('ProcessInstanceListComponent', () => {
         expect(triggered).toBeFalsy();
     });
 
+    it('should emit rowsSelected event when a row is selected', (done) => {
+        const row = new ObjectDataRow({ obj: fakeProcessInstance.data[0] });
+        const customEvent = new CustomEvent('row-select', { detail: { selection: [row] } });
+
+        component.rowsSelected.subscribe((selection) => {
+            expect(selection).toEqual([row]);
+            done();
+        });
+
+        component.onRowCheckboxToggle(customEvent);
+    });
+
+    it('should emit rowsSelected event when a row is unselected', (done) => {
+        const customEvent = new CustomEvent('row-unselect', { detail: { selection: [] } });
+
+        component.rowsSelected.subscribe((selection) => {
+            expect(selection).toEqual([]);
+            done();
+        });
+
+        component.onRowCheckboxToggle(customEvent);
+    });
+
     it('should show custom resolved value in the column', async () => {
         appConfig.config['adf-process-list'] = {
             presets: {

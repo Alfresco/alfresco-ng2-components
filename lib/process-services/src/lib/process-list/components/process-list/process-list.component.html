@@ -13,7 +13,10 @@
     [contextMenu]="showContextMenu"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (rowClick)="onRowClick($event)"
-    (row-keyup)="onRowKeyUp($any($event))">
+    (row-keyup)="onRowKeyUp($any($event))"
+    (row-select)="onRowCheckboxToggle($any($event))"
+    (row-unselect)="onRowCheckboxToggle($any($event))"
+>
     <adf-loading-content-template>
         <ng-template>
             <mat-progress-spinner

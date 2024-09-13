@@ -32,7 +32,8 @@ import {
     EmptyContentComponent,
     DataTableComponent,
     LoadingContentTemplateDirective,
-    NoContentTemplateDirective
+    NoContentTemplateDirective,
+    ObjectDataRow
 } from '@alfresco/adf-core';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ProcessService } from '../../services/process.service';
@@ -181,6 +182,10 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     @Output()
     error = new EventEmitter<any>();
 
+    /** Emitted when rows are selected/unselected */
+    @Output()
+    rowsSelected = new EventEmitter<ObjectDataRow[]>();
+
     requestNode: ProcessInstanceQueryRepresentation;
     currentInstanceId: string;
     isLoading: boolean = true;
@@ -273,6 +278,10 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
+    }
+
+    onRowCheckboxToggle(event: CustomEvent) {
+        this.rowsSelected.emit([...event.detail.selection]);
     }
 
     /**
