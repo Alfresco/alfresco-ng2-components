@@ -71,10 +71,12 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
         ee(this);
     }
 
+    /** @deprecated not used anywhere */
     setDefaultSecurityOption(options: any) {
         this.defaultSecurityOptions = this.merge(this.defaultSecurityOptions, options);
     }
 
+    /** @deprecated not used anywhere */
     merge(...objects): any {
         const result = {};
 
@@ -94,9 +96,9 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
     }
 
     request<T = any>(url: string, options?: RequestOptions, sc: SecurityOptions = this.defaultSecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        const body = AdfHttpClient.getBody(options);
+        const body = this.getBody(options);
         const params = getQueryParamsWithCustomEncoder(options.queryParams, new AlfrescoApiParamEncoder());
-        const responseType = AdfHttpClient.getResponseType(options);
+        const responseType = this.getResponseType(options);
         const context = new HttpContext().set(SHOULD_ADD_AUTH_TOKEN, true);
         const security: SecurityOptions = { ...this.defaultSecurityOptions, ...sc };
         const headers = this.getHeaders(options);
@@ -135,7 +137,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
     }
 
     private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any) {
-        const eventPromise = Object.assign(promise, {
+        return Object.assign(promise, {
             on() {
                 // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.on.apply(eventEmitter, arguments);
@@ -157,8 +159,6 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
                 return this;
             }
         });
-
-        return eventPromise;
     }
 
     private getEventEmitters(): Emitters {
@@ -189,7 +189,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
 
                     if (isHttpResponseEvent(res)) {
                         eventEmitter.emit('success', res.body);
-                        return AdfHttpClient.deserialize(res, returnType);
+                        return this.deserialize(res, returnType);
                     }
                 }),
                 catchError((err: HttpErrorResponse): Observable<AlfrescoApiResponseError> => {
@@ -222,7 +222,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
                     };
 
                     const alfrescoApiError = new AlfrescoApiResponseError(msg, err.status, error);
-                    return throwError(alfrescoApiError);
+                    return throwError(() => alfrescoApiError);
                 }),
                 takeUntil(abort$)
             )
@@ -238,8 +238,8 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
         return this.addPromiseListeners(promise, eventEmitter);
     }
 
-    private static getBody(options: RequestOptions): any {
-        const contentType = options.contentType ? options.contentType : AdfHttpClient.jsonPreferredMime(options.contentTypes);
+    private getBody(options: RequestOptions): any {
+        const contentType = options.contentType ? options.contentType : this.jsonPreferredMime(options.contentTypes);
         const isFormData = contentType === 'multipart/form-data';
         const isFormUrlEncoded = contentType === 'application/x-www-form-urlencoded';
         const body = options.bodyParam;
@@ -256,8 +256,8 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
     }
 
     private getHeaders(options: RequestOptions): HttpHeaders {
-        const contentType = options.contentType || AdfHttpClient.jsonPreferredMime(options.contentTypes);
-        const accept = options.accept || AdfHttpClient.jsonPreferredMime(options.accepts);
+        const contentType = options.contentType || this.jsonPreferredMime(options.contentTypes);
+        const accept = options.accept || this.jsonPreferredMime(options.accepts);
 
         const optionsHeaders = {
             ...options.headerParams,
@@ -278,13 +278,13 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
      * @param contentTypes a contentType array
      * @returns  The chosen content type, preferring JSON.
      */
-    private static jsonPreferredMime(contentTypes: readonly string[]): string {
+    private jsonPreferredMime(contentTypes: readonly string[]): string {
         if (!contentTypes?.length) {
             return 'application/json';
         }
 
         for (let i = 0; i < contentTypes.length; i++) {
-            if (AdfHttpClient.isJsonMime(contentTypes[i])) {
+            if (this.isJsonMime(contentTypes[i])) {
                 return contentTypes[i];
             }
         }
@@ -303,7 +303,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
      * @param contentType The MIME content type to check.
      * @returns <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
      */
-    private static isJsonMime(contentType: string): boolean {
+    private isJsonMime(contentType: string): boolean {
         return Boolean(contentType?.match(/^application\/json(;.*)?$/i));
     }
 
@@ -319,16 +319,16 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
     }
 
     private createCSRFToken(a?: any): string {
-        const randomValue = AdfHttpClient.getSecureRandomValue();
+        const randomValue = this.getSecureRandomValue();
         return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
     }
 
-    private static getSecureRandomValue(): number {
+    private getSecureRandomValue(): number {
         const max = Math.pow(2, 32);
         return window.crypto.getRandomValues(new Uint32Array(1))[0] / max;
     }
 
-    private static getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
+    private getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
         const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
 
         if (isBlobType) {
@@ -349,7 +349,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
      * @param returnType return type
      * @returns deserialized object
      */
-    private static deserialize<T>(response: HttpResponse<T>, returnType?: Constructor<unknown> | 'blob'): any {
+    private deserialize<T>(response: HttpResponse<T>, returnType?: Constructor<unknown> | 'blob'): any {
         if (response === null) {
             return null;
         }
@@ -366,7 +366,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
         }
 
         if (isBlobResponse(response, returnType)) {
-            return AdfHttpClient.deserializeBlobResponse(response);
+            return this.deserializeBlobResponse(response);
         }
 
         if (!isConstructor(returnType)) {
@@ -380,7 +380,7 @@ export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
         return new returnType(body);
     }
 
-    private static deserializeBlobResponse(response: HttpResponse<Blob>) {
+    private deserializeBlobResponse(response: HttpResponse<Blob>) {
         return new Blob([response.body], { type: response.headers.get('Content-Type') });
     }
 }
