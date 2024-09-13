@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
 import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient } from '@alfresco/js-api';
 import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -35,6 +34,7 @@ import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-e
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
 import ee, { Emitter } from 'event-emitter';
+import { SHOULD_ADD_AUTH_TOKEN } from './tokens';
 
 export interface Emitters {
     readonly eventEmitter: Emitter;

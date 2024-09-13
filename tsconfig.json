@@ -26,7 +26,6 @@
       "@alfresco/adf-core": ["lib/core/src/public-api.ts"],
       "@alfresco/adf-core/*": ["lib/core/*/public-api.ts"],
       "@alfresco/adf-core/api": ["lib/core/api/src/index.ts"],
-      "@alfresco/adf-core/auth": ["lib/core/auth/src/index.ts"],
       "@alfresco/adf-core/breadcrumbs": ["lib/core/breadcrumbs/src/index.ts"],
       "@alfresco/adf-core/feature-flags": ["lib/core/feature-flags/public-api.ts"],
       "@alfresco/adf-core/shell": ["lib/core/shell/src/index.ts"],
