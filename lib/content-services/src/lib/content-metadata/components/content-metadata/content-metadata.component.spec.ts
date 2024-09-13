@@ -36,7 +36,7 @@ import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
 import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
 import { CategoriesManagementComponent, CategoriesManagementMode } from '../../../category';
-import { ContentTestingModule } from '@alfresco/adf-content-services';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;

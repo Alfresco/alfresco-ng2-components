@@ -30,7 +30,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CategoryService } from '../../../category';
 import { TagService } from '../../../tag';
 import { PropertyDescriptorsService } from '../../public-api';
-import { ContentTestingModule } from '@alfresco/adf-content-services';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataCardComponent', () => {
     let component: ContentMetadataCardComponent;
