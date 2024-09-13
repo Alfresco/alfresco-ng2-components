@@ -23,6 +23,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EMPTY, of } from 'rxjs';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 declare let jasmine: any;
 
@@ -34,7 +35,9 @@ describe('NodeCommentsService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null }
             ]
         });
         service = TestBed.inject(NodeCommentsService);
