@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { StorageService } from '../common/services/storage.service';
 import { AppConfigService, AppConfigValues } from './app-config.service';
 
 @Injectable()
 export class DebugAppConfigService extends AppConfigService {
-    constructor(private storage: StorageService) {
-        super();
-    }
+    private storage = inject(StorageService);
 
     get<T>(key: string, defaultValue?: T): T {
         if (key === AppConfigValues.OAUTHCONFIG) {

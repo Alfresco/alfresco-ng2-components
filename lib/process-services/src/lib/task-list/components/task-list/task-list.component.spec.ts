@@ -41,6 +41,7 @@ import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatMenuItemHarness } from '@angular/material/menu/testing';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { CommonModule } from '@angular/common';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 declare let jasmine: any;
 
@@ -109,7 +110,9 @@ describe('TaskListComponent', () => {
             providers: [
                 TaskListService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null }
             ]
         });
         appConfig = TestBed.inject(AppConfigService);
