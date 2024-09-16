@@ -36,10 +36,12 @@
     "@editorjs/inline-code",
     "@editorjs/list",
     "@editorjs/marker",
+    "@editorjs/paragraph",
     "@editorjs/underline",
     "@quanzo/change-font-size",
     "editorjs-text-color-plugin",
     "editorjs-html",
-    "editorjs-paragraph-with-alignment"
+    "editorjs-paragraph-with-alignment",
+    "editorjs-text-alignment-blocktune"
   ]
 }
