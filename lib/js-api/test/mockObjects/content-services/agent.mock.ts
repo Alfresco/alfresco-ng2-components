@@ -47,10 +47,4 @@ export class AgentMock extends BaseMock {
                 }
             });
     }
-
-    getAgentAvatar200Response(agentId: string): void {
-        nock(this.host, { encodedQueryParams: true })
-            .get(`/alfresco/api/-default-/private/hxi/versions/1/agents/${agentId}/avatars/-default-`)
-            .reply(200, { avatarImage: 'agentAvatarImageMock' });
-    }
 }
