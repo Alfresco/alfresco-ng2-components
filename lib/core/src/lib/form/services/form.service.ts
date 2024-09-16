@@ -46,6 +46,8 @@ export class FormService implements FormValidationService {
     formContentClicked = new Subject<ContentLinkModel>();
     toggleFormSpinner = new Subject<FormSpinnerEvent>();
 
+    updateWidget = new Subject<{widgetId: string; data: any}>();
+
     validateForm = new Subject<ValidateFormEvent>();
     validateFormField = new Subject<ValidateFormFieldEvent>();
     validateDynamicTableRow = new Subject<FormFieldEvent>();

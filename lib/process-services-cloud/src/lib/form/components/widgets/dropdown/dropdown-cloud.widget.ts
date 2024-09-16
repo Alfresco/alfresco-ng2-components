@@ -131,6 +131,13 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
 
         this.initFormControl();
         this.initFilter();
+
+        this.formService.updateWidget.subscribe(({ widgetId, data }) => {
+            if (widgetId === this.field.id) {
+                debugger;
+                this.updateDropdownOptions(data);
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -327,9 +334,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 .subscribe({
                     next: (result: FormFieldOption[]) => {
                         this.resetRestApiErrorMessage();
-                        this.updateOptions(result);
-                        this.field.updateForm();
-                        this.resetInvalidValue();
+                        this.updateDropdownOptions(result);
                     },
                     error: (err) => {
                         this.resetRestApiOptions();
@@ -337,6 +342,12 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                     }
                 });
         }
+    }
+
+    private updateDropdownOptions(options: FormFieldOption[]): void {
+        this.updateOptions(options);
+        this.field.updateForm();
+        this.resetInvalidValue();
     }
 
     private buildBodyParam(): any {
