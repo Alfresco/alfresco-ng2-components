@@ -22,7 +22,7 @@ import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
-import { ProcessListCloudService, TaskCloudEngineEvent } from '@alfresco/adf-process-services-cloud';
+import { ProcessListCloudService } from '@alfresco/adf-process-services-cloud';
 
 @Component({
     selector: 'adf-cloud-process-filters',
@@ -242,7 +242,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
             this.processFilterCloudService
                 .getProcessNotificationSubscription(this.appName)
                 .pipe(debounceTime(1000), takeUntil(this.onDestroy$))
-                .subscribe((result: TaskCloudEngineEvent[]) => {
+                .subscribe(() => {
                     this.updateFilterCounters();
                 });
         }

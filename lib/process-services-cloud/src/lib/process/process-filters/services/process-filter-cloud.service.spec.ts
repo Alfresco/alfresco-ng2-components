@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { firstValueFrom, of } from 'rxjs';
 import { ProcessFilterCloudService } from './process-filter-cloud.service';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
@@ -241,14 +241,12 @@ describe('ProcessFilterCloudService', () => {
         expect(updatePreferenceSpy).toHaveBeenCalledWith('mock-appName', 'process-filters-mock-appName-mock-username', fakeProcessCloudFilters);
     });
 
-    it('should return engine event task subscription', (done) => {
+    it('should return engine event task subscription', async () => {
         spyOn(notificationCloudService, 'makeGQLQuery').and.returnValue(of(processCloudEngineEventsMock));
 
-        service.getProcessNotificationSubscription('testApp').subscribe((res) => {
-            expect(res.length).toBe(1);
-            expect(res[0].eventType).toBe('PROCESS_CREATED');
-            expect(res[0].entity.status).toBe('CREATED');
-            done();
-        });
+        const result = await firstValueFrom(service.getProcessNotificationSubscription('testApp'));
+        expect(result.length).toBe(1);
+        expect(result[0].eventType).toBe('PROCESS_CREATED');
+        expect(result[0].entity.status).toBe('CREATED');
     });
 });
