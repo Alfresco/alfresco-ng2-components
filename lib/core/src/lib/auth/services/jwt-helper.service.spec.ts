@@ -18,6 +18,7 @@
 import { JwtHelperService } from './jwt-helper.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { TestBed } from '@angular/core/testing';
+import { STORAGE_SERVICE } from '../../common';
 
 describe('JwtHelperService', () => {
 
@@ -25,7 +26,10 @@ describe('JwtHelperService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [JwtHelperService]
+            providers: [
+                JwtHelperService,
+                { provide: STORAGE_SERVICE, useValue: {} }
+            ]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
     });

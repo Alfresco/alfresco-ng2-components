@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { StorageService } from '../../common/services/storage.service';
+import { Inject, Injectable } from '@angular/core';
+import { STORAGE_SERVICE, StorageServiceInterface } from '../../common/interface/storage-service.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -34,8 +34,7 @@ export class JwtHelperService {
     static USER_PREFERRED_USERNAME = 'preferred_username';
     static HXP_AUTHORIZATION = 'hxp_authorization';
 
-    constructor(private storageService: StorageService) {
-    }
+    constructor(@Inject(STORAGE_SERVICE) private storageService: StorageServiceInterface) {}
 
     /**
      * Decodes a JSON web token into a JS object.

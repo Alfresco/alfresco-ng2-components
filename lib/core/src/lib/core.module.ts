@@ -50,6 +50,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { loadAppConfig } from './app-config/app-config.loader';
 import { AppConfigService } from './app-config/app-config.service';
 import { StorageService } from './common/services/storage.service';
+import { STORAGE_SERVICE } from './common/interface/storage-service.interface';
 import { MomentDateAdapter } from './common/utils/moment-date-adapter';
 import { AppConfigPipe, StoragePrefixFactory } from './app-config';
 import { IconComponent } from './icon';
@@ -138,6 +139,7 @@ export class CoreModule {
                 TranslateService,
                 { provide: TranslateLoader, useClass: TranslateLoaderService },
                 MomentDateAdapter,
+                { provide: STORAGE_SERVICE, useExisting: StorageService },
                 StoragePrefixFactory,
                 {
                     provide: APP_INITIALIZER,

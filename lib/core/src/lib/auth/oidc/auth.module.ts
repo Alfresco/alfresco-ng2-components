@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, EnvironmentProviders, ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { AUTH_CONFIG, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthenticationService } from '../services/authentication.service';
 import { StorageService } from '../../common/services/storage.service';
@@ -25,6 +25,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
+import { CustomAuthStorageService } from '../services/custom-auth-storage.service';
+import { STORAGE_SERVICE } from '../../common/interface/storage-service.interface';
 
 /**
  * Create a Login Factory function
@@ -41,7 +43,7 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
         { provide: OAuthStorage, useExisting: StorageService },
-        { provide: AuthenticationService},
+        { provide: AuthenticationService },
         {
             provide: AUTH_CONFIG,
             useFactory: authConfigFactory,
@@ -58,11 +60,18 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
     ]
 })
 export class AuthModule {
-    static forRoot(config: AuthModuleConfig = { useHash: false }): ModuleWithProviders<AuthModule> {
+    static forRoot(config: AuthModuleConfig = { useHash: false, overrideAuthStoragePrefix: false }): ModuleWithProviders<AuthModule> {
         config.preventClearHashAfterLogin = config.preventClearHashAfterLogin ?? true;
+        const providers: (Provider | EnvironmentProviders)[] = [
+            { provide: AUTH_MODULE_CONFIG, useValue: config }
+        ];
+        if(config.overrideAuthStoragePrefix){
+            providers.push({ provide: OAuthStorage, useClass: CustomAuthStorageService });
+            providers.push({ provide: STORAGE_SERVICE, useExisting: OAuthStorage });
+        }
         return {
             ngModule: AuthModule,
-            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: config }]
+            providers
         };
     }
 }

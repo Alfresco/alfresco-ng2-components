@@ -17,10 +17,13 @@
 
 import { InjectionToken } from '@angular/core';
 
-export interface AuthModuleConfig {
-    readonly useHash: boolean;
-    preventClearHashAfterLogin?: boolean;
-    overrideAuthStoragePrefix?: boolean;
-}
+export const STORAGE_SERVICE = new InjectionToken<StorageServiceInterface>('STORAGE_SERVICE');
 
-export const AUTH_MODULE_CONFIG = new InjectionToken<AuthModuleConfig>('AUTH_MODULE_CONFIG');
+export interface StorageServiceInterface {
+    prefix: string;
+    getItem(key: string): string | null;
+    setItem(key: string, data: string): void;
+    clear(): void;
+    removeItem(key: string): void;
+    hasItem(key: string): boolean;
+}

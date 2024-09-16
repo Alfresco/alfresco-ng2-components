@@ -16,11 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
+import { StorageServiceInterface } from '../interface/storage-service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class StorageService {
+export class StorageService implements StorageServiceInterface {
     private memoryStore: { [key: string]: any } = {};
     private readonly useLocalStorage: boolean = false;
     private _prefix: string = '';

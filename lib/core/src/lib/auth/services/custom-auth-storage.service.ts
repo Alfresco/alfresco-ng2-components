@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-import { InjectionToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { StorageService } from '../../common/services/storage.service';
+import { Observable } from 'rxjs';
 
-export interface AuthModuleConfig {
-    readonly useHash: boolean;
-    preventClearHashAfterLogin?: boolean;
-    overrideAuthStoragePrefix?: boolean;
+export const CUSTOM_AUTH_STORAGE_PREFIX = new InjectionToken<any>('CUSTOM_AUTH_STORAGE_PREFIX');
+
+@Injectable()
+export class CustomAuthStorageService extends StorageService {
+
+  constructor(@Inject(CUSTOM_AUTH_STORAGE_PREFIX) customAuthStoragePrefix$: Observable<string>) {
+      super();
+      customAuthStoragePrefix$.subscribe(prefix => {
+        this.prefix = prefix;
+      });
+  }
 }
-
-export const AUTH_MODULE_CONFIG = new InjectionToken<AuthModuleConfig>('AUTH_MODULE_CONFIG');
