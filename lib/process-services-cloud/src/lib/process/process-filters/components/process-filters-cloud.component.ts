@@ -243,12 +243,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
                 .getProcessNotificationSubscription(this.appName)
                 .pipe(debounceTime(1000), takeUntil(this.onDestroy$))
                 .subscribe((result: TaskCloudEngineEvent[]) => {
-                    const hasValidStatuses = result.some(
-                        (item: TaskCloudEngineEvent) => item.entity.status === 'COMPLETED' || item.entity.status === 'CREATED'
-                    );
-                    if (hasValidStatuses) {
-                        this.updateFilterCounters();
-                    }
+                    this.updateFilterCounters();
                 });
         }
     }
