@@ -18,12 +18,14 @@
 /** Plugin import */
 import CodeTool from '@editorjs/code';
 import Header from '@editorjs/header';
+import Paragraph from '@editorjs/paragraph';
 import InlineCode from '@editorjs/inline-code';
 import List from '@editorjs/list';
 import Marker from '@editorjs/marker';
 import Underline from '@editorjs/underline';
 import ChangeFontSize from '@quanzo/change-font-size';
 import ColorPlugin from 'editorjs-text-color-plugin';
+import AlignmentTuneTool from 'editorjs-text-alignment-blocktune';
 
 export const editorJsConfig = {
     autofocus: true,
@@ -35,7 +37,13 @@ export const editorJsConfig = {
         },
         header: {
             class: Header,
-            inlineToolbar: true
+            inlineToolbar: true,
+            tunes: ['anyTuneName']
+        },
+        paragraph: {
+            class: Paragraph,
+            inlineToolbar: true,
+            tunes: ['anyTuneName']
         },
         list: {
             class: List,
@@ -48,7 +56,25 @@ export const editorJsConfig = {
             class: ColorPlugin,
             config: {
                 customPicker: true,
-                colorCollections: ['#FF1300', '#ffa500', '#9C27B0', '#673AB7', '#3F51B5', '#0070FF', '#03A9F4', '#00BCD4', '#5f9ea0', '#4CAF50', '#8BC34A', '#CDDC39', '#FFF', '#000', '#c0c0c0', '#808080', '#800000'],
+                colorCollections: [
+                    '#FF1300',
+                    '#ffa500',
+                    '#9C27B0',
+                    '#673AB7',
+                    '#3F51B5',
+                    '#0070FF',
+                    '#03A9F4',
+                    '#00BCD4',
+                    '#5f9ea0',
+                    '#4CAF50',
+                    '#8BC34A',
+                    '#CDDC39',
+                    '#FFF',
+                    '#000',
+                    '#c0c0c0',
+                    '#808080',
+                    '#800000'
+                ],
                 defaultColor: '#FF1300',
                 type: 'text'
             }
@@ -66,6 +92,9 @@ export const editorJsConfig = {
         inlineCode: {
             class: InlineCode,
             shortcut: 'CMD+SHIFT+M'
+        },
+        anyTuneName: {
+            class: AlignmentTuneTool
         },
         code: CodeTool
     }

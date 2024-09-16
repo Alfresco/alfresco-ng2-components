@@ -31,6 +31,12 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
     @Input()
     data: OutputData;
 
+    @Input()
+    placeholder = '';
+
+    @Input()
+    autoFocus = false;
+
     private _outputData = new Subject<OutputData>();
 
     outputData$ = this._outputData.asObservable();
@@ -46,6 +52,8 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
     ngAfterViewInit(): void {
         this.editorInstance = new EditorJS({
             holder: this.dynamicId,
+            placeholder: this.placeholder,
+            autofocus: this.autoFocus,
             ...editorJsConfig,
             data: this.data,
             onChange: () => {

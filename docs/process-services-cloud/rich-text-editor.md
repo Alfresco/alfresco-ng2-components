@@ -69,4 +69,6 @@ export class RichTextEditorDemo {
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | data | `OutputData` | null | EditorJs data format (follow the [official documentation](https://editorjs.io/saving-data) ) |
+| placeholder | `string` | '' | Placeholder displayed when the content of the editor is empty (follow the [official documentation](https://editorjs.io/configuration/#placeholder) ) |
+| autofocus | `boolean` | false | Set a Caret to the Editor after initialization (follow the [official documentation](https://editorjs.io/configuration/#autofocus) ) |
 | readOnly | `boolean` | false | If true users won't have the ability to change the document content |
