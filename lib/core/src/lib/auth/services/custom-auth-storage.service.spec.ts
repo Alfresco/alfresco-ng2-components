@@ -25,16 +25,9 @@ describe('CustomAuthStorageService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
-                CustomAuthStorageService,
-                { provide: CUSTOM_AUTH_STORAGE_PREFIX, useValue: of('custom-prefix') }
-            ]
+            providers: [CustomAuthStorageService, { provide: CUSTOM_AUTH_STORAGE_PREFIX, useValue: of('custom-prefix') }]
         });
         service = TestBed.inject(CustomAuthStorageService);
-    });
-
-    it('should be created', () => {
-        expect(service).toBeTruthy();
     });
 
     it('should set the prefix from the observable', () => {
