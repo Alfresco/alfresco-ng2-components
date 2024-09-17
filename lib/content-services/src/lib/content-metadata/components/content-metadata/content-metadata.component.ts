@@ -19,6 +19,7 @@ import { Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges,
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
+    AdfStringsToChipsPipe,
     AppConfigService,
     CardViewBaseItemModel,
     CardViewComponent,
@@ -48,6 +49,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
+import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
+import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
+import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService } from '../../../category';
+import { AllowableOperationsEnum, CardViewContentUpdateService, ContentService, NodesApiService } from '../../../common';
+import { TagsCreatorComponent, TagsCreatorMode, TagService } from '../../../tag';
+import { CardViewGroup, ContentMetadataCustomPanel, ContentMetadataPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataService } from '../../services/content-metadata.service';
+import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
 
 const DEFAULT_SEPARATOR = ', ';
 

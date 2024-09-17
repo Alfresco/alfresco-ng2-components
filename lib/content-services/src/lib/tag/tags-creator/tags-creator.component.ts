@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DynamicChipListComponent, NotificationService } from '@alfresco/adf-core';
+import { AdfStringsToChipsPipe, DynamicChipListComponent, NotificationService } from '@alfresco/adf-core';
 import { TagEntry, TagPaging } from '@alfresco/js-api';
 import {
     Component,
@@ -44,7 +44,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
 import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
-import { AdfStringsToChipsPipe } from '../../../../../core/src/lib/dynamic-chip-list/adf-strings-to-chips.pipe';
 import { AutoFocusDirective } from '../../directives';
 import { TagService } from '../services/tag.service';
 import { TagsCreatorMode } from './tags-creator-mode';

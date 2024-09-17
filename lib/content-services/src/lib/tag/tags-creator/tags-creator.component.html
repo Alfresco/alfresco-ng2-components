@@ -22,6 +22,7 @@
             <adf-dynamic-chip-list
                 class="adf-tags-chips-container"
                 [chips]="tags | adfStringsToChips"
+                [disableDelete]="disabledTagsRemoving"
                 (removedChip)="removeTag($event)">
             </adf-dynamic-chip-list>
         </ng-container>

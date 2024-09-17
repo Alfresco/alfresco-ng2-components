@@ -65,6 +65,10 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     @Input()
     showDelete = true;
 
+    /** Disable delete button. */
+    @Input()
+    disableDelete = false;
+
     /** Should limit number of chips displayed. */
     @Input()
     limitChipsDisplayed = false;
@@ -118,7 +122,6 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         if (changes.chips) {
             this.initialChips = this.chips;
             this.chipsToDisplay = this.initialChips;
-            this.changeDetectorRef.detectChanges();
             if (this.limitChipsDisplayed && this.chipsToDisplay.length) {
                 setTimeout(() => {
                     this.calculateChipsToDisplay();

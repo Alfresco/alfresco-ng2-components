@@ -23,9 +23,31 @@ import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { AppConfigService, CardViewBaseItemModel, CardViewComponent, NotificationService, UpdateNotification } from '@alfresco/adf-core';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
+import {
+    AppConfigService,
+    AuthModule,
+    CardViewBaseItemModel,
+    CardViewComponent,
+    NoopTranslateModule,
+    NotificationService,
+    UpdateNotification
+} from '@alfresco/adf-core';
+import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { SimpleChange } from '@angular/core';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EMPTY, of, throwError } from 'rxjs';
-import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
+import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService } from '../../../category';
+import { CardViewContentUpdateService, NodesApiService } from '../../../common';
+import { TagsCreatorComponent, TagsCreatorMode, TagService } from '../../../tag';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
+import { ContentMetadataService } from '../../services/content-metadata.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -37,6 +59,7 @@ import { CategoryService } from '../../../category/services/category.service';
 import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
 import { CategoriesManagementComponent, CategoriesManagementMode } from '../../../category';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { ContentMetadataComponent } from './content-metadata.component';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -71,11 +94,16 @@ describe('ContentMetadataComponent', () => {
 
     const category1 = new Category({ id: 'test', name: 'testCat' });
     const category2 = new Category({ id: 'test2', name: 'testCat2' });
-    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [{ entry: category1 }, { entry: category2 }] } };
+    const categoryPagingResponse: CategoryPaging = {
+        list: {
+            pagination: {},
+            entries: [{ entry: category1 }, { entry: category2 }]
+        }
+    };
 
     const findTagElements = async (): Promise<string[]> => {
         const matChipHarnessList = await TestbedHarnessEnvironment.loader(fixture).getAllHarnesses(
-            MatChipHarness.with({ selector: '[data-automation-id="metadata-properties-tag-chip"]' })
+            MatChipHarness.with({ selector: '.adf-dynamic-chip-list-chip' })
         );
         const tags = [];
         for (const matChip of matChipHarnessList) {
@@ -269,7 +297,11 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('nodeAspectUpdate', fakeAsync(() => {
-            const fakeNode = { id: 'fake-minimal-node', aspectNames: ['ft:a', 'ft:b', 'ft:c'], name: 'fake-node' } as Node;
+            const fakeNode = {
+                id: 'fake-minimal-node',
+                aspectNames: ['ft:a', 'ft:b', 'ft:c'],
+                name: 'fake-node'
+            } as Node;
             getGroupedPropertiesSpy.and.stub();
             spyOn(contentMetadataService, 'getBasicProperties').and.stub();
             updateService.updateNodeAspect(fakeNode);
@@ -1321,7 +1353,8 @@ describe('ContentMetadataComponent', () => {
 
             toggleEditModeForTags();
             fixture.detectChanges();
-            expect(await findTagElements()).toHaveSize(0);
+            const noEditableTagsContainer = fixture.debugElement.query(By.css('div.adf-metadata-properties-tags'));
+            expect(noEditableTagsContainer).toBeNull();
         });
     });
 

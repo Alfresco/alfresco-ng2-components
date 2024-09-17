@@ -98,7 +98,8 @@
                     </div>
                 </adf-content-metadata-header>
             </mat-expansion-panel-header>
-            <div *ngIf="currentPanel.panelTitle === DefaultPanels.TAGS && !editing" class="adf-metadata-properties-tags">
+            <div *ngIf="currentPanel.panelTitle === DefaultPanels.TAGS && !editing"
+                 class="adf-metadata-properties-tags">
                 <adf-dynamic-chip-list [chips]="tags | adfStringsToChips" [showDelete]="false"></adf-dynamic-chip-list>
             </div>
             <div *ngIf="showEmptyTagMessage" class="adf-metadata-no-item-added">

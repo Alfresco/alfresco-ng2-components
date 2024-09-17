@@ -18,6 +18,7 @@
             <mat-icon *ngIf="showDelete"
                       id="adf-dynamic-chip-list-delete-{{ chip.name }}"
                       class="adf-dynamic-chip-list-delete-icon"
+                      [disabled]="disableDelete"
                       matChipRemove>
                 close
             </mat-icon>

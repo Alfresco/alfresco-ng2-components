@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { TagsCreatorComponent } from './tags-creator.component';
-import { NoopTranslateModule, NotificationService } from '@alfresco/adf-core';
-import { By } from '@angular/platform-browser';
-import { MatError } from '@angular/material/form-field';
 import { TagsCreatorMode, TagService } from '@alfresco/adf-content-services';
-import { EMPTY, of, throwError } from 'rxjs';
-import { DebugElement } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopTranslateModule, NotificationService } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { DebugElement } from '@angular/core';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { MatChipHarness } from '@angular/material/chips/testing';
+import { MatError } from '@angular/material/form-field';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { EMPTY, of, throwError } from 'rxjs';
+import { TagsCreatorComponent } from './tags-creator.component';
 
 describe('TagsCreatorComponent', () => {
     let fixture: ComponentFixture<TagsCreatorComponent>;
@@ -94,7 +94,7 @@ describe('TagsCreatorComponent', () => {
      * @returns list of native elements
      */
     function getRemoveTagButtons(): HTMLButtonElement[] {
-        const elements = fixture.debugElement.queryAll(By.css(`[data-automation-id="remove-tag-button"]`));
+        const elements = fixture.debugElement.queryAll(By.css(`.adf-dynamic-chip-list-delete-icon`));
         return elements.map((el) => el.nativeElement);
     }
 
@@ -104,7 +104,7 @@ describe('TagsCreatorComponent', () => {
      * @returns list of tags
      */
     async function getAddedTags(): Promise<string[]> {
-        const matChipHarness = await loader.getAllHarnesses(MatChipHarness.with({ selector: '.adf-tags-chip' }));
+        const matChipHarness = await loader.getAllHarnesses(MatChipHarness.with({ selector: '.adf-dynamic-chip-list-chip' }));
         const tagElements = [];
         for (const matChip of matChipHarness) {
             tagElements.push(await matChip.getText());
