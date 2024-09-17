@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { DynamicChipListComponent, NotificationService } from '@alfresco/adf-core';
 import { TagEntry, TagPaging } from '@alfresco/js-api';
 import {
     Component,
@@ -30,22 +31,23 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
-import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
-import { NotificationService } from '@alfresco/adf-core';
-import { TagsCreatorMode } from './tags-creator-mode';
-import { TagService } from '../services/tag.service';
 import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { AutoFocusDirective } from '../../directives';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatChipsModule } from '@angular/material/chips';
+import { Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
+import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
+import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
+import { AdfStringsToChipsPipe } from '../../../../../core/src/lib/dynamic-chip-list/adf-strings-to-chips.pipe';
+import { AutoFocusDirective } from '../../directives';
+import { TagService } from '../services/tag.service';
+import { TagsCreatorMode } from './tags-creator-mode';
 
 interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
@@ -76,7 +78,9 @@ const DEFAULT_TAGS_SORTING = {
         MatButtonModule,
         MatIconModule,
         MatListModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        DynamicChipListComponent,
+        AdfStringsToChipsPipe
     ],
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
@@ -106,7 +110,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     set tags(tags: string[]) {
         this._tags = [...tags];
         this._initialExistingTags = null;
-        this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
         if (this.tagNameControl.errors?.required) {
@@ -277,6 +280,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     addTag(): void {
         if (!this._typing && !this.tagNameControl.invalid) {
             this.tags.push(this.tagNameControl.value.trim());
+            this.tags = [...this.tags];
             this.clearTagNameInput();
             this.checkScrollbarVisibility();
             this.tagsChange.emit(this.tags);
@@ -291,6 +295,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      */
     removeTag(tag: string): void {
         this.removeTagFromArray(this.tags, tag);
+        this.tags = [...this.tags];
         this.tagNameControl.updateValueAndValidity({ emitEvent: false });
         this.updateExistingTagsListOnRemoveFromTagsToConfirm(tag);
         this.exactTagSet$.next();
@@ -308,6 +313,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             this.tags.push(selectedTag.entry.tag);
             this.removeTagFromArray(this.existingTags, selectedTag);
             this.tagNameControl.updateValueAndValidity();
+            this.tags = [...this.tags];
             this.exactTagSet$.next();
             this.tagsChange.emit(this.tags);
         }

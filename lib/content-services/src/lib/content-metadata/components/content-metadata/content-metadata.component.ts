@@ -23,6 +23,7 @@ import {
     CardViewBaseItemModel,
     CardViewComponent,
     CardViewItem,
+    DynamicChipListComponent,
     NotificationService,
     TranslationService,
     UpdateNotification
@@ -39,14 +40,11 @@ import { CategoriesManagementMode } from '../../../category/categories-managemen
 import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
 import { ContentService } from '../../../common/services/content.service';
 import { CommonModule } from '@angular/common';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { CategoriesManagementComponent } from '../../../category';
-import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -74,7 +72,9 @@ enum DefaultPanels {
         DynamicExtensionComponent,
         MatProgressBarModule,
         TagsCreatorComponent,
-        CardViewComponent
+        CardViewComponent,
+        DynamicChipListComponent,
+        AdfStringsToChipsPipe
     ],
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],

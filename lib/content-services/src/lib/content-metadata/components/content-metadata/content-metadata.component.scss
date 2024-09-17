@@ -84,18 +84,8 @@ $panel-properties-height: 56px !default;
         }
 
         &-tags {
-            adf-tags-creator {
-                .adf-tags-creation {
-                    padding-right: 0;
-                }
-
-                &.adf-creator-with-existing-tags-panel {
-                    background: var(--adf-theme-background-dialog-color);
-                }
-            }
-
-            [hidden] {
-                visibility: hidden;
+            #{$mat-chip} {
+                padding: 0;
             }
         }
     }
