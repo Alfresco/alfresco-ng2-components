@@ -76,17 +76,17 @@
       "FONT_WEIGHT": "Font weight",
       "FONT_COLOR": "Font color",
       "FONT_WEIGHTS": {
-        "REGULAR": "Regular",
-        "BOLD": "Bold"
+        "REGULAR": "regular",
+        "BOLD": "bold"
       },
       "COLORS": {
-        "SYSTEM_COLOR": "System color",
-        "BLACK": "Black",
-        "GREY": "Grey",
-        "RED": "Red",
-        "GREEN": "Green",
-        "BLUE": "Blue",
-        "YELLOW": "Yellow"
+        "SYSTEM_COLOR": "system color",
+        "BLACK": "black",
+        "GREY": "grey",
+        "RED": "red",
+        "GREEN": "green",
+        "BLUE": "blue",
+        "YELLOW": "yellow"
       },
       "PREDEFINED": {
           "HEADER": {
