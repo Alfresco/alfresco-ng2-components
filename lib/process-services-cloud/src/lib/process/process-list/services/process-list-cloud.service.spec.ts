@@ -20,6 +20,7 @@ import { ProcessListCloudService } from './process-list-cloud.service';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { firstValueFrom } from 'rxjs';
 
 describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
@@ -99,17 +100,16 @@ describe('ProcessListCloudService', () => {
         );
     });
 
-    it('should return number of total items of processes ', (done) => {
+    it('should return number of total items of processes ', async () => {
         const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 1, service: 'fake-service' } as ProcessQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallQueryParameters);
-        service.getProcessByRequest(processRequest).subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res.skipCount).toBe(0);
-            expect(res.maxItems).toBe(1);
-            expect(res.service).toBe('fake-service');
-            done();
-        });
+        const result = await firstValueFrom(service.getProcessByRequest(processRequest));
+
+        expect(result).toBeDefined();
+        expect(result).not.toBeNull();
+        expect(result.skipCount).toBe(0);
+        expect(result.maxItems).toBe(1);
+        expect(result.service).toBe('fake-service');
     });
 
     describe('getAdminProcessRequest', () => {
