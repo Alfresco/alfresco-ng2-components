@@ -19,6 +19,7 @@ import { Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges,
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
+    AdfStringsToChipsPipe,
     AppConfigService,
     CardViewBaseItemModel,
     CardViewComponent,

@@ -33,6 +33,7 @@ import { CategoriesManagementComponent, CategoriesManagementMode } from '../../.
 import { TagsCreatorComponent, TagsCreatorMode } from '../../../tag';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { PropertyGroup } from '../../interfaces/property-group.interface';
+import { ContentMetadataService } from '../../services/content-metadata.service';
 import { PropertyDescriptorsService } from '../../services/property-descriptors.service';
 import { TagService } from '../../../tag/services/tag.service';
 import { CategoryService } from '../../../category/services/category.service';
