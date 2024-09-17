@@ -20,7 +20,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { EmptyContentComponent, NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { EmptyContentComponent } from './empty-content.component';
 
 @Component({
     selector: 'adf-test-component',
