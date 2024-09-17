@@ -210,7 +210,7 @@ describe('SearchTextInputComponent', () => {
             userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
             component.subscriptAnimationState.value = 'active';
             clickSearchButton();
-            const expectedValue = isLtr ? 'translateX(85%)' : 'translateX(-85%)';
+            const expectedValue = isLtr ? 'translateX(100%)' : 'translateX(-100%)';
             expect(component.subscriptAnimationState.params).toEqual({ transform: expectedValue });
             discardPeriodicTasks();
         }
