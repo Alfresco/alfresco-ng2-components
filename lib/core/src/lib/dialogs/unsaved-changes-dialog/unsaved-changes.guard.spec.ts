@@ -16,9 +16,10 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { UnsavedChangesDialogComponent, UnsavedChangesGuard } from '@alfresco/adf-core';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
+import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
+import { UnsavedChangesGuard } from './unsaved-changes.guard';
 
 describe('UnsavedChangesGuard', () => {
     let guard: UnsavedChangesGuard;
