@@ -1,7 +1,5 @@
 @import 'styles/mat-selectors';
 
-$search-text-input-search-icon-width: 48px;
-
 .adf-search-container {
     &:has(.adf-input-form-field-divider) {
         overflow: hidden;
@@ -16,17 +14,9 @@ $search-text-input-search-icon-width: 48px;
         align-items: center;
     }
 
-    &[state='inactive'] .adf-search-button {
-        margin-left: -$search-text-input-search-icon-width;
-    }
-
-    &[state='active'] .adf-search-button {
-        margin-left: 0;
-    }
-
     .adf {
         &-search-button-inactive {
-            margin-left: -$search-text-input-search-icon-width;
+            margin-left: -48px;
         }
 
         &-search-fixed-text {
