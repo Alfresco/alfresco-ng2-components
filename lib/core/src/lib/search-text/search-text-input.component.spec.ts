@@ -223,6 +223,13 @@ describe('SearchTextInputComponent', () => {
             testTransformValue(false);
         }));
 
+        it('should have an inactive class when input is collapsed', fakeAsync(() => {
+            component.subscriptAnimationState.value = 'inactive';
+            fixture.detectChanges();
+            expect(component.subscriptAnimationState.value).toBe('inactive');
+            expect(element.querySelector('.adf-search-button-inactive')).toBeTruthy();
+        }));
+
         it('should set browser autocomplete to on when configured', async () => {
             component.autocomplete = true;
 

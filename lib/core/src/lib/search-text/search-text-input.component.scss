@@ -25,6 +25,10 @@ $search-text-input-search-icon-width: 48px;
     }
 
     .adf {
+        &-search-button-inactive {
+            margin-left: -$search-text-input-search-icon-width;
+        }
+
         &-search-fixed-text {
             line-height: normal;
         }
