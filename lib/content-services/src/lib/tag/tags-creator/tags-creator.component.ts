@@ -76,7 +76,8 @@ const DEFAULT_TAGS_SORTING = {
         MatIconModule,
         MatListModule,
         MatProgressSpinnerModule,
-        DynamicChipListComponent
+        DynamicChipListComponent,
+        AdfStringsToChipsPipe
     ],
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
@@ -107,7 +108,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this._tags = [...tags];
         this.tagsToDisplay = this.tags.map((tag) => ({ id: tag, name: tag }));
         this._initialExistingTags = null;
-        this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
     }

@@ -45,6 +45,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { CategoriesManagementComponent } from '../../../category';
+import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -77,7 +80,8 @@ enum DefaultPanels {
         MatProgressBarModule,
         TagsCreatorComponent,
         CardViewComponent,
-        DynamicChipListComponent
+        DynamicChipListComponent,
+        AdfStringsToChipsPipe
     ],
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],

@@ -15,13 +15,21 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
 import { AdfStringsToChipsPipe } from './adf-strings-to-chips.pipe';
-import { DynamicChipListComponent } from './dynamic-chip-list.component';
 
-/** @deprecated use `DynamicChipListComponent` or import standalone components directly  */
-@NgModule({
-    imports: [DynamicChipListComponent, AdfStringsToChipsPipe],
-    exports: [DynamicChipListComponent, AdfStringsToChipsPipe]
-})
-export class DynamicChipListModule {}
+describe('AdfStringsToChipsPipe', () => {
+    let pipe: AdfStringsToChipsPipe;
+
+    beforeEach(() => {
+        pipe = new AdfStringsToChipsPipe();
+    });
+
+    it('create an instance', () => {
+        expect(pipe).toBeTruthy();
+    });
+
+    it('should return array of Chips for given array of strings', () => {
+        const strings = ['one', 'two'];
+        expect(pipe.transform(strings)).toContain({ id: 'two', name: 'two' });
+    });
+});

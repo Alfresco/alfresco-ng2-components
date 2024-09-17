@@ -15,13 +15,17 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { AdfStringsToChipsPipe } from './adf-strings-to-chips.pipe';
-import { DynamicChipListComponent } from './dynamic-chip-list.component';
+import { Pipe, PipeTransform } from '@angular/core';
+import { Chip } from './chip';
 
-/** @deprecated use `DynamicChipListComponent` or import standalone components directly  */
-@NgModule({
-    imports: [DynamicChipListComponent, AdfStringsToChipsPipe],
-    exports: [DynamicChipListComponent, AdfStringsToChipsPipe]
+@Pipe({
+    name: 'adfStringsToChips',
+    standalone: true
 })
-export class DynamicChipListModule {}
+export class AdfStringsToChipsPipe implements PipeTransform {
+    transform(tags: string[]): Chip[] {
+        return tags.map((tag) => {
+            return { id: tag, name: tag };
+        });
+    }
+}
