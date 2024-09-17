@@ -21,7 +21,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { ContentInfo, Node, NodeEntry, VersionEntry } from '@alfresco/js-api';
-import { AlfrescoViewerComponent, ContentService, ContentTestingModule, NodeActionsService, RenditionService } from '@alfresco/adf-content-services';
 import {
     CloseButtonPosition,
     EventMock,
@@ -46,6 +45,11 @@ import { By } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { AlfrescoViewerComponent } from './alfresco-viewer.component';
+import { RenditionService } from '../../common/services/rendition.service';
+import { NodeActionsService } from '../../document-list/services/node-actions.service';
+import { ContentTestingModule } from '../../testing/content.testing.module';
+import { ContentService } from '../../common/services/content.service';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
