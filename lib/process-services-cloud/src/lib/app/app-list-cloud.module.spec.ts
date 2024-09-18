@@ -15,16 +15,23 @@
  * limitations under the License.
  */
 
+import { NoopTranslateModule } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app-list-cloud.module';
+import { TestBed } from '@angular/core/testing';
+import { ProcessFilterCloudService } from '@alfresco/adf-process-services-cloud';
 
 describe('AppListCloudModule', () => {
-  let appListCloudModule: AppListCloudModule;
+    let appListCloudModule: AppListCloudModule;
 
-  beforeEach(() => {
-    appListCloudModule = new AppListCloudModule();
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [AppListCloudModule, NoopTranslateModule],
+            providers: [ProcessFilterCloudService]
+        });
+        appListCloudModule = TestBed.inject(AppListCloudModule);
+    });
 
-  it('should create an instance', () => {
-    expect(appListCloudModule).toBeTruthy();
-  });
+    it('should create an instance', () => {
+        expect(appListCloudModule).toBeTruthy();
+    });
 });
