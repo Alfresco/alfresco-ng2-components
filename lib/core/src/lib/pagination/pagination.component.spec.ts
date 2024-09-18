@@ -21,7 +21,7 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../testing/noop-translate.module';
 
 class FakePaginationInput implements PaginationModel {
     count = 25;
