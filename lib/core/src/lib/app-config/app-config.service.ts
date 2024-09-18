@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ObjectUtils } from '../common/utils/object-utils';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
