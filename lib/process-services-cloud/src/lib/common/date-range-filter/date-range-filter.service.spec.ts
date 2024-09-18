@@ -15,17 +15,15 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
 import { DateRangeFilterService } from './date-range-filter.service';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { add, endOfDay, endOfMonth, endOfQuarter, endOfYear, startOfDay, startOfMonth, startOfQuarter, startOfYear } from 'date-fns';
 
 describe('Date Range Filter service', () => {
-
     let service: DateRangeFilterService;
 
     beforeEach(() => {
-        service = TestBed.inject(DateRangeFilterService);
+        service = new DateRangeFilterService();
     });
 
     it('should return today range', () => {

@@ -37,11 +37,11 @@ describe('DateRangeFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule, DateRangeFilterComponent]
         });
         fixture = TestBed.createComponent(DateRangeFilterComponent);
         component = fixture.componentInstance;
-        service = TestBed.inject(DateRangeFilterService);
+        service = new DateRangeFilterService();
 
         component.processFilterProperty = {
             key: 'createdDate',
