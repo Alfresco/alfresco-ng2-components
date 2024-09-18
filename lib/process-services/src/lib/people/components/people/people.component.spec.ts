@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { LightUserRepresentation } from '@alfresco/js-api';
-
-declare let jasmine: any;
+import { PeopleProcessService } from '@alfresco/adf-process-services';
+import { of, throwError } from 'rxjs';
 
 const fakeUser: LightUserRepresentation = {
     id: 0,
@@ -40,19 +40,24 @@ describe('PeopleComponent', () => {
     let peopleComponent: PeopleComponent;
     let fixture: ComponentFixture<PeopleComponent>;
     let element: HTMLElement;
-    const userArray = [fakeUser, fakeSecondUser];
+    let peopleProcessService: PeopleProcessService;
+    let userArray: LightUserRepresentation[];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ProcessTestingModule, PeopleComponent]
         });
         fixture = TestBed.createComponent(PeopleComponent);
+        peopleProcessService = fixture.debugElement.injector.get(PeopleProcessService);
+
         peopleComponent = fixture.componentInstance;
         element = fixture.nativeElement;
 
         peopleComponent.people = [];
         peopleComponent.readOnly = true;
         fixture.detectChanges();
+
+        userArray = [fakeUser, fakeSecondUser];
     });
 
     afterEach(() => fixture.destroy());
@@ -78,16 +83,8 @@ describe('PeopleComponent', () => {
     describe('when there are involved people', () => {
         beforeEach(() => {
             peopleComponent.taskId = 'fake-task-id';
-            peopleComponent.people.push(...userArray);
+            peopleComponent.people = [...userArray];
             fixture.detectChanges();
-        });
-
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
         });
 
         it('should show people involved', async () => {
@@ -99,33 +96,73 @@ describe('PeopleComponent', () => {
             expect(gatewayElement.children.length).toBe(2);
         });
 
-        it('should remove people involved', fakeAsync(() => {
-            peopleComponent.removeInvolvedUser(fakeUser);
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
-            });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
-                expect(gatewayElement).not.toBeNull();
-                expect(gatewayElement.children.length).toBe(1);
-            });
-        }));
+        it('should remove involved user successfully', () => {
+            spyOn(peopleProcessService, 'removeInvolvedUser').and.returnValue(of(null));
+            peopleComponent.people = [...userArray];
 
-        it('should involve people', fakeAsync(() => {
+            peopleComponent.removeInvolvedUser(fakeUser);
+
+            fixture.detectChanges();
+
+            expect(peopleComponent.people.length).toBe(1);
+            expect(peopleComponent.people.find((user) => user.id === fakeUser.id)).toBeUndefined();
+        });
+
+        it('should emit error when removing involved user fails', () => {
+            spyOn(peopleProcessService, 'removeInvolvedUser').and.returnValue(throwError(() => new Error('error')));
+            spyOn(peopleComponent.error, 'emit');
+            peopleComponent.people = [...userArray];
+
+            peopleComponent.removeInvolvedUser(fakeUser);
+
+            fixture.detectChanges();
+
+            expect(peopleComponent.people.length).toBe(2);
+            expect(peopleComponent.error.emit).toHaveBeenCalledWith('Impossible to remove involved user from task');
+        });
+
+        it('should involve user successfully', () => {
+            spyOn(peopleProcessService, 'involveUserWithTask').and.returnValue(of(null));
+            peopleComponent.people = [...userArray];
+
             peopleComponent.involveUser(fakeUser);
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
-            });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
-                expect(gatewayElement).not.toBeNull();
-                expect(gatewayElement.children.length).toBe(3);
-            });
-        }));
+
+            fixture.detectChanges();
+
+            expect(peopleComponent.people.length).toBe(3);
+            expect(peopleComponent.people.find((user) => user.id === fakeUser.id)).toBeDefined();
+        });
+
+        it('should emit error when involving user fails', () => {
+            spyOn(peopleProcessService, 'involveUserWithTask').and.returnValue(throwError(() => new Error('error')));
+            spyOn(peopleComponent.error, 'emit');
+            peopleComponent.people = [...userArray];
+
+            peopleComponent.involveUser(fakeUser);
+
+            fixture.detectChanges();
+
+            expect(peopleComponent.people.length).toBe(2);
+            expect(peopleComponent.error.emit).toHaveBeenCalledWith('Impossible to involve user with task');
+        });
 
         it('should return an observable with user search results', (done) => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(
+                of([
+                    {
+                        id: 1,
+                        firstName: 'fake-test-1',
+                        lastName: 'fake-last-1',
+                        email: 'fake-test-1@test.com'
+                    },
+                    {
+                        id: 2,
+                        firstName: 'fake-test-2',
+                        lastName: 'fake-last-2',
+                        email: 'fake-test-2@test.com'
+                    }
+                ])
+            );
             peopleComponent.peopleSearch$.subscribe((users) => {
                 expect(users.length).toBe(2);
                 expect(users[0].firstName).toBe('fake-test-1');
@@ -135,71 +172,44 @@ describe('PeopleComponent', () => {
                 done();
             });
             peopleComponent.searchUser('fake-search-word');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    data: [
-                        {
-                            id: 1,
-                            firstName: 'fake-test-1',
-                            lastName: 'fake-last-1',
-                            email: 'fake-test-1@test.com'
-                        },
-                        {
-                            id: 2,
-                            firstName: 'fake-test-2',
-                            lastName: 'fake-last-2',
-                            email: 'fake-test-2@test.com'
-                        }
-                    ]
-                }
-            });
         });
 
         it('should return an empty list for not valid search', (done) => {
+            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
             peopleComponent.peopleSearch$.subscribe((users) => {
                 expect(users.length).toBe(0);
                 done();
             });
             peopleComponent.searchUser('fake-search-word');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {}
-            });
         });
     });
 
     describe('when there are errors on service call', () => {
         beforeEach(() => {
-            jasmine.Ajax.install();
             peopleComponent.people.push(...userArray);
             fixture.detectChanges();
         });
 
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
         it('should not remove user if remove involved user fail', async () => {
+            spyOn(peopleProcessService, 'removeInvolvedUser').and.returnValue(throwError(() => new Error('error')));
             peopleComponent.removeInvolvedUser(fakeUser);
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
+
+            fixture.detectChanges();
             await fixture.whenStable();
-            const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
+
+            const gatewayElement = element.querySelector('#assignment-people-list .adf-datatable-body');
             expect(gatewayElement).not.toBeNull();
             expect(gatewayElement.children.length).toBe(2);
         });
 
         it('should not involve user if involve user fail', async () => {
+            spyOn(peopleProcessService, 'involveUserWithTask').and.returnValue(throwError(() => new Error('error')));
             peopleComponent.involveUser(fakeUser);
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
+
+            fixture.detectChanges();
             await fixture.whenStable();
-            const gatewayElement: any = element.querySelector('#assignment-people-list .adf-datatable-body');
+
+            const gatewayElement = element.querySelector('#assignment-people-list .adf-datatable-body');
             expect(gatewayElement).not.toBeNull();
             expect(gatewayElement.children.length).toBe(2);
         });

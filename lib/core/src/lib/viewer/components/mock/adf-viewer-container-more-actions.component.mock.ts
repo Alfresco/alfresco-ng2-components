@@ -19,11 +19,12 @@ import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ViewerComponent } from '../viewer.component';
+import { ViewerMoreActionsComponent } from '../viewer-more-actions.component';
 
 @Component({
     selector: 'adf-viewer-container-more-actions',
     standalone: true,
-    imports: [ViewerComponent, MatIconModule, MatMenuModule],
+    imports: [ViewerComponent, MatIconModule, MatMenuModule, ViewerMoreActionsComponent],
     template: `
         <adf-viewer>
             <adf-viewer-more-actions>
@@ -31,7 +32,7 @@ import { ViewerComponent } from '../viewer.component';
                     <mat-icon>dialpad</mat-icon>
                     <span>Action One</span>
                 </button>
-                <button mat-menu-item disabled>
+                <button mat-menu-item [disabled]="true">
                     <mat-icon>voicemail</mat-icon>
                     <span>Action Two</span>
                 </button>

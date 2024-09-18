@@ -33,9 +33,7 @@ describe('UserPreferencesService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule],
-            providers: [
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
-            ]
+            providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }]
         });
         appConfig = TestBed.inject(AppConfigService);
         appConfig.config = {
@@ -54,6 +52,16 @@ describe('UserPreferencesService', () => {
     afterEach(() => {
         storage.clear();
         TestBed.resetTestingModule();
+    });
+
+    it('should set document direction on textOrientation event to `rtl`', () => {
+        preferences.set('textOrientation', 'rtl');
+        expect(document.body.getAttribute('dir')).toBe('rtl');
+    });
+
+    it('should set document direction on textOrientation event to `ltr`', () => {
+        preferences.set('textOrientation', 'ltr');
+        expect(document.body.getAttribute('dir')).toBe('ltr');
     });
 
     describe(' with pagination config', () => {

@@ -18,9 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { StorageService } from '../../common/services/storage.service';
-import { CoreTestingModule } from '../../testing';
-import { RedirectAuthService } from '../../auth';
-import { EMPTY } from 'rxjs';
+import { NoopAuthModule, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('StorageService', () => {
     let storage: StorageService;
@@ -31,48 +29,41 @@ describe('StorageService', () => {
     describe('with prefix', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule],
-                providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => [] } }]
+                imports: [NoopTranslateModule, NoopAuthModule]
             });
             appConfig = TestBed.inject(AppConfigService);
             storage = TestBed.inject(StorageService);
         });
 
-        it('should get the prefix for the storage from app config', (done) => {
-            appConfig.load().then(() => {
-                expect(storage.prefix).toBe('ADF_APP_');
-                done();
-            });
+        it('should get the prefix for the storage from app config', async () => {
+            await appConfig.load();
+            expect(storage.prefix).toBe('ADF_APP_');
         });
 
-        it('should set a property with the prefix in the local storage', (done) => {
-            appConfig.load().then(() => {
-                storage.clear();
-                storage.setItem(key, value);
-                const storageKey = localStorage.key(0);
-                expect(storageKey).toBe('ADF_APP_' + key);
-                expect(localStorage.getItem(storageKey)).toBe(value);
-                done();
-            });
+        it('should set a property with the prefix in the local storage', async () => {
+            await appConfig.load();
+
+            storage.clear();
+            storage.setItem(key, value);
+            const storageKey = localStorage.key(0);
+            expect(storageKey).toBe('ADF_APP_' + key);
+            expect(localStorage.getItem(storageKey)).toBe(value);
         });
 
-        it('should be able to get a property from the local storage', (done) => {
+        it('should be able to get a property from the local storage', async () => {
             storage.clear();
 
-            appConfig.load().then(() => {
-                storage.setItem(key, value);
+            await appConfig.load();
+            storage.setItem(key, value);
 
-                expect(storage.getItem(key)).toBe(value);
-                done();
-            });
+            expect(storage.getItem(key)).toBe(value);
         });
     });
 
     describe('without prefix', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule],
-                providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, init: () => [] } }]
+                imports: [NoopAuthModule]
             });
             appConfig = TestBed.inject(AppConfigService);
 
@@ -84,20 +75,16 @@ describe('StorageService', () => {
             storage = TestBed.inject(StorageService);
         });
 
-        it('should set an empty prefix when the it is not defined in the app config', (done) => {
-            appConfig.load().then(() => {
-                expect(storage.prefix).toBe('');
-                done();
-            });
+        it('should set an empty prefix when the it is not defined in the app config', async () => {
+            await appConfig.load();
+            expect(storage.prefix).toBe('');
         });
 
-        it('should set a property without a prefix in the local storage', (done) => {
-            appConfig.load().then(() => {
-                storage.setItem(key, value);
+        it('should set a property without a prefix in the local storage', async () => {
+            await appConfig.load();
+            storage.setItem(key, value);
 
-                expect(localStorage.getItem(key)).toBe(value);
-                done();
-            });
+            expect(localStorage.getItem(key)).toBe(value);
         });
     });
 });

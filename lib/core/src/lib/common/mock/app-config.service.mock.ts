@@ -17,24 +17,21 @@
 
 import { Injectable } from '@angular/core';
 import { AppConfigService, Status } from '../../app-config/app-config.service';
-import { HttpClient } from '@angular/common/http';
-import { ExtensionService } from '@alfresco/adf-extensions';
 
 @Injectable()
 export class AppConfigServiceMock extends AppConfigService {
+    constructor() {
+        super();
 
-    config: any = {
-        application: {
-            name: 'Alfresco ADF Application',
-            storagePrefix: 'ADF_APP'
-        },
-        ecmHost: 'http://{hostname}{:port}/ecm',
-        bpmHost: 'http://{hostname}{:port}/bpm',
-        logLevel: 'silent'
-    };
-
-    constructor(http: HttpClient, extensionService: ExtensionService) {
-        super(http, extensionService);
+        this.config = {
+            application: {
+                name: 'Alfresco ADF Application',
+                storagePrefix: 'ADF_APP'
+            },
+            ecmHost: 'http://{hostname}{:port}/ecm',
+            bpmHost: 'http://{hostname}{:port}/bpm',
+            logLevel: 'silent'
+        };
     }
 
     load(callback?: (...args: any[]) => any): Promise<any> {

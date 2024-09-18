@@ -15,16 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Inject, ViewEncapsulation, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { LoginDialogPanelComponent, TranslationService, AuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { DocumentListService, SitesService, SearchService, ContentNodeSelectorPanelComponent, AlfrescoApiService } from '@alfresco/adf-content-services';
+import {
+    DocumentListService,
+    SitesService,
+    SearchService,
+    ContentNodeSelectorPanelComponent,
+    AlfrescoApiService
+} from '@alfresco/adf-content-services';
 import { ExternalAlfrescoApiService } from '../../services/external-alfresco-api.service';
 import { Node } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',
@@ -41,7 +49,7 @@ import { TranslateModule } from '@ngx-translate/core';
         { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService }
     ]
 })
-export class AttachFileWidgetDialogComponent {
+export class AttachFileWidgetDialogComponent implements OnInit, OnDestroy {
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
@@ -49,6 +57,8 @@ export class AttachFileWidgetDialogComponent {
     action: string;
     buttonActionName: string;
     chosenNode: Node[];
+
+    private onDestroy$ = new Subject<boolean>();
 
     constructor(
         private translation: TranslationService,
@@ -61,14 +71,19 @@ export class AttachFileWidgetDialogComponent {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `ATTACH-FILE.ACTIONS.${this.action}`;
         this.updateTitle('DROPDOWN.MY_FILES_OPTION');
-        this.updateExternalHost();
     }
 
-    updateExternalHost() {
-        this.authenticationService.onLogin.subscribe(() => this.registerAndClose());
+    ngOnInit() {
+        this.authenticationService.onLogin.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.registerAndClose());
+
         if (this.isLoggedIn()) {
             this.registerAndClose();
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     isLoggedIn(): boolean {
@@ -111,10 +126,13 @@ export class AttachFileWidgetDialogComponent {
     }
 
     private registerAndClose() {
-        this.data.registerExternalHost(this.data.accountIdentifier, this.externalApiService);
-        if (this.data.loginOnly) {
-            this.data.selected.complete();
-            this.matDialogRef.close();
+        if (this.data) {
+            this.data.registerExternalHost?.(this.data.accountIdentifier, this.externalApiService);
+
+            if (this.data.loginOnly) {
+                this.data.selected?.complete();
+                this.matDialogRef.close();
+            }
         }
     }
 }

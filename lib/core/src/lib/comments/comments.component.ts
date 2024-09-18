@@ -73,8 +73,8 @@ export class CommentsComponent implements OnChanges {
             return;
         }
 
-        this.commentsService.get(this.id).subscribe(
-            (comments: CommentModel[]) => {
+        this.commentsService.get(this.id).subscribe({
+            next: (comments) => {
                 if (!this.isArrayInstance(comments)) {
                     return;
                 }
@@ -82,10 +82,10 @@ export class CommentsComponent implements OnChanges {
                 comments = this.sortedComments(comments);
                 this.comments.push(...comments);
             },
-            (err) => {
+            error: (err) => {
                 this.error.emit(err);
             }
-        );
+        });
     }
 
     addComment() {
@@ -95,18 +95,18 @@ export class CommentsComponent implements OnChanges {
 
         this.beingAdded = true;
 
-        this.commentsService.add(this.id, this.message).subscribe(
-            (res: CommentModel) => {
+        this.commentsService.add(this.id, this.message).subscribe({
+            next: (res) => {
                 this.addToComments(res);
                 this.resetMessage();
             },
-            (err) => {
+            error: (err) => {
                 this.error.emit(err);
             },
-            () => {
+            complete: () => {
                 this.beingAdded = false;
             }
-        );
+        });
     }
 
     clearMessage(event: Event): void {
@@ -135,7 +135,7 @@ export class CommentsComponent implements OnChanges {
     }
 
     private sortedComments(comments: CommentModel[]): CommentModel[] {
-        return comments.sort((comment1: CommentModel, comment2: CommentModel) => {
+        return comments.sort((comment1, comment2) => {
             const date1 = new Date(comment1.created);
             const date2 = new Date(comment2.created);
 

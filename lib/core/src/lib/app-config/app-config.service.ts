@@ -16,7 +16,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ObjectUtils } from '../common/utils/object-utils';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, distinctUntilChanged, take } from 'rxjs/operators';
@@ -63,6 +63,9 @@ export enum Status {
     providedIn: 'root'
 })
 export class AppConfigService {
+    protected http = inject(HttpClient);
+    protected extensionService = inject(ExtensionService);
+
     config: any = {
         application: {
             name: 'Alfresco ADF Application'
@@ -80,11 +83,11 @@ export class AppConfigService {
         return this.status === Status.LOADED;
     }
 
-    constructor(protected http: HttpClient, protected extensionService: ExtensionService) {
+    constructor() {
         this.onLoadSubject = new ReplaySubject();
         this.onLoad = this.onLoadSubject.asObservable();
 
-        extensionService.setup$.subscribe((config) => {
+        this.extensionService.setup$.subscribe((config) => {
             this.onExtensionsLoaded(config);
         });
     }

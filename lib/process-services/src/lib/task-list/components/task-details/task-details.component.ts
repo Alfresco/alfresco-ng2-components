@@ -16,6 +16,7 @@
  */
 
 import {
+    ADF_COMMENTS_SERVICE,
     CardViewUpdateService,
     ClickNotification,
     ContentLinkModel,
@@ -51,7 +52,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AttachFormComponent } from '../attach-form/attach-form.component';
 import { PeopleComponent, PeopleSearchComponent } from '../../../people';
 import { TaskHeaderComponent } from '../task-header/task-header.component';
-import { TaskCommentsComponent } from '../../../task-comments';
+import { TaskCommentsComponent, TaskCommentsService } from '../../../task-comments';
 import { ChecklistComponent } from '../checklist/checklist.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -74,6 +75,12 @@ import { MatCardModule } from '@angular/material/card';
         InfoDrawerTabComponent,
         InfoDrawerComponent,
         MatCardModule
+    ],
+    providers: [
+        {
+            provide: ADF_COMMENTS_SERVICE,
+            useClass: TaskCommentsService
+        }
     ],
     templateUrl: './task-details.component.html',
     styleUrls: ['./task-details.component.scss'],

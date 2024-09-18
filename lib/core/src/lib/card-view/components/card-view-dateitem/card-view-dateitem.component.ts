@@ -39,6 +39,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
     providers: [
@@ -49,7 +51,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ],
     selector: 'adf-card-view-dateitem',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatIconModule, MatDatetimepickerModule, MatChipsModule, MatFormFieldModule],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatIconModule,
+        MatDatetimepickerModule,
+        MatChipsModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatSnackBarModule
+    ],
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss'],
     encapsulation: ViewEncapsulation.None,
