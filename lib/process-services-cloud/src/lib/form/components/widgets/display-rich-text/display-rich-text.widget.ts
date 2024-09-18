@@ -42,12 +42,32 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class DisplayRichTextWidgetComponent extends WidgetComponent implements OnInit {
     parsedHTML: any;
 
+    private static readonly CUSTOM_PARSER = {
+        header: ({ data, tunes }): string => {
+            const paragraphAlign = data.alignment || data.align || tunes?.anyTuneName?.alignment;
+            if (typeof paragraphAlign !== 'undefined' && ['left', 'right', 'center'].includes(paragraphAlign)) {
+                return `<h${data.level} class="ce-tune-alignment--${paragraphAlign}">${data.text}</h${data.level}>`;
+            } else {
+                return `<h${data.level}>${data.text}</h${data.level}>`;
+            }
+        },
+        paragraph: ({ data, tunes }): string => {
+            const paragraphAlign = data.alignment || data.align || tunes?.anyTuneName?.alignment;
+
+            if (typeof paragraphAlign !== 'undefined' && ['left', 'right', 'center', 'justify'].includes(paragraphAlign)) {
+                return `<p class="ce-tune-alignment--${paragraphAlign}">${data.text}</p>`;
+            } else {
+                return `<p>${data.text}</p>`;
+            }
+        }
+    };
+
     constructor(public formService: FormService, private readonly sanitizer: DomSanitizer) {
         super(formService);
     }
 
     ngOnInit(): void {
-        this.parsedHTML = edjsHTML().parseStrict(this.field.value);
+        this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER).parseStrict(this.field.value);
 
         if (!(this.parsedHTML instanceof Error)) {
             this.sanitizeHtmlContent();

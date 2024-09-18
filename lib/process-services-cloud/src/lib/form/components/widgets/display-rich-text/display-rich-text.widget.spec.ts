@@ -49,6 +49,11 @@ describe('DisplayRichTextWidgetComponent', () => {
                     type: 'paragraph',
                     data: {
                         text: 'Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark>'
+                    },
+                    tunes: {
+                        anyTuneName: {
+                            alignment: 'left'
+                        }
                     }
                 }
             ],
@@ -90,7 +95,8 @@ describe('DisplayRichTextWidgetComponent', () => {
     });
 
     it('should parse editorjs data to html', async () => {
-        const expectedHtml = '<h1>Editor.js</h1><p>Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark></p>';
+        const expectedHtml =
+            '<h1>Editor.js</h1><p class="ce-tune-alignment--left">Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark></p>';
 
         fixture.detectChanges();
         await fixture.whenStable();
