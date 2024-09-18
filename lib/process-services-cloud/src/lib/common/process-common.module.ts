@@ -18,6 +18,7 @@
 import { NgModule } from '@angular/core';
 import { DateRangeFilterComponent } from './date-range-filter/date-range-filter.component';
 
+/** @deprecated use DateRangeFilterComponent instead */
 @NgModule({
     imports: [DateRangeFilterComponent],
     exports: [DateRangeFilterComponent]
