@@ -16,21 +16,20 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MAT_SNACK_BAR_DATA, MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { By } from '@angular/platform-browser';
 import { SnackbarContentComponent } from './snackbar-content.component';
-import { CoreTestingModule } from '@alfresco/adf-core';
+import { CoreTestingModule, NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('SnackbarContentComponent', () => {
     let component: SnackbarContentComponent;
     let fixture: ComponentFixture<SnackbarContentComponent>;
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             declarations: [SnackbarContentComponent],
-            imports: [CoreTestingModule, MatIconModule, MatSnackBarModule, MatButtonModule],
+            imports: [NoopTranslateModule, CoreTestingModule],
             providers: [
                 {
                     provide: MatSnackBarRef,
@@ -43,7 +42,7 @@ describe('SnackbarContentComponent', () => {
                     useValue: {}
                 }
             ]
-        }).compileComponents();
+        });
 
         fixture = TestBed.createComponent(SnackbarContentComponent);
         component = fixture.componentInstance;

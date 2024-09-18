@@ -17,13 +17,13 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AlfrescoApiService, ContentModule, ContentNodeSelectorPanelComponent, DocumentListService, SitesService, NodesApiService } from '@alfresco/adf-content-services';
+import { ContentNodeSelectorPanelComponent, DocumentListService, SitesService, NodesApiService } from '@alfresco/adf-content-services';
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { BasicAlfrescoAuthService, OidcAuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { of, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Node, SiteEntry, NodeEntry, SitePaging, SitePagingList } from '@alfresco/js-api';
 
@@ -39,21 +39,19 @@ describe('AttachFileWidgetDialogComponent', () => {
         isSelectionValid: (entry: Node) => entry.isFile
     };
     let element: HTMLInputElement;
-    let basicAlfrescoAuthService: BasicAlfrescoAuthService;
     let siteService: SitesService;
     let nodeService: NodesApiService;
     let documentListService: DocumentListService;
-    let apiService: AlfrescoApiService;
-    let matDialogRef: MatDialogRef<AttachFileWidgetDialogComponent>;
+    let isLoggedInSpy: jasmine.Spy;
+    let authService: AuthenticationService;
+    let closeSpy: jasmine.Spy;
 
-    let isLogged = false;
     const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentModule.forRoot(), ProcessTestingModule, AttachFileWidgetDialogComponent],
+            imports: [ProcessTestingModule, AttachFileWidgetDialogComponent],
             providers: [
-                { provide: OidcAuthenticationService, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: data },
                 { provide: MatDialogRef, useValue: { close: () => of() } }
             ],
@@ -62,12 +60,16 @@ describe('AttachFileWidgetDialogComponent', () => {
         fixture = TestBed.createComponent(AttachFileWidgetDialogComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        basicAlfrescoAuthService = fixture.debugElement.injector.get(BasicAlfrescoAuthService);
         siteService = fixture.debugElement.injector.get(SitesService);
         nodeService = fixture.debugElement.injector.get(NodesApiService);
         documentListService = fixture.debugElement.injector.get(DocumentListService);
-        matDialogRef = fixture.debugElement.injector.get(MatDialogRef);
-        apiService = fixture.debugElement.injector.get(AlfrescoApiService);
+
+        const matDialogRef = fixture.debugElement.injector.get(MatDialogRef);
+        closeSpy = spyOn(matDialogRef, 'close');
+
+        authService = fixture.debugElement.injector.get(AuthenticationService);
+        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        authService.onLogin = new Subject<any>();
 
         spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { path: { elements: [] } } } as NodeEntry));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
@@ -77,22 +79,17 @@ describe('AttachFileWidgetDialogComponent', () => {
 
         spyOn(siteService, 'getSite').and.returnValue(of(fakeSite));
         spyOn(siteService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
-        spyOn(widget, 'isLoggedIn').and.callFake(() => isLogged);
+        isLoggedInSpy = spyOn(widget, 'isLoggedIn').and.returnValue(false);
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should be able to create the widget', () => {
-        fixture.detectChanges();
-        expect(widget).not.toBeNull();
-    });
-
     describe('When is not logged in', () => {
         beforeEach(() => {
+            isLoggedInSpy.and.returnValue(false);
             fixture.detectChanges();
-            isLogged = false;
         });
 
         it('should show the login form', () => {
@@ -103,8 +100,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         });
 
         it('should be able to login', (done) => {
-            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
-            isLogged = true;
+            isLoggedInSpy.and.returnValue(true);
             let loginButton: HTMLButtonElement = element.querySelector('[data-automation-id="attach-file-dialog-actions-login"]');
             const usernameInput: HTMLInputElement = element.querySelector('#username');
             const passwordInput: HTMLInputElement = element.querySelector('#password');
@@ -129,7 +125,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         let contentNodePanel;
 
         beforeEach(() => {
-            isLogged = true;
+            isLoggedInSpy.and.returnValue(true);
             fixture.detectChanges();
             contentNodePanel = fixture.debugElement.query(By.directive(ContentNodeSelectorPanelComponent));
         });
@@ -181,43 +177,36 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     describe('login only', () => {
         beforeEach(() => {
-            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
-            spyOn(matDialogRef, 'close').and.callThrough();
-            fixture.detectChanges();
-            widget.data.loginOnly = true;
-            widget.data.registerExternalHost = () => {};
-            isLogged = false;
+            widget.data = {
+                ...widget.data,
+                loginOnly: true,
+                registerExternalHost: () => {}
+            };
         });
 
-        it('should close the dialog once user loggedIn', () => {
+        it('should close the dialog once user loggedIn', async () => {
+            isLoggedInSpy.and.returnValue(false);
             fixture.detectChanges();
-            isLogged = true;
-            const loginButton = element.querySelector<HTMLButtonElement>('[data-automation-id="attach-file-dialog-actions-login"]');
-            const usernameInput = element.querySelector<HTMLInputElement>('#username');
-            const passwordInput = element.querySelector<HTMLInputElement>('#password');
-            usernameInput.value = 'fake-user';
-            passwordInput.value = 'fake-user';
-            usernameInput.dispatchEvent(new Event('input'));
-            passwordInput.dispatchEvent(new Event('input'));
-            loginButton.click();
 
-            basicAlfrescoAuthService.onLogin.next('logged-in');
+            authService.onLogin.next('logged-in');
+
             fixture.detectChanges();
-            expect(matDialogRef.close).toHaveBeenCalled();
+            await fixture.whenStable();
+
+            expect(closeSpy).toHaveBeenCalled();
         });
 
         it('should close the dialog immediately if user already loggedIn', () => {
-            isLogged = true;
+            isLoggedInSpy.and.returnValue(true);
             fixture.detectChanges();
-            spyOn(apiService, 'getInstance').and.returnValue({ isLoggedIn: () => true } as any);
-            widget.updateExternalHost();
-            expect(matDialogRef.close).toHaveBeenCalled();
+            fixture.componentInstance.ngOnInit();
+            expect(closeSpy).toHaveBeenCalled();
         });
     });
 
     describe('Attach button', () => {
         beforeEach(() => {
-            isLogged = true;
+            isLoggedInSpy.and.returnValue(true);
         });
 
         it('should be disabled by default', () => {

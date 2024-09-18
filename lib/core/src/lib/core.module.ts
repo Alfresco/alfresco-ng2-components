@@ -39,8 +39,6 @@ import { CORE_DIRECTIVES } from './directives/directive.module';
 import { CORE_PIPES } from './pipes/pipe.module';
 import { TranslationService } from './translation/translation.service';
 import { TranslateLoaderService } from './translation/translate-loader.service';
-import { directionalityConfigFactory } from './common/services/directionality-config-factory';
-import { DirectionalityConfigService } from './common/services/directionality-config.service';
 import { SEARCH_TEXT_INPUT_DIRECTIVES } from './search-text/search-text-input.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { AuthenticationInterceptor, Authentication } from '@alfresco/adf-core/auth';
@@ -143,12 +141,6 @@ export class CoreModule {
                     provide: APP_INITIALIZER,
                     useFactory: loadAppConfig,
                     deps: [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
-                    multi: true
-                },
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: directionalityConfigFactory,
-                    deps: [DirectionalityConfigService],
                     multi: true
                 },
                 { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },

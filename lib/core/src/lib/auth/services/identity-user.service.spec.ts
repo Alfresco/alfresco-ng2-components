@@ -34,7 +34,7 @@ import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { AdfHttpClient } from '../../../../api/src';
 import { StorageService } from '../../common/services/storage.service';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 describe('IdentityUserService', () => {
     const mockRoles = [

@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutServerSettingsComponent } from './about-server-settings.component';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { AppConfigServiceMock } from '../../common';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 const aboutGithubDetails = {
     url: 'https://github.com/componany/repository/commits/',

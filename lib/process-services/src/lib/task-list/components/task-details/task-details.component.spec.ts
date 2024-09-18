@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
-import { FormModel, FormOutcomeEvent, FormOutcomeModel, CommentModel, User } from '@alfresco/adf-core';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel, CommentModel, User, ADF_COMMENTS_SERVICE, CommentsService } from '@alfresco/adf-core';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock, taskDetailsWithOutAssigneeMock } from '../../../testing/mock';
 import { TaskListService } from '../../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TaskService } from '../../../form/services/task.service';
 import { TaskFormService } from '../../../form/services/task-form.service';
-import { TaskCommentsService } from '../../../services/task-comments.service';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -48,32 +47,27 @@ const fakeTaskAssignResponse: any = {
 };
 
 describe('TaskDetailsComponent', () => {
-    let taskListService: TaskListService;
-    let taskService: TaskService;
     let taskFormService: TaskFormService;
     let component: TaskDetailsComponent;
     let fixture: ComponentFixture<TaskDetailsComponent>;
     let loader: HarnessLoader;
     let getTaskDetailsSpy: jasmine.Spy;
-    let getCommentsSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
     let assignTaskSpy: jasmine.Spy;
-    let taskCommentsService: TaskCommentsService;
+    let taskCommentsService: CommentsService;
     let peopleProcessService: PeopleProcessService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskDetailsComponent],
-            schemas: [NO_ERRORS_SCHEMA]
+            imports: [ProcessTestingModule, TaskDetailsComponent]
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);
-
         spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of({ email: 'fake-email' } as any));
 
-        taskListService = TestBed.inject(TaskListService);
+        const taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'getTaskChecklist').and.returnValue(of(noDataMock));
 
-        taskService = TestBed.inject(TaskService);
+        const taskService = TestBed.inject(TaskService);
         taskFormService = TestBed.inject(TaskFormService);
 
         getTaskDetailsSpy = spyOn(taskListService, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
@@ -83,9 +77,11 @@ describe('TaskDetailsComponent', () => {
 
         getTasksSpy = spyOn(taskListService, 'getTasks').and.returnValue(of(tasksMock));
         assignTaskSpy = spyOn(taskListService, 'assignTask').and.returnValue(of(fakeTaskAssignResponse));
-        taskCommentsService = TestBed.inject(TaskCommentsService);
 
-        getCommentsSpy = spyOn(taskCommentsService, 'get').and.returnValue(
+        fixture = TestBed.createComponent(TaskDetailsComponent);
+        taskCommentsService = fixture.debugElement.injector.get<CommentsService>(ADF_COMMENTS_SERVICE);
+
+        spyOn(taskCommentsService, 'get').and.returnValue(
             of([
                 new CommentModel({ message: 'Test1', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
                 new CommentModel({ message: 'Test2', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
@@ -93,15 +89,12 @@ describe('TaskDetailsComponent', () => {
             ])
         );
 
-        fixture = TestBed.createComponent(TaskDetailsComponent);
-        peopleProcessService = TestBed.inject(PeopleProcessService);
         component = fixture.componentInstance;
+        component.showComments = false;
         loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
     });
 
     afterEach(() => {
-        getTaskDetailsSpy.calls.reset();
-        getCommentsSpy.calls.reset();
         fixture.destroy();
     });
 
@@ -418,8 +411,12 @@ describe('TaskDetailsComponent', () => {
             expect(lastValue.length).toBe(0);
         });
 
-        it('should assign task to user', () => {
+        it('should assign task to user', async () => {
             component.assignTaskToUser(fakeUser);
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
             expect(assignTaskSpy).toHaveBeenCalled();
         });
     });

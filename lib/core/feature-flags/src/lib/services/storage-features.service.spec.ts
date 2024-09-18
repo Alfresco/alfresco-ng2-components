@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { StorageFeaturesService } from './storage-features.service';
-import { CoreTestingModule, StorageService } from '../../../../src/public-api';
+import { StorageService } from '../../../../src/public-api';
 import { FlagSet, WritableFeaturesServiceConfigToken } from '../interfaces/features.interface';
 import { skip, take } from 'rxjs/operators';
 
@@ -41,7 +41,6 @@ describe('StorageFeaturesService', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule],
                 providers: [
                     { provide: StorageService, useValue: mockStorage },
                     {
@@ -49,8 +48,7 @@ describe('StorageFeaturesService', () => {
                         useValue: {
                             storageKey: 'storage-key-test'
                         }
-                    },
-                    StorageFeaturesService
+                    }
                 ]
             });
 
@@ -170,11 +168,6 @@ describe('StorageFeaturesService', () => {
 
     describe('if flags are not present in LocalStorage and no configuration is provided', () => {
         beforeEach(() => {
-            TestBed.configureTestingModule({
-                imports: [CoreTestingModule],
-                providers: [StorageFeaturesService]
-            });
-
             storageFeaturesService = TestBed.inject(StorageFeaturesService);
         });
 

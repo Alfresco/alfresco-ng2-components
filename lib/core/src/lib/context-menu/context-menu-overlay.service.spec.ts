@@ -16,7 +16,6 @@
  */
 
 import { Overlay } from '@angular/cdk/overlay';
-import { CoreTestingModule } from '../testing/core.testing.module';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -35,7 +34,6 @@ describe('ContextMenuOverlayService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
             providers: [Overlay]
         });
         overlay = TestBed.inject(Overlay);

@@ -28,7 +28,6 @@ import { CategoryService } from '../../category';
     providedIn: 'root'
 })
 export class DialogAspectListService {
-
     constructor(
         private dialog: MatDialog,
         private overlayContainer: OverlayContainer,
@@ -49,8 +48,8 @@ export class DialogAspectListService {
             select,
             nodeId,
             excludedAspects: [
-                ...this.tagService.areTagsEnabled() ? [] : ['cm:taggable'],
-                ...this.categoryService.areCategoriesEnabled() ? [] : ['cm:generalclassifiable']
+                ...(this.tagService.areTagsEnabled() ? [] : ['cm:taggable']),
+                ...(this.categoryService.areCategoriesEnabled() ? [] : ['cm:generalclassifiable'])
             ]
         };
 
@@ -58,15 +57,17 @@ export class DialogAspectListService {
         return select;
     }
 
-    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string,
-                       selectorAutoFocusedOnClose?: string) {
-        this.dialog.open(AspectListDialogComponent, {
-            data,
-            panelClass,
-            width,
-            role: 'dialog',
-            disableClose: true
-        }).afterClosed().subscribe(() => this.focusOnClose(selectorAutoFocusedOnClose));
+    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string, selectorAutoFocusedOnClose?: string) {
+        this.dialog
+            .open(AspectListDialogComponent, {
+                data,
+                panelClass,
+                width,
+                role: 'dialog',
+                disableClose: true
+            })
+            .afterClosed()
+            .subscribe(() => this.focusOnClose(selectorAutoFocusedOnClose));
         this.overlayContainer.getContainerElement().setAttribute('role', 'main');
     }
 
@@ -77,7 +78,7 @@ export class DialogAspectListService {
 
     private focusOnClose(selectorAutoFocusedOnClose: string): void {
         if (selectorAutoFocusedOnClose) {
-            document.querySelector<HTMLElement>(selectorAutoFocusedOnClose).focus();
+            document.querySelector<HTMLElement>(selectorAutoFocusedOnClose)?.focus();
         }
     }
 }

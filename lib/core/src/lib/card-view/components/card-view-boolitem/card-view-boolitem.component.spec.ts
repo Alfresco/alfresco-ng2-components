@@ -21,7 +21,7 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../../testing/noop-translate.module';
 
 describe('CardViewBoolItemComponent', () => {
     let fixture: ComponentFixture<CardViewBoolItemComponent>;

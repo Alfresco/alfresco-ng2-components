@@ -29,7 +29,7 @@ import { OAuthEvent } from 'angular-oauth2-oidc';
 import { Subject } from 'rxjs';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { Injector } from '@angular/core';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 declare let jasmine: any;
 // eslint-disable-next-line

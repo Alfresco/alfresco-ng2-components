@@ -75,30 +75,30 @@ export class PeopleComponent {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleProcessService.getWorkflowUsers(this.taskId, searchedWord).subscribe(
-            (users) => {
+        this.peopleProcessService.getWorkflowUsers(this.taskId, searchedWord).subscribe({
+            next: (users) => {
                 this.peopleSearchObserver.next(users);
             },
-            (error) => this.error.emit(error)
-        );
+            error: (error) => this.error.emit(error)
+        });
     }
 
     involveUser(user: LightUserRepresentation) {
         if (user?.id !== undefined) {
-            this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString()).subscribe(
-                () => (this.people = [...this.people, user]),
-                () => this.error.emit('Impossible to involve user with task')
-            );
+            this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString()).subscribe({
+                next: () => (this.people = [...this.people, user]),
+                error: () => this.error.emit('Impossible to involve user with task')
+            });
         }
     }
 
     removeInvolvedUser(user: LightUserRepresentation) {
-        this.peopleProcessService.removeInvolvedUser(this.taskId, user.id.toString()).subscribe(
-            () => {
+        this.peopleProcessService.removeInvolvedUser(this.taskId, user.id.toString()).subscribe({
+            next: () => {
                 this.people = this.people.filter((involvedUser) => involvedUser.id !== user.id);
             },
-            () => this.error.emit('Impossible to remove involved user from task')
-        );
+            error: () => this.error.emit('Impossible to remove involved user from task')
+        });
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {

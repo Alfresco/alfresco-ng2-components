@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { EventEmitter, NgModule } from '@angular/core';
+import { EventEmitter, Injectable, NgModule } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslationService } from '../translation/translation.service';
 import { LangChangeEvent } from '../mock';
 import { Observable, of } from 'rxjs';
 
+@Injectable({ providedIn: 'root' })
 export class NoopTranslationService implements TranslationService {
     defaultLang: string = 'en';
     userLang: string;

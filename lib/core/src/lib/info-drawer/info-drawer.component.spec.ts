@@ -19,27 +19,23 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { By } from '@angular/platform-browser';
-import { InfoDrawerComponent } from './info-drawer.component';
-import { of } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { CoreTestingModule } from '../testing/core.testing.module';
+import { InfoDrawerComponent, InfoDrawerTabComponent } from './info-drawer.component';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTabGroupHarness } from '@angular/material/tabs/testing';
+import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
     let component: InfoDrawerComponent;
-    let translateService: TranslateService;
     let fixture: ComponentFixture<InfoDrawerComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [NoopTranslateModule, InfoDrawerComponent]
         });
-        translateService = TestBed.inject(TranslateService);
-        spyOn(translateService, 'get').and.callFake((key) => of(key));
 
         fixture = TestBed.createComponent(InfoDrawerComponent);
         element = fixture.nativeElement;
@@ -86,6 +82,8 @@ describe('InfoDrawerComponent', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [InfoDrawerTabComponent, InfoDrawerComponent],
     template: `
         <adf-info-drawer [selectedIndex]="tabIndex" [icon]="icon" title="Fake Title Custom">
             <adf-info-drawer-tab label="Tab1"></adf-info-drawer-tab>
@@ -102,18 +100,14 @@ class CustomInfoDrawerComponent extends InfoDrawerComponent {
 describe('Custom InfoDrawer', () => {
     let fixture: ComponentFixture<CustomInfoDrawerComponent>;
     let component: CustomInfoDrawerComponent;
-    let translateService: TranslateService;
     let loader: HarnessLoader;
 
     const getNodeIcon = () => fixture.debugElement.queryAll(By.css('[info-drawer-node-icon]'));
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [CustomInfoDrawerComponent]
+            imports: [NoopAnimationsModule, NoopTranslateModule, CustomInfoDrawerComponent]
         });
-        translateService = TestBed.inject(TranslateService);
-        spyOn(translateService, 'get').and.callFake((key) => of(key));
 
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
         fixture.detectChanges();
@@ -170,6 +164,8 @@ describe('Custom InfoDrawer', () => {
 });
 
 @Component({
+    standalone: true,
+    imports: [InfoDrawerComponent],
     template: ` <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title"> </adf-info-drawer> `
 })
 class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
@@ -184,8 +180,7 @@ describe('Header visibility InfoDrawer', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [VisibilityInfoDrawerComponent]
+            imports: [NoopTranslateModule, VisibilityInfoDrawerComponent]
         });
         fixture = TestBed.createComponent(VisibilityInfoDrawerComponent);
         fixture.detectChanges();

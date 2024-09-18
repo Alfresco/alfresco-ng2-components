@@ -28,7 +28,7 @@ import {
     roleMappingMock
 } from '../mock/identity-group.mock';
 import { AdfHttpClient } from '../../../../api/src';
-import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;

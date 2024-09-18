@@ -28,9 +28,10 @@ import { CardViewItemDispatcherComponent } from '../card-view-item-dispatcher/ca
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-import { CoreTestingModule } from '@alfresco/adf-core';
+import { NoopTranslateModule } from '@alfresco/adf-core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('CardViewComponent', () => {
     let loader: HarnessLoader;
@@ -39,7 +40,7 @@ describe('CardViewComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatSnackBarModule, MatDialogModule, CardViewComponent]
+            imports: [NoopTranslateModule, NoopAnimationsModule, MatSnackBarModule, MatDialogModule, CardViewComponent]
         });
 
         fixture = TestBed.createComponent(CardViewComponent);
