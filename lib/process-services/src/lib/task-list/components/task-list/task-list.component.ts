@@ -33,7 +33,19 @@ import {
     LoadingContentTemplateDirective,
     NoContentTemplateDirective
 } from '@alfresco/adf-core';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
+import {
+    AfterContentInit,
+    Component,
+    ContentChild,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { taskPresetsDefaultModel } from '../../models/task-preset.model';
 import { TaskListService } from '../../services/tasklist.service';
@@ -61,6 +73,9 @@ export const PRESET_KEY = 'adf-task-list.presets';
     styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
+    @ViewChild(DataTableComponent)
+    dataTable: DataTableComponent;
+
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
