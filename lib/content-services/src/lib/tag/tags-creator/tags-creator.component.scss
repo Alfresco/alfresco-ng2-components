@@ -49,12 +49,6 @@ adf-tags-creator {
         height: auto;
     }
 
-    adf-dynamic-chip-list {
-        #{$mat-chip} {
-            padding: 0;
-        }
-    }
-
     .adf-existing-tags-panel {
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
