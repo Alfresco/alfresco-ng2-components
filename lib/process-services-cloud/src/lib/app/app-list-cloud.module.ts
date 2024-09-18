@@ -16,15 +16,14 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
-import { CommonModule } from '@angular/common';
 import { AppDetailsCloudComponent } from './components/app-details-cloud.component';
 import { AppListCloudComponent } from './components/app-list-cloud.component';
-import { TEMPLATE_DIRECTIVES, CoreModule } from '@alfresco/adf-core';
 
+export const APP_LIST_CLOUD_DIRECTIVES = [AppListCloudComponent, AppDetailsCloudComponent] as const;
+
+/** @deprecated use `...APP_LIST_CLOUD_DIRECTIVES` instead. */
 @NgModule({
-    imports: [CommonModule, ...TEMPLATE_DIRECTIVES, MaterialModule, CoreModule],
-    declarations: [AppListCloudComponent, AppDetailsCloudComponent],
+    imports: [AppListCloudComponent, AppDetailsCloudComponent],
     exports: [AppListCloudComponent, AppDetailsCloudComponent]
 })
 export class AppListCloudModule {}
