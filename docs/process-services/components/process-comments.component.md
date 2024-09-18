@@ -25,4 +25,4 @@ Displays comments associated with a particular process instance and allows the u
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | processInstanceId | `string` |  | The numeric ID of the process instance to display comments for. |
-| readOnly | `boolean` | true | Should the comments be read-only? |
+| readOnly | `boolean` |  | Should the comments be read-only? |
