@@ -17,13 +17,10 @@
 
 import { NgModule } from '@angular/core';
 import { GroupCloudComponent } from './components/group-cloud.component';
-import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
-import { IDENTITY_GROUP_SERVICE_TOKEN } from './services/identity-group-service.token';
-import { IdentityGroupService } from './services/identity-group.service';
 
+/** @deprecated use GroupCloudComponent instead */
 @NgModule({
-    imports: [GroupCloudComponent, InitialGroupNamePipe],
-    providers: [{ provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }],
-    exports: [GroupCloudComponent, InitialGroupNamePipe]
+    imports: [GroupCloudComponent],
+    exports: [GroupCloudComponent]
 })
 export class GroupCloudModule {}
