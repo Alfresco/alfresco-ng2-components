@@ -17,13 +17,10 @@
 
 import { NgModule } from '@angular/core';
 import { PeopleCloudComponent } from './components/people-cloud.component';
-import { IdentityUserService } from './services/identity-user.service';
-import { IDENTITY_USER_SERVICE_TOKEN } from './services/identity-user-service.token';
 
 /** @deprecated Use `PeopleCloudComponent` instead */
 @NgModule({
     imports: [PeopleCloudComponent],
-    exports: [PeopleCloudComponent],
-    providers: [{ provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }]
+    exports: [PeopleCloudComponent]
 })
 export class PeopleCloudModule {}

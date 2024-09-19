@@ -32,9 +32,7 @@ import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeFilter } from '../../mock/task-filters-cloud.mock';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { AssignmentType, TaskFilterCloudModel, TaskStatusFilter } from '../../models/filter-cloud.model';
-import { PeopleCloudModule } from '../../../../people/people-cloud.module';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
-import { MatIconTestingModule } from '@angular/material/icon/testing';
 import {
     mockAlfrescoApi,
     mockCompletedDateFilter,
@@ -57,6 +55,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { PeopleCloudComponent } from '@alfresco/adf-process-services-cloud';
 
 describe('EditTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -74,7 +73,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, PeopleCloudModule, MatIconTestingModule],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, PeopleCloudComponent],
             providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);

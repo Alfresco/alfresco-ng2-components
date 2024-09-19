@@ -19,7 +19,6 @@ import { PeopleCloudComponent } from './people-cloud.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { PeopleCloudModule } from '../people-cloud.module';
 import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -83,13 +82,13 @@ describe('PeopleCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule, PeopleCloudComponent]
+            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudComponent]
         });
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        identityUserService = TestBed.inject(IDENTITY_USER_SERVICE_TOKEN);
+        identityUserService = fixture.debugElement.injector.get(IDENTITY_USER_SERVICE_TOKEN);
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 

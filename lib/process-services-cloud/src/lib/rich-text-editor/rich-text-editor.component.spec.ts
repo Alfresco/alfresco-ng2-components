@@ -51,10 +51,10 @@ describe('RichTextEditorComponent', () => {
         await fixture.whenStable();
     };
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            declarations: [RichTextEditorComponent]
-        }).compileComponents();
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [RichTextEditorComponent]
+        });
 
         fixture = TestBed.createComponent(RichTextEditorComponent);
         component = fixture.componentInstance;

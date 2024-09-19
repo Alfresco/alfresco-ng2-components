@@ -25,8 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
 import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
-import { PeopleCloudModule } from '../../people/people-cloud.module';
 import { DateRangeFilterComponent } from '../../common/date-range-filter/date-range-filter.component';
+import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
 
 @NgModule({
     imports: [
@@ -38,7 +38,7 @@ import { DateRangeFilterComponent } from '../../common/date-range-filter/date-ra
         ...APP_LIST_CLOUD_DIRECTIVES,
         CoreModule,
         DateRangeFilterComponent,
-        PeopleCloudModule
+        PeopleCloudComponent
     ],
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]

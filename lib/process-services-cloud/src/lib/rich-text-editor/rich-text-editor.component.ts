@@ -20,9 +20,12 @@ import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewEncapsulation }
 import EditorJS, { OutputData } from '@editorjs/editorjs';
 import { Subject } from 'rxjs';
 import { editorJsConfig } from './editorjs-config';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'adf-cloud-rich-text-editor',
+    standalone: true,
+    imports: [CommonModule],
     templateUrl: './rich-text-editor.component.html',
     styleUrls: ['./rich-text-editor.component.scss'],
     encapsulation: ViewEncapsulation.None
