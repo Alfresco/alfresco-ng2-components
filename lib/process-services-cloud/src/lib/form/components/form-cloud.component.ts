@@ -389,7 +389,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                         this.startProcessService.startProcessWithForm(
                             this.appName,
                             this.formId,
-                            1,
+                            process.version,
                             new ProcessWithFormPayloadCloud({
                                 processDefinitionKey: process.id,
                                 processName: process.name,
