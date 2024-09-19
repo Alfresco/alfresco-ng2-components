@@ -20,11 +20,13 @@ export class ProcessWithFormPayloadCloud {
     processDefinitionKey: string;
     variables: any;
     values: any;
+    outcome?: string;
 
     constructor(obj: ProcessWithFormPayloadCloud) {
         this.processName = obj.processName;
         this.processDefinitionKey = obj.processDefinitionKey;
         this.variables = obj.variables;
         this.values = obj.values;
+        this.outcome = obj.outcome;
     }
 }
