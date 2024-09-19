@@ -22,7 +22,8 @@ import { switchMap, map } from 'rxjs/operators';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
-import { NotificationCloudService, TaskCloudEngineEvent } from '@alfresco/adf-process-services-cloud';
+import { NotificationCloudService } from '../../../services/notification-cloud.service';
+import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 
 const PROCESS_EVENT_SUBSCRIPTION_QUERY = `
     subscription {

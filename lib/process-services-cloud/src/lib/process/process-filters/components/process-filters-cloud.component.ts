@@ -22,7 +22,7 @@ import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
-import { ProcessListCloudService } from '@alfresco/adf-process-services-cloud';
+import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
 
 @Component({
     selector: 'adf-cloud-process-filters',

@@ -25,7 +25,8 @@ import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.ser
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
 import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
-import { NotificationCloudService, ProcessListCloudService } from '@alfresco/adf-process-services-cloud';
+import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
+import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { ApolloModule } from 'apollo-angular';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';

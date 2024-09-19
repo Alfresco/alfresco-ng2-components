@@ -39,7 +39,7 @@ import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PreferenceCloudServiceInterface } from '@alfresco/adf-process-services-cloud';
+import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';

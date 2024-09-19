@@ -31,7 +31,7 @@ import {
 } from '../mock/process-filters-cloud.mock';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
-import { NotificationCloudService } from '@alfresco/adf-process-services-cloud';
+import { NotificationCloudService } from '../../../services/notification-cloud.service';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;

@@ -18,15 +18,13 @@
 import { NoopTranslateModule } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app-list-cloud.module';
 import { TestBed } from '@angular/core/testing';
-import { ProcessFilterCloudService } from '@alfresco/adf-process-services-cloud';
 
 describe('AppListCloudModule', () => {
     let appListCloudModule: AppListCloudModule;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AppListCloudModule, NoopTranslateModule],
-            providers: [ProcessFilterCloudService]
+            imports: [AppListCloudModule, NoopTranslateModule]
         });
         appListCloudModule = TestBed.inject(AppListCloudModule);
     });
