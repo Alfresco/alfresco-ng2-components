@@ -12,7 +12,9 @@ Displays comments associated with a particular process instance and allows the u
 
 ```html
 <adf-process-instance-comments 
-    processInstanceId="YOUR_PROCESS_INSTANCE_ID">
+    [processInstanceId]="YOUR_PROCESS_INSTANCE_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG"
+>
 </adf-process-instance-comments>
 ```
 
@@ -22,11 +24,5 @@ Displays comments associated with a particular process instance and allows the u
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| processInstanceId | `string` |  | (**required**) The numeric ID of the process instance to display comments for. |
-| readOnly | `boolean` | true | Should the comments be read-only? |
-
-### Events
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| processInstanceId | `string` |  | The numeric ID of the process instance to display comments for. |
+| readOnly | `boolean` |  | Should the comments be read-only? |

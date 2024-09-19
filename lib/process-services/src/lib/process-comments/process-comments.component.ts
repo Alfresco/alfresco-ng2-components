@@ -15,21 +15,15 @@
  * limitations under the License.
  */
 
-import { ADF_COMMENTS_SERVICE, CommentListComponent, CommentModel } from '@alfresco/adf-core';
+import { ADF_COMMENTS_SERVICE, CommentsComponent } from '@alfresco/adf-core';
 import { CommentProcessService } from './services/comment-process.service';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { Observable, Observer, Subject } from 'rxjs';
-import { share, takeUntil } from 'rxjs/operators';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-
 @Component({
     selector: 'adf-process-instance-comments',
     standalone: true,
-    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatInputModule, CommentListComponent, FormsModule],
+
+    imports: [CommonModule, CommentsComponent],
     providers: [
         {
             provide: ADF_COMMENTS_SERVICE,
@@ -37,103 +31,14 @@ import { FormsModule } from '@angular/forms';
         }
     ],
     templateUrl: './process-comments.component.html',
-    styleUrls: ['./process-comments.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-process-instance-comments' }
+    encapsulation: ViewEncapsulation.None
 })
-export class ProcessCommentsComponent implements OnChanges, OnDestroy {
+export class ProcessCommentsComponent {
     /** (**required**) The numeric ID of the process instance to display comments for. */
     @Input()
     processInstanceId: string;
 
     /** Should the comments be read-only? */
     @Input()
-    readOnly: boolean = true;
-
-    /** Emitted when an error occurs. */
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
-
-    comments: CommentModel[] = [];
-    comment$: Observable<CommentModel>;
-    message: string;
-    beingAdded: boolean = false;
-
-    private commentObserver: Observer<CommentModel>;
-    private onDestroy$ = new Subject<boolean>();
-
-    constructor(private commentProcessService: CommentProcessService) {
-        this.comment$ = new Observable<CommentModel>((observer) => (this.commentObserver = observer)).pipe(share());
-        this.comment$.pipe(takeUntil(this.onDestroy$)).subscribe((comment) => this.comments.push(comment));
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        const processInstanceId = changes['processInstanceId'];
-        if (processInstanceId) {
-            if (processInstanceId.currentValue) {
-                this.getProcessInstanceComments(processInstanceId.currentValue);
-            } else {
-                this.resetComments();
-            }
-        }
-    }
-
-    add(): void {
-        if (this.message?.trim() && !this.beingAdded) {
-            this.beingAdded = true;
-            this.commentProcessService.add(this.processInstanceId, this.message).subscribe(
-                (res: CommentModel) => {
-                    this.comments.unshift(res);
-                    this.message = '';
-                    this.beingAdded = false;
-                },
-                (err) => {
-                    this.error.emit(err);
-                    this.beingAdded = false;
-                }
-            );
-        }
-    }
-
-    clear(): void {
-        this.message = '';
-    }
-
-    isReadOnly(): boolean {
-        return this.readOnly;
-    }
-
-    onError(error: any) {
-        this.error.emit(error);
-    }
-
-    private getProcessInstanceComments(processInstanceId: string): void {
-        this.resetComments();
-        if (processInstanceId) {
-            this.commentProcessService.get(processInstanceId).subscribe(
-                (res: CommentModel[]) => {
-                    res = res.sort((comment1: CommentModel, comment2: CommentModel) => {
-                        const date1 = new Date(comment1.created);
-                        const date2 = new Date(comment2.created);
-                        return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-                    });
-                    res.forEach((comment) => {
-                        this.commentObserver.next(comment);
-                    });
-                },
-                (err) => {
-                    this.error.emit(err);
-                }
-            );
-        }
-    }
-
-    private resetComments(): void {
-        this.comments = [];
-    }
+    readOnly: boolean;
 }
