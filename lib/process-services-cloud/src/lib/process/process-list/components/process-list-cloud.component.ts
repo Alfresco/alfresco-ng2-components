@@ -42,7 +42,12 @@ import {
     DataCellEvent,
     DataRowActionEvent,
     DataTableComponent,
-    DataColumn
+    DataColumn,
+    EmptyContentComponent,
+    NoContentTemplateDirective,
+    LoadingContentTemplateDirective,
+    MainMenuDataTableTemplateDirective,
+    ColumnsSelectorComponent
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { BehaviorSubject, Subject, of } from 'rxjs';
@@ -56,19 +61,41 @@ import { ProcessListCloudPreferences } from '../models/process-cloud-preferences
 import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
 import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
 @Component({
     selector: 'adf-cloud-process-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        EmptyContentComponent,
+        NoContentTemplateDirective,
+        MatProgressSpinnerModule,
+        LoadingContentTemplateDirective,
+        MainMenuDataTableTemplateDirective,
+        ColumnsSelectorComponent,
+        DataTableComponent
+    ],
+    providers: [
+        {
+            provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
+            useClass: LocalPreferenceCloudService
+        }
+    ],
     templateUrl: './process-list-cloud.component.html',
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
+// eslint-disable-next-line @typescript-eslint/brace-style
 export class ProcessListCloudComponent
     extends DataTableSchema<ProcessListDataColumnCustomData>
     implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy
-// eslint-disable-next-line @typescript-eslint/brace-style
 {
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
