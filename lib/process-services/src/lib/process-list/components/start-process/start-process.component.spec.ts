@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, getTestBed } from '@angular/core/testing';
-import { AppConfigService, AppConfigServiceMock, FormRenderingService, LocalizedDatePipe, NoopTranslateModule } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock, FormRenderingService, NoopTranslateModule } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessService } from '../../services/process.service';
@@ -59,7 +59,6 @@ describe('StartProcessComponent', () => {
         getTestBed().configureTestingModule({
             imports: [NoopTranslateModule, NoopAnimationsModule, StartProcessInstanceComponent],
             providers: [
-                LocalizedDatePipe,
                 { provide: FormRenderingService, useClass: ProcessFormRenderingService },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]

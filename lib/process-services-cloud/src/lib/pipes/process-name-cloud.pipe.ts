@@ -23,27 +23,26 @@ import { getTime } from 'date-fns';
 export const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
 export const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
 
-@Pipe({ name: 'processNameCloud' })
+/**
+ * TODO: This pipe is not used in the HTML templates, only instantiated from code.
+ */
+@Pipe({
+    name: 'processNameCloud',
+    standalone: true
+})
 export class ProcessNameCloudPipe implements PipeTransform {
-    constructor(private localizedDatePipe: LocalizedDatePipe) {
-    }
+    constructor(private localizedDatePipe: LocalizedDatePipe) {}
 
     transform(processNameFormat: string, processInstance?: ProcessInstanceCloud): string {
         let processName = processNameFormat;
         if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = getTime(new Date());
-            processName = processName.replace(
-                DATE_TIME_IDENTIFIER_REG_EXP,
-                this.localizedDatePipe.transform(presentDateTime, 'medium')
-            );
+            processName = processName.replace(DATE_TIME_IDENTIFIER_REG_EXP, this.localizedDatePipe.transform(presentDateTime, 'medium'));
         }
 
         if (processName.match(PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
             const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
-            processName = processName.replace(
-                PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
-                selectedProcessDefinitionName
-            );
+            processName = processName.replace(PROCESS_DEFINITION_IDENTIFIER_REG_EXP, selectedProcessDefinitionName);
         }
         return processName;
     }

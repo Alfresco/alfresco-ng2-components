@@ -22,7 +22,7 @@ import { TaskFiltersCloudComponent } from './components/task-filters-cloud.compo
 import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
-import { AppListCloudModule } from './../../app/app-list-cloud.module';
+import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
 import { EditServiceTaskFilterCloudComponent } from './components/edit-task-filters/edit-service-task-filter-cloud.component';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filters/edit-task-filter-cloud.component';
@@ -40,7 +40,7 @@ import { DateRangeFilterComponent } from '../../common/date-range-filter/date-ra
         HttpClientModule,
         CommonModule,
         MaterialModule,
-        AppListCloudModule,
+        ...APP_LIST_CLOUD_DIRECTIVES,
         CoreModule,
         GroupCloudModule,
         DateRangeFilterComponent,

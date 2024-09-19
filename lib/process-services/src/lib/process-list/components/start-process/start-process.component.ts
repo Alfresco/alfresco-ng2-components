@@ -65,6 +65,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
         EmptyContentComponent,
         StartFormComponent
     ],
+    providers: [LocalizedDatePipe],
     templateUrl: './start-process.component.html',
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None

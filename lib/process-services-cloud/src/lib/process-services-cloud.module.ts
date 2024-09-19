@@ -33,9 +33,9 @@ import {
 } from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
-import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-pipe.module';
 import { ApolloModule } from 'apollo-angular';
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
+import { ProcessNameCloudPipe } from './pipes/process-name-cloud.pipe';
 
 @NgModule({
     imports: [
@@ -47,7 +47,7 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
         PeopleCloudModule,
         FormCloudModule,
         TaskFormModule,
-        ProcessServicesCloudPipeModule,
+        ProcessNameCloudPipe,
         ApolloModule,
         RichTextEditorModule
     ],
@@ -60,7 +60,7 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
         FormCloudModule,
         TaskFormModule,
         PeopleCloudModule,
-        ProcessServicesCloudPipeModule,
+        ProcessNameCloudPipe,
         RichTextEditorModule
     ]
 })
