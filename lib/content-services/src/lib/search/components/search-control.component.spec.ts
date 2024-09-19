@@ -415,13 +415,13 @@ describe('SearchControlComponent', () => {
             it('should have positive transform translation', () => {
                 userPreferencesService.setWithoutStore('textOrientation', 'ltr');
                 fixture.detectChanges();
-                expect(component.searchTextInput.subscriptAnimationState.params.transform).toBe('translateX(85%)');
+                expect(component.searchTextInput.subscriptAnimationState.params.transform).toBe('translateX(100%)');
             });
 
             it('should have negative transform translation ', () => {
                 userPreferencesService.setWithoutStore('textOrientation', 'rtl');
                 fixture.detectChanges();
-                expect(component.searchTextInput.subscriptAnimationState.params.transform).toBe('translateX(-85%)');
+                expect(component.searchTextInput.subscriptAnimationState.params.transform).toBe('translateX(-100%)');
             });
         });
     });
