@@ -21,13 +21,19 @@ import { of, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
 import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
-import { ProcessListCloudService } from '@alfresco/adf-process-services-cloud';
+import { NotificationCloudService, ProcessListCloudService } from '@alfresco/adf-process-services-cloud';
+import { ApolloModule } from 'apollo-angular';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatListModule } from '@angular/material/list';
+
+const ProcessFilterCloudServiceMock = {
+    getProcessFilters: () => of(mockProcessFilters),
+    getProcessNotificationSubscription: () => of([])
+};
 
 describe('ProcessFiltersCloudComponent', () => {
     let processFilterService: ProcessFilterCloudService;
@@ -38,11 +44,14 @@ describe('ProcessFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule, NoopTranslateModule],
+            imports: [NoopTranslateModule, NoopAnimationsModule, MatListModule],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: ProcessListCloudService, useValue: { getProcessCounter: () => of(10) } }
+                { provide: ProcessListCloudService, useValue: { getProcessCounter: () => of(10) } },
+                { provide: ProcessFilterCloudService, useValue: ProcessFilterCloudServiceMock },
+                NotificationCloudService,
+                ApolloModule
             ]
         });
         fixture = TestBed.createComponent(ProcessFiltersCloudComponent);

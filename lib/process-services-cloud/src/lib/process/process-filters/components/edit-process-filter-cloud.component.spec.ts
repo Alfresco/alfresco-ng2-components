@@ -15,37 +15,51 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SimpleChange } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { MatDialog } from '@angular/material/dialog';
+import { ADF_DATE_FORMATS, FullNamePipe, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
+import { IDENTITY_USER_SERVICE_TOKEN, NotificationCloudService, PeopleCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSelectHarness } from '@angular/material/select/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { endOfDay, format, isValid, startOfDay, subYears } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 import { of } from 'rxjs';
-import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
+import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
+import { DateRangeFilterComponent } from '../../../common/date-range-filter/date-range-filter.component';
+import { fakeEnvironmentList } from '../../../common/mock/environment.mock';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
+import { IdentityUserServiceMock } from '../../../people/mock/people-cloud.mock';
+import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
+import { ProcessCloudService } from '../../services/process-cloud.service';
+import { mockAppVersions } from '../mock/process-filters-cloud.mock';
+import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
+import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from './../../../app/mock/app-model.mock';
 import {
     EditProcessFilterCloudComponent,
     PROCESS_FILTER_ACTION_RESTORE,
     PROCESS_FILTER_ACTION_SAVE_DEFAULT
 } from './edit-process-filter-cloud.component';
-import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
-import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
-import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from './../../../app/mock/app-model.mock';
-import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
-import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
-import { ProcessCloudService } from '../../services/process-cloud.service';
-import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
-import { MatIconTestingModule } from '@angular/material/icon/testing';
-import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { mockAppVersions } from '../mock/process-filters-cloud.mock';
-import { fakeEnvironmentList } from '../../../common/mock/environment.mock';
-import { endOfDay, format, startOfDay, subYears, isValid } from 'date-fns';
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
-import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
+import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 describe('EditProcessFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -59,6 +73,7 @@ describe('EditProcessFilterCloudComponent', () => {
     let getRunningApplicationsSpy: jasmine.Spy;
     let getProcessFilterByIdSpy: jasmine.Spy;
     let alfrescoApiService: AlfrescoApiService;
+    let userPreferencesService: UserPreferencesService;
 
     const fakeFilter = new ProcessFilterCloudModel({
         name: 'FakeRunningProcess',
@@ -83,8 +98,30 @@ describe('EditProcessFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessFiltersCloudModule, ProcessServiceCloudTestingModule, MatIconTestingModule],
-            providers: [MatDialog, { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            imports: [
+                MatIconTestingModule,
+                MatDialogModule,
+                NoopTranslateModule,
+                NoopAnimationsModule,
+                MatSelectModule,
+                MatDatepickerModule,
+                MatAutocompleteModule,
+                FullNamePipe,
+                MatFormFieldModule,
+                MatInputModule,
+                ReactiveFormsModule,
+                MatChipsModule,
+                MatProgressBarModule
+            ],
+            providers: [
+                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                { provide: MAT_DATE_LOCALE, useValue: enUS },
+                { provide: DateAdapter, useClass: DateFnsAdapter },
+                { provide: NotificationCloudService, useValue: { makeGQLQuery: () => of([]) } },
+                { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
+                { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserServiceMock }
+            ],
+            declarations: [PeopleCloudComponent, DateRangeFilterComponent]
         });
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);
         component = fixture.componentInstance;
@@ -93,7 +130,9 @@ describe('EditProcessFilterCloudComponent', () => {
         appsService = TestBed.inject(AppsProcessCloudService);
         processService = TestBed.inject(ProcessCloudService);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        userPreferencesService = TestBed.inject(UserPreferencesService);
         dialog = TestBed.inject(MatDialog);
+
         spyOn(dialog, 'open').and.returnValue({
             afterClosed: () =>
                 of({
@@ -105,6 +144,7 @@ describe('EditProcessFilterCloudComponent', () => {
         getProcessFilterByIdSpy = spyOn(service, 'getFilterById').and.returnValue(of(fakeFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
+        spyOn(userPreferencesService, 'select').and.returnValue(of({ localize: 'en', formatLong: {} }));
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
