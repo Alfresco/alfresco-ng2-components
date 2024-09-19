@@ -21,12 +21,12 @@ import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './components/start-task-cloud.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GroupCloudModule } from '../../group/group-cloud.module';
 import { FormCloudModule } from '../../form/form-cloud.module';
 import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
+import { GroupCloudComponent } from '../../group/components/group-cloud.component';
 
 @NgModule({
-    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, GroupCloudModule, CoreModule, FormCloudModule, PeopleCloudComponent],
+    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, GroupCloudComponent, CoreModule, FormCloudModule, PeopleCloudComponent],
     declarations: [StartTaskCloudComponent],
     exports: [StartTaskCloudComponent]
 })

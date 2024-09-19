@@ -20,7 +20,6 @@ import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco
 import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
-import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
 import {
     LocalPreferenceCloudService,
@@ -36,6 +35,7 @@ import { ProcessNameCloudPipe } from './pipes/process-name-cloud.pipe';
 import { PeopleCloudComponent } from './people/components/people-cloud.component';
 import { RichTextEditorComponent } from './rich-text-editor';
 import { TaskFormCloudComponent } from './task/task-form/components/task-form-cloud.component';
+import { GroupCloudComponent } from './group/components/group-cloud.component';
 
 @NgModule({
     imports: [
@@ -43,7 +43,7 @@ import { TaskFormCloudComponent } from './task/task-form/components/task-form-cl
         ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
         TaskCloudModule,
-        GroupCloudModule,
+        GroupCloudComponent,
         PeopleCloudComponent,
         FormCloudModule,
         TaskFormCloudComponent,
@@ -56,7 +56,7 @@ import { TaskFormCloudComponent } from './task/task-form/components/task-form-cl
         ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
         TaskCloudModule,
-        GroupCloudModule,
+        GroupCloudComponent,
         FormCloudModule,
         TaskFormCloudComponent,
         PeopleCloudComponent,

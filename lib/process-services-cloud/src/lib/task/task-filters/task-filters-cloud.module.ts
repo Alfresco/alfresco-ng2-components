@@ -28,10 +28,10 @@ import { EditTaskFilterCloudComponent } from './components/edit-task-filters/edi
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/task-filter-dialog-cloud.component';
 import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters-cloud.component';
 import { TaskAssignmentFilterCloudComponent } from './components/task-assignment-filter/task-assignment-filter.component';
-import { GroupCloudModule } from '../../group/group-cloud.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DateRangeFilterComponent } from '../../common/date-range-filter/date-range-filter.component';
 import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
+import { GroupCloudComponent } from '../../group/components/group-cloud.component';
 
 @NgModule({
     imports: [
@@ -42,7 +42,7 @@ import { PeopleCloudComponent } from '../../people/components/people-cloud.compo
         MaterialModule,
         ...APP_LIST_CLOUD_DIRECTIVES,
         CoreModule,
-        GroupCloudModule,
+        GroupCloudComponent,
         DateRangeFilterComponent,
         PeopleCloudComponent,
         MatProgressSpinnerModule

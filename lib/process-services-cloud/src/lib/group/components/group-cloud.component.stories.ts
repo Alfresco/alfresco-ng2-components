@@ -16,7 +16,6 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { GroupCloudModule } from '../group-cloud.module';
 import { GroupCloudComponent } from './group-cloud.component';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { IdentityGroupService } from '../services/identity-group.service';
@@ -28,13 +27,10 @@ export default {
     title: 'Process Services Cloud/Group Cloud/Group Cloud',
     decorators: [
         moduleMetadata({
-            imports: [GroupCloudModule]
+            imports: [GroupCloudComponent]
         }),
         applicationConfig({
-            providers: [
-                { provide: IdentityGroupService, useClass: IdentityGroupServiceMock },
-                importProvidersFrom(ProcessServicesCloudStoryModule)
-            ]
+            providers: [{ provide: IdentityGroupService, useClass: IdentityGroupServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {
@@ -102,7 +98,7 @@ export default {
             description: 'FormControl to list of group.',
             table: {
                 type: { summary: 'FormControl' },
-                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
+                defaultValue: { summary: `new FormControl({ value: '', disabled: false })` },
                 category: 'Form Controls'
             }
         },
@@ -111,7 +107,7 @@ export default {
             description: 'FormControl to search the group.',
             table: {
                 type: { summary: 'FormControl' },
-                defaultValue: { summary: 'new FormControl({ value: \'\', disabled: false })' },
+                defaultValue: { summary: `new FormControl({ value: '', disabled: false })` },
                 category: 'Form Controls'
             }
         },

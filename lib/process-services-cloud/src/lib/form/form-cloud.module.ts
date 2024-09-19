@@ -33,7 +33,6 @@ import { GroupCloudWidgetComponent } from './components/widgets/group/group-clou
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
 import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
-import { GroupCloudModule } from '../group/group-cloud.module';
 import { PropertiesViewerWidgetComponent } from './components/widgets/properties-viewer/properties-viewer.widget';
 import { PropertiesViewerWrapperComponent } from './components/widgets/properties-viewer/properties-viewer-wrapper/properties-viewer-wrapper.component';
 import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-buttons/radio-buttons-cloud.widget';
@@ -45,6 +44,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
 import { PeopleCloudComponent } from '../people/components/people-cloud.component';
+import { GroupCloudComponent } from '../group/components/group-cloud.component';
 
 @NgModule({
     imports: [
@@ -56,7 +56,7 @@ import { PeopleCloudComponent } from '../people/components/people-cloud.componen
         CoreModule,
         ContentNodeSelectorModule,
         PeopleCloudComponent,
-        GroupCloudModule,
+        GroupCloudComponent,
         RichTextEditorComponent,
         ...TOOLBAR_DIRECTIVES,
         A11yModule,
