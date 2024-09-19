@@ -18,18 +18,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormCloudSpinnerService } from './form-cloud-spinner.service';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { FormService, FormSpinnerEvent } from '@alfresco/adf-core';
+import { FormService, FormSpinnerEvent, NoopTranslateModule } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 import { Component } from '@angular/core';
 import { FormSpinnerComponent } from '../../components/spinner/form-spinner.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { PortalModule } from '@angular/cdk/portal';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
+    standalone: true,
     selector: 'adf-cloud-overlay-test',
     template: `<div>adf-cloud-overlay-test</div>`
 })
@@ -48,17 +47,15 @@ describe('FormCloudSpinnerService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [FormSpinnerComponent, SpinnerTestComponent],
+            imports: [NoopTranslateModule, FormSpinnerComponent, SpinnerTestComponent, OverlayModule, PortalModule],
             providers: [
-                FormCloudSpinnerService,
                 {
                     provide: FormService,
                     useValue: {
                         toggleFormSpinner: new Subject()
                     }
                 }
-            ],
-            imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, TranslateModule.forRoot()]
+            ]
         });
 
         fixture = TestBed.createComponent(SpinnerTestComponent);

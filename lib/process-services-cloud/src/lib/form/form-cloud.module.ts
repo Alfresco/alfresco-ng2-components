@@ -46,7 +46,6 @@ import { RichTextEditorModule } from '../rich-text-editor';
 import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
-import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.service';
 
 @NgModule({
     imports: [
@@ -66,7 +65,8 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         AlfrescoViewerComponent,
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
-        FormStylePipe
+        FormStylePipe,
+        FormSpinnerComponent
     ],
     declarations: [
         FormCloudComponent,
@@ -81,8 +81,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         PropertiesViewerWidgetComponent,
         FilePropertiesTableCloudComponent,
         FileViewerWidgetComponent,
-        DisplayRichTextWidgetComponent,
-        FormSpinnerComponent
+        DisplayRichTextWidgetComponent
     ],
     exports: [
         FormCloudComponent,
@@ -96,7 +95,6 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         PropertiesViewerWidgetComponent,
         FileViewerWidgetComponent,
         DisplayRichTextWidgetComponent
-    ],
-    providers: [FormCloudSpinnerService]
+    ]
 })
 export class FormCloudModule {}

@@ -23,7 +23,7 @@ import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormSpinnerComponent } from '../../components/spinner/form-spinner.component';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FormCloudSpinnerService {
     private formService = inject(FormService);
     private overlay = inject(Overlay);
