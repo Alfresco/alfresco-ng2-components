@@ -29,7 +29,7 @@ import {
     OnDestroy,
     Inject
 } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
@@ -37,9 +37,33 @@ import { ComponentSelectionMode } from '../../types';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
 import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service.token';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'adf-cloud-group',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatProgressBarModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        MatChipsModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule
+    ],
     templateUrl: './group-cloud.component.html',
     styleUrls: ['./group-cloud.component.scss'],
     animations: [

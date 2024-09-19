@@ -69,7 +69,10 @@ import { FormSpinnerComponent } from './components/spinner/form-spinner.componen
         FormSpinnerComponent,
         UploadCloudWidgetComponent,
         AttachFileCloudWidgetComponent,
-        FilePropertiesTableCloudComponent
+        FilePropertiesTableCloudComponent,
+        DisplayRichTextWidgetComponent,
+        FileViewerWidgetComponent,
+        GroupCloudWidgetComponent
     ],
     declarations: [
         FormCloudComponent,
@@ -77,11 +80,8 @@ import { FormSpinnerComponent } from './components/spinner/form-spinner.componen
         FormCustomOutcomesComponent,
         RadioButtonsCloudWidgetComponent,
         PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent,
         PropertiesViewerWrapperComponent,
-        PropertiesViewerWidgetComponent,
-        FileViewerWidgetComponent,
-        DisplayRichTextWidgetComponent
+        PropertiesViewerWidgetComponent
     ],
     exports: [
         FormCloudComponent,

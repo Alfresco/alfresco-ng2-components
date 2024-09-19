@@ -16,20 +16,13 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-
-import { CoreModule } from '@alfresco/adf-core';
-import { MaterialModule } from '../material.module';
 import { GroupCloudComponent } from './components/group-cloud.component';
 import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
 import { IDENTITY_GROUP_SERVICE_TOKEN } from './services/identity-group-service.token';
 import { IdentityGroupService } from './services/identity-group.service';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
-    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, MatProgressBarModule],
-    declarations: [GroupCloudComponent, InitialGroupNamePipe],
+    imports: [GroupCloudComponent, InitialGroupNamePipe],
     providers: [{ provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }],
     exports: [GroupCloudComponent, InitialGroupNamePipe]
 })

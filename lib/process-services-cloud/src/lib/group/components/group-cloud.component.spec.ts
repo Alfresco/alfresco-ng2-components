@@ -72,7 +72,7 @@ describe('GroupCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, GroupCloudModule]
+            imports: [CoreTestingModule, GroupCloudModule, GroupCloudComponent]
         });
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;

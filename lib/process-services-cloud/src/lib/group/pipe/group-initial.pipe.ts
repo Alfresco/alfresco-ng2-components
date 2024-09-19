@@ -19,10 +19,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IdentityGroupModel } from '../models/identity-group.model';
 
 @Pipe({
-    name: 'groupNameInitial'
+    name: 'groupNameInitial',
+    standalone: true
 })
 export class InitialGroupNamePipe implements PipeTransform {
-
     transform(group: IdentityGroupModel): string {
         let result = '';
         if (group) {
@@ -32,7 +32,7 @@ export class InitialGroupNamePipe implements PipeTransform {
     }
 
     getInitialGroupName(groupName: string) {
-        groupName = (groupName ? groupName[0] : '');
+        groupName = groupName ? groupName[0] : '';
         return groupName;
     }
 }

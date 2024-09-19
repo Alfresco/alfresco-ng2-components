@@ -16,17 +16,22 @@
  */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ComponentSelectionMode } from '../../../../types';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { GroupCloudComponent } from '../../../../group/components/group-cloud.component';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'group-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, GroupCloudComponent],
     templateUrl: './group-cloud.widget.html',
     host: {
         '(click)': 'event($event)',
@@ -42,7 +47,6 @@ import { IdentityGroupModel } from '../../../../group/models/identity-group.mode
     encapsulation: ViewEncapsulation.None
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-
     private onDestroy$ = new Subject<boolean>();
 
     typeId = 'GroupCloudWidgetComponent';
@@ -66,17 +70,16 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.validate = this.field.readOnly ? false : true;
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        this.search =  new UntypedFormControl({value: '', disabled: this.field.readOnly}, []),
-
-        this.search.statusChanges
-            .pipe(
-                filter((value: string) => value === 'INVALID'),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(() => {
-                this.field.markAsInvalid();
-                this.field.form.markAsInvalid();
-            });
+        (this.search = new UntypedFormControl({ value: '', disabled: this.field.readOnly }, [])),
+            this.search.statusChanges
+                .pipe(
+                    filter((value: string) => value === 'INVALID'),
+                    takeUntil(this.onDestroy$)
+                )
+                .subscribe(() => {
+                    this.field.markAsInvalid();
+                    this.field.form.markAsInvalid();
+                });
 
         this.search.statusChanges
             .pipe(
