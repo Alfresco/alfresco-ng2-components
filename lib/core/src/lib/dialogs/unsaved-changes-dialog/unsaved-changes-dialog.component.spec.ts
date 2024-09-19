@@ -16,39 +16,61 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreTestingModule, UnsavedChangesDialogComponent } from '@alfresco/adf-core';
+import { AppConfigValues, CoreTestingModule, UnsavedChangesDialogComponent, UserPreferencesService } from '@alfresco/adf-core';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { MatDialogClose } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
+import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
 
 describe('UnsavedChangesDialog', () => {
     let fixture: ComponentFixture<UnsavedChangesDialogComponent>;
+    let userPreferencesService: UserPreferencesService;
+    let savePreferenceCheckbox: DebugElement;
 
-    beforeEach(() => {
+    const setupBeforeEach = (unsavedChangesDialogData?: UnsavedChangesDialogData) => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule],
+            providers: [
+                {
+                    provide: MAT_DIALOG_DATA,
+                    useValue: unsavedChangesDialogData ?? {}
+                }
+            ]
         });
+
+        userPreferencesService = TestBed.inject(UserPreferencesService);
         fixture = TestBed.createComponent(UnsavedChangesDialogComponent);
         fixture.detectChanges();
-    });
+        savePreferenceCheckbox = fixture.debugElement.query(By.css('[data-automation-id="adf-unsaved-changes-dialog-content-checkbox"]'));
+    };
 
-    describe('Close icon button', () => {
-        let closeIconButton: DebugElement;
+    const getElements = (): { header: HTMLElement; content: HTMLElement; discardChangesButton: HTMLElement } => {
+        const header = fixture.nativeElement.querySelector('.adf-unsaved-changes-dialog-header');
+        const content = fixture.nativeElement.querySelector('.adf-unsaved-changes-dialog-content');
+        const discardChangesButton = fixture.nativeElement.querySelector('.adf-unsaved-changes-dialog-actions-discard-changes-button');
+        return { header, content, discardChangesButton };
+    };
 
+    describe('when data is not present in dialog', () => {
         beforeEach(() => {
-            closeIconButton = fixture.debugElement.query(By.css('[data-automation-id="adf-unsaved-changes-dialog-close-button"]'));
+            setupBeforeEach();
         });
 
-        it('should have assigned dialog close button with false as result', () => {
-            expect(closeIconButton.injector.get(MatDialogClose).dialogResult).toBeFalse();
+        it('should display correct text if there is no data object', () => {
+            const { header, content, discardChangesButton } = getElements();
+            expect(header.textContent).toContain('CORE.DIALOG.UNSAVED_CHANGES.TITLE');
+            expect(content.textContent).toContain('CORE.DIALOG.UNSAVED_CHANGES.DESCRIPTION');
+            expect(discardChangesButton.textContent).toContain('CORE.DIALOG.UNSAVED_CHANGES.DISCARD_CHANGES_BUTTON');
         });
 
-        it('should have displayed correct icon', () => {
-            expect(closeIconButton.nativeElement.textContent).toBe('close');
+        it('should have assigned dialog close button with true as result', () => {
+            expect(
+                fixture.debugElement
+                    .query(By.css('[data-automation-id="adf-unsaved-changes-dialog-discard-changes-button"]'))
+                    .injector.get(MatDialogClose).dialogResult
+            ).toBeTrue();
         });
-    });
 
-    describe('Cancel button', () => {
         it('should have assigned dialog close button with false as result', () => {
             expect(
                 fixture.debugElement.query(By.css('[data-automation-id="adf-unsaved-changes-dialog-cancel-button"]')).injector.get(MatDialogClose)
@@ -57,13 +79,38 @@ describe('UnsavedChangesDialog', () => {
         });
     });
 
-    describe('Discard changes button', () => {
-        it('should have assigned dialog close button with true as result', () => {
-            expect(
-                fixture.debugElement
-                    .query(By.css('[data-automation-id="adf-unsaved-changes-dialog-discard-changes-button"]'))
-                    .injector.get(MatDialogClose).dialogResult
-            ).toBeTrue();
+    describe('when data is present in dialog', () => {
+        let userPreferencesServiceSetSpy: jasmine.Spy<(property: string, value: any) => void>;
+
+        beforeEach(() => {
+            setupBeforeEach({
+                headerText: 'headerText',
+                descriptionText: 'descriptionText',
+                confirmButtonText: 'confirmButtonText',
+                checkboxText: 'checkboxText'
+            });
+            userPreferencesServiceSetSpy = spyOn(userPreferencesService, 'set');
+            fixture.detectChanges();
+        });
+
+        it('should display correct text if there is data object', () => {
+            const { header, content, discardChangesButton } = getElements();
+
+            expect(header.textContent).toContain('headerText');
+            expect(content.textContent).toContain('descriptionText checkboxText');
+            expect(discardChangesButton.textContent).toContain('confirmButtonText');
+        });
+
+        it('should call UserPreferences Service and update it to true when checkbox is checked', () => {
+            const event = { checked: true };
+            savePreferenceCheckbox.triggerEventHandler('change', event);
+            expect(userPreferencesServiceSetSpy).toHaveBeenCalledWith(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, 'true');
+        });
+
+        it('should call UserPreferences Service and update it to false when checkbox is unchecked', () => {
+            const event = { checked: false };
+            savePreferenceCheckbox.triggerEventHandler('change', event);
+            expect(userPreferencesServiceSetSpy).toHaveBeenCalledWith(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, 'false');
         });
     });
 });

@@ -32,6 +32,8 @@ describe('AvatarComponent', () => {
         fixture.detectChanges();
     });
 
+    const getAvatarImageElement = (): HTMLImageElement => fixture.nativeElement.querySelector('.adf-avatar__image');
+
     it('should create', () => {
         expect(component).toBeTruthy();
     });
@@ -46,8 +48,7 @@ describe('AvatarComponent', () => {
     it('should display image when src is provided', () => {
         component.src = 'path/to/image.jpg';
         fixture.detectChanges();
-        const imgElement: HTMLImageElement = fixture.nativeElement.querySelector('.adf-avatar__image');
-        expect(imgElement.src).toContain(component.src);
+        expect(getAvatarImageElement().src).toContain(component.src);
     });
 
     it('should use default initials when not provided', () => {
@@ -67,7 +68,7 @@ describe('AvatarComponent', () => {
         component.size = '48px';
         fixture.detectChanges();
 
-        const style = getComputedStyle(fixture.nativeElement.querySelector('.adf-avatar__image'));
+        const style = getComputedStyle(getAvatarImageElement());
         expect(style.width).toBe('48px');
         expect(style.height).toBe('48px');
     });
@@ -76,14 +77,22 @@ describe('AvatarComponent', () => {
         component.cursor = 'pointer';
         fixture.detectChanges();
 
-        const style = getComputedStyle(fixture.nativeElement.querySelector('.adf-avatar__image'));
+        const style = getComputedStyle(getAvatarImageElement());
         expect(style.cursor).toBe('pointer');
     });
 
     it('should display tooltip when provided', () => {
         component.tooltip = 'User Tooltip';
         fixture.detectChanges();
-        const avatarElement: HTMLElement = fixture.nativeElement.querySelector('.adf-avatar__image');
-        expect(avatarElement.getAttribute('title')).toBe('User Tooltip');
+        expect(getAvatarImageElement().getAttribute('title')).toBe('User Tooltip');
+    });
+
+    it('should call onImageError when the image fails to load', () => {
+        component.src = 'path/to/image.jpg';
+        fixture.detectChanges();
+
+        getAvatarImageElement().dispatchEvent(new Event('error'));
+
+        expect(component.src).toEqual('');
     });
 });

@@ -701,5 +701,13 @@
       "JOIN_CANCELED": "Canceled the request to join the library",
       "JOIN_REQUESTED": "Request sent to join this library"
     }
+  },
+  "KNOWLEDGE_RETRIEVAL": {
+    "SEARCH": {
+      "WARNINGS": {
+        "TOO_MANY_FILES_SELECTED": "Please select no more than {{ maxFiles }} files.",
+        "FOLDER_SELECTED": "Folders are not compatible with AI Agents."
+      }
+    }
   }
 }

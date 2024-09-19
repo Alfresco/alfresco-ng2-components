@@ -20,7 +20,8 @@ import { CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
 
 /**
  * Guard responsible for protecting leaving page with unsaved changes.
@@ -30,6 +31,7 @@ import { tap } from 'rxjs/operators';
 })
 export class UnsavedChangesGuard implements CanDeactivate<any> {
     unsaved = false;
+    data: UnsavedChangesDialogData;
 
     constructor(private dialog: MatDialog) {}
 
@@ -39,9 +41,17 @@ export class UnsavedChangesGuard implements CanDeactivate<any> {
      * @returns boolean | Observable<boolean> true when there is no unsaved changes or changes can be discarded, false otherwise.
      */
     canDeactivate(): boolean | Observable<boolean> {
-        return this.unsaved ?
-            this.dialog.open<UnsavedChangesDialogComponent, undefined, boolean>(UnsavedChangesDialogComponent, {
-                maxWidth: 346
-            }).afterClosed().pipe(tap((confirmed) => this.unsaved = !confirmed)) : true;
+        return this.unsaved
+            ? this.dialog
+                  .open<UnsavedChangesDialogComponent>(UnsavedChangesDialogComponent, {
+                      maxWidth: 346,
+                      data: this.data
+                  })
+                  .afterClosed()
+                  .pipe(
+                      tap((confirmed) => (this.unsaved = !confirmed)),
+                      map((confirmed) => !!confirmed)
+                  )
+            : true;
     }
 }

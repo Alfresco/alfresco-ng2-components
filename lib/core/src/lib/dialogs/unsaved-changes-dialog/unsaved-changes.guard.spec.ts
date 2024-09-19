@@ -91,5 +91,15 @@ describe('UnsavedChangesGuard', () => {
             });
             afterClosed$.next(true);
         });
+
+        it('should return false if afterClosed subject value was undefined', (done) => {
+            guard.unsaved = true;
+
+            (guard.canDeactivate() as Observable<boolean>).subscribe((result) => {
+                expect(result).toBeFalse();
+                done();
+            });
+            afterClosed$.next(undefined);
+        });
     });
 });

@@ -86,8 +86,9 @@
         --adf-header-icon-button-hover-color: $adf-ref-header-icon-color,
         --adf-header-icon-button-pressed-color: $adf-ref-header-icon-color,
         --adf-header-icon-button-disabled-color: $adf-ref-header-icon-color,
-        --adf-danger-button-background: $adf-danger-button-background,
+        --adf-error-color: $adf-error-color,
         --adf-secondary-button-background: $adf-secondary-button-background,
+        --adf-secondary-modal-text-color: $adf-secondary-modal-text-color,
 
         --adf-display-external-property-widget-preview-selection-color: mat.get-color-from-palette($foreground, secondary-text)
     );
