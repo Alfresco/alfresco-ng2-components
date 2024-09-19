@@ -29,7 +29,7 @@ import {
     inject
 } from '@angular/core';
 import { Observable, of, forkJoin, Subject, Subscription } from 'rxjs';
-import { switchMap, takeUntil, map, filter } from 'rxjs/operators';
+import { switchMap, takeUntil, map, filter, find } from 'rxjs/operators';
 import {
     FormBaseComponent,
     FormFieldModel,
@@ -54,8 +54,8 @@ import { v4 as uuidGeneration } from 'uuid';
 import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
 import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.service';
 import { DisplayModeService } from '../services/display-mode.service';
-import { StartProcessCloudService } from '@alfresco/adf-process-services-cloud';
 import { ProcessWithFormPayloadCloud } from '../../process/start-process/models/process-with-form-payload-cloud.model';
+import { StartProcessCloudService } from '../../process/start-process/services/start-process-cloud.service';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -382,26 +382,27 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         } else {
             this.startProcessService
                 .getProcessDefinitions(this.appName)
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe((processDefs) => {
-                    const process = processDefs.find((processDef) => processDef.formKey === this.form.id);
-                    if (process) {
-                        this.startProcessService
-                            .startProcessWithForm(
-                                this.appName,
-                                this.formId,
-                                1,
-                                new ProcessWithFormPayloadCloud({
-                                    processDefinitionKey: process.id,
-                                    processName: process.name,
-                                    variables: this.form.values,
-                                    values: this.form.values,
-                                    outcome
-                                })
-                            )
-                            .pipe(takeUntil(this.onDestroy$))
-                            .subscribe(() => this.onTaskCompleted(this.form));
-                    }
+                .pipe(
+                    map((processDefs) => processDefs.find((processDef) => processDef.formKey === this.form.id)),
+                    find((process) => !!process),
+                    switchMap((process) =>
+                        this.startProcessService.startProcessWithForm(
+                            this.appName,
+                            this.formId,
+                            1,
+                            new ProcessWithFormPayloadCloud({
+                                processDefinitionKey: process.id,
+                                processName: process.name,
+                                variables: this.form.values,
+                                values: this.form.values,
+                                outcome
+                            })
+                        )
+                    ),
+                    takeUntil(this.onDestroy$)
+                )
+                .subscribe(() => {
+                    this.onTaskCompleted(this.form);
                 });
         }
     }
