@@ -20,6 +20,7 @@ import { BaseApi } from '../../hxi-connector-api/api/base.api';
 
 /**
  * Agents Api.
+ * In order to use this api, you need to have the HX Insights Connector (additional ACS module) installed.
  */
 export class AgentsApi extends BaseApi {
     /**

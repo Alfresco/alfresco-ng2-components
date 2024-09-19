@@ -12,7 +12,7 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
--   [v6.9.1](#v691)
+-   [v7.0.0-alpha.3](#v700-alpha3)
 -   [v6.8.0](#v680)
 -   [v6.7.0](#v670)
 -   [v6.4.0](#v640)
@@ -47,14 +47,14 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
-## v6.9.1
+## v7.0.0-alpha.3
 
-<!--691 start-->
+<!--7.0.0-alpha.3 start-->
 
 -   [AgentService](content-services/services/agent.service.md)
 -   [SearchAiService](content-services/services/search-ai.service.md)
 
-<!--691 end-->
+<!--7.0.0-alpha.3 end-->
 
 
 ## v6.8.0

@@ -59,7 +59,7 @@ export class UnsavedChangesDialogComponent implements OnInit {
     }
 
     /**
-     * Sets 'unsaved_ai_changes__modal_visible' checked state (true or false string) as new item in local storage.
+     * Sets 'unsaved_changes__modal_visible' checked state (true or false string) as new item in local storage.
      *
      * @param savePreferences - MatCheckboxChange object with information about checkbox state.
      */

@@ -1,6 +1,6 @@
 ---
 Title: Search Ai service
-Added: v6.9.1
+Added: v7.0.0-alpha.3
 Status: Active
 Last reviewed: 2024-07-12
 ---
@@ -8,6 +8,8 @@ Last reviewed: 2024-07-12
 # [Search Ai service](../../../lib/content-services/src/lib/search-ai/services/search-ai.service.ts "Defined in search-ai.service.ts")
 
 Manages search AI in Content Services.
+
+<b>In order to use this service, you need to have the HX Insights Connector (additional ACS module) installed.</b>
 
 ## Class members
 
