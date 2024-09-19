@@ -37,7 +37,7 @@ export class NotificationCloudService extends BaseCloudService {
     }
 
     private get webSocketHost() {
-        return 'hxps-rc.studio.dev.experience.hyland.com'; // Your target environment
+        return 'hxps-alpha.studio.dev.experience.hyland.com'; // Your target environment
     }
 
     private get protocol() {
