@@ -84,7 +84,7 @@ $panel-properties-height: 56px !default;
         }
 
         &-tags {
-            #{$mat-chip} {
+            .adf-dynamic-chip-list-chip {
                 padding: 0;
             }
         }
