@@ -150,7 +150,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, FormCloudModule, ContentModule.forRoot()],
+            imports: [ProcessServiceCloudTestingModule, AttachFileCloudWidgetComponent, FormCloudModule, ContentModule.forRoot()],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         notificationService = TestBed.inject(NotificationService);

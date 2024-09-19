@@ -66,20 +66,20 @@ import { FormSpinnerComponent } from './components/spinner/form-spinner.componen
         ...CONTENT_UPLOAD_DIRECTIVES,
         ...CONTENT_METADATA_DIRECTIVES,
         FormStylePipe,
-        FormSpinnerComponent
+        FormSpinnerComponent,
+        UploadCloudWidgetComponent,
+        AttachFileCloudWidgetComponent,
+        FilePropertiesTableCloudComponent
     ],
     declarations: [
         FormCloudComponent,
-        UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
         RadioButtonsCloudWidgetComponent,
-        AttachFileCloudWidgetComponent,
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent,
         PropertiesViewerWrapperComponent,
         PropertiesViewerWidgetComponent,
-        FilePropertiesTableCloudComponent,
         FileViewerWidgetComponent,
         DisplayRichTextWidgetComponent
     ],
@@ -94,7 +94,8 @@ import { FormSpinnerComponent } from './components/spinner/form-spinner.componen
         GroupCloudWidgetComponent,
         PropertiesViewerWidgetComponent,
         FileViewerWidgetComponent,
-        DisplayRichTextWidgetComponent
+        DisplayRichTextWidgetComponent,
+        FilePropertiesTableCloudComponent
     ]
 })
 export class FormCloudModule {}
