@@ -17,7 +17,7 @@
 
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormModel, FormService, FormFieldModel, NoopTranslateModule } from '@alfresco/adf-core';
+import { FormModel, FormService, FormFieldModel, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('FileViewerWidgetComponent', () => {
@@ -43,7 +43,7 @@ describe('FileViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, FileViewerWidgetComponent],
+            imports: [NoopTranslateModule, NoopAuthModule, FileViewerWidgetComponent],
             providers: [{ provide: FormService, useValue: formServiceStub }],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });

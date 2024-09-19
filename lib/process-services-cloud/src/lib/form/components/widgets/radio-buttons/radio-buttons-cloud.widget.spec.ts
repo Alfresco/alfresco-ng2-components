@@ -44,7 +44,7 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule, RadioButtonsCloudWidgetComponent]
         });
         formCloudService = TestBed.inject(FormCloudService);
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);

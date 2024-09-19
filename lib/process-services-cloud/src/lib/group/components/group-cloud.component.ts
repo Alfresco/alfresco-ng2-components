@@ -47,6 +47,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { InitialGroupNamePipe } from '../pipe/group-initial.pipe';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -62,7 +63,8 @@ import { MatButtonModule } from '@angular/material/button';
         MatChipsModule,
         MatInputModule,
         ReactiveFormsModule,
-        MatButtonModule
+        MatButtonModule,
+        InitialGroupNamePipe
     ],
     templateUrl: './group-cloud.component.html',
     styleUrls: ['./group-cloud.component.scss'],

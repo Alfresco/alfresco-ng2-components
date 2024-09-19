@@ -23,7 +23,6 @@ import { MaterialModule } from '../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_LIST_CLOUD_DIRECTIVES } from './../../app/app-list-cloud.module';
-import { PeopleCloudModule } from '../../people/people-cloud.module';
 import { EditServiceTaskFilterCloudComponent } from './components/edit-task-filters/edit-service-task-filter-cloud.component';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filters/edit-task-filter-cloud.component';
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/task-filter-dialog-cloud.component';
@@ -32,6 +31,7 @@ import { TaskAssignmentFilterCloudComponent } from './components/task-assignment
 import { GroupCloudModule } from '../../group/group-cloud.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DateRangeFilterComponent } from '../../common/date-range-filter/date-range-filter.component';
+import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
 
 @NgModule({
     imports: [
@@ -44,7 +44,7 @@ import { DateRangeFilterComponent } from '../../common/date-range-filter/date-ra
         CoreModule,
         GroupCloudModule,
         DateRangeFilterComponent,
-        PeopleCloudModule,
+        PeopleCloudComponent,
         MatProgressSpinnerModule
     ],
     declarations: [

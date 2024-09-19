@@ -17,17 +17,12 @@
 
 import { NgModule } from '@angular/core';
 import { PeopleCloudComponent } from './components/people-cloud.component';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material.module';
-import { CoreModule, FullNamePipe, InitialUsernamePipe } from '@alfresco/adf-core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IdentityUserService } from './services/identity-user.service';
 import { IDENTITY_USER_SERVICE_TOKEN } from './services/identity-user-service.token';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
+/** @deprecated Use `PeopleCloudComponent` instead */
 @NgModule({
-    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, FullNamePipe, InitialUsernamePipe, MatProgressBarModule],
-    declarations: [PeopleCloudComponent],
+    imports: [PeopleCloudComponent],
     exports: [PeopleCloudComponent],
     providers: [{ provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }]
 })

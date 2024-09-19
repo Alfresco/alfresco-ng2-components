@@ -16,18 +16,23 @@
  */
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ComponentSelectionMode } from '../../../../types';
 import { IdentityUserModel } from '../../../../people/models/identity-user.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'people-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, PeopleCloudComponent],
     templateUrl: './people-cloud.widget.html',
     host: {
         '(click)': 'event($event)',
@@ -43,7 +48,6 @@ import { IdentityUserService } from '../../../../people/services/identity-user.s
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-
     private onDestroy$ = new Subject<boolean>();
 
     typeId = 'PeopleCloudWidgetComponent';
@@ -70,7 +74,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.validate = this.field.readOnly ? false : true;
         }
 
-        this.search = new UntypedFormControl({value: '', disabled: this.field.readOnly}, []);
+        this.search = new UntypedFormControl({ value: '', disabled: this.field.readOnly }, []);
 
         this.search.statusChanges
             .pipe(
@@ -94,7 +98,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
 
         if (this.field.selectLoggedUser && !this.field.value) {
             const userInfo = this.identityUserService.getCurrentUserInfo();
-            this.preSelectUsers = [ userInfo ];
+            this.preSelectUsers = [userInfo];
             this.onChangedUser(this.preSelectUsers);
         }
     }

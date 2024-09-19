@@ -32,9 +32,7 @@ import {
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
-
 import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
-import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
 import { PropertiesViewerWidgetComponent } from './components/widgets/properties-viewer/properties-viewer.widget';
 import { PropertiesViewerWrapperComponent } from './components/widgets/properties-viewer/properties-viewer-wrapper/properties-viewer-wrapper.component';
@@ -46,6 +44,7 @@ import { RichTextEditorModule } from '../rich-text-editor';
 import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
+import { PeopleCloudComponent } from '../people/components/people-cloud.component';
 
 @NgModule({
     imports: [
@@ -56,7 +55,7 @@ import { FormSpinnerComponent } from './components/spinner/form-spinner.componen
         ReactiveFormsModule,
         CoreModule,
         ContentNodeSelectorModule,
-        PeopleCloudModule,
+        PeopleCloudComponent,
         GroupCloudModule,
         RichTextEditorModule,
         ...TOOLBAR_DIRECTIVES,
@@ -72,16 +71,14 @@ import { FormSpinnerComponent } from './components/spinner/form-spinner.componen
         FilePropertiesTableCloudComponent,
         DisplayRichTextWidgetComponent,
         FileViewerWidgetComponent,
-        GroupCloudWidgetComponent
-    ],
-    declarations: [
-        FormCloudComponent,
-        FormDefinitionSelectorCloudComponent,
+        GroupCloudWidgetComponent,
+        PeopleCloudWidgetComponent,
         FormCustomOutcomesComponent,
         RadioButtonsCloudWidgetComponent,
-        PeopleCloudWidgetComponent,
+        FormDefinitionSelectorCloudComponent,
         PropertiesViewerWrapperComponent,
-        PropertiesViewerWidgetComponent
+        PropertiesViewerWidgetComponent,
+        FormCloudComponent
     ],
     exports: [
         FormCloudComponent,

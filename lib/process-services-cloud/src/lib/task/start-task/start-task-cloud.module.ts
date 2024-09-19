@@ -23,23 +23,11 @@ import { StartTaskCloudComponent } from './components/start-task-cloud.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupCloudModule } from '../../group/group-cloud.module';
 import { FormCloudModule } from '../../form/form-cloud.module';
-import { PeopleCloudModule } from '../../people/people-cloud.module';
+import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        GroupCloudModule,
-        CoreModule,
-        FormCloudModule,
-        PeopleCloudModule
-    ],
+    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, GroupCloudModule, CoreModule, FormCloudModule, PeopleCloudComponent],
     declarations: [StartTaskCloudComponent],
-    exports: [
-        StartTaskCloudComponent
-    ]
+    exports: [StartTaskCloudComponent]
 })
-export class StartTaskCloudModule {
-}
+export class StartTaskCloudModule {}

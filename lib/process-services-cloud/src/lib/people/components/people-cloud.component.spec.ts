@@ -83,7 +83,7 @@ describe('PeopleCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule]
+            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule, PeopleCloudComponent]
         });
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;

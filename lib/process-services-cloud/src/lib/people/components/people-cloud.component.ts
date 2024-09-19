@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import {
     Component,
     OnInit,
@@ -33,16 +33,37 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, takeUntil } from 'rxjs/operators';
-import { FullNamePipe } from '@alfresco/adf-core';
+import { FullNamePipe, InitialUsernamePipe } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
 import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
 import { MatFormFieldAppearance, SubscriptSizing } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { IdentityUserService } from '../services/identity-user.service';
 
 @Component({
     selector: 'adf-cloud-people',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatIconModule,
+        MatChipsModule,
+        MatInputModule,
+        FullNamePipe,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        InitialUsernamePipe,
+        MatProgressBarModule
+    ],
     templateUrl: './people-cloud.component.html',
     styleUrls: ['./people-cloud.component.scss'],
     animations: [
@@ -51,7 +72,7 @@ import { MatFormFieldAppearance, SubscriptSizing } from '@angular/material/form-
             transition('void => enter', [style({ opacity: 0, transform: 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
         ])
     ],
-    providers: [FullNamePipe],
+    providers: [FullNamePipe, { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }],
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {

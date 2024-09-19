@@ -18,14 +18,19 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, FormFieldOption, ErrorMessageModel } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, FormFieldOption, ErrorMessageModel, ErrorWidgetComponent } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'radio-buttons-cloud-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, ErrorWidgetComponent, MatRadioModule, FormsModule],
     templateUrl: './radio-buttons-cloud.widget.html',
     styleUrls: ['./radio-buttons-cloud.widget.scss'],
     host: {
