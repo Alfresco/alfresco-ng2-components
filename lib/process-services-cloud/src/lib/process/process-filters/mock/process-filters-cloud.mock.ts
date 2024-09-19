@@ -186,3 +186,25 @@ const mockAppVersion2: ApplicationVersionModel = {
 };
 
 export const mockAppVersions = [mockAppVersion1, mockAppVersion2];
+
+export const processNotifications = [
+    {
+        eventType: 'PROCESS_CREATED',
+        entity: {
+            appVersion: '1',
+            id: 'bccc1217-7036-11ef-86f2-bae4749e773e',
+            processDefinitionId: 'Process_XmWTFMqf:1:1b30709b-6ff3-11ef-86f2-bae4749e773e',
+            processDefinitionKey: 'Process_XmWTFMqf',
+            initiator: 'hruser',
+            status: 'CREATED',
+            processDefinitionVersion: 1,
+            processDefinitionName: 'processchild'
+        }
+    }
+];
+
+export const processCloudEngineEventsMock = {
+    data: {
+        engineEvents: processNotifications
+    }
+};

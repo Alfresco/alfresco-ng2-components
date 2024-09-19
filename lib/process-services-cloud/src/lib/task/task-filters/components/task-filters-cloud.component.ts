@@ -52,7 +52,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     filters: TaskFilterCloudModel[] = [];
     currentFilter: TaskFilterCloudModel;
     enableNotifications: boolean;
-    currentFiltersValues = {};
+    currentFiltersValues: { [key: string]: number } = {};
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
     private readonly translationService = inject(TranslationService);

@@ -9,15 +9,25 @@
         [class.adf-active]="currentFilter === filter"
     >
         <div class="adf-process-filters__entry">
-            <adf-icon
-                data-automation-id="adf-filter-icon"
-                *ngIf="showIcons"
-                [value]="filter.icon">
-            </adf-icon>
+            <div>
+                <adf-icon
+                    data-automation-id="adf-filter-icon"
+                    *ngIf="showIcons"
+                    [value]="filter.icon">
+                </adf-icon>
+                <span
+                    data-automation-id="adf-filter-label"
+                    class="adf-filter-action-button__label">
+                    {{ filter.name | translate }}
+                </span>
+            </div>
             <span
-                data-automation-id="adf-filter-label"
-                class="adf-filter-action-button__label">
-                {{ filter.name | translate }}
+                *ngIf="counters$[filter.key]"
+                [attr.data-automation-id]="filter.key + '_filter-counter'"
+                class="adf-process-filters__entry-counter"
+                [class.adf-active]="isFilterUpdated(filter.key)"
+               >
+                {{ counters$[filter.key] | async }}
             </span>
         </div>
     </button>

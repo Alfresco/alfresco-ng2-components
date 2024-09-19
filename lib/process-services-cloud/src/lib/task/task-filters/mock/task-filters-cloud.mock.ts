@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskDetailsCloudModel } from '@alfresco/adf-process-services-cloud';
+import { TaskDetailsCloudModel } from '../../../task/start-task/models/task-details-cloud.model';
 import { assignedTaskDetailsCloudMock } from '../../task-header/mocks/task-details-cloud.mock';
 import { TaskFilterCloudModel, ServiceTaskFilterCloudModel, AssignmentType, TaskStatusFilter } from '../models/filter-cloud.model';
 

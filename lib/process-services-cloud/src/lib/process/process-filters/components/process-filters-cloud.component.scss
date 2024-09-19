@@ -6,12 +6,24 @@
         color: var(--adf-theme-foreground-text-color-054);
         display: flex;
         align-items: center;
+        justify-content: space-between;
         flex: 1;
         height: 100%;
         gap: var(--adf-theme-spacing);
 
         &:hover {
             color: var(--theme-primary-color);
+        }
+
+        &-counter {
+            padding: 0 5px;
+            border-radius: 15px;
+
+            &.adf-active {
+                background-color: var(--theme-accent-color);
+                color: var(--theme-accent-color-default-contrast);
+                font-size: smaller;
+            }
         }
     }
 
