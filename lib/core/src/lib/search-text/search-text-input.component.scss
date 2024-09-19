@@ -15,6 +15,10 @@
     }
 
     .adf {
+        &-search-button-inactive {
+            margin-left: -48px;
+        }
+
         &-search-fixed-text {
             line-height: normal;
         }

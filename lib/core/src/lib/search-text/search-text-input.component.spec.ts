@@ -210,7 +210,7 @@ describe('SearchTextInputComponent', () => {
             userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
             component.subscriptAnimationState.value = 'active';
             clickSearchButton();
-            const expectedValue = isLtr ? 'translateX(85%)' : 'translateX(-85%)';
+            const expectedValue = isLtr ? 'translateX(100%)' : 'translateX(-100%)';
             expect(component.subscriptAnimationState.params).toEqual({ transform: expectedValue });
             discardPeriodicTasks();
         }
@@ -221,6 +221,13 @@ describe('SearchTextInputComponent', () => {
 
         it('should have negative transform translateX set when inactive and direction is rtl', fakeAsync(() => {
             testTransformValue(false);
+        }));
+
+        it('should have an inactive class when input is collapsed', fakeAsync(() => {
+            component.subscriptAnimationState.value = 'inactive';
+            fixture.detectChanges();
+            expect(component.subscriptAnimationState.value).toBe('inactive');
+            expect(element.querySelector('.adf-search-button-inactive')).toBeTruthy();
         }));
 
         it('should set browser autocomplete to on when configured', async () => {
