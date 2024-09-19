@@ -22,7 +22,6 @@ import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
-import { TaskFormModule } from './task/task-form/task-form.module';
 import {
     LocalPreferenceCloudService,
     PreferenceCloudServiceInterface,
@@ -36,6 +35,7 @@ import { ApolloModule } from 'apollo-angular';
 import { ProcessNameCloudPipe } from './pipes/process-name-cloud.pipe';
 import { PeopleCloudComponent } from './people/components/people-cloud.component';
 import { RichTextEditorComponent } from './rich-text-editor';
+import { TaskFormCloudComponent } from './task/task-form/components/task-form-cloud.component';
 
 @NgModule({
     imports: [
@@ -46,7 +46,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
         GroupCloudModule,
         PeopleCloudComponent,
         FormCloudModule,
-        TaskFormModule,
+        TaskFormCloudComponent,
         ProcessNameCloudPipe,
         ApolloModule,
         RichTextEditorComponent
@@ -58,7 +58,7 @@ import { RichTextEditorComponent } from './rich-text-editor';
         TaskCloudModule,
         GroupCloudModule,
         FormCloudModule,
-        TaskFormModule,
+        TaskFormCloudComponent,
         PeopleCloudComponent,
         ProcessNameCloudPipe,
         RichTextEditorComponent

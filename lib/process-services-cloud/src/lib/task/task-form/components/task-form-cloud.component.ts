@@ -18,7 +18,15 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { FormRenderingService, FormModel, ContentLinkModel, FormOutcomeEvent, FormFieldValidator, FORM_FIELD_VALIDATORS } from '@alfresco/adf-core';
+import {
+    FormRenderingService,
+    FormModel,
+    ContentLinkModel,
+    FormOutcomeEvent,
+    FormFieldValidator,
+    FORM_FIELD_VALIDATORS,
+    EmptyContentComponent
+} from '@alfresco/adf-core';
 import { AttachFileCloudWidgetComponent } from '../../../form/components/widgets/attach-file/attach-file-cloud-widget.component';
 import { DropdownCloudWidgetComponent } from '../../../form/components/widgets/dropdown/dropdown-cloud.widget';
 import { DateCloudWidgetComponent } from '../../../form/components/widgets/date/date-cloud.widget';
@@ -26,9 +34,32 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ClaimTaskCloudDirective } from '../../directives/claim-task-cloud.directive';
+import { UnClaimTaskCloudDirective } from '../../directives/unclaim-task-cloud.directive';
+import { CompleteTaskDirective } from '../../directives/complete-task.directive';
+import { MatCardModule } from '@angular/material/card';
+import { FormCustomOutcomesComponent } from '../../../form/components/form-cloud-custom-outcomes.component';
 
 @Component({
     selector: 'adf-cloud-task-form',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        ClaimTaskCloudDirective,
+        UnClaimTaskCloudDirective,
+        CompleteTaskDirective,
+        EmptyContentComponent,
+        MatCardModule,
+        FormCustomOutcomesComponent,
+        FormCloudComponent
+    ],
     templateUrl: './task-form-cloud.component.html',
     styleUrls: ['./task-form-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
