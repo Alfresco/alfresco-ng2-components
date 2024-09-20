@@ -37,11 +37,11 @@ export class NotificationCloudService extends BaseCloudService {
     }
 
     private get webSocketHost() {
-        return 'hxps-alpha.studio.dev.experience.hyland.com'; // Your target environment
+        return this.contextRoot.split('://')[1];
     }
 
     private get protocol() {
-        return 'wss';
+        return this.contextRoot.split('://')[0] === 'https' ? 'wss' : 'ws';
     }
 
     initNotificationsForApp(appName: string) {

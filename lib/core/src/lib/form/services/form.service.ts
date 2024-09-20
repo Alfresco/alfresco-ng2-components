@@ -30,6 +30,7 @@ import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
 import { FormValidationService } from './form-validation-service.interface';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormSpinnerEvent } from '../events';
+import { FormFieldModel } from '../components/widgets';
 
 @Injectable({
     providedIn: 'root'
@@ -46,7 +47,8 @@ export class FormService implements FormValidationService {
     formContentClicked = new Subject<ContentLinkModel>();
     toggleFormSpinner = new Subject<FormSpinnerEvent>();
 
-    updateWidget = new Subject<{widgetId: string; data: any}>();
+    // Hook where widgets can listen for its updates e.g. update dropdown options
+    formWidgetUpdate = new Subject<{ field: FormFieldModel; data: any }>();
 
     validateForm = new Subject<ValidateFormEvent>();
     validateFormField = new Subject<ValidateFormFieldEvent>();

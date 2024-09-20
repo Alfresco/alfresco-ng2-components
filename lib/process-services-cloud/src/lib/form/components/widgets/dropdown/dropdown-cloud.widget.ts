@@ -124,18 +124,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     ngOnInit() {
-        this.setPreviewState();
+        this.setupDropdown();
 
-        this.checkFieldOptionsSource();
-        this.updateOptions();
-
-        this.initFormControl();
-        this.initFilter();
-
-        this.formService.updateWidget.subscribe(({ widgetId, data }) => {
-            if (widgetId === this.field.id) {
-                debugger;
-                this.updateDropdownOptions(data);
+        this.formService.formWidgetUpdate.subscribe(({ field }) => {
+            if (field.id === this.field.id) {
+                this.setupDropdown();
             }
         });
     }
@@ -169,6 +162,16 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         const formFieldValueChangedEvent = new FormFieldEvent(field.form, field);
         this.formService.formFieldValueChanged.next(formFieldValueChangedEvent);
         this.onFieldChanged(field);
+    }
+
+    private setupDropdown(): void {
+        this.setPreviewState();
+
+        this.checkFieldOptionsSource();
+        this.updateOptions();
+
+        this.initFormControl();
+        this.initFilter();
     }
 
     private initFormControl(): void {
@@ -334,7 +337,9 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 .subscribe({
                     next: (result: FormFieldOption[]) => {
                         this.resetRestApiErrorMessage();
-                        this.updateDropdownOptions(result);
+                        this.updateOptions(result);
+                        this.field.updateForm();
+                        this.resetInvalidValue();
                     },
                     error: (err) => {
                         this.resetRestApiOptions();
@@ -342,12 +347,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                     }
                 });
         }
-    }
-
-    private updateDropdownOptions(options: FormFieldOption[]): void {
-        this.updateOptions(options);
-        this.field.updateForm();
-        this.resetInvalidValue();
     }
 
     private buildBodyParam(): any {
