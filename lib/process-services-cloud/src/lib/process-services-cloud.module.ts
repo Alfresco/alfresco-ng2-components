@@ -19,7 +19,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TASK_CLOUD_DIRECTIVES } from './task/task-cloud.module';
-import { ProcessCloudModule } from './process/process-cloud.module';
+import { PROCESS_CLOUD_DIRECTIVES } from './process/process-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
 import {
     LocalPreferenceCloudService,
@@ -47,7 +47,7 @@ import { TaskListCloudService } from './task/task-list/services/task-list-cloud.
     imports: [
         CoreModule,
         ...APP_LIST_CLOUD_DIRECTIVES,
-        ProcessCloudModule,
+        ...PROCESS_CLOUD_DIRECTIVES,
         ...TASK_CLOUD_DIRECTIVES,
         GroupCloudComponent,
         PeopleCloudComponent,
@@ -57,10 +57,10 @@ import { TaskListCloudService } from './task/task-list/services/task-list-cloud.
         ApolloModule,
         RichTextEditorComponent
     ],
-    providers: [provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')],
+    providers: [provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'), ProcessNameCloudPipe],
     exports: [
         ...APP_LIST_CLOUD_DIRECTIVES,
-        ProcessCloudModule,
+        ...PROCESS_CLOUD_DIRECTIVES,
         ...TASK_CLOUD_DIRECTIVES,
         GroupCloudComponent,
         FormCloudModule,

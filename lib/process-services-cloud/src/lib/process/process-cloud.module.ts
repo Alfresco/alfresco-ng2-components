@@ -17,29 +17,22 @@
 
 import { NgModule } from '@angular/core';
 import { PROCESS_FILTERS_CLOUD_DIRECTIVES } from './process-filters/process-filters-cloud.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { ProcessNameCloudPipe } from '../pipes/process-name-cloud.pipe';
 import { ProcessListCloudComponent } from './process-list/components/process-list-cloud.component';
 import { CancelProcessDirective } from './directives/cancel-process.directive';
 import { StartProcessCloudComponent } from './start-process/components/start-process-cloud.component';
 import { ProcessHeaderCloudComponent } from './process-header/components/process-header-cloud.component';
 
+export const PROCESS_CLOUD_DIRECTIVES = [
+    ...PROCESS_FILTERS_CLOUD_DIRECTIVES,
+    ProcessListCloudComponent,
+    StartProcessCloudComponent,
+    ProcessHeaderCloudComponent,
+    CancelProcessDirective
+] as const;
+
+/** @deprecated import individual standalone components instead */
 @NgModule({
-    imports: [
-        CoreModule,
-        ...PROCESS_FILTERS_CLOUD_DIRECTIVES,
-        ProcessListCloudComponent,
-        StartProcessCloudComponent,
-        ProcessHeaderCloudComponent,
-        CancelProcessDirective
-    ],
-    exports: [
-        ...PROCESS_FILTERS_CLOUD_DIRECTIVES,
-        ProcessListCloudComponent,
-        StartProcessCloudComponent,
-        ProcessHeaderCloudComponent,
-        CancelProcessDirective
-    ],
-    providers: [ProcessNameCloudPipe]
+    imports: [...PROCESS_CLOUD_DIRECTIVES],
+    exports: [...PROCESS_CLOUD_DIRECTIVES]
 })
 export class ProcessCloudModule {}
