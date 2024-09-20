@@ -123,6 +123,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     filteredProcesses: ProcessDefinitionCloud[] = [];
     staticMappings: TaskVariableCloud[] = [];
     resolvedValues?: TaskVariableCloud[];
+    customOutcome: string;
 
     protected onDestroy$ = new Subject<boolean>();
 
@@ -366,6 +367,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
+    onCustomOutcomeClicked(outcome: string) {
+        this.customOutcome = outcome;
+        this.startProcess();
+    }
+
     startProcess() {
         this.isProcessStarting = true;
 
@@ -378,7 +384,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
                       processName: this.processInstanceName.value,
                       processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
                       variables: this.variables ?? {},
-                      values: this.formCloud.values
+                      values: this.formCloud.values,
+                      outcome: this.customOutcome
                   })
               )
             : this.startProcessCloudService.startProcess(
