@@ -30,7 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatLineModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 
-export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
+const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
 @Component({
     selector: 'adf-cloud-file-properties-table',

@@ -17,7 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskAssignmentFilterCloudComponent } from './task-assignment-filter.component';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { AssignmentType, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { By } from '@angular/platform-browser';
@@ -29,7 +28,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { GroupCloudComponent } from '@alfresco/adf-process-services-cloud';
 
 describe('TaskAssignmentFilterComponent', () => {
     let component: TaskAssignmentFilterCloudComponent;
@@ -58,7 +56,7 @@ describe('TaskAssignmentFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, GroupCloudComponent, TaskFiltersCloudModule]
+            imports: [ProcessServiceCloudTestingModule, TaskAssignmentFilterCloudComponent]
         });
     });
 

@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { TaskFiltersCloudModule } from './task-filters/task-filters-cloud.module';
+import { TASK_FILTERS_CLOUD_DIRECTIVES } from './task-filters/task-filters-cloud.module';
 import { TaskFormCloudComponent } from './task-form/components/task-form-cloud.component';
 import { StartTaskCloudComponent } from './start-task/components/start-task-cloud.component';
 import { TaskHeaderCloudComponent } from './task-header/components/task-header-cloud.component';
@@ -29,7 +29,7 @@ import { ServiceTaskListCloudComponent } from './task-list/components/service-ta
 export const TASK_CLOUD_DIRECTIVES = [
     TaskListCloudComponent,
     ServiceTaskListCloudComponent,
-    TaskFiltersCloudModule,
+    ...TASK_FILTERS_CLOUD_DIRECTIVES,
     StartTaskCloudComponent,
     TaskHeaderCloudComponent,
     TaskFormCloudComponent,

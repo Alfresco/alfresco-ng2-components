@@ -42,6 +42,7 @@ import { IdentityGroupService } from './group/services/identity-group.service';
 import { IDENTITY_USER_SERVICE_TOKEN } from './people/services/identity-user-service.token';
 import { IdentityUserService } from './people/services/identity-user.service';
 import { TaskListCloudService } from './task/task-list/services/task-list-cloud.service';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
     imports: [
@@ -57,7 +58,11 @@ import { TaskListCloudService } from './task/task-list/services/task-list-cloud.
         ApolloModule,
         RichTextEditorComponent
     ],
-    providers: [provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'), ProcessNameCloudPipe],
+    providers: [
+        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
+        ProcessNameCloudPipe,
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
+    ],
     exports: [
         ...APP_LIST_CLOUD_DIRECTIVES,
         ...PROCESS_CLOUD_DIRECTIVES,

@@ -48,11 +48,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FilePropertiesTableCloudComponent } from './file-properties-table-cloud.component';
 
-export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
-export const ALIAS_ROOT_FOLDER = '-root-';
-export const ALIAS_USER_FOLDER = '-my-';
-export const APP_NAME = '-appname-';
-export const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
+const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
+const ALIAS_ROOT_FOLDER = '-root-';
+const ALIAS_USER_FOLDER = '-my-';
+const APP_NAME = '-appname-';
+const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',

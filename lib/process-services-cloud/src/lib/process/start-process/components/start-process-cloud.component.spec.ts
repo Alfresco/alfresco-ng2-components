@@ -41,13 +41,13 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ESCAPE } from '@angular/cdk/keycodes';
-import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { first } from 'rxjs/operators';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 
 describe('StartProcessCloudComponent', () => {
     let loader: HarnessLoader;

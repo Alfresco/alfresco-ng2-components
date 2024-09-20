@@ -25,7 +25,6 @@ import { LocalPreferenceCloudService } from '../../../../services/local-preferen
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance } from '../../../../app/mock/app-model.mock';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { TaskCloudService } from '../../../services/task-cloud.service';
@@ -55,7 +54,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MatExpansionPanelHarness } from '@angular/material/expansion/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
-import { PeopleCloudComponent } from '@alfresco/adf-process-services-cloud';
 
 describe('EditTaskFilterCloudComponent', () => {
     let loader: HarnessLoader;
@@ -73,7 +71,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, PeopleCloudComponent],
+            imports: [ProcessServiceCloudTestingModule, EditTaskFilterCloudComponent],
             providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
