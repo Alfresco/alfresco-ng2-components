@@ -30,9 +30,16 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 
-import { ContentLinkModel, FORM_FIELD_VALIDATORS, FormFieldValidator, FormModel, TranslationService } from '@alfresco/adf-core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+    ContentLinkModel,
+    FORM_FIELD_VALIDATORS,
+    FormFieldValidator,
+    FormModel,
+    InplaceFormInputComponent,
+    TranslationService
+} from '@alfresco/adf-core';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { catchError, debounceTime, takeUntil } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
@@ -42,12 +49,39 @@ import { forkJoin, of, Subject } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { FormCustomOutcomesComponent } from '../../../form/components/form-cloud-custom-outcomes.component';
+import { FormCloudComponent } from '../../../form/components/form-cloud.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
 
 @Component({
     selector: 'adf-cloud-start-process',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatProgressSpinnerModule,
+        MatCardModule,
+        MatButtonModule,
+        FormCustomOutcomesComponent,
+        FormCloudComponent,
+        InplaceFormInputComponent,
+        MatIconModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
     templateUrl: './start-process-cloud.component.html',
     styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
