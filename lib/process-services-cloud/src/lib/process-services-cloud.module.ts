@@ -20,7 +20,7 @@ import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco
 import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
 import { TASK_CLOUD_DIRECTIVES } from './task/task-cloud.module';
 import { PROCESS_CLOUD_DIRECTIVES } from './process/process-cloud.module';
-import { FormCloudModule } from './form/form-cloud.module';
+import { FORM_CLOUD_DIRECTIVES } from './form/form-cloud.module';
 import {
     LocalPreferenceCloudService,
     PreferenceCloudServiceInterface,
@@ -51,7 +51,7 @@ import { TaskListCloudService } from './task/task-list/services/task-list-cloud.
         ...TASK_CLOUD_DIRECTIVES,
         GroupCloudComponent,
         PeopleCloudComponent,
-        FormCloudModule,
+        ...FORM_CLOUD_DIRECTIVES,
         TaskFormCloudComponent,
         ProcessNameCloudPipe,
         ApolloModule,
@@ -63,7 +63,7 @@ import { TaskListCloudService } from './task/task-list/services/task-list-cloud.
         ...PROCESS_CLOUD_DIRECTIVES,
         ...TASK_CLOUD_DIRECTIVES,
         GroupCloudComponent,
-        FormCloudModule,
+        ...FORM_CLOUD_DIRECTIVES,
         TaskFormCloudComponent,
         PeopleCloudComponent,
         ProcessNameCloudPipe,

@@ -16,19 +16,9 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CoreModule, FormatSpacePipe, TOOLBAR_DIRECTIVES, FormStylePipe } from '@alfresco/adf-core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
-import {
-    AlfrescoViewerComponent,
-    CONTENT_METADATA_DIRECTIVES,
-    CONTENT_UPLOAD_DIRECTIVES,
-    ContentNodeSelectorModule
-} from '@alfresco/adf-content-services';
 import { GroupCloudWidgetComponent } from './components/widgets/group/group-cloud.widget';
 import { PeopleCloudWidgetComponent } from './components/widgets/people/people-cloud.widget';
 import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file/attach-file-cloud-widget.component';
@@ -39,60 +29,28 @@ import { RadioButtonsCloudWidgetComponent } from './components/widgets/radio-but
 import { FilePropertiesTableCloudComponent } from './components/widgets/attach-file/file-properties-table-cloud.component';
 import { FileViewerWidgetComponent } from './components/widgets/file-viewer/file-viewer.widget';
 import { DisplayRichTextWidgetComponent } from './components/widgets/display-rich-text/display-rich-text.widget';
-import { RichTextEditorComponent } from '../rich-text-editor';
-import { A11yModule } from '@angular/cdk/a11y';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { FormSpinnerComponent } from './components/spinner/form-spinner.component';
-import { PeopleCloudComponent } from '../people/components/people-cloud.component';
-import { GroupCloudComponent } from '../group/components/group-cloud.component';
 
+export const FORM_CLOUD_DIRECTIVES = [
+    FormSpinnerComponent,
+    UploadCloudWidgetComponent,
+    AttachFileCloudWidgetComponent,
+    FilePropertiesTableCloudComponent,
+    DisplayRichTextWidgetComponent,
+    FileViewerWidgetComponent,
+    GroupCloudWidgetComponent,
+    PeopleCloudWidgetComponent,
+    FormCustomOutcomesComponent,
+    RadioButtonsCloudWidgetComponent,
+    FormDefinitionSelectorCloudComponent,
+    PropertiesViewerWrapperComponent,
+    PropertiesViewerWidgetComponent,
+    FormCloudComponent
+] as const;
+
+/** @deprecated use individual standalone components instead */
 @NgModule({
-    imports: [
-        CommonModule,
-        OverlayModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CoreModule,
-        ContentNodeSelectorModule,
-        PeopleCloudComponent,
-        GroupCloudComponent,
-        RichTextEditorComponent,
-        ...TOOLBAR_DIRECTIVES,
-        A11yModule,
-        FormatSpacePipe,
-        AlfrescoViewerComponent,
-        ...CONTENT_UPLOAD_DIRECTIVES,
-        ...CONTENT_METADATA_DIRECTIVES,
-        FormStylePipe,
-        FormSpinnerComponent,
-        UploadCloudWidgetComponent,
-        AttachFileCloudWidgetComponent,
-        FilePropertiesTableCloudComponent,
-        DisplayRichTextWidgetComponent,
-        FileViewerWidgetComponent,
-        GroupCloudWidgetComponent,
-        PeopleCloudWidgetComponent,
-        FormCustomOutcomesComponent,
-        RadioButtonsCloudWidgetComponent,
-        FormDefinitionSelectorCloudComponent,
-        PropertiesViewerWrapperComponent,
-        PropertiesViewerWidgetComponent,
-        FormCloudComponent
-    ],
-    exports: [
-        FormCloudComponent,
-        UploadCloudWidgetComponent,
-        FormDefinitionSelectorCloudComponent,
-        FormCustomOutcomesComponent,
-        RadioButtonsCloudWidgetComponent,
-        AttachFileCloudWidgetComponent,
-        PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent,
-        PropertiesViewerWidgetComponent,
-        FileViewerWidgetComponent,
-        DisplayRichTextWidgetComponent,
-        FilePropertiesTableCloudComponent
-    ]
+    imports: [...FORM_CLOUD_DIRECTIVES],
+    exports: [...FORM_CLOUD_DIRECTIVES]
 })
 export class FormCloudModule {}

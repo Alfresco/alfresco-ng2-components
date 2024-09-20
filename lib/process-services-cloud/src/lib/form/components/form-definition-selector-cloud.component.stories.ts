@@ -16,7 +16,7 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { FormCloudModule } from '../form-cloud.module';
+import { FORM_CLOUD_DIRECTIVES } from '../form-cloud.module';
 import { FormDefinitionSelectorCloudComponent } from './form-definition-selector-cloud.component';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
@@ -28,7 +28,7 @@ export default {
     title: 'Process Services Cloud/Form Cloud/Form Definition Selector Cloud',
     decorators: [
         moduleMetadata({
-            imports: [FormCloudModule],
+            imports: [...FORM_CLOUD_DIRECTIVES],
             providers: [{ provide: FormDefinitionSelectorCloudService, useClass: FormDefinitionSelectorCloudServiceMock }]
         }),
         applicationConfig({
