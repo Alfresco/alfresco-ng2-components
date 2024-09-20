@@ -64,7 +64,6 @@ import { VariableMapperService } from '../../../services/variable-mapper.sevice'
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -81,12 +80,6 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
         MainMenuDataTableTemplateDirective,
         ColumnsSelectorComponent,
         DataTableComponent
-    ],
-    providers: [
-        {
-            provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
-            useClass: LocalPreferenceCloudService
-        }
     ],
     templateUrl: './process-list-cloud.component.html',
     styleUrls: ['./process-list-cloud.component.scss'],

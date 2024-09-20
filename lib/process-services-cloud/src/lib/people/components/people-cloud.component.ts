@@ -47,7 +47,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { IdentityUserService } from '../services/identity-user.service';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -72,7 +71,7 @@ import { IdentityUserService } from '../services/identity-user.service';
             transition('void => enter', [style({ opacity: 0, transform: 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
         ])
     ],
-    providers: [FullNamePipe, { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService }],
+    providers: [FullNamePipe],
     encapsulation: ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {

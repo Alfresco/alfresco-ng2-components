@@ -48,7 +48,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { InitialGroupNamePipe } from '../pipe/group-initial.pipe';
-import { IdentityGroupService } from '../services/identity-group.service';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -67,7 +66,6 @@ import { IdentityGroupService } from '../services/identity-group.service';
         MatButtonModule,
         InitialGroupNamePipe
     ],
-    providers: [{ provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }],
     templateUrl: './group-cloud.component.html',
     styleUrls: ['./group-cloud.component.scss'],
     animations: [

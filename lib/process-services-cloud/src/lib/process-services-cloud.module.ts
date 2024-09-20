@@ -36,6 +36,10 @@ import { PeopleCloudComponent } from './people/components/people-cloud.component
 import { RichTextEditorComponent } from './rich-text-editor';
 import { TaskFormCloudComponent } from './task/task-form/components/task-form-cloud.component';
 import { GroupCloudComponent } from './group/components/group-cloud.component';
+import { IDENTITY_GROUP_SERVICE_TOKEN } from './group/services/identity-group-service.token';
+import { IdentityGroupService } from './group/services/identity-group.service';
+import { IDENTITY_USER_SERVICE_TOKEN } from './people/services/identity-user-service.token';
+import { IdentityUserService } from './people/services/identity-user.service';
 
 @NgModule({
     imports: [
@@ -77,6 +81,8 @@ export class ProcessServicesCloudModule {
                 { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService },
+                { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService },
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]
