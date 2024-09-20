@@ -27,7 +27,8 @@ import {
     PROCESS_FILTERS_SERVICE_TOKEN,
     TASK_FILTERS_SERVICE_TOKEN,
     PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
-    TASK_LIST_PREFERENCES_SERVICE_TOKEN
+    TASK_LIST_PREFERENCES_SERVICE_TOKEN,
+    TASK_LIST_CLOUD_TOKEN
 } from './services/public-api';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
 import { ApolloModule } from 'apollo-angular';
@@ -40,6 +41,7 @@ import { IDENTITY_GROUP_SERVICE_TOKEN } from './group/services/identity-group-se
 import { IdentityGroupService } from './group/services/identity-group.service';
 import { IDENTITY_USER_SERVICE_TOKEN } from './people/services/identity-user-service.token';
 import { IdentityUserService } from './people/services/identity-user.service';
+import { TaskListCloudService } from './task/task-list/services/task-list-cloud.service';
 
 @NgModule({
     imports: [
@@ -83,6 +85,8 @@ export class ProcessServicesCloudModule {
                 { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService },
                 { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService },
+                { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService },
+                { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]

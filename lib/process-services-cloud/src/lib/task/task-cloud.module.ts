@@ -18,10 +18,12 @@
 import { NgModule } from '@angular/core';
 import { TaskListCloudModule } from './task-list/task-list-cloud.module';
 import { TaskFiltersCloudModule } from './task-filters/task-filters-cloud.module';
-import { TaskDirectiveModule } from './directives/task-directive.module';
 import { TaskFormCloudComponent } from './task-form/components/task-form-cloud.component';
 import { StartTaskCloudComponent } from './start-task/components/start-task-cloud.component';
 import { TaskHeaderCloudComponent } from './task-header/components/task-header-cloud.component';
+import { CompleteTaskDirective } from './directives/complete-task.directive';
+import { ClaimTaskCloudDirective } from './directives/claim-task-cloud.directive';
+import { UnClaimTaskCloudDirective } from './directives/unclaim-task-cloud.directive';
 
 @NgModule({
     imports: [
@@ -29,16 +31,20 @@ import { TaskHeaderCloudComponent } from './task-header/components/task-header-c
         TaskFiltersCloudModule,
         StartTaskCloudComponent,
         TaskHeaderCloudComponent,
-        TaskDirectiveModule,
-        TaskFormCloudComponent
+        TaskFormCloudComponent,
+        CompleteTaskDirective,
+        ClaimTaskCloudDirective,
+        UnClaimTaskCloudDirective
     ],
     exports: [
         TaskListCloudModule,
         TaskFiltersCloudModule,
         StartTaskCloudComponent,
         TaskHeaderCloudComponent,
-        TaskDirectiveModule,
-        TaskFormCloudComponent
+        TaskFormCloudComponent,
+        CompleteTaskDirective,
+        ClaimTaskCloudDirective,
+        UnClaimTaskCloudDirective
     ]
 })
 export class TaskCloudModule {}

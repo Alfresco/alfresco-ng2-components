@@ -20,6 +20,7 @@ import { CompleteTaskDirective } from './complete-task.directive';
 import { ClaimTaskCloudDirective } from './claim-task-cloud.directive';
 import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
 
+/** @deprecated import standalone directives from the individual files */
 @NgModule({
     imports: [CompleteTaskDirective, ClaimTaskCloudDirective, UnClaimTaskCloudDirective],
     exports: [CompleteTaskDirective, ClaimTaskCloudDirective, UnClaimTaskCloudDirective]
