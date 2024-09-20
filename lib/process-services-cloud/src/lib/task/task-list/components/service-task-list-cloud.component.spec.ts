@@ -79,7 +79,7 @@ describe('ServiceTaskListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule, ServiceTaskListCloudComponent],
             declarations: [EmptyTemplateComponent]
         });
         appConfig = TestBed.inject(AppConfigService);

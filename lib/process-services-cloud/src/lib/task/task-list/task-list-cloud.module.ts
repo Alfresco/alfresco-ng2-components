@@ -16,15 +16,12 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../material.module';
 import { TaskListCloudComponent } from './components/task-list-cloud.component';
 import { ServiceTaskListCloudComponent } from './components/service-task-list-cloud.component';
-import { CoreModule } from '@alfresco/adf-core';
 
+/** @deprecated use individual standalone components instead */
 @NgModule({
-    imports: [CommonModule, MaterialModule, CoreModule],
-    declarations: [TaskListCloudComponent, ServiceTaskListCloudComponent],
+    imports: [TaskListCloudComponent, ServiceTaskListCloudComponent],
     exports: [TaskListCloudComponent, ServiceTaskListCloudComponent]
 })
 export class TaskListCloudModule {}

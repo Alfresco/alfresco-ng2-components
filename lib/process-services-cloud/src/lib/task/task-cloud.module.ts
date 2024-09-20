@@ -16,7 +16,6 @@
  */
 
 import { NgModule } from '@angular/core';
-import { TaskListCloudModule } from './task-list/task-list-cloud.module';
 import { TaskFiltersCloudModule } from './task-filters/task-filters-cloud.module';
 import { TaskFormCloudComponent } from './task-form/components/task-form-cloud.component';
 import { StartTaskCloudComponent } from './start-task/components/start-task-cloud.component';
@@ -24,27 +23,24 @@ import { TaskHeaderCloudComponent } from './task-header/components/task-header-c
 import { CompleteTaskDirective } from './directives/complete-task.directive';
 import { ClaimTaskCloudDirective } from './directives/claim-task-cloud.directive';
 import { UnClaimTaskCloudDirective } from './directives/unclaim-task-cloud.directive';
+import { TaskListCloudComponent } from './task-list/components/task-list-cloud.component';
+import { ServiceTaskListCloudComponent } from './task-list/components/service-task-list-cloud.component';
 
+export const TASK_CLOUD_DIRECTIVES = [
+    TaskListCloudComponent,
+    ServiceTaskListCloudComponent,
+    TaskFiltersCloudModule,
+    StartTaskCloudComponent,
+    TaskHeaderCloudComponent,
+    TaskFormCloudComponent,
+    CompleteTaskDirective,
+    ClaimTaskCloudDirective,
+    UnClaimTaskCloudDirective
+] as const;
+
+/** @deprecated import individual standalone components instead */
 @NgModule({
-    imports: [
-        TaskListCloudModule,
-        TaskFiltersCloudModule,
-        StartTaskCloudComponent,
-        TaskHeaderCloudComponent,
-        TaskFormCloudComponent,
-        CompleteTaskDirective,
-        ClaimTaskCloudDirective,
-        UnClaimTaskCloudDirective
-    ],
-    exports: [
-        TaskListCloudModule,
-        TaskFiltersCloudModule,
-        StartTaskCloudComponent,
-        TaskHeaderCloudComponent,
-        TaskFormCloudComponent,
-        CompleteTaskDirective,
-        ClaimTaskCloudDirective,
-        UnClaimTaskCloudDirective
-    ]
+    imports: [...TASK_CLOUD_DIRECTIVES],
+    exports: [...TASK_CLOUD_DIRECTIVES]
 })
 export class TaskCloudModule {}

@@ -18,7 +18,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
 import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
-import { TaskCloudModule } from './task/task-cloud.module';
+import { TASK_CLOUD_DIRECTIVES } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
 import {
@@ -48,7 +48,7 @@ import { TaskListCloudService } from './task/task-list/services/task-list-cloud.
         CoreModule,
         ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
-        TaskCloudModule,
+        ...TASK_CLOUD_DIRECTIVES,
         GroupCloudComponent,
         PeopleCloudComponent,
         FormCloudModule,
@@ -61,7 +61,7 @@ import { TaskListCloudService } from './task/task-list/services/task-list-cloud.
     exports: [
         ...APP_LIST_CLOUD_DIRECTIVES,
         ProcessCloudModule,
-        TaskCloudModule,
+        ...TASK_CLOUD_DIRECTIVES,
         GroupCloudComponent,
         FormCloudModule,
         TaskFormCloudComponent,
