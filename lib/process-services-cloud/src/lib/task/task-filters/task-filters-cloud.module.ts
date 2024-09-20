@@ -45,11 +45,12 @@ import { GroupCloudComponent } from '../../group/components/group-cloud.componen
         GroupCloudComponent,
         DateRangeFilterComponent,
         PeopleCloudComponent,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        //
+        TaskFiltersCloudComponent,
+        ServiceTaskFiltersCloudComponent
     ],
     declarations: [
-        TaskFiltersCloudComponent,
-        ServiceTaskFiltersCloudComponent,
         EditTaskFilterCloudComponent,
         EditServiceTaskFilterCloudComponent,
         TaskFilterDialogCloudComponent,
