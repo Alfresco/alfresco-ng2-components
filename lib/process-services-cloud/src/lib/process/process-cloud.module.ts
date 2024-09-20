@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { ProcessFiltersCloudModule } from './process-filters/process-filters-cloud.module';
+import { PROCESS_FILTERS_CLOUD_DIRECTIVES } from './process-filters/process-filters-cloud.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { ProcessNameCloudPipe } from '../pipes/process-name-cloud.pipe';
 import { ProcessListCloudComponent } from './process-list/components/process-list-cloud.component';
@@ -27,13 +27,19 @@ import { ProcessHeaderCloudComponent } from './process-header/components/process
 @NgModule({
     imports: [
         CoreModule,
-        ProcessFiltersCloudModule,
+        ...PROCESS_FILTERS_CLOUD_DIRECTIVES,
         ProcessListCloudComponent,
         StartProcessCloudComponent,
         ProcessHeaderCloudComponent,
         CancelProcessDirective
     ],
-    exports: [ProcessFiltersCloudModule, ProcessListCloudComponent, StartProcessCloudComponent, ProcessHeaderCloudComponent, CancelProcessDirective],
+    exports: [
+        ...PROCESS_FILTERS_CLOUD_DIRECTIVES,
+        ProcessListCloudComponent,
+        StartProcessCloudComponent,
+        ProcessHeaderCloudComponent,
+        CancelProcessDirective
+    ],
     providers: [ProcessNameCloudPipe]
 })
 export class ProcessCloudModule {}

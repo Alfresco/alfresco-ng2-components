@@ -21,15 +21,14 @@ import { of, throwError } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { mockProcessFilters } from '../mock/process-filters-cloud.mock';
-import { AppConfigService, AppConfigServiceMock, NoopTranslateModule } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
 import { NotificationCloudService } from '../../../services/notification-cloud.service';
 import { ApolloModule } from 'apollo-angular';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule } from '@angular/material/list';
 
 const ProcessFilterCloudServiceMock = {
     getProcessFilters: () => of(mockProcessFilters),
@@ -45,7 +44,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatListModule],
+            imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudComponent],
             providers: [
                 { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },

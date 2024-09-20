@@ -19,13 +19,19 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDes
 import { Observable, Subject } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { AppConfigService, TranslationService } from '@alfresco/adf-core';
+import { IconComponent, TranslationService, AppConfigService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule } from '@angular/material/list';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
 
 @Component({
     selector: 'adf-cloud-process-filters',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatProgressSpinnerModule, IconComponent, MatListModule],
     templateUrl: './process-filters-cloud.component.html',
     styleUrls: ['./process-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None

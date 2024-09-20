@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, AbstractControl, FormGroup, FormControl } from '@angular/forms';
-import { DateAdapter } from '@angular/material/core';
+import { FormBuilder, AbstractControl, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DateAdapter, MatOptionModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/operators';
 import { Subject, Observable, Subscription } from 'rxjs';
@@ -29,7 +29,7 @@ import {
     ProcessFilterOptions,
     ProcessSortFilterProperty
 } from '../models/process-filter-cloud.model';
-import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { DateFnsUtils, IconComponent, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ProcessCloudService } from '../../services/process-cloud.service';
@@ -37,6 +37,18 @@ import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { Environment } from '../../../common/interface/environment.interface';
 import { endOfDay, isValid, startOfDay } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
+import { DateRangeFilterComponent } from '../../../common/date-range-filter/date-range-filter.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -67,6 +79,24 @@ interface ProcessFilterFormProps {
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        PeopleCloudComponent,
+        DateRangeFilterComponent,
+        MatIconModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        IconComponent,
+        MatButtonModule,
+        MatExpansionModule
+    ],
     templateUrl: './edit-process-filter-cloud.component.html',
     styleUrls: ['./edit-process-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
