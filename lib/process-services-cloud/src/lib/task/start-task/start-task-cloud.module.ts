@@ -16,18 +16,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../material.module';
-import { CoreModule } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './components/start-task-cloud.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormCloudModule } from '../../form/form-cloud.module';
-import { PeopleCloudComponent } from '../../people/components/people-cloud.component';
-import { GroupCloudComponent } from '../../group/components/group-cloud.component';
 
+/** @deprecated  use StartTaskCloudComponent instead */
 @NgModule({
-    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, GroupCloudComponent, CoreModule, FormCloudModule, PeopleCloudComponent],
-    declarations: [StartTaskCloudComponent],
+    imports: [StartTaskCloudComponent],
     exports: [StartTaskCloudComponent]
 })
 export class StartTaskCloudModule {}

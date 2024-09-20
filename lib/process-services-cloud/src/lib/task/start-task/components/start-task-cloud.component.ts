@@ -16,9 +16,9 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatOptionModule } from '@angular/material/core';
 import { Observable, Subject } from 'rxjs';
-import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
 import { GroupCloudComponent } from '../../../group/components/group-cloud.component';
@@ -30,12 +30,40 @@ import { IdentityUserService } from '../../../people/services/identity-user.serv
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { isValid, parse } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { FormDefinitionSelectorCloudComponent } from '../../../form/components/form-definition-selector-cloud.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 const MAX_NAME_LENGTH = 255;
 const DATE_FORMAT: string = 'dd/MM/yyyy';
 
 @Component({
     selector: 'adf-cloud-start-task',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        MatButtonModule,
+        MatCardModule,
+        FormDefinitionSelectorCloudComponent,
+        GroupCloudComponent,
+        PeopleCloudComponent,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatOptionModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatIconModule
+    ],
     templateUrl: './start-task-cloud.component.html',
     styleUrls: ['./start-task-cloud.component.scss'],
     providers: [
