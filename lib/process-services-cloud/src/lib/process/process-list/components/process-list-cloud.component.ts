@@ -64,8 +64,8 @@ import { VariableMapperService } from '../../../services/variable-mapper.sevice'
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 const PRESET_KEY = 'adf-cloud-process-list.presets';
+/* eslint-disable @typescript-eslint/brace-style */
 
 @Component({
     selector: 'adf-cloud-process-list',
@@ -85,7 +85,6 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-// eslint-disable-next-line @typescript-eslint/brace-style
 export class ProcessListCloudComponent
     extends DataTableSchema<ProcessListDataColumnCustomData>
     implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy
