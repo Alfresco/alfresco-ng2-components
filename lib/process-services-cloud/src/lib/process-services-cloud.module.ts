@@ -91,7 +91,6 @@ export class ProcessServicesCloudModule {
                 { provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService },
                 { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService },
                 { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService },
-                { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]

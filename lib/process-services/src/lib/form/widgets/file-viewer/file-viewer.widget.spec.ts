@@ -17,9 +17,7 @@
 
 import { FileViewerWidgetComponent } from './file-viewer.widget';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormModel, FormService, FormFieldModel, RedirectAuthService, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { EMPTY, of } from 'rxjs';
+import { FormModel, FormService, FormFieldModel, NoopTranslateModule, NoopAuthModule } from '@alfresco/adf-core';
 
 describe('FileViewerWidgetComponent', () => {
     const fakeForm = new FormModel();
@@ -45,11 +43,7 @@ describe('FileViewerWidgetComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule, NoopAuthModule, FileViewerWidgetComponent],
-            providers: [
-                { provide: FormService, useValue: formServiceStub },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            providers: [{ provide: FormService, useValue: formServiceStub }]
         });
 
         formServiceStub = TestBed.inject(FormService);

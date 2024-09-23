@@ -69,17 +69,16 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.preSelectGroup = this.field.value ? this.field.value : [];
             this.validate = this.field.readOnly ? false : true;
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        (this.search = new UntypedFormControl({ value: '', disabled: this.field.readOnly }, [])),
-            this.search.statusChanges
-                .pipe(
-                    filter((value: string) => value === 'INVALID'),
-                    takeUntil(this.onDestroy$)
-                )
-                .subscribe(() => {
-                    this.field.markAsInvalid();
-                    this.field.form.markAsInvalid();
-                });
+        this.search = new UntypedFormControl({ value: '', disabled: this.field.readOnly }, []);
+        this.search.statusChanges
+            .pipe(
+                filter((value: string) => value === 'INVALID'),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe(() => {
+                this.field.markAsInvalid();
+                this.field.form.markAsInvalid();
+            });
 
         this.search.statusChanges
             .pipe(
