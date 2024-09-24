@@ -26,7 +26,7 @@ export interface FormRepresentation {
     version?: number;
     formDefinition?: FormDefinition;
     standAlone?: boolean;
-    displayMode?: FormCloudDisplayMode;
+    displayMode?: string;
 }
 
 export interface FormTab {
@@ -266,11 +266,15 @@ export interface FormCloudDisplayModeConfigurationOptions {
     onSaveTask(id?: string): void;
     onDisplayModeOn(id?: string): void;
     onDisplayModeOff(id?: string): void;
+    fullscreen?: boolean;
+    displayToolbar?: boolean;
+    displayCloseButton?: boolean;
+    trapFocus?: boolean;
     [key: string]: any;
 }
 
 export interface FormCloudDisplayModeConfiguration {
-    displayMode: FormCloudDisplayMode;
+    displayMode: string;
     options?: FormCloudDisplayModeConfigurationOptions;
     default?: boolean;
 }
@@ -278,10 +282,11 @@ export interface FormCloudDisplayModeConfiguration {
 // eslint-disable-next-line no-shadow
 export enum FormCloudDisplayMode {
     inline = 'inline',
-    fullScreen = 'fullScreen'
+    fullScreen = 'fullScreen',
+    standalone = 'standalone'
 }
 
 export interface FormCloudDisplayModeChange {
-    displayMode: FormCloudDisplayMode;
+    displayMode: string;
     id?: string;
 }

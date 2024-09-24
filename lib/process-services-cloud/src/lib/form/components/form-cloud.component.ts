@@ -134,7 +134,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected onDestroy$ = new Subject<boolean>();
 
     readonly id: string;
-    displayMode: FormCloudDisplayMode;
+    displayMode: string;
+    displayConfiguration: FormCloudDisplayModeConfiguration = DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0];
     style: string = '';
 
     protected formCloudService = inject(FormCloudService);
@@ -241,6 +242,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                         this.displayModeOn.emit(newDisplayModeConfiguration);
                     }
                 }
+
+                this.displayConfiguration = newDisplayModeConfiguration;
             });
     }
 
@@ -433,7 +436,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 this.displayModeConfigurations
             );
 
-            this.displayModeOn.emit(this.displayModeService.findConfiguration(this.displayMode, this.displayModeConfigurations));
+            this.displayConfiguration = this.displayModeService.findConfiguration(this.displayMode, this.displayModeConfigurations);
+
+            this.displayModeOn.emit(this.displayConfiguration);
         }
 
         this.changeDetector.detectChanges();
