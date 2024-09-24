@@ -36,6 +36,7 @@ interface PackageInfo {
     name: string;
     description: string;
     version: string;
+    dependencies: Record<string, string>;
 }
 
 const nonStandardLicenses = {
@@ -132,6 +133,9 @@ export default function main(_args: string[], workingDir: string) {
         exit(1);
     }
 
+    const packageJson = getPackageFile(packagePath);
+    const directDependencies = { ...packageJson.dependencies };
+
     return new Promise((resolve, reject) => {
         // eslint-disable-next-line no-console
         console.info(`Checking ${packagePath}`);
@@ -147,9 +151,16 @@ export default function main(_args: string[], workingDir: string) {
                     console.error(err);
                     reject(err);
                 } else {
+                    const filteredPackages = Object.keys(packages)
+                        .filter((packageName) => Object.keys(directDependencies).some((dep) => packageName.startsWith(dep)))
+                        .reduce((obj, packageName) => {
+                            obj[packageName] = packages[packageName];
+                            return obj;
+                        }, {});
+
                     // eslint-disable-next-line guard-for-in
-                    for (const packageName in packages) {
-                        const pack = packages[packageName];
+                    for (const packageName in filteredPackages) {
+                        const pack = filteredPackages[packageName];
                         pack['licenseExp'] = pack['licenses']
                             .toString()
                             .replace(/\*/g, '')
@@ -173,12 +184,10 @@ export default function main(_args: string[], workingDir: string) {
                         }
                     }
 
-                    const packageJson: PackageInfo = getPackageFile(packagePath);
-
                     ejs.renderFile(
                         templatePath,
                         {
-                            packages,
+                            packages: filteredPackages,
                             projVersion: packageJson.version,
                             projName: packageJson.name
                         },
