@@ -101,7 +101,7 @@ jobs:
           npx nx affected:build $NX_CALCULATION_FLAGS --prod --skip-nx-cache
           npx nx affected $NX_CALCULATION_FLAGS --target=pretheme
           npx nx affected $NX_CALCULATION_FLAGS --target=build-schematics
-      - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+      - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         name: release libraries GH registry
         with:
           node-version-file: '.nvmrc'
@@ -110,7 +110,7 @@ jobs:
       - run: npx nx affected --target=npm-publish $NX_CALCULATION_FLAGS --tag=branch|| exit 1
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PAT_WRITE_PKG }}
-      - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+      - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         name: release libraries Npm registry
         with:
           node-version-file: '.nvmrc'
