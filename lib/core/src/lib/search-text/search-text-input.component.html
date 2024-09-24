@@ -6,7 +6,10 @@
                 *ngIf="expandable"
                 id="adf-search-button"
                 class="adf-search-button"
-                [ngClass]="{'adf-search-button-inactive': subscriptAnimationState.value === 'inactive'}"
+                [ngClass]="{
+                    'adf-search-button-inactive': subscriptAnimationState.value === 'inactive',
+                    'adf-search-button-active': subscriptAnimationState.value === 'active'
+                }"
                 [title]="'SEARCH.BUTTON.TOOLTIP' | translate"
                 (click)="toggleSearchBar()"
                 (keyup.enter)="toggleSearchBar()">
