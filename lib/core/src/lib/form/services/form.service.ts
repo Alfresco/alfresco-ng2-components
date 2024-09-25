@@ -47,8 +47,7 @@ export class FormService implements FormValidationService {
     formContentClicked = new Subject<ContentLinkModel>();
     toggleFormSpinner = new Subject<FormSpinnerEvent>();
 
-    // Hook where widgets can listen for its updates e.g. update dropdown options
-    formWidgetUpdate = new Subject<{ field: FormFieldModel; data: any }>();
+    onFormVariableChanged = new Subject<{ field: FormFieldModel; data?: any }>();
 
     validateForm = new Subject<ValidateFormEvent>();
     validateFormField = new Subject<ValidateFormFieldEvent>();

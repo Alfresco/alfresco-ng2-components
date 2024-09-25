@@ -126,7 +126,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     ngOnInit() {
         this.setupDropdown();
 
-        this.formService.formWidgetUpdate.subscribe(({ field }) => {
+        this.formService.onFormVariableChanged.subscribe(({ field }) => {
             if (field.id === this.field.id) {
                 this.setupDropdown();
             }

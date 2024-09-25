@@ -1056,5 +1056,24 @@ describe('DropdownCloudWidgetComponent', () => {
             const failedErrorMsgElement = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
             expect(failedErrorMsgElement).toBeNull();
         });
+
+        it('should update options when form variable changes', async () => {
+            const field = getVariableDropdownWidget('json-form-variable', 'countries', 'id', 'name', undefined, mockFormVariableWithJson);
+
+            widget.field = field;
+            fixture.detectChanges();
+
+            field.form.variables[0]['value']['countries'] = [{ id: 'NEW', name: 'New Country' }];
+
+            formService.onFormVariableChanged.next({ field });
+
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            await dropdown.open();
+
+            expect(widget.field.options.length).toEqual(1);
+            const allOptions = await dropdown.getOptions();
+            expect(await allOptions[0].getText()).toEqual('New Country');
+            expect(allOptions.length).toEqual(1);
+        });
     });
 });
