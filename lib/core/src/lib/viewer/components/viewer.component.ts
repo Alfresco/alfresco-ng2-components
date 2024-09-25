@@ -456,7 +456,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     }
 
     private showOrClearDownloadPrompt() {
-        if (!this.urlFile) {
+        if (!this.urlFile && !this.blobFile) {
             this.showDownloadPrompt();
         } else {
             this.clearDownloadPromptTimeouts();
