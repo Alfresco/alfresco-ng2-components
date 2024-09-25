@@ -21,10 +21,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     standalone: true,
-    template: ` <button mat-raised-button color="primary" (click)="view()">json</button> `,
+    templateUrl: './json.widget.html',
+    styleUrls: ['./json.widget.scss'],
     host: {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
@@ -36,7 +39,7 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatButtonModule],
+    imports: [TranslateModule, MatFormFieldModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {
