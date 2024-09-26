@@ -18,4 +18,3 @@
 export * from './dynamic-chip-list.component';
 export * from './dynamic-chip-list.module';
 export * from './chip';
-export * from './adf-strings-to-chips.pipe';

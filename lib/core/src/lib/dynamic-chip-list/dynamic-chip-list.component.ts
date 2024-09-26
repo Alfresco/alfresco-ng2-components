@@ -106,8 +106,10 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     private requestedDisplayingAllChips = false;
     private resizeObserver = new ResizeObserver(() => {
         if (this.limitChipsDisplayed && this.chipsToDisplay.length) {
-            this.calculateChipsToDisplay();
-            this.changeDetectorRef.detectChanges();
+            setTimeout(() => {
+                this.calculateChipsToDisplay();
+                this.changeDetectorRef.detectChanges();
+            });
         }
     });
 

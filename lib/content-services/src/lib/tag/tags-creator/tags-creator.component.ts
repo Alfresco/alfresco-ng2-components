@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AdfStringsToChipsPipe, DynamicChipListComponent, NotificationService } from '@alfresco/adf-core';
+import { Chip, DynamicChipListComponent, NotificationService } from '@alfresco/adf-core';
 import { TagEntry, TagPaging } from '@alfresco/js-api';
 import {
     Component,
@@ -78,8 +78,7 @@ const DEFAULT_TAGS_SORTING = {
         MatIconModule,
         MatListModule,
         MatProgressSpinnerModule,
-        DynamicChipListComponent,
-        AdfStringsToChipsPipe
+        DynamicChipListComponent
     ],
     templateUrl: './tags-creator.component.html',
     styleUrls: ['./tags-creator.component.scss'],
@@ -108,6 +107,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
     set tags(tags: string[]) {
         this._tags = [...tags];
+        this.tagsToDisplay = this._tags.map((tag) => {
+            return { id: tag, name: tag };
+        });
         this._initialExistingTags = null;
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
@@ -119,6 +121,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     get tags(): string[] {
         return this._tags;
     }
+
+    tagsToDisplay: Chip[] = [];
 
     /**
      * Decides if input for tags creation/searching should be visible. When input is hidden then panel of existing tags is hidden as well.
