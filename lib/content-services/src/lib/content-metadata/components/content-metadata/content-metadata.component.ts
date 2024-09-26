@@ -19,7 +19,6 @@ import { Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges,
 import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
-    AdfStringsToChipsPipe,
     AppConfigService,
     CardViewBaseItemModel,
     CardViewComponent,
@@ -81,8 +80,7 @@ enum DefaultPanels {
         MatProgressBarModule,
         TagsCreatorComponent,
         CardViewComponent,
-        DynamicChipListComponent,
-        AdfStringsToChipsPipe
+        DynamicChipListComponent
     ],
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
@@ -231,6 +229,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     get tags(): string[] {
         return this._tags;
+    }
+
+    get tagsToDisplay(): Chip[] {
+        return this._tags.map((tag) => {
+            return { id: tag, name: tag };
+        });
     }
 
     get tagsCreatorMode(): TagsCreatorMode {

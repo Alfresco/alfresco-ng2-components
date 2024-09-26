@@ -16,12 +16,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { AdfStringsToChipsPipe } from './adf-strings-to-chips.pipe';
 import { DynamicChipListComponent } from './dynamic-chip-list.component';
 
 /** @deprecated use `DynamicChipListComponent` or import standalone components directly  */
 @NgModule({
-    imports: [DynamicChipListComponent, AdfStringsToChipsPipe],
-    exports: [DynamicChipListComponent, AdfStringsToChipsPipe]
+    imports: [DynamicChipListComponent],
+    exports: [DynamicChipListComponent]
 })
 export class DynamicChipListModule {}
