@@ -20,15 +20,47 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { Observable, Subject } from 'rxjs';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
 import { UnsavedChangesGuard } from './unsaved-changes.guard';
+import { AuthenticationService, AuthGuardService, NoopAuthModule } from '@alfresco/adf-core';
 
 describe('UnsavedChangesGuard', () => {
     let guard: UnsavedChangesGuard;
+    let authService: AuthenticationService;
+    let authGuardService: AuthGuardService;
+
+    const expectGuardToBe = (condition: boolean, done: DoneFn, checkUnsaved?: boolean) => {
+        (guard.canDeactivate() as Observable<boolean>).subscribe((allowed) => {
+            if (checkUnsaved) {
+                allowed = guard.unsaved;
+            }
+            condition ? expect(allowed).toBeTrue() : expect(allowed).toBeFalse();
+            done();
+        });
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule]
+            imports: [MatDialogModule, NoopAuthModule],
+            providers: [
+                {
+                    provide: AuthenticationService,
+                    useValue: {
+                        isLoggedIn: () => true
+                    }
+                },
+                {
+                    provide: AuthGuardService,
+                    useValue: {
+                        get withCredentials() {
+                            return false;
+                        }
+                    }
+                }
+            ]
         });
         guard = TestBed.inject(UnsavedChangesGuard);
+        authService = TestBed.inject(AuthenticationService);
+        TestBed.inject(AuthGuardService);
+        authGuardService = TestBed.inject(AuthGuardService);
     });
 
     describe('canDeactivate', () => {
@@ -43,63 +75,73 @@ describe('UnsavedChangesGuard', () => {
             } as MatDialogRef<UnsavedChangesDialogComponent>);
         });
 
-        it('should return true if unsaved is set to false', () => {
-            guard.unsaved = false;
-            expect(guard.canDeactivate()).toBeTrue();
-        });
-
-        it('should return true if unsaved was not set', () => {
-            expect(guard.canDeactivate()).toBeTrue();
-        });
-
-        it('should return true when unsaved is set to true and result of dialog is true', (done) => {
-            guard.unsaved = true;
-
-            (guard.canDeactivate() as Observable<boolean>).subscribe((allowed) => {
-                expect(allowed).toBeTrue();
-                done();
+        describe('with Auth', () => {
+            beforeEach(() => {
+                spyOn(authService, 'isLoggedIn').and.returnValue(true);
             });
-            afterClosed$.next(true);
+
+            it('should return true if unsaved is set to false and user is logged in', () => {
+                guard.unsaved = false;
+                expect(guard.canDeactivate()).toBeTrue();
+            });
+
+            it('should return true if unsaved was not set and user is logged in', () => {
+                expect(guard.canDeactivate()).toBeTrue();
+            });
+
+            it('should return true when unsaved is set to true and result of dialog is true', (done) => {
+                guard.unsaved = true;
+
+                expectGuardToBe(true, done);
+                afterClosed$.next(true);
+            });
+
+            it('should set unsaved to false when unsaved is set to true and result of dialog is true', (done) => {
+                guard.unsaved = true;
+
+                expectGuardToBe(false, done, true);
+                afterClosed$.next(true);
+            });
+
+            it('should return false if afterClosed subject value was undefined', (done) => {
+                guard.unsaved = true;
+
+                expectGuardToBe(false, done);
+                afterClosed$.next(undefined);
+            });
+
+            it('should return false when unsaved is set to true and result of dialog is false', (done) => {
+                guard.unsaved = true;
+
+                expectGuardToBe(false, done);
+                afterClosed$.next(false);
+            });
+
+            it('should keep unsaved set to true when unsaved was to true and result of dialog is false', (done) => {
+                guard.unsaved = true;
+
+                expectGuardToBe(true, done, true);
+                afterClosed$.next(false);
+            });
         });
 
-        it('should return false when unsaved is set to true and result of dialog is false', (done) => {
-            guard.unsaved = true;
-
-            (guard.canDeactivate() as Observable<boolean>).subscribe((allowed) => {
-                expect(allowed).toBeFalse();
-                done();
+        describe('Without auth', () => {
+            beforeEach(() => {
+                spyOn(authService, 'isLoggedIn').and.returnValue(false);
             });
-            afterClosed$.next(false);
-        });
 
-        it('should keep unsaved set to true when unsaved was to true and result of dialog is false', (done) => {
-            guard.unsaved = true;
-
-            (guard.canDeactivate() as Observable<boolean>).subscribe(() => {
-                expect(guard.unsaved).toBeTrue();
-                done();
+            it('should return true when user is logged out of authenticationService and authGuardBaseService.withCredentials returns false', (done) => {
+                expectGuardToBe(true, done);
+                afterClosed$.next(true);
             });
-            afterClosed$.next(false);
-        });
 
-        it('should set unsaved to false when unsaved is set to true and result of dialog is true', (done) => {
-            guard.unsaved = true;
+            it('should return false when authGuardBaseService.withCredentials returns true', (done) => {
+                guard.unsaved = true;
+                spyOnProperty(authGuardService, 'withCredentials').and.returnValue(true);
 
-            (guard.canDeactivate() as Observable<boolean>).subscribe(() => {
-                expect(guard.unsaved).toBeFalse();
-                done();
+                expectGuardToBe(false, done);
+                afterClosed$.next(false);
             });
-            afterClosed$.next(true);
-        });
-
-        it('should return false if afterClosed subject value was undefined', (done) => {
-            guard.unsaved = true;
-
-            (guard.canDeactivate() as Observable<boolean>).subscribe((result) => {
-                expect(result).toBeFalse();
-                done();
-            });
-            afterClosed$.next(undefined);
         });
     });
 });
