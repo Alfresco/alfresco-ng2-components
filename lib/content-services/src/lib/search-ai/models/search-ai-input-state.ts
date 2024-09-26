@@ -18,4 +18,5 @@
 export interface SearchAiInputState {
     active: boolean;
     selectedAgentId?: string;
+    searchTerm?: string;
 }
