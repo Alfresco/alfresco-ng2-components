@@ -510,7 +510,7 @@ describe('AlfrescoViewerComponent', () => {
             } as Node);
 
             await fixture.whenStable();
-            expect(component.mimeType).toEqual('application/msWord');
+            expect(component.mimeType).toEqual('application/pdf');
         });
     });
 
