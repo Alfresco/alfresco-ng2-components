@@ -346,7 +346,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
 
                 const nodeMimeType = nodeData?.content?.mimeType;
                 const renditionMimeType = nodeRendition.mimeType;
-                mimeType = nodeMimeType || renditionMimeType;
+                mimeType = renditionMimeType || nodeMimeType;
             }
         } else if (viewerType === 'media') {
             this.tracks = await this.renditionService.generateMediaTracksRendition(this.nodeId);
