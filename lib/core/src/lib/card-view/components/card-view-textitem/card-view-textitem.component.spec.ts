@@ -581,7 +581,7 @@ describe('CardViewTextItemComponent', () => {
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value');
         });
 
-        it('should trigger the update event if the editedValue is NOT valid', async () => {
+        it('should NOT trigger the update event if the editedValue is invalid', async () => {
             const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
             component.property.isValid = () => false;
@@ -589,7 +589,7 @@ describe('CardViewTextItemComponent', () => {
             updateTextField(component.property.key, '@invalid-value');
             await fixture.whenStable();
 
-            expect(cardViewUpdateService.update).toHaveBeenCalled();
+            expect(cardViewUpdateService.update).not.toHaveBeenCalled();
         });
 
         it('should trigger the update event if the editedValue is valid', async () => {
