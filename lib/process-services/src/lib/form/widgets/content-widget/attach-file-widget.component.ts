@@ -33,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
     selector: 'attach-widget',
@@ -77,6 +78,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         private contentDialog: ContentNodeDialogService,
         private appConfigService: AppConfigService,
         private downloadService: DownloadService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
         private attachDialogService: AttachFileWidgetDialogService
     ) {
         super(formService, thumbnails, processContentService);
@@ -149,6 +152,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         } else {
             this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe((selections: Node[]) => {
                 this.tempFilesList.push(...selections);
+                this.updateNodesParams();
                 this.uploadFileFromCS(
                     selections,
                     this.field.params.fileSource.selectedFolder.accountId,
@@ -166,6 +170,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     onRemoveAttachFile(file: File | RelatedContentRepresentation) {
         if (this.isTemporaryFile(file)) {
             this.tempFilesList.splice(this.tempFilesList.indexOf((file as RelatedContentRepresentation).contentBlob), 1);
+            this.updateNodesParams();
         }
         this.removeFile(file);
     }
@@ -219,6 +224,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             this.contentDialog.openFileBrowseDialogByDefaultLocation().subscribe((selections: Node[]) => {
                 if (selections.length) {
                     this.tempFilesList.push(...selections);
+                    this.updateNodesParams();
                     this.uploadFileFromCS(selections, `alfresco-${repository.id}-${repository.name}Alfresco`);
                 }
             });
@@ -275,6 +281,18 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                     this.hasFile = true;
                 }
             );
+    }
+
+
+    private updateNodesParams(): void {
+        this.router.navigate(
+            [],
+            {
+                relativeTo: this.activatedRoute,
+                queryParams: { nodes: this.tempFilesList.map(file => file.id).join(',') },
+                queryParamsHandling: 'merge',
+            }
+        );
     }
 
     private getDomainHost(urlToCheck: string): string {
