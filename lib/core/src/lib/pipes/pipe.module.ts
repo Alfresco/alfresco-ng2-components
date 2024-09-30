@@ -29,7 +29,6 @@ import { LocalizedDatePipe } from './localized-date.pipe';
 import { DecimalNumberPipe } from './decimal-number.pipe';
 import { MomentDatePipe } from './moment-date.pipe';
 import { MomentDateTimePipe } from './moment-datetime.pipe';
-import { FilterStringPipe } from './filter-string.pipe';
 import { DateTimePipe } from './date-time.pipe';
 
 export const CORE_PIPES = [
@@ -45,7 +44,6 @@ export const CORE_PIPES = [
     MomentDatePipe,
     MomentDateTimePipe,
     DateTimePipe,
-    FilterStringPipe,
     InitialUsernamePipe
 ] as const;
 

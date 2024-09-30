@@ -29,4 +29,3 @@ export * from './pipe.module';
 export * from './moment-date.pipe';
 export * from './moment-datetime.pipe';
 export * from './date-time.pipe';
-export * from './filter-string.pipe';
