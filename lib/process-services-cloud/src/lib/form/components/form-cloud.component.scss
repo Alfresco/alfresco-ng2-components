@@ -67,18 +67,22 @@
     }
 
     &-content-card {
-        padding: 0;
-        height: 100%;
-        width: 100%;
+        overflow-y: auto;
 
-        .adf-cloud-form-content-card-container {
-            display: flex;
-            flex-direction: column;
+        &-fullscreen {
+            padding: 0;
             height: 100%;
+            width: 100%;
 
-            #{$mat-card-content} {
+            .adf-cloud-form-content-card-container {
+                display: flex;
+                flex-direction: column;
                 height: 100%;
-                overflow: hidden auto;
+
+                #{$mat-card-content} {
+                    height: 100%;
+                    overflow: hidden auto;
+                }
             }
         }
     }
