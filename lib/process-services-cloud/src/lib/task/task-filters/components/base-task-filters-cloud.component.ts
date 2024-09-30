@@ -46,7 +46,7 @@ export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     counters$: { [key: string]: Observable<number> } = {};
-    updatedCounters: string[] = [];
+    updatedCountersSet = new Set<string>();
 
     protected onDestroy$ = new Subject<boolean>();
 
@@ -56,19 +56,14 @@ export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
     }
 
     wasFilterUpdated(filterKey: string): boolean {
-        return this.updatedCounters.includes(filterKey);
+        return this.updatedCountersSet.has(filterKey);
     }
 
     addToUpdatedCounters(filterKey: string) {
-        if (!this.updatedCounters.includes(filterKey)) {
-            this.updatedCounters.push(filterKey);
-        }
+        this.updatedCountersSet.add(filterKey);
     }
 
     resetFilterCounter(filterKey: string) {
-        const filterIndex = this.updatedCounters.indexOf(filterKey);
-        if (filterIndex > -1) {
-            this.updatedCounters.splice(filterIndex, 1);
-        }
+        this.updatedCountersSet.delete(filterKey);
     }
 }

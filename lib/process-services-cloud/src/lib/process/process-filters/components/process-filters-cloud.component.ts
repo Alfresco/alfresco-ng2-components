@@ -43,6 +43,14 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     @Input()
     showIcons: boolean = false;
 
+    /** (optional) Toggles showing an icon by the side of each filter */
+    @Input()
+    set refreshedFilterKey(value: string[]) {
+        if (value?.length) {
+            this.updatedFiltersSet.delete(value[0]);
+        }
+    }
+
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<ProcessFilterCloudModel>();
@@ -250,9 +258,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     updateFilterCounters(): void {
         this.filters.forEach((filter: ProcessFilterCloudModel) => {
-            if (filter?.status) {
-                this.updateFilterCounter(filter);
-            }
+            this.updateFilterCounter(filter);
         });
     }
 

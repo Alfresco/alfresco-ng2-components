@@ -295,6 +295,19 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(component.getCurrentFilter()).toBe(filter);
     });
 
+    it('should remove key from set of updated filters when received refreshedFilterKey', async () => {
+        const filter = mockProcessFilters[1];
+        component.updatedFiltersSet.add(filter.key);
+        fixture.detectChanges();
+
+        expect(component.updatedFiltersSet.size).toBe(1);
+
+        fixture.componentRef.setInput('refreshedFilterKey', [filter.key]);
+        await fixture.whenStable();
+
+        expect(component.updatedFiltersSet.size).toBe(0);
+    });
+
     describe('Highlight Selected Filter', () => {
         const allProcessesFilterKey = mockProcessFilters[0].key;
         const runningProcessesFilterKey = mockProcessFilters[1].key;

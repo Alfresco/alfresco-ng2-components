@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -32,6 +32,14 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
+    /** (optional) Toggles showing an icon by the side of each filter */
+    @Input()
+    set refreshedFilterKey(value: string[]) {
+        if (value?.length) {
+            this.updatedCountersSet.delete(value[0]);
+        }
+    }
+
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -182,6 +190,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.selectFilter(filter);
             this.updateFilterCounter(this.currentFilter);
             this.filterClicked.emit(this.currentFilter);
+            this.updatedCountersSet.delete(filter.key);
         } else {
             this.currentFilter = undefined;
         }
@@ -221,6 +230,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         if (this.currentFiltersValues[filterKey] !== filterValue) {
             this.currentFiltersValues[filterKey] = filterValue;
             this.updatedFilter.emit(filterKey);
+            this.updatedCountersSet.add(filterKey);
         }
     }
 }
