@@ -33,7 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'attach-widget',
@@ -290,7 +290,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             {
                 relativeTo: this.activatedRoute,
                 queryParams: { nodes: this.tempFilesList.map(file => file.id).join(',') },
-                queryParamsHandling: 'merge',
+                queryParamsHandling: 'merge'
             }
         );
     }
