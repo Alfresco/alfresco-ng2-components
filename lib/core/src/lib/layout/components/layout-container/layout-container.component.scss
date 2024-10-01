@@ -10,6 +10,7 @@ adf-layout-container {
         overflow: hidden;
         border-right: 1px solid var(--adf-theme-foreground-text-color-007);
         background-color: var(--theme-background-color);
+        color: var(--adf-theme-foreground-text-color);
     }
 }
 
@@ -31,7 +32,7 @@ adf-layout-container {
     overflow: hidden;
 }
 
-/* stylelint-disable selector-class-pattern */
+/* stylelint-disable selector-class-pattern, declaration-no-important */
 #{$mat-sidenav-content},
 #{$mat-drawer-transition} #{$mat-drawer-content} {
     margin-left: 0 !important;
