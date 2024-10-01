@@ -19,7 +19,6 @@ import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../s
 import { DisplayModeService } from './display-mode.service';
 
 describe('DisplayModeService', () => {
-
     let service: DisplayModeService;
     let displayModeOnSpy: jasmine.Spy;
     let displayModeOffSpy: jasmine.Spy;
@@ -61,11 +60,18 @@ describe('DisplayModeService', () => {
     });
 
     it('should return the default display mode when no display mode does not exist in the configuration', () => {
-        expect(service.getDisplayMode('notExisting' as any)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
-        expect(service.getDisplayMode('notExisting' as any, [])).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
-        expect(service.getDisplayMode('notExisting' as any, [{ displayMode: FormCloudDisplayMode.fullScreen }])).toBe(FormCloudDisplayMode.fullScreen);
-        expect(service.getDisplayMode('notExisting' as any, [{ displayMode: FormCloudDisplayMode.fullScreen }, { displayMode: FormCloudDisplayMode.inline }])).toBe(FormCloudDisplayMode.fullScreen);
-        expect(service.getDisplayMode('notExisting' as any, [{ displayMode: FormCloudDisplayMode.fullScreen, default: true }, { displayMode: FormCloudDisplayMode.inline }])).toBe(FormCloudDisplayMode.fullScreen);
+        expect(service.getDisplayMode('notExisting')).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
+        expect(service.getDisplayMode('notExisting', [])).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
+        expect(service.getDisplayMode('notExisting', [{ displayMode: FormCloudDisplayMode.fullScreen }])).toBe(FormCloudDisplayMode.fullScreen);
+        expect(
+            service.getDisplayMode('notExisting', [{ displayMode: FormCloudDisplayMode.fullScreen }, { displayMode: FormCloudDisplayMode.inline }])
+        ).toBe(FormCloudDisplayMode.fullScreen);
+        expect(
+            service.getDisplayMode('notExisting', [
+                { displayMode: FormCloudDisplayMode.fullScreen, default: true },
+                { displayMode: FormCloudDisplayMode.inline }
+            ])
+        ).toBe(FormCloudDisplayMode.fullScreen);
     });
 
     it('should return the provided display mode when display mode is provided', () => {
@@ -75,8 +81,10 @@ describe('DisplayModeService', () => {
     it('should find the display configuration', () => {
         expect(service.findConfiguration()).toBeUndefined();
         expect(service.findConfiguration(FormCloudDisplayMode.fullScreen)).toBe(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
-        expect(service.findConfiguration('notExisting' as any)).toBeUndefined();
-        expect(service.findConfiguration(FormCloudDisplayMode.fullScreen, [{ displayMode: FormCloudDisplayMode.fullScreen }])).toEqual({ displayMode: FormCloudDisplayMode.fullScreen });
+        expect(service.findConfiguration('notExisting')).toBeUndefined();
+        expect(service.findConfiguration(FormCloudDisplayMode.fullScreen, [{ displayMode: FormCloudDisplayMode.fullScreen }])).toEqual({
+            displayMode: FormCloudDisplayMode.fullScreen
+        });
         expect(service.findConfiguration(FormCloudDisplayMode.fullScreen, [{ displayMode: FormCloudDisplayMode.inline }])).toBeUndefined();
     });
 
@@ -134,21 +142,27 @@ describe('DisplayModeService', () => {
     });
 
     it('should return the default display mode when calling the switchToDisplayMode and display does not exist in configuration', () => {
-        expect(service.switchToDisplayMode(formId, 'notExisting' as any)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
+        expect(service.switchToDisplayMode(formId, 'notExisting')).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
     });
 
     it('should not call the change display mode method when switchToDisplayMode and the mode to switch is the same as the old one', () => {
-        expect(service.switchToDisplayMode(formId, FormCloudDisplayMode.fullScreen, FormCloudDisplayMode.fullScreen)).toBe(FormCloudDisplayMode.fullScreen);
+        expect(service.switchToDisplayMode(formId, FormCloudDisplayMode.fullScreen, FormCloudDisplayMode.fullScreen)).toBe(
+            FormCloudDisplayMode.fullScreen
+        );
         expect(changeDisplayModeSpy).not.toHaveBeenCalledWith();
     });
 
     it('should not call the change display mode method when switchToDisplayMode and the mode to switch does not exist and the previous mode was the default one', () => {
-        expect(service.switchToDisplayMode(formId, 'notExisting' as any, DisplayModeService.DEFAULT_DISPLAY_MODE)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
+        expect(service.switchToDisplayMode(formId, 'notExisting', DisplayModeService.DEFAULT_DISPLAY_MODE)).toBe(
+            DisplayModeService.DEFAULT_DISPLAY_MODE
+        );
         expect(changeDisplayModeSpy).not.toHaveBeenCalledWith();
     });
 
     it('should not call the change display mode method when switchToDisplayMode and the mode to switch does not exist and the previous mode was not provided', () => {
-        expect(service.switchToDisplayMode(formId, 'notExisting' as any, DisplayModeService.DEFAULT_DISPLAY_MODE)).toBe(DisplayModeService.DEFAULT_DISPLAY_MODE);
+        expect(service.switchToDisplayMode(formId, 'notExisting', DisplayModeService.DEFAULT_DISPLAY_MODE)).toBe(
+            DisplayModeService.DEFAULT_DISPLAY_MODE
+        );
         expect(changeDisplayModeSpy).not.toHaveBeenCalledWith();
     });
 
