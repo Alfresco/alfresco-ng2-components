@@ -147,10 +147,19 @@ class ViewerWithCustomOpenWithComponent {}
 })
 class ViewerWithCustomMoreActionsComponent {}
 
-const getSimpleChanges = (currentValue: string, previousValue?: string): SimpleChanges => {
-    return {
-        nodeId: new SimpleChange(previousValue || null, currentValue, false)
-    };
+const getSimpleChanges = (currentValue: string, previousValue?: string): SimpleChanges => ({
+    nodeId: new SimpleChange(previousValue || null, currentValue, false)
+});
+
+const verifyCustomElement = (component: any, selector: string, done: DoneFn) => {
+    const customFixture = TestBed.createComponent(component);
+    const customElement: HTMLElement = customFixture.nativeElement;
+
+    customFixture.detectChanges();
+    customFixture.whenStable().then(() => {
+        expect(customElement.querySelector(selector)).toBeDefined();
+        done();
+    });
 };
 
 describe('AlfrescoViewerComponent', () => {
@@ -365,61 +374,23 @@ describe('AlfrescoViewerComponent', () => {
 
     describe('Viewer Example Component Rendering', () => {
         it('should use custom toolbar', (done) => {
-            const customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
-            const customElement: HTMLElement = customFixture.nativeElement;
-
-            customFixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(customElement.querySelector('.custom-toolbar-element')).toBeDefined();
-                done();
-            });
+            verifyCustomElement(ViewerWithCustomToolbarComponent, '.custom-toolbar-element', done);
         });
 
         it('should use custom toolbar actions', (done) => {
-            const customFixture = TestBed.createComponent(ViewerWithCustomToolbarActionsComponent);
-            const customElement: HTMLElement = customFixture.nativeElement;
-
-            customFixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(customElement.querySelector('#custom-button')).toBeDefined();
-                done();
-            });
+            verifyCustomElement(ViewerWithCustomToolbarActionsComponent, '#custom-button', done);
         });
 
         it('should use custom info drawer', (done) => {
-            const customFixture = TestBed.createComponent(ViewerWithCustomSidebarComponent);
-            const customElement: HTMLElement = customFixture.nativeElement;
-
-            customFixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(customElement.querySelector('.custom-info-drawer-element')).toBeDefined();
-                done();
-            });
+            verifyCustomElement(ViewerWithCustomSidebarComponent, '.custom-info-drawer-element', done);
         });
 
         it('should use custom open with menu', (done) => {
-            const customFixture = TestBed.createComponent(ViewerWithCustomOpenWithComponent);
-            const customElement: HTMLElement = customFixture.nativeElement;
-
-            customFixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(customElement.querySelector('.adf-viewer-container-open-with')).toBeDefined();
-                done();
-            });
+            verifyCustomElement(ViewerWithCustomOpenWithComponent, '.adf-viewer-container-open-with', done);
         });
 
         it('should use custom more actions menu', (done) => {
-            const customFixture = TestBed.createComponent(ViewerWithCustomMoreActionsComponent);
-            const customElement: HTMLElement = customFixture.nativeElement;
-
-            customFixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
-                done();
-            });
+            verifyCustomElement(ViewerWithCustomMoreActionsComponent, '.adf-viewer-container-more-actions', done);
         });
 
         it('should stop propagation on sidebar keydown event [keydown]', async () => {
