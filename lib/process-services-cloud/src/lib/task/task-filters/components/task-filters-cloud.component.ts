@@ -32,7 +32,7 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
-    /** (optional) Toggles showing an icon by the side of each filter */
+    /** (optional) The property indicates that the filter has been refreshed by an external action */
     @Input()
     set refreshedFilterKey(value: string[]) {
         if (value?.length) {
