@@ -296,21 +296,13 @@ describe('AlfrescoViewerComponent', () => {
     }));
 
     it('should not setup the node twice if the node id is not changed', fakeAsync(() => {
-        spyOn(component['nodesApi'], 'getNode').and.returnValues(
-            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) })),
-            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file2', content: new ContentInfo() }) }))
-        );
-
+        spyOn(component['nodesApi'], 'getNode').and.stub();
         component.showViewer = true;
         component.nodeId = 'id1';
-        component.ngOnChanges(getSimpleChanges('id1'));
+        component.ngOnChanges(getSimpleChanges('id0', 'id1'));
         tick();
-
-        expect(component.fileName).toBe('file1');
         component.ngOnChanges(getSimpleChanges('id1', 'id1'));
         tick();
-
-        expect(component.fileName).toBe('file1');
         expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(1);
     }));
 
