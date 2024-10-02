@@ -722,52 +722,47 @@ describe('AlfrescoViewerComponent', () => {
         });
 
         describe('SideBar Test', () => {
-            it('should NOT display sidebar if is not allowed', (done) => {
-                component.showRightSidebar = true;
-                component.allowRightSidebar = false;
+            const verifySidebarDisplay = (
+                sidebarId: string,
+                showSidebar: boolean,
+                allowSidebar: boolean,
+                expectedOrder: string | null,
+                done: DoneFn
+            ) => {
+                if (sidebarId === '#adf-right-sidebar') {
+                    component.showRightSidebar = showSidebar;
+                    component.allowRightSidebar = allowSidebar;
+                } else if (sidebarId === '#adf-left-sidebar') {
+                    component.showLeftSidebar = showSidebar;
+                    component.allowLeftSidebar = allowSidebar;
+                }
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    const sidebar = element.querySelector('#adf-right-sidebar');
-                    expect(sidebar).toBeNull();
+                    const sidebar = element.querySelector(sidebarId);
+                    if (expectedOrder === null) {
+                        expect(sidebar).toBeNull();
+                    } else {
+                        expect(getComputedStyle(sidebar).order).toEqual(expectedOrder);
+                    }
                     done();
                 });
+            };
+
+            it('should NOT display sidebar if is not allowed', (done) => {
+                verifySidebarDisplay('#adf-right-sidebar', true, false, null, done);
             });
 
             it('should display sidebar on the right side', (done) => {
-                component.allowRightSidebar = true;
-                component.showRightSidebar = true;
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    const sidebar = element.querySelector('#adf-right-sidebar');
-                    expect(getComputedStyle(sidebar).order).toEqual('4');
-                    done();
-                });
+                verifySidebarDisplay('#adf-right-sidebar', true, true, '4', done);
             });
 
             it('should NOT display left sidebar if is not allowed', (done) => {
-                component.showLeftSidebar = true;
-                component.allowLeftSidebar = false;
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    const sidebar = element.querySelector('#adf-left-sidebar');
-                    expect(sidebar).toBeNull();
-                    done();
-                });
+                verifySidebarDisplay('#adf-left-sidebar', true, false, null, done);
             });
 
             it('should display sidebar on the left side', (done) => {
-                component.allowLeftSidebar = true;
-                component.showLeftSidebar = true;
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    const sidebar = element.querySelector('#adf-left-sidebar');
-                    expect(getComputedStyle(sidebar).order).toEqual('1');
-                    done();
-                });
+                verifySidebarDisplay('#adf-left-sidebar', true, true, '1', done);
             });
         });
 
