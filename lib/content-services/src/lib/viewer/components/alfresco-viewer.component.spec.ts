@@ -39,7 +39,7 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
 import { UploadService } from '../../common/services/upload.service';
 import { FileModel } from '../../common/models/file.model';
 import { throwError } from 'rxjs';
-import { Component } from '@angular/core';
+import { Component, SimpleChange, SimpleChanges } from '@angular/core';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { By } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
@@ -147,6 +147,12 @@ class ViewerWithCustomOpenWithComponent {}
 })
 class ViewerWithCustomMoreActionsComponent {}
 
+const getSimpleChanges = (currentValue: string, previousValue?: string): SimpleChanges => {
+    return {
+        nodeId: new SimpleChange(previousValue || null, currentValue, false)
+    };
+};
+
 describe('AlfrescoViewerComponent', () => {
     let component: AlfrescoViewerComponent;
     let fixture: ComponentFixture<AlfrescoViewerComponent>;
@@ -225,7 +231,7 @@ describe('AlfrescoViewerComponent', () => {
             spyOn(component.nodesApi, 'getNode').and.callFake(() => Promise.resolve(new NodeEntry({ entry: new Node() })));
 
             component.nodeId = '37f7f34d-4e64-4db6-bb3f-5c89f7844251';
-            component.ngOnChanges();
+            component.ngOnChanges(getSimpleChanges('new-node-id'));
 
             fixture.detectChanges();
             tick(100);
@@ -249,7 +255,7 @@ describe('AlfrescoViewerComponent', () => {
 
             spyOn(component['contentApi'], 'getContentUrl').and.returnValue(contentUrl);
 
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
@@ -267,16 +273,38 @@ describe('AlfrescoViewerComponent', () => {
         component.showViewer = true;
 
         component.nodeId = 'id1';
-        component.ngOnChanges();
+        component.ngOnChanges(getSimpleChanges('id1'));
         tick();
 
         expect(component.fileName).toBe('file1');
 
         component.nodeId = 'id2';
-        component.ngOnChanges();
+        component.ngOnChanges(getSimpleChanges('id2'));
         tick();
 
         expect(component.fileName).toBe('file2');
+        expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(2);
+    }));
+
+    it('should not setup the node twice if the node id is not changed', fakeAsync(() => {
+        spyOn(component['nodesApi'], 'getNode').and.returnValues(
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file1', content: new ContentInfo() }) })),
+            Promise.resolve(new NodeEntry({ entry: new Node({ name: 'file2', content: new ContentInfo() }) }))
+        );
+
+        component.showViewer = true;
+        component.nodeId = 'id1';
+        component.ngOnChanges(getSimpleChanges('id1'));
+        tick();
+
+        expect(component.fileName).toBe('file1');
+
+        component.nodeId = 'id1';
+        component.ngOnChanges(getSimpleChanges('id1', 'id1'));
+        tick();
+
+        expect(component.fileName).toBe('file1');
+        expect(component['nodesApi'].getNode).toHaveBeenCalledTimes(1);
     }));
 
     it('should append version of the file to the file content URL', fakeAsync(() => {
@@ -296,7 +324,7 @@ describe('AlfrescoViewerComponent', () => {
         component.nodeId = 'id1';
         component.showViewer = true;
         component.versionId = null;
-        component.ngOnChanges();
+        component.ngOnChanges(getSimpleChanges('id1'));
         tick();
 
         expect(component.fileName).toBe('file1.pdf');
@@ -316,13 +344,13 @@ describe('AlfrescoViewerComponent', () => {
         component.nodeId = 'id1';
         component.showViewer = true;
         component.versionId = '1.0';
-        component.ngOnChanges();
+        component.ngOnChanges(getSimpleChanges('id1'));
         tick();
 
         expect(component.fileName).toBe('file1');
 
         component.versionId = '1.1';
-        component.ngOnChanges();
+        component.ngOnChanges(getSimpleChanges('id1'));
         tick();
 
         expect(component.fileName).toBe('file2');
@@ -438,7 +466,7 @@ describe('AlfrescoViewerComponent', () => {
             component.nodeId = 'the-node-id-of-the-file-to-preview';
             component.mimeType = null;
 
-            component.ngOnChanges();
+            component.ngOnChanges(getSimpleChanges('id1'));
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
@@ -453,7 +481,7 @@ describe('AlfrescoViewerComponent', () => {
             component.mimeType = null;
             component.nodeId = null;
 
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('adf-viewer-unknown-format')).not.toBeNull();
@@ -472,9 +500,8 @@ describe('AlfrescoViewerComponent', () => {
                 expect(emittedValue).toBeUndefined();
             });
 
-            component.ngOnChanges();
+            component.ngOnChanges({});
         }));
-        //
     });
 
     describe('mimeType', () => {
@@ -684,7 +711,7 @@ describe('AlfrescoViewerComponent', () => {
             spyOn(component['nodesApi'], 'getNode').and.returnValue(Promise.resolve(node));
             spyOn(component['contentApi'], 'getContentUrl').and.returnValue(contentUrl);
 
-            component.ngOnChanges();
+            component.ngOnChanges(getSimpleChanges('id1'));
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(component.nodeEntry).toBe(node);
@@ -708,7 +735,7 @@ describe('AlfrescoViewerComponent', () => {
             component.sharedLinkId = 'the-Shared-Link-id';
             component.mimeType = null;
 
-            component.ngOnChanges();
+            component.ngOnChanges({});
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('[data-automation-id="adf-toolbar-left-back"]')).toBeNull();
@@ -791,7 +818,7 @@ describe('AlfrescoViewerComponent', () => {
                 });
 
                 it('should Name File be present if is overlay mode ', async () => {
-                    component.ngOnChanges();
+                    component.ngOnChanges({});
                     fixture.detectChanges();
                     await fixture.whenStable();
                     fixture.detectChanges();
@@ -870,7 +897,7 @@ describe('AlfrescoViewerComponent', () => {
                 component.nodeId = 'file-node-id';
                 spyOn(component.nodesApi, 'getNode').and.callFake(() => Promise.resolve(new NodeEntry({ entry: new Node() })));
                 expect(() => {
-                    component.ngOnChanges();
+                    component.ngOnChanges({});
                 }).not.toThrow();
             });
 
