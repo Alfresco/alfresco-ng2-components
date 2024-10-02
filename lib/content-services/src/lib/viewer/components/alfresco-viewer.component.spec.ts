@@ -298,8 +298,6 @@ describe('AlfrescoViewerComponent', () => {
         tick();
 
         expect(component.fileName).toBe('file1');
-
-        component.nodeId = 'id1';
         component.ngOnChanges(getSimpleChanges('id1', 'id1'));
         tick();
 
