@@ -25,6 +25,7 @@ import { SearchDateRangeTabbedComponent } from './search-date-range-tabbed.compo
 import { DateRangeType } from './search-date-range/date-range-type';
 import { InLastDateType } from './search-date-range/in-last-date-type';
 import { endOfDay, endOfToday, formatISO, parse, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from 'date-fns';
+import { ReplaySubject } from 'rxjs';
 
 @Component({
     selector: 'adf-search-filter-tabbed',
@@ -75,13 +76,15 @@ describe('SearchDateRangeTabbedComponent', () => {
             queryFragments: {
                 dateRange: ''
             },
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
             update: jasmine.createSpy('update')
         } as any;
         component.settings = {
             hideDefaultAction: false,
             dateFormat: 'dd-MMM-yy',
             maxDate: 'today',
-            field: 'createdDate, modifiedDate',
+            field: 'createdDate,modifiedDate',
             displayedLabelsByField: {
                 createdDate: 'Created Date',
                 modifiedDate: 'Modified Date'
@@ -163,6 +166,8 @@ describe('SearchDateRangeTabbedComponent', () => {
             `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
             ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.combinedQuery).toEqual(query);
+        expect(component.context.filterRawParams[component.id].createdDate).toEqual(betweenMockData);
+        expect(component.context.filterRawParams[component.id].modifiedDate).toEqual(inLastMockData);
 
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
@@ -178,6 +183,7 @@ describe('SearchDateRangeTabbedComponent', () => {
             `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
             ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.combinedQuery).toEqual(query);
+        expect(component.context.filterRawParams[component.id].modifiedDate).toEqual(inLastMockData);
 
         inLastMockData = {
             dateRangeType: DateRangeType.IN_LAST,
@@ -193,12 +199,14 @@ describe('SearchDateRangeTabbedComponent', () => {
             `createdDate:['${formatISO(startOfDay(betweenMockData.betweenStartDate))}' TO '${formatISO(endOfDay(betweenMockData.betweenEndDate))}']` +
             ` AND modifiedDate:['${formatISO(startOfDay(inLastStartDate))}' TO '${formatISO(endOfToday())}']`;
         expect(component.combinedQuery).toEqual(query);
-        expect(component.combinedQuery).toEqual(query);
+        expect(component.context.filterRawParams[component.id].modifiedDate).toEqual(inLastMockData);
 
         component.onDateRangedValueChanged(anyMockDate, 'createdDate');
         component.onDateRangedValueChanged(anyMockDate, 'modifiedDate');
         fixture.detectChanges();
         expect(component.combinedQuery).toEqual('');
+        expect(component.context.filterRawParams[component.id].createdDate).toEqual(anyMockDate);
+        expect(component.context.filterRawParams[component.id].modifiedDate).toEqual(anyMockDate);
     });
 
     it('should trigger context.update() when values are submitted', () => {
@@ -224,6 +232,31 @@ describe('SearchDateRangeTabbedComponent', () => {
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
         expect(component.context.queryFragments['dateRange']).toEqual('');
         expect(component.context.update).toHaveBeenCalled();
+        component.fields.forEach((field) => expect(component.context.filterRawParams[field]).toBeUndefined());
+    });
+
+    it('should populate filter state when populate filters event has been observed', () => {
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        const createdDateMock = {
+            dateRangeType: DateRangeType.BETWEEN,
+            inLastValueType: InLastDateType.DAYS,
+            inLastValue: undefined,
+            betweenStartDate: '2023-06-05',
+            betweenEndDate: '2023-06-07'
+        };
+        component.context.populateFilters.next({ dateRange: { createdDate: createdDateMock, modifiedDate: inLastMockData } });
+        fixture.detectChanges();
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith(
+            'CREATED DATE: 05-Jun-23 - 07-Jun-23 MODIFIED DATE: SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.WEEKS'
+        );
+        expect(component.preselectedValues['createdDate']).toEqual(betweenMockData);
+        expect(component.preselectedValues['modifiedDate']).toEqual(inLastMockData);
+        expect(component.context.filterRawParams[component.id].createdDate).toEqual(betweenMockData);
+        expect(component.context.filterRawParams[component.id].modifiedDate).toEqual(inLastMockData);
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 
     describe('SearchDateRangeTabbedComponent getTabLabel', () => {

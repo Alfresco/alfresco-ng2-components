@@ -23,6 +23,8 @@ Stores information from all the custom search and faceted search widgets, compil
 -   **buildQuery**(): `SearchRequest`<br/>
     Builds the current query.
     -   **Returns** `SearchRequest` - The finished query
+-   **encodeQuery**()<br/>
+    Encodes query shards stored in `filterRawParams` property.    
 -   **execute**(queryBody?: `SearchRequest`)<br/>
     Builds and executes the current query.
     -   _queryBody:_ `SearchRequest`  - (Optional)
@@ -70,7 +72,12 @@ Stores information from all the custom search and faceted search widgets, compil
 
 -   **loadConfiguration**(): [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts)<br/>
 
-    -   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts) - 
+    -   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/models/search-configuration.interface.ts) -
+
+-   **navigateToSearch**(query: `string`, searchUrl: `string`) <br/>
+    Updates user query, executes existing search configuration, encodes the query and navigates to searchUrl.
+    -   _query:_ `string`  - The query to use as user query
+    -   _searchUrl:_ `string`  - Search url to navigate to
 
 -   **removeFilterQuery**(query: `string`)<br/>
     Removes an existing filter query.
@@ -93,6 +100,8 @@ Stores information from all the custom search and faceted search widgets, compil
 -   **update**(queryBody?: `SearchRequest`)<br/>
     Builds the current query and triggers the `updated` event.
     -   _queryBody:_ `SearchRequest`  - (Optional)
+-   **updateSearchQueryParams**() <br/>
+    Encodes the query and navigates to existing search route adding encoded query as a search param.
 -   **updateSelectedConfiguration**(index: `number`)<br/>
 
     -   _index:_ `number`  -

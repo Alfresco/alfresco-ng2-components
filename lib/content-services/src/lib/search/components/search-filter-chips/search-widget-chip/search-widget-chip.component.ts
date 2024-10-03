@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SearchCategory } from '../../../models/search-category.interface';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
@@ -26,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
 import { MatButtonModule } from '@angular/material/button';
+import { first } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-widget-chip',
@@ -50,7 +51,7 @@ import { MatButtonModule } from '@angular/material/button';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchWidgetChipComponent {
+export class SearchWidgetChipComponent implements AfterViewInit {
     @Input()
     category: SearchCategory;
 
@@ -66,7 +67,16 @@ export class SearchWidgetChipComponent {
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
 
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory) {}
+    constructor(private cd: ChangeDetectorRef, private focusTrapFactory: ConfigurableFocusTrapFactory) {}
+
+    ngAfterViewInit(): void {
+        this.widgetContainerComponent
+            ?.getDisplayValue()
+            .pipe(first())
+            .subscribe(() => {
+                this.cd.detectChanges();
+            });
+    }
 
     onMenuOpen() {
         if (this.menuContainer && !this.focusTrap) {

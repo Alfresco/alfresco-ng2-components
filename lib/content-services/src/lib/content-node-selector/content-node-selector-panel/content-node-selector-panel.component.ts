@@ -343,7 +343,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             if (searchRequest) {
                 this.hasValidQuery = true;
                 this.prepareDialogForNewSearch(searchRequest);
-                this.queryBuilderService.execute(searchRequest);
+                this.queryBuilderService.execute(false, searchRequest);
             } else {
                 this.hasValidQuery = false;
                 this.resetFolderToShow();

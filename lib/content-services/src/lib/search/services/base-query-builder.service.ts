@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Subject, Observable, from, ReplaySubject } from 'rxjs';
+import { Subject, Observable, from, ReplaySubject, BehaviorSubject } from 'rxjs';
 import { AppConfigService } from '@alfresco/adf-core';
 import {
     SearchRequest,
@@ -37,8 +37,13 @@ import { FacetField } from '../models/facet-field.interface';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { SearchForm } from '../models/search-form.interface';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { Buffer } from 'buffer';
+import { inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export abstract class BaseQueryBuilderService {
+    private router = inject(Router);
+    private activatedRoute = inject(ActivatedRoute);
     private _searchApi: SearchApi;
     get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.alfrescoApiService.getInstance());
@@ -47,6 +52,9 @@ export abstract class BaseQueryBuilderService {
 
     /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();
+
+    /*  Stream that emits the event each time when search filter finishes loading initial value */
+    filterLoaded = new Subject<void>();
 
     /*  Stream that emits the query before search whenever user search  */
     updated = new Subject<SearchRequest>();
@@ -60,12 +68,17 @@ export abstract class BaseQueryBuilderService {
     /*  Stream that emits search forms  */
     searchForms = new ReplaySubject<SearchForm[]>(1);
 
+    /*  Stream that emits the initial value for some or all search filters */
+    populateFilters = new BehaviorSubject<{ [key: string]: any }>({});
+
     categories: SearchCategory[] = [];
     queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
+    filterRawParams: { [key: string]: any } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
+    private encodedQuery: string;
     private scope: RequestScope;
     private selectedConfiguration: number;
     private _userQuery = '';
@@ -88,10 +101,7 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    protected constructor(
-        protected appConfig: AppConfigService,
-        protected alfrescoApiService: AlfrescoApiService
-    ) {
+    protected constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
         this.resetToDefaults();
     }
 
@@ -297,12 +307,16 @@ export abstract class BaseQueryBuilderService {
     /**
      * Builds and executes the current query.
      *
+     * @param updateQueryParams whether query params should be updated with encoded query
      * @param queryBody query settings
      */
-    async execute(queryBody?: SearchRequest) {
+    async execute(updateQueryParams = true, queryBody?: SearchRequest) {
         try {
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
+                if (updateQueryParams) {
+                    this.updateSearchQueryParams();
+                }
                 const resultSetPaging: ResultSetPaging = await this.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
@@ -461,9 +475,9 @@ export abstract class BaseQueryBuilderService {
                                         end: set.end,
                                         startInclusive: set.startInclusive,
                                         endInclusive: set.endInclusive
-                                    }) as any
+                                    } as any)
                             )
-                        }) as any
+                        } as any)
                 )
             };
         }
@@ -477,6 +491,9 @@ export abstract class BaseQueryBuilderService {
 
     protected getFinalQuery(): string {
         let query = '';
+        if (this.userQuery) {
+            this.filterRawParams['userQuery'] = this.userQuery;
+        }
 
         this.categories.forEach((facet) => {
             const customQuery = this.queryFragments[facet.id];
@@ -522,7 +539,7 @@ export abstract class BaseQueryBuilderService {
                             limit: facet.limit,
                             offset: facet.offset,
                             prefix: facet.prefix
-                        }) as any
+                        } as any)
                 )
             };
         }
@@ -542,5 +559,39 @@ export abstract class BaseQueryBuilderService {
             return `"${configLabel}"`;
         }
         return configLabel;
+    }
+
+    /**
+     * Encodes filter configuration stored in filterRawParams object.
+     */
+    encodeQuery() {
+        this.encodedQuery = Buffer.from(JSON.stringify(this.filterRawParams)).toString('base64');
+    }
+
+    /**
+     * Encodes existing filters configuration and updates search query param value.
+     */
+    updateSearchQueryParams() {
+        this.encodeQuery();
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { q: this.encodedQuery },
+            queryParamsHandling: 'merge'
+        });
+    }
+
+    /**
+     * Builds search query with provided user query, executes query, encodes latest filter config and navigates to search.
+     *
+     * @param query user query to search for
+     * @param searchUrl search url to navigate to
+     */
+    async navigateToSearch(query: string, searchUrl: string) {
+        this.userQuery = query;
+        await this.execute();
+        await this.router.navigate([searchUrl], {
+            queryParams: { q: this.encodedQuery },
+            queryParamsHandling: 'merge'
+        });
     }
 }

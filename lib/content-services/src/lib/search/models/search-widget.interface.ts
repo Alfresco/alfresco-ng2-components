@@ -17,7 +17,7 @@
 
 import { SearchWidgetSettings } from './search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../services/search-query-builder.service';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 export interface SearchWidget {
     id: string;
@@ -27,7 +27,7 @@ export interface SearchWidget {
     isActive?: boolean;
     startValue: any;
     /* stream emit value on changes */
-    displayValue$: Subject<string>;
+    displayValue$: ReplaySubject<string>;
     /* reset the value and update the search */
     reset(): void;
     /* update the search with field value */
