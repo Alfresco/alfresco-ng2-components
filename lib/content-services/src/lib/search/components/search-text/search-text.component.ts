@@ -19,7 +19,8 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
@@ -48,7 +49,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     startValue: string;
     isActive = false;
     enableChangeUpdate = true;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {
@@ -70,6 +71,16 @@ export class SearchTextComponent implements SearchWidget, OnInit {
                 }
             }
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(first())
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    this.value = filtersQueries[this.id];
+                    this.updateQuery(this.value, false);
+                    this.context.filterLoaded.next();
+                }
+            });
     }
 
     clear() {
@@ -93,11 +104,14 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         }
     }
 
-    private updateQuery(value: string) {
+    private updateQuery(value: string, updateContext = true) {
+        this.context.filterRawParams[this.id] = value;
         this.displayValue$.next(value);
         if (this.context && this.settings && this.settings.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 

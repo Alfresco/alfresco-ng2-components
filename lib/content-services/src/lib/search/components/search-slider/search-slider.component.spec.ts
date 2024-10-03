@@ -18,6 +18,7 @@
 import { SearchSliderComponent } from './search-slider.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReplaySubject } from 'rxjs';
 
 describe('SearchSliderComponent', () => {
     let fixture: ComponentFixture<SearchSliderComponent>;
@@ -29,101 +30,84 @@ describe('SearchSliderComponent', () => {
         });
         fixture = TestBed.createComponent(SearchSliderComponent);
         component = fixture.componentInstance;
-    });
-
-    it('should setup slider from settings', () => {
-        const settings: any = {
+        component.id = 'slider';
+        component.context = {
+            queryFragments: {
+                slider: ''
+            },
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy('update')
+        } as any;
+        component.settings = {
+            field: 'field1',
             min: 10,
             max: 100,
             step: 2,
             thumbLabel: true
         };
+    });
 
-        component.settings = settings;
+    it('should setup slider from settings', () => {
         fixture.detectChanges();
 
-        expect(component.min).toEqual(settings.min);
-        expect(component.max).toEqual(settings.max);
-        expect(component.step).toEqual(settings.step);
-        expect(component.thumbLabel).toEqual(settings.thumbLabel);
+        expect(component.min).toEqual(10);
+        expect(component.max).toEqual(100);
+        expect(component.step).toEqual(2);
+        expect(component.thumbLabel).toEqual(true);
     });
 
     it('should update its query part on slider change', () => {
-        const context: any = {
-            queryFragments: {},
-            update: () => {}
-        };
-
-        spyOn(context, 'update').and.stub();
-
-        component.context = context;
-        component.id = 'contentSize';
-        component.settings = { field: 'cm:content.size' };
+        component.settings['field'] = 'cm:content.size';
         component.value = 10;
         fixture.detectChanges();
 
         component.onChangedHandler();
-        expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 10]');
-        expect(context.update).toHaveBeenCalled();
+        expect(component.context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 10]');
+        expect(component.context.filterRawParams[component.id]).toEqual(10);
+        expect(component.context.update).toHaveBeenCalled();
 
         component.value = 20;
         component.onChangedHandler();
-        expect(context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 20]');
+        expect(component.context.queryFragments[component.id]).toEqual('cm:content.size:[0 TO 20]');
+        expect(component.context.filterRawParams[component.id]).toEqual(20);
     });
 
     it('should reset the value for query builder', () => {
-        const settings: any = {
-            field: 'field1',
-            min: 10,
-            max: 100,
-            step: 2,
-            thumbLabel: true
-        };
-
-        const context: any = {
-            queryFragments: {},
-            update: () => {}
-        };
-
-        component.settings = settings;
-        component.context = context;
         component.value = 20;
-        component.id = 'slider';
-        spyOn(context, 'update').and.stub();
         fixture.detectChanges();
 
         component.reset();
 
-        expect(component.value).toBe(settings.min);
-        expect(context.queryFragments[component.id]).toBe('');
-        expect(context.update).toHaveBeenCalled();
+        expect(component.value).toBe(10);
+        expect(component.context.queryFragments[component.id]).toBe('');
+        expect(component.context.filterRawParams[component.id]).toBe(null);
+        expect(component.context.update).toHaveBeenCalled();
     });
 
     it('should reset to 0 if min not provided', () => {
-        const settings: any = {
-            field: 'field1',
-            min: null,
-            max: 100,
-            step: 2,
-            thumbLabel: true
-        };
-
-        const context: any = {
-            queryFragments: {},
-            update: () => {}
-        };
-
-        component.settings = settings;
-        component.context = context;
+        component.settings.min = null;
         component.value = 20;
-        component.id = 'slider';
-        spyOn(context, 'update').and.stub();
         fixture.detectChanges();
 
         component.reset();
 
         expect(component.value).toBe(0);
-        expect(context.queryFragments['slider']).toBe('');
-        expect(context.update).toHaveBeenCalled();
+        expect(component.context.queryFragments['slider']).toBe('');
+        expect(component.context.update).toHaveBeenCalled();
+    });
+
+    it('should populate filter state when populate filters event has been observed', async () => {
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+        component.context.populateFilters.next({ slider: 20 });
+        fixture.detectChanges();
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith('20 ');
+        expect(component.value).toBe(20);
+        expect(component.context.filterRawParams[component.id]).toBe(20);
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

@@ -19,7 +19,8 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
@@ -47,7 +48,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     max: number;
     thumbLabel = false;
     enableChangeUpdate: boolean;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
 
     /** The numeric value represented by the slider. */
     @Input()
@@ -74,6 +75,16 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         if (this.startValue) {
             this.setValue(this.startValue);
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(first())
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    this.value = filtersQueries[this.id];
+                    this.updateQuery(this.value, false);
+                    this.context.filterLoaded.next();
+                }
+            });
     }
 
     clear() {
@@ -111,7 +122,8 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         this.submitValues();
     }
 
-    private updateQuery(value: number | null) {
+    private updateQuery(value: number | null, updateContext = true) {
+        this.context.filterRawParams[this.id] = value;
         this.displayValue$.next(this.value ? `${this.value} ${this.settings.unit ?? ''}` : '');
         if (this.id && this.context && this.settings && this.settings.field) {
             if (value === null) {
@@ -119,7 +131,9 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
             } else {
                 this.context.queryFragments[this.id] = `${this.settings.field}:[0 TO ${value}]`;
             }
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 }

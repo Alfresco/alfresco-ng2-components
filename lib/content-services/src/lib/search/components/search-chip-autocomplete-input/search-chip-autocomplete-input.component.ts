@@ -56,6 +56,9 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     autocompleteOptions: AutocompleteOption[] = [];
 
     @Input()
+    preselectedOptions: AutocompleteOption[] = [];
+
+    @Input()
     onReset$: Observable<void>;
 
     @Input()
@@ -106,6 +109,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
                 this.inputChanged.emit(value);
             });
         this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
+        this.selectedOptions = this.preselectedOptions ?? [];
     }
 
     ngOnChanges(changes: SimpleChanges) {
