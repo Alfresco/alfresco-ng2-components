@@ -20,13 +20,13 @@ runs:
   using: "composite"
   steps:
       - name: install NPM
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         with:
           node-version-file: '.nvmrc'
           cache-dependency-path: package-lock.json
       - name: get latest tag sha
         id: tag-sha
-        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@a4013b7dfd8453ee94ec5d4eb8cb51d74654f770 # v7.0.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/git-latest-tag@bd803ea1bf16464eaf9726560c0496b41d15c03f # v7.1.0
 # CACHE
       - name: Node Modules cache
         id: node-modules-cache

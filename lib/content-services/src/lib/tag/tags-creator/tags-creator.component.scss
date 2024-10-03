@@ -106,6 +106,7 @@ adf-tags-creator {
         .mdc-evolution-chip__action--primary,
         .mat-mdc-chip-action-label {
             overflow: hidden;
+            word-break: break-all;
         }
     }
     /* stylelint-enable selector-class-pattern */

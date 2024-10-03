@@ -77,7 +77,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         const files = event.target.files;
         let filesSaved = [];
 
-        if (this.field.json.value) {
+        if (this.field?.json.value) {
             filesSaved = [...this.field.json.value];
         }
 
