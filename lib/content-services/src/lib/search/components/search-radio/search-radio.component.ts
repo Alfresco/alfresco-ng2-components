@@ -22,7 +22,8 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -56,7 +57,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
 
     constructor() {
         this.options = new SearchFilterList<SearchRadioOption>();
@@ -82,6 +83,16 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         }
         this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
         this.updateDisplayValue();
+        this.context.populateFilters
+            .asObservable()
+            .pipe(first())
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    this.value = filtersQueries[this.id];
+                    this.submitValues(false);
+                    this.context.filterLoaded.next();
+                }
+            });
     }
 
     private getSelectedValue(): string {
@@ -98,10 +109,12 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         return null;
     }
 
-    submitValues() {
+    submitValues(updateContext = true) {
         this.setValue(this.value);
         this.updateDisplayValue();
-        this.context.update();
+        if (updateContext) {
+            this.context.update();
+        }
     }
 
     hasValidValue() {
@@ -112,6 +125,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     setValue(newValue: string) {
         this.value = newValue;
         this.context.queryFragments[this.id] = newValue;
+        this.context.filterRawParams[this.id] = newValue;
         if (this.enableChangeUpdate) {
             this.updateDisplayValue();
             this.context.update();

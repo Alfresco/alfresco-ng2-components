@@ -15,15 +15,31 @@
  * limitations under the License.
  */
 
+import { ReplaySubject } from 'rxjs';
 import { SearchNumberRangeComponent } from './search-number-range.component';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('SearchNumberRangeComponent', () => {
-
     let component: SearchNumberRangeComponent;
+    let fixture: ComponentFixture<SearchNumberRangeComponent>;
 
     beforeEach(() => {
-        component = new SearchNumberRangeComponent();
+        TestBed.configureTestingModule({
+            imports: [ContentTestingModule, SearchNumberRangeComponent]
+        });
+        fixture = TestBed.createComponent(SearchNumberRangeComponent);
+        component = fixture.componentInstance;
+        component.id = 'contentSize';
+        component.context = {
+            queryFragments: {
+                contentSize: ''
+            },
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy('update')
+        } as any;
     });
 
     it('should setup form elements on init', () => {
@@ -44,46 +60,32 @@ describe('SearchNumberRangeComponent', () => {
     });
 
     it('should update query builder on reset', () => {
-        const context: any = {
-            queryFragments: {
-                contentSize: 'query'
-            },
-            update: () => {}
-        };
-
-        component.id = 'contentSize';
-        component.context = context;
-
-        spyOn(context, 'update').and.stub();
-
+        component.context.queryFragments[component.id] = 'query';
         component.ngOnInit();
         component.reset();
 
-        expect(context.queryFragments.contentSize).toEqual('');
-        expect(context.update).toHaveBeenCalled();
+        expect(component.context.queryFragments.contentSize).toEqual('');
+        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.filterRawParams[component.id]).toBeUndefined();
     });
 
     it('should update query builder on value changes', () => {
-        const context: any = {
-            queryFragments: {},
-            update: () => {}
-        };
-
-        component.id = 'contentSize';
-        component.context = context;
         component.settings = { field: 'cm:content.size' };
 
-        spyOn(context, 'update').and.stub();
-
         component.ngOnInit();
-        component.apply({
-            from: '10',
-            to: '20'
-        }, true);
+        component.apply(
+            {
+                from: '10',
+                to: '20'
+            },
+            true
+        );
 
         const expectedQuery = 'cm:content.size:[10 TO 20]';
-        expect(context.queryFragments[component.id]).toEqual(expectedQuery);
-        expect(context.update).toHaveBeenCalled();
+        expect(component.context.queryFragments[component.id]).toEqual(expectedQuery);
+        expect(component.context.update).toHaveBeenCalled();
+        expect(component.context.filterRawParams[component.id].from).toEqual('10');
+        expect(component.context.filterRawParams[component.id].to).toEqual('20');
     });
 
     it('should fetch format from the settings', () => {
@@ -108,31 +110,27 @@ describe('SearchNumberRangeComponent', () => {
     });
 
     it('should format value based on the current pattern', () => {
-        const context: any = {
-            queryFragments: {},
-            update: () => {}
-        };
-
-        component.id = 'range1';
         component.settings = {
             field: 'cm:content.size',
             format: '<{FROM} TO {TO}>'
         };
-        component.context = context;
         component.ngOnInit();
 
         component.apply({ from: '0', to: '100' }, true);
-        expect(context.queryFragments['range1']).toEqual('cm:content.size:<0 TO 100>');
+        expect(component.context.queryFragments[component.id]).toEqual('cm:content.size:<0 TO 100>');
     });
 
     it('should return true if TO value is bigger than FROM value', () => {
         component.ngOnInit();
         component.from = new UntypedFormControl('10');
         component.to = new UntypedFormControl('20');
-        component.form = new UntypedFormGroup({
-            from: component.from,
-            to: component.to
-        }, component.formValidator);
+        component.form = new UntypedFormGroup(
+            {
+                from: component.from,
+                to: component.to
+            },
+            component.formValidator
+        );
 
         expect(component.formValidator).toBeTruthy();
     });
@@ -165,5 +163,22 @@ describe('SearchNumberRangeComponent', () => {
         component.ngOnInit();
         component.from = new UntypedFormControl(-100, component.validators);
         expect(component.from.hasError('min')).toBe(true);
+    });
+
+    it('should populate filter state when populate filters event has been observed', () => {
+        component.settings = {
+            field: 'cm:content.size'
+        };
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+        component.context.populateFilters.next({ contentSize: { from: '10', to: '100' } });
+        fixture.detectChanges();
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith('10 - 100 ');
+        expect(component.context.filterRawParams[component.id]).toEqual({ from: '10', to: '100' });
+        expect(component.form.value).toEqual({ from: '10', to: '100' });
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

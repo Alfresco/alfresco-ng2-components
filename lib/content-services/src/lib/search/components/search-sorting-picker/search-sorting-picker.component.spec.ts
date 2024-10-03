@@ -17,42 +17,45 @@
 
 import { SearchSortingPickerComponent } from './search-sorting-picker.component';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { AppConfigService } from '@alfresco/adf-core';
-import { SearchConfiguration } from '../../models/search-configuration.interface';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
-import { AlfrescoApiService } from '../../../services/alfresco-api.service';
+import { SearchConfiguration } from '../../models';
 
 describe('SearchSortingPickerComponent', () => {
-    let queryBuilder: SearchQueryBuilderService;
+    let fixture: ComponentFixture<SearchSortingPickerComponent>;
     let component: SearchSortingPickerComponent;
 
-    const buildConfig = (searchSettings): AppConfigService => {
-        const config = TestBed.inject(AppConfigService);
-        config.config.search = searchSettings;
-        return config;
+    const config: SearchConfiguration = {
+        sorting: {
+            options: [
+                { key: 'name', label: 'Name', type: 'FIELD', field: 'cm:name', ascending: true },
+                { key: 'content.sizeInBytes', label: 'Size', type: 'FIELD', field: 'content.size', ascending: true },
+                { key: 'description', label: 'Description', type: 'FIELD', field: 'cm:description', ascending: true }
+            ],
+            defaults: [{ key: 'name', type: 'FIELD', field: 'cm:name', ascending: false } as any]
+        },
+        categories: [{ id: 'cat1', enabled: true } as any]
+    };
+
+    const queryBuilder = {
+        getSortingOptions: () => config.sorting.options,
+        getPrimarySorting: () => config.sorting.defaults[0],
+        sorting: config.sorting.options,
+        update: jasmine.createSpy('update')
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            imports: [ContentTestingModule],
+            providers: [
+                {
+                    provide: SearchQueryBuilderService,
+                    useValue: queryBuilder
+                }
+            ]
         });
-
-        const config: SearchConfiguration = {
-            sorting: {
-                options: [
-                    { key: 'name', label: 'Name', type: 'FIELD', field: 'cm:name', ascending: true },
-                    { key: 'content.sizeInBytes', label: 'Size', type: 'FIELD', field: 'content.size', ascending: true },
-                    { key: 'description', label: 'Description', type: 'FIELD', field: 'cm:description', ascending: true }
-                ],
-                defaults: [{ key: 'name', type: 'FIELD', field: 'cm:name', ascending: false } as any]
-            },
-            categories: [{ id: 'cat1', enabled: true } as any]
-        };
-        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
-
-        queryBuilder = new SearchQueryBuilderService(buildConfig(config), alfrescoApiService);
-        component = new SearchSortingPickerComponent(queryBuilder);
+        fixture = TestBed.createComponent(SearchSortingPickerComponent);
+        component = fixture.componentInstance;
     });
 
     it('should load options from query builder', () => {
@@ -72,8 +75,6 @@ describe('SearchSortingPickerComponent', () => {
     });
 
     it('should update query builder each time selection is changed', () => {
-        spyOn(queryBuilder, 'update').and.stub();
-
         component.ngOnInit();
         component.onValueChanged('description');
 
@@ -84,8 +85,6 @@ describe('SearchSortingPickerComponent', () => {
     });
 
     it('should update query builder each time sorting is changed', () => {
-        spyOn(queryBuilder, 'update').and.stub();
-
         component.ngOnInit();
         component.onSortingChanged(false);
 

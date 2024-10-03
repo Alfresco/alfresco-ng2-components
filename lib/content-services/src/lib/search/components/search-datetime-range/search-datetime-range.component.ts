@@ -22,10 +22,11 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { isValid, isBefore, startOfMinute, endOfMinute } from 'date-fns';
+import { isValid, isBefore, startOfMinute, endOfMinute, parseISO } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -74,7 +75,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
 
     constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
 
@@ -133,9 +134,22 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
 
         this.setFromMaxDatetime();
         this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
+        this.context.populateFilters
+            .asObservable()
+            .pipe(first())
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    const start = parseISO(filtersQueries[this.id].start);
+                    const end = parseISO(filtersQueries[this.id].end);
+                    this.form.patchValue({ from: start, to: end });
+                    this.form.markAsDirty();
+                    this.apply({ from: start, to: end }, true, false);
+                    this.context.filterLoaded.next();
+                }
+            });
     }
 
-    apply(model: Partial<{ from: Date; to: Date }>, isValidValue: boolean) {
+    apply(model: Partial<{ from: Date; to: Date }>, isValidValue: boolean, updateContext = true) {
         if (isValidValue && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
@@ -143,8 +157,13 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
             const end = DateFnsUtils.utcToLocal(endOfMinute(model.to)).toISOString();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
+            this.context.filterRawParams[this.id] = this.context.filterRawParams[this.id] ?? {};
+            this.context.filterRawParams[this.id].start = start;
+            this.context.filterRawParams[this.id].end = end;
             this.updateDisplayValue();
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 
@@ -197,6 +216,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
         });
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
+            this.context.filterRawParams[this.id] = undefined;
         }
 
         if (this.id && this.context && this.enableChangeUpdate) {
