@@ -17,15 +17,15 @@
                         {{ filter.name | translate }}
                     </span>
                 </div>
-                <span *ngIf="counters$[filter.key]"
+                <span *ngIf="counters[filter.key]"
                     [attr.data-automation-id]="filter.key + '_filter-counter'"
                     class="adf-task-filters__entry-counter"
                     [class.adf-active]="wasFilterUpdated(filter.key)">
-                    {{ counters$[filter.key] | async }}
+                    {{ counters[filter.key] }}
                 </span>
             </div>
         </button>
-</mat-action-list>
+    </mat-action-list>
 <ng-template #loading>
     <ng-container>
         <div class="adf-app-list-spinner">
