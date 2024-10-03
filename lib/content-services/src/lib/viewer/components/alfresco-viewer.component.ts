@@ -25,6 +25,7 @@ import {
     OnDestroy,
     OnInit,
     Output,
+    SimpleChanges,
     TemplateRef,
     ViewChild,
     ViewEncapsulation
@@ -443,13 +444,13 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         return !!(this.nodeId || this.sharedLinkId);
     }
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
         if (this.showViewer) {
             if (!this.isSourceDefined()) {
                 throw new Error('A content source attribute value is missing.');
             }
 
-            if (this.nodeId) {
+            if (changes.nodeId?.currentValue !== changes.nodeId?.previousValue) {
                 this.setupNode();
             } else if (this.sharedLinkId) {
                 this.setupSharedLink();
