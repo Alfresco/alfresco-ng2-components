@@ -79,6 +79,7 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         this.clientsFactory();
 
         this.errorListeners();
+        this.ticketMismatchListeners();
         if (this.config.oauthInit) {
             this.initAuth(config);
 
@@ -132,6 +133,11 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
                 this.emitBuffer('logged-in');
             });
 
+            this.processAuth?.on('ticket_mismatch', (error: any) => {
+                this.ticketMismatchHandler(error);
+                this.emitBuffer('ticket_mismatch');
+            });
+
             if (!this.contentAuth) {
                 this.contentAuth = new ContentAuth(this.config, this, this.httpClient);
             } else {
@@ -140,6 +146,11 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
             this.contentAuth?.on('logged-in', () => {
                 this.emitBuffer('logged-in');
+            });
+
+            this.contentAuth?.on('ticket_mismatch', (error: any) => {
+                this.ticketMismatchHandler(error);
+                this.emitBuffer('ticket_mismatch');
             });
 
             this.setAuthenticationClientECMBPM(this.contentAuth.getAuthentication(), this.processAuth.getAuthentication());
@@ -240,6 +251,19 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         });
     }
 
+    ticketMismatchListeners() {
+        this.contentClient.off('ticket_mismatch', () => {});
+        this.processClient.off('ticket_mismatch', () => {});
+
+        this.contentClient.on('ticket_mismatch', (error: any) => {
+            this.ticketMismatchHandler(error);
+        });
+
+        this.processClient.on('ticket_mismatch', (error: any) => {
+            this.ticketMismatchHandler(error);
+        });
+    }
+
     /**@private? */
     errorHandler(error: { status?: number }) {
         if (this.config.oauthInit && error.status === 401) {
@@ -247,6 +271,15 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
         }
 
         this.emitBuffer('error', error);
+    }
+
+    ticketMismatchHandler(error: { newTicket?: string }) {
+        if (error.newTicket) {
+            this.config.ticketEcm = error.newTicket;
+            this.initConfig(this.config);
+        }
+
+        this.emitBuffer('ticket_mismatch', error);
     }
 
     changeWithCredentialsConfig(withCredentials: boolean) {

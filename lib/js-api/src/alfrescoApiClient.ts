@@ -243,10 +243,18 @@ export class AlfrescoApiClient implements ee.Emitter, LegacyHttpClient {
 
         if (ticket) {
             return ticketParam + ticket;
-        } else if (this.config.ticketEcm) {
-            return ticketParam + this.config.ticketEcm;
-        } else if (this.storage.getItem('ticket-ECM')) {
-            return ticketParam + this.storage.getItem('ticket-ECM');
+        } else {
+            const ticketConfig = this.config.ticketEcm;
+            const ticketStorage = this.storage.getItem('ticket-ECM');
+
+            if (ticketConfig && ticketStorage && ticketConfig !== ticketStorage) {
+                this.emit('ticket_mismatch', { newTicket: ticketStorage });
+                return ticketParam + ticketStorage;
+            } else if (ticketConfig) {
+                return ticketParam + ticketConfig;
+            } else if (ticketStorage) {
+                return ticketParam + ticketStorage;
+            }
         }
 
         return '';
