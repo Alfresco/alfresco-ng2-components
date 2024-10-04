@@ -1319,7 +1319,7 @@ describe('FormCloudComponent', () => {
         });
 
         it('should not set the styles for the card', () => {
-            const fullScreenCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card'));
+            const fullScreenCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card-fullscreen'));
             expect(fullScreenCard).toBeNull();
         });
 
@@ -1405,7 +1405,7 @@ describe('FormCloudComponent', () => {
             });
 
             it('should set the styles for the card', () => {
-                const fullScreenCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card'));
+                const fullScreenCard = fixture.debugElement.query(By.css('.adf-cloud-form-content-card-fullscreen'));
                 expect(fullScreenCard).not.toBeNull();
             });
 
