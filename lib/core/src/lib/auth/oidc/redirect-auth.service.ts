@@ -19,9 +19,10 @@ import { Inject, Injectable, inject } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, take } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
+import { RetryLoginService } from './retry-login.service';
 
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
@@ -29,6 +30,7 @@ const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && ty
 export class RedirectAuthService extends AuthService {
 
   readonly authModuleConfig: AuthModuleConfig = inject(AUTH_MODULE_CONFIG);
+  private readonly _retryLoginService: RetryLoginService = inject(RetryLoginService);
 
   onLogin: Observable<any>;
 
@@ -53,21 +55,6 @@ export class RedirectAuthService extends AuthService {
 
   private authConfig!: AuthConfig | Promise<AuthConfig>;
 
-  private readonly AUTH_STORAGE_ITEMS: string[] = [
-    'access_token',
-    'access_token_stored_at',
-    'expires_at',
-    'granted_scopes',
-    'id_token',
-    'id_token_claims_obj',
-    'id_token_expires_at',
-    'id_token_stored_at',
-    'nonce',
-    'PKCE_verifier',
-    'refresh_token',
-    'session_state'
-  ];
-
   constructor(
     private oauthService: OAuthService,
     private _oauthStorage: OAuthStorage,
@@ -83,13 +70,6 @@ export class RedirectAuthService extends AuthService {
       distinctUntilChanged(),
       shareReplay(1)
     );
-
-    this.oauthService.events.pipe(take(1)).subscribe(() => {
-        if(this.oauthService.getAccessToken() && !this.authenticated){
-            this.AUTH_STORAGE_ITEMS.map((item: string) => this._oauthStorage.removeItem(item));
-            this.reloadPage();
-        }
-    });
 
     this.onLogin = this.authenticated$.pipe(
         filter((authenticated) => authenticated),
@@ -160,9 +140,13 @@ export class RedirectAuthService extends AuthService {
   }
 
   async loginCallback(loginOptions?: LoginOptions): Promise<string | undefined> {
-    return this.ensureDiscoveryDocument()
-      .then(() => this.oauthService.tryLogin({ ...loginOptions, preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin }))
-      .then(() => this._getRedirectUrl());
+      return this.ensureDiscoveryDocument()
+          .then(() => this._retryLoginService.tryToLoginTimes({ ...loginOptions, preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin }))
+          .then(() => this._getRedirectUrl())
+          .catch(async (error) => {
+            console.error(error);
+            this.oauthService.revokeTokenAndLogout();
+        });
   }
 
   private _getRedirectUrl() {
@@ -244,10 +228,6 @@ export class RedirectAuthService extends AuthService {
 
   updateIDPConfiguration(config: AuthConfig) {
     this.oauthService.configure(config);
-  }
-
-  reloadPage() {
-    window.location.reload();
   }
 
 }
