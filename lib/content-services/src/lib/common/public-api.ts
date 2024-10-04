@@ -24,6 +24,7 @@ export * from './services/nodes-api.service';
 export * from './services/discovery-api.service';
 export * from './services/people-content.service';
 export * from './services/content.service';
+export * from './services/saved-searches.service';
 
 export * from './events/file.event';
 
