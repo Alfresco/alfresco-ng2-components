@@ -16,8 +16,12 @@
  */
 
 import { Component, Input } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone: true,
+    imports: [MatProgressSpinnerModule, TranslateModule],
     templateUrl: './form-spinner.component.html',
     styleUrls: ['./form-spinner.component.scss']
 })

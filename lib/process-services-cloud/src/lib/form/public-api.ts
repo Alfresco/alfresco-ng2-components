@@ -17,18 +17,20 @@
 
 export * from './models/task-variable-cloud.model';
 
+export * from './components/spinner/form-spinner.component';
 export * from './components/form-cloud-custom-outcomes.component';
 export * from './components/form-cloud.component';
 export * from './components/form-definition-selector-cloud.component';
 export * from './components/cloud-form-rendering.service';
-
 export * from './components/widgets/attach-file/attach-file-cloud-widget.component';
+export * from './components/widgets/attach-file/file-properties-table-cloud.component';
 export * from './components/widgets/attach-file/upload-cloud.widget';
 export * from './components/widgets/date/date-cloud.widget';
 export * from './components/widgets/dropdown/dropdown-cloud.widget';
 export * from './components/widgets/group/group-cloud.widget';
 export * from './components/widgets/people/people-cloud.widget';
 export * from './components/widgets/properties-viewer/properties-viewer.widget';
+export * from './components/widgets/properties-viewer/properties-viewer-wrapper/properties-viewer-wrapper.component';
 export * from './components/widgets/file-viewer/file-viewer.widget';
 export * from './components/widgets/display-rich-text/display-rich-text.widget';
 

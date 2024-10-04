@@ -25,7 +25,6 @@ import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { fakeGlobalFilter, defaultTaskFiltersMock, taskNotifications } from '../mock/task-filters-cloud.mock';
 
 describe('TaskFiltersCloudComponent', () => {
@@ -39,7 +38,7 @@ describe('TaskFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudComponent],
             providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         taskFilterService = TestBed.inject(TaskFilterCloudService);

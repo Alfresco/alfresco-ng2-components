@@ -16,27 +16,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../material.module';
-import { FormCloudModule } from '../../form/form-cloud.module';
-import { TaskDirectiveModule } from '../directives/task-directive.module';
-
 import { TaskFormCloudComponent } from './components/task-form-cloud.component';
-import { CoreModule } from '@alfresco/adf-core';
 
+/** @deprecated use TaskFormCloudComponent instead */
 @NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        MaterialModule,
-        FormCloudModule,
-        TaskDirectiveModule
-    ],
-    declarations: [
-        TaskFormCloudComponent
-    ],
-    exports: [
-        TaskFormCloudComponent
-    ]
+    imports: [TaskFormCloudComponent],
+    exports: [TaskFormCloudComponent]
 })
-export class TaskFormModule { }
+export class TaskFormModule {}

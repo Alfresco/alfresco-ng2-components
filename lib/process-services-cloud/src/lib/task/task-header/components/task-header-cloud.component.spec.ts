@@ -23,7 +23,6 @@ import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { AppConfigService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 import {
     assignedTaskDetailsCloudMock,
     completedTaskDetailsCloudMock,
@@ -32,7 +31,6 @@ import {
     taskDetailsWithParentTaskIdMock,
     createdTaskDetailsCloudMock
 } from '../mocks/task-details-cloud.mock';
-import { MatSelectModule } from '@angular/material/select';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
@@ -62,7 +60,7 @@ describe('TaskHeaderCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskHeaderCloudModule, MatSelectModule]
+            imports: [ProcessServiceCloudTestingModule, TaskHeaderCloudComponent]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {

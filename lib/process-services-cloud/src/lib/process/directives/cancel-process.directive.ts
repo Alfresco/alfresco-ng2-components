@@ -23,11 +23,11 @@ import { ProcessInstanceCloud } from '../start-process/models/process-instance-c
 import { IdentityUserService } from '../../people/services/identity-user.service';
 
 @Directive({
+    standalone: true,
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adf-cloud-cancel-process]'
 })
 export class CancelProcessDirective implements OnInit, OnDestroy {
-
     /** Emitted when the process is cancelled. */
     @Output()
     success = new EventEmitter<any>();
@@ -42,19 +42,14 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        private elementRef: ElementRef,
-        private processCloudService: ProcessCloudService,
-        private identityUserService: IdentityUserService) {}
+    constructor(private elementRef: ElementRef, private processCloudService: ProcessCloudService, private identityUserService: IdentityUserService) {}
 
     ngOnInit() {
-        this.processCloudService.dataChangesDetected
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((processDetails) => {
-                this.processInstanceDetails = processDetails;
-                this.canCancelProcess = this.checkCanCancelProcess();
-                this.setElementVisibility();
-            });
+        this.processCloudService.dataChangesDetected.pipe(takeUntil(this.onDestroy$)).subscribe((processDetails) => {
+            this.processInstanceDetails = processDetails;
+            this.canCancelProcess = this.checkCanCancelProcess();
+            this.setElementVisibility();
+        });
     }
 
     @HostListener('click')
@@ -73,11 +68,10 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     cancelProcess() {
         if (this.canCancelProcess) {
-            this.processCloudService.cancelProcess(this.processInstanceDetails.appName, this.processInstanceDetails.id)
-                .subscribe(
-                    (response) => this.success.emit(response),
-                    (error) => this.error.emit(error)
-                );
+            this.processCloudService.cancelProcess(this.processInstanceDetails.appName, this.processInstanceDetails.id).subscribe(
+                (response) => this.success.emit(response),
+                (error) => this.error.emit(error)
+            );
         } else {
             this.error.emit('Permission denied, only process initiator can cancel the process');
         }

@@ -16,45 +16,25 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { TaskFiltersCloudComponent } from './components/task-filters-cloud.component';
-import { MaterialModule } from '../../material.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { HttpClientModule } from '@angular/common/http';
-import { AppListCloudModule } from './../../app/app-list-cloud.module';
-import { ProcessCommonModule } from '../../common/process-common.module';
-import { PeopleCloudModule } from '../../people/people-cloud.module';
 import { EditServiceTaskFilterCloudComponent } from './components/edit-task-filters/edit-service-task-filter-cloud.component';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filters/edit-task-filter-cloud.component';
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog/task-filter-dialog-cloud.component';
 import { ServiceTaskFiltersCloudComponent } from './components/service-task-filters-cloud.component';
 import { TaskAssignmentFilterCloudComponent } from './components/task-assignment-filter/task-assignment-filter.component';
-import { GroupCloudModule } from '../../group/group-cloud.module';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+export const TASK_FILTERS_CLOUD_DIRECTIVES = [
+    TaskFiltersCloudComponent,
+    ServiceTaskFiltersCloudComponent,
+    EditTaskFilterCloudComponent,
+    EditServiceTaskFilterCloudComponent,
+    TaskAssignmentFilterCloudComponent,
+    TaskFilterDialogCloudComponent
+] as const;
+
+/** @deprecated use individual standalone components instead */
 @NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        CommonModule,
-        MaterialModule,
-        AppListCloudModule,
-        CoreModule,
-        GroupCloudModule,
-        ProcessCommonModule,
-        PeopleCloudModule,
-        MatProgressSpinnerModule
-    ],
-    declarations: [
-        TaskFiltersCloudComponent,
-        ServiceTaskFiltersCloudComponent,
-        EditTaskFilterCloudComponent,
-        EditServiceTaskFilterCloudComponent,
-        TaskFilterDialogCloudComponent,
-        TaskAssignmentFilterCloudComponent
-    ],
-    exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
+    imports: [...TASK_FILTERS_CLOUD_DIRECTIVES],
+    exports: [...TASK_FILTERS_CLOUD_DIRECTIVES]
 })
 export class TaskFiltersCloudModule {}

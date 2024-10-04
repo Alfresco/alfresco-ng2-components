@@ -16,12 +16,17 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { FormService, BaseViewerWidgetComponent } from '@alfresco/adf-core';
+import { FormService, BaseViewerWidgetComponent, ErrorWidgetComponent } from '@alfresco/adf-core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
     selector: 'file-viewer-widget',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, AlfrescoViewerComponent, ErrorWidgetComponent],
     templateUrl: './file-viewer.widget.html',
     styleUrls: ['./file-viewer.widget.scss'],
     host: {

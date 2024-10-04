@@ -16,31 +16,19 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProcessFiltersCloudComponent } from './components/process-filters-cloud.component';
-import { MaterialModule } from '../../material.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
-import { AppListCloudModule } from './../../app/app-list-cloud.module';
-import { ProcessCommonModule } from '../../common/process-common.module';
-import { PeopleCloudModule } from '../../people/people-cloud.module';
 
+export const PROCESS_FILTERS_CLOUD_DIRECTIVES = [
+    ProcessFiltersCloudComponent,
+    EditProcessFilterCloudComponent,
+    ProcessFilterDialogCloudComponent
+] as const;
+
+/** @deprecated import individual standalone components instead */
 @NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        CommonModule,
-        MaterialModule,
-        AppListCloudModule,
-        CoreModule,
-        ProcessCommonModule,
-        PeopleCloudModule
-    ],
-    declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
-    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]
+    imports: [...PROCESS_FILTERS_CLOUD_DIRECTIVES],
+    exports: [...PROCESS_FILTERS_CLOUD_DIRECTIVES]
 })
-export class ProcessFiltersCloudModule { }
+export class ProcessFiltersCloudModule {}

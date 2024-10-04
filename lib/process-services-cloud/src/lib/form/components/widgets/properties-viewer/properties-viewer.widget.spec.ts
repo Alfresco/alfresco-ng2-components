@@ -47,8 +47,7 @@ describe('PropertiesViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [PropertiesViewerWrapperComponent],
+            imports: [ProcessServiceCloudTestingModule, PropertiesViewerWrapperComponent],
             providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
         });
         fixture = TestBed.createComponent(PropertiesViewerWidgetComponent);

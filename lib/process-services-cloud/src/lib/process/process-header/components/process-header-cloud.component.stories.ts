@@ -16,7 +16,6 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { ProcessHeaderCloudModule } from '../process-header-cloud.module';
 import { ProcessServicesCloudStoryModule } from '../../../testing/process-services-cloud-story.module';
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessCloudServiceMock } from '../../mock/process-cloud.service.mock';
@@ -28,7 +27,7 @@ export default {
     title: 'Process Services Cloud/Process Cloud/Process Header Cloud/Process Header Cloud',
     decorators: [
         moduleMetadata({
-            imports: [ProcessHeaderCloudModule]
+            imports: [ProcessHeaderCloudComponent]
         }),
         applicationConfig({
             providers: [{ provide: ProcessCloudService, useClass: ProcessCloudServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]

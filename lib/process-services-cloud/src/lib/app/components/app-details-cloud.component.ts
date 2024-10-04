@@ -17,46 +17,49 @@
 
 import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { ApplicationInstanceModel, DEFAULT_APP_INSTANCE_ICON, DEFAULT_APP_INSTANCE_THEME } from '../models/application-instance.model';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'adf-cloud-app-details',
-  templateUrl: './app-details-cloud.component.html',
-  styleUrls: ['./app-details-cloud.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-cloud-app-details',
+    standalone: true,
+    imports: [CommonModule, MatCardModule, MatIconModule],
+    templateUrl: './app-details-cloud.component.html',
+    styleUrls: ['./app-details-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-
 export class AppDetailsCloudComponent {
+    @Input()
+    applicationInstance: ApplicationInstanceModel;
 
-  @Input()
-  applicationInstance: ApplicationInstanceModel;
+    @Output()
+    selectedApp = new EventEmitter<ApplicationInstanceModel>();
 
-  @Output()
-  selectedApp = new EventEmitter<ApplicationInstanceModel>();
+    /**
+     * Pass the selected app as next
+     *
+     * @param app application model
+     */
+    onSelectApp(app: ApplicationInstanceModel): void {
+        this.selectedApp.emit(app);
+    }
 
-  /**
-   * Pass the selected app as next
-   *
-   * @param app application model
-   */
-  onSelectApp(app: ApplicationInstanceModel): void {
-    this.selectedApp.emit(app);
-  }
+    /**
+     * Get application instance theme
+     *
+     * @returns the name of the theme
+     */
+    getTheme(): string {
+        return this.applicationInstance.theme || DEFAULT_APP_INSTANCE_THEME;
+    }
 
-  /**
-   * Get application instance theme
-   *
-   * @returns the name of the theme
-   */
-  getTheme(): string {
-    return this.applicationInstance.theme || DEFAULT_APP_INSTANCE_THEME;
-  }
-
-  /**
-   * Get application instance icon
-   *
-   * @returns the name of the icon
-   */
-  getIcon(): string {
-    return this.applicationInstance.icon || DEFAULT_APP_INSTANCE_ICON;
-  }
+    /**
+     * Get application instance icon
+     *
+     * @returns the name of the icon
+     */
+    getIcon(): string {
+        return this.applicationInstance.icon || DEFAULT_APP_INSTANCE_ICON;
+    }
 }

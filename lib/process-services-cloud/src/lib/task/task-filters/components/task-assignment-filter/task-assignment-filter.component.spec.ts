@@ -17,8 +17,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskAssignmentFilterCloudComponent } from './task-assignment-filter.component';
-import { GroupCloudModule } from '../../../../group/group-cloud.module';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { AssignmentType, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { IdentityUserService } from '../../../../people/services/identity-user.service';
 import { By } from '@angular/platform-browser';
@@ -58,7 +56,7 @@ describe('TaskAssignmentFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, GroupCloudModule, TaskFiltersCloudModule]
+            imports: [ProcessServiceCloudTestingModule, TaskAssignmentFilterCloudComponent]
         });
     });
 

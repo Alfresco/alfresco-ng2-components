@@ -20,7 +20,6 @@ import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
 import { FormDefinitionSelectorCloudService } from '../../../form/services/form-definition-selector-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -50,8 +49,7 @@ describe('StartTaskCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [ProcessServiceCloudTestingModule, StartTaskCloudComponent]
         });
         fixture = TestBed.createComponent(StartTaskCloudComponent);
         component = fixture.componentInstance;

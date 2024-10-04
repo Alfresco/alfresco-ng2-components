@@ -44,7 +44,12 @@ import {
     ContentLinkModel,
     UploadWidgetContentLinkModel,
     FormEvent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    FormatSpacePipe,
+    FormRendererComponent,
+    ToolbarDividerComponent,
+    ToolbarComponent,
+    FormStylePipe
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -54,9 +59,29 @@ import { v4 as uuidGeneration } from 'uuid';
 import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
 import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.service';
 import { DisplayModeService } from '../services/display-mode.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-cloud-form',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        FormatSpacePipe,
+        MatButtonModule,
+        MatCardModule,
+        FormRendererComponent,
+        MatIconModule,
+        ToolbarDividerComponent,
+        ToolbarComponent,
+        A11yModule,
+        FormStylePipe
+    ],
     templateUrl: './form-cloud.component.html',
     styleUrls: ['./form-cloud.component.scss']
 })

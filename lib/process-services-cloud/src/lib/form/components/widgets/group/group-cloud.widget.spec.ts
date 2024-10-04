@@ -33,8 +33,7 @@ describe('GroupCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [GroupCloudWidgetComponent],
+            imports: [ProcessServiceCloudTestingModule, GroupCloudWidgetComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(GroupCloudWidgetComponent);

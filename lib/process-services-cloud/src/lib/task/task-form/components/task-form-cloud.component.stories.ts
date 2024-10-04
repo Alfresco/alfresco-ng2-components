@@ -18,7 +18,6 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { FormCloudService } from '../../../form/public-api';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TaskFormModule } from '../task-form.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
 import { FormCloudServiceMock } from '../../../form/mocks/form-cloud.service.mock';
@@ -30,16 +29,14 @@ export default {
     title: 'Process Services Cloud/Task Cloud/Task Form/Task Form Cloud',
     decorators: [
         moduleMetadata({
-            imports: [TaskFormModule],
+            imports: [TaskFormCloudComponent],
             providers: [
                 { provide: TaskCloudService, useClass: TaskCloudServiceMock },
                 { provide: FormCloudService, useClass: FormCloudServiceMock }
             ]
         }),
         applicationConfig({
-            providers: [
-                importProvidersFrom(ProcessServicesCloudStoryModule)
-            ]
+            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
     argTypes: {

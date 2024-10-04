@@ -16,7 +16,6 @@
  */
 
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
-import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskCloudServiceMock } from '../../mock/task-cloud.service.mock';
@@ -28,7 +27,7 @@ export default {
     title: 'Process Services Cloud/Task Cloud/Task Header Cloud/Task Header Cloud',
     decorators: [
         moduleMetadata({
-            imports: [TaskHeaderCloudModule],
+            imports: [TaskHeaderCloudComponent],
             providers: [{ provide: TaskCloudService, useClass: TaskCloudServiceMock }]
         }),
         applicationConfig({

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppConfigService } from '@alfresco/adf-core';
@@ -26,9 +26,12 @@ import { RequestOptions } from '@alfresco/js-api';
 
 @Injectable({ providedIn: 'root' })
 export class AppsProcessCloudService {
+    private adfHttpClient = inject(AdfHttpClient);
+    private appConfigService = inject(AppConfigService);
+
     deployedApps: ApplicationInstanceModel[];
 
-    constructor(private adfHttpClient: AdfHttpClient, private appConfigService: AppConfigService) {
+    constructor() {
         this.loadApps();
     }
 

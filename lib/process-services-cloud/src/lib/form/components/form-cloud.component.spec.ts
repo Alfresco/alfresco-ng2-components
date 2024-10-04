@@ -46,7 +46,6 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, of, throwError } from 'rxjs';
-import { FormCloudModule } from '../form-cloud.module';
 import {
     cloudFormMock,
     conditionalUploadWidgetsMock,
@@ -98,7 +97,7 @@ describe('FormCloudComponent', () => {
         const resolver = formRenderingService.getComponentTypeResolver(type);
         const widgetType = resolver(null);
 
-        const factoryResolver: ComponentFactoryResolver = TestBed.inject(ComponentFactoryResolver);
+        const factoryResolver = TestBed.inject(ComponentFactoryResolver);
         const factory = factoryResolver.resolveComponentFactory(widgetType);
         const componentRef = factory.create(injector);
 
@@ -107,7 +106,7 @@ describe('FormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [ProcessServiceCloudTestingModule, FormCloudComponent],
             providers: [
                 {
                     provide: VersionCompatibilityService,
@@ -1539,7 +1538,7 @@ describe('retrieve metadata on submit', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot(), FormCloudModule],
+            imports: [ProcessServiceCloudTestingModule, FormCloudComponent],
             providers: [
                 provideTranslations('app', 'resources'),
                 {

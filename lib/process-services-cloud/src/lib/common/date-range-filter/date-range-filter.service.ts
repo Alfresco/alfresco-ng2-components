@@ -15,27 +15,42 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
-import { add, endOfDay, endOfMonth, endOfQuarter, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfQuarter, startOfWeek, startOfYear } from 'date-fns';
+import {
+    add,
+    endOfDay,
+    endOfMonth,
+    endOfQuarter,
+    endOfWeek,
+    endOfYear,
+    startOfDay,
+    startOfMonth,
+    startOfQuarter,
+    startOfWeek,
+    startOfYear
+} from 'date-fns';
 
-@Injectable({
-    providedIn: 'root'
-})
 export class DateRangeFilterService {
-
     currentDate = new Date();
 
     getDateRange(type: DateCloudFilterType): DateRangeFilter {
         switch (type) {
-            case DateCloudFilterType.TODAY: return this.getTodayDateRange();
-            case DateCloudFilterType.TOMORROW: return this.getTomorrowDateRange();
-            case DateCloudFilterType.NEXT_7_DAYS: return this.getNext7DaysDateRange();
-            case DateCloudFilterType.WEEK: return this.getCurrentWeekRange();
-            case DateCloudFilterType.MONTH: return this.getCurrentMonthDateRange();
-            case DateCloudFilterType.QUARTER: return this.getQuarterDateRange();
-            case DateCloudFilterType.YEAR: return this.getCurrentYearDateRange();
-            default: return this.resetDateRange();
+            case DateCloudFilterType.TODAY:
+                return this.getTodayDateRange();
+            case DateCloudFilterType.TOMORROW:
+                return this.getTomorrowDateRange();
+            case DateCloudFilterType.NEXT_7_DAYS:
+                return this.getNext7DaysDateRange();
+            case DateCloudFilterType.WEEK:
+                return this.getCurrentWeekRange();
+            case DateCloudFilterType.MONTH:
+                return this.getCurrentMonthDateRange();
+            case DateCloudFilterType.QUARTER:
+                return this.getQuarterDateRange();
+            case DateCloudFilterType.YEAR:
+                return this.getCurrentYearDateRange();
+            default:
+                return this.resetDateRange();
         }
     }
 
@@ -79,7 +94,7 @@ export class DateRangeFilterService {
     }
 
     private getCurrentWeekRange(): DateRangeFilter {
-        return  {
+        return {
             startDate: startOfWeek(new Date()).toISOString(),
             endDate: endOfWeek(new Date()).toISOString()
         };

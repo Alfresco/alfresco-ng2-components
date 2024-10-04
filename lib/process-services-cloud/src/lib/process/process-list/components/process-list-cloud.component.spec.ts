@@ -82,8 +82,9 @@ describe('ProcessListCloudComponent', () => {
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
-        preferencesService = TestBed.inject<PreferenceCloudServiceInterface>(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN);
         fixture = TestBed.createComponent(ProcessListCloudComponent);
+        preferencesService = fixture.debugElement.injector.get<PreferenceCloudServiceInterface>(PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN);
+
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-process-list': {
@@ -614,6 +615,8 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
 describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
     @Component({
+        standalone: true,
+        imports: [ProcessListCloudComponent, CustomEmptyContentTemplateDirective],
         template: `
             <adf-cloud-process-list #processListCloud>
                 <adf-custom-empty-content-template>
@@ -635,9 +638,14 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, MatProgressSpinnerModule, CustomEmptyContentTemplateDirective],
-            providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
-            declarations: [EmptyTemplateComponent, ProcessListCloudComponent]
+            imports: [
+                ProcessServiceCloudTestingModule,
+                MatProgressSpinnerModule,
+                CustomEmptyContentTemplateDirective,
+                ProcessListCloudComponent,
+                EmptyTemplateComponent
+            ],
+            providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }]
         });
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
         fixtureEmpty.detectChanges();

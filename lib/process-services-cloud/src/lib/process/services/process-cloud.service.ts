@@ -48,7 +48,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
                 })
             );
         } else {
-            return throwError('AppName/ProcessInstanceId not configured');
+            return throwError(() => new Error('AppName/ProcessInstanceId not configured'));
         }
     }
 
@@ -64,7 +64,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
             return this.get(url).pipe(map((res: any) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry))));
         } else {
-            return throwError('AppName not configured');
+            return throwError(() => new Error('AppName not configured'));
         }
     }
 
@@ -80,7 +80,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
             return this.get(url).pipe(map((appEntities: ApplicationVersionResponseModel) => appEntities.list.entries));
         } else {
-            return throwError('AppName not configured');
+            return throwError(() => new Error('AppName not configured'));
         }
     }
 
@@ -101,7 +101,7 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
                 })
             );
         } else {
-            return throwError('App name and process id not configured');
+            return throwError(() => new Error('App name and process id not configured'));
         }
     }
 }

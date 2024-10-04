@@ -19,10 +19,9 @@ export * from './components/task-filters-cloud.component';
 export * from './components/service-task-filters-cloud.component';
 export * from './components/edit-task-filters/edit-task-filter-cloud.component';
 export * from './components/edit-task-filters/edit-service-task-filter-cloud.component';
-
+export * from './components/task-filter-dialog/task-filter-dialog-cloud.component';
+export * from './components/task-assignment-filter/task-assignment-filter.component';
 export * from './models/filter-cloud.model';
-
 export * from './services/task-filter-cloud.service';
 export * from './services/service-task-filter-cloud.service';
-
 export * from './task-filters-cloud.module';

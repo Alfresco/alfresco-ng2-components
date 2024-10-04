@@ -18,7 +18,6 @@
 import { applicationConfig, Meta, moduleMetadata, StoryFn } from '@storybook/angular';
 import { ProcessServicesCloudStoryModule } from '../../testing/process-services-cloud-story.module';
 import { mockFilterProperty } from '../mock/date-range-filter.mock';
-import { ProcessCommonModule } from '../process-common.module';
 import { DateRangeFilterComponent } from './date-range-filter.component';
 import { importProvidersFrom } from '@angular/core';
 
@@ -27,7 +26,7 @@ export default {
     title: 'Process Services Cloud/Process Common/Date Range Filter',
     decorators: [
         moduleMetadata({
-            imports: [ProcessCommonModule]
+            imports: [DateRangeFilterComponent]
         }),
         applicationConfig({
             providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]

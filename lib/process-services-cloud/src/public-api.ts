@@ -28,7 +28,6 @@ export * from './lib/rich-text-editor/public-api';
 export * from './lib/types';
 export * from './lib/common/index';
 export * from './lib/pipes/process-name-cloud.pipe';
-export * from './lib/pipes/process-services-cloud-pipe.module';
 export * from './lib/models/process-definition-cloud.model';
 export * from './lib/models/date-cloud-filter.model';
 export * from './lib/models/application-version.model';

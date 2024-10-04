@@ -81,7 +81,7 @@ describe('DisplayRichTextWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            imports: [CoreTestingModule, DisplayRichTextWidgetComponent]
         });
         fixture = TestBed.createComponent(DisplayRichTextWidgetComponent);
         widget = fixture.componentInstance;
@@ -94,7 +94,7 @@ describe('DisplayRichTextWidgetComponent', () => {
         expect(widget).toBeTruthy();
     });
 
-    it('should parse editorjs data to html', async () => {
+    it('should parse editor.js data to html', async () => {
         const expectedHtml =
             '<h1>Editor.js</h1><p class="ce-tune-alignment--left">Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark></p>';
 

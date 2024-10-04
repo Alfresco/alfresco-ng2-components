@@ -23,9 +23,44 @@ import { TaskFilterCloudService } from '../../services/task-filter-cloud.service
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
 import { set } from 'date-fns';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { IconComponent } from '@alfresco/adf-core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DateRangeFilterComponent } from '../../../../common/date-range-filter/date-range-filter.component';
+import { PeopleCloudComponent } from '../../../../people/components/people-cloud.component';
+import { TaskAssignmentFilterCloudComponent } from '../task-assignment-filter/task-assignment-filter.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
+    standalone: true,
+    imports: [
+        CommonModule,
+        TranslateModule,
+        IconComponent,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatIconModule,
+        MatCheckboxModule,
+        DateRangeFilterComponent,
+        PeopleCloudComponent,
+        TaskAssignmentFilterCloudComponent,
+        MatExpansionModule
+    ],
     templateUrl: './base-edit-task-filter-cloud.component.html',
     styleUrls: ['./base-edit-task-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -45,21 +80,14 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
     }
 
     protected getTaskFilterById(appName: string, id: string) {
-        return this.taskFilterCloudService
-            .getTaskFilterById(appName, id)
-            .pipe(
-                map(response => new TaskFilterCloudModel(response))
-            );
+        return this.taskFilterCloudService.getTaskFilterById(appName, id).pipe(map((response) => new TaskFilterCloudModel(response)));
     }
 
     createAndFilterProperties() {
         const result = super.createAndFilterProperties();
 
         if (this.hasLastModifiedProperty()) {
-            return [
-                ...result,
-                ...this.createLastModifiedProperty()
-            ];
+            return [...result, ...this.createLastModifiedProperty()];
         }
 
         return result;
@@ -75,14 +103,11 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
 
     private setLastModifiedToFilter(formValues: TaskFilterCloudModel) {
         if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
-            const lastModifiedToFilterValue = set(
-                new Date(formValues.lastModifiedTo),
-                {
-                    hours: 23,
-                    minutes: 59,
-                    seconds: 59
-                }
-            );
+            const lastModifiedToFilterValue = set(new Date(formValues.lastModifiedTo), {
+                hours: 23,
+                minutes: 59,
+                seconds: 59
+            });
             formValues.lastModifiedTo = lastModifiedToFilterValue.toISOString();
         }
     }
@@ -96,9 +121,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
     }
 
     protected addFilter(filterToAdd: TaskFilterCloudModel): Observable<any> {
-        return this.taskFilterCloudService
-            .addFilter(filterToAdd)
-            .pipe(takeUntil(this.onDestroy$));
+        return this.taskFilterCloudService.addFilter(filterToAdd).pipe(takeUntil(this.onDestroy$));
     }
 
     isDisabledForDefaultFilters(action: TaskFilterAction): boolean {
@@ -244,7 +267,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
                 type: 'date-range',
                 key: 'dueDateRange',
-                attributes: { dateType: 'dueDateType', from: '_dueDateFrom', to: '_dueDateTo'},
+                attributes: { dateType: 'dueDateType', from: '_dueDateFrom', to: '_dueDateTo' },
                 value: {
                     dueDateType: this.taskFilter.dueDateType || null,
                     _dueDateFrom: this.taskFilter.dueDateFrom || null,
@@ -262,7 +285,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date-range',
                 key: 'completedDateRange',
-                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo'},
+                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo' },
                 value: {
                     completedDateType: this.taskFilter.completedDateType || null,
                     _completedFrom: this.taskFilter.completedFrom || null,
@@ -273,7 +296,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
                 type: 'date-range',
                 key: 'createdDateRange',
-                attributes: { dateType: 'createdDateType', from: '_createdFrom', to: '_createdTo'},
+                attributes: { dateType: 'createdDateType', from: '_createdFrom', to: '_createdTo' },
                 value: {
                     createdDateType: this.taskFilter.createdDateType || null,
                     _createdFrom: this.taskFilter.createdFrom || null,
@@ -291,7 +314,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
                 type: 'assignment',
                 key: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'},
+                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' },
                 value: {
                     assignedUsers: this.taskFilter.assignedUsers || [],
                     candidateGroups: this.taskFilter.candidateGroups || []

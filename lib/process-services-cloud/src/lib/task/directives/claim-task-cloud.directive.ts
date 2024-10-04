@@ -20,11 +20,11 @@ import { IdentityUserService } from '../../people/services/identity-user.service
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
+    standalone: true,
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adf-cloud-claim-task]'
 })
 export class ClaimTaskCloudDirective implements OnInit {
-
     /** (Required) The id of the task. */
     @Input()
     taskId: string;
@@ -47,14 +47,14 @@ export class ClaimTaskCloudDirective implements OnInit {
         private readonly el: ElementRef,
         private readonly renderer: Renderer2,
         private taskListService: TaskCloudService,
-        private identityUserService: IdentityUserService) { }
+        private identityUserService: IdentityUserService
+    ) {}
 
     ngOnInit() {
         this.validateInputs();
     }
 
     validateInputs() {
-
         if (!this.isTaskValid()) {
             this.invalidParams.push('taskId');
         }
@@ -81,7 +81,6 @@ export class ClaimTaskCloudDirective implements OnInit {
         } catch (error) {
             this.error.emit(error);
         }
-
     }
 
     private async claimTask() {

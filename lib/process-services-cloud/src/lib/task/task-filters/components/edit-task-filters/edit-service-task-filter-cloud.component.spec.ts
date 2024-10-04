@@ -24,12 +24,10 @@ import { LocalPreferenceCloudService } from '../../../../services/local-preferen
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance, fakeApplicationInstanceWithEnvironment } from '../../../../app/mock/app-model.mock';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeServiceFilter } from '../../mock/task-filters-cloud.mock';
 import { EditServiceTaskFilterCloudComponent } from './edit-service-task-filter-cloud.component';
-import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
 import { TaskFilterDialogCloudComponent } from '../task-filter-dialog/task-filter-dialog-cloud.component';
 import { fakeEnvironmentList } from '../../../../common/mock/environment.mock';
@@ -54,7 +52,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, MatIconTestingModule],
+            imports: [ProcessServiceCloudTestingModule, EditServiceTaskFilterCloudComponent],
             providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditServiceTaskFilterCloudComponent);

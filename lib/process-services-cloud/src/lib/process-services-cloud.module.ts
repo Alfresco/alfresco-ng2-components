@@ -17,53 +17,62 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule, FormRenderingService, provideTranslations } from '@alfresco/adf-core';
-import { AppListCloudModule } from './app/app-list-cloud.module';
-import { TaskCloudModule } from './task/task-cloud.module';
-import { ProcessCloudModule } from './process/process-cloud.module';
-import { GroupCloudModule } from './group/group-cloud.module';
-import { FormCloudModule } from './form/form-cloud.module';
-import { TaskFormModule } from './task/task-form/task-form.module';
+import { APP_LIST_CLOUD_DIRECTIVES } from './app/app-list-cloud.module';
+import { TASK_CLOUD_DIRECTIVES } from './task/task-cloud.module';
+import { PROCESS_CLOUD_DIRECTIVES } from './process/process-cloud.module';
+import { FORM_CLOUD_DIRECTIVES } from './form/form-cloud.module';
 import {
     LocalPreferenceCloudService,
     PreferenceCloudServiceInterface,
     PROCESS_FILTERS_SERVICE_TOKEN,
     TASK_FILTERS_SERVICE_TOKEN,
     PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
-    TASK_LIST_PREFERENCES_SERVICE_TOKEN
+    TASK_LIST_PREFERENCES_SERVICE_TOKEN,
+    TASK_LIST_CLOUD_TOKEN
 } from './services/public-api';
-import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
-import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-pipe.module';
 import { ApolloModule } from 'apollo-angular';
-import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
+import { ProcessNameCloudPipe } from './pipes/process-name-cloud.pipe';
+import { PeopleCloudComponent } from './people/components/people-cloud.component';
+import { RichTextEditorComponent } from './rich-text-editor';
+import { TaskFormCloudComponent } from './task/task-form/components/task-form-cloud.component';
+import { GroupCloudComponent } from './group/components/group-cloud.component';
+import { IDENTITY_GROUP_SERVICE_TOKEN } from './group/services/identity-group-service.token';
+import { IdentityGroupService } from './group/services/identity-group.service';
+import { IDENTITY_USER_SERVICE_TOKEN } from './people/services/identity-user-service.token';
+import { IdentityUserService } from './people/services/identity-user.service';
+import { TaskListCloudService } from './task/task-list/services/task-list-cloud.service';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
     imports: [
         CoreModule,
-        AppListCloudModule,
-        ProcessCloudModule,
-        TaskCloudModule,
-        GroupCloudModule,
-        PeopleCloudModule,
-        FormCloudModule,
-        TaskFormModule,
-        ProcessServicesCloudPipeModule,
+        ...APP_LIST_CLOUD_DIRECTIVES,
+        ...PROCESS_CLOUD_DIRECTIVES,
+        ...TASK_CLOUD_DIRECTIVES,
+        GroupCloudComponent,
+        PeopleCloudComponent,
+        ...FORM_CLOUD_DIRECTIVES,
+        TaskFormCloudComponent,
+        ProcessNameCloudPipe,
         ApolloModule,
-        RichTextEditorModule
+        RichTextEditorComponent
     ],
     providers: [
-        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
+        provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
+        ProcessNameCloudPipe,
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
     ],
     exports: [
-        AppListCloudModule,
-        ProcessCloudModule,
-        TaskCloudModule,
-        GroupCloudModule,
-        FormCloudModule,
-        TaskFormModule,
-        PeopleCloudModule,
-        ProcessServicesCloudPipeModule,
-        RichTextEditorModule
+        ...APP_LIST_CLOUD_DIRECTIVES,
+        ...PROCESS_CLOUD_DIRECTIVES,
+        ...TASK_CLOUD_DIRECTIVES,
+        GroupCloudComponent,
+        ...FORM_CLOUD_DIRECTIVES,
+        TaskFormCloudComponent,
+        PeopleCloudComponent,
+        ProcessNameCloudPipe,
+        RichTextEditorComponent
     ]
 })
 export class ProcessServicesCloudModule {
@@ -79,6 +88,9 @@ export class ProcessServicesCloudModule {
                 { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService },
+                { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserService },
+                { provide: TASK_LIST_CLOUD_TOKEN, useClass: TaskListCloudService },
                 FormRenderingService,
                 { provide: FormRenderingService, useClass: CloudFormRenderingService }
             ]

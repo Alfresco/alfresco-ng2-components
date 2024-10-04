@@ -25,16 +25,13 @@ import { LocalPreferenceCloudService } from '../../../../services/local-preferen
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance } from '../../../../app/mock/app-model.mock';
-import { TaskFiltersCloudModule } from '../../task-filters-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../../services/task-filter-cloud.service';
 import { TaskCloudService } from '../../../services/task-cloud.service';
 import { fakeFilter } from '../../mock/task-filters-cloud.mock';
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { AssignmentType, TaskFilterCloudModel, TaskStatusFilter } from '../../models/filter-cloud.model';
-import { PeopleCloudModule } from '../../../../people/people-cloud.module';
 import { ProcessDefinitionCloud } from '../../../../models/process-definition-cloud.model';
-import { MatIconTestingModule } from '@angular/material/icon/testing';
 import {
     mockAlfrescoApi,
     mockCompletedDateFilter,
@@ -74,7 +71,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule, PeopleCloudModule, MatIconTestingModule],
+            imports: [ProcessServiceCloudTestingModule, EditTaskFilterCloudComponent],
             providers: [MatDialog, { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);

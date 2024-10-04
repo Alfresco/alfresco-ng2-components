@@ -16,17 +16,23 @@
  */
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'adf-cloud-task-filter-dialog',
-  templateUrl: './task-filter-dialog-cloud.component.html',
-  styleUrls: ['./task-filter-dialog-cloud.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'adf-cloud-task-filter-dialog',
+    standalone: true,
+    imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, MatInputModule, ReactiveFormsModule, MatDialogModule],
+    templateUrl: './task-filter-dialog-cloud.component.html',
+    styleUrls: ['./task-filter-dialog-cloud.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TaskFilterDialogCloudComponent implements OnInit {
-
     // eslint-disable-next-line @typescript-eslint/naming-convention
     public static ACTION_SAVE = 'SAVE';
     defaultIcon = 'inbox';
@@ -36,8 +42,8 @@ export class TaskFilterDialogCloudComponent implements OnInit {
     constructor(
         private fb: UntypedFormBuilder,
         public dialogRef: MatDialogRef<TaskFilterDialogCloudComponent>,
-        @Inject(MAT_DIALOG_DATA) public data) {
-    }
+        @Inject(MAT_DIALOG_DATA) public data
+    ) {}
 
     ngOnInit() {
         this.filterForm = this.fb.group({
