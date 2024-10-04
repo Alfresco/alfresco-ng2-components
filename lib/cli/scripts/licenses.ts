@@ -151,12 +151,15 @@ export default function main(_args: string[], workingDir: string) {
                     console.error(err);
                     reject(err);
                 } else {
-                    const filteredPackages = Object.keys(packages)
-                        .filter((packageName) => Object.keys(directDependencies).some((dep) => packageName.startsWith(dep)))
-                        .reduce((obj, packageName) => {
-                            obj[packageName] = packages[packageName];
-                            return obj;
-                        }, {});
+                    const filteredPackages = Object.keys(directDependencies).reduce((obj, packageName) => {
+                        obj[packageName] = packages[packageName];
+                        return obj;
+                    }, {});
+
+                    // eslint-disable-next-line no-console
+                    console.log({ filteredPackages });
+                    // eslint-disable-next-line no-console
+                    console.log({ packages });
 
                     // eslint-disable-next-line guard-for-in
                     for (const packageName in filteredPackages) {
