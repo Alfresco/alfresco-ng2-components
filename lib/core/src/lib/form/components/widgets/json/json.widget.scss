@@ -1,0 +1,11 @@
+.adf {
+    &-json-widget {
+        width: 100%;
+
+        &-label {
+            .adf-label {
+                -webkit-font-smoothing: antialiased;
+            }
+        }
+    }
+}

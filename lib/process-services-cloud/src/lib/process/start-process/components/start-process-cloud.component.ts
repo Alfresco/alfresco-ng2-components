@@ -42,6 +42,7 @@ import { forkJoin, of, Subject } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
+import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -95,6 +96,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     /** Show/hide cancel button. */
     @Input()
     showCancelButton: boolean = true;
+
+    /**
+     * The available display configurations for the form.
+     * (start process event can have assigned form)
+     */
+    @Input()
+    displayModeConfigurations: FormCloudDisplayModeConfiguration[];
 
     /** Emitted when the process is successfully started. */
     @Output()
