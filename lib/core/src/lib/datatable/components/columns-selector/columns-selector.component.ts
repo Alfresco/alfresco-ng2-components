@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
@@ -27,25 +27,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FilterStringPipe } from '../../../pipes';
+import { TranslationService } from '../../../translation';
+
 @Component({
     selector: 'adf-datatable-column-selector',
     standalone: true,
-    imports: [
-        CommonModule,
-        TranslateModule,
-        MatButtonModule,
-        MatIconModule,
-        MatDividerModule,
-        ReactiveFormsModule,
-        MatCheckboxModule,
-        FilterStringPipe
-    ],
+    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatDividerModule, ReactiveFormsModule, MatCheckboxModule],
     templateUrl: './columns-selector.component.html',
     styleUrls: ['./columns-selector.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ColumnsSelectorComponent implements OnInit, OnDestroy {
+    private translationService = inject(TranslationService);
+
     @Input()
     columns: DataColumn[] = [];
 
@@ -68,8 +62,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.mainMenuTrigger.menuOpened.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            const columns = this.columns.map((column) => ({ ...column }));
-            this.columnItems = this.columnsSorting ? this.sortColumns(columns) : columns;
+            this.updateColumnItems();
         });
 
         this.mainMenuTrigger.menuClosed.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
@@ -78,7 +71,15 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
 
         this.searchInputControl.valueChanges.pipe(debounceTime(300), takeUntil(this.onDestroy$)).subscribe((searchQuery) => {
             this.searchQuery = searchQuery;
+            this.updateColumnItems();
         });
+    }
+
+    private updateColumnItems(): void {
+        let columns = this.columns.map((column) => ({ ...column }));
+        columns = this.filterColumnItems(columns, this.searchQuery);
+        columns = this.sortColumns(columns);
+        this.columnItems = columns;
     }
 
     ngOnDestroy() {
@@ -88,6 +89,34 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
 
     closeMenu(): void {
         this.mainMenuTrigger.closeMenu();
+    }
+
+    private filterString(value: string = '', filterBy: string = ''): string {
+        const testResult = filterBy ? value.toLowerCase().indexOf(filterBy.toLowerCase()) > -1 : true;
+        return testResult ? value : '';
+    }
+
+    private filterColumnItems(columns: DataColumn[], query: string): DataColumn[] {
+        const result = [];
+
+        for (const column of columns) {
+            if (!column.title) {
+                continue;
+            }
+
+            if (!query) {
+                result.push(column);
+                continue;
+            }
+
+            const title = this.translationService.instant(column.title);
+
+            if (this.filterString(title, query)) {
+                result.push(column);
+            }
+        }
+
+        return result;
     }
 
     changeColumnVisibility(column: DataColumn): void {
@@ -103,14 +132,17 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         return (
             this.maxColumnsVisible &&
             column.isHidden &&
-            this.maxColumnsVisible === this.columnItems.filter((dataColumn) => !dataColumn.isHidden).length
+            this.maxColumnsVisible >= this.columnItems.filter((dataColumn) => !dataColumn.isHidden).length
         );
     }
 
     private sortColumns(columns: DataColumn[]): DataColumn[] {
-        const shownColumns = columns.filter((column) => !column.isHidden);
-        const hiddenColumns = columns.filter((column) => column.isHidden);
+        if (this.columnsSorting) {
+            const shownColumns = columns.filter((column) => !column.isHidden);
+            const hiddenColumns = columns.filter((column) => column.isHidden);
 
-        return [...shownColumns, ...hiddenColumns];
+            return [...shownColumns, ...hiddenColumns];
+        }
+        return columns;
     }
 }

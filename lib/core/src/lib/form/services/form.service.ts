@@ -30,6 +30,7 @@ import { ValidateFormFieldEvent } from '../events/validate-form-field.event';
 import { FormValidationService } from './form-validation-service.interface';
 import { FormRulesEvent } from '../events/form-rules.event';
 import { FormSpinnerEvent } from '../events';
+import { FormFieldModel } from '../components/widgets';
 
 @Injectable({
     providedIn: 'root'
@@ -45,6 +46,8 @@ export class FormService implements FormValidationService {
     taskSavedError = new Subject<FormErrorEvent>();
     formContentClicked = new Subject<ContentLinkModel>();
     toggleFormSpinner = new Subject<FormSpinnerEvent>();
+
+    onFormVariableChanged = new Subject<{ field: FormFieldModel; data?: any }>();
 
     validateForm = new Subject<ValidateFormEvent>();
     validateFormField = new Subject<ValidateFormFieldEvent>();

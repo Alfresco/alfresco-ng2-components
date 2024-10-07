@@ -611,6 +611,14 @@ describe('ViewerComponent', () => {
             expect(dialogOpenSpy).toHaveBeenCalled();
         }));
 
+        it('should not show non responsive dialog if blobFile was provided', fakeAsync(() => {
+            component.blobFile = new Blob(['mock content'], { type: 'text/plain' });
+            fixture.detectChanges();
+            tick(3000);
+            fixture.detectChanges();
+            expect(dialogOpenSpy).not.toHaveBeenCalled();
+        }));
+
         it('should show reminder non responsive dialog after initial dialog', fakeAsync(() => {
             dialogOpenSpy.and.returnValue({ afterClosed: () => of(DownloadPromptActions.WAIT) } as any);
             fixture.detectChanges();

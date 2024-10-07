@@ -17,11 +17,12 @@
 
 import { Injectable } from '@angular/core';
 import { CanDeactivate } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.component';
 import { map, tap } from 'rxjs/operators';
 import { UnsavedChangesDialogData } from './unsaved-changes-dialog.model';
+import { AuthenticationService, AuthGuardService } from '../../auth';
 
 /**
  * Guard responsible for protecting leaving page with unsaved changes.
@@ -33,7 +34,7 @@ export class UnsavedChangesGuard implements CanDeactivate<any> {
     unsaved = false;
     data: UnsavedChangesDialogData;
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog, private authenticationService: AuthenticationService, private authGuardBaseService: AuthGuardService) {}
 
     /**
      * Allows to deactivate route when there is no unsaved changes, otherwise displays dialog to confirm discarding changes.
@@ -41,6 +42,10 @@ export class UnsavedChangesGuard implements CanDeactivate<any> {
      * @returns boolean | Observable<boolean> true when there is no unsaved changes or changes can be discarded, false otherwise.
      */
     canDeactivate(): boolean | Observable<boolean> {
+        if (!this.authenticationService.isLoggedIn() && !this.authGuardBaseService.withCredentials) {
+            return of(true);
+        }
+
         return this.unsaved
             ? this.dialog
                   .open<UnsavedChangesDialogComponent>(UnsavedChangesDialogComponent, {
