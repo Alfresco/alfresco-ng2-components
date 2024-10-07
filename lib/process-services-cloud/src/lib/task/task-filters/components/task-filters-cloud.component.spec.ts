@@ -386,15 +386,13 @@ describe('TaskFiltersCloudComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should remove key from set of updated filters when received refreshedFilterKey', async () => {
-        const filter = defaultTaskFiltersMock[1];
-        component.updatedCountersSet.add(filter.key);
-        fixture.detectChanges();
+    it('should remove key from set of updated filters when received refreshed filter key', async () => {
+        const filterKeyTest = 'filter-key-test';
+        component.updatedCountersSet.add(filterKeyTest);
 
         expect(component.updatedCountersSet.size).toBe(1);
 
-        fixture.componentRef.setInput('refreshedFilterKey', [filter.key]);
-        await fixture.whenStable();
+        taskFilterService.filterKeyToBeRefreshed$ = of(filterKeyTest);
         fixture.detectChanges();
 
         expect(component.updatedCountersSet.size).toBe(0);

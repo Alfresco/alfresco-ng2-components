@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject, Input } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -32,14 +32,6 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
-    /** (optional) The property indicates that the filter has been refreshed by an external action */
-    @Input()
-    set refreshedFilterKey(value: string[]) {
-        if (value?.length) {
-            this.updatedCountersSet.delete(value[0]);
-        }
-    }
-
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -70,6 +62,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.getFilters(this.appName);
         this.initFilterCounterNotifications();
+        this.getFilterKeysAfterExternalRefreshing();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -232,5 +225,15 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.updatedFilter.emit(filterKey);
             this.updatedCountersSet.add(filterKey);
         }
+    }
+
+    /**
+     * Get filer key when filter was refreshed by external action
+     *
+     */
+    getFilterKeysAfterExternalRefreshing(): void {
+        this.taskFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
+            this.updatedCountersSet.delete(filterKey);
+        });
     }
 }

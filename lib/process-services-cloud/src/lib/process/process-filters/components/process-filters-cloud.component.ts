@@ -43,14 +43,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     @Input()
     showIcons: boolean = false;
 
-    /** (optional) The property indicates that the filter has been refreshed by an external action */
-    @Input()
-    set refreshedFilterKey(value: string[]) {
-        if (value?.length) {
-            this.updatedFiltersSet.delete(value[0]);
-        }
-    }
-
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<ProcessFilterCloudModel>();
@@ -92,6 +84,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
             this.getFilters(this.appName);
         }
         this.initProcessNotification();
+        this.getFilterKeysAfterExternalRefreshing();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -284,5 +277,15 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     isFilterUpdated(filterName: string): boolean {
         return this.updatedFiltersSet.has(filterName);
+    }
+
+    /**
+     * Get filer key when filter was refreshed by external action
+     *
+     */
+    getFilterKeysAfterExternalRefreshing(): void {
+        this.processFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
+            this.updatedFiltersSet.delete(filterKey);
+        });
     }
 }

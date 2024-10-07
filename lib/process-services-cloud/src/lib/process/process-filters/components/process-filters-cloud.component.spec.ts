@@ -33,7 +33,8 @@ import { MatListModule } from '@angular/material/list';
 
 const ProcessFilterCloudServiceMock = {
     getProcessFilters: () => of(mockProcessFilters),
-    getProcessNotificationSubscription: () => of([])
+    getProcessNotificationSubscription: () => of([]),
+    filterKeyToBeRefreshed$: of(mockProcessFilters[0].key)
 };
 
 describe('ProcessFiltersCloudComponent', () => {
@@ -295,15 +296,13 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(component.getCurrentFilter()).toBe(filter);
     });
 
-    it('should remove key from set of updated filters when received refreshedFilterKey', async () => {
-        const filter = mockProcessFilters[1];
-        component.updatedFiltersSet.add(filter.key);
-        fixture.detectChanges();
+    it('should remove key from set of updated filters when received refreshed filter key', async () => {
+        const filterKeyTest = 'filter-key-test';
+        component.updatedFiltersSet.add(filterKeyTest);
 
         expect(component.updatedFiltersSet.size).toBe(1);
-
-        fixture.componentRef.setInput('refreshedFilterKey', [filter.key]);
-        await fixture.whenStable();
+        processFilterService.filterKeyToBeRefreshed$ = of(filterKeyTest);
+        fixture.detectChanges();
 
         expect(component.updatedFiltersSet.size).toBe(0);
     });
