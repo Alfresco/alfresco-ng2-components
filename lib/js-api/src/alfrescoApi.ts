@@ -135,7 +135,6 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
             this.processAuth?.on('ticket_mismatch', (error: any) => {
                 this.ticketMismatchHandler(error);
-                this.emitBuffer('ticket_mismatch');
             });
 
             if (!this.contentAuth) {
@@ -150,7 +149,6 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
             this.contentAuth?.on('ticket_mismatch', (error: any) => {
                 this.ticketMismatchHandler(error);
-                this.emitBuffer('ticket_mismatch');
             });
 
             this.setAuthenticationClientECMBPM(this.contentAuth.getAuthentication(), this.processAuth.getAuthentication());
