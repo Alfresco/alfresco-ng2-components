@@ -36,7 +36,11 @@
                     </button>
             </adf-toolbar>
 
-            <mat-card appearance="outlined" [class.adf-cloud-form-content-card]="displayConfiguration?.options?.fullscreen">
+            <mat-card 
+                appearance="outlined"
+                class="adf-cloud-form-content-card"
+                [class.adf-cloud-form-content-card-fullscreen]="displayMode === 'fullScreen'"
+            >
                 <div class="adf-cloud-form-content-card-container">
                 <mat-card-header *ngIf="showTitle || showRefreshButton || showValidationIcon">
                     <mat-card-title>
