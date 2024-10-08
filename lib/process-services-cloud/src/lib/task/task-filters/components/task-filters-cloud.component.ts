@@ -62,6 +62,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.getFilters(this.appName);
         this.initFilterCounterNotifications();
+        this.getFilterKeysAfterExternalRefreshing();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -182,6 +183,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             this.selectFilter(filter);
             this.updateFilterCounter(this.currentFilter);
             this.filterClicked.emit(this.currentFilter);
+            this.updatedCountersSet.delete(filter.key);
         } else {
             this.currentFilter = undefined;
         }
@@ -221,6 +223,17 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         if (this.currentFiltersValues[filterKey] !== filterValue) {
             this.currentFiltersValues[filterKey] = filterValue;
             this.updatedFilter.emit(filterKey);
+            this.updatedCountersSet.add(filterKey);
         }
+    }
+
+    /**
+     * Get filer key when filter was refreshed by external action
+     *
+     */
+    getFilterKeysAfterExternalRefreshing(): void {
+        this.taskFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
+            this.updatedCountersSet.delete(filterKey);
+        });
     }
 }

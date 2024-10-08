@@ -84,6 +84,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
             this.getFilters(this.appName);
         }
         this.initProcessNotification();
+        this.getFilterKeysAfterExternalRefreshing();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -250,9 +251,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     updateFilterCounters(): void {
         this.filters.forEach((filter: ProcessFilterCloudModel) => {
-            if (filter?.status) {
-                this.updateFilterCounter(filter);
-            }
+            this.updateFilterCounter(filter);
         });
     }
 
@@ -278,5 +277,15 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     isFilterUpdated(filterName: string): boolean {
         return this.updatedFiltersSet.has(filterName);
+    }
+
+    /**
+     * Get filer key when filter was refreshed by external action
+     *
+     */
+    getFilterKeysAfterExternalRefreshing(): void {
+        this.processFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
+            this.updatedFiltersSet.delete(filterKey);
+        });
     }
 }
