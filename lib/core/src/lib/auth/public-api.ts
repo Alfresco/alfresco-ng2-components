@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+export * from './authentication';
 export * from './authentication-interceptor/auth-bearer.interceptor';
-
+export * from './authentication-interceptor/authentication.interceptor';
 export * from './guard/auth-guard.service';
 export * from './guard/auth-guard';
 export * from './guard/auth-guard-ecm.service';

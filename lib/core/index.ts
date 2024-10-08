@@ -16,4 +16,3 @@
  */
 
 export * from './src/public-api';
-export * from './api/src/index';

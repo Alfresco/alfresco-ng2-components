@@ -17,7 +17,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AppConfigModule, AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
 import { UploadService } from './upload.service';
 import { RepositoryInfo } from '@alfresco/js-api';
 import { BehaviorSubject } from 'rxjs';
@@ -26,6 +26,7 @@ import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 declare let jasmine: any;
 
@@ -38,11 +39,13 @@ describe('UploadService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AppConfigModule, HttpClientTestingModule],
+            imports: [HttpClientTestingModule],
             providers: [
                 UploadService,
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null },
                 {
                     provide: DiscoveryApiService,
                     useValue: {

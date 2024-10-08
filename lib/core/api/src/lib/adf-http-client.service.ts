@@ -15,17 +15,8 @@
  * limitations under the License.
  */
 
-import { SHOULD_ADD_AUTH_TOKEN } from '@alfresco/adf-core/auth';
 import { Emitters as JsApiEmitters, HttpClient as JsApiHttpClient } from '@alfresco/js-api';
-import {
-    HttpClient,
-    HttpContext,
-    HttpErrorResponse,
-    HttpEvent,
-    HttpHeaders,
-    HttpParams,
-    HttpResponse
-} from '@angular/common/http';
+import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map, takeUntil } from 'rxjs/operators';
@@ -43,6 +34,7 @@ import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-e
 import { Constructor } from './types';
 import { RequestOptions, SecurityOptions } from './interfaces';
 import ee, { Emitter } from 'event-emitter';
+import { SHOULD_ADD_AUTH_TOKEN } from './tokens';
 
 export interface Emitters {
     readonly eventEmitter: Emitter;
@@ -52,8 +44,7 @@ export interface Emitters {
 @Injectable({
     providedIn: 'root'
 })
-export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
-
+export class AdfHttpClient implements ee.Emitter, JsApiHttpClient {
     on: ee.EmitterMethod;
     off: ee.EmitterMethod;
     once: ee.EmitterMethod;
@@ -80,10 +71,23 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         ee(this);
     }
 
+    /**
+     * Update the default security options
+     *
+     * @param options security options
+     * @deprecated not used anywhere
+     */
     setDefaultSecurityOption(options: any) {
         this.defaultSecurityOptions = this.merge(this.defaultSecurityOptions, options);
     }
 
+    /**
+     * Merge objects
+     *
+     * @param objects objects to merge
+     * @deprecated not used anywhere
+     * @returns merged object
+     */
     merge(...objects): any {
         const result = {};
 
@@ -103,52 +107,48 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     request<T = any>(url: string, options?: RequestOptions, sc: SecurityOptions = this.defaultSecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        const body = AdfHttpClient.getBody(options);
+        const body = this.getBody(options);
         const params = getQueryParamsWithCustomEncoder(options.queryParams, new AlfrescoApiParamEncoder());
-        const responseType = AdfHttpClient.getResponseType(options);
+        const responseType = this.getResponseType(options);
         const context = new HttpContext().set(SHOULD_ADD_AUTH_TOKEN, true);
-        const security: SecurityOptions = {...this.defaultSecurityOptions, ...sc};
+        const security: SecurityOptions = { ...this.defaultSecurityOptions, ...sc };
         const headers = this.getHeaders(options);
         if (!emitters) {
             emitters = this.getEventEmitters();
         }
 
-        const request = this.httpClient.request(
-            options.httpMethod,
-            url,
-            {
-                context,
-                ...(body && {body}),
-                ...(responseType && {responseType}),
-                ...security,
-                ...(params && {params}),
-                headers,
-                observe: 'events',
-                reportProgress: true
-            }
-        );
+        const request = this.httpClient.request(options.httpMethod, url, {
+            context,
+            ...(body && { body }),
+            ...(responseType && { responseType }),
+            ...security,
+            ...(params && { params }),
+            headers,
+            observe: 'events',
+            reportProgress: true
+        });
 
         return this.requestWithLegacyEventEmitters<T>(request, emitters, options.returnType);
     }
 
     post<T = any>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        return this.request<T>(url, {...options, httpMethod: 'POST'}, sc, emitters);
+        return this.request<T>(url, { ...options, httpMethod: 'POST' }, sc, emitters);
     }
 
     put<T = any>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        return this.request<T>(url, {...options, httpMethod: 'PUT'}, sc, emitters);
+        return this.request<T>(url, { ...options, httpMethod: 'PUT' }, sc, emitters);
     }
 
     get<T = any>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        return this.request<T>(url, {...options, httpMethod: 'GET'}, sc, emitters);
+        return this.request<T>(url, { ...options, httpMethod: 'GET' }, sc, emitters);
     }
 
     delete<T = void>(url: string, options?: RequestOptions, sc?: SecurityOptions, emitters?: JsApiEmitters): Promise<T> {
-        return this.request<T>(url, {...options, httpMethod: 'DELETE'}, sc, emitters);
+        return this.request<T>(url, { ...options, httpMethod: 'DELETE' }, sc, emitters);
     }
 
-    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any)  {
-        const eventPromise = Object.assign(promise, {
+    private addPromiseListeners<T = any>(promise: Promise<T>, eventEmitter: any) {
+        return Object.assign(promise, {
             on() {
                 // eslint-disable-next-line prefer-spread, prefer-rest-params
                 eventEmitter.on.apply(eventEmitter, arguments);
@@ -170,8 +170,6 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
                 return this;
             }
         });
-
-        return eventPromise;
     }
 
     private getEventEmitters(): Emitters {
@@ -189,58 +187,60 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
     }
 
     private requestWithLegacyEventEmitters<T = any>(request$: Observable<HttpEvent<T>>, emitters: JsApiEmitters, returnType: any): Promise<T> {
-
         const abort$ = new Subject<void>();
-        const {eventEmitter, apiClientEmitter} = emitters;
+        const { eventEmitter, apiClientEmitter } = emitters;
 
-        const promise = request$.pipe(
-            map((res) => {
-                if (isHttpUploadProgressEvent(res)) {
-                    const percent = Math.round((res.loaded / res.total) * 100);
-                    eventEmitter.emit('progress', {loaded: res.loaded, total: res.total, percent});
-                }
+        const promise = request$
+            .pipe(
+                map((res) => {
+                    if (isHttpUploadProgressEvent(res)) {
+                        const percent = Math.round((res.loaded / res.total) * 100);
+                        eventEmitter.emit('progress', { loaded: res.loaded, total: res.total, percent });
+                    }
 
-                if (isHttpResponseEvent(res)) {
-                    eventEmitter.emit('success', res.body);
-                    return AdfHttpClient.deserialize(res, returnType);
-                }
-            }),
-            catchError((err: HttpErrorResponse): Observable<AlfrescoApiResponseError> => {
+                    if (isHttpResponseEvent(res)) {
+                        eventEmitter.emit('success', res.body);
+                        return this.deserialize(res, returnType);
+                    }
+                }),
+                catchError((err: HttpErrorResponse): Observable<AlfrescoApiResponseError> => {
+                    // since we can't always determinate ahead of time if the response is going to be xml or plain text response
+                    // we need to handle false positive cases here.
 
-                // since we can't always determinate ahead of time if the response is going to be xml or plain text response
-                // we need to handle false positive cases here.
+                    if (err.status === 200) {
+                        eventEmitter.emit('success', err.error.text);
+                        return of(err.error.text);
+                    }
 
-                if (err.status === 200) {
-                    eventEmitter.emit('success', err.error.text);
-                    return of(err.error.text);
-                }
+                    eventEmitter.emit('error', err);
+                    apiClientEmitter.emit('error', { ...err, response: { req: err } });
 
-                eventEmitter.emit('error', err);
-                apiClientEmitter.emit('error', { ...err, response: { req: err } });
+                    if (err.status === 401) {
+                        eventEmitter.emit('unauthorized');
+                        apiClientEmitter.emit('unauthorized');
+                    }
 
-                if (err.status === 401) {
-                    eventEmitter.emit('unauthorized');
-                    apiClientEmitter.emit('unauthorized');
-                }
+                    // for backwards compatibility we need to convert it to error class as the HttpErrorResponse only implements Error interface, not extending it,
+                    // and we need to be able to correctly pass instanceof Error conditions used inside repository
+                    // we also need to pass error as Stringify string as we are detecting statusCodes using JSON.parse(error.message) in some places
+                    const msg = typeof err.error === 'string' ? err.error : JSON.stringify(err.error);
 
-                // for backwards compatibility we need to convert it to error class as the HttpErrorResponse only implements Error interface, not extending it,
-                // and we need to be able to correctly pass instanceof Error conditions used inside repository
-                // we also need to pass error as Stringify string as we are detecting statusCodes using JSON.parse(error.message) in some places
-                const msg = typeof err.error === 'string' ? err.error : JSON.stringify(err.error);
+                    // for backwards compatibility to handle cases in code where we try read response.error.response.body;
 
-                // for backwards compatibility to handle cases in code where we try read response.error.response.body;
+                    const error = {
+                        ...err,
+                        body: err.error
+                    };
 
-                const error = {
-                    ...err, body: err.error
-                };
+                    const alfrescoApiError = new AlfrescoApiResponseError(msg, err.status, error);
+                    return throwError(() => alfrescoApiError);
+                }),
+                takeUntil(abort$)
+            )
+            .toPromise();
 
-                const alfrescoApiError = new AlfrescoApiResponseError(msg, err.status, error);
-                return throwError(alfrescoApiError);
-            }),
-            takeUntil(abort$)
-        ).toPromise();
-
-        (promise as any).abort = function() {
+        /* eslint-disable @typescript-eslint/space-before-function-paren */
+        (promise as any).abort = function () {
             eventEmitter.emit('abort');
             abort$.next();
             abort$.complete();
@@ -250,8 +250,8 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         return this.addPromiseListeners(promise, eventEmitter);
     }
 
-    private static getBody(options: RequestOptions): any {
-        const contentType = options.contentType ? options.contentType : AdfHttpClient.jsonPreferredMime(options.contentTypes);
+    private getBody(options: RequestOptions): any {
+        const contentType = options.contentType ? options.contentType : this.jsonPreferredMime(options.contentTypes);
         const isFormData = contentType === 'multipart/form-data';
         const isFormUrlEncoded = contentType === 'application/x-www-form-urlencoded';
         const body = options.bodyParam;
@@ -261,20 +261,20 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         }
 
         if (isFormUrlEncoded) {
-            return new HttpParams({fromObject: removeNilValues(options.formParams)});
+            return new HttpParams({ fromObject: removeNilValues(options.formParams) });
         }
 
         return body;
     }
 
     private getHeaders(options: RequestOptions): HttpHeaders {
-        const contentType = options.contentType || AdfHttpClient.jsonPreferredMime(options.contentTypes);
-        const accept = options.accept || AdfHttpClient.jsonPreferredMime(options.accepts);
+        const contentType = options.contentType || this.jsonPreferredMime(options.contentTypes);
+        const accept = options.accept || this.jsonPreferredMime(options.accepts);
 
         const optionsHeaders = {
             ...options.headerParams,
-            ...(accept && {Accept: accept}),
-            ...((contentType) && {'Content-Type': contentType})
+            ...(accept && { Accept: accept }),
+            ...(contentType && { 'Content-Type': contentType })
         };
 
         if (!this.disableCsrf) {
@@ -290,13 +290,13 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
      * @param contentTypes a contentType array
      * @returns  The chosen content type, preferring JSON.
      */
-    private static jsonPreferredMime(contentTypes: readonly string[]): string {
+    private jsonPreferredMime(contentTypes: readonly string[]): string {
         if (!contentTypes?.length) {
             return 'application/json';
         }
 
         for (let i = 0; i < contentTypes.length; i++) {
-            if (AdfHttpClient.isJsonMime(contentTypes[i])) {
+            if (this.isJsonMime(contentTypes[i])) {
                 return contentTypes[i];
             }
         }
@@ -315,10 +315,9 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
      * @param contentType The MIME content type to check.
      * @returns <code>true</code> if <code>contentType</code> represents JSON, otherwise <code>false</code>.
      */
-    private static isJsonMime(contentType: string): boolean {
+    private isJsonMime(contentType: string): boolean {
         return Boolean(contentType?.match(/^application\/json(;.*)?$/i));
     }
-
 
     private setCsrfToken(optionsHeaders: any) {
         const token = this.createCSRFToken();
@@ -336,8 +335,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         return a ? (a ^ ((randomValue * 16) >> (a / 4))).toString(16) : ([1e16] + (1e16).toString()).replace(/[01]/g, this.createCSRFToken);
     }
 
-    private static getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
-
+    private getResponseType(options: RequestOptions): 'blob' | 'json' | 'text' {
         const isBlobType = options.returnType?.toString().toLowerCase() === 'blob' || options.responseType?.toString().toLowerCase() === 'blob';
 
         if (isBlobType) {
@@ -358,8 +356,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
      * @param returnType return type
      * @returns deserialized object
      */
-    private static deserialize<T>(response: HttpResponse<T>, returnType?: Constructor<unknown> | 'blob'): any {
-
+    private deserialize<T>(response: HttpResponse<T>, returnType?: Constructor<unknown> | 'blob'): any {
         if (response === null) {
             return null;
         }
@@ -376,7 +373,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         }
 
         if (isBlobResponse(response, returnType)) {
-            return AdfHttpClient.deserializeBlobResponse(response);
+            return this.deserializeBlobResponse(response);
         }
 
         if (!isConstructor(returnType)) {
@@ -390,9 +387,7 @@ export class AdfHttpClient implements ee.Emitter,JsApiHttpClient {
         return new returnType(body);
     }
 
-
-    private static deserializeBlobResponse(response: HttpResponse<Blob>) {
-        return new Blob([response.body], {type: response.headers.get('Content-Type')});
+    private deserializeBlobResponse(response: HttpResponse<Blob>) {
+        return new Blob([response.body], { type: response.headers.get('Content-Type') });
     }
 }
-
