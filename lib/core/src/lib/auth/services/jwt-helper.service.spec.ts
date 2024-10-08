@@ -57,8 +57,6 @@ describe('JwtHelperService', () => {
 
     describe('RealmRole ', () => {
         it('Should be true if the realm_access contains the single role', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
                 realm_access: { roles: ['role1'] }
             });
@@ -68,8 +66,6 @@ describe('JwtHelperService', () => {
         });
 
         it('Should be true if the realm_access contains at least one of the roles', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
                 realm_access: { roles: ['role1'] }
             });
@@ -99,8 +95,6 @@ describe('JwtHelperService', () => {
 
     describe('ClientRole ', () => {
         it('Should be true if the resource_access contains the single role', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
                 resource_access: { fakeApp: { roles: ['role1'] } }
             });
@@ -110,8 +104,6 @@ describe('JwtHelperService', () => {
         });
 
         it('Should be true if the resource_access contains at least one of the roles', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
                 resource_access: { fakeApp: { roles: ['role1'] } }
             });
@@ -130,7 +122,6 @@ describe('JwtHelperService', () => {
         });
 
         it('Should be false if the resource_access does not contain the client role related to the app', () => {
-            spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
                 resource_access: { anotherFakeApp: { roles: ['role1'] } }
             });
