@@ -46,7 +46,9 @@ describe('CustomResourcesService', () => {
                                                 title: 'some-title',
                                                 description: 'some-description'
                                             }
-                                        }
+                                        },
+                                        aspectNames: ['aspect-name-1', 'aspect-name-2'],
+                                        allowableOperations: ['allowable-operation-1', 'allowable-operation-2']
                                     })
                                 }
                             ]
@@ -68,7 +70,9 @@ describe('CustomResourcesService', () => {
                             properties: {
                                 'cm:title': 'some-title',
                                 'cm:description': 'some-description'
-                            }
+                            },
+                            aspectNames: ['aspect-name-1', 'aspect-name-2'],
+                            allowableOperations: ['allowable-operation-1', 'allowable-operation-2']
                         }
                     } as any
                 ]);
@@ -92,7 +96,9 @@ describe('CustomResourcesService', () => {
                                                 title: 'some-title',
                                                 description: 'some-description'
                                             }
-                                        }
+                                        },
+                                        aspectNames: ['aspect-name-1', 'aspect-name-2'],
+                                        allowableOperations: ['allowable-operation-1', 'allowable-operation-2']
                                     })
                                 }
                             ]
@@ -115,7 +121,9 @@ describe('CustomResourcesService', () => {
                                 'cm:title': 'some-title',
                                 'cm:description': 'some-description',
                                 'cm:property': 'some-property'
-                            }
+                            },
+                            aspectNames: ['aspect-name-1', 'aspect-name-2'],
+                            allowableOperations: ['allowable-operation-1', 'allowable-operation-2']
                         }
                     } as any
                 ]);

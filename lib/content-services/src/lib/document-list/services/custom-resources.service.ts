@@ -207,6 +207,8 @@ export class CustomResourcesService {
                                     }),
                                     ...(entry.properties || {})
                                 };
+                                target.aspectNames = entry?.aspectNames ?? [];
+                                target.allowableOperations = entry?.allowableOperations ?? [];
 
                                 return {
                                     entry: target
