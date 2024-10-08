@@ -28,6 +28,7 @@ import { EMPTY, of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { JWT_STORAGE_SERVICE } from '../public-api';
 
 describe('AuthGuardService', () => {
     let state: RouterStateSnapshot;
@@ -45,7 +46,7 @@ describe('AuthGuardService', () => {
             imports: [NoopTranslateModule, MatDialogModule, RouterTestingModule],
             providers: [
                 AppConfigService,
-                StorageService,
+                { provide: JWT_STORAGE_SERVICE, useClass: StorageService },
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
                 {
                     provide: OidcAuthenticationService,

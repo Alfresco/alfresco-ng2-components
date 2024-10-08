@@ -18,9 +18,10 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
-import { JwtHelperService } from '../services/jwt-helper.service';
+import { JWT_STORAGE_SERVICE, JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { StorageService } from '../../common';
 
 describe('Auth Guard SSO role service', () => {
     let jwtHelperService: JwtHelperService;
@@ -29,7 +30,8 @@ describe('Auth Guard SSO role service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule]
+            imports: [NoopTranslateModule, MatDialogModule],
+            providers: [{ provide: JWT_STORAGE_SERVICE, useClass: StorageService }]
         });
         localStorage.clear();
         jwtHelperService = TestBed.inject(JwtHelperService);
