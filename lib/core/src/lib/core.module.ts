@@ -56,6 +56,7 @@ import { DynamicChipListComponent } from './dynamic-chip-list';
 import { IdentityUserInfoComponent } from './identity-user-info';
 import { UnsavedChangesDialogComponent } from './dialogs';
 import { MaterialModule } from './material.module';
+import { JWT_STORAGE_SERVICE } from './auth/services/jwt-helper.service';
 
 @NgModule({
     imports: [
@@ -150,7 +151,8 @@ export class CoreModule {
                     useValue: {
                         duration: 10000
                     }
-                }
+                },
+                { provide: JWT_STORAGE_SERVICE, useExisting: StorageService }
             ]
         };
     }
