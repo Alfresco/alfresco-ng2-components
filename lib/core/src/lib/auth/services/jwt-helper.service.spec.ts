@@ -19,6 +19,7 @@ import { JWT_STORAGE_SERVICE, JwtHelperService } from './jwt-helper.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { TestBed } from '@angular/core/testing';
 import { StorageService } from '../../common';
+import { OAuthStorage } from 'angular-oauth2-oidc';
 
 const mockStorage = {
     access_token: 'my-access_token',
@@ -35,6 +36,7 @@ const mockCustomStorage = {
         return this[key];
     }
 };
+
 describe('JwtHelperService', () => {
     let jwtHelperService: JwtHelperService;
 
@@ -133,6 +135,8 @@ describe('JwtHelperService', () => {
 
 describe('JwtHelperService with custom storage service', () => {
     let jwtHelperService: JwtHelperService;
+    let defaultStorage: StorageService;
+    let customStorage: OAuthStorage;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -143,10 +147,18 @@ describe('JwtHelperService with custom storage service', () => {
             ]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
+        defaultStorage = TestBed.inject(StorageService);
+        customStorage = TestBed.inject(JWT_STORAGE_SERVICE);
     });
 
-    it('Should take the Jwt token from custom storage', () => {
-        const result = jwtHelperService.getAccessToken();
-        expect(result).toBe('my-custom-access_token');
+    it('should use the custom storage service', () => {
+        const customStorageGetItemSpy = spyOn(customStorage, 'getItem').and.callThrough();
+        const defaultStorageGetItemSpy = spyOn(defaultStorage, 'getItem').and.callThrough();
+        const result = jwtHelperService.getIdToken();
+
+        expect(customStorage).toBeDefined();
+        expect(customStorageGetItemSpy).toHaveBeenCalled();
+        expect(defaultStorageGetItemSpy).not.toHaveBeenCalled();
+        expect(result).toBe('my-custom-id_token');
     });
 });
