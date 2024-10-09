@@ -29,7 +29,7 @@ import {
 } from '../mock/identity-user.mock';
 import { mockGroups, mockJoinGroupRequest } from '../mock/identity-group.mock';
 import { IdentityUserService } from './identity-user.service';
-import { JwtHelperService } from './jwt-helper.service';
+import { JWT_STORAGE_SERVICE, JwtHelperService } from './jwt-helper.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { AdfHttpClient } from '../../../../api/src';
@@ -53,7 +53,7 @@ describe('IdentityUserService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule],
-            providers: [StorageService, AdfHttpClient]
+            providers: [StorageService, AdfHttpClient, { provide: JWT_STORAGE_SERVICE, useClass: StorageService }]
         });
         storageService = TestBed.inject(StorageService);
         service = TestBed.inject(IdentityUserService);
