@@ -25,10 +25,6 @@ export const OidcAuthGuard: CanActivateFn = async (): Promise<boolean> => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    if (authService.authenticated) {
-        return Promise.resolve(true);
-    }
-
     try {
         const route = await authService.loginCallback({ customHashFragment: window.location.search });
         return router.navigateByUrl(route, { replaceUrl: true });
