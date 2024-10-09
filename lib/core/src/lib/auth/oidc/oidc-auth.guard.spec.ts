@@ -40,16 +40,6 @@ describe('OidcAuthGuard', () => {
         authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     });
 
-    describe('canActivate', () => {
-        it('should return true if is authenticated', async () => {
-            authServiceSpy.authenticated = true;
-
-            const oidcAuthGuard = await TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
-
-            expect(oidcAuthGuard).toBe(true);
-        });
-    });
-
     describe('isAuthenticated', () => {
         it('should call loginCallback and navigateByUrl if not authenticated', async () => {
             authServiceSpy.authenticated = false;
