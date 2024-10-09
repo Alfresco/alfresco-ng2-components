@@ -26,6 +26,15 @@ export abstract class AuthService {
 
   abstract onTokenReceived: Observable<any>;
 
+  /**
+   * An abstract observable that emits a boolean value indicating whether the discovery document
+   * has been successfully loaded.
+   *
+   * @observable
+   * @type {Observable<boolean>}
+   */
+  abstract isDiscoveryDocumentLoaded$: Observable<boolean>;
+
   /** Subscribe to whether the user has valid Id/Access tokens.  */
   abstract authenticated$: Observable<boolean>;
 

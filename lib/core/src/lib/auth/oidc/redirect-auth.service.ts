@@ -18,7 +18,7 @@
 import { Inject, Injectable, inject } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
-import { from, Observable } from 'rxjs';
+import { from, Observable, ReplaySubject } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
@@ -31,6 +31,9 @@ export class RedirectAuthService extends AuthService {
 
   readonly authModuleConfig: AuthModuleConfig = inject(AUTH_MODULE_CONFIG);
   private readonly _retryLoginService: RetryLoginService = inject(RetryLoginService);
+
+  private _isDiscoveryDocumentLoadedSubject$ = new ReplaySubject<boolean>();
+  public isDiscoveryDocumentLoaded$ = this._isDiscoveryDocumentLoadedSubject$.asObservable();
 
   onLogin: Observable<any>;
 
@@ -85,7 +88,15 @@ export class RedirectAuthService extends AuthService {
       filter((event): event is OAuthErrorEvent => event.type === 'discovery_document_load_error'),
       map((event) => event.reason as Error)
     );
-  }
+
+    this.oauthService.events.subscribe(event => {
+        if (event instanceof OAuthErrorEvent) {
+          console.error('OAuthErrorEvent Object:', event);
+        } else {
+          console.warn('OAuthEvent Object:', event);
+        }
+      });
+    }
 
   init(): Promise<boolean> {
     if (isPromise(this.authConfig)) {
@@ -144,9 +155,9 @@ export class RedirectAuthService extends AuthService {
           .then(() => this._retryLoginService.tryToLoginTimes({ ...loginOptions, preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin }))
           .then(() => this._getRedirectUrl())
           .catch(async (error) => {
-            console.error(error);
-            this.oauthService.revokeTokenAndLogout();
-        });
+              console.error(error);
+              this.logout();
+          });
   }
 
   private _getRedirectUrl() {
@@ -176,6 +187,7 @@ export class RedirectAuthService extends AuthService {
     }
 
     return this.ensureDiscoveryDocument().then(() => {
+      this._isDiscoveryDocumentLoadedSubject$.next(true);
       this.oauthService.setupAutomaticSilentRefresh();
       return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
     }).catch(() => {

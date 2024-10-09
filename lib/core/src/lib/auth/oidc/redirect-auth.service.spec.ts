@@ -16,13 +16,17 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse, AuthConfig } from 'angular-oauth2-oidc';
 import { Subject } from 'rxjs';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
+import { RetryLoginService } from './retry-login.service';
 
 describe('RedirectAuthService', () => {
     let service: RedirectAuthService;
+    let ensureDiscoveryDocumentSpy: jasmine.Spy;
+    let retryLoginServiceSpy: jasmine.SpyObj<RetryLoginService>;
+
     const mockOAuthStorage: Partial<OAuthStorage> = {
         getItem: jasmine.createSpy('getItem'),
         removeItem: jasmine.createSpy('removeItem'),
@@ -33,6 +37,7 @@ describe('RedirectAuthService', () => {
         clearHashAfterLogin: false,
         events: oauthEvents$,
         configure: () => {},
+        logOut: () => {},
         hasValidAccessToken: jasmine.createSpy().and.returnValue(true),
         hasValidIdToken: jasmine.createSpy().and.returnValue(true),
         setupAutomaticSilentRefresh: () => {
@@ -42,19 +47,23 @@ describe('RedirectAuthService', () => {
     };
 
     beforeEach(() => {
+        retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
         TestBed.configureTestingModule({
             providers: [
                 RedirectAuthService,
                 { provide: OAuthService, useValue: mockOauthService },
                 { provide: OAuthStorage, useValue: mockOAuthStorage },
-                { provide: AUTH_CONFIG, useValue: {} },
+                { provide: RetryLoginService, useValue: retryLoginServiceSpy },
+                { provide: AUTH_CONFIG, useValue: {
+                    sessionChecksEnabled: false
+                } },
                 { provide: AUTH_MODULE_CONFIG, useValue: {} }
             ]
         });
 
         TestBed.inject(OAuthService);
         service = TestBed.inject(RedirectAuthService);
-        spyOn(service, 'ensureDiscoveryDocument').and.resolveTo(true);
+        ensureDiscoveryDocumentSpy = spyOn(service, 'ensureDiscoveryDocument').and.resolveTo(true);
         mockOauthService.getAccessToken = () => 'access-token';
     });
 
@@ -94,5 +103,51 @@ describe('RedirectAuthService', () => {
         expect(refreshTokenCalled).toBe(true);
         expect(silentRefreshCalled).toBe(true);
     });
+
+    it('should configure OAuthService with given config', async () => {
+        const config = { sessionChecksEnabled: false } as AuthConfig;
+        const configureSpy = spyOn(mockOauthService as any, 'configure');
+        const setupAutomaticSilentRefreshSpy = spyOn(mockOauthService as any, 'setupAutomaticSilentRefresh');
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        await service.init();
+
+        expect(configureSpy).toHaveBeenCalledWith(config);
+        expect(setupAutomaticSilentRefreshSpy).toHaveBeenCalled();
+    });
+
+    it('should send isDiscoveryDocumentLoadedSubject$ when ensureDiscoveryDocument is resolved', async () => {
+        ensureDiscoveryDocumentSpy.and.resolveTo();
+
+        await service.init();
+
+        const isDiscoveryDocumentLoadedPromise = new Promise<boolean>((resolve) => {
+            service.isDiscoveryDocumentLoaded$.subscribe(resolve);
+        });
+
+        expect(await isDiscoveryDocumentLoadedPromise).toBeTrue();
+    });
+
+    it('should return redirectUrl if login successfully', async () => {
+        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+
+        const expectedRedirectUrl = '/';
+        const loginCallbackResponse = await service.loginCallback();
+
+        expect(loginCallbackResponse).toEqual(expectedRedirectUrl);
+        expect(logOutSpy).not.toHaveBeenCalled();
+
+    });
+
+    it('should logout user if login fails', async () => {
+        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+
+        retryLoginServiceSpy.tryToLoginTimes.and.rejectWith('error');
+
+        await service.loginCallback();
+
+        expect(logOutSpy).toHaveBeenCalled();
+    });
+
 
 });
