@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse, AuthConfig } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse, AuthConfig, OAuthLogger } from 'angular-oauth2-oidc';
 import { Subject } from 'rxjs';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
@@ -43,7 +43,8 @@ describe('RedirectAuthService', () => {
         setupAutomaticSilentRefresh: () => {
             mockOauthService.silentRefresh();
             mockOauthService.refreshToken();
-        }
+        },
+        showDebugInformation: false
     };
 
     beforeEach(() => {
@@ -52,6 +53,9 @@ describe('RedirectAuthService', () => {
             providers: [
                 RedirectAuthService,
                 { provide: OAuthService, useValue: mockOauthService },
+                { provide: OAuthLogger, useValue: {
+                    error: () => {}, info: () => {}
+                } },
                 { provide: OAuthStorage, useValue: mockOAuthStorage },
                 { provide: RetryLoginService, useValue: retryLoginServiceSpy },
                 { provide: AUTH_CONFIG, useValue: {
@@ -104,6 +108,35 @@ describe('RedirectAuthService', () => {
         expect(silentRefreshCalled).toBe(true);
     });
 
+    it('should remove all auth items from the storage if access token is set and is NOT valid', () => {
+        mockOauthService.getAccessToken = () => 'access-token';
+        mockOauthService.hasValidAccessToken = () => false;
+        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token_stored_at');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('expires_at');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('granted_scopes');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('id_token');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('id_token_claims_obj');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('id_token_expires_at');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('id_token_stored_at');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('nonce');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('PKCE_verifier');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('refresh_token');
+        expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('session_state');
+    });
+
+    it('should NOT remove auth items from the storage if access token is valid', () => {
+        mockOauthService.getAccessToken = () => 'access-token';
+        mockOauthService.hasValidAccessToken = () => true;
+        (mockOAuthStorage.removeItem as any).calls.reset();
+
+        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+
+        expect(mockOAuthStorage.removeItem).not.toHaveBeenCalled();
+    });
+
     it('should configure OAuthService with given config', async () => {
         const config = { sessionChecksEnabled: false } as AuthConfig;
         const configureSpy = spyOn(mockOauthService as any, 'configure');
@@ -146,7 +179,7 @@ describe('RedirectAuthService', () => {
 
         await service.loginCallback();
 
-        expect(logOutSpy).toHaveBeenCalled();
+        expect(logOutSpy).toHaveBeenCalledTimes(1);
     });
 
 
