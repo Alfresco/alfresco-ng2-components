@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { JWT_CUSTOM_STORAGE_SERVICE, JwtHelperService } from './jwt-helper.service';
+import { JWT_STORAGE_SERVICE, JwtHelperService } from './jwt-helper.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { TestBed } from '@angular/core/testing';
 import { StorageService } from '../../common';
@@ -35,7 +35,6 @@ const mockCustomStorage = {
         return this[key];
     }
 };
-
 describe('JwtHelperService', () => {
     let jwtHelperService: JwtHelperService;
 
@@ -140,7 +139,7 @@ describe('JwtHelperService with custom storage service', () => {
             providers: [
                 JwtHelperService,
                 { provide: StorageService, useValue: mockStorage },
-                { provide: JWT_CUSTOM_STORAGE_SERVICE, useValue: mockCustomStorage }
+                { provide: JWT_STORAGE_SERVICE, useValue: mockCustomStorage }
             ]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);

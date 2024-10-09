@@ -19,13 +19,9 @@ import { inject, Injectable, InjectionToken } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { StorageService } from '../../common/services/storage.service';
 
-export const JWT_CUSTOM_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_CUSTOM_STORAGE_SERVICE');
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
     providedIn: 'root',
-    factory() {
-        const customStorageService = inject(JWT_CUSTOM_STORAGE_SERVICE, { optional: true });
-        return customStorageService ?? inject(StorageService);
-    }
+    factory: () => inject(StorageService)
 });
 
 @Injectable({
