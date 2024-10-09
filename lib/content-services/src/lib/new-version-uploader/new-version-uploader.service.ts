@@ -62,7 +62,15 @@ export class NewVersionUploaderService {
                 const dialogRef = this.dialog.open<NewVersionUploaderDialogComponent, NewVersionUploaderDialogData>(
                     NewVersionUploaderDialogComponent,
                     {
-                        data: { file, node, currentVersion: versionPaging.list.entries[0].entry, showComments, allowDownload, showVersionsOnly },
+                        data: {
+                            file,
+                            node,
+                            currentVersion: versionPaging.list.entries[0].entry,
+                            showComments,
+                            allowDownload,
+                            showVersionsOnly,
+                            allowViewVersions: data.allowViewVersions ?? true
+                        },
                         panelClass: this.composePanelClass(showVersionsOnly),
                         width: '630px',
                         ...(config && Object.keys(config).length > 0 && config)

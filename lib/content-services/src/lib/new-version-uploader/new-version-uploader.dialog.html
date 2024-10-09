@@ -20,6 +20,7 @@
           [node]="data.node"
           [showComments]="data.showComments"
           [allowDownload]="data.allowDownload"
+          [allowViewVersions]="data.allowViewVersions"
           (deleted)="refresh($event)"
           (restored)="refresh($event)"
           (viewVersion)="onViewingVersion($event)"
