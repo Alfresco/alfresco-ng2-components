@@ -16,7 +16,7 @@
  */
 
 import { inject, Injectable } from '@angular/core';
-import { LoginOptions, OAuthService } from 'angular-oauth2-oidc';
+import { LoginOptions, OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable({
     providedIn: 'root'
@@ -37,13 +37,13 @@ export class RetryLoginService {
         const maxRetries = maxLoginAttempts - 1;
 
         const attemptLogin = (): Promise<boolean> => this.oauthService.tryLogin({ ...loginOptions })
-            .catch((error) => {
+            .catch((error: OAuthErrorEvent) => {
                 if (retryCount < maxRetries) {
                     console.error(`Login attempt ${retryCount + 1} of ${maxLoginAttempts} failed. ${retryCount < maxLoginAttempts - 1 ? 'Retrying...' : ''}`);
                     retryCount++;
                     return attemptLogin();
                 } else {
-                    throw new Error(`Login failed after ${maxLoginAttempts} attempts. ${error.message}`);
+                    throw new Error(`Login failed after ${maxLoginAttempts} attempts. caused by: ${error.reason}`);
                 }
             });
 

@@ -22,6 +22,7 @@ import { RetryLoginService } from './retry-login.service';
 describe('RetryLoginService', () => {
     let service: RetryLoginService;
     let oauthService: jasmine.SpyObj<OAuthService>;
+    let spyOnConsoleError: jasmine.Spy;
 
     beforeEach(() => {
         const oauthServiceSpy = jasmine.createSpyObj('OAuthService', ['tryLogin']);
@@ -35,6 +36,7 @@ describe('RetryLoginService', () => {
 
         service = TestBed.inject(RetryLoginService);
         oauthService = TestBed.inject(OAuthService) as jasmine.SpyObj<OAuthService>;
+        spyOnConsoleError = spyOn(console, 'error');
     });
 
     it('should login successfully on the first attempt', async () => {
@@ -46,39 +48,41 @@ describe('RetryLoginService', () => {
         expect(oauthService.tryLogin).toHaveBeenCalledTimes(1);
     });
 
-    it('should retry login up to maxRetries times', async () => {
+    it('should retry login up to 3 times', async () => {
         oauthService.tryLogin.and.returnValues(
             Promise.reject(new Error('error')),
             Promise.reject(new Error('error')),
             Promise.resolve(true)
         );
 
-        const result = await service.tryToLoginTimes({}, 2);
+        const result = await service.tryToLoginTimes({}, 3);
 
+        expect(spyOnConsoleError).toHaveBeenCalledWith('Login attempt 1 of 3 failed. Retrying...');
+        expect(spyOnConsoleError).toHaveBeenCalledWith('Login attempt 2 of 3 failed. Retrying...');
         expect(result).toBeTrue();
-        expect(oauthService.tryLogin).toHaveBeenCalledTimes(2);
+        expect(oauthService.tryLogin).toHaveBeenCalledTimes(3);
     });
 
-    it('should fail after maxRetries attempts providing maxRetries', async () => {
-        oauthService.tryLogin.and.rejectWith('error');
+    it('should fail after 2 attempts throwing an error', async () => {
+        oauthService.tryLogin.and.rejectWith({ reason: 'fake-error'});
 
         try {
             await service.tryToLoginTimes({}, 2);
             fail('Expected to throw an error');
         } catch (error) {
-            expect(error).toBe('error');
+            expect(error).toEqual(new Error('Login failed after 2 attempts. caused by: fake-error'));
             expect(oauthService.tryLogin).toHaveBeenCalledTimes(2);
         }
     });
 
-    it('should fail after maxRetries attempts using default maxRetries value', async () => {
-        oauthService.tryLogin.and.rejectWith('error');
+    it('should fail after default max logint attempts ', async () => {
+        oauthService.tryLogin.and.rejectWith({ reason: 'fake-error'});
 
         try {
             await service.tryToLoginTimes({});
             fail('Expected to throw an error');
         } catch (error) {
-            expect(error).toBe('error');
+            expect(error).toEqual(new Error('Login failed after 3 attempts. caused by: fake-error'));
             expect(oauthService.tryLogin).toHaveBeenCalledTimes(3);
         }
     });
