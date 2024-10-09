@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { ADF_DATE_FORMATS, FullNamePipe, JWT_STORAGE_SERVICE, NoopTranslateModule, StorageService, UserPreferencesService } from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, FullNamePipe, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { SimpleChange } from '@angular/core';
@@ -121,8 +121,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 { provide: DateAdapter, useClass: DateFnsAdapter },
                 { provide: NotificationCloudService, useValue: { makeGQLQuery: () => of([]) } },
                 { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-                { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserServiceMock },
-                { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
+                { provide: IDENTITY_USER_SERVICE_TOKEN, useExisting: IdentityUserServiceMock }
             ],
             declarations: [PeopleCloudComponent, DateRangeFilterComponent]
         });
