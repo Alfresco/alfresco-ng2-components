@@ -105,9 +105,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
     set tags(tags: string[]) {
         this._tags = [...tags];
-        this.tagsToDisplay = this.tags.map((tag) => {
-            return { id: tag, name: tag };
-        });
+        this.tagsToDisplay = this.tags.map((tag) => ({ id: tag, name: tag }));
         this._initialExistingTags = null;
         this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
