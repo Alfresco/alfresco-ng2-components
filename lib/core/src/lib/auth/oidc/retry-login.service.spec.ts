@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { RetryLoginService } from './retry-login.service';
 
 describe('RetryLoginService', () => {
@@ -64,7 +64,7 @@ describe('RetryLoginService', () => {
     });
 
     it('should fail after 2 attempts throwing an error', async () => {
-        oauthService.tryLogin.and.rejectWith({ reason: 'fake-error'});
+        oauthService.tryLogin.and.rejectWith({ reason: 'fake-error' } as unknown as OAuthErrorEvent);
 
         try {
             await service.tryToLoginTimes({}, 2);
@@ -75,8 +75,20 @@ describe('RetryLoginService', () => {
         }
     });
 
+    it('should fail after 2 attempts throwing an error if error is returned as string instead of object', async () => {
+        oauthService.tryLogin.and.rejectWith('fake-message-error');
+
+        try {
+            await service.tryToLoginTimes({}, 2);
+            fail('Expected to throw an error');
+        } catch (error) {
+            expect(error).toEqual(new Error('Login failed after 2 attempts. caused by: fake-message-error'));
+            expect(oauthService.tryLogin).toHaveBeenCalledTimes(2);
+        }
+    });
+
     it('should fail after default max logint attempts ', async () => {
-        oauthService.tryLogin.and.rejectWith({ reason: 'fake-error'});
+        oauthService.tryLogin.and.rejectWith({ reason: 'fake-error' } as unknown as OAuthErrorEvent);
 
         try {
             await service.tryToLoginTimes({});
