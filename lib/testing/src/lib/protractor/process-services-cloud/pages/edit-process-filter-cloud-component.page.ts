@@ -36,7 +36,6 @@ export interface FilterProps {
 }
 
 export class EditProcessFilterCloudComponentPage {
-
     rootElement = $$('adf-cloud-edit-process-filter').first();
     customiseFilter = $('#adf-edit-process-filter-sub-title-id');
     saveButton = $('button[data-automation-id="adf-filter-action-save"]');
@@ -48,17 +47,29 @@ export class EditProcessFilterCloudComponentPage {
     statusDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-status']`));
     sortDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-sort']`));
     orderDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-order']`));
-    processDefinitionNameDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`));
-    suspendedDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`));
-    startedDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`));
-    completedDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`));
-    suspendedDateRangeWithin = new DatePickerPage($(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`));
+    processDefinitionNameDropdown = new DropdownPage(
+        $(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-processDefinitionName']`)
+    );
+    suspendedDateRangeDropdown = new DropdownPage(
+        $(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-suspendedDateRange']`)
+    );
+    startedDateRangeDropdown = new DropdownPage(
+        $(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-startedDateRange']`)
+    );
+    completedDateRangeDropdown = new DropdownPage(
+        $(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-completedDateRange']`)
+    );
+    suspendedDateRangeWithin = new DatePickerPage(
+        $(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-process-property-date-range-suspendedDateRange']`)
+    );
 
     peopleCloudComponent = new PeopleCloudComponentPage();
     editProcessFilterDialogPage = new EditProcessFilterDialogPage();
 
     private expansionPanelExtended = this.rootElement.$(`${materialLocators.Expansion.panel.header.root}${materialLocators.Expanded.class}`);
-    private content = TestElement.byCss(`adf-cloud-edit-process-filter ${materialLocators.Expansion.panel.root} [style*="visible"]`);
+    private content = TestElement.byCss(
+        `adf-cloud-edit-process-filter ${materialLocators.Expansion.panel.root}${materialLocators.Expansion.panel.expanded} ${materialLocators.Expansion.panel.content.class}`
+    );
 
     editProcessFilterDialog(): EditProcessFilterDialogPage {
         return this.editProcessFilterDialogPage;
