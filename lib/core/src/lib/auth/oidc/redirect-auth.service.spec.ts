@@ -45,7 +45,7 @@ describe('RedirectAuthService', () => {
             mockOauthService.refreshToken();
         },
         showDebugInformation: false,
-        getIdentityClaims: jasmine.createSpy().and.returnValue(true),
+        getIdentityClaims: jasmine.createSpy().and.returnValue(true)
     };
 
     beforeEach(() => {
@@ -54,14 +54,22 @@ describe('RedirectAuthService', () => {
             providers: [
                 RedirectAuthService,
                 { provide: OAuthService, useValue: mockOauthService },
-                { provide: OAuthLogger, useValue: {
-                    error: () => {}, info: () => {}, warn: () => {}
-                } },
+                {
+                    provide: OAuthLogger,
+                    useValue: {
+                        error: () => {},
+                        info: () => {},
+                        warn: () => {}
+                    }
+                },
                 { provide: OAuthStorage, useValue: mockOAuthStorage },
                 { provide: RetryLoginService, useValue: retryLoginServiceSpy },
-                { provide: AUTH_CONFIG, useValue: {
-                    sessionChecksEnabled: false
-                } },
+                {
+                    provide: AUTH_CONFIG,
+                    useValue: {
+                        sessionChecksEnabled: false
+                    }
+                },
                 { provide: AUTH_MODULE_CONFIG, useValue: {} }
             ]
         });
@@ -169,19 +177,18 @@ describe('RedirectAuthService', () => {
 
         expect(loginCallbackResponse).toEqual(expectedRedirectUrl);
         expect(logOutSpy).not.toHaveBeenCalled();
-
     });
 
     it('should logout user if login fails', async () => {
         const logOutSpy = jasmine.createSpy('logOut');
 
         mockOauthService.events?.subscribe((event: any) => {
-            if(event.type === 'bad_error') {
+            if (event.type === 'bad_error') {
                 logOutSpy();
             }
         });
 
-        retryLoginServiceSpy.tryToLoginTimes.and.callFake( () => {
+        retryLoginServiceSpy.tryToLoginTimes.and.callFake(() => {
             oauthEvents$.next({ type: 'bad_error' } as any);
             throw new Error('code_error');
         });
@@ -204,4 +211,57 @@ describe('RedirectAuthService', () => {
         expect(logOutSpy).not.toHaveBeenCalled();
     });
 
+    it('should logout user if clock is out of sync (current Date is behind the issued date + the allowed clock skew)', () => {
+        const mockDateNowInMilliseconds = 1728597618621; // GMT: Thursday, October 10, 2024 10:00:18.621 PM
+
+        const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
+        const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
+
+        mockOauthService.clockSkewInSec = 120;
+
+        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+
+        spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
+        mockOauthService.getIdentityClaims = () => ({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+
+        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+
+        expect(logOutSpy).toHaveBeenCalled();
+    });
+
+    it('should NOT logout user if current Date is behind the issued date within the allowed clock skew', () => {
+        const mockDateNowInMilliseconds = 1728598139000; // GMT: Thursday, October 10, 2024 10:08:59 PM
+
+        const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
+        const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
+
+        mockOauthService.clockSkewInSec = 120;
+
+        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+
+        spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
+        mockOauthService.getIdentityClaims = () => ({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+
+        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+
+        expect(logOutSpy).not.toHaveBeenCalled();
+    });
+
+    it('should NOT logout user if current Date is ahead the issued date within the allowed clock skew', () => {
+        const mockDateNowInMilliseconds = 1728598620000; // GMT: Thursday, October 10, 2024 10:17:00 PM
+
+        const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
+        const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
+
+        mockOauthService.clockSkewInSec = 120;
+
+        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+
+        spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
+        mockOauthService.getIdentityClaims = () => ({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+
+        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+
+        expect(logOutSpy).not.toHaveBeenCalled();
+    });
 });
