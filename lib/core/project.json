@@ -71,10 +71,7 @@
         "browserTarget": "core:build",
         "configDir": "lib/core/.storybook",
         "compodoc": false,
-        "styles": [
-          "node_modules/cropperjs/dist/cropper.min.css",
-          "node_modules/pdfjs-dist/web/pdf_viewer.css"
-        ],
+        "styles": ["node_modules/cropperjs/dist/cropper.min.css", "node_modules/pdfjs-dist/web/pdf_viewer.css"],
         "stylePreprocessorOptions": {
           "includePaths": ["lib", "lib/core/src/lib"]
         }
