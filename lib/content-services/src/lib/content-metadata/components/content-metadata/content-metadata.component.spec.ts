@@ -15,9 +15,15 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { SimpleChange } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import {
+    AppConfigService,
+    AuthModule,
+    CardViewBaseItemModel,
+    CardViewComponent,
+    NoopTranslateModule,
+    NotificationService,
+    UpdateNotification
+} from '@alfresco/adf-core';
 import { Category, CategoryPaging, ClassesApi, Node, Tag, TagBody, TagEntry, TagPaging, TagPagingList } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
