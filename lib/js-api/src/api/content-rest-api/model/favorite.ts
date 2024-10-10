@@ -35,6 +35,8 @@ export class Favorite {
      * A subset of the target favorite properties, system properties and properties already available in the target are excluded.
      */
     properties?: any;
+    aspectNames?: string[];
+    allowableOperations?: string[];
 
     constructor(input?: Partial<Favorite>) {
         if (input) {

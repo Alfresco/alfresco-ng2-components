@@ -18,10 +18,8 @@
 import { TestBed } from '@angular/core/testing';
 import { OidcAuthenticationService } from './oidc-authentication.service';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
+import { AppConfigService, AuthService } from '@alfresco/adf-core';
 import { AUTH_MODULE_CONFIG } from './auth-config';
-import { StorageService } from '../../common';
-import { AuthService, JWT_STORAGE_SERVICE } from '../public-api';
-import { AppConfigService } from '../../app-config';
 
 interface MockAppConfigOAuth2 {
     oauth2: {
@@ -64,7 +62,6 @@ describe('OidcAuthenticationService', () => {
                 OidcAuthenticationService,
                 { provide: AppConfigService, useClass: MockAppConfigService },
                 { provide: OAuthService, useClass: MockOAuthService },
-                { provide: JWT_STORAGE_SERVICE, useValue: StorageService },
                 { provide: OAuthStorage, useValue: {} },
                 { provide: AUTH_MODULE_CONFIG, useValue: {} },
                 { provide: AuthService, useValue: {} }
