@@ -44,6 +44,7 @@
     "@cspell/eslint-plugin": "^8.16.0",
     "@mat-datetimepicker/core": "13.0.2",
     "@ngx-translate/core": "^14.0.0",
+    "@nx/webpack": "^20.0.0",
     "@storybook/addon-interactions": "^8.2.9",
     "@storybook/core-server": "^8.2.9",
     "@storybook/theming": "^8.2.9",
