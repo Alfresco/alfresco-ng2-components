@@ -18,8 +18,8 @@
 import { Inject, Injectable, inject } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent, OAuthLogger } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
-import { from, Observable, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, take } from 'rxjs/operators';
+import { from, Observable, race, ReplaySubject } from 'rxjs';
+import { distinctUntilChanged, filter, map, shareReplay, take, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
@@ -41,6 +41,39 @@ export class RedirectAuthService extends AuthService {
   onTokenReceived: Observable<any>;
 
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
+
+  tokenHasExpired$: Observable<boolean>;
+
+/**
+ * Observable stream that emits OAuth error events.
+ *
+ * This stream filters events from the OAuth service to only include instances of `OAuthErrorEvent`.
+ * It can be used to handle authentication errors in a centralized manner.
+ */
+  oauthErrorEvent$ = this.oauthService.events.pipe(
+    filter(event => event instanceof OAuthErrorEvent)
+  );
+
+
+   /**
+   * Observable that emits `true` when the first OAuth error event occurs.
+   *
+   * This observable listens to the `oauthErrorEvent$` stream and maps the first
+   * occurrence of an OAuth error event to `true`. It completes after emitting
+   * the first value.
+   *
+   * @type {Observable<boolean>}
+   */
+  firstOauthErrorEventOccur$ = this.oauthErrorEvent$.pipe(
+    map(() => true),
+    take(1)
+  );
+
+  /**
+   * Observable stream that emits a boolean value indicating the presence of combined OAuth errors.
+   */
+  combinedOAuthErrorsStream$: Observable<boolean>;
+
 
   /** Subscribe to whether the user has valid Id/Access tokens.  */
   authenticated$!: Observable<boolean>;
@@ -100,6 +133,22 @@ export class RedirectAuthService extends AuthService {
       shareReplay(1)
     );
 
+    this.tokenHasExpired$ = this.oauthService.events.pipe(
+        map(() => !!this.oauthService.getIdentityClaims() && this.tokenHasExpired()),
+        filter((hasExpired) => hasExpired),
+        take(1),
+        tap((hasExpired) => this._oauthLogger.warn('tokenHasExpired: ', hasExpired))
+      );
+
+    this.combinedOAuthErrorsStream$ = race([this.firstOauthErrorEventOccur$, this.tokenHasExpired$]).pipe(
+        tap(() => oauthService.showDebugInformation && this._oauthLogger.warn('OAuth errors occur. logging out')),
+        map(() => true)
+    );
+
+    this.combinedOAuthErrorsStream$.subscribe(() => {
+        this.logout();
+    });
+
     this.oauthService.events.pipe(take(1)).subscribe(() => {
         if(this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken()) {
             if(this.oauthService.showDebugInformation) {
@@ -124,6 +173,34 @@ export class RedirectAuthService extends AuthService {
       map((event) => event.reason as Error)
     );
 
+    }
+
+    tokenHasExpired(){
+        const claims = this.oauthService.getIdentityClaims();
+        if(!claims){
+            this._oauthLogger.warn('No claims found in the token');
+            return false;
+        }
+        const now = Date.now();
+        const issuedAtMSec = claims.iat * 1000;
+        const expiresAtMSec = claims.exp * 1000;
+        const clockSkewInMSec = this.oauthService.clockSkewInSec * 1000;
+
+        this.showTokenExpiredDebugInformations(now, issuedAtMSec, expiresAtMSec, clockSkewInMSec);
+        return issuedAtMSec - clockSkewInMSec >= now ||
+        expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now;
+    }
+
+    private showTokenExpiredDebugInformations(now: number, issuedAtMSec: number, expiresAtMSec: number, clockSkewInMSec: number) {
+        if(this.oauthService.showDebugInformation) {
+            this._oauthLogger.warn('now: ', new Date(now));
+            this._oauthLogger.warn('issuedAt: ', new Date(issuedAtMSec));
+            this._oauthLogger.warn('expiresAt: ', new Date(expiresAtMSec));
+            this._oauthLogger.warn('clockSkewInMSec: ', this.oauthService.clockSkewInSec);
+            this._oauthLogger.warn('this.oauthService.decreaseExpirationBySec: ', this.oauthService.decreaseExpirationBySec);
+            this._oauthLogger.warn('issuedAtMSec - clockSkewInMSec >= now: ', issuedAtMSec - clockSkewInMSec >= now);
+            this._oauthLogger.warn('expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now: ', expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now);
+        }
     }
 
   init(): Promise<boolean> {
@@ -181,11 +258,7 @@ export class RedirectAuthService extends AuthService {
   async loginCallback(loginOptions?: LoginOptions): Promise<string | undefined> {
       return this.ensureDiscoveryDocument()
           .then(() => this._retryLoginService.tryToLoginTimes({ ...loginOptions, preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin }))
-          .then(() => this._getRedirectUrl())
-          .catch(async (error) => {
-              this._oauthLogger.error(error);
-              this.logout();
-          });
+          .then(() => this._getRedirectUrl());
   }
 
   private _getRedirectUrl() {

@@ -37,13 +37,14 @@ export class RetryLoginService {
         const maxRetries = maxLoginAttempts - 1;
 
         const attemptLogin = (): Promise<boolean> => this.oauthService.tryLogin({ ...loginOptions })
-            .catch((error: OAuthErrorEvent) => {
+            .catch((error) => {
                 if (retryCount < maxRetries) {
                     console.error(`Login attempt ${retryCount + 1} of ${maxLoginAttempts} failed. ${retryCount < maxLoginAttempts - 1 ? 'Retrying...' : ''}`);
                     retryCount++;
                     return attemptLogin();
                 } else {
-                    throw new Error(`Login failed after ${maxLoginAttempts} attempts. caused by: ${error.reason}`);
+                    const errorReason = (error as OAuthErrorEvent)?.reason || error;
+                    throw new Error(`Login failed after ${maxLoginAttempts} attempts. caused by: ${errorReason}`);
                 }
             });
 
