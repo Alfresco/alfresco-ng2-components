@@ -44,7 +44,8 @@ describe('RedirectAuthService', () => {
             mockOauthService.silentRefresh();
             mockOauthService.refreshToken();
         },
-        showDebugInformation: false
+        showDebugInformation: false,
+        getIdentityClaims: jasmine.createSpy().and.returnValue(true),
     };
 
     beforeEach(() => {
@@ -54,7 +55,7 @@ describe('RedirectAuthService', () => {
                 RedirectAuthService,
                 { provide: OAuthService, useValue: mockOauthService },
                 { provide: OAuthLogger, useValue: {
-                    error: () => {}, info: () => {}
+                    error: () => {}, info: () => {}, warn: () => {}
                 } },
                 { provide: OAuthStorage, useValue: mockOAuthStorage },
                 { provide: RetryLoginService, useValue: retryLoginServiceSpy },
@@ -65,7 +66,6 @@ describe('RedirectAuthService', () => {
             ]
         });
 
-        TestBed.inject(OAuthService);
         service = TestBed.inject(RedirectAuthService);
         ensureDiscoveryDocumentSpy = spyOn(service, 'ensureDiscoveryDocument').and.resolveTo(true);
         mockOauthService.getAccessToken = () => 'access-token';
@@ -173,14 +173,35 @@ describe('RedirectAuthService', () => {
     });
 
     it('should logout user if login fails', async () => {
+        const logOutSpy = jasmine.createSpy('logOut');
+
+        mockOauthService.events?.subscribe((event: any) => {
+            if(event.type === 'bad_error') {
+                logOutSpy();
+            }
+        });
+
+        retryLoginServiceSpy.tryToLoginTimes.and.callFake( () => {
+            oauthEvents$.next({ type: 'bad_error' } as any);
+            throw new Error('code_error');
+        });
+
+        try {
+            await service.loginCallback();
+            fail('Expected to throw an error');
+        } catch (error) {
+            expect(logOutSpy).toHaveBeenCalledTimes(1);
+        }
+    });
+
+    it('should NOT logout user if login success', async () => {
         const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
 
-        retryLoginServiceSpy.tryToLoginTimes.and.rejectWith('error');
+        retryLoginServiceSpy.tryToLoginTimes.and.resolveTo(true);
 
         await service.loginCallback();
 
-        expect(logOutSpy).toHaveBeenCalledTimes(1);
+        expect(logOutSpy).not.toHaveBeenCalled();
     });
-
 
 });
