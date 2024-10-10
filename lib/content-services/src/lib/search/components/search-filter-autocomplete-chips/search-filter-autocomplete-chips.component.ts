@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -37,7 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: './search-filter-autocomplete-chips.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {
+export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit, OnDestroy {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -51,6 +51,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     reset$: Observable<void> = this.resetSubject$.asObservable();
     private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
+    private destroy$ = new Subject<void>();
 
     constructor(private tagService: TagService, private categoryService: CategoryService) {
         this.options = new SearchFilterList<AutocompleteOption[]>();
@@ -66,14 +67,21 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         }
         this.context.populateFilters
             .asObservable()
-            .pipe(first())
+            .pipe(takeUntil(this.destroy$))
             .subscribe((filtersQueries) => {
                 if (filtersQueries[this.id]) {
                     this.selectedOptions = filtersQueries[this.id];
                     this.updateQuery(false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     reset() {

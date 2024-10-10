@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DateRangeType } from './search-date-range/date-range-type';
 import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchWidget } from '../../models/search-widget.interface';
@@ -41,7 +41,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     styleUrls: ['./search-date-range-tabbed.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
+export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnDestroy {
     displayValue$ = new ReplaySubject<string>(1);
     id: string;
     startValue: SearchDateRange = {
@@ -51,7 +51,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         betweenStartDate: undefined,
         betweenEndDate: undefined
     };
-    preselectedValues = {};
+    preselectedValues: { [key: string]: Partial<SearchDateRange> } = {};
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     fields: string[];
@@ -62,6 +62,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     private value: { [key: string]: Partial<SearchDateRange> } = {};
     private queryMapByField: Map<string, string> = new Map<string, string>();
     private displayValueMapByField: Map<string, string> = new Map<string, string>();
+    private destroy$ = new Subject<void>();
 
     constructor(private translateService: TranslationService) {}
 
@@ -70,7 +71,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         this.setDefaultDateFormatSettings();
         this.context.populateFilters
             .asObservable()
-            .pipe(first())
+            .pipe(takeUntil(this.destroy$))
             .subscribe((filtersQueries) => {
                 if (filtersQueries[this.id]) {
                     Object.keys(filtersQueries[this.id]).forEach((field) => {
@@ -85,8 +86,15 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
                     });
                     this.submitValues(false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     private setDefaultDateFormatSettings() {

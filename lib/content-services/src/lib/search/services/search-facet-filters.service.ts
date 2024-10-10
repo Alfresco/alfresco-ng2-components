@@ -447,7 +447,7 @@ export class SearchFacetFiltersService implements OnDestroy {
         this.responseFacets = [];
         this.selectedBuckets = [];
         this.tabbedFacet = null;
-        this.queryBuilder.resetToDefaults();
+        this.queryBuilder.resetToDefaults(true);
         this.queryBuilder.update();
     }
 }

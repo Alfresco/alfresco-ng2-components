@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ReplaySubject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
@@ -36,7 +36,7 @@ import { TranslateModule } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-slider' }
 })
-export class SearchSliderComponent implements SearchWidget, OnInit {
+export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
     isActive?: boolean;
     startValue: any;
 
@@ -49,6 +49,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     thumbLabel = false;
     enableChangeUpdate: boolean;
     displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
+    private destroy$ = new Subject<void>();
 
     /** The numeric value represented by the slider. */
     @Input()
@@ -77,14 +78,21 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         }
         this.context.populateFilters
             .asObservable()
-            .pipe(first())
+            .pipe(takeUntil(this.destroy$))
             .subscribe((filtersQueries) => {
                 if (filtersQueries[this.id]) {
                     this.value = filtersQueries[this.id];
                     this.updateQuery(this.value, false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     clear() {

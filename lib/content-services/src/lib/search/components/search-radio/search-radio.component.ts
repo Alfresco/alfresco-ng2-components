@@ -91,6 +91,8 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
                     this.value = filtersQueries[this.id];
                     this.submitValues(false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
     }

@@ -94,6 +94,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
                     this.form.markAsDirty();
                     this.apply({ from: filtersQueries[this.id].from, to: filtersQueries[this.id].to }, true, false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
     }
