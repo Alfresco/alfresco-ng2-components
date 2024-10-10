@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchFilterAutocompleteChipsComponent } from './search-filter-autocomplete-chips.component';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, ReplaySubject } from 'rxjs';
 import { AutocompleteField } from '../../models/autocomplete-option.interface';
 import { TagService } from '../../../tag/services/tag.service';
 
@@ -44,8 +44,12 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         tagService = TestBed.inject(TagService);
         component.id = 'test-id';
         component.context = {
-            queryFragments: {},
-            update: () => EMPTY
+            queryFragments: {
+                createdDatetimeRange: ''
+            },
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy('update')
         } as any;
         component.settings = {
             field: 'test',
@@ -109,7 +113,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         component.setValue([{ value: 'option1' }, { value: 'option2' }]);
         fixture.detectChanges();
         expect(component.selectedOptions).toEqual([{ value: 'option1' }, { value: 'option2' }]);
-        spyOn(component.context, 'update');
+        expect(component.context.filterRawParams[component.id]).toEqual([{ value: 'option1' }, { value: 'option2' }]);
         spyOn(component.displayValue$, 'next');
         const clearBtn: HTMLButtonElement = fixture.debugElement.query(
             By.css('[data-automation-id="adf-search-chip-autocomplete-btn-clear"]')
@@ -120,10 +124,10 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         expect(component.context.update).toHaveBeenCalled();
         expect(component.selectedOptions).toEqual([]);
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
+        expect(component.context.filterRawParams[component.id]).toBeUndefined();
     });
 
     it('should correctly compose the search query', () => {
-        spyOn(component.context, 'update');
         component.selectedOptions = [{ value: 'option2' }, { value: 'option1' }];
         const applyBtn: HTMLButtonElement = fixture.debugElement.query(
             By.css('[data-automation-id="adf-search-chip-autocomplete-btn-apply"]')
@@ -133,11 +137,27 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('test:"option2" OR test:"option1"');
+        expect(component.context.filterRawParams[component.id]).toEqual([{ value: 'option2' }, { value: 'option1' }]);
 
         component.settings.field = AutocompleteField.CATEGORIES;
         component.selectedOptions = [{ id: 'test-id', value: 'test' }];
         applyBtn.click();
         fixture.detectChanges();
         expect(component.context.queryFragments[component.id]).toBe('cm:categories:"workspace://SpacesStore/test-id"');
+        expect(component.context.filterRawParams[component.id]).toEqual([{ id: 'test-id', value: 'test' }]);
+    });
+
+    it('should populate filter state when populate filters event has been observed', () => {
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+        component.context.populateFilters.next({ 'test-id': [{ value: 'option2' }, { value: 'option1' }] });
+        fixture.detectChanges();
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith('option2, option1');
+        expect(component.context.filterRawParams[component.id]).toEqual([{ value: 'option2' }, { value: 'option1' }]);
+        expect(component.selectedOptions).toEqual([{ value: 'option2' }, { value: 'option1' }]);
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

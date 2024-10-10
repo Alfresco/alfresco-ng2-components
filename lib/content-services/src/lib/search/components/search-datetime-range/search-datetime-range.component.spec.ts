@@ -20,7 +20,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { MatDatetimepickerInputEvent } from '@mat-datetimepicker/core';
 import { DateFnsUtils } from '@alfresco/adf-core';
-import { isValid } from 'date-fns';
+import { endOfMinute, isValid, startOfMinute } from 'date-fns';
+import { ReplaySubject } from 'rxjs';
 
 describe('SearchDatetimeRangeComponent', () => {
     let fixture: ComponentFixture<SearchDatetimeRangeComponent>;
@@ -36,6 +37,16 @@ describe('SearchDatetimeRangeComponent', () => {
         });
         fixture = TestBed.createComponent(SearchDatetimeRangeComponent);
         component = fixture.componentInstance;
+        component.id = 'createdDateRange';
+        component.context = {
+            queryFragments: {
+                createdDatetimeRange: ''
+            },
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy('update')
+        } as any;
+        component.settings = { field: 'cm:created' };
     });
 
     afterEach(() => fixture.destroy());
@@ -76,7 +87,7 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(component.from.value).toBeNull();
     });
 
-    it('should reset form', async () => {
+    it('should reset form and filter params', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -93,6 +104,7 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(component.from.value).toBeNull();
         expect(component.to.value).toBeNull();
         expect(component.form.value).toEqual({ from: null, to: null });
+        expect(component.context.filterRawParams[component.id]).toBeUndefined();
     });
 
     it('should reset fromMaxDatetime on reset', async () => {
@@ -106,39 +118,19 @@ describe('SearchDatetimeRangeComponent', () => {
     });
 
     it('should update query builder on reset', async () => {
-        const context: any = {
-            queryFragments: {
-                createdDatetimeRange: 'query'
-            },
-            update: () => {}
-        };
-
-        component.id = 'createdDatetimeRange';
-        component.context = context;
-
-        spyOn(context, 'update').and.stub();
+        component.context.queryFragments[component.id] = 'query';
 
         fixture.detectChanges();
         await fixture.whenStable();
 
         component.reset();
 
-        expect(context.queryFragments.createdDatetimeRange).toEqual('');
-        expect(context.update).toHaveBeenCalled();
+        expect(component.context.queryFragments.createdDatetimeRange).toEqual('');
+        expect(component.context.update).toHaveBeenCalled();
     });
 
     it('should update the query in UTC format when values change', async () => {
-        const context: any = {
-            queryFragments: {},
-            update: () => {}
-        };
-
-        component.id = 'createdDateRange';
-        component.context = context;
         component.settings = { field: 'cm:created' };
-
-        spyOn(context, 'update').and.stub();
-
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -151,24 +143,18 @@ describe('SearchDatetimeRangeComponent', () => {
         );
 
         const expectedQuery = `cm:created:['2016-10-16T12:30:00.000Z' TO '2017-10-16T20:00:59.000Z']`;
+        const expectedFromDate = DateFnsUtils.utcToLocal(startOfMinute(fromDatetime)).toISOString();
+        const expectedToDate = DateFnsUtils.utcToLocal(endOfMinute(toDatetime)).toISOString();
 
-        expect(context.queryFragments[component.id]).toEqual(expectedQuery);
-        expect(context.update).toHaveBeenCalled();
+        expect(component.context.queryFragments[component.id]).toEqual(expectedQuery);
+        expect(component.context.filterRawParams[component.id]).toEqual({ start: expectedFromDate, end: expectedToDate });
+        expect(component.context.update).toHaveBeenCalled();
     });
 
     it('should be able to update the query in UTC format from a GMT format', async () => {
-        const context: any = {
-            queryFragments: {},
-            update: () => {}
-        };
         const fromInGmt = new Date('2021-02-24T17:00:00+02:00');
         const toInGmt = new Date('2021-02-28T15:00:00+02:00');
-
-        component.id = 'createdDateRange';
-        component.context = context;
         component.settings = { field: 'cm:created' };
-
-        spyOn(context, 'update').and.stub();
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -181,10 +167,10 @@ describe('SearchDatetimeRangeComponent', () => {
             true
         );
 
-        const expectedQuery = `cm:created:['2021-02-24T15:00:00.000Z' TO '2021-02-28T13:00:59.000Z']`;
+        const expectedQuery = `cm:created:['2021-02-24T16:00:00.000Z' TO '2021-02-28T14:00:59.000Z']`;
 
-        expect(context.queryFragments[component.id]).toEqual(expectedQuery);
-        expect(context.update).toHaveBeenCalled();
+        expect(component.context.queryFragments[component.id]).toEqual(expectedQuery);
+        expect(component.context.update).toHaveBeenCalled();
     });
 
     it('should show datetime-format error when an invalid datetime is set', async () => {
@@ -231,5 +217,23 @@ describe('SearchDatetimeRangeComponent', () => {
         expect(inputs[0]).not.toBeNull();
         expect(inputs[1]).toBeDefined();
         expect(inputs[1]).not.toBeNull();
+    });
+
+    it('should populate filter state when populate filters event has been observed', () => {
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+        const fromDateString = startOfMinute(fromDatetime).toISOString();
+        const toDateString = endOfMinute(toDatetime).toISOString();
+        const expectedFromDate = DateFnsUtils.utcToLocal(startOfMinute(fromDatetime)).toISOString();
+        const expectedToDate = DateFnsUtils.utcToLocal(endOfMinute(toDatetime)).toISOString();
+        component.context.populateFilters.next({ createdDateRange: { start: fromDateString, end: toDateString } });
+        fixture.detectChanges();
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith('16/10/2016 12:30 - 16/10/2017 20:00');
+        expect(component.context.filterRawParams[component.id].start).toEqual(expectedFromDate);
+        expect(component.context.filterRawParams[component.id].end).toEqual(expectedToDate);
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

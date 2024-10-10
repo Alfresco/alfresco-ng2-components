@@ -22,6 +22,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { ReplaySubject } from 'rxjs';
 
 describe('SearchTextComponent', () => {
     let loader: HarnessLoader;
@@ -40,10 +41,13 @@ describe('SearchTextComponent', () => {
             field: 'cm:name',
             placeholder: 'Enter the name'
         };
-
         component.context = {
-            queryFragments: {},
-            update: () => {}
+            queryFragments: {
+                slider: ''
+            },
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy('update')
         } as any;
 
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -65,8 +69,6 @@ describe('SearchTextComponent', () => {
     });
 
     it('should update query builder on change', () => {
-        spyOn(component.context, 'update').and.stub();
-
         component.onChangedHandler({
             target: {
                 value: 'top-secret.doc'
@@ -75,6 +77,7 @@ describe('SearchTextComponent', () => {
 
         expect(component.value).toBe('top-secret.doc');
         expect(component.context.queryFragments[component.id]).toBe(`cm:name:'top-secret.doc'`);
+        expect(component.context.filterRawParams[component.id]).toBe('top-secret.doc');
         expect(component.context.update).toHaveBeenCalled();
     });
 
@@ -87,6 +90,7 @@ describe('SearchTextComponent', () => {
 
         expect(component.value).toBe('top-secret.doc');
         expect(component.context.queryFragments[component.id]).toBe(`cm:name:'top-secret.doc'`);
+        expect(component.context.filterRawParams[component.id]).toBe('top-secret.doc');
 
         component.onChangedHandler({
             target: {
@@ -96,6 +100,7 @@ describe('SearchTextComponent', () => {
 
         expect(component.value).toBe('');
         expect(component.context.queryFragments[component.id]).toBe('');
+        expect(component.context.filterRawParams[component.id]).toBe('');
     });
 
     it('should show the custom/default name', async () => {
@@ -118,10 +123,10 @@ describe('SearchTextComponent', () => {
 
         expect(component.value).toBe('');
         expect(component.context.queryFragments[component.id]).toBe('');
+        expect(component.context.filterRawParams[component.id]).toBeNull();
     });
 
     it('should update query with startValue on init, if provided', () => {
-        spyOn(component.context, 'update');
         component.startValue = 'mock-start-value';
         fixture.detectChanges();
 
@@ -132,12 +137,25 @@ describe('SearchTextComponent', () => {
 
     it('should parse value and set query context as blank, and not call query update, if no start value was provided', () => {
         component.context.queryFragments[component.id] = `cm:name:'secret.pdf'`;
-        spyOn(component.context, 'update');
         component.startValue = undefined;
         fixture.detectChanges();
 
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.value).toBe('secret.pdf');
         expect(component.context.update).not.toHaveBeenCalled();
+    });
+
+    it('should populate filter state when populate filters event has been observed', async () => {
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+        component.context.populateFilters.next({ text: 'secret.pdf' });
+        fixture.detectChanges();
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith('secret.pdf');
+        expect(component.value).toBe('secret.pdf');
+        expect(component.context.filterRawParams[component.id]).toBe('secret.pdf');
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

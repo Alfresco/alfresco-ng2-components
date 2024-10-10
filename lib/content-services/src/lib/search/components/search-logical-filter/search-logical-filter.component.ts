@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { TranslationService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -45,7 +46,7 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
     styleUrls: ['./search-logical-filter.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
+export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDestroy {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -53,15 +54,33 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     searchCondition: LogicalSearchCondition;
     fields = Object.keys(LogicalSearchFields);
     LogicalSearchFields = LogicalSearchFields;
-    displayValue$: Subject<string> = new Subject();
+    displayValue$: ReplaySubject<string> = new ReplaySubject(1);
+    private destroy$ = new Subject<void>();
 
     constructor(private translationService: TranslationService) {}
 
     ngOnInit(): void {
         this.clearSearchInputs();
+        this.context.populateFilters
+            .asObservable()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    this.searchCondition = filtersQueries[this.id];
+                    this.submitValues(false);
+                    this.context.filterLoaded.next();
+                } else {
+                    this.reset();
+                }
+            });
     }
 
-    submitValues() {
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    submitValues(updateContext = true) {
         if (this.hasValidValue() && this.id && this.context && this.settings && this.settings.field) {
             this.updateDisplayValue();
             const fields = this.settings.field.split(',').map((field) => (field += ':'));
@@ -108,7 +127,9 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
                 }
             });
             this.context.queryFragments[this.id] = query;
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         } else {
             this.reset();
         }
@@ -131,11 +152,13 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
             this.clearSearchInputs();
+            this.context.filterRawParams[this.id] = this.searchCondition;
             this.context.update();
         }
     }
 
     private updateDisplayValue(): void {
+        this.context.filterRawParams[this.id] = this.searchCondition;
         if (this.hasValidValue()) {
             const displayValue = Object.keys(this.searchCondition).reduce((acc, key) => {
                 const fieldIndex = Object.values(LogicalSearchFields).indexOf(key as LogicalSearchFields);

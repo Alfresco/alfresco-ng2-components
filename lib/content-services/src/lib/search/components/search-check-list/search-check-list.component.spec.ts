@@ -24,6 +24,7 @@ import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatCheckboxHarness } from '@angular/material/checkbox/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { ReplaySubject } from 'rxjs';
 
 describe('SearchCheckListComponent', () => {
     let loader: HarnessLoader;
@@ -37,6 +38,13 @@ describe('SearchCheckListComponent', () => {
         fixture = TestBed.createComponent(SearchCheckListComponent);
         component = fixture.componentInstance;
         loader = TestbedHarnessEnvironment.loader(fixture);
+
+        component.context = {
+            queryFragments: {},
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy()
+        } as any;
     });
 
     it('should setup options from settings', () => {
@@ -87,22 +95,17 @@ describe('SearchCheckListComponent', () => {
         ]);
 
         component.id = 'checklist';
-        component.context = {
-            queryFragments: {},
-            update: () => {}
-        } as any;
-
         component.ngOnInit();
-
-        spyOn(component.context, 'update').and.stub();
 
         component.changeHandler({ checked: true } as any, component.options.items[0]);
 
         expect(component.context.queryFragments[component.id]).toEqual(`TYPE:'cm:folder'`);
+        expect(component.context.filterRawParams[component.id]).toEqual([`TYPE:'cm:folder'`]);
 
         component.changeHandler({ checked: true } as any, component.options.items[1]);
 
         expect(component.context.queryFragments[component.id]).toEqual(`TYPE:'cm:folder' OR TYPE:'cm:content'`);
+        expect(component.context.filterRawParams[component.id]).toEqual([`TYPE:'cm:folder'`, `TYPE:'cm:content'`]);
     });
 
     it('should reset selected boxes', () => {
@@ -119,13 +122,8 @@ describe('SearchCheckListComponent', () => {
 
     it('should update query builder on reset', () => {
         component.id = 'checklist';
-        component.context = {
-            queryFragments: {
-                checklist: 'query'
-            },
-            update: () => {}
-        } as any;
-        spyOn(component.context, 'update').and.stub();
+        component.context.queryFragments[component.id] = 'query';
+        component.context.filterRawParams[component.id] = 'test';
 
         component.ngOnInit();
         component.options = new SearchFilterList<SearchListOption>([
@@ -137,17 +135,13 @@ describe('SearchCheckListComponent', () => {
 
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('');
+        expect(component.context.filterRawParams[component.id]).toBeUndefined();
     });
 
     describe('Pagination', () => {
         it('should show 5 items when pageSize not defined', async () => {
             component.id = 'checklist';
-            component.context = {
-                queryFragments: {
-                    checklist: 'query'
-                },
-                update: () => {}
-            } as any;
+            component.context.queryFragments[component.id] = 'query';
             component.settings = { options: sizeOptions } as any;
 
             component.ngOnInit();
@@ -162,12 +156,7 @@ describe('SearchCheckListComponent', () => {
 
         it('should show all items when pageSize is high', async () => {
             component.id = 'checklist';
-            component.context = {
-                queryFragments: {
-                    checklist: 'query'
-                },
-                update: () => {}
-            } as any;
+            component.context.queryFragments[component.id] = 'query';
             component.settings = { pageSize: 15, options: sizeOptions } as any;
             component.ngOnInit();
             fixture.detectChanges();
@@ -182,12 +171,7 @@ describe('SearchCheckListComponent', () => {
 
     it('should able to check/reset the checkbox', async () => {
         component.id = 'checklist';
-        component.context = {
-            queryFragments: {
-                checklist: 'query'
-            },
-            update: () => {}
-        } as any;
+        component.context.queryFragments[component.id] = 'query';
         component.settings = { options: sizeOptions } as any;
         spyOn(component, 'submitValues').and.stub();
         component.ngOnInit();
@@ -212,10 +196,7 @@ describe('SearchCheckListComponent', () => {
             { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
         ]);
         component.startValue = `TYPE:'cm:folder'`;
-        component.context = {
-            queryFragments: {},
-            update: jasmine.createSpy()
-        } as any;
+        component.context.queryFragments[component.id] = 'query';
         fixture.detectChanges();
 
         expect(component.context.queryFragments[component.id]).toBe(`TYPE:'cm:folder'`);
@@ -229,15 +210,31 @@ describe('SearchCheckListComponent', () => {
             { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
         ]);
         component.startValue = undefined;
-        component.context = {
-            queryFragments: {
-                checkList: `TYPE:'cm:folder'`
-            },
-            update: jasmine.createSpy()
-        } as any;
+        component.context.queryFragments[component.id] = `TYPE:'cm:folder'`;
         fixture.detectChanges();
 
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.update).not.toHaveBeenCalled();
+    });
+
+    it('should populate filter state when populate filters event has been observed', () => {
+        component.id = 'checkList';
+        component.options = new SearchFilterList<SearchListOption>([
+            { name: 'Folder', value: `TYPE:'cm:folder'`, checked: false },
+            { name: 'Document', value: `TYPE:'cm:content'`, checked: false }
+        ]);
+        component.startValue = undefined;
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+
+        component.context.populateFilters.next({ checkList: [`TYPE:'cm:content'`] });
+        fixture.detectChanges();
+
+        expect(component.options.items[1].checked).toBeTrue();
+        expect(component.displayValue$.next).toHaveBeenCalledWith('Document');
+        expect(component.context.filterRawParams[component.id]).toEqual([`TYPE:'cm:content'`]);
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

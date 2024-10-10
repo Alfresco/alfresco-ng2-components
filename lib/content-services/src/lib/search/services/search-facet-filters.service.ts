@@ -69,7 +69,7 @@ export class SearchFacetFiltersService implements OnDestroy {
             this.responseFacets = null;
         });
 
-        this.queryBuilder.updated.pipe(takeUntil(this.onDestroy$)).subscribe((query) => this.queryBuilder.execute(query));
+        this.queryBuilder.updated.pipe(takeUntil(this.onDestroy$)).subscribe((query) => this.queryBuilder.execute(true, query));
 
         this.queryBuilder.executed.pipe(takeUntil(this.onDestroy$)).subscribe((resultSetPaging: ResultSetPaging) => {
             this.onDataLoaded(resultSetPaging);
@@ -447,7 +447,7 @@ export class SearchFacetFiltersService implements OnDestroy {
         this.responseFacets = [];
         this.selectedBuckets = [];
         this.tabbedFacet = null;
-        this.queryBuilder.resetToDefaults();
+        this.queryBuilder.resetToDefaults(true);
         this.queryBuilder.update();
     }
 }

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FileSizeCondition } from './file-size-condition';
 import { FileSizeOperator } from './file-size-operator.enum';
 import { FileSizeUnit } from './file-size-unit.enum';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchProperties } from './search-properties';
@@ -31,6 +31,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-properties',
@@ -40,13 +41,14 @@ import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplet
     styleUrls: ['./search-properties.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchPropertiesComponent implements OnInit, AfterViewChecked, SearchWidget {
+export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDestroy, SearchWidget {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     startValue: SearchProperties;
-    displayValue$ = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
     autocompleteOptions: AutocompleteOption[] = [];
+    preselectedOptions: AutocompleteOption[] = [];
 
     private _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
         fileSizeOperator: FileSizeOperator.AT_LEAST,
@@ -85,10 +87,15 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         return this._reset$;
     }
 
+    get selectedExtensions(): AutocompleteOption[] {
+        return this.parseToAutocompleteOptions(this._selectedExtensions);
+    }
+
     set selectedExtensions(extensions: AutocompleteOption[]) {
         this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
 
+    private destroy$ = new Subject<void>();
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
     ngOnInit() {
@@ -102,6 +109,24 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         if (this.startValue) {
             this.setValue(this.startValue);
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    filtersQueries[this.id].fileSizeCondition.fileSizeUnit = this.fileSizeUnits.find(
+                        (fileSizeUnit) => fileSizeUnit.bytes === filtersQueries[this.id].fileSizeCondition.fileSizeUnit.bytes
+                    );
+                    this.form.patchValue(filtersQueries[this.id].fileSizeCondition);
+                    this.form.updateValueAndValidity();
+                    this._selectedExtensions = filtersQueries[this.id].fileExtensions ?? [];
+                    this.preselectedOptions = this.parseToAutocompleteOptions(this._selectedExtensions);
+                    this.submitValues(false);
+                    this.context.filterLoaded.next();
+                } else {
+                    this.reset();
+                }
+            });
     }
 
     ngAfterViewChecked() {
@@ -118,6 +143,11 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
                     extraFreeSpace;
             });
         }
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     narrowDownAllowedCharacters(event: Event) {
@@ -164,13 +194,20 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         this.form.reset();
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
+            this.context.filterRawParams[this.id] = undefined;
             this.context.update();
         }
         this.reset$.next();
         this.displayValue$.next('');
     }
 
-    submitValues() {
+    submitValues(updateContext = true) {
+        if (this.context?.filterRawParams) {
+            this.context.filterRawParams[this.id] = {
+                fileExtensions: this._selectedExtensions,
+                fileSizeCondition: this.form.value
+            };
+        }
         if (this.settings && this.context) {
             let query = '';
             let displayedValue = '';
@@ -200,7 +237,9 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
             }
             this.displayValue$.next(displayedValue);
             this.context.queryFragments[this.id] = query;
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 
@@ -217,7 +256,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
 
     setValue(searchProperties: SearchProperties) {
         this.form.patchValue(searchProperties.fileSizeCondition);
-        this.selectedExtensions = this.parseToAutocompleteOptions(searchProperties.fileExtensions);
+        this.selectedExtensions = this.parseToAutocompleteOptions(searchProperties.fileExtensions ?? []);
         this.submitValues();
     }
 
