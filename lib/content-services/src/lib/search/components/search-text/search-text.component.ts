@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ReplaySubject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
@@ -38,7 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-text' }
 })
-export class SearchTextComponent implements SearchWidget, OnInit {
+export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
     /** The content of the text box. */
     @Input()
     value = '';
@@ -50,6 +50,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     isActive = false;
     enableChangeUpdate = true;
     displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
+    private destroy$ = new Subject<void>();
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {
@@ -73,14 +74,21 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         }
         this.context.populateFilters
             .asObservable()
-            .pipe(first())
+            .pipe(takeUntil(this.destroy$))
             .subscribe((filtersQueries) => {
                 if (filtersQueries[this.id]) {
                     this.value = filtersQueries[this.id];
                     this.updateQuery(this.value, false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     clear() {

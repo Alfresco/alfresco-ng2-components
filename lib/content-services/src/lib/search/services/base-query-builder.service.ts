@@ -109,7 +109,14 @@ export abstract class BaseQueryBuilderService {
 
     public abstract isFilterServiceActive(): boolean;
 
-    public resetToDefaults() {
+    public resetToDefaults(withNavigate = false) {
+        if (withNavigate) {
+            this.router.navigate([], {
+                queryParams: { q: null },
+                relativeTo: this.activatedRoute,
+                queryParamsHandling: 'merge'
+            });
+        }
         const currentConfig = this.getDefaultConfiguration();
         this.resetSearchOptions();
         this.configUpdated.next(currentConfig);
@@ -150,6 +157,7 @@ export abstract class BaseQueryBuilderService {
         this.sortingOptions = [];
         this.userFacetBuckets = {};
         this.scope = null;
+        this.populateFilters.next({});
     }
 
     public getSearchFormDetails(): SearchForm[] {

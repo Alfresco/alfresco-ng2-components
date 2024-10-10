@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FileSizeCondition } from './file-size-condition';
 import { FileSizeOperator } from './file-size-operator.enum';
@@ -31,7 +31,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
-import { first } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-properties',
@@ -41,7 +41,7 @@ import { first } from 'rxjs/operators';
     styleUrls: ['./search-properties.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchPropertiesComponent implements OnInit, AfterViewChecked, SearchWidget {
+export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDestroy, SearchWidget {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -95,6 +95,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
 
+    private destroy$ = new Subject<void>();
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
     ngOnInit() {
@@ -110,7 +111,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
         }
         this.context.populateFilters
             .asObservable()
-            .pipe(first())
+            .pipe(takeUntil(this.destroy$))
             .subscribe((filtersQueries) => {
                 if (filtersQueries[this.id]) {
                     filtersQueries[this.id].fileSizeCondition.fileSizeUnit = this.fileSizeUnits.find(
@@ -122,6 +123,8 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
                     this.preselectedOptions = this.parseToAutocompleteOptions(this._selectedExtensions);
                     this.submitValues(false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
     }
@@ -140,6 +143,11 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
                     extraFreeSpace;
             });
         }
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     narrowDownAllowedCharacters(event: Event) {

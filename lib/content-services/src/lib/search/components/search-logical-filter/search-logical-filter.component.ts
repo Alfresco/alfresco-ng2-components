@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ReplaySubject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { TranslationService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -46,7 +46,7 @@ export interface LogicalSearchCondition extends LogicalSearchConditionEnumValued
     styleUrls: ['./search-logical-filter.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
+export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDestroy {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -55,6 +55,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     fields = Object.keys(LogicalSearchFields);
     LogicalSearchFields = LogicalSearchFields;
     displayValue$: ReplaySubject<string> = new ReplaySubject(1);
+    private destroy$ = new Subject<void>();
 
     constructor(private translationService: TranslationService) {}
 
@@ -62,14 +63,21 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
         this.clearSearchInputs();
         this.context.populateFilters
             .asObservable()
-            .pipe(first())
+            .pipe(takeUntil(this.destroy$))
             .subscribe((filtersQueries) => {
                 if (filtersQueries[this.id]) {
                     this.searchCondition = filtersQueries[this.id];
                     this.submitValues(false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     submitValues(updateContext = true) {

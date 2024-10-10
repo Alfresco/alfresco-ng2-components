@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
-import { ReplaySubject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { isValid, isBefore, startOfMinute, endOfMinute, parseISO } from 'date-fns';
@@ -59,7 +59,7 @@ export const DEFAULT_DATETIME_FORMAT: string = 'dd/MM/yyyy HH:mm';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
-export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
+export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDestroy {
     from: FormControl<Date>;
     to: FormControl<Date>;
 
@@ -76,6 +76,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     startValue: any;
     enableChangeUpdate: boolean;
     displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
+    private destroy$ = new Subject<void>();
 
     constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
 
@@ -136,7 +137,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
         this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
         this.context.populateFilters
             .asObservable()
-            .pipe(first())
+            .pipe(takeUntil(this.destroy$))
             .subscribe((filtersQueries) => {
                 if (filtersQueries[this.id]) {
                     const start = parseISO(filtersQueries[this.id].start);
@@ -145,8 +146,15 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
                     this.form.markAsDirty();
                     this.apply({ from: start, to: end }, true, false);
                     this.context.filterLoaded.next();
+                } else {
+                    this.reset();
                 }
             });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     apply(model: Partial<{ from: Date; to: Date }>, isValidValue: boolean, updateContext = true) {

@@ -17,9 +17,10 @@
 
 import { NodesApi, NodeEntry, SearchApi, SEARCH_LANGUAGE, ResultSetPaging } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, of, from } from 'rxjs';
-import { concatMap, first, map } from 'rxjs/operators';
+import { Observable, of, from, ReplaySubject } from 'rxjs';
+import { concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { SavedSearch } from '../interfaces/saved-search.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -37,12 +38,37 @@ export class SavedSearchesService {
         return this._nodesApi;
     }
 
+    private savedSearchFileNodeId: string;
+
     readonly SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id';
 
-    constructor(private apiService: AlfrescoApiService) {}
+    savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
+
+    constructor(private apiService: AlfrescoApiService) {
+        this.getSavedSearches()
+            .pipe(take(1))
+            .subscribe((searches) => this.savedSearches$.next(searches));
+    }
 
     getSavedSearches() {
-        return this.getSavedSearchesNodeId().pipe(concatMap((nodeId) => from(this.nodesApi.getNodeContent(nodeId))));
+        return this.getSavedSearchesNodeId().pipe(
+            concatMap((nodeId) => {
+                this.savedSearchFileNodeId = nodeId;
+                return from(this.nodesApi.getNodeContent(nodeId).then((content) => this.mapFileContentToSavedSearches(content)));
+            })
+        );
+    }
+
+    saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
+        return this.getSavedSearches().pipe(
+            take(1),
+            switchMap((savedSearches) => {
+                const updatedSavedSearches = [...savedSearches, { ...newSaveSearch, order: savedSearches.length }];
+                return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSavedSearches))).pipe(
+                    tap(() => this.savedSearches$.next(updatedSavedSearches))
+                );
+            })
+        );
     }
 
     getSavedSearchesNodeId(): Observable<string> {
@@ -83,15 +109,16 @@ export class SavedSearchesService {
             return of(savedSearchesNodeId);
         }
     }
-
     private createSavedSearchesNode(parentNodeId: string): Observable<NodeEntry> {
         return from(
             this.nodesApi.createNode(parentNodeId, {
                 name: 'saved-searches.json',
                 nodeType: 'cm:content'
-                //TODO request fails with this aspect, probably different namespace to be used??
-                // aspectNames: ['sys:hidden']
             })
         );
+    }
+
+    private mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {
+        return blob.text().then((content) => (content ? JSON.parse(content) : []));
     }
 }
