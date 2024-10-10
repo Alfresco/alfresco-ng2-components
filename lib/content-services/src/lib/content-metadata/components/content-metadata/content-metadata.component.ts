@@ -224,7 +224,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
 
     set tags(tags: string[]) {
         this._tags = tags;
-        this.tagsToDisplay = this._tags.map((tag) => {
+        this.tagsToDisplay = this.tags.map((tag) => {
             return { id: tag, name: tag };
         });
     }
