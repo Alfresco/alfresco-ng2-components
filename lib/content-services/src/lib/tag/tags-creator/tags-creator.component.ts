@@ -33,7 +33,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -52,7 +52,6 @@ interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
     duplicatedAddedTag?: boolean;
     emptyTag?: boolean;
-    required?: boolean;
     specialCharacters?: boolean;
 }
 
@@ -107,22 +106,18 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Input()
     set tags(tags: string[]) {
         this._tags = [...tags];
-        this.tagsToDisplay = this._tags.map((tag) => {
+        this.tagsToDisplay = this.tags.map((tag) => {
             return { id: tag, name: tag };
         });
         this._initialExistingTags = null;
+        this._existingTags = null;
         this.loadTags(this.tagNameControl.value);
         this.tagNameControl.updateValueAndValidity();
-        if (this.tagNameControl.errors?.required) {
-            this.tagNameControl.markAsUntouched();
-        }
     }
 
     get tags(): string[] {
         return this._tags;
     }
-
-    tagsToDisplay: Chip[] = [];
 
     /**
      * Decides if input for tags creation/searching should be visible. When input is hidden then panel of existing tags is hidden as well.
@@ -136,9 +131,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             this._existingTagsPanelVisible = true;
             setTimeout(() => {
                 this.tagNameInputElement?.nativeElement?.scrollIntoView();
-                if (!this.tags.length) {
-                    this.tagNameInputElement?.nativeElement?.focus();
-                }
             });
         } else {
             this._existingTagsPanelVisible = false;
@@ -162,11 +154,12 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @Output()
     tagsChange = new EventEmitter<string[]>();
 
+    tagsToDisplay: Chip[] = [];
+
     readonly nameErrorMessagesByErrors = new Map<keyof TagNameControlErrors, string>([
         ['duplicatedExistingTag', 'EXISTING_TAG'],
         ['duplicatedAddedTag', 'ALREADY_ADDED_TAG'],
         ['emptyTag', 'EMPTY_TAG'],
-        ['required', 'REQUIRED'],
         ['specialCharacters', 'SPECIAL_CHARACTERS']
     ]);
 
@@ -176,7 +169,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _tags: string[] = [];
     private _tagNameControl = new FormControl<string>(
         '',
-        [this.validateIfNotAlreadyAdded.bind(this), Validators.required, this.validateEmptyTag, this.validateSpecialCharacters],
+        [this.validateIfNotAlreadyAdded.bind(this), this.validateEmptyTag, this.validateSpecialCharacters],
         this.validateIfNotExistingTag.bind(this)
     );
     private _tagNameControlVisible = false;
@@ -282,8 +275,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      */
     addTag(): void {
         if (!this._typing && !this.tagNameControl.invalid) {
-            this.tags.push(this.tagNameControl.value.trim());
-            this.tags = [...this.tags];
+            this.tags = [...this.tags, this.tagNameControl.value.trim()];
             this.clearTagNameInput();
             this.checkScrollbarVisibility();
             this.tagsChange.emit(this.tags);
@@ -299,7 +291,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     removeTag(tag: string): void {
         this.removeTagFromArray(this.tags, tag);
         this.tags = [...this.tags];
-        this.tagNameControl.updateValueAndValidity({ emitEvent: false });
+        this.tagNameControl.updateValueAndValidity();
         this.updateExistingTagsListOnRemoveFromTagsToConfirm(tag);
         this.exactTagSet$.next();
         this.checkScrollbarVisibility();
@@ -346,8 +338,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     takeUntil(this.cancelExistingTagsLoading$),
                     finalize(() => (this._typing = false))
                 )
-                .subscribe(
-                    ({ exactResult, searchedResult }: { exactResult: TagEntry; searchedResult: TagPaging }) => {
+                .subscribe({
+                    next: ({ exactResult, searchedResult }: { exactResult: TagEntry; searchedResult: TagPaging }) => {
                         if (exactResult) {
                             this.existingExactTag = exactResult;
                             this.removeExactTagFromSearchedResult(searchedResult);
@@ -361,11 +353,11 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                         this.exactTagSet$.next();
                         this._spinnerVisible = false;
                     },
-                    () => {
+                    error: () => {
                         this.notificationService.showError('TAG.TAGS_CREATOR.ERRORS.FETCH_TAGS');
                         this._spinnerVisible = false;
                     }
-                );
+                });
         } else {
             this.existingExactTag = null;
             this._spinnerVisible = false;

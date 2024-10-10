@@ -36,7 +36,7 @@
         role="button"
         tabindex="0"
         (keyup.enter)="addTag()"
-        [hidden]="tagNameControl.invalid || typing"
+        [hidden]="!tagNameControl.value || tagNameControl.invalid || typing"
     >
         {{ 'TAG.TAGS_CREATOR.CREATE_TAG' | translate : { tag: tagNameControl.value } }}
     </span>

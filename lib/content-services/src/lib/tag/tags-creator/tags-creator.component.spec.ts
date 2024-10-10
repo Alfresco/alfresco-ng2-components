@@ -337,22 +337,6 @@ describe('TagsCreatorComponent', () => {
                 expect(getFirstError()).toBe('TAG.TAGS_CREATOR.ERRORS.EMPTY_TAG');
             }));
 
-            it('should show error for required', fakeAsync(() => {
-                typeTag('');
-                component.tagNameControl.markAsTouched();
-                fixture.detectChanges();
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.REQUIRED');
-            }));
-
-            it('should not show error for required if tags are changed', fakeAsync(() => {
-                typeTag('');
-                component.tagNameControl.markAsTouched();
-                component.tags = ['new tag 1', 'new tag 2'];
-                fixture.detectChanges();
-                expect(getFirstError()).toBeUndefined();
-            }));
-
             it('should show error when duplicated already added tag', fakeAsync(() => {
                 const tag = 'Some tag';
 
@@ -437,17 +421,6 @@ describe('TagsCreatorComponent', () => {
                 fixture.detectChanges();
                 const error = getFirstError();
                 expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.EXISTING_TAG');
-            }));
-
-            it('should error for required when not typed anything and blur input', fakeAsync(() => {
-                component.tagNameControlVisible = true;
-                component.tagNameControl.markAsTouched();
-                fixture.detectChanges();
-
-                const error = getFirstError();
-                expect(error).toBe('TAG.TAGS_CREATOR.ERRORS.REQUIRED');
-
-                flush();
             }));
         });
     });
