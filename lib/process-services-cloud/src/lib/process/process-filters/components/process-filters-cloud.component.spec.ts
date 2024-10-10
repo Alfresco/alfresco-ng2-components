@@ -118,6 +118,7 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(filters[0].nativeElement.innerText).toContain('FakeAllProcesses');
         expect(filters[1].nativeElement.innerText).toContain('FakeRunningProcesses');
         expect(filters[2].nativeElement.innerText).toContain('FakeCompletedProcesses');
+        expect(Object.keys(component.counters).length).toBe(3);
     });
 
     it('should emit an error with a bad response', () => {
@@ -148,6 +149,7 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(component.filters[0].name).toEqual('FakeAllProcesses');
         expect(component.filters[1].name).toEqual('FakeRunningProcesses');
         expect(component.filters[2].name).toEqual('FakeCompletedProcesses');
+        expect(Object.keys(component.counters).length).toBe(3);
     });
 
     it('should not select any filter as default', async () => {

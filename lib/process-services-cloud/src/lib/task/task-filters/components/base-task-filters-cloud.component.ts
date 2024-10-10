@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { EventEmitter, Input, Output, OnDestroy, Directive } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Directive, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 import { FilterParamsModel } from '../models/filter-cloud.model';
 
 @Directive()
@@ -45,7 +45,7 @@ export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    counters$: { [key: string]: Observable<number> } = {};
+    counters: { [key: string]: number } = {};
     updatedCountersSet = new Set<string>();
 
     protected onDestroy$ = new Subject<boolean>();

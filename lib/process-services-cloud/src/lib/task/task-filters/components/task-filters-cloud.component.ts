@@ -87,6 +87,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             (res) => {
                 this.resetFilter();
                 this.filters = res || [];
+                this.initFilterCounters();
                 this.selectFilterAndEmit(this.filterParam);
                 this.updateFilterCounters();
                 this.success.emit(res);
@@ -97,17 +98,39 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         );
     }
 
-    updateFilterCounters() {
+    /**
+     * Initialize counter collection for filters
+     */
+    initFilterCounters(): void {
+        this.filters.forEach((filter) => (this.counters[filter.key] = 0));
+    }
+
+    /**
+     * Iterate over filters and update counters
+     */
+    updateFilterCounters(): void {
         this.filters.forEach((filter: TaskFilterCloudModel) => this.updateFilterCounter(filter));
     }
 
-    updateFilterCounter(filter: TaskFilterCloudModel) {
+    /**
+     *  Get current value for filter and check if value has changed
+     * @param filter filter
+     */
+    updateFilterCounter(filter: TaskFilterCloudModel): void {
         if (filter?.showCounter) {
-            this.counters$[filter.key] = this.taskFilterCloudService.getTaskFilterCounter(filter).pipe(
-                tap((filterCounter) => {
-                    this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
-                })
-            );
+            this.taskFilterCloudService
+                .getTaskFilterCounter(filter)
+                .pipe(
+                    tap((filterCounter) => {
+                        this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
+                    })
+                )
+                .subscribe((data) => {
+                    this.counters = {
+                        ...this.counters,
+                        [filter.key]: data
+                    };
+                });
         }
     }
 

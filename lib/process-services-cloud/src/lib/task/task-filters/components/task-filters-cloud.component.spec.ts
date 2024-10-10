@@ -283,8 +283,8 @@ describe('TaskFiltersCloudComponent', () => {
 
         const updatedFilterCounters = fixture.debugElement.queryAll(By.css('span.adf-active'));
         expect(updatedFilterCounters.length).toBe(1);
-        expect(Object.keys(component.counters$).length).toBe(1);
-        expect(component.counters$['fake-involved-tasks']).toBeDefined();
+        expect(Object.keys(component.counters).length).toBe(3);
+        expect(component.counters['fake-involved-tasks']).toBeDefined();
     });
 
     it('should not update filter counter when notifications are disabled from app.config.json', fakeAsync(() => {
