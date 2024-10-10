@@ -62,6 +62,39 @@ describe('Basic configuration test', () => {
         });
     });
 
+    describe('ticket mismatch', () => {
+        it('should update config ticketEcm on ticket_mismatch event', (done) => {
+            // Tickets
+            const mockStorageTicket = 'storage-ticket';
+            const mockConfigTicket = 'config-ticket';
+
+            // Create a mock storage
+            const storageContent = { 'ticket-ECM': mockStorageTicket };
+            const mockStorage = { getItem: (key: string) => storageContent[key] };
+
+            // Initialize AlfrescoApi instance (without ticketEcm to prevent validateTicket from being called at this point)
+            const alfrescoApi = new AlfrescoApi({ authType: 'BASIC' });
+
+            // Initializes configuration and storage
+            alfrescoApi.config.ticketEcm = mockConfigTicket;
+            alfrescoApi.contentClient.config.ticketEcm = mockConfigTicket;
+            alfrescoApi.contentClient.storage = mockStorage as any;
+
+            // Ensure alfrescoApi and contentClient have the config ticket
+            assert.equal(alfrescoApi.config.ticketEcm, mockConfigTicket);
+            assert.equal(alfrescoApi.contentClient.config.ticketEcm, mockConfigTicket);
+
+            alfrescoApi.on('ticket_mismatch', () => {
+                // As the ticket mismatch event is triggered, the ticketEcm should now be the one from storage
+                assert.equal(alfrescoApi.config.ticketEcm, mockStorageTicket);
+                assert.equal(alfrescoApi.contentClient.config.ticketEcm, mockStorageTicket);
+                done();
+            });
+
+            alfrescoApi.contentClient.getAlfTicket(undefined);
+        });
+    });
+
     describe('setconfig parameter ', () => {
         it('should be possible change the host in the client', () => {
             const config = {
