@@ -101,7 +101,8 @@ describe('NewVersionUploaderService', () => {
                         currentVersion: '2',
                         showComments: true,
                         allowDownload: true,
-                        showVersionsOnly: undefined
+                        showVersionsOnly: undefined,
+                        allowViewVersions: true
                     },
                     panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px'
@@ -122,7 +123,8 @@ describe('NewVersionUploaderService', () => {
                         currentVersion: '2',
                         showComments: true,
                         allowDownload: true,
-                        showVersionsOnly: undefined
+                        showVersionsOnly: undefined,
+                        allowViewVersions: true
                     },
                     panelClass: 'adf-custom-class',
                     width: '500px'
@@ -142,7 +144,8 @@ describe('NewVersionUploaderService', () => {
                         currentVersion: '2',
                         showComments: true,
                         allowDownload: true,
-                        showVersionsOnly: undefined
+                        showVersionsOnly: undefined,
+                        allowViewVersions: true
                     },
                     panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px',
@@ -161,7 +164,8 @@ describe('NewVersionUploaderService', () => {
                         currentVersion: '2',
                         showComments: true,
                         allowDownload: true,
-                        showVersionsOnly: undefined
+                        showVersionsOnly: undefined,
+                        allowViewVersions: true
                     },
                     panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
                     width: '630px'
@@ -185,12 +189,57 @@ describe('NewVersionUploaderService', () => {
                         currentVersion: '2',
                         showComments: true,
                         allowDownload: true,
-                        showVersionsOnly: true
+                        showVersionsOnly: true,
+                        allowViewVersions: true
                     },
                     panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-list'],
                     width: '630px'
                 } as any);
             }));
+
+            it('should open dialog with correct configuration when allowViewVersions is true', (done) => {
+                dialogRefSpyObj.componentInstance.dialogAction = new BehaviorSubject<NewVersionUploaderData>(mockNewVersionUploaderData);
+                mockNewVersionUploaderDialogData.allowViewVersions = true;
+
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).subscribe(() => {
+                    expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
+                        data: {
+                            file: mockFile,
+                            node: mockNode,
+                            currentVersion: '2',
+                            showComments: true,
+                            allowDownload: true,
+                            showVersionsOnly: undefined,
+                            allowViewVersions: true
+                        },
+                        panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
+                        width: '630px'
+                    });
+                    done();
+                });
+            });
+
+            it('should open dialog with correct configuration when allowViewVersions is false', (done) => {
+                dialogRefSpyObj.componentInstance.dialogAction = new BehaviorSubject<NewVersionUploaderData>(mockNewVersionUploaderData);
+                mockNewVersionUploaderDialogData.allowViewVersions = false;
+
+                service.openUploadNewVersionDialog(mockNewVersionUploaderDialogData).subscribe(() => {
+                    expect(spyOnDialogOpen).toHaveBeenCalledWith(NewVersionUploaderDialogComponent, {
+                        data: {
+                            file: mockFile,
+                            node: mockNode,
+                            currentVersion: '2',
+                            showComments: true,
+                            allowDownload: true,
+                            showVersionsOnly: undefined,
+                            allowViewVersions: false
+                        },
+                        panelClass: ['adf-new-version-uploader-dialog', 'adf-new-version-uploader-dialog-upload'],
+                        width: '630px'
+                    });
+                    done();
+                });
+            });
         });
 
         describe('Subscribe events from Dialog', () => {

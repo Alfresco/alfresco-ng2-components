@@ -21,6 +21,7 @@ import { mockFile, mockNode } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { NewVersionUploaderDataAction } from './models';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
+import { By } from '@angular/platform-browser';
 
 describe('NewVersionUploaderDialog', () => {
     let component: NewVersionUploaderDialogComponent;
@@ -181,6 +182,15 @@ describe('NewVersionUploaderDialog', () => {
             fixture.detectChanges();
             const matDialogTitle = nativeElement.querySelector(cssSelectors.title);
             expect(matDialogTitle.innerHTML).toEqual('TEST_TITLE');
+        });
+
+        it('should have assigned allowViewVersions based on allowViewVersions from data', () => {
+            component.data.showVersionsOnly = true;
+            component.data.allowViewVersions = true;
+
+            fixture.detectChanges();
+            const adfVersionListComponent = fixture.debugElement.query(By.css(cssSelectors.adfVersionList));
+            expect(adfVersionListComponent.componentInstance.allowViewVersions).toBeTrue();
         });
     });
 });
