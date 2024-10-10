@@ -22,7 +22,8 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { TranslationService } from '@alfresco/adf-core';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,7 +54,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
 
     constructor(private translationService: TranslationService) {
         this.options = new SearchFilterList<SearchListOption>();
@@ -77,6 +78,21 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
                 this.context.queryFragments[this.id] = '';
             }
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(first())
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    filtersQueries[this.id].forEach((value) => {
+                        const foundIndex = this.options.items.findIndex((option) => option.value === value);
+                        if (foundIndex !== -1) {
+                            this.options.items[foundIndex].checked = true;
+                        }
+                    });
+                    this.submitValues(false);
+                    this.context.filterLoaded.next();
+                }
+            });
     }
 
     clear() {
@@ -95,6 +111,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
+            this.context.filterRawParams[this.id] = undefined;
         }
     }
 
@@ -142,13 +159,18 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         return this.options.items.filter((option) => option.checked).map((option) => option.value);
     }
 
-    submitValues() {
+    submitValues(updateContext = true) {
         const checkedValues = this.getCheckedValues();
+        if (checkedValues.length !== 0) {
+            this.context.filterRawParams[this.id] = checkedValues;
+        }
         const query = checkedValues.join(` ${this.operator} `);
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = query;
             this.updateDisplayValue();
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 }

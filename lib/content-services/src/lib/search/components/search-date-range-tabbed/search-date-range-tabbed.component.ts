@@ -16,7 +16,8 @@
  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { DateRangeType } from './search-date-range/date-range-type';
 import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchWidget } from '../../models/search-widget.interface';
@@ -24,7 +25,7 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { InLastDateType } from './search-date-range/in-last-date-type';
 import { TranslationService } from '@alfresco/adf-core';
-import { endOfDay, endOfToday, format, formatISO, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from 'date-fns';
+import { endOfDay, endOfToday, format, formatISO, parseISO, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
 import { SearchDateRangeComponent } from './search-date-range/search-date-range.component';
@@ -41,7 +42,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
-    displayValue$ = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
     id: string;
     startValue: SearchDateRange = {
         dateRangeType: DateRangeType.ANY,
@@ -50,6 +51,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         betweenStartDate: undefined,
         betweenEndDate: undefined
     };
+    preselectedValues = {};
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     fields: string[];
@@ -66,6 +68,25 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     ngOnInit(): void {
         this.fields = this.settings?.field.split(',').map((field) => field.trim());
         this.setDefaultDateFormatSettings();
+        this.context.populateFilters
+            .asObservable()
+            .pipe(first())
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    Object.keys(filtersQueries[this.id]).forEach((field) => {
+                        filtersQueries[this.id][field].betweenStartDate = filtersQueries[this.id][field].betweenStartDate
+                            ? parseISO(filtersQueries[this.id][field].betweenStartDate)
+                            : undefined;
+                        filtersQueries[this.id][field].betweenEndDate = filtersQueries[this.id][field].betweenEndDate
+                            ? parseISO(filtersQueries[this.id][field].betweenEndDate)
+                            : undefined;
+                        this.preselectedValues[field] = filtersQueries[this.id][field];
+                        this.onDateRangedValueChanged(filtersQueries[this.id][field], field);
+                    });
+                    this.submitValues(false);
+                    this.context.filterLoaded.next();
+                }
+            });
     }
 
     private setDefaultDateFormatSettings() {
@@ -88,6 +109,9 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         this.startValue = {
             ...this.startValue
         };
+        this.fields.forEach((field) => {
+            this.context.filterRawParams[field] = undefined;
+        });
         this.submitValues();
     }
 
@@ -99,14 +123,16 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
         return this.settings?.displayedLabelsByField?.[field] ? this.settings.displayedLabelsByField[field] : field;
     }
 
-    submitValues() {
+    submitValues(updateContext = true) {
         this.context.queryFragments[this.id] = this.combinedQuery;
         this.displayValue$.next(this.combinedDisplayValue);
-        if (this.id && this.context) {
+        if (this.id && this.context && updateContext) {
             this.context.update();
         }
     }
     onDateRangedValueChanged(value: Partial<SearchDateRange>, field: string) {
+        this.context.filterRawParams[this.id] = this.context.filterRawParams[this.id] || {};
+        this.context.filterRawParams[this.id][field] = value;
         this.value[field] = value;
         this.updateQuery(value, field);
         this.updateDisplayValue(value, field);

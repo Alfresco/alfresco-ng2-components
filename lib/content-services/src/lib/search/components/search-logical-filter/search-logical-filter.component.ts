@@ -19,7 +19,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { TranslationService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -53,15 +54,25 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     searchCondition: LogicalSearchCondition;
     fields = Object.keys(LogicalSearchFields);
     LogicalSearchFields = LogicalSearchFields;
-    displayValue$: Subject<string> = new Subject();
+    displayValue$: ReplaySubject<string> = new ReplaySubject(1);
 
     constructor(private translationService: TranslationService) {}
 
     ngOnInit(): void {
         this.clearSearchInputs();
+        this.context.populateFilters
+            .asObservable()
+            .pipe(first())
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    this.searchCondition = filtersQueries[this.id];
+                    this.submitValues(false);
+                    this.context.filterLoaded.next();
+                }
+            });
     }
 
-    submitValues() {
+    submitValues(updateContext = true) {
         if (this.hasValidValue() && this.id && this.context && this.settings && this.settings.field) {
             this.updateDisplayValue();
             const fields = this.settings.field.split(',').map((field) => (field += ':'));
@@ -108,7 +119,9 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
                 }
             });
             this.context.queryFragments[this.id] = query;
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         } else {
             this.reset();
         }
@@ -131,11 +144,13 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
             this.clearSearchInputs();
+            this.context.filterRawParams[this.id] = this.searchCondition;
             this.context.update();
         }
     }
 
     private updateDisplayValue(): void {
+        this.context.filterRawParams[this.id] = this.searchCondition;
         if (this.hasValidValue()) {
             const displayValue = Object.keys(this.searchCondition).reduce((acc, key) => {
                 const fieldIndex = Object.values(LogicalSearchFields).indexOf(key as LogicalSearchFields);

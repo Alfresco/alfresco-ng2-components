@@ -24,7 +24,7 @@ import { FileSizeUnit } from './file-size-unit.enum';
 import { FileSizeOperator } from './file-size-operator.enum';
 import { SearchProperties } from './search-properties';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
-import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
+import { ReplaySubject } from 'rxjs';
 
 describe('SearchPropertiesComponent', () => {
     let component: SearchPropertiesComponent;
@@ -66,6 +66,15 @@ describe('SearchPropertiesComponent', () => {
 
         fixture = TestBed.createComponent(SearchPropertiesComponent);
         component = fixture.componentInstance;
+        component.id = 'properties';
+        component.context = {
+            queryFragments: {
+                properties: ''
+            },
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy('update')
+        } as any;
     });
 
     describe('File size', () => {
@@ -187,14 +196,11 @@ describe('SearchPropertiesComponent', () => {
         const nameField = 'cm:name';
 
         beforeEach(() => {
-            component.id = 'properties';
             component.settings = {
                 field: `${sizeField},${nameField}`
             };
-            component.context = TestBed.inject(SearchQueryBuilderService);
             fixture.detectChanges();
             spyOn(component.displayValue$, 'next');
-            spyOn(component.context, 'update');
         });
 
         it('should not search when settings is not set', () => {
@@ -203,7 +209,6 @@ describe('SearchPropertiesComponent', () => {
 
             component.submitValues();
             expect(component.displayValue$.next).not.toHaveBeenCalled();
-            expect(component.context.queryFragments[component.id]).toBeUndefined();
             expect(component.context.update).not.toHaveBeenCalled();
         });
 
@@ -219,6 +224,10 @@ describe('SearchPropertiesComponent', () => {
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith('');
             expect(component.context.queryFragments[component.id]).toBe('');
+            expect(component.context.filterRawParams[component.id]).toEqual({
+                fileExtensions: undefined,
+                fileSizeCondition: { fileSize: null, fileSizeOperator: FileSizeOperator.AT_LEAST, fileSizeUnit: FileSizeUnit.KB }
+            });
             expect(component.context.update).toHaveBeenCalled();
         });
 
@@ -230,6 +239,14 @@ describe('SearchPropertiesComponent', () => {
                 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB'
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[328704 TO MAX]`);
+            expect(component.context.filterRawParams[component.id]).toEqual({
+                fileExtensions: undefined,
+                fileSizeCondition: {
+                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+                    fileSize: 321,
+                    fileSizeUnit: FileSizeUnit.KB
+                }
+            });
             expect(component.context.update).toHaveBeenCalled();
         });
 
@@ -247,6 +264,14 @@ describe('SearchPropertiesComponent', () => {
                 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB'
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[0 TO 336592896]`);
+            expect(component.context.filterRawParams[component.id]).toEqual({
+                fileExtensions: undefined,
+                fileSizeCondition: {
+                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+                    fileSize: 321,
+                    fileSizeUnit: FileSizeUnit.MB
+                }
+            });
             expect(component.context.update).toHaveBeenCalled();
         });
 
@@ -264,6 +289,14 @@ describe('SearchPropertiesComponent', () => {
                 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.EXACTLY 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.GB'
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[344671125504 TO 344671125504]`);
+            expect(component.context.filterRawParams[component.id]).toEqual({
+                fileExtensions: undefined,
+                fileSizeCondition: {
+                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.EXACTLY',
+                    fileSize: 321,
+                    fileSizeUnit: FileSizeUnit.GB
+                }
+            });
             expect(component.context.update).toHaveBeenCalled();
         });
 
@@ -274,6 +307,14 @@ describe('SearchPropertiesComponent', () => {
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith('pdf');
             expect(component.context.queryFragments[component.id]).toBe(`${nameField}:("*.${extension.value}")`);
+            expect(component.context.filterRawParams[component.id]).toEqual({
+                fileExtensions: ['pdf'],
+                fileSizeCondition: {
+                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+                    fileSize: null,
+                    fileSizeUnit: FileSizeUnit.KB
+                }
+            });
             expect(component.context.update).toHaveBeenCalled();
         });
 
@@ -283,6 +324,14 @@ describe('SearchPropertiesComponent', () => {
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith('pdf, txt');
             expect(component.context.queryFragments[component.id]).toBe(`${nameField}:("*.pdf" OR "*.txt")`);
+            expect(component.context.filterRawParams[component.id]).toEqual({
+                fileExtensions: ['pdf', 'txt'],
+                fileSizeCondition: {
+                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+                    fileSize: null,
+                    fileSizeUnit: FileSizeUnit.KB
+                }
+            });
             expect(component.context.update).toHaveBeenCalled();
         });
 
@@ -295,6 +344,14 @@ describe('SearchPropertiesComponent', () => {
                 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.KB, pdf, txt'
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[328704 TO MAX] AND ${nameField}:("*.pdf" OR "*.txt")`);
+            expect(component.context.filterRawParams[component.id]).toEqual({
+                fileExtensions: ['pdf', 'txt'],
+                fileSizeCondition: {
+                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+                    fileSize: 321,
+                    fileSizeUnit: FileSizeUnit.KB
+                }
+            });
             expect(component.context.update).toHaveBeenCalled();
         });
     });
@@ -377,14 +434,12 @@ describe('SearchPropertiesComponent', () => {
         });
 
         it('should clear the queryFragments for the component id and call update', () => {
-            component.context = TestBed.inject(SearchQueryBuilderService);
-            component.id = 'test-id';
             component.context.queryFragments[component.id] = 'test-query';
             fixture.detectChanges();
-            spyOn(component.context, 'update');
             component.reset();
 
             expect(component.context.queryFragments[component.id]).toBe('');
+            expect(component.context.filterRawParams[component.id]).toBeUndefined();
             expect(component.context.update).toHaveBeenCalled();
         });
     });
@@ -411,20 +466,25 @@ describe('SearchPropertiesComponent', () => {
         it('should search based on passed value', () => {
             const sizeField = 'content.size';
             const nameField = 'cm:name';
-            component.id = 'properties';
             component.settings = {
                 field: `${sizeField},${nameField}`
             };
-            component.context = TestBed.inject(SearchQueryBuilderService);
             component.ngOnInit();
             spyOn(component.displayValue$, 'next');
-            spyOn(component.context, 'update');
 
             component.setValue(searchProperties);
             expect(component.displayValue$.next).toHaveBeenCalledWith(
                 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB, pdf, txt'
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[0 TO 336592896] AND ${nameField}:("*.pdf" OR "*.txt")`);
+            expect(component.context.filterRawParams[component.id]).toEqual({
+                fileExtensions: ['pdf', 'txt'],
+                fileSizeCondition: {
+                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+                    fileSize: 321,
+                    fileSizeUnit: FileSizeUnit.MB
+                }
+            });
             expect(component.context.update).toHaveBeenCalled();
         });
     });
@@ -469,5 +529,38 @@ describe('SearchPropertiesComponent', () => {
                 )
             ).toBeTrue();
         });
+    });
+
+    it('should populate filter state when populate filters event has been observed', () => {
+        component.settings = {
+            field: 'field'
+        };
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+        component.context.populateFilters.next({
+            properties: {
+                fileExtensions: ['pdf', 'txt'],
+                fileSizeCondition: {
+                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+                    fileSize: 321,
+                    fileSizeUnit: FileSizeUnit.MB
+                }
+            }
+        });
+        fixture.detectChanges();
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith(
+            'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB, pdf, txt'
+        );
+        expect(component.selectedExtensions).toEqual([{ value: 'pdf' }, { value: 'txt' }]);
+        expect(component.preselectedOptions).toEqual([{ value: 'pdf' }, { value: 'txt' }]);
+        expect(component.form.value).toEqual({
+            fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+            fileSize: 321,
+            fileSizeUnit: FileSizeUnit.MB
+        });
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });
