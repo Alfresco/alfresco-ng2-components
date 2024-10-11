@@ -18,7 +18,6 @@
 import { StringUtils } from './string-utils';
 
 describe('StringUtils', () => {
-
     describe('capitalize', () => {
         it('should uppercase first letter of word and lowercase the rest', () => {
             const lowercaseWord = 'test';
