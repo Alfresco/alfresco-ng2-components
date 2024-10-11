@@ -70,7 +70,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
                     this.submitValues(false);
                     this.context.filterLoaded.next();
                 } else {
-                    this.reset();
+                    this.reset(false);
                 }
             });
     }
@@ -131,7 +131,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
                 this.context.update();
             }
         } else {
-            this.reset();
+            this.reset(updateContext);
         }
     }
 
@@ -148,12 +148,14 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
         this.updateDisplayValue();
     }
 
-    reset() {
+    reset(updateContext = true) {
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
             this.clearSearchInputs();
             this.context.filterRawParams[this.id] = this.searchCondition;
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 

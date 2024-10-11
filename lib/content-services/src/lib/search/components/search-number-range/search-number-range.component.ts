@@ -95,7 +95,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
                     this.apply({ from: filtersQueries[this.id].from, to: filtersQueries[this.id].to }, true, false);
                     this.context.filterLoaded.next();
                 } else {
-                    this.reset();
+                    this.reset(false);
                 }
             });
     }
@@ -162,7 +162,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         this.updateDisplayValue();
     }
 
-    clear() {
+    clear(updateContext = true) {
         this.isActive = false;
 
         this.form.reset({
@@ -174,15 +174,15 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             this.context.queryFragments[this.id] = '';
             this.context.filterRawParams[this.id] = undefined;
             this.updateDisplayValue();
-            if (this.enableChangeUpdate) {
+            if (this.enableChangeUpdate && updateContext) {
                 this.context.update();
             }
         }
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.clear();
-        if (this.id && this.context) {
+        if (this.id && this.context && updateContext) {
             this.context.update();
         }
     }

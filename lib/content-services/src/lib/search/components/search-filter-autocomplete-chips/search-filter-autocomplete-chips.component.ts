@@ -74,7 +74,9 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                     this.updateQuery(false);
                     this.context.filterLoaded.next();
                 } else {
-                    this.reset();
+                    if (this.selectedOptions.length) {
+                        this.reset();
+                    }
                 }
             });
     }

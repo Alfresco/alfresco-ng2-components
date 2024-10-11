@@ -92,7 +92,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
                     this.submitValues(false);
                     this.context.filterLoaded.next();
                 } else {
-                    this.reset();
+                    this.reset(false);
                 }
             });
     }
@@ -159,12 +159,14 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         }
     }
 
-    reset() {
+    reset(updateContext = true) {
         const initialValue = this.getSelectedValue();
         if (initialValue !== null) {
             this.setValue(initialValue);
             this.updateDisplayValue();
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 }

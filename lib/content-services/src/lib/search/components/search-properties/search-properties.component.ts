@@ -124,7 +124,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
                     this.submitValues(false);
                     this.context.filterLoaded.next();
                 } else {
-                    this.reset();
+                    this.reset(false);
                 }
             });
     }
@@ -190,12 +190,14 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         });
     };
 
-    reset() {
+    reset(updateContext = true) {
         this.form.reset();
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
             this.context.filterRawParams[this.id] = undefined;
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
         this.reset$.next();
         this.displayValue$.next('');

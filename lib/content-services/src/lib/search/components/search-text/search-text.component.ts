@@ -81,7 +81,7 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
                     this.updateQuery(this.value, false);
                     this.context.filterLoaded.next();
                 } else {
-                    this.reset();
+                    this.reset(false);
                 }
             });
     }
@@ -99,9 +99,9 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
         }
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.value = '';
-        this.updateQuery(null);
+        this.updateQuery(null, updateContext);
     }
 
     onChangedHandler(event) {

@@ -51,7 +51,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         betweenStartDate: undefined,
         betweenEndDate: undefined
     };
-    preselectedValues: { [key: string]: Partial<SearchDateRange> } = {};
+    preselectedValues: { [key: string]: SearchDateRange } = {};
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     fields: string[];
@@ -87,7 +87,9 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
                     this.submitValues(false);
                     this.context.filterLoaded.next();
                 } else {
-                    this.reset();
+                    if (Object.keys(this.getCurrentValue()).length && this.hasValidValue()) {
+                        this.reset();
+                    }
                 }
             });
     }
@@ -120,6 +122,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         this.fields.forEach((field) => {
             this.context.filterRawParams[field] = undefined;
         });
+        this.context.filterRawParams[this.id] = undefined;
         this.submitValues();
     }
 

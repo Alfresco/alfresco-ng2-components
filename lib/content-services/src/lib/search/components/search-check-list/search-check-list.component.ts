@@ -92,7 +92,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
                     this.submitValues(false);
                     this.context.filterLoaded.next();
                 } else {
-                    this.reset();
+                    this.reset(false);
                 }
             });
     }
@@ -117,12 +117,14 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         }
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.isActive = false;
         this.clearOptions();
         if (this.id && this.context) {
             this.updateDisplayValue();
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 
