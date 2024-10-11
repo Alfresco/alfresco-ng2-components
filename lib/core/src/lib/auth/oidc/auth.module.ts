@@ -45,7 +45,6 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
     declarations: [AuthenticationConfirmationComponent],
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
-        { provide: OAuthStorage, useExisting: JWT_STORAGE_SERVICE },
         { provide: AuthenticationService},
         {
             provide: AUTH_CONFIG,
@@ -63,11 +62,14 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
     ]
 })
 export class AuthModule {
-    static forRoot(config: AuthModuleConfig = { useHash: false }): ModuleWithProviders<AuthModule> {
+    static forRoot(config: AuthModuleConfig = { useHash: false }, jwtStorage?: typeof OAuthStorage): ModuleWithProviders<AuthModule> {
         config.preventClearHashAfterLogin = config.preventClearHashAfterLogin ?? true;
         return {
             ngModule: AuthModule,
-            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: config }]
+            providers: [
+                { provide: AUTH_MODULE_CONFIG, useValue: config },
+                { provide: OAuthStorage, useExisting: jwtStorage ?? StorageService }
+            ]
         };
     }
 }
