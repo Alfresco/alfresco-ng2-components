@@ -6,12 +6,11 @@
   "prefix": "adf",
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/webpack:webpack",
       "options": {
         "projectRoot": "lib/testing",
         "outputPath": "dist/libs/testing",
         "main": "lib/testing/index.ts",
-        "generatePackageJson": true,
         "tsConfig": "lib/testing/tsconfig.lib.prod.json",
         "webpackConfig": "lib/testing/webpack.config.js",
         "stylePreprocessorOptions": {
@@ -25,14 +24,13 @@
           "projectRoot": "lib/testing",
           "outputPath": "dist/libs/testing",
           "main": "lib/testing/index.ts",
-          "generatePackageJson": true,
-          "tsConfig": "lib/testing/tsconfig.lib.prod.json",
+          "tsConfig": "lib/testing/tsconfig.lib.prod.json"
         }
       },
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["lib/testing/**/*.ts", "lib/testing/**/*.html"]
       }
