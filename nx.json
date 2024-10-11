@@ -6,22 +6,12 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ],
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"],
       "cache": true
     },
     "build-storybook": {
-      "inputs": [
-        "default",
-        "^production",
-        "{projectRoot}/.storybook/**/*",
-        "{projectRoot}/tsconfig.storybook.json"
-      ]
+      "inputs": ["default", "^production", "{projectRoot}/.storybook/**/*", "{projectRoot}/tsconfig.storybook.json"]
     },
     "lint": {
       "cache": true
@@ -36,18 +26,12 @@
   "tasksRunnerOptions": {
     "default": {
       "options": {
-        "cacheDirectory": "nxcache",
-        "runtimeCacheInputs": [
-          "node -v"
-        ]
+        "runtimeCacheInputs": ["node -v"]
       }
     }
   },
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [
       "{workspaceRoot}/angular.json",
       "{workspaceRoot}/demo-shell/src/index.html",
@@ -63,5 +47,6 @@
       "!{projectRoot}/karma.conf.js",
       "!{projectRoot}/tsconfig.storybook.json"
     ]
-  }
+  },
+  "cacheDirectory": "nxcache"
 }
