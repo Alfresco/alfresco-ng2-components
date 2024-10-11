@@ -34,10 +34,6 @@
     &.adf-dynamic-chip-list-button-in-next-line {
         align-items: unset;
         padding-bottom: 54px;
-
-        .adf-dynamic-chip-list-view-more-button {
-            margin-top: 4px;
-        }
     }
 
     &:not(.adf-dynamic-chip-list-paginated) {
@@ -45,7 +41,6 @@
 
         &:not(.adf-dynamic-chip-list-flex-column) {
             .adf-dynamic-chip-list-view-more-button {
-                margin-top: 18px;
                 margin-left: 4px;
             }
         }
