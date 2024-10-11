@@ -66,7 +66,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     filters$: Observable<ProcessFilterCloudModel[]>;
     currentFilter?: ProcessFilterCloudModel;
     filters: ProcessFilterCloudModel[] = [];
-    counters$: { [key: string]: Observable<number> } = {};
+    counters: { [key: string]: number } = {};
     enableNotifications: boolean;
     currentFiltersValues: { [key: string]: number } = {};
     updatedFiltersSet = new Set<string>();
@@ -109,6 +109,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
             next: (res) => {
                 this.resetFilter();
                 this.filters = res || [];
+                this.initFilterCounters();
                 this.selectFilterAndEmit(this.filterParam);
                 this.success.emit(res);
                 this.updateFilterCounters();
@@ -117,6 +118,13 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
                 this.error.emit(err);
             }
         });
+    }
+
+    /**
+     * Initialize counter collection for filters
+     */
+    initFilterCounters() {
+        this.filters.forEach((filter) => (this.counters[filter.key] = 0));
     }
 
     /**
@@ -249,18 +257,33 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         }
     }
 
+    /**
+     * Iterate over filters and update counters
+     */
     updateFilterCounters(): void {
         this.filters.forEach((filter: ProcessFilterCloudModel) => {
             this.updateFilterCounter(filter);
         });
     }
 
+    /**
+     *  Get current value for filter and check if value has changed
+     * @param filter filter
+     */
     updateFilterCounter(filter: ProcessFilterCloudModel): void {
-        this.counters$[filter.key] = this.processListCloudService.getProcessCounter(filter.appName, filter.status).pipe(
-            tap((filterCounter) => {
-                this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
-            })
-        );
+        this.processListCloudService
+            .getProcessCounter(filter.appName, filter.status)
+            .pipe(
+                tap((filterCounter) => {
+                    this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
+                })
+            )
+            .subscribe((data) => {
+                this.counters = {
+                    ...this.counters,
+                    [filter.key]: data
+                };
+            });
     }
 
     checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number): void {
