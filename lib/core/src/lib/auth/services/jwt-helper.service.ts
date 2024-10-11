@@ -15,14 +15,9 @@
  * limitations under the License.
  */
 
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
-import { StorageService } from '../../common/services/storage.service';
-
-export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
-    providedIn: 'root',
-    factory: () => inject(StorageService)
-});
+import { JWT_STORAGE_SERVICE } from '../oidc/auth.module';
 
 @Injectable({
     providedIn: 'root'
