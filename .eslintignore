@@ -10,3 +10,4 @@ scripts
 docs/**/*.md
 lib/js-api/docs/**/*.md
 .storybook
+webpack.config.js
