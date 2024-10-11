@@ -21,7 +21,7 @@ import { createESLintRule } from '../../utils/create-eslint-rule/create-eslint-r
 
 export const RULE_NAME = 'use-none-component-view-encapsulation';
 
-type MessageIds = 'useNoneComponentViewEncapsulation'| 'suggestAddViewEncapsulationNone';
+type MessageIds = 'useNoneComponentViewEncapsulation' | 'suggestAddViewEncapsulationNone';
 type DecoratorForClass = TSESTree.Decorator & {
     parent: TSESTree.ClassDeclaration;
 };
@@ -53,8 +53,7 @@ export default createESLintRule<unknown[], MessageIds>({
     meta: {
         type: 'suggestion',
         docs: {
-            description: `Disallows using other encapsulation than \`${viewEncapsulationNone}\``,
-            recommended: false
+            description: `Disallows using other encapsulation than \`${viewEncapsulationNone}\``
         },
         hasSuggestions: true,
         schema: [],
@@ -65,18 +64,13 @@ export default createESLintRule<unknown[], MessageIds>({
     },
     defaultOptions: [],
     create(context) {
-        const encapsulationProperty = Selectors.metadataProperty(
-            metadataPropertyName
-        );
+        const encapsulationProperty = Selectors.metadataProperty(metadataPropertyName);
         const withoutEncapsulationProperty =
             `${Selectors.COMPONENT_CLASS_DECORATOR}:matches([expression.arguments.length=0], [expression.arguments.0.type='ObjectExpression']:not(:has(${encapsulationProperty})))` as const;
         const nonNoneViewEncapsulationNoneProperty =
             `${Selectors.COMPONENT_CLASS_DECORATOR} > CallExpression > ObjectExpression > ` +
             `${encapsulationProperty}:matches([value.type='Identifier'][value.name='undefined'], [value.object.name='ViewEncapsulation'][value.property.name!='None'])`;
-        const selectors = [
-            withoutEncapsulationProperty,
-            nonNoneViewEncapsulationNoneProperty
-        ].join(',');
+        const selectors = [withoutEncapsulationProperty, nonNoneViewEncapsulationNoneProperty].join(',');
         return {
             [selectors](node: DecoratorForClass | PropertyInClassDecorator) {
                 context.report({
@@ -92,7 +86,7 @@ export default createESLintRule<unknown[], MessageIds>({
                                             fixer,
                                             importName: 'ViewEncapsulation',
                                             moduleName: '@angular/core',
-                                            node: node.parent.parent.parent.parent
+                                            node: node.parent
                                         }),
                                         ASTUtils.isMemberExpression(node.value)
                                             ? fixer.replaceText(node.value.property, 'None')
@@ -107,11 +101,7 @@ export default createESLintRule<unknown[], MessageIds>({
                                         moduleName: '@angular/core',
                                         node: node.parent
                                     }),
-                                    RuleFixes.getDecoratorPropertyAddFix(
-                                        node,
-                                        fixer,
-                                        `${metadataPropertyName}: ${viewEncapsulationNone}`
-                                    )
+                                    RuleFixes.getDecoratorPropertyAddFix(node, fixer, `${metadataPropertyName}: ${viewEncapsulationNone}`)
                                 ].filter(isNotNullOrUndefined);
                             }
                         }
