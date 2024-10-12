@@ -15,4 +15,17 @@
  * limitations under the License.
  */
 
-export const isBrowser = (): boolean => typeof window?.document !== 'undefined';
+import { ElementFinder, browser } from 'protractor';
+
+/**
+ * Tagged template to convert a sting to an `ElementFinder`.
+ * @example ```const item = byCss`.adf-breadcrumb-item-current`;```
+ * @example ```const item = byCss`${variable}`;```
+ * @param literals literals
+ * @param placeholders placeholders
+ * @returns Instance of `ElementFinder` type.
+ */
+export const byCss = (literals: TemplateStringsArray, ...placeholders: string[]): ElementFinder => {
+    const selector = literals[0] || placeholders[0];
+    return browser.$(selector);
+};
