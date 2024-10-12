@@ -79,7 +79,6 @@ export class QueriesApi extends BaseApi {
      * - name
      * - modifiedAt
      * - createdAt
-     *
      * @param term The term to search for.
      * @param opts Optional parameters
      * @returns Promise<NodePaging>
@@ -122,7 +121,6 @@ export class QueriesApi extends BaseApi {
      * - id
      * - firstName
      * - lastName
-     *
      * @param term The term to search for.
      * @param opts Optional parameters
      * @returns Promise<PersonPaging>
@@ -164,7 +162,6 @@ export class QueriesApi extends BaseApi {
      * - id
      * - title
      * - description
-     *
      * @param term The term to search for.
      * @param opts Optional parameters
      * @returns Promise<SitePaging>

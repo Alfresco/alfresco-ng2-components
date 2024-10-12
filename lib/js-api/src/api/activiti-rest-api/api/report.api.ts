@@ -105,7 +105,6 @@ export class ReportApi extends BaseApi {
 
     /**
      * Export a report
-     *
      * @param reportId report id
      * @param bodyParam body parameters
      */
@@ -127,7 +126,6 @@ export class ReportApi extends BaseApi {
 
     /**
      * Save a report
-     *
      * @param reportId report id
      * @param opts Optional parameters
      */
@@ -154,7 +152,6 @@ export class ReportApi extends BaseApi {
 
     /**
      * Delete a report
-     *
      * @param reportId report id
      */
     deleteReport(reportId: string) {

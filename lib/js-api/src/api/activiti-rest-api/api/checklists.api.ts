@@ -27,7 +27,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class ChecklistsApi extends BaseApi {
     /**
      * Create a task checklist
-     *
      * @param taskId taskId
      * @param taskRepresentation taskRepresentation
      * @return Promise<TaskRepresentation>
@@ -50,7 +49,6 @@ export class ChecklistsApi extends BaseApi {
 
     /**
      * Get checklist for a task
-     *
      * @param taskId taskId
      * @return Promise<ResultListDataRepresentationTaskRepresentation>
      */
@@ -70,7 +68,6 @@ export class ChecklistsApi extends BaseApi {
 
     /**
      * Change the order of items on a checklist
-     *
      * @param taskId taskId
      * @param orderRepresentation orderRepresentation
      * @return Promise<{}>

@@ -44,7 +44,6 @@ export interface GetUsersOpts {
 export class AdminUsersApi extends BaseApi {
     /**
      * Bulk update a list of users
-     *
      * @param update update
      * @return Promise<{}>
      */
@@ -59,7 +58,6 @@ export class AdminUsersApi extends BaseApi {
 
     /**
      * Create a user
-     *
      * @param userRepresentation userRepresentation
      * @return Promise<UserRepresentation>
      */
@@ -75,7 +73,6 @@ export class AdminUsersApi extends BaseApi {
 
     /**
      * Get a user
-     *
      * @param userId userId
      * @param opts Optional parameters
      * @return Promise<AbstractUserRepresentation>
@@ -96,7 +93,6 @@ export class AdminUsersApi extends BaseApi {
 
     /**
      * Query users
-     *
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationAbstractUserRepresentation>
      */
@@ -109,7 +105,6 @@ export class AdminUsersApi extends BaseApi {
 
     /**
      * Update a user
-     *
      * @param userId userId
      * @param userRepresentation userRepresentation
      * @return Promise<{}>

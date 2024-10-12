@@ -34,7 +34,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class TasksApi extends BaseApi {
     /**
      * List the users and groups involved with a task
-     *
      * @param taskId taskId
      * @param identityLinkRepresentation identityLinkRepresentation
      * @returns Promise<IdentityLinkRepresentation>
@@ -58,7 +57,6 @@ export class TasksApi extends BaseApi {
      * Create a standalone task
      *
      * A standalone task is one which is not associated with any process instance.
-     *
      * @param taskRepresentation taskRepresentation
      * @returns Promise<TaskRepresentation>
      */
@@ -74,7 +72,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * Remove a user or group involvement from a task
-     *
      * @param taskId taskId
      * @param family family
      * @param identityId identityId
@@ -102,7 +99,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * Delete a task
-     *
      * @param taskId taskId
      * @returns Promise<{}>
      */
@@ -121,7 +117,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * Filter a list of tasks
-     *
      * @param tasksFilter tasksFilter
      * @returns Promise<ResultListDataRepresentationTaskRepresentation>
      */
@@ -137,7 +132,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * Get a user or group involvement with a task
-     *
      * @param taskId taskId
      * @param family family
      * @param identityId identityId
@@ -165,7 +159,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * List either the users or groups involved with a process instance
-     *
      * @param taskId taskId
      * @param family family
      * @returns Promise<IdentityLinkRepresentation>
@@ -187,7 +180,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * getIdentityLinks
-     *
      * @param taskId taskId
      * @returns Promise<IdentityLinkRepresentation>
      */
@@ -206,7 +198,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * Get the audit log for a task
-     *
      * @param taskId taskId
      * @returns Promise<TaskAuditInfoRepresentation>
      */
@@ -225,7 +216,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * Get the audit log for a task
-     *
      * @param taskId taskId
      * @returns Promise<Blob> task audit in blob
      */
@@ -246,7 +236,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * Get a task
-     *
      * @param taskId taskId
      * @returns Promise<TaskRepresentation>
      */
@@ -266,7 +255,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * Query historic tasks
-     *
      * @param queryRequest queryRequest
      * @returns Promise<ResultListDataRepresentationTaskRepresentation>
      */
@@ -282,7 +270,6 @@ export class TasksApi extends BaseApi {
 
     /**
      * List tasks
-     *
      * @param tasksQuery tasksQuery
      * @returns Promise<ResultListDataRepresentationTaskRepresentation>
      */
@@ -300,7 +287,6 @@ export class TasksApi extends BaseApi {
      * Update a task
      *
      * You can edit only name, description and dueDate (ISO 8601 string).
-     *
      * @param taskId taskId
      * @param updated updated
      * @returns Promise<TaskRepresentation>

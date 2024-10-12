@@ -31,7 +31,6 @@ export class RuntimeAppDefinitionsApi extends BaseApi {
      * Deploy a published app
      *
      * Deploying an app allows the user to see it on his/her landing page. Apps must be published before they can be deployed.
-     *
      * @param saveObject saveObject
      * @return Promise<{}>
      */
@@ -46,7 +45,6 @@ export class RuntimeAppDefinitionsApi extends BaseApi {
 
     /**
      * Get a runtime app
-     *
      * @param appDefinitionId appDefinitionId
      * @return Promise<AppDefinitionRepresentation>
      */
@@ -67,7 +65,6 @@ export class RuntimeAppDefinitionsApi extends BaseApi {
      * List runtime apps
      *
      * When a user logs in into Alfresco Process Services Suite, a landing page is displayed containing all the apps that the user is allowed to see and use. These are referred to as runtime apps.
-     *
      * @return Promise<ResultListDataRepresentationAppDefinitionRepresentation>
      */
     getAppDefinitions(): Promise<ResultListDataRepresentationAppDefinitionRepresentation> {

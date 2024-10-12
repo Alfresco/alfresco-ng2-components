@@ -25,7 +25,6 @@ import { BaseApi } from '../../hxi-connector-api/api/base.api';
 export class AgentsApi extends BaseApi {
     /**
      * Gets all agents.
-     *
      * @returns AgentPaging object containing the agents.
      */
     getAgents(): Promise<AgentPaging> {

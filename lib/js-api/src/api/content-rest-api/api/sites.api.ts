@@ -47,7 +47,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 export class SitesApi extends BaseApi {
     /**
      * Approve a site membership request
-     *
      * @param siteId The identifier of a site.
      * @param inviteeId The invitee username.
      * @param opts Optional parameters
@@ -76,7 +75,6 @@ export class SitesApi extends BaseApi {
      * Create a site
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param siteBodyCreate The site details
      * @param opts Optional parameters
      * @param opts.skipConfiguration Flag to indicate whether the Share-specific (surf) configuration files for the site should not be created. (default to false)
@@ -111,7 +109,6 @@ export class SitesApi extends BaseApi {
 
     /**
      * Create a site membership
-     *
      * @param siteId The identifier of a site.
      * @param siteMembershipBodyCreate The person to add and their role
      * @param opts Optional parameters
@@ -144,7 +141,6 @@ export class SitesApi extends BaseApi {
 
     /**
      * Create a site membership request
-     *
      * @param personId The identifier of a person.
      * @param siteMembershipRequestBodyCreate Site membership request details
      * @param opts Optional parameters
@@ -178,7 +174,6 @@ export class SitesApi extends BaseApi {
     /**
      * Delete a site
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
      * @param opts.permanent Flag to indicate whether the site should be permanently deleted i.e. bypass the trashcan. (default to false)
@@ -205,7 +200,6 @@ export class SitesApi extends BaseApi {
     /**
      * Delete a site membership
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
      * @returns Promise<{}>
@@ -230,7 +224,6 @@ export class SitesApi extends BaseApi {
      *
      * Deletes person **personId** as a member of site **siteId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
      * @returns Promise<{}>
@@ -255,7 +248,6 @@ export class SitesApi extends BaseApi {
      *
      * Deletes the site membership request to site **siteId** for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
      * @returns Promise<{}>
@@ -289,7 +281,6 @@ export class SitesApi extends BaseApi {
      * objects related to the site **siteId**:
      *
      * containers,members
-     *
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
      * @param opts.relations Use the relations parameter to include one or more related entities in a single response.
@@ -319,7 +310,6 @@ export class SitesApi extends BaseApi {
      * Get a site container
      *
      * Gets information on the container **containerId** in site **siteId**.
-     *
      * @param siteId The identifier of a site.
      * @param containerId The unique identifier of a site container.
      * @param opts Optional parameters
@@ -350,7 +340,6 @@ export class SitesApi extends BaseApi {
      *
      * Gets site membership information for person **personId** on site **siteId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
      * @param opts Optional parameters
@@ -382,7 +371,6 @@ export class SitesApi extends BaseApi {
      *
      * Gets site membership information for person **personId** on site **siteId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
      * @returns Promise<SiteRoleEntry>
@@ -408,7 +396,6 @@ export class SitesApi extends BaseApi {
      *
      * Gets the site membership request for site **siteId** for person **personId**, if one exists.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
@@ -449,7 +436,6 @@ export class SitesApi extends BaseApi {
      * This may be combined with the siteId filter, as shown below:
      *
      * where=(siteId=mySite AND personId=person))
-     *
      * @param opts Optional parameters
      * @param opts.where A string to restrict the returned objects by using a predicate.
      * @returns Promise<SiteMembershipRequestWithPersonPaging>
@@ -473,7 +459,6 @@ export class SitesApi extends BaseApi {
      * List site containers
      *
      * Gets a list of containers for the site **siteId**.
-     *
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
      * @returns Promise<SiteContainerPaging>
@@ -504,7 +489,6 @@ export class SitesApi extends BaseApi {
      *
      * Gets a list of the current site membership requests for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @returns Promise<SiteMembershipRequestPaging>
@@ -534,7 +518,6 @@ export class SitesApi extends BaseApi {
      * List site memberships
      *
      * Gets a list of site memberships for site **siteId**.
-     *
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
      * @returns Promise<SiteMemberPaging>
@@ -585,7 +568,6 @@ export class SitesApi extends BaseApi {
      * - id
      * - title
      * - role
-     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
@@ -657,8 +639,6 @@ export class SitesApi extends BaseApi {
      * objects related to each site:
      *
      * containers,members
-     *
-     *
      * @param opts Optional parameters
      * @param opts.orderBy A string to control the order of the entities returned in a list. You can use the **orderBy** parameter to
      * sort the list by one or more fields.
@@ -695,7 +675,6 @@ export class SitesApi extends BaseApi {
 
     /**
      * Reject a site membership request
-     *
      * @param siteId The identifier of a site.
      * @param inviteeId The invitee username.
      * @param opts Optional parameters
@@ -729,7 +708,6 @@ export class SitesApi extends BaseApi {
      * (site) admin can update title, description or visibility.
      *
      * Note: the id of a site cannot be updated once the site has been created.
-     *
      * @param siteId The identifier of a site.
      * @param siteBodyUpdate The site information to update.
      * @param opts Optional parameters
@@ -768,7 +746,6 @@ export class SitesApi extends BaseApi {
      * - SiteCollaborator
      * - SiteContributor
      * - SiteManager
-     *
      * @param siteId The identifier of a site.
      * @param personId The identifier of a person.
      * @param siteMembershipBodyUpdate The persons new role
@@ -808,7 +785,6 @@ export class SitesApi extends BaseApi {
      *
      * Updates the message for the site membership request to site **siteId** for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param siteId The identifier of a site.
      * @param siteMembershipRequestBodyUpdate The new message to display
@@ -852,7 +828,6 @@ export class SitesApi extends BaseApi {
      * - SiteCollaborator
      * - SiteContributor
      * - SiteManager
-     *
      * @param siteId The identifier of a site.
      * @param siteMembershipBodyCreate The group to add and it role
      * @param opts Optional parameters
@@ -887,7 +862,6 @@ export class SitesApi extends BaseApi {
      * List group membership for site
      *
      * **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
-     *
      * @param siteId The identifier of a site.
      * @param opts Optional parameters
      * @returns Promise<SiteGroupPaging>
@@ -917,7 +891,6 @@ export class SitesApi extends BaseApi {
      * Get information about site membership of group
      * **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
      * Gets site membership information for group **groupId** on site **siteId**.
-     *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
      * @param opts Optional parameters
@@ -954,7 +927,6 @@ export class SitesApi extends BaseApi {
      * - SiteCollaborator
      * - SiteContributor
      * - SiteManager
-     *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
      * @param siteMembershipBodyUpdate The group new role
@@ -991,7 +963,6 @@ export class SitesApi extends BaseApi {
 
     /**
      * Delete a group membership for site
-     *
      * @param siteId The identifier of a site.
      * @param groupId The authorityId of a group.
      * @returns Promise<{}>

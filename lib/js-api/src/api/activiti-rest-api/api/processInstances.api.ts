@@ -38,7 +38,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class ProcessInstancesApi extends BaseApi {
     /**
      * Activate a process instance
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<ProcessInstanceRepresentation>
      */
@@ -58,7 +57,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Add a user or group involvement to a process instance
-     *
      * @param processInstanceId processInstanceId
      * @param identityLinkRepresentation identityLinkRepresentation
      * @return Promise<IdentityLinkRepresentation>
@@ -80,7 +78,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Remove a user or group involvement from a process instance
-     *
      * @param processInstanceId processInstanceId
      * @param family family
      * @param identityId identityId
@@ -110,7 +107,6 @@ export class ProcessInstancesApi extends BaseApi {
      * Cancel or remove a process instance
      *
      * If the process instance has not yet been completed, it will be cancelled. If it has already finished or been cancelled then the process instance will be removed and will no longer appear in queries.
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<{}>
      */
@@ -131,7 +127,6 @@ export class ProcessInstancesApi extends BaseApi {
      * List process instances using a filter
      *
      * The request body provided must define either a valid filterId value or filter object
-     *
      * @param filterRequest filterRequest
      * @return Promise<ResultListDataRepresentationProcessInstanceRepresentation>
      */
@@ -149,7 +144,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Get decision tasks in a process instance
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<ResultListDataRepresentationDecisionTaskRepresentation>
      */
@@ -169,7 +163,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Get historic variables for a process instance
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<ProcessInstanceVariableRepresentation>
      */
@@ -188,7 +181,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Query historic process instances
-     *
      * @param queryRequest queryRequest
      * @return Promise<ResultListDataRepresentationProcessInstanceRepresentation>
      */
@@ -206,7 +198,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Get a user or group involvement with a process instance
-     *
      * @param processInstanceId processInstanceId
      * @param family family
      * @param identityId identityId
@@ -234,7 +225,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * List either the users or groups involved with a process instance
-     *
      * @param processInstanceId processInstanceId
      * @param family family
      * @return Promise<IdentityLinkRepresentation>
@@ -256,7 +246,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * List the users and groups involved with a process instance
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<IdentityLinkRepresentation>
      */
@@ -275,7 +264,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * List content attached to process instance fields
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<ResultListDataRepresentationProcessContentRepresentation>
      */
@@ -295,7 +283,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Get the process diagram for the process instance
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<string>
      */
@@ -319,7 +306,6 @@ export class ProcessInstancesApi extends BaseApi {
      * Get a process instance start form
      *
      * The start form for a process instance can be retrieved when the process definition has a start form defined (hasStartForm = true on the process instance)
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<FormDefinitionRepresentation>
      */
@@ -338,7 +324,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Get a process instance
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<ProcessInstanceRepresentation>
      */
@@ -358,7 +343,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Query process instances
-     *
      * @param processInstancesQuery processInstancesQuery
      * @return Promise<ResultListDataRepresentationProcessInstanceRepresentation>
      */
@@ -376,7 +360,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Get the audit log for a process instance
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<ProcessInstanceAuditInfoRepresentation>
      */
@@ -395,7 +378,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Retrieve the process audit in the PDF format
-     *
      * @param processInstanceId processId
      * @returns process audit
      */
@@ -417,7 +399,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Start a process instance
-     *
      * @param startRequest startRequest
      * @return Promise<ProcessInstanceRepresentation>
      */
@@ -433,7 +414,6 @@ export class ProcessInstancesApi extends BaseApi {
 
     /**
      * Suspend a process instance
-     *
      * @param processInstanceId processInstanceId
      * @return Promise<ProcessInstanceRepresentation>
      */

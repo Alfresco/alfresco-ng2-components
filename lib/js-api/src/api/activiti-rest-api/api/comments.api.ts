@@ -26,7 +26,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class ActivitiCommentsApi extends BaseApi {
     /**
      * Add a comment to a process instance
-     *
      * @param commentRequest commentRequest
      * @param processInstanceId processInstanceId
      * @return Promise<CommentRepresentation>
@@ -49,7 +48,6 @@ export class ActivitiCommentsApi extends BaseApi {
 
     /**
      * Add a comment to a task
-     *
      * @param commentRequest commentRequest
      * @param taskId taskId
      * @return Promise<CommentRepresentation>
@@ -72,7 +70,6 @@ export class ActivitiCommentsApi extends BaseApi {
 
     /**
      * Get comments for a process
-     *
      * @param processInstanceId processInstanceId
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationCommentRepresentation>
@@ -97,7 +94,6 @@ export class ActivitiCommentsApi extends BaseApi {
 
     /**
      * Get comments for a task
-     *
      * @param taskId taskId
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationCommentRepresentation>

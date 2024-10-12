@@ -23,7 +23,6 @@ import { BaseApi } from './base.api';
 export class ScriptFilesApi extends BaseApi {
     /**
      * getControllers
-     *
      * @returns Promise<string>
      */
     getControllers(): Promise<string> {
@@ -37,7 +36,6 @@ export class ScriptFilesApi extends BaseApi {
 
     /**
      * getLibraries
-     *
      * @returns Promise<string>
      */
     getLibraries(): Promise<string> {
