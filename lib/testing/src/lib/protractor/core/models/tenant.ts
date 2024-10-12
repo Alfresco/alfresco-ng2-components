@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,4 +15,20 @@
  * limitations under the License.
  */
 
-export const isBrowser = (): boolean => typeof window?.document !== 'undefined';
+import { StringUtil } from '../../../shared/utils/string.util';
+
+/**
+ * Create tenant JSON Object
+ * @param details - JSON object used to overwrite the default values
+ */
+export class Tenant {
+    active = true;
+    configuration = 'DefaultConfig';
+    domain = 'DefaultDomain';
+    maxUsers = 10;
+    name = StringUtil.generateRandomString();
+
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+}

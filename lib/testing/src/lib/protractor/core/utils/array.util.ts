@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright © 2005-2025 Hyland Software, Inc. and its affiliates. All rights reserved.
+ * Copyright © 2005-2024 Hyland Software, Inc. and its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,4 +15,17 @@
  * limitations under the License.
  */
 
-export const isBrowser = (): boolean => typeof window?.document !== 'undefined';
+export class ArrayUtil {
+    /**
+     * Returns TRUE if the first array contains all elements from the second one.
+     * @param superset source array
+     * @param subset target array
+     * @returns `true` if array is included, otherwise `false`
+     */
+    static arrayContainsArray(superset: any[], subset: any[]): boolean {
+        if (0 === subset.length) {
+            return false;
+        }
+        return subset.every((value) => superset.indexOf(value) >= 0);
+    }
+}
