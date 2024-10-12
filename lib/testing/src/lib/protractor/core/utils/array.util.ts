@@ -16,10 +16,8 @@
  */
 
 export class ArrayUtil {
-
     /**
      * Returns TRUE if the first array contains all elements from the second one.
-     *
      * @param superset source array
      * @param subset target array
      * @returns `true` if array is included, otherwise `false`
@@ -28,6 +26,6 @@ export class ArrayUtil {
         if (0 === subset.length) {
             return false;
         }
-        return subset.every((value) => (superset.indexOf(value) >= 0));
+        return subset.every((value) => superset.indexOf(value) >= 0);
     }
 }

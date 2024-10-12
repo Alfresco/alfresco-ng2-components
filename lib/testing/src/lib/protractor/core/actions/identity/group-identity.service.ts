@@ -99,11 +99,11 @@ export class GroupIdentityService {
 
     /**
      * Add client roles.
-     *
      * @param groupId ID of the target group
      * @param clientId ID of the client
      * @param roleId ID of the clientRole
      * @param roleName of the clientRole
+     * @returns Promise
      */
     async addClientRole(groupId: string, clientId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}`;
@@ -123,7 +123,6 @@ export class GroupIdentityService {
 
     /**
      * Gets the client ID using the app name.
-     *
      * @param applicationName Name of the app
      * @returns client ID string
      */

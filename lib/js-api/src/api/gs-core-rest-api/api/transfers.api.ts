@@ -24,7 +24,6 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * Transfers service.
- *
  * @module TransfersApi
  */
 export class TransfersApi extends BaseApi {
@@ -33,7 +32,6 @@ export class TransfersApi extends BaseApi {
      *
      * Mandatory fields and the transfer's aspects and properties are returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param transferId The identifier of a transfer.
      * @param opts Optional parameters
      * @returns Promise<TransferEntry>
@@ -63,7 +61,6 @@ export class TransfersApi extends BaseApi {
      *
      * Minimal information for each child is returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param transferId The identifier of a transfer.
      * @param opts Optional parameters
      * @returns Promise<TransferAssociationPaging>

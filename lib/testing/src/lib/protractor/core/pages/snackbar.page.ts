@@ -21,16 +21,13 @@ import { BrowserActions } from '../utils/browser-actions';
 
 /** @deprecated Use Playwright API instead */
 export class SnackbarPage {
-
     notificationSnackBar = $$(`[data-automation-id='adf-snackbar-message-content']`).first();
     snackBarAction = $(`[data-automation-id='adf-snackbar-message-content-action-button']`);
     snackBarContainerCss = $$('adf-snackbar-content');
     decorativeIconSnackBar = $(`[data-automation-id='adf-snackbar-decorative-icon']`);
 
     async waitForSnackBarToAppear(timeout = 5000) {
-        return BrowserVisibility.waitUntilElementIsVisible(this.snackBarContainerCss.first(), timeout,
-            'snackbar did not appear'
-        );
+        return BrowserVisibility.waitUntilElementIsVisible(this.snackBarContainerCss.first(), timeout, 'snackbar did not appear');
     }
 
     async waitForSnackBarToClose(timeout = 15000) {
@@ -42,7 +39,6 @@ export class SnackbarPage {
         return this.notificationSnackBar.getText();
     }
 
-    /** @deprecated Use Playwright API instead */
     async getSnackBarActionMessage(): Promise<string> {
         await this.waitForSnackBarToAppear();
         return this.snackBarAction.getText();
@@ -53,7 +49,6 @@ export class SnackbarPage {
         return this.decorativeIconSnackBar.getText();
     }
 
-    /** @deprecated Use Playwright API instead */
     async clickSnackBarAction(): Promise<void> {
         await this.waitForSnackBarToAppear();
         await BrowserActions.click(this.snackBarAction);

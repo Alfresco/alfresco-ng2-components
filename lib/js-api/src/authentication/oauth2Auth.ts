@@ -561,7 +561,6 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * login Alfresco API
-     *
      * @returns A promise that returns {new authentication token} if resolved and {error} if rejected.
      */
     login(username: string, password: string): Promise<any> {
@@ -622,7 +621,6 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * Refresh the Token
-     *
      * @returns promise of void
      */
     refreshToken(): Promise<any> {
@@ -686,7 +684,6 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * Get the current Token
-     *
      * @returns token value
      */
     getToken(): string {
@@ -695,7 +692,6 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * return the Authentication
-     *
      * @returns authentications
      */
     getAuthentication(): Authentication {
@@ -711,7 +707,6 @@ export class Oauth2Auth extends AlfrescoApiClient {
 
     /**
      * If the client is logged in return true
-     *
      * @returns is logged in
      */
     isLoggedIn(): boolean {

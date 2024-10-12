@@ -19,7 +19,6 @@ import { ElementFinder, browser } from 'protractor';
 
 /**
  * Tagged template to convert a sting to an `ElementFinder`.
- *
  * @example ```const item = byCss`.adf-breadcrumb-item-current`;```
  * @example ```const item = byCss`${variable}`;```
  * @param literals literals

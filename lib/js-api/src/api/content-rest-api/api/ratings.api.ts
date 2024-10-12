@@ -29,7 +29,6 @@ import { ContentFieldsQuery, ContentPagingQuery } from './types';
 export class RatingsApi extends BaseApi {
     /**
      * Create a rating
-     *
      * @param nodeId The identifier of a node.
      * @param ratingBodyCreate For \"myRating\" the type is specific to the rating scheme, boolean for the likes and an integer for the fiveStar.
      * For example, to \"like\" a file the following body would be used:
@@ -67,7 +66,6 @@ export class RatingsApi extends BaseApi {
      * Delete a rating
      *
      * Deletes rating **ratingId** from node **nodeId**.
-     *
      * @param nodeId The identifier of a node.
      * @param ratingId The identifier of a rating.
      * @returns Promise<{}>
@@ -91,7 +89,6 @@ export class RatingsApi extends BaseApi {
      * Get a rating
      *
      * Get the specific rating **ratingId** on node **nodeId**.
-     *
      * @param nodeId The identifier of a node.
      * @param ratingId The identifier of a rating.
      * @param opts Optional parameters
@@ -122,7 +119,6 @@ export class RatingsApi extends BaseApi {
      * List ratings
      *
      * Gets a list of ratings for node **nodeId**.
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @returns Promise<RatingPaging>

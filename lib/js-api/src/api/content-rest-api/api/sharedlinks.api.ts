@@ -34,7 +34,6 @@ export class SharedlinksApi extends BaseApi {
      * Create a shared link to a file
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param sharedLinkBodyCreate The nodeId to create a shared link for.
      * @param opts Optional parameters
      * @returns Promise<SharedLinkEntry>
@@ -59,7 +58,6 @@ export class SharedlinksApi extends BaseApi {
      * Deletes a shared link
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param sharedId The identifier of a shared link to a file.
      * @returns Promise<{}>
      */
@@ -80,7 +78,6 @@ export class SharedlinksApi extends BaseApi {
      * Email shared link
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param sharedId The identifier of a shared link to a file.
      * @param sharedLinkBodyEmail The shared link email to send.
      * @returns Promise<{}>
@@ -105,7 +102,6 @@ export class SharedlinksApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      * **Note:** No authentication is required to call this endpoint.
-     *
      * @param sharedId The identifier of a shared link to a file.
      * @param opts Optional parameters
      * @returns Promise<SharedLinkEntry>
@@ -134,7 +130,6 @@ export class SharedlinksApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      * **Note:** No authentication is required to call this endpoint.
-     *
      * @param sharedId The identifier of a shared link to a file.
      * @param opts Optional parameters
      * @param opts.attachment **true** enables a web browser to download the file as an attachment.
@@ -190,7 +185,6 @@ export class SharedlinksApi extends BaseApi {
      * which means the rendition is available to view/download.
      *
      * **Note:** No authentication is required to call this endpoint.
-     *
      * @param sharedId The identifier of a shared link to a file.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
      * @returns Promise<RenditionEntry>
@@ -216,7 +210,6 @@ export class SharedlinksApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
      * **Note:** No authentication is required to call this endpoint.
-     *
      * @param sharedId The identifier of a shared link to a file.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
      * @param opts Optional parameters
@@ -278,7 +271,6 @@ export class SharedlinksApi extends BaseApi {
      * where the rendition status is CREATED, which means the rendition is available to view/download.
      *
      * **Note:** No authentication is required to call this endpoint.
-     *
      * @param sharedId The identifier of a shared link to a file.
      * @returns Promise<RenditionPaging>
      */
@@ -305,7 +297,6 @@ export class SharedlinksApi extends BaseApi {
      * The list is ordered in descending modified order.
      *
      * **Note:** The list of links is eventually consistent so newly created shared links may not appear immediately.
-     *
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list by \"sharedByUser\" `userId` of person who shared the link (can also use -me-)
      *   where=(sharedByUser='jbloggs')

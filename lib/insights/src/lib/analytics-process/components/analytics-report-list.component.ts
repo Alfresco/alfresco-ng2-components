@@ -85,7 +85,6 @@ export class AnalyticsReportListComponent implements OnInit {
 
     /**
      * Reload the component
-     *
      * @param reportId report id
      */
     reload(reportId?: number) {
@@ -95,7 +94,6 @@ export class AnalyticsReportListComponent implements OnInit {
 
     /**
      * Get the report list
-     *
      * @param appId application id
      * @param reportId report id
      */
@@ -139,7 +137,6 @@ export class AnalyticsReportListComponent implements OnInit {
 
     /**
      * Check if the report list is empty
-     *
      * @returns `true` if report list is empty, otherwise `false`
      */
     isReportsEmpty(): boolean {
@@ -148,7 +145,6 @@ export class AnalyticsReportListComponent implements OnInit {
 
     /**
      * Select the current report
-     *
      * @param report report model
      */
     selectReport(report: ReportParametersModel) {

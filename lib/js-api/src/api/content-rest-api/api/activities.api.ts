@@ -30,7 +30,6 @@ export class ActivitiesApi extends BaseApi {
      *
      * Gets a list of activities for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @param opts.who A filter to include the user's activities only me, other user's activities only others'

@@ -24,4 +24,4 @@
  * allowableOperations
  * association
  */
-export interface RequestInclude extends Array<string> {}
+export type RequestInclude = Array<string>;

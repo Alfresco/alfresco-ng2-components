@@ -19,11 +19,9 @@ import { StringUtil } from '../../../shared/utils/string.util';
 
 /**
  * Create tenant JSON Object
- *
  * @param details - JSON object used to overwrite the default values
  */
 export class Tenant {
-
     active = true;
     configuration = 'DefaultConfig';
     domain = 'DefaultDomain';
@@ -33,5 +31,4 @@ export class Tenant {
     constructor(details?: any) {
         Object.assign(this, details);
     }
-
 }
