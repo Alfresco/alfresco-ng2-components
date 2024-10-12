@@ -25,7 +25,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class AdminEndpointsApi extends BaseApi {
     /**
      * Add an endpoint authorization
-     *
      * @param createRepresentation createRepresentation
      * @return Promise<EndpointBasicAuthRepresentation>
      */
@@ -41,7 +40,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * Create an endpoint
-     *
      * @param representation representation
      * @return Promise<EndpointConfigurationRepresentation>
      */
@@ -56,7 +54,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * Get an endpoint authorization
-     *
      * @param basicAuthId basicAuthId
      * @param tenantId tenantId
      * @return Promise<EndpointBasicAuthRepresentation>
@@ -83,7 +80,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * List endpoint authorizations
-     *
      * @param tenantId tenantId
      * @return Promise<EndpointBasicAuthRepresentation>
      */
@@ -103,7 +99,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * Get an endpoint
-     *
      * @param endpointConfigurationId endpointConfigurationId
      * @param tenantId tenantId
      * @return Promise<EndpointConfigurationRepresentation>
@@ -129,7 +124,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * List endpoints
-     *
      * @param tenantId tenantId
      * @return Promise<EndpointConfigurationRepresentation>
      */
@@ -148,7 +142,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * Delete an endpoint authorization
-     *
      * @param basicAuthId basicAuthId
      * @param tenantId tenantId
      * @return Promise<{}>
@@ -174,7 +167,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * Delete an endpoint
-     *
      * @param endpointConfigurationId endpointConfigurationId
      * @param tenantId tenantId
      * @return Promise<{}>
@@ -200,7 +192,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * Update an endpoint authorization
-     *
      * @param basicAuthId basicAuthId
      * @param createRepresentation createRepresentation
      * @return Promise<EndpointBasicAuthRepresentation>
@@ -226,7 +217,6 @@ export class AdminEndpointsApi extends BaseApi {
 
     /**
      * Update an endpoint
-     *
      * @param endpointConfigurationId endpointConfigurationId
      * @param representation representation
      * @return Promise<EndpointConfigurationRepresentation>

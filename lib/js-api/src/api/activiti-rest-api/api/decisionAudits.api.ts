@@ -26,7 +26,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class DecisionAuditsApi extends BaseApi {
     /**
      * Get an audit trail
-     *
      * @param auditTrailId auditTrailId
      * @return Promise<DecisionAuditRepresentation>
      */
@@ -46,7 +45,6 @@ export class DecisionAuditsApi extends BaseApi {
 
     /**
      * Query decision table audit trails
-     *
      * @param decisionKey decisionKey
      * @param dmnDeploymentId dmnDeploymentId
      * @return Promise<ResultListDataRepresentationDecisionAuditRepresentation>

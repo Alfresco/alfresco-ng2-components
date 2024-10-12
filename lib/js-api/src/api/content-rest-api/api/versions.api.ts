@@ -23,7 +23,6 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * Versions service.
- *
  * @module VersionsApi
  */
 export class VersionsApi extends BaseApi {
@@ -31,7 +30,6 @@ export class VersionsApi extends BaseApi {
      * Create rendition for a file version
      *
      * **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @param renditionBodyCreate The rendition \"id\".
@@ -70,7 +68,6 @@ export class VersionsApi extends BaseApi {
      * can remove the \"cm:versionable\" aspect (via update node) which will also disable versioning. In this
      * case, you can re-enable versioning by adding back the \"cm:versionable\" aspect or using the version
      * params (majorVersion and comment) on a subsequent file content update.
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @returns Promise<{}>
@@ -94,7 +91,6 @@ export class VersionsApi extends BaseApi {
      * Get version information
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @returns Promise<VersionEntry>
@@ -119,7 +115,6 @@ export class VersionsApi extends BaseApi {
      * Get version content
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @param opts Optional parameters
@@ -177,7 +172,6 @@ export class VersionsApi extends BaseApi {
      * Get rendition information for a file version
      *
      * **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
@@ -205,7 +199,6 @@ export class VersionsApi extends BaseApi {
      * Get rendition content for a file version
      *
      * **Note:** this endpoint is available in Alfresco 7.0.0 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
@@ -281,7 +274,6 @@ export class VersionsApi extends BaseApi {
      *
      * The list is ordered in descending modified order. So the most recent version is first and
      * the original version is last in the list.
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @returns Promise<VersionPaging>
@@ -317,7 +309,6 @@ export class VersionsApi extends BaseApi {
      * Each rendition returned has a **status**: CREATED means it is available to view or download, NOT_CREATED means the rendition can be requested.
      * You can use the **where** parameter to filter the returned renditions by **status**. For example, the following **where**
      * clause will return just the CREATED renditions: (status='CREATED')
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @param opts Optional parameters
@@ -349,7 +340,6 @@ export class VersionsApi extends BaseApi {
      * Attempts to revert the version identified by **versionId** and **nodeId** to the live node.
      * If the node is successfully reverted then the content and metadata for that versioned node
      * will be promoted to the live node and a new version will appear in the version history.
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version, ie. version label, within the version history of a node.
      * @param revertBody Optionally, specify a version comment and whether this should be a major version, or not.
@@ -383,7 +373,6 @@ export class VersionsApi extends BaseApi {
      * Generate a direct access content url for a given version of a node
      *
      * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param versionId The identifier of a version
      * @returns Promise<DirectAccessUrlEntry>

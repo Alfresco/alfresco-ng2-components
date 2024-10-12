@@ -30,7 +30,6 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
     /**
      * Alfresco Cloud Authorization
      * Returns Alfresco OAuth HTML Page
-     *
      * @param code code
      * @return Promise<{}>
      */
@@ -50,7 +49,6 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
 
     /**
      * List Alfresco networks
-     *
      * @return Promise<ResultListDataRepresentationAlfrescoNetworkRepresenation>
      */
     getAllNetworks(): Promise<ResultListDataRepresentationAlfrescoNetworkRepresenation> {
@@ -62,7 +60,6 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
     /**
      * List Alfresco sites
      * Returns ALL Sites
-     *
      * @param networkId networkId
      * @return Promise<ResultListDataRepresentationAlfrescoSiteRepresenation>
      */
@@ -81,7 +78,6 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
 
     /**
      * List files and folders inside a specific folder identified by path
-     *
      * @param networkId networkId
      * @param opts Optional parameters
      * @param opts.siteId {string} siteId
@@ -107,7 +103,6 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
 
     /**
      * List files and folders inside a specific folder
-     *
      * @param networkId networkId
      * @param folderId folderId
      * @return Promise<ResultListDataRepresentationAlfrescoContentRepresentation>
@@ -129,7 +124,6 @@ export class IntegrationAlfrescoCloudApi extends BaseApi {
 
     /**
      * List files and folders inside a specific site
-     *
      * @param networkId networkId
      * @param siteId siteId
      * @return Promise<ResultListDataRepresentationAlfrescoContentRepresentation>

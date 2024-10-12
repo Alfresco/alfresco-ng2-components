@@ -30,7 +30,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class AppDefinitionsApi extends BaseApi {
     /**
      * deleteAppDefinition
-     *
      * @param appDefinitionId appDefinitionId
      * @return Promise<{}>
      */
@@ -51,7 +50,6 @@ export class AppDefinitionsApi extends BaseApi {
      * Export an app definition
      *
      * This will return a zip file containing the app definition model and all related models (process definitions and forms).
-     *
      * @param modelId modelId from a runtime app or the id of an app definition model
      * @return Promise<{}>
      */
@@ -75,7 +73,6 @@ export class AppDefinitionsApi extends BaseApi {
 
     /**
      * Get an app definition
-     *
      * @param modelId Application definition ID
      * @return Promise<AppDefinitionRepresentation>
      */
@@ -94,7 +91,6 @@ export class AppDefinitionsApi extends BaseApi {
 
     /**
      * importAndPublishApp
-     *
      * @param file file
      * @param opts options
      * @return Promise<AppDefinitionUpdateResultRepresentation>
@@ -124,7 +120,6 @@ export class AppDefinitionsApi extends BaseApi {
      * Allows a zip file to be uploaded containing an app definition and any number of included models.
      * <p>This is useful to bootstrap an environment (for users or continuous integration).<p>
      * Before using any processes included in the import the app must be published and deployed.
-     *
      * @param file file
      * @param opts Optional parameters
      * @param opts.renewIdmEntries Whether to renew user and group identifiers (default to false)
@@ -149,7 +144,6 @@ export class AppDefinitionsApi extends BaseApi {
      * Publish an app definition
      *
      * Publishing an app definition makes it available for use. The application must not have any validation errors or an error will be returned.<p>Before an app definition can be used by other users, it must also be deployed for their use
-     *
      * @param modelId modelId
      * @param publishModel publishModel
      * @return Promise<AppDefinitionUpdateResultRepresentation>
@@ -171,7 +165,6 @@ export class AppDefinitionsApi extends BaseApi {
 
     /**
      * Update an app definition
-     *
      * @param modelId Application definition ID
      * @param updatedModel updatedModel |
      * @return Promise<AppDefinitionUpdateResultRepresentation>

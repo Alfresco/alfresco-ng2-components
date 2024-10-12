@@ -36,7 +36,6 @@ export class DownloadsApi extends BaseApi {
      * By default, if the download node is not deleted it will be picked up by a cleaner job which removes download nodes older than a configurable amount of time (default is 1 hour)
      * Information about the existing progress at the time of cancelling can be retrieved by calling the **GET /downloads/{downloadId}** endpoint
      * The cancel operation is done asynchronously.
-     *
      * @param downloadId The identifier of a download node.
      * @returns Promise<{}>
      */
@@ -58,7 +57,6 @@ export class DownloadsApi extends BaseApi {
      *
      * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
      * **Note:** The content of the download node can be obtained using the **GET /nodes/{downloadId}/content** endpoint
-     *
      * @param downloadBodyCreate The nodeIds the content of which will be zipped, which zip will be set as the content of our download node.
      * @param opts Optional parameters
      * @param opts.fields A list of field names. You can use this parameter to restrict the fields
@@ -86,7 +84,6 @@ export class DownloadsApi extends BaseApi {
      * Get a download
      *
      * **Note:** this endpoint is available in Alfresco 5.2.1 and newer versions.
-     *
      * @param downloadId The identifier of a download node.
      * @param opts Optional parameters
      * @param opts.fields A list of field names. You can use this parameter to restrict the fields

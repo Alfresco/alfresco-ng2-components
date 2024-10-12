@@ -28,15 +28,9 @@ import { RuleRef } from '../config/rule.extensions';
     providedIn: 'root'
 })
 export class ExtensionLoaderService {
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
-    load(
-        configPath: string,
-        pluginsPath: string,
-        extensions?: string[],
-        extensionValues?: ExtensionConfig[]
-    ): Promise<ExtensionConfig> {
+    load(configPath: string, pluginsPath: string, extensions?: string[], extensionValues?: ExtensionConfig[]): Promise<ExtensionConfig> {
         return new Promise<any>((resolve) => {
             this.loadConfig(configPath, 0).then((result) => {
                 if (result) {
@@ -54,9 +48,7 @@ export class ExtensionLoaderService {
                     }
 
                     if (config.$references?.length > 0 || extensionValues) {
-                        const plugins = (config.$references ?? []).map((name, idx) =>
-                            this.loadConfig(`${pluginsPath}/${name}`, idx)
-                        );
+                        const plugins = (config.$references ?? []).map((name, idx) => this.loadConfig(`${pluginsPath}/${name}`, idx));
 
                         Promise.all(plugins).then((results) => {
                             let configs = results
@@ -65,12 +57,8 @@ export class ExtensionLoaderService {
                                 .map((entry) => entry.config);
 
                             if (extensionValues) {
-                                configs = [
-                                    ...configs,
-                                    ...extensionValues
-                                ];
+                                configs = [...configs, ...extensionValues];
                             }
-
 
                             if (configs.length > 0) {
                                 config = mergeObjects(config, ...configs);
@@ -96,26 +84,18 @@ export class ExtensionLoaderService {
      * Retrieves configuration elements.
      * Filters element by **enabled** and **order** attributes.
      * Example:
-     *  `getElements<ViewerExtensionRef>(config, 'features.viewer.extensions')`
-     *
+     * `getElements<ViewerExtensionRef>(config, 'features.viewer.extensions')`
      * @param config configuration settings
      * @param key element key
      * @param fallback fallback array of values
      * @returns list of elements
      */
-    getElements<T extends ExtensionElement>(
-        config: ExtensionConfig,
-        key: string,
-        fallback: Array<T> = []
-    ): Array<T> {
+    getElements<T extends ExtensionElement>(config: ExtensionConfig, key: string, fallback: Array<T> = []): Array<T> {
         const values = getValue(config, key) || fallback || [];
         return values.filter(filterEnabled).sort(sortByOrder);
     }
 
-    getContentActions(
-        config: ExtensionConfig,
-        key: string
-    ): Array<ContentActionRef> {
+    getContentActions(config: ExtensionConfig, key: string): Array<ContentActionRef> {
         return this.getElements(config, key).map(this.setActionDefaults);
     }
 
@@ -150,8 +130,7 @@ export class ExtensionLoaderService {
     protected getMetadata(config: ExtensionConfig): ExtensionRef {
         const result: any = {};
 
-        Object
-            .keys(config)
+        Object.keys(config)
             .filter((key) => key.startsWith('$'))
             .forEach((key) => {
                 result[key] = config[key];
@@ -160,10 +139,7 @@ export class ExtensionLoaderService {
         return result;
     }
 
-    protected loadConfig(
-        url: string,
-        order: number
-    ): Promise<{ order: number; config: ExtensionConfig }> {
+    protected loadConfig(url: string, order: number): Promise<{ order: number; config: ExtensionConfig }> {
         return new Promise((resolve) => {
             this.http.get<ExtensionConfig>(url).subscribe(
                 (config) => {
