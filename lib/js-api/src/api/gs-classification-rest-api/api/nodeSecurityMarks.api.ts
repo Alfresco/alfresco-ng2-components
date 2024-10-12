@@ -27,7 +27,6 @@ import { GsPagingQuery } from './types';
 export class NodeSecurityMarksApi extends BaseApi {
     /**
      * Add/Remove security mark on a node
-     *
      * @param nodeId The key for the node id.
      * @param dataBody Array of NodeSecurityMarkBody.
      * @returns Promise<SecurityMarkPaging>
@@ -49,7 +48,6 @@ export class NodeSecurityMarksApi extends BaseApi {
 
     /**
      * Get security marks on a node
-     *
      * @param nodeId The key for the node id.
      * @param opts Optional parameters
      * @returns Promise<SecurityMarkPaging>

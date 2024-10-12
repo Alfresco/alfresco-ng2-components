@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "declaration": true,
+    "declarationMap": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@alfresco/js-api": ["../../../dist/libs/js-api"],
+      "@alfresco/js-api/*": ["../../../dist/libs/js-api/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "index.ts"]
+}

@@ -30,7 +30,6 @@ export class RecordFoldersApi extends BaseApi {
      *
      * Create a record as a primary child of **recordFolderId**.
      * This endpoint supports both JSON and multipart/form-data (file upload).
-     *
      * @param recordFolderId The identifier of a record folder.
      * @param recordBodyCreate The record information to create. This field is ignored for multipart/form-data content uploads.
      * @param opts Optional parameters
@@ -61,7 +60,6 @@ export class RecordFoldersApi extends BaseApi {
     /**
      * Deletes record folder **recordFolderId**.
      * Deleted file plan components cannot be recovered, they are deleted permanently.
-     *
      * @param recordFolderId The identifier of a record folder.
      * @returns Promise<{}>
      */
@@ -83,7 +81,6 @@ export class RecordFoldersApi extends BaseApi {
      *
      * Mandatory fields and the record folder's aspects and properties are returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param recordFolderId The identifier of a record folder.
      * @param opts Optional parameters
      * @returns Promise<RecordFolderEntry>
@@ -114,7 +111,6 @@ export class RecordFoldersApi extends BaseApi {
      * Minimal information for each record is returned by default.
      * The list of records includes primary children and secondary children, if there are any.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param recordFolderId The identifier of a record folder.
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list. Here are some examples:
@@ -159,7 +155,6 @@ export class RecordFoldersApi extends BaseApi {
      *
      * **Note:** if you want to add or remove aspects, then you must use **GET /record-folders/{recordFolderId}** first to get the complete set of *aspectNames*.
      * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-     *
      * @param recordFolderId The identifier of a record folder.
      * @param recordFolderBodyUpdate The record folder information to update.
      * @param opts Optional parameters

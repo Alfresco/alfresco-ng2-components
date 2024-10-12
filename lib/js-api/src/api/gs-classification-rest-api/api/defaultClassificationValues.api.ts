@@ -26,7 +26,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class DefaultClassificationValuesApi extends BaseApi {
     /**
      * Calculates the default declassification date for **nodeId** based on the properties of the node and the current declassification time frame.
-     *
      * @param nodeId The identifier of a node.
      * @returns Promise<DeclassificationDate>
      */

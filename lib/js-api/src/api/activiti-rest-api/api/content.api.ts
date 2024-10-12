@@ -29,7 +29,6 @@ import { throwIfNotDefined } from '../../../assert';
 export class ContentApi extends BaseApi {
     /**
      * Attach existing content to a process instance
-     *
      * @param processInstanceId processInstanceId
      * @param relatedContent relatedContent
      * @param opts Optional parameters
@@ -75,7 +74,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * Attach existing content to a task
-     *
      * @param taskId taskId
      * @param relatedContent relatedContent
      * @param opts Optional parameters
@@ -119,7 +117,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * Upload content and create a local representation
-     *
      * @param file file
      * @return Promise<RelatedContentRepresentation>
      */
@@ -140,7 +137,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * Create a local representation of content from a remote repository
-     *
      * @param relatedContent relatedContent
      * @return Promise<RelatedContentRepresentation>
      */
@@ -156,7 +152,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * Remove a local content representation
-     *
      * @param contentId contentId
      * @return Promise<{}>
      */
@@ -175,7 +170,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * Get a local content representation
-     *
      * @param contentId contentId
      * @return Promise<RelatedContentRepresentation>
      */
@@ -195,7 +189,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * Get content Raw URL for the given contentId
-     *
      * @param contentId contentId
      */
     getRawContentUrl(contentId: number): string {
@@ -204,7 +197,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * Stream content rendition
-     *
      * @param contentId contentId
      * @param renditionType renditionType
      * @return Promise<{}>
@@ -240,7 +232,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * List content attached to a process instance
-     *
      * @param processInstanceId processInstanceId
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationRelatedContentRepresentation>
@@ -267,7 +258,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * List content attached to a task
-     *
      * @param taskId taskId
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationRelatedContentRepresentation>
@@ -292,7 +282,6 @@ export class ContentApi extends BaseApi {
 
     /**
      * Lists processes and tasks on workflow started with provided document
-     *
      * @param sourceId - id of the document that workflow or task has been started with
      * @param source - source of the document that workflow or task has been started with
      * @param size - size of the entries to get

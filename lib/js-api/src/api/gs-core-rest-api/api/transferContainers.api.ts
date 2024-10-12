@@ -32,7 +32,6 @@ export class TransferContainersApi extends BaseApi {
      *
      * Mandatory fields and the transfer container's aspects and properties are returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
      * @param opts Optional parameters
      * @returns Promise<TransferContainerEntry>
@@ -62,7 +61,6 @@ export class TransferContainersApi extends BaseApi {
      *
      * Minimal information for each child is returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
      * @param opts Optional parameters
      * @returns Promise<TransferContainerAssociationPaging>
@@ -96,7 +94,6 @@ export class TransferContainersApi extends BaseApi {
 
     /**
      * Update transfer container
-     *
      * @param transferContainerId The identifier of a transfer container. You can also use the -transfers- alias.
      * @param nodeBodyUpdate The node information to update.
      * @param opts Optional parameters
