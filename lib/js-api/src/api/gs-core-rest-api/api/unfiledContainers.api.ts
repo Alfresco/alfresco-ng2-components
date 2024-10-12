@@ -23,13 +23,11 @@ import { RecordsIncludeQuery, RecordsPagingQuery, RecordsSourceQuery } from './t
 
 /**
  * Unfiled containers service.
- *
  * @module UnfiledContainersApi
  */
 export class UnfiledContainersApi extends BaseApi {
     /**
      * Creates a record or an unfiled record folder as a primary child of **unfiledContainerId**.
-     *
      * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
      * @param nodeBodyCreate The node information to create.
      * @param opts Optional parameters
@@ -75,7 +73,6 @@ export class UnfiledContainersApi extends BaseApi {
      * Mandatory fields and the unfiled records container's aspects and properties are returned by default.
      *
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
      * @param opts Optional parameters
      * @returns Promise<UnfiledContainerEntry>
@@ -107,7 +104,6 @@ export class UnfiledContainersApi extends BaseApi {
      *
      * Minimal information for each child is returned by default.
      * You can use the **include** parameter (include=allowableOperations) to return additional information.
-     *
      * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
      * @param opts Optional parameters
      * @param opts.where Optionally filter the list. Here are some examples:
@@ -152,7 +148,6 @@ export class UnfiledContainersApi extends BaseApi {
      * Update an unfiled record container
      *
      * **Note:** Currently there is no optimistic locking for updates, so they are applied in \"last one wins\" order.
-     *
      * @param unfiledContainerId The identifier of an unfiled records container. You can use the **-unfiled-** alias.
      * @param unfiledContainerBodyUpdate The unfiled record container information to update.
      * @param opts Optional parameters

@@ -142,7 +142,6 @@ export class DataTableComponentPage {
 
     /**
      * Check the list is sorted.
-     *
      * @param sortOrder 'ASC' if the list is await expected to be sorted ascending and 'DESC' for descending
      * @param columnTitle titleColumn column
      * @param listType 'string' for string typed lists and 'number' for number typed (int, float) lists
@@ -278,7 +277,6 @@ export class DataTableComponentPage {
 
     /**
      *  Sort the list by name column.
-     *
      * @param sortOrder 'ASC' to sort the list ascendant and 'DESC' for descendant
      * @param titleColumn column title
      */

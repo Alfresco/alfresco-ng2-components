@@ -98,7 +98,6 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
 
     /**
      * Calculates the tooltip position and displays it
-     *
      * @param event mouseenter/touchend event
      */
     private handleMouseEnter(event): void {

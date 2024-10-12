@@ -24,7 +24,6 @@ import { BaseApi } from './base.api';
 export class DataSourcesApi extends BaseApi {
     /**
      * Get data sources
-     *
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationDataSourceRepresentation>
      */

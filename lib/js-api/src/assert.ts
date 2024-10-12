@@ -17,7 +17,6 @@
 
 /**
  * Throw exception if param is not defined
- *
  * @param param param
  * @param name param name
  */

@@ -27,7 +27,6 @@ export class RenditionsApi extends BaseApi {
      * Create rendition
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param renditionBodyCreate The rendition \"id\".
      * @returns Promise<{}>
@@ -51,7 +50,6 @@ export class RenditionsApi extends BaseApi {
      * Get rendition information
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
      * @returns Promise<RenditionEntry>
@@ -76,7 +74,6 @@ export class RenditionsApi extends BaseApi {
      * Get rendition content
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
      * @param opts Optional parameters
@@ -143,7 +140,6 @@ export class RenditionsApi extends BaseApi {
      * You can use the **where** parameter to filter the returned renditions by **status**. For example, the following **where**
      * clause will return just the CREATED renditions:
      * - (status='CREATED')
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @param opts.where A string to restrict the returned objects by using a predicate.
@@ -168,7 +164,6 @@ export class RenditionsApi extends BaseApi {
      * Generate a direct access content url for a given rendition of a node
      *
      * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param renditionId The identifier of a version
      * @returns Promise<DirectAccessUrlEntry>
