@@ -15,4 +15,20 @@
  * limitations under the License.
  */
 
-export const isBrowser = (): boolean => typeof window?.document !== 'undefined';
+import { StringUtil } from '../../../shared/utils/string.util';
+
+/**
+ * Create tenant JSON Object
+ * @param details - JSON object used to overwrite the default values
+ */
+export class Tenant {
+    active = true;
+    configuration = 'DefaultConfig';
+    domain = 'DefaultDomain';
+    maxUsers = 10;
+    name = StringUtil.generateRandomString();
+
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+}
