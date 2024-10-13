@@ -18,16 +18,24 @@
 import { trigger, transition, animate, style, state, AnimationTriggerMetadata } from '@angular/animations';
 
 export const searchAnimation: AnimationTriggerMetadata = trigger('transitionMessages', [
-    state('active', style({
-        'margin-left': '{{ margin-left }}px',
-        'margin-right': '{{ margin-right }}px',
-        transform: '{{ transform }}'
-    }), { params: { 'margin-left': 0, 'margin-right': 0, transform: 'translateX(0%)' } }),
-    state('inactive', style({
-        'margin-left': '{{ margin-left }}px',
-        'margin-right': '{{ margin-right }}px',
-        transform: '{{ transform }}'
-    }), { params: { 'margin-left': 0, 'margin-right': 0, transform: 'translateX(0%)' } }),
+    state(
+        'active',
+        style({
+            'margin-left': '{{ margin-left }}px',
+            'margin-right': '{{ margin-right }}px',
+            transform: '{{ transform }}'
+        }),
+        { params: { 'margin-left': 0, 'margin-right': 0, transform: 'translateX(0%)' } }
+    ),
+    state(
+        'inactive',
+        style({
+            'margin-left': '{{ margin-left }}px',
+            'margin-right': '{{ margin-right }}px',
+            transform: '{{ transform }}'
+        }),
+        { params: { 'margin-left': 0, 'margin-right': 0, transform: 'translateX(0%)' } }
+    ),
     state('no-animation', style({ transform: 'translateX(0%)', width: '100%' })),
     transition('active <=> inactive', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
 ]);

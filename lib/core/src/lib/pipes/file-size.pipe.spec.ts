@@ -18,7 +18,6 @@
 import { FileSizePipe } from './file-size.pipe';
 
 describe('FileSizePipe', () => {
-
     let pipe: FileSizePipe;
 
     beforeEach(() => {
@@ -74,14 +73,14 @@ describe('FileSizePipe', () => {
 
     it('should convert value with custom precision', () => {
         const tests = [
-            { size: 10, precision: 2, expectancy: '10 Bytes'},
-            { size: 1023, precision: 1, expectancy: '1023 Bytes'},
-            { size: 1025, precision: 2, expectancy: '1 KB'},
-            { size: 1499, precision: 0, expectancy: '1.46 KB'},
-            { size: 1999, precision: 0, expectancy: '1.95 KB'},
-            { size: 2000, precision: 2, expectancy: '1.95 KB'},
-            { size: 5000000, precision: 4, expectancy: '4.7684 MB'},
-            { size: 12345678901234, precision: 3, expectancy: '11.228 TB'}
+            { size: 10, precision: 2, expectancy: '10 Bytes' },
+            { size: 1023, precision: 1, expectancy: '1023 Bytes' },
+            { size: 1025, precision: 2, expectancy: '1 KB' },
+            { size: 1499, precision: 0, expectancy: '1.46 KB' },
+            { size: 1999, precision: 0, expectancy: '1.95 KB' },
+            { size: 2000, precision: 2, expectancy: '1.95 KB' },
+            { size: 5000000, precision: 4, expectancy: '4.7684 MB' },
+            { size: 12345678901234, precision: 3, expectancy: '11.228 TB' }
         ];
 
         tests.forEach(({ size, precision, expectancy }) => {

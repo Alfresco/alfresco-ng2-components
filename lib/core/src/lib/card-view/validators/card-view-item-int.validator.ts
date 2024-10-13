@@ -18,7 +18,6 @@
 import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
 export class CardViewItemIntValidator implements CardViewItemValidator {
-
     message = 'CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR';
 
     isValid(value: any | any[]): boolean {
@@ -26,7 +25,7 @@ export class CardViewItemIntValidator implements CardViewItemValidator {
             return value.every(this.isIntegerNumber);
         }
 
-        return value === '' || !isNaN(value) && this.isIntegerNumber(value) && this.isNotOnlySpace(value);
+        return value === '' || (!isNaN(value) && this.isIntegerNumber(value) && this.isNotOnlySpace(value));
     }
 
     isIntegerNumber(value: any): boolean {
