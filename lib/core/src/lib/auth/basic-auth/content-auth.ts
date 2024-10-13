@@ -81,7 +81,6 @@ export class ContentAuth {
 
     /**
      * login Alfresco API
-     *
      * @param username username to login
      * @param password password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
@@ -123,7 +122,6 @@ export class ContentAuth {
 
     /**
      * logout Alfresco API
-     *
      * @returns A promise that returns { authentication ticket} if resolved and {error} if rejected.
      */
     logout(): Promise<any> {
@@ -151,7 +149,6 @@ export class ContentAuth {
 
     /**
      * Set the current Ticket
-     *
      * @param ticket a string representing the ticket
      */
     setTicket(ticket: string) {

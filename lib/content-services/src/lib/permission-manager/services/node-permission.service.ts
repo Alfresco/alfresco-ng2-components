@@ -46,7 +46,6 @@ export class NodePermissionService {
 
     /**
      * Gets a list of roles for the current node.
-     *
      * @param node The target node
      * @returns Array of strings representing the roles
      */
@@ -66,7 +65,6 @@ export class NodePermissionService {
 
     /**
      * Get permissions for a given node
-     *
      * @param node Node to check permissions for
      * @returns list of permission models
      */
@@ -91,7 +89,6 @@ export class NodePermissionService {
 
     /**
      * Updates the permission role for a node.
-     *
      * @param node Target node
      * @param updatedPermissionRole Permission role to update or add
      * @returns Node with updated permission
@@ -110,7 +107,6 @@ export class NodePermissionService {
 
     /**
      * Update permissions for a node.
-     *
      * @param nodeId ID of the target node
      * @param permissionList New permission settings
      * @returns Node with updated permissions
@@ -121,7 +117,6 @@ export class NodePermissionService {
 
     /**
      * Updates the locally set permissions for a node.
-     *
      * @param node ID of the target node
      * @param permissions Permission settings
      * @returns Node with updated permissions
@@ -164,7 +159,6 @@ export class NodePermissionService {
 
     /**
      * Removes a permission setting from a node.
-     *
      * @param node ID of the target node
      * @param permissionToRemove Permission setting to remove
      * @returns Node with modified permissions
@@ -197,7 +191,6 @@ export class NodePermissionService {
 
     /**
      * Gets all members related to a group name.
-     *
      * @param groupName Name of group to look for members
      * @param opts Extra options supported by JS-API
      * @returns List of members
@@ -258,7 +251,6 @@ export class NodePermissionService {
 
     /**
      * Removes permissions setting from a node.
-     *
      * @param node target node with permission
      * @param permissions Permissions to remove
      * @returns Node with modified permissions
@@ -278,7 +270,6 @@ export class NodePermissionService {
 
     /**
      * updates permissions setting from a node.
-     *
      * @param node target node with permission
      * @param permissions Permissions to update
      * @returns Node with modified permissions
@@ -291,7 +282,6 @@ export class NodePermissionService {
 
     /**
      * Gets all node detail for nodeId along with settable permissions.
-     *
      * @param nodeId Id of the node
      * @returns node and it's associated roles { node: Node; roles: RoleModel[] }
      */

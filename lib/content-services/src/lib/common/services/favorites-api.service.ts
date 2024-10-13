@@ -63,7 +63,6 @@ export class FavoritesApiService {
 
     /**
      * Gets the favorites for a user.
-     *
      * @param personId ID of the user
      * @param options Options supported by JS-API
      * @returns List of favorites

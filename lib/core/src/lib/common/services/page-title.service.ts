@@ -34,7 +34,6 @@ export class PageTitleService {
 
     /**
      * Sets the page title.
-     *
      * @param value The new title
      */
     setTitle(value: string = '') {

@@ -42,7 +42,6 @@ export class IdentityRoleService {
 
     /**
      * Ret all roles
-     *
      * @param skipCount skip count
      * @param size page size
      * @returns List of roles
@@ -66,7 +65,6 @@ export class IdentityRoleService {
 
     /**
      * Add new role
-     *
      * @param newRole Role model
      * @returns Server result payload
      */
@@ -79,7 +77,6 @@ export class IdentityRoleService {
 
     /**
      * Delete existing role
-     *
      * @param deletedRole Role model
      * @returns Server result payload
      */
@@ -89,7 +86,6 @@ export class IdentityRoleService {
 
     /**
      * Update existing role
-     *
      * @param updatedRole Role model
      * @param roleId Role id
      * @returns Server result payload

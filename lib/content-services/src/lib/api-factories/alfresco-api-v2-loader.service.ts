@@ -22,7 +22,6 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 /**
  * Create a factory to resolve an api service instance
- *
  * @param angularAlfrescoApiService loader service
  * @returns factory function
  */

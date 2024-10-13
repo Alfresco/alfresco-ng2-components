@@ -249,7 +249,6 @@ describe('CardViewComponent', () => {
 
     /**
      * Return the card view item dispatcher component
-     *
      * @returns the dispatcher component instance
      */
     function getCardViewItemDispatcherComponent(): CardViewItemDispatcherComponent {

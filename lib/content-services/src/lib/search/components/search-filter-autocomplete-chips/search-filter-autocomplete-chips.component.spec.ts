@@ -63,7 +63,6 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
     /**
      * Add new auto-complete input
-     *
      * @param value value to add
      */
     function addNewOption(value: string) {

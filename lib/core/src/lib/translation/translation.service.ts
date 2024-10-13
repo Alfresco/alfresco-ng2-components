@@ -30,7 +30,6 @@ export interface TranslationProvider {
 
 /**
  * Generate translation provider
- *
  * @param id Unique identifier
  * @param path Path to translation files
  * @returns Provider
@@ -81,7 +80,6 @@ export class TranslationService {
 
     /**
      * Adds a new folder of translation source files.
-     *
      * @param name Name for the translation provider
      * @param path Path to the folder
      */
@@ -99,7 +97,6 @@ export class TranslationService {
 
     /**
      * Loads a translation file.
-     *
      * @param lang Language code for the language to load
      * @param fallback Language code to fall back to if the first one was unavailable
      */
@@ -119,7 +116,6 @@ export class TranslationService {
 
     /**
      * Triggers a notification callback when the translation language changes.
-     *
      * @param lang The new language code
      */
     onTranslationChanged(lang: string): void {
@@ -131,7 +127,6 @@ export class TranslationService {
 
     /**
      * Sets the target language for translations.
-     *
      * @param lang Code name for the language
      * @returns Translations available for the language
      */
@@ -142,7 +137,6 @@ export class TranslationService {
 
     /**
      * Gets the translation for the supplied key.
-     *
      * @param key Key to translate
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text
@@ -153,7 +147,6 @@ export class TranslationService {
 
     /**
      * Directly returns the translation for the supplied key.
-     *
      * @param key Key to translate
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text

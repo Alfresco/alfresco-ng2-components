@@ -27,7 +27,6 @@ export class UrlService {
     /**
      * Creates a trusted object URL from the Blob.
      * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
-     *
      * @param  blob Data to wrap into object URL
      * @returns URL string
      */

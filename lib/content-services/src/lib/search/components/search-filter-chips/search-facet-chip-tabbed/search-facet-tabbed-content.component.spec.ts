@@ -64,7 +64,6 @@ describe('SearchFacetTabbedContentComponent', () => {
 
     /**
      * Get the tab label content
-     *
      * @returns list of native elements
      */
     async function getTabs(): Promise<MatTabHarness[]> {
@@ -85,7 +84,6 @@ describe('SearchFacetTabbedContentComponent', () => {
 
     /**
      * Add new item to the bucket
-     *
      * @param field field name
      * @param displayValue value to display
      */

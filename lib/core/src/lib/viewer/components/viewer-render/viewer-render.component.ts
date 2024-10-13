@@ -146,7 +146,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     /**
      * Returns a list of the active Viewer content extensions.
-     *
      * @returns list of extension references
      */
     get viewerExtensions(): ViewerExtensionRef[] {
@@ -155,7 +154,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit {
 
     /**
      * Provides a list of file extensions supported by external plugins.
-     *
      * @returns list of extensions
      */
     get externalExtensions(): string[] {

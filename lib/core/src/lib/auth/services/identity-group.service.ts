@@ -40,7 +40,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Gets all groups.
-     *
      * @returns Array of group information objects
      */
     getGroups(): Observable<IdentityGroupModel[]> {
@@ -50,7 +49,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Gets available roles
-     *
      * @param groupId Id of the group.
      * @returns Array of available roles information objects
      */
@@ -61,7 +59,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Gets assigned roles
-     *
      * @param groupId Id of the group.
      * @returns Array of available roles
      */
@@ -72,7 +69,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Assigns roles to the group
-     *
      * @param groupId The ID of the group
      * @param roles Array of roles to assign
      * @returns request result
@@ -86,7 +82,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Removes roles from the group
-     *
      * @param groupId The ID of the group
      * @param roles Array of roles to remove
      * @returns request result
@@ -100,7 +95,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Get effective roles
-     *
      * @param groupId Id of the group
      * @returns Array of effective roles
      */
@@ -111,7 +105,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Queries groups.
-     *
      * @param requestQuery query settings
      * @returns Array of user information objects
      */
@@ -142,7 +135,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Gets groups total count.
-     *
      * @returns Number of groups count.
      */
     getTotalGroupsCount(): Observable<IdentityGroupCountModel> {
@@ -152,7 +144,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Creates new group.
-     *
      * @param newGroup Object of containing the new group details.
      * @returns Empty response when the group created.
      */
@@ -165,7 +156,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Updates group details.
-     *
      * @param groupId Id of the targeted group.
      * @param updatedGroup Object of containing the group details
      * @returns Empty response when the group updated.
@@ -179,7 +169,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Deletes Group.
-     *
      * @param groupId Id of the group.
      * @returns Empty response when the group deleted.
      */
@@ -190,7 +179,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Finds groups filtered by name.
-     *
      * @param searchParams Object containing the name filter string
      * @returns List of group information
      */
@@ -206,7 +194,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Gets details for a specified group.
-     *
      * @param groupId Id of the target group
      * @returns Group details
      */
@@ -217,7 +204,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Check that a group has one or more roles from the supplied list.
-     *
      * @param groupId Id of the target group
      * @param roleNames Array of role names
      * @returns True if the group has one or more of the roles, false otherwise
@@ -242,7 +228,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Gets the client Id using the app name.
-     *
      * @param applicationName Name of the app
      * @returns client Id string
      */
@@ -255,7 +240,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Gets client roles.
-     *
      * @param groupId Id of the target group
      * @param clientId Id of the client
      * @returns List of roles
@@ -267,7 +251,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Checks if a group has a client app.
-     *
      * @param groupId Id of the target group
      * @param clientId Id of the client
      * @returns True if the group has the client app, false otherwise
@@ -278,7 +261,6 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     /**
      * Check if a group has any of the client app roles in the supplied list.
-     *
      * @param groupId Id of the target group
      * @param clientId Id of the client
      * @param roleNames Array of role names to check

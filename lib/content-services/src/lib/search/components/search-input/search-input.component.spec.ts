@@ -31,7 +31,6 @@ describe('SearchInputComponent', () => {
 
     /**
      * Sets the search input value
-     *
      * @param value the value to set
      */
     async function setInputValue(value: string) {

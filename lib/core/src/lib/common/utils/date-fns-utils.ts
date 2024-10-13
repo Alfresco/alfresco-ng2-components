@@ -101,7 +101,6 @@ export class DateFnsUtils {
 
     /**
      * Converts a Moment.js date format string to the equivalent date-fns format string.
-     *
      * @param dateDisplayFormat - The Moment.js date format string to convert.
      * @returns The equivalent date-fns format string.
      */
@@ -120,7 +119,6 @@ export class DateFnsUtils {
 
     /**
      * Formats a date using the specified date format.
-     *
      * @param date - The date to format, can be a number or a Date object.
      * @param dateFormat - The date format string to use for formatting.
      * @returns The formatted date as a string
@@ -134,7 +132,6 @@ export class DateFnsUtils {
 
     /**
      * Parses a date string using the specified date format.
-     *
      * @param value - The date value to parse. Can be a string or a Date (for generic calls)
      * @param dateFormat - The date format string to use for parsing.
      * @param options - Additional options
@@ -157,7 +154,6 @@ export class DateFnsUtils {
 
     /**
      * Parses a datetime string using the ISO format
-     *
      * @param value - The date and time string to parse
      * @returns returns the parsed Date object
      */
@@ -167,7 +163,6 @@ export class DateFnsUtils {
 
     /**
      * Checks if the date string is a valid date according to the specified format
-     *
      * @param dateValue Date value
      * @param dateFormat The date format
      * @returns `true` if the date is valid, otherwise `false`
@@ -182,7 +177,6 @@ export class DateFnsUtils {
 
     /**
      * Validates a date is before another one
-     *
      * @param source source date to compare
      * @param target target date to compare
      * @returns `true` if the source date is before the target one, otherwise `false`
@@ -193,7 +187,6 @@ export class DateFnsUtils {
 
     /**
      * Validates a date is after another one
-     *
      * @param source source date to compare
      * @param target target date to compare
      * @returns `true` if the source date is after the target one, otherwise `false`

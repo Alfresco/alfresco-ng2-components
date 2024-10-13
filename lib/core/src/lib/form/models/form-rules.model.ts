@@ -26,7 +26,6 @@ export const FORM_RULES_MANAGER = new InjectionToken<FormRulesManager<any>>('for
 
 /**
  * A factory for forms rule manager
- *
  * @param injector Angular injector
  * @returns FormsRuleManager instance
  */

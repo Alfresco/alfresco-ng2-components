@@ -28,7 +28,6 @@ export interface HighlightTransformResult {
 export class HighlightTransformService {
     /**
      * Searches for `search` string(s) within `text` and highlights all occurrences.
-     *
      * @param text Text to search within
      * @param search Text pattern to search for
      * @param wrapperClass CSS class used to provide highlighting style

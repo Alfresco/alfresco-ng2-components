@@ -43,7 +43,6 @@ export class SearchAiService {
 
     /**
      * Update the state of the search AI input.
-     *
      * @param state The new state of the search AI input.
      */
     updateSearchAiInputState(state: SearchAiInputState): void {
@@ -52,7 +51,6 @@ export class SearchAiService {
 
     /**
      * Ask a question to the AI.
-     *
      * @param question The question to ask.
      * @returns QuestionModel object containing information about questions.
      */
@@ -62,7 +60,6 @@ export class SearchAiService {
 
     /**
      * Get an answer to specific question.
-     *
      * @param questionId The ID of the question to get an answer for.
      * @returns AiAnswerEntry object containing the answer.
      */
@@ -72,7 +69,6 @@ export class SearchAiService {
 
     /**
      * Get the knowledge retrieval configuration.
-     *
      * @returns KnowledgeRetrievalConfigEntry object containing the configuration.
      */
     getConfig(): Observable<KnowledgeRetrievalConfigEntry> {
@@ -81,7 +77,6 @@ export class SearchAiService {
 
     /**
      * Check if using of search is possible (if all conditions are met).
-     *
      * @param selectedNodesState information about selected nodes.
      * @param maxSelectedNodes max number of selected nodes. Default 100.
      * @returns string with error if any condition is not met, empty string otherwise.

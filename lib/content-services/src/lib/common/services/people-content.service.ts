@@ -60,7 +60,6 @@ export class PeopleContentService {
 
     /**
      * Gets information about a user identified by their username.
-     *
      * @param personId ID of the target user
      * @returns User information
      */
@@ -74,7 +73,6 @@ export class PeopleContentService {
 
     /**
      * Gets information about the current user alias -me-
-     *
      * @returns User information
      */
     getCurrentUserInfo(): Observable<EcmUserModel> {
@@ -86,7 +84,6 @@ export class PeopleContentService {
 
     /**
      * Used to know if the current user has the admin capability
-     *
      * @returns true or false
      */
     isCurrentUserAdmin(): boolean {
@@ -102,7 +99,6 @@ export class PeopleContentService {
 
     /**
      * Gets a list of people.
-     *
      * @param requestQuery maxItems and skipCount parameters supported by JS-API
      * @returns Response containing pagination and list of entries
      */
@@ -124,7 +120,6 @@ export class PeopleContentService {
 
     /**
      * Creates new person.
-     *
      * @param newPerson Object containing the new person details.
      * @param opts Optional parameters
      * @returns Created new person
@@ -135,7 +130,6 @@ export class PeopleContentService {
 
     /**
      * Updates the person details
-     *
      * @param personId The identifier of a person
      * @param details The person details
      * @param opts Optional parameters
@@ -147,7 +141,6 @@ export class PeopleContentService {
 
     /**
      * Returns a profile image as a URL.
-     *
      * @param avatarId Target avatar
      * @returns Image URL
      */

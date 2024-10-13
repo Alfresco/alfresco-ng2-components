@@ -22,7 +22,6 @@ import { StoragePrefixFactory } from './app-config-storage-prefix.factory';
 
 /**
  * Create a factory to load app configuration
- *
  * @param appConfigService app config service
  * @param storageService storage service
  * @param adfHttpClient http client
