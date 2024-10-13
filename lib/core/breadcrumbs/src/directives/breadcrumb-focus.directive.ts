@@ -34,13 +34,8 @@ export class BreadcrumbFocusDirective {
 
     private getFocusableElements(root: HTMLElement): HTMLElement[] {
         const allFocusableElements = `button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])`;
-        return Array.from(
-            root.querySelectorAll(
-                allFocusableElements
-            ) as NodeListOf<HTMLElement>
-        ).filter(
-            (element) =>
-                !element.hasAttribute('disabled') && element.tabIndex >= 0
+        return Array.from(root.querySelectorAll(allFocusableElements) as NodeListOf<HTMLElement>).filter(
+            (element) => !element.hasAttribute('disabled') && element.tabIndex >= 0
         );
     }
 }

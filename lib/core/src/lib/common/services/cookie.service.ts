@@ -21,7 +21,6 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class CookieService {
-
     cookieEnabled = false;
 
     constructor() {
@@ -37,7 +36,6 @@ export class CookieService {
 
     /**
      * Checks if cookies are enabled.
-     *
      * @returns True if enabled, false otherwise
      */
     isEnabled(): boolean {
@@ -46,39 +44,33 @@ export class CookieService {
 
     /**
      * Retrieves a cookie by its key.
-     *
      * @param key Key to identify the cookie
      * @returns The cookie data or null if it is not found
      */
     getItem(key: string): string | null {
         const regexp = new RegExp('(?:' + key + '|;\\s*' + key + ')=(.*?)(?:;|$)', 'g');
         const result = regexp.exec(document.cookie);
-        return (result === null) ? null : result[1];
+        return result === null ? null : result[1];
     }
 
     /**
      * Sets a cookie.
-     *
      * @param key Key to identify the cookie
      * @param data Data value to set for the cookie
      * @param expiration Expiration date of the data
      * @param path "Pathname" to store the cookie
      */
     setItem(key: string, data: string, expiration: Date | null = null, path: string | null = null): void {
-        document.cookie = `${key}=${data}` +
-            (expiration ? ';expires=' + expiration.toUTCString() : '') +
-            (path ? `;path=${path}` : ';path=/');
+        document.cookie = `${key}=${data}` + (expiration ? ';expires=' + expiration.toUTCString() : '') + (path ? `;path=${path}` : ';path=/');
     }
 
     /**
      * Delete a cookie Key.
-     *
      * @param key Key to identify the cookie
      * @param path "Pathname" to store the cookie
      */
     deleteCookie(key: string, path: string | null = null): void {
-        document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;' +
-            (path ? `;path=${path}` : ';path=/');
+        document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;' + (path ? `;path=${path}` : ';path=/');
     }
 
     /** Placeholder for testing purposes - do not use. */

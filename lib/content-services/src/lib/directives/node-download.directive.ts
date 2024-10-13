@@ -55,7 +55,6 @@ export class NodeDownloadDirective {
     /**
      * Downloads multiple selected nodes.
      * Packs result into a .ZIP archive if there is more than one node selected.
-     *
      * @param selection Multiple selected nodes to download
      */
     downloadNodes(selection: NodeEntry | Array<NodeEntry>) {
@@ -76,7 +75,6 @@ export class NodeDownloadDirective {
     /**
      * Downloads a single node.
      * Packs result into a .ZIP archive is the node is a Folder.
-     *
      * @param node Node to download
      */
     downloadNode(node: NodeEntry) {

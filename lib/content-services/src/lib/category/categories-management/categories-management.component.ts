@@ -103,7 +103,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     /**
      * Decides if categoryNameControl should be visible. Sets also existing categories panel visibility
      * and scrolls control into view when visible.
-     *
      * @param categoryNameControlVisible control visibility.
      */
     @Input()
@@ -259,7 +258,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     /**
      * Adds existing category to categories list and removes it from existing categories list.
-     *
      * @param category - selection list change containing selected category
      */
     addCategoryToAssign(category: Category) {
@@ -274,7 +272,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     /**
      * Removes the category from categories list and adds it to existing categories list in ASSIGN mode.
-     *
      * @param category - category to remove
      */
     removeCategory(category: Category) {
