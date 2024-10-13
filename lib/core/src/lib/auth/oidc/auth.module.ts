@@ -28,7 +28,6 @@ import { AuthenticationConfirmationComponent } from './view/authentication-confi
 
 /**
  * Create a Login Factory function
- *
  * @param redirectService auth redirect service
  * @returns a factory function
  */
@@ -41,7 +40,7 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
         { provide: OAuthStorage, useExisting: StorageService },
-        { provide: AuthenticationService},
+        { provide: AuthenticationService },
         {
             provide: AUTH_CONFIG,
             useFactory: authConfigFactory,

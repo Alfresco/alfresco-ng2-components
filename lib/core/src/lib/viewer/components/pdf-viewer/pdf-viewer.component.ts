@@ -292,7 +292,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Method to scale the page current support implementation
-     *
      * @param scaleMode - new scale mode
      */
     scalePage(scaleMode: PdfScaleMode) {
@@ -400,7 +399,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Update all the pages with the newScale scale
-     *
      * @param newScale - new scale page
      */
     setScaleUpdatePages(newScale: number) {
@@ -416,7 +414,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Check if the request scale of the page is the same for avoid useless re-rendering
-     *
      * @param oldScale - old scale page
      * @param newScale - new scale page
      * @returns `true` if the scale is the same, otherwise `false`
@@ -427,7 +424,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Check if is a land scape view
-     *
      * @param width target width
      * @param height target height
      * @returns `true` if the target is in the landscape mode, otherwise `false`
@@ -456,7 +452,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * zoom in page pdf
-     *
      * @param ticks number of ticks to zoom
      */
     zoomIn(ticks?: number): void {
@@ -472,7 +467,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * zoom out page pdf
-     *
      * @param ticks number of ticks to scale
      */
     zoomOut(ticks?: number): void {
@@ -512,7 +506,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * load the page in input
-     *
      * @param page to load
      */
     inputPage(page: string) {
@@ -529,7 +522,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Page Change Event
-     *
      * @param event event
      */
     onPageChange(event: any) {
@@ -572,7 +564,6 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     /**
      * Keyboard Event Listener
-     *
      * @param event KeyboardEvent
      */
     @HostListener('document:keydown', ['$event'])

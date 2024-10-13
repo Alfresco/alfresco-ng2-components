@@ -25,7 +25,6 @@ export class DebugAppConfigService extends AppConfigService {
         super();
     }
 
-    /** @override */
     get<T>(key: string, defaultValue?: T): T {
         if (key === AppConfigValues.OAUTHCONFIG) {
             return JSON.parse(this.storage.getItem(key)) || super.get<T>(key, defaultValue);

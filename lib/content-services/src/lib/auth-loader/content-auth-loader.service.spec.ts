@@ -54,7 +54,6 @@ describe('ContentAuthLoaderService', () => {
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
     });
 
-
     it('should require Alf ticket on login if OAuth and provider is ALL or ECM', fakeAsync(() => {
         spyOn(authService, 'isOauth').and.returnValue(true);
         spyOn(authService, 'isALLProvider').and.returnValue(true);

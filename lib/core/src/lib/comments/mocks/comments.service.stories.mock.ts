@@ -21,7 +21,6 @@ import { CommentsService } from '../interfaces/comments-service.interface';
 import { testUser } from './comments.stories.mock';
 
 export class CommentsServiceStoriesMock implements Partial<CommentsService> {
-
     constructor() {}
 
     get(_id: string): Observable<CommentModel[]> {
@@ -41,36 +40,38 @@ const commentUser = new User({
 });
 
 export const commentsResponseMock = {
-    getComments: () => of([
-        new CommentModel({
-            id: 1,
-            message: 'Test Comment',
-            created: new Date(),
-            createdBy: commentUser,
-            isSelected: false
-        }),
-        new CommentModel({
-            id: 2,
-            message: 'Test Comment',
-            created: new Date(),
-            createdBy: commentUser,
-            isSelected: false
-        }),
-        new CommentModel({
-            id: 3,
-            message: 'Test Comment',
-            created: new Date(),
-            createdBy: commentUser,
-            isSelected: false
-        })
-    ]),
-    addComment: (message: string) => of(
-        new CommentModel({
-            id: 1,
-            message,
-            created: new Date(),
-            createdBy: testUser,
-            isSelected: false
-        })
-    )
+    getComments: () =>
+        of([
+            new CommentModel({
+                id: 1,
+                message: 'Test Comment',
+                created: new Date(),
+                createdBy: commentUser,
+                isSelected: false
+            }),
+            new CommentModel({
+                id: 2,
+                message: 'Test Comment',
+                created: new Date(),
+                createdBy: commentUser,
+                isSelected: false
+            }),
+            new CommentModel({
+                id: 3,
+                message: 'Test Comment',
+                created: new Date(),
+                createdBy: commentUser,
+                isSelected: false
+            })
+        ]),
+    addComment: (message: string) =>
+        of(
+            new CommentModel({
+                id: 1,
+                message,
+                created: new Date(),
+                createdBy: testUser,
+                isSelected: false
+            })
+        )
 };

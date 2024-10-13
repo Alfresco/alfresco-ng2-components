@@ -19,7 +19,6 @@ import { SearchNumberRangeComponent } from './search-number-range.component';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 describe('SearchNumberRangeComponent', () => {
-
     let component: SearchNumberRangeComponent;
 
     beforeEach(() => {
@@ -76,10 +75,13 @@ describe('SearchNumberRangeComponent', () => {
         spyOn(context, 'update').and.stub();
 
         component.ngOnInit();
-        component.apply({
-            from: '10',
-            to: '20'
-        }, true);
+        component.apply(
+            {
+                from: '10',
+                to: '20'
+            },
+            true
+        );
 
         const expectedQuery = 'cm:content.size:[10 TO 20]';
         expect(context.queryFragments[component.id]).toEqual(expectedQuery);
@@ -129,10 +131,13 @@ describe('SearchNumberRangeComponent', () => {
         component.ngOnInit();
         component.from = new UntypedFormControl('10');
         component.to = new UntypedFormControl('20');
-        component.form = new UntypedFormGroup({
-            from: component.from,
-            to: component.to
-        }, component.formValidator);
+        component.form = new UntypedFormGroup(
+            {
+                from: component.from,
+                to: component.to
+            },
+            component.formValidator
+        );
 
         expect(component.formValidator).toBeTruthy();
     });

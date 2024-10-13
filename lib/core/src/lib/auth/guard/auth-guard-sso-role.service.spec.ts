@@ -38,7 +38,6 @@ describe('Auth Guard SSO role service', () => {
 
     /**
      * Spy on user access
-     *
      * @param realmRoles roles
      * @param resourceAccess resource access values
      */

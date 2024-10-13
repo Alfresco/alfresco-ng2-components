@@ -115,5 +115,4 @@ describe('RedirectAuthService', () => {
         expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('session_state');
         expect(service.reloadPage).toHaveBeenCalledOnceWith();
     });
-
 });

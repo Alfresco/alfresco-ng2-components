@@ -20,8 +20,8 @@ import { ShellLayoutComponent } from './components/shell/shell.component';
 import { SHELL_AUTH_TOKEN } from './services/shell-app.service';
 
 export const SHELL_LAYOUT_ROUTE: Route = {
-  path: '',
-  component: ShellLayoutComponent,
-  canActivate: [SHELL_AUTH_TOKEN],
-  children: []
+    path: '',
+    component: ShellLayoutComponent,
+    canActivate: [SHELL_AUTH_TOKEN],
+    children: []
 };

@@ -18,7 +18,6 @@
 import { ObjectUtils } from './object-utils';
 
 describe('ObjectUtils', () => {
-
     it('should get top level property value', () => {
         const obj = {
             id: 1
