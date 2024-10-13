@@ -17,10 +17,13 @@
 
 import { Type } from '@angular/core';
 
-const getType = (type: any): any => () => type;
+const getType =
+    (type: any): any =>
+    () =>
+        type;
 
 export interface DynamicComponentModel {
- type: string;
+    type: string;
 }
 
 export type DynamicComponentResolveFunction = (model: DynamicComponentModel) => Type<any>;
@@ -31,13 +34,11 @@ export class DynamicComponentResolver {
 }
 
 export abstract class DynamicComponentMapper {
-
     protected defaultValue: Type<any> = undefined;
     protected types: { [key: string]: DynamicComponentResolveFunction } = {};
 
     /**
      * Gets the currently active DynamicComponentResolveFunction for a field type.
-     *
      * @param type The type whose resolver you want
      * @param defaultValue Default type returned for types that are not yet mapped
      * @returns Resolver function
@@ -51,7 +52,6 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Sets or optionally replaces a DynamicComponentResolveFunction for a field type.
-     *
      * @param type The type whose resolver you want to set
      * @param resolver The new resolver function
      * @param override The new resolver will only replace an existing one if this parameter is true
@@ -75,7 +75,6 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Register multiple components
-     *
      * @param components map of components to register
      * @param override replace existing components
      */
@@ -89,7 +88,6 @@ export abstract class DynamicComponentMapper {
 
     /**
      * Finds the component type that is needed to render a form field.
-     *
      * @param model Form field model for the field to render
      * @param defaultValue Default type returned for field types that are not yet mapped.
      * @returns Component type

@@ -19,7 +19,6 @@ import { NodeEntry } from '@alfresco/js-api';
 import { NodeNameTooltipPipe } from './node-name-tooltip.pipe';
 
 describe('NodeNameTooltipPipe', () => {
-
     const nodeName = 'node-name';
     const nodeTitle = 'node-title';
     const nodeDescription = 'node-description';

@@ -25,7 +25,6 @@ export class ClipboardService {
 
     /**
      * Checks if the target element can have its text copied.
-     *
      * @param target Target HTML element
      * @returns True if the text can be copied, false otherwise
      */
@@ -38,7 +37,6 @@ export class ClipboardService {
 
     /**
      * Copies text from an HTML element to the clipboard.
-     *
      * @param target HTML element to be copied
      * @param message Snackbar message to alert when copying happens
      */
@@ -61,7 +59,6 @@ export class ClipboardService {
 
     /**
      * Copies a text string to the clipboard.
-     *
      * @param content Text to copy
      * @param message Snackbar message to alert when copying happens
      */

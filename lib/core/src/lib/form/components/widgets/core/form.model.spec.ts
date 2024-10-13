@@ -33,9 +33,7 @@ describe('FormModel', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            imports: [CoreTestingModule]
         });
         formService = new FormService();
     });
@@ -132,10 +130,7 @@ describe('FormModel', () => {
 
     it('should parse tabs', () => {
         const json = {
-            tabs: [
-                { id: 'tab1' },
-                { id: 'tab2' }
-            ]
+            tabs: [{ id: 'tab1' }, { id: 'tab2' }]
         };
 
         const form = new FormModel(json);
@@ -199,10 +194,7 @@ describe('FormModel', () => {
 
     it('should put fields into corresponding tabs', () => {
         const json = {
-            tabs: [
-                { id: 'tab1' },
-                { id: 'tab2' }
-            ],
+            tabs: [{ id: 'tab1' }, { id: 'tab2' }],
             fields: [
                 { id: 'field1', tab: 'tab1', type: FormFieldTypes.CONTAINER },
                 { id: 'field2', tab: 'tab2', type: FormFieldTypes.CONTAINER },
@@ -227,9 +219,7 @@ describe('FormModel', () => {
 
     it('should create standard form outcomes', () => {
         const json = {
-            fields: [
-                { id: 'container1' }
-            ]
+            fields: [{ id: 'container1' }]
         };
 
         const form = new FormModel(json);
@@ -255,12 +245,8 @@ describe('FormModel', () => {
 
     it('should use custom form outcomes', () => {
         const json = {
-            fields: [
-                { id: 'container1' }
-            ],
-            outcomes: [
-                { id: 'custom-1', name: 'custom 1' }
-            ]
+            fields: [{ id: 'container1' }],
+            outcomes: [{ id: 'custom-1', name: 'custom 1' }]
         };
 
         const form = new FormModel(json);
@@ -276,9 +262,7 @@ describe('FormModel', () => {
     it('should raise validation event when validating form', () => {
         const form = new FormModel({}, null, false, formService);
 
-        formService.validateForm.subscribe((validateFormEvent) =>
-            expect(validateFormEvent).toBeTruthy()
-        );
+        formService.validateForm.subscribe((validateFormEvent) => expect(validateFormEvent).toBeTruthy());
         form.validateForm();
     });
 
@@ -286,9 +270,7 @@ describe('FormModel', () => {
         const form = new FormModel({}, null, false, formService);
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
 
-        formService.validateFormField.subscribe((validateFormFieldEvent) =>
-            expect(validateFormFieldEvent).toBeTruthy()
-        );
+        formService.validateFormField.subscribe((validateFormFieldEvent) => expect(validateFormFieldEvent).toBeTruthy());
         form.validateField(field);
     });
 
@@ -614,7 +596,6 @@ describe('FormModel', () => {
             expect(form.values['pfx_property_six']).toEqual('text-value');
             expect(form.values['pfx_property_seven']).toBeNull();
             expect(form.values['pfx_property_eight']).toBeNull();
-
         });
     });
 

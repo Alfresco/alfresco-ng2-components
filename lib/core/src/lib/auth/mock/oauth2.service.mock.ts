@@ -128,6 +128,6 @@ export const deleteGroupMappingApi: any = {
 
 export const applicationDetailsMockApi: any = {
     oauth2Auth: {
-        callCustomApi: () => Promise.resolve([{id: 'mock-app-id', name: 'mock-app-name'}])
+        callCustomApi: () => Promise.resolve([{ id: 'mock-app-id', name: 'mock-app-name' }])
     }
 };

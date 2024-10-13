@@ -35,22 +35,14 @@ describe('SearchHeaderQueryBuilderService', () => {
         return config;
     };
 
-    const createQueryBuilder = (searchSettings): SearchHeaderQueryBuilderService => {
-        let builder: SearchHeaderQueryBuilderService;
-        TestBed.runInInjectionContext(() => {
-            const alfrescoApiService = TestBed.inject(AlfrescoApiService);
-            builder = new SearchHeaderQueryBuilderService(buildConfig(searchSettings), alfrescoApiService, null);
-        });
-        return builder;
-    };
-
     it('should load the configuration from app config', () => {
         const config: SearchConfiguration = {
             categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any],
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
 
-        const builder = createQueryBuilder(config);
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        const builder = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
 
         builder.categories = [];
         builder.filterQueries = [];
@@ -73,7 +65,8 @@ describe('SearchHeaderQueryBuilderService', () => {
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
 
-        const service = createQueryBuilder(config);
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        const service = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
 
         const category = service.getCategoryForColumn('fake-key-1');
         expect(category).not.toBeNull();
@@ -82,7 +75,8 @@ describe('SearchHeaderQueryBuilderService', () => {
     });
 
     it('should have empty user query by default', () => {
-        const builder = createQueryBuilder({});
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        const builder = new SearchHeaderQueryBuilderService(buildConfig({}), alfrescoApiService, null);
         expect(builder.userQuery).toBe('');
     });
 
@@ -94,7 +88,8 @@ describe('SearchHeaderQueryBuilderService', () => {
 
         const expectedResult = [{ query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }];
 
-        const searchHeaderService = createQueryBuilder(config);
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        const searchHeaderService = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
 
         searchHeaderService.setCurrentRootFolderId('fake-node-id');
 
@@ -109,7 +104,9 @@ describe('SearchHeaderQueryBuilderService', () => {
             filterQueries: expectedResult
         };
 
-        const searchHeaderService = createQueryBuilder(config);
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        const searchHeaderService = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
+
         searchHeaderService.setCurrentRootFolderId('fake-node-id');
 
         expect(searchHeaderService.filterQueries).toEqual(expectedResult, 'Filters are not as expected');
@@ -123,7 +120,8 @@ describe('SearchHeaderQueryBuilderService', () => {
             filterQueries: [{ query: 'PARENT:"workspace://SpacesStore/fake-node-id' }]
         };
 
-        const searchHeaderService = createQueryBuilder(config);
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        const searchHeaderService = new SearchHeaderQueryBuilderService(buildConfig(config), alfrescoApiService, null);
 
         expect(searchHeaderService.activeFilters.length).toBe(0);
 

@@ -22,14 +22,11 @@ import { DomSanitizer } from '@angular/platform-browser';
     providedIn: 'root'
 })
 export class UrlService {
-
-    constructor(private sanitizer: DomSanitizer) {
-    }
+    constructor(private sanitizer: DomSanitizer) {}
 
     /**
      * Creates a trusted object URL from the Blob.
      * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
-     *
      * @param  blob Data to wrap into object URL
      * @returns URL string
      */
@@ -37,6 +34,4 @@ export class UrlService {
         const url = window.URL.createObjectURL(blob);
         return this.sanitizer.bypassSecurityTrustUrl(url) as string;
     }
-
-
 }

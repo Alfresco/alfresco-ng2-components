@@ -27,11 +27,7 @@ export class CardViewItemPositiveIntValidator implements CardViewItemValidator {
 
         const valueIsNotSet = value === '';
 
-        return valueIsNotSet ||
-            (
-                !isNaN(value) &&
-                this.isPositiveNumber(value)
-            );
+        return valueIsNotSet || (!isNaN(value) && this.isPositiveNumber(value));
     }
 
     private isPositiveNumber(value: any): boolean {

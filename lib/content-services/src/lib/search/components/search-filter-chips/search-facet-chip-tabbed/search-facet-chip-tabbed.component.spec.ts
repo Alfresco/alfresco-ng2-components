@@ -57,7 +57,6 @@ describe('SearchFacetChipTabbedComponent', () => {
 
     /**
      * Get the filter display value
-     *
      * @returns filter value
      */
     function getDisplayValue(): string {
@@ -66,7 +65,6 @@ describe('SearchFacetChipTabbedComponent', () => {
 
     /**
      * Emit the event for the tabbed content
-     *
      * @param eventName event name to trigger
      * @param event event to trigger
      */

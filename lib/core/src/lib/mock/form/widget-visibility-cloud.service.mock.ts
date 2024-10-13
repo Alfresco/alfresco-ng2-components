@@ -45,7 +45,7 @@ export const fakeFormJson: any = {
             value: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'FIELD_TEST',
@@ -74,7 +74,7 @@ export const fakeFormJson: any = {
                         isVisible: true
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'RIGHT_FORM_FIELD_ID',
@@ -157,7 +157,7 @@ export const complexVisibilityJsonVisible: any = {
                 visibilityCondition: null,
                 numberOfColumns: 2,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label',
@@ -193,7 +193,7 @@ export const complexVisibilityJsonVisible: any = {
                             visibilityCondition: null
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label1',
@@ -265,7 +265,7 @@ export const complexVisibilityJsonVisible: any = {
                 visibilityCondition: null,
                 numberOfColumns: 2,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label4',
@@ -301,7 +301,7 @@ export const complexVisibilityJsonVisible: any = {
                             visibilityCondition: null
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label3',
@@ -373,7 +373,7 @@ export const complexVisibilityJsonVisible: any = {
                 visibilityCondition: null,
                 numberOfColumns: 2,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label2',
@@ -409,7 +409,7 @@ export const complexVisibilityJsonVisible: any = {
                             visibilityCondition: null
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label5',
@@ -538,7 +538,7 @@ export const complexVisibilityJsonNotVisible: any = {
                 visibilityCondition: null,
                 numberOfColumns: 2,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label',
@@ -574,7 +574,7 @@ export const complexVisibilityJsonNotVisible: any = {
                             visibilityCondition: null
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label1',
@@ -646,7 +646,7 @@ export const complexVisibilityJsonNotVisible: any = {
                 visibilityCondition: null,
                 numberOfColumns: 2,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label4',
@@ -682,7 +682,7 @@ export const complexVisibilityJsonNotVisible: any = {
                             visibilityCondition: null
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label3',
@@ -754,7 +754,7 @@ export const complexVisibilityJsonNotVisible: any = {
                 visibilityCondition: null,
                 numberOfColumns: 2,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label2',
@@ -790,7 +790,7 @@ export const complexVisibilityJsonNotVisible: any = {
                             visibilityCondition: null
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             fieldType: 'FormFieldRepresentation',
                             id: 'label5',
@@ -889,7 +889,7 @@ export const nextConditionForm: any = {
             tab: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         id: 'Text1',
                         name: 'Text1',
@@ -925,7 +925,7 @@ export const nextConditionForm: any = {
                         value: 'one'
                     }
                 ],
-                2: [
+                '2': [
                     {
                         id: 'Text2',
                         name: 'Text2',
@@ -1001,7 +1001,7 @@ export const headerVisibilityCond: any = {
                 },
                 numberOfColumns: 1,
                 fields: {
-                    1: []
+                    '1': []
                 },
                 visibilityCondition: {
                     leftType: 'field',
@@ -1020,7 +1020,7 @@ export const headerVisibilityCond: any = {
                 tab: null,
                 numberOfColumns: 2,
                 fields: {
-                    1: [
+                    '1': [
                         {
                             id: 'Text1',
                             name: 'Text1',
@@ -1038,7 +1038,7 @@ export const headerVisibilityCond: any = {
                             }
                         }
                     ],
-                    2: [
+                    '2': [
                         {
                             id: 'Text2',
                             name: 'Text2',
