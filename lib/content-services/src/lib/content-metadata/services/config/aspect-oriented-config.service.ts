@@ -19,8 +19,7 @@ import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer, 
 import { getGroup, getProperty } from './property-group-reader';
 
 export class AspectOrientedConfigService implements ContentMetadataConfig {
-
-    constructor(private config: any) { }
+    constructor(private config: any) {}
 
     public isGroupAllowed(groupName: string): boolean {
         if (this.isIncludeAllEnabled()) {
@@ -43,24 +42,23 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
     }
 
     public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
-        const groups = Object.keys(propertyGroups)
-            .map((groupName) => {
-                const propertyGroup = propertyGroups[groupName];
-                const properties = propertyGroup.properties;
+        const groups = Object.keys(propertyGroups).map((groupName) => {
+            const propertyGroup = propertyGroups[groupName];
+            const properties = propertyGroup.properties;
 
-                if (this.isAspectReadOnly(groupName)) {
-                    Object.keys(properties).map((propertyName) => this.setReadOnlyProperty(properties[propertyName]));
-                }
+            if (this.isAspectReadOnly(groupName)) {
+                Object.keys(properties).map((propertyName) => this.setReadOnlyProperty(properties[propertyName]));
+            }
 
-                return Object.assign({}, propertyGroup, {
-                    properties: Object.keys(properties).map((propertyName) => {
-                        if (this.isPropertyReadOnly(propertyName)) {
-                            this.setReadOnlyProperty(properties[propertyName]);
-                        }
-                        return properties[propertyName];
-                    })
-                });
+            return Object.assign({}, propertyGroup, {
+                properties: Object.keys(properties).map((propertyName) => {
+                    if (this.isPropertyReadOnly(propertyName)) {
+                        this.setReadOnlyProperty(properties[propertyName]);
+                    }
+                    return properties[propertyName];
+                })
             });
+        });
 
         return groups;
     }
@@ -87,7 +85,6 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
         } else {
             return readOnlyAspects === propertyGroupName;
         }
-
     }
 
     public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {

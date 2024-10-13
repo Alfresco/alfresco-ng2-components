@@ -59,7 +59,7 @@ export const formDefinitionTwoTextFields: any = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'firstname',
@@ -102,7 +102,7 @@ export const formDefinitionTwoTextFields: any = {
                         visibilityCondition: null
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'lastname',
@@ -204,7 +204,7 @@ export const formDefinitionDropdownField: any = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'RestFieldRepresentation',
                         id: 'country',
@@ -266,7 +266,7 @@ export const formDefinitionDropdownField: any = {
                         requestHeaders: null
                     }
                 ],
-                2: []
+                '2': []
             }
         }
     ],
@@ -326,7 +326,7 @@ export const formDefinitionRequiredField: any = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'RestFieldRepresentation',
                         id: 'country',
@@ -388,7 +388,7 @@ export const formDefinitionRequiredField: any = {
                         requestHeaders: null
                     }
                 ],
-                2: []
+                '2': []
             }
         }
     ],

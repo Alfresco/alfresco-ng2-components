@@ -24,7 +24,6 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 
 /**
  * Create auth configuration factory
- *
  * @param authConfigService auth config service
  * @returns factory function
  */
