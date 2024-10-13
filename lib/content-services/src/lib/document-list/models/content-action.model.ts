@@ -59,14 +59,14 @@ export enum ContentActionTarget {
 export type ContentActionHandler = (obj: any, target?: any, permission?: string) => any;
 
 export class DocumentActionModel extends ContentActionModel {
-    constructor(json?: any)  {
+    constructor(json?: any) {
         super(json);
         this.target = 'document';
     }
 }
 
-export class FolderActionModel extends  ContentActionModel {
-    constructor(json?: any)  {
+export class FolderActionModel extends ContentActionModel {
+    constructor(json?: any) {
         super(json);
         this.target = 'folder';
     }

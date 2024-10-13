@@ -32,7 +32,6 @@ type StoryWithoutFunction<T> = NonFunctionProperties<StoryFn<T>>;
 
 /**
  * Copy storybook story
- *
  * @param story story
  * @param annotations annotations
  * @returns a copy of the story
@@ -47,13 +46,7 @@ const meta: Meta = {
     component: DemoBreadcrumbComponent,
     decorators: [
         moduleMetadata({
-            imports: [
-                BreadcrumbComponent,
-                BreadcrumbItemComponent,
-                MatButtonModule,
-                MatMenuModule,
-                MatIconModule
-            ]
+            imports: [BreadcrumbComponent, BreadcrumbItemComponent, MatButtonModule, MatMenuModule, MatIconModule]
         }),
         applicationConfig({
             providers: [importProvidersFrom(CoreStoryModule)]

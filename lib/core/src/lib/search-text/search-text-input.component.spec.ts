@@ -179,7 +179,6 @@ describe('SearchTextInputComponent', () => {
 
         /**
          * Runs a test for ltr/rtl margin values
-         *
          * @param isLtr sets ltr or rtl value to test
          */
         function testMarginValue(isLtr: boolean): void {
@@ -200,7 +199,6 @@ describe('SearchTextInputComponent', () => {
 
         /**
          * Runs a test for ltr/rtl transform values
-         *
          * @param isLtr sets ltr or rtl value to test
          */
         function testTransformValue(isLtr: boolean): void {

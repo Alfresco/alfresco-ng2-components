@@ -31,24 +31,24 @@ import { VersionCompatibilityService } from '../../version-compatibility/version
     providedIn: 'root'
 })
 export class ContentTypePropertiesService {
-
-    constructor(private contentTypeService: ContentTypeService,
-                private dialog: MatDialog,
-                private versionCompatibilityService: VersionCompatibilityService,
-                private propertyGroupTranslatorService: PropertyGroupTranslatorService) {
-    }
+    constructor(
+        private contentTypeService: ContentTypeService,
+        private dialog: MatDialog,
+        private versionCompatibilityService: VersionCompatibilityService,
+        private propertyGroupTranslatorService: PropertyGroupTranslatorService
+    ) {}
 
     getContentTypeCardItem(node: Node): Observable<CardViewItem[]> {
         if (this.versionCompatibilityService.isVersionSupported('7')) {
-            return this.contentTypeService.getContentTypeByPrefix(node.nodeType).
-                pipe(
-                    map((contentType) => {
-                        const contentTypesOptions$ = this.getContentTypesAsSelectOption(contentType);
-                        const contentTypeCard = this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
-                        const filteredProperties =  this.getContentTypeSpecificProperties(contentType);
-                        const propertiesCard = this.buildCardItemsFromPropertyList(filteredProperties, node.properties);
-                        return [contentTypeCard, ...propertiesCard];
-                    }));
+            return this.contentTypeService.getContentTypeByPrefix(node.nodeType).pipe(
+                map((contentType) => {
+                    const contentTypesOptions$ = this.getContentTypesAsSelectOption(contentType);
+                    const contentTypeCard = this.buildContentTypeSelectCardModel(contentType.entry.id, contentTypesOptions$);
+                    const filteredProperties = this.getContentTypeSpecificProperties(contentType);
+                    const propertiesCard = this.buildCardItemsFromPropertyList(filteredProperties, node.properties);
+                    return [contentTypeCard, ...propertiesCard];
+                })
+            );
         } else {
             return of([this.buildContentTypeTextCardModel(node.nodeType)]);
         }
@@ -80,7 +80,10 @@ export class ContentTypePropertiesService {
         return contentTypeCard;
     }
 
-    private buildContentTypeSelectCardModel(currentValue: string, options$: Observable<CardViewSelectItemOption<string>[]>): CardViewSelectItemModel<string> {
+    private buildContentTypeSelectCardModel(
+        currentValue: string,
+        options$: Observable<CardViewSelectItemOption<string>[]>
+    ): CardViewSelectItemModel<string> {
         const contentTypeCard = new CardViewSelectItemModel({
             label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
             value: currentValue,
@@ -100,7 +103,8 @@ export class ContentTypePropertiesService {
             map(([contentTypesEntries, currentContentType]) => {
                 const updatedTypes = this.appendCurrentType(currentContentType, contentTypesEntries);
                 return updatedTypes.map((contentType) => ({ key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id }));
-            }));
+            })
+        );
     }
 
     private appendCurrentType(currentType: TypeEntry, contentTypesEntries: TypeEntry[]): TypeEntry[] {

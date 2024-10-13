@@ -45,7 +45,6 @@ export class LegalHoldService {
 
     /**
      * Gets the list of holds available in the file plan.
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param options Optional parameters supported by JS-API
      * @returns List of holds Observable<Hold[]>
@@ -56,7 +55,6 @@ export class LegalHoldService {
 
     /**
      * Assign a node to a hold.
-     *
      * @param nodeId The Id of the node which will be assigned to a hold
      * @param holdId The Id of the hold to which nodes will be assigned
      * @returns Observable<HoldEntry>
@@ -67,7 +65,6 @@ export class LegalHoldService {
 
     /**
      * Assign multiple nodes to a hold.
-     *
      * @param nodeIds The list of managed node Ids
      * @param holdId The Id of the hold to which nodes will be assigned
      * @returns Observable<HoldPaging>
@@ -78,7 +75,6 @@ export class LegalHoldService {
 
     /**
      * Unassign the relationship between a child with id nodeId and a parent hold with id holdId.
-     *
      * @param holdId The hold Id
      * @param nodeId The Id of the node which is unassigned
      * @returns Empty response
@@ -89,7 +85,6 @@ export class LegalHoldService {
 
     /**
      * Create hold.
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param hold Hold to create
      * @returns List of created holds Observable<HoldEntry>
@@ -100,7 +95,6 @@ export class LegalHoldService {
 
     /**
      * Create list of holds.
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param holds Array of holds to create
      * @returns List of created holds Observable<HoldPaging>
@@ -111,7 +105,6 @@ export class LegalHoldService {
 
     /**
      * Start the asynchronous bulk process for a hold with id holdId based on search query results.
-     *
      * @param holdId The identifier of a hold
      * @param query Search query
      * @returns Observable<BulkAssignHoldResponseEntry>
@@ -122,7 +115,6 @@ export class LegalHoldService {
 
     /**
      * Assign a folder to a hold.
-     *
      * @param holdId The identifier of a hold
      * @param folderId The identifier of a folder
      * @param language Language code
@@ -139,7 +131,6 @@ export class LegalHoldService {
 
     /**
      * Get status of bulk operation with **bulkStatusId** for **holdId**.
-     *
      * @param bulkStatusId The identifier of a bulk status
      * @param holdId The identifier of a hold
      * @returns Promise<HoldsBulkStatusEntry>

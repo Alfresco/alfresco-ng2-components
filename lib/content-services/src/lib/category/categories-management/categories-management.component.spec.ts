@@ -68,7 +68,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Get no categories message
-     *
      * @returns message text
      */
     function getNoCategoriesMessage(): string {
@@ -77,7 +76,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Get assigned categories list
-     *
      * @returns list of native elements
      */
     function getAssignedCategoriesList(): HTMLSpanElement[] {
@@ -86,7 +84,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Get the exiting categories list
-     *
      * @returns list of material option element
      */
     function getExistingCategoriesList(): HTMLElement[] {
@@ -95,7 +92,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Create new category
-     *
      * @param name name of the category
      * @param addUsingEnter use Enter key
      * @param typingTimeout typing timeout in milliseconds (default 300)
@@ -115,7 +111,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Get first error
-     *
      * @returns error text
      */
     function getFirstError(): string {
@@ -124,7 +119,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Get selection list
-     *
      * @returns material selection list
      */
     function getSelectionList(): MatList {
@@ -133,7 +127,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Get remove category buttons
-     *
      * @returns list of native elements
      */
     function getRemoveCategoryButtons(): HTMLButtonElement[] {
@@ -144,7 +137,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Get category control input
-     *
      * @returns native input element
      */
     function getCategoryControlInput(): HTMLInputElement {
@@ -153,7 +145,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Get create category label
-     *
      * @returns native element
      */
     function getCreateCategoryLabel(): HTMLSpanElement {
@@ -162,7 +153,6 @@ describe('CategoriesManagementComponent', () => {
 
     /**
      * Type new category
-     *
      * @param name name of the category
      * @param timeout typing timeout in milliseconds (default 300)
      */

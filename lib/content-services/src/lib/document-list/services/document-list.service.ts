@@ -63,7 +63,6 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Deletes a node.
-     *
      * @param nodeId ID of the node to delete
      * @returns Empty response when the operation is complete
      */
@@ -73,7 +72,6 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Copy a node to destination node
-     *
      * @param nodeId The id of the node to be copied
      * @param targetParentId The id of the folder where the node will be copied
      * @returns NodeEntry for the copied node
@@ -84,7 +82,6 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Moves a node to destination node.
-     *
      * @param nodeId The id of the node to be moved
      * @param targetParentId The id of the folder where the node will be moved
      * @returns NodeEntry for the moved node
@@ -95,7 +92,6 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Gets the folder node with the specified relative name path below the root node.
-     *
      * @param folder Path to folder.
      * @param opts Options.
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
@@ -140,7 +136,6 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Gets a node via its node ID.
-     *
      * @param nodeId ID of the target node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
@@ -160,7 +155,6 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Gets a folder node via its node ID.
-     *
      * @param nodeId ID of the folder node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
@@ -184,7 +178,6 @@ export class DocumentListService implements DocumentListLoader {
 
     /**
      * Load a folder by Node Id.
-     *
      * @param nodeId ID of the folder node
      * @param pagination pagination model
      * @param includeFields List of data field names to include in the results

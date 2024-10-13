@@ -31,7 +31,6 @@ import { SearchDateRangeTabbedComponent } from '../components/search-date-range-
     providedIn: 'root'
 })
 export class SearchFilterService {
-
     /**
      * Contains string-to-type mappings for registered widgets.
      */
@@ -47,5 +46,4 @@ export class SearchFilterService {
         'autocomplete-chips': SearchFilterAutocompleteChipsComponent,
         'date-range': SearchDateRangeTabbedComponent
     };
-
 }

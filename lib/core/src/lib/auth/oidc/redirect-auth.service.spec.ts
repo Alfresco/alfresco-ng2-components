@@ -485,5 +485,4 @@ describe('RedirectAuthService', () => {
 
         expect(expectedLogoutIsEmitted).toBeTrue();
     });
-
 });

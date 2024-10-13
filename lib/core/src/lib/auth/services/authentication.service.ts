@@ -35,9 +35,7 @@ export class AuthenticationService implements AuthenticationServiceInterface, ee
     constructor(private injector: Injector, private redirectAuthService: RedirectAuthService) {
         this.redirectAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 
-        this.redirectAuthService.onTokenReceived.subscribe(
-            (value) => this.onTokenReceived.next(value)
-        );
+        this.redirectAuthService.onTokenReceived.subscribe((value) => this.onTokenReceived.next(value));
 
         this.basicAlfrescoAuthService.onLogin.subscribe((value) => this.onLogin.next(value));
 

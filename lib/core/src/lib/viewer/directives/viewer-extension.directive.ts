@@ -54,7 +54,6 @@ export class ViewerExtensionDirective implements AfterContentInit {
 
     /**
      * Check if the current extension in the viewer is compatible with this extension checking against `supportedExtensions`
-     *
      * @param fileExtension file extension to check
      * @returns `true` if file extension is compatible, otherwise `false`
      */

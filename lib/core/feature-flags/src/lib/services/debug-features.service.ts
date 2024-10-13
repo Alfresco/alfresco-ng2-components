@@ -68,7 +68,6 @@ export class DebugFeaturesService implements IDebugFeaturesService {
 
     /**
      * Gets the flags as an observable.
-     *
      * @returns the observable that emits the flag changeset.
      */
     getFlags$(): Observable<FlagChangeset> {
@@ -79,7 +78,6 @@ export class DebugFeaturesService implements IDebugFeaturesService {
 
     /**
      * Resets the specified flags.
-     *
      * @param flags The flags to reset.
      */
     resetFlags(flags: FlagSet): void {
