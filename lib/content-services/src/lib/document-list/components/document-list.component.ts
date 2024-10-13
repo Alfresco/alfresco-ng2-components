@@ -733,7 +733,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     }
 
     private isLinkFolder(node: Node) {
-        return node.nodeType === 'app:folderlink' && node.properties && node.properties['cm:destination'];
+        return node.nodeType === 'app:folderlink' && node.properties?.['cm:destination'];
     }
 
     private updateCustomSourceData(nodeId: string): void {
@@ -742,7 +742,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     /**
      * Invoked when executing content action for a document or folder.
-     *
      * @param node Node to be the context of the execution.
      * @param action Action to be executed against the context.
      */

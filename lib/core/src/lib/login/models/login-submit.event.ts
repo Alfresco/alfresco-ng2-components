@@ -16,7 +16,6 @@
  */
 
 export class LoginSubmitEvent {
-
     private readonly _values: any;
     private _defaultPrevented: boolean = false;
 
@@ -35,5 +34,4 @@ export class LoginSubmitEvent {
     preventDefault() {
         this._defaultPrevented = true;
     }
-
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Subject, Observable, from, ReplaySubject, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, from, ReplaySubject } from 'rxjs';
 import { AppConfigService } from '@alfresco/adf-core';
 import {
     SearchRequest,
@@ -37,13 +37,8 @@ import { FacetField } from '../models/facet-field.interface';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { SearchForm } from '../models/search-form.interface';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { Buffer } from 'buffer';
-import { inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 export abstract class BaseQueryBuilderService {
-    private readonly router = inject(Router);
-    private readonly activatedRoute = inject(ActivatedRoute);
     private _searchApi: SearchApi;
     get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.alfrescoApiService.getInstance());
@@ -52,9 +47,6 @@ export abstract class BaseQueryBuilderService {
 
     /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();
-
-    /*  Stream that emits the event each time when search filter finishes loading initial value */
-    filterLoaded = new Subject<void>();
 
     /*  Stream that emits the query before search whenever user search  */
     updated = new Subject<SearchRequest>();
@@ -68,17 +60,12 @@ export abstract class BaseQueryBuilderService {
     /*  Stream that emits search forms  */
     searchForms = new ReplaySubject<SearchForm[]>(1);
 
-    /*  Stream that emits the initial value for some or all search filters */
-    populateFilters = new BehaviorSubject<{ [key: string]: any }>({});
-
     categories: SearchCategory[] = [];
     queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
-    filterRawParams: { [key: string]: any } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
-    private encodedQuery: string;
     private scope: RequestScope;
     private selectedConfiguration: number;
     private _userQuery = '';
@@ -101,7 +88,7 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    protected constructor(protected readonly appConfig: AppConfigService, protected readonly alfrescoApiService: AlfrescoApiService) {
+    protected constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
         this.resetToDefaults();
     }
 
@@ -109,14 +96,7 @@ export abstract class BaseQueryBuilderService {
 
     public abstract isFilterServiceActive(): boolean;
 
-    public resetToDefaults(withNavigate = false) {
-        if (withNavigate) {
-            this.router.navigate([], {
-                queryParams: { q: null },
-                relativeTo: this.activatedRoute,
-                queryParamsHandling: 'merge'
-            });
-        }
+    public resetToDefaults() {
         const currentConfig = this.getDefaultConfiguration();
         this.resetSearchOptions();
         this.configUpdated.next(currentConfig);
@@ -157,9 +137,6 @@ export abstract class BaseQueryBuilderService {
         this.sortingOptions = [];
         this.userFacetBuckets = {};
         this.scope = null;
-        this.filterRawParams = {};
-        this._userQuery = '';
-        this.populateFilters.next({});
     }
 
     public getSearchFormDetails(): SearchForm[] {
@@ -199,7 +176,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Adds a facet bucket to a field.
-     *
      * @param field The target field
      * @param bucket Bucket to add
      */
@@ -216,7 +192,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets the buckets currently added to a field
-     *
      * @param field The target fields
      * @returns Bucket array
      */
@@ -226,7 +201,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Removes an existing bucket from a field.
-     *
      * @param field The target field
      * @param bucket Bucket to remove
      */
@@ -239,7 +213,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Adds a filter query to the current query.
-     *
      * @param query Query string to add
      */
     addFilterQuery(query: string): void {
@@ -253,7 +226,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Removes an existing filter query.
-     *
      * @param query The query to remove
      */
     removeFilterQuery(query: string): void {
@@ -264,7 +236,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets a facet query by label.
-     *
      * @param label Label of the query
      * @returns Facet query data
      */
@@ -280,7 +251,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets a facet field by label.
-     *
      * @param label Label of the facet field
      * @returns Facet field data
      */
@@ -306,7 +276,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Builds the current query and triggers the `updated` event.
-     *
      * @param queryBody query settings
      */
     update(queryBody?: SearchRequest): void {
@@ -316,17 +285,12 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Builds and executes the current query.
-     *
-     * @param updateQueryParams whether query params should be updated with encoded query
      * @param queryBody query settings
      */
-    async execute(updateQueryParams = true, queryBody?: SearchRequest) {
+    async execute(queryBody?: SearchRequest) {
         try {
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
-                if (updateQueryParams) {
-                    this.updateSearchQueryParams();
-                }
                 const resultSetPaging: ResultSetPaging = await this.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
@@ -356,7 +320,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Builds the current query.
-     *
      * @returns The finished query
      */
     buildQuery(): SearchRequest {
@@ -397,7 +360,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets the primary sorting definition.
-     *
      * @returns The primary sorting definition
      */
     getPrimarySorting(): SearchSortingDefinition {
@@ -409,7 +371,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets all pre-configured sorting options that users can choose from.
-     *
      * @returns Pre-configured sorting options
      */
     getSortingOptions(): SearchSortingDefinition[] {
@@ -418,7 +379,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets the query group.
-     *
      * @param query Target query
      * @returns Query group
      */
@@ -428,7 +388,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Checks if FacetQueries has been defined
-     *
      * @returns True if defined, false otherwise
      */
     get hasFacetQueries(): boolean {
@@ -437,7 +396,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Checks if FacetIntervals has been defined
-     *
      * @returns True if defined, false otherwise
      */
     get hasFacetIntervals(): boolean {
@@ -501,9 +459,7 @@ export abstract class BaseQueryBuilderService {
 
     protected getFinalQuery(): string {
         let query = '';
-        if (this.userQuery) {
-            this.filterRawParams['userQuery'] = this.userQuery;
-        }
+
         this.categories.forEach((facet) => {
             const customQuery = this.queryFragments[facet.id];
             if (customQuery) {
@@ -558,7 +514,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Encloses a label name with double quotes if it contains whitespace characters.
-     *
      * @param configLabel Original label text
      * @returns Label, possibly with quotes if it contains spaces
      */
@@ -568,39 +523,5 @@ export abstract class BaseQueryBuilderService {
             return `"${configLabel}"`;
         }
         return configLabel;
-    }
-
-    /**
-     * Encodes filter configuration stored in filterRawParams object.
-     */
-    encodeQuery() {
-        this.encodedQuery = Buffer.from(JSON.stringify(this.filterRawParams)).toString('base64');
-    }
-
-    /**
-     * Encodes existing filters configuration and updates search query param value.
-     */
-    updateSearchQueryParams() {
-        this.encodeQuery();
-        this.router.navigate([], {
-            relativeTo: this.activatedRoute,
-            queryParams: { q: this.encodedQuery },
-            queryParamsHandling: 'merge'
-        });
-    }
-
-    /**
-     * Builds search query with provided user query, executes query, encodes latest filter config and navigates to search.
-     *
-     * @param query user query to search for
-     * @param searchUrl search url to navigate to
-     */
-    async navigateToSearch(query: string, searchUrl: string) {
-        this.userQuery = query;
-        await this.execute();
-        await this.router.navigate([searchUrl], {
-            queryParams: { q: this.encodedQuery },
-            queryParamsHandling: 'merge'
-        });
     }
 }

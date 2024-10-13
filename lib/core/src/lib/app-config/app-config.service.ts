@@ -95,7 +95,6 @@ export class AppConfigService {
 
     /**
      * Requests notification of a property value when it is loaded.
-     *
      * @param property The desired property value
      * @returns Property value, when loaded
      */
@@ -108,7 +107,6 @@ export class AppConfigService {
 
     /**
      * Gets the value of a named property.
-     *
      * @param key Name of the property
      * @param defaultValue Value to return if the key is not found
      * @returns Value of the property
@@ -139,7 +137,6 @@ export class AppConfigService {
 
     /**
      * Gets the location.protocol value.
-     *
      * @returns The location.protocol string
      */
     getLocationProtocol(): string {
@@ -148,7 +145,6 @@ export class AppConfigService {
 
     /**
      * Gets the location.hostname property.
-     *
      * @returns Value of the property
      */
     getLocationHostname(): string {
@@ -157,7 +153,6 @@ export class AppConfigService {
 
     /**
      * Gets the location.port property.
-     *
      * @param prefix Text added before port value
      * @returns Port with prefix
      */
@@ -187,7 +182,6 @@ export class AppConfigService {
 
     /**
      * Loads the config file.
-     *
      * @param callback an optional callback to execute when configuration is loaded
      * @returns Notification when loading is complete
      */
@@ -223,7 +217,6 @@ export class AppConfigService {
 
     /**
      * Call the discovery API to fetch configuration
-     *
      * @param hostIdp host address
      * @returns Discovery configuration
      */
@@ -244,7 +237,6 @@ export class AppConfigService {
 
     /**
      * OAuth2 configuration
-     *
      * @returns auth config model
      */
     get oauth2(): OauthConfigModel {

@@ -45,7 +45,6 @@ export class ProgressComponent {
     /**
      * The value of the progress bar or spinner.
      * Changes the mode to `determinate` if a value is provided.
-     *
      * @returns The progress value
      */
     get value(): number | undefined {
@@ -65,7 +64,6 @@ export class ProgressComponent {
      *
      * For progress spinner, the mode can be either `indeterminate` or `determinate`.
      * For progress bar, the mode can be either `determinate`, `indeterminate`, `buffer`, or `query`.
-     *
      * @returns The progress mode
      */
     get mode(): ProgressMode {

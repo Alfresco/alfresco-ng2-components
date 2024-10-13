@@ -46,31 +46,33 @@ export const fakeContentComments = {
             skipCount: 0,
             maxItems: 100
         },
-        entries: [{
-            entry: {
-                createdAt: '2018-03-27T10:55:45.725+0000',
-                createdBy: fakeUser1,
-                edited: false,
-                modifiedAt: '2018-03-27T10:55:45.725+0000',
-                canEdit: true,
-                modifiedBy: fakeUser1,
-                canDelete: true,
-                id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
-                content: 'fake-message-1'
+        entries: [
+            {
+                entry: {
+                    createdAt: '2018-03-27T10:55:45.725+0000',
+                    createdBy: fakeUser1,
+                    edited: false,
+                    modifiedAt: '2018-03-27T10:55:45.725+0000',
+                    canEdit: true,
+                    modifiedBy: fakeUser1,
+                    canDelete: true,
+                    id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
+                    content: 'fake-message-1'
+                }
+            },
+            {
+                entry: {
+                    createdAt: '2018-03-27T10:55:45.725+0000',
+                    createdBy: fakeUser2,
+                    edited: false,
+                    modifiedAt: '2018-03-27T10:55:45.725+0000',
+                    canEdit: true,
+                    modifiedBy: fakeUser2,
+                    canDelete: true,
+                    id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
+                    content: 'fake-message-2'
+                }
             }
-        }, {
-            entry: {
-                createdAt: '2018-03-27T10:55:45.725+0000',
-                createdBy: fakeUser2,
-                edited: false,
-                modifiedAt: '2018-03-27T10:55:45.725+0000',
-                canEdit: true,
-                modifiedBy: fakeUser2,
-                canDelete: true,
-                id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
-                content: 'fake-message-2'
-            }
-        }
         ]
     }
 };
@@ -146,62 +148,62 @@ export const getDateXMinutesAgo = (minutes: number) => new Date(new Date().getTi
 
 export const commentsNodeData: CommentModel[] = [
     new CommentModel({
-      id: 1,
-      message: `I've done this component, is it cool?`,
-      created: getDateXMinutesAgo(30),
-      createdBy: new User(johnDoe),
-      isSelected: false
+        id: 1,
+        message: `I've done this component, is it cool?`,
+        created: getDateXMinutesAgo(30),
+        createdBy: new User(johnDoe),
+        isSelected: false
     }),
     new CommentModel({
-      id: 2,
-      message: 'Yeah',
-      created: getDateXMinutesAgo(15),
-      createdBy: new User(janeEod),
-      isSelected: false
+        id: 2,
+        message: 'Yeah',
+        created: getDateXMinutesAgo(15),
+        createdBy: new User(janeEod),
+        isSelected: false
     }),
     new CommentModel({
-      id: 3,
-      message: '+1',
-      created: getDateXMinutesAgo(12),
-      createdBy: new User(robertSmith),
-      isSelected: false
+        id: 3,
+        message: '+1',
+        created: getDateXMinutesAgo(12),
+        createdBy: new User(robertSmith),
+        isSelected: false
     }),
     new CommentModel({
-      id: 4,
-      message: 'ty',
-      created: new Date(),
-      createdBy: new User(johnDoe),
-      isSelected: false
+        id: 4,
+        message: 'ty',
+        created: new Date(),
+        createdBy: new User(johnDoe),
+        isSelected: false
     })
 ];
 
 export const commentsTaskData: CommentModel[] = [
     new CommentModel({
-      id: 1,
-      message: `I've done this task, what's next?`,
-      created: getDateXMinutesAgo(30),
-      createdBy: new User(johnDoe),
-      isSelected: false
+        id: 1,
+        message: `I've done this task, what's next?`,
+        created: getDateXMinutesAgo(30),
+        createdBy: new User(johnDoe),
+        isSelected: false
     }),
     new CommentModel({
-      id: 2,
-      message: `I've assigned you another one 🤠`,
-      created: getDateXMinutesAgo(15),
-      createdBy: new User(janeEod),
-      isSelected: false
+        id: 2,
+        message: `I've assigned you another one 🤠`,
+        created: getDateXMinutesAgo(15),
+        createdBy: new User(janeEod),
+        isSelected: false
     }),
     new CommentModel({
-      id: 3,
-      message: '+1',
-      created: getDateXMinutesAgo(12),
-      createdBy: new User(robertSmith),
-      isSelected: false
+        id: 3,
+        message: '+1',
+        created: getDateXMinutesAgo(12),
+        createdBy: new User(robertSmith),
+        isSelected: false
     }),
     new CommentModel({
-      id: 4,
-      message: 'Cheers',
-      created: new Date(),
-      createdBy: new User(johnDoe),
-      isSelected: false
+        id: 4,
+        message: 'Cheers',
+        created: new Date(),
+        createdBy: new User(johnDoe),
+        isSelected: false
     })
 ];

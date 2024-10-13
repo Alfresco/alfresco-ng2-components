@@ -48,7 +48,7 @@ export const AuthGuardSsoRoleService: CanActivateFn = (route: ActivatedRouteSnap
     }
     const hasRole = hasRealmRole && hasClientRole;
 
-    if (!hasRole && route?.data && route.data['redirectUrl']) {
+    if (!hasRole && route?.data?.['redirectUrl']) {
         const router = inject(Router);
         router.navigate(['/' + route.data['redirectUrl']]);
     }

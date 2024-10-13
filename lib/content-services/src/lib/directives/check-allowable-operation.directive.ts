@@ -59,7 +59,6 @@ export class CheckAllowableOperationDirective implements OnChanges {
 
     /**
      * Updates disabled state for the decorated element
-     *
      * @returns the new state
      */
     updateElement(): boolean {
@@ -94,8 +93,6 @@ export class CheckAllowableOperationDirective implements OnChanges {
 
     /**
      * Enables decorated element
-     *
-     * @memberof CheckAllowableOperationDirective
      */
     enableElement(): void {
         this.renderer.removeAttribute(this.elementRef.nativeElement, 'disabled');
@@ -103,8 +100,6 @@ export class CheckAllowableOperationDirective implements OnChanges {
 
     /**
      * Disables decorated element
-     *
-     * @memberof CheckAllowableOperationDirective
      */
     disableElement(): void {
         this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
@@ -112,7 +107,6 @@ export class CheckAllowableOperationDirective implements OnChanges {
 
     /**
      * Checks whether all nodes have a particular permission
-     *
      * @param  nodes Node collection to check
      * @param  permission Permission to check for each node
      * @returns `true` if there are allowable operations, otherwise `false`

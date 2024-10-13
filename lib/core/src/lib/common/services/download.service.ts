@@ -42,8 +42,7 @@ export class DownloadService {
                 }
 
                 if (blob) {
-                    if (typeof window.navigator !== 'undefined' &&
-                        window.navigator['msSaveOrOpenBlob']) {
+                    if (window.navigator?.['msSaveOrOpenBlob']) {
                         window.navigator['msSaveOrOpenBlob'](blob, fileName);
                     } else {
                         const url = window.URL.createObjectURL(blob);
@@ -60,7 +59,6 @@ export class DownloadService {
 
     /**
      * Invokes content download for a Blob with a file name.
-     *
      * @param blob Content to download.
      * @param fileName Name of the resulting file.
      */
@@ -70,7 +68,6 @@ export class DownloadService {
 
     /**
      * Invokes content download for a data array with a file name.
-     *
      * @param data Data to download.
      * @param fileName Name of the resulting file.
      */
@@ -80,7 +77,6 @@ export class DownloadService {
 
     /**
      * Invokes content download for a JSON object with a file name.
-     *
      * @param json JSON object to download.
      * @param fileName Name of the resulting file.
      */
@@ -90,7 +86,6 @@ export class DownloadService {
 
     /**
      * Invokes the download of the file by its URL address.
-     *
      * @param url Url address pointing to the file.
      * @param fileName Name of the file download.
      */

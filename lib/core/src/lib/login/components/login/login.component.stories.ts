@@ -32,10 +32,7 @@ export default {
             providers: [{ provide: AuthenticationService, useClass: AuthenticationMock }]
         }),
         applicationConfig({
-            providers: [
-                importProvidersFrom(CoreStoryModule),
-                importProvidersFrom(RouterModule.forRoot([], { useHash: true }))
-            ]
+            providers: [importProvidersFrom(CoreStoryModule), importProvidersFrom(RouterModule.forRoot([], { useHash: true }))]
         })
     ],
     parameters: {
