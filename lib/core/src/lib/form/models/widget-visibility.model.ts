@@ -58,7 +58,7 @@ export class WidgetVisibilityModel {
             return this.json.leftValue;
         } else if (this.leftFormFieldId) {
             return this.leftFormFieldId;
-        } else if(this.leftRestResponseId){
+        } else if (this.leftRestResponseId) {
             return this.leftRestResponseId;
         }
         return null;
@@ -91,7 +91,7 @@ export class WidgetVisibilityModel {
             return this.json.rightValue;
         } else if (this.rightFormFieldId) {
             return this.rightFormFieldId;
-        } else if(this.rightRestResponseId){
+        } else if (this.rightRestResponseId) {
             return this.rightRestResponseId;
         }
         return null;

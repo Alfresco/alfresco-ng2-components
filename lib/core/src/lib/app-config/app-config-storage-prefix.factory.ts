@@ -33,7 +33,8 @@ export class StoragePrefixFactory {
     constructor(
         private appConfigService: AppConfigService,
         @Optional()
-        @Inject(STORAGE_PREFIX_FACTORY_SERVICE) private storagePrefixFactory?: StoragePrefixFactoryService
+        @Inject(STORAGE_PREFIX_FACTORY_SERVICE)
+        private storagePrefixFactory?: StoragePrefixFactoryService
     ) {}
 
     getPrefix(): Observable<string | undefined> {
@@ -43,9 +44,7 @@ export class StoragePrefixFactory {
                     return of(prefix);
                 }
 
-                return this.storagePrefixFactory ?
-                    this.storagePrefixFactory.getPrefix() :
-                    of(prefix);
+                return this.storagePrefixFactory ? this.storagePrefixFactory.getPrefix() : of(prefix);
             })
         );
     }

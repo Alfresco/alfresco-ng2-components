@@ -25,15 +25,13 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ContentTypeService {
-
     private _typesApi: TypesApi;
     get typesApi(): TypesApi {
         this._typesApi = this._typesApi ?? new TypesApi(this.alfrescoApiService.getInstance());
         return this._typesApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {
-    }
+    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     getContentTypeByPrefix(prefixedType: string): Observable<TypeEntry> {
         return from(this.typesApi.getType(prefixedType));
@@ -45,8 +43,6 @@ export class ContentTypeService {
             where,
             include: ['properties']
         };
-        return from(this.typesApi.listTypes(opts)).pipe(
-            map((result: TypePaging) => result.list.entries)
-        );
+        return from(this.typesApi.listTypes(opts)).pipe(map((result: TypePaging) => result.list.entries));
     }
 }
