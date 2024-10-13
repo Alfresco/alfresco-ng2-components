@@ -56,7 +56,7 @@ export const formDefVisibilityFieldDependsOnNextOne: any = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'RestFieldRepresentation',
                         id: 'country',
@@ -123,7 +123,7 @@ export const formDefVisibilityFieldDependsOnNextOne: any = {
                         requestHeaders: null
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'name',
@@ -222,7 +222,7 @@ export const formDefVisibilitiFieldDependsOnPreviousOne: any = {
             visibilityCondition: null,
             numberOfColumns: 2,
             fields: {
-                1: [
+                '1': [
                     {
                         fieldType: 'FormFieldRepresentation',
                         id: 'name',
@@ -265,7 +265,7 @@ export const formDefVisibilitiFieldDependsOnPreviousOne: any = {
                         visibilityCondition: null
                     }
                 ],
-                2: [
+                '2': [
                     {
                         fieldType: 'RestFieldRepresentation',
                         id: 'country',

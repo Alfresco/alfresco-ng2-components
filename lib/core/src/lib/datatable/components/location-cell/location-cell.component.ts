@@ -44,7 +44,6 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
         super.ngOnInit();
     }
 
-    /** @override */
     protected updateValue(): void {
         if (this.column?.key && this.column?.format && this.row && this.data) {
             const path: PathInfo = this.data.getValue(this.row, this.column, this.resolverFn);

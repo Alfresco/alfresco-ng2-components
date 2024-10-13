@@ -41,7 +41,6 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Method called when files are dropped in the drag area.
-     *
      * @param files - files dropped in the drag area.
      */
     onFilesDropped(files: File[]): void {
@@ -52,7 +51,6 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Called when a folder are dropped in the drag area
-     *
      * @param folder - name of the dropped folder
      */
     onFolderEntityDropped(folder: any): void {
@@ -65,7 +63,6 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Show undo notification bar.
-     *
      * @param latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
      */
     showUndoNotificationBar(latestFilesAdded: FileModel[]) {
@@ -82,7 +79,6 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Check if content is droppable
-     *
      * @returns `true` or `false` considering the component options and node permissions
      */
     isDroppable(): boolean {
@@ -91,7 +87,6 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Handles 'upload-files' events raised by child components.
-     *
      * @param event DOM event
      */
     onUploadFiles(event: CustomEvent) {

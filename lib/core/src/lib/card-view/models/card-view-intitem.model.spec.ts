@@ -19,7 +19,6 @@ import { CardViewIntItemModel } from './card-view-intitem.model';
 import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
 describe('CardViewIntItemModel', () => {
-
     let properties: CardViewTextItemProperties;
 
     beforeEach(() => {
@@ -43,7 +42,7 @@ describe('CardViewIntItemModel', () => {
         expect(itemModel.value).toBe(undefined);
     });
 
-    it('isValid should return the validator\'s value', () => {
+    it("isValid should return the validator's value", () => {
         const itemModel = new CardViewIntItemModel(properties);
 
         expect(itemModel.isValid(42)).toBe(true, 'For 42 it should be true');
@@ -63,11 +62,13 @@ describe('CardViewIntItemModel', () => {
             value: '20',
             key: 'tribe',
             dataType: 'd:float',
-            constraints: [{
-                id: 'constraint-id',
-                type: 'MINMAX',
-                parameters: { minValue: 10,  maxValue: 15 }
-            }]
+            constraints: [
+                {
+                    id: 'constraint-id',
+                    type: 'MINMAX',
+                    parameters: { minValue: 10, maxValue: 15 }
+                }
+            ]
         };
 
         const itemModel = new CardViewIntItemModel(constrainedProperties);

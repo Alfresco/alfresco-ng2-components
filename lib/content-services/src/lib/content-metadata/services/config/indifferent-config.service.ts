@@ -15,26 +15,22 @@
  * limitations under the License.
  */
 
-import { ContentMetadataConfig, OrganisedPropertyGroup,
-    PropertyGroupContainer
-} from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 
 export class IndifferentConfigService implements ContentMetadataConfig {
-
     isGroupAllowed(): boolean {
         return true;
     }
 
     reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
-        return Object.keys(propertyGroups)
-            .map((groupName) => {
-                const propertyGroup = propertyGroups[groupName];
-                const properties = propertyGroup.properties;
+        return Object.keys(propertyGroups).map((groupName) => {
+            const propertyGroup = propertyGroups[groupName];
+            const properties = propertyGroup.properties;
 
-                return Object.assign({}, propertyGroup, {
-                    properties: Object.keys(properties).map((propertyName) => properties[propertyName])
-                });
+            return Object.assign({}, propertyGroup, {
+                properties: Object.keys(properties).map((propertyName) => properties[propertyName])
             });
+        });
     }
 
     filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
@@ -42,7 +38,7 @@ export class IndifferentConfigService implements ContentMetadataConfig {
     }
 
     appendAllPreset(): OrganisedPropertyGroup[] {
-        return[];
+        return [];
     }
 
     isIncludeAllEnabled(): boolean {

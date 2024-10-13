@@ -18,9 +18,7 @@
 import { FileModel } from './file.model';
 
 describe('FileModel', () => {
-
     describe('extension', () => {
-
         it('should return the extension if file has it', () => {
             const file = new FileModel({ name: 'tyrion-lannister.doc' } as File);
 
@@ -33,7 +31,7 @@ describe('FileModel', () => {
             expect(file.extension).toBe('');
         });
 
-        it('should return the empty string if file is starting with . and doesn\'t have extension', () => {
+        it("should return the empty string if file is starting with . and doesn't have extension", () => {
             const file = new FileModel({ name: '.white-walkers' } as File);
 
             expect(file.extension).toBe('');

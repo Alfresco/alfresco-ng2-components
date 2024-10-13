@@ -16,5 +16,6 @@
     },
     "target": "ES2022",
     "useDefineForClassFields": false
-  }
+  },
+  "include": ["src/**/*.ts", "index.ts"]
 }

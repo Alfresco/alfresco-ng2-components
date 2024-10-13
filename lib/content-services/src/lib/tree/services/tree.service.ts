@@ -49,7 +49,6 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
 
     /**
      * Expands node applying subnodes to it.
-     *
      * @param nodeToExpand Node to be expanded
      * @param subNodes List of nodes that will be added as children of expanded node
      */
@@ -65,7 +64,6 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
 
     /**
      * Collapses a node removing all children from it.
-     *
      * @param nodeToCollapse Node to be collapsed
      */
     public collapseNode(nodeToCollapse: T): void {
@@ -81,7 +79,6 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
 
     /**
      * Append more child nodes to already expanded parent node
-     *
      * @param nodeToAppend Expanded parent node
      * @param subNodes List of nodes that will be added as children of expanded node
      */
@@ -98,7 +95,6 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
 
     /**
      * Removes provided node from the tree
-     *
      * @param node Node to be removed
      */
     public removeNode(node: T): void {
@@ -107,7 +103,6 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
 
     /**
      * Gets children of the node
-     *
      * @param parentNode Parent node
      * @returns children of parent node
      */
@@ -117,7 +112,6 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
 
     /**
      * Checks if tree is empty
-     *
      * @returns boolean
      */
     public isEmpty(): boolean {
@@ -126,7 +120,6 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
 
     /**
      * Gets parent node of given node. If node with parentNodeId is not found it returns undefined.
-     *
      * @param parentNodeId Id of a parent node to be found
      * @returns parent node or undefined when not found
      */

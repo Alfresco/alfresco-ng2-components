@@ -18,7 +18,10 @@
 import { Injectable } from '@angular/core';
 import {
     CategoryEntry,
-    CategoryPaging, Pagination, PathInfo, ResultNode,
+    CategoryPaging,
+    Pagination,
+    PathInfo,
+    ResultNode,
     ResultSetPaging,
     ResultSetPagingList,
     ResultSetRowEntry
@@ -27,7 +30,6 @@ import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryServiceMock {
-
     public getSubcategories(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
         return parentNodeId ? of(this.getChildrenLevelResponse(skipCount, maxItems)) : of(this.getRootLevelResponse(skipCount, maxItems));
     }
@@ -66,12 +68,12 @@ export class CategoryServiceMock {
     }
 
     private getRootLevelResponse(skipCount?: number, maxItems?: number): CategoryPaging {
-        const rootCategoryEntry: CategoryEntry = {entry: {id: 'testId', name: 'testNode', parentId: '-root-', hasChildren: true}};
-        return {list: {pagination: {skipCount, maxItems, hasMoreItems: false}, entries: [rootCategoryEntry]}};
+        const rootCategoryEntry: CategoryEntry = { entry: { id: 'testId', name: 'testNode', parentId: '-root-', hasChildren: true } };
+        return { list: { pagination: { skipCount, maxItems, hasMoreItems: false }, entries: [rootCategoryEntry] } };
     }
 
     private getChildrenLevelResponse(skipCount?: number, maxItems?: number): CategoryPaging {
-        const childCategoryEntry: CategoryEntry = {entry: {id: 'childId', name: 'childNode', parentId: 'testId', hasChildren: false}};
-        return {list: {pagination: {skipCount, maxItems, hasMoreItems: true}, entries: [childCategoryEntry]}};
+        const childCategoryEntry: CategoryEntry = { entry: { id: 'childId', name: 'childNode', parentId: 'testId', hasChildren: false } };
+        return { list: { pagination: { skipCount, maxItems, hasMoreItems: true }, entries: [childCategoryEntry] } };
     }
 }
