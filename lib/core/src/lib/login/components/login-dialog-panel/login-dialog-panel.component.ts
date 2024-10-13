@@ -26,11 +26,7 @@ import { LoginComponent } from '../login/login.component';
     standalone: true,
     templateUrl: './login-dialog-panel.component.html',
     styleUrls: ['./login-dialog-panel.component.scss'],
-    imports: [
-        LoginComponent,
-        LoginHeaderDirective,
-        LoginFooterDirective
-    ],
+    imports: [LoginComponent, LoginHeaderDirective, LoginFooterDirective],
     encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogPanelComponent {

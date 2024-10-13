@@ -16,7 +16,6 @@
  */
 
 export class RequestPaginationModel {
-
     skipCount?: number;
 
     maxItems?: number;

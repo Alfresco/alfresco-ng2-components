@@ -33,8 +33,7 @@ describe('Breadcrumb', () => {
     });
     let documentListComponent: DocumentListComponent;
 
-    const getBreadcrumbActionText = (): string =>
-        fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
+    const getBreadcrumbActionText = (): string => fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
 
     beforeEach(() => {
         TestBed.configureTestingModule({

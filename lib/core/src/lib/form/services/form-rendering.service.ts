@@ -29,7 +29,6 @@ import { FormFieldTypes } from '../components/widgets';
     providedIn: 'root'
 })
 export class FormRenderingService extends DynamicComponentMapper {
-
     protected defaultValue: Type<any> = widgets.UnknownWidgetComponent;
     protected types: { [key: string]: DynamicComponentResolveFunction } = {
         [FormFieldTypes.TEXT]: DynamicComponentResolver.fromType(widgets.TextWidgetComponent),

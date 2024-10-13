@@ -100,16 +100,11 @@ export const simpleCategories: SearchCategory[] = [
             }
         }
     }
-
 ];
 
 export const searchFilter = {
-    'app:fields': [
-        'cm:name'
-    ],
-    include: [
-        'allowableOperations'
-    ],
+    'app:fields': ['cm:name'],
+    include: ['allowableOperations'],
     sorting: {
         options: [
             {
@@ -412,8 +407,10 @@ export const mockSearchResult = {
                             label: 'SEARCH.FACET_QUERIES.MIMETYPE',
                             filterQuery: 'content.mimetype:text/html',
                             metrics: [{ type: 'count', value: { count: 13 } }]
-                        }]
-                }, {
+                        }
+                    ]
+                },
+                {
                     type: 'query',
                     label: 'Size facet queries',
                     buckets: [
@@ -421,60 +418,75 @@ export const mockSearchResult = {
                             label: 'my1',
                             filterQuery: 'content.size:[111111 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 806 } }]
-                        }, {
+                        },
+                        {
                             label: 'my3',
                             filterQuery: 'content.size:[333333 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 669 } }]
-                        }, {
+                        },
+                        {
                             label: 'my2',
                             filterQuery: 'content.size:[222222 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 691 } }]
-                        }, {
+                        },
+                        {
                             label: 'my5',
                             filterQuery: 'content.size:[5555 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 1866 } }]
-                        }, {
+                        },
+                        {
                             label: 'my4',
                             filterQuery: 'content.size:[444444 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 665 } }]
-                        }, {
+                        },
+                        {
                             label: 'my7',
                             filterQuery: 'content.size:[777777 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 641 } }]
-                        }, {
+                        },
+                        {
                             label: 'SEARCH.FACET_QUERIES.SMALL',
                             filterQuery: 'content.size:[10240 TO 102400]',
                             metrics: [{ type: 'count', value: { count: 526 } }]
-                        }, {
+                        },
+                        {
                             label: 'my6',
                             filterQuery: 'content.size:[666666 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 652 } }]
-                        }, {
+                        },
+                        {
                             label: 'SEARCH.FACET_QUERIES.XTRALARGE',
                             filterQuery: 'content.size:[16777216 TO 134217728]',
                             metrics: [{ type: 'count', value: { count: 617 } }]
-                        }, {
+                        },
+                        {
                             label: 'my8',
                             filterQuery: 'content.size:[888888 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 641 } }]
-                        }, {
+                        },
+                        {
                             label: 'SEARCH.FACET_QUERIES.XXTRALARGE',
                             filterQuery: 'content.size:[134217728 TO MAX]',
                             metrics: [{ type: 'count', value: { count: 0 } }]
-                        }, {
+                        },
+                        {
                             label: 'SEARCH.FACET_QUERIES.MEDIUM',
                             filterQuery: 'content.size:[102400 TO 1048576]',
                             metrics: [{ type: 'count', value: { count: 630 } }]
-                        }, {
+                        },
+                        {
                             label: 'SEARCH.FACET_QUERIES.LARGE',
                             filterQuery: 'content.size:[1048576 TO 16777216]',
                             metrics: [{ type: 'count', value: { count: 23 } }]
-                        }, {
+                        },
+                        {
                             label: 'Extra Small',
                             filterQuery: 'content.size:[0 TO 10240]',
                             metrics: [{ type: 'count', value: { count: 10239 } }]
-                        }]
-                }, {
+                        }
+                    ]
+                },
+                {
                     type: 'query',
                     label: 'SEARCH.FACET_QUERIES.MY_FACET_QUERIES',
                     buckets: [
@@ -482,37 +494,45 @@ export const mockSearchResult = {
                             label: 'SEARCH.FACET_QUERIES.CREATED_THIS_YEAR',
                             filterQuery: 'created:2019',
                             metrics: [{ type: 'count', value: { count: 0 } }]
-                        }]
+                        }
+                    ]
                 },
                 {
                     type: 'field',
                     label: 'SEARCH.FACET_FIELDS.SIZE',
                     buckets: []
-                }, {
+                },
+                {
                     type: 'field',
                     label: 'SEARCH.FACET_FIELDS.CREATED',
                     buckets: []
-                }, {
+                },
+                {
                     type: 'field',
                     label: 'SEARCH.FACET_FIELDS.TYPE',
                     buckets: []
-                }, {
+                },
+                {
                     type: 'field',
                     label: 'SEARCH.FACET_FIELDS.MODIFIER',
                     buckets: []
-                }, {
+                },
+                {
                     type: 'field',
                     label: 'SEARCH.FACET_FIELDS.CREATOR',
                     buckets: []
-                }, {
+                },
+                {
                     type: 'interval',
                     label: 'TheModified',
                     buckets: []
-                }, {
+                },
+                {
                     type: 'interval',
                     label: 'The Created',
                     buckets: []
-                }]
+                }
+            ]
         }
     }
 };
@@ -609,29 +629,23 @@ export const sizeOptions = [
     }
 ];
 
-export const filteredResult = [
-    'my1 (806)',
-    'my2 (691)',
-    'my3 (669)',
-    'my4 (665)',
-    'my5 (1866)'
-];
+export const filteredResult = ['my1 (806)', 'my2 (691)', 'my3 (669)', 'my4 (665)', 'my5 (1866)'];
 
 export const mockContentSizeResponseBucket = {
-        label: '5875',
-        filterQuery: 'content.size:5875',
-        metrics: [
-            {
-                type: 'count',
-                value: {
-                    count: 364
-                }
+    label: '5875',
+    filterQuery: 'content.size:5875',
+    metrics: [
+        {
+            type: 'count',
+            value: {
+                count: 364
             }
-        ]
-    };
+        }
+    ]
+};
 
 export const getMockSearchResultWithResponseBucket = () => {
-    const cloneResult = JSON.parse(JSON.stringify( mockSearchResult));
+    const cloneResult = JSON.parse(JSON.stringify(mockSearchResult));
     cloneResult.list.context.facets[3].buckets.push(mockContentSizeResponseBucket);
     return cloneResult;
 };

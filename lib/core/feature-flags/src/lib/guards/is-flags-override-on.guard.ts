@@ -18,11 +18,10 @@
 import { Inject, Injectable, Optional, inject } from '@angular/core';
 import { FlagsOverrideToken } from '../interfaces/features.interface';
 
-
 export const isFlagsOverrideOn = () => () => inject(FlagsOverrideToken) ?? false;
 
 @Injectable({ providedIn: 'root' })
-export class IsFlagsOverrideOn  {
+export class IsFlagsOverrideOn {
     constructor(@Optional() @Inject(FlagsOverrideToken) private devToolsToken: boolean) {}
 
     canMatch(): boolean {
