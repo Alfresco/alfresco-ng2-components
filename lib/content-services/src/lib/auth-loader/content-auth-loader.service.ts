@@ -21,22 +21,15 @@ import { take } from 'rxjs/operators';
 
 @Injectable()
 export class ContentAuthLoaderService {
-
-    constructor(
-        private readonly basicAlfrescoAuthService: BasicAlfrescoAuthService,
-        private readonly authService: AuthenticationService
-    ) {
-    }
+    constructor(private readonly basicAlfrescoAuthService: BasicAlfrescoAuthService, private readonly authService: AuthenticationService) {}
 
     init(): void {
-        this.authService.onLogin
-            .pipe(take(1))
-            .subscribe({
-                next: async () => {
-                    if (this.authService.isOauth() && (this.authService.isALLProvider() || this.authService.isECMProvider())) {
-                        await this.basicAlfrescoAuthService.requireAlfTicket();
-                    }
+        this.authService.onLogin.pipe(take(1)).subscribe({
+            next: async () => {
+                if (this.authService.isOauth() && (this.authService.isALLProvider() || this.authService.isECMProvider())) {
+                    await this.basicAlfrescoAuthService.requireAlfTicket();
                 }
-            });
+            }
+        });
     }
 }

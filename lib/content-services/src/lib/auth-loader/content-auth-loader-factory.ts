@@ -17,10 +17,8 @@
 
 import { ContentAuthLoaderService } from './content-auth-loader.service';
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 /**
  * Create a content auth factory
- *
  * @param authLoaderService service dependency
  * @returns factory function
  */

@@ -30,7 +30,6 @@ export class PreferencesApi extends BaseApi {
      *
      * Gets a specific preference for person **personId**.
      * You can use the -me- string in place of <personId> to specify the currently authenticated user.
-     *
      * @param personId The identifier of a person.
      * @param preferenceName The name of the preference.
      * @param opts Optional parameters
@@ -63,7 +62,6 @@ export class PreferencesApi extends BaseApi {
      * Note that each preference consists of an **id** and a **value**.
      *
      * The **value** can be of any JSON type.
-     *
      * @param personId The identifier of a person.
      * @param opts Optional parameters
      * @returns Promise<PreferencePaging>

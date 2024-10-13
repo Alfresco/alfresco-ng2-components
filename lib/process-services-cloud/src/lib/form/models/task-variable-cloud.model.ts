@@ -28,6 +28,6 @@ export class TaskVariableCloud {
     }
 
     hasValue(obj: TaskVariableCloud): boolean {
-        return typeof obj.value !== undefined && obj.value !== null;
+        return obj.value !== undefined && obj.value !== null;
     }
 }

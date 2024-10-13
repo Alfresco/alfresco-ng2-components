@@ -44,7 +44,6 @@ describe('SearchLogicalFilterComponent', () => {
 
     /**
      * Get search input elements
-     *
      * @returns list of native elements
      */
     function getInputs(): HTMLInputElement[] {
@@ -53,7 +52,6 @@ describe('SearchLogicalFilterComponent', () => {
 
     /**
      * Get input label elements
-     *
      * @returns list of labels
      */
     function getInputsLabels(): string[] {
@@ -62,7 +60,6 @@ describe('SearchLogicalFilterComponent', () => {
 
     /**
      * Enters a new phrase
-     *
      * @param value new value
      * @param index value index
      */

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { FormFieldModel } from './form-field.model';
 import { FormWidgetModel } from './form-widget.model';
@@ -23,7 +23,6 @@ import { ContainerColumnModel } from './container-column.model';
 import { FormFieldTypes } from './form-field-types';
 
 export class ContainerModel extends FormWidgetModel {
-
     field: FormFieldModel;
 
     readonly columns: ContainerColumnModel[] = [];

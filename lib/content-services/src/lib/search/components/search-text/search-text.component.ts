@@ -51,7 +51,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     displayValue$: Subject<string> = new Subject<string>();
 
     ngOnInit() {
-        if (this.context && this.settings && this.settings.pattern) {
+        if (this.context && this.settings?.pattern) {
             const pattern = new RegExp(this.settings.pattern, 'g');
             const match = pattern.exec(this.context.queryFragments[this.id] || '');
             if (this.settings.allowUpdateOnChange !== undefined && this.settings.allowUpdateOnChange !== null) {

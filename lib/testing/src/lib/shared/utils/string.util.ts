@@ -16,7 +16,6 @@
  */
 
 export class StringUtil {
-
     static generatePasswordString(length: number = 8): string {
         let text = '';
         const lowerCaseLimit = Math.floor(length / 2);
@@ -28,7 +27,6 @@ export class StringUtil {
 
     /**
      * Generates a random string.
-     *
      * @param length If this parameter is not provided the length is set to 8 by default.
      * @returns random string
      */
@@ -38,7 +36,6 @@ export class StringUtil {
 
     /**
      * Generates a random lowercase string.
-     *
      * @param length If this parameter is not provided the length is set to 8 by default.
      * @returns random string
      */
@@ -48,7 +45,6 @@ export class StringUtil {
 
     /**
      * Generates a random email address following the format: abcdef@activiti.test.com
-     *
      * @param domain email domain
      * @param length email length
      * @returns email address
@@ -61,7 +57,6 @@ export class StringUtil {
 
     /**
      * Generates a random string - digits only.
-     *
      * @param length If this parameter is not provided the length is set to 8 by default.
      * @returns random string
      */
@@ -71,7 +66,6 @@ export class StringUtil {
 
     /**
      * Generates a random string - non-latin characters only.
-     *
      * @param length If this parameter is not provided the length is set to 3 by default.
      * @returns random string
      */
@@ -81,7 +75,6 @@ export class StringUtil {
 
     /**
      * Generates a random string.
-     *
      * @param length If this parameter is not provided the length is set to 8 by default.
      * @param charSet to use
      * @returns random string
@@ -98,14 +91,13 @@ export class StringUtil {
 
     /**
      * Generates a sequence of files with name: baseName + index + extension (e.g.) baseName1.txt, baseName2.txt, ...
-     *
      * @param startIndex start index
      * @param endIndex end index
      * @param baseName  the base name of all files
      * @param extension the extension of the file
      * @returns list of file names
      */
-    static generateFilesNames(startIndex: number, endIndex: number, baseName: string, extension: string): string [] {
+    static generateFilesNames(startIndex: number, endIndex: number, baseName: string, extension: string): string[] {
         const fileNames: string[] = [];
         for (let i = startIndex; i <= endIndex; i++) {
             fileNames.push(baseName + i + extension);
@@ -115,7 +107,6 @@ export class StringUtil {
 
     /**
      * Generates a random name for a process
-     *
      * @param length  {int} If this parameter is not provided the length is set to 5 by default.
      * @returns process name
      */
@@ -125,12 +116,10 @@ export class StringUtil {
 
     /**
      * Generates a random name for a user task
-     *
      * @param length If this parameter is not provided the length is set to 5 by default.
      * @returns task name
      */
-     static generateUserTaskName(length: number = 5): string {
+    static generateUserTaskName(length: number = 5): string {
         return 'userTask_' + StringUtil.generateRandomString(length);
     }
-
 }

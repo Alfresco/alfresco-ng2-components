@@ -88,10 +88,7 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    protected constructor(
-        protected appConfig: AppConfigService,
-        protected alfrescoApiService: AlfrescoApiService
-    ) {
+    protected constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
         this.resetToDefaults();
     }
 
@@ -179,7 +176,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Adds a facet bucket to a field.
-     *
      * @param field The target field
      * @param bucket Bucket to add
      */
@@ -196,7 +192,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets the buckets currently added to a field
-     *
      * @param field The target fields
      * @returns Bucket array
      */
@@ -206,7 +201,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Removes an existing bucket from a field.
-     *
      * @param field The target field
      * @param bucket Bucket to remove
      */
@@ -219,7 +213,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Adds a filter query to the current query.
-     *
      * @param query Query string to add
      */
     addFilterQuery(query: string): void {
@@ -233,7 +226,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Removes an existing filter query.
-     *
      * @param query The query to remove
      */
     removeFilterQuery(query: string): void {
@@ -244,7 +236,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets a facet query by label.
-     *
      * @param label Label of the query
      * @returns Facet query data
      */
@@ -260,7 +251,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets a facet field by label.
-     *
      * @param label Label of the facet field
      * @returns Facet field data
      */
@@ -286,7 +276,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Builds the current query and triggers the `updated` event.
-     *
      * @param queryBody query settings
      */
     update(queryBody?: SearchRequest): void {
@@ -296,7 +285,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Builds and executes the current query.
-     *
      * @param queryBody query settings
      */
     async execute(queryBody?: SearchRequest) {
@@ -332,7 +320,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Builds the current query.
-     *
      * @returns The finished query
      */
     buildQuery(): SearchRequest {
@@ -373,7 +360,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets the primary sorting definition.
-     *
      * @returns The primary sorting definition
      */
     getPrimarySorting(): SearchSortingDefinition {
@@ -385,7 +371,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets all pre-configured sorting options that users can choose from.
-     *
      * @returns Pre-configured sorting options
      */
     getSortingOptions(): SearchSortingDefinition[] {
@@ -394,7 +379,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Gets the query group.
-     *
      * @param query Target query
      * @returns Query group
      */
@@ -404,7 +388,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Checks if FacetQueries has been defined
-     *
      * @returns True if defined, false otherwise
      */
     get hasFacetQueries(): boolean {
@@ -413,7 +396,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Checks if FacetIntervals has been defined
-     *
      * @returns True if defined, false otherwise
      */
     get hasFacetIntervals(): boolean {
@@ -461,9 +443,9 @@ export abstract class BaseQueryBuilderService {
                                         end: set.end,
                                         startInclusive: set.startInclusive,
                                         endInclusive: set.endInclusive
-                                    }) as any
+                                    } as any)
                             )
-                        }) as any
+                        } as any)
                 )
             };
         }
@@ -522,7 +504,7 @@ export abstract class BaseQueryBuilderService {
                             limit: facet.limit,
                             offset: facet.offset,
                             prefix: facet.prefix
-                        }) as any
+                        } as any)
                 )
             };
         }
@@ -532,7 +514,6 @@ export abstract class BaseQueryBuilderService {
 
     /**
      * Encloses a label name with double quotes if it contains whitespace characters.
-     *
      * @param configLabel Original label text
      * @returns Label, possibly with quotes if it contains spaces
      */

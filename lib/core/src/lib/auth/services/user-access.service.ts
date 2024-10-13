@@ -27,9 +27,7 @@ export class UserAccessService {
     private globalAccess: string[];
     private applicationAccess: ApplicationAccessModel[];
 
-    constructor(private jwtHelperService: JwtHelperService,
-                private appConfigService: AppConfigService) {
-    }
+    constructor(private jwtHelperService: JwtHelperService, private appConfigService: AppConfigService) {}
 
     fetchUserAccess() {
         if (this.hasRolesInRealmAccess()) {
@@ -69,7 +67,6 @@ export class UserAccessService {
 
     /**
      * Checks for global roles access.
-     *
      * @param rolesToCheck List of the roles to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
@@ -93,15 +90,16 @@ export class UserAccessService {
 
     /**
      * Checks for global roles access.
-     *
      * @param appName The app name
      * @param rolesToCheck List of the roles to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
     hasApplicationAccess(appName: string, rolesToCheck: string[]): boolean {
         if (rolesToCheck?.length > 0) {
-            const appAccess = this.hasRolesInRealmAccess() ? this.applicationAccess[appName] : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
-            return appAccess ? appAccess.roles.some(appRole => rolesToCheck.includes(appRole)) : false;
+            const appAccess = this.hasRolesInRealmAccess()
+                ? this.applicationAccess[appName]
+                : this.applicationAccess.find((app: ApplicationAccessModel) => app.name === appName);
+            return appAccess ? appAccess.roles.some((appRole) => rolesToCheck.includes(appRole)) : false;
         }
         return true;
     }

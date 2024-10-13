@@ -22,7 +22,6 @@ import { Logger } from '../../utils/logger';
 import { browser } from 'protractor';
 
 export class GroupIdentityService {
-
     api: ApiService;
 
     constructor(api: ApiService) {
@@ -75,9 +74,11 @@ export class GroupIdentityService {
 
                 Logger.log(`Data ${JSON.stringify(data)}`);
 
-                return data[0];                Logger.error('Group not found');
-
+                return data[0];
+                Logger.error('Group not found');
             } catch (error) {
+                Logger.error('Group not found');
+                return null;
             }
         };
 
@@ -98,11 +99,11 @@ export class GroupIdentityService {
 
     /**
      * Add client roles.
-     *
      * @param groupId ID of the target group
      * @param clientId ID of the client
      * @param roleId ID of the clientRole
      * @param roleName of the clientRole
+     * @returns Promise
      */
     async addClientRole(groupId: string, clientId: string, roleId: string, roleName: string): Promise<any> {
         const path = `/groups/${groupId}/role-mappings/clients/${clientId}`;
@@ -122,7 +123,6 @@ export class GroupIdentityService {
 
     /**
      * Gets the client ID using the app name.
-     *
      * @param applicationName Name of the app
      * @returns client ID string
      */
@@ -135,5 +135,4 @@ export class GroupIdentityService {
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data[0].id;
     }
-
 }

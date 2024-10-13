@@ -28,7 +28,6 @@ import { materialLocators } from '../../public-api';
 export type StatusType = 'All' | 'Created' | 'Assigned' | 'Cancelled' | 'Suspended' | 'Completed';
 
 export class EditTaskFilterCloudComponentPage {
-
     rootElement = $$('adf-cloud-edit-task-filter').first();
     customiseFilter = $('#adf-edit-task-filter-sub-title-id');
     assignee = $('input[data-automation-id="adf-cloud-edit-task-property-assignee"]');
@@ -51,21 +50,33 @@ export class EditTaskFilterCloudComponentPage {
     sortDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-task-property-sort']`));
     priorityDropdown = new DropdownPage(this.priority);
     orderDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-task-property-order']`));
-    completedDateDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`));
+    completedDateDropdown = new DropdownPage(
+        $(`${materialLocators.Select.root}[data-automation-id="adf-cloud-edit-process-property-completedDateRange"]`)
+    );
     assignmentDropdown = new DropdownPage($(`.adf-task-assignment-filter`));
-    processDefinitionNameDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id="adf-cloud-edit-task-property-processDefinitionName"]`));
-    createdDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-createdDateRange']`));
-    createdDateRangeWithin = new DatePickerPage($(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-process-property-date-range-createdDateRange']`));
+    processDefinitionNameDropdown = new DropdownPage(
+        $(`${materialLocators.Select.root}[data-automation-id="adf-cloud-edit-task-property-processDefinitionName"]`)
+    );
+    createdDateRangeDropdown = new DropdownPage(
+        $(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-createdDateRange']`)
+    );
+    createdDateRangeWithin = new DatePickerPage(
+        $(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-process-property-date-range-createdDateRange']`)
+    );
     dueDateRangeDropdown = new DropdownPage($(`${materialLocators.Select.root}[data-automation-id='adf-cloud-edit-process-property-dueDateRange']`));
-    dueDateRangeWithin = new DatePickerPage($(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-picker-date-range-dueDateRange']`));
+    dueDateRangeWithin = new DatePickerPage(
+        $(`${materialLocators.Datepicker.toggle.root}[data-automation-id='adf-cloud-edit-picker-date-range-dueDateRange']`)
+    );
 
     peopleCloudComponent = new PeopleCloudComponentPage();
     groupCloudComponent = new GroupCloudComponentPage();
 
-    dataTable = new DataTableComponentPage( $('adf-cloud-task-list'));
+    dataTable = new DataTableComponentPage($('adf-cloud-task-list'));
 
     private expansionPanelExtended = this.rootElement.$(`${materialLocators.Expansion.panel.header.root}${materialLocators.Expanded.class}`);
-    private content = this.rootElement.$(`div${materialLocators.Expansion.panel.content.class}[style*="visible"]`);
+    private content = this.rootElement.$(
+        `${materialLocators.Expansion.panel.root}${materialLocators.Expansion.panel.expanded} ${materialLocators.Expansion.panel.content.class}`
+    );
 
     async isFilterDisplayed(): Promise<boolean> {
         return BrowserVisibility.waitUntilElementIsVisible(this.filter);
@@ -307,5 +318,4 @@ export class EditTaskFilterCloudComponentPage {
     async getProcessInstanceId(): Promise<string> {
         return BrowserActions.getInputValue(this.processInstanceId);
     }
-
 }

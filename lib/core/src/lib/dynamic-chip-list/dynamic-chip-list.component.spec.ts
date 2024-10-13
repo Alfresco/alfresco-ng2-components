@@ -46,7 +46,6 @@ describe('DynamicChipListComponent', () => {
 
     /**
      * Find 'More' button
-     *
      * @returns native element
      */
     function findViewMoreButton(): HTMLButtonElement {
@@ -55,7 +54,6 @@ describe('DynamicChipListComponent', () => {
 
     /**
      * Get the chips
-     *
      * @returns native element list
      */
     function findChips(): NodeListOf<Element> {
@@ -163,7 +161,6 @@ describe('DynamicChipListComponent', () => {
 
         /**
          * Render chips
-         *
          * @param chipsToRender chips to render
          */
         async function renderChips(chipsToRender?: Chip[]) {
@@ -182,7 +179,7 @@ describe('DynamicChipListComponent', () => {
             element.style.maxWidth = '309px';
         });
 
-        afterEach(() =>{
+        afterEach(() => {
             fixture.destroy();
         });
 
@@ -316,6 +313,16 @@ describe('DynamicChipListComponent', () => {
             resizeCallback([], null);
             fixture.detectChanges();
             expect(viewMoreButton.hidden).toBeTrue();
+        }));
+
+        it('should not render View more button if there are no chips', fakeAsync(() => {
+            renderChips();
+            component.chips = [];
+            tick();
+            fixture.detectChanges();
+
+            expect(component.chipsToDisplay).toEqual([]);
+            expect(findViewMoreButton().hidden).toBeTrue();
         }));
     });
 });

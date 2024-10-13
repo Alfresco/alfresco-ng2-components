@@ -30,14 +30,8 @@ describe('TranslateLoader', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                AuthModule.forRoot({ useHash: true }),
-                TranslateModule.forRoot(),
-                CoreModule.forRoot()
-            ],
-            providers: [
-                TranslationService
-            ]
+            imports: [AuthModule.forRoot({ useHash: true }), TranslateModule.forRoot(), CoreModule.forRoot()],
+            providers: [TranslationService]
         });
         translationService = TestBed.inject(TranslationService);
         customLoader = translationService.translate.currentLoader as TranslateLoaderService;

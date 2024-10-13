@@ -142,7 +142,6 @@ export class DataTableComponentPage {
 
     /**
      * Check the list is sorted.
-     *
      * @param sortOrder 'ASC' if the list is await expected to be sorted ascending and 'DESC' for descending
      * @param columnTitle titleColumn column
      * @param listType 'string' for string typed lists and 'number' for number typed (int, float) lists
@@ -278,7 +277,6 @@ export class DataTableComponentPage {
 
     /**
      *  Sort the list by name column.
-     *
      * @param sortOrder 'ASC' to sort the list ascendant and 'DESC' for descendant
      * @param titleColumn column title
      */
@@ -388,7 +386,9 @@ export class DataTableComponentPage {
                     this.rootElement.element(by.tagName(materialLocators.Progress.spinner.root)),
                     MAX_LOADING_TIME
                 );
-            } catch (error) {}
+            } catch (error) {
+                Logger.error('Loading spinner is not present');
+            }
 
             if (await this.isEmpty()) {
                 Logger.log('empty page');
@@ -414,7 +414,9 @@ export class DataTableComponentPage {
             try {
                 Logger.log('wait datatable loading spinner is present');
                 await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName(materialLocators.Progress.bar.root)));
-            } catch (error) {}
+            } catch (error) {
+                Logger.error('Infinite pagination spinner is not present');
+            }
             if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {

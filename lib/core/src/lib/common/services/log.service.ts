@@ -29,7 +29,7 @@ import { Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class LogService {
-    get currentLogLevel() {
+    get currentLogLevel(): number {
         const configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
 
         if (configLevel) {
@@ -47,7 +47,6 @@ export class LogService {
 
     /**
      * Logs a message at the "ERROR" level.
-     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -61,7 +60,6 @@ export class LogService {
 
     /**
      * Logs a message at the "DEBUG" level.
-     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -75,7 +73,6 @@ export class LogService {
 
     /**
      * Logs a message at the "INFO" level.
-     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -89,7 +86,6 @@ export class LogService {
 
     /**
      * Logs a message at any level from "TRACE" upwards.
-     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -103,7 +99,6 @@ export class LogService {
 
     /**
      * Logs a message at the "TRACE" level.
-     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -117,7 +112,6 @@ export class LogService {
 
     /**
      * Logs a message at the "WARN" level.
-     *
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
@@ -131,7 +125,6 @@ export class LogService {
 
     /**
      * Logs a message if a boolean test fails.
-     *
      * @param test Test value (typically a boolean expression)
      * @param message Message to show if test is false
      * @param optionalParams Interpolation values for the message in "printf" format
@@ -146,7 +139,6 @@ export class LogService {
 
     /**
      * Starts an indented group of log messages.
-     *
      * @param groupTitle Title shown at the start of the group
      * @param optionalParams Interpolation values for the title in "printf" format
      */
@@ -167,11 +159,10 @@ export class LogService {
 
     /**
      * Converts a log level name string into its numeric equivalent.
-     *
      * @param level Level name
      * @returns Numeric log level
      */
-    getLogLevel(level: string): LogLevelsEnum {
+    getLogLevel(level: string): number {
         const referencedLevel = logLevels.find((currentLevel: any) => currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase());
 
         return referencedLevel ? referencedLevel.level : 5;
@@ -179,7 +170,6 @@ export class LogService {
 
     /**
      * Triggers notification callback for log messages.
-     *
      * @param text Message text
      * @param logLevel Log level for the message
      */

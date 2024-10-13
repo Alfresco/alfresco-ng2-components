@@ -29,7 +29,6 @@ import * as Locales from 'date-fns/locale';
     name: 'adfTimeAgo'
 })
 export class TimeAgoPipe implements PipeTransform, OnDestroy {
-
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_TIME_FORMAT = 'dd/MM/yyyy HH:mm';
 
@@ -38,28 +37,25 @@ export class TimeAgoPipe implements PipeTransform, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        public userPreferenceService: UserPreferencesService,
-        public appConfig: AppConfigService
-    ) {
+    constructor(public userPreferenceService: UserPreferencesService, public appConfig: AppConfigService) {
         this.userPreferenceService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => {
+            .subscribe((locale) => {
                 this.defaultLocale = locale || TimeAgoPipe.DEFAULT_LOCALE;
             });
         this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
     }
 
     transform(value: Date, locale?: string) {
-        if (value !== null && value !== undefined ) {
+        if (value !== null && value !== undefined) {
             const actualLocale = locale || this.defaultLocale;
             const diff = differenceInDays(new Date(), new Date(value));
-            if ( diff > 7) {
+            if (diff > 7) {
                 const datePipe: DatePipe = new DatePipe(actualLocale);
                 return datePipe.transform(value, this.defaultDateTimeFormat);
             } else {
-                return formatDistance(new Date(value) , new Date(), { addSuffix: true , locale: Locales[actualLocale] });
+                return formatDistance(new Date(value), new Date(), { addSuffix: true, locale: Locales[actualLocale] });
             }
         }
         return '';

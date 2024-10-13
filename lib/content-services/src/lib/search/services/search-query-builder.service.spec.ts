@@ -30,9 +30,7 @@ describe('SearchQueryBuilder (runtime config)', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ContentTestingModule],
-            providers: [
-                { provide: ADF_SEARCH_CONFIGURATION, useValue: runtimeConfig }
-            ]
+            providers: [{ provide: ADF_SEARCH_CONFIGURATION, useValue: runtimeConfig }]
         });
     });
 
@@ -50,7 +48,7 @@ describe('SearchQueryBuilder (runtime config)', () => {
     });
 
     it('should prioritise runtime config over configuration file', () => {
-         const config: SearchConfiguration = {
+        const config: SearchConfiguration = {
             categories: [{ id: 'cat1', enabled: true } as any, { id: 'cat2', enabled: true } as any],
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };

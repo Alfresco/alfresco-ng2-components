@@ -24,19 +24,16 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
     providedIn: 'root'
 })
 export class DownloadZipService {
-
     private _downloadsApi: DownloadsApi;
     get downloadsApi(): DownloadsApi {
         this._downloadsApi = this._downloadsApi ?? new DownloadsApi(this.apiService.getInstance());
         return this._downloadsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {
-    }
+    constructor(private apiService: AlfrescoApiService) {}
 
     /**
      * Creates a new download.
-     *
      * @param payload Object containing the node IDs of the items to add to the ZIP file
      * @returns Status object for the download
      */
@@ -46,7 +43,6 @@ export class DownloadZipService {
 
     /**
      * Gets status information for a download node.
-     *
      * @param downloadId ID of the download node
      * @returns Status object for the download
      */
@@ -56,7 +52,6 @@ export class DownloadZipService {
 
     /**
      * Cancels a download.
-     *
      * @param downloadId ID of the target download node
      */
     cancelDownload(downloadId: string) {

@@ -17,10 +17,8 @@
 
 import { VersionCompatibilityService } from './version-compatibility.service';
 
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 /**
  * Create a version compatibility factory
- *
  * @param versionCompatibilityService service dependency
  * @returns factory function
  */

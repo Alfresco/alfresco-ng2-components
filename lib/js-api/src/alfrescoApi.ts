@@ -273,7 +273,6 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**
      * login Alfresco API
-     *
      * @param  username Username to login
      * @param  password Password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
@@ -352,7 +351,6 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**
      * login Tickets
-     *
      * @param ticketEcm alfresco ticket
      * @param ticketBpm alfresco ticket
      */
@@ -527,7 +525,6 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
 
     /**
      * Set the current Ticket
-     *
      * @param ticketEcm ecm ticket
      * @param ticketBpm bpm ticket
      */

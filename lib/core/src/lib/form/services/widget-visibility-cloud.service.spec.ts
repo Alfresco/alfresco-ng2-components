@@ -499,7 +499,7 @@ describe('WidgetVisibilityCloudService', () => {
                         value: null,
                         numberOfColumns: 2,
                         fields: {
-                            1: [
+                            '1': [
                                 {
                                     fieldType: 'FormFieldRepresentation',
                                     id: 'FIELD_FORM_EMPTY',
@@ -613,7 +613,7 @@ describe('WidgetVisibilityCloudService', () => {
                         value: null,
                         numberOfColumns: 2,
                         fields: {
-                            1: [
+                            '1': [
                                 {
                                     id: 'radioboxField',
                                     name: 'radioboxField test',
@@ -777,7 +777,7 @@ describe('WidgetVisibilityCloudService', () => {
                         value: null,
                         numberOfColumns: 2,
                         fields: {
-                            1: [
+                            '1': [
                                 {
                                     id: 'CheckboxOne',
                                     name: 'CheckboxOne',
@@ -797,7 +797,7 @@ describe('WidgetVisibilityCloudService', () => {
                                     visibilityCondition: null
                                 }
                             ],
-                            2: [
+                            '2': [
                                 {
                                     id: 'CheckboxThree',
                                     name: 'CheckboxThree',
