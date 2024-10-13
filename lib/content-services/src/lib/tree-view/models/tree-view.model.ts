@@ -18,7 +18,6 @@
 import { NodeEntry } from '@alfresco/js-api';
 
 export class TreeBaseNode {
-
     name: string;
     nodeId: string;
     level: number;
@@ -31,6 +30,5 @@ export class TreeBaseNode {
         this.level = level ? level : 0;
         this.expandable = expandable ? expandable : true;
         this.node = nodeEntry ? new NodeEntry(nodeEntry) : undefined;
-
     }
 }

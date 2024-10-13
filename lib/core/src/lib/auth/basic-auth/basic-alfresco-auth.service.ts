@@ -93,7 +93,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Logs the user in.
-     *
      * @param username Username for the login
      * @param password Password for the login
      * @param rememberMe Stores the user's login details if true
@@ -115,7 +114,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * login Alfresco API
-     *
      * @param username username to login
      * @param password password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
@@ -174,7 +172,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Checks whether the "remember me" cookie was set or not.
-     *
      * @returns True if set, false otherwise
      */
     isRememberMeSet(): boolean {
@@ -183,7 +180,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Saves the "remember me" cookie as either a long-life cookie or a session cookie.
-     *
      * @param rememberMe Enables a long-life cookie
      */
     saveRememberMeCookie(rememberMe: boolean): void {
@@ -254,6 +250,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * logout Alfresco API
+     * @returns A promise that returns {logout} if resolved and {error} if rejected.
      */
     async logout(): Promise<any> {
         if (this.isBPMProvider()) {
@@ -295,7 +292,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Gets the URL to redirect to after login.
-     *
      * @returns The redirect URL
      */
     getRedirect(): string {
@@ -335,7 +331,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Does kerberos enabled?
-     *
      * @returns True if enabled, false otherwise
      */
     isKerberosEnabled(): boolean {
@@ -362,7 +357,6 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
 
     /**
      * Gets the BPM ticket from the Storage in Base 64 format.
-     *
      * @param requestUrl the request url
      * @returns The ticket or `null` if none was found
      */

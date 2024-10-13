@@ -33,7 +33,6 @@ export class PredictionService {
 
     /**
      * Get predictions for a given node
-     *
      * @param nodeId The identifier of node.
      * @returns Observable<PredictionPaging>
      */
@@ -43,7 +42,6 @@ export class PredictionService {
 
     /**
      * Review a prediction
-     *
      * @param predictionId The identifier of prediction.
      * @param reviewStatus Review status to apply.
      * @returns Observable<void>

@@ -24,15 +24,12 @@ import { Component } from '@angular/core';
         <span id="update-notification" *ngIf="updatedNode"> NODE UPDATED </span>
     `
 })
-
 export class SimpleInheritedPermissionTestComponent {
-
     message: string = '';
     nodeId: string = 'fake-node-id';
     updatedNode: boolean = false;
 
-    constructor() {
-    }
+    constructor() {}
 
     onUpdate(node: any) {
         this.updatedNode = node.permissions?.isInheritanceEnabled ?? false;

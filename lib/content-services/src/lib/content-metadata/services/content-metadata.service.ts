@@ -30,15 +30,15 @@ import { ContentTypePropertiesService } from './content-type-property.service';
     providedIn: 'root'
 })
 export class ContentMetadataService {
-
     error = new Subject<{ statusCode: number; message: string }>();
 
-    constructor(private basicPropertiesService: BasicPropertiesService,
-                private contentMetadataConfigFactory: ContentMetadataConfigFactory,
-                private propertyGroupTranslatorService: PropertyGroupTranslatorService,
-                private propertyDescriptorsService: PropertyDescriptorsService,
-                private contentTypePropertyService: ContentTypePropertiesService) {
-    }
+    constructor(
+        private basicPropertiesService: BasicPropertiesService,
+        private contentMetadataConfigFactory: ContentMetadataConfigFactory,
+        private propertyGroupTranslatorService: PropertyGroupTranslatorService,
+        private propertyDescriptorsService: PropertyDescriptorsService,
+        private contentTypePropertyService: ContentTypePropertiesService
+    ) {}
 
     getBasicProperties(node: Node): Observable<CardViewItem[]> {
         return of(this.basicPropertiesService.getProperties(node));
@@ -63,9 +63,7 @@ export class ContentMetadataService {
                 contentMetadataConfig = this.contentMetadataConfigFactory.createConfig(preset);
             }
 
-            const groupNames = node.aspectNames
-                .concat(node.nodeType)
-                .filter((groupName) => contentMetadataConfig.isGroupAllowed(groupName));
+            const groupNames = node.aspectNames.concat(node.nodeType).filter((groupName) => contentMetadataConfig.isGroupAllowed(groupName));
 
             if (groupNames.length > 0) {
                 groupedProperties = this.propertyDescriptorsService.load(groupNames).pipe(
@@ -74,7 +72,8 @@ export class ContentMetadataService {
                             () => contentMetadataConfig.isIncludeAllEnabled(),
                             of(contentMetadataConfig.appendAllPreset(groups).concat(contentMetadataConfig.reorganiseByConfig(groups))),
                             of(contentMetadataConfig.reorganiseByConfig(groups))
-                        )),
+                        )
+                    ),
                     map((groups) => contentMetadataConfig.filterExcludedPreset(groups)),
                     map((groups) => this.filterEmptyPreset(groups)),
                     map((groups) => this.setTitleToNameIfNotSet(groups)),
@@ -93,7 +92,7 @@ export class ContentMetadataService {
         return propertyGroups;
     }
 
-    filterEmptyPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[]  {
+    filterEmptyPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         return propertyGroups.filter((props) => props.properties.length);
     }
 }

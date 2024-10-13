@@ -85,7 +85,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     /**
      * Default top list.
-     *
      * @param tags tags which should be displayed as default tags for top list.
      */
     @Input()
@@ -106,7 +105,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     /**
      * Decides if input for tags creation/searching should be visible. When input is hidden then panel of existing tags is hidden as well.
-     *
      * @param tagNameControlVisible true if input should be visible, false otherwise.
      */
     @Input()
@@ -273,7 +271,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     /**
      * Remove tag from top list. In case that tag was part of search result then that tag is moved to bottom list
      * (list of existing tags) after removing so user can reselect it again later.
-     *
      * @param tag tag's name which should be removed from top list.
      */
     removeTag(tag: string): void {
@@ -287,7 +284,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     /**
      * Called when user selects any tag from list of existing tags. It moves tag from existing tags list to top list.
-     *
      * @param selectedTag changes
      */
     addExistingTagToTagsToAssign(selectedTag: TagEntry): void {
@@ -302,7 +298,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
 
     /**
      * Checks if component is in Create mode.
-     *
      * @returns `true` if `Create` mode, `false` otherwise.
      */
     isOnlyCreateMode(): boolean {

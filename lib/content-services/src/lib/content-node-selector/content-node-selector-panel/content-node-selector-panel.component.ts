@@ -441,7 +441,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
-        if (this._excludeSiteContent?.length && entry && entry.properties?.['st:componentId']) {
+        if (this._excludeSiteContent?.length && entry?.properties?.['st:componentId']) {
             const excludedItem = this._excludeSiteContent.find((id: string) => entry.properties['st:componentId'] === id);
             return !!excludedItem;
         }
@@ -450,7 +450,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Updates the site attribute and starts a new search
-     *
      * @param chosenSite SiteEntry to search within
      */
     siteChanged(chosenSite: SiteEntry): void {
@@ -462,7 +461,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Get current breadcrumb folder node
-     *
      * @returns the actually selected|entered folder node or null in case of searching for the breadcrumb
      */
     get breadcrumbFolderNode(): Node | null {
@@ -479,7 +477,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Prepares the dialog for a new search
-     *
      * @param searchRequest request options
      */
     prepareDialogForNewSearch(searchRequest: SearchRequest): void {
@@ -552,7 +549,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Show the results of the search
-     *
      * @param results Search results
      */
     private showSearchResults(results: NodePaging): void {
@@ -565,7 +561,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
-     *
      * @param $event node event
      */
     onFolderChange($event: NodeEntryEvent): void {
@@ -580,7 +575,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Attempts to set the currently loaded node
-     *
      * @param nodePaging pagination model
      */
     onFolderLoaded(nodePaging: NodePaging): void {
@@ -596,7 +590,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Updates pagination.hasMoreItems to false after filtering only folders during 'COPY' and 'MOVE' action
-     *
      * @param nodePaging pagination model
      */
     updatePaginationAfterRowFilter(nodePaging: NodePaging): void {
@@ -607,7 +600,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Returns whether breadcrumb has to be shown or not
-     *
      * @returns `true` if needs to show the breadcrumb, otherwise `false`
      */
     showBreadcrumbs() {
@@ -616,7 +608,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Loads the next batch of search results
-     *
      * @param pagination Pagination object
      */
     getNextPageOfSearch(pagination: Pagination): void {
@@ -631,7 +622,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * Selects node as chosen if it has the right permission, clears the selection otherwise
-     *
      * @param entry node entry
      */
     private attemptNodeSelection(entry: Node): void {
@@ -649,7 +639,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /**
      * It filters and emit the selection coming from the document list
-     *
      * @param nodesEntries selected nodes
      */
     onCurrentSelection(nodesEntries: NodeEntry[]): void {
