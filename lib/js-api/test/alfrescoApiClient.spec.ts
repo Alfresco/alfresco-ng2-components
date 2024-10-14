@@ -16,7 +16,7 @@
  */
 
 import assert from 'assert';
-import { AlfrescoApi, DateAlfresco } from '../src';
+import { AlfrescoApi, AlfrescoApiClient, DateAlfresco } from '../src';
 import { EcmAuthMock } from './mockObjects';
 
 describe('Alfresco Core API Client', () => {
@@ -74,6 +74,39 @@ describe('Alfresco Core API Client', () => {
 
         it('should convert dates with a timezone with hours only', () => {
             assert.equal(equalTime(DateAlfresco.parseDate('2015-11-17T03:33:17+02'), new Date(Date.UTC(2015, 10, 17, 1, 33, 17))), true);
+        });
+    });
+
+    describe('Alfresco Api Client getAlfTicket', () => {
+        // Tickets
+        const alfTicketParam = '&alf_ticket=';
+        const mockArgTicket = 'arg-ticket';
+        const mockStorageTicket = 'storage-ticket';
+        const mockConfigTicket = 'config-ticket';
+
+        // Create a mock storage
+        const storageContent = { 'ticket-ECM': mockStorageTicket };
+        const mockStorage = { getItem: (key: string) => storageContent[key] };
+
+        let alfrescoApiClient: AlfrescoApiClient;
+
+        beforeEach(() => {
+            // Create an instance of AlfrescoApiClient with storage and config
+            alfrescoApiClient = new AlfrescoApiClient();
+            alfrescoApiClient.storage = mockStorage as any;
+            alfrescoApiClient.config = { ticketEcm: mockConfigTicket };
+        });
+
+        it('should return the supplied ticket', () => {
+            const ticket = alfrescoApiClient.getAlfTicket(mockArgTicket);
+            const expectedResult = alfTicketParam + mockArgTicket;
+            assert.equal(ticket, expectedResult);
+        });
+
+        it('should return the ticket from storage', () => {
+            const ticket = alfrescoApiClient.getAlfTicket(undefined);
+            const expectedResult = alfTicketParam + mockStorageTicket;
+            assert.equal(ticket, expectedResult);
         });
     });
 });
