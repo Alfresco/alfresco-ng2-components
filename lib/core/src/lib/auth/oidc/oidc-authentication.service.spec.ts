@@ -65,7 +65,6 @@ describe('OidcAuthenticationService', () => {
                 { provide: OAuthService, useClass: MockOAuthService },
                 { provide: OAuthStorage, useValue: {} },
                 { provide: AUTH_MODULE_CONFIG, useValue: {} },
-                { provide: AuthService, useValue: {} }
             ]
         });
         service = TestBed.inject(OidcAuthenticationService);

@@ -30,7 +30,7 @@ describe('UserAccessService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [UserAccessService, { provide: JWT_STORAGE_SERVICE, useValue: StorageService }]
+            providers: [{ provide: JWT_STORAGE_SERVICE, useClass: StorageService }, UserAccessService]
         });
         userAccessService = TestBed.inject(UserAccessService);
         jwtHelperService = TestBed.inject(JwtHelperService);

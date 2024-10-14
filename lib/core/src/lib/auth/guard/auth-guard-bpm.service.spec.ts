@@ -27,6 +27,8 @@ import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { AuthGuardService } from './auth-guard.service';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { JWT_STORAGE_SERVICE } from '../public-api';
+import { StorageService } from '../../common';
 
 describe('AuthGuardService BPM', () => {
     let authGuard: Promise<boolean>;
@@ -45,6 +47,7 @@ describe('AuthGuardService BPM', () => {
             providers: [
                 AuthGuardService,
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+                { provide: JWT_STORAGE_SERVICE, useClass: StorageService },
                 {
                     provide: OidcAuthenticationService,
                     useValue: {
