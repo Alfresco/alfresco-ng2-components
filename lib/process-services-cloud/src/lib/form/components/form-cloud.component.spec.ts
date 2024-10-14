@@ -32,7 +32,9 @@ import {
     WidgetVisibilityService,
     provideTranslations,
     AuthModule,
-    FormFieldEvent
+    FormFieldEvent,
+    StorageService,
+    JWT_STORAGE_SERVICE
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -60,12 +62,12 @@ import { FormCloudRepresentation } from '../models/form-cloud-representation.mod
 import { FormCloudService } from '../services/form-cloud.service';
 import { DisplayModeService } from '../services/display-mode.service';
 import { FormCloudComponent } from './form-cloud.component';
-import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {
@@ -1472,7 +1474,7 @@ describe('Multilingual Form', () => {
                 CoreModule.forRoot(),
                 ProcessServicesCloudModule.forRoot()
             ],
-            providers: [provideTranslations('app', 'resources')]
+            providers: [{ provide: JWT_STORAGE_SERVICE, useClass: StorageService }, provideTranslations('app', 'resources')]
         });
         translateService = TestBed.inject(TranslateService);
         formCloudService = TestBed.inject(FormCloudService);
@@ -1545,7 +1547,8 @@ describe('retrieve metadata on submit', () => {
                 {
                     provide: VersionCompatibilityService,
                     useValue: {}
-                }
+                },
+                { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
             ]
         });
         const apiService = TestBed.inject(AlfrescoApiService);
