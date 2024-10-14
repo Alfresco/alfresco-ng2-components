@@ -250,14 +250,14 @@ export class AlfrescoApi implements Emitter, AlfrescoApiType {
     }
 
     ticketMismatchListeners() {
-        this.contentClient.off('ticket_mismatch', () => {});
-        this.processClient.off('ticket_mismatch', () => {});
+        this.contentClient?.off('ticket_mismatch', () => {});
+        this.processClient?.off('ticket_mismatch', () => {});
 
-        this.contentClient.on('ticket_mismatch', (error: any) => {
+        this.contentClient?.on('ticket_mismatch', (error: any) => {
             this.ticketMismatchHandler(error);
         });
 
-        this.processClient.on('ticket_mismatch', (error: any) => {
+        this.processClient?.on('ticket_mismatch', (error: any) => {
             this.ticketMismatchHandler(error);
         });
     }
