@@ -22,12 +22,12 @@
                 </span>
             </div>
             <span
-                *ngIf="counters$[filter.key]"
+                *ngIf="counters[filter.key]"
                 [attr.data-automation-id]="filter.key + '_filter-counter'"
                 class="adf-process-filters__entry-counter"
                 [class.adf-active]="isFilterUpdated(filter.key)"
                >
-                {{ counters$[filter.key] | async }}
+                {{ counters[filter.key] }}
             </span>
         </div>
     </button>

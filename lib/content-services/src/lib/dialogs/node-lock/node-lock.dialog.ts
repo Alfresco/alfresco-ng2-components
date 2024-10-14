@@ -74,7 +74,7 @@ export class NodeLockDialogComponent implements OnInit {
         const time = isTimeLock ? new Date(node.properties['cm:expiryDate']) : new Date();
 
         this.form = this.formBuilder.group({
-            isLocked: node.isLocked || false,
+            isLocked: !!node.properties['cm:lockType'] || node.isLocked,
             allowOwner: node.properties['cm:lockType'] === 'WRITE_LOCK',
             isTimeLock,
             time
@@ -113,6 +113,7 @@ export class NodeLockDialogComponent implements OnInit {
         this.toggleLock()
             .then((node: NodeEntry) => {
                 this.data.node.isLocked = this.form.value.isLocked;
+                this.data.node.properties = node.entry.properties;
                 this.dialog.close(node.entry);
             })
             .catch((error: any) => this.data.onError(error));

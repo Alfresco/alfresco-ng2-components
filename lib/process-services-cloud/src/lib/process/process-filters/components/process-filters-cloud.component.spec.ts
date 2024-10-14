@@ -33,7 +33,8 @@ import { MatListModule } from '@angular/material/list';
 
 const ProcessFilterCloudServiceMock = {
     getProcessFilters: () => of(mockProcessFilters),
-    getProcessNotificationSubscription: () => of([])
+    getProcessNotificationSubscription: () => of([]),
+    filterKeyToBeRefreshed$: of(mockProcessFilters[0].key)
 };
 
 describe('ProcessFiltersCloudComponent', () => {
@@ -117,6 +118,7 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(filters[0].nativeElement.innerText).toContain('FakeAllProcesses');
         expect(filters[1].nativeElement.innerText).toContain('FakeRunningProcesses');
         expect(filters[2].nativeElement.innerText).toContain('FakeCompletedProcesses');
+        expect(Object.keys(component.counters).length).toBe(3);
     });
 
     it('should emit an error with a bad response', () => {
@@ -147,6 +149,7 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(component.filters[0].name).toEqual('FakeAllProcesses');
         expect(component.filters[1].name).toEqual('FakeRunningProcesses');
         expect(component.filters[2].name).toEqual('FakeCompletedProcesses');
+        expect(Object.keys(component.counters).length).toBe(3);
     });
 
     it('should not select any filter as default', async () => {
@@ -293,6 +296,17 @@ describe('ProcessFiltersCloudComponent', () => {
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter({ id: filter.id });
         expect(component.getCurrentFilter()).toBe(filter);
+    });
+
+    it('should remove key from set of updated filters when received refreshed filter key', async () => {
+        const filterKeyTest = 'filter-key-test';
+        component.updatedFiltersSet.add(filterKeyTest);
+
+        expect(component.updatedFiltersSet.size).toBe(1);
+        processFilterService.filterKeyToBeRefreshed$ = of(filterKeyTest);
+        fixture.detectChanges();
+
+        expect(component.updatedFiltersSet.size).toBe(0);
     });
 
     describe('Highlight Selected Filter', () => {

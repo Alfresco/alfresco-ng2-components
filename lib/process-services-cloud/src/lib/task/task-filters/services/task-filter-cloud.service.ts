@@ -16,7 +16,7 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
-import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, of, BehaviorSubject, throwError, Subject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map } from 'rxjs/operators';
 import { BaseCloudService } from '../../../services/base-cloud.service';
@@ -50,6 +50,8 @@ const TASK_EVENT_SUBSCRIPTION_QUERY = `
 export class TaskFilterCloudService extends BaseCloudService {
     private filtersSubject = new BehaviorSubject<TaskFilterCloudModel[]>([]);
     filters$ = this.filtersSubject.asObservable();
+    private filterKeyToBeRefreshedSource = new Subject<string>();
+    filterKeyToBeRefreshed$ = this.filterKeyToBeRefreshedSource.asObservable();
 
     constructor(
         private identityUserService: IdentityUserService,
@@ -367,5 +369,14 @@ export class TaskFilterCloudService extends BaseCloudService {
         return this.notificationCloudService
             .makeGQLQuery(appName, TASK_EVENT_SUBSCRIPTION_QUERY)
             .pipe(map((events: any) => events.data.engineEvents));
+    }
+
+    /**
+     * Refresh filter key
+     *
+     * @param filterKey  Key of the filter
+     */
+    refreshFilter(filterKey: string): void {
+        this.filterKeyToBeRefreshedSource.next(filterKey);
     }
 }

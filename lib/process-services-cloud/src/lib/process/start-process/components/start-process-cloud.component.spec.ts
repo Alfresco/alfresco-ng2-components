@@ -56,6 +56,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { FormCloudDisplayMode } from '../../../services/form-fields.interfaces';
 
 describe('StartProcessCloudComponent', () => {
     let loader: HarnessLoader;
@@ -332,6 +333,44 @@ describe('StartProcessCloudComponent', () => {
 
         it('should be able to start a process with a valid form', async () => {
             formDefinitionSpy.and.returnValue(of(fakeStartForm));
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
+            typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            fixture.detectChanges();
+            const firstNameEl = fixture.nativeElement.querySelector('#firstName');
+            expect(firstNameEl).toBeDefined();
+            const lastNameEl = fixture.nativeElement.querySelector('#lastName');
+            expect(lastNameEl).toBeDefined();
+            const startBtn = fixture.nativeElement.querySelector('#button-start');
+            expect(component.formCloud.isValid).toBe(true);
+            expect(startBtn.disabled).toBe(false);
+        });
+
+        it('should be able to start a process with form full display mode', async () => {
+            component.displayModeConfigurations = [
+                {
+                    displayMode: FormCloudDisplayMode.fullScreen,
+                    options: {
+                        onDisplayModeOn: () => {},
+                        onDisplayModeOff: () => {},
+                        onCompleteTask: () => {},
+                        onSaveTask: () => {},
+                        fullscreen: true,
+                        displayToolbar: true,
+                        displayCloseButton: true,
+                        trapFocus: true
+                    }
+                }
+            ];
+
+            const fakeStartFormClone = structuredClone(fakeStartForm);
+
+            (fakeStartFormClone.formRepresentation as any).displayMode = FormCloudDisplayMode.fullScreen;
+
+            formDefinitionSpy.and.returnValue(of(fakeStartFormClone));
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition('processwithform')));
             typeValueInto('[data-automation-id="adf-inplace-input"]', 'My new process with form');
             typeValueInto('#processDefinitionName', 'processwithform');
