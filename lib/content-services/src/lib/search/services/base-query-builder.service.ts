@@ -157,6 +157,8 @@ export abstract class BaseQueryBuilderService {
         this.sortingOptions = [];
         this.userFacetBuckets = {};
         this.scope = null;
+        this.filterRawParams = {};
+        this._userQuery = '';
         this.populateFilters.next({});
     }
 
@@ -502,7 +504,6 @@ export abstract class BaseQueryBuilderService {
         if (this.userQuery) {
             this.filterRawParams['userQuery'] = this.userQuery;
         }
-
         this.categories.forEach((facet) => {
             const customQuery = this.queryFragments[facet.id];
             if (customQuery) {

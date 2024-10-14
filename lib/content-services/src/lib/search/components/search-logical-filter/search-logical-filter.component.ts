@@ -68,10 +68,10 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
                 if (filtersQueries[this.id]) {
                     this.searchCondition = filtersQueries[this.id];
                     this.submitValues(false);
-                    this.context.filterLoaded.next();
                 } else {
                     this.reset(false);
                 }
+                this.context.filterLoaded.next();
             });
     }
 

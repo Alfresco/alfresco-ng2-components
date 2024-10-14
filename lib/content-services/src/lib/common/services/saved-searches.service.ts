@@ -18,7 +18,7 @@
 import { NodesApi, NodeEntry, SearchApi, SEARCH_LANGUAGE, ResultSetPaging } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, of, from, ReplaySubject } from 'rxjs';
-import { concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SavedSearch } from '../interfaces/saved-search.interface';
 
@@ -50,11 +50,20 @@ export class SavedSearchesService {
             .subscribe((searches) => this.savedSearches$.next(searches));
     }
 
-    getSavedSearches() {
+    getSavedSearches(): Observable<SavedSearch[]> {
         return this.getSavedSearchesNodeId().pipe(
             concatMap((nodeId) => {
                 this.savedSearchFileNodeId = nodeId;
-                return from(this.nodesApi.getNodeContent(nodeId).then((content) => this.mapFileContentToSavedSearches(content)));
+                return from(
+                    this.nodesApi.getNodeContent(nodeId).then((content) => {
+                        return this.mapFileContentToSavedSearches(content);
+                    })
+                ).pipe(
+                    catchError(() => {
+                        localStorage.removeItem(this.SAVED_SEARCHES_NODE_ID);
+                        return this.getSavedSearches();
+                    })
+                );
             })
         );
     }
@@ -62,7 +71,7 @@ export class SavedSearchesService {
     saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
         return this.getSavedSearches().pipe(
             take(1),
-            switchMap((savedSearches) => {
+            switchMap((savedSearches: Array<SavedSearch>) => {
                 const updatedSavedSearches = [...savedSearches, { ...newSaveSearch, order: savedSearches.length }];
                 return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSavedSearches))).pipe(
                     tap(() => this.savedSearches$.next(updatedSavedSearches))

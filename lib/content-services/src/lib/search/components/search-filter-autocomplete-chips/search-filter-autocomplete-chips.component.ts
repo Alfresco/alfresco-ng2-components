@@ -72,12 +72,12 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                 if (filtersQueries[this.id]) {
                     this.selectedOptions = filtersQueries[this.id];
                     this.updateQuery(false);
-                    this.context.filterLoaded.next();
                 } else {
                     if (this.selectedOptions.length) {
                         this.reset();
                     }
                 }
+                this.context.filterLoaded.next();
             });
     }
 

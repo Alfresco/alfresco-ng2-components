@@ -122,10 +122,10 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
                     this._selectedExtensions = filtersQueries[this.id].fileExtensions ?? [];
                     this.preselectedOptions = this.parseToAutocompleteOptions(this._selectedExtensions);
                     this.submitValues(false);
-                    this.context.filterLoaded.next();
                 } else {
                     this.reset(false);
                 }
+                this.context.filterLoaded.next();
             });
     }
 

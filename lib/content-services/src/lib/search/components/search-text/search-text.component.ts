@@ -79,10 +79,10 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
                 if (filtersQueries[this.id]) {
                     this.value = filtersQueries[this.id];
                     this.updateQuery(this.value, false);
-                    this.context.filterLoaded.next();
                 } else {
                     this.reset(false);
                 }
+                this.context.filterLoaded.next();
             });
     }
 

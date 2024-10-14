@@ -90,10 +90,10 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
                         }
                     });
                     this.submitValues(false);
-                    this.context.filterLoaded.next();
                 } else {
                     this.reset(false);
                 }
+                this.context.filterLoaded.next();
             });
     }
 

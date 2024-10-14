@@ -85,12 +85,10 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
                         this.onDateRangedValueChanged(filtersQueries[this.id][field], field);
                     });
                     this.submitValues(false);
-                    this.context.filterLoaded.next();
                 } else {
-                    if (Object.keys(this.getCurrentValue()).length && this.hasValidValue()) {
-                        this.reset();
-                    }
+                    this.reset(false);
                 }
+                this.context.filterLoaded.next();
             });
     }
 
@@ -113,7 +111,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         return Object.values(this.tabsValidity).every((valid) => valid);
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.combinedQuery = '';
         this.combinedDisplayValue = '';
         this.startValue = {
@@ -122,8 +120,9 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         this.fields.forEach((field) => {
             this.context.filterRawParams[field] = undefined;
         });
+        this.context.queryFragments[this.id] = undefined;
         this.context.filterRawParams[this.id] = undefined;
-        this.submitValues();
+        this.submitValues(updateContext);
     }
 
     setValue(value: { [key: string]: SearchDateRange }) {

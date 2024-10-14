@@ -145,10 +145,10 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
                     this.form.patchValue({ from: start, to: end });
                     this.form.markAsDirty();
                     this.apply({ from: start, to: end }, true, false);
-                    this.context.filterLoaded.next();
                 } else {
                     this.reset();
                 }
+                this.context.filterLoaded.next();
             });
     }
 
