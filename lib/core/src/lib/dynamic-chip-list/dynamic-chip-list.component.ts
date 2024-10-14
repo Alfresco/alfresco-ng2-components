@@ -97,6 +97,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     moveLoadMoreButtonToNextRow = false;
     undisplayedChipsCount = 0;
     viewMoreButtonLeftOffset: number;
+    viewMoreButtonTop = 0;
     paginationData: Pagination;
 
     private initialChips: Chip[] = [];
@@ -193,7 +194,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
             chips.splice(0, lastIndex);
             lastIndex = 0;
         } while ((chips.length || (chipsToDisplay < this.matChips.length && this.matChips.length)) && this.paginationData);
-        this.arrangeElements(containerWidth, chipsWidth, viewMoreBtnWidth, chipsToDisplay);
+        this.arrangeElements(containerWidth, chipsWidth, viewMoreBtnWidth, chipsToDisplay, viewMoreButton);
         this.calculationsDone = true;
     }
 
@@ -202,7 +203,13 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         return parseInt(chipStyles.marginLeft, 10) + parseInt(chipStyles.marginRight, 10);
     }
 
-    private arrangeElements(containerWidth: number, chipsWidth: number, viewMoreBtnWidth: number, chipsToDisplay: number): void {
+    private arrangeElements(
+        containerWidth: number,
+        chipsWidth: number,
+        viewMoreBtnWidth: number,
+        chipsToDisplay: number,
+        viewMoreButton: HTMLButtonElement
+    ): void {
         if (containerWidth - chipsWidth - viewMoreBtnWidth <= 0) {
             const chip = this.paginationData ? this.matChips.last : this.matChips.first;
             const hasNotEnoughSpaceForMoreButton =
@@ -216,13 +223,20 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         }
         this.limitChipsDisplayed = this.undisplayedChipsCount ? this.initialLimitChipsDisplayed : this.paginationData?.hasMoreItems;
         if (this.paginationData?.hasMoreItems) {
+            const lastChipTop = this.matChips.last._elementRef.nativeElement.offsetTop;
             if (this.moveLoadMoreButtonToNextRow) {
                 this.viewMoreButtonLeftOffset = 0;
+                this.viewMoreButtonTop = lastChipTop + viewMoreButton.offsetHeight;
             } else {
                 this.viewMoreButtonLeftOffset = this.viewMoreButtonLeftOffsetBeforeFlexDirection;
+                this.viewMoreButtonTop = lastChipTop;
             }
         } else {
             this.viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
+        }
+
+        if (!this.pagination) {
+            this.viewMoreButtonTop = null;
         }
     }
 }

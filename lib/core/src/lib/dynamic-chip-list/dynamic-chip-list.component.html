@@ -29,6 +29,7 @@
         mat-button
         [hidden]="chipsToDisplay.length === 0 || !limitChipsDisplayed"
         [style.left.px]="viewMoreButtonLeftOffset"
+        [style.top.px]="!!pagination ? viewMoreButtonTop : ''"
         class="adf-dynamic-chip-list-view-more-button"
         [class.adf-dynamic-chip-list-hidden-btn]="!calculationsDone"
         (click)="displayNextChips($event)">
