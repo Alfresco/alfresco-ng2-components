@@ -42,7 +42,7 @@ describe('JwtHelperService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [JwtHelperService, { provide: StorageService, useValue: mockStorage }]
+            providers: [JwtHelperService, { provide: JWT_STORAGE_SERVICE, useValue: mockStorage }]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
     });
