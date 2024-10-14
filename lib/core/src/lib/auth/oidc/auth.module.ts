@@ -40,8 +40,7 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
     declarations: [AuthenticationConfirmationComponent],
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
-        { provide: OAuthStorage, useExisting: StorageService },
-        { provide: AuthenticationService},
+        { provide: AuthenticationService },
         {
             provide: AUTH_CONFIG,
             useFactory: authConfigFactory,
