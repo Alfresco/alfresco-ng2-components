@@ -57,7 +57,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
     validators: Validators;
     enableChangeUpdate: boolean;
-    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
+    displayValue$ = new ReplaySubject<string>(1);
 
     ngOnInit(): void {
         if (this.settings) {
@@ -116,9 +116,10 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             const value = this.formatString(this.format, map);
 
             this.context.queryFragments[this.id] = `${this.field}:${value}`;
-            this.context.filterRawParams[this.id] = this.context.filterRawParams[this.id] ?? {};
-            this.context.filterRawParams[this.id].from = model.from;
-            this.context.filterRawParams[this.id].to = model.to;
+            const filterParam = this.context.filterRawParams[this.id] ?? {};
+            this.context.filterRawParams[this.id] = filterParam;
+            filterParam.from = model.from;
+            filterParam.to = model.to;
             if (updateContext) {
                 this.context.update();
             }

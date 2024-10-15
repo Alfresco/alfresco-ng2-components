@@ -20,7 +20,7 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { TranslationService } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -54,7 +54,8 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
     searchCondition: LogicalSearchCondition;
     fields = Object.keys(LogicalSearchFields);
     LogicalSearchFields = LogicalSearchFields;
-    displayValue$: ReplaySubject<string> = new ReplaySubject(1);
+    displayValue$ = new ReplaySubject<string>(1);
+
     private destroy$ = new Subject<void>();
 
     constructor(private translationService: TranslationService) {}
@@ -63,10 +64,13 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
         this.clearSearchInputs();
         this.context.populateFilters
             .asObservable()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
-                    this.searchCondition = filtersQueries[this.id];
+            .pipe(
+                map((filtersQueries) => filtersQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    this.searchCondition = filterQuery;
                     this.submitValues(false);
                 } else {
                     this.reset(false);

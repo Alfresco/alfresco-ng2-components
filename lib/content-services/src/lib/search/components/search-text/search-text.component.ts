@@ -49,7 +49,8 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
     startValue: string;
     isActive = false;
     enableChangeUpdate = true;
-    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
+    displayValue$ = new ReplaySubject<string>(1);
+
     private destroy$ = new Subject<void>();
 
     ngOnInit() {

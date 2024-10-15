@@ -57,7 +57,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
-    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
+    displayValue$ = new ReplaySubject<string>(1);
 
     constructor() {
         this.options = new SearchFilterList<SearchRadioOption>();

@@ -55,18 +55,14 @@ export class SavedSearchesService {
         return this.getSavedSearchesNodeId().pipe(
             concatMap((nodeId) => {
                 this.savedSearchFileNodeId = nodeId;
-                return from(
-                    this.nodesApi.getNodeContent(nodeId).then((content) => {
-                        return this.mapFileContentToSavedSearches(content);
-                    })
-                ).pipe(
+                return from(this.nodesApi.getNodeContent(nodeId).then((content) => this.mapFileContentToSavedSearches(content))).pipe(
                     catchError((error) => {
                         if (!this.createFileAttempt) {
                             this.createFileAttempt = true;
                             localStorage.removeItem(this.SAVED_SEARCHES_NODE_ID);
                             return this.getSavedSearches();
                         }
-                        return throwError(error);
+                        return throwError(() => error);
                     })
                 );
             })
@@ -85,7 +81,7 @@ export class SavedSearchesService {
         );
     }
 
-    getSavedSearchesNodeId(): Observable<string> {
+    private getSavedSearchesNodeId(): Observable<string> {
         let savedSearchesNodeId = localStorage.getItem(this.SAVED_SEARCHES_NODE_ID) ?? '';
         if (savedSearchesNodeId === '') {
             return from(this.nodesApi.getNode('-my-')).pipe(
@@ -132,7 +128,7 @@ export class SavedSearchesService {
         );
     }
 
-    private mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {
+    private async mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {
         return blob.text().then((content) => (content ? JSON.parse(content) : []));
     }
 }

@@ -20,6 +20,7 @@ import { SearchQueryBuilderService } from '../../services/search-query-builder.s
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SearchConfiguration } from '../../models';
+import { BaseQueryBuilderService } from '../../services/base-query-builder.service';
 
 describe('SearchSortingPickerComponent', () => {
     let fixture: ComponentFixture<SearchSortingPickerComponent>;
@@ -37,7 +38,7 @@ describe('SearchSortingPickerComponent', () => {
         categories: [{ id: 'cat1', enabled: true } as any]
     };
 
-    const queryBuilder = {
+    const queryBuilder: Partial<BaseQueryBuilderService> = {
         getSortingOptions: () => config.sorting.options,
         getPrimarySorting: () => config.sorting.defaults[0],
         sorting: config.sorting.options,

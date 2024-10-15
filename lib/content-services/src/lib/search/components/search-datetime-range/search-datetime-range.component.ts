@@ -23,7 +23,7 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { isValid, isBefore, startOfMinute, endOfMinute, parseISO } from 'date-fns';
@@ -75,7 +75,8 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
-    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
+    displayValue$ = new ReplaySubject<string>(1);
+
     private destroy$ = new Subject<void>();
 
     constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
@@ -137,11 +138,14 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
         this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
         this.context.populateFilters
             .asObservable()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
-                    const start = parseISO(filtersQueries[this.id].start);
-                    const end = parseISO(filtersQueries[this.id].end);
+            .pipe(
+                map((filtersQueries) => filtersQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    const start = parseISO(filterQuery.start);
+                    const end = parseISO(filterQuery.end);
                     this.form.patchValue({ from: start, to: end });
                     this.form.markAsDirty();
                     this.apply({ from: start, to: end }, true, false);
@@ -165,9 +169,10 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
             const end = DateFnsUtils.utcToLocal(endOfMinute(model.to)).toISOString();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
-            this.context.filterRawParams[this.id] = this.context.filterRawParams[this.id] ?? {};
-            this.context.filterRawParams[this.id].start = start;
-            this.context.filterRawParams[this.id].end = end;
+            const filterParam = this.context.filterRawParams[this.id] ?? {};
+            this.context.filterRawParams[this.id] = filterParam;
+            filterParam.start = start;
+            filterParam.end = end;
             this.updateDisplayValue();
             if (updateContext) {
                 this.context.update();

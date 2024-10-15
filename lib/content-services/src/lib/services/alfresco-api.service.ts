@@ -27,7 +27,7 @@ export const ALFRESCO_API_FACTORY = new InjectionToken('ALFRESCO_API_FACTORY');
     providedIn: 'root'
 })
 export class AlfrescoApiService {
-    alfrescoApiInitialized: ReplaySubject<boolean> = new ReplaySubject(1);
+    alfrescoApiInitialized = new ReplaySubject<boolean>(1);
 
     protected alfrescoApi: AlfrescoApi;
 

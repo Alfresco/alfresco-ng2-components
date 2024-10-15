@@ -37,6 +37,10 @@ import { TranslateModule } from '@ngx-translate/core';
     host: { class: 'adf-search-slider' }
 })
 export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
+    /** The numeric value represented by the slider. */
+    @Input()
+    value: number | null;
+
     isActive?: boolean;
     startValue: any;
 
@@ -48,12 +52,9 @@ export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
     max: number;
     thumbLabel = false;
     enableChangeUpdate: boolean;
-    displayValue$: ReplaySubject<string> = new ReplaySubject<string>(1);
-    private destroy$ = new Subject<void>();
+    displayValue$ = new ReplaySubject<string>(1);
 
-    /** The numeric value represented by the slider. */
-    @Input()
-    value: number | null;
+    private destroy$ = new Subject<void>();
 
     ngOnInit() {
         if (this.settings) {

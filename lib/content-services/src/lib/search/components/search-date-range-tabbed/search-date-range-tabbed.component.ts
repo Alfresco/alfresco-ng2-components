@@ -17,7 +17,7 @@
 
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { DateRangeType } from './search-date-range/date-range-type';
 import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchWidget } from '../../models/search-widget.interface';
@@ -71,18 +71,21 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         this.setDefaultDateFormatSettings();
         this.context.populateFilters
             .asObservable()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
-                    Object.keys(filtersQueries[this.id]).forEach((field) => {
-                        filtersQueries[this.id][field].betweenStartDate = filtersQueries[this.id][field].betweenStartDate
-                            ? parseISO(filtersQueries[this.id][field].betweenStartDate)
+            .pipe(
+                map((filtersQueries) => filtersQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    Object.keys(filterQuery).forEach((field) => {
+                        filterQuery[field].betweenStartDate = filterQuery[field].betweenStartDate
+                            ? parseISO(filterQuery[field].betweenStartDate)
                             : undefined;
-                        filtersQueries[this.id][field].betweenEndDate = filtersQueries[this.id][field].betweenEndDate
-                            ? parseISO(filtersQueries[this.id][field].betweenEndDate)
+                        filterQuery[field].betweenEndDate = filterQuery[field].betweenEndDate
+                            ? parseISO(filterQuery[field].betweenEndDate)
                             : undefined;
-                        this.preselectedValues[field] = filtersQueries[this.id][field];
-                        this.onDateRangedValueChanged(filtersQueries[this.id][field], field);
+                        this.preselectedValues[field] = filterQuery[field];
+                        this.onDateRangedValueChanged(filterQuery[field], field);
                     });
                     this.submitValues(false);
                 } else {

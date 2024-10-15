@@ -31,7 +31,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-properties',
@@ -96,6 +96,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
     }
 
     private destroy$ = new Subject<void>();
+
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
     ngOnInit() {
@@ -111,15 +112,18 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         }
         this.context.populateFilters
             .asObservable()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
-                    filtersQueries[this.id].fileSizeCondition.fileSizeUnit = this.fileSizeUnits.find(
-                        (fileSizeUnit) => fileSizeUnit.bytes === filtersQueries[this.id].fileSizeCondition.fileSizeUnit.bytes
+            .pipe(
+                map((filtersQueries) => filtersQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    filterQuery.fileSizeCondition.fileSizeUnit = this.fileSizeUnits.find(
+                        (fileSizeUnit) => fileSizeUnit.bytes === filterQuery.fileSizeCondition.fileSizeUnit.bytes
                     );
-                    this.form.patchValue(filtersQueries[this.id].fileSizeCondition);
+                    this.form.patchValue(filterQuery.fileSizeCondition);
                     this.form.updateValueAndValidity();
-                    this._selectedExtensions = filtersQueries[this.id].fileExtensions ?? [];
+                    this._selectedExtensions = filterQuery.fileExtensions ?? [];
                     this.preselectedOptions = this.parseToAutocompleteOptions(this._selectedExtensions);
                     this.submitValues(false);
                 } else {
