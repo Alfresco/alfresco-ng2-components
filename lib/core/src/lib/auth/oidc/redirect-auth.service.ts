@@ -19,7 +19,7 @@ import { Inject, Injectable, inject } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent, OAuthLogger } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable, race, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
@@ -45,12 +45,6 @@ export class RedirectAuthService extends AuthService {
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
 
   /**
-   * Observable stream that emits a boolean value indicating whether the user's
-   * token has expired due to the local machine clock being out of sync with the server.
-   */
-  tokenHasExpiredDueToClockOutOfSync$: Observable<Error>;
-
-  /**
    * Observable stream that emits OAuthErrorEvent instances.
    *
    * This observable listens to the events emitted by the OAuth service and filters
@@ -70,11 +64,19 @@ export class RedirectAuthService extends AuthService {
   firstOauthErrorEventOccur$: Observable<OAuthErrorEvent> = this.oauthErrorEvent$.pipe(take(1));
 
   /**
+   * Observable that emits an error when the token has expired due to
+   * the local machine clock being out of sync with the server time.
+   *
+   * @observable
+   * @type {Observable<Error>}
+   */
+  tokenHasExpiredDueToClockOutOfSync$: Observable<Error>;
+
+  /**
    * Observable stream that emits either OAuthErrorEvent or Error.
    * This stream combines multiple OAuth error sources into a single observable.
    */
   combinedOAuthErrorsStream$: Observable<OAuthErrorEvent | Error>;
-
 
   /** Subscribe to whether the user has valid Id/Access tokens.  */
   authenticated$!: Observable<boolean>;
@@ -144,12 +146,14 @@ export class RedirectAuthService extends AuthService {
         take(1)
     );
 
-    this.combinedOAuthErrorsStream$ = race([this.firstOauthErrorEventOccur$, this.tokenHasExpiredDueToClockOutOfSync$]).pipe(
-        tap((error) => this._oauthLogger.error(error))
-    );
+    this.combinedOAuthErrorsStream$ = race([this.firstOauthErrorEventOccur$, this.tokenHasExpiredDueToClockOutOfSync$]);
 
-    this.combinedOAuthErrorsStream$.subscribe(() => {
-        this.logout();
+    this.combinedOAuthErrorsStream$.subscribe({
+        next: (res) => {
+            this._oauthLogger.error(res);
+            this.logout();
+        },
+        error: () => {}
     });
 
     this.oauthService.events.pipe(take(1)).subscribe(() => {
@@ -326,7 +330,7 @@ export class RedirectAuthService extends AuthService {
    * the token's issued and expiration times. It then compares the current time with
    * these values, considering a clock skew and a configurable expiration decrease.
    *
-   * @returns {boolean} - Returns `true` if the token has expired, otherwise `false`.
+   * @returns - Returns `true` if the token has expired, otherwise `false`.
    */
   tokenHasExpired(){
     const claims = this.oauthService.getIdentityClaims();
