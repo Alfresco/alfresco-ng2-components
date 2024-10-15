@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
-import { StorageService } from '../../common/services/storage.service';
-import { JWT_STORAGE_SERVICE } from '../oidc/auth.module';
 
 @Injectable({
     providedIn: 'root'
@@ -35,11 +33,7 @@ export class JwtHelperService {
     static USER_PREFERRED_USERNAME = 'preferred_username';
     static HXP_AUTHORIZATION = 'hxp_authorization';
 
-    private storageService: OAuthStorage;
-
-    constructor (@Inject(JWT_STORAGE_SERVICE) jwtStorageService: OAuthStorage, private defaultStorageService: StorageService) {
-        this.storageService = jwtStorageService ?? defaultStorageService;
-    }
+    private storageService: OAuthStorage = inject(OAuthStorage)
 
     /**
      * Decodes a JSON web token into a JS object.
