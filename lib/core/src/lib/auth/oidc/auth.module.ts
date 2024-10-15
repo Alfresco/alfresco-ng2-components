@@ -25,7 +25,7 @@ import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
 import { JWT_STORAGE_SERVICE } from '../services/jwt-helper.service';
-import { StorageService } from 'public-api';
+import { StorageService } from '../../common/services/storage.service';
 
 /**
  * Create a Login Factory function
