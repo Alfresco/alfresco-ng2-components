@@ -50,6 +50,7 @@
                         {{ 'ADF_VERSION_LIST.ACTIONS.DOWNLOAD' | translate }}
                     </button>
                     <button
+                        *ngIf="allowVersionDelete"
                         [disabled]="!canDelete()"
                         [id]="'adf-version-list-action-delete-' + version.entry.id"
                         (click)="deleteVersion(version.entry.id)"

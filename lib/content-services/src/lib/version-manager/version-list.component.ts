@@ -113,6 +113,10 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     showActions = true;
 
+    /** Enable/disable deletion of version */
+    @Input()
+    allowVersionDelete = true;
+
     /** Emitted when a version is restored */
     @Output()
     restored = new EventEmitter<Node>();

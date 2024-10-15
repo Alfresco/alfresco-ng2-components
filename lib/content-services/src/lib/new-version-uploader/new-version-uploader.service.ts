@@ -69,7 +69,9 @@ export class NewVersionUploaderService {
                             showComments,
                             allowDownload,
                             showVersionsOnly,
-                            allowViewVersions: data.allowViewVersions ?? true
+                            allowViewVersions: data.allowViewVersions ?? true,
+                            allowVersionDelete: data.allowVersionDelete ?? true,
+                            showActions: data.showActions ?? true
                         },
                         panelClass: this.composePanelClass(showVersionsOnly),
                         width: '630px',
