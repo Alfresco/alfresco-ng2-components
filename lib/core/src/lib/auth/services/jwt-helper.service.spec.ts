@@ -20,7 +20,6 @@ import { mockToken } from '../mock/jwt-helper.service.spec';
 import { TestBed } from '@angular/core/testing';
 import { StorageService } from '../../common';
 import { OAuthStorage } from 'angular-oauth2-oidc';
-import { JWT_STORAGE_SERVICE } from '../oidc/auth.module';
 
 const mockStorage = {
     access_token: 'my-access_token',
@@ -43,7 +42,7 @@ describe('JwtHelperService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [JwtHelperService, { provide: JWT_STORAGE_SERVICE, useValue: mockStorage }]
+            providers: [JwtHelperService, { provide: OAuthStorage, useValue: mockStorage }]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
     });
@@ -141,15 +140,11 @@ describe('JwtHelperService with custom storage service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
-                JwtHelperService,
-                { provide: StorageService, useValue: mockStorage },
-                { provide: JWT_STORAGE_SERVICE, useValue: mockCustomStorage }
-            ]
+            providers: [JwtHelperService, { provide: StorageService, useValue: mockStorage }, { provide: OAuthStorage, useValue: mockCustomStorage }]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
         defaultStorage = TestBed.inject(StorageService);
-        customStorage = TestBed.inject(JWT_STORAGE_SERVICE);
+        customStorage = TestBed.inject(OAuthStorage);
     });
 
     it('should use the custom storage service', () => {
