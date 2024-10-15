@@ -26,7 +26,10 @@ import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
 import { StorageService } from '../../common/services/storage.service';
 
-export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE');
+export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
+    providedIn: 'root',
+    factory: () => inject(StorageService)
+});
 
 /**
  * Create a Login Factory function
@@ -42,7 +45,7 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
  *  @returns current instance of OAuthStorage
  */
 export function oauthStorageFactory(): OAuthStorage {
-    return inject(JWT_STORAGE_SERVICE) ?? inject(StorageService);
+    return inject(JWT_STORAGE_SERVICE);
 }
 
 @NgModule({
