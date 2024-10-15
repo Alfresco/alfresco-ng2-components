@@ -17,7 +17,7 @@
 
 import { NodesApi, NodeEntry, SearchApi, SEARCH_LANGUAGE, ResultSetPaging } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { Observable, of, from, ReplaySubject } from 'rxjs';
+import { Observable, of, from, ReplaySubject, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SavedSearch } from '../interfaces/saved-search.interface';
@@ -39,6 +39,7 @@ export class SavedSearchesService {
     }
 
     private savedSearchFileNodeId: string;
+    private createFileAttempt = false;
 
     readonly SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id';
 
@@ -59,9 +60,13 @@ export class SavedSearchesService {
                         return this.mapFileContentToSavedSearches(content);
                     })
                 ).pipe(
-                    catchError(() => {
-                        localStorage.removeItem(this.SAVED_SEARCHES_NODE_ID);
-                        return this.getSavedSearches();
+                    catchError((error) => {
+                        if (!this.createFileAttempt) {
+                            this.createFileAttempt = true;
+                            localStorage.removeItem(this.SAVED_SEARCHES_NODE_ID);
+                            return this.getSavedSearches();
+                        }
+                        return throwError(error);
                     })
                 );
             })
