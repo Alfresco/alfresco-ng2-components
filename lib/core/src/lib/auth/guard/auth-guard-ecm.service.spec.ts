@@ -27,8 +27,7 @@ import { RedirectAuthService } from '../oidc/redirect-auth.service';
 import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
-import { JWT_STORAGE_SERVICE } from '../public-api';
-import { StorageService } from '../../common';
+
 
 describe('AuthGuardService ECM', () => {
     let authGuard: Promise<boolean>;
@@ -56,8 +55,7 @@ describe('AuthGuardService ECM', () => {
                         shouldPerformSsoLogin$: of(true)
                     }
                 },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
-                { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
             ]
         });
         localStorage.clear();

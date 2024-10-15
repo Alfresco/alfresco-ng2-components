@@ -22,7 +22,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core.module';
 import { AuthModule } from '../auth/oidc/auth.module';
 import { StorageService } from '../common';
-import { JWT_STORAGE_SERVICE } from '../auth/services/jwt-helper.service';
 
 declare let jasmine: any;
 
@@ -33,7 +32,7 @@ describe('TranslateLoader', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [AuthModule.forRoot({ useHash: true }), TranslateModule.forRoot(), CoreModule.forRoot()],
-            providers: [TranslationService, { provide: JWT_STORAGE_SERVICE, useClass: StorageService }]
+            providers: [TranslationService]
         });
         translationService = TestBed.inject(TranslationService);
         customLoader = translationService.translate.currentLoader as TranslateLoaderService;
