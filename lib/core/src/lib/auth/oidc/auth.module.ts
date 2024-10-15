@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER, inject, ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, inject, ModuleWithProviders, NgModule, InjectionToken } from '@angular/core';
 import { AUTH_CONFIG, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthenticationService } from '../services/authentication.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
@@ -24,8 +24,9 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
-import { JWT_STORAGE_SERVICE } from '../services/jwt-helper.service';
 import { StorageService } from '../../common/services/storage.service';
+
+export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE');
 
 /**
  * Create a Login Factory function
