@@ -45,39 +45,35 @@ export class RedirectAuthService extends AuthService {
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
 
   /**
-   * Observable stream that emits a boolean value indicating whether the token
-   * has expired due to the local machine clock being out of sync with the server time.
+   * Observable stream that emits a boolean value indicating whether the user's
+   * token has expired due to the local machine clock being out of sync with the server.
    */
-  tokenHasExpiredDueToClockOutOfSync$: Observable<boolean>;
+  tokenHasExpiredDueToClockOutOfSync$: Observable<Error>;
 
   /**
-   * Observable stream that emits OAuth error events.
+   * Observable stream that emits OAuthErrorEvent instances.
    *
-   * This stream filters events from the OAuth service to only include instances of `OAuthErrorEvent`.
-   * It can be used to handle authentication errors in a centralized manner.
+   * This observable listens to the events emitted by the OAuth service and filters
+   * them to only include instances of OAuthErrorEvent. It then maps these events
+   * to the correct type.
+   *
+   * @type {Observable<OAuthErrorEvent>}
    */
-  oauthErrorEvent$ = this.oauthService.events.pipe(
-    filter(event => event instanceof OAuthErrorEvent)
-  );
-
-   /**
-   * Observable that emits `true` when the first OAuth error event occurs.
-   *
-   * This observable listens to the `oauthErrorEvent$` stream and maps the first
-   * occurrence of an OAuth error event to `true`. It completes after emitting
-   * the first value.
-   *
-   * @type {Observable<boolean>}
-   */
-  firstOauthErrorEventOccur$ = this.oauthErrorEvent$.pipe(
-    map(() => true),
-    take(1)
+  oauthErrorEvent$: Observable<OAuthErrorEvent> = this.oauthService.events.pipe(
+    filter(event => event instanceof OAuthErrorEvent),
+    map((event) => event as OAuthErrorEvent)
   );
 
   /**
-   * Observable stream that emits a boolean value indicating the presence of combined OAuth errors.
+   * Observable stream that emits the first OAuth error event that occurs.
    */
-  combinedOAuthErrorsStream$: Observable<boolean>;
+  firstOauthErrorEventOccur$: Observable<OAuthErrorEvent> = this.oauthErrorEvent$.pipe(take(1));
+
+  /**
+   * Observable stream that emits either OAuthErrorEvent or Error.
+   * This stream combines multiple OAuth error sources into a single observable.
+   */
+  combinedOAuthErrorsStream$: Observable<OAuthErrorEvent | Error>;
 
 
   /** Subscribe to whether the user has valid Id/Access tokens.  */
@@ -143,15 +139,13 @@ export class RedirectAuthService extends AuthService {
         map(() => !!this.oauthService.getIdentityClaims() && this.tokenHasExpired()),
         filter((hasExpired) => hasExpired),
         switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
-        filter((timeSync) => timeSync.outOfSync),
-        tap((timeSync) => this._oauthLogger.error(`Token has expired due to local machine clock ${timeSync.localDateTimeISO} being out of sync with server time ${timeSync.serverDateTimeISO}`)),
-        map((timeSync) => timeSync.outOfSync),
+        filter((timeSync) => timeSync?.outOfSync),
+        map((timeSync) => new Error(`Token has expired due to local machine clock ${timeSync.localDateTimeISO} being out of sync with server time ${timeSync.serverDateTimeISO}`)),
         take(1)
     );
 
     this.combinedOAuthErrorsStream$ = race([this.firstOauthErrorEventOccur$, this.tokenHasExpiredDueToClockOutOfSync$]).pipe(
-        tap(() => this._oauthLogger.error('OAuth errors occur. logging out')),
-        map(() => true)
+        tap((error) => this._oauthLogger.error(error))
     );
 
     this.combinedOAuthErrorsStream$.subscribe(() => {
@@ -325,15 +319,15 @@ export class RedirectAuthService extends AuthService {
   }
 
 
-/**
- * Checks if the token has expired.
- *
- * This method retrieves the identity claims from the OAuth service and calculates
- * the token's issued and expiration times. It then compares the current time with
- * these values, considering a clock skew and a configurable expiration decrease.
- *
- * @returns {boolean} - Returns `true` if the token has expired, otherwise `false`.
- */
+  /**
+   * Checks if the token has expired.
+   *
+   * This method retrieves the identity claims from the OAuth service and calculates
+   * the token's issued and expiration times. It then compares the current time with
+   * these values, considering a clock skew and a configurable expiration decrease.
+   *
+   * @returns {boolean} - Returns `true` if the token has expired, otherwise `false`.
+   */
   tokenHasExpired(){
     const claims = this.oauthService.getIdentityClaims();
     if(!claims){
