@@ -19,10 +19,11 @@ import { Inject, Injectable, inject } from '@angular/core';
 import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent, OAuthLogger } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { from, Observable, race, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, take, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
+import { TimeSyncService } from '../services/time-sync.service';
 
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
@@ -32,6 +33,7 @@ export class RedirectAuthService extends AuthService {
   readonly authModuleConfig: AuthModuleConfig = inject(AUTH_MODULE_CONFIG);
   private readonly _retryLoginService: RetryLoginService = inject(RetryLoginService);
   private readonly _oauthLogger: OAuthLogger = inject(OAuthLogger);
+  private readonly _timeSyncService: TimeSyncService = inject(TimeSyncService);
 
   private _isDiscoveryDocumentLoadedSubject$ = new ReplaySubject<boolean>();
   public isDiscoveryDocumentLoaded$ = this._isDiscoveryDocumentLoadedSubject$.asObservable();
@@ -42,18 +44,21 @@ export class RedirectAuthService extends AuthService {
 
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
 
-  tokenHasExpired$: Observable<boolean>;
+  /**
+   * Observable stream that emits a boolean value indicating whether the token
+   * has expired due to the local machine clock being out of sync with the server time.
+   */
+  tokenHasExpiredDueToClockOutOfSync$: Observable<boolean>;
 
-/**
- * Observable stream that emits OAuth error events.
- *
- * This stream filters events from the OAuth service to only include instances of `OAuthErrorEvent`.
- * It can be used to handle authentication errors in a centralized manner.
- */
+  /**
+   * Observable stream that emits OAuth error events.
+   *
+   * This stream filters events from the OAuth service to only include instances of `OAuthErrorEvent`.
+   * It can be used to handle authentication errors in a centralized manner.
+   */
   oauthErrorEvent$ = this.oauthService.events.pipe(
     filter(event => event instanceof OAuthErrorEvent)
   );
-
 
    /**
    * Observable that emits `true` when the first OAuth error event occurs.
@@ -113,6 +118,7 @@ export class RedirectAuthService extends AuthService {
     @Inject(AUTH_CONFIG) authConfig: AuthConfig
   ) {
     super();
+
     this.authConfig = authConfig;
 
     this.oauthService.clearHashAfterLogin = true;
@@ -133,15 +139,18 @@ export class RedirectAuthService extends AuthService {
       shareReplay(1)
     );
 
-    this.tokenHasExpired$ = this.oauthService.events.pipe(
+    this.tokenHasExpiredDueToClockOutOfSync$ = this.oauthService.events.pipe(
         map(() => !!this.oauthService.getIdentityClaims() && this.tokenHasExpired()),
         filter((hasExpired) => hasExpired),
-        take(1),
-        tap((hasExpired) => this._oauthLogger.warn('tokenHasExpired: ', hasExpired))
-      );
+        switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
+        filter((timeSync) => timeSync.outOfSync),
+        tap((timeSync) => this._oauthLogger.error(`Token has expired due to local machine clock ${timeSync.localDateTimeISO} being out of sync with server time ${timeSync.serverDateTimeISO}`)),
+        map((timeSync) => timeSync.outOfSync),
+        take(1)
+    );
 
-    this.combinedOAuthErrorsStream$ = race([this.firstOauthErrorEventOccur$, this.tokenHasExpired$]).pipe(
-        tap(() => oauthService.showDebugInformation && this._oauthLogger.warn('OAuth errors occur. logging out')),
+    this.combinedOAuthErrorsStream$ = race([this.firstOauthErrorEventOccur$, this.tokenHasExpiredDueToClockOutOfSync$]).pipe(
+        tap(() => this._oauthLogger.error('OAuth errors occur. logging out')),
         map(() => true)
     );
 
@@ -173,34 +182,6 @@ export class RedirectAuthService extends AuthService {
       map((event) => event.reason as Error)
     );
 
-    }
-
-    tokenHasExpired(){
-        const claims = this.oauthService.getIdentityClaims();
-        if(!claims){
-            this._oauthLogger.warn('No claims found in the token');
-            return false;
-        }
-        const now = Date.now();
-        const issuedAtMSec = claims.iat * 1000;
-        const expiresAtMSec = claims.exp * 1000;
-        const clockSkewInMSec = this.oauthService.clockSkewInSec * 1000;
-
-        this.showTokenExpiredDebugInformations(now, issuedAtMSec, expiresAtMSec, clockSkewInMSec);
-        return issuedAtMSec - clockSkewInMSec >= now ||
-        expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now;
-    }
-
-    private showTokenExpiredDebugInformations(now: number, issuedAtMSec: number, expiresAtMSec: number, clockSkewInMSec: number) {
-        if(this.oauthService.showDebugInformation) {
-            this._oauthLogger.warn('now: ', new Date(now));
-            this._oauthLogger.warn('issuedAt: ', new Date(issuedAtMSec));
-            this._oauthLogger.warn('expiresAt: ', new Date(expiresAtMSec));
-            this._oauthLogger.warn('clockSkewInMSec: ', this.oauthService.clockSkewInSec);
-            this._oauthLogger.warn('this.oauthService.decreaseExpirationBySec: ', this.oauthService.decreaseExpirationBySec);
-            this._oauthLogger.warn('issuedAtMSec - clockSkewInMSec >= now: ', issuedAtMSec - clockSkewInMSec >= now);
-            this._oauthLogger.warn('expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now: ', expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now);
-        }
     }
 
   init(): Promise<boolean> {
@@ -341,6 +322,44 @@ export class RedirectAuthService extends AuthService {
 
   updateIDPConfiguration(config: AuthConfig) {
     this.oauthService.configure(config);
+  }
+
+
+/**
+ * Checks if the token has expired.
+ *
+ * This method retrieves the identity claims from the OAuth service and calculates
+ * the token's issued and expiration times. It then compares the current time with
+ * these values, considering a clock skew and a configurable expiration decrease.
+ *
+ * @returns {boolean} - Returns `true` if the token has expired, otherwise `false`.
+ */
+  tokenHasExpired(){
+    const claims = this.oauthService.getIdentityClaims();
+    if(!claims){
+        this._oauthLogger.warn('No claims found in the token');
+        return false;
+    }
+    const now = Date.now();
+    const issuedAtMSec = claims.iat * 1000;
+    const expiresAtMSec = claims.exp * 1000;
+    const clockSkewInMSec = this.oauthService.clockSkewInSec * 1000;
+
+    this.showTokenExpiredDebugInformations(now, issuedAtMSec, expiresAtMSec, clockSkewInMSec);
+    return issuedAtMSec - clockSkewInMSec >= now ||
+    expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now;
+  }
+
+  private showTokenExpiredDebugInformations(now: number, issuedAtMSec: number, expiresAtMSec: number, clockSkewInMSec: number) {
+    if(this.oauthService.showDebugInformation) {
+        this._oauthLogger.warn('now: ', new Date(now));
+        this._oauthLogger.warn('issuedAt: ', new Date(issuedAtMSec));
+        this._oauthLogger.warn('expiresAt: ', new Date(expiresAtMSec));
+        this._oauthLogger.warn('clockSkewInMSec: ', this.oauthService.clockSkewInSec);
+        this._oauthLogger.warn('this.oauthService.decreaseExpirationBySec: ', this.oauthService.decreaseExpirationBySec);
+        this._oauthLogger.warn('issuedAtMSec - clockSkewInMSec >= now: ', issuedAtMSec - clockSkewInMSec >= now);
+        this._oauthLogger.warn('expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now: ', expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now);
+    }
   }
 
 }
