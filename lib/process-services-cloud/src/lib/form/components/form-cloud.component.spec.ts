@@ -32,9 +32,7 @@ import {
     WidgetVisibilityService,
     provideTranslations,
     AuthModule,
-    FormFieldEvent,
-    StorageService,
-    JWT_STORAGE_SERVICE
+    FormFieldEvent
 } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -1474,7 +1472,7 @@ describe('Multilingual Form', () => {
                 CoreModule.forRoot(),
                 ProcessServicesCloudModule.forRoot()
             ],
-            providers: [{ provide: JWT_STORAGE_SERVICE, useClass: StorageService }, provideTranslations('app', 'resources')]
+            providers: [provideTranslations('app', 'resources')]
         });
         translateService = TestBed.inject(TranslateService);
         formCloudService = TestBed.inject(FormCloudService);
@@ -1547,8 +1545,7 @@ describe('retrieve metadata on submit', () => {
                 {
                     provide: VersionCompatibilityService,
                     useValue: {}
-                },
-                { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
+                }
             ]
         });
         const apiService = TestBed.inject(AlfrescoApiService);

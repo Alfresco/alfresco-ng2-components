@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { JWT_STORAGE_SERVICE, JwtHelperService } from './jwt-helper.service';
+import { JwtHelperService } from './jwt-helper.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { TestBed } from '@angular/core/testing';
 import { StorageService } from '../../common';
 import { OAuthStorage } from 'angular-oauth2-oidc';
+import { JWT_STORAGE_SERVICE } from '../oidc/auth.module';
 
 const mockStorage = {
     access_token: 'my-access_token',
