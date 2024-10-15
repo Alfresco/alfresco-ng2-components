@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse, AuthConfig, OAuthLogger } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse, AuthConfig, OAuthLogger, OAuthErrorEvent, OAuthSuccessEvent } from 'angular-oauth2-oidc';
 import { of, Subject } from 'rxjs';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
@@ -29,6 +29,8 @@ describe('RedirectAuthService', () => {
     let retryLoginServiceSpy: jasmine.SpyObj<RetryLoginService>;
     let timeSyncServiceSpy: jasmine.SpyObj<TimeSyncService>;
     let oauthLoggerSpy: jasmine.SpyObj<OAuthLogger>;
+    let oauthServiceSpy: jasmine.SpyObj<OAuthService>;
+    let authConfigSpy: jasmine.SpyObj<AuthConfig>;
 
     const mockOAuthStorage: Partial<OAuthStorage> = {
         getItem: jasmine.createSpy('getItem'),
@@ -36,51 +38,41 @@ describe('RedirectAuthService', () => {
         setItem: jasmine.createSpy('setItem')
     };
     const oauthEvents$ = new Subject<OAuthEvent>();
-    const mockOauthService: Partial<OAuthService> = {
-        clearHashAfterLogin: false,
-        events: oauthEvents$,
-        configure: () => { },
-        logOut: () => { },
-        hasValidAccessToken: jasmine.createSpy().and.returnValue(true),
-        hasValidIdToken: jasmine.createSpy().and.returnValue(true),
-        setupAutomaticSilentRefresh: () => {
-            mockOauthService.silentRefresh();
-            mockOauthService.refreshToken();
-        },
-        showDebugInformation: false,
-        getIdentityClaims: jasmine.createSpy().and.returnValue(true)
-    };
 
     beforeEach(() => {
         retryLoginServiceSpy = jasmine.createSpyObj('RetryLoginService', ['tryToLoginTimes']);
         timeSyncServiceSpy = jasmine.createSpyObj('TimeSyncService', ['checkTimeSync']);
         oauthLoggerSpy = jasmine.createSpyObj('OAuthLogger', ['error', 'info', 'warn']);
+        oauthServiceSpy = jasmine.createSpyObj('OAuthService', [
+            'clearHashAfterLogin',
+            'configure',
+            'logOut',
+            'hasValidAccessToken',
+            'hasValidIdToken',
+            'setupAutomaticSilentRefresh',
+            'silentRefresh',
+            'refreshToken',
+            'getIdentityClaims',
+            'getAccessToken'
+        ], { clockSkewInSec: 120, events: oauthEvents$, tokenValidationHandler: {} } );
+        authConfigSpy = jasmine.createSpyObj('AuthConfig', ['sessionChecksEnabled']);
 
         TestBed.configureTestingModule({
             providers: [
                 RedirectAuthService,
-                { provide: OAuthService, useValue: mockOauthService },
+                { provide: OAuthService, useValue: oauthServiceSpy },
                 { provide: TimeSyncService, useValue: timeSyncServiceSpy },
-                {
-                    provide: OAuthLogger,
-                    useValue: oauthLoggerSpy
-                },
+                { provide: OAuthLogger, useValue: oauthLoggerSpy },
                 { provide: OAuthStorage, useValue: mockOAuthStorage },
                 { provide: RetryLoginService, useValue: retryLoginServiceSpy },
-                {
-                    provide: AUTH_CONFIG,
-                    useValue: {
-                        sessionChecksEnabled: false
-                    }
-                },
+                { provide: AUTH_CONFIG, useValue: authConfigSpy },
                 { provide: AUTH_MODULE_CONFIG, useValue: {} }
             ]
         });
 
         service = TestBed.inject(RedirectAuthService);
-        ensureDiscoveryDocumentSpy = spyOn(service, 'ensureDiscoveryDocument').and.resolveTo(true);
-        mockOauthService.getAccessToken = () => 'access-token';
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: false } as TimeSync));
+        ensureDiscoveryDocumentSpy = spyOn(service, 'ensureDiscoveryDocument');
     });
 
     it('should emit event when token_received event is received', () => {
@@ -102,17 +94,23 @@ describe('RedirectAuthService', () => {
     });
 
     it('should call refresh token and silent refresh when automatic silent refresh is setup', async () => {
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+        oauthServiceSpy.setupAutomaticSilentRefresh.and.callFake(() => {
+            oauthServiceSpy.silentRefresh();
+            oauthServiceSpy.refreshToken();
+        });
+
         let refreshTokenCalled = false;
         let silentRefreshCalled = false;
 
-        mockOauthService.refreshToken = async () => {
+        oauthServiceSpy.refreshToken.and.callFake(async () => {
             refreshTokenCalled = true;
             return Promise.resolve({} as TokenResponse);
-        };
-        mockOauthService.silentRefresh = async () => {
+        });
+        oauthServiceSpy.silentRefresh.and.callFake(async () => {
             silentRefreshCalled = true;
             return Promise.resolve({} as OAuthEvent);
-        };
+        });
 
         await service.init();
 
@@ -121,9 +119,10 @@ describe('RedirectAuthService', () => {
     });
 
     it('should remove all auth items from the storage if access token is set and is NOT valid', () => {
-        mockOauthService.getAccessToken = () => 'access-token';
-        mockOauthService.hasValidAccessToken = () => false;
-        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthServiceSpy.getAccessToken.and.returnValue('fake-access-token');
+        oauthServiceSpy.hasValidAccessToken.and.returnValue(false);
+
+        oauthEvents$.next({ type: 'discovery_document_loaded' } as OAuthEvent);
 
         expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token');
         expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token_stored_at');
@@ -140,25 +139,26 @@ describe('RedirectAuthService', () => {
     });
 
     it('should NOT remove auth items from the storage if access token is valid', () => {
-        mockOauthService.getAccessToken = () => 'access-token';
-        mockOauthService.hasValidAccessToken = () => true;
+        oauthServiceSpy.getAccessToken.and.returnValue('fake-access-token');
+        oauthServiceSpy.hasValidAccessToken.and.returnValue(true);
+
         (mockOAuthStorage.removeItem as any).calls.reset();
 
-        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
         expect(mockOAuthStorage.removeItem).not.toHaveBeenCalled();
     });
 
     it('should configure OAuthService with given config', async () => {
         const config = { sessionChecksEnabled: false } as AuthConfig;
-        const configureSpy = spyOn(mockOauthService as any, 'configure');
-        const setupAutomaticSilentRefreshSpy = spyOn(mockOauthService as any, 'setupAutomaticSilentRefresh');
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        authConfigSpy.sessionChecksEnabled = false;
 
         await service.init();
 
-        expect(configureSpy).toHaveBeenCalledWith(config);
-        expect(setupAutomaticSilentRefreshSpy).toHaveBeenCalled();
+        expect(oauthServiceSpy.configure).toHaveBeenCalledOnceWith(config);
+        expect(oauthServiceSpy.setupAutomaticSilentRefresh).toHaveBeenCalledTimes(1);
     });
 
     it('should send isDiscoveryDocumentLoadedSubject$ when ensureDiscoveryDocument is resolved', async () => {
@@ -174,49 +174,37 @@ describe('RedirectAuthService', () => {
     });
 
     it('should return redirectUrl if login successfully', async () => {
-        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
 
         const expectedRedirectUrl = '/';
         const loginCallbackResponse = await service.loginCallback();
 
         expect(loginCallbackResponse).toEqual(expectedRedirectUrl);
-        expect(logOutSpy).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
     });
 
     it('should logout user if login fails', async () => {
-        const logOutSpy = jasmine.createSpy('logOut');
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
 
-        mockOauthService.events?.subscribe((event: any) => {
-            if (event.type === 'bad_error') {
-                logOutSpy();
-            }
-        });
+        const fakeErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {});
 
         retryLoginServiceSpy.tryToLoginTimes.and.callFake(() => {
-            oauthEvents$.next({ type: 'bad_error' } as any);
-            throw new Error('code_error');
+            oauthEvents$.next(fakeErrorEvent);
+            throw new Error('Login failed');
         });
 
         try {
             await service.loginCallback();
             fail('Expected to throw an error');
         } catch (error) {
-            expect(logOutSpy).toHaveBeenCalledTimes(1);
+            expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         }
-    });
-
-    it('should NOT logout user if login success', async () => {
-        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
-
-        retryLoginServiceSpy.tryToLoginTimes.and.resolveTo(true);
-
-        await service.loginCallback();
-
-        expect(logOutSpy).not.toHaveBeenCalled();
     });
 
     it('should logout user if token has expired due to local machine clock being out of sync', () => {
         const mockTimeSync: TimeSync = { outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' };
+        const expectedError = new Error(`Token has expired due to local machine clock ${mockTimeSync.localDateTimeISO} being out of sync with server time ${mockTimeSync.serverDateTimeISO}`);
+
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
 
         const mockDateNowInMilliseconds = 1728597618621; // GMT: Thursday, October 10, 2024 10:00:18.621 PM
@@ -224,18 +212,85 @@ describe('RedirectAuthService', () => {
         const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
         const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
 
-        mockOauthService.clockSkewInSec = 120;
-
-        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+        oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        mockOauthService.getIdentityClaims = () => ({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
-        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthEvents$.next({ type: 'discovery_document_loaded' } as OAuthEvent);
 
-        expect(logOutSpy).toHaveBeenCalled();
-        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(`Token has expired due to local machine clock ${mockTimeSync.localDateTimeISO} being out of sync with server time ${mockTimeSync.serverDateTimeISO}`);
-        expect(oauthLoggerSpy.error).toHaveBeenCalledWith('OAuth errors occur. logging out');
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(expectedError);
+    });
+
+    it('should logout user if an OAuthErroEvent occurs', () => {
+        const fakeErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {});
+        const expectedLoggedError = new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {});
+
+        const mockTimeSync = { outOfSync: false } as TimeSync;
+
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
+
+        oauthEvents$.next(fakeErrorEvent);
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(expectedLoggedError);
+    });
+
+    it('should logout user if sessionChecksEnabled is true and event type session_terminated is emitted', async () => {
+        const mockTimeSync = { outOfSync: false } as TimeSync;
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
+
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        authConfigSpy.sessionChecksEnabled = true;
+
+        await service.init();
+
+        oauthEvents$.next({type: 'session_terminated'} as OAuthEvent);
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+    });
+
+    it('should NOT logout user if login success', async () => {
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        retryLoginServiceSpy.tryToLoginTimes.and.resolveTo(true);
+
+        try {
+            await service.loginCallback();
+            expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        } catch (error) {
+            fail('Expected not to throw an error');
+        }
+    });
+
+    it('should NOT logout user if sessionChecksEnabled is true and event type session_terminated is NOT emitted', async () => {
+        const mockTimeSync = { outOfSync: false } as TimeSync;
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
+
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        authConfigSpy.sessionChecksEnabled = true;
+
+        await service.init();
+
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+    });
+
+    it('should NOT logout user if sessionChecksEnabled is false and event type session_terminated is emitted', async () => {
+        const mockTimeSync = { outOfSync: false } as TimeSync;
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
+
+        ensureDiscoveryDocumentSpy.and.resolveTo(true);
+
+        authConfigSpy.sessionChecksEnabled = false;
+
+        await service.init();
+
+        oauthEvents$.next({type: 'session_terminated'} as OAuthEvent);
+
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
     });
 
     it('should NOT logout user if token has expired but local machine clock is in sync with the server time', () => {
@@ -246,16 +301,15 @@ describe('RedirectAuthService', () => {
         const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
         const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
 
-        mockOauthService.clockSkewInSec = 120;
-
-        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+        oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        mockOauthService.getIdentityClaims = () => ({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
-        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
-        expect(logOutSpy).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
     });
 
     it('should NOT logout user if token has expired but local clock sync status cannot be determined', () => {
@@ -266,16 +320,15 @@ describe('RedirectAuthService', () => {
         const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
         const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
 
-        mockOauthService.clockSkewInSec = 120;
-
-        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+        oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        mockOauthService.getIdentityClaims = () => ({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
-        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
-        expect(logOutSpy).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
     });
 
     it('should NOT logout user if current Date is behind the issued date within the allowed clock skew', () => {
@@ -284,16 +337,15 @@ describe('RedirectAuthService', () => {
         const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
         const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
 
-        mockOauthService.clockSkewInSec = 120;
-
-        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+        oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        mockOauthService.getIdentityClaims = () => ({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
-        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
-        expect(logOutSpy).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
     });
 
     it('should NOT logout user if current Date is ahead the issued date within the allowed clock skew', () => {
@@ -302,15 +354,14 @@ describe('RedirectAuthService', () => {
         const tokenExpiresAtInSeconds = 1728598353; // GMT: Thursday, October 10, 2024 10:15:00 PM
         const tokenIssuedAtInSeconds = 1728598253; // GMT: Thursday, October 10, 2024 10:10:53 PM
 
-        mockOauthService.clockSkewInSec = 120;
-
-        const logOutSpy = spyOn(mockOauthService as OAuthService, 'logOut');
+        oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        mockOauthService.getIdentityClaims = () => ({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
 
-        (mockOauthService.events as Subject<OAuthEvent>).next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
-        expect(logOutSpy).not.toHaveBeenCalled();
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
     });
 });
