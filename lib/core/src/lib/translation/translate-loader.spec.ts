@@ -21,7 +21,6 @@ import { TranslationService } from './translation.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core.module';
 import { AuthModule } from '../auth/oidc/auth.module';
-import { StorageService } from '../common';
 
 declare let jasmine: any;
 

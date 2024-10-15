@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
-import { ADF_DATE_FORMATS, FullNamePipe, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, FullNamePipe, NoopAuthModule, NoopTranslateModule, UserPreferencesService } from '@alfresco/adf-core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { SimpleChange } from '@angular/core';
@@ -101,6 +101,7 @@ describe('EditProcessFilterCloudComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                NoopAuthModule,
                 MatIconTestingModule,
                 MatDialogModule,
                 NoopTranslateModule,
