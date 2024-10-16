@@ -22,9 +22,9 @@ import { skip } from 'rxjs/operators';
 import { SavedSearchesService } from './saved-searches.service';
 import { AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AuthenticationService } from "@alfresco/adf-core";
+import { AuthenticationService } from '@alfresco/adf-core';
 
-fdescribe('SavedSearchesService', () => {
+describe('SavedSearchesService', () => {
     let service: SavedSearchesService;
     let authService: AuthenticationService;
     let testUserName: string;
@@ -37,14 +37,14 @@ fdescribe('SavedSearchesService', () => {
     ]);
 
     beforeEach(() => {
-        testUserName = 'test-user'
+        testUserName = 'test-user';
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [SavedSearchesService, { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(SavedSearchesService);
-        authService = TestBed.inject(AuthenticationService)
-        spyOn(authService, 'getUsername').and.returnValue(testUserName)
+        authService = TestBed.inject(AuthenticationService);
+        spyOn(authService, 'getUsername').and.returnValue(testUserName);
     });
 
     afterEach(() => {
@@ -88,11 +88,11 @@ fdescribe('SavedSearchesService', () => {
 
             service.getSavedSearches().subscribe(() => {
                 localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
-                testUserName = 'secondTestUser'
+                testUserName = 'secondTestUser';
                 service.savedSearches$.subscribe(() => {
                     expect(localStorage.getItem).toHaveBeenCalledWith([SAVED_SEARCHES_NODE_ID + testUserName, SAVED_SEARCHES_NODE_ID + testUserName]);
                     done();
-                })
+                });
             });
         });
     });

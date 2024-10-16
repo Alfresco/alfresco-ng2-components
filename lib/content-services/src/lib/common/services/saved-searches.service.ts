@@ -21,7 +21,7 @@ import { Observable, of, from, ReplaySubject, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SavedSearch } from '../interfaces/saved-search.interface';
-import { AuthenticationService } from "@alfresco/adf-core";
+import { AuthenticationService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
@@ -45,11 +45,10 @@ export class SavedSearchesService {
     private currentUserLocalStorageKey: string;
     private createFileAttempt = false;
 
-
     constructor(private apiService: AlfrescoApiService, private authService: AuthenticationService) {
         this.fetchSavedSearches();
         this.authService.onLogin.subscribe(() => {
-            this.fetchSavedSearches()
+            this.fetchSavedSearches();
         });
     }
 
@@ -86,7 +85,7 @@ export class SavedSearchesService {
     private getSavedSearchesNodeId(): Observable<string> {
         const localStorageKey = this.getLocalStorageKey();
         if (this.currentUserLocalStorageKey && this.currentUserLocalStorageKey !== localStorageKey) {
-            this.savedSearches$.next([])
+            this.savedSearches$.next([]);
         }
         this.currentUserLocalStorageKey = localStorageKey;
         let savedSearchesNodeId = localStorage.getItem(this.currentUserLocalStorageKey) ?? '';
@@ -140,7 +139,7 @@ export class SavedSearchesService {
     }
 
     private getLocalStorageKey(): string {
-        return `saved-searches-node-id__${this.authService.getUsername()}`
+        return `saved-searches-node-id__${this.authService.getUsername()}`;
     }
 
     private fetchSavedSearches(): void {
