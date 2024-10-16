@@ -22,7 +22,7 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
 import { ReplaySubject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -87,12 +87,14 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         this.updateDisplayValue();
         this.context.populateFilters
             .asObservable()
-            .pipe(first())
-            .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
-                    this.form.patchValue({ from: filtersQueries[this.id].from, to: filtersQueries[this.id].to });
+            .pipe(
+                map(filtersQueries => filtersQueries[this.id]),
+                first())
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    this.form.patchValue({ from: filterQuery.from, to: filterQuery.to });
                     this.form.markAsDirty();
-                    this.apply({ from: filtersQueries[this.id].from, to: filtersQueries[this.id].to }, true, false);
+                    this.apply({ from: filterQuery.from, to: filterQuery.to }, true, false);
                 } else {
                     this.reset(false);
                 }
