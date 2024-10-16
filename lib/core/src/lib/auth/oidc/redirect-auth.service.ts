@@ -67,7 +67,6 @@ export class RedirectAuthService extends AuthService {
    * Observable that emits an error when the token has expired due to
    * the local machine clock being out of sync with the server time.
    *
-   * @observable
    * @type {Observable<Error>}
    */
   tokenHasExpiredDueToClockOutOfSync$: Observable<Error>;
