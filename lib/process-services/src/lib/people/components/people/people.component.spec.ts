@@ -19,8 +19,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleComponent } from './people.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { LightUserRepresentation } from '@alfresco/js-api';
-import { PeopleProcessService } from '@alfresco/adf-process-services';
+import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { of, throwError } from 'rxjs';
+import { PeopleProcessService } from '@alfresco/adf-process-services';
 
 const fakeUser: LightUserRepresentation = {
     id: 0,
@@ -45,7 +46,11 @@ describe('PeopleComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, PeopleComponent]
+            imports: [ProcessTestingModule, PeopleComponent],
+            providers: [
+                // TODO: remove this as soon as unit test not using jasmine.Ajax
+                { provide: AdfHttpClient, useValue: null }
+            ]
         });
         fixture = TestBed.createComponent(PeopleComponent);
         peopleProcessService = fixture.debugElement.injector.get(PeopleProcessService);

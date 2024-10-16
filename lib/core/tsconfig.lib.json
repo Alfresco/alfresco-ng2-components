@@ -7,7 +7,6 @@
     "paths": {
       "@alfresco/adf-extensions": ["../../../dist/libs/extensions"],
       "@alfresco/adf-extensions/*": ["../../../dist/libs/extensions/*"],
-      "@alfresco/adf-core/auth": ["../auth/src/index.ts"],
       "@alfresco/adf-core/shell": ["../shell/src/index.ts"],
       "@alfresco/adf-core/api": ["../api/src/index.ts"],
       "@alfresco/adf-core/feature-flags": ["../feature-flags/src/index.ts"],
