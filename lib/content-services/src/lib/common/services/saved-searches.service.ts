@@ -21,6 +21,7 @@ import { Observable, of, from, ReplaySubject, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SavedSearch } from '../interfaces/saved-search.interface';
+import { AuthenticationService } from "@alfresco/adf-core";
 
 @Injectable({
     providedIn: 'root'
@@ -38,17 +39,18 @@ export class SavedSearchesService {
         return this._nodesApi;
     }
 
-    private savedSearchFileNodeId: string;
-    private createFileAttempt = false;
-
-    readonly SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id';
-
     savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
 
-    constructor(private apiService: AlfrescoApiService) {
-        this.getSavedSearches()
-            .pipe(take(1))
-            .subscribe((searches) => this.savedSearches$.next(searches));
+    private savedSearchFileNodeId: string;
+    private currentUserLocalStorageKey: string;
+    private createFileAttempt = false;
+
+
+    constructor(private apiService: AlfrescoApiService, private authService: AuthenticationService) {
+        this.fetchSavedSearches();
+        this.authService.onLogin.subscribe(() => {
+            this.fetchSavedSearches()
+        });
     }
 
     getSavedSearches(): Observable<SavedSearch[]> {
@@ -59,7 +61,7 @@ export class SavedSearchesService {
                     catchError((error) => {
                         if (!this.createFileAttempt) {
                             this.createFileAttempt = true;
-                            localStorage.removeItem(this.SAVED_SEARCHES_NODE_ID);
+                            localStorage.removeItem(this.getLocalStorageKey());
                             return this.getSavedSearches();
                         }
                         return throwError(() => error);
@@ -82,7 +84,12 @@ export class SavedSearchesService {
     }
 
     private getSavedSearchesNodeId(): Observable<string> {
-        let savedSearchesNodeId = localStorage.getItem(this.SAVED_SEARCHES_NODE_ID) ?? '';
+        const localStorageKey = this.getLocalStorageKey();
+        if (this.currentUserLocalStorageKey && this.currentUserLocalStorageKey !== localStorageKey) {
+            this.savedSearches$.next([])
+        }
+        this.currentUserLocalStorageKey = localStorageKey;
+        let savedSearchesNodeId = localStorage.getItem(this.currentUserLocalStorageKey) ?? '';
         if (savedSearchesNodeId === '') {
             return from(this.nodesApi.getNode('-my-')).pipe(
                 first(),
@@ -100,12 +107,12 @@ export class SavedSearchesService {
                         concatMap((searchResult: ResultSetPaging) => {
                             if (searchResult.list.entries.length > 0) {
                                 savedSearchesNodeId = searchResult.list.entries[0].entry.id;
-                                localStorage.setItem(this.SAVED_SEARCHES_NODE_ID, savedSearchesNodeId);
+                                localStorage.setItem(this.currentUserLocalStorageKey, savedSearchesNodeId);
                             } else {
                                 return this.createSavedSearchesNode(parentNodeId).pipe(
                                     first(),
                                     map((node) => {
-                                        localStorage.setItem(this.SAVED_SEARCHES_NODE_ID, node.entry.id);
+                                        localStorage.setItem(this.currentUserLocalStorageKey, node.entry.id);
                                         return node.entry.id;
                                     })
                                 );
@@ -130,5 +137,15 @@ export class SavedSearchesService {
 
     private async mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {
         return blob.text().then((content) => (content ? JSON.parse(content) : []));
+    }
+
+    private getLocalStorageKey(): string {
+        return `saved-searches-node-id__${this.authService.getUsername()}`
+    }
+
+    private fetchSavedSearches(): void {
+        this.getSavedSearches()
+            .pipe(take(1))
+            .subscribe((searches) => this.savedSearches$.next(searches));
     }
 }

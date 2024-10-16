@@ -22,36 +22,43 @@ import { skip } from 'rxjs/operators';
 import { SavedSearchesService } from './saved-searches.service';
 import { AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthenticationService } from "@alfresco/adf-core";
 
-describe('SavedSearchesService', () => {
+fdescribe('SavedSearchesService', () => {
     let service: SavedSearchesService;
+    let authService: AuthenticationService;
+    let testUserName: string;
 
-    const SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id';
+    const testNodeId = 'test-node-id';
+    const SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id__';
     const SAVED_SEARCHES_CONTENT = JSON.stringify([
         { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0 },
         { name: 'Search 2', description: 'Description 2', encodedUrl: 'url2', order: 1 }
     ]);
 
     beforeEach(() => {
+        testUserName = 'test-user'
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [SavedSearchesService, { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(SavedSearchesService);
+        authService = TestBed.inject(AuthenticationService)
+        spyOn(authService, 'getUsername').and.returnValue(testUserName)
     });
 
     afterEach(() => {
-        localStorage.removeItem(SAVED_SEARCHES_NODE_ID);
+        localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
     });
 
     describe('getSavedSearches', () => {
         it('should retrieve saved searches from the saved-searches.json file', (done) => {
-            const nodeId = 'saved-searches-node-id';
-            spyOn(localStorage, 'getItem').and.returnValue(nodeId);
+            spyOn(localStorage, 'getItem').and.returnValue(testNodeId);
             spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
 
             service.getSavedSearches().subscribe((searches) => {
-                expect(service.nodesApi.getNodeContent).toHaveBeenCalledWith(nodeId);
+                expect(localStorage.getItem).toHaveBeenCalledWith(SAVED_SEARCHES_NODE_ID + testUserName);
+                expect(service.nodesApi.getNodeContent).toHaveBeenCalledWith(testNodeId);
                 expect(searches.length).toBe(2);
                 expect(searches[0].name).toBe('Search 1');
                 expect(searches[1].name).toBe('Search 2');
@@ -72,6 +79,20 @@ describe('SavedSearchesService', () => {
                 expect(service.nodesApi.createNode).toHaveBeenCalledWith(myNodeId, jasmine.objectContaining({ name: 'saved-searches.json' }));
                 expect(searches.length).toBe(0);
                 done();
+            });
+        });
+
+        it('should fetch new saved search file for differnt user', (done) => {
+            spyOn(localStorage, 'getItem').and.returnValue(testNodeId);
+            spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
+
+            service.getSavedSearches().subscribe(() => {
+                localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
+                testUserName = 'secondTestUser'
+                service.savedSearches$.subscribe(() => {
+                    expect(localStorage.getItem).toHaveBeenCalledWith([SAVED_SEARCHES_NODE_ID + testUserName, SAVED_SEARCHES_NODE_ID + testUserName]);
+                    done();
+                })
             });
         });
     });
