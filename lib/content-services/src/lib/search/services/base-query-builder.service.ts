@@ -43,7 +43,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export abstract class BaseQueryBuilderService {
     private readonly router = inject(Router);
-    private activatedRoute = inject(ActivatedRoute);
+    private readonly activatedRoute = inject(ActivatedRoute);
     private _searchApi: SearchApi;
     get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.alfrescoApiService.getInstance());

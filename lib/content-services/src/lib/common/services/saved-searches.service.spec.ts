@@ -94,23 +94,22 @@ describe('SavedSearchesService', () => {
             });
         });
     });
-    describe('saveSearch', () => {
-        it('should save a new search', (done) => {
-            const nodeId = 'saved-searches-node-id';
-            spyOn(localStorage, 'getItem').and.returnValue(nodeId);
-            spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
-            const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
-            spyOn(service.nodesApi, 'updateNodeContent').and.returnValue(Promise.resolve({ entry: {} } as NodeEntry));
 
-            service.saveSearch(newSearch).subscribe(() => {
-                expect(service.nodesApi.updateNodeContent).toHaveBeenCalledWith(nodeId, jasmine.any(String));
-                expect(service.savedSearches$).toBeDefined();
-                service.savedSearches$.subscribe((searches) => {
-                    expect(searches.length).toBe(3);
-                    expect(searches[2].name).toBe('Search 3');
-                    expect(searches[2].order).toBe(2);
-                    done();
-                });
+    it('should save a new search', (done) => {
+        const nodeId = 'saved-searches-node-id';
+        spyOn(localStorage, 'getItem').and.returnValue(nodeId);
+        spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
+        const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
+        spyOn(service.nodesApi, 'updateNodeContent').and.returnValue(Promise.resolve({ entry: {} } as NodeEntry));
+
+        service.saveSearch(newSearch).subscribe(() => {
+            expect(service.nodesApi.updateNodeContent).toHaveBeenCalledWith(nodeId, jasmine.any(String));
+            expect(service.savedSearches$).toBeDefined();
+            service.savedSearches$.subscribe((searches) => {
+                expect(searches.length).toBe(3);
+                expect(searches[2].name).toBe('Search 3');
+                expect(searches[2].order).toBe(2);
+                done();
             });
         });
     });
