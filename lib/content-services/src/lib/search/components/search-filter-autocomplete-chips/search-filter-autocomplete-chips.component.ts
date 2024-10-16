@@ -16,7 +16,8 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -42,7 +43,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     context?: SearchQueryBuilderService;
     options: SearchFilterList<AutocompleteOption[]>;
     startValue: AutocompleteOption[] = [];
-    displayValue$ = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
     selectedOptions: AutocompleteOption[] = [];
     enableChangeUpdate: boolean;
 
@@ -58,15 +59,26 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     ngOnInit() {
         if (this.settings) {
             this.setOptions();
-            if (this.startValue) {
+            if (this.startValue?.length > 0) {
                 this.setValue(this.startValue);
             }
             this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(first())
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    this.selectedOptions = filtersQueries[this.id];
+                    this.updateQuery(false);
+                    this.context.filterLoaded.next();
+                }
+            });
     }
 
     reset() {
         this.selectedOptions = [];
+        this.context.filterRawParams[this.id] = undefined;
         this.resetSubject$.next();
         this.updateQuery();
     }
@@ -107,7 +119,8 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         return option1.id ? option1.id.toUpperCase() === option2.id.toUpperCase() : option1.value.toUpperCase() === option2.value.toUpperCase();
     }
 
-    private updateQuery() {
+    private updateQuery(updateContext = true) {
+        this.context.filterRawParams[this.id] = this.selectedOptions.length > 0 ? this.selectedOptions : undefined;
         this.displayValue$.next(this.selectedOptions.map((option) => option.value).join(', '));
         if (this.context && this.settings && this.settings.field) {
             let queryFragments;
@@ -117,7 +130,9 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                 queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.value}"`);
             }
             this.context.queryFragments[this.id] = queryFragments.join(' OR ');
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 

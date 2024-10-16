@@ -22,6 +22,7 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatRadioButtonHarness, MatRadioGroupHarness } from '@angular/material/radio/testing';
+import { ReplaySubject } from 'rxjs';
 
 describe('SearchRadioComponent', () => {
     let loader: HarnessLoader;
@@ -36,20 +37,20 @@ describe('SearchRadioComponent', () => {
         component = fixture.componentInstance;
 
         loader = TestbedHarnessEnvironment.loader(fixture);
+        component.id = 'radio';
+        component.context = {
+            queryFragments: {
+                radio: 'query'
+            },
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy('update')
+        } as any;
+        component.settings = { options: sizeOptions } as any;
     });
 
     describe('Pagination', () => {
         it('should show 5 items when pageSize not defined', async () => {
-            component.id = 'radio';
-            component.context = {
-                queryFragments: {
-                    radio: 'query'
-                },
-                update: () => {}
-            } as any;
-            component.settings = { options: sizeOptions } as any;
-
-            component.ngOnInit();
             fixture.detectChanges();
 
             const options = await loader.getAllHarnesses(MatRadioButtonHarness);
@@ -60,15 +61,7 @@ describe('SearchRadioComponent', () => {
         });
 
         it('should show all items when pageSize is high', async () => {
-            component.id = 'radio';
-            component.context = {
-                queryFragments: {
-                    radio: 'query'
-                },
-                update: () => {}
-            } as any;
-            component.settings = { pageSize: 15, options: sizeOptions } as any;
-            component.ngOnInit();
+            component.settings['pageSize'] = 15;
             fixture.detectChanges();
 
             const options = await loader.getAllHarnesses(MatRadioButtonHarness);
@@ -80,18 +73,40 @@ describe('SearchRadioComponent', () => {
     });
 
     it('should able to check the radio button', async () => {
-        component.id = 'radio';
-        component.context = {
-            queryFragments: {
-                radio: 'query'
-            },
-            update: () => {}
-        } as any;
-        component.settings = { options: sizeOptions } as any;
-
         const group = await loader.getHarness(MatRadioGroupHarness);
-        await group.checkRadioButton({ selector: `[data-automation-id="search-radio-${sizeOptions[0].name}"]` });
+        await group.checkRadioButton({ selector: `[data-automation-id="search-radio-${sizeOptions[1].name}"]` });
+
+        expect(component.context.queryFragments[component.id]).toBe(sizeOptions[1].value);
+        expect(component.context.filterRawParams[component.id]).toBe(sizeOptions[1].value);
+    });
+
+    it('should reset to initial value ', async () => {
+        const group = await loader.getHarness(MatRadioGroupHarness);
+        await group.checkRadioButton({ selector: `[data-automation-id="search-radio-${sizeOptions[2].name}"]` });
+
+        expect(component.context.queryFragments[component.id]).toBe(sizeOptions[2].value);
+        expect(component.context.filterRawParams[component.id]).toBe(sizeOptions[2].value);
+
+        component.reset();
+        fixture.detectChanges();
 
         expect(component.context.queryFragments[component.id]).toBe(sizeOptions[0].value);
+        expect(component.context.filterRawParams[component.id]).toBe(sizeOptions[0].value);
+    });
+
+    it('should populate filter state when populate filters event has been observed', async () => {
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+        component.context.populateFilters.next({ radio: sizeOptions[1].value });
+        fixture.detectChanges();
+        const group = await loader.getHarness(MatRadioGroupHarness);
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith(sizeOptions[1].name);
+        expect(component.value).toEqual(sizeOptions[1].value);
+        expect(component.context.filterRawParams[component.id]).toBe(sizeOptions[1].value);
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
+        expect(await group.getCheckedValue()).toEqual(sizeOptions[1].value);
     });
 });
