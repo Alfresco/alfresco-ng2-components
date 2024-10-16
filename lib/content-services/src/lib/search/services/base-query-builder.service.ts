@@ -42,7 +42,7 @@ import { inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 export abstract class BaseQueryBuilderService {
-    private router = inject(Router);
+    private readonly router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     private _searchApi: SearchApi;
     get searchApi(): SearchApi {
@@ -101,7 +101,7 @@ export abstract class BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    protected constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
+    protected constructor(protected readonly appConfig: AppConfigService, protected readonly alfrescoApiService: AlfrescoApiService) {
         this.resetToDefaults();
     }
 

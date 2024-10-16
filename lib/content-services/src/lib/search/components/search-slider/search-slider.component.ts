@@ -54,7 +54,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
     enableChangeUpdate: boolean;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     ngOnInit() {
         if (this.settings) {

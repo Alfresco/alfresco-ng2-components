@@ -56,7 +56,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
     LogicalSearchFields = LogicalSearchFields;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private translationService: TranslationService) {}
 

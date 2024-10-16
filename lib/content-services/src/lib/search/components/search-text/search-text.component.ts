@@ -51,7 +51,7 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
     enableChangeUpdate = true;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {
@@ -76,8 +76,9 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map(filtersQueries => filtersQueries[this.id]),
-                takeUntil(this.destroy$))
+                map((filtersQueries) => filtersQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
                     this.value = filterQuery;

@@ -62,7 +62,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
     private value: { [key: string]: Partial<SearchDateRange> } = {};
     private queryMapByField: Map<string, string> = new Map<string, string>();
     private displayValueMapByField: Map<string, string> = new Map<string, string>();
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private translateService: TranslationService) {}
 

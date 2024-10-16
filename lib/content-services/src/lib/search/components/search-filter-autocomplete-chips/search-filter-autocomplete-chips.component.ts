@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -51,7 +51,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     reset$: Observable<void> = this.resetSubject$.asObservable();
     private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private tagService: TagService, private categoryService: CategoryService) {
         this.options = new SearchFilterList<AutocompleteOption[]>();
@@ -67,15 +67,16 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         }
         this.context.populateFilters
             .asObservable()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
-                    this.selectedOptions = filtersQueries[this.id];
+            .pipe(
+                map((filterQueries) => filterQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    this.selectedOptions = filterQuery;
                     this.updateQuery(false);
-                } else {
-                    if (this.selectedOptions.length) {
-                        this.reset();
-                    }
+                } else if (!filterQuery && this.selectedOptions.length) {
+                    this.reset();
                 }
                 this.context.filterLoaded.next();
             });

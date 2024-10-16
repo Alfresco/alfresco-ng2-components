@@ -51,52 +51,49 @@ describe('SavedSearchesService', () => {
         localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
     });
 
-    describe('getSavedSearches', () => {
-        it('should retrieve saved searches from the saved-searches.json file', (done) => {
-            spyOn(localStorage, 'getItem').and.returnValue(testNodeId);
-            spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
+    it('should retrieve saved searches from the saved-searches.json file', (done) => {
+        spyOn(localStorage, 'getItem').and.returnValue(testNodeId);
+        spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
 
-            service.getSavedSearches().subscribe((searches) => {
-                expect(localStorage.getItem).toHaveBeenCalledWith(SAVED_SEARCHES_NODE_ID + testUserName);
-                expect(service.nodesApi.getNodeContent).toHaveBeenCalledWith(testNodeId);
-                expect(searches.length).toBe(2);
-                expect(searches[0].name).toBe('Search 1');
-                expect(searches[1].name).toBe('Search 2');
-                done();
-            });
-        });
-
-        it('should create saved-searches.json file if it does not exist', (done) => {
-            const myNodeId = 'my-node-id';
-            spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } }));
-            spyOn(service.nodesApi, 'getNode').and.returnValue(Promise.resolve({ entry: { id: myNodeId } } as NodeEntry));
-            spyOn(service.nodesApi, 'createNode').and.returnValue(Promise.resolve({ entry: { id: 'new-node-id' } }));
-            spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([''])));
-
-            service.getSavedSearches().subscribe((searches) => {
-                expect(service.nodesApi.getNode).toHaveBeenCalledWith('-my-');
-                expect(service.searchApi.search).toHaveBeenCalled();
-                expect(service.nodesApi.createNode).toHaveBeenCalledWith(myNodeId, jasmine.objectContaining({ name: 'saved-searches.json' }));
-                expect(searches.length).toBe(0);
-                done();
-            });
-        });
-
-        it('should fetch new saved search file for differnt user', (done) => {
-            spyOn(localStorage, 'getItem').and.returnValue(testNodeId);
-            spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
-
-            service.getSavedSearches().subscribe(() => {
-                localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
-                testUserName = 'secondTestUser';
-                service.savedSearches$.subscribe(() => {
-                    expect(localStorage.getItem).toHaveBeenCalledWith([SAVED_SEARCHES_NODE_ID + testUserName, SAVED_SEARCHES_NODE_ID + testUserName]);
-                    done();
-                });
-            });
+        service.getSavedSearches().subscribe((searches) => {
+            expect(localStorage.getItem).toHaveBeenCalledWith(SAVED_SEARCHES_NODE_ID + testUserName);
+            expect(service.nodesApi.getNodeContent).toHaveBeenCalledWith(testNodeId);
+            expect(searches.length).toBe(2);
+            expect(searches[0].name).toBe('Search 1');
+            expect(searches[1].name).toBe('Search 2');
+            done();
         });
     });
 
+    it('should create saved-searches.json file if it does not exist', (done) => {
+        const myNodeId = 'my-node-id';
+        spyOn(service.searchApi, 'search').and.returnValue(Promise.resolve({ list: { entries: [] } }));
+        spyOn(service.nodesApi, 'getNode').and.returnValue(Promise.resolve({ entry: { id: myNodeId } } as NodeEntry));
+        spyOn(service.nodesApi, 'createNode').and.returnValue(Promise.resolve({ entry: { id: 'new-node-id' } }));
+        spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([''])));
+
+        service.getSavedSearches().subscribe((searches) => {
+            expect(service.nodesApi.getNode).toHaveBeenCalledWith('-my-');
+            expect(service.searchApi.search).toHaveBeenCalled();
+            expect(service.nodesApi.createNode).toHaveBeenCalledWith(myNodeId, jasmine.objectContaining({ name: 'saved-searches.json' }));
+            expect(searches.length).toBe(0);
+            done();
+        });
+    });
+
+    it('should fetch new saved search file for differnt user', (done) => {
+        spyOn(localStorage, 'getItem').and.returnValue(testNodeId);
+        spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
+
+        service.getSavedSearches().subscribe(() => {
+            localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
+            testUserName = 'secondTestUser';
+            service.savedSearches$.subscribe(() => {
+                expect(localStorage.getItem).toHaveBeenCalledWith([SAVED_SEARCHES_NODE_ID + testUserName, SAVED_SEARCHES_NODE_ID + testUserName]);
+                done();
+            });
+        });
+    });
     describe('saveSearch', () => {
         it('should save a new search', (done) => {
             const nodeId = 'saved-searches-node-id';
@@ -118,45 +115,43 @@ describe('SavedSearchesService', () => {
         });
     });
 
-    describe('savedSearches$', () => {
-        it('should emit initial saved searches on subscription', (done) => {
-            const nodeId = 'saved-searches-node-id';
-            spyOn(localStorage, 'getItem').and.returnValue(nodeId);
-            spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
+    it('should emit initial saved searches on subscription', (done) => {
+        const nodeId = 'saved-searches-node-id';
+        spyOn(localStorage, 'getItem').and.returnValue(nodeId);
+        spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
 
-            service.savedSearches$.pipe(skip(1)).subscribe((searches) => {
-                expect(searches.length).toBe(2);
-                expect(searches[0].name).toBe('Search 1');
-                done();
-            });
-
-            service.getSavedSearches().subscribe();
+        service.savedSearches$.pipe(skip(1)).subscribe((searches) => {
+            expect(searches.length).toBe(2);
+            expect(searches[0].name).toBe('Search 1');
+            done();
         });
 
-        it('should emit updated saved searches after saving a new search', (done) => {
-            const nodeId = 'saved-searches-node-id';
-            spyOn(localStorage, 'getItem').and.returnValue(nodeId);
-            spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
-            const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
-            spyOn(service.nodesApi, 'updateNodeContent').and.returnValue(Promise.resolve({ entry: {} } as NodeEntry));
+        service.getSavedSearches().subscribe();
+    });
 
-            let emissionCount = 0;
+    it('should emit updated saved searches after saving a new search', (done) => {
+        const nodeId = 'saved-searches-node-id';
+        spyOn(localStorage, 'getItem').and.returnValue(nodeId);
+        spyOn(service.nodesApi, 'getNodeContent').and.returnValue(Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT])));
+        const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
+        spyOn(service.nodesApi, 'updateNodeContent').and.returnValue(Promise.resolve({ entry: {} } as NodeEntry));
 
-            service.savedSearches$.subscribe((searches) => {
-                emissionCount++;
-                if (emissionCount === 1) {
-                    expect(searches.length).toBe(2);
-                }
-                if (emissionCount === 2) {
-                    expect(searches.length).toBe(3);
-                    expect(searches[2].name).toBe('Search 3');
-                    done();
-                }
-            });
+        let emissionCount = 0;
 
-            service.getSavedSearches().subscribe(() => {
-                service.saveSearch(newSearch).subscribe();
-            });
+        service.savedSearches$.subscribe((searches) => {
+            emissionCount++;
+            if (emissionCount === 1) {
+                expect(searches.length).toBe(2);
+            }
+            if (emissionCount === 2) {
+                expect(searches.length).toBe(3);
+                expect(searches[2].name).toBe('Search 3');
+                done();
+            }
+        });
+
+        service.getSavedSearches().subscribe(() => {
+            service.saveSearch(newSearch).subscribe();
         });
     });
 });

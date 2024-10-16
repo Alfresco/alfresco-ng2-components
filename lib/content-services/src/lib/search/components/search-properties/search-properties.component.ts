@@ -95,7 +95,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
@@ -215,37 +215,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
             };
         }
         if (this.settings && this.context) {
-            let query = '';
-            let displayedValue = '';
-            if (this.form.value.fileSize !== undefined && this.form.value.fileSize !== null) {
-                displayedValue = `${this.translateService.instant(this.form.value.fileSizeOperator)} ${
-                    this.form.value.fileSize
-                } ${this.translateService.instant(this.form.value.fileSizeUnit.abbreviation)}`;
-                const size = this.form.value.fileSize * this.form.value.fileSizeUnit.bytes;
-                switch (this.form.value.fileSizeOperator) {
-                    case FileSizeOperator.AT_MOST:
-                        query = `${this.sizeField}:[0 TO ${size}]`;
-                        break;
-                    case FileSizeOperator.AT_LEAST:
-                        query = `${this.sizeField}:[${size} TO MAX]`;
-                        break;
-                    default:
-                        query = `${this.sizeField}:[${size} TO ${size}]`;
-                }
-            }
-            if (this._selectedExtensions?.length) {
-                if (query) {
-                    query += ' AND ';
-                    displayedValue += ', ';
-                }
-                query += `${this.nameField}:("*.${this._selectedExtensions.join('" OR "*.')}")`;
-                displayedValue += this._selectedExtensions.join(', ');
-            }
-            this.displayValue$.next(displayedValue);
-            this.context.queryFragments[this.id] = query;
-            if (updateContext) {
-                this.context.update();
-            }
+            this.updateSettingsAndContext(updateContext);
         }
     }
 
@@ -264,6 +234,40 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         this.form.patchValue(searchProperties.fileSizeCondition);
         this.selectedExtensions = this.parseToAutocompleteOptions(searchProperties.fileExtensions ?? []);
         this.submitValues();
+    }
+
+    private updateSettingsAndContext(updateContext = true): void {
+        let query = '';
+        let displayedValue = '';
+        if (this.form.value.fileSize !== undefined && this.form.value.fileSize !== null) {
+            displayedValue = `${this.translateService.instant(this.form.value.fileSizeOperator)} ${
+                this.form.value.fileSize
+            } ${this.translateService.instant(this.form.value.fileSizeUnit.abbreviation)}`;
+            const size = this.form.value.fileSize * this.form.value.fileSizeUnit.bytes;
+            switch (this.form.value.fileSizeOperator) {
+                case FileSizeOperator.AT_MOST:
+                    query = `${this.sizeField}:[0 TO ${size}]`;
+                    break;
+                case FileSizeOperator.AT_LEAST:
+                    query = `${this.sizeField}:[${size} TO MAX]`;
+                    break;
+                default:
+                    query = `${this.sizeField}:[${size} TO ${size}]`;
+            }
+        }
+        if (this._selectedExtensions?.length) {
+            if (query) {
+                query += ' AND ';
+                displayedValue += ', ';
+            }
+            query += `${this.nameField}:("*.${this._selectedExtensions.join('" OR "*.')}")`;
+            displayedValue += this._selectedExtensions.join(', ');
+        }
+        this.displayValue$.next(displayedValue);
+        this.context.queryFragments[this.id] = query;
+        if (updateContext) {
+            this.context.update();
+        }
     }
 
     private parseToAutocompleteOptions(array: string[]): AutocompleteOption[] {

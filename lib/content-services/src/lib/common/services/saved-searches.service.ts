@@ -39,13 +39,13 @@ export class SavedSearchesService {
         return this._nodesApi;
     }
 
-    savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
+    readonly savedSearches$ = new ReplaySubject<SavedSearch[]>(1);
 
     private savedSearchFileNodeId: string;
     private currentUserLocalStorageKey: string;
     private createFileAttempt = false;
 
-    constructor(private apiService: AlfrescoApiService, private authService: AuthenticationService) {
+    constructor(private readonly apiService: AlfrescoApiService, private readonly authService: AuthenticationService) {
         this.fetchSavedSearches();
         this.authService.onLogin.subscribe(() => {
             this.fetchSavedSearches();

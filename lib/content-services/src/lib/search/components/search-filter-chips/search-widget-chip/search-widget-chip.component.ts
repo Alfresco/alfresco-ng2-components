@@ -67,7 +67,7 @@ export class SearchWidgetChipComponent implements AfterViewInit {
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
 
-    constructor(private cd: ChangeDetectorRef, private focusTrapFactory: ConfigurableFocusTrapFactory) {}
+    constructor(private readonly cd: ChangeDetectorRef, private readonly focusTrapFactory: ConfigurableFocusTrapFactory) {}
 
     ngAfterViewInit(): void {
         this.widgetContainerComponent

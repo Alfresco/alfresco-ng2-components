@@ -56,7 +56,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
     enableChangeUpdate = true;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private translationService: TranslationService) {
         this.options = new SearchFilterList<SearchListOption>();
