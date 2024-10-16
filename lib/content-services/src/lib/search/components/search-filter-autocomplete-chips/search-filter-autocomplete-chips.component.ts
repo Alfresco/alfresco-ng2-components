@@ -76,7 +76,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                     this.selectedOptions = filterQuery;
                     this.updateQuery(false);
                 } else if (!filterQuery && this.selectedOptions.length) {
-                    this.reset();
+                    this.reset(false);
                 }
                 this.context.filterLoaded.next();
             });
@@ -87,11 +87,11 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         this.destroy$.complete();
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.selectedOptions = [];
         this.context.filterRawParams[this.id] = undefined;
         this.resetSubject$.next();
-        this.updateQuery();
+        this.updateQuery(updateContext);
     }
 
     submitValues() {
