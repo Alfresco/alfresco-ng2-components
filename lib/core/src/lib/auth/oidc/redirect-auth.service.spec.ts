@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse, AuthConfig, OAuthLogger, OAuthErrorEvent, OAuthSuccessEvent } from 'angular-oauth2-oidc';
-import { of, Subject } from 'rxjs';
+import { of, Subject, timeout } from 'rxjs';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
 import { RetryLoginService } from './retry-login.service';
@@ -54,7 +54,7 @@ describe('RedirectAuthService', () => {
             'refreshToken',
             'getIdentityClaims',
             'getAccessToken'
-        ], { clockSkewInSec: 120, events: oauthEvents$, tokenValidationHandler: {} } );
+        ], { clockSkewInSec: 120, events: oauthEvents$, tokenValidationHandler: {} });
         authConfigSpy = jasmine.createSpyObj('AuthConfig', ['sessionChecksEnabled']);
 
         TestBed.configureTestingModule({
@@ -247,7 +247,7 @@ describe('RedirectAuthService', () => {
 
         await service.init();
 
-        oauthEvents$.next({type: 'session_terminated'} as OAuthEvent);
+        oauthEvents$.next({ type: 'session_terminated' } as OAuthEvent);
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
     });
@@ -288,7 +288,7 @@ describe('RedirectAuthService', () => {
 
         await service.init();
 
-        oauthEvents$.next({type: 'session_terminated'} as OAuthEvent);
+        oauthEvents$.next({ type: 'session_terminated' } as OAuthEvent);
 
         expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
     });
@@ -364,4 +364,36 @@ describe('RedirectAuthService', () => {
         expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
         expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
     });
+
+    it('should NOT logout user if the refresh token failed first time', fakeAsync(async () => {
+        const expectedFakeErrorEvent = new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {});
+
+        const firstEventOccurPromise = service.firstOauthErrorEventOccur$.toPromise();
+        const secondTokenRefreshErrorEventPromise = service.secondTokenRefreshErrorEventOccur$.pipe(timeout(1000)).toPromise();
+
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
+        expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
+        expect(await firstEventOccurPromise).toEqual(expectedFakeErrorEvent);;
+
+        try {
+            tick(1000);
+            await secondTokenRefreshErrorEventPromise;
+            fail('Expected secondTokenRefreshErrorEventOccur$ not to be emitted');
+        } catch (error) {
+            expect(error).toEqual(jasmine.any(Error));
+        }
+    }));
+
+    it('should logout user if the second time the refresh token failed', fakeAsync(async () => {
+
+        const expectedErrorCausedBySecondTokenRefreshError = new OAuthErrorEvent('token_refresh_error', { reason: 'second token refresh error' }, {});
+
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'second token refresh error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorCausedBySecondTokenRefreshError);
+    }));
 });
