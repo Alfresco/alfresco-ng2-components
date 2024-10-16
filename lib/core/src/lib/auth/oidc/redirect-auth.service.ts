@@ -53,15 +53,22 @@ export class RedirectAuthService extends AuthService {
    *
    * @type {Observable<OAuthErrorEvent>}
    */
-  oauthErrorEvent$: Observable<OAuthErrorEvent> = this.oauthService.events.pipe(
-    filter(event => event instanceof OAuthErrorEvent),
-    map((event) => event as OAuthErrorEvent)
-  );
+  oauthErrorEvent$: Observable<OAuthErrorEvent>;
 
   /**
    * Observable stream that emits the first OAuth error event that occurs.
    */
-  firstOauthErrorEventOccur$: Observable<OAuthErrorEvent> = this.oauthErrorEvent$.pipe(take(1));
+  firstOauthErrorEventOccur$: Observable<OAuthErrorEvent>;
+
+  /**
+   * Observable stream that emits the first OAuth error event that occurs, excluding token refresh errors.
+   */
+  firstOauthErrorEventExcludingTokenRefreshError$: Observable<OAuthErrorEvent>;
+
+  /**
+   * Observable stream that emits the second OAuth token refresh error event that occurs.
+   */
+  secondTokenRefreshErrorEventOccur$: Observable<OAuthErrorEvent>;
 
   /**
    * Observable that emits an error when the token has expired due to
@@ -130,6 +137,24 @@ export class RedirectAuthService extends AuthService {
         }
     });
 
+    this.oauthErrorEvent$ = this.oauthService.events.pipe(
+        filter(event => event instanceof OAuthErrorEvent),
+        map((event) => event as OAuthErrorEvent)
+    );
+
+    this.firstOauthErrorEventOccur$ = this.oauthErrorEvent$.pipe(take(1));
+
+    this.firstOauthErrorEventExcludingTokenRefreshError$ = this.oauthErrorEvent$.pipe(
+        filter(event => event instanceof OAuthErrorEvent && event.type !== 'token_refresh_error'),
+        take(1)
+    );
+
+    this.secondTokenRefreshErrorEventOccur$ = this.oauthErrorEvent$.pipe(
+        filter(event => event.type === 'token_refresh_error'),
+        take(2),
+        filter((_, index) => index === 1)
+    );
+
     this.authenticated$ = this.oauthService.events.pipe(
       map(() => this.authenticated),
       distinctUntilChanged(),
@@ -145,7 +170,11 @@ export class RedirectAuthService extends AuthService {
         take(1)
     );
 
-    this.combinedOAuthErrorsStream$ = race([this.firstOauthErrorEventOccur$, this.tokenHasExpiredDueToClockOutOfSync$]);
+    this.combinedOAuthErrorsStream$ = race([
+        this.firstOauthErrorEventExcludingTokenRefreshError$,
+        this.tokenHasExpiredDueToClockOutOfSync$,
+        this.secondTokenRefreshErrorEventOccur$
+    ]);
 
     this.combinedOAuthErrorsStream$.subscribe({
         next: (res) => {
