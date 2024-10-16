@@ -20,7 +20,7 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
@@ -75,10 +75,12 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
         }
         this.context.populateFilters
             .asObservable()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe((filtersQueries) => {
-                if (filtersQueries[this.id]) {
-                    this.value = filtersQueries[this.id];
+            .pipe(
+                map(filtersQueries => filtersQueries[this.id]),
+                takeUntil(this.destroy$))
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    this.value = filterQuery;
                     this.updateQuery(this.value, false);
                 } else {
                     this.reset(false);
