@@ -93,6 +93,78 @@ export class SavedSearchesService {
         );
     }
 
+    editSavedSearch(updatedSavedSearch: SavedSearch): Observable<NodeEntry> {
+        let previousSavedSearches: SavedSearch[];
+        return this.savedSearches$.pipe(
+            take(1),
+            map((savedSearches: SavedSearch[]) => {
+                previousSavedSearches = [...savedSearches];
+                return savedSearches.map((search) => (search.order === updatedSavedSearch.order ? updatedSavedSearch : search));
+            }),
+            tap((updatedSearches: SavedSearch[]) => {
+                this.savedSearches$.next(updatedSearches);
+            }),
+            switchMap((updatedSearches: SavedSearch[]) => {
+                return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
+            }),
+            catchError((error) => {
+                this.savedSearches$.next(previousSavedSearches);
+                return throwError(() => error);
+            })
+        );
+    }
+
+    deleteSavedSearch(deletedSavedSearch: SavedSearch): Observable<NodeEntry> {
+        let previousSavedSearchesOrder: SavedSearch[];
+        return this.savedSearches$.pipe(
+            take(1),
+            map((savedSearches: SavedSearch[]) => {
+                previousSavedSearchesOrder = [...savedSearches];
+                const updatedSearches = savedSearches.filter((search) => search.order !== deletedSavedSearch.order);
+                return updatedSearches.map((search, index) => ({
+                    ...search,
+                    order: index
+                }));
+            }),
+            tap((updatedSearches: SavedSearch[]) => {
+                this.savedSearches$.next(updatedSearches);
+            }),
+            switchMap((updatedSearches: SavedSearch[]) => {
+                return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
+            }),
+            catchError((error) => {
+                this.savedSearches$.next(previousSavedSearchesOrder);
+                return throwError(() => error);
+            })
+        );
+    }
+
+    changeOrder(previousIndex: number, currentIndex: number): void {
+        let previousSavedSearchesOrder: SavedSearch[];
+        this.savedSearches$
+            .pipe(
+                take(1),
+                map((savedSearches: SavedSearch[]) => {
+                    previousSavedSearchesOrder = [...savedSearches];
+                    const [movedSearch] = savedSearches.splice(previousIndex, 1);
+                    savedSearches.splice(currentIndex, 0, movedSearch);
+                    return savedSearches.map((search, index) => ({
+                        ...search,
+                        order: index
+                    }));
+                }),
+                tap((savedSearches: SavedSearch[]) => this.savedSearches$.next(savedSearches)),
+                switchMap((updatedSearches: SavedSearch[]) => {
+                    return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
+                }),
+                catchError((error) => {
+                    this.savedSearches$.next(previousSavedSearchesOrder);
+                    return throwError(() => error);
+                })
+            )
+            .subscribe();
+    }
+
     private getSavedSearchesNodeId(): Observable<string> {
         const localStorageKey = this.getLocalStorageKey();
         if (this.currentUserLocalStorageKey && this.currentUserLocalStorageKey !== localStorageKey) {
