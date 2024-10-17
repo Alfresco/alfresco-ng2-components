@@ -45,11 +45,10 @@ export class SavedSearchesService {
     private currentUserLocalStorageKey: string;
     private createFileAttempt = false;
 
-    constructor(private readonly apiService: AlfrescoApiService, private readonly authService: AuthenticationService) {
+    constructor(private readonly apiService: AlfrescoApiService, private readonly authService: AuthenticationService) {}
+
+    innit(): void {
         this.fetchSavedSearches();
-        this.authService.onLogin.subscribe(() => {
-            this.fetchSavedSearches();
-        });
     }
 
     /**

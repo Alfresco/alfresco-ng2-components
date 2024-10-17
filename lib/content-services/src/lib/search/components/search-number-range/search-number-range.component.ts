@@ -88,8 +88,9 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         this.context.populateFilters
             .asObservable()
             .pipe(
-                map(filtersQueries => filtersQueries[this.id]),
-                first())
+                map((filtersQueries) => filtersQueries[this.id]),
+                first()
+            )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
                     this.form.patchValue({ from: filterQuery.from, to: filterQuery.to });
@@ -111,11 +112,11 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             this.updateDisplayValue();
             this.isActive = true;
 
-            const map = new Map<string, string>();
-            map.set('FROM', model.from);
-            map.set('TO', model.to);
+            const destinationObject = new Map<string, string>();
+            destinationObject.set('FROM', model.from);
+            destinationObject.set('TO', model.to);
 
-            const value = this.formatString(this.format, map);
+            const value = this.formatString(this.format, destinationObject);
 
             this.context.queryFragments[this.id] = `${this.field}:${value}`;
             const filterParam = this.context.filterRawParams[this.id] ?? {};
@@ -128,10 +129,10 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         }
     }
 
-    private formatString(str: string, map: Map<string, string>): string {
+    private formatString(str: string, destinationObject: Map<string, string>): string {
         let result = str;
 
-        map.forEach((value, key) => {
+        destinationObject.forEach((value, key) => {
             const expr = new RegExp('{' + key + '}', 'gm');
             result = result.replace(expr, value);
         });
