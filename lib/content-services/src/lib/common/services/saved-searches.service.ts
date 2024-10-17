@@ -76,21 +76,131 @@ export class SavedSearchesService {
     }
 
     /**
-     * Gets a list of saved searches by user.
+     * Saves a new search into state and updates state. If there are less than 5 searches,
+     * it will be pushed on first place, if more it will be pushed to 6th place.
      *
      * @param newSaveSearch object { name: string, description: string, encodedUrl: string }
-     * @returns Adds and saves search also updating current saved search state
+     * @returns NodeEntry
      */
     saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
         return this.getSavedSearches().pipe(
             take(1),
-            switchMap((savedSearches: Array<SavedSearch>) => {
-                const updatedSavedSearches = [...savedSearches, { ...newSaveSearch, order: savedSearches.length }];
+            switchMap((savedSearches: SavedSearch[]) => {
+                let updatedSavedSearches: SavedSearch[] = [];
+
+                if (savedSearches.length < 5) {
+                    updatedSavedSearches = [{ ...newSaveSearch, order: 0 }, ...savedSearches];
+                } else {
+                    const firstFiveSearches = savedSearches.slice(0, 5);
+                    const restOfSearches = savedSearches.slice(5);
+
+                    updatedSavedSearches = [...firstFiveSearches, { ...newSaveSearch, order: 5 }, ...restOfSearches];
+                }
+
+                updatedSavedSearches = updatedSavedSearches.map((search, index) => ({
+                    ...search,
+                    order: index
+                }));
+
                 return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSavedSearches))).pipe(
                     tap(() => this.savedSearches$.next(updatedSavedSearches))
                 );
+            }),
+            catchError((error) => {
+                console.error('Error saving new search:', error);
+                return throwError(() => error);
             })
         );
+    }
+
+    /**
+     * Replace Save Search with new one and also updates the state.
+     *
+     * @param updatedSavedSearch - updated Save Search
+     * @returns NodeEntry
+     */
+    editSavedSearch(updatedSavedSearch: SavedSearch): Observable<NodeEntry> {
+        let previousSavedSearches: SavedSearch[];
+        return this.savedSearches$.pipe(
+            take(1),
+            map((savedSearches: SavedSearch[]) => {
+                previousSavedSearches = [...savedSearches];
+                return savedSearches.map((search) => (search.order === updatedSavedSearch.order ? updatedSavedSearch : search));
+            }),
+            tap((updatedSearches: SavedSearch[]) => {
+                this.savedSearches$.next(updatedSearches);
+            }),
+            switchMap((updatedSearches: SavedSearch[]) => {
+                return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
+            }),
+            catchError((error) => {
+                this.savedSearches$.next(previousSavedSearches);
+                return throwError(() => error);
+            })
+        );
+    }
+
+    /**
+     * Deletes Save Search and update state.
+     *
+     * @param deletedSavedSearch - Save Search to delete
+     * @returns NodeEntry
+     */
+    deleteSavedSearch(deletedSavedSearch: SavedSearch): Observable<NodeEntry> {
+        let previousSavedSearchesOrder: SavedSearch[];
+        return this.savedSearches$.pipe(
+            take(1),
+            map((savedSearches: SavedSearch[]) => {
+                previousSavedSearchesOrder = [...savedSearches];
+                const updatedSearches = savedSearches.filter((search) => search.order !== deletedSavedSearch.order);
+                return updatedSearches.map((search, index) => ({
+                    ...search,
+                    order: index
+                }));
+            }),
+            tap((updatedSearches: SavedSearch[]) => {
+                this.savedSearches$.next(updatedSearches);
+            }),
+            switchMap((updatedSearches: SavedSearch[]) => {
+                return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
+            }),
+            catchError((error) => {
+                this.savedSearches$.next(previousSavedSearchesOrder);
+                return throwError(() => error);
+            })
+        );
+    }
+
+    /**
+     * Reorders saved search place
+     *
+     * @param previousIndex - previous index of saved search
+     * @param currentIndex - new index of saved search
+     */
+    changeOrder(previousIndex: number, currentIndex: number): void {
+        let previousSavedSearchesOrder: SavedSearch[];
+        this.savedSearches$
+            .pipe(
+                take(1),
+                map((savedSearches: SavedSearch[]) => {
+                    previousSavedSearchesOrder = [...savedSearches];
+                    const [movedSearch] = savedSearches.splice(previousIndex, 1);
+                    savedSearches.splice(currentIndex, 0, movedSearch);
+                    return savedSearches.map((search, index) => ({
+                        ...search,
+                        order: index
+                    }));
+                }),
+                tap((savedSearches: SavedSearch[]) => this.savedSearches$.next(savedSearches)),
+                switchMap((updatedSearches: SavedSearch[]) => {
+                    return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
+                }),
+                catchError((error) => {
+                    this.savedSearches$.next(previousSavedSearchesOrder);
+                    return throwError(() => error);
+                })
+            )
+            .subscribe();
     }
 
     private getSavedSearchesNodeId(): Observable<string> {
