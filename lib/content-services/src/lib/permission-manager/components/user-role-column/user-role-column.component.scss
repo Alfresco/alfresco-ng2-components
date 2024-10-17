@@ -1,0 +1,10 @@
+@import 'styles/mat-selectors';
+
+.adf-role-selector-field#{$mat-form-field} {
+    width: 100%;
+    max-width: 200px;
+
+    #{$mat-form-field-flex} {
+        height: 40px;
+    }
+}

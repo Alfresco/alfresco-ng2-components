@@ -21,6 +21,7 @@ import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from '../services/jwt-helper.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { AuthModule } from '../oidc/auth.module';
 
 describe('Auth Guard SSO role service', () => {
     let jwtHelperService: JwtHelperService;
@@ -29,7 +30,7 @@ describe('Auth Guard SSO role service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule]
+            imports: [NoopTranslateModule, MatDialogModule, AuthModule.forRoot({ useHash: true })]
         });
         localStorage.clear();
         jwtHelperService = TestBed.inject(JwtHelperService);

@@ -6,5 +6,5 @@ module.exports = {
     staticDirs: [],
     docs: {},
     stories: [],
-    addons: []
+    addons: ['@chromatic-com/storybook']
 };

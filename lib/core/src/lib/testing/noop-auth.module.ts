@@ -16,7 +16,7 @@
  */
 
 import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
-import { AuthModule, RedirectAuthService } from '../auth';
+import { AuthModule, JWT_STORAGE_SERVICE, RedirectAuthService } from '../auth';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppConfigService, StoragePrefixFactory } from '../app-config';
@@ -47,7 +47,8 @@ export class NoopRedirectAuthService extends RedirectAuthService {
             useFactory: loadAppConfig,
             deps: [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
             multi: true
-        }
+        },
+        { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
     ]
 })
 export class NoopAuthModule {}

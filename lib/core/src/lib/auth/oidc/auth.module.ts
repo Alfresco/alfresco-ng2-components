@@ -15,16 +15,21 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, inject, ModuleWithProviders, NgModule, InjectionToken } from '@angular/core';
 import { AUTH_CONFIG, OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthenticationService } from '../services/authentication.service';
-import { StorageService } from '../../common/services/storage.service';
 import { AuthModuleConfig, AUTH_MODULE_CONFIG } from './auth-config';
 import { authConfigFactory, AuthConfigService } from './auth-config.service';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
+import { StorageService } from '../../common/services/storage.service';
+
+export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
+    providedIn: 'root',
+    factory: () => inject(StorageService)
+});
 
 /**
  * Create a Login Factory function
@@ -36,12 +41,19 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
     return () => redirectService.init();
 }
 
+/**
+ *  @returns current instance of OAuthStorage
+ */
+export function oauthStorageFactory(): OAuthStorage {
+    return inject(JWT_STORAGE_SERVICE);
+}
+
 @NgModule({
     declarations: [AuthenticationConfirmationComponent],
     imports: [AuthRoutingModule, OAuthModule.forRoot()],
     providers: [
-        { provide: OAuthStorage, useExisting: StorageService },
-        { provide: AuthenticationService},
+        { provide: OAuthStorage, useFactory: oauthStorageFactory },
+        { provide: AuthenticationService },
         {
             provide: AUTH_CONFIG,
             useFactory: authConfigFactory,

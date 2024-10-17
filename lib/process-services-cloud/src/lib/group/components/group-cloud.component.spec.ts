@@ -26,7 +26,7 @@ import { IdentityGroupService } from '../services/identity-group.service';
 import { mockFoodGroups, mockMeatChicken, mockVegetableAubergine } from '../mock/group-cloud.mock';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatChipGridHarness, MatChipHarness } from '@angular/material/chips/testing';
+import { MatChipHarness } from '@angular/material/chips/testing';
 import { MatIconHarness } from '@angular/material/icon/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 
@@ -357,9 +357,7 @@ describe('GroupCloudComponent', () => {
 
             const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toBe(1);
-
-            const chipList = await loader.getHarness(MatChipGridHarness);
-            expect(await chipList.isDisabled()).toBe(true);
+            expect(await chips[0].isDisabled()).toBe(true);
         });
 
         it('should chip list be disabled and show all the chips - multiple mode', async () => {
@@ -372,9 +370,8 @@ describe('GroupCloudComponent', () => {
 
             const chips = await loader.getAllHarnesses(MatChipHarness);
             expect(chips.length).toBe(2);
-
-            const chipList = await loader.getHarness(MatChipGridHarness);
-            expect(await chipList.isDisabled()).toBe(true);
+            expect(await chips[0].isDisabled()).toBe(true);
+            expect(await chips[1].isDisabled()).toBe(true);
         });
     });
 });
