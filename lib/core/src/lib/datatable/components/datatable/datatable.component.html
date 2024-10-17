@@ -15,6 +15,12 @@
             class="adf-datatable-row"
             role="row">
 
+
+            <!-- Drag -->
+            <div *ngIf="enableDragRows" class="adf-datatable-cell-header adf-drag-column">
+                <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate }}</span>
+            </div>
+
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
@@ -148,10 +154,17 @@
 
     <div
         class="adf-datatable-body"
-        [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing) }"
+        [ngClass]="{ 'adf-blur-datatable-body': blurOnResize && (isDraggingHeaderColumn || isResizing), 'adf-datatable-body__draggable': enableDragRows && !isDraggingRow, 'adf-datatable-body__dragging': isDraggingRow }"
+        cdkDropList
+        [cdkDropListDisabled]="!enableDragRows"
         role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
+                cdkDrag
+                [cdkDragDisabled]="!enableDragRows"
+                (cdkDragDropped)="onDragDrop($event)"
+                (cdkDragStarted)="onDragStart()"
+                (cdkDragEnded)="onDragEnd()"
                 [row]="row"
                 (select)="onEnterKeyPressed(row, $event)"
                 (keyup)="onRowKeyUp(row, $event)"
@@ -160,8 +173,19 @@
                 [adf-upload-data]="row"
                 [ngStyle]="rowStyle"
                 [ngClass]="getRowStyle(row)"
+                [class.adf-datatable-row__dragging]="isDraggingRow"
                 [attr.data-automation-id]="'datatable-row-' + idx"
                 (contextmenu)="markRowAsContextMenuSource(row)">
+                <!-- Drag button -->
+                <div *ngIf="enableDragRows"
+                     role="gridcell"
+                     class="adf-datatable-cell adf-datatable__actions-cell adf-datatable-actions-menu">
+                    <button mat-icon-button
+                            [attr.aria-label]="'ADF-DATATABLE.ACCESSIBILITY.DRAG' | translate">
+                        <mat-icon>drag_indicator</mat-icon>
+                    </button>
+                </div>
+
                 <!-- Actions (left) -->
                 <div *ngIf="actions && actionsPosition === 'left'" role="gridcell" class="adf-datatable-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu" #actionsMenuTrigger="matMenuTrigger"

@@ -26,7 +26,8 @@ import {
     OnDestroy,
     TemplateRef,
     EventEmitter,
-    ViewEncapsulation
+    ViewEncapsulation,
+    ChangeDetectorRef
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { UserPreferencesService } from '../../../common/services/user-preferences.service';
@@ -100,7 +101,11 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private mediaMatcher: MediaMatcher, private userPreferencesService: UserPreferencesService) {
+    constructor(
+        private readonly mediaMatcher: MediaMatcher,
+        private readonly userPreferencesService: UserPreferencesService,
+        private readonly changeDetectorRef: ChangeDetectorRef
+    ) {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 
@@ -137,6 +142,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         } else {
             this.isMenuMinimized = false;
         }
+        this.changeDetectorRef.detectChanges();
 
         this.container.toggleMenu();
         this.expanded.emit(!this.isMenuMinimized);
