@@ -28,13 +28,13 @@ import { AuthenticationService } from '@alfresco/adf-core';
 })
 export class SavedSearchesService {
     private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
+    private get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    private get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
@@ -52,11 +52,17 @@ export class SavedSearchesService {
         });
     }
 
+    /**
+     * Gets a list of saved searches by user.
+     *
+     * @returns SavedSearch list containing user saved searches
+     */
     getSavedSearches(): Observable<SavedSearch[]> {
         return this.getSavedSearchesNodeId().pipe(
-            concatMap((nodeId) => {
-                this.savedSearchFileNodeId = nodeId;
-                return from(this.nodesApi.getNodeContent(nodeId).then((content) => this.mapFileContentToSavedSearches(content))).pipe(
+            concatMap(() => {
+                return from(
+                    this.nodesApi.getNodeContent(this.savedSearchFileNodeId).then((content) => this.mapFileContentToSavedSearches(content))
+                ).pipe(
                     catchError((error) => {
                         if (!this.createFileAttempt) {
                             this.createFileAttempt = true;
@@ -70,6 +76,12 @@ export class SavedSearchesService {
         );
     }
 
+    /**
+     * Gets a list of saved searches by user.
+     *
+     * @param newSaveSearch object { name: string, description: string, encodedUrl: string }
+     * @returns Adds and saves search also updating current saved search state
+     */
     saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
         return this.getSavedSearches().pipe(
             take(1),
@@ -116,12 +128,14 @@ export class SavedSearchesService {
                                     })
                                 );
                             }
+                            this.savedSearchFileNodeId = savedSearchesNodeId;
                             return savedSearchesNodeId;
                         })
                     )
                 )
             );
         } else {
+            this.savedSearchFileNodeId = savedSearchesNodeId;
             return of(savedSearchesNodeId);
         }
     }

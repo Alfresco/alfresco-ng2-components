@@ -144,7 +144,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         }
     }
     onDateRangedValueChanged(value: Partial<SearchDateRange>, field: string) {
-        this.context.filterRawParams[this.id] = this.context.filterRawParams[this.id] || {};
+        this.context.filterRawParams[this.id] ||= {};
         this.context.filterRawParams[this.id][field] = value;
         this.value[field] = value;
         this.updateQuery(value, field);
