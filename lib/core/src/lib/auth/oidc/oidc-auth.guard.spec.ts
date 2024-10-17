@@ -20,16 +20,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { OidcAuthGuard } from './oidc-auth.guard';
 import { AuthService } from './auth.service';
+import { Subject } from 'rxjs';
 
 describe('OidcAuthGuard', () => {
     let authServiceSpy: jasmine.SpyObj<AuthService>;
     let routerSpy: jasmine.SpyObj<Router>;
+    const fakeLogoutSubject: Subject<void> = new Subject<void>();
     const route: ActivatedRouteSnapshot = new ActivatedRouteSnapshot();
     const state: RouterStateSnapshot = {} as RouterStateSnapshot;
 
     beforeEach(() => {
         const routerSpyObj = jasmine.createSpyObj('Router', ['navigateByUrl']);
-        const authSpy = jasmine.createSpyObj('AuthService', ['loginCallback']);
+        const authSpy = jasmine.createSpyObj('AuthService', ['loginCallback'], { onLogout$: fakeLogoutSubject.asObservable() });
 
         TestBed.configureTestingModule({
             providers: [OidcAuthGuard, { provide: AuthService, useValue: authSpy }, { provide: Router, useValue: routerSpyObj }],
@@ -40,24 +42,55 @@ describe('OidcAuthGuard', () => {
         authServiceSpy = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     });
 
-    describe('isAuthenticated', () => {
-        it('should call loginCallback and navigateByUrl if not authenticated', async () => {
-            authServiceSpy.authenticated = false;
-            authServiceSpy.loginCallback.and.returnValue(Promise.resolve('/fake-route'));
+    it('should call loginCallback and navigateByUrl', async () => {
+        authServiceSpy.loginCallback.and.returnValue(Promise.resolve('/fake-route'));
 
+        try {
             await TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
-
             expect(authServiceSpy.loginCallback).toHaveBeenCalled();
             expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/fake-route', { replaceUrl: true });
-        });
+        } catch {
+            fail('Expected no error to be thrown');
+        }
+    });
 
-        it('should navigate to default route if loginCallback fails', async () => {
-            authServiceSpy.authenticated = false;
-            authServiceSpy.loginCallback.and.returnValue(Promise.reject(new Error()));
+    it('should navigate to default route if loginCallback fails', async () => {
+        authServiceSpy.loginCallback.and.returnValue(Promise.reject(new Error()));
 
+        try {
             await TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
-
             expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/', { replaceUrl: true });
-        });
+        } catch (error) {
+            fail('Expected no error to be thrown');
+        }
+
+    });
+
+    it('should throw an error if loginCallback fails and logout event is emitted', async () => {
+        const expectedError = new Error('fake login error');
+        authServiceSpy.loginCallback.and.returnValue(Promise.reject(new Error('fake login error')));
+
+        try {
+            const runInInjectionContext = TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
+            fakeLogoutSubject.next();
+            await runInInjectionContext;
+            fail('Expected an error to be thrown');
+        } catch (error) {
+            expect(error).toEqual(expectedError);
+            expect(routerSpy.navigateByUrl).not.toHaveBeenCalled();
+        }
+    });
+
+    it('should NOT throw an error if loginCallback success and logout event is emitted', async () => {
+        authServiceSpy.loginCallback.and.returnValue(Promise.resolve('/test-route'));
+
+        try {
+            const runInInjectionContext = TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
+            fakeLogoutSubject.next();
+            await runInInjectionContext;
+            expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/test-route', { replaceUrl: true });
+        } catch (error) {
+            fail('Expected no error to be thrown');
+        }
     });
 });
