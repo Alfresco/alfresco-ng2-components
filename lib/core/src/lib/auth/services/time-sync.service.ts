@@ -45,7 +45,7 @@ export class TimeSyncService {
     checkTimeSync(maxAllowedClockSkewInSec: number): Observable<TimeSync> {
         const startTime = Date.now();
 
-        return this.getServiceTime().pipe(
+        return this.getServerTime().pipe(
             map((serverTimeResponse: number) => {
                 let serverTimeInMs: number;
 
@@ -87,7 +87,7 @@ export class TimeSyncService {
         );
     }
 
-    private getServiceTime(): Observable<number> {
+    private getServerTime(): Observable<number> {
         return from(this._http.get<number>(this.getServerTimeUrl())).pipe(
             timeout(5000),
             catchError(() => throwError(() => new Error('Failed to get server time')))

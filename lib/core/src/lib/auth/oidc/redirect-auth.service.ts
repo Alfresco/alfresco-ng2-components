@@ -79,6 +79,14 @@ export class RedirectAuthService extends AuthService {
   tokenHasExpiredDueToClockOutOfSync$: Observable<Error>;
 
   /**
+   * Observable that emits an error when the OAuth error event occurs due to
+   * the local machine clock being out of sync with the server time.
+   *
+   * @type {Observable<Error>}
+   */
+  oauthErrorEventOccurDueToClockOutOfSync$: Observable<Error>;
+
+  /**
    * Observable stream that emits either OAuthErrorEvent or Error.
    * This stream combines multiple OAuth error sources into a single observable.
    */
@@ -155,6 +163,13 @@ export class RedirectAuthService extends AuthService {
         filter((_, index) => index === 1)
     );
 
+    this.oauthErrorEventOccurDueToClockOutOfSync$ = this.oauthErrorEvent$.pipe(
+        switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
+        filter((timeSync) => timeSync?.outOfSync),
+        map((timeSync) => new Error(`OAuth error occurred due to local machine clock ${timeSync.localDateTimeISO} being out of sync with server time ${timeSync.serverDateTimeISO}`)),
+        take(1)
+    );
+
     this.authenticated$ = this.oauthService.events.pipe(
       map(() => this.authenticated),
       distinctUntilChanged(),
@@ -171,6 +186,7 @@ export class RedirectAuthService extends AuthService {
     );
 
     this.combinedOAuthErrorsStream$ = race([
+        this.oauthErrorEventOccurDueToClockOutOfSync$,
         this.firstOauthErrorEventExcludingTokenRefreshError$,
         this.tokenHasExpiredDueToClockOutOfSync$,
         this.secondTokenRefreshErrorEventOccur$
@@ -381,7 +397,7 @@ export class RedirectAuthService extends AuthService {
         this._oauthLogger.warn('now: ', new Date(now));
         this._oauthLogger.warn('issuedAt: ', new Date(issuedAtMSec));
         this._oauthLogger.warn('expiresAt: ', new Date(expiresAtMSec));
-        this._oauthLogger.warn('clockSkewInMSec: ', this.oauthService.clockSkewInSec);
+        this._oauthLogger.warn('clockSkewInMSec: ', clockSkewInMSec);
         this._oauthLogger.warn('this.oauthService.decreaseExpirationBySec: ', this.oauthService.decreaseExpirationBySec);
         this._oauthLogger.warn('issuedAtMSec - clockSkewInMSec >= now: ', issuedAtMSec - clockSkewInMSec >= now);
         this._oauthLogger.warn('expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now: ', expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now);

@@ -396,4 +396,85 @@ describe('RedirectAuthService', () => {
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorCausedBySecondTokenRefreshError);
     }));
+
+    it('should logout user if token_refresh_error is emitted because of clock out of sync', () => {
+        const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
+    it('should logout user if discovery_document_load_error is emitted because of clock out of sync', () => {
+        const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+
+        oauthEvents$.next(new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
+    it('should logout user if code_error is emitted because of clock out of sync', () => {
+        const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+
+        oauthEvents$.next(new OAuthErrorEvent('code_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
+    it('should logout user if discovery_document_validation_error is emitted because of clock out of sync', () => {
+        const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+
+        oauthEvents$.next(new OAuthErrorEvent('discovery_document_validation_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
+    it('should logout user if jwks_load_error is emitted because of clock out of sync', () => {
+        const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+
+        oauthEvents$.next(new OAuthErrorEvent('jwks_load_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
+    it('should logout user if silent_refresh_error is emitted because of clock out of sync', () => {
+        const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+
+        oauthEvents$.next(new OAuthErrorEvent('silent_refresh_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
+    it('should logout user if user_profile_load_error is emitted because of clock out of sync', () => {
+        const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+
+        oauthEvents$.next(new OAuthErrorEvent('user_profile_load_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
+    it('should logout user if token_error is emitted because of clock out of sync', () => {
+        const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+
+        oauthEvents$.next(new OAuthErrorEvent('token_error', { reason: 'error' }, {}));
+
+        expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
+        expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
 });
