@@ -24,6 +24,15 @@ import { Observable } from 'rxjs';
 export abstract class AuthService {
   abstract onLogin: Observable<any>;
 
+  /**
+   * An observable that emits a value when a logout event occurs.
+   * Implement this observable to handle any necessary cleanup or state updates
+   * when a user logs out of the application.
+   *
+   * @type {Observable<void>}
+   */
+  abstract onLogout$: Observable<void>;
+
   abstract onTokenReceived: Observable<any>;
 
   /**

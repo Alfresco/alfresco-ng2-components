@@ -45,6 +45,16 @@ export class RedirectAuthService extends AuthService {
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
 
   /**
+   * Observable stream that emits when the user logs out.
+   *
+   * This observable listens to the events emitted by the OAuth service and filters
+   * them to only include instances of OAuthSuccessEvent with the type `logout`.
+   *
+   * @type {Observable<void>}
+   */
+  onLogout$: Observable<void>;
+
+  /**
    * Observable stream that emits OAuthErrorEvent instances.
    *
    * This observable listens to the events emitted by the OAuth service and filters
@@ -183,6 +193,11 @@ export class RedirectAuthService extends AuthService {
         filter((timeSync) => timeSync?.outOfSync),
         map((timeSync) => new Error(`Token has expired due to local machine clock ${timeSync.localDateTimeISO} being out of sync with server time ${timeSync.serverDateTimeISO}`)),
         take(1)
+    );
+
+    this.onLogout$ = this.oauthService.events.pipe(
+        filter((event) => event.type === 'logout'),
+        map(() => undefined)
     );
 
     this.combinedOAuthErrorsStream$ = race([

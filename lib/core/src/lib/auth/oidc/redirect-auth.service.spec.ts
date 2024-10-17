@@ -16,7 +16,7 @@
  */
 
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse, AuthConfig, OAuthLogger, OAuthErrorEvent, OAuthSuccessEvent } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthEvent, OAuthStorage, AUTH_CONFIG, TokenResponse, AuthConfig, OAuthLogger, OAuthErrorEvent, OAuthSuccessEvent, OAuthInfoEvent } from 'angular-oauth2-oidc';
 import { of, Subject, timeout } from 'rxjs';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AUTH_MODULE_CONFIG } from './auth-config';
@@ -475,6 +475,15 @@ describe('RedirectAuthService', () => {
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
+    });
+
+    it('should onLogout$ be emitted when logout event occur', () => {
+        let expectedLogoutIsEmitted = false;
+        service.onLogout$.subscribe(() => expectedLogoutIsEmitted = true);
+
+        oauthEvents$.next(new OAuthInfoEvent('logout'));
+
+        expect(expectedLogoutIsEmitted).toBeTrue();
     });
 
 });
