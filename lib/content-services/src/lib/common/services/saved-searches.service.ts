@@ -28,13 +28,13 @@ import { AuthenticationService } from '@alfresco/adf-core';
 })
 export class SavedSearchesService {
     private _searchApi: SearchApi;
-    private get searchApi(): SearchApi {
+    get searchApi(): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
 
     private _nodesApi: NodesApi;
-    private get nodesApi(): NodesApi {
+    get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
@@ -140,8 +140,7 @@ export class SavedSearchesService {
         }
     }
     private createSavedSearchesNode(parentNodeId: string): Observable<NodeEntry> {
-        return from(this.nodesApi.createNode(parentNodeId,
-            { name: 'saved-searches.json', nodeType: 'cm:content' }));
+        return from(this.nodesApi.createNode(parentNodeId, { name: 'saved-searches.json', nodeType: 'cm:content' }));
     }
 
     private async mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {
