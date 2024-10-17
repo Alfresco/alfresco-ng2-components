@@ -43,12 +43,23 @@ export class RetryLoginService {
                     retryCount++;
                     return attemptLogin();
                 } else {
-                    const errorReason = (error as OAuthErrorEvent)?.reason || error;
-                    throw new Error(`Login failed after ${maxLoginAttempts} attempts. caused by: ${errorReason}`);
+                    const errorMessage = this.getErrorMessage(error, maxLoginAttempts);
+                    throw new Error(errorMessage);
                 }
             });
 
         return attemptLogin();
     }
 
+    private getErrorMessage(error: any, maxLoginAttempts: number) {
+        const isOAuthErrorEvent = error instanceof OAuthErrorEvent;
+        let oAuthErrorMessage: string;
+        if (isOAuthErrorEvent) {
+            oAuthErrorMessage = (error.reason as any).reason || error.type.toString();
+        }
+        const errorDescription = oAuthErrorMessage || error;
+        const errorMessage = `Login failed after ${maxLoginAttempts} attempts. caused by: ${errorDescription}`;
+        return errorMessage;
+    }
 }
+
