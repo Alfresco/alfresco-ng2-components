@@ -64,13 +64,37 @@ describe('RetryLoginService', () => {
     });
 
     it('should fail after 2 attempts throwing an error', async () => {
-        oauthService.tryLogin.and.rejectWith({ reason: 'fake-error' } as unknown as OAuthErrorEvent);
+        oauthService.tryLogin.and.rejectWith(new OAuthErrorEvent('code_error', { reason: 'fake-error' }));
 
         try {
             await service.tryToLoginTimes({}, 2);
             fail('Expected to throw an error');
         } catch (error) {
             expect(error).toEqual(new Error('Login failed after 2 attempts. caused by: fake-error'));
+            expect(oauthService.tryLogin).toHaveBeenCalledTimes(2);
+        }
+    });
+
+    it('should show the error type if error is OAuthErrorEvent and error reason property object is null', async () => {
+        oauthService.tryLogin.and.rejectWith(new OAuthErrorEvent('invalid_nonce_in_state', { reason: null }));
+
+        try {
+            await service.tryToLoginTimes({}, 2);
+            fail('Expected to throw an error');
+        } catch (error) {
+            expect(error).toEqual(new Error('Login failed after 2 attempts. caused by: invalid_nonce_in_state'));
+            expect(oauthService.tryLogin).toHaveBeenCalledTimes(2);
+        }
+    });
+
+    it('should show the error type if error is OAuthErrorEvent and error reason is an empty object', async () => {
+        oauthService.tryLogin.and.rejectWith(new OAuthErrorEvent('jwks_load_error', {}));
+
+        try {
+            await service.tryToLoginTimes({}, 2);
+            fail('Expected to throw an error');
+        } catch (error) {
+            expect(error).toEqual(new Error('Login failed after 2 attempts. caused by: jwks_load_error'));
             expect(oauthService.tryLogin).toHaveBeenCalledTimes(2);
         }
     });
@@ -88,7 +112,7 @@ describe('RetryLoginService', () => {
     });
 
     it('should fail after default max logint attempts ', async () => {
-        oauthService.tryLogin.and.rejectWith({ reason: 'fake-error' } as unknown as OAuthErrorEvent);
+        oauthService.tryLogin.and.rejectWith( new OAuthErrorEvent('discovery_document_validation_error', { reason: 'fake-error' }));
 
         try {
             await service.tryToLoginTimes({});
