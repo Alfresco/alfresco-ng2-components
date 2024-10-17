@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
@@ -35,7 +36,11 @@ import { TranslateModule } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-slider' }
 })
-export class SearchSliderComponent implements SearchWidget, OnInit {
+export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
+    /** The numeric value represented by the slider. */
+    @Input()
+    value: number | null;
+
     isActive?: boolean;
     startValue: any;
 
@@ -47,11 +52,9 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     max: number;
     thumbLabel = false;
     enableChangeUpdate: boolean;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
 
-    /** The numeric value represented by the slider. */
-    @Input()
-    value: number | null;
+    private readonly destroy$ = new Subject<void>();
 
     ngOnInit() {
         if (this.settings) {
@@ -74,6 +77,23 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         if (this.startValue) {
             this.setValue(this.startValue);
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((filtersQueries) => {
+                if (filtersQueries[this.id]) {
+                    this.value = filtersQueries[this.id];
+                    this.updateQuery(this.value, false);
+                } else {
+                    this.reset(false);
+                }
+                this.context.filterLoaded.next();
+            });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     clear() {
@@ -83,9 +103,9 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         }
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.value = this.min || 0;
-        this.updateQuery(null);
+        this.updateQuery(null, updateContext);
     }
 
     onChangedHandler() {
@@ -111,7 +131,8 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         this.submitValues();
     }
 
-    private updateQuery(value: number | null) {
+    private updateQuery(value: number | null, updateContext = true) {
+        this.context.filterRawParams[this.id] = value;
         this.displayValue$.next(this.value ? `${this.value} ${this.settings.unit ?? ''}` : '');
         if (this.id && this.context && this.settings && this.settings.field) {
             if (value === null) {
@@ -119,7 +140,9 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
             } else {
                 this.context.queryFragments[this.id] = `${this.settings.field}:[0 TO ${value}]`;
             }
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 }

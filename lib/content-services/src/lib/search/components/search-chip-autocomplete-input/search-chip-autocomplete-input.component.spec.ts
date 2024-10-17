@@ -122,6 +122,12 @@ describe('SearchChipAutocompleteInputComponent', () => {
         return fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'));
     }
 
+    it('should assign preselected values to selected options on init', () => {
+        component.preselectedOptions = [{ value: 'option1' }];
+        component.ngOnInit();
+        expect(component.selectedOptions).toEqual([{ value: 'option1' }]);
+    });
+
     it('should add new option only if value is predefined when allowOnlyPredefinedValues = true', async () => {
         addNewOption('test');
         addNewOption('option1');

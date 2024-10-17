@@ -21,7 +21,8 @@ import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -56,7 +57,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
     validators: Validators;
     enableChangeUpdate: boolean;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
 
     ngOnInit(): void {
         if (this.settings) {
@@ -84,32 +85,54 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
         this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
         this.updateDisplayValue();
+        this.context.populateFilters
+            .asObservable()
+            .pipe(
+                map((filtersQueries) => filtersQueries[this.id]),
+                first()
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    this.form.patchValue({ from: filterQuery.from, to: filterQuery.to });
+                    this.form.markAsDirty();
+                    this.apply({ from: filterQuery.from, to: filterQuery.to }, true, false);
+                } else {
+                    this.reset(false);
+                }
+                this.context.filterLoaded.next();
+            });
     }
 
     formValidator(formGroup: UntypedFormGroup) {
         return parseInt(formGroup.get('from').value, 10) < parseInt(formGroup.get('to').value, 10) ? null : { mismatch: true };
     }
 
-    apply(model: { from: string; to: string }, isValid: boolean) {
+    apply(model: { from: string; to: string }, isValid: boolean, updateContext = true) {
         if (isValid && this.id && this.context && this.field) {
             this.updateDisplayValue();
             this.isActive = true;
 
-            const map = new Map<string, string>();
-            map.set('FROM', model.from);
-            map.set('TO', model.to);
+            const destinationObject = new Map<string, string>();
+            destinationObject.set('FROM', model.from);
+            destinationObject.set('TO', model.to);
 
-            const value = this.formatString(this.format, map);
+            const value = this.formatString(this.format, destinationObject);
 
             this.context.queryFragments[this.id] = `${this.field}:${value}`;
-            this.context.update();
+            const filterParam = this.context.filterRawParams[this.id] ?? {};
+            this.context.filterRawParams[this.id] = filterParam;
+            filterParam.from = model.from;
+            filterParam.to = model.to;
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 
-    private formatString(str: string, map: Map<string, string>): string {
+    private formatString(str: string, destinationObject: Map<string, string>): string {
         let result = str;
 
-        map.forEach((value, key) => {
+        destinationObject.forEach((value, key) => {
             const expr = new RegExp('{' + key + '}', 'gm');
             result = result.replace(expr, value);
         });
@@ -143,7 +166,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         this.updateDisplayValue();
     }
 
-    clear() {
+    clear(updateContext = true) {
         this.isActive = false;
 
         this.form.reset({
@@ -153,16 +176,17 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
+            this.context.filterRawParams[this.id] = undefined;
             this.updateDisplayValue();
-            if (this.enableChangeUpdate) {
+            if (this.enableChangeUpdate && updateContext) {
                 this.context.update();
             }
         }
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.clear();
-        if (this.id && this.context) {
+        if (this.id && this.context && updateContext) {
             this.context.update();
         }
     }

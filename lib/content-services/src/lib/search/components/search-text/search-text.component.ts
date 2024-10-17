@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
@@ -37,7 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-text' }
 })
-export class SearchTextComponent implements SearchWidget, OnInit {
+export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
     /** The content of the text box. */
     @Input()
     value = '';
@@ -48,7 +49,9 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     startValue: string;
     isActive = false;
     enableChangeUpdate = true;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
+
+    private readonly destroy$ = new Subject<void>();
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {
@@ -70,6 +73,26 @@ export class SearchTextComponent implements SearchWidget, OnInit {
                 }
             }
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(
+                map((filtersQueries) => filtersQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    this.value = filterQuery;
+                    this.updateQuery(this.value, false);
+                } else {
+                    this.reset(false);
+                }
+                this.context.filterLoaded.next();
+            });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     clear() {
@@ -80,9 +103,9 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         }
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.value = '';
-        this.updateQuery(null);
+        this.updateQuery(null, updateContext);
     }
 
     onChangedHandler(event) {
@@ -93,11 +116,14 @@ export class SearchTextComponent implements SearchWidget, OnInit {
         }
     }
 
-    private updateQuery(value: string) {
+    private updateQuery(value: string, updateContext = true) {
+        this.context.filterRawParams[this.id] = value;
         this.displayValue$.next(value);
         if (this.context && this.settings && this.settings.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 

@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -36,13 +37,13 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: './search-filter-autocomplete-chips.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {
+export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit, OnDestroy {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     options: SearchFilterList<AutocompleteOption[]>;
     startValue: AutocompleteOption[] = [];
-    displayValue$ = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
     selectedOptions: AutocompleteOption[] = [];
     enableChangeUpdate: boolean;
 
@@ -50,6 +51,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     reset$: Observable<void> = this.resetSubject$.asObservable();
     private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private tagService: TagService, private categoryService: CategoryService) {
         this.options = new SearchFilterList<AutocompleteOption[]>();
@@ -58,17 +60,38 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     ngOnInit() {
         if (this.settings) {
             this.setOptions();
-            if (this.startValue) {
+            if (this.startValue?.length > 0) {
                 this.setValue(this.startValue);
             }
             this.enableChangeUpdate = this.settings.allowUpdateOnChange ?? true;
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(
+                map((filterQueries) => filterQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    this.selectedOptions = filterQuery;
+                    this.updateQuery(false);
+                } else if (!filterQuery && this.selectedOptions.length) {
+                    this.reset(false);
+                }
+                this.context.filterLoaded.next();
+            });
     }
 
-    reset() {
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    reset(updateContext = true) {
         this.selectedOptions = [];
+        this.context.filterRawParams[this.id] = undefined;
         this.resetSubject$.next();
-        this.updateQuery();
+        this.updateQuery(updateContext);
     }
 
     submitValues() {
@@ -107,7 +130,8 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         return option1.id ? option1.id.toUpperCase() === option2.id.toUpperCase() : option1.value.toUpperCase() === option2.value.toUpperCase();
     }
 
-    private updateQuery() {
+    private updateQuery(updateContext = true) {
+        this.context.filterRawParams[this.id] = this.selectedOptions.length > 0 ? this.selectedOptions : undefined;
         this.displayValue$.next(this.selectedOptions.map((option) => option.value).join(', '));
         if (this.context && this.settings && this.settings.field) {
             let queryFragments;
@@ -117,7 +141,9 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                 queryFragments = this.selectedOptions.map((val) => val.query ?? `${this.settings.field}:"${val.value}"`);
             }
             this.context.queryFragments[this.id] = queryFragments.join(' OR ');
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 

@@ -87,7 +87,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     betweenStartDateFormControl = this.form.controls.betweenStartDate;
     betweenEndDateFormControl = this.form.controls.betweenEndDate;
     convertedMaxDate: Date;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;

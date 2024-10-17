@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { TranslationService } from '@alfresco/adf-core';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,7 +44,7 @@ export interface SearchListOption {
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-check-list' }
 })
-export class SearchCheckListComponent implements SearchWidget, OnInit {
+export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -53,7 +54,9 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     pageSize = 5;
     isActive = false;
     enableChangeUpdate = true;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
+
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private translationService: TranslationService) {
         this.options = new SearchFilterList<SearchListOption>();
@@ -77,6 +80,31 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
                 this.context.queryFragments[this.id] = '';
             }
         }
+        this.context.populateFilters
+            .asObservable()
+            .pipe(
+                map((filtersQueries) => filtersQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    filterQuery.forEach((value) => {
+                        const option = this.options.items.find((searchListOption) => searchListOption.value === value);
+                        if (option) {
+                            option.checked = true;
+                        }
+                    });
+                    this.submitValues(false);
+                } else {
+                    this.reset(false);
+                }
+                this.context.filterLoaded.next();
+            });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     clear() {
@@ -95,15 +123,18 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
+            this.context.filterRawParams[this.id] = undefined;
         }
     }
 
-    reset() {
+    reset(updateContext = true) {
         this.isActive = false;
         this.clearOptions();
         if (this.id && this.context) {
             this.updateDisplayValue();
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 
@@ -142,13 +173,18 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         return this.options.items.filter((option) => option.checked).map((option) => option.value);
     }
 
-    submitValues() {
+    submitValues(updateContext = true) {
         const checkedValues = this.getCheckedValues();
+        if (checkedValues.length !== 0) {
+            this.context.filterRawParams[this.id] = checkedValues;
+        }
         const query = checkedValues.join(` ${this.operator} `);
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = query;
             this.updateDisplayValue();
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 }

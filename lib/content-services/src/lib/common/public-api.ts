@@ -24,6 +24,7 @@ export * from './services/nodes-api.service';
 export * from './services/discovery-api.service';
 export * from './services/people-content.service';
 export * from './services/content.service';
+export * from './services/saved-searches.service';
 
 export * from './events/file.event';
 
@@ -36,4 +37,5 @@ export * from './models/permissions.enum';
 export * from './models/allowable-operations.enum';
 
 export * from './interfaces/search-configuration.interface';
+export * from './interfaces/saved-search.interface';
 export * from './mocks/ecm-user.service.mock';

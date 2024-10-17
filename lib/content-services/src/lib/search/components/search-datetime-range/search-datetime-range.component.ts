@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { isValid, isBefore, startOfMinute, endOfMinute } from 'date-fns';
+import { isValid, isBefore, startOfMinute, endOfMinute, parseISO } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -58,7 +59,7 @@ export const DEFAULT_DATETIME_FORMAT: string = 'dd/MM/yyyy HH:mm';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
-export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
+export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDestroy {
     from: FormControl<Date>;
     to: FormControl<Date>;
 
@@ -74,7 +75,9 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     isActive = false;
     startValue: any;
     enableChangeUpdate: boolean;
-    displayValue$: Subject<string> = new Subject<string>();
+    displayValue$ = new ReplaySubject<string>(1);
+
+    private readonly destroy$ = new Subject<void>();
 
     constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
 
@@ -133,9 +136,32 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
 
         this.setFromMaxDatetime();
         this.enableChangeUpdate = this.settings?.allowUpdateOnChange ?? true;
+        this.context.populateFilters
+            .asObservable()
+            .pipe(
+                map((filtersQueries) => filtersQueries[this.id]),
+                takeUntil(this.destroy$)
+            )
+            .subscribe((filterQuery) => {
+                if (filterQuery) {
+                    const start = parseISO(filterQuery.start);
+                    const end = parseISO(filterQuery.end);
+                    this.form.patchValue({ from: start, to: end });
+                    this.form.markAsDirty();
+                    this.apply({ from: start, to: end }, true, false);
+                } else {
+                    this.reset();
+                }
+                this.context.filterLoaded.next();
+            });
     }
 
-    apply(model: Partial<{ from: Date; to: Date }>, isValidValue: boolean) {
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    apply(model: Partial<{ from: Date; to: Date }>, isValidValue: boolean, updateContext = true) {
         if (isValidValue && this.id && this.context && this.settings && this.settings.field) {
             this.isActive = true;
 
@@ -143,8 +169,14 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
             const end = DateFnsUtils.utcToLocal(endOfMinute(model.to)).toISOString();
 
             this.context.queryFragments[this.id] = `${this.settings.field}:['${start}' TO '${end}']`;
+            const filterParam = this.context.filterRawParams[this.id] ?? {};
+            this.context.filterRawParams[this.id] = filterParam;
+            filterParam.start = start;
+            filterParam.end = end;
             this.updateDisplayValue();
-            this.context.update();
+            if (updateContext) {
+                this.context.update();
+            }
         }
     }
 
@@ -197,6 +229,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
         });
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
+            this.context.filterRawParams[this.id] = undefined;
         }
 
         if (this.id && this.context && this.enableChangeUpdate) {

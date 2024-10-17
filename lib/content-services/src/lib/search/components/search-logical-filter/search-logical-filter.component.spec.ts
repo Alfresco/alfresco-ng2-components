@@ -19,6 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { LogicalSearchCondition, LogicalSearchFields, SearchLogicalFilterComponent } from './search-logical-filter.component';
+import { ReplaySubject } from 'rxjs';
 
 describe('SearchLogicalFilterComponent', () => {
     let component: SearchLogicalFilterComponent;
@@ -36,7 +37,9 @@ describe('SearchLogicalFilterComponent', () => {
             queryFragments: {
                 logic: ''
             },
-            update: () => {}
+            filterRawParams: {},
+            populateFilters: new ReplaySubject(1),
+            update: jasmine.createSpy('update')
         } as any;
         component.settings = { field: 'field1,field2', allowUpdateOnChange: true, hideDefaultAction: false };
         fixture.detectChanges();
@@ -131,51 +134,50 @@ describe('SearchLogicalFilterComponent', () => {
         const searchCondition: LogicalSearchCondition = { matchAll: 'test1', matchAny: 'test2', exclude: 'test3', matchExact: 'test4' };
         component.setValue(searchCondition);
         fixture.detectChanges();
-        spyOn(component.context, 'update');
         spyOn(component.displayValue$, 'next');
         component.reset();
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.update).toHaveBeenCalled();
         expect(component.getCurrentValue()).toEqual({ matchAll: '', matchAny: '', exclude: '', matchExact: '' });
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
+        expect(component.context.filterRawParams[component.id]).toEqual(component.getCurrentValue());
     });
 
     it('should form correct query from match all field', () => {
-        spyOn(component.context, 'update');
         enterNewPhrase('  test1   test2  ', 0);
         component.submitValues();
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('((field1:"test1" AND field1:"test2") OR (field2:"test1" AND field2:"test2"))');
+        expect(component.context.filterRawParams[component.id]).toEqual(component.getCurrentValue());
     });
 
     it('should form correct query from match any field', () => {
-        spyOn(component.context, 'update');
         enterNewPhrase('  test3  test4', 1);
         component.submitValues();
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('((field1:"test3" OR field1:"test4") OR (field2:"test3" OR field2:"test4"))');
+        expect(component.context.filterRawParams[component.id]).toEqual(component.getCurrentValue());
     });
 
     it('should form correct query from exclude field', () => {
-        spyOn(component.context, 'update');
         enterNewPhrase('test5   test6  ', 2);
         component.submitValues();
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe(
             '((NOT field1:"test5" AND NOT field1:"test6") AND (NOT field2:"test5" AND NOT field2:"test6"))'
         );
+        expect(component.context.filterRawParams[component.id]).toEqual(component.getCurrentValue());
     });
 
     it('should form correct query from match exact field and trim it', () => {
-        spyOn(component.context, 'update');
         enterNewPhrase('   test7 test8   ', 3);
         component.submitValues();
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('((field1:"test7 test8") OR (field2:"test7 test8"))');
+        expect(component.context.filterRawParams[component.id]).toEqual(component.getCurrentValue());
     });
 
     it('should form correct joined query from all fields', () => {
-        spyOn(component.context, 'update');
         enterNewPhrase('test1', 0);
         enterNewPhrase('test2', 1);
         enterNewPhrase('test3', 2);
@@ -187,5 +189,20 @@ describe('SearchLogicalFilterComponent', () => {
         const subQuery4 = '((field1:"test4") OR (field2:"test4"))';
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe(`${subQuery1} AND ${subQuery2} AND ${subQuery4} AND ${subQuery3}`);
+        expect(component.context.filterRawParams[component.id]).toEqual(component.getCurrentValue());
+    });
+
+    it('should populate filter state when populate filters event has been observed', () => {
+        component.context.filterLoaded = new ReplaySubject(1);
+        spyOn(component.context.filterLoaded, 'next').and.stub();
+        spyOn(component.displayValue$, 'next').and.stub();
+        fixture.detectChanges();
+        component.context.populateFilters.next({ logic: { matchAll: 'test', matchAny: 'test2', matchExact: '', exclude: '' } });
+        fixture.detectChanges();
+
+        expect(component.displayValue$.next).toHaveBeenCalledWith(' SEARCH.LOGICAL_SEARCH.MATCH_ALL: test SEARCH.LOGICAL_SEARCH.MATCH_ANY: test2');
+        expect(component.context.filterRawParams[component.id]).toEqual({ matchAll: 'test', matchAny: 'test2', matchExact: '', exclude: '' });
+        expect(component.searchCondition).toEqual({ matchAll: 'test', matchAny: 'test2', matchExact: '', exclude: '' });
+        expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

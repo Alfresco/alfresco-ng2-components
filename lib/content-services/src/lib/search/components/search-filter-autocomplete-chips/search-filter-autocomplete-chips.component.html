@@ -1,5 +1,6 @@
 <adf-search-chip-autocomplete-input
     [autocompleteOptions]="autocompleteOptions$ | async"
+    [preselectedOptions]="selectedOptions"
     [onReset$]="reset$"
     [allowOnlyPredefinedValues]="settings.allowOnlyPredefinedValues"
     (inputChanged)="onInputChange($event)"
