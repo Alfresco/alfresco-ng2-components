@@ -22,6 +22,7 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { NewVersionUploaderDataAction } from './models';
 import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog';
 import { By } from '@angular/platform-browser';
+import { VersionListComponent } from '../version-manager/version-list.component';
 
 describe('NewVersionUploaderDialog', () => {
     let component: NewVersionUploaderDialogComponent;
@@ -139,6 +140,8 @@ describe('NewVersionUploaderDialog', () => {
     describe('Manage Versions', () => {
         const expectedManageVersionsTitle = 'ADF-NEW-VERSION-UPLOADER.DIALOG_LIST.TITLE';
 
+        const getVersionListComponent = (): VersionListComponent => fixture.debugElement.query(By.css(cssSelectors.adfVersionList)).componentInstance;
+
         it('should display adf version list if showVersionsOnly is passed as true from parent component', () => {
             component.data.showVersionsOnly = true;
             fixture.detectChanges();
@@ -184,13 +187,52 @@ describe('NewVersionUploaderDialog', () => {
             expect(matDialogTitle.innerHTML).toEqual('TEST_TITLE');
         });
 
-        it('should have assigned allowViewVersions based on allowViewVersions from data', () => {
+        it('should have assigned allowViewVersions to true if allowViewVersions from data is true', () => {
             component.data.showVersionsOnly = true;
             component.data.allowViewVersions = true;
 
             fixture.detectChanges();
-            const adfVersionListComponent = fixture.debugElement.query(By.css(cssSelectors.adfVersionList));
-            expect(adfVersionListComponent.componentInstance.allowViewVersions).toBeTrue();
+            expect(getVersionListComponent().allowViewVersions).toBeTrue();
+        });
+
+        it('should have assigned allowViewVersions to false if allowViewVersions from data is false', () => {
+            component.data.showVersionsOnly = true;
+            component.data.allowViewVersions = false;
+
+            fixture.detectChanges();
+            expect(getVersionListComponent().allowViewVersions).toBeFalse();
+        });
+
+        it('should have assigned showActions to true if showActions from data is true', () => {
+            component.data.showVersionsOnly = true;
+            component.data.showActions = true;
+
+            fixture.detectChanges();
+            expect(getVersionListComponent().showActions).toBeTrue();
+        });
+
+        it('should have assigned showActions to false if showActions from data is false', () => {
+            component.data.showVersionsOnly = true;
+            component.data.showActions = false;
+
+            fixture.detectChanges();
+            expect(getVersionListComponent().showActions).toBeFalse();
+        });
+
+        it('should have assigned allowVersionDelete to true if allowVersionDelete from data is true', () => {
+            component.data.showVersionsOnly = true;
+            component.data.allowVersionDelete = true;
+
+            fixture.detectChanges();
+            expect(getVersionListComponent().allowVersionDelete).toBeTrue();
+        });
+
+        it('should have assigned allowVersionDelete to false if allowVersionDelete from data is false', () => {
+            component.data.showVersionsOnly = true;
+            component.data.allowVersionDelete = false;
+
+            fixture.detectChanges();
+            expect(getVersionListComponent().allowVersionDelete).toBeFalse();
         });
     });
 });

@@ -267,6 +267,8 @@ describe('VersionListComponent', () => {
             return fixture.debugElement.query(By.css(`[id="adf-version-list-action-restore-${version}"]`))?.nativeElement;
         };
 
+        const getDeleteButton = (version = '1.1') => fixture.debugElement.query(By.css(`[id="adf-version-list-action-delete-${version}"]`));
+
         beforeEach(() => {
             fixture.detectChanges();
             versionTest[1].entry.id = '1.1';
@@ -351,6 +353,41 @@ describe('VersionListComponent', () => {
             it('should enable restore action if is allowed', (done) => {
                 fixture.whenStable().then(() => {
                     expect(getRestoreButton('1.1').disabled).toBeFalse();
+                    done();
+                });
+            });
+        });
+
+        describe('Delete action', () => {
+            beforeEach(() => {
+                component.node = { id: nodeId, allowableOperations: ['update', 'delete'] } as Node;
+            });
+
+            it('should show delete action by default', (done) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    getActionMenuButton('1.1').click();
+                    expect(getDeleteButton()).not.toBeNull();
+                    done();
+                });
+            });
+
+            it('should show delete action if allowVersionDelete is true', (done) => {
+                component.allowVersionDelete = true;
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    getActionMenuButton('1.1').click();
+                    expect(getDeleteButton()).not.toBeNull();
+                    done();
+                });
+            });
+
+            it('should hide delete action if allowVersionDelete is false', (done) => {
+                component.allowVersionDelete = false;
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    getActionMenuButton('1.1').click();
+                    expect(getDeleteButton()).toBeNull();
                     done();
                 });
             });
