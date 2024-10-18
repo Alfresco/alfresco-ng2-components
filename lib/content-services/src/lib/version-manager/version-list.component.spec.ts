@@ -267,6 +267,8 @@ describe('VersionListComponent', () => {
             return fixture.debugElement.query(By.css(`[id="adf-version-list-action-restore-${version}"]`))?.nativeElement;
         };
 
+        const getDeleteButton = (version = '1.1') => fixture.debugElement.query(By.css(`[id="adf-version-list-action-delete-${version}"]`));
+
         beforeEach(() => {
             fixture.detectChanges();
             versionTest[1].entry.id = '1.1';
@@ -353,6 +355,37 @@ describe('VersionListComponent', () => {
                     expect(getRestoreButton('1.1').disabled).toBeFalse();
                     done();
                 });
+            });
+        });
+
+        describe('Delete action', () => {
+            const testDeleteButtonVisibility = (done: DoneFn, visible = true) => {
+                fixture.whenStable().then(() => {
+                    getActionMenuButton('1.1').click();
+                    expect(getDeleteButton() !== null).toBe(visible);
+                    done();
+                });
+            };
+
+            beforeEach(() => {
+                component.node = { id: nodeId, allowableOperations: ['update', 'delete'] } as Node;
+            });
+
+            it('should show delete action by default', (done) => {
+                fixture.detectChanges();
+                testDeleteButtonVisibility(done);
+            });
+
+            it('should show delete action if allowVersionDelete is true', (done) => {
+                component.allowVersionDelete = true;
+                fixture.detectChanges();
+                testDeleteButtonVisibility(done);
+            });
+
+            it('should hide delete action if allowVersionDelete is false', (done) => {
+                component.allowVersionDelete = false;
+                fixture.detectChanges();
+                testDeleteButtonVisibility(done, false);
             });
         });
     });

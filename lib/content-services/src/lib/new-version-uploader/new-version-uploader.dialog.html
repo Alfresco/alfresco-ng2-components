@@ -19,7 +19,10 @@
         <adf-version-list
           [node]="data.node"
           [showComments]="data.showComments"
+          [showActions]="data.showActions"
           [allowDownload]="data.allowDownload"
+          [allowViewVersions]="data.allowViewVersions"
+          [allowVersionDelete]="data.allowVersionDelete"
           (deleted)="refresh($event)"
           (restored)="refresh($event)"
           (viewVersion)="onViewingVersion($event)"
