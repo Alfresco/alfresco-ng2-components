@@ -198,6 +198,13 @@ module.exports = {
             files: ['*.ts'],
             extends: ['plugin:@angular-eslint/template/process-inline-templates'],
             excludedFiles: ['*.spec.ts']
+        },
+        {
+            files: ['*.json'],
+            parser: 'jsonc-eslint-parser',
+            rules: {
+                'comma-dangle': ['error', 'never']
+            }
         }
     ],
 

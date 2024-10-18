@@ -1,0 +1,13 @@
+"project_id": "11"
+"api_token_env": "CROWDIN_TOKEN"
+"base_path": "."
+"base_url": "https://hyland.api.crowdin.com"
+"preserve_hierarchy": true
+"files": [
+  {
+    "source": "/**/**/i18n/en.json",
+    "translation": "/%original_path%/%two_letters_code%.%file_extension%",
+    "export_only_approved": "true",
+    "update_option": "update_as_unapproved"
+  }
+]

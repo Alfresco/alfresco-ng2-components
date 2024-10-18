@@ -1,0 +1,24 @@
+name: Pull Translations from Crowdin
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+jobs:
+  pull-from-crowdin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+      - name: Pull translations from Crowdin
+        uses: crowdin/github-action@6ed209d411599a981ccb978df3be9dc9b8a81699 # v2.1.1
+        with:
+          upload_sources: false
+          download_translations: true
+          create_pull_request: true
+          localization_branch_name: automated-translations-update
+          pull_request_title: "GH auto: Automated Update of Translations from Crowdin"
+          pull_request_base_branch_name: develop
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          CROWDIN_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
