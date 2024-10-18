@@ -10,7 +10,6 @@
     .adf-dynamic-chip-list-view-more-button {
         margin-left: 5px;
         position: absolute;
-        width: auto;
         padding: 0 16px;
 
         &[hidden] {
@@ -27,27 +26,14 @@
     }
 
     &.adf-dynamic-chip-list-paginated {
-        /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version. */
-        mat-chip-list {
-            width: 100%;
-
-            & > div {
-                width: 100%;
-            }
-        }
-
         .adf-dynamic-chip-list-view-more-button {
-            margin: -2px 4px 4px 24px;
+            margin-left: 24px;
         }
     }
 
     &.adf-dynamic-chip-list-button-in-next-line {
         align-items: unset;
         padding-bottom: 54px;
-
-        .adf-dynamic-chip-list-view-more-button {
-            margin-top: 4px;
-        }
     }
 
     &:not(.adf-dynamic-chip-list-paginated) {
@@ -55,7 +41,6 @@
 
         &:not(.adf-dynamic-chip-list-flex-column) {
             .adf-dynamic-chip-list-view-more-button {
-                margin-top: 18px;
                 margin-left: 4px;
             }
         }
@@ -70,7 +55,6 @@
     }
 
     .adf-dynamic-chip-list-chip {
-        height: auto;
         word-break: break-word;
         margin-top: 0;
         margin-bottom: 0;
@@ -83,15 +67,5 @@
                 color: var(--adf-theme-foreground-text-color-054);
             }
         }
-    }
-
-    .adf-dynamic-chip-list-delete-icon {
-        font-size: var(--theme-title-font-size);
-        background-repeat: no-repeat;
-        display: inline-block;
-        fill: currentcolor;
-        height: 20px;
-        width: 20px;
-        color: var(--theme-primary-color-default-contrast);
     }
 }

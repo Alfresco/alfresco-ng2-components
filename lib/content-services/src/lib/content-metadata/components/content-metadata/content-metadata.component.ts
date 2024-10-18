@@ -15,40 +15,35 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
-import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
     AppConfigService,
     CardViewBaseItemModel,
     CardViewComponent,
     CardViewItem,
+    Chip,
+    DynamicChipListComponent,
     NotificationService,
     TranslationService,
     UpdateNotification
 } from '@alfresco/adf-core';
-import { ContentMetadataService } from '../../services/content-metadata.service';
-import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel, ContentMetadataPanel } from '../../interfaces/content-metadata.interfaces';
-import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
-import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
-import { NodesApiService } from '../../../common/services/nodes-api.service';
-import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
-import { TagService } from '../../../tag/services/tag.service';
-import { CategoryService } from '../../../category/services/category.service';
-import { CategoriesManagementMode } from '../../../category/categories-management/categories-management-mode';
-import { AllowableOperationsEnum } from '../../../common/models/allowable-operations.enum';
-import { ContentService } from '../../../common/services/content.service';
-import { CommonModule } from '@angular/common';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
-import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { CategoriesManagementComponent } from '../../../category';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
+import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { TagsCreatorComponent } from '../../../tag';
+import { TranslateModule } from '@ngx-translate/core';
+import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
+import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
+import { CategoriesManagementComponent, CategoriesManagementMode, CategoryService } from '../../../category';
+import { AllowableOperationsEnum, CardViewContentUpdateService, ContentService, NodesApiService } from '../../../common';
+import { TagsCreatorComponent, TagsCreatorMode, TagService } from '../../../tag';
+import { CardViewGroup, ContentMetadataCustomPanel, ContentMetadataPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataService } from '../../services/content-metadata.service';
+import { ContentMetadataHeaderComponent } from './content-metadata-header.component';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -73,7 +68,8 @@ enum DefaultPanels {
         DynamicExtensionComponent,
         MatProgressBarModule,
         TagsCreatorComponent,
-        CardViewComponent
+        CardViewComponent,
+        DynamicChipListComponent
     ],
     templateUrl: './content-metadata.component.html',
     styleUrls: ['./content-metadata.component.scss'],
@@ -154,6 +150,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
+    tagsToDisplay: Chip[];
     changedProperties = {};
     hasMetadataChanged = false;
     assignedCategories: Category[] = [];
@@ -212,6 +209,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     get assignedTags(): string[] {
         return this._assignedTags;
+    }
+
+    set tags(tags: string[]) {
+        this._tags = tags;
+        this.tagsToDisplay = this.tags.map((tag) => ({ id: tag, name: tag }));
     }
 
     get tags(): string[] {
@@ -311,7 +313,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * @param tags array of tags to register, they are not saved yet until we click save button.
      */
     storeTagsToAssign(tags: string[]) {
-        this._tags = tags;
+        this.tags = tags;
+        this._assignedTags = tags;
         this.hasMetadataChanged = true;
     }
 
@@ -514,8 +517,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private loadTagsForNode(id: string) {
         this.tagService.getTagsByNodeId(id).subscribe((tagPaging) => {
             this.assignedTagsEntries = tagPaging.list.entries;
-            this._tags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
-            this._assignedTags = [...this._tags];
+            this.tags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
+            this._assignedTags = [...this.tags];
         });
     }
 
