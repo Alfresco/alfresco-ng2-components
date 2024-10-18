@@ -22,7 +22,6 @@ import { LoginOptions, OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc
     providedIn: 'root'
 })
 export class RetryLoginService {
-
     private oauthService = inject(OAuthService);
 
     /**
@@ -36,10 +35,12 @@ export class RetryLoginService {
         let retryCount = 0;
         const maxRetries = maxLoginAttempts - 1;
 
-        const attemptLogin = (): Promise<boolean> => this.oauthService.tryLogin({ ...loginOptions })
-            .catch((error) => {
+        const attemptLogin = (): Promise<boolean> =>
+            this.oauthService.tryLogin({ ...loginOptions }).catch((error) => {
                 if (retryCount < maxRetries) {
-                    console.error(`Login attempt ${retryCount + 1} of ${maxLoginAttempts} failed. ${retryCount < maxLoginAttempts - 1 ? 'Retrying...' : ''}`);
+                    console.error(
+                        `Login attempt ${retryCount + 1} of ${maxLoginAttempts} failed. ${retryCount < maxLoginAttempts - 1 ? 'Retrying...' : ''}`
+                    );
                     retryCount++;
                     return attemptLogin();
                 } else {
@@ -55,11 +56,10 @@ export class RetryLoginService {
         const isOAuthErrorEvent = error instanceof OAuthErrorEvent;
         let oAuthErrorMessage: string;
         if (isOAuthErrorEvent) {
-            oAuthErrorMessage = (error.reason as any).reason || error.type.toString();
+            oAuthErrorMessage = (error.reason as any)?.reason || error.type.toString();
         }
         const errorDescription = oAuthErrorMessage || error;
         const errorMessage = `Login failed after ${maxLoginAttempts} attempts. caused by: ${errorDescription}`;
         return errorMessage;
     }
 }
-

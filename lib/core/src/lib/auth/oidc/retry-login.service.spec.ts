@@ -28,10 +28,7 @@ describe('RetryLoginService', () => {
         const oauthServiceSpy = jasmine.createSpyObj('OAuthService', ['tryLogin']);
 
         TestBed.configureTestingModule({
-            providers: [
-                RetryLoginService,
-                { provide: OAuthService, useValue: oauthServiceSpy }
-            ]
+            providers: [RetryLoginService, { provide: OAuthService, useValue: oauthServiceSpy }]
         });
 
         service = TestBed.inject(RetryLoginService);
@@ -49,11 +46,7 @@ describe('RetryLoginService', () => {
     });
 
     it('should retry login up to 3 times', async () => {
-        oauthService.tryLogin.and.returnValues(
-            Promise.reject(new Error('error')),
-            Promise.reject(new Error('error')),
-            Promise.resolve(true)
-        );
+        oauthService.tryLogin.and.returnValues(Promise.reject(new Error('error')), Promise.reject(new Error('error')), Promise.resolve(true));
 
         const result = await service.tryToLoginTimes({}, 3);
 
@@ -77,6 +70,18 @@ describe('RetryLoginService', () => {
 
     it('should show the error type if error is OAuthErrorEvent and error reason property object is null', async () => {
         oauthService.tryLogin.and.rejectWith(new OAuthErrorEvent('invalid_nonce_in_state', { reason: null }));
+
+        try {
+            await service.tryToLoginTimes({}, 2);
+            fail('Expected to throw an error');
+        } catch (error) {
+            expect(error).toEqual(new Error('Login failed after 2 attempts. caused by: invalid_nonce_in_state'));
+            expect(oauthService.tryLogin).toHaveBeenCalledTimes(2);
+        }
+    });
+
+    it('should show the error type if error is OAuthErrorEvent and error reason is empty', async () => {
+        oauthService.tryLogin.and.rejectWith(new OAuthErrorEvent('invalid_nonce_in_state', {}));
 
         try {
             await service.tryToLoginTimes({}, 2);
@@ -112,7 +117,7 @@ describe('RetryLoginService', () => {
     });
 
     it('should fail after default max logint attempts ', async () => {
-        oauthService.tryLogin.and.rejectWith( new OAuthErrorEvent('discovery_document_validation_error', { reason: 'fake-error' }));
+        oauthService.tryLogin.and.rejectWith(new OAuthErrorEvent('discovery_document_validation_error', { reason: 'fake-error' }));
 
         try {
             await service.tryToLoginTimes({});
