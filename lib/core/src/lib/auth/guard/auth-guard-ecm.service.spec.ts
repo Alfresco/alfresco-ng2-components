@@ -50,7 +50,8 @@ describe('AuthGuardService ECM', () => {
                         ssoLogin: () => {},
                         isPublicUrl: () => false,
                         hasValidIdToken: () => false,
-                        isLoggedIn: () => false
+                        isLoggedIn: () => false,
+                        shouldPerformSsoLogin$: of(true)
                     }
                 },
                 { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }

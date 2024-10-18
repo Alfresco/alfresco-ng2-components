@@ -71,7 +71,10 @@ export class AuthGuardService {
             urlToRedirect = `${urlToRedirect}?redirectUrl=${url}`;
             return this.navigate(urlToRedirect);
         } else if (this.getOauthConfig().silentLogin && !this.oidcAuthenticationService.isPublicUrl()) {
-            if (!this.oidcAuthenticationService.hasValidIdToken() || !this.oidcAuthenticationService.hasValidAccessToken()) {
+            const shouldPerformSsoLogin = await new Promise((resolve) => {
+                this.oidcAuthenticationService.shouldPerformSsoLogin$.subscribe(value => resolve(value));
+            });
+            if (shouldPerformSsoLogin) {
                 this.oidcAuthenticationService.ssoLogin(url);
             }
         } else {
