@@ -359,37 +359,33 @@ describe('VersionListComponent', () => {
         });
 
         describe('Delete action', () => {
+            const testDeleteButtonVisibility = (done: DoneFn, visible = true) => {
+                fixture.whenStable().then(() => {
+                    getActionMenuButton('1.1').click();
+                    expect(getDeleteButton() !== null).toBe(visible);
+                    done();
+                });
+            };
+
             beforeEach(() => {
                 component.node = { id: nodeId, allowableOperations: ['update', 'delete'] } as Node;
             });
 
             it('should show delete action by default', (done) => {
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    getActionMenuButton('1.1').click();
-                    expect(getDeleteButton()).not.toBeNull();
-                    done();
-                });
+                testDeleteButtonVisibility(done);
             });
 
             it('should show delete action if allowVersionDelete is true', (done) => {
                 component.allowVersionDelete = true;
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    getActionMenuButton('1.1').click();
-                    expect(getDeleteButton()).not.toBeNull();
-                    done();
-                });
+                testDeleteButtonVisibility(done);
             });
 
             it('should hide delete action if allowVersionDelete is false', (done) => {
                 component.allowVersionDelete = false;
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    getActionMenuButton('1.1').click();
-                    expect(getDeleteButton()).toBeNull();
-                    done();
-                });
+                testDeleteButtonVisibility(done, false);
             });
         });
     });
