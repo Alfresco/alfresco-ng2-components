@@ -64,42 +64,6 @@ describe('AnalyticsReportListComponent', () => {
             expect(component.isReportsEmpty()).toBeTruthy();
         });
 
-        // TODO: very flaky test, to be refactored
-        // eslint-disable-next-line ban/ban
-        xit('should return the default reports when the report list is empty', (done) => {
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/reports').andReturn({
-                status: 200,
-                contentType: 'json',
-                responseText: []
-            });
-
-            fixture.detectChanges();
-
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/default-reports').andReturn({
-                status: 200,
-                contentType: 'json',
-                responseText: []
-            });
-
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/reports').andReturn({
-                status: 200,
-                contentType: 'json',
-                responseText: reportList
-            });
-
-            component.success.subscribe(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('#report-list-0 .adf-activiti-filters__entry-icon').innerHTML).toBe('assignment');
-                expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
-                expect(element.querySelector('#report-list-1 > span').innerHTML).toBe('Fake Test Process definition overview');
-                expect(element.querySelector('#report-list-2 > span').innerHTML).toBe('Fake Test Process instances overview');
-                expect(element.querySelector('#report-list-3 > span').innerHTML).toBe('Fake Test Task overview');
-                expect(element.querySelector('#report-list-4 > span').innerHTML).toBe('Fake Test Task service level agreement');
-                expect(component.isReportsEmpty()).toBeFalsy();
-                done();
-            });
-        });
-
         it('Report render the report list relative to a single app', (done) => {
             fixture.detectChanges();
 

@@ -16,36 +16,36 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Chart } from '../../diagram/models/chart/chart.model';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
-
-declare let jasmine: any;
+import { AnalyticsService } from '@alfresco/adf-insights';
 
 describe('AnalyticsGeneratorComponent', () => {
-    let component: any;
+    let component: AnalyticsGeneratorComponent;
     let fixture: ComponentFixture<AnalyticsGeneratorComponent>;
+    let analyticsService: AnalyticsService;
+    let getReportsByParamsSpy: jasmine.Spy;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [InsightsTestingModule]
         });
+
+        analyticsService = TestBed.inject(AnalyticsService);
+        getReportsByParamsSpy = spyOn(analyticsService.reportApi, 'getReportsByParams').and.stub();
+
         fixture = TestBed.createComponent(AnalyticsGeneratorComponent);
         component = fixture.componentInstance;
 
         fixture.detectChanges();
-
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     it('Should render the Process definition overview report ', (done) => {
+        getReportsByParamsSpy.and.returnValue(Promise.resolve(analyticMock.chartProcessDefOverview));
+
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res.length).toEqual(3);
@@ -80,22 +80,14 @@ describe('AnalyticsGeneratorComponent', () => {
             done();
         });
 
-        component.reportId = 1001;
+        component.reportId = '1001';
         component.reportParamQuery = new ReportQuery({ status: 'All' });
         component.ngOnChanges();
-
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticMock.chartProcessDefOverview
-            });
-        });
     });
 
     it('Should render the Process definition overview report when [onChanges] is called ', (done) => {
+        getReportsByParamsSpy.and.returnValue(Promise.resolve(analyticMock.chartProcessDefOverview));
+
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res.length).toEqual(3);
@@ -130,22 +122,14 @@ describe('AnalyticsGeneratorComponent', () => {
             done();
         });
 
-        component.reportId = 1001;
+        component.reportId = '1001';
         component.reportParamQuery = new ReportQuery({ status: 'All' });
         component.ngOnChanges();
-
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticMock.chartProcessDefOverview
-            });
-        });
     });
 
     it('Should render the Task overview report ', (done) => {
+        getReportsByParamsSpy.and.returnValue(Promise.resolve(analyticMock.chartTaskOverview));
+
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res.length).toEqual(3);
@@ -183,9 +167,9 @@ describe('AnalyticsGeneratorComponent', () => {
             expect(res[2].type).toEqual('multiBar');
             expect(res[2].labels).toBeDefined();
             expect(res[2].labels.length).toEqual(3);
-            expect(res[2].labels[0]).toEqual(1);
-            expect(res[2].labels[1]).toEqual(2);
-            expect(res[2].labels[2]).toEqual(3);
+            expect(res[2].labels[0]).toEqual('1');
+            expect(res[2].labels[1]).toEqual('2');
+            expect(res[2].labels[2]).toEqual('3');
             expect(res[2].datasets[0].label).toEqual('averages');
             expect(res[2].datasets[0].data[0]).toEqual(0);
             expect(res[2].datasets[0].data[1]).toEqual(5);
@@ -202,24 +186,14 @@ describe('AnalyticsGeneratorComponent', () => {
             done();
         });
 
-        component.reportId = 1;
+        component.reportId = '1';
         component.reportParamQuery = new ReportQuery({ status: 'All' });
         component.ngOnChanges();
-
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticMock.chartTaskOverview
-            });
-        });
     });
 
     it('Should reset the reports when the onChanged is call', async () => {
         component.reports = [new Chart({ id: 'fake', type: 'fake-type' })];
-        component.reportId = 1;
+        component.reportId = '1';
         component.ngOnChanges();
 
         fixture.detectChanges();
@@ -229,23 +203,15 @@ describe('AnalyticsGeneratorComponent', () => {
     });
 
     it('Should emit onError event with a 404 response ', (done) => {
+        getReportsByParamsSpy.and.returnValue(Promise.reject(new Error('404')));
+
         component.error.subscribe((err) => {
             expect(err).toBeDefined();
             done();
         });
 
-        component.reportId = 1;
+        component.reportId = '1';
         component.reportParamQuery = new ReportQuery({ status: 'All' });
         component.ngOnChanges();
-
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 404,
-                contentType: 'json',
-                responseText: []
-            });
-        });
     });
 });

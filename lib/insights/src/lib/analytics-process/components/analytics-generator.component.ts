@@ -101,18 +101,18 @@ export class AnalyticsGeneratorComponent implements OnChanges {
         if (reportParamQuery === undefined || reportParamQuery === null) {
             reportParamQuery = new ReportQuery();
         }
-        this.analyticsService.getReportsByParams(reportId, reportParamQuery).subscribe(
-            (res) => {
+        this.analyticsService.getReportsByParams(reportId, reportParamQuery).subscribe({
+            next: (res) => {
                 this.reports = res;
                 if (this.reports) {
                     this.selectFirstReport();
                 }
                 this.success.emit(res);
             },
-            (err: any) => {
+            error: (err: any) => {
                 this.error.emit(err);
             }
-        );
+        });
     }
 
     public reset() {
