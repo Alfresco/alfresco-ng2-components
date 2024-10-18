@@ -27,13 +27,12 @@ export const OidcAuthGuard: CanActivateFn = async (): Promise<boolean> => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    authService.onLogout$.subscribe(() => onLogoutEmitted = true);
+    authService.onLogout$.subscribe(() => (onLogoutEmitted = true));
 
     try {
         const route = await authService.loginCallback({ customHashFragment: window.location.search });
         return router.navigateByUrl(route, { replaceUrl: true });
     } catch (error) {
-        console.log('onLogoutEmitted: ', onLogoutEmitted);
         if (onLogoutEmitted) {
             throw error;
         }
