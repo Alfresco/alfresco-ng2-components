@@ -30,8 +30,8 @@ Displays the version history of a node in a [Version Manager component](version-
 
 ### Events
 
-| Name        | Type                            |  Description                       |
-|-------------|---------------------------------|------------------------------------|
+| Name        | Type                                                                 | Description                        |
+|-------------|----------------------------------------------------------------------|------------------------------------|
 | deleted     | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Node>`   | Emitted when a version is deleted  |
 | restored    | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Node>`   | Emitted when a version is restored |
 | viewVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when viewing a version     |
