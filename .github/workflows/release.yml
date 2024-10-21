@@ -189,7 +189,7 @@ jobs:
     name: Push translations keys to Crowdin
     if: ${{ github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
-    needs: [ initialization, build ]
+    needs: [setup]
     permissions:
       contents: read
       packages: read
