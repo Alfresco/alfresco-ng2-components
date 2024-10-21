@@ -1049,7 +1049,9 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
                 if (JSON.parse(err.message).error.statusCode === 403) {
                     this.noPermission = true;
                 }
-            } catch (error) {}
+            } catch (error) {
+                /* empty */
+            }
         }
         this.setLoadingState(false);
         this.error.emit(err);

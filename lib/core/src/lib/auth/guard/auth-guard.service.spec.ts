@@ -28,6 +28,7 @@ import { EMPTY, of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { NoopAuthModule } from '../../testing';
 
 describe('AuthGuardService', () => {
     let state: RouterStateSnapshot;
@@ -42,11 +43,10 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, RouterTestingModule],
+            imports: [NoopTranslateModule, MatDialogModule, RouterTestingModule, NoopAuthModule],
             providers: [
                 AppConfigService,
-                StorageService,
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } },
+                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of(), init: () => {} } },
                 {
                     provide: OidcAuthenticationService,
                     useValue: {

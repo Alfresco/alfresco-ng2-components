@@ -238,7 +238,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
         try {
             statusCode = JSON.parse(error.message).error.statusCode;
-        } catch {}
+        } catch {
+            /* empty */
+        }
 
         let message = `METADATA.ERRORS.${statusCode}`;
 

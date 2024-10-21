@@ -28,6 +28,7 @@ import { EMPTY, of } from 'rxjs';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
+
 describe('AuthGuardService ECM', () => {
     let authGuard: Promise<boolean>;
     let authService: AuthenticationService;
