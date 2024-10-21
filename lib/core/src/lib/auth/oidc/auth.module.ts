@@ -25,6 +25,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './token.interceptor';
 
 /**
  * Create a Login Factory function
@@ -52,6 +54,11 @@ export function loginFactory(redirectService: RedirectAuthService): () => Promis
             provide: APP_INITIALIZER,
             useFactory: loginFactory,
             deps: [RedirectAuthService],
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
             multi: true
         }
     ]
