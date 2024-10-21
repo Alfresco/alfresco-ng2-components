@@ -18,7 +18,6 @@ jobs:
           localization_branch_name: automated-translations-update
           pull_request_title: "GH auto: Automated Update of Translations from Crowdin"
           pull_request_base_branch_name: develop
-
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
           CROWDIN_TOKEN: ${{ secrets.CROWDIN_TRANSLATIONS_TOKEN }}
