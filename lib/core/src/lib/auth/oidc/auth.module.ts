@@ -24,6 +24,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
 import { RedirectAuthService } from './redirect-auth.service';
 import { AuthenticationConfirmationComponent } from './view/authentication-confirmation/authentication-confirmation.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './token.interceptor';
 import { StorageService } from '../../common/services/storage.service';
 
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
