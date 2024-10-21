@@ -26,6 +26,7 @@ backend services have been tested with each released version of ADF.
 -   [v4.4.0](#v440)
 -   [v4.3.0](#v430)
 -   [v4.2.0](#v420)
+-   [v4.1.1](#v411)
 -   [v4.1.0](#v410)
 -   [v4.0.0](#v400)
 -   [v3.9.0](#v390)
@@ -195,6 +196,14 @@ backend services have been tested with each released version of ADF.
 -   [Search datetime range component](content-services/components/search-datetime-range.component.md)
 
 <!--v420 end-->
+
+## v4.1.1
+
+<!--v411 start-->
+
+-   [New version uploader dialog](content-services/components/new-version-uploader.dialog.md)
+
+<!--v411 end-->
 
 ## v4.1.0
 

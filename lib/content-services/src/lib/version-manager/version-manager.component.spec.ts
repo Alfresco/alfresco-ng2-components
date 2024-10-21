@@ -118,4 +118,106 @@ describe('VersionManagerComponent', () => {
             expect(component.uploadState).toEqual('open');
         });
     });
+
+    describe('Version list', () => {
+        it('should have assigned showActions to true by default', () => {
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.showActions).toBeTrue();
+        });
+
+        it('should have assigned showActions to true if true is passed to showActions for component', () => {
+            component.showActions = true;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.showActions).toBeTrue();
+        });
+
+        it('should have assigned showActions to false if false is passed to showActions for component', () => {
+            component.showActions = false;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.showActions).toBeFalse();
+        });
+
+        it('should have assigned allowViewVersions to true by default', () => {
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.allowViewVersions).toBeTrue();
+        });
+
+        it('should have assigned allowViewVersions to true if true is passed to allowViewVersions for component', () => {
+            component.allowViewVersions = true;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.allowViewVersions).toBeTrue();
+        });
+
+        it('should have assigned allowViewVersions to false if false is passed to allowViewVersions for component', () => {
+            component.allowViewVersions = false;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.allowViewVersions).toBeFalse();
+        });
+
+        it('should have assigned allowVersionDelete to true by default', () => {
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.allowVersionDelete).toBeTrue();
+        });
+
+        it('should have assigned allowVersionDelete to true if true is passed to allowVersionDelete for component', () => {
+            component.allowVersionDelete = true;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.allowVersionDelete).toBeTrue();
+        });
+
+        it('should have assigned allowVersionDelete to false if false is passed to allowVersionDelete for component', () => {
+            component.allowVersionDelete = false;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.allowVersionDelete).toBeFalse();
+        });
+
+        it('should have assigned showComments to true by default', () => {
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.showComments).toBeTrue();
+        });
+
+        it('should have assigned showComments to true if true is passed to showComments for component', () => {
+            component.showComments = true;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.showComments).toBeTrue();
+        });
+
+        it('should have assigned showComments to false if false is passed to showComments for component', () => {
+            component.showComments = false;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.showComments).toBeFalse();
+        });
+
+        it('should have assigned allowDownload to true by default', () => {
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.showComments).toBeTrue();
+        });
+
+        it('should have assigned allowDownload to true if true is passed to allowDownload for component', () => {
+            component.allowDownload = true;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.allowDownload).toBeTrue();
+        });
+
+        it('should have assigned allowDownload to false if false is passed to allowDownload for component', () => {
+            component.allowDownload = false;
+            fixture.detectChanges();
+
+            expect(component.versionListComponent.allowDownload).toBeFalse();
+        });
+    });
 });

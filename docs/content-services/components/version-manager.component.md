@@ -1,7 +1,7 @@
 ---
 Title: Version Manager Component
 Added: v2.0.0
-Status: Experimental
+Status: Active
 Last reviewed: 2019-01-16
 ---
 
@@ -10,8 +10,6 @@ Last reviewed: 2019-01-16
 Displays the version history of a node with the ability to upload a new version.
 
 ![Version Manager](../../docassets/images/version-manager.png)
-
-`This component is still in experimental phase. It has several limitations which will be resolved soon.`
 
 ## Basic Usage
 
@@ -27,13 +25,16 @@ Displays the version history of a node with the ability to upload a new version.
 
 ### Properties
 
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| allowDownload | `boolean` | true | Enable/disable downloading a version of the current node. |
-| newFileVersion | `File` |  | New file for updating current version. |
-| node | `Node` |  | Target node to manage version history. |
-| showComments | `boolean` | true | Toggles showing/hiding of comments. |
-| showVersionComparison | `boolean` | false | Toggles showing/hiding the [version comparison component](../../content-services/components/version-comparison.component.md). |
+| Name                  | Type      | Default value | Description                                                                                                                   |
+|-----------------------|-----------|---------------|-------------------------------------------------------------------------------------------------------------------------------|
+| allowDownload         | `boolean` | true          | Enable/disable downloading a version of the current node.                                                                     |
+| newFileVersion        | `File`    |               | New file for updating current version.                                                                                        |
+| node                  | `Node`    |               | Target node to manage version history.                                                                                        |
+| showComments          | `boolean` | true          | Toggles showing/hiding of comments.                                                                                           |
+| showVersionComparison | `boolean` | false         | Toggles showing/hiding the [version comparison component](../../content-services/components/version-comparison.component.md). |
+| showActions           | `boolean` | true          | Toggles showing/hiding of version actions.                                                                                    |
+| allowViewVersions     | `boolean` | true          | Enable/disable viewing versions of the current node.                                                                          |
+| allowVersionDelete    | `boolean` | true          | Enable/disable deletion of version                                                                                            |
 
 ### Events
 
@@ -50,11 +51,16 @@ Displays the version history of a node with the ability to upload a new version.
 
 Each version has a context menu on the right, with the following actions.
 
-| Action | Versions | Description |
-| ------ | -------- | ----------- |
-| Restore | All | Revert the current version to the selected one with creating a new version of it. |
+| Action   | Versions | Description                                                                       |
+|----------|----------|-----------------------------------------------------------------------------------|
+| View     | All      | View selected version.                                                            |
+| Restore  | All      | Revert the current version to the selected one with creating a new version of it. |
+| Download | All      | Download selected version.                                                        |
+| Delete   | All      | Delete selected version.                                                          |
 
 ## See also
 
 -   [Version list component](version-list.component.md)
 -   [Document list component](document-list.component.md)
+-   [New Version Uploader service](../services/new-version-uploader.dialog.service.md)
+-   [New Version Uploader component](new-version-uploader.dialog.md)
