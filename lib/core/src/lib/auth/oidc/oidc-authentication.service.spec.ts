@@ -20,6 +20,7 @@ import { OidcAuthenticationService } from './oidc-authentication.service';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
 import { AppConfigService, AuthService } from '@alfresco/adf-core';
 import { AUTH_MODULE_CONFIG } from './auth-config';
+import { of } from 'rxjs';
 
 interface MockAppConfigOAuth2 {
     oauth2: {
@@ -124,5 +125,69 @@ describe('OidcAuthenticationService', () => {
                 client_id: 'testClientId'
             });
         });
+    });
+
+});
+
+describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
+    let service: OidcAuthenticationService;
+
+    const configureTestingModule = (providers: any) => {
+        TestBed.configureTestingModule({
+            providers: [
+                OidcAuthenticationService,
+                { provide: AppConfigService, useClass: MockAppConfigService },
+                { provide: OAuthService, useClass: MockOAuthService },
+                { provide: OAuthStorage, useValue: {} },
+                { provide: AUTH_MODULE_CONFIG, useValue: {} },
+                { provide: AuthService, useValue: {} },
+                providers
+            ]
+        });
+        service = TestBed.inject(OidcAuthenticationService);
+    };
+
+    it('should emit true when user is not authenticated and discovery document is loaded', async () => {
+        const mockAuthServiceValue = {
+            authenticated$: of(false),
+            isDiscoveryDocumentLoaded$: of(true)
+        };
+        configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
+
+        const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
+        expect(shouldPerformSsoLogin).toBeTrue();
+    });
+
+    it('should emit false when user is authenticated', async () => {
+        const mockAuthServiceValue = {
+            authenticated$: of(true),
+            isDiscoveryDocumentLoaded$: of(false)
+        };
+        configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
+
+        const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
+        expect(shouldPerformSsoLogin).toBeFalse();
+    });
+
+    it('should emit false when discovery document is not loaded', async () => {
+        const mockAuthServiceValue = {
+            authenticated$: of(false),
+            isDiscoveryDocumentLoaded$: of(false)
+        };
+        configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
+
+        const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
+        expect(shouldPerformSsoLogin).toBeFalse();
+    });
+
+    it('should emit false when both user is authenticated and discovery document is loaded', async () => {
+        const mockAuthServiceValue = {
+            authenticated$: of(true),
+            isDiscoveryDocumentLoaded$: of(true)
+        };
+        configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
+
+        const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
+        expect(shouldPerformSsoLogin).toBeFalse();
     });
 });

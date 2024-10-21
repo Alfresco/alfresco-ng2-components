@@ -16,12 +16,14 @@
  */
 
 import { Inject, Injectable, inject } from '@angular/core';
-import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent } from 'angular-oauth2-oidc';
+import { AuthConfig, AUTH_CONFIG, OAuthErrorEvent, OAuthEvent, OAuthService, OAuthStorage, TokenResponse, LoginOptions, OAuthSuccessEvent, OAuthLogger } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
-import { from, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, take } from 'rxjs/operators';
+import { from, Observable, race, ReplaySubject } from 'rxjs';
+import { distinctUntilChanged, filter, map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { AUTH_MODULE_CONFIG, AuthModuleConfig } from './auth-config';
+import { RetryLoginService } from './retry-login.service';
+import { TimeSyncService } from '../services/time-sync.service';
 
 const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && typeof (value as Promise<T>).then === 'function';
 
@@ -29,12 +31,76 @@ const isPromise = <T>(value: T | Promise<T>): value is Promise<T> => value && ty
 export class RedirectAuthService extends AuthService {
 
   readonly authModuleConfig: AuthModuleConfig = inject(AUTH_MODULE_CONFIG);
+  private readonly _retryLoginService: RetryLoginService = inject(RetryLoginService);
+  private readonly _oauthLogger: OAuthLogger = inject(OAuthLogger);
+  private readonly _timeSyncService: TimeSyncService = inject(TimeSyncService);
+
+  private _isDiscoveryDocumentLoadedSubject$ = new ReplaySubject<boolean>();
+  public isDiscoveryDocumentLoaded$ = this._isDiscoveryDocumentLoadedSubject$.asObservable();
 
   onLogin: Observable<any>;
 
   onTokenReceived: Observable<any>;
 
   private _loadDiscoveryDocumentPromise = Promise.resolve(false);
+
+  /**
+   * Observable stream that emits when the user logs out.
+   *
+   * This observable listens to the events emitted by the OAuth service and filters
+   * them to only include instances of OAuthSuccessEvent with the type `logout`.
+   *
+   * @type {Observable<void>}
+   */
+  onLogout$: Observable<void>;
+
+  /**
+   * Observable stream that emits OAuthErrorEvent instances.
+   *
+   * This observable listens to the events emitted by the OAuth service and filters
+   * them to only include instances of OAuthErrorEvent. It then maps these events
+   * to the correct type.
+   *
+   * @type {Observable<OAuthErrorEvent>}
+   */
+  oauthErrorEvent$: Observable<OAuthErrorEvent>;
+
+  /**
+   * Observable stream that emits the first OAuth error event that occurs.
+   */
+  firstOauthErrorEventOccur$: Observable<OAuthErrorEvent>;
+
+  /**
+   * Observable stream that emits the first OAuth error event that occurs, excluding token refresh errors.
+   */
+  firstOauthErrorEventExcludingTokenRefreshError$: Observable<OAuthErrorEvent>;
+
+  /**
+   * Observable stream that emits the second OAuth token refresh error event that occurs.
+   */
+  secondTokenRefreshErrorEventOccur$: Observable<OAuthErrorEvent>;
+
+  /**
+   * Observable that emits an error when the token has expired due to
+   * the local machine clock being out of sync with the server time.
+   *
+   * @type {Observable<Error>}
+   */
+  tokenHasExpiredDueToClockOutOfSync$: Observable<Error>;
+
+  /**
+   * Observable that emits an error when the OAuth error event occurs due to
+   * the local machine clock being out of sync with the server time.
+   *
+   * @type {Observable<Error>}
+   */
+  oauthErrorEventOccurDueToClockOutOfSync$: Observable<Error>;
+
+  /**
+   * Observable stream that emits either OAuthErrorEvent or Error.
+   * This stream combines multiple OAuth error sources into a single observable.
+   */
+  combinedOAuthErrorsStream$: Observable<OAuthErrorEvent | Error>;
 
   /** Subscribe to whether the user has valid Id/Access tokens.  */
   authenticated$!: Observable<boolean>;
@@ -74,9 +140,45 @@ export class RedirectAuthService extends AuthService {
     @Inject(AUTH_CONFIG) authConfig: AuthConfig
   ) {
     super();
+
     this.authConfig = authConfig;
 
     this.oauthService.clearHashAfterLogin = true;
+
+    this.oauthService.events.pipe(
+        filter(() => oauthService.showDebugInformation))
+    .subscribe(event => {
+        if (event instanceof OAuthErrorEvent) {
+            this._oauthLogger.error('OAuthErrorEvent Object:', event);
+        } else {
+            this._oauthLogger.info('OAuthEvent Object:', event);
+        }
+    });
+
+    this.oauthErrorEvent$ = this.oauthService.events.pipe(
+        filter(event => event instanceof OAuthErrorEvent),
+        map((event) => event as OAuthErrorEvent)
+    );
+
+    this.firstOauthErrorEventOccur$ = this.oauthErrorEvent$.pipe(take(1));
+
+    this.firstOauthErrorEventExcludingTokenRefreshError$ = this.oauthErrorEvent$.pipe(
+        filter(event => event instanceof OAuthErrorEvent && event.type !== 'token_refresh_error'),
+        take(1)
+    );
+
+    this.secondTokenRefreshErrorEventOccur$ = this.oauthErrorEvent$.pipe(
+        filter(event => event.type === 'token_refresh_error'),
+        take(2),
+        filter((_, index) => index === 1)
+    );
+
+    this.oauthErrorEventOccurDueToClockOutOfSync$ = this.oauthErrorEvent$.pipe(
+        switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
+        filter((timeSync) => timeSync?.outOfSync),
+        map((timeSync) => new Error(`OAuth error occurred due to local machine clock ${timeSync.localDateTimeISO} being out of sync with server time ${timeSync.serverDateTimeISO}`)),
+        take(1)
+    );
 
     this.authenticated$ = this.oauthService.events.pipe(
       map(() => this.authenticated),
@@ -84,10 +186,41 @@ export class RedirectAuthService extends AuthService {
       shareReplay(1)
     );
 
+    this.tokenHasExpiredDueToClockOutOfSync$ = this.oauthService.events.pipe(
+        map(() => !!this.oauthService.getIdentityClaims() && this.tokenHasExpired()),
+        filter((hasExpired) => hasExpired),
+        switchMap(() => this._timeSyncService.checkTimeSync(this.oauthService.clockSkewInSec)),
+        filter((timeSync) => timeSync?.outOfSync),
+        map((timeSync) => new Error(`Token has expired due to local machine clock ${timeSync.localDateTimeISO} being out of sync with server time ${timeSync.serverDateTimeISO}`)),
+        take(1)
+    );
+
+    this.onLogout$ = this.oauthService.events.pipe(
+        filter((event) => event.type === 'logout'),
+        map(() => undefined)
+    );
+
+    this.combinedOAuthErrorsStream$ = race([
+        this.oauthErrorEventOccurDueToClockOutOfSync$,
+        this.firstOauthErrorEventExcludingTokenRefreshError$,
+        this.tokenHasExpiredDueToClockOutOfSync$,
+        this.secondTokenRefreshErrorEventOccur$
+    ]);
+
+    this.combinedOAuthErrorsStream$.subscribe({
+        next: (res) => {
+            this._oauthLogger.error(res);
+            this.logout();
+        },
+        error: () => {}
+    });
+
     this.oauthService.events.pipe(take(1)).subscribe(() => {
-        if(this.oauthService.getAccessToken() && !this.authenticated){
+        if(this.oauthService.getAccessToken() && !this.oauthService.hasValidAccessToken()) {
+            if(this.oauthService.showDebugInformation) {
+                this._oauthLogger.warn('Access token not valid. Removing all auth items from storage');
+            }
             this.AUTH_STORAGE_ITEMS.map((item: string) => this._oauthStorage.removeItem(item));
-            this.reloadPage();
         }
     });
 
@@ -105,7 +238,8 @@ export class RedirectAuthService extends AuthService {
       filter((event): event is OAuthErrorEvent => event.type === 'discovery_document_load_error'),
       map((event) => event.reason as Error)
     );
-  }
+
+    }
 
   init(): Promise<boolean> {
     if (isPromise(this.authConfig)) {
@@ -160,9 +294,9 @@ export class RedirectAuthService extends AuthService {
   }
 
   async loginCallback(loginOptions?: LoginOptions): Promise<string | undefined> {
-    return this.ensureDiscoveryDocument()
-      .then(() => this.oauthService.tryLogin({ ...loginOptions, preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin }))
-      .then(() => this._getRedirectUrl());
+      return this.ensureDiscoveryDocument()
+          .then(() => this._retryLoginService.tryToLoginTimes({ ...loginOptions, preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin }))
+          .then(() => this._getRedirectUrl());
   }
 
   private _getRedirectUrl() {
@@ -192,6 +326,7 @@ export class RedirectAuthService extends AuthService {
     }
 
     return this.ensureDiscoveryDocument().then(() => {
+      this._isDiscoveryDocumentLoadedSubject$.next(true);
       this.oauthService.setupAutomaticSilentRefresh();
       return void this.allowRefreshTokenAndSilentRefreshOnMultipleTabs();
     }).catch(() => {
@@ -246,8 +381,42 @@ export class RedirectAuthService extends AuthService {
     this.oauthService.configure(config);
   }
 
-  reloadPage() {
-    window.location.reload();
+
+  /**
+   * Checks if the token has expired.
+   *
+   * This method retrieves the identity claims from the OAuth service and calculates
+   * the token's issued and expiration times. It then compares the current time with
+   * these values, considering a clock skew and a configurable expiration decrease.
+   *
+   * @returns - Returns `true` if the token has expired, otherwise `false`.
+   */
+  tokenHasExpired(){
+    const claims = this.oauthService.getIdentityClaims();
+    if(!claims){
+        this._oauthLogger.warn('No claims found in the token');
+        return false;
+    }
+    const now = Date.now();
+    const issuedAtMSec = claims.iat * 1000;
+    const expiresAtMSec = claims.exp * 1000;
+    const clockSkewInMSec = this.oauthService.clockSkewInSec * 1000;
+
+    this.showTokenExpiredDebugInformations(now, issuedAtMSec, expiresAtMSec, clockSkewInMSec);
+    return issuedAtMSec - clockSkewInMSec >= now ||
+    expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now;
+  }
+
+  private showTokenExpiredDebugInformations(now: number, issuedAtMSec: number, expiresAtMSec: number, clockSkewInMSec: number) {
+    if(this.oauthService.showDebugInformation) {
+        this._oauthLogger.warn('now: ', new Date(now));
+        this._oauthLogger.warn('issuedAt: ', new Date(issuedAtMSec));
+        this._oauthLogger.warn('expiresAt: ', new Date(expiresAtMSec));
+        this._oauthLogger.warn('clockSkewInMSec: ', clockSkewInMSec);
+        this._oauthLogger.warn('this.oauthService.decreaseExpirationBySec: ', this.oauthService.decreaseExpirationBySec);
+        this._oauthLogger.warn('issuedAtMSec - clockSkewInMSec >= now: ', issuedAtMSec - clockSkewInMSec >= now);
+        this._oauthLogger.warn('expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now: ', expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now);
+    }
   }
 
 }

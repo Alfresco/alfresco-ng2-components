@@ -22,17 +22,20 @@ import { AuthService } from './auth.service';
 const ROUTE_DEFAULT = '/';
 
 export const OidcAuthGuard: CanActivateFn = async (): Promise<boolean> => {
+    let onLogoutEmitted = false;
+
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    if (authService.authenticated) {
-        return Promise.resolve(true);
-    }
+    authService.onLogout$.subscribe(() => (onLogoutEmitted = true));
 
     try {
         const route = await authService.loginCallback({ customHashFragment: window.location.search });
         return router.navigateByUrl(route, { replaceUrl: true });
     } catch (error) {
+        if (onLogoutEmitted) {
+            throw error;
+        }
         return router.navigateByUrl(ROUTE_DEFAULT, { replaceUrl: true });
     }
 };

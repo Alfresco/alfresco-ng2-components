@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { OAuthService, OAuthStorage } from 'angular-oauth2-oidc';
-import { Observable, defer, EMPTY } from 'rxjs';
+import { Observable, defer, EMPTY, combineLatest } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
@@ -44,6 +44,19 @@ export class OidcAuthenticationService extends BaseAuthenticationService {
     ) {
         super(appConfig, cookie);
     }
+
+    /**
+     * Observable that determines whether an SSO login should be performed.
+     *
+     * This observable combines the authentication status and the discovery document load status
+     * to decide if an SSO login is necessary. It emits `true` if the user is not authenticated
+     * and the discovery document is loaded, otherwise it emits `false`.
+     *
+     * @type {Observable<boolean>}
+     */
+    shouldPerformSsoLogin$: Observable<boolean> = combineLatest([this.auth.authenticated$, this.auth.isDiscoveryDocumentLoaded$]).pipe(
+        map(([authenticated, isDiscoveryDocumentLoaded]) => !authenticated && isDiscoveryDocumentLoaded)
+    );
 
     isEcmLoggedIn(): boolean {
         if (this.isECMProvider() || this.isALLProvider()) {
