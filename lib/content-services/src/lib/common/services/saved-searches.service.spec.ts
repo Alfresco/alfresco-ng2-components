@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { NodeEntry } from '@alfresco/js-api';
 import { SavedSearchesService } from './saved-searches.service';
@@ -110,7 +110,7 @@ describe('SavedSearchesService', () => {
             expect(service.savedSearches$).toBeDefined();
             service.savedSearches$.subscribe((searches) => {
                 expect(searches.length).toBe(3);
-                expect(searches[2].name).toBe('Search 3');
+                expect(searches[2].name).toBe('Search 2');
                 expect(searches[2].order).toBe(2);
                 done();
             });
@@ -149,11 +149,69 @@ describe('SavedSearchesService', () => {
             }
             if (emissionCount === 2) {
                 expect(searches.length).toBe(3);
-                expect(searches[2].name).toBe('Search 3');
+                expect(searches[2].name).toBe('Search 2');
                 done();
             }
         });
 
         service.saveSearch(newSearch).subscribe();
     });
+
+    it('should edit a search', (done) => {
+        const updatedSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3', order: 0 };
+        prepareDefaultMock();
+
+        service.editSavedSearch(updatedSearch).subscribe(() => {
+            service.savedSearches$.subscribe((searches) => {
+                expect(searches.length).toBe(2);
+                expect(searches[0].name).toBe('Search 3');
+                expect(searches[0].order).toBe(0);
+
+                expect(searches[1].name).toBe('Search 2');
+                expect(searches[1].order).toBe(1);
+                done();
+            });
+        });
+    });
+
+    it('should delete a search', (done) => {
+        const searchToDelete = { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0 };
+        prepareDefaultMock();
+
+        service.deleteSavedSearch(searchToDelete).subscribe(() => {
+            service.savedSearches$.subscribe((searches) => {
+                expect(searches.length).toBe(1);
+                expect(searches[0].name).toBe('Search 2');
+                expect(searches[0].order).toBe(0);
+                done();
+            });
+        });
+    });
+
+    it('should change search order', fakeAsync(() => {
+        prepareDefaultMock();
+
+        service.changeOrder(0, 1);
+        tick(500);
+        service.savedSearches$.subscribe((searches) => {
+            expect(searches.length).toBe(2);
+            expect(searches[0].name).toBe('Search 2');
+            expect(searches[0].order).toBe(0);
+
+            expect(searches[0].name).toBe('Search 1');
+            expect(searches[0].order).toBe(1);
+        });
+    }));
+
+    /**
+     * Prepares default mocks for service
+     */
+    function prepareDefaultMock(): void {
+        spyOn(authService, 'getUsername').and.callFake(() => testUserName);
+        const nodeId = 'saved-searches-node-id';
+        spyOn(localStorage, 'getItem').and.callFake(() => nodeId);
+        spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
+        spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ entry: {} } as NodeEntry));
+        service.innit();
+    }
 });
