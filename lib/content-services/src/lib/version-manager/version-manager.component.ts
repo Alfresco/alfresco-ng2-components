@@ -65,6 +65,18 @@ export class VersionManagerComponent implements OnInit {
     @Input()
     allowDownload = true;
 
+    /** Toggles showing/hiding of version actions. */
+    @Input()
+    showActions = true;
+
+    /** Enable/disable viewing versions of the current node. */
+    @Input()
+    allowViewVersions = true;
+
+    /** Enable/disable deletion of version */
+    @Input()
+    allowVersionDelete = true;
+
     /** Emitted when a file is uploaded successfully. */
     @Output()
     uploadSuccess = new EventEmitter<Node>();

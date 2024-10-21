@@ -25,6 +25,7 @@ import { Node, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentVersionService } from './content-version.service';
 import { take } from 'rxjs/operators';
+import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -257,6 +258,14 @@ describe('VersionListComponent', () => {
     });
 
     describe('Actions buttons', () => {
+        const testDeleteButtonVisibility = (done: DoneFn, visible = true) => {
+            fixture.whenStable().then(() => {
+                getActionMenuButton('1.1').click();
+                expect(getDeleteButton() !== null).toBe(visible);
+                done();
+            });
+        };
+
         const getActionMenuButton = (version = '1.0'): HTMLButtonElement => {
             fixture.detectChanges();
             return fixture.debugElement.query(By.css(`[id="adf-version-list-action-menu-button-${version}"]`))?.nativeElement;
@@ -359,14 +368,6 @@ describe('VersionListComponent', () => {
         });
 
         describe('Delete action', () => {
-            const testDeleteButtonVisibility = (done: DoneFn, visible = true) => {
-                fixture.whenStable().then(() => {
-                    getActionMenuButton('1.1').click();
-                    expect(getDeleteButton() !== null).toBe(visible);
-                    done();
-                });
-            };
-
             beforeEach(() => {
                 component.node = { id: nodeId, allowableOperations: ['update', 'delete'] } as Node;
             });
@@ -387,6 +388,23 @@ describe('VersionListComponent', () => {
                 fixture.detectChanges();
                 testDeleteButtonVisibility(done, false);
             });
+        });
+    });
+
+    describe('Virtual list viewport', () => {
+        let virtualListViewport: CdkFixedSizeVirtualScroll;
+
+        beforeEach(() => {
+            fixture.detectChanges();
+            virtualListViewport = fixture.debugElement.query(By.directive(CdkFixedSizeVirtualScroll)).injector.get(CdkFixedSizeVirtualScroll);
+        });
+
+        it('should have assigned correct minBufferPx', () => {
+            expect(virtualListViewport.minBufferPx).toBe(440);
+        });
+
+        it('should have assigned correct maxBufferPx', () => {
+            expect(virtualListViewport.maxBufferPx).toBe(528);
         });
     });
 });

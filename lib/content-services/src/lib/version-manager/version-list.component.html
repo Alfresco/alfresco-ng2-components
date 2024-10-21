@@ -1,7 +1,7 @@
 <mat-progress-bar *ngIf="isLoading" data-automation-id="version-history-loading-bar" mode="indeterminate"
                   color="accent"></mat-progress-bar>
 <mat-list class="adf-version-list adf-version-list-element" [hidden]="isLoading">
-    <cdk-virtual-scroll-viewport #viewport itemSize="88" class="adf-version-list-viewport">
+    <cdk-virtual-scroll-viewport #viewport itemSize="88" class="adf-version-list-viewport" [minBufferPx]="440" [maxBufferPx]="528">
         <mat-list-item class="adf-version-list-item"
                        *cdkVirtualFor="let version of versionsDataSource; let idx = index; let latestVersion = first">
             <mat-icon class="adf-version-list-icon" matListItemIcon>insert_drive_file</mat-icon>

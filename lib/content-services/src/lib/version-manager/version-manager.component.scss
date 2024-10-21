@@ -41,6 +41,15 @@ adf-version-manager {
 
 .adf-version-list-table {
     width: 100%;
+
+    .adf-version-manager-upload-button {
+        margin-left: 20px;
+    }
+
+    adf-version-list {
+        display: flex;
+        height: 538px;
+    }
 }
 
 .adf-version-upload-table {

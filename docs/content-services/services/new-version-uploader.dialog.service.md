@@ -88,6 +88,6 @@ yourFunctionToOpenDialog(){
 
 ## See Also
 
--   [Version list component](../components/docs/content-services/components/version-list.component.md)
--   [Version Comparison Component](../components/docs/content-services/components/version-comparison.component.md)
--   [Version Upload Component](../components/docs/content-services/components/version-upload.component.md)
+-   [Version list component](../components/version-list.component.md)
+-   [Version Comparison Component](../components/version-comparison.component.md)
+-   [Version Upload Component](../components/version-upload.component.md)

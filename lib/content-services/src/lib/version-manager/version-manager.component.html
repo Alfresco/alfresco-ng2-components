@@ -22,6 +22,7 @@
             <div>
                 <button mat-raised-button
                         id="adf-show-version-upload-button"
+                        class="adf-version-manager-upload-button"
                         (click)="toggleNewVersion()" color="primary"
                         *ngIf="uploadState ==='close'">{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.ADD' | translate }}
                 </button>
@@ -32,6 +33,9 @@
                     [node]="node"
                     [allowDownload]="allowDownload"
                     [showComments]="showComments"
+                    [showActions]="showActions"
+                    [allowViewVersions]="allowViewVersions"
+                    [allowVersionDelete]="allowVersionDelete"
                     (deleted)="refresh($event)"
                     (restored)="refresh($event)"
                     (viewVersion)="onViewVersion($event)">

@@ -1,7 +1,7 @@
 ---
 Title: Version List component
 Added: v2.0.0
-Status: Experimental
+Status: Active
 Last reviewed: 2019-01-16
 ---
 
@@ -50,3 +50,5 @@ If you want show readonly version list you set this component with showActions f
 ## See also
 
 -   [Version manager component](version-manager.component.md)
+-   [New Version Uploader service](../services/new-version-uploader.dialog.service.md)
+-   [New Version Uploader component](new-version-uploader.dialog.md)
