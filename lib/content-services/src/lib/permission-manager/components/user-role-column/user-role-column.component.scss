@@ -3,8 +3,9 @@
 .adf-role-selector-field#{$mat-form-field} {
     width: 100%;
     max-width: 200px;
+    height: 40px;
 
-    #{$mat-form-field-flex} {
-        height: 40px;
+    #{$mat-form-field-infix}:not(:disabled) {
+        padding-top: 8px;
     }
 }

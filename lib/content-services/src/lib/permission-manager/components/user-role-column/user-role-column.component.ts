@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { RoleModel } from '../../models/role.model';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,7 +32,7 @@ export interface RoleModelOption {
     standalone: true,
     imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslateModule],
     template: `
-        <mat-form-field class="adf-role-selector-field" *ngIf="!readonly">
+        <mat-form-field class="adf-role-selector-field" *ngIf="!readonly" subscriptSizing="dynamic">
             <mat-select
                 class="adf-role-selector"
                 (click)="$event.stopPropagation()"
@@ -52,6 +52,7 @@ export interface RoleModelOption {
             {{ i18nValue | translate }}
         </span>
     `,
+    encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },
     styleUrls: ['./user-role-column.component.scss']
 })
