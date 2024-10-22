@@ -1,6 +1,7 @@
 <div (keyup)="onKeyPress($event)" tabindex="-1" role="button" class="adf-notification-history-container">
     <button mat-button
             [matMenuTriggerFor]="menu"
+            aria-hidden="false"
             [attr.aria-label]="'NOTIFICATIONS.OPEN_HISTORY' | translate"
             title="{{ 'NOTIFICATIONS.OPEN_HISTORY' | translate }}"
             class="adf-notification-history-menu_button"
