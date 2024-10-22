@@ -370,7 +370,7 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
      * @param requestUrl the request url
      * @returns The ticket or `null` if none was found
      */
-    private getTicketEcmBase64(requestUrl: string): string | null {
+    getTicketEcmBase64(requestUrl: string): string | null {
         let ticket = null;
 
         const contextRootBpm = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app';
