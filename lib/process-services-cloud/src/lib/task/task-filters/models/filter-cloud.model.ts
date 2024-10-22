@@ -60,12 +60,12 @@ export class TaskFilterCloudModel {
     completedBy: IdentityUserModel;
     showCounter: boolean;
 
-    taskNames: string[];
-    statuses: TaskStatusFilter[];
-    assignees: string[];
-    processDefinitionNames: string[];
-    priorities: string[];
-    completedByUsers: string[];
+    taskNames: string[] | null;
+    statuses: TaskStatusFilter[] | null;
+    assignees: string[] | null;
+    processDefinitionNames: string[] | null;
+    priorities: string[] | null;
+    completedByUsers: string[] | null;
 
     private _completedFrom: string;
     private _completedTo: string;
