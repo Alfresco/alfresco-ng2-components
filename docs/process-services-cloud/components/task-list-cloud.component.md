@@ -87,13 +87,12 @@ when the task list is empty:
 | standalone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
-| useNewApi | `boolean` | false | Toggles the use of the new API. Available from Activiti 8.7.0 forwards. |
-| names | `string[]` | [] | Filter the tasks. Display only tasks with names matching any of the supplied strings. This input will be ignored if the useNewApi input is set to false. |
-| processDefinitionNames | `string[]` | [] | Filter the tasks. Display only tasks under provided processes. This input will be ignored if the useNewApi input is set to false. |
-| statuses | `string[]` | [] | Filter the tasks. Display only tasks with provided statuses. This input will be ignored if the useNewApi input is set to false. |
-| assignees | `string[]` | [] | Filter the tasks. Display only tasks with assignees whose usernames are present in the array. This input will be ignored if the useNewApi input is set to false. |
-| priorities | `string[]` | [] | Filter the tasks. Display only tasks with provided priorities. This input will be ignored if the useNewApi input is set to false. |
-| completedByUsers | `string[]` | [] | Filter the tasks. Display only tasks completed by users whose usernames are present in the array. This input will be ignored if the useNewApi input is set to false. |
+| names | `string[]` | [] | Filter the tasks. Display only tasks with names matching any of the supplied strings. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| processDefinitionNames | `string[]` | [] | Filter the tasks. Display only tasks under provided processes. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| statuses | `string[]` | [] | Filter the tasks. Display only tasks with provided statuses. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| assignees | `string[]` | [] | Filter the tasks. Display only tasks with assignees whose usernames are present in the array. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| priorities | `string[]` | [] | Filter the tasks. Display only tasks with provided priorities. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| completedByUsers | `string[]` | [] | Filter the tasks. Display only tasks completed by users whose usernames are present in the array. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
 
 ### Events
 

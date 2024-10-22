@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, Inject, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Inject, OnDestroy, Optional } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 import { Subject, BehaviorSubject, combineLatest } from 'rxjs';
@@ -145,48 +145,44 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     @Input()
     candidateGroupId: string = '';
 
-    /** Use new task search API. (Available from Activiti version 8.7.0 forward) */
-    @Input()
-    useNewApi: boolean = false;
-
     /**
      * Filter the tasks. Display only tasks with names matching any of the supplied strings.
-     * This input will be ignored if the useNewApi input is set to false.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
     names: string[] = [];
 
     /**
      * Filter the tasks. Display only tasks with assignees whose usernames are present in the array.
-     * This input will be ignored if the useNewApi input is set to false.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
     assignees: string[] = [];
 
     /**
      * Filter the tasks. Display only tasks with provided statuses.
-     * This input will be ignored if the useNewApi input is set to false.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
     statuses: string[] = [];
 
     /**
      * Filter the tasks. Display only tasks under provided processes.
-     * This input will be ignored if the useNewApi input is set to false.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
     processDefinitionNames: string[] = [];
 
     /**
      * Filter the tasks. Display only tasks with provided priorities.
-     * This input will be ignored if the useNewApi input is set to false.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
     priorities: string[] = [];
 
     /**
      * Filter the tasks. Display only tasks completed by users whose usernames are present in the array.
-     * This input will be ignored if the useNewApi input is set to false.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
      */
     @Input()
     completedByUsers: string[] = [];
@@ -202,6 +198,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     );
 
     constructor(
+        @Inject(TASK_SEARCH_API_METHOD_TOKEN) @Optional() private searchMethod: 'GET' | 'POST',
         @Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
         appConfigService: AppConfigService,
         taskCloudService: TaskCloudService,
@@ -225,7 +222,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                 filter((isColumnSchemaCreated) => !!isColumnSchemaCreated),
                 take(1),
                 switchMap(() => {
-                    if (this.useNewApi) {
+                    if (this.searchMethod === 'POST') {
                         const requestNode = this.createTaskListRequestNode();
                         return this.taskListCloudService.fetchTaskList(requestNode).pipe(take(1));
                     } else {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject, Input } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -26,6 +26,7 @@ import { TaskDetailsCloudModel } from '../../start-task/models/task-details-clou
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { TaskListCloudService } from '../../task-list/services/task-list-cloud.service';
 import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';
+import { TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 
 @Component({
     selector: 'adf-cloud-task-filters',
@@ -34,10 +35,6 @@ import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
-    /** Use new task search API. (Available from Activiti version 8.7.0 forward) */
-    @Input()
-    useNewApi: boolean = false;
-
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -64,6 +61,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
+    private readonly searchMethod = inject<'GET' | 'POST'>(TASK_SEARCH_API_METHOD_TOKEN, { optional: true });
 
     ngOnInit() {
         this.enableNotifications = this.appConfigService.get('notifications', true);
@@ -143,7 +141,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     }
 
     private fetchTaskFilterCounter(filter: TaskFilterCloudModel): Observable<number> {
-        return this.useNewApi
+        return this.searchMethod === 'POST'
             ? this.taskListCloudService.getTaskListCounter(new TaskFilterCloudAdapter(filter))
             : this.taskFilterCloudService.getTaskFilterCounter(filter);
     }
