@@ -347,6 +347,10 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     }
 
     private addBasicAuth(requestUrl: string, header: HttpHeaders): HttpHeaders {
+        if (this.isKerberosEnabled()) {
+            return header;
+        }
+
         const ticket = this.getTicketEcmBase64(requestUrl);
 
         if (!ticket) {
