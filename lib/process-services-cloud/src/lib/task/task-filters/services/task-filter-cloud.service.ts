@@ -80,7 +80,8 @@ export class TaskFilterCloudService extends BaseCloudService {
                     } else {
                         return of(this.findFiltersByKeyInPreferences(preferences, key));
                     }
-                })
+                }),
+                switchMap((filters) => this.handleBackwardCompatibility(appName, key, filters))
             )
             .subscribe((filters) => {
                 this.addFiltersToStream(filters);
@@ -378,5 +379,30 @@ export class TaskFilterCloudService extends BaseCloudService {
      */
     refreshFilter(filterKey: string): void {
         this.filterKeyToBeRefreshedSource.next(filterKey);
+    }
+
+    private handleBackwardCompatibility(appName: string, key: string, filters: TaskFilterCloudModel[]): Observable<TaskFilterCloudModel[]> {
+        filters.forEach((filter) => {
+            if (filter.taskName && !filter.taskNames) {
+                filter.taskNames = [filter.taskName];
+            }
+            if (filter.status && !filter.statuses) {
+                filter.statuses = [filter.status];
+            }
+            if (filter.assignee && !filter.assignees) {
+                filter.assignees = [filter.assignee];
+            }
+            if (filter.processDefinitionName && !filter.processDefinitionNames) {
+                filter.processDefinitionNames = [filter.processDefinitionName];
+            }
+            if (filter.completedBy?.username && !filter.completedByUsers) {
+                filter.completedByUsers = [filter.completedBy.username];
+            }
+            if (filter.priority && !filter.priorities) {
+                filter.priorities = [`${filter.priority}`];
+            }
+        });
+
+        return this.updateTaskFilters(appName, key, filters);
     }
 }

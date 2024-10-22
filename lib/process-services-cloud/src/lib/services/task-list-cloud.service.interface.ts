@@ -16,8 +16,9 @@
  */
 
 import { Observable } from 'rxjs';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 
 export interface TaskListCloudServiceInterface {
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any>;
+    fetchTaskList(requestNode: TaskListRequestModel, queryUrl?: string): Observable<any>;
 }

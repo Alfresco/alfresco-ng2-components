@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
@@ -24,6 +24,8 @@ import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
+import { TaskListCloudService } from '../../task-list/services/task-list-cloud.service';
+import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';
 
 @Component({
     selector: 'adf-cloud-task-filters',
@@ -32,6 +34,10 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
     encapsulation: ViewEncapsulation.None
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
+    /** Use new task search API. (Available from Activiti version 8.7.0 forward) */
+    @Input()
+    useNewApi: boolean = false;
+
     /** Emitted when a filter is being selected based on the filterParam input. */
     @Output()
     filterSelected = new EventEmitter<TaskFilterCloudModel>();
@@ -55,6 +61,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     currentFiltersValues: { [key: string]: number } = {};
 
     private readonly taskFilterCloudService = inject(TaskFilterCloudService);
+    private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
 
@@ -114,24 +121,31 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      *  Get current value for filter and check if value has changed
+     *
      * @param filter filter
      */
     updateFilterCounter(filter: TaskFilterCloudModel): void {
-        if (filter?.showCounter) {
-            this.taskFilterCloudService
-                .getTaskFilterCounter(filter)
-                .pipe(
-                    tap((filterCounter) => {
-                        this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
-                    })
-                )
-                .subscribe((data) => {
-                    this.counters = {
-                        ...this.counters,
-                        [filter.key]: data
-                    };
-                });
+        if (!filter?.showCounter) {
+            return;
         }
+        this.fetchTaskFilterCounter(filter)
+            .pipe(
+                tap((filterCounter) => {
+                    this.checkIfFilterValuesHasBeenUpdated(filter.key, filterCounter);
+                })
+            )
+            .subscribe((data) => {
+                this.counters = {
+                    ...this.counters,
+                    [filter.key]: data
+                };
+            });
+    }
+
+    private fetchTaskFilterCounter(filter: TaskFilterCloudModel): Observable<number> {
+        return this.useNewApi
+            ? this.taskListCloudService.getTaskListCounter(new TaskFilterCloudAdapter(filter))
+            : this.taskFilterCloudService.getTaskFilterCounter(filter);
     }
 
     initFilterCounterNotifications() {

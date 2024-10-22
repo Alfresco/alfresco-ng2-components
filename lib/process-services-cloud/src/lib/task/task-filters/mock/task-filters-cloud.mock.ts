@@ -21,6 +21,7 @@ import { TaskFilterCloudModel, ServiceTaskFilterCloudModel, AssignmentType, Task
 
 export const fakeGlobalFilter: any[] = [
     {
+        appName: 'fake-app-name',
         name: 'FakeInvolvedTasks',
         key: 'fake-involved-tasks',
         icon: 'adjust',
@@ -244,37 +245,37 @@ export const fakeTaskFilter = new TaskFilterCloudModel({
     status: 'ALL'
 });
 
-export const fakeTaskCloudFilters = [
-    {
+export const fakeTaskCloudFilters: TaskFilterCloudModel[] = [
+    new TaskFilterCloudModel({
         name: 'FAKE_TASK_1',
         id: '1',
-        key: 'all-fake-task',
+        key: 'completed-fake-task',
         icon: 'adjust',
         appName: 'fakeAppName',
         sort: 'startDate',
-        status: 'ALL',
+        status: TaskStatusFilter.COMPLETED,
         order: 'DESC'
-    },
-    {
+    }),
+    new TaskFilterCloudModel({
         name: 'FAKE_TASK_2',
         id: '2',
         key: 'run-fake-task',
         icon: 'adjust',
         appName: 'fakeAppName',
         sort: 'startDate',
-        status: 'RUNNING',
+        status: TaskStatusFilter.ASSIGNED,
         order: 'DESC'
-    },
-    {
+    }),
+    new TaskFilterCloudModel({
         name: 'FAKE_TASK_3',
         id: '3',
         key: 'complete-fake-task',
         icon: 'adjust',
         appName: 'fakeAppName',
         sort: 'startDate',
-        status: 'COMPLETED',
+        status: TaskStatusFilter.COMPLETED,
         order: 'DESC'
-    }
+    })
 ];
 
 export const taskNotifications = [
@@ -290,8 +291,8 @@ export const taskCloudEngineEventsMock = {
     }
 };
 
-export const defaultTaskFiltersMock = [
-    {
+export const defaultTaskFiltersMock: TaskFilterCloudModel[] = [
+    new TaskFilterCloudModel({
         name: 'CREATED_TASK_FILTER',
         id: '1',
         key: 'created',
@@ -300,8 +301,8 @@ export const defaultTaskFiltersMock = [
         sort: 'startDate',
         status: TaskStatusFilter.CREATED,
         order: 'DESC'
-    },
-    {
+    }),
+    new TaskFilterCloudModel({
         name: 'ASSIGNED_TASK_FILTER',
         id: '2',
         key: 'assigned',
@@ -310,8 +311,8 @@ export const defaultTaskFiltersMock = [
         sort: 'startDate',
         status: TaskStatusFilter.ASSIGNED,
         order: 'DESC'
-    },
-    {
+    }),
+    new TaskFilterCloudModel({
         name: 'COMPLETED_TASK_FILTER',
         id: '3',
         key: 'complete-fake-task',
@@ -320,7 +321,7 @@ export const defaultTaskFiltersMock = [
         sort: 'startDate',
         status: TaskStatusFilter.COMPLETED,
         order: 'DESC'
-    }
+    })
 ];
 
 export const fakeFilterNotification: TaskDetailsCloudModel = {

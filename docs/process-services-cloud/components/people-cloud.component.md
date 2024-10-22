@@ -34,7 +34,8 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | required | `boolean` | false | Mark this field as required |
 | roles | `string[]` |  | Role names of the users to be listed. |
 | searchUserCtrl | `FormControl<any>` |  | FormControl to search the user |
-| title | `string` |  | Placeholder translation key |
+| title | `string` |  | Label translation key |
+| placeholder | `string` |  | Placeholder for the input field |
 | hideInputOnSingleSelection | `boolean` | false | Hide the input field when a user is selected in single selection mode. The input will be shown again when the user is removed using the icon on the chip. |
 | formFieldAppearance | [`MatFormFieldAppearance`](https://material.angular.io/components/form-field/api#MatFormFieldAppearance) | "fill" | Material form field appearance (fill / outline). |
 | formFieldSubscriptSizing | [`SubscriptSizing`](https://material.angular.io/components/form-field/api#SubscriptSizing) | "fixed" | Material form field subscript sizing (fixed / dynamic). |

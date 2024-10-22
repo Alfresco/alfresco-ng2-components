@@ -19,13 +19,12 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
-import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 
 @Injectable({ providedIn: 'root' })
-export class ProcessTaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {
+export class ProcessTaskListCloudService extends BaseCloudService {
     /**
      * Finds a task using an object with optional query properties.
      *

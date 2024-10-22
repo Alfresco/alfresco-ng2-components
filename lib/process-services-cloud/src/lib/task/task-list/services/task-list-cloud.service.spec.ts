@@ -17,9 +17,10 @@
 
 import { TestBed } from '@angular/core/testing';
 import { TaskListCloudService } from './task-list-cloud.service';
-import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
+import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { catchError, firstValueFrom, of } from 'rxjs';
 
 describe('TaskListCloudService', () => {
     let service: TaskListCloudService;
@@ -39,59 +40,126 @@ describe('TaskListCloudService', () => {
         requestSpy = spyOn(adfHttpClient, 'request');
     });
 
-    it('should append to the call all the parameters', (done) => {
-        const taskRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as TaskQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallQueryParameters);
-        service.getTaskByRequest(taskRequest).subscribe((res) => {
+    describe('getTaskByRequest', () => {
+        it('should append to the call all the parameters', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                skipCount: 0,
+                maxItems: 20,
+                service: 'fake-service'
+            } as TaskQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.getTaskByRequest(taskRequest));
+
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.skipCount).toBe(0);
             expect(res.maxItems).toBe(20);
             expect(res.service).toBe('fake-service');
-            done();
         });
-    });
 
-    it('should concat the app name to the request url', (done) => {
-        const taskRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as TaskQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallUrl);
-        service.getTaskByRequest(taskRequest).subscribe((requestUrl) => {
+        it('should concat the app name to the request url', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                skipCount: 0,
+                maxItems: 20,
+                service: 'fake-service'
+            } as TaskQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const requestUrl = await firstValueFrom(service.getTaskByRequest(taskRequest));
+
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
             expect(requestUrl).toContain('/fakeName/query/v1/tasks');
-            done();
         });
-    });
 
-    it('should concat the sorting to append as parameters', (done) => {
-        const taskRequest = {
-            appName: 'fakeName',
-            skipCount: 0,
-            maxItems: 20,
-            service: 'fake-service',
-            sorting: [
-                { orderBy: 'NAME', direction: 'DESC' },
-                { orderBy: 'TITLE', direction: 'ASC' }
-            ]
-        } as TaskQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallQueryParameters);
-        service.getTaskByRequest(taskRequest).subscribe((res) => {
+        it('should concat the sorting to append as parameters', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                skipCount: 0,
+                maxItems: 20,
+                service: 'fake-service',
+                sorting: [
+                    { orderBy: 'NAME', direction: 'DESC' },
+                    { orderBy: 'TITLE', direction: 'ASC' }
+                ]
+            } as TaskQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.getTaskByRequest(taskRequest));
+
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.sort).toBe('NAME,DESC&TITLE,ASC');
-            done();
+        });
+
+        it('should return an error when app name is not specified', async () => {
+            const taskRequest = { appName: null } as TaskQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(service.getTaskByRequest(taskRequest).pipe(catchError((error) => of(error))));
+
+            expect(res).toBe('Appname not configured');
         });
     });
 
-    it('should return an error when app name is not specified', (done) => {
-        const taskRequest = { appName: null } as TaskQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallUrl);
-        service.getTaskByRequest(taskRequest).subscribe(
-            () => {},
-            (error) => {
-                expect(error).toBe('Appname not configured');
-                done();
-            }
-        );
+    describe('fetchTaskList', () => {
+        it('should append to the call all the parameters', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 }
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchTaskList(taskRequest));
+
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.skipCount).toBe(0);
+            expect(res.maxItems).toBe(20);
+        });
+
+        it('should concat the app name to the request url', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 }
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(service.fetchTaskList(taskRequest));
+
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res).toContain('/fakeName/query/v1/tasks/search');
+        });
+
+        it('should concat the sorting to append as parameters', async () => {
+            const taskRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 },
+                sorting: [
+                    { orderBy: 'NAME', direction: 'DESC' },
+                    { orderBy: 'TITLE', direction: 'ASC' }
+                ]
+            } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchTaskList(taskRequest));
+
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.sort).toBe('NAME,DESC&TITLE,ASC');
+        });
+
+        it('should return an error when app name is not specified', async () => {
+            const taskRequest = { appName: null } as TaskListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(service.fetchTaskList(taskRequest).pipe(catchError((error) => of(error.message))));
+
+            expect(res).toBe('Appname not configured');
+        });
     });
 });
