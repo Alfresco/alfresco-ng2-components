@@ -146,6 +146,19 @@ describe('DynamicChipListComponent', () => {
             expect(getComputedStyle(chip.nativeElement).borderRadius).toBe('20px');
         });
 
+        it('should disable the delete button if disableDelete is true', async () => {
+            component.disableDelete = true;
+
+            component.ngOnChanges({
+                chips: new SimpleChange(undefined, component.chips, true)
+            });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const chip = fixture.debugElement.query(By.css('.adf-dynamic-chip-list-delete-icon'));
+            expect(Object.keys(chip.attributes)).toContain('disabled');
+        });
+
         it('should not render view more button by default', async () => {
             component.ngOnChanges({
                 chips: new SimpleChange(undefined, component.chips, true)
@@ -182,7 +195,7 @@ describe('DynamicChipListComponent', () => {
             element.style.maxWidth = '309px';
         });
 
-        afterEach(() =>{
+        afterEach(() => {
             fixture.destroy();
         });
 
