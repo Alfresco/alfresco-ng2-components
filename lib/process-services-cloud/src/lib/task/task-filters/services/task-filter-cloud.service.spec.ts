@@ -36,6 +36,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { ApolloModule } from 'apollo-angular';
 import { StorageService } from '@alfresco/adf-core';
+import { TaskStatusFilter } from '../public-api';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -46,18 +47,17 @@ describe('TaskFilterCloudService', () => {
     let createPreferenceSpy: jasmine.Spy;
     let getCurrentUserInfoSpy: jasmine.Spy;
 
-    const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
+    const identityUserMock = {
+        username: 'fakeusername',
+        firstName: 'fake-identity-first-name',
+        lastName: 'fake-identity-last-name',
+        email: 'fakeIdentity@email.com'
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule,
-                ProcessServiceCloudTestingModule,
-                ApolloModule
-            ],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }
-            ]
+            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
+            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
         notificationCloudService = TestBed.inject(NotificationCloudService);
@@ -90,17 +90,20 @@ describe('TaskFilterCloudService', () => {
             expect(res[0].appName).toBe('fakeAppName');
             expect(res[0].id).toBe('1');
             expect(res[0].name).toBe('FAKE_TASK_1');
-            expect(res[0].status).toBe('ALL');
+            expect(res[0].status).toBe(TaskStatusFilter.COMPLETED);
+            expect(res[0].statuses).toContain(TaskStatusFilter.COMPLETED);
 
             expect(res[1].appName).toBe('fakeAppName');
             expect(res[1].id).toBe('2');
             expect(res[1].name).toBe('FAKE_TASK_2');
-            expect(res[1].status).toBe('RUNNING');
+            expect(res[1].status).toBe(TaskStatusFilter.ASSIGNED);
+            expect(res[1].statuses).toContain(TaskStatusFilter.ASSIGNED);
 
             expect(res[2].appName).toBe('fakeAppName');
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('FAKE_TASK_3');
-            expect(res[2].status).toBe('COMPLETED');
+            expect(res[2].status).toBe(TaskStatusFilter.COMPLETED);
+            expect(res[2].statuses).toContain(TaskStatusFilter.COMPLETED);
 
             expect(createPreferenceSpy).toHaveBeenCalled();
             done();
@@ -116,17 +119,20 @@ describe('TaskFilterCloudService', () => {
             expect(res[0].appName).toBe('fakeAppName');
             expect(res[0].id).toBe('1');
             expect(res[0].name).toBe('FAKE_TASK_1');
-            expect(res[0].status).toBe('ALL');
+            expect(res[0].status).toBe(TaskStatusFilter.COMPLETED);
+            expect(res[0].statuses).toContain(TaskStatusFilter.COMPLETED);
 
             expect(res[1].appName).toBe('fakeAppName');
             expect(res[1].id).toBe('2');
             expect(res[1].name).toBe('FAKE_TASK_2');
-            expect(res[1].status).toBe('RUNNING');
+            expect(res[1].status).toBe(TaskStatusFilter.ASSIGNED);
+            expect(res[1].statuses).toContain(TaskStatusFilter.ASSIGNED);
 
             expect(res[2].appName).toBe('fakeAppName');
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('FAKE_TASK_3');
-            expect(res[2].status).toBe('COMPLETED');
+            expect(res[2].status).toBe(TaskStatusFilter.COMPLETED);
+            expect(res[2].statuses).toContain(TaskStatusFilter.COMPLETED);
 
             expect(getPreferencesSpy).toHaveBeenCalled();
             done();
@@ -144,17 +150,20 @@ describe('TaskFilterCloudService', () => {
             expect(res[0].appName).toBe('fakeAppName');
             expect(res[0].id).toBe('1');
             expect(res[0].name).toBe('FAKE_TASK_1');
-            expect(res[0].status).toBe('ALL');
+            expect(res[0].status).toBe(TaskStatusFilter.COMPLETED);
+            expect(res[0].statuses).toContain(TaskStatusFilter.COMPLETED);
 
             expect(res[1].appName).toBe('fakeAppName');
             expect(res[1].id).toBe('2');
             expect(res[1].name).toBe('FAKE_TASK_2');
-            expect(res[1].status).toBe('RUNNING');
+            expect(res[1].status).toBe(TaskStatusFilter.ASSIGNED);
+            expect(res[1].statuses).toContain(TaskStatusFilter.ASSIGNED);
 
             expect(res[2].appName).toBe('fakeAppName');
             expect(res[2].id).toBe('3');
             expect(res[2].name).toBe('FAKE_TASK_3');
-            expect(res[2].status).toBe('COMPLETED');
+            expect(res[2].status).toBe(TaskStatusFilter.COMPLETED);
+            expect(res[2].statuses).toContain(TaskStatusFilter.COMPLETED);
 
             done();
         });
@@ -167,7 +176,8 @@ describe('TaskFilterCloudService', () => {
             expect(res.appName).toBe('fakeAppName');
             expect(res.id).toBe('2');
             expect(res.name).toBe('FAKE_TASK_2');
-            expect(res.status).toBe('RUNNING');
+            expect(res.status).toBe(TaskStatusFilter.ASSIGNED);
+            expect(res.statuses).toContain(TaskStatusFilter.ASSIGNED);
 
             expect(getPreferenceByKeySpy).toHaveBeenCalled();
             done();
@@ -183,7 +193,8 @@ describe('TaskFilterCloudService', () => {
             expect(res.appName).toBe('fakeAppName');
             expect(res.id).toBe('2');
             expect(res.name).toBe('FAKE_TASK_2');
-            expect(res.status).toBe('RUNNING');
+            expect(res.status).toBe(TaskStatusFilter.ASSIGNED);
+            expect(res.statuses).toContain(TaskStatusFilter.ASSIGNED);
             done();
         });
     });
@@ -245,14 +256,17 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     let getPreferencesSpy: jasmine.Spy;
     let storageService: StorageService;
 
-    const identityUserMock = { username: 'fakeusername', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
+    const identityUserMock = {
+        username: 'fakeusername',
+        firstName: 'fake-identity-first-name',
+        lastName: 'fake-identity-last-name',
+        email: 'fakeIdentity@email.com'
+    };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
-            providers: [
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
-            ]
+            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;
@@ -272,20 +286,24 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
             expect(res[0].key).toEqual('my-tasks');
             expect(res[0].appName).toEqual(appName);
             expect(res[0].icon).toEqual('inbox');
-            expect(res[0].status).toEqual('ASSIGNED');
+            expect(res[0].status).toEqual(TaskStatusFilter.ASSIGNED);
+            expect(res[0].statuses).toContain(TaskStatusFilter.ASSIGNED);
             expect(res[0].assignee).toEqual(identityUserMock.username);
+            expect(res[0].assignees).toContain(identityUserMock.username);
 
             expect(res[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS');
             expect(res[1].key).toEqual('queued-tasks');
             expect(res[1].appName).toEqual(appName);
             expect(res[1].icon).toEqual('queue');
-            expect(res[1].status).toEqual('CREATED');
+            expect(res[1].status).toEqual(TaskStatusFilter.CREATED);
+            expect(res[1].statuses).toContain(TaskStatusFilter.CREATED);
 
             expect(res[2].name).toEqual('ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS');
             expect(res[2].key).toEqual('completed-tasks');
             expect(res[2].appName).toEqual(appName);
             expect(res[2].icon).toEqual('done');
-            expect(res[2].status).toEqual('COMPLETED');
+            expect(res[2].status).toEqual(TaskStatusFilter.COMPLETED);
+            expect(res[2].statuses).toContain(TaskStatusFilter.COMPLETED);
             expect(getPreferencesSpy).toHaveBeenCalled();
 
             const localData = JSON.parse(storageService.getItem(`task-filters-${appName}-${identityUserMock.username}`));
@@ -295,20 +313,24 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
             expect(localData[0].key).toEqual('my-tasks');
             expect(localData[0].appName).toEqual(appName);
             expect(localData[0].icon).toEqual('inbox');
-            expect(localData[0].status).toEqual('ASSIGNED');
+            expect(localData[0].status).toEqual(TaskStatusFilter.ASSIGNED);
+            expect(localData[0].statuses).toContain(TaskStatusFilter.ASSIGNED);
             expect(localData[0].assignee).toEqual(identityUserMock.username);
+            expect(localData[0].assignees).toContain(identityUserMock.username);
 
             expect(localData[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS');
             expect(localData[1].key).toEqual('queued-tasks');
             expect(localData[1].appName).toEqual(appName);
             expect(localData[1].icon).toEqual('queue');
-            expect(localData[1].status).toEqual('CREATED');
+            expect(localData[1].status).toEqual(TaskStatusFilter.CREATED);
+            expect(localData[1].statuses).toContain(TaskStatusFilter.CREATED);
 
             expect(localData[2].name).toEqual('ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS');
             expect(localData[2].key).toEqual('completed-tasks');
             expect(localData[2].appName).toEqual(appName);
             expect(localData[2].icon).toEqual('done');
-            expect(localData[2].status).toEqual('COMPLETED');
+            expect(localData[2].status).toEqual(TaskStatusFilter.COMPLETED);
+            expect(localData[2].statuses).toContain(TaskStatusFilter.COMPLETED);
 
             done();
         });

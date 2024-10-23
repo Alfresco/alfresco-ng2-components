@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
+import { Pagination } from '@alfresco/js-api';
 import { TaskListCloudSortingModel } from './task-list-sorting.model';
+import { TaskFilterCloudModel } from '../task/task-filters/models/filter-cloud.model';
 
 export class TaskQueryCloudRequestModel {
     appName: string;
@@ -88,5 +90,104 @@ export class TaskQueryCloudRequestModel {
             this.candidateGroupId = obj.candidateGroupId;
             this.variableKeys = obj.variableKeys;
         }
+    }
+}
+
+export interface TaskListRequestTaskVariableFilter {
+    name?: string;
+    type?: string;
+    value?: string;
+    operator?: string;
+}
+
+export class TaskListRequestModel {
+    appName: string;
+    pagination?: Pagination;
+    sorting?: TaskListCloudSortingModel[];
+
+    onlyStandalone?: boolean;
+    onlyRoot?: boolean;
+    name?: string[];
+    description?: string[];
+    processDefinitionName?: string[];
+    priority?: string[];
+    status?: string[];
+    completedBy?: string[];
+    assignee?: string[];
+    createdFrom?: string;
+    createdTo?: string;
+    lastModifiedFrom?: string;
+    lastModifiedTo?: string;
+    lastClaimedFrom?: string;
+    lastClaimedTo?: string;
+    dueDateFrom?: string;
+    dueDateTo?: string;
+    completedFrom?: string;
+    completedTo?: string;
+    candidateUserId?: string[];
+    candidateGroupId?: string[];
+
+    taskVariableFilters?: TaskListRequestTaskVariableFilter[];
+    variableKeys?: string[];
+
+    constructor(obj: Partial<TaskListRequestModel>) {
+        if (!obj.appName) {
+            throw new Error('appName not configured');
+        }
+
+        this.appName = obj.appName;
+        this.pagination = obj.pagination;
+        this.sorting = obj.sorting;
+
+        this.onlyStandalone = obj.onlyStandalone;
+        this.onlyRoot = obj.onlyRoot;
+        this.name = obj.name;
+        this.description = obj.description;
+        this.processDefinitionName = obj.processDefinitionName;
+        this.priority = obj.priority;
+        this.status = obj.status;
+        this.completedBy = obj.completedBy;
+        this.assignee = obj.assignee;
+        this.createdFrom = obj.createdFrom;
+        this.createdTo = obj.createdTo;
+        this.lastModifiedFrom = obj.lastModifiedFrom;
+        this.lastModifiedTo = obj.lastModifiedTo;
+        this.lastClaimedFrom = obj.lastClaimedFrom;
+        this.lastClaimedTo = obj.lastClaimedTo;
+        this.dueDateFrom = obj.dueDateFrom;
+        this.dueDateTo = obj.dueDateTo;
+        this.completedFrom = obj.completedFrom;
+        this.completedTo = obj.completedTo;
+        this.candidateUserId = obj.candidateUserId;
+        this.candidateGroupId = obj.candidateGroupId;
+        this.taskVariableFilters = obj.taskVariableFilters;
+        this.variableKeys = obj.variableKeys;
+    }
+}
+
+export class TaskFilterCloudAdapter extends TaskListRequestModel {
+    constructor(filter: TaskFilterCloudModel) {
+        super({
+            appName: filter.appName,
+            pagination: { maxItems: 25, skipCount: 0 },
+            sorting: [{ orderBy: filter.sort, direction: filter.order }],
+
+            onlyStandalone: filter.standalone,
+            name: filter.taskNames,
+            processDefinitionName: filter.processDefinitionNames,
+            priority: filter.priorities?.map((priority) => priority.toString()),
+            status: filter.statuses,
+            completedBy: filter.completedByUsers,
+            assignee: filter.assignees,
+            createdFrom: filter.createdFrom,
+            createdTo: filter.createdTo,
+            lastModifiedFrom: filter.lastModifiedFrom,
+            lastModifiedTo: filter.lastModifiedTo,
+            dueDateFrom: filter.dueDateFrom,
+            dueDateTo: filter.dueDateTo,
+            completedFrom: filter.completedFrom,
+            completedTo: filter.completedTo,
+            candidateGroupId: filter.candidateGroups?.map((group) => group.id)
+        });
     }
 }

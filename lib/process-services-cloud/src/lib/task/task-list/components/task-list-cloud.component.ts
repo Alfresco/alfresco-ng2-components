@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, Inject, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Inject, OnDestroy, Optional } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
+import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { Subject, of, BehaviorSubject, combineLatest } from 'rxjs';
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Subject, BehaviorSubject, combineLatest } from 'rxjs';
+import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { TaskCloudModel } from '../../../models/task-cloud.model';
@@ -145,6 +145,48 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     @Input()
     candidateGroupId: string = '';
 
+    /**
+     * Filter the tasks. Display only tasks with names matching any of the supplied strings.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    names: string[] = [];
+
+    /**
+     * Filter the tasks. Display only tasks with assignees whose usernames are present in the array.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    assignees: string[] = [];
+
+    /**
+     * Filter the tasks. Display only tasks with provided statuses.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    statuses: string[] = [];
+
+    /**
+     * Filter the tasks. Display only tasks under provided processes.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    processDefinitionNames: string[] = [];
+
+    /**
+     * Filter the tasks. Display only tasks with provided priorities.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    priorities: string[] = [];
+
+    /**
+     * Filter the tasks. Display only tasks completed by users whose usernames are present in the array.
+     * This input will be used only if TASK_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
+    @Input()
+    completedByUsers: string[] = [];
+
     private onDestroyTaskList$ = new Subject<boolean>();
 
     rows: TaskInstanceCloudListViewModel[] = [];
@@ -156,6 +198,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     );
 
     constructor(
+        @Inject(TASK_SEARCH_API_METHOD_TOKEN) @Optional() private searchMethod: 'GET' | 'POST',
         @Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
         appConfigService: AppConfigService,
         taskCloudService: TaskCloudService,
@@ -176,13 +219,22 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
 
         this.isColumnSchemaCreated$
             .pipe(
-                switchMap(() => of(this.createRequestNode())),
-                tap((requestNode) => (this.requestNode = requestNode)),
-                switchMap((requestNode) => this.taskListCloudService.getTaskByRequest(requestNode)),
+                filter((isColumnSchemaCreated) => !!isColumnSchemaCreated),
+                take(1),
+                switchMap(() => {
+                    if (this.searchMethod === 'POST') {
+                        const requestNode = this.createTaskListRequestNode();
+                        return this.taskListCloudService.fetchTaskList(requestNode).pipe(take(1));
+                    } else {
+                        const requestNode = this.createRequestNode();
+                        this.requestNode = requestNode;
+                        return this.taskListCloudService.getTaskByRequest(requestNode);
+                    }
+                }),
                 takeUntil(this.onDestroyTaskList$)
             )
-            .subscribe(
-                (tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
+            .subscribe({
+                next: (tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
                     const tasksWithVariables = tasks.list.entries.map((task) => ({
                         ...task,
                         variables: task.processVariables
@@ -196,14 +248,43 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                     this.isReloadingSubject$.next(false);
                     this.pagination.next(tasks.list.pagination);
                 },
-                (error) => {
+                error: (error) => {
                     this.error.emit(error);
                     this.isReloadingSubject$.next(false);
                 }
-            );
+            });
     }
 
-    createRequestNode(): TaskQueryCloudRequestModel {
+    private createTaskListRequestNode(): TaskListRequestModel {
+        const requestNode: TaskListRequestModel = {
+            appName: this.appName,
+            pagination: {
+                maxItems: this.size,
+                skipCount: this.skipCount
+            },
+            sorting: this.sorting,
+            onlyStandalone: this.standalone,
+            name: this.names,
+            processDefinitionName: this.processDefinitionNames,
+            priority: this.priorities,
+            status: this.statuses,
+            completedBy: this.completedByUsers,
+            assignee: this.assignees,
+            createdFrom: this.createdFrom,
+            createdTo: this.createdTo,
+            lastModifiedFrom: this.lastModifiedFrom,
+            lastModifiedTo: this.lastModifiedTo,
+            dueDateFrom: this.dueDateFrom,
+            dueDateTo: this.dueDateTo,
+            completedFrom: this.completedFrom,
+            completedTo: this.completedTo,
+            variableKeys: this.getRequestNodeVariables()
+        };
+
+        return new TaskListRequestModel(requestNode);
+    }
+
+    private createRequestNode(): TaskQueryCloudRequestModel {
         const requestNode = {
             appName: this.appName,
             assignee: this.assignee,

@@ -119,10 +119,16 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
     searchUserCtrl = new UntypedFormControl({ value: '', disabled: false });
 
     /**
-     * Placeholder translation key
+     * Label translation key
      */
     @Input()
     title: string;
+
+    /**
+     * Placeholder for the input field
+     */
+    @Input()
+    placeholder: string;
 
     /**
      * Hide the matInput associated with the chip grid when a single user is selected in single selection mode.

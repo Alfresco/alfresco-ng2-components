@@ -29,10 +29,13 @@
                    [matAutocomplete]="auto"
                    [matChipInputFor]="userMultipleChipList"
                    [required]="required"
+                   [placeholder]="placeholder"
                    (focus)="setFocus(true)"
                    (blur)="setFocus(false); markAsTouched()"
                    class="adf-cloud-input"
-                   data-automation-id="adf-people-cloud-search-input" #userInput>
+                   data-automation-id="adf-people-cloud-search-input"
+                   #userInput
+            >
         </mat-chip-grid>
 
 

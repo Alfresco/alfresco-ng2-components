@@ -87,6 +87,12 @@ when the task list is empty:
 | standalone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| names | `string[]` | [] | Filter the tasks. Display only tasks with names matching any of the supplied strings. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| processDefinitionNames | `string[]` | [] | Filter the tasks. Display only tasks under provided processes. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| statuses | `string[]` | [] | Filter the tasks. Display only tasks with provided statuses. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| assignees | `string[]` | [] | Filter the tasks. Display only tasks with assignees whose usernames are present in the array. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| priorities | `string[]` | [] | Filter the tasks. Display only tasks with provided priorities. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| completedByUsers | `string[]` | [] | Filter the tasks. Display only tasks completed by users whose usernames are present in the array. This input will be used only if `TASK_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
 
 ### Events
 

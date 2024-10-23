@@ -80,7 +80,8 @@ export class TaskFilterCloudService extends BaseCloudService {
                     } else {
                         return of(this.findFiltersByKeyInPreferences(preferences, key));
                     }
-                })
+                }),
+                switchMap((filters) => this.handleCreateFilterBackwardsCompatibility(appName, key, filters))
             )
             .subscribe((filters) => {
                 this.addFiltersToStream(filters);
@@ -378,5 +379,46 @@ export class TaskFilterCloudService extends BaseCloudService {
      */
     refreshFilter(filterKey: string): void {
         this.filterKeyToBeRefreshedSource.next(filterKey);
+    }
+
+    /**
+     * This method is run after retrieving the filter array from preferences.
+     * It handles the backwards compatibility with the new API by looking for the new properties and their counterparts in each passed filter.
+     * If the new property is not found, it is created and assigned the value constructed from the old property.
+     * The filters are then updated in the preferences and returned.
+     * Old properties are left untouched for purposes like feature toggling.
+     *
+     * @param appName Name of the target app.
+     * @param key Key of the task filters.
+     * @param filters Array of task filters to be checked for backward compatibility.
+     * @returns Observable of task filters with updated properties.
+     */
+    private handleCreateFilterBackwardsCompatibility(
+        appName: string,
+        key: string,
+        filters: TaskFilterCloudModel[]
+    ): Observable<TaskFilterCloudModel[]> {
+        filters.forEach((filter) => {
+            if (filter.taskName && !filter.taskNames) {
+                filter.taskNames = [filter.taskName];
+            }
+            if (filter.status && !filter.statuses) {
+                filter.statuses = [filter.status];
+            }
+            if (filter.assignee && !filter.assignees) {
+                filter.assignees = [filter.assignee];
+            }
+            if (filter.processDefinitionName && !filter.processDefinitionNames) {
+                filter.processDefinitionNames = [filter.processDefinitionName];
+            }
+            if (filter.completedBy?.username && !filter.completedByUsers) {
+                filter.completedByUsers = [filter.completedBy.username];
+            }
+            if (filter.priority && !filter.priorities) {
+                filter.priorities = [`${filter.priority}`];
+            }
+        });
+
+        return this.updateTaskFilters(appName, key, filters);
     }
 }

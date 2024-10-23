@@ -25,7 +25,7 @@ import { ComponentSelectionMode } from '../../../types';
 import { IdentityGroupModel } from '../../../group/models/identity-group.model';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 
-export class TaskFilterCloudModel  {
+export class TaskFilterCloudModel {
     id: string;
     name: string;
     key: string;
@@ -59,6 +59,13 @@ export class TaskFilterCloudModel  {
     completedDate: Date;
     completedBy: IdentityUserModel;
     showCounter: boolean;
+
+    taskNames: string[] | null;
+    statuses: TaskStatusFilter[] | null;
+    assignees: string[] | null;
+    processDefinitionNames: string[] | null;
+    priorities: string[] | null;
+    completedByUsers: string[] | null;
 
     private _completedFrom: string;
     private _completedTo: string;
@@ -108,6 +115,13 @@ export class TaskFilterCloudModel  {
             this.createdTo = obj._createdTo || null;
             this.candidateGroups = obj.candidateGroups || null;
             this.showCounter = obj.showCounter || false;
+
+            this.taskNames = obj.taskNames || null;
+            this.statuses = obj.statuses || null;
+            this.assignees = obj.assignees || null;
+            this.processDefinitionNames = obj.processDefinitionNames || null;
+            this.priorities = obj.priorities || null;
+            this.completedByUsers = obj.completedByUsers || null;
         }
     }
 

@@ -28,3 +28,9 @@ export const PROCESS_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudS
 export const TASK_FILTERS_SERVICE_TOKEN = new InjectionToken<PreferenceCloudServiceInterface>('task-filters-cloud');
 
 export const TASK_LIST_CLOUD_TOKEN = new InjectionToken<TaskListCloudServiceInterface>('task-list-cloud');
+
+/**
+ * Token used to indicate the API used to search for tasks.
+ * 'POST' value should be provided only if the used Activiti version is 8.7.0 or higher.
+ */
+export const TASK_SEARCH_API_METHOD_TOKEN = new InjectionToken<'GET' | 'POST'>('task-search-method');
