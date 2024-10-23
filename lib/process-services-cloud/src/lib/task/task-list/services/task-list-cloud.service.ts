@@ -119,7 +119,9 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
 
         Object.keys(queryData).forEach((key) => {
             const value = queryData[key];
-            if (value === undefined || value === null || value === '' || (Array.isArray(value) && (value.length === 0 || value[0] === null))) {
+            const isValueEmpty = !value;
+            const isValueArrayWithEmptyValue = Array.isArray(value) && (value.length === 0 || value[0] === null);
+            if (isValueEmpty || isValueArrayWithEmptyValue) {
                 delete queryData[key];
             }
         });

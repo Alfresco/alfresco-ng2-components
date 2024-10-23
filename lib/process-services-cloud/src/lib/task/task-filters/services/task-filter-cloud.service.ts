@@ -81,7 +81,7 @@ export class TaskFilterCloudService extends BaseCloudService {
                         return of(this.findFiltersByKeyInPreferences(preferences, key));
                     }
                 }),
-                switchMap((filters) => this.handleBackwardsCompatibility(appName, key, filters))
+                switchMap((filters) => this.handleCreateFilterBackwardsCompatibility(appName, key, filters))
             )
             .subscribe((filters) => {
                 this.addFiltersToStream(filters);
@@ -393,7 +393,11 @@ export class TaskFilterCloudService extends BaseCloudService {
      * @param filters Array of task filters to be checked for backward compatibility.
      * @returns Observable of task filters with updated properties.
      */
-    private handleBackwardsCompatibility(appName: string, key: string, filters: TaskFilterCloudModel[]): Observable<TaskFilterCloudModel[]> {
+    private handleCreateFilterBackwardsCompatibility(
+        appName: string,
+        key: string,
+        filters: TaskFilterCloudModel[]
+    ): Observable<TaskFilterCloudModel[]> {
         filters.forEach((filter) => {
             if (filter.taskName && !filter.taskNames) {
                 filter.taskNames = [filter.taskName];
