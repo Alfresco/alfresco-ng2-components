@@ -27,7 +27,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 import { shareReplay, skip } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { TaskListCloudModule } from '../task-list-cloud.module';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HarnessLoader } from '@angular/cdk/testing';
@@ -100,7 +100,7 @@ describe('TaskListCloudComponent', () => {
         updatePreference: of({})
     });
 
-    beforeEach(() => {
+    const configureTestingModule = (providers: any[]) => {
         TestBed.configureTestingModule({
             imports: [ProcessServiceCloudTestingModule],
             providers: [
@@ -111,7 +111,8 @@ describe('TaskListCloudComponent', () => {
                 {
                     provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN,
                     useValue: preferencesService
-                }
+                },
+                ...providers
             ]
         });
         appConfig = TestBed.inject(AppConfigService);
@@ -141,151 +142,15 @@ describe('TaskListCloudComponent', () => {
 
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
         loader = TestbedHarnessEnvironment.loader(fixture);
-    });
+    };
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should be able to inject TaskListCloudService instance', () => {
-        fixture.detectChanges();
-
-        expect(component.taskListCloudService instanceof TaskListCloudService).toBeTruthy();
-    });
-
-    it('should use the default schemaColumn as default', () => {
-        component.ngAfterContentInit();
-        expect(component.columns).toBeDefined();
-        expect(component.columns.length).toEqual(3);
-    });
-
-    it('should display empty content when process list is empty', async () => {
-        const emptyList = { list: { entries: [] } };
-        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
-        fixture.detectChanges();
-
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.ngOnChanges({ appName });
-        fixture.detectChanges();
-
-        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
-
-        const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
-        expect(emptyContent.nativeElement).toBeDefined();
-    });
-
-    it('should use the custom schemaColumn from app.config.json', () => {
-        component.presetColumn = 'fakeCustomSchema';
-        component.ngAfterContentInit();
-        fixture.detectChanges();
-        expect(component.columns).toEqual(fakeCustomSchema);
-    });
-
-    it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
-        component.presetColumn = 'fakeCustomSchema';
-        fixture.detectChanges();
-        expect(component.columns).toBeDefined();
-        expect(component.columns.length).toEqual(2);
-    });
-
-    it('should return an empty task list when no input parameters are passed', () => {
-        component.ngAfterContentInit();
-        expect(component.rows).toBeDefined();
-        expect(component.isListEmpty()).toBeTruthy();
-    });
-
-    it('should emit row click event', (done) => {
-        const row = new ObjectDataRow({ id: '999' });
-        const rowEvent = new DataRowEvent(row, null);
-        component.rowClick.subscribe((taskId) => {
-            expect(taskId).toEqual('999');
-            expect(component.currentInstanceId).toEqual('999');
-            done();
-        });
-        component.onRowClick(rowEvent);
-    });
-
-    it('should re-create columns when a column width gets changed', () => {
-        component.reload();
-        fixture.detectChanges();
-
-        const newColumns = [...component.columns];
-        newColumns[0].width = 120;
-        component.onColumnsWidthChanged(newColumns);
-
-        expect(component.columns[0].width).toBe(120);
-    });
-
-    it('should update columns widths when a column width gets changed', () => {
-        component.appName = 'fake-app-name';
-        component.reload();
-        fixture.detectChanges();
-
-        const newColumns = [...component.columns];
-        newColumns[0].width = 120;
-        component.onColumnsWidthChanged(newColumns);
-
-        expect(component.columns[0].width).toBe(120);
-        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
-            name: 120
-        });
-    });
-
-    it('should update columns widths while preserving previously saved widths when a column width gets changed', () => {
-        component.appName = 'fake-app-name';
-        component.reload();
-        fixture.detectChanges();
-
-        const newColumns = [...component.columns];
-        newColumns[0].width = 120;
-        component.onColumnsWidthChanged(newColumns);
-
-        expect(component.columns[0].width).toBe(120);
-        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
-            name: 120
-        });
-
-        newColumns[1].width = 150;
-        component.onColumnsWidthChanged(newColumns);
-
-        expect(component.columns[0].width).toBe(120);
-        expect(component.columns[1].width).toBe(150);
-        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
-            name: 120,
-            created: 150
-        });
-    });
-
-    it('should re-create columns when a column order gets changed', () => {
-        component.reload();
-        fixture.detectChanges();
-
-        expect(component.columns[0].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
-        expect(component.columns[1].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
-        expect(component.columns[2].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE');
-
-        component.onColumnOrderChanged([component.columns[1], ...component.columns]);
-        fixture.detectChanges();
-
-        expect(component.columns[0].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
-        expect(component.columns[1].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
-        expect(component.columns[2].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE');
-    });
-
-    it('should create datatable schema when a column visibility gets changed', () => {
-        component.ngAfterContentInit();
-        spyOn(component, 'createDatatableSchema');
-
-        component.onColumnsVisibilityChange(component.columns);
-
-        fixture.detectChanges();
-
-        expect(component.createDatatableSchema).toHaveBeenCalled();
-    });
-
-    describe('Old API', () => {
+    describe('TASK_SEARCH_API_METHOD_TOKEN injected with GET value', () => {
         beforeEach(() => {
-            component.useNewApi = false;
+            configureTestingModule([{ provide: TASK_SEARCH_API_METHOD_TOKEN, useValue: 'GET' }]);
         });
 
         it('should load spinner and show the content', async () => {
@@ -372,11 +237,62 @@ describe('TaskListCloudComponent', () => {
 
             expect(taskListCloudService.getTaskByRequest).toHaveBeenCalledTimes(1);
         });
+        describe('component changes', () => {
+            beforeEach(() => {
+                component.rows = fakeGlobalTasks.list.entries;
+                fixture.detectChanges();
+            });
+
+            it('should reload the task list when input parameters changed', () => {
+                const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                component.appName = 'mock-app-name';
+                component.priority = 1;
+                component.status = 'mock-status';
+                component.lastModifiedFrom = 'mock-lastmodified-date';
+                component.owner = 'mock-owner-name';
+                const priorityChange = new SimpleChange(undefined, 1, true);
+                const statusChange = new SimpleChange(undefined, 'mock-status', true);
+                const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
+                const ownerChange = new SimpleChange(undefined, 'mock-owner-name', true);
+                component.ngOnChanges({
+                    priority: priorityChange,
+                    status: statusChange,
+                    lastModifiedFrom: lastModifiedFromChange,
+                    owner: ownerChange
+                });
+                fixture.detectChanges();
+                expect(component.isListEmpty()).toBeFalsy();
+                expect(getTaskByRequestSpy).toHaveBeenCalled();
+            });
+
+            it('should reload task list when sorting on a column changes', () => {
+                const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                component.onSortingChanged(
+                    new CustomEvent('sorting-changed', {
+                        detail: {
+                            key: 'fakeName',
+                            direction: 'asc'
+                        },
+                        bubbles: true
+                    })
+                );
+                fixture.detectChanges();
+                expect(component.sorting).toEqual([
+                    new TaskListCloudSortingModel({
+                        orderBy: 'fakeName',
+                        direction: 'ASC'
+                    })
+                ]);
+                expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
+                expect(component.isListEmpty()).toBeFalsy();
+                expect(getTaskByRequestSpy).toHaveBeenCalled();
+            });
+        });
     });
 
-    describe('New API', () => {
+    describe('TASK_SEARCH_API_METHOD_TOKEN injected with POST value', () => {
         beforeEach(() => {
-            component.useNewApi = true;
+            configureTestingModule([{ provide: TASK_SEARCH_API_METHOD_TOKEN, useValue: 'POST' }]);
             component.appName = 'mock-app-name';
         });
 
@@ -464,139 +380,11 @@ describe('TaskListCloudComponent', () => {
 
             expect(fetchTaskListSpy).toHaveBeenCalledTimes(1);
         });
-    });
-
-    describe('component changes', () => {
-        beforeEach(() => {
-            component.rows = fakeGlobalTasks.list.entries;
-            fixture.detectChanges();
-        });
-
-        it('should NOT reload the task list when no parameters changed', () => {
-            spyOn(taskListCloudService, 'getTaskByRequest');
-            component.rows = null;
-            fixture.detectChanges();
-            expect(component.isListEmpty()).toBeTruthy();
-        });
-
-        it('should set formattedSorting if sorting input changes', () => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-            spyOn(component, 'formatSorting').and.callThrough();
-
-            component.appName = 'mock-app-name';
-            const mockSort = [
-                new TaskListCloudSortingModel({
-                    orderBy: 'startDate',
-                    direction: 'DESC'
-                })
-            ];
-            const sortChange = new SimpleChange(undefined, mockSort, true);
-            component.ngOnChanges({
-                sorting: sortChange
-            });
-            fixture.detectChanges();
-            expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
-            expect(component.formattedSorting).toEqual(['startDate', 'desc']);
-        });
-
-        it('should reset pagination when resetPaginationValues is called', (done) => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-
-            const size = component.size;
-            const skipCount = component.skipCount;
-            component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
-                fixture.detectChanges();
-                expect(component.size).toBe(size);
-                expect(component.skipCount).toBe(skipCount);
-                expect(updatedPagination.maxItems).toEqual(size);
-                expect(updatedPagination.skipCount).toEqual(skipCount);
-                done();
-            });
-
-            const pagination = {
-                maxItems: 250,
-                skipCount: 200
-            };
-            component.updatePagination(pagination);
-
-            component.resetPagination();
-        });
-
-        it('should set pagination and reload when updatePagination is called', (done) => {
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-            spyOn(component, 'reload').and.stub();
-
-            const pagination = {
-                maxItems: 250,
-                skipCount: 200
-            };
-            component.pagination.pipe(skip(1)).subscribe((updatedPagination) => {
-                fixture.detectChanges();
-                expect(component.size).toBe(pagination.maxItems);
-                expect(component.skipCount).toBe(pagination.skipCount);
-                expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
-                expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
-                done();
-            });
-
-            component.updatePagination(pagination);
-        });
-
-        describe('Old API', () => {
+        describe('component changes', () => {
             beforeEach(() => {
-                component.useNewApi = false;
-            });
-
-            it('should reload the task list when input parameters changed', () => {
-                const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                component.rows = fakeGlobalTasks.list.entries;
                 component.appName = 'mock-app-name';
-                component.priority = 1;
-                component.status = 'mock-status';
-                component.lastModifiedFrom = 'mock-lastmodified-date';
-                component.owner = 'mock-owner-name';
-                const priorityChange = new SimpleChange(undefined, 1, true);
-                const statusChange = new SimpleChange(undefined, 'mock-status', true);
-                const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
-                const ownerChange = new SimpleChange(undefined, 'mock-owner-name', true);
-                component.ngOnChanges({
-                    priority: priorityChange,
-                    status: statusChange,
-                    lastModifiedFrom: lastModifiedFromChange,
-                    owner: ownerChange
-                });
                 fixture.detectChanges();
-                expect(component.isListEmpty()).toBeFalsy();
-                expect(getTaskByRequestSpy).toHaveBeenCalled();
-            });
-
-            it('should reload task list when sorting on a column changes', () => {
-                const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
-                component.onSortingChanged(
-                    new CustomEvent('sorting-changed', {
-                        detail: {
-                            key: 'fakeName',
-                            direction: 'asc'
-                        },
-                        bubbles: true
-                    })
-                );
-                fixture.detectChanges();
-                expect(component.sorting).toEqual([
-                    new TaskListCloudSortingModel({
-                        orderBy: 'fakeName',
-                        direction: 'ASC'
-                    })
-                ]);
-                expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
-                expect(component.isListEmpty()).toBeFalsy();
-                expect(getTaskByRequestSpy).toHaveBeenCalled();
-            });
-        });
-
-        describe('New API', () => {
-            beforeEach(() => {
-                component.useNewApi = true;
-                component.appName = 'mock-app-name';
             });
 
             it('should reload the task list when input parameters changed', () => {
@@ -640,6 +428,225 @@ describe('TaskListCloudComponent', () => {
                 expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
                 expect(component.isListEmpty()).toBeFalsy();
                 expect(fetchTaskListSpy).toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe('API agnostic', () => {
+        beforeEach(() => {
+            configureTestingModule([]);
+        });
+
+        it('should be able to inject TaskListCloudService instance', () => {
+            fixture.detectChanges();
+
+            expect(component.taskListCloudService instanceof TaskListCloudService).toBeTruthy();
+        });
+
+        it('should use the default schemaColumn as default', () => {
+            component.ngAfterContentInit();
+            expect(component.columns).toBeDefined();
+            expect(component.columns.length).toEqual(3);
+        });
+
+        it('should display empty content when process list is empty', async () => {
+            const emptyList = { list: { entries: [] } };
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
+            fixture.detectChanges();
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
+
+            const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+            expect(emptyContent.nativeElement).toBeDefined();
+        });
+
+        it('should use the custom schemaColumn from app.config.json', () => {
+            component.presetColumn = 'fakeCustomSchema';
+            component.ngAfterContentInit();
+            fixture.detectChanges();
+            expect(component.columns).toEqual(fakeCustomSchema);
+        });
+
+        it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
+            component.presetColumn = 'fakeCustomSchema';
+            fixture.detectChanges();
+            expect(component.columns).toBeDefined();
+            expect(component.columns.length).toEqual(2);
+        });
+
+        it('should return an empty task list when no input parameters are passed', () => {
+            component.ngAfterContentInit();
+            expect(component.rows).toBeDefined();
+            expect(component.isListEmpty()).toBeTruthy();
+        });
+
+        it('should emit row click event', (done) => {
+            const row = new ObjectDataRow({ id: '999' });
+            const rowEvent = new DataRowEvent(row, null);
+            component.rowClick.subscribe((taskId) => {
+                expect(taskId).toEqual('999');
+                expect(component.currentInstanceId).toEqual('999');
+                done();
+            });
+            component.onRowClick(rowEvent);
+        });
+
+        it('should re-create columns when a column width gets changed', () => {
+            component.reload();
+            fixture.detectChanges();
+
+            const newColumns = [...component.columns];
+            newColumns[0].width = 120;
+            component.onColumnsWidthChanged(newColumns);
+
+            expect(component.columns[0].width).toBe(120);
+        });
+
+        it('should update columns widths when a column width gets changed', () => {
+            component.appName = 'fake-app-name';
+            component.reload();
+            fixture.detectChanges();
+
+            const newColumns = [...component.columns];
+            newColumns[0].width = 120;
+            component.onColumnsWidthChanged(newColumns);
+
+            expect(component.columns[0].width).toBe(120);
+            expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
+                name: 120
+            });
+        });
+
+        it('should update columns widths while preserving previously saved widths when a column width gets changed', () => {
+            component.appName = 'fake-app-name';
+            component.reload();
+            fixture.detectChanges();
+
+            const newColumns = [...component.columns];
+            newColumns[0].width = 120;
+            component.onColumnsWidthChanged(newColumns);
+
+            expect(component.columns[0].width).toBe(120);
+            expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
+                name: 120
+            });
+
+            newColumns[1].width = 150;
+            component.onColumnsWidthChanged(newColumns);
+
+            expect(component.columns[0].width).toBe(120);
+            expect(component.columns[1].width).toBe(150);
+            expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'tasks-list-cloud-columns-widths', {
+                name: 120,
+                created: 150
+            });
+        });
+
+        it('should re-create columns when a column order gets changed', () => {
+            component.reload();
+            fixture.detectChanges();
+
+            expect(component.columns[0].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
+            expect(component.columns[1].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
+            expect(component.columns[2].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE');
+
+            component.onColumnOrderChanged([component.columns[1], ...component.columns]);
+            fixture.detectChanges();
+
+            expect(component.columns[0].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
+            expect(component.columns[1].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
+            expect(component.columns[2].title).toBe('ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE');
+        });
+
+        it('should create datatable schema when a column visibility gets changed', () => {
+            component.ngAfterContentInit();
+            spyOn(component, 'createDatatableSchema');
+
+            component.onColumnsVisibilityChange(component.columns);
+
+            fixture.detectChanges();
+
+            expect(component.createDatatableSchema).toHaveBeenCalled();
+        });
+
+        describe('component changes', () => {
+            beforeEach(() => {
+                component.rows = fakeGlobalTasks.list.entries;
+                fixture.detectChanges();
+            });
+
+            it('should NOT reload the task list when no parameters changed', () => {
+                spyOn(taskListCloudService, 'getTaskByRequest');
+                component.rows = null;
+                fixture.detectChanges();
+                expect(component.isListEmpty()).toBeTruthy();
+            });
+
+            it('should set formattedSorting if sorting input changes', () => {
+                spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                spyOn(component, 'formatSorting').and.callThrough();
+
+                component.appName = 'mock-app-name';
+                const mockSort = [
+                    new TaskListCloudSortingModel({
+                        orderBy: 'startDate',
+                        direction: 'DESC'
+                    })
+                ];
+                const sortChange = new SimpleChange(undefined, mockSort, true);
+                component.ngOnChanges({
+                    sorting: sortChange
+                });
+                fixture.detectChanges();
+                expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
+                expect(component.formattedSorting).toEqual(['startDate', 'desc']);
+            });
+
+            it('should reset pagination when resetPaginationValues is called', (done) => {
+                spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+
+                const size = component.size;
+                const skipCount = component.skipCount;
+                component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(size);
+                    expect(component.skipCount).toBe(skipCount);
+                    expect(updatedPagination.maxItems).toEqual(size);
+                    expect(updatedPagination.skipCount).toEqual(skipCount);
+                    done();
+                });
+
+                const pagination = {
+                    maxItems: 250,
+                    skipCount: 200
+                };
+                component.updatePagination(pagination);
+
+                component.resetPagination();
+            });
+
+            it('should set pagination and reload when updatePagination is called', (done) => {
+                spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
+                spyOn(component, 'reload').and.stub();
+
+                const pagination = {
+                    maxItems: 250,
+                    skipCount: 200
+                };
+                component.pagination.pipe(skip(1)).subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(pagination.maxItems);
+                    expect(component.skipCount).toBe(pagination.skipCount);
+                    expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
+                    expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                    done();
+                });
+
+                component.updatePagination(pagination);
             });
         });
     });
