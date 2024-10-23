@@ -600,8 +600,7 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 }
 
-#{$cdk-drag-preview},
-#{$cdk-drag-placeholder} {
+#{$cdk-drag-preview} {
     min-height: $data-table-row-height;
     display: flex;
     align-items: center;
