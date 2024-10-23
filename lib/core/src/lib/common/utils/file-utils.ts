@@ -22,36 +22,38 @@ export interface FileInfo {
 }
 
 export class FileUtils {
-
     static flatten(folder: any): Promise<FileInfo[]> {
         const reader = folder.createReader();
         const files: FileInfo[] = [];
         return new Promise((resolve) => {
             const iterations = [];
-            // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
             (function traverse() {
                 reader.readEntries((entries) => {
                     if (!entries.length) {
                         Promise.all(iterations).then(() => resolve(files));
                     } else {
-                        iterations.push(Promise.all(entries.map((entry) => {
-                            if (entry.isFile) {
-                                return new Promise<void>((resolveFile) => {
-                                    entry.file((file: File) => {
-                                        files.push({
-                                            entry,
-                                            file,
-                                            relativeFolder: entry.fullPath.replace(/\/[^/]*$/, '')
+                        iterations.push(
+                            Promise.all(
+                                entries.map((entry) => {
+                                    if (entry.isFile) {
+                                        return new Promise<void>((resolveFile) => {
+                                            entry.file((file: File) => {
+                                                files.push({
+                                                    entry,
+                                                    file,
+                                                    relativeFolder: entry.fullPath.replace(/\/[^/]*$/, '')
+                                                });
+                                                resolveFile();
+                                            });
                                         });
-                                        resolveFile();
-                                    });
-                                });
-                            } else {
-                                return FileUtils.flatten(entry).then((result) => {
-                                    files.push(...result);
-                                });
-                            }
-                        })));
+                                    } else {
+                                        return FileUtils.flatten(entry).then((result) => {
+                                            files.push(...result);
+                                        });
+                                    }
+                                })
+                            )
+                        );
                         // Try calling traverse() again for the same dir, according to spec
                         traverse();
                     }

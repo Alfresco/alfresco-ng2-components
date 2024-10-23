@@ -1,5 +1,6 @@
 {
   "npmScope": "adf",
+  "defaultProject": "demoshell",
   "affected": {
     "defaultBase": "develop"
   },
@@ -12,6 +13,14 @@
       "inputs": [
         "production",
         "^production"
+      ]
+    },
+    "build-storybook": {
+      "inputs": [
+        "default",
+        "^production",
+        "{projectRoot}/.storybook/**/*",
+        "{projectRoot}/tsconfig.storybook.json"
       ]
     }
   },
@@ -34,7 +43,14 @@
   },
   "namedInputs": {
     "default": [
-      "{projectRoot}/**/*"
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": [
+      "{workspaceRoot}/angular.json",
+      "{workspaceRoot}/demo-shell/src/index.html",
+      "{workspaceRoot}/e2e/protractor.excludes.json",
+      "{workspaceRoot}/e2e/protractor.conf.js"
     ],
     "production": [
       "default",
@@ -42,7 +58,8 @@
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
       "!{projectRoot}/**/*.spec.[jt]s",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/karma.conf.js"
+      "!{projectRoot}/karma.conf.js",
+      "!{projectRoot}/tsconfig.storybook.json"
     ]
   }
 }

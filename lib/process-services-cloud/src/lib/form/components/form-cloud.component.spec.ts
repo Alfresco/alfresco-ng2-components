@@ -60,12 +60,12 @@ import { FormCloudRepresentation } from '../models/form-cloud-representation.mod
 import { FormCloudService } from '../services/form-cloud.service';
 import { DisplayModeService } from '../services/display-mode.service';
 import { FormCloudComponent } from './form-cloud.component';
-import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { FormCloudDisplayMode } from '../../services/form-fields.interfaces';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
+import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 
 const mockOauth2Auth: any = {
     oauth2Auth: {

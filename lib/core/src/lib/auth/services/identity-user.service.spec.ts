@@ -35,6 +35,7 @@ import { IdentityRoleModel } from '../models/identity-role.model';
 import { AdfHttpClient } from '../../../../api/src';
 import { StorageService } from '../../common/services/storage.service';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
+import { OAuthStorage } from 'angular-oauth2-oidc';
 
 describe('IdentityUserService', () => {
     const mockRoles = [
@@ -53,7 +54,7 @@ describe('IdentityUserService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NoopTranslateModule],
-            providers: [StorageService, AdfHttpClient]
+            providers: [AdfHttpClient, { provide: OAuthStorage, useClass: StorageService }]
         });
         storageService = TestBed.inject(StorageService);
         service = TestBed.inject(IdentityUserService);

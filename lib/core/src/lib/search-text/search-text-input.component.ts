@@ -166,9 +166,12 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private toggleSearch = new Subject<any>();
     private focusSubscription: Subscription;
     private valueChange = new Subject<string>();
+    private toggleSubscription: Subscription;
+
+    toggle$ = this.toggleSearch.asObservable();
 
     constructor(private userPreferencesService: UserPreferencesService) {
-        this.toggleSearch.pipe(debounceTime(200), takeUntil(this.onDestroy$)).subscribe(() => {
+        this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntil(this.onDestroy$)).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();
                 if (this.subscriptAnimationState.value === 'inactive') {
@@ -302,6 +305,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.toggleSearch) {
+            this.toggleSubscription.unsubscribe();
             this.toggleSearch.complete();
             this.toggleSearch = null;
         }

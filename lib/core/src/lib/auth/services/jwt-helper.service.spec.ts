@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { JWT_STORAGE_SERVICE, JwtHelperService } from './jwt-helper.service';
+import { JwtHelperService } from './jwt-helper.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { TestBed } from '@angular/core/testing';
 import { StorageService } from '../../common';
@@ -42,7 +42,7 @@ describe('JwtHelperService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [JwtHelperService, { provide: StorageService, useValue: mockStorage }]
+            providers: [JwtHelperService, { provide: OAuthStorage, useValue: mockStorage }]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
     });
@@ -140,15 +140,11 @@ describe('JwtHelperService with custom storage service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
-                JwtHelperService,
-                { provide: StorageService, useValue: mockStorage },
-                { provide: JWT_STORAGE_SERVICE, useValue: mockCustomStorage }
-            ]
+            providers: [JwtHelperService, { provide: StorageService, useValue: mockStorage }, { provide: OAuthStorage, useValue: mockCustomStorage }]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
         defaultStorage = TestBed.inject(StorageService);
-        customStorage = TestBed.inject(JWT_STORAGE_SERVICE);
+        customStorage = TestBed.inject(OAuthStorage);
     });
 
     it('should use the custom storage service', () => {

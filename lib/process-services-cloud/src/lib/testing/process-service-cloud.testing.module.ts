@@ -24,7 +24,9 @@ import {
     TranslationService,
     TranslationMock,
     CoreModule,
-    AuthModule
+    AuthModule,
+    JWT_STORAGE_SERVICE,
+    StorageService
 } from '@alfresco/adf-core';
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { TranslateModule } from '@ngx-translate/core';
@@ -44,7 +46,8 @@ import { RouterTestingModule } from '@angular/router/testing';
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock }
+        { provide: TranslationService, useClass: TranslationMock },
+        { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
     ],
     exports: [NoopAnimationsModule, TranslateModule, CoreModule, ProcessServicesCloudModule]
 })
