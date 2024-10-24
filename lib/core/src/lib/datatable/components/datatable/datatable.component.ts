@@ -292,6 +292,16 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     @Input()
     displayCheckboxesOnHover = false;
 
+    /**
+     * Flag that enables dragging rows
+     */
+    @Input()
+    enableDragRows = false;
+
+    /** Emitted when dragged row is dropped. */
+    @Output()
+    dragDropped = new EventEmitter<{ previousIndex: number; currentIndex: number }>();
+
     headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
@@ -306,6 +316,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     isDraggingHeaderColumn = false;
     hoveredHeaderColumnIndex = -1;
     resizingColumnIndex = -1;
+    isDraggingRow = false;
 
     private keyManager: FocusKeyManager<DataTableRowComponent>;
     private clickObserver: Observer<DataRowEvent>;
@@ -844,7 +855,8 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         row.cssClass = row.cssClass ? row.cssClass : '';
         this.rowStyleClass = this.rowStyleClass ? this.rowStyleClass : '';
         const contextMenuSourceClass = row.isContextMenuSource ? 'adf-context-menu-source' : '';
-        return `${row.cssClass} ${this.rowStyleClass} ${contextMenuSourceClass}`;
+        const isDragEnabled = this.enableDragRows ? 'adf-drag-row' : '';
+        return `${row.cssClass} ${this.rowStyleClass} ${contextMenuSourceClass} ${isDragEnabled}`;
     }
 
     markRowAsContextMenuSource(selectedRow: DataRow): void {
@@ -1008,6 +1020,20 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
 
     filterDisabledColumns(index: number, _drag: CdkDrag, drop: CdkDropList): boolean {
         return !drop.getSortedItems()[index].disabled;
+    }
+
+    onDragDrop(droppedEvent: CdkDragDrop<any>): void {
+        if (this.enableDragRows) {
+            this.dragDropped.emit({ previousIndex: droppedEvent.previousIndex, currentIndex: droppedEvent.currentIndex });
+        }
+    }
+
+    onDragStart(): void {
+        this.isDraggingRow = true;
+    }
+
+    onDragEnd(): void {
+        this.isDraggingRow = false;
     }
 
     private updateColumnsWidths(): void {
