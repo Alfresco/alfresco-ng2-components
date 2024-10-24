@@ -26,25 +26,25 @@ describe('SearchSliderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchSliderComponent);
         component = fixture.componentInstance;
         component.id = 'slider';
         component.context = {
-            queryFragments: {
-                slider: ''
+            "queryFragments": {
+                "slider": ''
             },
-            filterRawParams: {},
-            populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            "filterRawParams": {},
+            "populateFilters": new ReplaySubject(1),
+            "update": jasmine.createSpy('update')
         } as any;
         component.settings = {
-            field: 'field1',
-            min: 10,
-            max: 100,
-            step: 2,
-            thumbLabel: true
+            "field": 'field1',
+            "min": 10,
+            "max": 100,
+            "step": 2,
+            "thumbLabel": true
         };
     });
 
@@ -102,7 +102,7 @@ describe('SearchSliderComponent', () => {
         spyOn(component.context.filterLoaded, 'next').and.stub();
         spyOn(component.displayValue$, 'next').and.stub();
         fixture.detectChanges();
-        component.context.populateFilters.next({ slider: 20 });
+        component.context.populateFilters.next({ "slider": 20 });
         fixture.detectChanges();
 
         expect(component.displayValue$.next).toHaveBeenCalledWith('20 ');

@@ -22,19 +22,19 @@ import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 
 @Component({
-    selector: 'content-actions',
-    template: '',
-    standalone: true
+    "selector": 'content-actions',
+    "template": '',
+    "standalone": true
 })
 export class ContentActionListComponent {
-    constructor(private documentList: DocumentListComponent) {}
+    constructor (private documentList: DocumentListComponent) {}
 
     /**
      * Registers action handler within the parent document list component.
      * @param action Action model to register.
      * @returns `true` if actions was registered, otherwise `false`
      */
-    registerAction(action: ContentActionModel): boolean {
+    registerAction (action: ContentActionModel): boolean {
         if (this.documentList && action) {
             this.documentList.actions.push(action);
             return true;
@@ -42,7 +42,7 @@ export class ContentActionListComponent {
         return false;
     }
 
-    unregisterAction(action: ContentActionModel): boolean {
+    unregisterAction (action: ContentActionModel): boolean {
         if (this.documentList && action) {
             const idx = this.documentList.actions.indexOf(action);
             if (idx >= 0) {

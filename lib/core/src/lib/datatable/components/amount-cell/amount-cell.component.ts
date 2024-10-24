@@ -21,13 +21,13 @@ import { CurrencyConfig } from '../../data/data-column.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    standalone: true,
-    imports: [CommonModule],
-    selector: 'adf-amount-cell',
-    templateUrl: './amount-cell.component.html',
-    host: { class: 'adf-datatable-content-cell' },
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    "standalone": true,
+    "imports": [CommonModule],
+    "selector": 'adf-amount-cell',
+    "templateUrl": './amount-cell.component.html',
+    "host": { "class": 'adf-datatable-content-cell' },
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class AmountCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
@@ -35,13 +35,13 @@ export class AmountCellComponent extends DataTableCellComponent implements OnIni
 
     private readonly defaultCurrencyCode: string = inject(DEFAULT_CURRENCY_CODE);
     readonly defaultCurrencyConfig: CurrencyConfig = {
-        code: this.defaultCurrencyCode,
-        display: 'symbol',
-        digitsInfo: undefined,
-        locale: undefined
+        "code": this.defaultCurrencyCode,
+        "display": 'symbol',
+        "digitsInfo": undefined,
+        "locale": undefined
     };
 
-    ngOnInit() {
+    ngOnInit () {
         super.ngOnInit();
     }
 }

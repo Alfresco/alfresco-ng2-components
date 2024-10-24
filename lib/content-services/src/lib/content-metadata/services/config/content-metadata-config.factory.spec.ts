@@ -31,12 +31,12 @@ describe('ContentMetadataConfigFactory', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule],
-            providers: [
+            "imports": [HttpClientModule],
+            "providers": [
                 {
-                    provide: LogService,
-                    useValue: {
-                        error: () => {}
+                    "provide": LogService,
+                    "useValue": {
+                        "error": () => {}
                     }
                 }
             ]
@@ -83,7 +83,7 @@ describe('ContentMetadataConfigFactory', () => {
         describe('set', () => {
             const setConfig = (presetName: string, presetConfig: any) => {
                 appConfig.config['content-metadata'] = {
-                    presets: {
+                    "presets": {
                         [presetName]: presetConfig
                     }
                 };

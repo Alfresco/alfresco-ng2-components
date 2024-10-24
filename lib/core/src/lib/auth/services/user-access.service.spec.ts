@@ -30,8 +30,8 @@ describe('UserAccessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, AuthModule.forRoot({ useHash: true })],
-            providers: [{ provide: JWT_STORAGE_SERVICE, useClass: StorageService }, UserAccessService]
+            "imports": [HttpClientTestingModule, AuthModule.forRoot({ "useHash": true })],
+            "providers": [{ "provide": JWT_STORAGE_SERVICE, "useClass": StorageService }, UserAccessService]
         });
         userAccessService = TestBed.inject(UserAccessService);
         jwtHelperService = TestBed.inject(JwtHelperService);
@@ -43,11 +43,11 @@ describe('UserAccessService', () => {
      * @param realmRoles roles
      * @param resourceAccess access settings
      */
-    function spyRealmAccess(realmRoles: string[], resourceAccess: any) {
+    function spyRealmAccess (realmRoles: string[], resourceAccess: any) {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-            realm_access: { roles: realmRoles },
-            resource_access: resourceAccess
+            "realm_access": { "roles": realmRoles },
+            "resource_access": resourceAccess
         });
     }
 
@@ -56,12 +56,12 @@ describe('UserAccessService', () => {
      * @param appkey app key
      * @param roles roles list
      */
-    function spyHxpAuthorization(appkey: string, roles: string[]) {
+    function spyHxpAuthorization (appkey: string, roles: string[]) {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
         spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-            hxp_authorization: {
+            "hxp_authorization": {
                 appkey,
-                role: roles
+                "role": roles
             }
         });
     }
@@ -75,7 +75,7 @@ describe('UserAccessService', () => {
     });
 
     it('should return true when no roles to check are passed in application access', () => {
-        spyRealmAccess([], { mockApp: { roles: ['MOCK_APP_ROLE'] } });
+        spyRealmAccess([], { "mockApp": { "roles": ['MOCK_APP_ROLE'] } });
         userAccessService.fetchUserAccess();
         const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp', []);
 
@@ -92,7 +92,7 @@ describe('UserAccessService', () => {
         });
 
         it('should return true when the user has one of the roles for an application', () => {
-            spyRealmAccess([], { mockApp: { roles: ['MOCK_APP_ROLE', 'MOCK_APP_ROLE_2'] } });
+            spyRealmAccess([], { "mockApp": { "roles": ['MOCK_APP_ROLE', 'MOCK_APP_ROLE_2'] } });
             userAccessService.fetchUserAccess();
             const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp', ['MOCK_APP_ROLE']);
 
@@ -108,7 +108,7 @@ describe('UserAccessService', () => {
         });
 
         it('should return false when the user has none of the roles for an application', () => {
-            spyRealmAccess([], { mockApp: { roles: ['MOCK_APP_ROLE'] } });
+            spyRealmAccess([], { "mockApp": { "roles": ['MOCK_APP_ROLE'] } });
             userAccessService.fetchUserAccess();
             const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp', ['MOCK_APP_ROLE_2']);
 
@@ -119,7 +119,7 @@ describe('UserAccessService', () => {
     describe('Access present in hxp_authorization', () => {
         it('should return true when the user has one of the global roles', () => {
             spyHxpAuthorization('mockApp1', ['MOCK_GLOBAL_USER_ROLE']);
-            appConfigService.config = { application: { key: 'mockApp1' } };
+            appConfigService.config = { "application": { "key": 'mockApp1' } };
             userAccessService.fetchUserAccess();
             const hasGlobalAccess = userAccessService.hasGlobalAccess(['MOCK_GLOBAL_USER_ROLE']);
 
@@ -128,7 +128,7 @@ describe('UserAccessService', () => {
 
         it('should return true when the user has one of the roles for an application', () => {
             spyHxpAuthorization('mockApp1', ['MOCK_USER_ROLE_APP_1']);
-            appConfigService.config = { application: { key: 'mockApp1' } };
+            appConfigService.config = { "application": { "key": 'mockApp1' } };
             userAccessService.fetchUserAccess();
             const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp1', ['MOCK_USER_ROLE_APP_1']);
 
@@ -137,7 +137,7 @@ describe('UserAccessService', () => {
 
         it('should return false when the user has none of the global roles', () => {
             spyHxpAuthorization('mockApp1', ['MOCK_USER_ROLE_APP_1']);
-            appConfigService.config = { application: { key: 'mockApp1' } };
+            appConfigService.config = { "application": { "key": 'mockApp1' } };
             userAccessService.fetchUserAccess();
             const hasGlobalAccess = userAccessService.hasGlobalAccess(['MOCK_USER_ROLE_NOT_EXISTING']);
 
@@ -146,7 +146,7 @@ describe('UserAccessService', () => {
 
         it('should return false when the user has none of the roles for an application', () => {
             spyHxpAuthorization('mockApp1', ['MOCK_USER_ROLE_APP_1']);
-            appConfigService.config = { application: { key: 'mockApp1' } };
+            appConfigService.config = { "application": { "key": 'mockApp1' } };
             userAccessService.fetchUserAccess();
             const hasApplicationAccess = userAccessService.hasApplicationAccess('mockApp1', ['MOCK_ROLE_NOT_EXISING_IN_APP']);
 
@@ -156,7 +156,7 @@ describe('UserAccessService', () => {
 
     it('should return false when access is neither in realm_access or hxp_authorization', () => {
         spyOn(jwtHelperService, 'getAccessToken').and.returnValue('my-access_token');
-        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ mock_access: {} });
+        spyOn(jwtHelperService, 'decodeToken').and.returnValue({ "mock_access": {} });
         userAccessService.fetchUserAccess();
         const hasGlobalAccess = userAccessService.hasGlobalAccess(['mock_role']);
 

@@ -41,9 +41,9 @@ interface SharedDialogFormProps {
 }
 
 @Component({
-    selector: 'adf-share-dialog',
-    standalone: true,
-    imports: [
+    "selector": 'adf-share-dialog',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatIconModule,
@@ -56,16 +56,16 @@ interface SharedDialogFormProps {
         MatButtonModule,
         ClipboardDirective
     ],
-    templateUrl: './content-node-share.dialog.html',
-    styleUrls: ['./content-node-share.dialog.scss'],
-    host: { class: 'adf-share-dialog' },
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './content-node-share.dialog.html',
+    "styleUrls": ['./content-node-share.dialog.scss'],
+    "host": { "class": 'adf-share-dialog' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class ShareDialogComponent implements OnInit, OnDestroy {
     private minDateValidator = (control: FormControl<Date>): any =>
-        isBefore(endOfDay(new Date(control.value)), this.minDate) ? { invalidDate: true } : null;
+        isBefore(endOfDay(new Date(control.value)), this.minDate) ? { "invalidDate": true } : null;
 
-    minDate = add(new Date(), { days: 1 });
+    minDate = add(new Date(), { "days": 1 });
     sharedId: string;
     fileName: string;
     baseShareUrl: string;
@@ -73,17 +73,17 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     isDisabled = false;
     isLinkWithExpiryDate = false;
     form = new FormGroup<SharedDialogFormProps>({
-        sharedUrl: new FormControl(''),
-        time: new FormControl({ value: null, disabled: true }, [Validators.required, this.minDateValidator])
+        "sharedUrl": new FormControl(''),
+        "time": new FormControl({ "value": null, "disabled": true }, [Validators.required, this.minDateValidator])
     });
     isExpiryDateToggleChecked: boolean;
 
-    @ViewChild('slideToggleExpirationDate', { static: true })
+    @ViewChild('slideToggleExpirationDate', { "static": true })
     slideToggleExpirationDate;
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private sharedLinksApiService: SharedLinksApiService,
         private dialogRef: MatDialogRef<ShareDialogComponent>,
         private dialog: MatDialog,
@@ -92,7 +92,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: ContentNodeShareSettings
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.data.node?.entry) {
             this.fileName = this.data.node.entry.name;
             this.baseShareUrl = this.data.baseShareUrl;
@@ -112,22 +112,22 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    onTimeChanged() {
+    onTimeChanged () {
         if (this.time.valid) {
             this.updateNode(this.time.value);
         }
     }
 
-    get time(): FormControl<Date> {
+    get time (): FormControl<Date> {
         return this.form.controls['time'];
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    onSlideShareChange(event: MatSlideToggleChange) {
+    onSlideShareChange (event: MatSlideToggleChange) {
         if (event.checked) {
             this.createSharedLinks(this.data.node.entry.id);
         } else {
@@ -135,7 +135,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    get canUpdate() {
+    get canUpdate () {
         const { entry } = this.data.node;
 
         if (entry?.allowableOperations) {
@@ -145,7 +145,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         return true;
     }
 
-    onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
+    onToggleExpirationDate (slideToggle: MatSlideToggleChange) {
         if (slideToggle.checked) {
             this.time.enable();
             this.isExpiryDateToggleChecked = true;
@@ -156,31 +156,31 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    onDatePickerClosed() {
+    onDatePickerClosed () {
         this.onTimeChanged();
         if (!this.time.value) {
             this.slideToggleExpirationDate.checked = false;
         }
     }
 
-    preventIncorrectCharacters(e: KeyboardEvent): boolean {
+    preventIncorrectCharacters (e: KeyboardEvent): boolean {
         const regex = /[^\d/.-]/;
         return e.key.length === 1 ? !regex.test(e.key) : true;
     }
 
-    private openConfirmationDialog() {
+    private openConfirmationDialog () {
         this.isFileShared = false;
 
         this.dialog
             .open(ConfirmDialogComponent, {
-                data: {
-                    title: 'SHARE.CONFIRMATION.DIALOG-TITLE',
-                    message: 'SHARE.CONFIRMATION.MESSAGE',
-                    yesLabel: 'SHARE.CONFIRMATION.REMOVE',
-                    noLabel: 'SHARE.CONFIRMATION.CANCEL'
+                "data": {
+                    "title": 'SHARE.CONFIRMATION.DIALOG-TITLE',
+                    "message": 'SHARE.CONFIRMATION.MESSAGE',
+                    "yesLabel": 'SHARE.CONFIRMATION.REMOVE',
+                    "noLabel": 'SHARE.CONFIRMATION.CANCEL'
                 },
-                minWidth: '250px',
-                closeOnNavigation: true
+                "minWidth": '250px',
+                "closeOnNavigation": true
             })
             .beforeClosed()
             .subscribe((deleteSharedLink) => {
@@ -192,7 +192,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             });
     }
 
-    private createSharedLinks(nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate) {
+    private createSharedLinks (nodeId: string, sharedLinkWithExpirySettings?: SharedLinkBodyCreate) {
         this.isDisabled = true;
 
         this.sharedLinksApiService.createSharedLinks(nodeId, sharedLinkWithExpirySettings).subscribe(
@@ -222,7 +222,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         );
     }
 
-    deleteSharedLink(sharedId: string, dialogOpenFlag?: boolean) {
+    deleteSharedLink (sharedId: string, dialogOpenFlag?: boolean) {
         this.isDisabled = true;
 
         this.sharedLinksApiService.deleteSharedLink(sharedId).subscribe((response: any) => {
@@ -246,7 +246,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         });
     }
 
-    private handleError(error: Error) {
+    private handleError (error: Error) {
         let message = 'SHARE.UNSHARE_ERROR';
         let statusCode = 0;
 
@@ -266,7 +266,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         });
     }
 
-    private updateForm(): Date {
+    private updateForm (): Date {
         const { entry } = this.data.node;
         let expiryDate = null;
 
@@ -276,16 +276,16 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         this.form.setValue(
             {
-                sharedUrl: `${this.baseShareUrl}${this.sharedId}`,
-                time: expiryDate ? new Date(expiryDate) : null
+                "sharedUrl": `${this.baseShareUrl}${this.sharedId}`,
+                "time": expiryDate ? new Date(expiryDate) : null
             },
-            { emitEvent: false }
+            { "emitEvent": false }
         );
 
         return expiryDate;
     }
 
-    private updateNode(date: Date) {
+    private updateNode (date: Date) {
         let expiryDate: Date | string;
         if (date) {
             expiryDate = format(endOfDay(new Date(date)), `yyyy-MM-dd'T'HH:mm:ss.SSSxx`);
@@ -310,15 +310,15 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    private sharedLinkWithExpirySettings(expiryDate: Date) {
+    private sharedLinkWithExpirySettings (expiryDate: Date) {
         const nodeObject: SharedLinkBodyCreate = {
-            nodeId: this.data.node.entry.id,
-            expiresAt: expiryDate as Date
+            "nodeId": this.data.node.entry.id,
+            "expiresAt": expiryDate as Date
         };
         this.createSharedLinks(this.data.node.entry.id, nodeObject);
     }
 
-    private updateEntryExpiryDate(date: Date) {
+    private updateEntryExpiryDate (date: Date) {
         const { properties } = this.data.node.entry;
 
         if (properties) {

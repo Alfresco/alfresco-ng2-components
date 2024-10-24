@@ -26,27 +26,27 @@ describe('StorageFeaturesService', () => {
 
     describe('if flags are present in LocalStorage', () => {
         const mockStorage = {
-            getItem: () =>
+            "getItem": () =>
                 JSON.stringify({
-                    feature1: {
-                        current: true
+                    "feature1": {
+                        "current": true
                     },
-                    feature2: {
-                        current: false,
-                        fictive: true
+                    "feature2": {
+                        "current": false,
+                        "fictive": true
                     }
                 }),
-            setItem: () => {}
+            "setItem": () => {}
         };
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                providers: [
-                    { provide: StorageService, useValue: mockStorage },
+                "providers": [
+                    { "provide": StorageService, "useValue": mockStorage },
                     {
-                        provide: WritableFeaturesServiceConfigToken,
-                        useValue: {
-                            storageKey: 'storage-key-test'
+                        "provide": WritableFeaturesServiceConfigToken,
+                        "useValue": {
+                            "storageKey": 'storage-key-test'
                         }
                     }
                 ]
@@ -62,14 +62,14 @@ describe('StorageFeaturesService', () => {
                 .pipe(take(1))
                 .subscribe((flags) => {
                     expect(flags).toEqual({
-                        feature1: {
-                            current: true,
-                            previous: null
+                        "feature1": {
+                            "current": true,
+                            "previous": null
                         },
-                        feature2: {
-                            current: false,
-                            fictive: true,
-                            previous: null
+                        "feature2": {
+                            "current": false,
+                            "fictive": true,
+                            "previous": null
                         }
                     });
                     done();
@@ -85,7 +85,7 @@ describe('StorageFeaturesService', () => {
                 .getFlags$()
                 .pipe(take(1))
                 .subscribe((flags) => {
-                    expect(flags[flagKey]).toEqual({ current: true, previous: null, fictive: true });
+                    expect(flags[flagKey]).toEqual({ "current": true, "previous": null, "fictive": true });
                     done();
                 });
         });
@@ -106,7 +106,7 @@ describe('StorageFeaturesService', () => {
         });
 
         it('should reset flags to the provided set', (done) => {
-            const flagSet: FlagSet = { feature1: true };
+            const flagSet: FlagSet = { "feature1": true };
             storageFeaturesService.resetFlags(flagSet);
 
             storageFeaturesService
@@ -121,13 +121,13 @@ describe('StorageFeaturesService', () => {
 
         it('should merge flags to the provided set', (done) => {
             const newFlags = {
-                feature2: {
-                    current: false,
-                    previous: null
+                "feature2": {
+                    "current": false,
+                    "previous": null
                 },
-                feature3: {
-                    current: false,
-                    previous: null
+                "feature3": {
+                    "current": false,
+                    "previous": null
                 }
             };
 
@@ -138,9 +138,9 @@ describe('StorageFeaturesService', () => {
                 .pipe(take(1))
                 .subscribe((flags) => {
                     expect(flags).toEqual({
-                        feature1: { current: true, previous: null, fictive: true },
-                        feature2: { current: false, previous: false },
-                        feature3: { current: false, previous: null }
+                        "feature1": { "current": true, "previous": null, "fictive": true },
+                        "feature2": { "current": false, "previous": false },
+                        "feature3": { "current": false, "previous": null }
                     });
                     done();
                 });
@@ -154,7 +154,7 @@ describe('StorageFeaturesService', () => {
                 .getFlags$()
                 .pipe(skip(1))
                 .subscribe((flags) => {
-                    expect(flags[flagKey]).toEqual({ current: true, previous: null, fictive: true });
+                    expect(flags[flagKey]).toEqual({ "current": true, "previous": null, "fictive": true });
                     done();
                 });
 

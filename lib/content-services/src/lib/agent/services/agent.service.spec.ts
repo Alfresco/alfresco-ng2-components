@@ -21,27 +21,27 @@ import { AgentService } from './agent.service';
 import { Agent, AgentPaging } from '@alfresco/js-api';
 
 const agent1: Agent = {
-    id: '1',
-    name: 'HR Agent',
-    description: 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.',
-    avatarUrl: ''
+    "id": '1',
+    "name": 'HR Agent',
+    "description": 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.',
+    "avatarUrl": ''
 };
 
 const agent2: Agent = {
-    id: '2',
-    name: 'Policy Agent',
-    description: 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.',
-    avatarUrl: ''
+    "id": '2',
+    "name": 'Policy Agent',
+    "description": 'Your Claims Doc Agent streamlines the extraction, analysis, and management of data from insurance claims documents.',
+    "avatarUrl": ''
 };
 
 const agentPagingObjectMock: AgentPaging = {
-    list: {
-        entries: [
+    "list": {
+        "entries": [
             {
-                entry: agent1
+                "entry": agent1
             },
             {
-                entry: agent2
+                "entry": agent2
             }
         ]
     }
@@ -54,7 +54,7 @@ describe('AgentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
 
         agentService = TestBed.inject(AgentService);

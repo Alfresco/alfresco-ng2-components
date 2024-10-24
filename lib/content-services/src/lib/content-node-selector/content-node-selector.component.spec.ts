@@ -47,33 +47,33 @@ describe('ContentNodeSelectorComponent', () => {
 
     beforeEach(() => {
         data = {
-            title: 'Choose along citizen...',
-            actionName: NodeAction.CHOOSE,
-            select: new EventEmitter<Node>(),
-            rowFilter: (shareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
-            imageResolver: () => 'piccolo',
-            currentFolderId: 'cat-girl-nuku-nuku',
-            selectionMode: 'multiple',
-            showLocalUploadButton: true,
-            restrictRootToCurrentFolderId: true
+            "title": 'Choose along citizen...',
+            "actionName": NodeAction.CHOOSE,
+            "select": new EventEmitter<Node>(),
+            "rowFilter": (shareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
+            "imageResolver": () => 'piccolo',
+            "currentFolderId": 'cat-girl-nuku-nuku',
+            "selectionMode": 'multiple',
+            "showLocalUploadButton": true,
+            "restrictRootToCurrentFolderId": true
         };
 
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, ContentNodeSelectorComponent],
-            providers: [
-                { provide: MAT_DIALOG_DATA, useValue: data },
+            "imports": [ContentTestingModule, ContentNodeSelectorComponent],
+            "providers": [
+                { "provide": MAT_DIALOG_DATA, "useValue": data },
                 {
-                    provide: MatDialogRef,
-                    useValue: {
-                        keydownEvents: () => of(null),
-                        backdropClick: () => of(null),
-                        close: jasmine.createSpy('close'),
-                        afterClosed: () => of(null),
-                        afterOpened: () => of(null)
+                    "provide": MatDialogRef,
+                    "useValue": {
+                        "keydownEvents": () => of(null),
+                        "backdropClick": () => of(null),
+                        "close": jasmine.createSpy('close'),
+                        "afterClosed": () => of(null),
+                        "afterOpened": () => of(null)
                     }
                 }
             ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
 
         const documentListService = TestBed.inject(DocumentListService);
@@ -84,7 +84,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         spyOn(documentListService, 'getFolder');
         spyOn(documentListService, 'getFolderNode');
-        spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
+        spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ "list": new SitePagingList({ "entries": [] }) })));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);
         component = fixture.componentInstance;
@@ -94,11 +94,11 @@ describe('ContentNodeSelectorComponent', () => {
         spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
 
         const fakeFolderNodeWithPermission = new NodeEntry({
-            entry: new Node({
-                allowableOperations: ['create', 'update'],
-                isFolder: true,
-                name: 'Folder Fake Name',
-                nodeType: 'cm:folder'
+            "entry": new Node({
+                "allowableOperations": ['create', 'update'],
+                "isFolder": true,
+                "name": 'Folder Fake Name',
+                "nodeType": 'cm:folder'
             })
         });
 
@@ -125,7 +125,7 @@ describe('ContentNodeSelectorComponent', () => {
     };
 
     const selectTabByIndex = async (tabIndex: number): Promise<void> => {
-        const tabGroup = await loader.getHarness(MatTabGroupHarness.with({ selector: '.adf-content-node-selector-dialog-content' }));
+        const tabGroup = await loader.getHarness(MatTabGroupHarness.with({ "selector": '.adf-content-node-selector-dialog-content' }));
         const tabToSelect = (await tabGroup.getTabs())[tabIndex];
 
         return tabToSelect.select();
@@ -156,19 +156,19 @@ describe('ContentNodeSelectorComponent', () => {
             expect(documentList).not.toBeNull('Document list should be shown');
             expect(
                 documentList.componentInstance.rowFilter({
-                    node: {
-                        entry: new Node({
-                            name: 'impossible-name',
-                            id: 'name'
+                    "node": {
+                        "entry": new Node({
+                            "name": 'impossible-name',
+                            "id": 'name'
                         })
                     }
                 })
             ).toBe(
                 data.rowFilter({
-                    node: {
-                        entry: new Node({
-                            name: 'impossible-name',
-                            id: 'name'
+                    "node": {
+                        "entry": new Node({
+                            "name": 'impossible-name',
+                            "id": 'name'
                         })
                     }
                 })
@@ -208,7 +208,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should be enabled when a node is chosen', () => {
-            component.onSelect([new Node({ id: 'fake' })]);
+            component.onSelect([new Node({ "id": 'fake' })]);
             fixture.detectChanges();
 
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
@@ -216,7 +216,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should be disabled when no node chosen', () => {
-            component.onSelect([new Node({ id: 'fake' })]);
+            component.onSelect([new Node({ "id": 'fake' })]);
             fixture.detectChanges();
 
             const actionButtonWithNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
@@ -232,7 +232,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should close the dialog when action button is clicked', async () => {
-            component.onSelect([new Node({ id: 'fake' })]);
+            component.onSelect([new Node({ "id": 'fake' })]);
             fixture.detectChanges();
 
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
@@ -260,7 +260,7 @@ describe('ContentNodeSelectorComponent', () => {
             enableLocalUpload();
             fixture.detectChanges();
 
-            const tabGroup = await loader.getHarness(MatTabGroupHarness.with({ selector: '.adf-content-node-selector-dialog-content' }));
+            const tabGroup = await loader.getHarness(MatTabGroupHarness.with({ "selector": '.adf-content-node-selector-dialog-content' }));
             const uploadFromLocalTab = (await tabGroup.getTabs())[1];
             let infoMatIcon = getTabInfoButton();
 
@@ -447,7 +447,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should uploadStarted become true when the first upload gets started', () => {
-            const fileUploadEvent = new FileUploadEvent(new FileModel({ name: 'fake-name', size: 100 } as File));
+            const fileUploadEvent = new FileUploadEvent(new FileModel({ "name": 'fake-name', "size": 100 } as File));
             uploadService.fileUploadStarting.next(fileUploadEvent);
 
             expect(component.uploadStarted).toBe(true);
@@ -485,7 +485,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should getSelectedCount return 1 when a node is selected', () => {
-            component.onSelect([new Node({ id: 'fake' })]);
+            component.onSelect([new Node({ "id": 'fake' })]);
 
             expect(component.getSelectedCount()).toBe(1);
         });

@@ -29,7 +29,7 @@ describe('StorageService', () => {
     describe('with prefix', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopTranslateModule, NoopAuthModule]
+                "imports": [NoopTranslateModule, NoopAuthModule]
             });
             appConfig = TestBed.inject(AppConfigService);
             storage = TestBed.inject(StorageService);
@@ -63,13 +63,13 @@ describe('StorageService', () => {
     describe('without prefix', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAuthModule]
+                "imports": [NoopAuthModule]
             });
             appConfig = TestBed.inject(AppConfigService);
 
             appConfig.config = {
-                application: {
-                    storagePrefix: ''
+                "application": {
+                    "storagePrefix": ''
                 }
             };
             storage = TestBed.inject(StorageService);

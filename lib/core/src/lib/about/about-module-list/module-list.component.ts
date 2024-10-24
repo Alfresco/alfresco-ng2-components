@@ -26,24 +26,24 @@ interface ModuleInfo {
 }
 
 @Component({
-    selector: 'adf-about-module-list',
-    templateUrl: './module-list.component.html',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatTableModule]
+    "selector": 'adf-about-module-list',
+    "templateUrl": './module-list.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatTableModule]
 })
 export class ModuleListComponent {
     columns = [
         {
-            columnDef: 'title',
-            header: 'ABOUT.MODULES.NAME',
-            cell: (row: ModuleInfo) => `${row.title}`
+            "columnDef": 'title',
+            "header": 'ABOUT.MODULES.NAME',
+            "cell": (row: ModuleInfo) => `${row.title}`
         },
         {
-            columnDef: 'version',
-            header: 'ABOUT.MODULES.VERSION',
-            cell: (row: ModuleInfo) => `${row.version}`
+            "columnDef": 'version',
+            "header": 'ABOUT.MODULES.VERSION',
+            "cell": (row: ModuleInfo) => `${row.version}`
         }
     ];
 

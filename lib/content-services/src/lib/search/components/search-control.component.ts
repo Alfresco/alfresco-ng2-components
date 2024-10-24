@@ -39,13 +39,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-search-control',
-    standalone: true,
-    imports: [CommonModule, SearchTextInputComponent, SearchComponent, MatListModule, MatIconModule, HighlightPipe, TranslateModule],
-    templateUrl: './search-control.component.html',
-    styleUrls: ['./search-control.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-control' }
+    "selector": 'adf-search-control',
+    "standalone": true,
+    "imports": [CommonModule, SearchTextInputComponent, SearchComponent, MatListModule, MatIconModule, HighlightPipe, TranslateModule],
+    "templateUrl": './search-control.component.html',
+    "styleUrls": ['./search-control.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-control' }
 })
 export class SearchControlComponent implements OnDestroy {
     /** Toggles highlighting of the search term in the results. */
@@ -113,32 +113,32 @@ export class SearchControlComponent implements OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public authService: AuthenticationService, private thumbnailService: ThumbnailService) {}
+    constructor (public authService: AuthenticationService, private thumbnailService: ThumbnailService) {}
 
-    isNoSearchTemplatePresent(): boolean {
+    isNoSearchTemplatePresent (): boolean {
         return !!this.emptySearchTemplate;
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    isLoggedIn(): boolean {
+    isLoggedIn (): boolean {
         return this.authService.isEcmLoggedIn();
     }
 
-    inputChange(value: string) {
+    inputChange (value: string) {
         this.searchTerm = value;
         this.searchChange.emit(value);
     }
 
-    getMimeTypeIcon(node: NodeEntry): string {
+    getMimeTypeIcon (node: NodeEntry): string {
         const mimeType = this.getMimeType(node);
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    getMimeType(node: NodeEntry): string {
+    getMimeType (node: NodeEntry): string {
         let mimeType: string;
 
         if (node.entry.content?.mimeType) {
@@ -150,25 +150,25 @@ export class SearchControlComponent implements OnDestroy {
         return mimeType;
     }
 
-    elementClicked(item: any) {
+    elementClicked (item: any) {
         if (item.entry) {
             this.optionClicked.next(item);
             this.focusSubject.next(new FocusEvent('blur'));
         }
     }
 
-    onFocus(event: FocusEvent): void {
+    onFocus (event: FocusEvent): void {
         this.focusSubject.next(event);
     }
 
-    onBlur(event: FocusEvent): void {
+    onBlur (event: FocusEvent): void {
         const nextElement: any = this.getNextElementSibling(event.target as Element);
         if (!nextElement && !this.isListElement(event)) {
             this.focusSubject.next(event);
         }
     }
 
-    onSelectFirstResult() {
+    onSelectFirstResult () {
         if (this.listResultElement && this.listResultElement.length > 0) {
             const firstElement = this.listResultElement.first as MatListItem;
             // eslint-disable-next-line no-underscore-dangle
@@ -176,14 +176,14 @@ export class SearchControlComponent implements OnDestroy {
         }
     }
 
-    onRowArrowDown(event: Event): void {
+    onRowArrowDown (event: Event): void {
         const nextElement: any = this.getNextElementSibling(event.target as Element);
         if (nextElement) {
             nextElement.focus();
         }
     }
 
-    onRowArrowUp(event: Event): void {
+    onRowArrowUp (event: Event): void {
         const previousElement: any = this.getPreviousElementSibling(event.target as Element);
         if (previousElement) {
             previousElement.focus();
@@ -192,21 +192,21 @@ export class SearchControlComponent implements OnDestroy {
         }
     }
 
-    onReset(status: boolean) {
+    onReset (status: boolean) {
         if (status) {
             this.searchAutocomplete.resetResults();
         }
     }
 
-    private isListElement(event: any): boolean {
+    private isListElement (event: any): boolean {
         return event.relatedTarget?.children[0] && event.relatedTarget.children[0].className === 'mat-list-item-content';
     }
 
-    private getNextElementSibling(node: Element): Element {
+    private getNextElementSibling (node: Element): Element {
         return node.nextElementSibling;
     }
 
-    private getPreviousElementSibling(node: Element): Element {
+    private getPreviousElementSibling (node: Element): Element {
         return node.previousElementSibling;
     }
 }

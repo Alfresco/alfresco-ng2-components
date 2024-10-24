@@ -16,7 +16,7 @@
  */
 
 import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
-import { AuthModule, JWT_STORAGE_SERVICE, RedirectAuthService } from '../auth';
+import { AuthModule, JWT_STORAGE_SERVICE } from '../auth/oidc/auth.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppConfigService, StoragePrefixFactory } from '../app-config';
@@ -25,30 +25,31 @@ import { CookieServiceMock } from '../mock';
 import { EMPTY, of } from 'rxjs';
 import { loadAppConfig } from '../app-config/app-config.loader';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
+import { RedirectAuthService } from '../auth/oidc/redirect-auth.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class NoopRedirectAuthService extends RedirectAuthService {
     onLogin = EMPTY;
     onTokenReceived = of();
 
-    init(): Promise<boolean> {
+    init (): Promise<boolean> {
         return Promise.resolve(true);
     }
 }
 
 @NgModule({
-    imports: [AuthModule.forRoot({ useHash: true }), HttpClientTestingModule, RouterTestingModule],
-    providers: [
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: CookieService, useClass: CookieServiceMock },
-        { provide: RedirectAuthService, useClass: NoopRedirectAuthService },
+    "imports": [AuthModule.forRoot({ "useHash": true }), HttpClientTestingModule, RouterTestingModule],
+    "providers": [
+        { "provide": AppConfigService, "useClass": AppConfigServiceMock },
+        { "provide": CookieService, "useClass": CookieServiceMock },
+        { "provide": RedirectAuthService, "useClass": NoopRedirectAuthService },
         {
-            provide: APP_INITIALIZER,
-            useFactory: loadAppConfig,
-            deps: [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
-            multi: true
+            "provide": APP_INITIALIZER,
+            "useFactory": loadAppConfig,
+            "deps": [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
+            "multi": true
         },
-        { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
+        { "provide": JWT_STORAGE_SERVICE, "useClass": StorageService }
     ]
 })
 export class NoopAuthModule {}

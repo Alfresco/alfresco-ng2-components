@@ -58,9 +58,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-    selector: 'adf-task-details',
-    standalone: true,
-    imports: [
+    "selector": 'adf-task-details',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         TaskFormComponent,
@@ -76,15 +76,15 @@ import { MatCardModule } from '@angular/material/card';
         InfoDrawerComponent,
         MatCardModule
     ],
-    providers: [
+    "providers": [
         {
-            provide: ADF_COMMENTS_SERVICE,
-            useClass: TaskCommentsService
+            "provide": ADF_COMMENTS_SERVICE,
+            "useClass": TaskCommentsService
         }
     ],
-    templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './task-details.component.html',
+    "styleUrls": ['./task-details.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('errorDialog')
@@ -209,14 +209,14 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     private peopleSearchObserver: Observer<LightUserRepresentation[]>;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private taskListService: TaskListService,
         private peopleProcessService: PeopleProcessService,
         private cardViewUpdateService: CardViewUpdateService,
         private dialog: MatDialog
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.peopleSearch = new Observable<LightUserRepresentation[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
 
         if (this.taskId) {
@@ -228,12 +228,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         this.cardViewUpdateService.itemClicked$.pipe(takeUntil(this.onDestroy$)).subscribe(this.clickTaskDetails.bind(this));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges (changes: SimpleChanges): void {
         const taskId = changes.taskId;
         this.showAssignee = false;
 
@@ -244,102 +244,102 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isAssigned(): boolean {
+    isAssigned (): boolean {
         return !!this.taskDetails.assignee;
     }
 
     /**
      * Complete button clicked
      */
-    onComplete(): void {
+    onComplete (): void {
         this.onFormCompleted(null);
     }
 
-    onShowAttachForm() {
+    onShowAttachForm () {
         this.showAttachForm = true;
     }
 
-    onCancelAttachForm() {
+    onCancelAttachForm () {
         this.showAttachForm = false;
     }
 
-    onCompleteAttachForm() {
+    onCompleteAttachForm () {
         this.taskFormName = null;
         this.showAttachForm = false;
         this.taskFormComponent.loadTask(this.taskId);
         this.loadDetails(this.taskId);
     }
 
-    onFormContentClick(content: ContentLinkModel): void {
+    onFormContentClick (content: ContentLinkModel): void {
         this.formContentClicked.emit(content);
     }
 
-    onFormSaved(form: FormModel): void {
+    onFormSaved (form: FormModel): void {
         this.formSaved.emit(form);
     }
 
-    onFormCompleted(form: FormModel): void {
+    onFormCompleted (form: FormModel): void {
         this.formCompleted.emit(form);
         if (this.showNextTask && (this.taskDetails.processInstanceId || this.taskDetails.processDefinitionId)) {
             this.loadNextTask(this.taskDetails.processInstanceId, this.taskDetails.processDefinitionId);
         }
     }
 
-    onFormLoaded(form: FormModel): void {
+    onFormLoaded (form: FormModel): void {
         this.taskFormName = form?.name;
         this.formLoaded.emit(form);
     }
 
-    onChecklistTaskCreated(task: TaskRepresentation): void {
+    onChecklistTaskCreated (task: TaskRepresentation): void {
         this.taskCreated.emit(task);
     }
 
-    onChecklistTaskDeleted(taskId: string): void {
+    onChecklistTaskDeleted (taskId: string): void {
         this.taskDeleted.emit(taskId);
     }
 
-    onFormError(error: any): void {
-        this.errorDialogRef = this.dialog.open(this.errorDialog, { width: '500px' });
+    onFormError (error: any): void {
+        this.errorDialogRef = this.dialog.open(this.errorDialog, { "width": '500px' });
         this.error.emit(error);
     }
 
-    onFormExecuteOutcome(event: FormOutcomeEvent): void {
+    onFormExecuteOutcome (event: FormOutcomeEvent): void {
         this.executeOutcome.emit(event);
     }
 
-    closeErrorDialog(): void {
+    closeErrorDialog (): void {
         this.dialog.closeAll();
     }
 
-    onClaimAction(taskId: string): void {
+    onClaimAction (taskId: string): void {
         this.claimedTask.emit(taskId);
         this.loadDetails(taskId);
     }
 
-    onUnclaimAction(taskId: string): void {
+    onUnclaimAction (taskId: string): void {
         this.unClaimedTask.emit(taskId);
         this.loadDetails(taskId);
     }
 
-    searchUser(searchedWord: string) {
+    searchUser (searchedWord: string) {
         this.peopleProcessService.getWorkflowUsers(null, searchedWord).subscribe((users) => {
             users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
             this.peopleSearchObserver.next(users);
         });
     }
 
-    onCloseSearch() {
+    onCloseSearch () {
         this.showAssignee = false;
     }
 
-    assignTaskToUser(selectedUser: LightUserRepresentation) {
+    assignTaskToUser (selectedUser: LightUserRepresentation) {
         this.taskListService.assignTask(this.taskDetails.id, selectedUser).subscribe(() => {
             this.assignTask.emit();
         });
         this.showAssignee = false;
     }
 
-    getTaskHeaderViewClass(): string {
+    getTaskHeaderViewClass (): string {
         if (this.showAssignee) {
             return 'assign-edit-view';
         } else {
@@ -347,15 +347,15 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isReadOnlyComment(): boolean {
+    isReadOnlyComment (): boolean {
         return this.taskDetails?.isCompleted() && this.taskPeople?.length === 0;
     }
 
-    private reset() {
+    private reset () {
         this.taskDetails = null;
     }
 
-    private updateTaskDetails(updateNotification: UpdateNotification) {
+    private updateTaskDetails (updateNotification: UpdateNotification) {
         this.taskListService
             .updateTask(this.taskId, updateNotification.changed)
             .pipe(
@@ -367,7 +367,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe(() => this.loadDetails(this.taskId));
     }
 
-    private clickTaskDetails(clickNotification: ClickNotification) {
+    private clickTaskDetails (clickNotification: ClickNotification) {
         if (clickNotification.target.key === 'assignee') {
             this.showAssignee = true;
         }
@@ -376,7 +376,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private loadDetails(taskId: string) {
+    private loadDetails (taskId: string) {
         this.taskPeople = [];
 
         if (taskId) {
@@ -402,7 +402,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
+    private loadNextTask (processInstanceId: string, processDefinitionId: string): void {
         const requestNode = new TaskQueryRepresentation({
             processInstanceId,
             processDefinitionId

@@ -23,7 +23,7 @@ import { IconComponent } from './icon.component';
  * Consider importing components directly instead.
  */
 @NgModule({
-    imports: [IconComponent],
-    exports: [IconComponent]
+    "imports": [IconComponent],
+    "exports": [IconComponent]
 })
 export class IconModule {}

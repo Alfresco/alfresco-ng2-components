@@ -21,8 +21,8 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from '../auth/services/authentication.service';
 
 @Directive({
-    selector: '[adf-logout]',
-    standalone: true
+    "selector": '[adf-logout]',
+    "standalone": true
 })
 export class LogoutDirective implements OnInit {
     /** URI to redirect to after logging out. */
@@ -33,7 +33,7 @@ export class LogoutDirective implements OnInit {
     @Input()
     enableRedirect: boolean = true;
 
-    constructor(
+    constructor (
         private elementRef: ElementRef,
         private renderer: Renderer2,
         private router: Router,
@@ -41,7 +41,7 @@ export class LogoutDirective implements OnInit {
         private authenticationService: AuthenticationService
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.elementRef.nativeElement) {
             this.renderer.listen(this.elementRef.nativeElement, 'click', (evt) => {
                 evt.preventDefault();
@@ -50,21 +50,21 @@ export class LogoutDirective implements OnInit {
         }
     }
 
-    getRedirectUri() {
+    getRedirectUri () {
         if (this.redirectUri === undefined) {
             return this.appConfig.get<string>('loginRoute', '/login');
         }
         return this.redirectUri;
     }
 
-    logout() {
+    logout () {
         this.authenticationService.logout().subscribe(
             () => this.redirectToUri(),
             () => this.redirectToUri()
         );
     }
 
-    redirectToUri() {
+    redirectToUri () {
         if (this.enableRedirect && !this.authenticationService.isOauth()) {
             const redirectRoute = this.getRedirectUri();
             this.router.navigate([redirectRoute]);

@@ -42,10 +42,9 @@ describe('PeopleCloudComponent', () => {
 
     /**
      * Search users by value
-     *
      * @param value value
      */
-    async function searchUsers(value: string) {
+    async function searchUsers (value: string) {
         const input = await loader.getHarness(MatInputHarness);
         await input.focus();
         await input.setValue(value);
@@ -53,10 +52,9 @@ describe('PeopleCloudComponent', () => {
 
     /**
      * Search users and blur the input
-     *
      * @param value value
      */
-    async function searchUsersAndBlur(value: string) {
+    async function searchUsersAndBlur (value: string) {
         const input = await loader.getHarness(MatInputHarness);
         await input.focus();
         await input.setValue(value);
@@ -65,25 +63,23 @@ describe('PeopleCloudComponent', () => {
 
     /**
      * Get users list UI
-     *
      * @returns list of debug elements
      */
-    function getUsersListUI(): DebugElement[] {
+    function getUsersListUI (): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('[data-automation-id="adf-people-cloud-row"]'));
     }
 
     /**
      * Get the first user from the list
-     *
      * @returns native element
      */
-    function getFirstUserFromListUI(): Element {
+    function getFirstUserFromListUI (): Element {
         return element.querySelector('[data-automation-id="adf-people-cloud-row"]');
     }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule]
+            "imports": [CoreTestingModule, ProcessServiceCloudTestingModule, PeopleCloudModule]
         });
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
@@ -97,7 +93,7 @@ describe('PeopleCloudComponent', () => {
         component.title = 'TITLE_KEY';
         fixture.detectChanges();
 
-        const inputField = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-people-cloud' }));
+        const inputField = await loader.getHarness(MatFormFieldHarness.with({ "selector": '.adf-people-cloud' }));
 
         expect(await inputField.getLabel()).toEqual('TITLE_KEY');
     });
@@ -105,7 +101,7 @@ describe('PeopleCloudComponent', () => {
     it('should not populate label when title is not present', async () => {
         fixture.detectChanges();
 
-        const inputField = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-people-cloud' }));
+        const inputField = await loader.getHarness(MatFormFieldHarness.with({ "selector": '.adf-people-cloud' }));
 
         expect(await inputField.getLabel()).toBeNull();
     });
@@ -128,8 +124,8 @@ describe('PeopleCloudComponent', () => {
 
         it('should not be able to search for a user that his username matches one of the preselected users username', async () => {
             component.preSelectUsers = [mockKielbasaSausage];
-            const changes = new SimpleChange(null, [{ username: mockKielbasaSausage.username }], false);
-            component.ngOnChanges({ preSelectUsers: changes });
+            const changes = new SimpleChange(null, [{ "username": mockKielbasaSausage.username }], false);
+            component.ngOnChanges({ "preSelectUsers": changes });
             fixture.detectChanges();
 
             await searchUsers('first-name');
@@ -139,8 +135,8 @@ describe('PeopleCloudComponent', () => {
 
         it('should not be able to search for a user that his id matches one of the preselected users id', async () => {
             component.preSelectUsers = [mockKielbasaSausage];
-            const changes = new SimpleChange(null, [{ id: mockKielbasaSausage.id }], false);
-            component.ngOnChanges({ preSelectUsers: changes });
+            const changes = new SimpleChange(null, [{ "id": mockKielbasaSausage.id }], false);
+            component.ngOnChanges({ "preSelectUsers": changes });
             fixture.detectChanges();
 
             await searchUsers('first-name');
@@ -150,8 +146,8 @@ describe('PeopleCloudComponent', () => {
 
         it('should not be able to search for a user that his email matches one of the preselected users email', async () => {
             component.preSelectUsers = [mockKielbasaSausage];
-            const changes = new SimpleChange(null, [{ email: mockKielbasaSausage.email }], false);
-            component.ngOnChanges({ preSelectUsers: changes });
+            const changes = new SimpleChange(null, [{ "email": mockKielbasaSausage.email }], false);
+            component.ngOnChanges({ "preSelectUsers": changes });
             fixture.detectChanges();
 
             await searchUsers('first-name');
@@ -161,7 +157,7 @@ describe('PeopleCloudComponent', () => {
 
         it('should not be able to search for a user that his email matches one of the excluded users email', async () => {
             component.excludedUsers = [
-                { email: mockKielbasaSausage.email, username: 'new-username', firstName: 'new-first-name', lastName: 'new-last-name' }
+                { "email": mockKielbasaSausage.email, "username": 'new-username', "firstName": 'new-first-name', "lastName": 'new-last-name' }
             ];
             fixture.detectChanges();
 
@@ -173,11 +169,11 @@ describe('PeopleCloudComponent', () => {
         it('should not be able to search for a user that his id matches one of the excluded users id', async () => {
             component.excludedUsers = [
                 {
-                    id: mockKielbasaSausage.id,
-                    username: 'new-username',
-                    firstName: 'new-first-name',
-                    lastName: 'new-last-name',
-                    email: 'new-email@food.com'
+                    "id": mockKielbasaSausage.id,
+                    "username": 'new-username',
+                    "firstName": 'new-first-name',
+                    "lastName": 'new-last-name',
+                    "email": 'new-email@food.com'
                 }
             ];
             fixture.detectChanges();
@@ -189,7 +185,7 @@ describe('PeopleCloudComponent', () => {
 
         it('should not be able to search for a user that his username matches one of the excluded users username', async () => {
             component.excludedUsers = [
-                { username: mockKielbasaSausage.username, firstName: 'new-first-name', lastName: 'new-last-name', email: 'new-email@food.com' }
+                { "username": mockKielbasaSausage.username, "firstName": 'new-first-name', "lastName": 'new-last-name', "email": 'new-email@food.com' }
             ];
             fixture.detectChanges();
 
@@ -300,7 +296,7 @@ describe('PeopleCloudComponent', () => {
         beforeEach(() => {
             component.mode = 'single';
             component.preSelectUsers = mockPreselectedFoodUsers;
-            component.ngOnChanges({ preSelectUsers: changes });
+            component.ngOnChanges({ "preSelectUsers": changes });
 
             fixture.detectChanges();
             element = fixture.nativeElement;
@@ -324,7 +320,7 @@ describe('PeopleCloudComponent', () => {
             const changes = new SimpleChange(null, mockPreselectedFoodUsers, false);
 
             component.preSelectUsers = mockPreselectedFoodUsers;
-            component.ngOnChanges({ preSelectUsers: changes });
+            component.ngOnChanges({ "preSelectUsers": changes });
 
             await fixture.whenStable();
             fixture.detectChanges();
@@ -341,12 +337,12 @@ describe('PeopleCloudComponent', () => {
 
         it('Should not show remove icon for pre-selected users if readonly property set to true', async () => {
             component.preSelectUsers = [
-                { ...mockKielbasaSausage, readonly: true },
-                { ...mockYorkshirePudding, readonly: true }
+                { ...mockKielbasaSausage, "readonly": true },
+                { ...mockYorkshirePudding, "readonly": true }
             ];
 
             const change = new SimpleChange(null, component.preSelectUsers, false);
-            component.ngOnChanges({ preSelectUsers: change });
+            component.ngOnChanges({ "preSelectUsers": change });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -367,7 +363,7 @@ describe('PeopleCloudComponent', () => {
             component.preSelectUsers = mockPreselectedFoodUsers;
 
             const change = new SimpleChange(null, component.preSelectUsers, false);
-            component.ngOnChanges({ preSelectUsers: change });
+            component.ngOnChanges({ "preSelectUsers": change });
 
             const removeUserSpy = spyOn(component.removeUser, 'emit');
 
@@ -400,7 +396,7 @@ describe('PeopleCloudComponent', () => {
                 component.mode = 'single';
                 component.readOnly = true;
                 component.preSelectUsers = mockPreselectedFoodUsers;
-                component.ngOnChanges({ preSelectUsers: change });
+                component.ngOnChanges({ "preSelectUsers": change });
 
                 fixture.detectChanges();
 
@@ -413,7 +409,7 @@ describe('PeopleCloudComponent', () => {
                 component.mode = 'multiple';
                 component.readOnly = true;
                 component.preSelectUsers = mockPreselectedFoodUsers;
-                component.ngOnChanges({ preSelectUsers: change });
+                component.ngOnChanges({ "preSelectUsers": change });
 
                 fixture.detectChanges();
 
@@ -435,7 +431,7 @@ describe('PeopleCloudComponent', () => {
         it('should check validation only for the first user and emit warning when user is invalid - single mode', async () => {
             component.mode = 'single';
             component.ngOnChanges({
-                preSelectUsers: new SimpleChange(null, [mockPreselectedFoodUsers[0], mockPreselectedFoodUsers[1]], false)
+                "preSelectUsers": new SimpleChange(null, [mockPreselectedFoodUsers[0], mockPreselectedFoodUsers[1]], false)
             });
 
             fixture.detectChanges();
@@ -447,7 +443,7 @@ describe('PeopleCloudComponent', () => {
         it('should check validation for all the users and emit warning - multiple mode', async () => {
             component.mode = 'multiple';
             component.ngOnChanges({
-                preSelectUsers: new SimpleChange(null, [mockPreselectedFoodUsers[0], mockPreselectedFoodUsers[1]], false)
+                "preSelectUsers": new SimpleChange(null, [mockPreselectedFoodUsers[0], mockPreselectedFoodUsers[1]], false)
             });
 
             fixture.detectChanges();
@@ -461,7 +457,7 @@ describe('PeopleCloudComponent', () => {
             component.mode = 'multiple';
             component.validate = false;
             component.ngOnChanges({
-                preSelectUsers: new SimpleChange(null, [mockPreselectedFoodUsers[0], mockPreselectedFoodUsers[1]], false)
+                "preSelectUsers": new SimpleChange(null, [mockPreselectedFoodUsers[0], mockPreselectedFoodUsers[1]], false)
             });
 
             fixture.detectChanges();

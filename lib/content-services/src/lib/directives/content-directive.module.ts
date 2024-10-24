@@ -43,7 +43,7 @@ export const CONTENT_DIRECTIVES = [
 
 /** @deprecated import CONTENT_DIRECTIVES or standalone directives instead */
 @NgModule({
-    imports: [...CONTENT_DIRECTIVES],
-    exports: [...CONTENT_DIRECTIVES]
+    "imports": [...CONTENT_DIRECTIVES],
+    "exports": [...CONTENT_DIRECTIVES]
 })
 export class ContentDirectiveModule {}

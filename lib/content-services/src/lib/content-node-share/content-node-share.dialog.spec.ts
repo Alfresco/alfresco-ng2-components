@@ -34,7 +34,7 @@ describe('ShareDialogComponent', () => {
     let loader: HarnessLoader;
     let node: NodeEntry;
     const notificationServiceMock = {
-        openSnackMessage: jasmine.createSpy('openSnackMessage')
+        "openSnackMessage": jasmine.createSpy('openSnackMessage')
     };
     let sharedLinksApiService: SharedLinksApiService;
     let renditionService: RenditionService;
@@ -55,16 +55,16 @@ describe('ShareDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule, ShareDialogComponent],
-            providers: [
-                { provide: NotificationService, useValue: notificationServiceMock },
+            "imports": [ContentTestingModule, MatDialogModule, ShareDialogComponent],
+            "providers": [
+                { "provide": NotificationService, "useValue": notificationServiceMock },
                 {
-                    provide: MatDialogRef,
-                    useValue: {
-                        close: () => {}
+                    "provide": MatDialogRef,
+                    "useValue": {
+                        "close": () => {}
                     }
                 },
-                { provide: MAT_DIALOG_DATA, useValue: {} }
+                { "provide": MAT_DIALOG_DATA, "useValue": {} }
             ]
         });
         fixture = TestBed.createComponent(ShareDialogComponent);
@@ -75,18 +75,18 @@ describe('ShareDialogComponent', () => {
         nodesApiService = TestBed.inject(NodesApiService);
 
         node = {
-            entry: {
-                id: 'nodeId',
-                name: 'node1',
-                nodeType: 'cm:content',
-                allowableOperations: ['update'],
-                isFile: true,
-                isFolder: false,
-                modifiedAt: null,
-                modifiedByUser: null,
-                createdAt: null,
-                createdByUser: null,
-                properties: {}
+            "entry": {
+                "id": 'nodeId',
+                "name": 'node1',
+                "nodeType": 'cm:content',
+                "allowableOperations": ['update'],
+                "isFile": true,
+                "isFolder": false,
+                "modifiedAt": null,
+                "modifiedByUser": null,
+                "createdAt": null,
+                "createdByUser": null,
+                "properties": {}
             }
         };
 
@@ -129,14 +129,14 @@ describe('ShareDialogComponent', () => {
     it(`should toggle share action when property 'sharedId' does not exists`, async () => {
         spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(
             of({
-                entry: { id: 'sharedId', sharedId: 'sharedId' }
+                "entry": { "id": 'sharedId', "sharedId": 'sharedId' }
             })
         );
-        spyOn(renditionService, 'getNodeRendition').and.returnValue(Promise.resolve({ url: '', mimeType: '' }));
+        spyOn(renditionService, 'getNodeRendition').and.returnValue(Promise.resolve({ "url": '', "mimeType": '' }));
 
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
@@ -145,23 +145,23 @@ describe('ShareDialogComponent', () => {
         expect(renditionService.getNodeRendition).toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
 
-        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: shareToggleId }));
+        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": shareToggleId }));
         expect(await toggle.isChecked()).toBe(true);
     });
 
     it(`should not toggle share action when file has 'sharedId' property`, async () => {
         spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(
             of({
-                entry: { id: 'sharedId', sharedId: 'sharedId' }
+                "entry": { "id": 'sharedId', "sharedId": 'sharedId' }
             })
         );
-        spyOn(renditionService, 'getNodeRendition').and.returnValue(Promise.resolve({ url: '', mimeType: '' }));
+        spyOn(renditionService, 'getNodeRendition').and.returnValue(Promise.resolve({ "url": '', "mimeType": '' }));
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
@@ -172,25 +172,25 @@ describe('ShareDialogComponent', () => {
         expect(sharedLinksApiService.createSharedLinks).not.toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
 
-        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: shareToggleId }));
+        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": shareToggleId }));
         expect(await toggle.isChecked()).toBe(true);
     });
 
     it('should open a confirmation dialog when unshare button is triggered', async () => {
         const dialog = fixture.debugElement.injector.get(MatDialog);
-        const openSpy = spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
+        const openSpy = spyOn(dialog, 'open').and.returnValue({ "beforeClosed": () => of(false) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
 
-        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: shareToggleId }));
+        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": shareToggleId }));
         await toggle.toggle();
 
         expect(openSpy).toHaveBeenCalled();
@@ -198,19 +198,19 @@ describe('ShareDialogComponent', () => {
 
     it('should unshare file when confirmation dialog returns true', async () => {
         const dialog = fixture.debugElement.injector.get(MatDialog);
-        spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(true) } as any);
+        spyOn(dialog, 'open').and.returnValue({ "beforeClosed": () => of(true) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: shareToggleId }));
+        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": shareToggleId }));
         await toggle.toggle();
 
         expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
@@ -218,18 +218,18 @@ describe('ShareDialogComponent', () => {
 
     it('should not unshare file when confirmation dialog returns false', async () => {
         const dialog = fixture.debugElement.injector.get(MatDialog);
-        spyOn(dialog, 'open').and.returnValue({ beforeClosed: () => of(false) } as any);
+        spyOn(dialog, 'open').and.returnValue({ "beforeClosed": () => of(false) } as any);
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
 
-        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: shareToggleId }));
+        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": shareToggleId }));
         await toggle.toggle();
 
         expect(sharedLinksApiService.deleteSharedLink).not.toHaveBeenCalled();
@@ -241,12 +241,12 @@ describe('ShareDialogComponent', () => {
 
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
 
-        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: shareToggleId }));
+        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": shareToggleId }));
         expect(await toggle.isChecked()).toBe(true);
     });
 
@@ -259,14 +259,14 @@ describe('ShareDialogComponent', () => {
         node.entry.allowableOperations = ['update'];
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
         component.form.controls['time'].setValue(new Date());
         fixture.detectChanges();
 
-        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: expireToggle }));
+        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": expireToggle }));
         await toggle.toggle();
 
         expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
@@ -279,13 +279,13 @@ describe('ShareDialogComponent', () => {
 
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: `[data-automation-id="adf-expire-toggle"]` }));
+        const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": `[data-automation-id="adf-expire-toggle"]` }));
         expect(await toggle.isDisabled()).toBe(true);
 
         expect(fixture.nativeElement.querySelector('[data-automation-id="adf-slide-toggle-checked"]').style.display).toEqual('none');
@@ -294,7 +294,7 @@ describe('ShareDialogComponent', () => {
     it('should not display floating label for expiration field', () => {
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
@@ -306,7 +306,7 @@ describe('ShareDialogComponent', () => {
     it('should not display floating label for public link field', () => {
         component.data = {
             node,
-            baseShareUrl: 'some-url/'
+            "baseShareUrl": 'some-url/'
         };
 
         fixture.detectChanges();
@@ -324,7 +324,7 @@ describe('ShareDialogComponent', () => {
             node.entry.allowableOperations = ['update'];
             component.data = {
                 node,
-                baseShareUrl: 'some-url/'
+                "baseShareUrl": 'some-url/'
             };
         });
 
@@ -332,7 +332,7 @@ describe('ShareDialogComponent', () => {
             const date = new Date('2525-01-01');
             fixture.detectChanges();
 
-            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: expireToggle }));
+            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": expireToggle }));
             await toggle.toggle();
 
             fixture.componentInstance.time.setValue(date);
@@ -343,15 +343,15 @@ describe('ShareDialogComponent', () => {
 
             expect(sharedLinksApiService.deleteSharedLink).toHaveBeenCalled();
             expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalledWith('nodeId', {
-                nodeId: 'nodeId',
-                expiresAt: expiryDate
+                "nodeId": 'nodeId',
+                "expiresAt": expiryDate
             });
         });
 
         it('should not update node when provided date is less than minDate', async () => {
             fixture.detectChanges();
 
-            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: expireToggle }));
+            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": expireToggle }));
             await toggle.toggle();
 
             fillInDatepickerInput('01.01.2010');
@@ -364,7 +364,7 @@ describe('ShareDialogComponent', () => {
         it('should not accept alphabets in the datepicker input', async () => {
             fixture.detectChanges();
 
-            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: expireToggle }));
+            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": expireToggle }));
             await toggle.toggle();
 
             fillInDatepickerInput('test');
@@ -376,7 +376,7 @@ describe('ShareDialogComponent', () => {
         it('should show an error if provided date is invalid', async () => {
             fixture.detectChanges();
 
-            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: expireToggle }));
+            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": expireToggle }));
             await toggle.toggle();
 
             fillInDatepickerInput('incorrect');
@@ -393,7 +393,7 @@ describe('ShareDialogComponent', () => {
         it('should not show an error when provided date is valid', async () => {
             fixture.detectChanges();
 
-            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ selector: expireToggle }));
+            const toggle = await loader.getHarness(MatSlideToggleHarness.with({ "selector": expireToggle }));
             await toggle.toggle();
 
             fillInDatepickerInput('12.12.2525');

@@ -22,7 +22,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class SearchService {
     private apiService = inject(AlfrescoApiService);
@@ -31,13 +31,13 @@ export class SearchService {
     dataLoaded = new Subject<ResultSetPaging>();
 
     private _queriesApi: QueriesApi;
-    get queriesApi(): QueriesApi {
+    get queriesApi (): QueriesApi {
         this._queriesApi = this._queriesApi ?? new QueriesApi(this.apiService.getInstance());
         return this._queriesApi;
     }
 
     private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
+    get searchApi (): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
@@ -48,7 +48,7 @@ export class SearchService {
      * @param options Options for delivery of the search results
      * @returns List of nodes resulting from the search
      */
-    getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
+    getNodeQueryResults (term: string, options?: SearchOptions): Observable<NodePaging> {
         const promise = this.queriesApi.findNodes(term, options);
 
         promise.then((nodePaging) => {
@@ -65,7 +65,7 @@ export class SearchService {
      * @param skipCount Number of higher-ranked items to skip over in the list
      * @returns List of search results
      */
-    search(searchTerm: string, maxResults: number, skipCount: number): Observable<ResultSetPaging> {
+    search (searchTerm: string, maxResults: number, skipCount: number): Observable<ResultSetPaging> {
         const searchQuery = this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount);
         const promise = this.searchApi.search(searchQuery);
 
@@ -81,7 +81,7 @@ export class SearchService {
      * @param queryBody Object containing the search parameters
      * @returns List of search results
      */
-    searchByQueryBody(queryBody: SearchRequest): Observable<ResultSetPaging> {
+    searchByQueryBody (queryBody: SearchRequest): Observable<ResultSetPaging> {
         const promise = this.searchApi.search(queryBody);
 
         promise.then((nodePaging) => {

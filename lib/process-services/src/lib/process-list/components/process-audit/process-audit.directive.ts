@@ -26,10 +26,10 @@ const PDF_FORMAT: string = 'pdf';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: 'button[adf-process-audit]',
-    standalone: true,
-    host: {
-        role: 'button',
+    "selector": 'button[adf-process-audit]',
+    "standalone": true,
+    "host": {
+        "role": 'button',
         '(click)': 'onClickAudit()'
     }
 })
@@ -58,53 +58,53 @@ export class ProcessAuditDirective implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private downloadService: DownloadService, private processListService: ProcessService) {}
+    constructor (private downloadService: DownloadService, private processListService: ProcessService) {}
 
-    ngOnChanges(): void {
+    ngOnChanges (): void {
         if (!this.isValidType()) {
             this.setDefaultFormatType();
         }
     }
 
-    isValidType() {
+    isValidType () {
         return this.format && (this.isJsonFormat() || this.isPdfFormat());
     }
 
-    setDefaultFormatType(): void {
+    setDefaultFormatType (): void {
         this.format = PDF_FORMAT;
     }
 
     /**
      * fetch the audit information in the requested format
      */
-    fetchAuditInfo(): void {
+    fetchAuditInfo (): void {
         if (this.isPdfFormat()) {
             this.processListService.fetchProcessAuditPdfById(this.processId).subscribe(
                 (blob: Blob) => {
                     if (this.download) {
                         this.downloadService.downloadBlob(blob, this.fileName + '.pdf');
                     }
-                    this.clicked.emit({ format: this.format, value: blob, fileName: this.fileName });
+                    this.clicked.emit({ "format": this.format, "value": blob, "fileName": this.fileName });
                 },
                 (err) => this.error.emit(err)
             );
         } else {
             this.processListService.fetchProcessAuditJsonById(this.processId).subscribe(
-                (res) => this.clicked.emit({ format: this.format, value: res, fileName: this.fileName }),
+                (res) => this.clicked.emit({ "format": this.format, "value": res, "fileName": this.fileName }),
                 (err) => this.error.emit(err)
             );
         }
     }
 
-    onClickAudit() {
+    onClickAudit () {
         this.fetchAuditInfo();
     }
 
-    isJsonFormat() {
+    isJsonFormat () {
         return this.format === JSON_FORMAT;
     }
 
-    isPdfFormat() {
+    isPdfFormat () {
         return this.format === PDF_FORMAT;
     }
 }

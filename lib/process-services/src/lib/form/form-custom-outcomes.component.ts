@@ -18,8 +18,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'adf-form-custom-outcomes',
-    standalone: true,
-    template: '<ng-content></ng-content>'
+    "selector": 'adf-form-custom-outcomes',
+    "standalone": true,
+    "template": '<ng-content></ng-content>'
 })
 export class FormCustomOutcomesComponent {}

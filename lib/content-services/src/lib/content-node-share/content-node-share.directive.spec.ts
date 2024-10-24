@@ -24,10 +24,10 @@ import { CoreModule } from '@alfresco/adf-core';
 import { NodeSharedDirective } from '@alfresco/adf-content-services';
 
 @Component({
-    selector: 'adf-node-share-test-component',
-    standalone: true,
-    imports: [NodeSharedDirective],
-    template: `
+    "selector": 'adf-node-share-test-component',
+    "standalone": true,
+    "imports": [NodeSharedDirective],
+    "template": `
         <button
             [disabled]="!shareRef.isFile"
             #shareRef="adfShare"
@@ -40,7 +40,7 @@ import { NodeSharedDirective } from '@alfresco/adf-content-services';
 class NodeShareTestComponent {
     baseShareUrl = 'some-url/';
     documentList = {
-        selection: []
+        "selection": []
     };
 }
 
@@ -53,7 +53,7 @@ describe('NodeSharedDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot(), ContentTestingModule, NodeShareTestComponent]
+            "imports": [CoreModule.forRoot(), ContentTestingModule, NodeShareTestComponent]
         });
         fixture = TestBed.createComponent(NodeShareTestComponent);
         document = TestBed.inject(DOCUMENT);
@@ -71,9 +71,9 @@ describe('NodeSharedDirective', () => {
     beforeEach(() => {
         shareButtonElement = fixture.debugElement.query(By.css('button')).nativeElement;
         selection = {
-            entry: {
-                isFile: true,
-                properties: {}
+            "entry": {
+                "isFile": true,
+                "properties": {}
             }
         };
     });

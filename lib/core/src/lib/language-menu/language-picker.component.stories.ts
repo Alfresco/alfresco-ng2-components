@@ -24,35 +24,35 @@ import { LanguageServiceMock } from '../mock/language.service.mock';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: LanguagePickerComponent,
-    title: 'Core/Language Menu/Language Picker',
-    decorators: [
+    "component": LanguagePickerComponent,
+    "title": 'Core/Language Menu/Language Picker',
+    "decorators": [
         moduleMetadata({
-            imports: [...LANGUAGE_MENU_DIRECTIVES],
-            providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
+            "imports": [...LANGUAGE_MENU_DIRECTIVES],
+            "providers": [{ "provide": LanguageService, "useClass": LanguageServiceMock }]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    argTypes: {
-        changedLanguage: {
-            action: 'changedLanguage',
-            description: 'Emitted when the user clicks on one of the language buttons.',
-            table: {
-                category: 'Actions',
-                type: { summary: 'EventEmitter <LanguageItem>' }
+    "argTypes": {
+        "changedLanguage": {
+            "action": 'changedLanguage',
+            "description": 'Emitted when the user clicks on one of the language buttons.',
+            "table": {
+                "category": 'Actions',
+                "type": { "summary": 'EventEmitter <LanguageItem>' }
             }
         }
     }
 } as Meta<LanguagePickerComponent>;
 
 const languagePickerComponentTemplate: StoryFn<LanguagePickerComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const Primary = languagePickerComponentTemplate.bind({});
-Primary.parameters = { layout: 'centered' };
+Primary.parameters = { "layout": 'centered' };
 
 export const AsNestedMenu = languagePickerComponentTemplate.bind({});
 AsNestedMenu.decorators = [
@@ -67,4 +67,4 @@ AsNestedMenu.decorators = [
     `
     )
 ];
-AsNestedMenu.parameters = { layout: 'centered' };
+AsNestedMenu.parameters = { "layout": 'centered' };

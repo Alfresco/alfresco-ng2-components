@@ -24,7 +24,7 @@ export class WidgetVisibilityModel {
     nextCondition?: WidgetVisibilityModel;
     nextConditionOperator: string;
 
-    constructor(private json?: any) {
+    constructor (private json?: any) {
         if (json) {
             this.operator = json.operator;
             this.nextCondition = new WidgetVisibilityModel(json.nextCondition);
@@ -38,7 +38,7 @@ export class WidgetVisibilityModel {
         }
     }
 
-    get leftType(): string | null {
+    get leftType (): string | null {
         if (this.leftFormFieldId) {
             return WidgetTypeEnum.field;
         } else if (this.leftRestResponseId) {
@@ -49,11 +49,11 @@ export class WidgetVisibilityModel {
         return null;
     }
 
-    set leftType(leftType: string) {
+    set leftType (leftType: string) {
         this.json.leftType = leftType;
     }
 
-    get leftValue(): any {
+    get leftValue (): any {
         if (this.json.leftValue?.toString()) {
             return this.json.leftValue;
         } else if (this.leftFormFieldId) {
@@ -64,11 +64,11 @@ export class WidgetVisibilityModel {
         return null;
     }
 
-    set leftValue(leftValue: any) {
+    set leftValue (leftValue: any) {
         this.json.leftValue = leftValue;
     }
 
-    get rightType(): string | null {
+    get rightType (): string | null {
         if (this.json.rightType) {
             return this.json.rightType;
         } else if (this.json.rightValue) {
@@ -82,11 +82,11 @@ export class WidgetVisibilityModel {
         return null;
     }
 
-    set rightType(rightType: string | null) {
+    set rightType (rightType: string | null) {
         this.json.rightType = rightType;
     }
 
-    get rightValue(): any {
+    get rightValue (): any {
         if (this.json.rightValue?.toString()) {
             return this.json.rightValue;
         } else if (this.rightFormFieldId) {
@@ -97,7 +97,7 @@ export class WidgetVisibilityModel {
         return null;
     }
 
-    set rightValue(rightValue: any) {
+    set rightValue (rightValue: any) {
         this.json.rightValue = rightValue;
     }
 }

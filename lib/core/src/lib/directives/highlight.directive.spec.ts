@@ -23,10 +23,10 @@ import { HighlightDirective } from './highlight.directive';
 
 /* spellchecker: disable */
 @Component({
-    selector: 'adf-test-component',
-    standalone: true,
-    imports: [HighlightDirective],
-    template: ` <div id="outerDiv1" adf-highlight adf-highlight-selector=".highlightable" adf-highlight-class="highlight-for-free-willy">
+    "selector": 'adf-test-component',
+    "standalone": true,
+    "imports": [HighlightDirective],
+    "template": ` <div id="outerDiv1" adf-highlight adf-highlight-selector=".highlightable" adf-highlight-class="highlight-for-free-willy">
             <div id="innerDiv11" class="highlightable">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
             <div id="innerDiv12">Lorem ipsum salana-eyong-aysis dolor sit amet</div>
             <div id="innerDiv13" class="highlightable">consectetur adipiscing elit</div>
@@ -46,7 +46,7 @@ describe('HighlightDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TestComponent]
+            "imports": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -89,7 +89,7 @@ describe('HighlightDirective', () => {
 
     it('should NOT reinsert the same text to the innerText if there was no change at all (search string is not found)', () => {
         const highlighter = TestBed.inject(HighlightTransformService);
-        spyOn(highlighter, 'highlight').and.returnValue({ changed: false, text: 'Modified text' });
+        spyOn(highlighter, 'highlight').and.returnValue({ "changed": false, "text": 'Modified text' });
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
 

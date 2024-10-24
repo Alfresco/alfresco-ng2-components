@@ -23,77 +23,77 @@ import { MatButtonModule } from '@angular/material/button';
 import { importProvidersFrom } from '@angular/core';
 
 const jsonData = {
-    maxValue: 50,
-    minValue: 10,
-    values: [10, 15, 14, 27, 35, 23, 49, 38],
-    measurementId: 'm_10001',
-    researcherId: 's_10002'
+    "maxValue": 50,
+    "minValue": 10,
+    "values": [10, 15, 14, 27, 35, 23, 49, 38],
+    "measurementId": 'm_10001',
+    "researcherId": 's_10002'
 };
 
 export default {
-    component: EditJsonDialogStorybookComponent,
-    title: 'Core/Dialog/Edit JSON Dialog',
-    decorators: [
+    "component": EditJsonDialogStorybookComponent,
+    "title": 'Core/Dialog/Edit JSON Dialog',
+    "decorators": [
         moduleMetadata({
-            imports: [EditJsonDialogModule, MatButtonModule]
+            "imports": [EditJsonDialogModule, MatButtonModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    argTypes: {
-        value: {
-            description: 'Displayed text',
-            control: {
-                type: 'object'
+    "argTypes": {
+        "value": {
+            "description": 'Displayed text',
+            "control": {
+                "type": 'object'
             },
-            table: {
-                category: 'Provider settings',
-                type: {
-                    summary: 'object'
+            "table": {
+                "category": 'Provider settings',
+                "type": {
+                    "summary": 'object'
                 }
             }
         },
-        editable: {
-            description: 'Defines if component is editable',
-            control: {
-                type: 'boolean'
+        "editable": {
+            "description": 'Defines if component is editable',
+            "control": {
+                "type": 'boolean'
             },
-            table: {
-                category: 'Provider settings',
-                type: {
-                    summary: 'boolean'
+            "table": {
+                "category": 'Provider settings',
+                "type": {
+                    "summary": 'boolean'
                 },
-                defaultValue: {
-                    summary: 'false'
+                "defaultValue": {
+                    "summary": 'false'
                 }
             }
         },
-        title: {
-            control: {
-                type: 'text'
+        "title": {
+            "control": {
+                "type": 'text'
             },
-            table: {
-                category: 'Provider settings',
-                type: {
-                    summary: 'string'
+            "table": {
+                "category": 'Provider settings',
+                "type": {
+                    "summary": 'string'
                 },
-                defaultValue: {
-                    summary: 'JSON'
+                "defaultValue": {
+                    "summary": 'JSON'
                 }
             }
         }
     },
-    args: {
-        value: jsonData as unknown as string,
-        editable: false,
-        title: 'JSON Dialog Title'
+    "args": {
+        "value": jsonData as unknown as string,
+        "editable": false,
+        "title": 'JSON Dialog Title'
     }
 } as Meta<EditJsonDialogStorybookComponent>;
 
 const template: StoryFn<EditJsonDialogStorybookComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const EditJSONDialog = template.bind({});
-EditJSONDialog.parameters = { layout: 'centered' };
+EditJSONDialog.parameters = { "layout": 'centered' };

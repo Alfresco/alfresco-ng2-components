@@ -35,14 +35,14 @@ describe('SearchFacetChipComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchFacetChipComponent);
         component = fixture.componentInstance;
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         spyOn(queryBuilder, 'update').and.stub();
 
-        component.field = { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() };
+        component.field = { "type": 'field', "label": 'f2', "field": 'f2', "buckets": new SearchFilterList() };
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
@@ -51,7 +51,7 @@ describe('SearchFacetChipComponent', () => {
         const menu = await loader.getHarness(MatMenuHarness);
         await menu.open();
 
-        const applyButton = await menu.getHarness(MatButtonHarness.with({ selector: '#apply-filter-button' }));
+        const applyButton = await menu.getHarness(MatButtonHarness.with({ "selector": '#apply-filter-button' }));
         await applyButton.click();
 
         expect(queryBuilder.update).toHaveBeenCalled();
@@ -61,14 +61,14 @@ describe('SearchFacetChipComponent', () => {
         const menu = await loader.getHarness(MatMenuHarness);
         await menu.open();
 
-        const cancelButton = await menu.getHarness(MatButtonHarness.with({ selector: '#cancel-filter-button' }));
+        const cancelButton = await menu.getHarness(MatButtonHarness.with({ "selector": '#cancel-filter-button' }));
         await cancelButton.click();
 
         expect(queryBuilder.update).toHaveBeenCalled();
     });
 
     it('should display arrow down icon and not disable the chip when items are loaded', async () => {
-        component.field.buckets.items = [{ count: 1, label: 'test', filterQuery: '' }];
+        component.field.buckets.items = [{ "count": 1, "label": 'test', "filterQuery": '' }];
 
         const menu = await loader.getHarness(MatMenuHarness);
         expect(await menu.isDisabled()).toBe(false);
@@ -78,7 +78,7 @@ describe('SearchFacetChipComponent', () => {
     });
 
     it('should display arrow up icon when menu is opened', async () => {
-        component.field.buckets.items = [{ count: 1, label: 'test', filterQuery: '' }];
+        component.field.buckets.items = [{ "count": 1, "label": 'test', "filterQuery": '' }];
 
         const menu = await loader.getHarness(MatMenuHarness);
         await menu.open();

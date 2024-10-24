@@ -22,26 +22,26 @@ import { map, switchMap } from 'rxjs/operators';
 import { AlfrescoApiService } from '../../services';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AgentService {
     private _agentsApi: AgentsApi;
     private agents = new BehaviorSubject<Agent[]>([]);
 
-    get agentsApi(): AgentsApi {
+    get agentsApi (): AgentsApi {
         this._agentsApi = this._agentsApi ?? new AgentsApi(this.apiService.getInstance());
         return this._agentsApi;
     }
 
     agents$ = this.agents.asObservable();
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Gets all agents from cache. If cache is empty, fetches agents from backend.
      * @returns Agent[] list containing agents.
      */
-    getAgents(): Observable<Agent[]> {
+    getAgents (): Observable<Agent[]> {
         return this.agents$.pipe(
             switchMap((agentsList) => {
                 if (agentsList.length) {

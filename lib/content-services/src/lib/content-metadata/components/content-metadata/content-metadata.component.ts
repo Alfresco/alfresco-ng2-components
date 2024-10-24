@@ -59,9 +59,9 @@ enum DefaultPanels {
 }
 
 @Component({
-    selector: 'adf-content-metadata',
-    standalone: true,
-    imports: [
+    "selector": 'adf-content-metadata',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatExpansionModule,
         ContentMetadataHeaderComponent,
@@ -75,10 +75,10 @@ enum DefaultPanels {
         TagsCreatorComponent,
         CardViewComponent
     ],
-    templateUrl: './content-metadata.component.html',
-    styleUrls: ['./content-metadata.component.scss'],
-    host: { class: 'adf-content-metadata' },
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './content-metadata.component.html',
+    "styleUrls": ['./content-metadata.component.scss'],
+    "host": { "class": 'adf-content-metadata' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     protected onDestroy$ = new Subject<boolean>();
@@ -163,11 +163,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     editing = false;
     editedPanelTitle = '';
     currentPanel: ContentMetadataPanel = {
-        expanded: false,
-        panelTitle: ''
+        "expanded": false,
+        "panelTitle": ''
     };
 
-    constructor(
+    constructor (
         private contentMetadataService: ContentMetadataService,
         private cardViewContentUpdateService: CardViewContentUpdateService,
         private nodesApiService: NodesApiService,
@@ -183,7 +183,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips');
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.cardViewContentUpdateService.itemUpdated$
             .pipe(debounceTime(500), takeUntil(this.onDestroy$))
             .subscribe((updatedNode: UpdateNotification) => {
@@ -204,36 +204,36 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.currentPanel.expanded = true;
     }
 
-    private verifyAllowableOperations() {
+    private verifyAllowableOperations () {
         if (!this.node?.allowableOperations || !this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE)) {
             this.readOnly = true;
         }
     }
 
-    get assignedTags(): string[] {
+    get assignedTags (): string[] {
         return this._assignedTags;
     }
 
-    get tags(): string[] {
+    get tags (): string[] {
         return this._tags;
     }
 
-    get tagsCreatorMode(): TagsCreatorMode {
+    get tagsCreatorMode (): TagsCreatorMode {
         return this._tagsCreatorMode;
     }
 
-    get saving(): boolean {
+    get saving (): boolean {
         return this._saving;
     }
 
-    isPanelEditing(panelTitle: string): boolean {
+    isPanelEditing (panelTitle: string): boolean {
         return (
             this.editing &&
             ((this.currentPanel.panelTitle === panelTitle && this.editedPanelTitle === panelTitle) || this.editedPanelTitle === panelTitle)
         );
     }
 
-    protected handleUpdateError(error: Error) {
+    protected handleUpdateError (error: Error) {
         let statusCode = 0;
 
         try {
@@ -254,7 +254,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes.node && !changes.node.firstChange) {
             this.loadProperties(changes.node.currentValue);
         }
@@ -274,12 +274,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    updateChanges(updatedNodeChanges) {
+    updateChanges (updatedNodeChanges) {
         Object.keys(updatedNodeChanges).map((propertyGroup: string) => {
             if (typeof updatedNodeChanges[propertyGroup] === 'object') {
                 this.changedProperties[propertyGroup] = {
@@ -292,7 +292,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    saveChanges(event?: MouseEvent) {
+    saveChanges (event?: MouseEvent) {
         event?.stopPropagation();
         this.resetEditing();
         this._saving = true;
@@ -311,7 +311,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * until button for saving data is clicked. Calling that function causes that save button is enabled.
      * @param tags array of tags to register, they are not saved yet until we click save button.
      */
-    storeTagsToAssign(tags: string[]) {
+    storeTagsToAssign (tags: string[]) {
         this._tags = tags;
         this.hasMetadataChanged = true;
     }
@@ -321,25 +321,25 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
      * until button for saving data is clicked. Calling that function causes that save button is enabled.
      * @param categoriesToAssign array of categories to store.
      */
-    storeCategoriesToAssign(categoriesToAssign: Category[]) {
+    storeCategoriesToAssign (categoriesToAssign: Category[]) {
         this.categories = categoriesToAssign;
         this.hasMetadataChanged = true;
     }
 
-    revertChanges() {
+    revertChanges () {
         this.changedProperties = {};
         this.hasMetadataChanged = false;
     }
 
-    get showEmptyTagMessage(): boolean {
+    get showEmptyTagMessage (): boolean {
         return this.tags?.length === 0 && this.currentPanel.panelTitle === 'Tags' && !this.editing;
     }
 
-    get showEmptyCategoryMessage(): boolean {
+    get showEmptyCategoryMessage (): boolean {
         return this.categories?.length === 0 && this.currentPanel.panelTitle === 'Categories' && !this.editing;
     }
 
-    toggleGroupEditing(panelTitle: string, event?: MouseEvent) {
+    toggleGroupEditing (panelTitle: string, event?: MouseEvent) {
         event?.stopPropagation();
         if (this.editing && this.hasMetadataChanged) {
             this.notificationService.showError('METADATA.BASIC.SAVE_OR_DISCARD_CHANGES');
@@ -350,7 +350,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.expandPanel(panelTitle);
     }
 
-    cancelGroupEditing(panelTitle: string, event?: MouseEvent) {
+    cancelGroupEditing (panelTitle: string, event?: MouseEvent) {
         event?.stopPropagation();
         this.resetEditing();
         this.revertChanges();
@@ -361,38 +361,38 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         this.loadProperties(this.node, loadBasicProps, loadGroupedProps, loadTags, loadCategories);
     }
 
-    expandPanel(panelTitle: string) {
+    expandPanel (panelTitle: string) {
         this.currentPanel.panelTitle = panelTitle;
         this.currentPanel.expanded = true;
     }
 
-    closePanel(panelTitle: string) {
+    closePanel (panelTitle: string) {
         if (this.currentPanel.panelTitle === panelTitle) {
             this.currentPanel.expanded = false;
         }
     }
 
-    resetEditing() {
+    resetEditing () {
         this.editing = false;
         this.editedPanelTitle = '';
     }
 
-    showGroup(group: CardViewGroup): boolean {
+    showGroup (group: CardViewGroup): boolean {
         const properties = group.properties.filter((property) => !this.isEmpty(property.displayValue));
 
         return properties.length > 0;
     }
 
-    keyDown(event: KeyboardEvent) {
+    keyDown (event: KeyboardEvent) {
         if (event.keyCode === 37 || event.keyCode === 39) {
             // ArrowLeft && ArrowRight
             event.stopPropagation();
         }
     }
 
-    private updateNode() {
+    private updateNode () {
         forkJoin({
-            updatedNode: this.nodesApiService.updateNode(this.node.id, this.changedProperties),
+            "updatedNode": this.nodesApiService.updateNode(this.node.id, this.changedProperties),
             ...(this.displayTags ? this.saveTags() : {}),
             ...(this.displayCategories ? this.saveCategories() : {})
         })
@@ -427,17 +427,17 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             });
     }
 
-    private hasContentTypeChanged(changedProperties): boolean {
+    private hasContentTypeChanged (changedProperties): boolean {
         return !!changedProperties?.nodeType;
     }
 
-    private updateUndefinedNodeProperties(node: Node): void {
+    private updateUndefinedNodeProperties (node: Node): void {
         if (!node.properties) {
             node.properties = {};
         }
     }
 
-    private loadProperties(node: Node, loadBasicProps = true, loadGroupedProps = true, loadTags = true, loadCategories = true) {
+    private loadProperties (node: Node, loadBasicProps = true, loadGroupedProps = true, loadTags = true, loadCategories = true) {
         if (node) {
             if (loadBasicProps) {
                 this.basicProperties$ = this.getProperties(node);
@@ -462,7 +462,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private getProperties(node: Node) {
+    private getProperties (node: Node) {
         const properties$ = this.contentMetadataService.getBasicProperties(node);
         const contentTypeProperty$ = this.contentMetadataService.getContentTypeProperty(node);
         return zip(properties$, contentTypeProperty$).pipe(
@@ -475,11 +475,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         );
     }
 
-    private isEmpty(value: any): boolean {
+    private isEmpty (value: any): boolean {
         return value === undefined || value === null || value === '';
     }
 
-    private loadCategoriesForNode(nodeId: string) {
+    private loadCategoriesForNode (nodeId: string) {
         this.assignedCategories = [];
         this.categoryService.getCategoryLinksForNode(nodeId).subscribe((categoryPaging) => {
             this.categories = categoryPaging.list.entries.map((categoryEntry) => {
@@ -491,7 +491,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    private saveCategories(): { [key: string]: Observable<CategoryPaging | CategoryEntry | void> } {
+    private saveCategories (): { [key: string]: Observable<CategoryPaging | CategoryEntry | void> } {
         const observables: { [key: string]: Observable<CategoryPaging | CategoryEntry | void> } = {};
         if (this.categories) {
             this.assignedCategories.forEach((assignedCategory) => {
@@ -511,7 +511,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return observables;
     }
 
-    private loadTagsForNode(id: string) {
+    private loadTagsForNode (id: string) {
         this.tagService.getTagsByNodeId(id).subscribe((tagPaging) => {
             this.assignedTagsEntries = tagPaging.list.entries;
             this._tags = tagPaging.list.entries.map((tagEntry) => tagEntry.entry.tag);
@@ -519,7 +519,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    private saveTags(): { [key: string]: Observable<TagPaging | TagEntry | void> } {
+    private saveTags (): { [key: string]: Observable<TagPaging | TagEntry | void> } {
         const observables: { [key: string]: Observable<TagPaging | TagEntry | void> } = {};
         if (this.tags) {
             this.assignedTagsEntries.forEach((tagEntry) => {

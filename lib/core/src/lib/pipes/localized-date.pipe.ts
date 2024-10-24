@@ -23,9 +23,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Pipe({
-    standalone: true,
-    name: 'adfLocalizedDate',
-    pure: false
+    "standalone": true,
+    "name": 'adfLocalizedDate',
+    "pure": false
 })
 export class LocalizedDatePipe implements PipeTransform, OnDestroy {
     static DEFAULT_LOCALE = 'en-US';
@@ -36,7 +36,7 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
+    constructor (public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
         if (this.userPreferenceService) {
             this.userPreferenceService
                 .select(UserPreferenceValues.Locale)
@@ -53,14 +53,14 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
         }
     }
 
-    transform(value: Date | string | number, format?: string, locale?: string): string {
+    transform (value: Date | string | number, format?: string, locale?: string): string {
         const actualFormat = format || this.defaultFormat;
         const actualLocale = locale || this.defaultLocale;
         const datePipe = new DatePipe(actualLocale);
         return datePipe.transform(value, actualFormat);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

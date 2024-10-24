@@ -20,23 +20,23 @@ import { PredictionsApi, PredictionPaging, ReviewStatus } from '@alfresco/js-api
 import { from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class PredictionService {
     private _predictionsApi: PredictionsApi;
 
-    get predictionsApi(): PredictionsApi {
+    get predictionsApi (): PredictionsApi {
         this._predictionsApi = this._predictionsApi ?? new PredictionsApi(this.apiService.getInstance());
         return this._predictionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Get predictions for a given node
      * @param nodeId The identifier of node.
      * @returns Observable<PredictionPaging>
      */
-    getPredictions(nodeId: string): Observable<PredictionPaging> {
+    getPredictions (nodeId: string): Observable<PredictionPaging> {
         return from(this.predictionsApi.getPredictions(nodeId));
     }
 
@@ -46,7 +46,7 @@ export class PredictionService {
      * @param reviewStatus Review status to apply.
      * @returns Observable<void>
      */
-    reviewPrediction(predictionId: string, reviewStatus: ReviewStatus): Observable<void> {
+    reviewPrediction (predictionId: string, reviewStatus: ReviewStatus): Observable<void> {
         return from(this.predictionsApi.reviewPrediction(predictionId, reviewStatus));
     }
 }

@@ -24,23 +24,23 @@ describe('SearchFilterCardComponent', () => {
     let fixture: ComponentFixture<SearchFilterCardComponent>;
 
     const mockCategory = {
-        id: 'test-id',
-        name: 'test-name',
-        enabled: true,
-        expanded: false,
-        component: {
-            selector: 'date-range',
-            settings: {
-                pattern: 'test-pattern',
-                field: 'test-field',
-                placeholder: 'test-placeholder'
+        "id": 'test-id',
+        "name": 'test-name',
+        "enabled": true,
+        "expanded": false,
+        "component": {
+            "selector": 'date-range',
+            "settings": {
+                "pattern": 'test-pattern',
+                "field": 'test-field',
+                "placeholder": 'test-placeholder'
             }
         }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchFilterCardComponent);
         component = fixture.componentInstance;

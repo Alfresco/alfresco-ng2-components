@@ -25,29 +25,29 @@ import { TagService } from '../../tag';
 import { CategoryService } from '../../category';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class DialogAspectListService {
-    constructor(
+    constructor (
         private dialog: MatDialog,
         private overlayContainer: OverlayContainer,
         private tagService: TagService,
         private categoryService: CategoryService
     ) {}
 
-    openAspectListDialog(nodeId?: string, selectorAutoFocusedOnClose?: string): Observable<string[]> {
+    openAspectListDialog (nodeId?: string, selectorAutoFocusedOnClose?: string): Observable<string[]> {
         const select = new Subject<string[]>();
         select.subscribe({
-            complete: this.close.bind(this)
+            "complete": this.close.bind(this)
         });
 
         const data: AspectListDialogComponentData = {
-            title: 'ADF-ASPECT-LIST.DIALOG.TITLE',
-            description: 'ADF-ASPECT-LIST.DIALOG.DESCRIPTION',
-            overTableMessage: 'ADF-ASPECT-LIST.DIALOG.OVER-TABLE-MESSAGE',
+            "title": 'ADF-ASPECT-LIST.DIALOG.TITLE',
+            "description": 'ADF-ASPECT-LIST.DIALOG.DESCRIPTION',
+            "overTableMessage": 'ADF-ASPECT-LIST.DIALOG.OVER-TABLE-MESSAGE',
             select,
             nodeId,
-            excludedAspects: [
+            "excludedAspects": [
                 ...(this.tagService.areTagsEnabled() ? [] : ['cm:taggable']),
                 ...(this.categoryService.areCategoriesEnabled() ? [] : ['cm:generalclassifiable'])
             ]
@@ -57,26 +57,26 @@ export class DialogAspectListService {
         return select;
     }
 
-    private openDialog(data: AspectListDialogComponentData, panelClass: string, width: string, selectorAutoFocusedOnClose?: string) {
+    private openDialog (data: AspectListDialogComponentData, panelClass: string, width: string, selectorAutoFocusedOnClose?: string) {
         this.dialog
             .open(AspectListDialogComponent, {
                 data,
                 panelClass,
                 width,
-                role: 'dialog',
-                disableClose: true
+                "role": 'dialog',
+                "disableClose": true
             })
             .afterClosed()
             .subscribe(() => this.focusOnClose(selectorAutoFocusedOnClose));
         this.overlayContainer.getContainerElement().setAttribute('role', 'main');
     }
 
-    close() {
+    close () {
         this.dialog.closeAll();
         this.overlayContainer.getContainerElement().setAttribute('role', 'region');
     }
 
-    private focusOnClose(selectorAutoFocusedOnClose: string): void {
+    private focusOnClose (selectorAutoFocusedOnClose: string): void {
         if (selectorAutoFocusedOnClose) {
             document.querySelector<HTMLElement>(selectorAutoFocusedOnClose)?.focus();
         }

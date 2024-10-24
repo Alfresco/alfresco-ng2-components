@@ -26,20 +26,20 @@ describe('ProcessFilterDialogCloudComponent', () => {
     let fixture: ComponentFixture<ProcessFilterDialogCloudComponent>;
 
     const mockDialogRef = {
-        close: jasmine.createSpy('close'),
-        open: jasmine.createSpy('open')
+        "close": jasmine.createSpy('close'),
+        "open": jasmine.createSpy('open')
     };
 
     const mockDialogData = {
-        data: { name: 'Mock-Title' }
+        "data": { "name": 'Mock-Title' }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
-            providers: [
-                { provide: MatDialogRef, useValue: mockDialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
+            "imports": [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
+            "providers": [
+                { "provide": MatDialogRef, "useValue": mockDialogRef },
+                { "provide": MAT_DIALOG_DATA, "useValue": mockDialogData }
             ]
         });
         fixture = TestBed.createComponent(ProcessFilterDialogCloudComponent);

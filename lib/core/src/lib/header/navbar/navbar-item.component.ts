@@ -26,13 +26,13 @@ export interface NavbarItem {
 }
 
 @Component({
-    selector: 'adf-navbar-item',
-    standalone: true,
-    templateUrl: 'navbar-item.component.html',
-    styleUrls: ['./navbar-item.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    imports: [MatButtonModule, CommonModule, RouterModule],
-    host: { class: 'adf-navbar-item' }
+    "selector": 'adf-navbar-item',
+    "standalone": true,
+    "templateUrl": 'navbar-item.component.html',
+    "styleUrls": ['./navbar-item.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [MatButtonModule, CommonModule, RouterModule],
+    "host": { "class": 'adf-navbar-item' }
 })
 export class NavbarItemComponent {
     @Input() label: string;

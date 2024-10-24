@@ -23,18 +23,18 @@ import { catchError, map } from 'rxjs/operators';
 import { AspectEntry, AspectPaging, AspectsApi } from '@alfresco/js-api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AspectListService {
     private _aspectsApi: AspectsApi;
-    get aspectsApi(): AspectsApi {
+    get aspectsApi (): AspectsApi {
         this._aspectsApi = this._aspectsApi ?? new AspectsApi(this.alfrescoApiService.getInstance());
         return this._aspectsApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService, private appConfigService: AppConfigService) {}
+    constructor (private alfrescoApiService: AlfrescoApiService, private appConfigService: AppConfigService) {}
 
-    getAspects(): Observable<AspectEntry[]> {
+    getAspects (): Observable<AspectEntry[]> {
         const visibleAspectList = this.getVisibleAspects();
         const standardAspects$ = this.getStandardAspects(visibleAspectList);
         const customAspects$ = this.getCustomAspects(visibleAspectList);
@@ -43,11 +43,11 @@ export class AspectListService {
         );
     }
 
-    getStandardAspects(whiteList: string[]): Observable<AspectEntry[]> {
+    getStandardAspects (whiteList: string[]): Observable<AspectEntry[]> {
         const where = `(modelId in ('cm:contentmodel', 'emailserver:emailserverModel', 'smf:smartFolder', 'app:applicationmodel' ))`;
         const opts: any = {
             where,
-            include: ['properties']
+            "include": ['properties']
         };
 
         return from(this.aspectsApi.listAspects(opts)).pipe(
@@ -56,11 +56,11 @@ export class AspectListService {
         );
     }
 
-    getCustomAspects(whiteList?: string[]): Observable<AspectEntry[]> {
+    getCustomAspects (whiteList?: string[]): Observable<AspectEntry[]> {
         const where = `(not namespaceUri matches('http://www.alfresco.*'))`;
         const opts: any = {
             where,
-            include: ['properties']
+            "include": ['properties']
         };
         return from(this.aspectsApi.listAspects(opts)).pipe(
             map((result: AspectPaging) => this.filterAspectByConfig(whiteList, result?.list?.entries)),
@@ -68,7 +68,7 @@ export class AspectListService {
         );
     }
 
-    private filterAspectByConfig(visibleAspectList: string[], aspectEntries: AspectEntry[]): AspectEntry[] {
+    private filterAspectByConfig (visibleAspectList: string[], aspectEntries: AspectEntry[]): AspectEntry[] {
         let result = aspectEntries ? aspectEntries : [];
         if (visibleAspectList?.length > 0 && aspectEntries) {
             result = aspectEntries.filter((value) => visibleAspectList.includes(value?.entry?.id));
@@ -76,7 +76,7 @@ export class AspectListService {
         return result;
     }
 
-    getVisibleAspects(): string[] {
+    getVisibleAspects (): string[] {
         let visibleAspectList: string[] = [];
         const aspectVisibleConfig = this.appConfigService.get('aspect-visible');
         if (aspectVisibleConfig) {

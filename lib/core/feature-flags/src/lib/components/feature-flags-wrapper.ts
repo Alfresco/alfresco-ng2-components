@@ -19,15 +19,15 @@ import { Component } from '@angular/core';
 import { FlagsComponent } from './flags/flags.component';
 
 @Component({
-    selector: 'adf-feature-flags-wrapper',
-    standalone: true,
-    imports: [FlagsComponent],
-    template: `
+    "selector": 'adf-feature-flags-wrapper',
+    "standalone": true,
+    "imports": [FlagsComponent],
+    "template": `
         <div class="adf-feature-flags-wrapper">
             <adf-feature-flags-overrides></adf-feature-flags-overrides>
         </div>
     `,
-    styles: [
+    "styles": [
         `
             .adf-feature-flags-wrapper {
                 width: 100%;

@@ -20,7 +20,7 @@ import { AlfrescoViewerComponent } from './components/alfresco-viewer.component'
 
 /** @deprecated import AlfrescoViewerComponent instead */
 @NgModule({
-    imports: [AlfrescoViewerComponent],
-    exports: [AlfrescoViewerComponent]
+    "imports": [AlfrescoViewerComponent],
+    "exports": [AlfrescoViewerComponent]
 })
 export class AlfrescoViewerModule {}

@@ -31,7 +31,7 @@ describe('SearchRadioComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchRadioComponent);
         component = fixture.componentInstance;
@@ -39,14 +39,14 @@ describe('SearchRadioComponent', () => {
         loader = TestbedHarnessEnvironment.loader(fixture);
         component.id = 'radio';
         component.context = {
-            queryFragments: {
-                radio: 'query'
+            "queryFragments": {
+                "radio": 'query'
             },
-            filterRawParams: {},
-            populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            "filterRawParams": {},
+            "populateFilters": new ReplaySubject(1),
+            "update": jasmine.createSpy('update')
         } as any;
-        component.settings = { options: sizeOptions } as any;
+        component.settings = { "options": sizeOptions } as any;
     });
 
     describe('Pagination', () => {
@@ -74,7 +74,7 @@ describe('SearchRadioComponent', () => {
 
     it('should able to check the radio button', async () => {
         const group = await loader.getHarness(MatRadioGroupHarness);
-        await group.checkRadioButton({ selector: `[data-automation-id="search-radio-${sizeOptions[1].name}"]` });
+        await group.checkRadioButton({ "selector": `[data-automation-id="search-radio-${sizeOptions[1].name}"]` });
 
         expect(component.context.queryFragments[component.id]).toBe(sizeOptions[1].value);
         expect(component.context.filterRawParams[component.id]).toBe(sizeOptions[1].value);
@@ -82,7 +82,7 @@ describe('SearchRadioComponent', () => {
 
     it('should reset to initial value ', async () => {
         const group = await loader.getHarness(MatRadioGroupHarness);
-        await group.checkRadioButton({ selector: `[data-automation-id="search-radio-${sizeOptions[2].name}"]` });
+        await group.checkRadioButton({ "selector": `[data-automation-id="search-radio-${sizeOptions[2].name}"]` });
 
         expect(component.context.queryFragments[component.id]).toBe(sizeOptions[2].value);
         expect(component.context.filterRawParams[component.id]).toBe(sizeOptions[2].value);
@@ -99,7 +99,7 @@ describe('SearchRadioComponent', () => {
         spyOn(component.context.filterLoaded, 'next').and.stub();
         spyOn(component.displayValue$, 'next').and.stub();
         fixture.detectChanges();
-        component.context.populateFilters.next({ radio: sizeOptions[1].value });
+        component.context.populateFilters.next({ "radio": sizeOptions[1].value });
         fixture.detectChanges();
         const group = await loader.getHarness(MatRadioGroupHarness);
 

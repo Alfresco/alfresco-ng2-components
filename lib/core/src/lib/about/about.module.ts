@@ -40,7 +40,7 @@ export const ABOUT_DIRECTIVES = [
 
 /** @deprecated import `ABOUT_DIRECTIVES` or standalone components instead */
 @NgModule({
-    imports: [...ABOUT_DIRECTIVES],
-    exports: [...ABOUT_DIRECTIVES]
+    "imports": [...ABOUT_DIRECTIVES],
+    "exports": [...ABOUT_DIRECTIVES]
 })
 export class AboutModule {}

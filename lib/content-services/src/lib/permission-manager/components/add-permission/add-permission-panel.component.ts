@@ -32,9 +32,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.component';
 
 @Component({
-    selector: 'adf-add-permission-panel',
-    standalone: true,
-    imports: [
+    "selector": 'adf-add-permission-panel',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatFormFieldModule,
         MatInputModule,
@@ -45,16 +45,16 @@ import { UserIconColumnComponent } from '../user-icon-column/user-icon-column.co
         UserIconColumnComponent,
         SearchComponent
     ],
-    templateUrl: './add-permission-panel.component.html',
-    styleUrls: ['./add-permission-panel.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    providers: [{ provide: SearchConfigurationService, useClass: SearchPermissionConfigurationService }, SearchService]
+    "templateUrl": './add-permission-panel.component.html',
+    "styleUrls": ['./add-permission-panel.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "providers": [{ "provide": SearchConfigurationService, "useClass": SearchPermissionConfigurationService }, SearchService]
 })
 export class AddPermissionPanelComponent {
-    @ViewChild('search', { static: true })
+    @ViewChild('search', { "static": true })
     search: SearchComponent;
 
-    @ViewChild(MatSelectionList, { static: false })
+    @ViewChild(MatSelectionList, { "static": false })
     matSelectionList: MatSelectionList;
 
     /** Emitted when a permission list item is selected. */
@@ -69,10 +69,10 @@ export class AddPermissionPanelComponent {
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
     EVERYONE: NodeEntry = new NodeEntry({
-        entry: new Node({ nodeType: 'cm:authorityContainer', properties: { 'cm:authorityName': 'GROUP_EVERYONE' } })
+        "entry": new Node({ "nodeType": 'cm:authorityContainer', "properties": { 'cm:authorityName': 'GROUP_EVERYONE' } })
     });
 
-    constructor() {
+    constructor () {
         this.searchInput.valueChanges.pipe(debounceTime(this.debounceSearch)).subscribe((searchValue) => {
             const selectionOptions = this.matSelectionList.selectedOptions.selected.map((option) => option.value);
             this.selectedItems.push(...selectionOptions);
@@ -84,7 +84,7 @@ export class AddPermissionPanelComponent {
         });
     }
 
-    onSelectionChange() {
+    onSelectionChange () {
         const currentSelection = this.matSelectionList.selectedOptions.selected.map((option) => option.value);
         const uniqueSelection = [...currentSelection, ...this.selectedItems].reduce((uniquesElements, currentElement) => {
             const isExist = uniquesElements.find((uniqueElement) => uniqueElement.entry.id === currentElement.entry.id);
@@ -96,7 +96,7 @@ export class AddPermissionPanelComponent {
         this.select.emit(uniqueSelection);
     }
 
-    clearSearch() {
+    clearSearch () {
         this.searchedWord = '';
         this.selectedItems.splice(0, this.selectedItems.length);
         this.search.resetResults();

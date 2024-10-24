@@ -24,115 +24,115 @@ import { ProcessServicesCloudStoryModule } from '../../../testing/process-servic
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: TaskHeaderCloudComponent,
-    title: 'Process Services Cloud/Task Cloud/Task Header Cloud/Task Header Cloud',
-    decorators: [
+    "component": TaskHeaderCloudComponent,
+    "title": 'Process Services Cloud/Task Cloud/Task Header Cloud/Task Header Cloud',
+    "decorators": [
         moduleMetadata({
-            imports: [TaskHeaderCloudModule],
-            providers: [{ provide: TaskCloudService, useClass: TaskCloudServiceMock }]
+            "imports": [TaskHeaderCloudModule],
+            "providers": [{ "provide": TaskCloudService, "useClass": TaskCloudServiceMock }]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            "providers": [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
-    argTypes: {
-        appName: {
-            control: 'text',
-            description: '(Required) The name of the application.',
-            defaultValue: '',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: '' }
+    "argTypes": {
+        "appName": {
+            "control": 'text',
+            "description": '(Required) The name of the application.',
+            "defaultValue": '',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": '' }
             }
         },
-        taskId: {
-            control: 'text',
-            description: '(Required) The id of the task.',
-            table: {
-                type: { summary: 'string' }
+        "taskId": {
+            "control": 'text',
+            "description": '(Required) The id of the task.',
+            "table": {
+                "type": { "summary": 'string' }
             }
         },
-        showTitle: {
-            control: 'boolean',
-            description: 'Show/Hide the task title.',
-            defaultValue: true,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "showTitle": {
+            "control": 'boolean',
+            "description": 'Show/Hide the task title.',
+            "defaultValue": true,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        claim: {
-            action: 'claim',
-            description: 'Emitted when the task is claimed.',
-            table: { category: 'Actions' }
+        "claim": {
+            "action": 'claim',
+            "description": 'Emitted when the task is claimed.',
+            "table": { "category": 'Actions' }
         },
-        unclaim: {
-            action: 'unclaim',
-            description: 'Emitted when the task is unclaimed (ie, requeued).',
-            table: { category: 'Actions' }
+        "unclaim": {
+            "action": 'unclaim',
+            "description": 'Emitted when the task is unclaimed (ie, requeued).',
+            "table": { "category": 'Actions' }
         },
-        error: {
-            action: 'error',
-            description: 'Emitted when the given task has errors.',
-            table: { category: 'Actions' }
+        "error": {
+            "action": 'error',
+            "description": 'Emitted when the given task has errors.',
+            "table": { "category": 'Actions' }
         }
     }
 } as Meta<TaskHeaderCloudComponent>;
 
 const template: StoryFn<TaskHeaderCloudComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const AssignedAndEditable = template.bind({});
 AssignedAndEditable.args = {
-    appName: 'app',
-    taskId: 'mock-assigned-task'
+    "appName": 'app',
+    "taskId": 'mock-assigned-task'
 };
 
 export const CompletedAndReadonly = template.bind({});
 CompletedAndReadonly.args = {
     ...AssignedAndEditable.args,
-    taskId: 'mock-completed-task'
+    "taskId": 'mock-completed-task'
 };
 
 export const Suspended = template.bind({});
 Suspended.args = {
     ...AssignedAndEditable.args,
-    taskId: 'mock-suspended-task'
+    "taskId": 'mock-suspended-task'
 };
 
 export const WithParentId = template.bind({});
 WithParentId.args = {
     ...AssignedAndEditable.args,
-    taskId: 'mock-parent-task-id'
+    "taskId": 'mock-parent-task-id'
 };
 
 export const WithoutAssignee = template.bind({});
 WithoutAssignee.args = {
     ...AssignedAndEditable.args,
-    taskId: 'mock-created-task'
+    "taskId": 'mock-created-task'
 };
 
 export const NotClaimableByUser = template.bind({});
 NotClaimableByUser.args = {
     ...AssignedAndEditable.args,
-    taskId: 'mock-no-candidate-users'
+    "taskId": 'mock-no-candidate-users'
 };
 
 export const TaskNotClaimableByGroupUser = template.bind({});
 TaskNotClaimableByGroupUser.args = {
     ...AssignedAndEditable.args,
-    taskId: 'mock-no-candidate-groups'
+    "taskId": 'mock-no-candidate-groups'
 };
 
 export const InvalidForMissingApp = template.bind({});
 InvalidForMissingApp.args = {
     ...AssignedAndEditable.args,
-    appName: undefined
+    "appName": undefined
 };
 
 export const InvalidForMissingTaskId = template.bind({});
 InvalidForMissingTaskId.args = {
     ...AssignedAndEditable.args,
-    taskId: undefined
+    "taskId": undefined
 };

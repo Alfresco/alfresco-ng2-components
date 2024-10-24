@@ -32,7 +32,7 @@ describe('SearchTextInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         fixture = TestBed.createComponent(SearchTextInputComponent);
         component = fixture.componentInstance;
@@ -171,7 +171,7 @@ describe('SearchTextInputComponent', () => {
         /**
          * function which finds Search Button and clicks it
          */
-        function clickSearchButton(): void {
+        function clickSearchButton (): void {
             fixture.detectChanges();
             const searchButton: DebugElement = debugElement.query(By.css('#adf-search-button'));
             searchButton.triggerEventHandler('click', null);
@@ -184,7 +184,7 @@ describe('SearchTextInputComponent', () => {
          * Runs a test for ltr/rtl margin values
          * @param isLtr sets ltr or rtl value to test
          */
-        function testMarginValue(isLtr: boolean): void {
+        function testMarginValue (isLtr: boolean): void {
             userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
             clickSearchButton();
             const expectedResult = isLtr ? { 'margin-left': 13 } : { 'margin-right': 13 };
@@ -204,12 +204,12 @@ describe('SearchTextInputComponent', () => {
          * Runs a test for ltr/rtl transform values
          * @param isLtr sets ltr or rtl value to test
          */
-        function testTransformValue(isLtr: boolean): void {
+        function testTransformValue (isLtr: boolean): void {
             userPreferencesService.setWithoutStore('textOrientation', isLtr ? 'ltr' : 'rtl');
             component.subscriptAnimationState.value = 'active';
             clickSearchButton();
             const expectedValue = isLtr ? 'translateX(100%)' : 'translateX(-100%)';
-            expect(component.subscriptAnimationState.params).toEqual({ transform: expectedValue });
+            expect(component.subscriptAnimationState.params).toEqual({ "transform": expectedValue });
             discardPeriodicTasks();
         }
 
@@ -338,7 +338,7 @@ describe('SearchTextInputComponent', () => {
                 const resetEmitSpy = spyOn(component.reset, 'emit');
                 component.collapseOnBlur = true;
                 component.searchTerm = 'fake-search-term';
-                component.onBlur({ relatedTarget: null });
+                component.onBlur({ "relatedTarget": null });
                 tick(200);
 
                 expect(searchVisibilityChangeSpy).toHaveBeenCalledWith(false);
@@ -351,7 +351,7 @@ describe('SearchTextInputComponent', () => {
                 const searchVisibilityChangeSpy = spyOn(component.searchVisibility, 'emit');
                 component.searchTerm = 'fake-search-term';
                 component.collapseOnBlur = false;
-                component.onBlur({ relatedTarget: null });
+                component.onBlur({ "relatedTarget": null });
 
                 expect(searchVisibilityChangeSpy).not.toHaveBeenCalled();
                 expect(component.subscriptAnimationState.value).toEqual('active');

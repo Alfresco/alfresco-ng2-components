@@ -25,74 +25,74 @@ import { importProvidersFrom } from '@angular/core';
 import { CoreStoryModule } from '../../../../..';
 
 export default {
-    component: LoginDialogStorybookComponent,
-    title: 'Core/Login/Login Dialog',
-    decorators: [
+    "component": LoginDialogStorybookComponent,
+    "title": 'Core/Login/Login Dialog',
+    "decorators": [
         moduleMetadata({
-            imports: [LoginDialogComponent, RouterTestingModule]
+            "imports": [LoginDialogComponent, RouterTestingModule]
         }),
         applicationConfig({
-            providers: [{ provide: AuthenticationService, useClass: AuthenticationMock }, importProvidersFrom(CoreStoryModule)]
+            "providers": [{ "provide": AuthenticationService, "useClass": AuthenticationMock }, importProvidersFrom(CoreStoryModule)]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Allows a user to perform a login via a dialog.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Allows a user to perform a login via a dialog.`
             }
         }
     },
-    argTypes: {
-        correct: {
-            name: 'To test correct functionality:',
-            description: 'Use `fake-username` and `fake-password`.',
-            table: { category: 'Storybook Info' }
+    "argTypes": {
+        "correct": {
+            "name": 'To test correct functionality:',
+            "description": 'Use `fake-username` and `fake-password`.',
+            "table": { "category": 'Storybook Info' }
         },
-        corsError: {
-            name: 'To test CORS error:',
-            description: 'Use `fake-username-CORS-error` and `fake-password`.',
-            table: { category: 'Storybook Info' }
+        "corsError": {
+            "name": 'To test CORS error:',
+            "description": 'Use `fake-username-CORS-error` and `fake-password`.',
+            "table": { "category": 'Storybook Info' }
         },
-        csrfError: {
-            name: 'To test CSRF error:',
-            description: 'Use `fake-username-CSRF-error` and `fake-password`.',
-            table: { category: 'Storybook Info' }
+        "csrfError": {
+            "name": 'To test CSRF error:',
+            "description": 'Use `fake-username-CSRF-error` and `fake-password`.',
+            "table": { "category": 'Storybook Info' }
         },
-        ecmAccessError: {
-            name: 'To test ECM access error:',
-            description: 'Use `fake-username-ECM-access-error` and `fake-password`.',
-            table: { category: 'Storybook Info' }
+        "ecmAccessError": {
+            "name": 'To test ECM access error:',
+            "description": 'Use `fake-username-ECM-access-error` and `fake-password`.',
+            "table": { "category": 'Storybook Info' }
         },
-        closed: {
-            action: 'closed',
-            description: 'Emitted when the dialog is closed.',
-            table: {
-                type: { summary: 'EventEmitter <any>' },
-                category: 'Actions'
+        "closed": {
+            "action": 'closed',
+            "description": 'Emitted when the dialog is closed.',
+            "table": {
+                "type": { "summary": 'EventEmitter <any>' },
+                "category": 'Actions'
             }
         },
-        error: {
-            action: 'error',
-            description: 'Emitted when the login fails.',
-            table: {
-                type: { summary: 'EventEmitter <any>' },
-                category: 'Actions'
+        "error": {
+            "action": 'error',
+            "description": 'Emitted when the login fails.',
+            "table": {
+                "type": { "summary": 'EventEmitter <any>' },
+                "category": 'Actions'
             }
         },
-        executeSubmit: {
-            action: 'executeSubmit',
-            description: 'Emitted when the login form is submitted.',
-            table: {
-                type: { summary: 'EventEmitter <any>' },
-                category: 'Actions'
+        "executeSubmit": {
+            "action": 'executeSubmit',
+            "description": 'Emitted when the login form is submitted.',
+            "table": {
+                "type": { "summary": 'EventEmitter <any>' },
+                "category": 'Actions'
             }
         }
     }
 } as Meta<LoginDialogStorybookComponent>;
 
 const template: StoryFn<LoginDialogStorybookComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const LoginDialog = template.bind({});
-LoginDialog.parameters = { layout: 'centered' };
+LoginDialog.parameters = { "layout": 'centered' };

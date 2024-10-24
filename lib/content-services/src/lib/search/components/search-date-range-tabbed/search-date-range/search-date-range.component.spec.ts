@@ -36,7 +36,7 @@ describe('SearchDateRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchDateRangeComponent]
+            "imports": [ContentTestingModule, SearchDateRangeComponent]
         });
 
         fixture = TestBed.createComponent(SearchDateRangeComponent);
@@ -45,11 +45,11 @@ describe('SearchDateRangeComponent', () => {
         component.dateFormat = 'dd-MMM-yy';
         component.maxDate = 'today';
         component.form.setValue({
-            dateRangeType: component.DateRangeType.ANY,
-            inLastValueType: component.InLastDateType.DAYS,
-            inLastValue: null,
-            betweenStartDate: null,
-            betweenEndDate: null
+            "dateRangeType": component.DateRangeType.ANY,
+            "inLastValueType": component.InLastDateType.DAYS,
+            "inLastValue": null,
+            "betweenStartDate": null,
+            "betweenEndDate": null
         });
         loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
         fixture.detectChanges();
@@ -75,16 +75,16 @@ describe('SearchDateRangeComponent', () => {
 
     it('should set values if initial value is provided', () => {
         let value: any = {
-            dateRangeType: component.DateRangeType.ANY
+            "dateRangeType": component.DateRangeType.ANY
         };
         component.initialValue = value;
         component.ngOnInit();
         expect(component.form.controls.dateRangeType.value).toEqual(component.DateRangeType.ANY);
 
         value = {
-            dateRangeType: component.DateRangeType.IN_LAST,
-            inLastValueType: component.InLastDateType.WEEKS,
-            inLastValue: '5'
+            "dateRangeType": component.DateRangeType.IN_LAST,
+            "inLastValueType": component.InLastDateType.WEEKS,
+            "inLastValue": '5'
         };
         component.initialValue = value;
         component.ngOnInit();
@@ -93,9 +93,9 @@ describe('SearchDateRangeComponent', () => {
         expect(component.form.controls.inLastValue.value).toEqual('5');
 
         value = {
-            dateRangeType: component.DateRangeType.BETWEEN,
-            betweenStartDate: startOfYesterday(),
-            betweenEndDate: endOfToday()
+            "dateRangeType": component.DateRangeType.BETWEEN,
+            "betweenStartDate": startOfYesterday(),
+            "betweenEndDate": endOfToday()
         };
         component.initialValue = value;
         component.ngOnInit();
@@ -189,7 +189,7 @@ describe('SearchDateRangeComponent', () => {
         const calendar = await loader.getHarness(MatCalendarHarness);
 
         const afterDate = format(addDays(new Date().getTime(), 1), 'MMM d, yyyy');
-        const cell = await calendar.getCells({ disabled: true });
+        const cell = await calendar.getCells({ "disabled": true });
         expect(await cell[0].getAriaLabel()).toEqual(afterDate);
     });
 
@@ -225,34 +225,34 @@ describe('SearchDateRangeComponent', () => {
     it('should not emit values when form is invalid', async () => {
         spyOn(component.changed, 'emit');
         let value = {
-            dateRangeType: component.DateRangeType.IN_LAST,
-            inLastValueType: component.InLastDateType.WEEKS,
-            inLastValue: '',
-            betweenStartDate: undefined,
-            betweenEndDate: undefined
+            "dateRangeType": component.DateRangeType.IN_LAST,
+            "inLastValueType": component.InLastDateType.WEEKS,
+            "inLastValue": '',
+            "betweenStartDate": undefined,
+            "betweenEndDate": undefined
         };
-        let dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ selector: '[data-automation-id="date-range-in-last"]' }));
+        let dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ "selector": '[data-automation-id="date-range-in-last"]' }));
         await dateRangeTypeRadioButton.check();
         selectDropdownOption('date-range-in-last-option-weeks');
         enterValueInInputFieldAndTriggerEvent('date-range-in-last-input', '');
         expect(component.changed.emit).not.toHaveBeenCalledWith(value);
 
         component.form.patchValue({
-            dateRangeType: component.DateRangeType.ANY,
-            inLastValueType: component.InLastDateType.DAYS,
-            inLastValue: undefined,
-            betweenStartDate: undefined,
-            betweenEndDate: undefined
+            "dateRangeType": component.DateRangeType.ANY,
+            "inLastValueType": component.InLastDateType.DAYS,
+            "inLastValue": undefined,
+            "betweenStartDate": undefined,
+            "betweenEndDate": undefined
         });
 
         value = {
-            dateRangeType: component.DateRangeType.BETWEEN,
-            inLastValueType: component.InLastDateType.DAYS,
-            inLastValue: undefined,
-            betweenStartDate: '',
-            betweenEndDate: ''
+            "dateRangeType": component.DateRangeType.BETWEEN,
+            "inLastValueType": component.InLastDateType.DAYS,
+            "inLastValue": undefined,
+            "betweenStartDate": '',
+            "betweenEndDate": ''
         };
-        dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ selector: '[data-automation-id="date-range-between"]' }));
+        dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ "selector": '[data-automation-id="date-range-between"]' }));
         await dateRangeTypeRadioButton.check();
         fixture.detectChanges();
         expect(component.changed.emit).not.toHaveBeenCalledWith(value);
@@ -261,13 +261,13 @@ describe('SearchDateRangeComponent', () => {
     it('should emit values when form is valid', async () => {
         spyOn(component.changed, 'emit');
         let value = {
-            dateRangeType: component.DateRangeType.IN_LAST,
-            inLastValueType: component.InLastDateType.WEEKS,
-            inLastValue: 5,
-            betweenStartDate: null,
-            betweenEndDate: null
+            "dateRangeType": component.DateRangeType.IN_LAST,
+            "inLastValueType": component.InLastDateType.WEEKS,
+            "inLastValue": 5,
+            "betweenStartDate": null,
+            "betweenEndDate": null
         };
-        let dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ selector: '[data-automation-id="date-range-in-last"]' }));
+        let dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ "selector": '[data-automation-id="date-range-in-last"]' }));
         await dateRangeTypeRadioButton.check();
         selectDropdownOption('date-range-in-last-option-weeks');
         enterValueInInputFieldAndTriggerEvent('date-range-in-last-input', '5');
@@ -275,21 +275,21 @@ describe('SearchDateRangeComponent', () => {
         expect(component.changed.emit).toHaveBeenCalledWith(value);
 
         component.form.patchValue({
-            dateRangeType: component.DateRangeType.ANY,
-            inLastValueType: component.InLastDateType.DAYS,
-            inLastValue: undefined,
-            betweenStartDate: undefined,
-            betweenEndDate: undefined
+            "dateRangeType": component.DateRangeType.ANY,
+            "inLastValueType": component.InLastDateType.DAYS,
+            "inLastValue": undefined,
+            "betweenStartDate": undefined,
+            "betweenEndDate": undefined
         });
 
         value = {
-            dateRangeType: component.DateRangeType.BETWEEN,
-            inLastValueType: component.InLastDateType.DAYS,
-            inLastValue: undefined,
-            betweenStartDate: startDateSampleValue,
-            betweenEndDate: endDateSampleValue
+            "dateRangeType": component.DateRangeType.BETWEEN,
+            "inLastValueType": component.InLastDateType.DAYS,
+            "inLastValue": undefined,
+            "betweenStartDate": startDateSampleValue,
+            "betweenEndDate": endDateSampleValue
         };
-        dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ selector: '[data-automation-id="date-range-between"]' }));
+        dateRangeTypeRadioButton = await loader.getHarness(MatRadioButtonHarness.with({ "selector": '[data-automation-id="date-range-between"]' }));
         await dateRangeTypeRadioButton.check();
         component.betweenStartDateFormControl.setValue(startDateSampleValue);
         component.betweenEndDateFormControl.setValue(endDateSampleValue);

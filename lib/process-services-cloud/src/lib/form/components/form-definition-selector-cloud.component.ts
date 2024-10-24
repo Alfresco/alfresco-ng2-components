@@ -22,9 +22,9 @@ import { MatSelectChange } from '@angular/material/select';
 import { FormRepresentation } from '../../services/form-fields.interfaces';
 
 @Component({
-    selector: 'adf-cloud-form-definition-selector',
-    templateUrl: './form-definition-selector-cloud.component.html',
-    styleUrls: ['./form-definition-selector-cloud.component.scss']
+    "selector": 'adf-cloud-form-definition-selector',
+    "templateUrl": './form-definition-selector-cloud.component.html',
+    "styleUrls": ['./form-definition-selector-cloud.component.scss']
 })
 
 export class FormDefinitionSelectorCloudComponent implements OnInit {
@@ -39,14 +39,14 @@ export class FormDefinitionSelectorCloudComponent implements OnInit {
 
     forms$: Observable<FormRepresentation[]>;
 
-    constructor(private formDefinitionCloudService: FormDefinitionSelectorCloudService) {
+    constructor (private formDefinitionCloudService: FormDefinitionSelectorCloudService) {
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.forms$ = this.formDefinitionCloudService.getStandAloneTaskForms(this.appName);
     }
 
-    onSelect(event: MatSelectChange) {
+    onSelect (event: MatSelectChange) {
         this.selectForm.emit(event.value);
     }
 

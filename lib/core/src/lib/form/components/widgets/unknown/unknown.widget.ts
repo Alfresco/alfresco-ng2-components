@@ -24,9 +24,9 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    selector: 'unknown-widget',
-    standalone: true,
-    template: `
+    "selector": 'unknown-widget',
+    "standalone": true,
+    "template": `
         <mat-list class="adf-unknown-widget">
             <mat-list-item>
                 <mat-icon class="mat-24">error_outline</mat-icon>
@@ -34,8 +34,8 @@ import { WidgetComponent } from '../widget.component';
             </mat-list-item>
         </mat-list>
     `,
-    styleUrls: ['./unknown.widget.scss'],
-    host: {
+    "styleUrls": ['./unknown.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -46,11 +46,11 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatListModule, MatIconModule],
-    encapsulation: ViewEncapsulation.None
+    "imports": [MatListModule, MatIconModule],
+    "encapsulation": ViewEncapsulation.None
 })
 export class UnknownWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 }

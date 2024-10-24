@@ -26,13 +26,13 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { ContentService } from '../common/services/content.service';
 
 @Component({
-    template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
+    "template": '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
 })
 class TestComponent {
     folder = {};
     public successParameter: Node = null;
 
-    success(node: Node) {
+    success (node: Node) {
         this.successParameter = node;
     }
 }
@@ -45,14 +45,14 @@ describe('FolderEditDirective', () => {
     let dialogRefMock;
 
     const event = {
-        type: 'click',
-        preventDefault: () => null
+        "type": 'click',
+        "preventDefault": () => null
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, FolderEditDirective],
-            declarations: [TestComponent]
+            "imports": [ContentTestingModule, FolderEditDirective],
+            "declarations": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderEditDirective));
@@ -60,10 +60,10 @@ describe('FolderEditDirective', () => {
         contentService = TestBed.inject(ContentService);
 
         dialogRefMock = {
-            afterClosed: (val) => of(val),
-            componentInstance: {
-                error: new Subject<any>(),
-                success: new Subject<Node>()
+            "afterClosed": (val) => of(val),
+            "componentInstance": {
+                "error": new Subject<any>(),
+                "success": new Subject<Node>()
             }
         };
 
@@ -98,11 +98,11 @@ describe('FolderEditDirective', () => {
         await fixture.whenStable();
 
         expect(dialog.open).toHaveBeenCalledWith(jasmine.any(Function), {
-            data: {
-                folder: jasmine.any(Object),
-                editTitle: 'edit-title'
+            "data": {
+                "folder": jasmine.any(Object),
+                "editTitle": 'edit-title'
             },
-            width: jasmine.any(String)
+            "width": jasmine.any(String)
         });
     });
 });

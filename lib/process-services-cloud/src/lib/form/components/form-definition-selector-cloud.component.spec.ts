@@ -33,17 +33,17 @@ describe('FormDefinitionCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ProcessServiceCloudTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(FormDefinitionSelectorCloudComponent);
         service = TestBed.inject(FormDefinitionSelectorCloudService);
-        getFormsSpy = spyOn(service, 'getStandAloneTaskForms').and.returnValue(of([{ id: 'fake-form', name: 'fakeForm' } as any]));
+        getFormsSpy = spyOn(service, 'getStandAloneTaskForms').and.returnValue(of([{ "id": 'fake-form', "name": 'fakeForm' } as any]));
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
 
     it('should load the forms by default', async () => {
-        const selectElement = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-form-selector-dropdown' }));
+        const selectElement = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-form-selector-dropdown' }));
         await selectElement.open();
         const options = await selectElement.getOptions();
 
@@ -55,7 +55,7 @@ describe('FormDefinitionCloudComponent', () => {
 
     it('should load only None option when no forms exist', async () => {
         getFormsSpy.and.returnValue(of([]));
-        const selectElement = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-form-selector-dropdown' }));
+        const selectElement = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-form-selector-dropdown' }));
         await selectElement.open();
 
         const options = await selectElement.getOptions();
@@ -64,13 +64,13 @@ describe('FormDefinitionCloudComponent', () => {
     });
 
     it('should not preselect any form by default', async () => {
-        const selectElement = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-form-selector-dropdown' }));
+        const selectElement = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-form-selector-dropdown' }));
 
         expect(await selectElement.getValueText()).toBe('');
     });
 
     it('should display the name of the form that is selected', async () => {
-        const selectElement = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-form-selector-dropdown' }));
+        const selectElement = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-form-selector-dropdown' }));
         await selectElement.open();
         const options = await selectElement.getOptions();
 

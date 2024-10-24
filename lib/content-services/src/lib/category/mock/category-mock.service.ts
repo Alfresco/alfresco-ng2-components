@@ -28,23 +28,23 @@ import {
 } from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class CategoryServiceMock {
-    public getSubcategories(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
+    public getSubcategories (parentNodeId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
         return parentNodeId ? of(this.getChildrenLevelResponse(skipCount, maxItems)) : of(this.getRootLevelResponse(skipCount, maxItems));
     }
 
-    public getCategory(): Observable<CategoryEntry> {
+    public getCategory (): Observable<CategoryEntry> {
         return of({
-            entry: {
-                name: 'some name',
-                id: 'some id',
-                hasChildren: true
+            "entry": {
+                "name": 'some name',
+                "id": 'some id',
+                "hasChildren": true
             }
         });
     }
 
-    public searchCategories(): Observable<ResultSetPaging> {
+    public searchCategories (): Observable<ResultSetPaging> {
         const result = new ResultSetPaging();
         result.list = new ResultSetPagingList();
         const category1 = new ResultSetRowEntry();
@@ -67,13 +67,13 @@ export class CategoryServiceMock {
         return of(result);
     }
 
-    private getRootLevelResponse(skipCount?: number, maxItems?: number): CategoryPaging {
-        const rootCategoryEntry: CategoryEntry = { entry: { id: 'testId', name: 'testNode', parentId: '-root-', hasChildren: true } };
-        return { list: { pagination: { skipCount, maxItems, hasMoreItems: false }, entries: [rootCategoryEntry] } };
+    private getRootLevelResponse (skipCount?: number, maxItems?: number): CategoryPaging {
+        const rootCategoryEntry: CategoryEntry = { "entry": { "id": 'testId', "name": 'testNode', "parentId": '-root-', "hasChildren": true } };
+        return { "list": { "pagination": { skipCount, maxItems, "hasMoreItems": false }, "entries": [rootCategoryEntry] } };
     }
 
-    private getChildrenLevelResponse(skipCount?: number, maxItems?: number): CategoryPaging {
-        const childCategoryEntry: CategoryEntry = { entry: { id: 'childId', name: 'childNode', parentId: 'testId', hasChildren: false } };
-        return { list: { pagination: { skipCount, maxItems, hasMoreItems: true }, entries: [childCategoryEntry] } };
+    private getChildrenLevelResponse (skipCount?: number, maxItems?: number): CategoryPaging {
+        const childCategoryEntry: CategoryEntry = { "entry": { "id": 'childId', "name": 'childNode', "parentId": 'testId', "hasChildren": false } };
+        return { "list": { "pagination": { skipCount, maxItems, "hasMoreItems": true }, "entries": [childCategoryEntry] } };
     }
 }

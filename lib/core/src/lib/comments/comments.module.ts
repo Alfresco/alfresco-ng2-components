@@ -20,7 +20,7 @@ import { CommentsComponent } from './comments.component';
 
 /** @deprecated import standalone `CommentsComponent` directly */
 @NgModule({
-    imports: [CommentsComponent],
-    exports: [CommentsComponent]
+    "imports": [CommentsComponent],
+    "exports": [CommentsComponent]
 })
 export class CommentsModule {}

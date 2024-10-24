@@ -22,25 +22,25 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-card-view-mapitem',
-    standalone: true,
-    imports: [CommonModule, TranslateModule],
-    templateUrl: './card-view-mapitem.component.html',
-    styleUrls: ['./card-view-mapitem.component.scss']
+    "selector": 'adf-card-view-mapitem',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule],
+    "templateUrl": './card-view-mapitem.component.html',
+    "styleUrls": ['./card-view-mapitem.component.scss']
 })
 export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel> {
     @Input()
     displayEmpty: boolean = true;
 
-    get showProperty(): boolean {
+    get showProperty (): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    get isClickable(): boolean {
+    get isClickable (): boolean {
         return this.property.clickable;
     }
 
-    clicked(): void {
+    clicked (): void {
         this.cardViewUpdateService.clicked(this.property);
     }
 }

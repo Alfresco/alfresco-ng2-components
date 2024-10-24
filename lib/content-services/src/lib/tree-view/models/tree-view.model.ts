@@ -24,7 +24,7 @@ export class TreeBaseNode {
     expandable = true;
     node: NodeEntry;
 
-    constructor(nodeEntry: NodeEntry, level?: number, expandable?: boolean) {
+    constructor (nodeEntry: NodeEntry, level?: number, expandable?: boolean) {
         this.name = nodeEntry.entry.name;
         this.nodeId = nodeEntry.entry.id;
         this.level = level ? level : 0;

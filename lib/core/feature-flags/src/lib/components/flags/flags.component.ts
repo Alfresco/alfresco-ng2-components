@@ -39,9 +39,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-feature-flags-overrides',
-    standalone: true,
-    imports: [
+    "selector": 'adf-feature-flags-overrides',
+    "standalone": true,
+    "imports": [
         FlagsOverrideComponent,
         CommonModule,
         FormsModule,
@@ -54,10 +54,10 @@ import { TranslateModule } from '@ngx-translate/core';
         MatDialogModule,
         TranslateModule
     ],
-    templateUrl: './flags.component.html',
-    styleUrls: ['./flags.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    "templateUrl": './flags.component.html',
+    "styleUrls": ['./flags.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class FlagsComponent implements OnDestroy {
     displayedColumns: string[] = ['icon', 'flag', 'value'];
@@ -70,7 +70,7 @@ export class FlagsComponent implements OnDestroy {
     showPlusButton$!: Observable<boolean>;
     writableFlagChangeset: WritableFlagChangeset = {};
 
-    constructor(
+    constructor (
         @Inject(FeaturesServiceToken)
         private featuresService: IDebugFeaturesService & IFeaturesService<WritableFlagChangeset>,
         @Inject(WritableFeaturesServiceToken)
@@ -89,9 +89,9 @@ export class FlagsComponent implements OnDestroy {
             tap((flags) => (this.writableFlagChangeset = flags)),
             map((flags) =>
                 Object.keys(flags).map((key) => ({
-                    flag: key,
-                    value: flags[key].current,
-                    fictive: flags[key]?.fictive ?? false
+                    "flag": key,
+                    "value": flags[key].current,
+                    "fictive": flags[key]?.fictive ?? false
                 }))
             )
         );
@@ -113,11 +113,11 @@ export class FlagsComponent implements OnDestroy {
         );
     }
 
-    protected onChange(flag: string, value: boolean) {
+    protected onChange (flag: string, value: boolean) {
         this.writableFeaturesService.setFlag(flag, value);
     }
 
-    protected onEnable(value: boolean) {
+    protected onEnable (value: boolean) {
         if (value) {
             this.writableFeaturesService.mergeFlags(this.writableFlagChangeset);
         }
@@ -125,16 +125,16 @@ export class FlagsComponent implements OnDestroy {
         this.featuresService.enable(value);
     }
 
-    protected onInputChange(text: string) {
+    protected onInputChange (text: string) {
         this.inputValue$.next(text);
     }
 
-    protected onClearInput() {
+    protected onClearInput () {
         this.inputValue = '';
         this.inputValue$.next('');
     }
 
-    protected onAdd(event: KeyboardEvent) {
+    protected onAdd (event: KeyboardEvent) {
         this.showPlusButton$.pipe(take(1)).subscribe((showPlusButton) => {
             if (showPlusButton && event.key === 'Enter' && event.shiftKey) {
                 this.writableFeaturesService.setFlag(this.inputValue, false);
@@ -142,15 +142,15 @@ export class FlagsComponent implements OnDestroy {
         });
     }
 
-    protected onAddButtonClick() {
+    protected onAddButtonClick () {
         this.writableFeaturesService.setFlag(this.inputValue, false);
     }
 
-    protected onDelete(flag: string) {
+    protected onDelete (flag: string) {
         this.writableFeaturesService.removeFlag(flag);
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

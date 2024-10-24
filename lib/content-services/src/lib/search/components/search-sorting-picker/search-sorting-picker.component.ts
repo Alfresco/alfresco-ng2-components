@@ -22,22 +22,22 @@ import { CommonModule } from '@angular/common';
 import { SortingPickerComponent } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-search-sorting-picker',
-    standalone: true,
-    imports: [CommonModule, SortingPickerComponent],
-    templateUrl: './search-sorting-picker.component.html',
-    styleUrls: ['./search-sorting-picker.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-sorting-picker' }
+    "selector": 'adf-search-sorting-picker',
+    "standalone": true,
+    "imports": [CommonModule, SortingPickerComponent],
+    "templateUrl": './search-sorting-picker.component.html',
+    "styleUrls": ['./search-sorting-picker.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-sorting-picker' }
 })
 export class SearchSortingPickerComponent implements OnInit {
     options: SearchSortingDefinition[] = [];
     value: string;
     ascending: boolean;
 
-    constructor(private queryBuilder: SearchQueryBuilderService) {}
+    constructor (private queryBuilder: SearchQueryBuilderService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.options = this.queryBuilder.getSortingOptions();
 
         const primary = this.queryBuilder.getPrimarySorting();
@@ -47,38 +47,38 @@ export class SearchSortingPickerComponent implements OnInit {
         }
     }
 
-    onValueChanged(key: string) {
+    onValueChanged (key: string) {
         this.value = key;
         this.ascending = this.getSortingOrder();
         this.applySorting();
     }
 
-    onSortingChanged(ascending: boolean) {
+    onSortingChanged (ascending: boolean) {
         this.ascending = ascending;
         this.applySorting();
     }
 
-    private findOptionByKey(key: string): SearchSortingDefinition {
+    private findOptionByKey (key: string): SearchSortingDefinition {
         if (key) {
             return this.options.find((opt) => opt.key === key);
         }
         return null;
     }
 
-    private applySorting() {
+    private applySorting () {
         const option = this.findOptionByKey(this.value);
         if (option) {
             this.queryBuilder.sorting = [
                 {
                     ...option,
-                    ascending: this.ascending
+                    "ascending": this.ascending
                 }
             ];
             this.queryBuilder.update();
         }
     }
 
-    private getSortingOrder(): boolean {
+    private getSortingOrder (): boolean {
         const option = this.findOptionByKey(this.value);
         if (option) {
             return option.ascending;

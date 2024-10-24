@@ -18,7 +18,7 @@
 import { ContentInfo, Node, NodeEntry, PathInfo } from '@alfresco/js-api';
 
 export class FileNode extends NodeEntry {
-    constructor(name?: string, mimeType?: string, id?: string) {
+    constructor (name?: string, mimeType?: string, id?: string) {
         super();
         this.entry = new Node();
         this.entry.id = id || 'file-id';
@@ -33,7 +33,7 @@ export class FileNode extends NodeEntry {
 }
 
 export class FolderNode extends NodeEntry {
-    constructor(name?: string) {
+    constructor (name?: string) {
         super();
         this.entry = new Node();
         this.entry.id = 'folder-id';
@@ -47,7 +47,7 @@ export class FolderNode extends NodeEntry {
 }
 
 export class SmartFolderNode extends NodeEntry {
-    constructor(name?: string) {
+    constructor (name?: string) {
         super();
         this.entry = new Node();
         this.entry.id = 'smart-folder-id';
@@ -61,7 +61,7 @@ export class SmartFolderNode extends NodeEntry {
 }
 
 export class RuleFolderNode extends NodeEntry {
-    constructor(name?: string) {
+    constructor (name?: string) {
         super();
         this.entry = new Node();
         this.entry.id = 'rule-folder-id';
@@ -75,7 +75,7 @@ export class RuleFolderNode extends NodeEntry {
 }
 
 export class LinkFolderNode extends NodeEntry {
-    constructor(name?: string) {
+    constructor (name?: string) {
         super();
         this.entry = new Node();
         this.entry.id = 'link-folder-id';

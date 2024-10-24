@@ -23,7 +23,7 @@ describe('EmptyListComponentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [EmptyListComponent]
+            "imports": [EmptyListComponent]
         });
         fixture = TestBed.createComponent(EmptyListComponent);
     });

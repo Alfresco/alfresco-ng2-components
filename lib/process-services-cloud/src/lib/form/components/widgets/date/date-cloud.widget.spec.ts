@@ -31,7 +31,7 @@ describe('DateWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
 
         form = new FormModel();
@@ -46,8 +46,8 @@ describe('DateWidgetComponent', () => {
     it('should setup min value for date picker', () => {
         const minValue = '1982-03-13';
         widget.field = new FormFieldModel(null, {
-            id: 'date-id',
-            name: 'date-name',
+            "id": 'date-id',
+            "name": 'date-name',
             minValue
         });
 
@@ -60,7 +60,7 @@ describe('DateWidgetComponent', () => {
     it('should date field be present', () => {
         const minValue = '1982-03-13';
         widget.field = new FormFieldModel(form, {
-            type: FormFieldTypes.DATE,
+            "type": FormFieldTypes.DATE,
             minValue
         });
 
@@ -73,7 +73,7 @@ describe('DateWidgetComponent', () => {
     it('should setup max value for date picker', () => {
         const maxValue = '1982-03-13';
         widget.field = new FormFieldModel(form, {
-            type: FormFieldTypes.DATE,
+            "type": FormFieldTypes.DATE,
             maxValue
         });
         fixture.detectChanges();
@@ -86,11 +86,11 @@ describe('DateWidgetComponent', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
         const field = new FormFieldModel(form, {
-            type: FormFieldTypes.DATE,
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9999-9-9',
-            readOnly: 'false'
+            "type": FormFieldTypes.DATE,
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9999-9-9',
+            "readOnly": 'false'
         });
 
         widget.field = field;
@@ -110,10 +110,10 @@ describe('DateWidgetComponent', () => {
 
         it('should show visible date widget', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '9999-9-9',
-                type: FormFieldTypes.DATE
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": '9999-9-9',
+                "type": FormFieldTypes.DATE
             });
 
             fixture.detectChanges();
@@ -126,11 +126,11 @@ describe('DateWidgetComponent', () => {
 
         it('should show the correct format type', async () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: new Date('12-30-9999'),
-                type: FormFieldTypes.DATE,
-                dateDisplayFormat: 'yyyy-dd-MM'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": new Date('12-30-9999'),
+                "type": FormFieldTypes.DATE,
+                "dateDisplayFormat": 'yyyy-dd-MM'
             });
 
             fixture.detectChanges();
@@ -142,11 +142,11 @@ describe('DateWidgetComponent', () => {
 
         it('should disable date button when is readonly', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '9999-9-9',
-                type: FormFieldTypes.DATE,
-                readOnly: false
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": '9999-9-9',
+                "type": FormFieldTypes.DATE,
+                "readOnly": false
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
@@ -164,11 +164,11 @@ describe('DateWidgetComponent', () => {
 
         it('should set isValid to false when the value is not a correct date value', () => {
             widget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: 'aa',
-                type: FormFieldTypes.DATE,
-                readOnly: 'false'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": 'aa',
+                "type": FormFieldTypes.DATE,
+                "readOnly": 'false'
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
@@ -185,12 +185,12 @@ describe('DateWidgetComponent', () => {
 
     it('should display always the json value', () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: new Date('12-30-9999'),
-            type: FormFieldTypes.DATE,
-            readOnly: false,
-            dateDisplayFormat: 'MM-dd-yyyy'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": new Date('12-30-9999'),
+            "type": FormFieldTypes.DATE,
+            "readOnly": false,
+            "dateDisplayFormat": 'MM-dd-yyyy'
         });
         widget.field = field;
 
@@ -211,13 +211,13 @@ describe('DateWidgetComponent', () => {
 
     describe('when form model has left labels', () => {
         it('should have left labels classes on leftLabels true', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                id: 'date-id',
-                name: 'date-name',
-                value: '',
-                type: FormFieldTypes.DATE,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": true }), {
+                "id": 'date-id',
+                "name": 'date-name',
+                "value": '',
+                "type": FormFieldTypes.DATE,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -233,13 +233,13 @@ describe('DateWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels false', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                id: 'date-id',
-                name: 'date-name',
-                value: '',
-                type: FormFieldTypes.DATE,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": false }), {
+                "id": 'date-id',
+                "name": 'date-name',
+                "value": '',
+                "type": FormFieldTypes.DATE,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -255,13 +255,13 @@ describe('DateWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels not present', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'date-id',
-                name: 'date-name',
-                value: '',
-                type: FormFieldTypes.DATE,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'date-id',
+                "name": 'date-name',
+                "value": '',
+                "type": FormFieldTypes.DATE,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -288,10 +288,10 @@ describe('DateWidgetComponent', () => {
         describe('Minimum date range value and date', () => {
             it('should set minimum date range date to today if minimum date range value is 0', () => {
                 widget.field = new FormFieldModel(form, {
-                    type: FormFieldTypes.DATE,
-                    dynamicDateRangeSelection: true,
-                    minDateRangeValue: 0,
-                    maxDateRangeValue: null
+                    "type": FormFieldTypes.DATE,
+                    "dynamicDateRangeSelection": true,
+                    "minDateRangeValue": 0,
+                    "maxDateRangeValue": null
                 });
 
                 fixture.detectChanges();
@@ -304,10 +304,10 @@ describe('DateWidgetComponent', () => {
 
             it('should set minimum date range date to null if minimum date range value is null', () => {
                 widget.field = new FormFieldModel(form, {
-                    type: FormFieldTypes.DATE,
-                    dynamicDateRangeSelection: true,
-                    minDateRangeValue: null,
-                    maxDateRangeValue: null
+                    "type": FormFieldTypes.DATE,
+                    "dynamicDateRangeSelection": true,
+                    "minDateRangeValue": null,
+                    "maxDateRangeValue": null
                 });
 
                 fixture.detectChanges();
@@ -318,10 +318,10 @@ describe('DateWidgetComponent', () => {
 
             it('should set minimum date range date to today minus abs(minDateRangeValue) if minimum date range value is negative', () => {
                 widget.field = new FormFieldModel(form, {
-                    type: FormFieldTypes.DATE,
-                    dynamicDateRangeSelection: true,
-                    minDateRangeValue: -2,
-                    maxDateRangeValue: null
+                    "type": FormFieldTypes.DATE,
+                    "dynamicDateRangeSelection": true,
+                    "minDateRangeValue": -2,
+                    "maxDateRangeValue": null
                 });
 
                 fixture.detectChanges();
@@ -334,10 +334,10 @@ describe('DateWidgetComponent', () => {
 
             it('should set minimum date range date to today plus minDateRangeValue if minimum date range value is positive', () => {
                 widget.field = new FormFieldModel(form, {
-                    type: FormFieldTypes.DATE,
-                    dynamicDateRangeSelection: true,
-                    minDateRangeValue: 2,
-                    maxDateRangeValue: null
+                    "type": FormFieldTypes.DATE,
+                    "dynamicDateRangeSelection": true,
+                    "minDateRangeValue": 2,
+                    "maxDateRangeValue": null
                 });
 
                 fixture.detectChanges();
@@ -352,10 +352,10 @@ describe('DateWidgetComponent', () => {
         describe('Maximum date range value and date', () => {
             it('should set maximum date range date to today if maximum date range value is 0', () => {
                 widget.field = new FormFieldModel(form, {
-                    type: FormFieldTypes.DATE,
-                    dynamicDateRangeSelection: true,
-                    minDateRangeValue: null,
-                    maxDateRangeValue: 0
+                    "type": FormFieldTypes.DATE,
+                    "dynamicDateRangeSelection": true,
+                    "minDateRangeValue": null,
+                    "maxDateRangeValue": 0
                 });
 
                 fixture.detectChanges();
@@ -368,10 +368,10 @@ describe('DateWidgetComponent', () => {
 
             it('should set maximum date range date to null if maximum date range value is null', () => {
                 widget.field = new FormFieldModel(form, {
-                    type: FormFieldTypes.DATE,
-                    dynamicDateRangeSelection: true,
-                    minDateRangeValue: null,
-                    maxDateRangeValue: null
+                    "type": FormFieldTypes.DATE,
+                    "dynamicDateRangeSelection": true,
+                    "minDateRangeValue": null,
+                    "maxDateRangeValue": null
                 });
 
                 fixture.detectChanges();
@@ -382,10 +382,10 @@ describe('DateWidgetComponent', () => {
 
             it('should set maximum date range date to today minus abs(maxDateRangeValue) if maximum date range value is negative', () => {
                 widget.field = new FormFieldModel(form, {
-                    type: FormFieldTypes.DATE,
-                    dynamicDateRangeSelection: true,
-                    minDateRangeValue: null,
-                    maxDateRangeValue: -2
+                    "type": FormFieldTypes.DATE,
+                    "dynamicDateRangeSelection": true,
+                    "minDateRangeValue": null,
+                    "maxDateRangeValue": -2
                 });
 
                 fixture.detectChanges();
@@ -398,10 +398,10 @@ describe('DateWidgetComponent', () => {
 
             it('should set maximum date range date to today plus maxDateRangeValue if maximum date range value is positive', () => {
                 widget.field = new FormFieldModel(form, {
-                    type: FormFieldTypes.DATE,
-                    dynamicDateRangeSelection: true,
-                    minDateRangeValue: null,
-                    maxDateRangeValue: 2
+                    "type": FormFieldTypes.DATE,
+                    "dynamicDateRangeSelection": true,
+                    "minDateRangeValue": null,
+                    "maxDateRangeValue": 2
                 });
 
                 fixture.detectChanges();
@@ -416,9 +416,9 @@ describe('DateWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DATE,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DATE,
+                "required": true
             });
         });
 

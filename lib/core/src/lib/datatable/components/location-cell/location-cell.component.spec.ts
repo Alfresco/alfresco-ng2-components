@@ -30,7 +30,7 @@ describe('LocationCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, LocationCellComponent]
+            "imports": [RouterTestingModule, LocationCellComponent]
         });
         fixture = TestBed.createComponent(LocationCellComponent);
         component = fixture.componentInstance;
@@ -38,18 +38,18 @@ describe('LocationCellComponent', () => {
 
     beforeEach(() => {
         rowData = {
-            name: '1',
-            path: {
-                elements: [
-                    { id: '1', name: 'User files', nodeType: 'folder' },
-                    { id: '2', name: 'Favorite', nodeType: 'folder' },
-                    { id: '3', name: 'Movies', nodeType: 'folder' }
+            "name": '1',
+            "path": {
+                "elements": [
+                    { "id": '1', "name": 'User files', "nodeType": 'folder' },
+                    { "id": '2', "name": 'Favorite', "nodeType": 'folder' },
+                    { "id": '3', "name": 'Movies', "nodeType": 'folder' }
                 ],
-                name: '/User files/Favorite/Movies'
+                "name": '/User files/Favorite/Movies'
             }
         };
 
-        columnData = { format: '/files', type: 'location', key: 'path' };
+        columnData = { "format": '/files', "type": 'location', "key": 'path' };
 
         dataTableAdapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
 
@@ -96,7 +96,7 @@ describe('LocationCellComponent', () => {
     });
 
     it('should not setup cell when path is missing required properties', (done) => {
-        rowData.path = { someProp: '' };
+        rowData.path = { "someProp": '' };
 
         fixture.detectChanges();
 
@@ -111,7 +111,7 @@ describe('LocationCellComponent', () => {
 
     it('should not setup cell when path data is missing one of the property', () => {
         rowData.path = {
-            name: 'some-name'
+            "name": 'some-name'
         };
 
         let value = '';
@@ -127,7 +127,7 @@ describe('LocationCellComponent', () => {
         expect(component.link).toEqual([]);
 
         rowData.path = {
-            elements: []
+            "elements": []
         };
 
         fixture.detectChanges();

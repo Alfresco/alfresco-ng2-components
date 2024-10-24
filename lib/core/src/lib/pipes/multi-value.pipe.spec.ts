@@ -24,8 +24,8 @@ describe('MultiValuePipe', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MultiValuePipe],
-            providers: [MultiValuePipe]
+            "imports": [CoreTestingModule, MultiValuePipe],
+            "providers": [MultiValuePipe]
         });
         pipe = TestBed.inject(MultiValuePipe);
     });

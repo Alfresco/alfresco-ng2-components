@@ -21,11 +21,11 @@ import { AppConfigService, AppConfigValues } from './app-config.service';
 
 @Injectable()
 export class DebugAppConfigService extends AppConfigService {
-    constructor(private storage: StorageService) {
+    constructor (private storage: StorageService) {
         super();
     }
 
-    get<T>(key: string, defaultValue?: T): T {
+    get<T> (key: string, defaultValue?: T): T {
         if (key === AppConfigValues.OAUTHCONFIG) {
             return JSON.parse(this.storage.getItem(key)) || super.get<T>(key, defaultValue);
         } else if (key === AppConfigValues.APPLICATION) {

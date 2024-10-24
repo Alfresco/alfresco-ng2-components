@@ -19,10 +19,10 @@ import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angu
 import { ApplicationInstanceModel, DEFAULT_APP_INSTANCE_ICON, DEFAULT_APP_INSTANCE_THEME } from '../models/application-instance.model';
 
 @Component({
-  selector: 'adf-cloud-app-details',
-  templateUrl: './app-details-cloud.component.html',
-  styleUrls: ['./app-details-cloud.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  "selector": 'adf-cloud-app-details',
+  "templateUrl": './app-details-cloud.component.html',
+  "styleUrls": ['./app-details-cloud.component.scss'],
+  "encapsulation": ViewEncapsulation.None
 })
 
 export class AppDetailsCloudComponent {
@@ -35,28 +35,25 @@ export class AppDetailsCloudComponent {
 
   /**
    * Pass the selected app as next
-   *
    * @param app application model
    */
-  onSelectApp(app: ApplicationInstanceModel): void {
+  onSelectApp (app: ApplicationInstanceModel): void {
     this.selectedApp.emit(app);
   }
 
   /**
    * Get application instance theme
-   *
    * @returns the name of the theme
    */
-  getTheme(): string {
+  getTheme (): string {
     return this.applicationInstance.theme || DEFAULT_APP_INSTANCE_THEME;
   }
 
   /**
    * Get application instance icon
-   *
    * @returns the name of the icon
    */
-  getIcon(): string {
+  getIcon (): string {
     return this.applicationInstance.icon || DEFAULT_APP_INSTANCE_ICON;
   }
 }

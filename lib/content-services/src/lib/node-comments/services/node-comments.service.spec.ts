@@ -31,10 +31,10 @@ describe('NodeCommentsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+            "imports": [HttpClientTestingModule],
+            "providers": [
+                { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+                { "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }
             ]
         });
         service = TestBed.inject(NodeCommentsService);
@@ -60,9 +60,9 @@ describe('NodeCommentsService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeContentComment)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeContentComment)
             });
         });
 
@@ -76,9 +76,9 @@ describe('NodeCommentsService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeContentComments)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeContentComments)
             });
         });
     });

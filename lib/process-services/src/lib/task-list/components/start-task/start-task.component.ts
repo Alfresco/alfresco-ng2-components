@@ -40,9 +40,9 @@ const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
 
 @Component({
-    selector: 'adf-start-task',
-    standalone: true,
-    imports: [
+    "selector": 'adf-start-task',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatCardModule,
@@ -55,13 +55,13 @@ const MAX_LENGTH = 255;
         MatButtonModule,
         PeopleWidgetComponent
     ],
-    templateUrl: './start-task.component.html',
-    styleUrls: ['./start-task.component.scss'],
-    providers: [
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
+    "templateUrl": './start-task.component.html',
+    "styleUrls": ['./start-task.component.scss'],
+    "providers": [
+        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter },
+        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS }
     ],
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit, OnDestroy {
     /** (required) The id of the app. */
@@ -95,60 +95,60 @@ export class StartTaskComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private taskService: TaskListService, private formBuilder: UntypedFormBuilder) {}
+    constructor (private taskService: TaskListService, private formBuilder: UntypedFormBuilder) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.name) {
             this.taskDetailsModel.name = this.name;
         }
 
         this.validateMaxTaskNameLength();
 
-        this.field = new FormFieldModel(new FormModel(), { id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee' });
+        this.field = new FormFieldModel(new FormModel(), { "id": this.assigneeId, "value": this.assigneeId, "placeholder": 'Assignee' });
 
         this.loadFormsTask();
         this.buildForm();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    buildForm(): void {
+    buildForm (): void {
         this.taskForm = this.formBuilder.group({
-            name: new UntypedFormControl(this.taskDetailsModel.name, [
+            "name": new UntypedFormControl(this.taskDetailsModel.name, [
                 Validators.required,
                 Validators.maxLength(this.maxTaskNameLength),
                 this.whitespaceValidator
             ]),
-            description: new UntypedFormControl('', [this.whitespaceValidator]),
-            formKey: new UntypedFormControl('')
+            "description": new UntypedFormControl('', [this.whitespaceValidator]),
+            "formKey": new UntypedFormControl('')
         });
 
         this.taskForm.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
     }
 
-    private whitespaceValidator(control: UntypedFormControl): any {
+    private whitespaceValidator (control: UntypedFormControl): any {
         if (control.value) {
             const isWhitespace = (control.value || '').trim().length === 0;
             const isControlValid = control.value.length === 0 || !isWhitespace;
-            return isControlValid ? null : { whitespace: true };
+            return isControlValid ? null : { "whitespace": true };
         }
         return null;
     }
 
-    setTaskDetails(form: any) {
+    setTaskDetails (form: any) {
         this.taskDetailsModel.name = form.name;
         this.taskDetailsModel.description = form.description;
         this.taskDetailsModel.formKey = form.formKey ? form.formKey.toString() : null;
     }
 
-    isFormValid(): boolean {
+    isFormValid (): boolean {
         return this.taskForm.valid && !this.dateError && !this.loading;
     }
 
-    saveTask(): void {
+    saveTask (): void {
         this.loading = true;
         if (this.appId) {
             this.taskDetailsModel.category = this.appId.toString();
@@ -178,21 +178,21 @@ export class StartTaskComponent implements OnInit, OnDestroy {
             );
     }
 
-    setAssigneeId(userId: number): void {
+    setAssigneeId (userId: number): void {
         this.assigneeId = userId;
     }
 
-    onCancel(): void {
+    onCancel (): void {
         this.cancel.emit();
     }
 
-    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+    getDisplayUser (firstName: string, lastName: string, delimiter: string = '-'): string {
         firstName = firstName !== null ? firstName : '';
         lastName = lastName !== null ? lastName : '';
         return firstName + delimiter + lastName;
     }
 
-    onDateChanged(newDateValue: Date | string) {
+    onDateChanged (newDateValue: Date | string) {
         this.dateError = false;
 
         if (newDateValue) {
@@ -215,21 +215,21 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         }
     }
 
-    private validateMaxTaskNameLength() {
+    private validateMaxTaskNameLength () {
         if (this.maxTaskNameLength > MAX_LENGTH) {
             this.maxTaskNameLength = MAX_LENGTH;
         }
     }
 
-    get nameController(): AbstractControl {
+    get nameController (): AbstractControl {
         return this.taskForm.get('name');
     }
 
-    get descriptionController(): AbstractControl {
+    get descriptionController (): AbstractControl {
         return this.taskForm.get('description');
     }
 
-    private attachForm(taskId: string, formKey: string): Observable<any> {
+    private attachForm (taskId: string, formKey: string): Observable<any> {
         let response: any = EMPTY;
         if (taskId && formKey) {
             response = this.taskService.attachFormToATask(taskId, parseInt(formKey, 10));
@@ -237,14 +237,14 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         return response;
     }
 
-    private assignTaskByUserId(taskId: string, userId: string): Observable<TaskRepresentation> {
+    private assignTaskByUserId (taskId: string, userId: string): Observable<TaskRepresentation> {
         if (taskId && userId) {
             return this.taskService.assignTaskByUserId(taskId, userId);
         }
         return EMPTY;
     }
 
-    private loadFormsTask(): void {
+    private loadFormsTask (): void {
         this.forms$ = this.taskService.getFormList();
     }
 }

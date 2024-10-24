@@ -22,24 +22,24 @@ import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-about-extension-list',
-    templateUrl: './about-extension-list.component.html',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule, MatTableModule, TranslateModule]
+    "selector": 'adf-about-extension-list',
+    "templateUrl": './about-extension-list.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "standalone": true,
+    "imports": [CommonModule, MatTableModule, TranslateModule]
 })
 export class AboutExtensionListComponent {
     columns = [
         {
-            columnDef: 'name',
-            header: 'ABOUT.PLUGINS.NAME',
-            cell: (row: ExtensionRef) => `${row.$name}`
+            "columnDef": 'name',
+            "header": 'ABOUT.PLUGINS.NAME',
+            "cell": (row: ExtensionRef) => `${row.$name}`
         },
         {
-            columnDef: 'version',
-            header: 'ABOUT.PLUGINS.VERSION',
-            cell: (row: ExtensionRef) => `${row.$version}`
+            "columnDef": 'version',
+            "header": 'ABOUT.PLUGINS.VERSION',
+            "cell": (row: ExtensionRef) => `${row.$version}`
         }
     ];
 

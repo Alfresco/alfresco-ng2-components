@@ -25,14 +25,14 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-error-content',
-    standalone: true,
-    imports: [CommonModule, TranslateModule],
-    templateUrl: './error-content.component.html',
-    styleUrls: ['./error-content.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-error-content' }
+    "selector": 'adf-error-content',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule],
+    "templateUrl": './error-content.component.html',
+    "styleUrls": ['./error-content.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-error-content' }
 })
 export class ErrorContentComponent implements OnInit {
     static UNKNOWN_ERROR = 'UNKNOWN';
@@ -44,9 +44,9 @@ export class ErrorContentComponent implements OnInit {
     errorCodeTranslated: string;
     isSmallScreen$: Observable<boolean>;
 
-    constructor(private route: ActivatedRoute, private translateService: TranslationService, private breakpointObserver: BreakpointObserver) {}
+    constructor (private route: ActivatedRoute, private translateService: TranslationService, private breakpointObserver: BreakpointObserver) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.route) {
             this.route.params.subscribe((params) => {
                 const code = params['id'] || this.errorCode;
@@ -58,7 +58,7 @@ export class ErrorContentComponent implements OnInit {
         this.isSmallScreen$ = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
     }
 
-    checkErrorExists(errorCode: string) {
+    checkErrorExists (errorCode: string) {
         const errorMessage = this.translateService.instant('ERROR_CONTENT.' + errorCode);
         return errorMessage !== 'ERROR_CONTENT.' + errorCode;
     }

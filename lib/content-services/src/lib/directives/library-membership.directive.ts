@@ -25,9 +25,9 @@ import { VersionCompatibilityService } from '../version-compatibility/version-co
 import { SitesService } from '../common/services/sites.service';
 
 @Directive({
-    standalone: true,
-    selector: '[adf-library-membership]',
-    exportAs: 'libraryMembership'
+    "standalone": true,
+    "selector": '[adf-library-membership]',
+    "exportAs": 'libraryMembership'
 })
 export class LibraryMembershipDirective implements OnChanges {
     targetSite: any = null;
@@ -35,7 +35,7 @@ export class LibraryMembershipDirective implements OnChanges {
     isJoinRequested: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
+    get sitesApi (): SitesApi {
         this._sitesApi = this._sitesApi ?? new SitesApi(this.alfrescoApiService.getInstance());
         return this._sitesApi;
     }
@@ -56,17 +56,17 @@ export class LibraryMembershipDirective implements OnChanges {
     error = new EventEmitter<LibraryMembershipErrorEvent>();
 
     @HostListener('click')
-    onClick() {
+    onClick () {
         this.toggleMembershipRequest();
     }
 
-    constructor(
+    constructor (
         private alfrescoApiService: AlfrescoApiService,
         private sitesService: SitesService,
         private versionCompatibilityService: VersionCompatibilityService
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (!changes.selection.currentValue?.entry) {
             this.targetSite = null;
 
@@ -76,7 +76,7 @@ export class LibraryMembershipDirective implements OnChanges {
         this.markMembershipRequest();
     }
 
-    toggleMembershipRequest() {
+    toggleMembershipRequest () {
         if (!this.targetSite) {
             return;
         }
@@ -87,16 +87,16 @@ export class LibraryMembershipDirective implements OnChanges {
                     this.targetSite.joinRequested = false;
                     this.isJoinRequested.next(false);
                     const info = {
-                        updatedEntry: this.targetSite,
-                        shouldReload: false,
-                        i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOIN_CANCELED'
+                        "updatedEntry": this.targetSite,
+                        "shouldReload": false,
+                        "i18nKey": 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOIN_CANCELED'
                     };
                     this.toggle.emit(info);
                 },
                 (error) => {
                     const errWithMessage = {
                         error,
-                        i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.ERRORS.JOIN_CANCEL_FAILED'
+                        "i18nKey": 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.ERRORS.JOIN_CANCEL_FAILED'
                     };
                     this.error.emit(errWithMessage);
                 }
@@ -111,15 +111,15 @@ export class LibraryMembershipDirective implements OnChanges {
 
                     if (createdMembership.entry?.site?.role) {
                         const info = {
-                            shouldReload: true,
-                            i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOINED'
+                            "shouldReload": true,
+                            "i18nKey": 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOINED'
                         };
                         this.toggle.emit(info);
                     } else {
                         const info = {
-                            updatedEntry: this.targetSite,
-                            shouldReload: false,
-                            i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOIN_REQUESTED'
+                            "updatedEntry": this.targetSite,
+                            "shouldReload": false,
+                            "i18nKey": 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOIN_REQUESTED'
                         };
                         this.toggle.emit(info);
                     }
@@ -127,7 +127,7 @@ export class LibraryMembershipDirective implements OnChanges {
                 (error) => {
                     const errWithMessage = {
                         error,
-                        i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.ERRORS.JOIN_REQUEST_FAILED'
+                        "i18nKey": 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.ERRORS.JOIN_REQUEST_FAILED'
                     };
 
                     const senderEmailCheck = 'Failed to resolve sender mail address';
@@ -151,8 +151,8 @@ export class LibraryMembershipDirective implements OnChanges {
                 (createdMembership) => {
                     if (createdMembership.entry?.role) {
                         const info = {
-                            shouldReload: true,
-                            i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOINED'
+                            "shouldReload": true,
+                            "i18nKey": 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.INFO.JOINED'
                         };
                         this.toggle.emit(info);
                     }
@@ -160,7 +160,7 @@ export class LibraryMembershipDirective implements OnChanges {
                 (error) => {
                     const errWithMessage = {
                         error,
-                        i18nKey: 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.ERRORS.JOIN_REQUEST_FAILED'
+                        "i18nKey": 'ADF_LIBRARY_MEMBERSHIP_MESSAGES.ERRORS.JOIN_REQUEST_FAILED'
                     };
 
                     const senderEmailCheck = 'Failed to resolve sender mail address';
@@ -180,7 +180,7 @@ export class LibraryMembershipDirective implements OnChanges {
         }
     }
 
-    markMembershipRequest() {
+    markMembershipRequest () {
         if (!this.targetSite) {
             return;
         }
@@ -199,9 +199,9 @@ export class LibraryMembershipDirective implements OnChanges {
         );
     }
 
-    private joinLibraryRequest(): Observable<SiteMembershipRequestEntry> {
+    private joinLibraryRequest (): Observable<SiteMembershipRequestEntry> {
         const memberBody = {
-            id: this.targetSite.id
+            "id": this.targetSite.id
         } as SiteMembershipRequestBodyCreate;
 
         if (this.versionCompatibilityService.isVersionSupported('7.0.0')) {
@@ -210,18 +210,18 @@ export class LibraryMembershipDirective implements OnChanges {
         return from(this.sitesApi.createSiteMembershipRequestForPerson('-me-', memberBody));
     }
 
-    private joinLibrary() {
+    private joinLibrary () {
         return this.sitesService.createSiteMembership(this.targetSite.id, {
-            role: 'SiteConsumer',
-            id: '-me-'
+            "role": 'SiteConsumer',
+            "id": '-me-'
         });
     }
 
-    private cancelJoinRequest(): Observable<void> {
+    private cancelJoinRequest (): Observable<void> {
         return from(this.sitesApi.deleteSiteMembershipRequestForPerson('-me-', this.targetSite.id));
     }
 
-    private getMembershipRequest() {
+    private getMembershipRequest () {
         return from(this.sitesApi.getSiteMembershipRequestForPerson('-me-', this.targetSite.id));
     }
 }

@@ -36,10 +36,10 @@ export const LAYOUT_GRID: string = 'GRID';
 export const RUNNING_STATUS: string = 'RUNNING';
 
 @Component({
-    selector: 'adf-cloud-app-list',
-    templateUrl: './app-list-cloud.component.html',
-    styleUrls: ['./app-list-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-app-list',
+    "templateUrl": './app-list-cloud.component.html',
+    "styleUrls": ['./app-list-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class AppListCloudComponent implements OnInit, AfterContentInit {
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -60,9 +60,9 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
     loadingError$ = new Subject<boolean>();
     hasEmptyCustomContentTemplate: boolean = false;
 
-    constructor(private appsProcessCloudService: AppsProcessCloudService) { }
+    constructor (private appsProcessCloudService: AppsProcessCloudService) { }
 
-    ngOnInit() {
+    ngOnInit () {
         if (!this.isValidType()) {
             this.setDefaultLayoutType();
         }
@@ -76,22 +76,21 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
             );
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         if (this.emptyCustomContent) {
             this.hasEmptyCustomContentTemplate = true;
         }
     }
 
-    onSelectApp(app: ApplicationInstanceModel): void {
+    onSelectApp (app: ApplicationInstanceModel): void {
         this.appClick.emit(app);
     }
 
     /**
      * Check if the value of the layoutType property is an allowed value
-     *
      * @returns `true` if layout type is valid, otherwise `false`
      */
-    isValidType(): boolean {
+    isValidType (): boolean {
         if (this.layoutType && (this.layoutType === LAYOUT_LIST || this.layoutType === LAYOUT_GRID)) {
             return true;
         }
@@ -101,25 +100,23 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
     /**
      * Assign the default value to LayoutType
      */
-    setDefaultLayoutType(): void {
+    setDefaultLayoutType (): void {
         this.layoutType = LAYOUT_GRID;
     }
 
     /**
      * Check if the layout type is LIST
-     *
      * @returns `true` if the layout is list, otherwise `false`
      */
-    isList(): boolean {
+    isList (): boolean {
         return this.layoutType === LAYOUT_LIST;
     }
 
     /**
      * Check if the layout type is GRID
-     *
      * @returns `true` if layout is grid, otherwise `false`
      */
-    isGrid(): boolean {
+    isGrid (): boolean {
         return this.layoutType === LAYOUT_GRID;
     }
 }

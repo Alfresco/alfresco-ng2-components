@@ -36,13 +36,13 @@ export interface SearchListOption {
 }
 
 @Component({
-    selector: 'adf-search-check-list',
-    standalone: true,
-    imports: [CommonModule, MatCheckboxModule, TranslateModule, MatButtonModule, MatIconModule],
-    templateUrl: './search-check-list.component.html',
-    styleUrls: ['./search-check-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-check-list' }
+    "selector": 'adf-search-check-list',
+    "standalone": true,
+    "imports": [CommonModule, MatCheckboxModule, TranslateModule, MatButtonModule, MatIconModule],
+    "templateUrl": './search-check-list.component.html',
+    "styleUrls": ['./search-check-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-check-list' }
 })
 export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy {
     id: string;
@@ -58,11 +58,11 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(private translationService: TranslationService) {
+    constructor (private translationService: TranslationService) {
         this.options = new SearchFilterList<SearchListOption>();
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         if (this.settings) {
             this.operator = this.settings.operator || 'OR';
             this.pageSize = this.settings.pageSize || 5;
@@ -102,12 +102,12 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    clear() {
+    clear () {
         this.isActive = false;
         this.clearOptions();
         if (this.id && this.context && this.enableChangeUpdate) {
@@ -116,7 +116,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
         }
     }
 
-    clearOptions() {
+    clearOptions () {
         this.options.items.forEach((opt) => {
             opt.checked = false;
         });
@@ -127,7 +127,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
         }
     }
 
-    reset(updateContext = true) {
+    reset (updateContext = true) {
         this.isActive = false;
         this.clearOptions();
         if (this.id && this.context) {
@@ -138,7 +138,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
         }
     }
 
-    updateDisplayValue(): void {
+    updateDisplayValue (): void {
         const displayValue = this.options.items
             .filter((option) => option.checked)
             .map(({ name }) => this.translationService.instant(name))
@@ -146,7 +146,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
         this.displayValue$.next(displayValue);
     }
 
-    changeHandler(event: MatCheckboxChange, option: any) {
+    changeHandler (event: MatCheckboxChange, option: any) {
         option.checked = event.checked;
         const checkedValues = this.getCheckedValues();
         this.isActive = !!checkedValues.length;
@@ -155,25 +155,25 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
         }
     }
 
-    hasValidValue() {
+    hasValidValue () {
         const checkedValues = this.getCheckedValues();
         return !!checkedValues.length;
     }
 
-    getCurrentValue() {
+    getCurrentValue () {
         return this.getCheckedValues();
     }
 
-    setValue(value: any) {
+    setValue (value: any) {
         this.options.items.filter((item) => value.includes(item.value)).map((item) => (item.checked = true));
         this.submitValues();
     }
 
-    private getCheckedValues() {
+    private getCheckedValues () {
         return this.options.items.filter((option) => option.checked).map((option) => option.value);
     }
 
-    submitValues(updateContext = true) {
+    submitValues (updateContext = true) {
         const checkedValues = this.getCheckedValues();
         if (checkedValues.length !== 0) {
             this.context.filterRawParams[this.id] = checkedValues;

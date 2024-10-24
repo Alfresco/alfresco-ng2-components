@@ -23,20 +23,20 @@ import { By } from '@angular/platform-browser';
 describe('DynamicChipListComponent', () => {
     let chips: Chip[] = [
         {
-            name: 'test1',
-            id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
+            "name": 'test1',
+            "id": '0ee933fa-57fc-4587-8a77-b787e814f1d2'
         },
         {
-            name: 'test2',
-            id: 'fcb92659-1f10-41b4-9b17-851b72a3b597'
+            "name": 'test2',
+            "id": 'fcb92659-1f10-41b4-9b17-851b72a3b597'
         },
         {
-            name: 'test3',
-            id: 'fb4213c0-729d-466c-9a6c-ee2e937273bf'
+            "name": 'test3',
+            "id": 'fb4213c0-729d-466c-9a6c-ee2e937273bf'
         },
         {
-            name: 'test4',
-            id: 'as4213c0-729d-466c-9a6c-ee2e937273as'
+            "name": 'test4',
+            "id": 'as4213c0-729d-466c-9a6c-ee2e937273as'
         }
     ];
     let component: DynamicChipListComponent;
@@ -48,7 +48,7 @@ describe('DynamicChipListComponent', () => {
      * Find 'More' button
      * @returns native element
      */
-    function findViewMoreButton(): HTMLButtonElement {
+    function findViewMoreButton (): HTMLButtonElement {
         return element.querySelector('[data-automation-id="adf-dynamic-chip-list-view-more-button"]');
     }
 
@@ -56,13 +56,13 @@ describe('DynamicChipListComponent', () => {
      * Get the chips
      * @returns native element list
      */
-    function findChips(): NodeListOf<Element> {
+    function findChips (): NodeListOf<Element> {
         return element.querySelectorAll('.adf-dynamic-chip-list-chip');
     }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         const resizeObserverSpy = spyOn(window, 'ResizeObserver').and.callThrough();
         fixture = TestBed.createComponent(DynamicChipListComponent);
@@ -76,7 +76,7 @@ describe('DynamicChipListComponent', () => {
     describe('Rendering tests', () => {
         it('should render every chip', async () => {
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             fixture.detectChanges();
             await fixture.whenStable();
@@ -94,7 +94,7 @@ describe('DynamicChipListComponent', () => {
             spyOn(component.removedChip, 'emit');
 
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             fixture.detectChanges();
             await fixture.whenStable();
@@ -109,7 +109,7 @@ describe('DynamicChipListComponent', () => {
             component.showDelete = false;
 
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             fixture.detectChanges();
             await fixture.whenStable();
@@ -122,7 +122,7 @@ describe('DynamicChipListComponent', () => {
             component.showDelete = true;
 
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             fixture.detectChanges();
             await fixture.whenStable();
@@ -135,7 +135,7 @@ describe('DynamicChipListComponent', () => {
             component.roundUpChips = true;
 
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             fixture.detectChanges();
             await fixture.whenStable();
@@ -146,7 +146,7 @@ describe('DynamicChipListComponent', () => {
 
         it('should not render view more button by default', async () => {
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             fixture.detectChanges();
             await fixture.whenStable();
@@ -163,7 +163,7 @@ describe('DynamicChipListComponent', () => {
          * Render chips
          * @param chipsToRender chips to render
          */
-        async function renderChips(chipsToRender?: Chip[]) {
+        async function renderChips (chipsToRender?: Chip[]) {
             chips = chipsToRender || initialChips;
             component.chips = chips;
             fixture.detectChanges();
@@ -186,7 +186,7 @@ describe('DynamicChipListComponent', () => {
         it('should render view more button when limiting is enabled', fakeAsync(() => {
             renderChips();
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
 
             tick();
@@ -199,7 +199,7 @@ describe('DynamicChipListComponent', () => {
             renderChips();
             element.style.maxWidth = '800px';
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             tick();
             fixture.detectChanges();
@@ -211,7 +211,7 @@ describe('DynamicChipListComponent', () => {
         it('should emit displayNext event when view more button is clicked', fakeAsync(() => {
             renderChips();
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             tick();
             fixture.detectChanges();
@@ -228,12 +228,12 @@ describe('DynamicChipListComponent', () => {
         it('should not render view more button when chip takes more than one line and there are no more chips', fakeAsync(() => {
             renderChips([
                 {
-                    name: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
-                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
+                    "name": 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
+                    "id": '0ee933fa-57fc-4587-8a77-b787e814f1d2'
                 }
             ]);
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
 
             tick();
@@ -245,16 +245,16 @@ describe('DynamicChipListComponent', () => {
         it('should render view more button when chip takes more than one line and there are more chips', fakeAsync(() => {
             renderChips([
                 {
-                    name: 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
-                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d2'
+                    "name": 'VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag VeryLongTag',
+                    "id": '0ee933fa-57fc-4587-8a77-b787e814f1d2'
                 },
                 {
-                    name: 'Some other tag',
-                    id: '0ee933fa-57fc-4587-8a77-b787e814f1d3'
+                    "name": 'Some other tag',
+                    "id": '0ee933fa-57fc-4587-8a77-b787e814f1d3'
                 }
             ]);
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
 
             tick();
@@ -268,7 +268,7 @@ describe('DynamicChipListComponent', () => {
         it('should not render view more button when there is enough space after resizing', fakeAsync(() => {
             renderChips();
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             tick();
             fixture.detectChanges();
@@ -286,7 +286,7 @@ describe('DynamicChipListComponent', () => {
             element.style.maxWidth = '800px';
 
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             tick();
             fixture.detectChanges();
@@ -301,7 +301,7 @@ describe('DynamicChipListComponent', () => {
         it('should not render view more button again after resizing when there is not enough space if user requested to see all chips', fakeAsync(() => {
             renderChips();
             component.ngOnChanges({
-                chips: new SimpleChange(undefined, component.chips, true)
+                "chips": new SimpleChange(undefined, component.chips, true)
             });
             tick();
             fixture.detectChanges();

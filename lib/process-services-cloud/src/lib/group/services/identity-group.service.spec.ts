@@ -35,8 +35,8 @@ describe('IdentityGroupService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), HttpClientTestingModule],
-            providers: [IdentityGroupService]
+            "imports": [TranslateModule.forRoot(), HttpClientTestingModule],
+            "providers": [IdentityGroupService]
         });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
@@ -52,7 +52,7 @@ describe('IdentityGroupService', () => {
                 expect(res).toBeDefined();
                 expect(searchSpy).toHaveBeenCalled();
                 expect(service.queryParams).toEqual({
-                    search: 'fake'
+                    "search": 'fake'
                 });
                 done();
             });
@@ -85,8 +85,8 @@ describe('IdentityGroupService', () => {
                 expect(res).toBeDefined();
                 expect(searchSpy).toHaveBeenCalled();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    role: 'fake-role-1,fake-role-2'
+                    "search": 'fake',
+                    "role": 'fake-role-1,fake-role-2'
                 });
                 done();
             });
@@ -103,8 +103,8 @@ describe('IdentityGroupService', () => {
                 (error) => {
                     expect(searchSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
-                        search: 'fake',
-                        role: 'fake-role-1,fake-role-2'
+                        "search": 'fake',
+                        "role": 'fake-role-1,fake-role-2'
                     });
                     expect(error.status).toEqual(404);
                     expect(error.statusText).toEqual('Not Found');
@@ -120,8 +120,8 @@ describe('IdentityGroupService', () => {
             service.search('fake', mockSearchGroupByApp).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    application: 'fake-app-name'
+                    "search": 'fake',
+                    "application": 'fake-app-name'
                 });
                 done();
             });
@@ -133,9 +133,9 @@ describe('IdentityGroupService', () => {
             service.search('fake', mockSearchGroupByRolesAndApp).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    application: 'fake-app-name',
-                    role: 'fake-role-1,fake-role-2'
+                    "search": 'fake',
+                    "application": 'fake-app-name',
+                    "role": 'fake-role-1,fake-role-2'
                 });
                 done();
             });
@@ -152,8 +152,8 @@ describe('IdentityGroupService', () => {
                 (error) => {
                     expect(searchSpy).toHaveBeenCalled();
                     expect(service.queryParams).toEqual({
-                        search: 'fake',
-                        application: 'fake-app-name'
+                        "search": 'fake',
+                        "application": 'fake-app-name'
                     });
                     expect(error.status).toEqual(404);
                     expect(error.statusText).toEqual('Not Found');

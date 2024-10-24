@@ -30,7 +30,7 @@ describe('AttachFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, AttachFormComponent]
+            "imports": [ProcessTestingModule, AttachFormComponent]
         });
         fixture = TestBed.createComponent(AttachFormComponent);
         component = fixture.componentInstance;
@@ -158,10 +158,10 @@ describe('AttachFormComponent', () => {
 
         spyOn(taskService, 'attachFormToATask').and.returnValue(
             of({
-                id: 91,
-                name: 'fakeName',
-                formKey: 1204,
-                assignee: null
+                "id": 91,
+                "name": 'fakeName',
+                "formKey": 1204,
+                "assignee": null
             })
         );
 

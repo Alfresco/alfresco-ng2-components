@@ -29,12 +29,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'adf-aspect-list',
-    standalone: true,
-    imports: [CommonModule, MatExpansionModule, MatCheckboxModule, MatTableModule, TranslateModule, MatProgressSpinnerModule],
-    templateUrl: './aspect-list.component.html',
-    styleUrls: ['./aspect-list.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-aspect-list',
+    "standalone": true,
+    "imports": [CommonModule, MatExpansionModule, MatCheckboxModule, MatTableModule, TranslateModule, MatProgressSpinnerModule],
+    "templateUrl": './aspect-list.component.html',
+    "styleUrls": ['./aspect-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class AspectListComponent implements OnInit, OnDestroy {
     /** Node Id of the node that we want to update */
@@ -62,14 +62,14 @@ export class AspectListComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) {}
+    constructor (private aspectListService: AspectListService, private nodeApiService: NodesApiService) {}
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         let aspects$: Observable<AspectEntry[]>;
         if (this.nodeId) {
             const node$ = this.nodeApiService.getNode(this.nodeId);
@@ -97,11 +97,11 @@ export class AspectListComponent implements OnInit, OnDestroy {
         this.aspects$ = aspects$.pipe(map((aspects) => aspects.filter((aspect) => !this.excludedAspects.includes(aspect.entry.id))));
     }
 
-    onCheckBoxClick(event: Event) {
+    onCheckBoxClick (event: Event) {
         event.stopImmediatePropagation();
     }
 
-    onChange(change: MatCheckboxChange, prefixedName: string) {
+    onChange (change: MatCheckboxChange, prefixedName: string) {
         if (change.checked) {
             this.nodeAspects.push(prefixedName);
         } else {
@@ -112,7 +112,7 @@ export class AspectListComponent implements OnInit, OnDestroy {
         this.updateCounter.emit(this.nodeAspects.length);
     }
 
-    reset() {
+    reset () {
         if (this.nodeAspectStatus && this.nodeAspectStatus.length > 0) {
             this.nodeAspects.splice(0, this.nodeAspects.length, ...this.nodeAspectStatus);
             this.hasEqualAspect = true;
@@ -123,22 +123,22 @@ export class AspectListComponent implements OnInit, OnDestroy {
         }
     }
 
-    clear() {
+    clear () {
         this.nodeAspects = [];
         this.updateEqualityOfAspectList();
         this.valueChanged.emit([...this.nodeAspects, ...this.notDisplayedAspects]);
         this.updateCounter.emit(this.nodeAspects.length);
     }
 
-    getId(aspect: any): string {
+    getId (aspect: any): string {
         return aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id.replace(':', '-');
     }
 
-    getTitle(aspect: any): string {
+    getTitle (aspect: any): string {
         return aspect?.entry?.title ? aspect?.entry?.title : aspect?.entry?.id;
     }
 
-    private updateEqualityOfAspectList() {
+    private updateEqualityOfAspectList () {
         if (this.nodeAspectStatus.length !== this.nodeAspects.length) {
             this.hasEqualAspect = false;
         } else {

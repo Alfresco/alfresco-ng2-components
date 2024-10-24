@@ -20,13 +20,13 @@ import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-fi
 import { add, endOfDay, endOfMonth, endOfQuarter, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfQuarter, startOfWeek, startOfYear } from 'date-fns';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class DateRangeFilterService {
 
     currentDate = new Date();
 
-    getDateRange(type: DateCloudFilterType): DateRangeFilter {
+    getDateRange (type: DateCloudFilterType): DateRangeFilter {
         switch (type) {
             case DateCloudFilterType.TODAY: return this.getTodayDateRange();
             case DateCloudFilterType.TOMORROW: return this.getTomorrowDateRange();
@@ -39,63 +39,63 @@ export class DateRangeFilterService {
         }
     }
 
-    isDateRangeType(type: DateCloudFilterType) {
+    isDateRangeType (type: DateCloudFilterType) {
         return type === DateCloudFilterType.RANGE;
     }
 
-    private resetDateRange(): DateRangeFilter {
+    private resetDateRange (): DateRangeFilter {
         return {
-            startDate: null,
-            endDate: null
+            "startDate": null,
+            "endDate": null
         };
     }
 
-    private getNext7DaysDateRange(): DateRangeFilter {
+    private getNext7DaysDateRange (): DateRangeFilter {
         return {
-            startDate: startOfDay(new Date()).toISOString(),
-            endDate: add(endOfDay(new Date()), { days: 7 }).toISOString()
+            "startDate": startOfDay(new Date()).toISOString(),
+            "endDate": add(endOfDay(new Date()), { "days": 7 }).toISOString()
         };
     }
 
-    private getTomorrowDateRange(): DateRangeFilter {
+    private getTomorrowDateRange (): DateRangeFilter {
         return {
-            startDate: endOfDay(new Date()).toISOString(),
-            endDate: add(endOfDay(new Date()), { days: 1 }).toISOString()
+            "startDate": endOfDay(new Date()).toISOString(),
+            "endDate": add(endOfDay(new Date()), { "days": 1 }).toISOString()
         };
     }
 
-    private getCurrentYearDateRange(): DateRangeFilter {
+    private getCurrentYearDateRange (): DateRangeFilter {
         return {
-            startDate: startOfYear(new Date()).toISOString(),
-            endDate: endOfYear(new Date()).toISOString()
+            "startDate": startOfYear(new Date()).toISOString(),
+            "endDate": endOfYear(new Date()).toISOString()
         };
     }
 
-    private getTodayDateRange(): DateRangeFilter {
+    private getTodayDateRange (): DateRangeFilter {
         return {
-            startDate: startOfDay(new Date()).toISOString(),
-            endDate: endOfDay(new Date()).toISOString()
+            "startDate": startOfDay(new Date()).toISOString(),
+            "endDate": endOfDay(new Date()).toISOString()
         };
     }
 
-    private getCurrentWeekRange(): DateRangeFilter {
+    private getCurrentWeekRange (): DateRangeFilter {
         return  {
-            startDate: startOfWeek(new Date()).toISOString(),
-            endDate: endOfWeek(new Date()).toISOString()
+            "startDate": startOfWeek(new Date()).toISOString(),
+            "endDate": endOfWeek(new Date()).toISOString()
         };
     }
 
-    private getCurrentMonthDateRange(): DateRangeFilter {
+    private getCurrentMonthDateRange (): DateRangeFilter {
         return {
-            startDate: startOfMonth(new Date()).toISOString(),
-            endDate: endOfMonth(new Date()).toISOString()
+            "startDate": startOfMonth(new Date()).toISOString(),
+            "endDate": endOfMonth(new Date()).toISOString()
         };
     }
 
-    private getQuarterDateRange(): DateRangeFilter {
+    private getQuarterDateRange (): DateRangeFilter {
         return {
-            startDate: startOfQuarter(new Date()).toISOString(),
-            endDate: endOfQuarter(new Date()).toISOString()
+            "startDate": startOfQuarter(new Date()).toISOString(),
+            "endDate": endOfQuarter(new Date()).toISOString()
         };
     }
 }

@@ -31,9 +31,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
-    selector: 'people-widget',
-    standalone: true,
-    imports: [
+    "selector": 'people-widget',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatFormFieldModule,
@@ -43,9 +43,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         InitialUsernamePipe,
         ErrorWidgetComponent
     ],
-    templateUrl: './people.widget.html',
-    styleUrls: ['./people.widget.scss'],
-    host: {
+    "templateUrl": './people.widget.html',
+    "styleUrls": ['./people.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -56,10 +56,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
-    @ViewChild('inputValue', { static: true })
+    @ViewChild('inputValue', { "static": true })
     input: ElementRef;
 
     /** Emitted when a valid user has been highlighted */
@@ -90,11 +90,11 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         })
     );
 
-    constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
+    constructor (public formService: FormService, public peopleProcessService: PeopleProcessService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field) {
             if (this.field.value) {
                 this.searchTerm.setValue(this.field.value);
@@ -110,7 +110,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    checkUserAndValidateForm(list: LightUserRepresentation[], value: string): void {
+    checkUserAndValidateForm (list: LightUserRepresentation[], value: string): void {
         const isValidUser = this.isValidUser(list, value);
         if (isValidUser || value === '') {
             this.field.validationSummary.message = '';
@@ -123,7 +123,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    isValidUser(users: LightUserRepresentation[], name: string): boolean {
+    isValidUser (users: LightUserRepresentation[], name: string): boolean {
         if (users) {
             return !!users.find((user) => {
                 const selectedUser = this.getDisplayName(user).toLocaleLowerCase() === name.toLocaleLowerCase();
@@ -136,7 +136,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return false;
     }
 
-    getDisplayName(model: LightUserRepresentation) {
+    getDisplayName (model: LightUserRepresentation) {
         if (model) {
             const displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
@@ -144,7 +144,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item?: LightUserRepresentation) {
+    onItemSelect (item?: LightUserRepresentation) {
         if (item) {
             this.field.value = item;
         } else {

@@ -29,9 +29,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { first } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-search-widget-chip',
-    standalone: true,
-    imports: [
+    "selector": 'adf-search-widget-chip',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatChipsModule,
         MatMenuModule,
@@ -41,35 +41,35 @@ import { first } from 'rxjs/operators';
         SearchWidgetContainerComponent,
         MatButtonModule
     ],
-    templateUrl: './search-widget-chip.component.html',
-    styles: [
+    "templateUrl": './search-widget-chip.component.html',
+    "styles": [
         `
             .adf-search-widget-extra-width.adf-search-filter-chip-menu-panel {
                 max-width: 500px;
             }
         `
     ],
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchWidgetChipComponent implements AfterViewInit {
     @Input()
     category: SearchCategory;
 
-    @ViewChild('menuContainer', { static: false })
+    @ViewChild('menuContainer', { "static": false })
     menuContainer: ElementRef;
 
-    @ViewChild('menuTrigger', { static: false })
+    @ViewChild('menuTrigger', { "static": false })
     menuTrigger: MatMenuTrigger;
 
-    @ViewChild(SearchWidgetContainerComponent, { static: false })
+    @ViewChild(SearchWidgetContainerComponent, { "static": false })
     widgetContainerComponent: SearchWidgetContainerComponent;
 
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
 
-    constructor(private readonly cd: ChangeDetectorRef, private readonly focusTrapFactory: ConfigurableFocusTrapFactory) {}
+    constructor (private readonly cd: ChangeDetectorRef, private readonly focusTrapFactory: ConfigurableFocusTrapFactory) {}
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit (): void {
         this.widgetContainerComponent
             ?.getDisplayValue()
             .pipe(first())
@@ -78,30 +78,30 @@ export class SearchWidgetChipComponent implements AfterViewInit {
             });
     }
 
-    onMenuOpen() {
+    onMenuOpen () {
         if (this.menuContainer && !this.focusTrap) {
             this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
         }
         this.chipIcon = 'keyboard_arrow_up';
     }
 
-    onClosed() {
+    onClosed () {
         this.focusTrap.destroy();
         this.focusTrap = null;
         this.chipIcon = 'keyboard_arrow_down';
     }
 
-    onRemove() {
+    onRemove () {
         this.widgetContainerComponent.resetInnerWidget();
         this.menuTrigger.closeMenu();
     }
 
-    onApply() {
+    onApply () {
         this.widgetContainerComponent.applyInnerWidget();
         this.menuTrigger.closeMenu();
     }
 
-    onEnterKeydown(): void {
+    onEnterKeydown (): void {
         if (!this.menuTrigger.menuOpen) {
             this.menuTrigger.openMenu();
         } else {
@@ -109,7 +109,7 @@ export class SearchWidgetChipComponent implements AfterViewInit {
         }
     }
 
-    onEscKeydown() {
+    onEscKeydown () {
         if (this.menuTrigger.menuOpen) {
             this.menuTrigger.closeMenu();
         }

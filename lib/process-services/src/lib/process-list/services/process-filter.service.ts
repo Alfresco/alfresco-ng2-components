@@ -26,24 +26,23 @@ import {
 } from '@alfresco/js-api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ProcessFilterService {
     private _userFiltersApi: UserFiltersApi;
-    get userFiltersApi(): UserFiltersApi {
+    get userFiltersApi (): UserFiltersApi {
         this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.alfrescoApiService.getInstance());
         return this._userFiltersApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor (private alfrescoApiService: AlfrescoApiService) {}
 
     /**
      * Gets all filters defined for a Process App.
-     *
      * @param appId ID of the target app
      * @returns Array of filter details
      */
-    getProcessFilters(appId: number): Observable<UserProcessInstanceFilterRepresentation[]> {
+    getProcessFilters (appId: number): Observable<UserProcessInstanceFilterRepresentation[]> {
         return from(this.callApiProcessFilters(appId)).pipe(
             map((response) => {
                 const filters = [];
@@ -59,33 +58,30 @@ export class ProcessFilterService {
 
     /**
      * Retrieves the process filter by ID.
-     *
      * @param filterId ID of the filter
      * @param appId ID of the target app
      * @returns Details of the filter
      */
-    getProcessFilterById(filterId: number, appId?: number): Observable<UserProcessInstanceFilterRepresentation> {
+    getProcessFilterById (filterId: number, appId?: number): Observable<UserProcessInstanceFilterRepresentation> {
         return from(this.callApiProcessFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.id === filterId)));
     }
 
     /**
      * Retrieves the process filter by name.
-     *
      * @param filterName Name of the filter
      * @param appId ID of the target app
      * @returns Details of the filter
      */
-    getProcessFilterByName(filterName: string, appId?: number): Observable<UserProcessInstanceFilterRepresentation> {
+    getProcessFilterByName (filterName: string, appId?: number): Observable<UserProcessInstanceFilterRepresentation> {
         return from(this.callApiProcessFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.name === filterName)));
     }
 
     /**
      * Creates and returns the default filters for an app.
-     *
      * @param appId ID of the target app
      * @returns Default filters just created
      */
-    createDefaultFilters(appId: number): Observable<UserProcessInstanceFilterRepresentation[]> {
+    createDefaultFilters (appId: number): Observable<UserProcessInstanceFilterRepresentation[]> {
         const runningFilter = this.getRunningFilterInstance(appId, 0);
         const runningObservable = this.addProcessFilter(runningFilter);
 
@@ -101,11 +97,11 @@ export class ProcessFilterService {
                 res.forEach((filter) => {
                     if (!this.isFilterAlreadyExisting(filters, filter.name)) {
                         if (filter.name === runningFilter.name) {
-                            filters.push({ ...filter, filter: runningFilter.filter, appId });
+                            filters.push({ ...filter, "filter": runningFilter.filter, appId });
                         } else if (filter.name === completedFilter.name) {
-                            filters.push({ ...filter, filter: completedFilter.filter, appId });
+                            filters.push({ ...filter, "filter": completedFilter.filter, appId });
                         } else if (filter.name === allFilter.name) {
-                            filters.push({ ...filter, filter: allFilter.filter, appId });
+                            filters.push({ ...filter, "filter": allFilter.filter, appId });
                         }
                     }
                 });
@@ -117,50 +113,46 @@ export class ProcessFilterService {
 
     /**
      * Checks if a filter with the given name already exists in the list of filters.
-     *
      * @param filters - An array of objects representing the existing filters.
      * @param filterName - The name of the filter to check for existence.
      * @returns - True if a filter with the specified name already exists, false otherwise.
      */
-    isFilterAlreadyExisting(filters: Partial<{ name: string }>[], filterName: string): boolean {
+    isFilterAlreadyExisting (filters: Partial<{ name: string }>[], filterName: string): boolean {
         return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
     /**
      * Creates and returns a filter that matches "running" process instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns Filter just created
      */
-    getRunningFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
+    getRunningFilterInstance (appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'Running',
+            "name": 'Running',
             appId,
-            recent: true,
-            icon: 'glyphicon-random',
-            filter: { sort: 'created-desc', name: '', state: 'running' },
+            "recent": true,
+            "icon": 'glyphicon-random',
+            "filter": { "sort": 'created-desc', "name": '', "state": 'running' },
             index
         };
     }
 
     /**
      * Adds a filter.
-     *
      * @param filter The filter to add
      * @returns The filter just added
      */
-    addProcessFilter(filter: UserProcessInstanceFilterRepresentation): Observable<UserProcessInstanceFilterRepresentation> {
+    addProcessFilter (filter: UserProcessInstanceFilterRepresentation): Observable<UserProcessInstanceFilterRepresentation> {
         return from(this.userFiltersApi.createUserProcessInstanceFilter(filter));
     }
 
     /**
      * Calls `getUserProcessInstanceFilters` from the Alfresco JS API.
-     *
      * @param appId ID of the target app
      * @returns List of filter details
      */
-    callApiProcessFilters(appId?: number): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
+    callApiProcessFilters (appId?: number): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
         if (appId) {
             return this.userFiltersApi.getUserProcessInstanceFilters({ appId });
         } else {
@@ -168,24 +160,24 @@ export class ProcessFilterService {
         }
     }
 
-    getCompletedFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
+    getCompletedFilterInstance (appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'Completed',
+            "name": 'Completed',
             appId,
-            recent: false,
-            icon: 'glyphicon-ok-sign',
-            filter: { sort: 'created-desc', name: '', state: 'completed' },
+            "recent": false,
+            "icon": 'glyphicon-ok-sign',
+            "filter": { "sort": 'created-desc', "name": '', "state": 'completed' },
             index
         };
     }
 
-    getAllFilterInstance(appId: number, index?: number): UserProcessInstanceFilterRepresentation {
+    getAllFilterInstance (appId: number, index?: number): UserProcessInstanceFilterRepresentation {
         return {
-            name: 'All',
+            "name": 'All',
             appId,
-            recent: true,
-            icon: 'glyphicon-th',
-            filter: { sort: 'created-desc', name: '', state: 'all' },
+            "recent": true,
+            "icon": 'glyphicon-th',
+            "filter": { "sort": 'created-desc', "name": '', "state": 'all' },
             index
         };
     }

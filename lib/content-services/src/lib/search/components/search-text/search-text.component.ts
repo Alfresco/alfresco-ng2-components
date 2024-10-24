@@ -30,13 +30,13 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-search-text',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, MatButtonModule, FormsModule, MatIconModule],
-    templateUrl: './search-text.component.html',
-    styleUrls: ['./search-text.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-text' }
+    "selector": 'adf-search-text',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, MatButtonModule, FormsModule, MatIconModule],
+    "templateUrl": './search-text.component.html',
+    "styleUrls": ['./search-text.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-text' }
 })
 export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
     /** The content of the text box. */
@@ -53,7 +53,7 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
 
     private readonly destroy$ = new Subject<void>();
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.context && this.settings?.pattern) {
             const pattern = new RegExp(this.settings.pattern, 'g');
             const match = pattern.exec(this.context.queryFragments[this.id] || '');
@@ -90,12 +90,12 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    clear() {
+    clear () {
         this.isActive = false;
         this.value = '';
         if (this.enableChangeUpdate) {
@@ -103,12 +103,12 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
         }
     }
 
-    reset(updateContext = true) {
+    reset (updateContext = true) {
         this.value = '';
         this.updateQuery(null, updateContext);
     }
 
-    onChangedHandler(event) {
+    onChangedHandler (event) {
         this.value = event.target.value;
         this.isActive = !!this.value;
         if (this.enableChangeUpdate) {
@@ -116,7 +116,7 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
         }
     }
 
-    private updateQuery(value: string, updateContext = true) {
+    private updateQuery (value: string, updateContext = true) {
         this.context.filterRawParams[this.id] = value;
         this.displayValue$.next(value);
         if (this.context && this.settings && this.settings.field) {
@@ -127,29 +127,29 @@ export class SearchTextComponent implements SearchWidget, OnInit, OnDestroy {
         }
     }
 
-    submitValues() {
+    submitValues () {
         this.updateQuery(this.value);
     }
 
-    hasValidValue() {
+    hasValidValue () {
         return !!this.value;
     }
 
-    getCurrentValue() {
+    getCurrentValue () {
         return this.value;
     }
 
-    setValue(value: string) {
+    setValue (value: string) {
         this.value = value;
         this.displayValue$.next(this.value);
         this.submitValues();
     }
 
-    private getSearchPrefix(): string {
+    private getSearchPrefix (): string {
         return this.settings.searchPrefix ? this.settings.searchPrefix : '';
     }
 
-    private getSearchSuffix(): string {
+    private getSearchSuffix (): string {
         return this.settings.searchSuffix ? this.settings.searchSuffix : '';
     }
 }

@@ -44,12 +44,12 @@ import { FileUploadingListRowComponent } from './file-uploading-list-row.compone
 import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
-    selector: 'adf-file-uploading-dialog',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule, FileUploadingListComponent, FileUploadingListRowComponent, A11yModule],
-    templateUrl: './file-uploading-dialog.component.html',
-    styleUrls: ['./file-uploading-dialog.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-file-uploading-dialog',
+    "standalone": true,
+    "imports": [CommonModule, MatButtonModule, TranslateModule, MatIconModule, FileUploadingListComponent, FileUploadingListRowComponent, A11yModule],
+    "templateUrl": './file-uploading-dialog.component.html',
+    "styleUrls": ['./file-uploading-dialog.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /** Dialog direction. Can be 'ltr' or 'rtl. */
@@ -72,11 +72,11 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     error: EventEmitter<any> = new EventEmitter();
 
     @HostBinding('attr.adfUploadDialogRight')
-    public get isPositionRight(): boolean {
+    public get isPositionRight (): boolean {
         return (this.direction === 'ltr' && this.position === 'right') || (this.direction === 'rtl' && this.position === 'left') || null;
     }
     @HostBinding('attr.adfUploadDialogLeft')
-    public get isPositionLeft(): boolean {
+    public get isPositionLeft (): boolean {
         return (this.direction === 'ltr' && this.position === 'left') || (this.direction === 'rtl' && this.position === 'right') || null;
     }
 
@@ -93,14 +93,14 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private errorSubscription: Subscription;
     private dialogActive = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private uploadService: UploadService,
         private changeDetector: ChangeDetectorRef,
         private userPreferencesService: UserPreferencesService,
         private elementRef: ElementRef
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.dialogActive.pipe(delay(100), takeUntil(this.onDestroy$)).subscribe(() => {
             const element: any = this.elementRef.nativeElement.querySelector('#upload-dialog');
             if (element) {
@@ -156,7 +156,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /**
      * Toggle confirmation message.
      */
-    toggleConfirmation() {
+    toggleConfirmation () {
         this.isConfirmation = !this.isConfirmation;
 
         if (!this.isConfirmation) {
@@ -171,7 +171,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /**
      * Cancel uploads and hide confirmation
      */
-    cancelAllUploads() {
+    cancelAllUploads () {
         this.toggleConfirmation();
         this.dialogActive.next(undefined);
         this.uploadList.cancelAllFiles();
@@ -180,7 +180,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /**
      * Toggle dialog minimized state.
      */
-    toggleMinimized(): void {
+    toggleMinimized (): void {
         this.isDialogMinimized = !this.isDialogMinimized;
         this.changeDetector.detectChanges();
     }
@@ -188,7 +188,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /**
      * Dismiss dialog
      */
-    close(): void {
+    close (): void {
         this.isConfirmation = false;
         this.totalCompleted = 0;
         this.totalErrors = 0;
@@ -199,7 +199,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         this.changeDetector.detectChanges();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.uploadService.clearQueue();
         this.listSubscription.unsubscribe();
         this.counterSubscription.unsubscribe();
@@ -209,19 +209,19 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    canShowDialog(): boolean {
+    canShowDialog (): boolean {
         return this.isDialogActive || this.alwaysVisible;
     }
 
-    canShowCancelAll(): boolean {
+    canShowCancelAll (): boolean {
         return this.filesUploadingList?.length && this.hasUploadInProgress();
     }
 
-    canCloseDialog(): boolean {
+    canCloseDialog (): boolean {
         return !this.hasUploadInProgress() && !this.alwaysVisible;
     }
 
-    hasUploadInProgress(): boolean {
+    hasUploadInProgress (): boolean {
         return !this.uploadList?.isUploadCompleted() && !this.uploadList?.isUploadCancelled();
     }
 }

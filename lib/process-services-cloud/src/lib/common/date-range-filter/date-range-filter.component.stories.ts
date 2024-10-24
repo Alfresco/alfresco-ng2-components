@@ -23,45 +23,45 @@ import { DateRangeFilterComponent } from './date-range-filter.component';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: DateRangeFilterComponent,
-    title: 'Process Services Cloud/Process Common/Date Range Filter',
-    decorators: [
+    "component": DateRangeFilterComponent,
+    "title": 'Process Services Cloud/Process Common/Date Range Filter',
+    "decorators": [
         moduleMetadata({
-            imports: [ProcessCommonModule]
+            "imports": [ProcessCommonModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            "providers": [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
-    argTypes: {
-        processFilterProperty: {
-            control: 'object',
-            table: {
-                type: { summary: 'ApplicationInstanceModel' }
+    "argTypes": {
+        "processFilterProperty": {
+            "control": 'object',
+            "table": {
+                "type": { "summary": 'ApplicationInstanceModel' }
             }
         },
-        options: {
-            control: 'object',
-            table: {
-                type: { summary: 'DateCloudFilterType[]' }
+        "options": {
+            "control": 'object',
+            "table": {
+                "type": { "summary": 'DateCloudFilterType[]' }
             }
         },
-        dateChanged: {
-            action: 'dateChanged',
-            table: { category: 'Actions' }
+        "dateChanged": {
+            "action": 'dateChanged',
+            "table": { "category": 'Actions' }
         },
-        dateTypeChange: {
-            action: 'dateTypeChange',
-            table: { category: 'Actions' }
+        "dateTypeChange": {
+            "action": 'dateTypeChange',
+            "table": { "category": 'Actions' }
         }
     },
-    args: {
-        processFilterProperty: mockFilterProperty
+    "args": {
+        "processFilterProperty": mockFilterProperty
     }
 } as Meta<DateRangeFilterComponent>;
 
 const template: StoryFn<DateRangeFilterComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const DateRangeFilter = template.bind({});

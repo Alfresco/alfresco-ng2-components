@@ -27,12 +27,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'radio-buttons-widget',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatRadioModule, FormsModule, ErrorWidgetComponent],
-    templateUrl: './radio-buttons.widget.html',
-    styleUrls: ['./radio-buttons.widget.scss'],
-    host: {
+    "selector": 'radio-buttons-widget',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatRadioModule, FormsModule, ErrorWidgetComponent],
+    "templateUrl": './radio-buttons.widget.html',
+    "styleUrls": ['./radio-buttons.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -43,10 +43,10 @@ import { FormsModule } from '@angular/forms';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {
-    constructor(
+    constructor (
         public formService: FormService,
         private taskFormService: TaskFormService,
         private processDefinitionService: ProcessDefinitionService
@@ -54,7 +54,7 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.isValidRestConfig() && !this.isReadOnlyForm()) {
             if (this.field.form.taskId) {
                 this.getOptionsByTaskId();
@@ -64,14 +64,14 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    getOptionsByTaskId() {
+    getOptionsByTaskId () {
         this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe((formFieldOption) => {
             this.field.options = formFieldOption || [];
             this.field.updateForm();
         });
     }
 
-    getOptionsByProcessDefinitionId() {
+    getOptionsByProcessDefinitionId () {
         this.processDefinitionService
             .getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id)
             .subscribe((formFieldOption) => {
@@ -80,24 +80,24 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
             });
     }
 
-    onOptionClick(optionSelected: any) {
+    onOptionClick (optionSelected: any) {
         this.field.value = optionSelected;
         this.fieldChanged.emit(this.field);
     }
 
-    private isRestType(): boolean {
+    private isRestType (): boolean {
         return this.field?.optionType === 'rest';
     }
 
-    private isReadOnlyForm(): boolean {
+    private isReadOnlyForm (): boolean {
         return !!this.field?.form?.readOnly;
     }
 
-    private hasRestUrl(): boolean {
+    private hasRestUrl (): boolean {
         return !!this.field?.restUrl;
     }
 
-    private isValidRestConfig(): boolean {
+    private isValidRestConfig (): boolean {
         return this.isRestType() && this.hasRestUrl();
     }
 }

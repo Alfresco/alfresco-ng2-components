@@ -34,22 +34,22 @@ import { SearchFilterTabDirective } from '../search-filter-tabbed/search-filter-
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
-    selector: 'adf-search-date-range-tabbed',
-    standalone: true,
-    imports: [CommonModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchFilterTabDirective],
-    templateUrl: './search-date-range-tabbed.component.html',
-    styleUrls: ['./search-date-range-tabbed.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-date-range-tabbed',
+    "standalone": true,
+    "imports": [CommonModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchFilterTabDirective],
+    "templateUrl": './search-date-range-tabbed.component.html',
+    "styleUrls": ['./search-date-range-tabbed.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnDestroy {
     displayValue$ = new ReplaySubject<string>(1);
     id: string;
     startValue: SearchDateRange = {
-        dateRangeType: DateRangeType.ANY,
-        inLastValueType: InLastDateType.DAYS,
-        inLastValue: undefined,
-        betweenStartDate: undefined,
-        betweenEndDate: undefined
+        "dateRangeType": DateRangeType.ANY,
+        "inLastValueType": InLastDateType.DAYS,
+        "inLastValue": undefined,
+        "betweenStartDate": undefined,
+        "betweenEndDate": undefined
     };
     preselectedValues: { [key: string]: SearchDateRange } = {};
     settings?: SearchWidgetSettings;
@@ -64,9 +64,9 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
     private displayValueMapByField: Map<string, string> = new Map<string, string>();
     private readonly destroy$ = new Subject<void>();
 
-    constructor(private translateService: TranslationService) {}
+    constructor (private translateService: TranslationService) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.fields = this.settings?.field.split(',').map((field) => field.trim());
         this.setDefaultDateFormatSettings();
         this.context.populateFilters
@@ -95,26 +95,26 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    private setDefaultDateFormatSettings() {
+    private setDefaultDateFormatSettings () {
         if (this.settings && !this.settings.dateFormat) {
             this.settings.dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;
         }
     }
 
-    getCurrentValue(): { [key: string]: Partial<SearchDateRange> } {
+    getCurrentValue (): { [key: string]: Partial<SearchDateRange> } {
         return this.value;
     }
 
-    hasValidValue(): boolean {
+    hasValidValue (): boolean {
         return Object.values(this.tabsValidity).every((valid) => valid);
     }
 
-    reset(updateContext = true) {
+    reset (updateContext = true) {
         this.combinedQuery = '';
         this.combinedDisplayValue = '';
         this.startValue = {
@@ -128,22 +128,22 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         this.submitValues(updateContext);
     }
 
-    setValue(value: { [key: string]: SearchDateRange }) {
+    setValue (value: { [key: string]: SearchDateRange }) {
         this.value = value;
     }
 
-    getTabLabel(field: string): string {
+    getTabLabel (field: string): string {
         return this.settings?.displayedLabelsByField?.[field] ? this.settings.displayedLabelsByField[field] : field;
     }
 
-    submitValues(updateContext = true) {
+    submitValues (updateContext = true) {
         this.context.queryFragments[this.id] = this.combinedQuery;
         this.displayValue$.next(this.combinedDisplayValue);
         if (this.id && this.context && updateContext) {
             this.context.update();
         }
     }
-    onDateRangedValueChanged(value: Partial<SearchDateRange>, field: string) {
+    onDateRangedValueChanged (value: Partial<SearchDateRange>, field: string) {
         this.context.filterRawParams[this.id] ||= {};
         this.context.filterRawParams[this.id][field] = value;
         this.value[field] = value;
@@ -151,7 +151,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         this.updateDisplayValue(value, field);
     }
 
-    private generateQuery(value: Partial<SearchDateRange>, field: string): string {
+    private generateQuery (value: Partial<SearchDateRange>, field: string): string {
         let query = '';
         let startDate: Date;
         let endDate: Date;
@@ -184,11 +184,11 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         return query;
     }
 
-    private generateDisplayValue(value: Partial<SearchDateRange>): string {
+    private generateDisplayValue (value: Partial<SearchDateRange>): string {
         let displayValue = '';
         if (value.dateRangeType === DateRangeType.IN_LAST && value.inLastValue) {
             displayValue = this.translateService.instant(`SEARCH.DATE_RANGE_ADVANCED.IN_LAST_DISPLAY_LABELS.${value.inLastValueType}`, {
-                value: value.inLastValue
+                "value": value.inLastValue
             });
         } else if (value.dateRangeType === DateRangeType.BETWEEN && value.betweenStartDate && value.betweenEndDate) {
             displayValue = `${format(startOfDay(value.betweenStartDate), this.settings.dateFormat)} - ${format(
@@ -199,7 +199,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         return displayValue;
     }
 
-    private updateQuery(value: Partial<SearchDateRange>, field: string) {
+    private updateQuery (value: Partial<SearchDateRange>, field: string) {
         this.combinedQuery = '';
         this.queryMapByField.set(field, this.generateQuery(value, field));
         this.queryMapByField.forEach((query: string) => {
@@ -209,7 +209,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         });
     }
 
-    private updateDisplayValue(value: Partial<SearchDateRange>, field: string) {
+    private updateDisplayValue (value: Partial<SearchDateRange>, field: string) {
         this.combinedDisplayValue = '';
         this.displayValueMapByField.set(field, this.generateDisplayValue(value));
         this.displayValueMapByField.forEach((displayValue: string, fieldForDisplayLabel: string) => {
@@ -224,7 +224,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
         });
     }
 
-    private getDisplayLabelForField(fieldForDisplayLabel: string): string {
+    private getDisplayLabelForField (fieldForDisplayLabel: string): string {
         return this.settings?.displayedLabelsByField?.[fieldForDisplayLabel]
             ? this.settings.displayedLabelsByField[fieldForDisplayLabel]
             : fieldForDisplayLabel;

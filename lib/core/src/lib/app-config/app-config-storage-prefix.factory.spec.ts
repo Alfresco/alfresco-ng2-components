@@ -26,7 +26,7 @@ describe('StoragePrefixFactory', () => {
         const appConfigPrefix = 'prefix-from-app-config-json';
         const appConfigService: TestAppConfigService = {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            select(_property: string) {
+            select (_property: string) {
                 return of(appConfigPrefix);
             }
         };
@@ -42,7 +42,7 @@ describe('StoragePrefixFactory', () => {
         const appConfigPrefix = undefined;
         const appConfigService: TestAppConfigService = {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            select(_property: string) {
+            select (_property: string) {
                 return of(appConfigPrefix);
             }
         };
@@ -58,13 +58,13 @@ describe('StoragePrefixFactory', () => {
         const appConfigPrefix = undefined;
         const appConfigService: TestAppConfigService = {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            select(_property: string) {
+            select (_property: string) {
                 return of(appConfigPrefix);
             }
         };
 
         const externalPrefixFactory: StoragePrefixFactoryService = {
-            getPrefix() {
+            getPrefix () {
                 return of('prefix-from-factory');
             }
         };
@@ -81,13 +81,13 @@ describe('StoragePrefixFactory', () => {
 
         const appConfigService: TestAppConfigService = {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            select(_property: string) {
+            select (_property: string) {
                 return of(appConfigPrefix);
             }
         };
 
         const externalPrefixFactory: StoragePrefixFactoryService = {
-            getPrefix() {
+            getPrefix () {
                 return of('prefix-from-factory');
             }
         };

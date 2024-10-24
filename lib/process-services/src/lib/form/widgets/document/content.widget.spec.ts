@@ -36,7 +36,7 @@ describe('ContentWidgetComponent', () => {
 
     const createFakeImageBlob = () => {
         const data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
-        return new Blob([data], { type: 'image/png' });
+        return new Blob([data], { "type": 'image/png' });
     };
 
     const createFakePdfBlob = (): Blob => {
@@ -55,13 +55,13 @@ describe('ContentWidgetComponent', () => {
                 'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
                 'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G'
         );
-        return new Blob([pdfData], { type: 'application/pdf' });
+        return new Blob([pdfData], { "type": 'application/pdf' });
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ContentWidgetComponent],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            "imports": [CoreTestingModule, ContentWidgetComponent],
+            "providers": [{ "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock }]
         });
         downloadService = TestBed.inject(DownloadService);
         processContentService = TestBed.inject(ProcessContentService);
@@ -108,28 +108,28 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ id: change });
+            component.ngOnChanges({ "id": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    id: 4004,
-                    name: 'Useful expressions - Email_English.png',
-                    created: 1490354907883,
-                    createdBy: {
-                        id: 2,
-                        firstName: 'admin',
-                        lastName: 'admin',
-                        email: 'administrator@admin.com'
+                "status": 200,
+                "contentType": 'json',
+                "responseText": {
+                    "id": 4004,
+                    "name": 'Useful expressions - Email_English.png',
+                    "created": 1490354907883,
+                    "createdBy": {
+                        "id": 2,
+                        "firstName": 'admin',
+                        "lastName": 'admin',
+                        "email": 'administrator@admin.com'
                     },
-                    relatedContent: false,
-                    contentAvailable: true,
-                    link: false,
-                    mimeType: 'image/png',
-                    simpleType: 'image',
-                    previewStatus: 'unsupported',
-                    thumbnailStatus: 'unsupported'
+                    "relatedContent": false,
+                    "contentAvailable": true,
+                    "link": false,
+                    "mimeType": 'image/png',
+                    "simpleType": 'image',
+                    "previewStatus": 'unsupported',
+                    "thumbnailStatus": 'unsupported'
                 }
             });
         }));
@@ -150,28 +150,28 @@ describe('ContentWidgetComponent', () => {
 
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ id: change });
+            component.ngOnChanges({ "id": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    id: 4004,
-                    name: 'FakeBlob.pdf',
-                    created: 1490354907883,
-                    createdBy: {
-                        id: 2,
-                        firstName: 'admin',
-                        lastName: 'admin',
-                        email: 'administrator@admin.com'
+                "status": 200,
+                "contentType": 'json',
+                "responseText": {
+                    "id": 4004,
+                    "name": 'FakeBlob.pdf',
+                    "created": 1490354907883,
+                    "createdBy": {
+                        "id": 2,
+                        "firstName": 'admin',
+                        "lastName": 'admin',
+                        "email": 'administrator@admin.com'
                     },
-                    relatedContent: false,
-                    contentAvailable: true,
-                    link: false,
-                    mimeType: 'application/pdf',
-                    simpleType: 'pdf',
-                    previewStatus: 'created',
-                    thumbnailStatus: 'created'
+                    "relatedContent": false,
+                    "contentAvailable": true,
+                    "link": false,
+                    "mimeType": 'application/pdf',
+                    "simpleType": 'pdf',
+                    "previewStatus": 'created',
+                    "thumbnailStatus": 'created'
                 }
             });
         }));
@@ -179,7 +179,7 @@ describe('ContentWidgetComponent', () => {
         it('should show unsupported preview with unsupported file', fakeAsync(() => {
             const contentId = 1;
             const change = new SimpleChange(null, contentId, true);
-            component.ngOnChanges({ id: change });
+            component.ngOnChanges({ "id": change });
 
             component.contentLoaded.subscribe(() => {
                 fixture.detectChanges();
@@ -189,25 +189,25 @@ describe('ContentWidgetComponent', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    id: 4004,
-                    name: 'FakeBlob.zip',
-                    created: 1490354907883,
-                    createdBy: {
-                        id: 2,
-                        firstName: 'admin',
-                        lastName: 'admin',
-                        email: 'administrator@admin.com'
+                "status": 200,
+                "contentType": 'json',
+                "responseText": {
+                    "id": 4004,
+                    "name": 'FakeBlob.zip',
+                    "created": 1490354907883,
+                    "createdBy": {
+                        "id": 2,
+                        "firstName": 'admin',
+                        "lastName": 'admin',
+                        "email": 'administrator@admin.com'
                     },
-                    relatedContent: false,
-                    contentAvailable: false,
-                    link: false,
-                    mimeType: 'application/zip',
-                    simpleType: 'zip',
-                    previewStatus: 'unsupported',
-                    thumbnailStatus: 'unsupported'
+                    "relatedContent": false,
+                    "contentAvailable": false,
+                    "link": false,
+                    "mimeType": 'application/zip',
+                    "simpleType": 'zip',
+                    "previewStatus": 'unsupported',
+                    "thumbnailStatus": 'unsupported'
                 }
             });
         }));
@@ -218,22 +218,22 @@ describe('ContentWidgetComponent', () => {
             spyOn(processContentService, 'getFileRawContent').and.returnValue(of(blob));
 
             component.content = new ContentLinkModel({
-                id: 4004,
-                name: 'FakeBlob.pdf',
-                created: 1490354907883,
-                createdBy: {
-                    id: 2,
-                    firstName: 'admin',
-                    lastName: 'admin',
-                    email: 'administrator@admin.com'
+                "id": 4004,
+                "name": 'FakeBlob.pdf',
+                "created": 1490354907883,
+                "createdBy": {
+                    "id": 2,
+                    "firstName": 'admin',
+                    "lastName": 'admin',
+                    "email": 'administrator@admin.com'
                 },
-                relatedContent: false,
-                contentAvailable: true,
-                link: false,
-                mimeType: 'application/pdf',
-                simpleType: 'pdf',
-                previewStatus: 'created',
-                thumbnailStatus: 'created'
+                "relatedContent": false,
+                "contentAvailable": true,
+                "link": false,
+                "mimeType": 'application/pdf',
+                "simpleType": 'pdf',
+                "previewStatus": 'created',
+                "thumbnailStatus": 'created'
             });
 
             component.content.thumbnailUrl = '/alfresco-logo.svg';
@@ -255,22 +255,22 @@ describe('ContentWidgetComponent', () => {
             spyOn(downloadService, 'downloadBlob').and.callThrough();
 
             component.content = new ContentLinkModel({
-                id: 4004,
-                name: 'FakeBlob.pdf',
-                created: 1490354907883,
-                createdBy: {
-                    id: 2,
-                    firstName: 'admin',
-                    lastName: 'admin',
-                    email: 'administrator@admin.com'
+                "id": 4004,
+                "name": 'FakeBlob.pdf',
+                "created": 1490354907883,
+                "createdBy": {
+                    "id": 2,
+                    "firstName": 'admin',
+                    "lastName": 'admin',
+                    "email": 'administrator@admin.com'
                 },
-                relatedContent: false,
-                contentAvailable: true,
-                link: false,
-                mimeType: 'application/pdf',
-                simpleType: 'pdf',
-                previewStatus: 'created',
-                thumbnailStatus: 'created'
+                "relatedContent": false,
+                "contentAvailable": true,
+                "link": false,
+                "mimeType": 'application/pdf',
+                "simpleType": 'pdf',
+                "previewStatus": 'created',
+                "thumbnailStatus": 'created'
             });
 
             component.content.thumbnailUrl = '/alfresco-logo.svg';

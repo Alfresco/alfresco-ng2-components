@@ -21,7 +21,7 @@ import { Track, TranslationService, ViewUtilService } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class RenditionService {
     static TARGET = '_new';
@@ -31,10 +31,10 @@ export class RenditionService {
      * implementation or grouping is tied to the definition the ng component: ViewerRenderComponent
      */
     static ContentGroup = {
-        IMAGE: 'image',
-        MEDIA: 'media',
-        PDF: 'pdf',
-        TEXT: 'text'
+        "IMAGE": 'image',
+        "MEDIA": 'media',
+        "PDF": 'pdf',
+        "TEXT": 'text'
     };
 
     /**
@@ -54,13 +54,13 @@ export class RenditionService {
     private TRY_TIMEOUT: number = 10000;
 
     _renditionsApi: RenditionsApi;
-    get renditionsApi(): RenditionsApi {
+    get renditionsApi (): RenditionsApi {
         this._renditionsApi = this._renditionsApi ?? new RenditionsApi(this.apiService.getInstance());
         return this._renditionsApi;
     }
 
     _contentApi: ContentApi;
-    get contentApi(): ContentApi {
+    get contentApi (): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
@@ -68,20 +68,20 @@ export class RenditionService {
     _versionsApi: VersionsApi;
     private DEFAULT_RENDITION: string = 'imgpreview';
 
-    get versionsApi(): VersionsApi {
+    get versionsApi (): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private translateService: TranslationService, private viewUtilsService: ViewUtilService) {}
+    constructor (private apiService: AlfrescoApiService, private translateService: TranslationService, private viewUtilsService: ViewUtilService) {}
 
-    getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
+    getRenditionUrl (nodeId: string, type: string, renditionExists: boolean): string {
         return renditionExists && type !== RenditionService.ContentGroup.IMAGE
             ? this.contentApi.getRenditionUrl(nodeId, RenditionService.ContentGroup.PDF)
             : this.contentApi.getContentUrl(nodeId, false);
     }
 
-    private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
+    private async waitRendition (nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
         if (this.maxRetries > retries) {
             const rendition = await this.renditionsApi.getRendition(nodeId, renditionId);
             const status = rendition.entry.status.toString();
@@ -98,11 +98,11 @@ export class RenditionService {
         return Promise.resolve(null);
     }
 
-    private wait(ms: number): Promise<any> {
+    private wait (ms: number): Promise<any> {
         return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
-    async getRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
+    async getRendition (nodeId: string, renditionId: string): Promise<RenditionEntry> {
         const renditionPaging: RenditionPaging = await this.renditionsApi.listRenditions(nodeId);
         let rendition: RenditionEntry = renditionPaging.list.entries.find(
             (renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId
@@ -113,7 +113,7 @@ export class RenditionService {
 
             if (status === 'NOT_CREATED') {
                 try {
-                    await this.renditionsApi.createRendition(nodeId, { id: renditionId });
+                    await this.renditionsApi.createRendition(nodeId, { "id": renditionId });
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
                 } catch {
                     return null;
@@ -123,7 +123,7 @@ export class RenditionService {
         return new Promise<RenditionEntry>((resolve) => resolve(rendition));
     }
 
-    async getNodeRendition(nodeId: string, versionId?: string): Promise<{ url: string; mimeType: string }> {
+    async getNodeRendition (nodeId: string, versionId?: string): Promise<{ url: string; mimeType: string }> {
         try {
             return versionId ? await this.resolveNodeRendition(nodeId, 'pdf', versionId) : await this.resolveNodeRendition(nodeId, 'pdf');
         } catch {
@@ -131,7 +131,7 @@ export class RenditionService {
         }
     }
 
-    private async resolveNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string; mimeType: string }> {
+    private async resolveNodeRendition (nodeId: string, renditionId: string, versionId?: string): Promise<{ url: string; mimeType: string }> {
         renditionId = renditionId.toLowerCase();
 
         const supportedRendition: RenditionPaging = versionId
@@ -149,21 +149,21 @@ export class RenditionService {
             const mimeType: string = rendition.entry.content.mimeType;
 
             if (status === 'NOT_CREATED') {
-                return { url: await this.requestCreateRendition(nodeId, renditionId, versionId), mimeType };
+                return { "url": await this.requestCreateRendition(nodeId, renditionId, versionId), mimeType };
             } else {
-                return { url: await this.handleNodeRendition(nodeId, renditionId, versionId), mimeType };
+                return { "url": await this.handleNodeRendition(nodeId, renditionId, versionId), mimeType };
             }
         }
 
         return null;
     }
 
-    private async requestCreateRendition(nodeId: string, renditionId: string, versionId: string): Promise<string> {
+    private async requestCreateRendition (nodeId: string, renditionId: string, versionId: string): Promise<string> {
         try {
             if (versionId) {
-                await this.versionsApi.createVersionRendition(nodeId, versionId, { id: renditionId });
+                await this.versionsApi.createVersionRendition(nodeId, versionId, { "id": renditionId });
             } else {
-                await this.renditionsApi.createRendition(nodeId, { id: renditionId });
+                await this.renditionsApi.createRendition(nodeId, { "id": renditionId });
             }
             try {
                 return versionId ? await this.waitNodeRendition(nodeId, renditionId, versionId) : await this.waitNodeRendition(nodeId, renditionId);
@@ -175,11 +175,11 @@ export class RenditionService {
         }
     }
 
-    private findRenditionById(supportedRendition: RenditionPaging, renditionId: string) {
+    private findRenditionById (supportedRendition: RenditionPaging, renditionId: string) {
         return supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
     }
 
-    private async waitNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<string> {
+    private async waitNodeRendition (nodeId: string, renditionId: string, versionId?: string): Promise<string> {
         let currentRetry: number = 0;
         return new Promise<string>((resolve, reject) => {
             const intervalId = setInterval(() => {
@@ -218,21 +218,21 @@ export class RenditionService {
         });
     }
 
-    private async handleNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<string> {
+    private async handleNodeRendition (nodeId: string, renditionId: string, versionId?: string): Promise<string> {
         return versionId
             ? this.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId)
             : this.contentApi.getRenditionUrl(nodeId, renditionId);
     }
 
-    async generateMediaTracksRendition(nodeId: string): Promise<Track[]> {
+    async generateMediaTracksRendition (nodeId: string): Promise<Track[]> {
         return this.isRenditionAvailable(nodeId, RenditionService.SUBTITLES_RENDITION_NAME)
             .then((value) => {
                 const tracks = [];
                 if (value) {
                     tracks.push({
-                        kind: 'subtitles',
-                        src: this.contentApi.getRenditionUrl(nodeId, RenditionService.SUBTITLES_RENDITION_NAME),
-                        label: this.translateService.instant('ADF_VIEWER.SUBTITLES')
+                        "kind": 'subtitles',
+                        "src": this.contentApi.getRenditionUrl(nodeId, RenditionService.SUBTITLES_RENDITION_NAME),
+                        "label": this.translateService.instant('ADF_VIEWER.SUBTITLES')
                     });
                 }
                 return tracks;
@@ -240,7 +240,7 @@ export class RenditionService {
             .catch(() => []);
     }
 
-    private async isRenditionAvailable(nodeId: string, renditionId: string): Promise<boolean> {
+    private async isRenditionAvailable (nodeId: string, renditionId: string): Promise<boolean> {
         const renditionPaging: RenditionPaging = await this.renditionsApi.listRenditions(nodeId);
         const rendition: RenditionEntry = renditionPaging.list.entries.find(
             (renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId
@@ -256,7 +256,7 @@ export class RenditionService {
      * @param url url to print
      * @param type type of the rendition
      */
-    printFile(url: string, type: string): void {
+    printFile (url: string, type: string): void {
         const pwa = window.open(url, RenditionService.TARGET);
         if (pwa) {
             pwa.onload = () => {
@@ -280,7 +280,7 @@ export class RenditionService {
      * @param objectId object it
      * @param mimeType mime type
      */
-    printFileGeneric(objectId: string, mimeType: string): void {
+    printFileGeneric (objectId: string, mimeType: string): void {
         const nodeId = objectId;
         const type: string = this.viewUtilsService.getViewerTypeByMimeType(mimeType);
 

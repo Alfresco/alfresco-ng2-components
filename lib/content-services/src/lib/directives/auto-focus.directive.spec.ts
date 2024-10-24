@@ -22,9 +22,9 @@ import { By } from '@angular/platform-browser';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
-    standalone: true,
-    imports: [AutoFocusDirective],
-    template: ` <div tabindex="0" adf-auto-focus>Test</div>`
+    "standalone": true,
+    "imports": [AutoFocusDirective],
+    "template": ` <div tabindex="0" adf-auto-focus>Test</div>`
 })
 class AutoFocusTestComponent {}
 
@@ -33,7 +33,7 @@ describe('AutoFocusDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, AutoFocusDirective, AutoFocusTestComponent]
+            "imports": [NoopTranslateModule, AutoFocusDirective, AutoFocusTestComponent]
         });
         fixture = TestBed.createComponent(AutoFocusTestComponent);
     });

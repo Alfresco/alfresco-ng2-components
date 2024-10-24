@@ -24,12 +24,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchConfiguration } from '../../models';
 
 @Component({
-    selector: 'adf-search-input',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatInputModule, TranslateModule],
-    templateUrl: `./search-input.component.html`,
-    styleUrls: ['./search-input.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-input',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, MatInputModule, TranslateModule],
+    "templateUrl": `./search-input.component.html`,
+    "styleUrls": ['./search-input.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchInputComponent implements OnInit {
     @Input()
@@ -47,16 +47,16 @@ export class SearchInputComponent implements OnInit {
     @Output()
     changed = new EventEmitter<string>();
 
-    constructor(private appConfig: AppConfigService) {}
+    constructor (private appConfig: AppConfigService) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         const searchConfig = this.appConfig.get<SearchConfiguration>('search') || {};
         if (searchConfig['app:fields']) {
             this.fields = searchConfig['app:fields'];
         }
     }
 
-    onSearchInputChanged(event: Event) {
+    onSearchInputChanged (event: Event) {
         const input = event.target as HTMLInputElement;
         const searchTerm = input.value;
 
@@ -66,7 +66,7 @@ export class SearchInputComponent implements OnInit {
         }
     }
 
-    private formatSearchQuery(userInput: string, fields = ['cm:name']): string {
+    private formatSearchQuery (userInput: string, fields = ['cm:name']): string {
         if (!userInput) {
             return null;
         }
@@ -91,7 +91,7 @@ export class SearchInputComponent implements OnInit {
         return this.formatFields(fields, userInput);
     }
 
-    private isOperator(input: string): boolean {
+    private isOperator (input: string): boolean {
         if (input) {
             input = input.trim().toUpperCase();
 
@@ -101,7 +101,7 @@ export class SearchInputComponent implements OnInit {
         return false;
     }
 
-    private formatFields(fields: string[], term: string): string {
+    private formatFields (fields: string[], term: string): string {
         let prefix = '';
         let suffix = '*';
 

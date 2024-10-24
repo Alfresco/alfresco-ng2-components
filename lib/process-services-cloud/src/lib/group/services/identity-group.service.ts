@@ -24,17 +24,17 @@ import { IdentityGroupModel } from '../models/identity-group.model';
 
 const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class IdentityGroupService implements IdentityGroupServiceInterface {
 
     queryParams: { search: string; application?: string; roles?: string [] };
 
-    constructor(
+    constructor (
         private oAuth2Service: OAuth2Service,
         private appConfigService: AppConfigService
     ) {}
 
-    public search(name: string, filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
+    public search (name: string, filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
         if (name.trim() === '') {
             return EMPTY;
         } else if (filters?.withinApplication) {
@@ -46,36 +46,36 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
         }
     }
 
-    private searchGroupsByName(name: string): Observable<IdentityGroupModel[]> {
+    private searchGroupsByName (name: string): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name);
 
         return this.invokeIdentityGroupApi();
     }
 
-    private searchGroupsWithGlobalRoles(name: string, roles: string []): Observable<IdentityGroupModel[]> {
+    private searchGroupsWithGlobalRoles (name: string, roles: string []): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name, roles);
 
         return this.invokeIdentityGroupApi();
     }
 
-    private searchGroupsWithinApp(name: string, applicationName: string, roles?: string []): Observable<IdentityGroupModel[]> {
+    private searchGroupsWithinApp (name: string, applicationName: string, roles?: string []): Observable<IdentityGroupModel[]> {
         this.buildQueryParam(name, roles, applicationName);
 
         return this.invokeIdentityGroupApi();
     }
 
-    private invokeIdentityGroupApi(): Observable<IdentityGroupModel[]> {
+    private invokeIdentityGroupApi (): Observable<IdentityGroupModel[]> {
         const url = `${this.identityHost}/${IDENTITY_MICRO_SERVICE_INGRESS}/v1/groups`;
-        return this.oAuth2Service.get({ url, queryParams: this.queryParams });
+        return this.oAuth2Service.get({ url, "queryParams": this.queryParams });
     }
 
-    private buildQueryParam(name: string, roles?: string [], applicationName?: string) {
-        this.queryParams = { search: name };
+    private buildQueryParam (name: string, roles?: string [], applicationName?: string) {
+        this.queryParams = { "search": name };
         this.addOptionalValueToQueryParam('application', applicationName);
         this.addOptionalCommaValueToQueryParam('role', roles);
     }
 
-    private addOptionalCommaValueToQueryParam(key: string, values: string []) {
+    private addOptionalCommaValueToQueryParam (key: string, values: string []) {
         if (values?.length > 0) {
             const valuesNotEmpty = this.filterOutEmptyValue(values);
             if (valuesNotEmpty?.length > 0) {
@@ -84,17 +84,17 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
         }
     }
 
-    private addOptionalValueToQueryParam(key: string, value: string) {
+    private addOptionalValueToQueryParam (key: string, value: string) {
         if (value?.trim()) {
             this.queryParams[key] = value;
         }
     }
 
-    private filterOutEmptyValue(roles: string []): string [] {
+    private filterOutEmptyValue (roles: string []): string [] {
         return roles.filter( role => role.trim() ? true : false);
     }
 
-    private get identityHost(): string {
+    private get identityHost (): string {
         return `${this.appConfigService.get('bpmHost')}`;
     }
 }

@@ -22,26 +22,26 @@ import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContentTypeService {
     private _typesApi: TypesApi;
-    get typesApi(): TypesApi {
+    get typesApi (): TypesApi {
         this._typesApi = this._typesApi ?? new TypesApi(this.alfrescoApiService.getInstance());
         return this._typesApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor (private alfrescoApiService: AlfrescoApiService) {}
 
-    getContentTypeByPrefix(prefixedType: string): Observable<TypeEntry> {
+    getContentTypeByPrefix (prefixedType: string): Observable<TypeEntry> {
         return from(this.typesApi.getType(prefixedType));
     }
 
-    getContentTypeChildren(nodeType: string): Observable<TypeEntry[]> {
+    getContentTypeChildren (nodeType: string): Observable<TypeEntry[]> {
         const where = `(parentId in ('${nodeType}') and not namespaceUri matches('http://www.alfresco.*'))`;
         const opts: any = {
             where,
-            include: ['properties']
+            "include": ['properties']
         };
         return from(this.typesApi.listTypes(opts)).pipe(map((result: TypePaging) => result.list.entries));
     }

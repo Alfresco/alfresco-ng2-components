@@ -24,7 +24,7 @@ export class CardViewDatetimeItemModel extends CardViewDateItemModel implements 
     type = 'datetime';
     format = 'MMM d, y, H:mm';
 
-    constructor(cardViewDateItemProperties: CardViewDateItemProperties) {
+    constructor (cardViewDateItemProperties: CardViewDateItemProperties) {
         super(cardViewDateItemProperties);
 
         if (cardViewDateItemProperties.format) {

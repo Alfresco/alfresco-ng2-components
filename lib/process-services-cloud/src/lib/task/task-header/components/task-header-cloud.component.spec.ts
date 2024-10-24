@@ -53,21 +53,21 @@ describe('TaskHeaderCloudComponent', () => {
     const mockCandidateGroups = ['mockgroup1', 'mockgroup2', 'mockgroup3'];
 
     const mock: any = {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve({})
+        "oauth2Auth": {
+            "callCustomApi": () => Promise.resolve({})
         },
-        isEcmLoggedIn: () => false,
-        reply: jasmine.createSpy('reply')
+        "isEcmLoggedIn": () => false,
+        "reply": jasmine.createSpy('reply')
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskHeaderCloudModule, MatSelectModule]
+            "imports": [ProcessServiceCloudTestingModule, TaskHeaderCloudModule, MatSelectModule]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {
             'adf-cloud-task-header': {
-                defaultDateFormat: 'full'
+                "defaultDateFormat": 'full'
             }
         };
         fixture = TestBed.createComponent(TaskHeaderCloudComponent);
@@ -291,8 +291,8 @@ describe('TaskHeaderCloudComponent', () => {
 
         it('should not render defined edit icon for assignee property if the task in assigned state and shared among candidate groups', async () => {
             component.candidateGroups = [
-                { value: 'mock-group-1', icon: 'edit' },
-                { value: 'mock-group-2', icon: 'edit' }
+                { "value": 'mock-group-1', "icon": 'edit' },
+                { "value": 'mock-group-2', "icon": 'edit' }
             ];
             component.candidateUsers = [];
             fixture.detectChanges();
@@ -307,8 +307,8 @@ describe('TaskHeaderCloudComponent', () => {
         it('should not render defined edit icon for assignee property if the task in created state and shared among condidate groups', async () => {
             getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
             component.candidateGroups = [
-                { value: 'mock-group-1', icon: 'edit' },
-                { value: 'mock-group-2', icon: 'edit' }
+                { "value": 'mock-group-1', "icon": 'edit' },
+                { "value": 'mock-group-2', "icon": 'edit' }
             ];
             component.candidateUsers = [];
             component.ngOnChanges();
@@ -464,8 +464,8 @@ describe('TaskHeaderCloudComponent', () => {
         it('should show only the properties from the configuration file', async () => {
             appConfigService.config = {
                 'adf-cloud-task-header': {
-                    presets: {
-                        properties: ['assignee', 'status']
+                    "presets": {
+                        "properties": ['assignee', 'status']
                     }
                 }
             };

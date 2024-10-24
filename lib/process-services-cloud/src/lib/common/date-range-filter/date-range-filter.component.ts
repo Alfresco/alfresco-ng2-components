@@ -30,12 +30,12 @@ interface DateRangeFormProps {
 }
 
 @Component({
-    selector: 'adf-cloud-date-range-filter',
-    styleUrls: ['./date-range-filter.component.scss'],
-    templateUrl: './date-range-filter.component.html',
-    providers: [
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS }
+    "selector": 'adf-cloud-date-range-filter',
+    "styleUrls": ['./date-range-filter.component.scss'],
+    "templateUrl": './date-range-filter.component.html',
+    "providers": [
+        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter },
+        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS }
     ]
 })
 export class DateRangeFilterComponent implements OnInit {
@@ -54,11 +54,11 @@ export class DateRangeFilterComponent implements OnInit {
     type: DateCloudFilterType;
     filteredProperties: ProcessFilterOptions[] = [];
     dateRangeForm = new FormGroup<DateRangeFormProps>({
-        from: new FormControl(),
-        to: new FormControl()
+        "from": new FormControl(),
+        "to": new FormControl()
     });
 
-    ngOnInit() {
+    ngOnInit () {
         this.options = this.options ? this.options : this.createDefaultRangeOptions();
         const defaultProperties = this.createDefaultDateOptions();
         this.filteredProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.options, filterProperty.value.toString()));
@@ -67,18 +67,18 @@ export class DateRangeFilterComponent implements OnInit {
         }
     }
 
-    onSelectionChange(option: MatSelectChange) {
+    onSelectionChange (option: MatSelectChange) {
         this.type = option.value;
         if (!this.isDateRangeType()) {
             this.dateTypeChange.emit(this.type);
         }
     }
 
-    isDateRangeType(): boolean {
+    isDateRangeType (): boolean {
         return this.type === DateCloudFilterType.RANGE;
     }
 
-    onDateRangeClosed() {
+    onDateRangeClosed () {
         const startDate = isValid(this.dateRangeForm.controls.from.value) ? startOfDay(this.dateRangeForm.controls.from.value).toISOString() : null;
         const endDate = isValid(this.dateRangeForm.controls.to.value) ? endOfDay(this.dateRangeForm.controls.to.value).toISOString() : null;
 
@@ -89,11 +89,11 @@ export class DateRangeFilterComponent implements OnInit {
         this.dateChanged.emit(dateRange);
     }
 
-    private hasPreselectedValues(): boolean {
+    private hasPreselectedValues (): boolean {
         return !!this.processFilterProperty?.attributes && !!this.processFilterProperty?.value;
     }
 
-    private setPreselectedValues() {
+    private setPreselectedValues () {
         const from = this.getFilterAttribute('from');
         const to = this.getFilterAttribute('to');
         const type = this.getFilterAttribute('dateType');
@@ -103,19 +103,19 @@ export class DateRangeFilterComponent implements OnInit {
         this.type = this.getFilterValue(type);
     }
 
-    private getFilterAttribute(key: string): string {
+    private getFilterAttribute (key: string): string {
         return this.processFilterProperty.attributes[key];
     }
 
-    private getFilterValue<T = any>(attribute: string): T {
+    private getFilterValue<T = any> (attribute: string): T {
         return this.processFilterProperty.value[attribute];
     }
 
-    private isValidProperty(filterProperties: string[], key: string): boolean {
+    private isValidProperty (filterProperties: string[], key: string): boolean {
         return filterProperties ? filterProperties.indexOf(key) >= 0 : true;
     }
 
-    private createDefaultRangeOptions(): DateCloudFilterType[] {
+    private createDefaultRangeOptions (): DateCloudFilterType[] {
         return [
             DateCloudFilterType.NO_DATE,
             DateCloudFilterType.TODAY,
@@ -127,43 +127,43 @@ export class DateRangeFilterComponent implements OnInit {
         ];
     }
 
-    private createDefaultDateOptions(): ProcessFilterOptions[] {
+    private createDefaultDateOptions (): ProcessFilterOptions[] {
         return [
             {
-                value: DateCloudFilterType.NO_DATE,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.NO_DATE'
+                "value": DateCloudFilterType.NO_DATE,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.NO_DATE'
             },
             {
-                value: DateCloudFilterType.TODAY,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.TODAY'
+                "value": DateCloudFilterType.TODAY,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.TODAY'
             },
             {
-                value: DateCloudFilterType.TOMORROW,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.TOMORROW'
+                "value": DateCloudFilterType.TOMORROW,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.TOMORROW'
             },
             {
-                value: DateCloudFilterType.NEXT_7_DAYS,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.NEXT_7_DAYS'
+                "value": DateCloudFilterType.NEXT_7_DAYS,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.NEXT_7_DAYS'
             },
             {
-                value: DateCloudFilterType.WEEK,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.WEEK'
+                "value": DateCloudFilterType.WEEK,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.WEEK'
             },
             {
-                value: DateCloudFilterType.MONTH,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.MONTH'
+                "value": DateCloudFilterType.MONTH,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.MONTH'
             },
             {
-                value: DateCloudFilterType.QUARTER,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.QUARTER'
+                "value": DateCloudFilterType.QUARTER,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.QUARTER'
             },
             {
-                value: DateCloudFilterType.YEAR,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.YEAR'
+                "value": DateCloudFilterType.YEAR,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.YEAR'
             },
             {
-                value: DateCloudFilterType.RANGE,
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.RANGE'
+                "value": DateCloudFilterType.RANGE,
+                "label": 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.RANGE'
             }
         ];
     }

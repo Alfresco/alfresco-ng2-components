@@ -23,9 +23,9 @@ describe('CardViewFloatItemModel', () => {
 
     beforeEach(() => {
         properties = {
-            label: 'Tribe',
-            value: '42.42',
-            key: 'tribe'
+            "label": 'Tribe',
+            "value": '42.42',
+            "key": 'tribe'
         };
     });
 
@@ -58,15 +58,15 @@ describe('CardViewFloatItemModel', () => {
 
     it('should validate based on defined constraints', () => {
         const constrainedProperties = {
-            label: 'Tribe',
-            value: '42.42',
-            key: 'tribe',
-            dataType: 'd:float',
-            constraints: [
+            "label": 'Tribe',
+            "value": '42.42',
+            "key": 'tribe',
+            "dataType": 'd:float',
+            "constraints": [
                 {
-                    id: 'constraint-id',
-                    type: 'MINMAX',
-                    parameters: { minValue: 10, maxValue: 40 }
+                    "id": 'constraint-id',
+                    "type": 'MINMAX',
+                    "parameters": { "minValue": 10, "maxValue": 40 }
                 }
             ]
         };

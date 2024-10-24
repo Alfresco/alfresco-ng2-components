@@ -19,7 +19,7 @@ import { FacetQuery } from './facet-query.interface';
 import { SearchFilterList } from './search-filter-list.model';
 
 export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {
-    constructor(items: FacetQuery[] = [], translationService, pageSize: number = 5) {
+    constructor (items: FacetQuery[] = [], translationService, pageSize: number = 5) {
         super(
             items.filter((item) => item.count > 0),
             pageSize

@@ -32,10 +32,10 @@ import { DropdownWidgetComponent } from './widgets/dropdown/dropdown.widget';
 import { FileViewerWidgetComponent } from './widgets/file-viewer/file-viewer.widget';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ProcessFormRenderingService extends FormRenderingService {
-    constructor() {
+    constructor () {
         super();
 
         this.register({

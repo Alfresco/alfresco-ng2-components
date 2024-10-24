@@ -22,21 +22,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { TreeNode } from '../models/tree-node.interface';
 import { TreeResponse } from '../models/tree-response.interface';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
     public readonly treeControl: FlatTreeControl<T>;
     public treeNodesSource = new BehaviorSubject<T[]>([]);
 
-    get treeNodes(): T[] {
+    get treeNodes (): T[] {
         return this.treeControl.dataNodes;
     }
 
-    set treeNodes(nodes: T[]) {
+    set treeNodes (nodes: T[]) {
         this.treeControl.dataNodes = nodes;
         this.treeNodesSource.next(nodes);
     }
 
-    constructor() {
+    constructor () {
         super();
         this.treeControl = new FlatTreeControl<T>(
             (node) => node.level,
@@ -52,7 +52,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      * @param nodeToExpand Node to be expanded
      * @param subNodes List of nodes that will be added as children of expanded node
      */
-    public expandNode(nodeToExpand: T, subNodes: T[]): void {
+    public expandNode (nodeToExpand: T, subNodes: T[]): void {
         if (nodeToExpand != null && subNodes != null && nodeToExpand.hasChildren) {
             this.treeControl.expand(nodeToExpand);
             const index: number = this.treeNodes.indexOf(nodeToExpand);
@@ -66,7 +66,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      * Collapses a node removing all children from it.
      * @param nodeToCollapse Node to be collapsed
      */
-    public collapseNode(nodeToCollapse: T): void {
+    public collapseNode (nodeToCollapse: T): void {
         if (nodeToCollapse?.hasChildren) {
             this.treeControl.collapse(nodeToCollapse);
             const children: T[] = this.treeNodes.filter((node: T) => nodeToCollapse.id === node.parentId);
@@ -82,7 +82,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      * @param nodeToAppend Expanded parent node
      * @param subNodes List of nodes that will be added as children of expanded node
      */
-    public appendNodes(nodeToAppend: T, subNodes: T[]): void {
+    public appendNodes (nodeToAppend: T, subNodes: T[]): void {
         if (nodeToAppend != null && subNodes != null) {
             const lastChild: T = this.treeNodes.filter((treeNode: T) => nodeToAppend.id === treeNode.parentId).pop();
             const index: number = this.treeNodes.indexOf(lastChild);
@@ -97,7 +97,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      * Removes provided node from the tree
      * @param node Node to be removed
      */
-    public removeNode(node: T): void {
+    public removeNode (node: T): void {
         this.treeNodes.splice(this.treeNodes.indexOf(node), 1);
     }
 
@@ -106,7 +106,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      * @param parentNode Parent node
      * @returns children of parent node
      */
-    public getChildren(parentNode: T): T[] {
+    public getChildren (parentNode: T): T[] {
         return this.treeNodes.filter((treeNode: T) => treeNode.parentId === parentNode.id);
     }
 
@@ -114,7 +114,7 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      * Checks if tree is empty
      * @returns boolean
      */
-    public isEmpty(): boolean {
+    public isEmpty (): boolean {
         return !this.treeNodes.length;
     }
 
@@ -123,17 +123,17 @@ export abstract class TreeService<T extends TreeNode> extends DataSource<T> {
      * @param parentNodeId Id of a parent node to be found
      * @returns parent node or undefined when not found
      */
-    public getParentNode(parentNodeId: string): T | undefined {
+    public getParentNode (parentNodeId: string): T | undefined {
         return this.treeNodes.find((treeNode: T) => treeNode.id === parentNodeId);
     }
 
-    public connect(): Observable<T[]> {
+    public connect (): Observable<T[]> {
         return this.treeNodesSource.asObservable();
     }
 
-    public disconnect(): void {}
+    public disconnect (): void {}
 
-    private collapseInnerNode(nodeToCollapse: T): void {
+    private collapseInnerNode (nodeToCollapse: T): void {
         const index: number = this.treeNodes.indexOf(nodeToCollapse);
         this.treeNodes.splice(index, 1);
         if (nodeToCollapse.hasChildren) {

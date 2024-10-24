@@ -29,7 +29,7 @@ export class ProcessDefinitionCloud {
     description: string;
     variableDefinitions?: ProcessVariableDefinition[];
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         this.id = obj?.id;
         this.name = obj?.name;
         this.appName = obj?.appName;

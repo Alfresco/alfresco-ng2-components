@@ -21,12 +21,12 @@ import { Observable } from 'rxjs';
 import { SearchHeaderQueryBuilderService, SearchQueryBuilderService } from '../../services';
 
 @Component({
-    selector: 'adf-search-widget-container',
-    standalone: true,
-    template: '<div #content></div>'
+    "selector": 'adf-search-widget-container',
+    "standalone": true,
+    "template": '<div #content></div>'
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChanges {
-    @ViewChild('content', { read: ViewContainerRef, static: true })
+    @ViewChild('content', { "read": ViewContainerRef, "static": true })
     content: ViewContainerRef;
 
     @Input()
@@ -49,25 +49,25 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
 
     componentRef: ComponentRef<any>;
 
-    constructor(private searchFilterService: SearchFilterService, private injector: Injector) {}
+    constructor (private searchFilterService: SearchFilterService, private injector: Injector) {}
 
-    ngOnInit() {
+    ngOnInit () {
         const componentType = this.searchFilterService.widgets[this.selector];
         if (componentType) {
             this.content.clear();
-            this.componentRef = this.content.createComponent(componentType, { index: 0 });
+            this.componentRef = this.content.createComponent(componentType, { "index": 0 });
             this.setupWidget(this.componentRef);
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['value']?.currentValue && this.componentRef?.instance) {
             this.componentRef.instance.isActive = true;
             this.componentRef.instance.setValue(changes['value'].currentValue);
         }
     }
 
-    private setupWidget(ref: ComponentRef<any>) {
+    private setupWidget (ref: ComponentRef<any>) {
         if (ref?.instance) {
             ref.instance.id = this.id;
             ref.instance.settings = { ...this.settings };
@@ -83,38 +83,38 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         if (this.componentRef) {
             this.componentRef.destroy();
             this.componentRef = null;
         }
     }
 
-    applyInnerWidget() {
+    applyInnerWidget () {
         this.componentRef.instance.submitValues();
     }
 
-    setValue(currentValue: string | any) {
+    setValue (currentValue: string | any) {
         this.componentRef.instance.isActive = true;
         this.componentRef.instance.setValue(currentValue);
     }
 
-    hasValueSelected() {
+    hasValueSelected () {
         return this.componentRef.instance.hasValidValue();
     }
 
-    getCurrentValue() {
+    getCurrentValue () {
         return this.componentRef.instance.getCurrentValue();
     }
 
-    getDisplayValue(): Observable<string> | null {
+    getDisplayValue (): Observable<string> | null {
         if (!this.componentRef?.instance) {
             return null;
         }
         return this.componentRef.instance.displayValue$;
     }
 
-    resetInnerWidget() {
+    resetInnerWidget () {
         if (this.componentRef?.instance) {
             this.componentRef.instance.reset();
         }

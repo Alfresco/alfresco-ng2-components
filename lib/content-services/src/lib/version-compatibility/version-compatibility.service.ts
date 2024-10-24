@@ -22,29 +22,29 @@ import { VersionInfo, RepositoryInfo } from '@alfresco/js-api';
 import { DiscoveryApiService } from '../common/services/discovery-api.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class VersionCompatibilityService {
     private acsVersion: VersionInfo;
 
     acsVersionInitialized$ = new ReplaySubject<void>();
 
-    constructor(private discoveryApiService: DiscoveryApiService) {
+    constructor (private discoveryApiService: DiscoveryApiService) {
         this.discoveryApiService.ecmProductInfo$
             .pipe(filter((acsInfo) => !!acsInfo))
             .subscribe((acsInfo: RepositoryInfo) => this.initializeAcsVersion(acsInfo.version));
     }
 
-    private initializeAcsVersion(acsVersion: VersionInfo) {
+    private initializeAcsVersion (acsVersion: VersionInfo) {
         this.acsVersion = acsVersion;
         this.acsVersionInitialized$.next(undefined);
     }
 
-    getAcsVersion(): VersionInfo {
+    getAcsVersion (): VersionInfo {
         return this.acsVersion;
     }
 
-    isVersionSupported(requiredVersion: string): boolean {
+    isVersionSupported (requiredVersion: string): boolean {
         const parsedRequiredVersion = this.parseVersion(requiredVersion);
         const currentVersion = this.getAcsVersion();
 
@@ -67,7 +67,7 @@ export class VersionCompatibilityService {
         return versionSupported;
     }
 
-    private parseVersion(version: string): VersionInfo {
+    private parseVersion (version: string): VersionInfo {
         const major = version.split('.')[0];
         const minor = version.split('.')[1] || '0';
         const patch = version.split('.')[2] || '0';

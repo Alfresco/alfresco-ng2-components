@@ -30,11 +30,11 @@ import { SearchFilterTabbedComponent } from '../../search-filter-tabbed/search-f
 import { SearchFilterTabDirective } from '../../search-filter-tabbed';
 
 @Component({
-    selector: 'adf-search-facet-tabbed-content',
-    standalone: true,
-    imports: [CommonModule, SearchChipAutocompleteInputComponent, SearchFilterTabbedComponent, SearchFilterTabDirective],
-    templateUrl: './search-facet-tabbed-content.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-facet-tabbed-content',
+    "standalone": true,
+    "imports": [CommonModule, SearchChipAutocompleteInputComponent, SearchFilterTabbedComponent, SearchFilterTabDirective],
+    "templateUrl": './search-facet-tabbed-content.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnChanges, FacetWidget {
     private queryBuilder = inject(SearchQueryBuilderService);
@@ -64,11 +64,11 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnC
     autocompleteOptions = {};
     selectedOptions = {};
 
-    ngOnInit() {
+    ngOnInit () {
         this.tabbedFacet.fields.forEach((field) => {
             Object.defineProperty(this.selectedOptions, field, {
-                value: [],
-                writable: true
+                "value": [],
+                "writable": true
             });
         });
 
@@ -76,32 +76,32 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnC
         this.onApply$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.submitValues());
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes.tabbedFacet) {
             this.isPopulated.emit(this.tabbedFacet.fields.some((field) => this.tabbedFacet.facets[field]?.buckets.items.length > 0));
             this.tabbedFacet.fields.forEach((field) => {
-                const options: AutocompleteOption[] = this.tabbedFacet.facets[field].buckets.items.map((item) => ({ value: item.display }));
+                const options: AutocompleteOption[] = this.tabbedFacet.facets[field].buckets.items.map((item) => ({ "value": item.display }));
                 Object.defineProperty(this.autocompleteOptions, field, {
-                    value: options,
-                    writable: true
+                    "value": options,
+                    "writable": true
                 });
             });
         }
     }
 
-    onOptionsChange(selectedOptions: AutocompleteOption[], field: string) {
+    onOptionsChange (selectedOptions: AutocompleteOption[], field: string) {
         this.selectedOptions[field] = selectedOptions.map((selectedOption) => selectedOption.value);
         this.isPopulated.emit(this.tabbedFacet.fields.some((facetField) => this.selectedOptions[facetField].length > 0));
         this.updateDisplayValue();
         this.updateUserFacetBuckets();
     }
 
-    updateDisplayValue() {
+    updateDisplayValue () {
         let displayValue = '';
         this.tabbedFacet.fields.forEach((field) => {
             if (this.selectedOptions[field].length > 0) {
@@ -112,25 +112,25 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnC
         this.displayValue$.emit(displayValue);
     }
 
-    reset() {
+    reset () {
         this.resetSubject$.next();
         this.updateUserFacetBuckets();
         this.updateDisplayValue();
         this.queryBuilder.update();
     }
 
-    submitValues() {
+    submitValues () {
         this.updateUserFacetBuckets();
         this.searchFacetFiltersService.updateSelectedBuckets();
         this.updateDisplayValue();
         this.queryBuilder.update();
     }
 
-    optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
+    optionComparator (option1: AutocompleteOption, option2: AutocompleteOption): boolean {
         return option1.value.toUpperCase() === option2.value.toUpperCase();
     }
 
-    private updateUserFacetBuckets() {
+    private updateUserFacetBuckets () {
         this.tabbedFacet.fields.forEach((field) => {
             this.tabbedFacet.facets[field].buckets.items.forEach((item) => {
                 const matchedOption = this.selectedOptions[field].find((option) => option === item.display);

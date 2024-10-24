@@ -24,17 +24,16 @@ import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { map } from 'rxjs/operators';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class TaskListCloudService extends BaseCloudService implements TaskListCloudServiceInterface {
     /**
      * Finds a task using an object with optional query properties.
-     *
      * @deprecated From Activiti 8.7.0 forward, use TaskListCloudService.fetchTaskList instead.
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns Task information
      */
-    getTaskByRequest(requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any> {
+    getTaskByRequest (requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
             queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
             const queryParams = this.buildQueryParams(requestNode);
@@ -60,12 +59,11 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
     /**
      * Available from Activiti version 8.7.0 onwards.
      * Retrieves a list of tasks using an object with optional query properties.
-     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns List of tasks
      */
-    fetchTaskList(requestNode: TaskListRequestModel, queryUrl?: string): Observable<any> {
+    fetchTaskList (requestNode: TaskListRequestModel, queryUrl?: string): Observable<any> {
         if (!requestNode?.appName) {
             return throwError(() => new Error('Appname not configured'));
         }
@@ -73,9 +71,9 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/tasks/search`;
 
         const queryParams = {
-            maxItems: requestNode.pagination?.maxItems || 25,
-            skipCount: requestNode.pagination?.skipCount || 0,
-            sort: this.buildSortingParam(requestNode.sorting || [])
+            "maxItems": requestNode.pagination?.maxItems || 25,
+            "skipCount": requestNode.pagination?.skipCount || 0,
+            "sort": this.buildSortingParam(requestNode.sorting || [])
         };
 
         const queryData = this.buildQueryData(requestNode);
@@ -91,29 +89,29 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         );
     }
 
-    getTaskListCounter(requestNode: TaskListRequestModel): Observable<number> {
+    getTaskListCounter (requestNode: TaskListRequestModel): Observable<number> {
         if (!requestNode.appName) {
             return throwError(() => new Error('Appname not configured'));
         }
         return this.fetchTaskList(requestNode).pipe(map((tasks) => tasks.list.pagination.totalItems));
     }
 
-    protected buildQueryData(requestNode: TaskListRequestModel) {
+    protected buildQueryData (requestNode: TaskListRequestModel) {
         const variableKeys = requestNode.variableKeys?.length > 0 ? requestNode.variableKeys.join(',') : undefined;
 
         const queryData: any = {
-            status: requestNode.status,
-            processDefinitionName: requestNode.processDefinitionName,
-            assignee: requestNode.assignee,
-            priority: requestNode.priority,
-            name: requestNode.name,
-            completedBy: requestNode.completedBy,
-            completedFrom: requestNode.completedFrom,
-            completedTo: requestNode.completedTo,
-            createdFrom: requestNode.createdFrom,
-            createdTo: requestNode.createdTo,
-            dueDateFrom: requestNode.dueDateFrom,
-            dueDateTo: requestNode.dueDateTo,
+            "status": requestNode.status,
+            "processDefinitionName": requestNode.processDefinitionName,
+            "assignee": requestNode.assignee,
+            "priority": requestNode.priority,
+            "name": requestNode.name,
+            "completedBy": requestNode.completedBy,
+            "completedFrom": requestNode.completedFrom,
+            "completedTo": requestNode.completedTo,
+            "createdFrom": requestNode.createdFrom,
+            "createdTo": requestNode.createdTo,
+            "dueDateFrom": requestNode.dueDateFrom,
+            "dueDateTo": requestNode.dueDateTo,
             variableKeys
         };
 
@@ -129,7 +127,7 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         return queryData;
     }
 
-    protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
+    protected buildQueryParams (requestNode: TaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const propertyKey in requestNode) {
             if (
@@ -147,15 +145,15 @@ export class TaskListCloudService extends BaseCloudService implements TaskListCl
         return queryParam;
     }
 
-    protected isExcludedField(property: string): boolean {
+    protected isExcludedField (property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
-    protected isPropertyValueValid(requestNode: any, property: string): boolean {
+    protected isPropertyValueValid (requestNode: any, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    protected buildSortingParam(models: TaskListCloudSortingModel[]): string {
+    protected buildSortingParam (models: TaskListCloudSortingModel[]): string {
         let finalSorting: string = '';
         if (models) {
             for (const sort of models) {

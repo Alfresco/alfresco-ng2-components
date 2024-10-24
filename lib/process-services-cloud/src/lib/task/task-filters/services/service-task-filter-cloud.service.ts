@@ -24,13 +24,13 @@ import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.servic
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ServiceTaskFilterCloudService {
     private filtersSubject = new BehaviorSubject<ServiceTaskFilterCloudModel[]>([]);
     filters$ = this.filtersSubject.asObservable();
 
-    constructor(
+    constructor (
         private identityUserService: IdentityUserService,
         @Inject(TASK_FILTERS_SERVICE_TOKEN)
         public preferenceService: PreferenceCloudServiceInterface
@@ -38,10 +38,9 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Creates and returns the default task filters for an app.
-     *
      * @param appName Name of the target app
      */
-    private createDefaultFilters(appName: string): void {
+    private createDefaultFilters (appName: string): void {
         const key: string = this.prepareKey(appName);
         this.preferenceService
             .getPreferences(appName, key)
@@ -62,68 +61,62 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Checks user preference are empty or not
-     *
      * @param preferences User preferences of the target app
      * @returns Boolean value if the preferences are not empty
      */
-    private hasPreferences(preferences: any): boolean {
+    private hasPreferences (preferences: any): boolean {
         return preferences?.length > 0;
     }
 
     /**
      * Checks for task filters in given user preferences
-     *
      * @param preferences User preferences of the target app
      * @param key Key of the task filters
      * @returns Boolean value if the preference has task filters
      */
-    private hasTaskFilters(preferences: any, key: string): boolean {
+    private hasTaskFilters (preferences: any, key: string): boolean {
         const filters = preferences.find((filter: any) => filter.entry.key === key);
         return filters?.entry ? JSON.parse(filters.entry.value).length > 0 : false;
     }
 
     /**
      * Calls create preference api to create task filters
-     *
      * @param appName Name of the target app
      * @param key Key of the task instance filters
      * @param filters Details of new task filter
      * @returns Observable of created task filters
      */
-    private createTaskFilters(appName: string, key: string, filters: ServiceTaskFilterCloudModel[]): Observable<ServiceTaskFilterCloudModel[]> {
+    private createTaskFilters (appName: string, key: string, filters: ServiceTaskFilterCloudModel[]): Observable<ServiceTaskFilterCloudModel[]> {
         return this.preferenceService.createPreference(appName, key, filters);
     }
 
     /**
      * Calls get preference api to get task filter by preference key
-     *
      * @param appName Name of the target app
      * @param key Key of the task filters
      * @returns Observable of task filters
      */
-    private getTaskFiltersByKey(appName: string, key: string): Observable<ServiceTaskFilterCloudModel[]> {
+    private getTaskFiltersByKey (appName: string, key: string): Observable<ServiceTaskFilterCloudModel[]> {
         return this.preferenceService.getPreferenceByKey(appName, key);
     }
 
     /**
      * Gets all task filters for a task app.
-     *
      * @param appName Name of the target app
      * @returns Observable of task filter details
      */
-    getTaskListFilters(appName?: string): Observable<ServiceTaskFilterCloudModel[]> {
+    getTaskListFilters (appName?: string): Observable<ServiceTaskFilterCloudModel[]> {
         this.createDefaultFilters(appName);
         return this.filters$;
     }
 
     /**
      * Gets a task filter.
-     *
      * @param appName Name of the target app
      * @param id ID of the task
      * @returns Details of the task filter
      */
-    getTaskFilterById(appName: string, id: string): Observable<ServiceTaskFilterCloudModel> {
+    getTaskFilterById (appName: string, id: string): Observable<ServiceTaskFilterCloudModel> {
         const key: string = this.prepareKey(appName);
         return this.getTaskFiltersByKey(appName, key).pipe(
             switchMap((filters) => {
@@ -139,11 +132,10 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Adds a new task filter.
-     *
      * @param newFilter The new filter to add
      * @returns Observable of task instance filters with newly added filter
      */
-    addFilter(newFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
+    addFilter (newFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key: string = this.prepareKey(newFilter.appName);
         return this.getTaskFiltersByKey(newFilter.appName, key).pipe(
             switchMap((filters) => {
@@ -161,17 +153,16 @@ export class ServiceTaskFilterCloudService {
         );
     }
 
-    private addFiltersToStream(filters: ServiceTaskFilterCloudModel[]) {
+    private addFiltersToStream (filters: ServiceTaskFilterCloudModel[]) {
         this.filtersSubject.next(filters);
     }
 
     /**
      * Updates a task filter.
-     *
      * @param updatedFilter The filter to update
      * @returns Observable of task instance filters with updated filter
      */
-    updateFilter(updatedFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
+    updateFilter (updatedFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key: string = this.prepareKey(updatedFilter.appName);
         return this.getTaskFiltersByKey(updatedFilter.appName, key).pipe(
             switchMap((filters) => {
@@ -192,11 +183,10 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Deletes a task filter
-     *
      * @param deletedFilter The filter to delete
      * @returns Observable of task instance filters without deleted filter
      */
-    deleteFilter(deletedFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
+    deleteFilter (deletedFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key = this.prepareKey(deletedFilter.appName);
         return this.getTaskFiltersByKey(deletedFilter.appName, key).pipe(
             switchMap((filters) => {
@@ -215,91 +205,86 @@ export class ServiceTaskFilterCloudService {
 
     /**
      * Checks if given filter is a default filter
-     *
      * @param filterName Name of the target task filter
      * @returns Boolean value for whether the filter is a default filter
      */
-    isDefaultFilter(filterName: string): boolean {
+    isDefaultFilter (filterName: string): boolean {
         const defaultFilters = this.defaultServiceTaskFilters();
         return defaultFilters.findIndex((filter) => filterName === filter.name) !== -1;
     }
 
     /**
      * Calls update preference api to update task filter
-     *
      * @param appName Name of the target app
      * @param key Key of the task filters
      * @param filters Details of update filter
      * @returns Observable of updated task filters
      */
-    private updateTaskFilters(appName: string, key: string, filters: ServiceTaskFilterCloudModel[]): Observable<ServiceTaskFilterCloudModel[]> {
+    private updateTaskFilters (appName: string, key: string, filters: ServiceTaskFilterCloudModel[]): Observable<ServiceTaskFilterCloudModel[]> {
         return this.preferenceService.updatePreference(appName, key, filters);
     }
 
     /**
      * Creates a uniq key with appName and username
-     *
      * @param appName Name of the target app
      * @returns String of task filters preference key
      */
-    private prepareKey(appName: string): string {
+    private prepareKey (appName: string): string {
         return `service-task-filters-${appName}-${this.identityUserService.getCurrentUserInfo().username}`;
     }
 
     /**
      * Finds and returns the task filters from preferences
-     *
      * @returns Array of TaskFilterCloudModel
      * @param preferences preferences
      * @param key key
      */
-    private findFiltersByKeyInPreferences(preferences: any, key: string): ServiceTaskFilterCloudModel[] {
+    private findFiltersByKeyInPreferences (preferences: any, key: string): ServiceTaskFilterCloudModel[] {
         const result = preferences.find((filter: any) => filter.entry.key === key);
         return result?.entry ? JSON.parse(result.entry.value) : [];
     }
 
     /**
      * Creates and returns the default filters for a task app.
-     *
      * @param appName Name of the target app
      * @returns Array of TaskFilterCloudModel
      */
-    private defaultServiceTaskFilters(appName?: string): ServiceTaskFilterCloudModel[] {
+    private defaultServiceTaskFilters (appName?: string): ServiceTaskFilterCloudModel[] {
         return [
             {
-                id: this.generateRandomId(),
-                name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.ALL_SERVICE_TASKS',
-                key: 'my-service-tasks',
-                icon: 'inbox',
+                "id": this.generateRandomId(),
+                "name": 'ADF_CLOUD_SERVICE_TASK_FILTERS.ALL_SERVICE_TASKS',
+                "key": 'my-service-tasks',
+                "icon": 'inbox',
                 appName,
-                status: '',
-                sort: 'startedDate',
-                order: 'DESC'
+                "status": '',
+                "sort": 'startedDate',
+                "order": 'DESC'
             } as ServiceTaskFilterCloudModel,
             {
-                id: this.generateRandomId(),
-                name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.COMPLETED_TASKS',
-                key: 'completed-tasks',
-                icon: 'done',
+                "id": this.generateRandomId(),
+                "name": 'ADF_CLOUD_SERVICE_TASK_FILTERS.COMPLETED_TASKS',
+                "key": 'completed-tasks',
+                "icon": 'done',
                 appName,
-                status: 'COMPLETED',
-                sort: 'completedDate',
-                order: 'DESC'
+                "status": 'COMPLETED',
+                "sort": 'completedDate',
+                "order": 'DESC'
             } as ServiceTaskFilterCloudModel,
             {
-                id: this.generateRandomId(),
-                name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.ERRORED_TASKS',
-                key: 'errored-service-tasks',
-                icon: 'error',
+                "id": this.generateRandomId(),
+                "name": 'ADF_CLOUD_SERVICE_TASK_FILTERS.ERRORED_TASKS',
+                "key": 'errored-service-tasks',
+                "icon": 'error',
                 appName,
-                status: 'ERROR',
-                sort: 'startedDate',
-                order: 'DESC'
+                "status": 'ERROR',
+                "sort": 'startedDate',
+                "order": 'DESC'
             } as ServiceTaskFilterCloudModel
         ];
     }
 
-    generateRandomId(): string {
+    generateRandomId (): string {
         return Math.random().toString(36).substring(2, 9);
     }
 }

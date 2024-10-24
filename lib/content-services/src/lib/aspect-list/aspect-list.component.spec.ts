@@ -31,41 +31,41 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
 
 const aspectListMock: AspectEntry[] = [
     {
-        entry: {
-            parentId: 'frs:aspectZero',
-            id: 'frs:AspectOne',
-            description: 'First Aspect with random description',
-            title: 'FirstAspect',
-            properties: [
+        "entry": {
+            "parentId": 'frs:aspectZero',
+            "id": 'frs:AspectOne',
+            "description": 'First Aspect with random description',
+            "title": 'FirstAspect',
+            "properties": [
                 {
-                    id: 'channelPassword',
-                    title: 'The authenticated channel password',
-                    dataType: 'd:propA'
+                    "id": 'channelPassword',
+                    "title": 'The authenticated channel password',
+                    "dataType": 'd:propA'
                 },
                 {
-                    id: 'channelUsername',
-                    title: 'The authenticated channel username',
-                    dataType: 'd:propB'
+                    "id": 'channelUsername',
+                    "title": 'The authenticated channel username',
+                    "dataType": 'd:propB'
                 }
             ]
         }
     },
     {
-        entry: {
-            parentId: 'frs:AspectZer',
-            id: 'frs:SecondAspect',
-            description: 'Second Aspect description',
-            title: 'SecondAspect',
-            properties: [
+        "entry": {
+            "parentId": 'frs:AspectZer',
+            "id": 'frs:SecondAspect',
+            "description": 'Second Aspect description',
+            "title": 'SecondAspect',
+            "properties": [
                 {
-                    id: 'assetId',
-                    title: 'Published Asset Id',
-                    dataType: 'd:text'
+                    "id": 'assetId',
+                    "title": 'Published Asset Id',
+                    "dataType": 'd:text'
                 },
                 {
-                    id: 'assetUrl',
-                    title: 'Published Asset URL',
-                    dataType: 'd:text'
+                    "id": 'assetUrl',
+                    "title": 'Published Asset URL',
+                    "dataType": 'd:text'
                 }
             ]
         }
@@ -74,36 +74,36 @@ const aspectListMock: AspectEntry[] = [
 
 const customAspectListMock: AspectEntry[] = [
     {
-        entry: {
-            parentId: 'cst:parentAspect',
-            id: 'cst:customAspect',
-            description: 'Custom Aspect with random description',
-            title: 'CustomAspect',
-            properties: [
+        "entry": {
+            "parentId": 'cst:parentAspect',
+            "id": 'cst:customAspect',
+            "description": 'Custom Aspect with random description',
+            "title": 'CustomAspect',
+            "properties": [
                 {
-                    id: 'channelPassword',
-                    title: 'The authenticated channel password',
-                    dataType: 'd:propA'
+                    "id": 'channelPassword',
+                    "title": 'The authenticated channel password',
+                    "dataType": 'd:propA'
                 },
                 {
-                    id: 'channelUsername',
-                    title: 'The authenticated channel username',
-                    dataType: 'd:propB'
+                    "id": 'channelUsername',
+                    "title": 'The authenticated channel username',
+                    "dataType": 'd:propB'
                 }
             ]
         }
     },
     {
-        entry: {
-            parentId: 'cst:commonaspect',
-            id: 'cst:nonamedAspect',
-            description: '',
-            title: '',
-            properties: [
+        "entry": {
+            "parentId": 'cst:commonaspect',
+            "id": 'cst:nonamedAspect',
+            "description": '',
+            "title": '',
+            "properties": [
                 {
-                    id: 'channelPassword',
-                    title: 'The authenticated channel password',
-                    dataType: 'd:propA'
+                    "id": 'channelPassword',
+                    "title": 'The authenticated channel password',
+                    "dataType": 'd:propA'
                 }
             ]
         }
@@ -119,8 +119,8 @@ describe('AspectListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, AspectListComponent],
-            providers: [AspectListService]
+            "imports": [ContentTestingModule, AspectListComponent],
+            "providers": [AspectListService]
         });
     });
 
@@ -151,7 +151,7 @@ describe('AspectListComponent', () => {
             spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             nodeService = TestBed.inject(NodesApiService);
-            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'stored:aspect'] } as any));
+            spyOn(nodeService, 'getNode').and.returnValue(of({ "id": 'fake-node-id', "aspectNames": ['frs:AspectOne', 'stored:aspect'] } as any));
             component.nodeId = 'fake-node-id';
             loader = TestbedHarnessEnvironment.loader(fixture);
         });
@@ -175,8 +175,8 @@ describe('AspectListComponent', () => {
             });
 
             it('should show all the aspects', async () => {
-                expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBe(true);
-                expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBe(true);
+                expect(await loader.hasHarness(MatExpansionPanelHarness.with({ "selector": '#aspect-list-FirstAspect' }))).toBe(true);
+                expect(await loader.hasHarness(MatExpansionPanelHarness.with({ "selector": '#aspect-list-SecondAspect' }))).toBe(true);
             });
 
             it('should show aspect id when name or title is not set', () => {
@@ -280,16 +280,16 @@ describe('AspectListComponent', () => {
 
         it('should show all the aspects', async () => {
             fixture.detectChanges();
-            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBe(true);
-            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBe(true);
+            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ "selector": '#aspect-list-FirstAspect' }))).toBe(true);
+            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ "selector": '#aspect-list-SecondAspect' }))).toBe(true);
         });
 
         it('should not show excluded aspects', async () => {
             component.excludedAspects = ['frs:AspectOne', 'frs:SecondAspect'];
 
             fixture.detectChanges();
-            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-FirstAspect' }))).toBeFalse();
-            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ selector: '#aspect-list-SecondAspect' }))).toBeFalse();
+            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ "selector": '#aspect-list-FirstAspect' }))).toBeFalse();
+            expect(await loader.hasHarness(MatExpansionPanelHarness.with({ "selector": '#aspect-list-SecondAspect' }))).toBeFalse();
         });
     });
 });

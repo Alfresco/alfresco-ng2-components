@@ -21,15 +21,15 @@ import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'adf-node-path-column',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+    "selector": 'adf-node-path-column',
+    "standalone": true,
+    "imports": [CommonModule],
+    "template": `
         <span class="adf-user-name-column adf-datatable-cell-value" title="{{ displayText$ | async }}">
             {{ displayText$ | async }}
         </span>
     `,
-    host: { class: 'adf-node-path-column adf-datatable-content-cell' }
+    "host": { "class": 'adf-node-path-column adf-datatable-content-cell' }
 })
 export class NodePathColumnComponent implements OnInit {
     @Input()
@@ -37,11 +37,11 @@ export class NodePathColumnComponent implements OnInit {
 
     displayText$ = new BehaviorSubject<string>('');
 
-    ngOnInit() {
+    ngOnInit () {
         this.updateValue();
     }
 
-    protected updateValue() {
+    protected updateValue () {
         this.displayText$.next(this.node.path.name);
     }
 }

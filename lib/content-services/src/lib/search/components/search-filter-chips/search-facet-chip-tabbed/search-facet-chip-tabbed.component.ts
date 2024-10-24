@@ -29,9 +29,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search-filter-menu-card.component';
 
 @Component({
-    selector: 'adf-search-facet-chip-tabbed',
-    standalone: true,
-    imports: [
+    "selector": 'adf-search-facet-chip-tabbed',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatChipsModule,
         MatMenuModule,
@@ -41,18 +41,18 @@ import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search
         MatButtonModule,
         SearchFilterMenuCardComponent
     ],
-    templateUrl: './search-facet-chip-tabbed.component.html',
-    styleUrls: ['./search-facet-chip-tabbed.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './search-facet-chip-tabbed.component.html',
+    "styleUrls": ['./search-facet-chip-tabbed.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFacetChipTabbedComponent {
     @Input()
     tabbedFacet: TabbedFacetField;
 
-    @ViewChild('menuContainer', { static: false })
+    @ViewChild('menuContainer', { "static": false })
     menuContainer: ElementRef;
 
-    @ViewChild('menuTrigger', { static: false })
+    @ViewChild('menuTrigger', { "static": false })
     menuTrigger: MatMenuTrigger;
 
     private resetSubject$ = new Subject<void>();
@@ -65,32 +65,32 @@ export class SearchFacetChipTabbedComponent {
     chipIcon = 'keyboard_arrow_down';
     isPopulated = false;
 
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory, private changeDetectorRef: ChangeDetectorRef) {}
+    constructor (private focusTrapFactory: ConfigurableFocusTrapFactory, private changeDetectorRef: ChangeDetectorRef) {}
 
-    onMenuOpen() {
+    onMenuOpen () {
         if (this.menuContainer && !this.focusTrap) {
             this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
         }
         this.chipIcon = 'keyboard_arrow_up';
     }
 
-    onClosed() {
+    onClosed () {
         this.focusTrap.destroy();
         this.focusTrap = null;
         this.chipIcon = 'keyboard_arrow_down';
     }
 
-    onRemove() {
+    onRemove () {
         this.resetSubject$.next();
         this.menuTrigger.closeMenu();
     }
 
-    onApply() {
+    onApply () {
         this.applySubject$.next();
         this.menuTrigger.closeMenu();
     }
 
-    onEnterKeydown() {
+    onEnterKeydown () {
         if (this.isPopulated) {
             if (!this.menuTrigger.menuOpen) {
                 this.menuTrigger.openMenu();
@@ -100,13 +100,13 @@ export class SearchFacetChipTabbedComponent {
         }
     }
 
-    onEscKeydown() {
+    onEscKeydown () {
         if (this.menuTrigger.menuOpen) {
             this.menuTrigger.closeMenu();
         }
     }
 
-    onIsPopulatedEventChange(isPopulated: boolean) {
+    onIsPopulatedEventChange (isPopulated: boolean) {
         this.isPopulated = isPopulated;
         this.changeDetectorRef.detectChanges();
     }

@@ -23,7 +23,7 @@ export class ValidateDynamicTableRowEvent extends FormFieldEvent {
 
     isValid = true;
 
-    constructor(form: FormModel,
+    constructor (form: FormModel,
                 field: FormFieldModel,
                 public row: DynamicTableRow,
                 public summary: DynamicRowValidationSummary) {

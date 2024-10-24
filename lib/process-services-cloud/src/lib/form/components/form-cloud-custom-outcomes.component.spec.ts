@@ -23,8 +23,8 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { FormCloudComponent } from './form-cloud.component';
 
 @Component({
-    selector: 'adf-cloud-form-with-custom-outcomes',
-    template: ` <adf-cloud-form #adfCloudForm>
+    "selector": 'adf-cloud-form-with-custom-outcomes',
+    "template": ` <adf-cloud-form #adfCloudForm>
         <adf-cloud-form-custom-outcomes>
             <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">CUSTOM-BUTTON-1</button>
             <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">CUSTOM-BUTTON-2</button>
@@ -32,12 +32,12 @@ import { FormCloudComponent } from './form-cloud.component';
     </adf-cloud-form>`
 })
 class FormCloudWithCustomOutComesComponent {
-    @ViewChild('adfCloudForm', { static: true })
+    @ViewChild('adfCloudForm', { "static": true })
     adfCloudForm: FormCloudComponent;
 
-    onCustomButtonOneClick() {}
+    onCustomButtonOneClick () {}
 
-    onCustomButtonTwoClick() {}
+    onCustomButtonTwoClick () {}
 }
 
 describe('FormCloudWithCustomOutComesComponent', () => {
@@ -47,15 +47,15 @@ describe('FormCloudWithCustomOutComesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [FormCloudWithCustomOutComesComponent]
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [FormCloudWithCustomOutComesComponent]
         });
         fixture = TestBed.createComponent(FormCloudWithCustomOutComesComponent);
         customComponent = fixture.componentInstance;
         debugElement = fixture.debugElement;
         const formRepresentation = {
-            fields: [{ id: 'container1' }],
-            outcomes: [{ id: 'outcome-1', name: 'outcome 1' }]
+            "fields": [{ "id": 'container1' }],
+            "outcomes": [{ "id": 'outcome-1', "name": 'outcome 1' }]
         };
 
         const form = new FormModel(formRepresentation);

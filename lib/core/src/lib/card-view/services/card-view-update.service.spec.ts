@@ -47,12 +47,12 @@ describe('CardViewUpdateService', () => {
     describe('Service', () => {
         let cardViewUpdateService: CardViewUpdateService;
         const property: CardViewBaseItemModel = {
-            label: 'property-label',
-            value: 'property-value',
-            key: 'property-key',
-            default: 'property-default',
-            editable: false,
-            clickable: false
+            "label": 'property-label',
+            "value": 'property-value',
+            "key": 'property-key',
+            "default": 'property-default',
+            "editable": false,
+            "clickable": false
         } as CardViewBaseItemModel;
 
         beforeEach(() => {

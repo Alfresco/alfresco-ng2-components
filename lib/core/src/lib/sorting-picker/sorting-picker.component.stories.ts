@@ -21,87 +21,87 @@ import { SortingPickerComponent } from './sorting-picker.component';
 import { importProvidersFrom } from '@angular/core';
 
 const initialSortingTypes: Array<{ key: string; label: string }> = [
-    { key: 'sortByFirstName', label: 'First Name' },
-    { key: 'sortByLastName', label: 'Last Name' },
-    { key: 'sortByBirthDate', label: 'Birth Date' }
+    { "key": 'sortByFirstName', "label": 'First Name' },
+    { "key": 'sortByLastName', "label": 'Last Name' },
+    { "key": 'sortByBirthDate', "label": 'Birth Date' }
 ];
 
 const initialOptionKeys = [...initialSortingTypes.map((type) => type.key.toString())];
 
 export default {
-    component: SortingPickerComponent,
-    title: 'Core/Sorting Picker/Sorting Picker',
-    decorators: [
+    "component": SortingPickerComponent,
+    "title": 'Core/Sorting Picker/Sorting Picker',
+    "decorators": [
         moduleMetadata({
-            imports: [SortingPickerComponent]
+            "imports": [SortingPickerComponent]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `The picker shows the user a menu of sorting options (which could be data columns to sort on alphabetical vs numerical search, etc)
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `The picker shows the user a menu of sorting options (which could be data columns to sort on alphabetical vs numerical search, etc)
                     and the choice of ascending vs descending sort order.
                     Note that picker only implements the menu, so you are responsible for implementing the sorting options yourself.`
             }
         }
     },
-    argTypes: {
-        selected: {
-            control: 'select',
-            options: initialOptionKeys,
-            description: 'Currently selected option key',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'undefined' }
+    "argTypes": {
+        "selected": {
+            "control": 'select',
+            "options": initialOptionKeys,
+            "description": 'Currently selected option key',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'undefined' }
             }
         },
-        ascending: {
-            control: 'boolean',
-            description: 'Current sorting direction',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "ascending": {
+            "control": 'boolean',
+            "description": 'Current sorting direction',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        options: {
-            description: 'Available sorting options',
-            table: {
-                type: { summary: 'Array<{key: string; label: string}>' },
-                defaultValue: { summary: '[]' }
+        "options": {
+            "description": 'Available sorting options',
+            "table": {
+                "type": { "summary": 'Array<{key: string; label: string}>' },
+                "defaultValue": { "summary": '[]' }
             }
         },
-        valueChange: {
-            action: 'valueChange',
-            description: 'Raised each time sorting key gets changed',
-            table: {
-                type: { summary: 'EventEmitter <string>' },
-                category: 'Actions'
+        "valueChange": {
+            "action": 'valueChange',
+            "description": 'Raised each time sorting key gets changed',
+            "table": {
+                "type": { "summary": 'EventEmitter <string>' },
+                "category": 'Actions'
             }
         },
-        sortingChange: {
-            action: 'sortingChange',
-            description: 'Raised each time direction gets changed',
-            table: {
-                type: { summary: 'EventEmitter <boolean>' },
-                category: 'Actions'
+        "sortingChange": {
+            "action": 'sortingChange',
+            "description": 'Raised each time direction gets changed',
+            "table": {
+                "type": { "summary": 'EventEmitter <boolean>' },
+                "category": 'Actions'
             }
         }
     },
-    args: {
-        ascending: true,
-        options: []
+    "args": {
+        "ascending": true,
+        "options": []
     }
 } as Meta<SortingPickerComponent>;
 
 const template: StoryFn<SortingPickerComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const SortingPicker = template.bind({});
 SortingPicker.args = {
-    options: initialSortingTypes
+    "options": initialSortingTypes
 };
-SortingPicker.parameters = { layout: 'centered' };
+SortingPicker.parameters = { "layout": 'centered' };

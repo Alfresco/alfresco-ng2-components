@@ -25,34 +25,34 @@ describe('VersionComparisonComponent', () => {
     let component: VersionComparisonComponent;
     let fixture: ComponentFixture<VersionComparisonComponent>;
     const node: Node = new Node({
-        id: '1234',
-        name: 'TEST-NODE',
-        isFile: true,
-        nodeType: 'FAKE',
-        isFolder: false,
-        modifiedAt: new Date(),
-        modifiedByUser: null,
-        createdAt: new Date(),
-        createdByUser: null,
-        content: {
-            mimeType: 'text/html',
-            mimeTypeName: 'HTML',
-            sizeInBytes: 13
+        "id": '1234',
+        "name": 'TEST-NODE',
+        "isFile": true,
+        "nodeType": 'FAKE',
+        "isFolder": false,
+        "modifiedAt": new Date(),
+        "modifiedByUser": null,
+        "createdAt": new Date(),
+        "createdByUser": null,
+        "content": {
+            "mimeType": 'text/html',
+            "mimeTypeName": 'HTML',
+            "sizeInBytes": 13
         }
     });
 
     const file = {
-        name: 'Fake New file',
-        type: 'image/png',
-        lastModified: 13,
-        size: 1351,
-        slice: null
+        "name": 'Fake New file',
+        "type": 'image/png',
+        "lastModified": 13,
+        "size": 1351,
+        "slice": null
     } as File;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(VersionComparisonComponent);
         component = fixture.componentInstance;
@@ -73,11 +73,11 @@ describe('VersionComparisonComponent', () => {
 
     it('should display PDF svg image if new file type is PDF', () => {
         component.newFileVersion = {
-            name: 'Fake New file',
-            type: 'application/pdf',
-            lastModified: 13,
-            size: 1351,
-            slice: null
+            "name": 'Fake New file',
+            "type": 'application/pdf',
+            "lastModified": 13,
+            "size": 1351,
+            "slice": null
         } as File;
         fixture.detectChanges();
         const newImageNode = document.querySelector('.adf-version-new img');
@@ -86,19 +86,19 @@ describe('VersionComparisonComponent', () => {
 
     it('should display png svg image if the current node is png type', () => {
         component.node = {
-            id: '1234',
-            name: 'TEST-NODE',
-            isFile: true,
-            nodeType: 'FAKE',
-            isFolder: false,
-            modifiedAt: new Date(),
-            modifiedByUser: null,
-            createdAt: new Date(),
-            createdByUser: null,
-            content: {
-                mimeType: 'image/jpeg',
-                mimeTypeName: 'JPEG',
-                sizeInBytes: 13
+            "id": '1234',
+            "name": 'TEST-NODE',
+            "isFile": true,
+            "nodeType": 'FAKE',
+            "isFolder": false,
+            "modifiedAt": new Date(),
+            "modifiedByUser": null,
+            "createdAt": new Date(),
+            "createdByUser": null,
+            "content": {
+                "mimeType": 'image/jpeg',
+                "mimeTypeName": 'JPEG',
+                "sizeInBytes": 13
             }
         };
         fixture.detectChanges();

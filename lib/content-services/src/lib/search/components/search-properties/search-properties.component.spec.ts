@@ -61,19 +61,19 @@ describe('SearchPropertiesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchPropertiesComponent]
+            "imports": [ContentTestingModule, SearchPropertiesComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(SearchPropertiesComponent);
         component = fixture.componentInstance;
         component.id = 'properties';
         component.context = {
-            queryFragments: {
-                properties: ''
+            "queryFragments": {
+                "properties": ''
             },
-            filterRawParams: {},
-            populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            "filterRawParams": {},
+            "populateFilters": new ReplaySubject(1),
+            "update": jasmine.createSpy('update')
         } as any;
     });
 
@@ -144,13 +144,13 @@ describe('SearchPropertiesComponent', () => {
 
         it('should set autocompleteOptions for SearchChipAutocompleteInputComponent from settings', () => {
             component.settings = {
-                field: 'field',
-                fileExtensions: ['pdf', 'doc', 'txt']
+                "field": 'field',
+                "fileExtensions": ['pdf', 'doc', 'txt']
             };
             component.ngOnInit();
 
             fixture.detectChanges();
-            expect(searchChipAutocompleteInputComponent.autocompleteOptions).toEqual([{ value: 'pdf' }, { value: 'doc' }, { value: 'txt' }]);
+            expect(searchChipAutocompleteInputComponent.autocompleteOptions).toEqual([{ "value": 'pdf' }, { "value": 'doc' }, { "value": 'txt' }]);
         });
 
         it('should set onReset$ for SearchChipAutocompleteInputComponent to correct value', () => {
@@ -162,10 +162,10 @@ describe('SearchPropertiesComponent', () => {
         });
 
         it('should compare file extensions case insensitive after calling compareOption on SearchChipAutocompleteInputComponent', () => {
-            const option1 = { value: 'pdf' };
-            const option2 = { value: 'PdF' };
+            const option1 = { "value": 'pdf' };
+            const option2 = { "value": 'PdF' };
             expect(searchChipAutocompleteInputComponent.compareOption(option1, option2)).toBeTrue();
-            expect(searchChipAutocompleteInputComponent.compareOption(option1, { value: `${option2.value}1` })).toBeFalse();
+            expect(searchChipAutocompleteInputComponent.compareOption(option1, { "value": `${option2.value}1` })).toBeFalse();
         });
 
         it('should remove preceding dot after calling formatChipValue on SearchChipAutocompleteInputComponent', () => {
@@ -175,15 +175,15 @@ describe('SearchPropertiesComponent', () => {
         });
 
         it('should filter file extensions case insensitive without dots after calling filter on SearchChipAutocompleteInputComponent', () => {
-            const extensions = [{ value: 'pdf' }, { value: 'jpg' }, { value: 'txt' }, { value: 'png' }];
+            const extensions = [{ "value": 'pdf' }, { "value": 'jpg' }, { "value": 'txt' }, { "value": 'png' }];
             const searchValue = 'p';
 
             expect(searchChipAutocompleteInputComponent.filter(extensions, searchValue)).toEqual([
-                { value: 'pdf' },
-                { value: 'jpg' },
-                { value: 'png' }
+                { "value": 'pdf' },
+                { "value": 'jpg' },
+                { "value": 'png' }
             ]);
-            expect(searchChipAutocompleteInputComponent.filter(extensions, `.${searchValue}`)).toEqual([{ value: 'pdf' }, { value: 'png' }]);
+            expect(searchChipAutocompleteInputComponent.filter(extensions, `.${searchValue}`)).toEqual([{ "value": 'pdf' }, { "value": 'png' }]);
         });
 
         it('should set placeholder for SearchChipAutocompleteInputComponent to correct value', () => {
@@ -197,7 +197,7 @@ describe('SearchPropertiesComponent', () => {
 
         beforeEach(() => {
             component.settings = {
-                field: `${sizeField},${nameField}`
+                "field": `${sizeField},${nameField}`
             };
             fixture.detectChanges();
             spyOn(component.displayValue$, 'next');
@@ -225,8 +225,8 @@ describe('SearchPropertiesComponent', () => {
             expect(component.displayValue$.next).toHaveBeenCalledWith('');
             expect(component.context.queryFragments[component.id]).toBe('');
             expect(component.context.filterRawParams[component.id]).toEqual({
-                fileExtensions: undefined,
-                fileSizeCondition: { fileSize: null, fileSizeOperator: FileSizeOperator.AT_LEAST, fileSizeUnit: FileSizeUnit.KB }
+                "fileExtensions": undefined,
+                "fileSizeCondition": { "fileSize": null, "fileSizeOperator": FileSizeOperator.AT_LEAST, "fileSizeUnit": FileSizeUnit.KB }
             });
             expect(component.context.update).toHaveBeenCalled();
         });
@@ -240,11 +240,11 @@ describe('SearchPropertiesComponent', () => {
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[328704 TO MAX]`);
             expect(component.context.filterRawParams[component.id]).toEqual({
-                fileExtensions: undefined,
-                fileSizeCondition: {
-                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
-                    fileSize: 321,
-                    fileSizeUnit: FileSizeUnit.KB
+                "fileExtensions": undefined,
+                "fileSizeCondition": {
+                    "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+                    "fileSize": 321,
+                    "fileSizeUnit": FileSizeUnit.KB
                 }
             });
             expect(component.context.update).toHaveBeenCalled();
@@ -265,11 +265,11 @@ describe('SearchPropertiesComponent', () => {
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[0 TO 336592896]`);
             expect(component.context.filterRawParams[component.id]).toEqual({
-                fileExtensions: undefined,
-                fileSizeCondition: {
-                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
-                    fileSize: 321,
-                    fileSizeUnit: FileSizeUnit.MB
+                "fileExtensions": undefined,
+                "fileSizeCondition": {
+                    "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+                    "fileSize": 321,
+                    "fileSizeUnit": FileSizeUnit.MB
                 }
             });
             expect(component.context.update).toHaveBeenCalled();
@@ -290,46 +290,46 @@ describe('SearchPropertiesComponent', () => {
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[344671125504 TO 344671125504]`);
             expect(component.context.filterRawParams[component.id]).toEqual({
-                fileExtensions: undefined,
-                fileSizeCondition: {
-                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.EXACTLY',
-                    fileSize: 321,
-                    fileSizeUnit: FileSizeUnit.GB
+                "fileExtensions": undefined,
+                "fileSizeCondition": {
+                    "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.EXACTLY',
+                    "fileSize": 321,
+                    "fileSizeUnit": FileSizeUnit.GB
                 }
             });
             expect(component.context.update).toHaveBeenCalled();
         });
 
         it('should search by single file type', () => {
-            const extension = { value: 'pdf' };
+            const extension = { "value": 'pdf' };
             getSearchChipAutocompleteInputComponent().optionsChanged.emit([extension]);
 
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith('pdf');
             expect(component.context.queryFragments[component.id]).toBe(`${nameField}:("*.${extension.value}")`);
             expect(component.context.filterRawParams[component.id]).toEqual({
-                fileExtensions: ['pdf'],
-                fileSizeCondition: {
-                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
-                    fileSize: null,
-                    fileSizeUnit: FileSizeUnit.KB
+                "fileExtensions": ['pdf'],
+                "fileSizeCondition": {
+                    "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+                    "fileSize": null,
+                    "fileSizeUnit": FileSizeUnit.KB
                 }
             });
             expect(component.context.update).toHaveBeenCalled();
         });
 
         it('should search by multiple file types', () => {
-            getSearchChipAutocompleteInputComponent().optionsChanged.emit([{ value: 'pdf' }, { value: 'txt' }]);
+            getSearchChipAutocompleteInputComponent().optionsChanged.emit([{ "value": 'pdf' }, { "value": 'txt' }]);
 
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith('pdf, txt');
             expect(component.context.queryFragments[component.id]).toBe(`${nameField}:("*.pdf" OR "*.txt")`);
             expect(component.context.filterRawParams[component.id]).toEqual({
-                fileExtensions: ['pdf', 'txt'],
-                fileSizeCondition: {
-                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
-                    fileSize: null,
-                    fileSizeUnit: FileSizeUnit.KB
+                "fileExtensions": ['pdf', 'txt'],
+                "fileSizeCondition": {
+                    "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+                    "fileSize": null,
+                    "fileSizeUnit": FileSizeUnit.KB
                 }
             });
             expect(component.context.update).toHaveBeenCalled();
@@ -337,7 +337,7 @@ describe('SearchPropertiesComponent', () => {
 
         it('should search by file size and type', () => {
             typeInFileSizeInput();
-            getSearchChipAutocompleteInputComponent().optionsChanged.emit([{ value: 'pdf' }, { value: 'txt' }]);
+            getSearchChipAutocompleteInputComponent().optionsChanged.emit([{ "value": 'pdf' }, { "value": 'txt' }]);
 
             component.submitValues();
             expect(component.displayValue$.next).toHaveBeenCalledWith(
@@ -345,11 +345,11 @@ describe('SearchPropertiesComponent', () => {
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[328704 TO MAX] AND ${nameField}:("*.pdf" OR "*.txt")`);
             expect(component.context.filterRawParams[component.id]).toEqual({
-                fileExtensions: ['pdf', 'txt'],
-                fileSizeCondition: {
-                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
-                    fileSize: 321,
-                    fileSizeUnit: FileSizeUnit.KB
+                "fileExtensions": ['pdf', 'txt'],
+                "fileSizeCondition": {
+                    "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_LEAST',
+                    "fileSize": 321,
+                    "fileSizeUnit": FileSizeUnit.KB
                 }
             });
             expect(component.context.update).toHaveBeenCalled();
@@ -365,12 +365,12 @@ describe('SearchPropertiesComponent', () => {
     describe('getCurrentValue', () => {
         it('should return correct value when nothing changed', () => {
             expect(component.getCurrentValue()).toEqual({
-                fileSizeCondition: {
-                    fileSize: null,
-                    fileSizeUnit: FileSizeUnit.KB,
-                    fileSizeOperator: FileSizeOperator.AT_LEAST
+                "fileSizeCondition": {
+                    "fileSize": null,
+                    "fileSizeUnit": FileSizeUnit.KB,
+                    "fileSizeOperator": FileSizeOperator.AT_LEAST
                 },
-                fileExtensions: undefined
+                "fileExtensions": undefined
             });
         });
 
@@ -383,16 +383,16 @@ describe('SearchPropertiesComponent', () => {
             clickFileSizeUnitsSelect();
             getSelectOptions()[1].nativeElement.click();
             fixture.detectChanges();
-            const extensions = [{ value: 'pdf' }, { value: 'txt' }];
+            const extensions = [{ "value": 'pdf' }, { "value": 'txt' }];
             getSearchChipAutocompleteInputComponent().optionsChanged.emit(extensions);
 
             expect(component.getCurrentValue()).toEqual({
-                fileSizeCondition: {
-                    fileSize: 321,
-                    fileSizeUnit: FileSizeUnit.MB,
-                    fileSizeOperator: FileSizeOperator.AT_MOST
+                "fileSizeCondition": {
+                    "fileSize": 321,
+                    "fileSizeUnit": FileSizeUnit.MB,
+                    "fileSizeOperator": FileSizeOperator.AT_MOST
                 },
-                fileExtensions: ['pdf', 'txt']
+                "fileExtensions": ['pdf', 'txt']
             });
         });
     });
@@ -410,7 +410,7 @@ describe('SearchPropertiesComponent', () => {
             getSelectOptions()[1].nativeElement.click();
             fixture.detectChanges();
             searchChipAutocompleteInputComponent = getSearchChipAutocompleteInputComponent();
-            searchChipAutocompleteInputComponent.optionsChanged.emit([{ value: 'pdf' }, { value: 'txt' }]);
+            searchChipAutocompleteInputComponent.optionsChanged.emit([{ "value": 'pdf' }, { "value": 'txt' }]);
         });
 
         it('should reset form', () => {
@@ -419,9 +419,9 @@ describe('SearchPropertiesComponent', () => {
             component.reset();
             fixture.detectChanges();
             expect(component.form.value).toEqual({
-                fileSize: null,
-                fileSizeUnit: FileSizeUnit.KB,
-                fileSizeOperator: FileSizeOperator.AT_LEAST
+                "fileSize": null,
+                "fileSizeUnit": FileSizeUnit.KB,
+                "fileSizeOperator": FileSizeOperator.AT_LEAST
             });
             expect(searchChipAutocompleteInputComponent.optionsChanged.emit).toHaveBeenCalledWith([]);
         });
@@ -449,12 +449,12 @@ describe('SearchPropertiesComponent', () => {
 
         beforeEach(() => {
             searchProperties = {
-                fileSizeCondition: {
-                    fileSize: 321,
-                    fileSizeUnit: FileSizeUnit.MB,
-                    fileSizeOperator: FileSizeOperator.AT_MOST
+                "fileSizeCondition": {
+                    "fileSize": 321,
+                    "fileSizeUnit": FileSizeUnit.MB,
+                    "fileSizeOperator": FileSizeOperator.AT_MOST
                 },
-                fileExtensions: ['pdf', 'txt']
+                "fileExtensions": ['pdf', 'txt']
             };
         });
 
@@ -467,7 +467,7 @@ describe('SearchPropertiesComponent', () => {
             const sizeField = 'content.size';
             const nameField = 'cm:name';
             component.settings = {
-                field: `${sizeField},${nameField}`
+                "field": `${sizeField},${nameField}`
             };
             component.ngOnInit();
             spyOn(component.displayValue$, 'next');
@@ -478,11 +478,11 @@ describe('SearchPropertiesComponent', () => {
             );
             expect(component.context.queryFragments[component.id]).toBe(`${sizeField}:[0 TO 336592896] AND ${nameField}:("*.pdf" OR "*.txt")`);
             expect(component.context.filterRawParams[component.id]).toEqual({
-                fileExtensions: ['pdf', 'txt'],
-                fileSizeCondition: {
-                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
-                    fileSize: 321,
-                    fileSizeUnit: FileSizeUnit.MB
+                "fileExtensions": ['pdf', 'txt'],
+                "fileSizeCondition": {
+                    "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+                    "fileSize": 321,
+                    "fileSizeUnit": FileSizeUnit.MB
                 }
             });
             expect(component.context.update).toHaveBeenCalled();
@@ -494,7 +494,7 @@ describe('SearchPropertiesComponent', () => {
             expect(
                 component.preventIncorrectNumberCharacters(
                     new KeyboardEvent('keydown', {
-                        key: '-'
+                        "key": '-'
                     })
                 )
             ).toBeFalse();
@@ -504,7 +504,7 @@ describe('SearchPropertiesComponent', () => {
             expect(
                 component.preventIncorrectNumberCharacters(
                     new KeyboardEvent('keydown', {
-                        key: 'e'
+                        "key": 'e'
                     })
                 )
             ).toBeFalse();
@@ -514,7 +514,7 @@ describe('SearchPropertiesComponent', () => {
             expect(
                 component.preventIncorrectNumberCharacters(
                     new KeyboardEvent('keydown', {
-                        key: '+'
+                        "key": '+'
                     })
                 )
             ).toBeFalse();
@@ -524,7 +524,7 @@ describe('SearchPropertiesComponent', () => {
             expect(
                 component.preventIncorrectNumberCharacters(
                     new KeyboardEvent('keydown', {
-                        key: '1'
+                        "key": '1'
                     })
                 )
             ).toBeTrue();
@@ -533,19 +533,19 @@ describe('SearchPropertiesComponent', () => {
 
     it('should populate filter state when populate filters event has been observed', () => {
         component.settings = {
-            field: 'field'
+            "field": 'field'
         };
         component.context.filterLoaded = new ReplaySubject(1);
         spyOn(component.context.filterLoaded, 'next').and.stub();
         spyOn(component.displayValue$, 'next').and.stub();
         fixture.detectChanges();
         component.context.populateFilters.next({
-            properties: {
-                fileExtensions: ['pdf', 'txt'],
-                fileSizeCondition: {
-                    fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
-                    fileSize: 321,
-                    fileSizeUnit: FileSizeUnit.MB
+            "properties": {
+                "fileExtensions": ['pdf', 'txt'],
+                "fileSizeCondition": {
+                    "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+                    "fileSize": 321,
+                    "fileSizeUnit": FileSizeUnit.MB
                 }
             }
         });
@@ -554,12 +554,12 @@ describe('SearchPropertiesComponent', () => {
         expect(component.displayValue$.next).toHaveBeenCalledWith(
             'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST 321 SEARCH.SEARCH_PROPERTIES.FILE_SIZE_UNIT_ABBREVIATION.MB, pdf, txt'
         );
-        expect(component.selectedExtensions).toEqual([{ value: 'pdf' }, { value: 'txt' }]);
-        expect(component.preselectedOptions).toEqual([{ value: 'pdf' }, { value: 'txt' }]);
+        expect(component.selectedExtensions).toEqual([{ "value": 'pdf' }, { "value": 'txt' }]);
+        expect(component.preselectedOptions).toEqual([{ "value": 'pdf' }, { "value": 'txt' }]);
         expect(component.form.value).toEqual({
-            fileSizeOperator: 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
-            fileSize: 321,
-            fileSizeUnit: FileSizeUnit.MB
+            "fileSizeOperator": 'SEARCH.SEARCH_PROPERTIES.FILE_SIZE_OPERATOR.AT_MOST',
+            "fileSize": 321,
+            "fileSizeUnit": FileSizeUnit.MB
         });
         expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });

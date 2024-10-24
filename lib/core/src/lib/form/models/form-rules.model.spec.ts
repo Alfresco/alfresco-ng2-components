@@ -25,11 +25,11 @@ import { FormService } from '../services/form.service';
 import { ByPassFormRuleManager, FORM_RULES_MANAGER, FormRulesManager, formRulesManagerFactory } from './form-rules.model';
 
 class CustomRuleManager extends FormRulesManager<any> {
-    protected getRules() {
+    protected getRules () {
         return null;
     }
 
-    protected handleRuleEvent(): void {
+    protected handleRuleEvent (): void {
         return;
     }
 }
@@ -42,11 +42,11 @@ describe('Form Rules', () => {
     describe('Injection token provided', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule],
-                providers: [
+                "imports": [CoreTestingModule],
+                "providers": [
                     {
-                        provide: FORM_RULES_MANAGER,
-                        useValue: customRuleManager
+                        "provide": FORM_RULES_MANAGER,
+                        "useValue": customRuleManager
                     }
                 ]
             });
@@ -71,7 +71,7 @@ describe('Form Rules', () => {
             const rulesManager = new CustomRuleManager(formService);
             const getRulesSpy = spyOn<any>(rulesManager, 'getRules').and.returnValue({});
             const handleRuleEventSpy = spyOn<any>(rulesManager, 'handleRuleEvent');
-            const formModel = new FormModel({ id: 'mock' }, {}, false);
+            const formModel = new FormModel({ "id": 'mock' }, {}, false);
             const formEvent = new FormEvent(formModel);
             const event = new FormRulesEvent('formLoaded', formEvent);
 
@@ -86,7 +86,7 @@ describe('Form Rules', () => {
             const rulesManager = new CustomRuleManager(formService);
             spyOn<any>(rulesManager, 'getRules').and.returnValue({});
             const handleRuleEventSpy = spyOn<any>(rulesManager, 'handleRuleEvent');
-            const formModel = new FormModel({ id: 'mock' }, {}, false);
+            const formModel = new FormModel({ "id": 'mock' }, {}, false);
             const formEvent = new FormEvent(new FormModel(null));
             const event = new FormRulesEvent('formLoaded', formEvent);
 
@@ -107,7 +107,7 @@ describe('Form Rules', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule]
+                "imports": [CoreTestingModule]
             });
             injector = TestBed.inject(Injector);
             rulesManager = formRulesManagerFactory<any>(injector);

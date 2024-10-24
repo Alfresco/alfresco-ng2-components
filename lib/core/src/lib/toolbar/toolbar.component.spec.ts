@@ -24,7 +24,7 @@ describe('ToolbarComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, ToolbarComponent]
+            "imports": [NoopTranslateModule, ToolbarComponent]
         });
 
         fixture = TestBed.createComponent(ToolbarComponent);

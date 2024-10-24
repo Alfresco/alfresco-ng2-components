@@ -38,10 +38,10 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 @Component({
-    selector: 'adf-info-drawer-tab',
-    standalone: true,
-    template: '<ng-template><ng-content></ng-content></ng-template>',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-info-drawer-tab',
+    "standalone": true,
+    "template": '<ng-template><ng-content></ng-content></ng-template>',
+    "encapsulation": ViewEncapsulation.None
 })
 export class InfoDrawerTabComponent {
     /** The title of the tab (string or translation key). */
@@ -52,14 +52,14 @@ export class InfoDrawerTabComponent {
     @Input()
     icon: string = null;
 
-    @ViewChild(TemplateRef, { static: true })
+    @ViewChild(TemplateRef, { "static": true })
     content: TemplateRef<any>;
 }
 
 @Component({
-    selector: 'adf-info-drawer',
-    standalone: true,
-    imports: [
+    "selector": 'adf-info-drawer',
+    "standalone": true,
+    "imports": [
         CommonModule,
         InfoDrawerLayoutComponent,
         TranslateModule,
@@ -70,10 +70,10 @@ export class InfoDrawerTabComponent {
         InfoDrawerContentDirective,
         InfoDrawerTabComponent
     ],
-    templateUrl: './info-drawer.component.html',
-    styleUrls: ['./info-drawer.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-info-drawer' }
+    "templateUrl": './info-drawer.component.html',
+    "styleUrls": ['./info-drawer.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-info-drawer' }
 })
 export class InfoDrawerComponent {
     /** The title of the info drawer (string or translation key). */
@@ -99,20 +99,20 @@ export class InfoDrawerComponent {
     contentBlocks: QueryList<InfoDrawerTabComponent>;
 
     @HostListener('keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent): void {
+    onKeyDown (event: KeyboardEvent): void {
         event.stopPropagation();
     }
 
     @HostListener('keyup', ['$event'])
-    onKeyUp(event: KeyboardEvent): void {
+    onKeyUp (event: KeyboardEvent): void {
         event.stopPropagation();
     }
 
-    showTabLayout(): boolean {
+    showTabLayout (): boolean {
         return this.contentBlocks.length > 0;
     }
 
-    onTabChange(event: MatTabChangeEvent) {
+    onTabChange (event: MatTabChangeEvent) {
         this.currentTab.emit(event.index);
     }
 }

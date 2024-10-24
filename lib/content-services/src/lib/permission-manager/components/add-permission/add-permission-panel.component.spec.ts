@@ -37,7 +37,7 @@ describe('AddPermissionPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, AddPermissionPanelComponent]
+            "imports": [ContentTestingModule, AddPermissionPanelComponent]
         });
         fixture = TestBed.createComponent(AddPermissionPanelComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -54,7 +54,7 @@ describe('AddPermissionPanelComponent', () => {
     });
 
     const typeWordIntoSearchInput = async (word: string): Promise<void> => {
-        const input = await loader.getHarness(MatInputHarness.with({ selector: '#searchInput' }));
+        const input = await loader.getHarness(MatInputHarness.with({ "selector": '#searchInput' }));
 
         return input.setValue(word);
     };
@@ -158,7 +158,7 @@ describe('AddPermissionPanelComponent', () => {
     });
 
     it('should show everyone group when search return no result', async () => {
-        spyOn(searchApiService, 'search').and.returnValue(of({ list: { entries: [] } }));
+        spyOn(searchApiService, 'search').and.returnValue(of({ "list": { "entries": [] } }));
         component.selectedItems.push(fakeAuthorityListResult.list.entries[0]);
 
         await typeWordIntoSearchInput('a');

@@ -30,22 +30,22 @@ import {
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { from, Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class CategoryService {
     private _categoriesApi: CategoriesApi;
     private _searchApi: SearchApi;
 
-    get categoriesApi(): CategoriesApi {
+    get categoriesApi (): CategoriesApi {
         this._categoriesApi = this._categoriesApi ?? new CategoriesApi(this.apiService.getInstance());
         return this._categoriesApi;
     }
 
-    get searchApi(): SearchApi {
+    get searchApi (): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
 
-    constructor(
+    constructor (
         private apiService: AlfrescoApiService,
         private userPreferencesService: UserPreferencesService,
         private appConfigService: AppConfigService
@@ -58,7 +58,7 @@ export class CategoryService {
      * @param maxItems Maximum number of subcategories returned from Observable.
      * @returns Observable<CategoryPaging>
      */
-    getSubcategories(parentCategoryId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
+    getSubcategories (parentCategoryId: string, skipCount?: number, maxItems?: number): Observable<CategoryPaging> {
         return from(this.categoriesApi.getSubcategories(parentCategoryId ?? '-root-', { skipCount, maxItems }));
     }
 
@@ -72,7 +72,7 @@ export class CategoryService {
      * path
      * @returns Observable<CategoryEntry>
      */
-    getCategory(categoryId: string, opts?: any): Observable<CategoryEntry> {
+    getCategory (categoryId: string, opts?: any): Observable<CategoryEntry> {
         return from(this.categoriesApi.getCategory(categoryId, opts));
     }
 
@@ -82,7 +82,7 @@ export class CategoryService {
      * @param payload List of categories to be created.
      * @returns Observable<CategoryPaging | CategoryEntry>
      */
-    createSubcategories(parentCategoryId: string, payload: CategoryBody[]): Observable<CategoryPaging | CategoryEntry> {
+    createSubcategories (parentCategoryId: string, payload: CategoryBody[]): Observable<CategoryPaging | CategoryEntry> {
         return from(this.categoriesApi.createSubcategories(parentCategoryId, payload, {}));
     }
 
@@ -92,7 +92,7 @@ export class CategoryService {
      * @param payload Updated category body
      * @returns Observable<CategoryEntry>
      */
-    updateCategory(categoryId: string, payload: CategoryBody): Observable<CategoryEntry> {
+    updateCategory (categoryId: string, payload: CategoryBody): Observable<CategoryEntry> {
         return from(this.categoriesApi.updateCategory(categoryId, payload, {}));
     }
 
@@ -101,7 +101,7 @@ export class CategoryService {
      * @param categoryId The identifier of a category.
      * @returns Observable<void>
      */
-    deleteCategory(categoryId: string): Observable<void> {
+    deleteCategory (categoryId: string): Observable<void> {
         return from(this.categoriesApi.deleteCategory(categoryId));
     }
 
@@ -112,19 +112,19 @@ export class CategoryService {
      * @param maxItems Specify max number of returned categories. Default is specified by UserPreferencesService.
      * @returns Observable<ResultSetPaging> Found categories which name contains searched name.
      */
-    searchCategories(name: string, skipCount = 0, maxItems?: number): Observable<ResultSetPaging> {
+    searchCategories (name: string, skipCount = 0, maxItems?: number): Observable<ResultSetPaging> {
         maxItems = maxItems || this.userPreferencesService.paginationSize;
         return from(
             this.searchApi.search({
-                query: {
-                    language: SEARCH_LANGUAGE.AFTS,
-                    query: `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
+                "query": {
+                    "language": SEARCH_LANGUAGE.AFTS,
+                    "query": `cm:name:"*${name}*" AND TYPE:'cm:category' AND PATH:"/cm:categoryRoot/cm:generalclassifiable//*"`
                 },
-                paging: {
+                "paging": {
                     skipCount,
                     maxItems
                 },
-                include: ['path']
+                "include": ['path']
             })
         );
     }
@@ -134,8 +134,8 @@ export class CategoryService {
      * @param nodeId The identifier of a node.
      * @returns Observable<CategoryPaging> Categories that node is assigned to
      */
-    getCategoryLinksForNode(nodeId: string): Observable<CategoryPaging> {
-        return from(this.categoriesApi.getCategoryLinksForNode(nodeId, { include: ['path'] }));
+    getCategoryLinksForNode (nodeId: string): Observable<CategoryPaging> {
+        return from(this.categoriesApi.getCategoryLinksForNode(nodeId, { "include": ['path'] }));
     }
 
     /**
@@ -144,7 +144,7 @@ export class CategoryService {
      * @param categoryId The identifier of a category.
      * @returns Observable<void>
      */
-    unlinkNodeFromCategory(nodeId: string, categoryId: string): Observable<void> {
+    unlinkNodeFromCategory (nodeId: string, categoryId: string): Observable<void> {
         return from(this.categoriesApi.unlinkNodeFromCategory(nodeId, categoryId));
     }
 
@@ -154,7 +154,7 @@ export class CategoryService {
      * @param categoryLinkBodyCreate Array of a categories that node will be linked to.
      * @returns Observable<CategoryEntry>
      */
-    linkNodeToCategory(nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[]): Observable<CategoryPaging | CategoryEntry> {
+    linkNodeToCategory (nodeId: string, categoryLinkBodyCreate: CategoryLinkBody[]): Observable<CategoryPaging | CategoryEntry> {
         return from(this.categoriesApi.linkNodeToCategory(nodeId, categoryLinkBodyCreate));
     }
 
@@ -162,7 +162,7 @@ export class CategoryService {
      * Checks if categories plugin is enabled.
      * @returns boolean true if categories plugin is enabled, false otherwise.
      */
-    areCategoriesEnabled(): boolean {
+    areCategoriesEnabled (): boolean {
         return this.appConfigService.get('plugins.categoriesEnabled', true);
     }
 }

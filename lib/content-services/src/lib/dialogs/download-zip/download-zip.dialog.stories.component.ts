@@ -22,24 +22,24 @@ import { zipNode, downloadEntry } from './mock/download-zip-data.mock';
 import { FileDownloadStatus } from '@alfresco/js-api';
 
 @Component({
-    selector: 'adf-download-zip-dialog-storybook',
-    template: `<button mat-raised-button (click)="openDialog()">Open dialog</button>`
+    "selector": 'adf-download-zip-dialog-storybook',
+    "template": `<button mat-raised-button (click)="openDialog()">Open dialog</button>`
 })
 export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
     @Input()
     showLoading: boolean;
 
-    constructor(private dialog: MatDialog) {}
+    constructor (private dialog: MatDialog) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.setEntryStatus(this.showLoading);
     }
 
-    ngOnChanges(): void {
+    ngOnChanges (): void {
         this.setEntryStatus(this.showLoading);
     }
 
-    setEntryStatus(isLoading: boolean) {
+    setEntryStatus (isLoading: boolean) {
         if (!isLoading) {
             downloadEntry.entry.status = FileDownloadStatus.DONE;
         } else {
@@ -47,11 +47,11 @@ export class DownloadZipDialogStorybookComponent implements OnInit, OnChanges {
         }
     }
 
-    openDialog() {
+    openDialog () {
         this.dialog.open(DownloadZipDialogComponent, {
-            minWidth: '50%',
-            data: {
-                nodeIds: [zipNode.entry.id]
+            "minWidth": '50%',
+            "data": {
+                "nodeIds": [zipNode.entry.id]
             }
         });
     }

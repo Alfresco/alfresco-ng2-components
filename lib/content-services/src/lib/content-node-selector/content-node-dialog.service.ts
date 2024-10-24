@@ -32,7 +32,7 @@ import { switchMap } from 'rxjs/operators';
 import { SitesService } from '../common/services/sites.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class ContentNodeDialogService {
@@ -42,7 +42,7 @@ export class ContentNodeDialogService {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(
+    constructor (
         private dialog: MatDialog,
         private contentService: ContentService,
         private documentListService: DocumentListService,
@@ -57,7 +57,7 @@ export class ContentNodeDialogService {
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected file(s)
      */
-    openFileBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
+    openFileBrowseDialogByFolderId (folderNodeId: string): Observable<Node[]> {
         return this.documentListService
             .getFolderNode(folderNodeId)
             .pipe(switchMap((nodeEntry: NodeEntry) => this.openUploadFileDialog(NodeAction.CHOOSE, nodeEntry.entry, true)));
@@ -68,19 +68,19 @@ export class ContentNodeDialogService {
      * @param contentEntry Node to lock
      * @returns Error/status message (if any)
      */
-    public openLockNodeDialog(contentEntry: Node): Subject<string> {
+    public openLockNodeDialog (contentEntry: Node): Subject<string> {
         const observable: Subject<string> = new Subject<string>();
 
         if (this.contentService.hasAllowableOperations(contentEntry, AllowableOperationsEnum.LOCK)) {
             this.dialog.open(NodeLockDialogComponent, {
-                data: {
-                    node: contentEntry,
-                    onError: (error) => {
+                "data": {
+                    "node": contentEntry,
+                    "onError": (error) => {
                         this.error.emit(error);
                         observable.error(error);
                     }
                 },
-                width: '400px'
+                "width": '400px'
             });
         } else {
             observable.error('OPERATION.FAIL.NODE.NO_PERMISSION');
@@ -94,7 +94,7 @@ export class ContentNodeDialogService {
      * shows files and folders in the dialog search result.
      * @returns Information about the selected file(s)
      */
-    openFileBrowseDialogBySite(): Observable<Node[]> {
+    openFileBrowseDialogBySite (): Observable<Node[]> {
         return this.siteService
             .getSites()
             .pipe(switchMap((response: SitePaging) => this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid)));
@@ -105,7 +105,7 @@ export class ContentNodeDialogService {
      * shows files and folders in the dialog search result.
      * @returns Information about the selected file(s)
      */
-    openFileBrowseDialogByDefaultLocation(): Observable<Node[]> {
+    openFileBrowseDialogByDefaultLocation (): Observable<Node[]> {
         return this.openFileBrowseDialogByFolderId('-my-');
     }
 
@@ -113,7 +113,7 @@ export class ContentNodeDialogService {
      * Opens a folder browser at a chosen site location.
      * @returns Information about the selected folder(s)
      */
-    openFolderBrowseDialogBySite(): Observable<Node[]> {
+    openFolderBrowseDialogBySite (): Observable<Node[]> {
         return this.openFolderBrowseDialogByFolderId('-my-');
     }
 
@@ -122,7 +122,7 @@ export class ContentNodeDialogService {
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected folder(s)
      */
-    openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
+    openFolderBrowseDialogByFolderId (folderNodeId: string): Observable<Node[]> {
         return this.documentListService
             .getFolderNode(folderNodeId)
             .pipe(switchMap((node: NodeEntry) => this.openUploadFolderDialog(NodeAction.CHOOSE, node.entry)));
@@ -136,28 +136,28 @@ export class ContentNodeDialogService {
      * @param excludeSiteContent The site content that should be filtered out
      * @returns Information about files that were copied/moved
      */
-    openCopyMoveDialog(action: NodeAction, contentEntry: Node, permission?: string, excludeSiteContent?: string[]): Observable<Node[]> {
+    openCopyMoveDialog (action: NodeAction, contentEntry: Node, permission?: string, excludeSiteContent?: string[]): Observable<Node[]> {
         if (this.contentService.hasAllowableOperations(contentEntry, permission)) {
             const select = new Subject<Node[]>();
 
             const data: ContentNodeSelectorComponentData = {
-                title: this.getTitleTranslation(action, contentEntry.name),
-                actionName: action,
-                selectionMode: 'single',
-                currentFolderId: contentEntry.parentId,
-                imageResolver: this.imageResolver.bind(this),
-                where: '(isFolder=true)',
-                isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
-                excludeSiteContent: excludeSiteContent || ContentNodeDialogService.nonDocumentSiteContent,
+                "title": this.getTitleTranslation(action, contentEntry.name),
+                "actionName": action,
+                "selectionMode": 'single',
+                "currentFolderId": contentEntry.parentId,
+                "imageResolver": this.imageResolver.bind(this),
+                "where": '(isFolder=true)',
+                "isSelectionValid": this.isCopyMoveSelectionValid.bind(this),
+                "excludeSiteContent": excludeSiteContent || ContentNodeDialogService.nonDocumentSiteContent,
                 select
             };
 
             const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-            dialogRef.afterClosed().subscribe({ next: () => select.complete() });
+            dialogRef.afterClosed().subscribe({ "next": () => select.complete() });
 
             return select;
         } else {
-            const errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
+            const errors = new Error(JSON.stringify({ "error": { "statusCode": 403 } }));
             return throwError(errors);
         }
     }
@@ -168,7 +168,7 @@ export class ContentNodeDialogService {
      * @param name Name of the item on which the action is being performed
      * @returns Translated version of the title
      */
-    getTitleTranslation(action: string, name: string): string {
+    getTitleTranslation (action: string, name: string): string {
         return this.translation.instant(`NODE_SELECTOR.${action.toUpperCase()}_ITEM`, { name });
     }
 
@@ -178,22 +178,22 @@ export class ContentNodeDialogService {
      * @param contentEntry  Item to upload
      * @returns Information about the chosen folder(s)
      */
-    openUploadFolderDialog(action: NodeAction, contentEntry: Node): Observable<Node[]> {
+    openUploadFolderDialog (action: NodeAction, contentEntry: Node): Observable<Node[]> {
         const select = new Subject<Node[]>();
 
         const data: ContentNodeSelectorComponentData = {
-            title: this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
-            actionName: action,
-            selectionMode: 'single',
-            currentFolderId: contentEntry.id,
-            imageResolver: this.imageResolver.bind(this),
-            isSelectionValid: this.hasAllowableOperationsOnNodeFolder.bind(this),
-            where: '(isFolder=true)',
+            "title": this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
+            "actionName": action,
+            "selectionMode": 'single',
+            "currentFolderId": contentEntry.id,
+            "imageResolver": this.imageResolver.bind(this),
+            "isSelectionValid": this.hasAllowableOperationsOnNodeFolder.bind(this),
+            "where": '(isFolder=true)',
             select
         };
 
         const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-        dialogRef.afterClosed().subscribe({ next: () => select.complete() });
+        dialogRef.afterClosed().subscribe({ "next": () => select.complete() });
 
         return select;
     }
@@ -205,27 +205,27 @@ export class ContentNodeDialogService {
      * @param showFilesInResult Show files in dialog search result
      * @returns Information about the chosen file(s)
      */
-    openUploadFileDialog(action: NodeAction, contentEntry: Node, showFilesInResult = false): Observable<Node[]> {
+    openUploadFileDialog (action: NodeAction, contentEntry: Node, showFilesInResult = false): Observable<Node[]> {
         const select = new Subject<Node[]>();
 
         const data: ContentNodeSelectorComponentData = {
-            title: this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
-            actionName: action,
-            selectionMode: 'single',
-            currentFolderId: contentEntry.id,
-            imageResolver: this.imageResolver.bind(this),
-            isSelectionValid: (entry: Node) => entry.isFile,
+            "title": this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
+            "actionName": action,
+            "selectionMode": 'single',
+            "currentFolderId": contentEntry.id,
+            "imageResolver": this.imageResolver.bind(this),
+            "isSelectionValid": (entry: Node) => entry.isFile,
             select,
             showFilesInResult
         };
 
         const dialogRef = this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
-        dialogRef.afterClosed().subscribe({ next: () => select.complete() });
+        dialogRef.afterClosed().subscribe({ "next": () => select.complete() });
 
         return select;
     }
 
-    private openContentNodeDialog(
+    private openContentNodeDialog (
         data: ContentNodeSelectorComponentData,
         panelClass: string,
         width: string
@@ -234,11 +234,11 @@ export class ContentNodeDialogService {
             data,
             panelClass,
             width,
-            disableClose: true
+            "disableClose": true
         });
     }
 
-    private imageResolver(row: ShareDataRow): string | null {
+    private imageResolver (row: ShareDataRow): string | null {
         const entry: Node = row.node.entry;
         if (!this.contentService.hasAllowableOperations(entry, 'create')) {
             if (this.isNodeFolder(entry)) {
@@ -249,23 +249,23 @@ export class ContentNodeDialogService {
         return null;
     }
 
-    private hasAllowableOperationsOnNodeFolder(entry: Node): boolean {
+    private hasAllowableOperationsOnNodeFolder (entry: Node): boolean {
         return this.isNodeFolder(entry) && this.contentService.hasAllowableOperations(entry, 'create');
     }
 
-    private isNodeFolder(entry: Node): boolean {
+    private isNodeFolder (entry: Node): boolean {
         return entry.isFolder;
     }
 
-    private isCopyMoveSelectionValid(entry: Node): boolean {
+    private isCopyMoveSelectionValid (entry: Node): boolean {
         return this.hasEntityCreatePermission(entry) && !this.isSite(entry);
     }
 
-    private hasEntityCreatePermission(entry: Node): boolean {
+    private hasEntityCreatePermission (entry: Node): boolean {
         return this.contentService.hasAllowableOperations(entry, 'create');
     }
 
-    private isSite(entry) {
+    private isSite (entry) {
         return !!entry.guid || entry.nodeType === 'st:site' || entry.nodeType === 'st:sites';
     }
 }

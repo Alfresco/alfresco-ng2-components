@@ -31,7 +31,7 @@ describe('PermissionContainerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(PermissionContainerComponent);
         component = fixture.componentInstance;
@@ -39,22 +39,22 @@ describe('PermissionContainerComponent', () => {
 
         component.permissions = [
             {
-                authorityId: 'GROUP_EVERYONE',
-                accessStatus: 'ALLOWED',
-                isInherited: true,
-                name: 'consumer',
-                icon: null
+                "authorityId": 'GROUP_EVERYONE',
+                "accessStatus": 'ALLOWED',
+                "isInherited": true,
+                "name": 'consumer',
+                "icon": null
             }
         ];
 
         component.roles = [
             {
-                label: 'test',
-                role: 'Test'
+                "label": 'test',
+                "role": 'Test'
             },
             {
-                label: 'consumr',
-                role: 'Consumer'
+                "label": 'consumr',
+                "role": 'Consumer'
             }
         ];
 
@@ -75,19 +75,19 @@ describe('PermissionContainerComponent', () => {
     it('should emit update event on  role change', async () => {
         spyOn(component.update, 'emit');
 
-        const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+        const select = await loader.getHarness(MatSelectHarness.with({ "ancestor": `#adf-select-role-permission` }));
         await select.open();
 
         const options = await select.getOptions();
         expect(options.length).toBe(2);
         await options[0].click();
-        expect(component.update.emit).toHaveBeenCalledWith({ role: 'Test', permission: component.permissions[0] });
+        expect(component.update.emit).toHaveBeenCalledWith({ "role": 'Test', "permission": component.permissions[0] });
     });
 
     it('should delete update event on row delete', async () => {
         spyOn(component.delete, 'emit');
         const deleteButton = await loader.getHarness(
-            MatButtonHarness.with({ selector: `[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]` })
+            MatButtonHarness.with({ "selector": `[data-automation-id="adf-delete-permission-button-GROUP_EVERYONE"]` })
         );
         await deleteButton.click();
         expect(component.delete.emit).toHaveBeenCalledWith(component.permissions[0]);

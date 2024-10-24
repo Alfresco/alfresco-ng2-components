@@ -29,16 +29,16 @@ describe('SecurityControlsService', () => {
     let securityMarkId: string;
 
     const securityGroupBody: SecurityGroupBody = {
-        groupName: 'TestGroup',
-        groupType: 'HIERARCHICAL'
+        "groupName": 'TestGroup',
+        "groupType": 'HIERARCHICAL'
     };
     const securityMarkBody: SecurityMarkBody = {
-        name: 'securityMark1'
+        "name": 'securityMark1'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule]
+            "imports": [NoopTranslateModule]
         });
 
         service = TestBed.inject(SecurityControlsService);
@@ -49,9 +49,9 @@ describe('SecurityControlsService', () => {
         const groupPromise = service.getSecurityGroup(0, 5, 'inUse');
         const group = await groupPromise;
         expect(getGroupSpy).toHaveBeenCalledWith({
-            skipCount: 0,
-            maxItems: 5,
-            include: 'inUse'
+            "skipCount": 0,
+            "maxItems": 5,
+            "include": 'inUse'
         });
 
         expect(group.pagination.skipCount).toBe(0);
@@ -76,10 +76,10 @@ describe('SecurityControlsService', () => {
     it('should create new security group', async () => {
         spyOn(service.groupsApi, 'createSecurityGroup').and.returnValue(
             Promise.resolve({
-                entry: {
-                    groupName: 'TestGroup',
-                    groupType: 'HIERARCHICAL',
-                    id: 'eddf6269-ceba-42c6-b979-9ac445d29a94'
+                "entry": {
+                    "groupName": 'TestGroup',
+                    "groupType": 'HIERARCHICAL',
+                    "id": 'eddf6269-ceba-42c6-b979-9ac445d29a94'
                 }
             })
         );
@@ -97,7 +97,7 @@ describe('SecurityControlsService', () => {
         const mark = await markPromise;
 
         expect(getMarkSpy).toHaveBeenCalledWith(securityGroupId, {
-            skipCount: 0
+            "skipCount": 0
         });
 
         expect(mark.pagination.skipCount).toBe(0);
@@ -110,10 +110,10 @@ describe('SecurityControlsService', () => {
     it('should create new security mark', async () => {
         spyOn(service.marksApi, 'createSecurityMarks').and.returnValue(
             Promise.resolve({
-                entry: {
-                    groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
-                    name: 'securityMark1',
-                    id: 'ffBOeOJJ'
+                "entry": {
+                    "groupId": 'eddf6269-ceba-42c6-b979-9ac445d29a94',
+                    "name": 'securityMark1',
+                    "id": 'ffBOeOJJ'
                 }
             })
         );
@@ -128,10 +128,10 @@ describe('SecurityControlsService', () => {
     it('should edit a security mark', async () => {
         spyOn(service.marksApi, 'updateSecurityMark').and.returnValue(
             Promise.resolve({
-                entry: {
-                    groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
-                    name: 'securityMark1',
-                    id: 'ffBOeOJJ'
+                "entry": {
+                    "groupId": 'eddf6269-ceba-42c6-b979-9ac445d29a94',
+                    "name": 'securityMark1',
+                    "id": 'ffBOeOJJ'
                 }
             })
         );
@@ -147,10 +147,10 @@ describe('SecurityControlsService', () => {
     it('should update a security group', async () => {
         spyOn(service.groupsApi, 'updateSecurityGroup').and.returnValue(
             Promise.resolve({
-                entry: {
-                    groupName: 'TestGroup',
-                    groupType: 'HIERARCHICAL',
-                    id: 'eddf6269-ceba-42c6-b979-9ac445d29a94'
+                "entry": {
+                    "groupName": 'TestGroup',
+                    "groupType": 'HIERARCHICAL',
+                    "id": 'eddf6269-ceba-42c6-b979-9ac445d29a94'
                 }
             })
         );
@@ -164,10 +164,10 @@ describe('SecurityControlsService', () => {
     it('should delete a security mark', async () => {
         spyOn(service.marksApi, 'deleteSecurityMark').and.returnValue(
             Promise.resolve({
-                entry: {
-                    groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
-                    name: 'securityMark1',
-                    id: 'ffBOeOJJ'
+                "entry": {
+                    "groupId": 'eddf6269-ceba-42c6-b979-9ac445d29a94',
+                    "name": 'securityMark1',
+                    "id": 'ffBOeOJJ'
                 }
             })
         );
@@ -193,8 +193,8 @@ describe('SecurityControlsService', () => {
         const clearance = await clearancePromise.toPromise();
 
         expect(getClearancesForAuthoritySpy).toHaveBeenCalledWith('test-id', {
-            skipCount: 0,
-            maxItems: 10
+            "skipCount": 0,
+            "maxItems": 10
         });
 
         expect(clearance.list.pagination.skipCount).toBe(0);
@@ -208,19 +208,19 @@ describe('SecurityControlsService', () => {
     it('should update a clearances for authority', async () => {
         spyOn(service.authorityClearanceApi, 'updateAuthorityClearance').and.returnValue(
             Promise.resolve({
-                entry: {
-                    id: 'test-id',
-                    name: 'test-name',
-                    groupId: 'test-groupId'
+                "entry": {
+                    "id": 'test-id',
+                    "name": 'test-name',
+                    "groupId": 'test-groupId'
                 }
             })
         );
         const response = (await service
             .updateClearancesForAuthority('test-id', [
                 {
-                    groupId: 'test-group-id',
-                    op: 'test-op',
-                    id: 'test-id'
+                    "groupId": 'test-group-id',
+                    "op": 'test-op',
+                    "id": 'test-id'
                 }
             ])
             .toPromise()) as SecurityMarkEntry;

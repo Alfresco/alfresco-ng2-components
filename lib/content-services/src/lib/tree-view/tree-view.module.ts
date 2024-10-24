@@ -20,7 +20,7 @@ import { TreeViewComponent } from './components/tree-view.component';
 
 /** @deprecated use `TreeViewComponent` instead */
 @NgModule({
-    imports: [TreeViewComponent],
-    exports: [TreeViewComponent]
+    "imports": [TreeViewComponent],
+    "exports": [TreeViewComponent]
 })
 export class TreeViewModule {}

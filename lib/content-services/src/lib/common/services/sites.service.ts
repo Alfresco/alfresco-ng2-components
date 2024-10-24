@@ -34,23 +34,23 @@ import {
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class SitesService {
     private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
+    get sitesApi (): SitesApi {
         this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
         return this._sitesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Create a site
      * @param siteBody SiteBodyCreate to create site
      * @returns site SiteEntry
      */
-    createSite(siteBody: SiteBodyCreate): Observable<SiteEntry> {
+    createSite (siteBody: SiteBodyCreate): Observable<SiteEntry> {
         return from(this.sitesApi.createSite(siteBody));
     }
 
@@ -59,10 +59,10 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns List of sites
      */
-    getSites(opts: any = {}): Observable<SitePaging> {
+    getSites (opts: any = {}): Observable<SitePaging> {
         const defaultOptions = {
-            skipCount: 0,
-            include: ['properties']
+            "skipCount": 0,
+            "include": ['properties']
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
         return from(this.sitesApi.listSites(queryOptions));
@@ -74,7 +74,7 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns Information about the site
      */
-    getSite(siteId: string, opts?: any): Observable<SiteEntry | any> {
+    getSite (siteId: string, opts?: any): Observable<SiteEntry | any> {
         return from(this.sitesApi.getSite(siteId, opts));
     }
 
@@ -84,7 +84,7 @@ export class SitesService {
      * @param permanentFlag True: deletion is permanent; False: site is moved to the trash
      * @returns Null response notifying when the operation is complete
      */
-    deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
+    deleteSite (siteId: string, permanentFlag: boolean = true): Observable<any> {
         const options: any = {};
         options.permanent = permanentFlag;
         return from(this.sitesApi.deleteSite(siteId, options));
@@ -95,8 +95,8 @@ export class SitesService {
      * @param siteId ID of the target site
      * @returns Site content
      */
-    getSiteContent(siteId: string): Observable<SiteEntry | any> {
-        return this.getSite(siteId, { relations: ['containers'] });
+    getSiteContent (siteId: string): Observable<SiteEntry | any> {
+        return this.getSite(siteId, { "relations": ['containers'] });
     }
 
     /**
@@ -104,8 +104,8 @@ export class SitesService {
      * @param siteId ID of the target site
      * @returns Site members
      */
-    getSiteMembers(siteId: string): Observable<SiteEntry | any> {
-        return this.getSite(siteId, { relations: ['members'] });
+    getSiteMembers (siteId: string): Observable<SiteEntry | any> {
+        return this.getSite(siteId, { "relations": ['members'] });
     }
 
     /**
@@ -114,7 +114,7 @@ export class SitesService {
      * @param opts Optional parameters supported by JS-API
      * @returns Observable<SiteMemberPaging>
      */
-    listSiteMemberships(siteId: string, opts: any): Observable<SiteMemberPaging> {
+    listSiteMemberships (siteId: string, opts: any): Observable<SiteMemberPaging> {
         return from(this.sitesApi.listSiteMemberships(siteId, opts));
     }
 
@@ -124,7 +124,7 @@ export class SitesService {
      * @param node Node to look for parent site
      * @returns Site guid
      */
-    getSiteNameFromNodePath(node: Node): string {
+    getSiteNameFromNodePath (node: Node): string {
         let siteName = '';
         if (node.path?.elements) {
             const foundNode = node.path.elements.find((pathNode) => pathNode.nodeType === 'st:site' && pathNode.name !== 'Sites');
@@ -138,7 +138,7 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns Site membership requests
      */
-    getSiteMembershipRequests(opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
+    getSiteMembershipRequests (opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
         return from(this.sitesApi.getSiteMembershipRequests(opts));
     }
 
@@ -149,7 +149,7 @@ export class SitesService {
      * @param opts Optional parameters
      * @returns Observable<SiteMemberEntry>
      */
-    createSiteMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: any): Observable<SiteMemberEntry> {
+    createSiteMembership (siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: any): Observable<SiteMemberEntry> {
         return from(this.sitesApi.createSiteMembership(siteId, siteMembershipBodyCreate, opts));
     }
 
@@ -161,7 +161,7 @@ export class SitesService {
      * @param opts Optional parameters
      * @returns Observable<SiteMemberEntry>
      */
-    updateSiteMembership(
+    updateSiteMembership (
         siteId: string,
         personId: string,
         siteMembershipBodyUpdate: SiteMembershipBodyUpdate,
@@ -176,7 +176,7 @@ export class SitesService {
      * @param personId The identifier of a person.
      * @returns Null response notifying when the operation is complete
      */
-    deleteSiteMembership(siteId: string, personId: string): Observable<void> {
+    deleteSiteMembership (siteId: string, personId: string): Observable<void> {
         return from(this.sitesApi.deleteSiteMembership(siteId, personId));
     }
 
@@ -187,7 +187,7 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns  Null response notifying when the operation is complete
      */
-    approveSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
+    approveSiteMembershipRequest (siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
         return from(this.sitesApi.approveSiteMembershipRequest(siteId, inviteeId, opts));
     }
 
@@ -198,7 +198,7 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns  Null response notifying when the operation is complete
      */
-    rejectSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
+    rejectSiteMembershipRequest (siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
         return from(this.sitesApi.rejectSiteMembershipRequest(siteId, inviteeId, opts));
     }
 
@@ -208,7 +208,7 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns  Observable<SiteGroupPaging>
      */
-    listSiteGroups(siteId: string, opts?: any): Observable<SiteGroupPaging> {
+    listSiteGroups (siteId: string, opts?: any): Observable<SiteGroupPaging> {
         return from(this.sitesApi.listSiteGroups(siteId, opts));
     }
 
@@ -218,7 +218,7 @@ export class SitesService {
      * @param siteMembershipBodyCreate The Group to add and its role
      * @returns Observable<SiteGroupEntry>
      */
-    createSiteGroupMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate): Observable<SiteGroupEntry> {
+    createSiteGroupMembership (siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate): Observable<SiteGroupEntry> {
         return from(this.sitesApi.createSiteGroupMembership(siteId, siteMembershipBodyCreate));
     }
 
@@ -228,7 +228,7 @@ export class SitesService {
      * @param groupId The authorityId of a group.
      * @returns Observable<SiteGroupEntry>
      */
-    getSiteGroupMembership(siteId: string, groupId: string): Observable<SiteGroupEntry> {
+    getSiteGroupMembership (siteId: string, groupId: string): Observable<SiteGroupEntry> {
         return from(this.sitesApi.getSiteGroupMembership(siteId, groupId));
     }
 
@@ -239,7 +239,7 @@ export class SitesService {
      * @param siteMembershipBodyUpdate The group new role
      * @returns Observable<SiteGroupEntry>
      */
-    updateSiteGroupMembership(siteId: string, groupId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate): Observable<SiteGroupEntry> {
+    updateSiteGroupMembership (siteId: string, groupId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate): Observable<SiteGroupEntry> {
         return from(this.sitesApi.updateSiteGroupMembership(siteId, groupId, siteMembershipBodyUpdate));
     }
 
@@ -249,7 +249,7 @@ export class SitesService {
      * @param groupId The authorityId of a group.
      * @returns Observable<void>
      */
-    deleteSiteGroupMembership(siteId: string, groupId: string): Observable<void> {
+    deleteSiteGroupMembership (siteId: string, groupId: string): Observable<void> {
         return from(this.sitesApi.deleteSiteGroupMembership(siteId, groupId));
     }
 }

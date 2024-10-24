@@ -33,14 +33,14 @@ describe('LayoutContainerComponent', () => {
     const checkContentAnimationState = (value: string, marginProperty: string, marginValue: number) => {
         expect(layoutContainerComponent.contentAnimationState).toEqual({
             value,
-            params: { [marginProperty]: marginValue }
+            "params": { [marginProperty]: marginValue }
         });
     };
 
     const testDirectionChange = (position: 'start' | 'end', direction: Direction, marginProperty: string) => {
         layoutContainerComponent.position = position;
         layoutContainerComponent.direction = direction;
-        layoutContainerComponent.ngOnChanges({ direction: new SimpleChange('', '', false) });
+        layoutContainerComponent.ngOnChanges({ "direction": new SimpleChange('', '', false) });
         expect(layoutContainerComponent.contentAnimationState.params[marginProperty]).not.toBeNull();
     };
 
@@ -49,14 +49,14 @@ describe('LayoutContainerComponent', () => {
         layoutContainerComponent.sidenavMin = 70;
         layoutContainerComponent.sidenavMax = 200;
         layoutContainerComponent.mediaQueryList = {
-            matches: false,
-            addListener: jasmine.createSpy('addListener').and.callFake((callback) => window.addEventListener('resize', callback)),
-            removeListener: jasmine.createSpy('removeListener').and.callFake((callback) => window.removeEventListener('resize', callback))
+            "matches": false,
+            "addListener": jasmine.createSpy('addListener').and.callFake((callback) => window.addEventListener('resize', callback)),
+            "removeListener": jasmine.createSpy('removeListener').and.callFake((callback) => window.removeEventListener('resize', callback))
         };
         layoutContainerComponent.sidenav = {
-            open: jasmine.createSpy('open'),
-            close: jasmine.createSpy('close'),
-            toggle: jasmine.createSpy('toggle')
+            "open": jasmine.createSpy('open'),
+            "close": jasmine.createSpy('close'),
+            "toggle": jasmine.createSpy('toggle')
         } as unknown as MatSidenav;
     });
 
@@ -65,18 +65,18 @@ describe('LayoutContainerComponent', () => {
             layoutContainerComponent.expandedSidenav = true;
             layoutContainerComponent.ngOnInit();
             expect(layoutContainerComponent.SIDENAV_STATES.MOBILE).toEqual({
-                value: 'expanded',
-                params: { width: layoutContainerComponent.sidenavMax }
+                "value": 'expanded',
+                "params": { "width": layoutContainerComponent.sidenavMax }
             });
             expect(layoutContainerComponent.SIDENAV_STATES.EXPANDED).toEqual({
-                value: 'expanded',
-                params: { width: layoutContainerComponent.sidenavMax }
+                "value": 'expanded',
+                "params": { "width": layoutContainerComponent.sidenavMax }
             });
             expect(layoutContainerComponent.SIDENAV_STATES.COMPACT).toEqual({
-                value: 'compact',
-                params: { width: layoutContainerComponent.sidenavMin }
+                "value": 'compact',
+                "params": { "width": layoutContainerComponent.sidenavMin }
             });
-            expect(layoutContainerComponent.CONTENT_STATES.MOBILE).toEqual({ value: 'expanded' });
+            expect(layoutContainerComponent.CONTENT_STATES.MOBILE).toEqual({ "value": 'expanded' });
             expect(layoutContainerComponent.mediaQueryList.addListener).toHaveBeenCalled();
         });
 
@@ -169,8 +169,8 @@ describe('LayoutContainerComponent', () => {
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.toggleMenu();
             expect(layoutContainerComponent.sidenavAnimationState).toEqual({
-                value: 'compact',
-                params: { width: layoutContainerComponent.sidenavMin }
+                "value": 'compact',
+                "params": { "width": layoutContainerComponent.sidenavMin }
             });
         });
 
@@ -179,20 +179,20 @@ describe('LayoutContainerComponent', () => {
             layoutContainerComponent.ngOnInit();
             layoutContainerComponent.toggleMenu();
             expect(layoutContainerComponent.sidenavAnimationState).toEqual({
-                value: 'expanded',
-                params: { width: layoutContainerComponent.sidenavMax }
+                "value": 'expanded',
+                "params": { "width": layoutContainerComponent.sidenavMax }
             });
         });
     });
 
     describe('Media query change', () => {
         const expandedState = {
-            value: 'expanded',
-            params: { width: 200 }
+            "value": 'expanded',
+            "params": { "width": 200 }
         };
 
         const expandedContentState = {
-            value: 'expanded'
+            "value": 'expanded'
         };
 
         const testMediaQueryChange = (matches: boolean, expectedSidenavState: any, expectedContentState: any) => {
@@ -209,8 +209,8 @@ describe('LayoutContainerComponent', () => {
             window.dispatchEvent(new Event('resize'));
             expect(layoutContainerComponent.sidenavAnimationState).toEqual(layoutContainerComponent.SIDENAV_STATES.EXPANDED);
             expect(layoutContainerComponent.contentAnimationState).toEqual({
-                value: 'compact',
-                params: { 'margin-left': layoutContainerComponent.sidenavMax }
+                "value": 'compact',
+                "params": { 'margin-left': layoutContainerComponent.sidenavMax }
             });
             expect(layoutContainerComponent.sidenav.open).toHaveBeenCalled();
         });
@@ -222,8 +222,8 @@ describe('LayoutContainerComponent', () => {
             window.dispatchEvent(new Event('resize'));
             expect(layoutContainerComponent.sidenavAnimationState).toEqual(layoutContainerComponent.SIDENAV_STATES.COMPACT);
             expect(layoutContainerComponent.contentAnimationState).toEqual({
-                value: 'expanded',
-                params: { 'margin-left': layoutContainerComponent.sidenavMin }
+                "value": 'expanded',
+                "params": { 'margin-left': layoutContainerComponent.sidenavMin }
             });
             expect(layoutContainerComponent.sidenav.open).not.toHaveBeenCalled();
         });

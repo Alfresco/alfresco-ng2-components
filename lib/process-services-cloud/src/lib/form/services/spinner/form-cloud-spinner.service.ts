@@ -30,11 +30,11 @@ export class FormCloudSpinnerService {
 
     private overlayRef?: OverlayRef;
 
-    initSpinnerHandling(onDestroy$: Observable<boolean>): void {
+    initSpinnerHandling (onDestroy$: Observable<boolean>): void {
         this.formService.toggleFormSpinner.pipe(takeUntil(onDestroy$)).subscribe((event: FormSpinnerEvent) => {
             if (event?.payload.showSpinner) {
                 this.overlayRef = this.overlay.create({
-                    hasBackdrop: true
+                    "hasBackdrop": true
                 });
 
                 const userProfilePortal = new ComponentPortal(FormSpinnerComponent);

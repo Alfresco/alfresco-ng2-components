@@ -33,7 +33,7 @@ describe('NodeAspectService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         dialogAspectListService = TestBed.inject(DialogAspectListService);
         nodeAspectService = TestBed.inject(NodeAspectService);
@@ -64,7 +64,7 @@ describe('NodeAspectService', () => {
     });
 
     it('should update the node when the aspect dialog apply the changes', () => {
-        const expectedParameters = { aspectNames: ['a', 'b', 'c'] };
+        const expectedParameters = { "aspectNames": ['a', 'b', 'c'] };
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(null));
         nodeAspectService.updateNodeAspects('fake-node-id');
@@ -74,7 +74,7 @@ describe('NodeAspectService', () => {
     it('should send and update node event once the node has been updated', () => {
         let lastValue: Node;
         nodeApiService.nodeUpdated.subscribe((nodeUpdated) => (lastValue = nodeUpdated));
-        const fakeNode = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
+        const fakeNode = new Node({ "id": 'fake-node-id', "aspectNames": ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
 
@@ -86,7 +86,7 @@ describe('NodeAspectService', () => {
     it('should send and update node aspect once the node has been updated', () => {
         let lastValue: Node;
         cardViewContentUpdateService.updatedAspect$.subscribe((nodeUpdated) => (lastValue = nodeUpdated));
-        const fakeNode = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
+        const fakeNode = new Node({ "id": 'fake-node-id', "aspectNames": ['a', 'b', 'c'] });
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of(['a', 'b', 'c']));
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(fakeNode));
         nodeAspectService.updateNodeAspects('fake-node-id');
@@ -97,7 +97,7 @@ describe('NodeAspectService', () => {
     it('should call emit on refresh from TagService', () => {
         const tagService = TestBed.inject(TagService);
         spyOn(dialogAspectListService, 'openAspectListDialog').and.returnValue(of([]));
-        const node = new Node({ id: 'fake-node-id', aspectNames: ['a', 'b', 'c'] });
+        const node = new Node({ "id": 'fake-node-id', "aspectNames": ['a', 'b', 'c'] });
         spyOn(nodeApiService, 'updateNode').and.returnValue(of(node));
         spyOn(tagService.refresh, 'emit');
         nodeAspectService.updateNodeAspects('some node id', 'some-selector');

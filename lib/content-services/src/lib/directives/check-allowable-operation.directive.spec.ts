@@ -25,8 +25,8 @@ import { EMPTY, of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
-    selector: 'adf-text-subject',
-    template: ''
+    "selector": 'adf-text-subject',
+    "template": ''
 })
 class TestComponent implements NodeAllowableOperationSubject {
     disabled: boolean = false;
@@ -37,10 +37,10 @@ describe('CheckAllowableOperationDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
+            "imports": [HttpClientTestingModule],
+            "providers": [{ "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }]
         });
-        changeDetectorMock = { detectChanges: () => {} } as ChangeDetectorRef;
+        changeDetectorMock = { "detectChanges": () => {} } as ChangeDetectorRef;
     });
 
     describe('HTML nativeElement as subject', () => {
@@ -50,7 +50,7 @@ describe('CheckAllowableOperationDirective', () => {
 
             const nodes = [{}, {}];
             const change = new SimpleChange([], nodes, false);
-            directive.ngOnChanges({ nodes: change });
+            directive.ngOnChanges({ "nodes": change });
 
             expect(directive.updateElement).toHaveBeenCalled();
         });
@@ -61,7 +61,7 @@ describe('CheckAllowableOperationDirective', () => {
 
             const nodes = [{}, {}];
             const change = new SimpleChange([], nodes, true);
-            directive.ngOnChanges({ nodes: change });
+            directive.ngOnChanges({ "nodes": change });
 
             expect(directive.updateElement).not.toHaveBeenCalled();
         });

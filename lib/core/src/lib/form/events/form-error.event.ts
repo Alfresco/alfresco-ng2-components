@@ -21,7 +21,7 @@ import { FormEvent } from './form.event';
 export class FormErrorEvent extends FormEvent {
     readonly error: any;
 
-    constructor(form: FormModel, error: any) {
+    constructor (form: FormModel, error: any) {
         super(form);
         this.error = error;
     }

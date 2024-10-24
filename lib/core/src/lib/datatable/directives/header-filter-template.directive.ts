@@ -19,16 +19,16 @@ import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular
 import { DataTableComponent } from '../components/datatable/datatable.component';
 
 @Directive({
-    selector: 'adf-header-filter-template',
-    standalone: true
+    "selector": 'adf-header-filter-template',
+    "standalone": true
 })
 export class HeaderFilterTemplateDirective implements AfterContentInit {
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private dataTable: DataTableComponent) {}
+    constructor (private dataTable: DataTableComponent) {}
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         if (this.dataTable) {
             this.dataTable.headerFilterTemplate = this.template;
         }

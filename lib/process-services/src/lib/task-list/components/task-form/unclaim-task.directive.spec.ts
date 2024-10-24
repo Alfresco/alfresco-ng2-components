@@ -24,10 +24,10 @@ import { UnclaimTaskDirective } from '@alfresco/adf-process-services';
 
 describe('UnclaimTaskDirective', () => {
     @Component({
-        standalone: true,
-        imports: [UnclaimTaskDirective],
-        selector: 'adf-unclaim-test-component',
-        template: '<button adf-unclaim-task [taskId]="taskId" (success)="onUnclaim($event)">Unclaim</button>'
+        "standalone": true,
+        "imports": [UnclaimTaskDirective],
+        "selector": 'adf-unclaim-test-component',
+        "template": '<button adf-unclaim-task [taskId]="taskId" (success)="onUnclaim($event)">Unclaim</button>'
     })
     class TestComponent {
         @Output()
@@ -35,7 +35,7 @@ describe('UnclaimTaskDirective', () => {
 
         taskId = 'test1234';
 
-        onUnclaim(event) {
+        onUnclaim (event) {
             this.unclaim.emit(event);
         }
     }
@@ -45,7 +45,7 @@ describe('UnclaimTaskDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TestComponent]
+            "imports": [ProcessTestingModule, TestComponent]
         });
         taskListService = TestBed.inject(TaskListService);
         fixture = TestBed.createComponent(TestComponent);
@@ -76,18 +76,18 @@ describe('UnclaimTaskDirective', () => {
 
 describe('Claim Task Directive validation errors', () => {
     @Component({
-        standalone: true,
-        imports: [UnclaimTaskDirective],
-        selector: 'adf-unclaim-no-fields-validation-component',
-        template: '<button adf-unclaim-task></button>'
+        "standalone": true,
+        "imports": [UnclaimTaskDirective],
+        "selector": 'adf-unclaim-no-fields-validation-component',
+        "template": '<button adf-unclaim-task></button>'
     })
     class ClaimTestMissingInputDirectiveComponent {}
 
     @Component({
-        standalone: true,
-        imports: [UnclaimTaskDirective],
-        selector: 'adf-claim-no-taskid-validation-component',
-        template: '<button adf-unclaim-task [taskId]=""></button>'
+        "standalone": true,
+        "imports": [UnclaimTaskDirective],
+        "selector": 'adf-claim-no-taskid-validation-component',
+        "template": '<button adf-unclaim-task [taskId]=""></button>'
     })
     class ClaimTestMissingTaskIdDirectiveComponent {}
 
@@ -95,7 +95,7 @@ describe('Claim Task Directive validation errors', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
+            "imports": [ProcessTestingModule, ClaimTestMissingTaskIdDirectiveComponent, ClaimTestMissingInputDirectiveComponent]
         });
         fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
     });

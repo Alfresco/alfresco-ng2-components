@@ -22,16 +22,16 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { RenditionService } from './rendition.service';
 
 const getRenditionEntry = (status: Rendition.StatusEnum): RenditionEntry => ({
-    entry: {
-        id: 'pdf',
+    "entry": {
+        "id": 'pdf',
         status,
-        content: { mimeType: 'application/pdf', mimeTypeName: 'application/pdf', sizeInBytes: 10 }
+        "content": { "mimeType": 'application/pdf', "mimeTypeName": 'application/pdf', "sizeInBytes": 10 }
     }
 });
 
 const getRenditionPaging = (status: Rendition.StatusEnum): RenditionPaging => ({
-    list: {
-        entries: [getRenditionEntry(status)]
+    "list": {
+        "entries": [getRenditionEntry(status)]
     }
 });
 
@@ -41,17 +41,17 @@ describe('RenditionService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
+            "providers": [
                 RenditionService,
-                { provide: AlfrescoApiService, useValue: {} },
-                { provide: TranslationService, useValue: {} },
-                { provide: ViewUtilService, useValue: {} },
+                { "provide": AlfrescoApiService, "useValue": {} },
+                { "provide": TranslationService, "useValue": {} },
+                { "provide": ViewUtilService, "useValue": {} },
                 {
-                    provide: RenditionsApi,
-                    useValue: {
-                        listRenditions: jasmine.createSpy('listRenditions'),
-                        getRendition: jasmine.createSpy('getRendition'),
-                        createRendition: jasmine.createSpy('createRendition')
+                    "provide": RenditionsApi,
+                    "useValue": {
+                        "listRenditions": jasmine.createSpy('listRenditions'),
+                        "getRendition": jasmine.createSpy('getRendition'),
+                        "createRendition": jasmine.createSpy('createRendition')
                     }
                 }
             ]

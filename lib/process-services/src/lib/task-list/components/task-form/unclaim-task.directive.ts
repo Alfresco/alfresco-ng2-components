@@ -20,8 +20,8 @@ import { TaskListService } from '../../services/tasklist.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-unclaim-task]',
-    standalone: true
+    "selector": '[adf-unclaim-task]',
+    "standalone": true
 })
 export class UnclaimTaskDirective implements OnInit {
     /** (Required) The id of the task. */
@@ -38,10 +38,10 @@ export class UnclaimTaskDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(private taskListService: TaskListService) {}
+    constructor (private taskListService: TaskListService) {}
 
     @HostListener('click')
-    onClick() {
+    onClick () {
         try {
             this.unclaimTask();
         } catch (error) {
@@ -49,11 +49,11 @@ export class UnclaimTaskDirective implements OnInit {
         }
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.validateInputs();
     }
 
-    validateInputs() {
+    validateInputs () {
         if (!this.isTaskValid()) {
             this.invalidParams.push('taskId');
         }
@@ -62,11 +62,11 @@ export class UnclaimTaskDirective implements OnInit {
         }
     }
 
-    isTaskValid(): boolean {
+    isTaskValid (): boolean {
         return this.taskId && this.taskId.length > 0;
     }
 
-    private unclaimTask() {
+    private unclaimTask () {
         this.taskListService.unclaimTask(this.taskId).subscribe(
             () => {
                 this.success.emit(this.taskId);

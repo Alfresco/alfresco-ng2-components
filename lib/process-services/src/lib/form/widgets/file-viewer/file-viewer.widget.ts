@@ -24,12 +24,12 @@ import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
-    selector: 'file-viewer-widget',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, AlfrescoViewerComponent, ErrorWidgetComponent],
-    templateUrl: './file-viewer.widget.html',
-    styleUrls: ['./file-viewer.widget.scss'],
-    host: {
+    "selector": 'file-viewer-widget',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, AlfrescoViewerComponent, ErrorWidgetComponent],
+    "templateUrl": './file-viewer.widget.html',
+    "styleUrls": ['./file-viewer.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -40,10 +40,10 @@ import { AlfrescoViewerComponent } from '@alfresco/adf-content-services';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class FileViewerWidgetComponent extends BaseViewerWidgetComponent {
-    constructor(formService: FormService) {
+    constructor (formService: FormService) {
         super(formService);
     }
 }

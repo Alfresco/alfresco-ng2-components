@@ -26,13 +26,13 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-layout-header',
-    standalone: true,
-    imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslateModule],
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-layout-header' }
+    "selector": 'adf-layout-header',
+    "standalone": true,
+    "imports": [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, TranslateModule],
+    "templateUrl": './header.component.html',
+    "styleUrls": ['./header.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-layout-header' }
 })
 export class HeaderLayoutComponent implements OnInit {
     /** Title of the application. */
@@ -77,14 +77,14 @@ export class HeaderLayoutComponent implements OnInit {
     /** The side of the page that the drawer is attached to (can be 'start' or 'end') */
     @Input() position = 'start';
 
-    constructor(private appConfigService: AppConfigService) {}
+    constructor (private appConfigService: AppConfigService) {}
 
-    toggleMenu() {
+    toggleMenu () {
         this.clicked.emit(true);
         this.expandedSidenav = !this.expandedSidenav;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         const textColor = this.appConfigService.get<string | undefined>('headerTextColor');
         if (textColor) {
             document.documentElement.style.setProperty('--theme-header-text-color', textColor);

@@ -26,12 +26,12 @@ import { ModuleListComponent } from '../about-module-list/module-list.component'
 import { AboutStatusListComponent } from '../about-status-list/about-status-list.component';
 
 @Component({
-    selector: 'adf-about-repository-info',
-    templateUrl: './about-repository-info.component.html',
-    styleUrls: ['./about-repository-info.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [CommonModule, TranslateModule, AboutLicenseListComponent, ModuleListComponent, AboutStatusListComponent]
+    "selector": 'adf-about-repository-info',
+    "templateUrl": './about-repository-info.component.html',
+    "styleUrls": ['./about-repository-info.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, AboutLicenseListComponent, ModuleListComponent, AboutStatusListComponent]
 })
 export class AboutRepositoryInfoComponent implements OnInit {
     @Input()
@@ -40,27 +40,27 @@ export class AboutRepositoryInfoComponent implements OnInit {
     statusEntries: StatusData[];
     licenseEntries: LicenseData[];
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         if (this.data) {
             const repository = this.data;
 
             this.statusEntries = Object.keys(repository.status).map((key) => ({
-                property: key,
-                value: repository.status[key]
+                "property": key,
+                "value": repository.status[key]
             }));
 
             if (repository.license) {
                 this.licenseEntries = Object.keys(repository.license).map((key) => {
                     if (ObjectUtils.isObject(repository.license[key])) {
                         return {
-                            property: key,
-                            value: ObjectUtils.booleanPrettify(repository.license[key], StringUtils.prettifyBooleanEnabled)
+                            "property": key,
+                            "value": ObjectUtils.booleanPrettify(repository.license[key], StringUtils.prettifyBooleanEnabled)
                         };
                     }
 
                     return {
-                        property: key,
-                        value: repository.license[key]
+                        "property": key,
+                        "value": repository.license[key]
                     };
                 });
             }

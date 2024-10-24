@@ -30,35 +30,35 @@ interface MigrationData {
 }
 
 const alfrescoApiServiceMigration: MigrationData = {
-    change: {
-        importedValue: 'AlfrescoApiService',
-        importSource: '@alfresco/adf-core'
+    "change": {
+        "importedValue": 'AlfrescoApiService',
+        "importSource": '@alfresco/adf-core'
     },
-    to: {
-        importedValue: 'AlfrescoApiService',
-        importSource: '@alfresco/adf-content-services'
+    "to": {
+        "importedValue": 'AlfrescoApiService',
+        "importSource": '@alfresco/adf-content-services'
     }
 };
 
 const alfrescoApiMockMigration: MigrationData = {
-    change: {
-        importedValue: 'AlfrescoApiServiceMock',
-        importSource: '@alfresco/adf-core'
+    "change": {
+        "importedValue": 'AlfrescoApiServiceMock',
+        "importSource": '@alfresco/adf-core'
     },
-    to: {
-        importedValue: 'AlfrescoApiServiceMock',
-        importSource: '@alfresco/adf-content-services'
+    "to": {
+        "importedValue": 'AlfrescoApiServiceMock',
+        "importSource": '@alfresco/adf-content-services'
     }
 };
 
 const alfrescoApiFactoryMigration: MigrationData = {
-    change: {
-        importedValue: 'AlfrescoApiFactory',
-        importSource: '@alfresco/adf-core'
+    "change": {
+        "importedValue": 'AlfrescoApiFactory',
+        "importSource": '@alfresco/adf-core'
     },
-    to: {
-        importedValue: 'AlfrescoApiFactory',
-        importSource: '@alfresco/adf-content-services'
+    "to": {
+        "importedValue": 'AlfrescoApiFactory',
+        "importSource": '@alfresco/adf-content-services'
     }
 };
 
@@ -67,7 +67,7 @@ const migrations: MigrationData[] = [alfrescoApiServiceMigration, alfrescoApiMoc
 /**
  * @returns Schematic rule for updating imports
  */
-export function updateAlfrescoApiImports(): Rule {
+export function updateAlfrescoApiImports (): Rule {
     const project = new Project();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -110,8 +110,8 @@ const moveImport = (filePath: string, bufferFileContent: Buffer, project: Projec
         const sourceFile = project.getSourceFile(`migration-${filePath}`) ?? project.createSourceFile(`migration-${filePath}`, fileContent);
 
         const alfrescoApiImportResult = getImportedValueFromSource(sourceFile, {
-            importedIdentifier: migrationData.change.importedValue,
-            from: migrationData.change.importSource
+            "importedIdentifier": migrationData.change.importedValue,
+            "from": migrationData.change.importSource
         });
 
         if (alfrescoApiImportResult?.importedValue) {
@@ -167,9 +167,9 @@ const getImportedValueFromSource = (
 
     if (!importSource) {
         return {
-            importedValue: undefined,
-            importSource: undefined,
-            allImportedValuesCount: undefined
+            "importedValue": undefined,
+            "importSource": undefined,
+            "allImportedValuesCount": undefined
         };
     }
 
@@ -182,7 +182,7 @@ const getImportedValueFromSource = (
     return {
         importedValue,
         importSource,
-        allImportedValuesCount: namedImportsElements.length
+        "allImportedValuesCount": namedImportsElements.length
     };
 };
 

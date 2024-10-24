@@ -29,14 +29,14 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
     activeFilters: FilterSearch[] = [];
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
+    constructor (appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
         super(appConfig, alfrescoApiService);
 
         this.updated.pipe(filter((query) => !!query)).subscribe(() => {
@@ -44,53 +44,53 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         });
     }
 
-    public isFilterServiceActive(): boolean {
+    public isFilterServiceActive (): boolean {
         return true;
     }
 
-    loadConfiguration(): SearchConfiguration {
+    loadConfiguration (): SearchConfiguration {
         return this.appConfig.get<SearchConfiguration>('search-headers');
     }
 
-    setupCurrentPagination(maxItems: number, skipCount: number) {
+    setupCurrentPagination (maxItems: number, skipCount: number) {
         if (!this.paging || (this.paging && this.paging.maxItems !== maxItems) || this.paging.skipCount !== skipCount) {
             this.paging = { maxItems, skipCount };
             this.execute();
         }
     }
 
-    setActiveFilter(columnActivated: string, filterValue: string) {
+    setActiveFilter (columnActivated: string, filterValue: string) {
         const selectedFilter = this.activeFilters.find((activeFilter) => activeFilter.key === columnActivated);
         if (!selectedFilter) {
             this.activeFilters.push({
-                key: columnActivated,
-                value: filterValue
+                "key": columnActivated,
+                "value": filterValue
             });
         } else {
             selectedFilter.value = filterValue;
         }
     }
 
-    resetActiveFilters() {
+    resetActiveFilters () {
         this.activeFilters = [];
     }
 
-    getActiveFilters(): FilterSearch[] {
+    getActiveFilters (): FilterSearch[] {
         return this.activeFilters;
     }
 
-    isNoFilterActive(): boolean {
+    isNoFilterActive (): boolean {
         return this.activeFilters.length === 0;
     }
 
-    removeActiveFilter(columnRemoved: string) {
+    removeActiveFilter (columnRemoved: string) {
         const filterIndex = this.activeFilters.map((activeFilter) => activeFilter.key).indexOf(columnRemoved);
         if (filterIndex >= 0) {
             this.activeFilters.splice(filterIndex, 1);
         }
     }
 
-    setSorting(dataSorting: DataSorting[]) {
+    setSorting (dataSorting: DataSorting[]) {
         this.sorting = [];
         dataSorting.forEach((columnSorting: DataSorting) => {
             const fieldValue = this.getSortingFieldFromColumnName(columnSorting.key);
@@ -98,11 +98,11 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
                 const optionAscending = columnSorting.direction.toLocaleLowerCase() === 'asc';
                 const type = fieldValue === 'score' ? 'SCORE' : 'FIELD';
                 const currentSort: SearchSortingDefinition = {
-                    key: columnSorting.key,
-                    label: 'current',
+                    "key": columnSorting.key,
+                    "label": 'current',
                     type,
-                    field: fieldValue,
-                    ascending: optionAscending
+                    "field": fieldValue,
+                    "ascending": optionAscending
                 };
                 this.sorting.push(currentSort);
             }
@@ -111,7 +111,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         this.execute();
     }
 
-    private getSortingFieldFromColumnName(columnName: string) {
+    private getSortingFieldFromColumnName (columnName: string) {
         if (this.sortingOptions.length > 0) {
             const sortOption = this.sortingOptions.find((option) => option.key === columnName);
             return sortOption ? sortOption.field : '';
@@ -119,7 +119,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         return '';
     }
 
-    getCategoryForColumn(columnKey: string): SearchCategory {
+    getCategoryForColumn (columnKey: string): SearchCategory {
         let foundCategory = null;
         if (this.categories !== null) {
             foundCategory = this.categories.find((category) => category.columnKey === columnKey);
@@ -127,7 +127,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         return foundCategory;
     }
 
-    setCurrentRootFolderId(currentFolderId: string) {
+    setCurrentRootFolderId (currentFolderId: string) {
         const alreadyAddedFilter = this.filterQueries.find((filterQueries) => filterQueries.query.includes(currentFolderId));
 
         if (alreadyAddedFilter !== undefined) {
@@ -136,18 +136,18 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
         this.filterQueries = [
             {
-                query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
+                "query": `PARENT:"workspace://SpacesStore/${currentFolderId}"`
             }
         ];
 
         this.execute();
     }
 
-    isCustomSourceNode(currentNodeId: string): boolean {
+    isCustomSourceNode (currentNodeId: string): boolean {
         return this.customSources.includes(currentNodeId);
     }
 
-    getNodeIdForCustomSource(customSourceId: string): Observable<Node> {
+    getNodeIdForCustomSource (customSourceId: string): Observable<Node> {
         return this.nodeApiService.getNode(customSourceId);
     }
 }

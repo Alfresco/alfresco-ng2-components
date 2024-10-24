@@ -24,40 +24,40 @@ import { LanguageServiceMock } from '../mock/language.service.mock';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: LanguageMenuComponent,
-    title: 'Core/Language Menu/Language Menu',
-    decorators: [
+    "component": LanguageMenuComponent,
+    "title": 'Core/Language Menu/Language Menu',
+    "decorators": [
         moduleMetadata({
-            imports: [...LANGUAGE_MENU_DIRECTIVES],
-            providers: [{ provide: LanguageService, useClass: LanguageServiceMock }]
+            "imports": [...LANGUAGE_MENU_DIRECTIVES],
+            "providers": [{ "provide": LanguageService, "useClass": LanguageServiceMock }]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Displays all the languages that are present in "app.config.json" and the default (EN).`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Displays all the languages that are present in "app.config.json" and the default (EN).`
             }
         }
     },
-    argTypes: {
-        changedLanguage: {
-            action: 'changedLanguage',
-            description: 'Emitted when the user clicks on one of the language buttons.',
-            table: {
-                category: 'Actions',
-                type: { summary: 'EventEmitter <LanguageItem>' }
+    "argTypes": {
+        "changedLanguage": {
+            "action": 'changedLanguage',
+            "description": 'Emitted when the user clicks on one of the language buttons.',
+            "table": {
+                "category": 'Actions',
+                "type": { "summary": 'EventEmitter <LanguageItem>' }
             }
         }
     }
 } as Meta<LanguageMenuComponent>;
 
 const LanguageMenuComponentTemplate: StoryFn<LanguageMenuComponent> = (args) => ({
-    props: args
+    "props": args
 });
-LanguageMenuComponentTemplate.parameters = { layout: 'centered' };
+LanguageMenuComponentTemplate.parameters = { "layout": 'centered' };
 
 export const AsMainMenu = LanguageMenuComponentTemplate.bind({});
 AsMainMenu.decorators = [
@@ -74,7 +74,7 @@ AsMainMenu.decorators = [
     `
     )
 ];
-AsMainMenu.parameters = { layout: 'centered' };
+AsMainMenu.parameters = { "layout": 'centered' };
 
 export const AsNestedMenu = LanguageMenuComponentTemplate.bind({});
 AsNestedMenu.decorators = [
@@ -99,4 +99,4 @@ AsNestedMenu.decorators = [
     `
     )
 ];
-AsNestedMenu.parameters = { layout: 'centered' };
+AsNestedMenu.parameters = { "layout": 'centered' };

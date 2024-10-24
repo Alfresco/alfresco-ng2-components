@@ -26,12 +26,12 @@ const INDIFFERENT_PRESET = '*';
 const DEFAULT_PRESET_NAME = 'default';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContentMetadataConfigFactory {
-    constructor(private appConfigService: AppConfigService, private logService: LogService) {}
+    constructor (private appConfigService: AppConfigService, private logService: LogService) {}
 
-    public get(presetName: string = 'default'): ContentMetadataConfig {
+    public get (presetName: string = 'default'): ContentMetadataConfig {
         let presetConfig: PresetConfig;
         try {
             presetConfig = this.appConfigService.config['content-metadata'].presets[presetName];
@@ -45,7 +45,7 @@ export class ContentMetadataConfigFactory {
         return this.createConfig(presetConfig);
     }
 
-    public createConfig(presetConfig: PresetConfig): ContentMetadataConfig {
+    public createConfig (presetConfig: PresetConfig): ContentMetadataConfig {
         let config: ContentMetadataConfig;
 
         if (this.isLayoutOrientedPreset(presetConfig)) {
@@ -60,15 +60,15 @@ export class ContentMetadataConfigFactory {
         return config;
     }
 
-    private isAspectOrientedPreset(presetConfig: PresetConfig): boolean {
+    private isAspectOrientedPreset (presetConfig: PresetConfig): boolean {
         return this.isObject(presetConfig);
     }
 
-    private isLayoutOrientedPreset(presetConfig: PresetConfig): boolean {
+    private isLayoutOrientedPreset (presetConfig: PresetConfig): boolean {
         return Array.isArray(presetConfig);
     }
 
-    private isObject(x: any): boolean {
+    private isObject (x: any): boolean {
         return x != null && typeof x === 'object';
     }
 }

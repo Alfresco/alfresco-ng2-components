@@ -31,7 +31,7 @@ export interface FolderCreatedEvent {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContentService {
     folderCreated = new Subject<FolderCreatedEvent>();
@@ -39,12 +39,12 @@ export class ContentService {
     folderEdit = new Subject<Node>();
 
     private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
+    get contentApi (): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
 
-    constructor(public authService: AuthenticationService, public apiService: AlfrescoApiService, private thumbnailService?: ThumbnailService) {}
+    constructor (public authService: AuthenticationService, public apiService: AlfrescoApiService, private thumbnailService?: ThumbnailService) {}
 
     /**
      * Gets a content URL for the given node.
@@ -53,7 +53,7 @@ export class ContentService {
      * @param ticket Custom ticket to use for authentication
      * @returns URL string or `null`
      */
-    getContentUrl(node: NodeEntry | string, attachment?: boolean, ticket?: string): string {
+    getContentUrl (node: NodeEntry | string, attachment?: boolean, ticket?: string): string {
         if (node) {
             let nodeId: string;
 
@@ -69,7 +69,7 @@ export class ContentService {
         return null;
     }
 
-    getDocumentThumbnailUrl(nodeId: string, attachment?: boolean, ticket?: string): string {
+    getDocumentThumbnailUrl (nodeId: string, attachment?: boolean, ticket?: string): string {
         return this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
     }
 
@@ -80,7 +80,7 @@ export class ContentService {
      * @param userId Optional current user id will be taken by default
      * @returns True if the user has the required permissions, false otherwise
      */
-    hasPermissions(node: Node, permission: PermissionsEnum | string, userId?: string): boolean {
+    hasPermissions (node: Node, permission: PermissionsEnum | string, userId?: string): boolean {
         let hasPermissions = false;
         userId = userId ?? this.authService.getEcmUsername();
 
@@ -112,7 +112,7 @@ export class ContentService {
      * @param allowableOperation Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      * @returns True if the user has the required permissions, false otherwise
      */
-    hasAllowableOperations(node: Node, allowableOperation: AllowableOperationsEnum | string): boolean {
+    hasAllowableOperations (node: Node, allowableOperation: AllowableOperationsEnum | string): boolean {
         let hasAllowableOperations = false;
 
         if (node?.allowableOperations) {
@@ -144,7 +144,7 @@ export class ContentService {
         return hasAllowableOperations;
     }
 
-    getNodeIcon(node: Node): string {
+    getNodeIcon (node: Node): string {
         if (node?.isFolder) {
             return this.getFolderIcon(node);
         }
@@ -154,7 +154,7 @@ export class ContentService {
         return this.thumbnailService.getDefaultMimeTypeIcon();
     }
 
-    private getFolderIcon(node: Node): string {
+    private getFolderIcon (node: Node): string {
         if (this.isSmartFolder(node)) {
             return this.thumbnailService.getMimeTypeIcon('smartFolder');
         } else if (this.isRuleFolder(node)) {
@@ -166,25 +166,25 @@ export class ContentService {
         }
     }
 
-    isSmartFolder(node: Node): boolean {
+    isSmartFolder (node: Node): boolean {
         if (node) {
             return this.hasAspect(node, 'smf:customConfigSmartFolder') || this.hasAspect(node, 'smf:systemConfigSmartFolder');
         }
         return false;
     }
 
-    isRuleFolder(node: Node): boolean {
+    isRuleFolder (node: Node): boolean {
         if (node) {
             return this.hasAspect(node, 'rule:rules');
         }
         return false;
     }
 
-    isLinkFolder(node: Node): boolean {
+    isLinkFolder (node: Node): boolean {
         return node?.nodeType === 'app:folderlink';
     }
 
-    private hasAspect(node: Node, aspectName: string): boolean {
+    private hasAspect (node: Node, aspectName: string): boolean {
         return node?.aspectNames?.includes(aspectName);
     }
 }

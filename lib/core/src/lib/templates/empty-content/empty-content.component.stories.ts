@@ -22,73 +22,73 @@ import { TEMPLATE_DIRECTIVES } from '../template.module';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: EmptyContentComponent,
-    title: 'Core/Template/Empty Content',
-    decorators: [
+    "component": EmptyContentComponent,
+    "title": 'Core/Template/Empty Content',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, ...TEMPLATE_DIRECTIVES]
+            "imports": [CoreStoryModule, ...TEMPLATE_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Provides a generic "Empty Content" placeholder for components.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Provides a generic "Empty Content" placeholder for components.`
             }
         }
     },
-    argTypes: {
-        icon: {
-            control: 'text',
-            description: 'Material Icon to use.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'cake' }
+    "argTypes": {
+        "icon": {
+            "control": 'text',
+            "description": 'Material Icon to use.',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'cake' }
             }
         },
-        title: {
-            control: 'text',
-            description: 'String or Resource Key for the title.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'title' }
+        "title": {
+            "control": 'text',
+            "description": 'String or Resource Key for the title.',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'title' }
             }
         },
-        subtitle: {
-            control: 'text',
-            description: 'String or Resource Key for the subtitle.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'subtitle' }
+        "subtitle": {
+            "control": 'text',
+            "description": 'String or Resource Key for the subtitle.',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'subtitle' }
             }
         },
-        anyContentProjection: {
-            name: 'with any component / selector',
-            control: 'boolean',
-            description: 'Showcase content projection with any component / selector',
-            table: {
-                category: 'Content Projection',
-                type: {
-                    summary: 'code',
-                    detail: '<div style="color:red">\n  projected content\n</div>'
+        "anyContentProjection": {
+            "name": 'with any component / selector',
+            "control": 'boolean',
+            "description": 'Showcase content projection with any component / selector',
+            "table": {
+                "category": 'Content Projection',
+                "type": {
+                    "summary": 'code',
+                    "detail": '<div style="color:red">\n  projected content\n</div>'
                 },
-                defaultValue: { summary: 'false' }
+                "defaultValue": { "summary": 'false' }
             }
         }
     },
-    args: {
-        icon: 'cake',
-        title: 'title',
-        subtitle: 'subtitle',
-        anyContentProjection: false
+    "args": {
+        "icon": 'cake',
+        "title": 'title',
+        "subtitle": 'subtitle',
+        "anyContentProjection": false
     }
 } as Meta<EmptyContentComponent>;
 
 const template: StoryFn<EmptyContentComponent> = (args: EmptyContentComponent & { anyContentProjection: boolean }) => ({
-    props: args,
-    template: `
+    "props": args,
+    "template": `
     <adf-empty-content icon="${args.icon}" title="${args.title}" subtitle="${args.subtitle}">
         <div *ngIf="${args.anyContentProjection}" style="color:red">
             projected content
@@ -97,4 +97,4 @@ const template: StoryFn<EmptyContentComponent> = (args: EmptyContentComponent & 
 });
 
 export const EmptyContent = template.bind({});
-EmptyContent.parameters = { layout: 'centered' };
+EmptyContent.parameters = { "layout": 'centered' };

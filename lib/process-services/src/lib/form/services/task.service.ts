@@ -22,27 +22,26 @@ import { TaskRepresentation, TasksApi } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TaskService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     private _taskApi: TasksApi;
-    get taskApi(): TasksApi {
+    get taskApi (): TasksApi {
         this._taskApi = this._taskApi ?? new TasksApi(this.apiService.getInstance());
         return this._taskApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Gets a task.
-     *
      * @param taskId Task Id
      * @returns Task info
      */
-    getTask(taskId: string): Observable<TaskRepresentation> {
+    getTask (taskId: string): Observable<TaskRepresentation> {
         return from(this.taskApi.getTask(taskId)).pipe(
             map(this.toJson),
             catchError((err) => this.handleError(err))
@@ -51,11 +50,10 @@ export class TaskService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
-    toJson(res: any) {
+    toJson (res: any) {
         if (res) {
             return res || {};
         }
@@ -64,11 +62,10 @@ export class TaskService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */
-    private handleError(error: any): Observable<any> {
+    private handleError (error: any): Observable<any> {
         let errMsg = TaskService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : TaskService.GENERIC_ERROR_MESSAGE;

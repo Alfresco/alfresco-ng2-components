@@ -38,9 +38,9 @@ describe('ProcessFormRenderingService', () => {
 
     it('should resolve Upload field as Upload widget', () => {
         const field = new FormFieldModel(null, {
-            type: FormFieldTypes.UPLOAD,
-            params: {
-                link: null
+            "type": FormFieldTypes.UPLOAD,
+            "params": {
+                "link": null
             }
         });
         const type = service.resolveComponentType(field);

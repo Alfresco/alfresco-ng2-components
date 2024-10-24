@@ -25,12 +25,12 @@ import { AutoFocusDirective } from '../directives/auto-focus.directive';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'adf-aspect-list-dialog',
-    standalone: true,
-    imports: [CommonModule, MatDialogModule, TranslateModule, MatButtonModule, AspectListComponent, AutoFocusDirective],
-    templateUrl: './aspect-list-dialog.component.html',
-    styleUrls: ['./aspect-list-dialog.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-aspect-list-dialog',
+    "standalone": true,
+    "imports": [CommonModule, MatDialogModule, TranslateModule, MatButtonModule, AspectListComponent, AutoFocusDirective],
+    "templateUrl": './aspect-list-dialog.component.html',
+    "styleUrls": ['./aspect-list-dialog.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class AspectListDialogComponent implements OnInit {
     title: string;
@@ -41,14 +41,14 @@ export class AspectListDialogComponent implements OnInit {
 
     currentAspectSelection: string[] = [];
 
-    constructor(private dialog: MatDialogRef<AspectListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData) {
+    constructor (private dialog: MatDialogRef<AspectListDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: AspectListDialogComponentData) {
         this.title = data.title;
         this.description = data.description;
         this.overTableMessage = data.overTableMessage;
         this.currentNodeId = data.nodeId;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.dialog.backdropClick().subscribe(() => {
             this.close();
         });
@@ -62,23 +62,23 @@ export class AspectListDialogComponent implements OnInit {
         });
     }
 
-    onValueChanged(aspectList: string[]) {
+    onValueChanged (aspectList: string[]) {
         this.currentAspectSelection = aspectList;
     }
 
-    onUpdateCounter(count: number) {
+    onUpdateCounter (count: number) {
         this.counter = count;
     }
 
-    close() {
+    close () {
         this.data.select.complete();
     }
 
-    onCancel() {
+    onCancel () {
         this.close();
     }
 
-    onApply() {
+    onApply () {
         this.data.select.next(this.currentAspectSelection);
         this.close();
     }

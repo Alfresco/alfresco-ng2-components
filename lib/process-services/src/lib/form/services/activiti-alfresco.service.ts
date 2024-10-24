@@ -30,35 +30,34 @@ import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ActivitiContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     private _integrationAlfrescoOnPremiseApi: IntegrationAlfrescoOnPremiseApi;
-    get integrationAlfrescoOnPremiseApi(): IntegrationAlfrescoOnPremiseApi {
+    get integrationAlfrescoOnPremiseApi (): IntegrationAlfrescoOnPremiseApi {
         this._integrationAlfrescoOnPremiseApi =
             this._integrationAlfrescoOnPremiseApi ?? new IntegrationAlfrescoOnPremiseApi(this.apiService.getInstance());
         return this._integrationAlfrescoOnPremiseApi;
     }
 
     private _contentApi: ActivitiContentApi;
-    get contentApi(): ActivitiContentApi {
+    get contentApi (): ActivitiContentApi {
         this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private sitesService: SitesService) {}
+    constructor (private apiService: AlfrescoApiService, private sitesService: SitesService) {}
 
     /**
      * Returns a list of child nodes below the specified folder
-     *
      * @param accountId account id
      * @param folderId folder id
      * @returns list of external content instances
      */
-    getAlfrescoNodes(accountId: string, folderId: string): Observable<AlfrescoContentRepresentation[]> {
+    getAlfrescoNodes (accountId: string, folderId: string): Observable<AlfrescoContentRepresentation[]> {
         const accountShortId = accountId.replace('alfresco-', '');
         return from(this.integrationAlfrescoOnPremiseApi.getContentInFolder(accountShortId, folderId)).pipe(
             map((res) => res?.data || []),
@@ -68,15 +67,14 @@ export class ActivitiContentService {
 
     /**
      * Returns a list of all the repositories configured
-     *
      * @param tenantId tenant id
      * @param includeAccount include accounts
      * @returns list of endpoints
      */
-    getAlfrescoRepositories(tenantId?: string, includeAccount?: boolean): Observable<AlfrescoEndpointRepresentation[]> {
+    getAlfrescoRepositories (tenantId?: string, includeAccount?: boolean): Observable<AlfrescoEndpointRepresentation[]> {
         const opts = {
             tenantId,
-            includeAccounts: includeAccount ? includeAccount : true
+            "includeAccounts": includeAccount ? includeAccount : true
         };
         return from(this.integrationAlfrescoOnPremiseApi.getRepositories(opts)).pipe(
             map((res) => res?.data || []),
@@ -86,20 +84,19 @@ export class ActivitiContentService {
 
     /**
      * Returns a list of child nodes below the specified folder
-     *
      * @param accountId account id
      * @param node node details
      * @param siteId site id
      * @returns link to external content
      */
-    linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<RelatedContentRepresentation> {
+    linkAlfrescoNode (accountId: string, node: ExternalContent, siteId: string): Observable<RelatedContentRepresentation> {
         return from(
             this.contentApi.createTemporaryRelatedContent({
-                link: true,
-                name: node.title,
-                simpleType: node.simpleType,
-                source: accountId,
-                sourceId: node.id + '@' + siteId
+                "link": true,
+                "name": node.title,
+                "simpleType": node.simpleType,
+                "source": accountId,
+                "sourceId": node.id + '@' + siteId
             })
         ).pipe(
             map((res) => res || {}),
@@ -107,14 +104,14 @@ export class ActivitiContentService {
         );
     }
 
-    applyAlfrescoNode(node: Node, siteId: string, accountId: string): Observable<RelatedContentRepresentation> {
+    applyAlfrescoNode (node: Node, siteId: string, accountId: string): Observable<RelatedContentRepresentation> {
         const currentSideId = siteId ? siteId : this.sitesService.getSiteNameFromNodePath(node);
         const params: RelatedContentRepresentation = {
-            source: accountId,
-            mimeType: node?.content?.mimeType,
-            sourceId: node.id + ';' + node.properties?.['cm:versionLabel'] + '@' + currentSideId,
-            name: node.name,
-            link: node.isLink
+            "source": accountId,
+            "mimeType": node?.content?.mimeType,
+            "sourceId": node.id + ';' + node.properties?.['cm:versionLabel'] + '@' + currentSideId,
+            "name": node.name,
+            "link": node.isLink
         };
         return from(this.contentApi.createTemporaryRelatedContent(params)).pipe(
             map((res) => res || {}),
@@ -122,7 +119,7 @@ export class ActivitiContentService {
         );
     }
 
-    private handleError(error: any): Observable<never> {
+    private handleError (error: any): Observable<never> {
         let errMsg = ActivitiContentService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = error.message

@@ -54,7 +54,7 @@ export class TaskQueryCloudRequestModel {
     candidateGroupId?: string;
     variableKeys?: string[];
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         if (obj) {
             this.appName = obj.appName;
             this.appVersion = obj.appVersion;
@@ -130,7 +130,7 @@ export class TaskListRequestModel {
     taskVariableFilters?: TaskListRequestTaskVariableFilter[];
     variableKeys?: string[];
 
-    constructor(obj: Partial<TaskListRequestModel>) {
+    constructor (obj: Partial<TaskListRequestModel>) {
         if (!obj.appName) {
             throw new Error('appName not configured');
         }
@@ -166,28 +166,28 @@ export class TaskListRequestModel {
 }
 
 export class TaskFilterCloudAdapter extends TaskListRequestModel {
-    constructor(filter: TaskFilterCloudModel) {
+    constructor (filter: TaskFilterCloudModel) {
         super({
-            appName: filter.appName,
-            pagination: { maxItems: 25, skipCount: 0 },
-            sorting: [{ orderBy: filter.sort, direction: filter.order }],
+            "appName": filter.appName,
+            "pagination": { "maxItems": 25, "skipCount": 0 },
+            "sorting": [{ "orderBy": filter.sort, "direction": filter.order }],
 
-            onlyStandalone: filter.standalone,
-            name: filter.taskNames,
-            processDefinitionName: filter.processDefinitionNames,
-            priority: filter.priorities?.map((priority) => priority.toString()),
-            status: filter.statuses,
-            completedBy: filter.completedByUsers,
-            assignee: filter.assignees,
-            createdFrom: filter.createdFrom,
-            createdTo: filter.createdTo,
-            lastModifiedFrom: filter.lastModifiedFrom,
-            lastModifiedTo: filter.lastModifiedTo,
-            dueDateFrom: filter.dueDateFrom,
-            dueDateTo: filter.dueDateTo,
-            completedFrom: filter.completedFrom,
-            completedTo: filter.completedTo,
-            candidateGroupId: filter.candidateGroups?.map((group) => group.id)
+            "onlyStandalone": filter.standalone,
+            "name": filter.taskNames,
+            "processDefinitionName": filter.processDefinitionNames,
+            "priority": filter.priorities?.map((priority) => priority.toString()),
+            "status": filter.statuses,
+            "completedBy": filter.completedByUsers,
+            "assignee": filter.assignees,
+            "createdFrom": filter.createdFrom,
+            "createdTo": filter.createdTo,
+            "lastModifiedFrom": filter.lastModifiedFrom,
+            "lastModifiedTo": filter.lastModifiedTo,
+            "dueDateFrom": filter.dueDateFrom,
+            "dueDateTo": filter.dueDateTo,
+            "completedFrom": filter.completedFrom,
+            "completedTo": filter.completedTo,
+            "candidateGroupId": filter.candidateGroups?.map((group) => group.id)
         });
     }
 }

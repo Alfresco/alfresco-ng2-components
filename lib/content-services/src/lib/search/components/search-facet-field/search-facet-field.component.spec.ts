@@ -32,7 +32,7 @@ describe('SearchFacetFieldComponent', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
@@ -48,9 +48,9 @@ describe('SearchFacetFieldComponent', () => {
         spyOn(queryBuilder, 'update').and.stub();
         spyOn(queryBuilder, 'addUserFacetBucket').and.callThrough();
 
-        const event: any = { checked: true };
-        const facetField: FacetField = { field: 'f1', label: 'f1', buckets: new SearchFilterList() };
-        const bucket: FacetFieldBucket = { checked: false, filterQuery: 'q1', label: 'q1', count: 1 };
+        const event: any = { "checked": true };
+        const facetField: FacetField = { "field": 'f1', "label": 'f1', "buckets": new SearchFilterList() };
+        const bucket: FacetFieldBucket = { "checked": false, "filterQuery": 'q1', "label": 'q1', "count": 1 };
         component.field = facetField;
         fixture.detectChanges();
 
@@ -66,9 +66,9 @@ describe('SearchFacetFieldComponent', () => {
         spyOn(queryBuilder, 'update').and.stub();
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
-        const event: any = { checked: false };
-        const facetField: FacetField = { field: 'f1', label: 'f1', buckets: new SearchFilterList() };
-        const bucket: FacetFieldBucket = { checked: true, filterQuery: 'q1', label: 'q1', count: 1 };
+        const event: any = { "checked": false };
+        const facetField: FacetField = { "field": 'f1', "label": 'f1', "buckets": new SearchFilterList() };
+        const bucket: FacetFieldBucket = { "checked": true, "filterQuery": 'q1', "label": 'q1', "count": 1 };
 
         component.field = facetField;
         fixture.detectChanges();
@@ -84,9 +84,9 @@ describe('SearchFacetFieldComponent', () => {
         spyOn(queryBuilder, 'update').and.stub();
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
-        const event: any = { checked: false };
-        const query = { checked: true, label: 'q1', filterQuery: 'query1' };
-        const facetField = { field: 'q1', type: 'query', label: 'label1', buckets: new SearchFilterList([query]) } as FacetField;
+        const event: any = { "checked": false };
+        const query = { "checked": true, "label": 'q1', "filterQuery": 'query1' };
+        const facetField = { "field": 'q1', "type": 'query', "label": 'label1', "buckets": new SearchFilterList([query]) } as FacetField;
 
         component.field = facetField;
         fixture.detectChanges();
@@ -102,22 +102,22 @@ describe('SearchFacetFieldComponent', () => {
     it('should update query builder only when has bucket to unselect', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
-        const field: FacetField = { field: 'f1', label: 'f1' };
-        component.onToggleBucket({ checked: true } as any, field, null);
+        const field: FacetField = { "field": 'f1', "label": 'f1' };
+        component.onToggleBucket({ "checked": true } as any, field, null);
 
         expect(queryBuilder.update).not.toHaveBeenCalled();
     });
 
     it('should allow to to reset selected buckets', () => {
         const buckets: FacetFieldBucket[] = [
-            { label: 'bucket1', checked: true, count: 1, filterQuery: 'q1' },
-            { label: 'bucket2', checked: false, count: 1, filterQuery: 'q2' }
+            { "label": 'bucket1', "checked": true, "count": 1, "filterQuery": 'q1' },
+            { "label": 'bucket2', "checked": false, "count": 1, "filterQuery": 'q2' }
         ];
 
         const field: FacetField = {
-            field: 'f1',
-            label: 'field1',
-            buckets: new SearchFilterList<FacetFieldBucket>(buckets)
+            "field": 'f1',
+            "label": 'field1',
+            "buckets": new SearchFilterList<FacetFieldBucket>(buckets)
         };
 
         component.field = field;
@@ -128,14 +128,14 @@ describe('SearchFacetFieldComponent', () => {
 
     it('should not allow to reset selected buckets', () => {
         const buckets: FacetFieldBucket[] = [
-            { label: 'bucket1', checked: false, count: 1, filterQuery: 'q1' },
-            { label: 'bucket2', checked: false, count: 1, filterQuery: 'q2' }
+            { "label": 'bucket1', "checked": false, "count": 1, "filterQuery": 'q1' },
+            { "label": 'bucket2', "checked": false, "count": 1, "filterQuery": 'q2' }
         ];
 
         const field: FacetField = {
-            field: 'f1',
-            label: 'field1',
-            buckets: new SearchFilterList<FacetFieldBucket>(buckets)
+            "field": 'f1',
+            "label": 'field1',
+            "buckets": new SearchFilterList<FacetFieldBucket>(buckets)
         };
 
         component.field = field;
@@ -147,14 +147,14 @@ describe('SearchFacetFieldComponent', () => {
     it('should reset selected buckets', () => {
         spyOn(queryBuilder, 'execute').and.stub();
         const buckets: FacetFieldBucket[] = [
-            { label: 'bucket1', checked: false, count: 1, filterQuery: 'q1' },
-            { label: 'bucket2', checked: true, count: 1, filterQuery: 'q2' }
+            { "label": 'bucket1', "checked": false, "count": 1, "filterQuery": 'q1' },
+            { "label": 'bucket2', "checked": true, "count": 1, "filterQuery": 'q2' }
         ];
 
         const field: FacetField = {
-            field: 'f1',
-            label: 'field1',
-            buckets: new SearchFilterList<FacetFieldBucket>(buckets)
+            "field": 'f1',
+            "label": 'field1',
+            "buckets": new SearchFilterList<FacetFieldBucket>(buckets)
         };
 
         component.field = field;
@@ -170,14 +170,14 @@ describe('SearchFacetFieldComponent', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
         const buckets: FacetFieldBucket[] = [
-            { label: 'bucket1', checked: false, count: 1, filterQuery: 'q1' },
-            { label: 'bucket2', checked: true, count: 1, filterQuery: 'q2' }
+            { "label": 'bucket1', "checked": false, "count": 1, "filterQuery": 'q1' },
+            { "label": 'bucket2', "checked": true, "count": 1, "filterQuery": 'q2' }
         ];
 
         const field: FacetField = {
-            field: 'f1',
-            label: 'field1',
-            buckets: new SearchFilterList<FacetFieldBucket>(buckets)
+            "field": 'f1',
+            "label": 'field1',
+            "buckets": new SearchFilterList<FacetFieldBucket>(buckets)
         };
 
         component.field = field;

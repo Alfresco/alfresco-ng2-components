@@ -31,7 +31,7 @@ describe('DialogAspectListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         dialogAspectListService = TestBed.inject(DialogAspectListService);
         dialog = TestBed.inject(MatDialog);
@@ -43,7 +43,7 @@ describe('DialogAspectListService', () => {
         it('should focus element indicated by passed selector after closing modal', () => {
             const afterClosed$ = new Subject<void>();
             spyOn(dialog, 'open').and.returnValue({
-                afterClosed: () => afterClosed$.asObservable()
+                "afterClosed": () => afterClosed$.asObservable()
             } as MatDialogRef<any>);
             const elementToFocus = document.createElement(elementToFocusSelector);
             spyOn(elementToFocus, 'focus');
@@ -64,7 +64,7 @@ describe('DialogAspectListService', () => {
         it('should not looking for element to focus if passed selector is empty string', () => {
             const afterClosed$ = new Subject<void>();
             spyOn(dialog, 'open').and.returnValue({
-                afterClosed: () => afterClosed$.asObservable()
+                "afterClosed": () => afterClosed$.asObservable()
             } as MatDialogRef<any>);
             spyOn(document, 'querySelector');
             dialogAspectListService.openAspectListDialog('some-node-id', '');
@@ -77,21 +77,21 @@ describe('DialogAspectListService', () => {
 
             beforeEach(() => {
                 spyOn(dialog, 'open').and.returnValue({
-                    afterClosed: () => new Observable<void>()
+                    "afterClosed": () => new Observable<void>()
                 } as MatDialogRef<any>);
                 expectedDialogConfig = {
-                    data: {
-                        title: 'ADF-ASPECT-LIST.DIALOG.TITLE',
-                        description: 'ADF-ASPECT-LIST.DIALOG.DESCRIPTION',
-                        overTableMessage: 'ADF-ASPECT-LIST.DIALOG.OVER-TABLE-MESSAGE',
-                        excludedAspects: [],
-                        select: jasmine.any(Subject) as any,
-                        nodeId: undefined
+                    "data": {
+                        "title": 'ADF-ASPECT-LIST.DIALOG.TITLE',
+                        "description": 'ADF-ASPECT-LIST.DIALOG.DESCRIPTION',
+                        "overTableMessage": 'ADF-ASPECT-LIST.DIALOG.OVER-TABLE-MESSAGE',
+                        "excludedAspects": [],
+                        "select": jasmine.any(Subject) as any,
+                        "nodeId": undefined
                     },
-                    panelClass: 'adf-aspect-list-dialog',
-                    width: '750px',
-                    role: 'dialog',
-                    disableClose: true
+                    "panelClass": 'adf-aspect-list-dialog',
+                    "width": '750px',
+                    "role": 'dialog',
+                    "disableClose": true
                 };
             });
 

@@ -46,9 +46,9 @@ import { TranslateModule } from '@ngx-translate/core';
 export const PRESET_KEY = 'adf-task-list.presets';
 
 @Component({
-    selector: 'adf-tasklist',
-    standalone: true,
-    imports: [
+    "selector": 'adf-tasklist',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatProgressSpinnerModule,
         EmptyContentComponent,
@@ -57,8 +57,8 @@ export const PRESET_KEY = 'adf-task-list.presets';
         LoadingContentTemplateDirective,
         NoContentTemplateDirective
     ],
-    templateUrl: './task-list.component.html',
-    styleUrls: ['./task-list.component.css']
+    "templateUrl": './task-list.component.html',
+    "styleUrls": ['./task-list.component.css']
 })
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -214,17 +214,17 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private taskListService: TaskListService, appConfigService: AppConfigService, private userPreferences: UserPreferencesService) {
+    constructor (private taskListService: TaskListService, appConfigService: AppConfigService, private userPreferences: UserPreferencesService) {
         super(appConfigService, PRESET_KEY, taskPresetsDefaultModel);
 
         this.pagination = new BehaviorSubject<PaginationModel>({
-            maxItems: this.size,
-            skipCount: 0,
-            totalItems: 0
+            "maxItems": this.size,
+            "skipCount": 0,
+            "totalItems": 0
         });
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.createDatatableSchema();
         if (this.data && this.data.getColumns().length === 0) {
             this.data.setColumns(this.columns);
@@ -235,26 +235,26 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         }
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.userPreferences
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((pageSize) => (this.size = pageSize));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    setCustomDataSource(rows: any[]): void {
+    setCustomDataSource (rows: any[]): void {
         if (rows) {
             this.rows = rows;
             this.hasCustomDataSource = true;
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
             if (this.isSortChanged(changes)) {
                 this.sorting = this.sort ? this.sort.split('-') : this.sorting;
@@ -268,7 +268,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         }
     }
 
-    reload(): void {
+    reload (): void {
         if (!this.hasCustomDataSource) {
             this.requestNode = this.createRequestNode();
             this.load();
@@ -279,10 +279,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Select the task given in input if present
-     *
      * @param taskIdSelected selected task id
      */
-    selectTask(taskIdSelected: string): void {
+    selectTask (taskIdSelected: string): void {
         if (!this.isListEmpty()) {
             let dataRow = null;
 
@@ -305,48 +304,45 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Return the current instance id
-     *
      * @returns the current instance id
      */
-    getCurrentId(): string {
+    getCurrentId (): string {
         return this.currentInstanceId;
     }
 
     /**
      * Check if the taskId is the same of the selected task
-     *
      * @param taskId task id
      * @returns `true` if current instance id is the same as task id, otherwise `false`
      */
-    isEqualToCurrentId(taskId: string): boolean {
+    isEqualToCurrentId (taskId: string): boolean {
         return this.currentInstanceId === taskId;
     }
 
     /**
      * Check if the list is empty
-     *
      * @returns `true` if list is empty, otherwise `false`
      */
-    isListEmpty(): boolean {
+    isListEmpty (): boolean {
         return !this.rows || this.rows.length === 0;
     }
 
-    onRowClick(item: DataRowEvent) {
+    onRowClick (item: DataRowEvent) {
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
 
-    onRowSelect(event: CustomEvent) {
+    onRowSelect (event: CustomEvent) {
         this.selectedInstances = [...event.detail.selection];
         this.rowsSelected.emit(this.selectedInstances);
     }
 
-    onRowUnselect(event: CustomEvent) {
+    onRowUnselect (event: CustomEvent) {
         this.selectedInstances = [...event.detail.selection];
         this.rowsSelected.emit(this.selectedInstances);
     }
 
-    onRowKeyUp(event: CustomEvent) {
+    onRowKeyUp (event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
 
@@ -355,11 +351,11 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         }
     }
 
-    onShowRowContextMenu(event: DataCellEvent) {
+    onShowRowContextMenu (event: DataCellEvent) {
         this.showRowContextMenu.emit(event);
     }
 
-    updatePagination(params: PaginationModel) {
+    updatePagination (params: PaginationModel) {
         const needsReload = params.maxItems || params.skipCount;
 
         this.size = params.maxItems;
@@ -370,16 +366,16 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         }
     }
 
-    currentPage(skipCount: number, maxItems: number): number {
+    currentPage (skipCount: number, maxItems: number): number {
         return skipCount && maxItems ? Math.floor(skipCount / maxItems) : 0;
     }
 
-    private isSortChanged(changes: SimpleChanges): boolean {
+    private isSortChanged (changes: SimpleChanges): boolean {
         const actualSort = changes['sort'];
         return actualSort?.currentValue && actualSort.currentValue !== actualSort.previousValue;
     }
 
-    private isPropertyChanged(changes: SimpleChanges): boolean {
+    private isPropertyChanged (changes: SimpleChanges): boolean {
         let changed: boolean = true;
 
         const landingTaskId = changes['landingTaskId'];
@@ -396,7 +392,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         return changed;
     }
 
-    private load() {
+    private load () {
         this.isLoading = true;
 
         this.taskListService
@@ -408,10 +404,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
                     this.selectTask(this.landingTaskId);
                     this.success.emit(tasks);
                     this.pagination.next({
-                        count: tasks.data.length,
-                        maxItems: this.size,
-                        skipCount: this.page * this.size,
-                        totalItems: tasks.total
+                        "count": tasks.data.length,
+                        "maxItems": this.size,
+                        "skipCount": this.page * this.size,
+                        "totalItems": tasks.total
                     });
                 },
                 (error) => {
@@ -422,11 +418,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Optimize name field
-     *
      * @param instances task detail models
      * @returns list of task detail models
      */
-    private optimizeTaskDetails(instances: TaskRepresentation[]): TaskRepresentation[] {
+    private optimizeTaskDetails (instances: TaskRepresentation[]): TaskRepresentation[] {
         instances = instances.map((task) => {
             if (!task.name) {
                 task.name = 'No name';
@@ -436,22 +431,22 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         return instances;
     }
 
-    private createRequestNode() {
+    private createRequestNode () {
         return new TaskQueryRepresentation({
-            appDefinitionId: this.appId,
-            dueAfter: this.dueAfter ? new Date(this.dueAfter) : null,
-            dueBefore: this.dueBefore ? new Date(this.dueBefore) : null,
-            processInstanceId: this.processInstanceId,
-            processDefinitionId: this.processDefinitionId,
-            text: this.name,
-            assignment: this.assignment,
-            state: this.state,
-            sort: this.sort,
-            page: this.page,
-            size: this.size,
-            start: this.start,
-            taskId: this.taskId,
-            includeProcessInstance: this.includeProcessInstance
+            "appDefinitionId": this.appId,
+            "dueAfter": this.dueAfter ? new Date(this.dueAfter) : null,
+            "dueBefore": this.dueBefore ? new Date(this.dueBefore) : null,
+            "processInstanceId": this.processInstanceId,
+            "processDefinitionId": this.processDefinitionId,
+            "text": this.name,
+            "assignment": this.assignment,
+            "state": this.state,
+            "sort": this.sort,
+            "page": this.page,
+            "size": this.size,
+            "start": this.start,
+            "taskId": this.taskId,
+            "includeProcessInstance": this.includeProcessInstance
         });
     }
 }

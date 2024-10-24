@@ -39,9 +39,9 @@ describe('NodeNameTooltipPipe', () => {
 
     it('should use title and description when all fields present', () => {
         const node: any = {
-            entry: {
-                name: nodeName,
-                properties: {
+            "entry": {
+                "name": nodeName,
+                "properties": {
                     'cm:title': nodeTitle,
                     'cm:description': nodeDescription
                 }
@@ -53,8 +53,8 @@ describe('NodeNameTooltipPipe', () => {
 
     it('should use name when other properties are missing', () => {
         const node = {
-            entry: {
-                name: nodeName
+            "entry": {
+                "name": nodeName
             }
         } as NodeEntry;
         const tooltip = pipe.transform(node);
@@ -63,9 +63,9 @@ describe('NodeNameTooltipPipe', () => {
 
     it('should display name when title and description are missing', () => {
         const node: any = {
-            entry: {
-                name: nodeName,
-                properties: {}
+            "entry": {
+                "name": nodeName,
+                "properties": {}
             }
         };
         const tooltip = pipe.transform(node);
@@ -74,9 +74,9 @@ describe('NodeNameTooltipPipe', () => {
 
     it('should use name and description when title is missing', () => {
         const node: any = {
-            entry: {
-                name: nodeName,
-                properties: {
+            "entry": {
+                "name": nodeName,
+                "properties": {
                     'cm:title': null,
                     'cm:description': nodeDescription
                 }
@@ -88,9 +88,9 @@ describe('NodeNameTooltipPipe', () => {
 
     it('should use name and title when description is missing', () => {
         const node: any = {
-            entry: {
-                name: nodeName,
-                properties: {
+            "entry": {
+                "name": nodeName,
+                "properties": {
                     'cm:title': nodeTitle,
                     'cm:description': null
                 }
@@ -102,9 +102,9 @@ describe('NodeNameTooltipPipe', () => {
 
     it('should use name if name and description are the same', () => {
         const node: any = {
-            entry: {
-                name: nodeName,
-                properties: {
+            "entry": {
+                "name": nodeName,
+                "properties": {
                     'cm:title': null,
                     'cm:description': nodeName
                 }
@@ -116,9 +116,9 @@ describe('NodeNameTooltipPipe', () => {
 
     it('should use name if name and title are the same', () => {
         const node: any = {
-            entry: {
-                name: nodeName,
-                properties: {
+            "entry": {
+                "name": nodeName,
+                "properties": {
                     'cm:title': nodeName,
                     'cm:description': null
                 }
@@ -130,9 +130,9 @@ describe('NodeNameTooltipPipe', () => {
 
     it('should use name if all values are the same', () => {
         const node: any = {
-            entry: {
-                name: nodeName,
-                properties: {
+            "entry": {
+                "name": nodeName,
+                "properties": {
                     'cm:title': nodeName,
                     'cm:description': nodeName
                 }

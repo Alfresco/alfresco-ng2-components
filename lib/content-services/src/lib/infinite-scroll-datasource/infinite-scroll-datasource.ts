@@ -34,24 +34,24 @@ export abstract class InfiniteScrollDatasource<T> extends DataSource<T> {
     /* Observable with initial and on reset loading state */
     isLoading = this.isLoading$.asObservable();
 
-    get itemsCount(): number {
+    get itemsCount (): number {
         return this._itemsCount;
     }
 
-    get firstItem(): T {
+    get firstItem (): T {
         return this._firstItem;
     }
 
     abstract getNextBatch(pagingOptions: ContentPagingQuery): Observable<T[]>;
 
-    connect(collectionViewer: CollectionViewer): Observable<T[]> {
+    connect (collectionViewer: CollectionViewer): Observable<T[]> {
         this.reset();
         this.subscription.add(
             collectionViewer.viewChange.subscribe((range) => {
                 if (this.batchesFetched * this.batchSize <= range.end) {
                     forkJoin([
                         this.dataStream.asObservable().pipe(take(1)),
-                        this.getNextBatch({ skipCount: this.batchSize * this.batchesFetched, maxItems: this.batchSize }).pipe(
+                        this.getNextBatch({ "skipCount": this.batchSize * this.batchesFetched, "maxItems": this.batchSize }).pipe(
                             take(1),
                             tap((nextBatch) => (this._itemsCount += nextBatch.length))
                         )
@@ -63,13 +63,13 @@ export abstract class InfiniteScrollDatasource<T> extends DataSource<T> {
         return this.dataStream;
     }
 
-    disconnect(): void {
+    disconnect (): void {
         this.subscription.unsubscribe();
     }
 
-    reset(): void {
+    reset (): void {
         this.isLoading$.next(true);
-        this.getNextBatch({ skipCount: 0, maxItems: this.batchSize })
+        this.getNextBatch({ "skipCount": 0, "maxItems": this.batchSize })
             .pipe(take(1))
             .subscribe((firstBatch) => {
                 this._itemsCount = firstBatch.length;

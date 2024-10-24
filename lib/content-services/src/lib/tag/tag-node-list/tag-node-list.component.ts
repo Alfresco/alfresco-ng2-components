@@ -28,11 +28,11 @@ import { Chip, DynamicChipListComponent } from '@alfresco/adf-core';
  */
 
 @Component({
-    selector: 'adf-tag-node-list',
-    standalone: true,
-    imports: [DynamicChipListComponent],
-    templateUrl: './tag-node-list.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-tag-node-list',
+    "standalone": true,
+    "imports": [DynamicChipListComponent],
+    "templateUrl": './tag-node-list.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     /** The identifier of a node. */
@@ -54,38 +54,38 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     private onDestroy$ = new Subject<boolean>();
     private _tagChips: Chip[] = [];
 
-    get tagChips(): Chip[] {
+    get tagChips (): Chip[] {
         return this._tagChips;
     }
 
-    constructor(private tagService: TagService) {}
+    constructor (private tagService: TagService) {}
 
-    ngOnChanges(): void {
+    ngOnChanges (): void {
         this.refreshTag();
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.refreshTag());
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    refreshTag(): void {
+    refreshTag (): void {
         if (this.nodeId) {
             this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging) => {
                 this._tagChips = tagPaging.list.entries.map((tag) => ({
-                    id: tag.entry.id,
-                    name: tag.entry.tag
+                    "id": tag.entry.id,
+                    "name": tag.entry.tag
                 }));
                 this.results.emit(tagPaging.list.entries);
             });
         }
     }
 
-    removeTag(tag: string): void {
+    removeTag (tag: string): void {
         this.tagService.removeTag(this.nodeId, tag).subscribe(() => {
             this.refreshTag();
         });

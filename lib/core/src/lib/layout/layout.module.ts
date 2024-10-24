@@ -44,7 +44,7 @@ export const LAYOUT_DIRECTIVES = [
 
 /** @deprecated Use `...LAYOUT_DIRECTIVES` instead, or import standalone components directly */
 @NgModule({
-    imports: [...LAYOUT_DIRECTIVES],
-    exports: [...LAYOUT_DIRECTIVES]
+    "imports": [...LAYOUT_DIRECTIVES],
+    "exports": [...LAYOUT_DIRECTIVES]
 })
 export class SidenavLayoutModule {}

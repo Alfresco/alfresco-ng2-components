@@ -21,19 +21,19 @@ import { endOfDay, startOfDay } from 'date-fns';
 
 describe('ProcessFilterCloudModel', () => {
     it('should use appVersion from the provided object', () => {
-        const model = new ProcessFilterCloudModel({ appVersion: 1 });
+        const model = new ProcessFilterCloudModel({ "appVersion": 1 });
 
         expect(model.appVersion).toBe(1);
     });
 
     it('should use appVersionMultiple if provided', () => {
-        const model = new ProcessFilterCloudModel({ appVersionMultiple: [1, 2] });
+        const model = new ProcessFilterCloudModel({ "appVersionMultiple": [1, 2] });
 
         expect(model.appVersion).toEqual([1, 2]);
     });
 
     it('should use appVersionMultiple over the appVersion if both provided', () => {
-        const model = new ProcessFilterCloudModel({ appVersion: 1, appVersionMultiple: [1, 2] });
+        const model = new ProcessFilterCloudModel({ "appVersion": 1, "appVersionMultiple": [1, 2] });
 
         expect(model.appVersion).toEqual([1, 2]);
     });
@@ -41,7 +41,7 @@ describe('ProcessFilterCloudModel', () => {
     it('should get suspended start and end date if date type is today', () => {
         const date = new Date();
         const model = new ProcessFilterCloudModel({
-            suspendedDateType: DateCloudFilterType.TODAY
+            "suspendedDateType": DateCloudFilterType.TODAY
         });
         expect(model.suspendedFrom).toEqual(startOfDay(date).toISOString());
         expect(model.suspendedTo).toEqual(endOfDay(date).toISOString());
@@ -50,7 +50,7 @@ describe('ProcessFilterCloudModel', () => {
     it('should get completed date start and end date if date type is today', () => {
         const date = new Date();
         const model = new ProcessFilterCloudModel({
-            completedDateType: DateCloudFilterType.TODAY
+            "completedDateType": DateCloudFilterType.TODAY
         });
         expect(model.completedFrom).toEqual(startOfDay(date).toISOString());
         expect(model.completedTo).toEqual(endOfDay(date).toISOString());
@@ -59,7 +59,7 @@ describe('ProcessFilterCloudModel', () => {
     it('should get started date start and end date if date type is today', () => {
         const date = new Date();
         const model = new ProcessFilterCloudModel({
-            startedDateType: DateCloudFilterType.TODAY
+            "startedDateType": DateCloudFilterType.TODAY
         });
         expect(model.startFrom).toEqual(startOfDay(date).toISOString());
         expect(model.startTo).toEqual(endOfDay(date).toISOString());

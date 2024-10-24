@@ -24,13 +24,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-search-chip-list',
-    standalone: true,
-    imports: [CommonModule, MatChipsModule, TranslateModule, MatIconModule],
-    templateUrl: './search-chip-list.component.html',
-    styleUrls: ['./search-chip-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-chip-list' }
+    "selector": 'adf-search-chip-list',
+    "standalone": true,
+    "imports": [CommonModule, MatChipsModule, TranslateModule, MatIconModule],
+    "templateUrl": './search-chip-list.component.html',
+    "styleUrls": ['./search-chip-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-chip-list' }
 })
 export class SearchChipListComponent {
     /**
@@ -44,5 +44,5 @@ export class SearchChipListComponent {
     @Input()
     clearAll: boolean = false;
 
-    constructor(public facetFiltersService: SearchFacetFiltersService) {}
+    constructor (public facetFiltersService: SearchFacetFiltersService) {}
 }

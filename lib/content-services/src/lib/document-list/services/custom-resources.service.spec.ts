@@ -26,7 +26,7 @@ describe('CustomResourcesService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
 
         customResourcesService = TestBed.inject(CustomResourcesService);
@@ -37,18 +37,18 @@ describe('CustomResourcesService', () => {
             spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(
                 Promise.resolve(
                     new FavoritePaging({
-                        list: new FavoritePagingList({
-                            entries: [
+                        "list": new FavoritePagingList({
+                            "entries": [
                                 {
-                                    entry: new Favorite({
-                                        target: {
-                                            file: {
-                                                title: 'some-title',
-                                                description: 'some-description'
+                                    "entry": new Favorite({
+                                        "target": {
+                                            "file": {
+                                                "title": 'some-title',
+                                                "description": 'some-description'
                                             }
                                         },
-                                        aspectNames: ['aspect-name-1', 'aspect-name-2'],
-                                        allowableOperations: ['allowable-operation-1', 'allowable-operation-2']
+                                        "aspectNames": ['aspect-name-1', 'aspect-name-2'],
+                                        "allowableOperations": ['allowable-operation-1', 'allowable-operation-2']
                                     })
                                 }
                             ]
@@ -57,22 +57,22 @@ describe('CustomResourcesService', () => {
                 )
             );
             const pagination: PaginationModel = {
-                maxItems: 100,
-                skipCount: 0
+                "maxItems": 100,
+                "skipCount": 0
             };
 
             customResourcesService.loadFavorites(pagination).subscribe((result) => {
                 expect(result.list.entries).toEqual([
                     {
-                        entry: {
-                            title: 'some-title',
-                            description: 'some-description',
-                            properties: {
+                        "entry": {
+                            "title": 'some-title',
+                            "description": 'some-description',
+                            "properties": {
                                 'cm:title': 'some-title',
                                 'cm:description': 'some-description'
                             },
-                            aspectNames: ['aspect-name-1', 'aspect-name-2'],
-                            allowableOperations: ['allowable-operation-1', 'allowable-operation-2']
+                            "aspectNames": ['aspect-name-1', 'aspect-name-2'],
+                            "allowableOperations": ['allowable-operation-1', 'allowable-operation-2']
                         }
                     } as any
                 ]);
@@ -84,21 +84,21 @@ describe('CustomResourcesService', () => {
             spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(
                 Promise.resolve(
                     new FavoritePaging({
-                        list: new FavoritePagingList({
-                            entries: [
+                        "list": new FavoritePagingList({
+                            "entries": [
                                 {
-                                    entry: new Favorite({
-                                        properties: {
+                                    "entry": new Favorite({
+                                        "properties": {
                                             'cm:property': 'some-property'
                                         },
-                                        target: {
-                                            file: {
-                                                title: 'some-title',
-                                                description: 'some-description'
+                                        "target": {
+                                            "file": {
+                                                "title": 'some-title',
+                                                "description": 'some-description'
                                             }
                                         },
-                                        aspectNames: ['aspect-name-1', 'aspect-name-2'],
-                                        allowableOperations: ['allowable-operation-1', 'allowable-operation-2']
+                                        "aspectNames": ['aspect-name-1', 'aspect-name-2'],
+                                        "allowableOperations": ['allowable-operation-1', 'allowable-operation-2']
                                     })
                                 }
                             ]
@@ -107,23 +107,23 @@ describe('CustomResourcesService', () => {
                 )
             );
             const pagination: PaginationModel = {
-                maxItems: 100,
-                skipCount: 0
+                "maxItems": 100,
+                "skipCount": 0
             };
 
             customResourcesService.loadFavorites(pagination).subscribe((result) => {
                 expect(result.list.entries).toEqual([
                     {
-                        entry: {
-                            title: 'some-title',
-                            description: 'some-description',
-                            properties: {
+                        "entry": {
+                            "title": 'some-title',
+                            "description": 'some-description',
+                            "properties": {
                                 'cm:title': 'some-title',
                                 'cm:description': 'some-description',
                                 'cm:property': 'some-property'
                             },
-                            aspectNames: ['aspect-name-1', 'aspect-name-2'],
-                            allowableOperations: ['allowable-operation-1', 'allowable-operation-2']
+                            "aspectNames": ['aspect-name-1', 'aspect-name-2'],
+                            "allowableOperations": ['allowable-operation-1', 'allowable-operation-2']
                         }
                     } as any
                 ]);

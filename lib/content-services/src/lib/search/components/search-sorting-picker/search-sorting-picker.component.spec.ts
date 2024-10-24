@@ -27,31 +27,31 @@ describe('SearchSortingPickerComponent', () => {
     let component: SearchSortingPickerComponent;
 
     const config: SearchConfiguration = {
-        sorting: {
-            options: [
-                { key: 'name', label: 'Name', type: 'FIELD', field: 'cm:name', ascending: true },
-                { key: 'content.sizeInBytes', label: 'Size', type: 'FIELD', field: 'content.size', ascending: true },
-                { key: 'description', label: 'Description', type: 'FIELD', field: 'cm:description', ascending: true }
+        "sorting": {
+            "options": [
+                { "key": 'name', "label": 'Name', "type": 'FIELD', "field": 'cm:name', "ascending": true },
+                { "key": 'content.sizeInBytes', "label": 'Size', "type": 'FIELD', "field": 'content.size', "ascending": true },
+                { "key": 'description', "label": 'Description', "type": 'FIELD', "field": 'cm:description', "ascending": true }
             ],
-            defaults: [{ key: 'name', type: 'FIELD', field: 'cm:name', ascending: false } as any]
+            "defaults": [{ "key": 'name', "type": 'FIELD', "field": 'cm:name', "ascending": false } as any]
         },
-        categories: [{ id: 'cat1', enabled: true } as any]
+        "categories": [{ "id": 'cat1', "enabled": true } as any]
     };
 
     const queryBuilder: Partial<BaseQueryBuilderService> = {
-        getSortingOptions: () => config.sorting.options,
-        getPrimarySorting: () => config.sorting.defaults[0],
-        sorting: config.sorting.options,
-        update: jasmine.createSpy('update')
+        "getSortingOptions": () => config.sorting.options,
+        "getPrimarySorting": () => config.sorting.defaults[0],
+        "sorting": config.sorting.options,
+        "update": jasmine.createSpy('update')
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [
+            "imports": [ContentTestingModule],
+            "providers": [
                 {
-                    provide: SearchQueryBuilderService,
-                    useValue: queryBuilder
+                    "provide": SearchQueryBuilderService,
+                    "useValue": queryBuilder
                 }
             ]
         });

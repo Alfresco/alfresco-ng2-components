@@ -33,22 +33,22 @@ const assertFeatureFlag = (flagChangeset: FlagChangeset, key: string): void => {
 };
 
 const mockFeaturesService = (flagChangeset: FlagChangeset): IFeaturesService => ({
-    init: () => of(flagChangeset),
-    isOn$: (key) => {
+    "init": () => of(flagChangeset),
+    "isOn$": (key) => {
         assertFeatureFlag(flagChangeset, key);
         return of(flagChangeset[key].current);
     },
-    isOff$: (key) => {
+    "isOff$": (key) => {
         assertFeatureFlag(flagChangeset, key);
         return of(!flagChangeset[key].current);
     },
-    getFlags$: () => of(flagChangeset)
+    "getFlags$": () => of(flagChangeset)
 });
 
 const arrayToFlagChangeset = (featureFlags: string[]): FlagChangeset => {
     const flagChangeset: FlagChangeset = {};
     featureFlags.forEach((featureFlag) => {
-        flagChangeset[featureFlag] = { current: true, previous: null };
+        flagChangeset[featureFlag] = { "current": true, "previous": null };
     });
     return flagChangeset;
 };
@@ -57,7 +57,7 @@ const mockFeatureFlagsToFlagChangeset = (mockFeatureFlags: MockFeatureFlags) => 
     const flagChangeset: FlagChangeset = {};
     const featureFlags = Object.keys(mockFeatureFlags);
     featureFlags.forEach((featureFlag) => {
-        flagChangeset[featureFlag] = { current: mockFeatureFlags[featureFlag], previous: null };
+        flagChangeset[featureFlag] = { "current": mockFeatureFlags[featureFlag], "previous": null };
     });
     return flagChangeset;
 };
@@ -70,7 +70,7 @@ export const provideMockFeatureFlags = (featureFlag: MockFeatureFlags | string |
     const flagChangeset = Array.isArray(featureFlag) ? arrayToFlagChangeset(featureFlag) : mockFeatureFlagsToFlagChangeset(featureFlag);
 
     return {
-        provide: FeaturesServiceToken,
-        useValue: mockFeaturesService(flagChangeset)
+        "provide": FeaturesServiceToken,
+        "useValue": mockFeaturesService(flagChangeset)
     };
 };

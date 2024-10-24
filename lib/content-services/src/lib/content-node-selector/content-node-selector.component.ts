@@ -41,9 +41,9 @@ import { UploadButtonComponent } from '../upload/components/upload-button.compon
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-content-node-selector',
-    standalone: true,
-    imports: [
+    "selector": 'adf-content-node-selector',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatDialogModule,
         MatTabsModule,
@@ -60,9 +60,9 @@ import { MatButtonModule } from '@angular/material/button';
         UploadButtonComponent,
         MatButtonModule
     ],
-    templateUrl: './content-node-selector.component.html',
-    styleUrls: ['./content-node-selector.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './content-node-selector.component.html',
+    "styleUrls": ['./content-node-selector.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
     private onDestroy$ = new Subject<void>();
@@ -81,7 +81,7 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
 
-    constructor(
+    constructor (
         private translation: TranslationService,
         private contentService: ContentService,
         private notificationService: NotificationService,
@@ -96,7 +96,7 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
         this.currentDirectoryId = data.currentFolderId;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.dialog
             .keydownEvents()
             .pipe(takeUntil(this.onDestroy$))
@@ -127,117 +127,117 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 
-    close() {
+    close () {
         this.dialog.close();
         this.overlayContainer.getContainerElement().setAttribute('role', 'region');
     }
 
-    onSelect(nodeList: Node[]) {
+    onSelect (nodeList: Node[]) {
         this.chosenNode = nodeList;
     }
 
-    onSiteChange(siteTitle: string) {
+    onSiteChange (siteTitle: string) {
         this.updateTitle(siteTitle);
     }
 
-    onNavigationChange(pathElement: NodeEntryEvent) {
+    onNavigationChange (pathElement: NodeEntryEvent) {
         this.currentDirectoryId = pathElement.value.id;
         this.isLoading = true;
     }
 
-    onClick(): void {
+    onClick (): void {
         this.data.select.next(this.chosenNode);
         this.close();
     }
 
-    updateTitle(siteTitle: string) {
+    updateTitle (siteTitle: string) {
         if (this.action === NodeAction.CHOOSE && siteTitle) {
             this.title = this.getTitleTranslation(this.action, siteTitle);
         }
     }
 
-    getTitleTranslation(action: NodeAction, name: string): string {
-        return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
+    getTitleTranslation (action: NodeAction, name: string): string {
+        return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { "name": this.translation.instant(name) });
     }
 
-    getSelectedCount(): number {
+    getSelectedCount (): number {
         return this.chosenNode?.length || 0;
     }
 
-    isCounterVisible(): boolean {
+    isCounterVisible (): boolean {
         return this.action === NodeAction.ATTACH || this.action === NodeAction.CHOOSE;
     }
 
-    isMultipleSelection(): boolean {
+    isMultipleSelection (): boolean {
         return this.data.selectionMode === 'multiple';
     }
 
-    onError(error) {
+    onError (error) {
         this.notificationService.showError(error);
     }
 
-    isChooseButtonDisabled(): boolean {
+    isChooseButtonDisabled (): boolean {
         return this.uploadService.isUploading() || !this.hasNodeSelected();
     }
 
-    hasNodeSelected(): boolean {
+    hasNodeSelected (): boolean {
         return this.chosenNode?.length > 0;
     }
 
-    onShowingSearch(value: boolean) {
+    onShowingSearch (value: boolean) {
         this.showingSearch = value;
     }
 
-    onCurrentFolder(currentFolder: Node) {
+    onCurrentFolder (currentFolder: Node) {
         this.hasAllowableOperations = this.contentService.hasAllowableOperations(currentFolder, AllowableOperationsEnum.CREATE);
         this.breadcrumbFolderNode = currentFolder;
     }
 
-    isNotAllowedToUpload() {
+    isNotAllowedToUpload () {
         return this.showingSearch || !this.hasAllowableOperations;
     }
 
-    onFolderLoaded() {
+    onFolderLoaded () {
         this.isLoading = false;
     }
 
-    onTabSelectionChange(tabIndex: number) {
+    onTabSelectionChange (tabIndex: number) {
         this.selectedTabIndex = tabIndex;
     }
 
-    isFileServerTabSelected(): boolean {
+    isFileServerTabSelected (): boolean {
         return this.selectedTabIndex === 0;
     }
 
-    isLocalUploadTabSelected(): boolean {
+    isLocalUploadTabSelected (): boolean {
         return this.selectedTabIndex === 1;
     }
 
-    isUploadEnabled(): boolean {
+    isUploadEnabled (): boolean {
         return this.canPerformLocalUpload() && this.isLocalUploadTabSelected();
     }
 
-    canPerformLocalUpload(): boolean {
+    canPerformLocalUpload (): boolean {
         return this.data?.showLocalUploadButton;
     }
 
-    getWarningMessage(): string {
+    getWarningMessage (): string {
         if (this.showingSearch) {
             return 'NODE_SELECTOR.UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE';
         }
         return this.hasNoPermissionToUpload() ? 'NODE_SELECTOR.UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE' : '';
     }
 
-    hasNoPermissionToUpload(): boolean {
+    hasNoPermissionToUpload (): boolean {
         return !this.hasAllowableOperations && !this.showingSearch && !this.isLoading;
     }
 
-    hasUploadError(): boolean {
+    hasUploadError (): boolean {
         return this.showingSearch || this.hasNoPermissionToUpload();
     }
 }

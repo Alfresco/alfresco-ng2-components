@@ -23,7 +23,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { RedirectAuthService } from '../oidc/redirect-auth.service';
 
 const mockNext: HttpHandler = {
-    handle: () =>
+    "handle": () =>
         new Observable((subscriber) => {
             subscriber.complete();
         })
@@ -38,12 +38,12 @@ describe('AuthBearerInterceptor', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
+            "providers": [
                 HttpClient,
                 HttpHandler,
                 AuthBearerInterceptor,
                 AuthenticationService,
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+                { "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }
             ]
         });
 

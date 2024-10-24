@@ -51,7 +51,7 @@ import { AlfrescoApiNoAuthService } from './api-factories/alfresco-api-no-auth.s
 import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-factories/alfresco-api-v2-loader.service';
 
 @NgModule({
-    imports: [
+    "imports": [
         MaterialModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
@@ -79,8 +79,8 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
         NewVersionUploaderDialogComponent,
         AlfrescoIconComponent
     ],
-    providers: [provideTranslations('adf-content-services', 'assets/adf-content-services')],
-    exports: [
+    "providers": [provideTranslations('adf-content-services', 'assets/adf-content-services')],
+    "exports": [
         MaterialModule,
         ...CONTENT_PIPES,
         ...CONTENT_TAG_DIRECTIVES,
@@ -108,30 +108,30 @@ import { AlfrescoApiLoaderService, createAlfrescoApiInstance } from './api-facto
     ]
 })
 export class ContentModule {
-    static forRoot(): ModuleWithProviders<ContentModule> {
+    static forRoot (): ModuleWithProviders<ContentModule> {
         return {
-            ngModule: ContentModule,
-            providers: [
+            "ngModule": ContentModule,
+            "providers": [
                 provideTranslations('adf-content-services', 'assets/adf-content-services'),
                 ContentAuthLoaderService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiNoAuthService },
+                { "provide": AlfrescoApiService, "useClass": AlfrescoApiNoAuthService },
                 {
-                    provide: APP_INITIALIZER,
-                    useFactory: versionCompatibilityFactory,
-                    deps: [VersionCompatibilityService],
-                    multi: true
+                    "provide": APP_INITIALIZER,
+                    "useFactory": versionCompatibilityFactory,
+                    "deps": [VersionCompatibilityService],
+                    "multi": true
                 },
                 {
-                    provide: APP_INITIALIZER,
-                    useFactory: contentAuthLoaderFactory,
-                    deps: [ContentAuthLoaderService],
-                    multi: true
+                    "provide": APP_INITIALIZER,
+                    "useFactory": contentAuthLoaderFactory,
+                    "deps": [ContentAuthLoaderService],
+                    "multi": true
                 },
                 {
-                    provide: APP_INITIALIZER,
-                    useFactory: createAlfrescoApiInstance,
-                    deps: [AlfrescoApiLoaderService],
-                    multi: true
+                    "provide": APP_INITIALIZER,
+                    "useFactory": createAlfrescoApiInstance,
+                    "deps": [AlfrescoApiLoaderService],
+                    "multi": true
                 }
             ]
         };
@@ -141,9 +141,9 @@ export class ContentModule {
      * @deprecated use `ContentModule` instead
      * @returns ModuleWithProviders<ContentModule>
      */
-    static forChild(): ModuleWithProviders<ContentModule> {
+    static forChild (): ModuleWithProviders<ContentModule> {
         return {
-            ngModule: ContentModule
+            "ngModule": ContentModule
         };
     }
 }

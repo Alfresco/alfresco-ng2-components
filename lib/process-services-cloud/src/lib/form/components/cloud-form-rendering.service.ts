@@ -30,10 +30,10 @@ import { DataTableWidgetComponent } from './widgets/data-table/data-table.widget
 import { DisplayExternalPropertyWidgetComponent } from './widgets/display-external-property/display-external-property.widget';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class CloudFormRenderingService extends FormRenderingService {
-    constructor() {
+    constructor () {
         super();
 
         this.register({

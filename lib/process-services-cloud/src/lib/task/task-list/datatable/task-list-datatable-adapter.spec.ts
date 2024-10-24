@@ -25,34 +25,34 @@ import { getProcessInstanceVariableMock } from '../../../mock/process-instance-v
 describe('TasksListDatatableAdapter', () => {
     it('should get proepr type for column', () => {
         const processVariable = getProcessInstanceVariableMock({
-            variableDefinitionId: 'variableDefinitionId',
-            type: 'number'
+            "variableDefinitionId": 'variableDefinitionId',
+            "type": 'number'
         });
 
         const cloudModel = getTaskCloudModelMock({
-            processVariables: [processVariable]
+            "processVariables": [processVariable]
         });
 
         const viewModel: TaskInstanceCloudListViewModel = {
             ...cloudModel,
-            variablesMap: {
-                columnId1: processVariable
+            "variablesMap": {
+                "columnId1": processVariable
             }
         };
 
         const row: DataRow = {
-            getValue: () => {},
-            hasValue: () => true,
-            isSelected: false,
-            obj: viewModel
+            "getValue": () => {},
+            "hasValue": () => true,
+            "isSelected": false,
+            "obj": viewModel
         };
 
         const column: DataColumn<ProcessListDataColumnCustomData> = getDataColumnMock({
-            id: 'columnId1',
-            customData: {
-                assignedVariableDefinitionIds: ['variableDefinitionId'],
-                variableDefinitionsPayload: ['processKey/variableName'],
-                columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
+            "id": 'columnId1',
+            "customData": {
+                "assignedVariableDefinitionIds": ['variableDefinitionId'],
+                "variableDefinitionsPayload": ['processKey/variableName'],
+                "columnType": PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
             }
         });
 

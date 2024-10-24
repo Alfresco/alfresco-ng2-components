@@ -34,12 +34,12 @@ export enum Relations {
 }
 
 @Component({
-    selector: 'adf-sites-dropdown',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
-    templateUrl: './sites-dropdown.component.html',
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-sites-dropdown' }
+    "selector": 'adf-sites-dropdown',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, InfiniteSelectScrollDirective],
+    "templateUrl": './sites-dropdown.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-sites-dropdown' }
 })
 export class DropdownSitesComponent implements OnInit {
     /** Hide the "My Files" option. */
@@ -90,40 +90,40 @@ export class DropdownSitesComponent implements OnInit {
     selected: SiteEntry = null;
     MY_FILES_VALUE = '-my-';
 
-    constructor(
+    constructor (
         private authService: AuthenticationService,
         private sitesService: SitesService,
         private liveAnnouncer: LiveAnnouncer,
         private translateService: TranslateService
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (!this.siteList) {
             this.loadSiteList();
         }
     }
 
-    loadAllOnScroll() {
+    loadAllOnScroll () {
         if (this.isInfiniteScrollingEnabled()) {
             this.loading = true;
             this.loadSiteList();
         }
     }
 
-    selectedSite(event: MatSelectChange) {
+    selectedSite (event: MatSelectChange) {
         this.liveAnnouncer.announce(
             this.translateService.instant('ADF_DROPDOWN.SELECTION_ARIA_LABEL', {
-                placeholder: this.translateService.instant(this.placeholder),
-                selectedOption: this.translateService.instant(event.value.entry.title)
+                "placeholder": this.translateService.instant(this.placeholder),
+                "selectedOption": this.translateService.instant(event.value.entry.title)
             })
         );
         this.change.emit(event.value);
     }
 
-    private loadSiteList() {
+    private loadSiteList () {
         const extendedOptions: any = {
-            skipCount: this.skipCount,
-            maxItems: InfiniteSelectScrollDirective.MAX_ITEMS
+            "skipCount": this.skipCount,
+            "maxItems": InfiniteSelectScrollDirective.MAX_ITEMS
         };
 
         this.skipCount += InfiniteSelectScrollDirective.MAX_ITEMS;
@@ -139,7 +139,7 @@ export class DropdownSitesComponent implements OnInit {
 
                     if (!this.hideMyFiles) {
                         const siteEntry = new SiteEntry({
-                            entry: new Site({ id: this.MY_FILES_VALUE, guid: this.MY_FILES_VALUE, title: 'DROPDOWN.MY_FILES_OPTION' })
+                            "entry": new Site({ "id": this.MY_FILES_VALUE, "guid": this.MY_FILES_VALUE, "title": 'DROPDOWN.MY_FILES_OPTION' })
                         });
 
                         this.siteList.list.entries.unshift(siteEntry);
@@ -169,25 +169,25 @@ export class DropdownSitesComponent implements OnInit {
         );
     }
 
-    showLoading(): boolean {
+    showLoading (): boolean {
         return this.loading && this.siteListHasMoreItems();
     }
 
-    isInfiniteScrollingEnabled(): boolean {
+    isInfiniteScrollingEnabled (): boolean {
         return !this.loading && this.siteListHasMoreItems();
     }
 
-    private siteListHasMoreItems(): boolean {
+    private siteListHasMoreItems (): boolean {
         return this.siteList?.list.pagination?.hasMoreItems;
     }
 
-    private filteredResultsByMember(sites: SitePaging): SitePaging {
+    private filteredResultsByMember (sites: SitePaging): SitePaging {
         const loggedUserName = this.authService.getEcmUsername();
         sites.list.entries = sites.list.entries.filter((site) => this.isCurrentUserMember(site, loggedUserName));
         return sites;
     }
 
-    private isCurrentUserMember(site: SiteEntry, loggedUserName: string): boolean {
+    private isCurrentUserMember (site: SiteEntry, loggedUserName: string): boolean {
         return (
             site.entry.visibility === 'PUBLIC' ||
             !!site.relations.members.list.entries.find((member) => member.entry.id.toLowerCase() === loggedUserName.toLowerCase())

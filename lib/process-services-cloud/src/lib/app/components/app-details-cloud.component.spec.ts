@@ -29,7 +29,7 @@ describe('AppDetailsCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, AppListCloudModule]
+            "imports": [ProcessServiceCloudTestingModule, AppListCloudModule]
         });
         fixture = TestBed.createComponent(AppDetailsCloudComponent);
         component = fixture.componentInstance;
@@ -65,7 +65,7 @@ describe('AppDetailsCloudComponent', () => {
     });
 
     it('should render card with a non ApplicationInstanceModel input object', () => {
-        component.applicationInstance = { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' };
+        component.applicationInstance = { "name": 'application-new-3', "createdAt": '2018-09-21T12:31:39.000Z', "status": 'Pending' };
         fixture.detectChanges();
         const app = getAppCard();
         expect(app).toBeTruthy();

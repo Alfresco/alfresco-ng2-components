@@ -29,8 +29,8 @@ describe('ContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [ContentService, AuthenticationService, { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
+            "imports": [HttpClientTestingModule],
+            "providers": [ContentService, AuthenticationService, { "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }]
         });
         authService = TestBed.inject(AuthenticationService);
         contentService = TestBed.inject(ContentService);
@@ -39,8 +39,8 @@ describe('ContentService', () => {
 
         const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config = {
-            ecmHost: 'http://localhost:9876/ecm',
-            provider: 'ECM'
+            "ecmHost": 'http://localhost:9876/ecm',
+            "provider": 'ECM'
         };
     });
 
@@ -51,23 +51,23 @@ describe('ContentService', () => {
         });
 
         it('should hasAllowableOperations be true if allowableOperation is present and you have the permission for the request operation', () => {
-            const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'create', 'updatePermissions'] });
+            const permissionNode = new Node({ "allowableOperations": ['delete', 'update', 'create', 'updatePermissions'] });
 
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeTruthy();
         });
 
         it('should hasAllowableOperations be false if allowableOperation is present but you do not have the permission for the request operation', () => {
-            const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            const permissionNode = new Node({ "allowableOperations": ['delete', 'update', 'updatePermissions'] });
             expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeFalsy();
         });
 
         it('should hasAllowableOperations works in the opposite way with negate value', () => {
-            const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            const permissionNode = new Node({ "allowableOperations": ['delete', 'update', 'updatePermissions'] });
             expect(contentService.hasAllowableOperations(permissionNode, '!create')).toBeTruthy();
         });
 
         it('should hasAllowableOperations return false if no permission parameter are passed', () => {
-            const permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            const permissionNode = new Node({ "allowableOperations": ['delete', 'update', 'updatePermissions'] });
             expect(contentService.hasAllowableOperations(permissionNode, null)).toBeFalsy();
         });
 
@@ -85,11 +85,11 @@ describe('ContentService', () => {
 
         it('should havePermission be true if permissions is present and you have the permission for the request operation', () => {
             const permissionNode = new Node({
-                permissions: {
-                    locallySet: [
-                        { name: 'manager', authorityId: 'user1' },
-                        { name: 'collaborator', authorityId: 'user2' },
-                        { name: 'consumer', authorityId: 'user3' }
+                "permissions": {
+                    "locallySet": [
+                        { "name": 'manager', "authorityId": 'user1' },
+                        { "name": 'collaborator', "authorityId": 'user2' },
+                        { "name": 'consumer', "authorityId": 'user3' }
                     ]
                 }
             });
@@ -99,10 +99,10 @@ describe('ContentService', () => {
 
         it('should havePermission be false if permissions is present but you do not have the permission for the request operation', () => {
             const permissionNode = new Node({
-                permissions: {
-                    locallySet: [
-                        { name: 'collaborator', authorityId: 'user1' },
-                        { name: 'consumer', authorityId: 'user2' }
+                "permissions": {
+                    "locallySet": [
+                        { "name": 'collaborator', "authorityId": 'user1' },
+                        { "name": 'consumer', "authorityId": 'user2' }
                     ]
                 }
             });
@@ -111,10 +111,10 @@ describe('ContentService', () => {
 
         it('should havePermission works in the opposite way with negate value', () => {
             const permissionNode = new Node({
-                permissions: {
-                    locallySet: [
-                        { name: 'collaborator', authorityId: 'user1' },
-                        { name: 'consumer', authorityId: 'user2' }
+                "permissions": {
+                    "locallySet": [
+                        { "name": 'collaborator', "authorityId": 'user1' },
+                        { "name": 'consumer', "authorityId": 'user2' }
                     ]
                 }
             });
@@ -123,10 +123,10 @@ describe('ContentService', () => {
 
         it('should havePermission return false if no permission parameter are passed', () => {
             const permissionNode = new Node({
-                permissions: {
-                    locallySet: [
-                        { name: 'collaborator', authorityId: 'user1' },
-                        { name: 'consumer', authorityId: 'user2' }
+                "permissions": {
+                    "locallySet": [
+                        { "name": 'collaborator', "authorityId": 'user1' },
+                        { "name": 'consumer', "authorityId": 'user2' }
                     ]
                 }
             });
@@ -134,21 +134,21 @@ describe('ContentService', () => {
         });
 
         it('should havePermission return true if the permissions is empty and the permission to check is Consumer', () => {
-            const permissionNode = new Node({ permissions: new PermissionsInfo() });
+            const permissionNode = new Node({ "permissions": new PermissionsInfo() });
             expect(contentService.hasPermissions(permissionNode, 'Consumer', 'user1')).toBeTruthy();
         });
 
         it('should havePermission return false if the permissions is empty and the permission to check is not Consumer', () => {
-            const permissionNode = new Node({ permissions: new PermissionsInfo() });
+            const permissionNode = new Node({ "permissions": new PermissionsInfo() });
             expect(contentService.hasPermissions(permissionNode, '!Consumer', 'user1')).toBeFalsy();
         });
 
         it('should havePermission be true if inherited permissions is present and you have the permission for the request operation', () => {
             const permissionNode = new Node({
-                permissions: {
-                    inherited: [
-                        { name: 'manager', authorityId: 'user1' },
-                        { name: 'collaborator', authorityId: 'user2' }
+                "permissions": {
+                    "inherited": [
+                        { "name": 'manager', "authorityId": 'user1' },
+                        { "name": 'collaborator', "authorityId": 'user2' }
                     ]
                 }
             });
@@ -158,10 +158,10 @@ describe('ContentService', () => {
         it('should take current logged user id if userId undefined ', () => {
             spyOn(authService, 'getEcmUsername').and.returnValue('user1');
             const permissionNode = new Node({
-                permissions: {
-                    inherited: [
-                        { name: 'manager', authorityId: 'user1' },
-                        { name: 'collaborator', authorityId: 'user2' }
+                "permissions": {
+                    "inherited": [
+                        { "name": 'manager', "authorityId": 'user1' },
+                        { "name": 'collaborator', "authorityId": 'user2' }
                     ]
                 }
             });
@@ -174,21 +174,21 @@ describe('ContentService', () => {
 
         beforeEach(() => {
             node = {
-                isFolder: true,
-                isFile: false,
-                createdByUser: { id: 'admin', displayName: 'Administrator' },
-                modifiedAt: new Date('2017-05-24T15:08:55.640Z'),
-                nodeType: 'cm:content',
-                content: {
-                    mimeType: 'application/rtf',
-                    mimeTypeName: 'Rich Text Format',
-                    sizeInBytes: 14530
+                "isFolder": true,
+                "isFile": false,
+                "createdByUser": { "id": 'admin', "displayName": 'Administrator' },
+                "modifiedAt": new Date('2017-05-24T15:08:55.640Z'),
+                "nodeType": 'cm:content',
+                "content": {
+                    "mimeType": 'application/rtf',
+                    "mimeTypeName": 'Rich Text Format',
+                    "sizeInBytes": 14530
                 },
-                createdAt: new Date('2017-05-24T15:08:55.640Z'),
-                modifiedByUser: { id: 'admin', displayName: 'Administrator' },
-                name: 'b_txt_file.rtf',
-                id: 'test node 1',
-                aspectNames: ['']
+                "createdAt": new Date('2017-05-24T15:08:55.640Z'),
+                "modifiedByUser": { "id": 'admin', "displayName": 'Administrator' },
+                "name": 'b_txt_file.rtf',
+                "id": 'test node 1',
+                "aspectNames": ['']
             } as Node;
         });
 

@@ -29,20 +29,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-version-manager',
-    standalone: true,
-    imports: [CommonModule, VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslateModule, VersionListComponent],
-    templateUrl: './version-manager.component.html',
-    styleUrls: ['./version-manager.component.scss'],
-    animations: [
+    "selector": 'adf-version-manager',
+    "standalone": true,
+    "imports": [CommonModule, VersionComparisonComponent, VersionUploadComponent, MatButtonModule, TranslateModule, VersionListComponent],
+    "templateUrl": './version-manager.component.html',
+    "styleUrls": ['./version-manager.component.scss'],
+    "animations": [
         trigger('uploadToggle', [
-            state('open', style({ height: '175px', opacity: 1, visibility: 'visible' })),
-            state('close', style({ height: '0%', opacity: 0, visibility: 'hidden' })),
-            transition('open => close', [style({ visibility: 'hidden' }), animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')]),
-            transition('close => open', [style({ visibility: 'visible' }), animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')])
+            state('open', style({ "height": '175px', "opacity": 1, "visibility": 'visible' })),
+            state('close', style({ "height": '0%', "opacity": 0, "visibility": 'hidden' })),
+            transition('open => close', [style({ "visibility": 'hidden' }), animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')]),
+            transition('close => open', [style({ "visibility": 'visible' }), animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')])
         ])
     ],
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class VersionManagerComponent implements OnInit {
     /** Target node to manage version history. */
@@ -93,27 +93,27 @@ export class VersionManagerComponent implements OnInit {
     @Output()
     viewVersion = new EventEmitter<string>();
 
-    @ViewChild('versionList', { static: true })
+    @ViewChild('versionList', { "static": true })
     versionListComponent: VersionListComponent;
 
     uploadState: string = 'close';
 
-    constructor(private contentService: ContentService, private nodesApiService: NodesApiService) {}
+    constructor (private contentService: ContentService, private nodesApiService: NodesApiService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.newFileVersion) {
             this.toggleNewVersion();
         }
     }
 
-    refresh(node: Node) {
+    refresh (node: Node) {
         this.nodesApiService.nodeUpdated.next(node);
         this.versionListComponent.loadVersionHistory();
         this.uploadSuccess.emit(node);
         this.uploadState = 'close';
     }
 
-    onUploadSuccess(event: any) {
+    onUploadSuccess (event: any) {
         this.showVersionComparison = false;
         this.newFileVersion = null;
         this.nodesApiService.nodeUpdated.next(event.value.entry);
@@ -122,26 +122,26 @@ export class VersionManagerComponent implements OnInit {
         this.uploadState = 'close';
     }
 
-    onUploadError(event: FileUploadErrorEvent) {
+    onUploadError (event: FileUploadErrorEvent) {
         this.uploadError.emit(event);
     }
 
-    onUploadCancel() {
+    onUploadCancel () {
         this.uploadState = 'close';
         this.showVersionComparison = false;
         this.newFileVersion = null;
         this.uploadCancel.emit(true);
     }
 
-    onViewVersion(versionId: string) {
+    onViewVersion (versionId: string) {
         this.viewVersion.emit(versionId);
     }
 
-    toggleNewVersion() {
+    toggleNewVersion () {
         this.uploadState = this.uploadState === 'open' ? 'close' : 'open';
     }
 
-    canUpdate(): boolean {
+    canUpdate (): boolean {
         return this.contentService.hasAllowableOperations(this.node, 'update');
     }
 }

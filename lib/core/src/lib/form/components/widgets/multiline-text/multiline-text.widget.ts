@@ -28,11 +28,11 @@ import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    selector: 'multiline-text-widget',
-    standalone: true,
-    templateUrl: './multiline-text.widget.html',
-    styleUrls: ['./multiline-text.widget.scss'],
-    host: {
+    "selector": 'multiline-text-widget',
+    "standalone": true,
+    "templateUrl": './multiline-text.widget.html',
+    "styleUrls": ['./multiline-text.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -43,11 +43,11 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, NgIf, TranslateModule, MatInputModule, FormsModule, ErrorWidgetComponent],
-    encapsulation: ViewEncapsulation.None
+    "imports": [MatFormFieldModule, NgIf, TranslateModule, MatInputModule, FormsModule, ErrorWidgetComponent],
+    "encapsulation": ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent {
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 }

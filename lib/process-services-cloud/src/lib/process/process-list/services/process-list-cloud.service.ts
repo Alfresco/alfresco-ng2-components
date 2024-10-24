@@ -22,9 +22,9 @@ import { ProcessListCloudSortingModel } from '../models/process-list-sorting.mod
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class ProcessListCloudService extends BaseCloudService {
-    private getProcess(
+    private getProcess (
         callback: (queryUrl: string, queryParams: any) => Observable<any>,
         defaultQueryUrl: string,
         requestNode: ProcessQueryCloudRequestModel,
@@ -55,12 +55,11 @@ export class ProcessListCloudService extends BaseCloudService {
 
     /**
      * Finds a process using an object with optional query properties.
-     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns Process information
      */
-    getProcessByRequest(requestNode: ProcessQueryCloudRequestModel, queryUrl?: string): Observable<any> {
+    getProcessByRequest (requestNode: ProcessQueryCloudRequestModel, queryUrl?: string): Observable<any> {
         const callback = (url: string, queryParams: any) => this.get(url, queryParams);
         const defaultQueryUrl = 'query/v1/process-instances';
 
@@ -69,39 +68,38 @@ export class ProcessListCloudService extends BaseCloudService {
 
     /**
      * Finds a process using an object with optional query properties.
-     *
      * @param appName app name
      * @param status filter status
      * @returns Total items
      */
-    getProcessCounter(appName: string, status: string): Observable<any> {
+    getProcessCounter (appName: string, status: string): Observable<any> {
         const callback = (url: string, queryParams: any) => this.get(url, queryParams);
         let queryUrl: string;
         const defaultQueryUrl = 'query/v1/process-instances';
         const requestNode: ProcessQueryCloudRequestModel = {
             appName,
-            appVersion: '',
-            initiator: null,
-            id: '',
-            name: null,
-            processDefinitionId: '',
-            processDefinitionName: null,
-            processDefinitionKey: '',
+            "appVersion": '',
+            "initiator": null,
+            "id": '',
+            "name": null,
+            "processDefinitionId": '',
+            "processDefinitionName": null,
+            "processDefinitionKey": '',
             status,
-            businessKey: '',
-            startFrom: null,
-            startTo: null,
-            completedFrom: null,
-            completedTo: null,
-            suspendedFrom: null,
-            suspendedTo: null,
-            completedDate: '',
-            maxItems: 1,
-            skipCount: 0,
-            sorting: [
+            "businessKey": '',
+            "startFrom": null,
+            "startTo": null,
+            "completedFrom": null,
+            "completedTo": null,
+            "suspendedFrom": null,
+            "suspendedTo": null,
+            "completedDate": '',
+            "maxItems": 1,
+            "skipCount": 0,
+            "sorting": [
                 {
-                    orderBy: 'startDate',
-                    direction: 'DESC'
+                    "orderBy": 'startDate',
+                    "direction": 'DESC'
                 }
             ]
         };
@@ -111,15 +109,14 @@ export class ProcessListCloudService extends BaseCloudService {
 
     /**
      * Finds a process using an object with optional query properties in admin app.
-     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns Process information
      */
-    getAdminProcessByRequest(requestNode: ProcessQueryCloudRequestModel, queryUrl?: string): Observable<any> {
+    getAdminProcessByRequest (requestNode: ProcessQueryCloudRequestModel, queryUrl?: string): Observable<any> {
         const callback = (url: string, params: any) => {
             const postBody = {
-                variableKeys: this.getVariableKeysFromQueryParams(params)
+                "variableKeys": this.getVariableKeysFromQueryParams(params)
             };
 
             delete params['variableKeys'];
@@ -132,7 +129,7 @@ export class ProcessListCloudService extends BaseCloudService {
         return this.getProcess(callback, defaultQueryUrl, requestNode, queryUrl);
     }
 
-    private getVariableKeysFromQueryParams(queryParams: any): string[] {
+    private getVariableKeysFromQueryParams (queryParams: any): string[] {
         if (!queryParams['variableKeys'] || queryParams['variableKeys'].length <= 0) {
             return [];
         }
@@ -140,11 +137,11 @@ export class ProcessListCloudService extends BaseCloudService {
         return queryParams['variableKeys'].split(',');
     }
 
-    protected isPropertyValueValid(requestNode: ProcessQueryCloudRequestModel, property: string): boolean {
+    protected isPropertyValueValid (requestNode: ProcessQueryCloudRequestModel, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    protected buildQueryParams(requestNode: ProcessQueryCloudRequestModel): any {
+    protected buildQueryParams (requestNode: ProcessQueryCloudRequestModel): any {
         const queryParam = {};
 
         for (const property in requestNode) {
@@ -164,7 +161,7 @@ export class ProcessListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    private getQueryParamValueFromRequestNode(requestNode: ProcessQueryCloudRequestModel, property: keyof ProcessQueryCloudRequestModel) {
+    private getQueryParamValueFromRequestNode (requestNode: ProcessQueryCloudRequestModel, property: keyof ProcessQueryCloudRequestModel) {
         if (property === 'variableKeys' && requestNode[property]?.length > 0) {
             return `${requestNode[property].map((variableId) => variableId).join(',')}`;
         }
@@ -172,15 +169,15 @@ export class ProcessListCloudService extends BaseCloudService {
         return requestNode[property];
     }
 
-    protected buildFilterForAllStatus(): string[] {
+    protected buildFilterForAllStatus (): string[] {
         return ['RUNNING', 'SUSPENDED', 'CANCELLED', 'COMPLETED'];
     }
 
-    protected isExcludedField(property: string): boolean {
+    protected isExcludedField (property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
-    protected buildSortingParam(models: ProcessListCloudSortingModel[]): string {
+    protected buildSortingParam (models: ProcessListCloudSortingModel[]): string {
         let finalSorting: string = '';
         if (models) {
             for (const sort of models) {

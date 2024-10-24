@@ -27,22 +27,22 @@ describe('Confirm Dialog Component', () => {
     let component: ConfirmDialogComponent;
 
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        "close": jasmine.createSpy('close')
     };
 
     const data = {
-        title: 'Fake Title',
-        message: 'Base Message',
-        yesLabel: 'TAKE THIS',
-        noLabel: 'MAYBE NO'
+        "title": 'Fake Title',
+        "message": 'Base Message',
+        "yesLabel": 'TAKE THIS',
+        "noLabel": 'MAYBE NO'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, NoopAnimationsModule, NoopTranslateModule],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: data }
+            "imports": [MatDialogModule, NoopAnimationsModule, NoopTranslateModule],
+            "providers": [
+                { "provide": MatDialogRef, "useValue": dialogRef },
+                { "provide": MAT_DIALOG_DATA, "useValue": data }
             ]
         });
         dialogRef.close.calls.reset();

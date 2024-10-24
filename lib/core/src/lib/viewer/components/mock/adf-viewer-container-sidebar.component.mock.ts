@@ -20,10 +20,10 @@ import { ViewerComponent } from '../viewer.component';
 import { ViewerSidebarComponent } from '../viewer-sidebar.component';
 
 @Component({
-    selector: 'adf-viewer-container-sidebar',
-    standalone: true,
-    imports: [ViewerComponent, ViewerSidebarComponent],
-    template: `
+    "selector": 'adf-viewer-container-sidebar',
+    "standalone": true,
+    "imports": [ViewerComponent, ViewerSidebarComponent],
+    "template": `
         <adf-viewer>
             <adf-viewer-sidebar>
                 <div class="custom-sidebar"></div>

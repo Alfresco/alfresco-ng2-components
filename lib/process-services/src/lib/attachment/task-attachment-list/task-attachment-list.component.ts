@@ -44,9 +44,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-task-attachment-list',
-    standalone: true,
-    imports: [
+    "selector": 'adf-task-attachment-list',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatProgressSpinnerModule,
@@ -59,9 +59,9 @@ import { TranslateModule } from '@ngx-translate/core';
         EmptyListComponent,
         NoContentTemplateDirective
     ],
-    styleUrls: ['./task-attachment-list.component.scss'],
-    templateUrl: './task-attachment-list.component.html',
-    encapsulation: ViewEncapsulation.None
+    "styleUrls": ['./task-attachment-list.component.scss'],
+    "templateUrl": './task-attachment-list.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {
     @ContentChild(EmptyListComponent)
@@ -99,48 +99,48 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
     attachments: any[] = [];
     isLoading: boolean = false;
 
-    constructor(
+    constructor (
         private activitiContentService: ProcessContentService,
         private downloadService: DownloadService,
         private thumbnailService: ThumbnailService,
         private ngZone: NgZone
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['taskId']?.currentValue) {
             this.loadAttachmentsByTaskId(changes['taskId'].currentValue);
         }
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         if (this.emptyTemplate) {
             this.hasCustomTemplate = true;
         }
     }
 
-    reset(): void {
+    reset (): void {
         this.attachments = [];
     }
 
-    reload(): void {
+    reload (): void {
         this.ngZone.run(() => {
             this.loadAttachmentsByTaskId(this.taskId);
         });
     }
 
-    add(content: any): void {
+    add (content: any): void {
         this.ngZone.run(() => {
             this.attachments.push({
-                id: content.id,
-                name: content.name,
-                created: content.created,
-                createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                "id": content.id,
+                "name": content.name,
+                "created": content.created,
+                "createdBy": content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                "icon": this.thumbnailService.getMimeTypeIcon(content.mimeType)
             });
         });
     }
 
-    deleteAttachmentById(contentId: number) {
+    deleteAttachmentById (contentId: number) {
         if (contentId) {
             this.activitiContentService.deleteRelatedContent(contentId).subscribe(
                 () => {
@@ -153,20 +153,20 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         }
     }
 
-    onShowRowActionsMenu(event: any) {
+    onShowRowActionsMenu (event: any) {
         const viewAction = {
-            title: 'ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT',
-            name: 'view'
+            "title": 'ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT',
+            "name": 'view'
         };
 
         const removeAction = {
-            title: 'ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT',
-            name: 'remove'
+            "title": 'ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT',
+            "name": 'remove'
         };
 
         const downloadAction = {
-            title: 'ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
-            name: 'download'
+            "title": 'ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
+            "name": 'download'
         };
 
         event.value.actions = [viewAction, downloadAction];
@@ -176,7 +176,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         }
     }
 
-    onExecuteRowAction(event: any) {
+    onExecuteRowAction (event: any) {
         const args = event.value;
         const action = args.action;
         if (action.name === 'view') {
@@ -188,12 +188,12 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         }
     }
 
-    openContent(event: any): void {
+    openContent (event: any): void {
         const content = event.value.obj;
         this.emitDocumentContent(content);
     }
 
-    emitDocumentContent(content: any) {
+    emitDocumentContent (content: any) {
         this.activitiContentService.getContentPreview(content.id).subscribe(
             (blob: Blob) => {
                 content.contentBlob = blob;
@@ -205,7 +205,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         );
     }
 
-    downloadContent(content: any): void {
+    downloadContent (content: any): void {
         this.activitiContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.downloadService.downloadBlob(blob, content.name),
             (err) => {
@@ -214,7 +214,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         );
     }
 
-    private loadAttachmentsByTaskId(taskId: string) {
+    private loadAttachmentsByTaskId (taskId: string) {
         if (taskId) {
             this.isLoading = true;
             this.reset();
@@ -224,11 +224,11 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
                     const attachList = [];
                     res.data.forEach((content) => {
                         attachList.push({
-                            id: content.id,
-                            name: content.name,
-                            created: content.created,
-                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                            "id": content.id,
+                            "name": content.name,
+                            "created": content.created,
+                            "createdBy": content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                            "icon": this.thumbnailService.getMimeTypeIcon(content.mimeType)
                         });
                     });
                     this.attachments = attachList;

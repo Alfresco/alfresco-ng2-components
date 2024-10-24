@@ -35,7 +35,7 @@ describe('FileUploadingDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, UploadModule]
+            "imports": [ContentTestingModule, UploadModule]
         });
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
         component = fixture.componentInstance;
@@ -47,7 +47,7 @@ describe('FileUploadingDialogComponent', () => {
         spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
 
         emitter = new EventEmitter();
-        fileList = [new FileModel({ name: 'fake-name', size: 10 } as File), new FileModel({ name: 'fake-name2', size: 10 } as File)];
+        fileList = [new FileModel({ "name": 'fake-name', "size": 10 } as File), new FileModel({ "name": 'fake-name2', "size": 10 } as File)];
 
         fixture.detectChanges();
     });
@@ -222,7 +222,7 @@ describe('FileUploadingDialogComponent', () => {
     describe('cancelAllUploads()', () => {
         beforeEach(() => {
             (component as any).uploadList = {
-                cancelAllFiles: jasmine.createSpy('cancelAllFiles')
+                "cancelAllFiles": jasmine.createSpy('cancelAllFiles')
             };
         });
 

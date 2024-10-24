@@ -22,10 +22,10 @@ import { Subject } from 'rxjs';
 import { editorJsConfig } from './editorjs-config';
 
 @Component({
-    selector: 'adf-cloud-rich-text-editor',
-    templateUrl: './rich-text-editor.component.html',
-    styleUrls: ['./rich-text-editor.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-rich-text-editor',
+    "templateUrl": './rich-text-editor.component.html',
+    "styleUrls": ['./rich-text-editor.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input()
@@ -45,28 +45,28 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
     dynamicId: string;
     isReady = false;
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.dynamicId = `editorjs-${crypto.getRandomValues(new Uint32Array(1))}`;
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit (): void {
         this.editorInstance = new EditorJS({
-            holder: this.dynamicId,
-            placeholder: this.placeholder,
-            autofocus: this.autoFocus,
+            "holder": this.dynamicId,
+            "placeholder": this.placeholder,
+            "autofocus": this.autoFocus,
             ...editorJsConfig,
-            data: this.data,
-            onChange: () => {
+            "data": this.data,
+            "onChange": () => {
                 this.sendEditorOutputData();
             },
-            onReady: () => {
+            "onReady": () => {
                 this.isReady = true;
                 this.sendEditorOutputData();
             }
         } as any);
     }
 
-    private sendEditorOutputData() {
+    private sendEditorOutputData () {
         this.editorInstance
             .save()
             .then((outputData) => {
@@ -77,11 +77,11 @@ export class RichTextEditorComponent implements OnInit, OnDestroy, AfterViewInit
             });
     }
 
-    getEditorContent() {
+    getEditorContent () {
         return this.editorInstance.save();
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         if (this.isReady) {
             this.editorInstance.destroy();
         }

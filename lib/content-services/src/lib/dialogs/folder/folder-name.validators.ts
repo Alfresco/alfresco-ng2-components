@@ -27,7 +27,7 @@ export const forbidSpecialCharacters = ({ value }: UntypedFormControl) => {
     return isValid
         ? null
         : {
-              message: `${I18N_ERRORS_PATH}.SPECIAL_CHARACTERS`
+              "message": `${I18N_ERRORS_PATH}.SPECIAL_CHARACTERS`
           };
 };
 
@@ -37,7 +37,7 @@ export const forbidEndingDot = ({ value }: UntypedFormControl) => {
     return isValid
         ? null
         : {
-              message: `${I18N_ERRORS_PATH}.ENDING_DOT`
+              "message": `${I18N_ERRORS_PATH}.ENDING_DOT`
           };
 };
 
@@ -47,6 +47,6 @@ export const forbidOnlySpaces = ({ value }: UntypedFormControl) => {
     return isValid
         ? null
         : {
-              message: `${I18N_ERRORS_PATH}.ONLY_SPACES`
+              "message": `${I18N_ERRORS_PATH}.ONLY_SPACES`
           };
 };

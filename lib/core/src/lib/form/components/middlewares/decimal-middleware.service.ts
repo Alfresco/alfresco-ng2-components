@@ -23,7 +23,7 @@ import { FormFieldModel, FormFieldTypes } from '../widgets';
 export class DecimalRenderMiddlewareService implements FormFieldModelRenderMiddleware {
     type = FormFieldTypes.DECIMAL;
 
-    getParsedField(field: FormFieldModel): FormFieldModel {
+    getParsedField (field: FormFieldModel): FormFieldModel {
         const allowedMaxPrecision = field.precision;
         const value = field.value;
 
@@ -32,7 +32,7 @@ export class DecimalRenderMiddlewareService implements FormFieldModelRenderMiddl
         return field;
     }
 
-    private forceMaxPrecisionIfNeeded(value: string | number, allowedMaxPrecision: number): string | number {
+    private forceMaxPrecisionIfNeeded (value: string | number, allowedMaxPrecision: number): string | number {
         let numberOfDecimalDigits = 0;
         const stringValue = typeof value === 'string' ? value : `${value}`;
         const numberChunks = stringValue.split('.');

@@ -29,13 +29,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SelectFilterInputComponent } from './select-filter-input/select-filter-input.component';
 
 @Component({
-    selector: 'adf-card-view-selectitem',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, SelectFilterInputComponent],
-    templateUrl: './card-view-selectitem.component.html',
-    styleUrls: ['./card-view-selectitem.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-card-view-selectitem' }
+    "selector": 'adf-card-view-selectitem',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, SelectFilterInputComponent],
+    "templateUrl": './card-view-selectitem.component.html',
+    "styleUrls": ['./card-view-selectitem.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-card-view-selectitem' }
 })
 export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges, OnDestroy {
     private appConfig = inject(AppConfigService);
@@ -54,11 +54,11 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     showInputFilter: boolean = false;
     list$: Observable<CardViewSelectItemOption<string | number>[]> = null;
 
-    ngOnChanges(): void {
+    ngOnChanges (): void {
         this.value = this.property.value;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.getOptions()
             .pipe(takeUntil(this.destroy$))
             .subscribe((options) => {
@@ -68,36 +68,36 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         this.list$ = this.getList();
     }
 
-    onFilterInputChange(value: string) {
+    onFilterInputChange (value: string) {
         this.filter$.next(value.toString());
     }
 
-    private getOptions(): Observable<CardViewSelectItemOption<string | number>[]> {
+    private getOptions (): Observable<CardViewSelectItemOption<string | number>[]> {
         return this.options$ || this.property.options$;
     }
 
-    getList(): Observable<CardViewSelectItemOption<string | number>[]> {
+    getList (): Observable<CardViewSelectItemOption<string | number>[]> {
         return combineLatest([this.getOptions(), this.filter$]).pipe(
             map(([items, filter]) => items.filter((item) => (filter ? item.label.toLowerCase().includes(filter.toLowerCase()) : true))),
             takeUntil(this.destroy$)
         );
     }
 
-    onChange(event: MatSelectChange): void {
+    onChange (event: MatSelectChange): void {
         const selectedOption = event.value !== undefined ? event.value : null;
         this.cardViewUpdateService.update({ ...this.property } as CardViewSelectItemModel<string>, selectedOption);
         this.property.value = selectedOption;
     }
 
-    get showProperty(): boolean {
+    get showProperty (): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         super.ngOnDestroy();
     }
 
-    private get optionsLimit(): number {
+    private get optionsLimit (): number {
         return this.appConfig.get<number>('content-metadata.selectFilterLimit', CardViewSelectItemComponent.HIDE_FILTER_LIMIT);
     }
 }

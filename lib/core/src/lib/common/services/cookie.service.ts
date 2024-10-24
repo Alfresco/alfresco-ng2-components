@@ -18,12 +18,12 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class CookieService {
     cookieEnabled = false;
 
-    constructor() {
+    constructor () {
         // for certain scenarios Chrome may say 'true' but have cookies still disabled
         if (navigator.cookieEnabled === false) {
             this.cookieEnabled = false;
@@ -38,7 +38,7 @@ export class CookieService {
      * Checks if cookies are enabled.
      * @returns True if enabled, false otherwise
      */
-    isEnabled(): boolean {
+    isEnabled (): boolean {
         return this.cookieEnabled;
     }
 
@@ -47,7 +47,7 @@ export class CookieService {
      * @param key Key to identify the cookie
      * @returns The cookie data or null if it is not found
      */
-    getItem(key: string): string | null {
+    getItem (key: string): string | null {
         const regexp = new RegExp('(?:' + key + '|;\\s*' + key + ')=(.*?)(?:;|$)', 'g');
         const result = regexp.exec(document.cookie);
         return result === null ? null : result[1];
@@ -60,7 +60,7 @@ export class CookieService {
      * @param expiration Expiration date of the data
      * @param path "Pathname" to store the cookie
      */
-    setItem(key: string, data: string, expiration: Date | null = null, path: string | null = null): void {
+    setItem (key: string, data: string, expiration: Date | null = null, path: string | null = null): void {
         document.cookie = `${key}=${data}` + (expiration ? ';expires=' + expiration.toUTCString() : '') + (path ? `;path=${path}` : ';path=/');
     }
 
@@ -69,12 +69,12 @@ export class CookieService {
      * @param key Key to identify the cookie
      * @param path "Pathname" to store the cookie
      */
-    deleteCookie(key: string, path: string | null = null): void {
+    deleteCookie (key: string, path: string | null = null): void {
         document.cookie = key + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;' + (path ? `;path=${path}` : ';path=/');
     }
 
     /** Placeholder for testing purposes - do not use. */
-    clear() {
+    clear () {
         /* placeholder for testing purposes */
     }
 }

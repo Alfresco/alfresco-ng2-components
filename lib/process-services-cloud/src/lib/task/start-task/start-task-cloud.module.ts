@@ -26,7 +26,7 @@ import { FormCloudModule } from '../../form/form-cloud.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MaterialModule,
         FormsModule,
@@ -36,8 +36,8 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         FormCloudModule,
         PeopleCloudModule
     ],
-    declarations: [StartTaskCloudComponent],
-    exports: [
+    "declarations": [StartTaskCloudComponent],
+    "exports": [
         StartTaskCloudComponent
     ]
 })

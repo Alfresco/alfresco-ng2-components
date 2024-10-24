@@ -25,44 +25,44 @@ import { catchError, map, mapTo } from 'rxjs/operators';
 import { DestinationFolderPathModel } from '../models/form-cloud-representation.model';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContentCloudNodeSelectorService {
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
     sourceNodeNotFound = false;
 
-    constructor(private apiService: AlfrescoApiService, private notificationService: NotificationService, private dialog: MatDialog) {}
+    constructor (private apiService: AlfrescoApiService, private notificationService: NotificationService, private dialog: MatDialog) {}
 
-    openUploadFileDialog(
+    openUploadFileDialog (
         currentFolderId?: string,
         selectionMode?: string,
         isAllFileSources?: boolean,
         restrictRootToCurrentFolderId?: boolean
     ): Observable<Node[]> {
         const select = new Subject<Node[]>();
-        select.subscribe({ complete: this.close.bind(this) });
+        select.subscribe({ "complete": this.close.bind(this) });
         const data = {
-            title: 'Select a file',
-            actionName: NodeAction.ATTACH,
+            "title": 'Select a file',
+            "actionName": NodeAction.ATTACH,
             currentFolderId,
             restrictRootToCurrentFolderId,
             select,
             selectionMode,
-            isSelectionValid: (entry: Node) => entry.isFile,
-            showFilesInResult: true,
-            showDropdownSiteList: false,
-            showLocalUploadButton: isAllFileSources
+            "isSelectionValid": (entry: Node) => entry.isFile,
+            "showFilesInResult": true,
+            "showDropdownSiteList": false,
+            "showLocalUploadButton": isAllFileSources
         } as ContentNodeSelectorComponentData;
         this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '66%');
         return select;
     }
 
-    async getNodeIdFromPath(destinationFolderPath: DestinationFolderPathModel): Promise<string> {
+    async getNodeIdFromPath (destinationFolderPath: DestinationFolderPathModel): Promise<string> {
         if (destinationFolderPath.alias && destinationFolderPath.path) {
             try {
                 return await this.getNodeId(destinationFolderPath.alias, destinationFolderPath.path).toPromise();
@@ -74,12 +74,12 @@ export class ContentCloudNodeSelectorService {
         return this.getNodeId(destinationFolderPath.alias).toPromise();
     }
 
-    async getNodeIdFromFolderVariableValue(variableValue: string, defaultAlias?: string): Promise<string> {
+    async getNodeIdFromFolderVariableValue (variableValue: string, defaultAlias?: string): Promise<string> {
         const isExistingNode = await this.isExistingNode(variableValue);
         return isExistingNode ? variableValue : this.getNodeId(defaultAlias).toPromise();
     }
 
-    async isExistingNode(nodeId: string): Promise<boolean> {
+    async isExistingNode (nodeId: string): Promise<boolean> {
         let isExistingNode = false;
         if (nodeId) {
             try {
@@ -91,7 +91,7 @@ export class ContentCloudNodeSelectorService {
         return isExistingNode;
     }
 
-    private getNodeId(nodeId: string, relativePath?: string): Observable<string> {
+    private getNodeId (nodeId: string, relativePath?: string): Observable<string> {
         let opts: any;
         if (relativePath) {
             opts = { relativePath };
@@ -105,8 +105,8 @@ export class ContentCloudNodeSelectorService {
         );
     }
 
-    private openContentNodeDialog(data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
-        const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: currentPanelClass, width: chosenWidth });
+    private openContentNodeDialog (data: ContentNodeSelectorComponentData, currentPanelClass: string, chosenWidth: string) {
+        const contentNodeDialog = this.dialog.open(ContentNodeSelectorComponent, { data, "panelClass": currentPanelClass, "width": chosenWidth });
         contentNodeDialog.afterOpened().subscribe(() => {
             if (this.sourceNodeNotFound) {
                 this.notificationService.showWarning('ADF_CLOUD_TASK_FORM.ERROR.DESTINATION_FOLDER_PATH_ERROR');
@@ -117,11 +117,11 @@ export class ContentCloudNodeSelectorService {
         });
     }
 
-    close() {
+    close () {
         this.dialog.closeAll();
     }
 
-    private handleError(error: any): Observable<any> {
+    private handleError (error: any): Observable<any> {
         return throwError(error || 'Server error');
     }
 }

@@ -21,13 +21,13 @@ import { CommonModule } from '@angular/common';
 import { NavbarItem, NavbarItemComponent } from './navbar-item.component';
 
 @Component({
-    selector: 'adf-navbar',
-    standalone: true,
-    templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    imports: [MatToolbarModule, CommonModule, NavbarItemComponent],
-    host: { class: 'adf-navbar' }
+    "selector": 'adf-navbar',
+    "standalone": true,
+    "templateUrl": './navbar.component.html',
+    "styleUrls": ['./navbar.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [MatToolbarModule, CommonModule, NavbarItemComponent],
+    "host": { "class": 'adf-navbar' }
 })
 export class NavbarComponent {
     @Input()

@@ -27,7 +27,7 @@ describe('NotificationCloudService', () => {
     let apolloSubscribeSpy: jasmine.Spy;
 
     const useMock: any = {
-        subscribe: () => {}
+        "subscribe": () => {}
     };
 
     const queryMock = `
@@ -43,7 +43,7 @@ describe('NotificationCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(NotificationCloudService);
         apollo = TestBed.inject(Apollo);

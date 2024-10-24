@@ -28,35 +28,35 @@ import ColorPlugin from 'editorjs-text-color-plugin';
 import AlignmentTuneTool from 'editorjs-text-alignment-blocktune';
 
 export const editorJsConfig = {
-    autofocus: true,
-    logLevel: 'ERROR',
-    tools: {
-        underline: {
-            class: Underline,
-            shortcut: 'CMD+U'
+    "autofocus": true,
+    "logLevel": 'ERROR',
+    "tools": {
+        "underline": {
+            "class": Underline,
+            "shortcut": 'CMD+U'
         },
-        header: {
-            class: Header,
-            inlineToolbar: true,
-            tunes: ['anyTuneName']
+        "header": {
+            "class": Header,
+            "inlineToolbar": true,
+            "tunes": ['anyTuneName']
         },
-        paragraph: {
-            class: Paragraph,
-            inlineToolbar: true,
-            tunes: ['anyTuneName']
+        "paragraph": {
+            "class": Paragraph,
+            "inlineToolbar": true,
+            "tunes": ['anyTuneName']
         },
-        list: {
-            class: List,
-            inlineToolbar: true,
-            config: {
-                defaultStyle: 'unordered'
+        "list": {
+            "class": List,
+            "inlineToolbar": true,
+            "config": {
+                "defaultStyle": 'unordered'
             }
         },
-        Color: {
-            class: ColorPlugin,
-            config: {
-                customPicker: true,
-                colorCollections: [
+        "Color": {
+            "class": ColorPlugin,
+            "config": {
+                "customPicker": true,
+                "colorCollections": [
                     '#FF1300',
                     '#ffa500',
                     '#9C27B0',
@@ -75,27 +75,27 @@ export const editorJsConfig = {
                     '#808080',
                     '#800000'
                 ],
-                defaultColor: '#FF1300',
-                type: 'text'
+                "defaultColor": '#FF1300',
+                "type": 'text'
             }
         },
-        Marker: {
-            class: Marker,
-            shortcut: 'CMD+M'
+        "Marker": {
+            "class": Marker,
+            "shortcut": 'CMD+M'
         },
         'Increase/Decrease font size': {
-            class: ChangeFontSize,
-            config: {
-                cssClass: 'plus20pc'
+            "class": ChangeFontSize,
+            "config": {
+                "cssClass": 'plus20pc'
             }
         },
-        inlineCode: {
-            class: InlineCode,
-            shortcut: 'CMD+SHIFT+M'
+        "inlineCode": {
+            "class": InlineCode,
+            "shortcut": 'CMD+SHIFT+M'
         },
-        anyTuneName: {
-            class: AlignmentTuneTool
+        "anyTuneName": {
+            "class": AlignmentTuneTool
         },
-        code: CodeTool
+        "code": CodeTool
     }
 };

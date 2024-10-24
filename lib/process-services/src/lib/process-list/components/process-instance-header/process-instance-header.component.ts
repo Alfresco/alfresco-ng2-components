@@ -30,11 +30,11 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-    selector: 'adf-process-instance-header',
-    standalone: true,
-    imports: [CommonModule, MatCardModule, CardViewComponent],
-    templateUrl: './process-instance-header.component.html',
-    styleUrls: ['./process-instance-header.component.css']
+    "selector": 'adf-process-instance-header',
+    "standalone": true,
+    "imports": [CommonModule, MatCardModule, CardViewComponent],
+    "templateUrl": './process-instance-header.component.html',
+    "styleUrls": ['./process-instance-header.component.css']
 })
 export class ProcessInstanceHeaderComponent implements OnChanges {
     /** (**required**) Full details of the process instance to display information about. */
@@ -45,16 +45,16 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
     dateFormat: string;
     dateLocale: string;
 
-    constructor(private translationService: TranslationService, private appConfig: AppConfigService) {
+    constructor (private translationService: TranslationService, private appConfig: AppConfigService) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         this.refreshData();
     }
 
-    refreshData(): void {
+    refreshData (): void {
         if (this.processInstance) {
             const defaultProperties = this.initDefaultProperties();
             const filteredProperties: string[] = this.appConfig.get('adf-process-instance-header.presets.properties');
@@ -62,14 +62,14 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
         }
     }
 
-    getProcessStatus(): string {
+    getProcessStatus (): string {
         if (this.processInstance) {
             return this.isRunning() ? 'Running' : 'Completed';
         }
         return 'Unknown';
     }
 
-    getStartedByFullName(): string {
+    getStartedByFullName (): string {
         let fullName = '';
         if (this.processInstance?.startedBy) {
             fullName += this.processInstance.startedBy.firstName || '';
@@ -79,61 +79,61 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
         return fullName;
     }
 
-    isRunning(): boolean {
+    isRunning (): boolean {
         return this.processInstance && !this.processInstance.ended;
     }
 
-    private initDefaultProperties(): any[] {
+    private initDefaultProperties (): any[] {
         return [
             new CardViewTextItemModel({
-                label: 'ADF_PROCESS_LIST.PROPERTIES.STATUS',
-                value: this.getProcessStatus(),
-                key: 'status'
+                "label": 'ADF_PROCESS_LIST.PROPERTIES.STATUS',
+                "value": this.getProcessStatus(),
+                "key": 'status'
             }),
             new CardViewDateItemModel({
-                label: 'ADF_PROCESS_LIST.PROPERTIES.END_DATE',
-                value: this.processInstance.ended,
-                format: this.dateFormat,
-                locale: this.dateLocale,
-                key: 'ended',
-                default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT')
+                "label": 'ADF_PROCESS_LIST.PROPERTIES.END_DATE',
+                "value": this.processInstance.ended,
+                "format": this.dateFormat,
+                "locale": this.dateLocale,
+                "key": 'ended',
+                "default": this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT')
             }),
             new CardViewTextItemModel({
-                label: 'ADF_PROCESS_LIST.PROPERTIES.CATEGORY',
-                value: this.processInstance.processDefinitionCategory,
-                key: 'category',
-                default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT')
+                "label": 'ADF_PROCESS_LIST.PROPERTIES.CATEGORY',
+                "value": this.processInstance.processDefinitionCategory,
+                "key": 'category',
+                "default": this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT')
             }),
             new CardViewTextItemModel({
-                label: 'ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
-                value: this.processInstance.businessKey,
-                key: 'businessKey',
-                default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT')
+                "label": 'ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY',
+                "value": this.processInstance.businessKey,
+                "key": 'businessKey',
+                "default": this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT')
             }),
             new CardViewTextItemModel({
-                label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY',
-                value: this.getStartedByFullName(),
-                key: 'createdBy',
-                default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.CREATED_BY_DEFAULT')
+                "label": 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY',
+                "value": this.getStartedByFullName(),
+                "key": 'createdBy',
+                "default": this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.CREATED_BY_DEFAULT')
             }),
             new CardViewDateItemModel({
-                label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
-                value: this.processInstance.started,
-                format: this.dateFormat,
-                locale: this.dateLocale,
-                key: 'created'
+                "label": 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
+                "value": this.processInstance.started,
+                "format": this.dateFormat,
+                "locale": this.dateLocale,
+                "key": 'created'
             }),
-            new CardViewTextItemModel({ label: 'ADF_PROCESS_LIST.PROPERTIES.ID', value: this.processInstance.id, key: 'id' }),
+            new CardViewTextItemModel({ "label": 'ADF_PROCESS_LIST.PROPERTIES.ID', "value": this.processInstance.id, "key": 'id' }),
             new CardViewTextItemModel({
-                label: 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION',
-                value: this.processInstance.processDefinitionDescription,
-                key: 'description',
-                default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT')
+                "label": 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION',
+                "value": this.processInstance.processDefinitionDescription,
+                "key": 'description',
+                "default": this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT')
             })
         ];
     }
 
-    private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
+    private isValidSelection (filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
     }
 }

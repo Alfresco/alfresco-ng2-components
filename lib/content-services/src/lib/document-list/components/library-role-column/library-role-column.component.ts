@@ -25,17 +25,17 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-library-role-column',
-    standalone: true,
-    imports: [CommonModule, TranslateModule],
-    template: `
+    "selector": 'adf-library-role-column',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule],
+    "template": `
         <span class="adf-datatable-cell-value" title="{{ displayText$ | async | translate }}">
             {{ displayText$ | async | translate }}
         </span>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-library-role-column adf-datatable-content-cell' }
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-library-role-column adf-datatable-content-cell' }
 })
 export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
     @Input()
@@ -45,9 +45,9 @@ export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private nodesApiService: NodesApiService) {}
+    constructor (private nodesApiService: NodesApiService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.updateValue();
 
         this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
@@ -63,7 +63,7 @@ export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected updateValue() {
+    protected updateValue () {
         const node: SiteEntry = this.context.row.node;
         if (node?.entry) {
             const role: string = node.entry.role;
@@ -87,7 +87,7 @@ export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

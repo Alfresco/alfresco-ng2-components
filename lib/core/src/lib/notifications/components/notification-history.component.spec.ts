@@ -40,7 +40,7 @@ describe('Notification History Component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, NotificationHistoryComponent]
+            "imports": [CoreTestingModule, NotificationHistoryComponent]
         });
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         component = fixture.componentInstance;
@@ -104,10 +104,10 @@ describe('Notification History Component', () => {
             const callBackSpy = jasmine.createSpy('callBack');
             fixture.detectChanges();
             notificationService.pushToNotificationHistory({
-                clickCallBack: callBackSpy,
-                messages: ['My new message'],
-                datetime: new Date(),
-                type: NOTIFICATION_TYPE.RECURSIVE
+                "clickCallBack": callBackSpy,
+                "messages": ['My new message'],
+                "datetime": new Date(),
+                "type": NOTIFICATION_TYPE.RECURSIVE
             } as NotificationModel);
             openNotification();
             fixture.detectChanges();
@@ -143,9 +143,9 @@ describe('Notification History Component', () => {
                 NotificationHistoryComponent.NOTIFICATION_STORAGE,
                 JSON.stringify([
                     {
-                        messages: ['My new message'],
-                        datetime: new Date(),
-                        type: NOTIFICATION_TYPE.RECURSIVE
+                        "messages": ['My new message'],
+                        "datetime": new Date(),
+                        "type": NOTIFICATION_TYPE.RECURSIVE
                     } as NotificationModel
                 ])
             );

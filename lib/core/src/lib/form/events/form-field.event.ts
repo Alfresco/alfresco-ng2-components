@@ -21,7 +21,7 @@ import { FormEvent } from './form.event';
 export class FormFieldEvent extends FormEvent {
     readonly field: FormFieldModel;
 
-    constructor(form: any, field: FormFieldModel) {
+    constructor (form: any, field: FormFieldModel) {
         super(form);
         this.field = field;
     }

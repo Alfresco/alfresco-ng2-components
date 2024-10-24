@@ -20,11 +20,11 @@ import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } 
 import { ProcessInstanceCloudListViewModel } from '../models/perocess-instance-cloud-view.model';
 
 export class ProcessListDatatableAdapter extends ObjectDataTableAdapter {
-    constructor(data: ProcessInstanceCloudListViewModel[], schema: DataColumn<ProcessListDataColumnCustomData>[]) {
+    constructor (data: ProcessInstanceCloudListViewModel[], schema: DataColumn<ProcessListDataColumnCustomData>[]) {
         super(data, schema);
     }
 
-    getColumnType(row: DataRow, col: DataColumn<ProcessListDataColumnCustomData>): string {
+    getColumnType (row: DataRow, col: DataColumn<ProcessListDataColumnCustomData>): string {
         if (col.customData?.columnType === PROCESS_LIST_CUSTOM_VARIABLE_COLUMN) {
             const columnType = row.obj.variablesMap?.[col.id]?.type;
             return columnType ?? 'text';

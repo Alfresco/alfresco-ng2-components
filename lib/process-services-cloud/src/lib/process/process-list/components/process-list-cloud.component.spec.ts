@@ -45,7 +45,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 
 @Component({
-    template: ` <adf-cloud-process-list #processListCloud>
+    "template": ` <adf-cloud-process-list #processListCloud>
         <data-columns>
             <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3"></data-column>
             <data-column key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
@@ -61,7 +61,7 @@ class CustomTaskListComponent {
     @ViewChild(ProcessListCloudComponent)
     processListCloud: ProcessListCloudComponent;
 
-    getFullName(person: User): string {
+    getFullName (person: User): string {
         return `${person.firstName} ${person.lastName}`;
     }
 }
@@ -78,7 +78,7 @@ describe('ProcessListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -87,29 +87,29 @@ describe('ProcessListCloudComponent', () => {
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
             'adf-cloud-process-list': {
-                presets: {
+                "presets": {
                     [fakeCustomSchemaName]: [
                         {
-                            key: 'fakeName',
-                            type: 'text',
-                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
-                            sortable: true
+                            "key": 'fakeName',
+                            "type": 'text',
+                            "title": 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
+                            "sortable": true
                         },
                         {
-                            key: 'fakeTaskName',
-                            type: 'text',
-                            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
-                            sortable: true
+                            "key": 'fakeTaskName',
+                            "type": 'text',
+                            "title": 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
+                            "sortable": true
                         }
                     ],
                     [schemaWithVariable]: [
                         getDataColumnMock(),
                         getDataColumnMock({
-                            id: 'variableColumnId',
-                            customData: {
-                                variableDefinitionsPayload: ['processKey/variableName'],
-                                assignedVariableDefinitionIds: ['variableDefinitionId'],
-                                columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
+                            "id": 'variableColumnId',
+                            "customData": {
+                                "variableDefinitionsPayload": ['processKey/variableName'],
+                                "assignedVariableDefinitionIds": ['variableDefinitionId'],
+                                "columnType": PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
                             }
                         })
                     ]
@@ -134,7 +134,7 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should display empty content when process list is empty', async () => {
-        const emptyList = { list: { entries: [] } };
+        const emptyList = { "list": { "entries": [] } };
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
 
         fixture.detectChanges();
@@ -289,7 +289,7 @@ describe('ProcessListCloudComponent', () => {
 
         const newColumns = (component.columns as DataColumn[]).map((column, index) => ({
             ...column,
-            isHidden: index !== 0 // only first one is shown
+            "isHidden": index !== 0 // only first one is shown
         }));
 
         const columnsSelectorInstance = columnSelectorMenu.componentInstance as ColumnsSelectorComponent;
@@ -306,8 +306,8 @@ describe('ProcessListCloudComponent', () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         spyOn(preferencesService, 'getPreferences').and.returnValue(
             of({
-                list: {
-                    entries: []
+                "list": {
+                    "entries": []
                 }
             })
         );
@@ -324,12 +324,12 @@ describe('ProcessListCloudComponent', () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         spyOn(preferencesService, 'getPreferences').and.returnValue(
             of({
-                list: {
-                    entries: [
+                "list": {
+                    "entries": [
                         {
-                            entry: {
-                                key: ProcessListCloudPreferences.columnsVisibility,
-                                value: '{"variableColumnId":"id", "2":true}'
+                            "entry": {
+                                "key": ProcessListCloudPreferences.columnsVisibility,
+                                "value": '{"variableColumnId":"id", "2":true}'
                             }
                         }
                     ]
@@ -356,7 +356,7 @@ describe('ProcessListCloudComponent', () => {
     });
 
     it('should emit row click event', (done) => {
-        const row = new ObjectDataRow({ id: '999' });
+        const row = new ObjectDataRow({ "id": '999' });
         const rowEvent = new DataRowEvent(row, null);
         component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
@@ -392,7 +392,7 @@ describe('ProcessListCloudComponent', () => {
 
         expect(component.columns[0].width).toBe(120);
         expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
-            id: 120
+            "id": 120
         });
     });
 
@@ -408,7 +408,7 @@ describe('ProcessListCloudComponent', () => {
 
         expect(component.columns[0].width).toBe(120);
         expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
-            id: 120
+            "id": 120
         });
 
         newColumns[1].width = 150;
@@ -417,8 +417,8 @@ describe('ProcessListCloudComponent', () => {
         expect(component.columns[0].width).toBe(120);
         expect(component.columns[1].width).toBe(150);
         expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
-            id: 120,
-            startDate: 150
+            "id": 120,
+            "startDate": 150
         });
     });
 
@@ -479,9 +479,9 @@ describe('ProcessListCloudComponent', () => {
             const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
 
             component.ngOnChanges({
-                appName: appNameChange,
-                assignee: initiatorChange,
-                status: statusChange
+                "appName": appNameChange,
+                "assignee": initiatorChange,
+                "status": statusChange
             });
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeFalsy();
@@ -495,13 +495,13 @@ describe('ProcessListCloudComponent', () => {
             component.appName = 'mock-app-name';
             const mockSort = [
                 new ProcessListCloudSortingModel({
-                    orderBy: 'startDate',
-                    direction: 'DESC'
+                    "orderBy": 'startDate',
+                    "direction": 'DESC'
                 })
             ];
             const sortChange = new SimpleChange(undefined, mockSort, true);
             component.ngOnChanges({
-                sorting: sortChange
+                "sorting": sortChange
             });
             fixture.detectChanges();
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
@@ -512,18 +512,18 @@ describe('ProcessListCloudComponent', () => {
             const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
             component.onSortingChanged(
                 new CustomEvent('sorting-changed', {
-                    detail: {
-                        key: 'fakeName',
-                        direction: 'asc'
+                    "detail": {
+                        "key": 'fakeName',
+                        "direction": 'asc'
                     },
-                    bubbles: true
+                    "bubbles": true
                 })
             );
             fixture.detectChanges();
             expect(component.sorting).toEqual([
                 new ProcessListCloudSortingModel({
-                    orderBy: 'fakeName',
-                    direction: 'ASC'
+                    "orderBy": 'fakeName',
+                    "direction": 'ASC'
                 })
             ]);
             expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
@@ -550,8 +550,8 @@ describe('ProcessListCloudComponent', () => {
             });
 
             const pagination = {
-                maxItems: 250,
-                skipCount: 200
+                "maxItems": 250,
+                "skipCount": 200
             };
             component.updatePagination(pagination);
             fixture.whenStable().then(() => {
@@ -567,8 +567,8 @@ describe('ProcessListCloudComponent', () => {
             fixture.detectChanges();
 
             const pagination = {
-                maxItems: 250,
-                skipCount: 200
+                "maxItems": 250,
+                "skipCount": 200
             };
             component.pagination.pipe(skip(1)).subscribe((updatedPagination) => {
                 fixture.detectChanges();
@@ -590,8 +590,8 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [CustomTaskListComponent]
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [CustomTaskListComponent]
         });
         fixtureCustom = TestBed.createComponent(CustomTaskListComponent);
         fixtureCustom.detectChanges();
@@ -614,7 +614,7 @@ describe('ProcessListCloudComponent: Injecting custom columns for task list - Cu
 
 describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTemplateComponent', () => {
     @Component({
-        template: `
+        "template": `
             <adf-cloud-process-list #processListCloud>
                 <adf-custom-empty-content-template>
                     <p id="custom-id">TEST</p>
@@ -629,15 +629,15 @@ describe('ProcessListCloudComponent: Creating an empty custom template - EmptyTe
 
     let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
     const preferencesService = jasmine.createSpyObj('preferencesService', {
-        getPreferences: of({}),
-        updatePreference: of({})
+        "getPreferences": of({}),
+        "updatePreference": of({})
     });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, MatProgressSpinnerModule, CustomEmptyContentTemplateDirective],
-            providers: [{ provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useValue: preferencesService }],
-            declarations: [EmptyTemplateComponent, ProcessListCloudComponent]
+            "imports": [ProcessServiceCloudTestingModule, MatProgressSpinnerModule, CustomEmptyContentTemplateDirective],
+            "providers": [{ "provide": PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, "useValue": preferencesService }],
+            "declarations": [EmptyTemplateComponent, ProcessListCloudComponent]
         });
         fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
         fixtureEmpty.detectChanges();

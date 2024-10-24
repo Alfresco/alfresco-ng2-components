@@ -21,11 +21,11 @@ export class BaseEvent<T> {
 
     value: T;
 
-    get defaultPrevented() {
+    get defaultPrevented () {
         return this.isDefaultPrevented;
     }
 
-    preventDefault() {
+    preventDefault () {
         this.isDefaultPrevented = true;
     }
 }

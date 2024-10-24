@@ -33,9 +33,9 @@ describe('RedirectAuthService', () => {
     let authConfigSpy: jasmine.SpyObj<AuthConfig>;
 
     const mockOAuthStorage: Partial<OAuthStorage> = {
-        getItem: jasmine.createSpy('getItem'),
-        removeItem: jasmine.createSpy('removeItem'),
-        setItem: jasmine.createSpy('setItem')
+        "getItem": jasmine.createSpy('getItem'),
+        "removeItem": jasmine.createSpy('removeItem'),
+        "setItem": jasmine.createSpy('setItem')
     };
     const oauthEvents$ = new Subject<OAuthEvent>();
 
@@ -54,24 +54,24 @@ describe('RedirectAuthService', () => {
             'refreshToken',
             'getIdentityClaims',
             'getAccessToken'
-        ], { clockSkewInSec: 120, events: oauthEvents$, tokenValidationHandler: {} });
+        ], { "clockSkewInSec": 120, "events": oauthEvents$, "tokenValidationHandler": {} });
         authConfigSpy = jasmine.createSpyObj('AuthConfig', ['sessionChecksEnabled']);
 
         TestBed.configureTestingModule({
-            providers: [
+            "providers": [
                 RedirectAuthService,
-                { provide: OAuthService, useValue: oauthServiceSpy },
-                { provide: TimeSyncService, useValue: timeSyncServiceSpy },
-                { provide: OAuthLogger, useValue: oauthLoggerSpy },
-                { provide: OAuthStorage, useValue: mockOAuthStorage },
-                { provide: RetryLoginService, useValue: retryLoginServiceSpy },
-                { provide: AUTH_CONFIG, useValue: authConfigSpy },
-                { provide: AUTH_MODULE_CONFIG, useValue: {} }
+                { "provide": OAuthService, "useValue": oauthServiceSpy },
+                { "provide": TimeSyncService, "useValue": timeSyncServiceSpy },
+                { "provide": OAuthLogger, "useValue": oauthLoggerSpy },
+                { "provide": OAuthStorage, "useValue": mockOAuthStorage },
+                { "provide": RetryLoginService, "useValue": retryLoginServiceSpy },
+                { "provide": AUTH_CONFIG, "useValue": authConfigSpy },
+                { "provide": AUTH_MODULE_CONFIG, "useValue": {} }
             ]
         });
 
         service = TestBed.inject(RedirectAuthService);
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: false } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": false } as TimeSync));
         ensureDiscoveryDocumentSpy = spyOn(service, 'ensureDiscoveryDocument');
     });
 
@@ -79,7 +79,7 @@ describe('RedirectAuthService', () => {
         const onTokenReceivedSpy = jasmine.createSpy();
         service.onTokenReceived.subscribe(onTokenReceivedSpy);
 
-        oauthEvents$.next({ type: 'token_received' } as OAuthEvent);
+        oauthEvents$.next({ "type": 'token_received' } as OAuthEvent);
 
         expect(onTokenReceivedSpy).toHaveBeenCalled();
     });
@@ -88,7 +88,7 @@ describe('RedirectAuthService', () => {
         const onTokenReceivedSpy = jasmine.createSpy();
         service.onTokenReceived.subscribe(onTokenReceivedSpy);
 
-        oauthEvents$.next({ type: 'user_profile_loaded' } as OAuthEvent);
+        oauthEvents$.next({ "type": 'user_profile_loaded' } as OAuthEvent);
 
         expect(onTokenReceivedSpy).not.toHaveBeenCalled();
     });
@@ -122,7 +122,7 @@ describe('RedirectAuthService', () => {
         oauthServiceSpy.getAccessToken.and.returnValue('fake-access-token');
         oauthServiceSpy.hasValidAccessToken.and.returnValue(false);
 
-        oauthEvents$.next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthEvents$.next({ "type": 'discovery_document_loaded' } as OAuthEvent);
 
         expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token');
         expect(mockOAuthStorage.removeItem).toHaveBeenCalledWith('access_token_stored_at');
@@ -150,7 +150,7 @@ describe('RedirectAuthService', () => {
     });
 
     it('should configure OAuthService with given config', async () => {
-        const config = { sessionChecksEnabled: false } as AuthConfig;
+        const config = { "sessionChecksEnabled": false } as AuthConfig;
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
 
         authConfigSpy.sessionChecksEnabled = false;
@@ -186,7 +186,7 @@ describe('RedirectAuthService', () => {
     it('should logout user if login fails', async () => {
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
 
-        const fakeErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {});
+        const fakeErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { "reason": 'error' }, {});
 
         retryLoginServiceSpy.tryToLoginTimes.and.callFake(() => {
             oauthEvents$.next(fakeErrorEvent);
@@ -202,7 +202,7 @@ describe('RedirectAuthService', () => {
     });
 
     it('should logout user if token has expired due to local machine clock being out of sync', () => {
-        const mockTimeSync: TimeSync = { outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' };
+        const mockTimeSync: TimeSync = { "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' };
         const expectedError = new Error(`Token has expired due to local machine clock ${mockTimeSync.localDateTimeISO} being out of sync with server time ${mockTimeSync.serverDateTimeISO}`);
 
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
@@ -215,19 +215,19 @@ describe('RedirectAuthService', () => {
         oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ "exp": tokenExpiresAtInSeconds, "iat": tokenIssuedAtInSeconds });
 
-        oauthEvents$.next({ type: 'discovery_document_loaded' } as OAuthEvent);
+        oauthEvents$.next({ "type": 'discovery_document_loaded' } as OAuthEvent);
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledOnceWith(expectedError);
     });
 
     it('should logout user if an OAuthErroEvent occurs', () => {
-        const fakeErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {});
-        const expectedLoggedError = new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {});
+        const fakeErrorEvent = new OAuthErrorEvent('discovery_document_load_error', { "reason": 'error' }, {});
+        const expectedLoggedError = new OAuthErrorEvent('discovery_document_load_error', { "reason": 'error' }, {});
 
-        const mockTimeSync = { outOfSync: false } as TimeSync;
+        const mockTimeSync = { "outOfSync": false } as TimeSync;
 
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
 
@@ -238,7 +238,7 @@ describe('RedirectAuthService', () => {
     });
 
     it('should logout user if sessionChecksEnabled is true and event type session_terminated is emitted', async () => {
-        const mockTimeSync = { outOfSync: false } as TimeSync;
+        const mockTimeSync = { "outOfSync": false } as TimeSync;
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
 
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
@@ -247,7 +247,7 @@ describe('RedirectAuthService', () => {
 
         await service.init();
 
-        oauthEvents$.next({ type: 'session_terminated' } as OAuthEvent);
+        oauthEvents$.next({ "type": 'session_terminated' } as OAuthEvent);
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
     });
@@ -266,7 +266,7 @@ describe('RedirectAuthService', () => {
     });
 
     it('should NOT logout user if sessionChecksEnabled is true and event type session_terminated is NOT emitted', async () => {
-        const mockTimeSync = { outOfSync: false } as TimeSync;
+        const mockTimeSync = { "outOfSync": false } as TimeSync;
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
 
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
@@ -279,7 +279,7 @@ describe('RedirectAuthService', () => {
     });
 
     it('should NOT logout user if sessionChecksEnabled is false and event type session_terminated is emitted', async () => {
-        const mockTimeSync = { outOfSync: false } as TimeSync;
+        const mockTimeSync = { "outOfSync": false } as TimeSync;
         timeSyncServiceSpy.checkTimeSync.and.returnValue(of(mockTimeSync));
 
         ensureDiscoveryDocumentSpy.and.resolveTo(true);
@@ -288,13 +288,13 @@ describe('RedirectAuthService', () => {
 
         await service.init();
 
-        oauthEvents$.next({ type: 'session_terminated' } as OAuthEvent);
+        oauthEvents$.next({ "type": 'session_terminated' } as OAuthEvent);
 
         expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
     });
 
     it('should NOT logout user if token has expired but local machine clock is in sync with the server time', () => {
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: false } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": false } as TimeSync));
 
         const mockDateNowInMilliseconds = 1728597618621; // GMT: Thursday, October 10, 2024 10:00:18.621 PM
 
@@ -304,7 +304,7 @@ describe('RedirectAuthService', () => {
         oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ "exp": tokenExpiresAtInSeconds, "iat": tokenIssuedAtInSeconds });
 
         oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
@@ -323,7 +323,7 @@ describe('RedirectAuthService', () => {
         oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ "exp": tokenExpiresAtInSeconds, "iat": tokenIssuedAtInSeconds });
 
         oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
@@ -340,7 +340,7 @@ describe('RedirectAuthService', () => {
         oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ "exp": tokenExpiresAtInSeconds, "iat": tokenIssuedAtInSeconds });
 
         oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
@@ -357,7 +357,7 @@ describe('RedirectAuthService', () => {
         oauthServiceSpy.clockSkewInSec = 120;
 
         spyOn(Date, 'now').and.returnValue(mockDateNowInMilliseconds);
-        oauthServiceSpy.getIdentityClaims.and.returnValue({ exp: tokenExpiresAtInSeconds, iat: tokenIssuedAtInSeconds });
+        oauthServiceSpy.getIdentityClaims.and.returnValue({ "exp": tokenExpiresAtInSeconds, "iat": tokenIssuedAtInSeconds });
 
         oauthEvents$.next(new OAuthSuccessEvent('discovery_document_loaded'));
 
@@ -366,16 +366,16 @@ describe('RedirectAuthService', () => {
     });
 
     it('should NOT logout user if the refresh token failed first time', fakeAsync(async () => {
-        const expectedFakeErrorEvent = new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {});
+        const expectedFakeErrorEvent = new OAuthErrorEvent('token_refresh_error', { "reason": 'error' }, {});
 
         const firstEventOccurPromise = service.firstOauthErrorEventOccur$.toPromise();
         const secondTokenRefreshErrorEventPromise = service.secondTokenRefreshErrorEventOccur$.pipe(timeout(1000)).toPromise();
 
-        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).not.toHaveBeenCalled();
         expect(oauthLoggerSpy.error).not.toHaveBeenCalled();
-        expect(await firstEventOccurPromise).toEqual(expectedFakeErrorEvent);;
+        expect(await firstEventOccurPromise).toEqual(expectedFakeErrorEvent);
 
         try {
             tick(1000);
@@ -388,10 +388,10 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if the second time the refresh token failed', fakeAsync(async () => {
 
-        const expectedErrorCausedBySecondTokenRefreshError = new OAuthErrorEvent('token_refresh_error', { reason: 'second token refresh error' }, {});
+        const expectedErrorCausedBySecondTokenRefreshError = new OAuthErrorEvent('token_refresh_error', { "reason": 'second token refresh error' }, {});
 
-        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {}));
-        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'second token refresh error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { "reason": 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { "reason": 'second token refresh error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorCausedBySecondTokenRefreshError);
@@ -399,9 +399,9 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if token_refresh_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' } as TimeSync));
 
-        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('token_refresh_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
@@ -409,9 +409,9 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if discovery_document_load_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' } as TimeSync));
 
-        oauthEvents$.next(new OAuthErrorEvent('discovery_document_load_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('discovery_document_load_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
@@ -419,9 +419,9 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if code_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' } as TimeSync));
 
-        oauthEvents$.next(new OAuthErrorEvent('code_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('code_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
@@ -429,9 +429,9 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if discovery_document_validation_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' } as TimeSync));
 
-        oauthEvents$.next(new OAuthErrorEvent('discovery_document_validation_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('discovery_document_validation_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
@@ -439,9 +439,9 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if jwks_load_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' } as TimeSync));
 
-        oauthEvents$.next(new OAuthErrorEvent('jwks_load_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('jwks_load_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
@@ -449,9 +449,9 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if silent_refresh_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' } as TimeSync));
 
-        oauthEvents$.next(new OAuthErrorEvent('silent_refresh_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('silent_refresh_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
@@ -459,9 +459,9 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if user_profile_load_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' } as TimeSync));
 
-        oauthEvents$.next(new OAuthErrorEvent('user_profile_load_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('user_profile_load_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);
@@ -469,9 +469,9 @@ describe('RedirectAuthService', () => {
 
     it('should logout user if token_error is emitted because of clock out of sync', () => {
         const expectedErrorMessage = new Error('OAuth error occurred due to local machine clock 2024-10-10T22:00:18.621Z being out of sync with server time 2024-10-10T22:10:53.000Z');
-        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ outOfSync: true, localDateTimeISO: '2024-10-10T22:00:18.621Z', serverDateTimeISO: '2024-10-10T22:10:53.000Z' } as TimeSync));
+        timeSyncServiceSpy.checkTimeSync.and.returnValue(of({ "outOfSync": true, "localDateTimeISO": '2024-10-10T22:00:18.621Z', "serverDateTimeISO": '2024-10-10T22:10:53.000Z' } as TimeSync));
 
-        oauthEvents$.next(new OAuthErrorEvent('token_error', { reason: 'error' }, {}));
+        oauthEvents$.next(new OAuthErrorEvent('token_error', { "reason": 'error' }, {}));
 
         expect(oauthServiceSpy.logOut).toHaveBeenCalledTimes(1);
         expect(oauthLoggerSpy.error).toHaveBeenCalledWith(expectedErrorMessage);

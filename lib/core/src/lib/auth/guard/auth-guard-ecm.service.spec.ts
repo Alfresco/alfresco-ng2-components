@@ -41,21 +41,21 @@ describe('AuthGuardService ECM', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, RouterTestingModule, MatDialogModule],
-            providers: [
+            "imports": [NoopTranslateModule, RouterTestingModule, MatDialogModule],
+            "providers": [
                 BasicAlfrescoAuthService,
                 AppConfigService,
                 {
-                    provide: OidcAuthenticationService,
-                    useValue: {
-                        ssoLogin: () => {},
-                        isPublicUrl: () => false,
-                        hasValidIdToken: () => false,
-                        isLoggedIn: () => false,
-                        shouldPerformSsoLogin$: of(true)
+                    "provide": OidcAuthenticationService,
+                    "useValue": {
+                        "ssoLogin": () => {},
+                        "isPublicUrl": () => false,
+                        "hasValidIdToken": () => false,
+                        "isLoggedIn": () => false,
+                        "shouldPerformSsoLogin$": of(true)
                     }
                 },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+                { "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }
             ]
         });
         localStorage.clear();
@@ -68,7 +68,7 @@ describe('AuthGuardService ECM', () => {
         appConfigService.config.providers = 'ECM';
         appConfigService.config.auth = {};
         appConfigService.config.oauth2 = {};
-        state = { url: 'some-url' } as RouterStateSnapshot;
+        state = { "url": 'some-url' } as RouterStateSnapshot;
         spyOn(router, 'navigateByUrl');
     });
 
@@ -125,14 +125,14 @@ describe('AuthGuardService ECM', () => {
         spyOn(oidcAuthenticationService, 'ssoLogin').and.stub();
 
         appConfigService.config.oauth2 = {
-            silentLogin: true,
-            host: 'http://localhost:6543',
-            redirectUri: '/',
-            clientId: 'activiti',
-            publicUrl: 'settings',
-            scope: 'openid'
+            "silentLogin": true,
+            "host": 'http://localhost:6543',
+            "redirectUri": '/',
+            "clientId": 'activiti',
+            "publicUrl": 'settings',
+            "scope": 'openid'
         };
-        state = { url: 'abc' } as RouterStateSnapshot;
+        state = { "url": 'abc' } as RouterStateSnapshot;
 
         authGuard = TestBed.runInInjectionContext(() => AuthGuardEcm(route, state)) as Promise<boolean>;
 
@@ -157,34 +157,34 @@ describe('AuthGuardService ECM', () => {
         await TestBed.runInInjectionContext(() => AuthGuardEcm(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM',
-            url: 'some-url'
+            "provider": 'ECM',
+            "url": 'some-url'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
     });
 
     it('should set redirect navigation commands with query params', async () => {
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
-        state = { url: 'some-url;q=123' } as RouterStateSnapshot;
+        state = { "url": 'some-url;q=123' } as RouterStateSnapshot;
 
         await TestBed.runInInjectionContext(() => AuthGuardEcm(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM',
-            url: 'some-url;q=123'
+            "provider": 'ECM',
+            "url": 'some-url;q=123'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url;q=123');
     });
 
     it('should set redirect navigation commands with query params', async () => {
         spyOn(basicAlfrescoAuthService, 'setRedirect').and.callThrough();
-        state = { url: '/' } as RouterStateSnapshot;
+        state = { "url": '/' } as RouterStateSnapshot;
 
         await TestBed.runInInjectionContext(() => AuthGuardEcm(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM',
-            url: '/'
+            "provider": 'ECM',
+            "url": '/'
         });
         expect(basicAlfrescoAuthService.getRedirect()).toEqual('/');
     });
@@ -196,8 +196,8 @@ describe('AuthGuardService ECM', () => {
         await TestBed.runInInjectionContext(() => AuthGuardEcm(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM',
-            url: 'some-url'
+            "provider": 'ECM',
+            "url": 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     });
@@ -210,8 +210,8 @@ describe('AuthGuardService ECM', () => {
         await TestBed.runInInjectionContext(() => AuthGuardEcm(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ECM',
-            url: 'some-url'
+            "provider": 'ECM',
+            "url": 'some-url'
         });
 
         expect(materialDialog.closeAll).toHaveBeenCalled();

@@ -27,16 +27,16 @@ import { SHELL_APP_SERVICE, ShellAppService, SHELL_NAVBAR_MIN_WIDTH, SHELL_NAVBA
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-shell',
-    standalone: true,
-    imports: [CommonModule, SidenavLayoutModule, RouterModule, DynamicExtensionComponent],
-    templateUrl: './shell.component.html',
-    styleUrls: ['./shell.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'app-shell' }
+    "selector": 'app-shell',
+    "standalone": true,
+    "imports": [CommonModule, SidenavLayoutModule, RouterModule, DynamicExtensionComponent],
+    "templateUrl": './shell.component.html',
+    "styleUrls": ['./shell.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'app-shell' }
 })
 export class ShellLayoutComponent implements OnInit, OnDestroy {
-    @ViewChild('layout', { static: true })
+    @ViewChild('layout', { "static": true })
     layout: SidenavLayoutComponent;
 
     onDestroy$: Subject<boolean> = new Subject<boolean>();
@@ -49,7 +49,7 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
     sidenavMax: number;
     direction: Directionality;
 
-    constructor(
+    constructor (
         private router: Router,
         private appConfigService: AppConfigService,
         private breakpointObserver: BreakpointObserver,
@@ -61,7 +61,7 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
         this.sidenavMax = navbarMaxWidth ?? 320;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.isSmallScreen$ = this.breakpointObserver.observe(['(max-width: 600px)']).pipe(map((result) => result.matches));
 
         this.hideSidenav = this.shellService.hideSidenavConditions.some((el) => this.router.routerState.snapshot.url.includes(el));
@@ -96,19 +96,19 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    hideMenu(event: Event) {
+    hideMenu (event: Event) {
         if (this.layout.container.isMobileScreenSize) {
             event.preventDefault();
             this.layout.container.toggleMenu();
         }
     }
 
-    private updateState() {
+    private updateState () {
         if (this.minimizeSidenav && !this.layout.isMenuMinimized) {
             this.layout.isMenuMinimized = true;
             if (!this.layout.container.isMobileScreenSize) {
@@ -124,13 +124,13 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
         }
     }
 
-    onExpanded(state: boolean) {
+    onExpanded (state: boolean) {
         if (!this.minimizeSidenav && this.appConfigService.get('sideNav.preserveState')) {
             this.shellService.preferencesService.set('expandedSidenav', state);
         }
     }
 
-    private getSidenavState(): boolean {
+    private getSidenavState (): boolean {
         const expand = this.appConfigService.get<boolean>('sideNav.expandedSidenav', true);
         const preserveState = this.appConfigService.get<boolean>('sideNav.preserveState', true);
 

@@ -22,14 +22,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'adf-toolbar',
-    standalone: true,
-    templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    imports: [MatToolbarModule, TranslateModule, NgIf],
-    host: { class: 'adf-toolbar' }
+    "selector": 'adf-toolbar',
+    "standalone": true,
+    "templateUrl": './toolbar.component.html',
+    "styleUrls": ['./toolbar.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [MatToolbarModule, TranslateModule, NgIf],
+    "host": { "class": 'adf-toolbar' }
 })
 export class ToolbarComponent {
     /** Toolbar title. */

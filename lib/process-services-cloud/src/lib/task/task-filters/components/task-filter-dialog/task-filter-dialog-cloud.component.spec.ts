@@ -26,20 +26,20 @@ describe('TaskFilterDialogCloudComponent', () => {
     let fixture: ComponentFixture<TaskFilterDialogCloudComponent>;
 
     const mockDialogRef = {
-        close: jasmine.createSpy('close'),
-        open: jasmine.createSpy('open')
+        "close": jasmine.createSpy('close'),
+        "open": jasmine.createSpy('open')
     };
 
     const mockDialogData = {
-        data: { name: 'Mock-Title' }
+        "data": { "name": 'Mock-Title' }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
-            providers: [
-                { provide: MatDialogRef, useValue: mockDialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
+            "imports": [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+            "providers": [
+                { "provide": MatDialogRef, "useValue": mockDialogRef },
+                { "provide": MAT_DIALOG_DATA, "useValue": mockDialogData }
             ]
         });
         fixture = TestBed.createComponent(TaskFilterDialogCloudComponent);
@@ -105,7 +105,7 @@ describe('TaskFilterDialogCloudComponent', () => {
     });
 
     it('should able close dialog on click of cancel button', () => {
-        component.data = { data: { name: '' } };
+        component.data = { "data": { "name": '' } };
         const cancelButton = fixture.debugElement.nativeElement.querySelector('#adf-cancel-button-id');
         fixture.detectChanges();
         cancelButton.click();

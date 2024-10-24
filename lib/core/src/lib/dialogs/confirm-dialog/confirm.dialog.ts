@@ -29,11 +29,11 @@ export interface ConfirmDialogComponentProps {
 }
 
 @Component({
-    selector: 'adf-confirm-dialog',
-    templateUrl: './confirm.dialog.html',
-    styleUrls: ['./confirm.dialog.scss'],
-    host: { class: 'adf-confirm-dialog' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-confirm-dialog',
+    "templateUrl": './confirm.dialog.html',
+    "styleUrls": ['./confirm.dialog.scss'],
+    "host": { "class": 'adf-confirm-dialog' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class ConfirmDialogComponent {
     title: string;
@@ -43,7 +43,7 @@ export class ConfirmDialogComponent {
     thirdOptionLabel: string;
     htmlContent: string;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: ConfirmDialogComponentProps, private sanitizer: DomSanitizer) {
+    constructor (@Inject(MAT_DIALOG_DATA) data: ConfirmDialogComponentProps, private sanitizer: DomSanitizer) {
         data = data || {};
         this.title = data.title || 'ADF_CONFIRM_DIALOG.TITLE';
         this.message = data.message || 'ADF_CONFIRM_DIALOG.MESSAGE';
@@ -53,7 +53,7 @@ export class ConfirmDialogComponent {
         this.htmlContent = data.htmlContent;
     }
 
-    sanitizedHtmlContent(): string {
+    sanitizedHtmlContent (): string {
         return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
     }
 }

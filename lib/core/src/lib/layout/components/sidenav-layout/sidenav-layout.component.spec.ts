@@ -29,10 +29,10 @@ import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
-    selector: 'adf-test-component-for-sidenav',
-    standalone: true,
-    imports: [SidenavLayoutComponent, SidenavLayoutHeaderDirective, SidenavLayoutNavigationDirective, SidenavLayoutContentDirective],
-    template: ` <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
+    "selector": 'adf-test-component-for-sidenav',
+    "standalone": true,
+    "imports": [SidenavLayoutComponent, SidenavLayoutHeaderDirective, SidenavLayoutNavigationDirective, SidenavLayoutContentDirective],
+    "template": ` <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="320" [stepOver]="600" [hideSidenav]="false">
         <adf-sidenav-layout-header>
             <ng-template let-toggleMenu="toggleMenu">
                 <div id="header-test" (click)="toggleMenu()" role="button" tabindex="0" (keyup.enter)="toggleMenu()"></div>
@@ -62,16 +62,16 @@ describe('SidenavLayoutComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, NoopAnimationsModule, SidenavLayoutComponent],
-            providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }]
+            "imports": [CommonModule, NoopAnimationsModule, SidenavLayoutComponent],
+            "providers": [MediaMatcher, { "provide": UserPreferencesService, "useValue": { "select": () => of() } }]
         });
         mediaQueryList = {
-            mediaFn: null,
-            matches: false,
-            addListener(mediaFn) {
+            "mediaFn": null,
+            "matches": false,
+            addListener (mediaFn) {
                 this.mediaFn = mediaFn;
             },
-            removeListener: () => {}
+            "removeListener": () => {}
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);
@@ -158,14 +158,14 @@ describe('Template transclusion', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, NoopAnimationsModule, SidenavLayoutTesterComponent],
-            providers: [MediaMatcher, { provide: UserPreferencesService, useValue: { select: () => of() } }]
+            "imports": [CommonModule, NoopAnimationsModule, SidenavLayoutTesterComponent],
+            "providers": [MediaMatcher, { "provide": UserPreferencesService, "useValue": { "select": () => of() } }]
         });
 
         mediaQueryList = {
-            matches: false,
-            addListener: () => {},
-            removeListener: () => {}
+            "matches": false,
+            "addListener": () => {},
+            "removeListener": () => {}
         };
 
         mediaMatcher = TestBed.inject(MediaMatcher);

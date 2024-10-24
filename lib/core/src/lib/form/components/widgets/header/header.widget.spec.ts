@@ -28,7 +28,7 @@ describe('HeaderWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HeaderWidgetComponent, TranslateModule.forRoot()]
+            "imports": [HeaderWidgetComponent, TranslateModule.forRoot()]
         }).compileComponents();
     });
 
@@ -40,13 +40,13 @@ describe('HeaderWidgetComponent', () => {
             new ContainerModel(
                 new FormFieldModel(
                     {
-                        onFormFieldChanged: () => {}
+                        "onFormFieldChanged": () => {}
                     },
                     {
-                        type: FormFieldTypes.GROUP,
-                        name: 'test-name',
-                        id: 'test-id',
-                        params: { allowCollapse: true }
+                        "type": FormFieldTypes.GROUP,
+                        "name": 'test-name',
+                        "id": 'test-id',
+                        "params": { "allowCollapse": true }
                     }
                 )
             )

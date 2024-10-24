@@ -28,9 +28,9 @@ import { IdentityGroupService } from './services/identity-group.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
-    imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, MatProgressBarModule],
-    declarations: [GroupCloudComponent, InitialGroupNamePipe],
-    providers: [{ provide: IDENTITY_GROUP_SERVICE_TOKEN, useExisting: IdentityGroupService }],
-    exports: [GroupCloudComponent, InitialGroupNamePipe]
+    "imports": [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule, CoreModule, MatProgressBarModule],
+    "declarations": [GroupCloudComponent, InitialGroupNamePipe],
+    "providers": [{ "provide": IDENTITY_GROUP_SERVICE_TOKEN, "useExisting": IdentityGroupService }],
+    "exports": [GroupCloudComponent, InitialGroupNamePipe]
 })
 export class GroupCloudModule {}

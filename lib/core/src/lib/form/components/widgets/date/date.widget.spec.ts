@@ -32,7 +32,7 @@ describe('DateWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
 
         form = new FormModel();
@@ -46,9 +46,9 @@ describe('DateWidgetComponent', () => {
 
     it('[C310333] - should be able to set a placeholder', () => {
         widget.field = new FormFieldModel(form, {
-            id: 'date-id',
-            name: 'date-name',
-            placeholder: 'My Placeholder'
+            "id": 'date-id',
+            "name": 'date-name',
+            "placeholder": 'My Placeholder'
         });
 
         expect(widget.field.placeholder).toBe('My Placeholder');
@@ -57,8 +57,8 @@ describe('DateWidgetComponent', () => {
     it('should setup min value for date picker', () => {
         const minValue = '1982-03-13';
         widget.field = new FormFieldModel(null, {
-            id: 'date-id',
-            name: 'date-name',
+            "id": 'date-id',
+            "name": 'date-name',
             minValue
         });
 
@@ -72,10 +72,10 @@ describe('DateWidgetComponent', () => {
         const minValue = '1982-03-13';
 
         const field = new FormFieldModel(form, {
-            id: 'date-id',
-            type: 'date',
-            name: 'date-name',
-            dateDisplayFormat: 'DD-MM-YYYY',
+            "id": 'date-id',
+            "type": 'date',
+            "name": 'date-name',
+            "dateDisplayFormat": 'DD-MM-YYYY',
             minValue
         });
 
@@ -95,10 +95,10 @@ describe('DateWidgetComponent', () => {
         const maxValue = '1982-03-13';
 
         const field = new FormFieldModel(form, {
-            id: 'date-id',
-            type: 'date',
-            name: 'date-name',
-            dateDisplayFormat: 'DD-MM-YYYY',
+            "id": 'date-id',
+            "type": 'date',
+            "name": 'date-name',
+            "dateDisplayFormat": 'DD-MM-YYYY',
             maxValue
         });
 
@@ -141,10 +141,10 @@ describe('DateWidgetComponent', () => {
         spyOn(widget, 'onFieldChanged').and.callThrough();
 
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: '9-9-9999',
-            type: 'date'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": '9-9-9999',
+            "type": 'date'
         });
 
         widget.field = field;
@@ -158,9 +158,9 @@ describe('DateWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DATE,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DATE,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -185,10 +185,10 @@ describe('DateWidgetComponent', () => {
 
         it('should show visible date widget', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: new Date('9-9-9999'),
-                type: FormFieldTypes.DATE
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": new Date('9-9-9999'),
+                "type": FormFieldTypes.DATE
             });
 
             fixture.detectChanges();
@@ -201,11 +201,11 @@ describe('DateWidgetComponent', () => {
 
         it('[C310335] - Should be able to change display format for Date widget', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: new Date('12-30-9999'),
-                type: FormFieldTypes.DATE,
-                dateDisplayFormat: 'dd.MM.yyyy'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": new Date('12-30-9999'),
+                "type": FormFieldTypes.DATE,
+                "dateDisplayFormat": 'dd.MM.yyyy'
             });
 
             fixture.detectChanges();
@@ -217,10 +217,10 @@ describe('DateWidgetComponent', () => {
 
         it('should disable date button when is readonly', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: '9-9-9999',
-                type: FormFieldTypes.DATE
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": '9-9-9999',
+                "type": FormFieldTypes.DATE
             });
 
             fixture.detectChanges();
@@ -239,11 +239,11 @@ describe('DateWidgetComponent', () => {
 
         it('should set isValid to false when the value is not a correct date value', () => {
             widget.field = new FormFieldModel(form, {
-                id: 'date-field-id',
-                name: 'date-name',
-                value: 'aa',
-                type: FormFieldTypes.DATE,
-                readOnly: 'false'
+                "id": 'date-field-id',
+                "name": 'date-name',
+                "value": 'aa',
+                "type": FormFieldTypes.DATE,
+                "readOnly": 'false'
             });
             widget.field.isVisible = true;
             widget.field.readOnly = false;
@@ -259,11 +259,11 @@ describe('DateWidgetComponent', () => {
 
     it('should display always the json value', () => {
         const field = new FormFieldModel(form, {
-            id: 'date-field-id',
-            name: 'date-name',
-            value: new Date('12-30-9999'),
-            type: FormFieldTypes.DATE,
-            dateDisplayFormat: 'MM-dd-yyyy'
+            "id": 'date-field-id',
+            "name": 'date-name',
+            "value": new Date('12-30-9999'),
+            "type": FormFieldTypes.DATE,
+            "dateDisplayFormat": 'MM-dd-yyyy'
         });
 
         widget.field = field;

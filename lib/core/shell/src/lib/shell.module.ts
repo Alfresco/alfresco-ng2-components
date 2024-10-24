@@ -26,11 +26,11 @@ export interface AppShellRoutesConfig {
 }
 
 @NgModule({
-    imports: [ShellLayoutComponent],
-    exports: [ShellLayoutComponent]
+    "imports": [ShellLayoutComponent],
+    "exports": [ShellLayoutComponent]
 })
 export class ShellModule {
-    static withRoutes(routes: Routes | AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
+    static withRoutes (routes: Routes | AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
         if (Array.isArray(routes)) {
             return getModuleForRoutes(routes);
         }
@@ -44,7 +44,7 @@ export class ShellModule {
  * @param routes route configuration
  * @returns module with providers
  */
-function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
+function getModuleForRoutes (routes: Routes): ModuleWithProviders<ShellModule> {
     const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
 
     routes.forEach((childRoute) => {
@@ -52,8 +52,8 @@ function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
     });
 
     return {
-        ngModule: ShellModule,
-        providers: provideRoutes([shellLayoutRoute])
+        "ngModule": ShellModule,
+        "providers": provideRoutes([shellLayoutRoute])
     };
 }
 
@@ -62,7 +62,7 @@ function getModuleForRoutes(routes: Routes): ModuleWithProviders<ShellModule> {
  * @param config route configuration
  * @returns module with providers
  */
-function getModuleForRouteConfig(config: AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
+function getModuleForRouteConfig (config: AppShellRoutesConfig): ModuleWithProviders<ShellModule> {
     const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
 
     const shellParentRoute = config.shellParentRoute;
@@ -81,7 +81,7 @@ function getModuleForRouteConfig(config: AppShellRoutesConfig): ModuleWithProvid
     }
 
     return {
-        ngModule: ShellModule,
-        providers: provideRoutes([rootRoute])
+        "ngModule": ShellModule,
+        "providers": provideRoutes([rootRoute])
     };
 }

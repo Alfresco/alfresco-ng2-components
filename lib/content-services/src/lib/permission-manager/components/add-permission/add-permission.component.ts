@@ -27,12 +27,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-add-permission',
-    standalone: true,
-    imports: [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslateModule],
-    templateUrl: './add-permission.component.html',
-    styleUrls: ['./add-permission.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-add-permission',
+    "standalone": true,
+    "imports": [CommonModule, AddPermissionPanelComponent, MatButtonModule, TranslateModule],
+    "templateUrl": './add-permission.component.html',
+    "styleUrls": ['./add-permission.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 /*
  * @deprecated in 4.4.0, use adf-add-permission-panel instead.
@@ -54,26 +54,26 @@ export class AddPermissionComponent implements OnInit {
     currentNode: Node;
     currentNodeRoles: RoleModel[];
 
-    constructor(private nodePermissionService: NodePermissionService, private contentService: ContentService) {}
+    constructor (private nodePermissionService: NodePermissionService, private contentService: ContentService) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.nodePermissionService.getNodeWithRoles(this.nodeId).subscribe(({ node, roles }) => {
             this.currentNode = node;
             this.currentNodeRoles = roles;
         });
     }
 
-    onSelect(selection: NodeEntry[]) {
+    onSelect (selection: NodeEntry[]) {
         this.selectedItems = selection;
     }
 
-    isAddEnabled(): boolean {
+    isAddEnabled (): boolean {
         return (
             this.contentService.hasAllowableOperations(this.currentNode, AllowableOperationsEnum.UPDATEPERMISSIONS) && this.selectedItems.length !== 0
         );
     }
 
-    applySelection() {
+    applySelection () {
         if (this.contentService.hasAllowableOperations(this.currentNode, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
             const permissions = this.transformNodeToPermissionElement(this.selectedItems, this.currentNodeRoles[0].role);
             this.nodePermissionService.updateNodePermissions(this.nodeId, permissions).subscribe(
@@ -87,11 +87,11 @@ export class AddPermissionComponent implements OnInit {
         }
     }
 
-    private transformNodeToPermissionElement(nodes: NodeEntry[], role: string): PermissionElement[] {
+    private transformNodeToPermissionElement (nodes: NodeEntry[], role: string): PermissionElement[] {
         return nodes.map((node) => ({
-            authorityId: node.entry.properties['cm:authorityName'] ?? node.entry.properties['cm:userName'],
-            name: role,
-            accessStatus: 'ALLOWED'
+            "authorityId": node.entry.properties['cm:authorityName'] ?? node.entry.properties['cm:userName'],
+            "name": role,
+            "accessStatus": 'ALLOWED'
         }));
     }
 }

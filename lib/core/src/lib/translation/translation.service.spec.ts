@@ -33,17 +33,17 @@ describe('TranslationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
+            "imports": [
                 HttpClientModule,
                 TranslateModule.forRoot({
-                    loader: {
-                        provide: TranslateLoader,
-                        useClass: TranslateLoaderService
+                    "loader": {
+                        "provide": TranslateLoader,
+                        "useClass": TranslateLoaderService
                     }
                 })
             ],
-            providers: [
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
+            "providers": [
+                { "provide": AppConfigService, "useClass": AppConfigServiceMock },
                 provideTranslations('@alfresco/adf-core', 'assets/ng2-alfresco-core')
             ]
         });
@@ -65,9 +65,9 @@ describe('TranslationService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({ TEST: 'This is a test', TEST2: 'This is another test' })
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({ "TEST": 'This is a test', "TEST2": 'This is another test' })
         });
     });
 
@@ -77,9 +77,9 @@ describe('TranslationService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({ TEST: 'This is a test', TEST2: 'This is another test' })
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({ "TEST": 'This is a test', "TEST2": 'This is another test' })
         });
     });
 

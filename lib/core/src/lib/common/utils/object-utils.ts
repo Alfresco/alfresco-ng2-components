@@ -23,7 +23,7 @@ export class ObjectUtils {
      * @param key object property key
      * @returns object property value
      */
-    static getValue(target: any, key: string): any {
+    static getValue (target: any, key: string): any {
         if (!target || !key) {
             return undefined;
         }
@@ -47,7 +47,7 @@ export class ObjectUtils {
         return target;
     }
 
-    static merge(...objects): any {
+    static merge (...objects): any {
         const result = {};
 
         objects.forEach((source) => {
@@ -65,23 +65,23 @@ export class ObjectUtils {
         return result;
     }
 
-    static isObject(target: any): boolean {
+    static isObject (target: any): boolean {
         return target === Object(target);
     }
 
-    static isEmpty(target: any): boolean {
+    static isEmpty (target: any): boolean {
         return target && Object.keys(target).length === 0 && Object.getPrototypeOf(target) === Object.prototype;
     }
 
-    static hasKeys(target: any): boolean {
+    static hasKeys (target: any): boolean {
         return target && Object.keys(target).length > 0;
     }
 
-    static isBooleanObject(target: any): boolean {
+    static isBooleanObject (target: any): boolean {
         return Object.values(target).every((value) => typeof value === 'boolean');
     }
 
-    static booleanPrettify(target: any, enhancer?: (param: string) => string): string {
+    static booleanPrettify (target: any, enhancer?: (param: string) => string): string {
         if (!target || ObjectUtils.isEmpty(target) || !ObjectUtils.isBooleanObject(target)) {
             return '';
         }

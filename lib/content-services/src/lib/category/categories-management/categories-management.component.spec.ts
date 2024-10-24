@@ -36,28 +36,28 @@ describe('CategoriesManagementComponent', () => {
     let fixture: ComponentFixture<CategoriesManagementComponent>;
     let categoryService: CategoryService;
     const classifiableChangedSubject = new Subject<void>();
-    const category1 = new Category({ id: 'test', name: 'testCat' });
-    const category2 = new Category({ id: 'test2', name: 'testCat2' });
-    const category3 = new Category({ id: 'test3', name: 'testCat3' });
-    const category4 = new Category({ id: 'test4', name: 'testCat4' });
-    const resultCat1 = new ResultNode({ id: 'test', name: 'testCat', path: { name: 'general/categories' } });
-    const resultCat2 = new ResultNode({ id: 'test2', name: 'testCat2', path: { name: 'general/categories' } });
-    const categoryPagingResponse: CategoryPaging = { list: { pagination: {}, entries: [{ entry: category1 }, { entry: category2 }] } };
-    const categorySearchResponse: ResultSetPaging = { list: { pagination: {}, entries: [{ entry: resultCat1 }, { entry: resultCat2 }] } };
+    const category1 = new Category({ "id": 'test', "name": 'testCat' });
+    const category2 = new Category({ "id": 'test2', "name": 'testCat2' });
+    const category3 = new Category({ "id": 'test3', "name": 'testCat3' });
+    const category4 = new Category({ "id": 'test4', "name": 'testCat4' });
+    const resultCat1 = new ResultNode({ "id": 'test', "name": 'testCat', "path": { "name": 'general/categories' } });
+    const resultCat2 = new ResultNode({ "id": 'test2', "name": 'testCat2', "path": { "name": 'general/categories' } });
+    const categoryPagingResponse: CategoryPaging = { "list": { "pagination": {}, "entries": [{ "entry": category1 }, { "entry": category2 }] } };
+    const categorySearchResponse: ResultSetPaging = { "list": { "pagination": {}, "entries": [{ "entry": resultCat1 }, { "entry": resultCat2 }] } };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, CategoriesManagementComponent],
-            providers: [
+            "imports": [ContentTestingModule, CategoriesManagementComponent],
+            "providers": [
                 {
-                    provide: CategoryService,
-                    useValue: {
-                        getSubcategories: () => of(categoryPagingResponse),
-                        searchCategories: () => of(categorySearchResponse)
+                    "provide": CategoryService,
+                    "useValue": {
+                        "getSubcategories": () => of(categoryPagingResponse),
+                        "searchCategories": () => of(categorySearchResponse)
                     }
                 }
             ],
-            teardown: { destroyAfterEach: true }
+            "teardown": { "destroyAfterEach": true }
         });
 
         fixture = TestBed.createComponent(CategoriesManagementComponent);
@@ -70,7 +70,7 @@ describe('CategoriesManagementComponent', () => {
      * Get no categories message
      * @returns message text
      */
-    function getNoCategoriesMessage(): string {
+    function getNoCategoriesMessage (): string {
         return fixture.debugElement.query(By.css(`.adf-no-categories-message`))?.nativeElement.textContent.trim();
     }
 
@@ -78,7 +78,7 @@ describe('CategoriesManagementComponent', () => {
      * Get assigned categories list
      * @returns list of native elements
      */
-    function getAssignedCategoriesList(): HTMLSpanElement[] {
+    function getAssignedCategoriesList (): HTMLSpanElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-assigned-categories'))?.map((debugElem) => debugElem.nativeElement);
     }
 
@@ -86,7 +86,7 @@ describe('CategoriesManagementComponent', () => {
      * Get the exiting categories list
      * @returns list of material option element
      */
-    function getExistingCategoriesList(): HTMLElement[] {
+    function getExistingCategoriesList (): HTMLElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-category'))?.map((debugElem) => debugElem.nativeElement);
     }
 
@@ -96,11 +96,11 @@ describe('CategoriesManagementComponent', () => {
      * @param addUsingEnter use Enter key
      * @param typingTimeout typing timeout in milliseconds (default 300)
      */
-    function createCategory(name: string, addUsingEnter?: boolean, typingTimeout = 300): void {
+    function createCategory (name: string, addUsingEnter?: boolean, typingTimeout = 300): void {
         typeCategory(name, typingTimeout);
 
         if (addUsingEnter) {
-            getCategoryControlInput().dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+            getCategoryControlInput().dispatchEvent(new KeyboardEvent('keyup', { "key": 'Enter' }));
         } else {
             getCreateCategoryLabel().click();
         }
@@ -113,7 +113,7 @@ describe('CategoriesManagementComponent', () => {
      * Get first error
      * @returns error text
      */
-    function getFirstError(): string {
+    function getFirstError (): string {
         return fixture.debugElement.query(By.directive(MatError)).nativeElement.textContent;
     }
 
@@ -121,7 +121,7 @@ describe('CategoriesManagementComponent', () => {
      * Get selection list
      * @returns material selection list
      */
-    function getSelectionList(): MatList {
+    function getSelectionList (): MatList {
         return fixture.debugElement.query(By.directive(MatList)).componentInstance;
     }
 
@@ -129,7 +129,7 @@ describe('CategoriesManagementComponent', () => {
      * Get remove category buttons
      * @returns list of native elements
      */
-    function getRemoveCategoryButtons(): HTMLButtonElement[] {
+    function getRemoveCategoryButtons (): HTMLButtonElement[] {
         return fixture.debugElement
             .queryAll(By.css(`[data-automation-id="categories-remove-category-button"]`))
             .map((debugElem) => debugElem.nativeElement);
@@ -139,7 +139,7 @@ describe('CategoriesManagementComponent', () => {
      * Get category control input
      * @returns native input element
      */
-    function getCategoryControlInput(): HTMLInputElement {
+    function getCategoryControlInput (): HTMLInputElement {
         return fixture.debugElement.query(By.css('.adf-category-name-field input'))?.nativeElement;
     }
 
@@ -147,7 +147,7 @@ describe('CategoriesManagementComponent', () => {
      * Get create category label
      * @returns native element
      */
-    function getCreateCategoryLabel(): HTMLSpanElement {
+    function getCreateCategoryLabel (): HTMLSpanElement {
         return fixture.debugElement.query(By.css('.adf-create-category-label'))?.nativeElement;
     }
 
@@ -156,7 +156,7 @@ describe('CategoriesManagementComponent', () => {
      * @param name name of the category
      * @param timeout typing timeout in milliseconds (default 300)
      */
-    function typeCategory(name: string, timeout = 300): void {
+    function typeCategory (name: string, timeout = 300): void {
         component.categoryNameControlVisible = true;
         fixture.detectChanges();
 
@@ -243,7 +243,7 @@ describe('CategoriesManagementComponent', () => {
         });
 
         it('should display correct message when there are no existing categories', fakeAsync(() => {
-            spyOn(categoryService, 'getSubcategories').and.returnValue(of({ list: { pagination: {}, entries: [] } }));
+            spyOn(categoryService, 'getSubcategories').and.returnValue(of({ "list": { "pagination": {}, "entries": [] } }));
             typeCategory('test');
 
             const noExistingCategoriesMsg = fixture.debugElement

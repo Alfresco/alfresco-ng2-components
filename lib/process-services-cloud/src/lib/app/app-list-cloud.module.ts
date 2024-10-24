@@ -23,8 +23,8 @@ import { AppListCloudComponent } from './components/app-list-cloud.component';
 import { TEMPLATE_DIRECTIVES, CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [CommonModule, ...TEMPLATE_DIRECTIVES, MaterialModule, CoreModule],
-    declarations: [AppListCloudComponent, AppDetailsCloudComponent],
-    exports: [AppListCloudComponent, AppDetailsCloudComponent]
+    "imports": [CommonModule, ...TEMPLATE_DIRECTIVES, MaterialModule, CoreModule],
+    "declarations": [AppListCloudComponent, AppDetailsCloudComponent],
+    "exports": [AppListCloudComponent, AppDetailsCloudComponent]
 })
 export class AppListCloudModule {}

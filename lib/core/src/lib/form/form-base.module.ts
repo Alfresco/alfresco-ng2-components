@@ -25,7 +25,7 @@ import { FORM_FIELD_MODEL_RENDER_MIDDLEWARE } from './components/middlewares/mid
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES, WidgetComponent } from './components/widgets';
 
 @NgModule({
-    imports: [
+    "imports": [
         FormFieldComponent,
         FormRendererComponent,
         WidgetComponent,
@@ -34,8 +34,8 @@ import { MASK_DIRECTIVE, WIDGET_DIRECTIVES, WidgetComponent } from './components
         ...WIDGET_DIRECTIVES,
         ...MASK_DIRECTIVE
     ],
-    declarations: [],
-    exports: [
+    "declarations": [],
+    "exports": [
         FormFieldComponent,
         FormRendererComponent,
         StartFormCustomButtonDirective,
@@ -43,11 +43,11 @@ import { MASK_DIRECTIVE, WIDGET_DIRECTIVES, WidgetComponent } from './components
         InplaceFormInputComponent,
         WidgetComponent
     ],
-    providers: [
+    "providers": [
         {
-            provide: FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
-            useClass: DecimalRenderMiddlewareService,
-            multi: true
+            "provide": FORM_FIELD_MODEL_RENDER_MIDDLEWARE,
+            "useClass": DecimalRenderMiddlewareService,
+            "multi": true
         }
     ]
 })

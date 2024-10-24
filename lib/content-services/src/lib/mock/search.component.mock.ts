@@ -22,65 +22,65 @@ import { SearchModule } from '../search';
 import { CommonModule } from '@angular/common';
 
 const entryItem = new ResultSetRowEntry({
-    entry: new ResultNode({
-        id: '123',
-        name: 'MyDoc',
-        isFile: true,
-        content: new ContentInfo({
-            mimeType: 'text/plain'
+    "entry": new ResultNode({
+        "id": '123',
+        "name": 'MyDoc',
+        "isFile": true,
+        "content": new ContentInfo({
+            "mimeType": 'text/plain'
         }),
-        createdByUser: new UserInfo({
-            displayName: 'John Doe'
+        "createdByUser": new UserInfo({
+            "displayName": 'John Doe'
         }),
-        modifiedByUser: new UserInfo({
-            displayName: 'John Doe'
+        "modifiedByUser": new UserInfo({
+            "displayName": 'John Doe'
         })
     })
 });
 
 const entryDifferentItem = new ResultSetRowEntry({
-    entry: new ResultNode({
-        id: '999',
-        name: 'TEST_DOC',
-        isFile: true,
-        content: new ContentInfo({
-            mimeType: 'text/plain'
+    "entry": new ResultNode({
+        "id": '999',
+        "name": 'TEST_DOC',
+        "isFile": true,
+        "content": new ContentInfo({
+            "mimeType": 'text/plain'
         }),
-        createdByUser: new UserInfo({
-            displayName: 'John TEST'
+        "createdByUser": new UserInfo({
+            "displayName": 'John TEST'
         }),
-        modifiedByUser: new UserInfo({
-            displayName: 'John TEST'
+        "modifiedByUser": new UserInfo({
+            "displayName": 'John TEST'
         })
     })
 });
 
 export const result = new ResultSetPaging({
-    list: {
-        entries: [entryItem]
+    "list": {
+        "entries": [entryItem]
     }
 });
 
 export const differentResult = new ResultSetPaging({
-    list: {
-        entries: [entryDifferentItem]
+    "list": {
+        "entries": [entryDifferentItem]
     }
 });
 
 export const results = {
-    list: {
-        entries: [entryItem, entryItem, entryItem]
+    "list": {
+        "entries": [entryItem, entryItem, entryItem]
     }
 };
 
 export const noResult = {
-    list: {
-        entries: []
+    "list": {
+        "entries": []
     }
 };
 
 @Component({
-    template: `
+    "template": `
         <adf-search
             [searchTerm]="searchedWord"
             [maxResults]="maxResults"
@@ -106,11 +106,11 @@ export const noResult = {
         </adf-search>
         <span id="component-result-message">{{ message }}</span>
     `,
-    standalone: true,
-    imports: [SearchModule, CommonModule]
+    "standalone": true,
+    "imports": [SearchModule, CommonModule]
 })
 export class SimpleSearchTestComponent {
-    @ViewChild('search', { static: true })
+    @ViewChild('search', { "static": true })
     search: SearchComponent;
 
     message: string = '';
@@ -118,29 +118,29 @@ export class SimpleSearchTestComponent {
     maxResults: number = 5;
     searchNode: SearchRequest;
 
-    constructor() {}
+    constructor () {}
 
-    showSearchResult(event: any) {
+    showSearchResult (event: any) {
         this.message = event;
     }
 
-    elementClicked() {
+    elementClicked () {
         this.message = 'element clicked';
     }
 
-    setSearchWordTo(str: string) {
+    setSearchWordTo (str: string) {
         this.searchedWord = str;
     }
 
-    setSearchNodeTo(searchNode: SearchRequest) {
+    setSearchNodeTo (searchNode: SearchRequest) {
         this.searchNode = searchNode;
     }
 
-    changeMaxResultTo(newMax: number) {
+    changeMaxResultTo (newMax: number) {
         this.maxResults = newMax;
     }
 
-    forceHidePanel() {
+    forceHidePanel () {
         this.search.hidePanel();
     }
 }

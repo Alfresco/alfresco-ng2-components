@@ -20,23 +20,23 @@ import { VersionCompatibilityService } from './version-compatibility.service';
 import { take } from 'rxjs/operators';
 
 @Directive({
-    selector: '[adf-acs-version]',
-    standalone: true
+    "selector": '[adf-acs-version]',
+    "standalone": true
 })
 export class VersionCompatibilityDirective {
     /** Minimum version required for component to work correctly . */
     @Input('adf-acs-version')
-    set version(requiredVersion: string) {
+    set version (requiredVersion: string) {
         this.validateAcsVersion(requiredVersion);
     }
 
-    constructor(
+    constructor (
         private templateRef: TemplateRef<any>,
         private viewContainer: ViewContainerRef,
         private versionCompatibilityService: VersionCompatibilityService
     ) {}
 
-    private validateAcsVersion(requiredVersion: string) {
+    private validateAcsVersion (requiredVersion: string) {
         this.versionCompatibilityService.acsVersionInitialized$.pipe(take(1)).subscribe(() => {
             this.viewContainer.clear();
             if (requiredVersion && this.versionCompatibilityService.isVersionSupported(requiredVersion)) {

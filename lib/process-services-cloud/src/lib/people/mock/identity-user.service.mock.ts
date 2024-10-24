@@ -19,54 +19,54 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IdentityUserFilterInterface } from '../services/identity-user-filter.interface';
 
 export const mockSearchUserEmptyFilters: IdentityUserFilterInterface = {
-    roles: [],
-    groups: [],
-    withinApplication: ''
+    "roles": [],
+    "groups": [],
+    "withinApplication": ''
 };
 
 export const mockSearchUserByGroups: IdentityUserFilterInterface = {
-    roles: [],
-    groups: ['fake-group-1', 'fake-group-2'],
-    withinApplication: ''
+    "roles": [],
+    "groups": ['fake-group-1', 'fake-group-2'],
+    "withinApplication": ''
 };
 
 export const mockSearchUserByGroupsAndRoles: IdentityUserFilterInterface = {
-    roles: ['fake-role-1', 'fake-role-2'],
-    groups: ['fake-group-1', 'fake-group-2'],
-    withinApplication: ''
+    "roles": ['fake-role-1', 'fake-role-2'],
+    "groups": ['fake-group-1', 'fake-group-2'],
+    "withinApplication": ''
 };
 
 export const mockSearchUserByGroupsAndRolesAndApp: IdentityUserFilterInterface = {
-    roles: ['fake-role-1', 'fake-role-2'],
-    groups: ['fake-group-1', 'fake-group-2'],
-    withinApplication: 'fake-app-name'
+    "roles": ['fake-role-1', 'fake-role-2'],
+    "groups": ['fake-group-1', 'fake-group-2'],
+    "withinApplication": 'fake-app-name'
 };
 
 export const mockSearchUserByRoles: IdentityUserFilterInterface = {
-    roles: ['fake-role-1', 'fake-role-2'],
-    groups: [],
-    withinApplication: ''
+    "roles": ['fake-role-1', 'fake-role-2'],
+    "groups": [],
+    "withinApplication": ''
 };
 
 export const mockSearchUserByRolesAndApp: IdentityUserFilterInterface = {
-    roles: ['fake-role-1', 'fake-role-2'],
-    groups: [],
-    withinApplication: 'fake-app-name'
+    "roles": ['fake-role-1', 'fake-role-2'],
+    "groups": [],
+    "withinApplication": 'fake-app-name'
 };
 
 export const mockSearchUserByApp: IdentityUserFilterInterface = {
-    roles: [],
-    groups: [],
-    withinApplication: 'fake-app-name'
+    "roles": [],
+    "groups": [],
+    "withinApplication": 'fake-app-name'
 };
 
 export const mockSearchUserByAppAndGroups: IdentityUserFilterInterface = {
-    roles: [],
-    groups: ['fake-group-1', 'fake-group-2'],
-    withinApplication: 'fake-app-name'
+    "roles": [],
+    "groups": ['fake-group-1', 'fake-group-2'],
+    "withinApplication": 'fake-app-name'
 };
 
 export const mockHttpErrorResponse = new HttpErrorResponse({
-    error: 'Mock Error',
-    status: 404, statusText: 'Not Found'
+    "error": 'Mock Error',
+    "status": 404, "statusText": 'Not Found'
 });

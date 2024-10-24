@@ -18,25 +18,25 @@
 import { ContentInfo, Node, NodePagingList, UserInfo } from '@alfresco/js-api';
 
 export const fakeSearch = {
-    list: new NodePagingList({
-        pagination: {
-            count: 1,
-            hasMoreItems: false,
-            totalItems: 1,
-            skipCount: 0,
-            maxItems: 100
+    "list": new NodePagingList({
+        "pagination": {
+            "count": 1,
+            "hasMoreItems": false,
+            "totalItems": 1,
+            "skipCount": 0,
+            "maxItems": 100
         },
-        entries: [
+        "entries": [
             {
-                entry: new Node({
-                    id: '123',
-                    name: 'MyDoc',
-                    content: new ContentInfo({ mimeType: 'text/plain' }),
-                    createdByUser: new UserInfo({
-                        displayName: 'John Doe'
+                "entry": new Node({
+                    "id": '123',
+                    "name": 'MyDoc',
+                    "content": new ContentInfo({ "mimeType": 'text/plain' }),
+                    "createdByUser": new UserInfo({
+                        "displayName": 'John Doe'
                     }),
-                    modifiedByUser: new UserInfo({
-                        displayName: 'John Doe'
+                    "modifiedByUser": new UserInfo({
+                        "displayName": 'John Doe'
                     })
                 })
             }
@@ -45,15 +45,15 @@ export const fakeSearch = {
 };
 
 export const mockError = {
-    error: {
-        errorKey: 'Search failed',
-        statusCode: 400,
-        briefSummary: '08220082 search failed',
-        stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-        descriptionURL: 'https://api-explorer.alfresco.com'
+    "error": {
+        "errorKey": 'Search failed',
+        "statusCode": 400,
+        "briefSummary": '08220082 search failed',
+        "stackTrace": 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+        "descriptionURL": 'https://api-explorer.alfresco.com'
     }
 };
 
 export const searchMockApi: any = {
-    findNodes: () => Promise.resolve(fakeSearch)
+    "findNodes": () => Promise.resolve(fakeSearch)
 };

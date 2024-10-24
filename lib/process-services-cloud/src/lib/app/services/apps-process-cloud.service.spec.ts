@@ -32,13 +32,13 @@ describe('AppsProcessCloudService', () => {
     let adfHttpClient: AdfHttpClient;
 
     const apiMockResponse: any = Promise.resolve({
-        list: { entries: [{ entry: fakeApplicationInstance[0] }, { entry: fakeApplicationInstance[1] }] }
+        "list": { "entries": [{ "entry": fakeApplicationInstance[0] }, { "entry": fakeApplicationInstance[1] }] }
     });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, ProcessServiceCloudTestingModule],
-            providers: [AlfrescoApiService, AppConfigService]
+            "imports": [CoreTestingModule, ProcessServiceCloudTestingModule],
+            "providers": [AlfrescoApiService, AppConfigService]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         spyOn(adfHttpClient, 'request').and.returnValue(apiMockResponse);
@@ -73,9 +73,9 @@ describe('AppsProcessCloudService', () => {
 
     it('Should not fetch deployed applications if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getDeployedApplicationsByStatus').and.returnValue(throwError(errorResponse));

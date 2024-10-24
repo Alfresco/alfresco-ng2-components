@@ -20,116 +20,116 @@ import { fakeApplicationInstance } from '../../../app/mock/app-model.mock';
 import { endOfDay, startOfDay } from 'date-fns';
 
 export const mockAlfrescoApi: any = {
-    oauth2Auth: {
-        callCustomApi: () => Promise.resolve(fakeApplicationInstance)
+    "oauth2Auth": {
+        "callCustomApi": () => Promise.resolve(fakeApplicationInstance)
     },
-    isEcmLoggedIn: () => false,
-    reply: jasmine.createSpy('reply')
+    "isEcmLoggedIn": () => false,
+    "reply": jasmine.createSpy('reply')
 };
 
 export const mockTaskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
 
 export const mockTaskFilterResponse = {
-    name: 'FakeInvolvedTasks',
-    icon: 'adjust',
-    id: 'mock-task-filter-id',
-    appName: 'mock-app-name',
-    processDefinitionId: 'process-def-id',
-    assignee: 'fake-involved',
-    order: 'ASC',
-    sort: 'id',
-    processInstanceId: 'fakeProcessInstanceIdFromResponse'
+    "name": 'FakeInvolvedTasks',
+    "icon": 'adjust',
+    "id": 'mock-task-filter-id',
+    "appName": 'mock-app-name',
+    "processDefinitionId": 'process-def-id',
+    "assignee": 'fake-involved',
+    "order": 'ASC',
+    "sort": 'id',
+    "processInstanceId": 'fakeProcessInstanceIdFromResponse'
 };
 
 export const mockTaskFilterResponseWithProcessInstanceIdNull = {
-    name: 'FakeInvolvedTasks',
-    icon: 'adjust',
-    id: 'mock-task-filter-id',
-    appName: 'mock-app-name',
-    processDefinitionId: 'process-def-id',
-    assignee: 'fake-involved',
-    order: 'ASC',
-    sort: 'id',
-    processInstanceId: null
+    "name": 'FakeInvolvedTasks',
+    "icon": 'adjust',
+    "id": 'mock-task-filter-id',
+    "appName": 'mock-app-name',
+    "processDefinitionId": 'process-def-id',
+    "assignee": 'fake-involved',
+    "order": 'ASC',
+    "sort": 'id',
+    "processInstanceId": null
 };
 
 export const mockDefaultTaskFilter = {
-    name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
-    id: 'filter-id',
-    key: 'all-fake-task',
-    icon: 'adjust',
-    sort: 'startDate',
-    status: 'ALL',
-    order: 'DESC'
+    "name": 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
+    "id": 'filter-id',
+    "key": 'all-fake-task',
+    "icon": 'adjust',
+    "sort": 'startDate',
+    "status": 'ALL',
+    "order": 'DESC'
 };
 
 export const mockDateFilterFromTo = {
-    startFrom: startOfDay(new Date()).toISOString(),
-    startTo: endOfDay(new Date()).toISOString()
+    "startFrom": startOfDay(new Date()).toISOString(),
+    "startTo": endOfDay(new Date()).toISOString()
 };
 
 export const mockDateFilterStartEnd = {
-    startDate: startOfDay(new Date()).toISOString(),
-    endDate: endOfDay(new Date()).toISOString()
+    "startDate": startOfDay(new Date()).toISOString(),
+    "endDate": endOfDay(new Date()).toISOString()
 };
 
 export const mockDueDateFilter = {
-    key: 'dueDateRange',
-    label: '',
-    type: 'date-range',
-    value: '',
-    attributes: {
-        dateType: 'dueDateType',
-        from: '_dueDateFrom',
-        to: '_dueDateTo'
+    "key": 'dueDateRange',
+    "label": '',
+    "type": 'date-range',
+    "value": '',
+    "attributes": {
+        "dateType": 'dueDateType',
+        "from": '_dueDateFrom',
+        "to": '_dueDateTo'
     }
 };
 
 export const mockCompletedDateFilter = {
-    key: 'completedDateType',
-    label: '',
-    type: 'date-range',
-    value: '',
-    attributes: {
-        dateType: 'completedDateType',
-        from: '_completedFrom',
-        to: '_completedTo'
+    "key": 'completedDateType',
+    "label": '',
+    "type": 'date-range',
+    "value": '',
+    "attributes": {
+        "dateType": 'completedDateType',
+        "from": '_completedFrom',
+        "to": '_completedTo'
     }
 };
 
 export const mockCreatedDateFilter = {
-    key: 'createdDateType',
-    label: '',
-    type: 'date-range',
-    value: '',
-    attributes: {
-        dateType: 'createdDateType',
-        from: '_createdFrom',
-        to: '_createdTo'
+    "key": 'createdDateType',
+    "label": '',
+    "type": 'date-range',
+    "value": '',
+    "attributes": {
+        "dateType": 'createdDateType',
+        "from": '_createdFrom',
+        "to": '_createdTo'
     }
 };
 
 export const mockApplicationsSelectorOptions = [
     {
-        label: 'application-new-1 (test-env-name-1)',
-        value: 'application-new-1'
+        "label": 'application-new-1 (test-env-name-1)',
+        "value": 'application-new-1'
     },
     {
-        label: 'application-new-1 (test-env-name-1)',
-        value: 'application-new-1'
+        "label": 'application-new-1 (test-env-name-1)',
+        "value": 'application-new-1'
     },
     {
-        label: 'application-new-1 (test-env-name-1)',
-        value: 'application-new-1'
+        "label": 'application-new-1 (test-env-name-1)',
+        "value": 'application-new-1'
     }
 ];
 
 export const mockApplicationTaskFilterProperties = [
     {
-        label: 'test-label',
-        type: 'select',
-        key: 'appName',
-        value: mockApplicationsSelectorOptions[0].value,
-        options: mockApplicationsSelectorOptions
+        "label": 'test-label',
+        "type": 'select',
+        "key": 'appName',
+        "value": mockApplicationsSelectorOptions[0].value,
+        "options": mockApplicationsSelectorOptions
     }
 ];

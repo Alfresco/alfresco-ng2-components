@@ -22,13 +22,13 @@ import { ProcessServicesCloudModule } from '../process-services-cloud.module';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 @NgModule({
-    imports: [
+    "imports": [
         AuthModule.forRoot(),
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ProcessServicesCloudModule.forRoot()
     ],
-    providers: [
+    "providers": [
         provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
         provideAnimations()
     ]

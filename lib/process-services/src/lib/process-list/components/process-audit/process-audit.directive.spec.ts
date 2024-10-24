@@ -25,10 +25,10 @@ import { ProcessInstanceAuditInfoRepresentation } from '@alfresco/js-api';
 import { ProcessAuditDirective } from '@alfresco/adf-process-services';
 
 @Component({
-    selector: 'adf-basic-button',
-    standalone: true,
-    imports: [ProcessAuditDirective],
-    template: ` <button
+    "selector": 'adf-basic-button',
+    "standalone": true,
+    "imports": [ProcessAuditDirective],
+    "template": ` <button
         id="auditButton"
         adf-process-audit
         [process-id]="'1234'"
@@ -46,10 +46,10 @@ class BasicButtonComponent {
     fileName: string;
     format: string;
 
-    onAuditClick(_event: any) {
+    onAuditClick (_event: any) {
         /* do nothing */
     }
-    onAuditError(_event: any) {
+    onAuditError (_event: any) {
         /* do nothing */
     }
 }
@@ -75,14 +75,14 @@ describe('ProcessAuditDirective', () => {
                 'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
                 'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G'
         );
-        return new Blob([pdfData], { type: 'application/pdf' });
+        return new Blob([pdfData], { "type": 'application/pdf' });
     };
 
     const blob = createFakePdfBlob();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, BasicButtonComponent]
+            "imports": [ProcessTestingModule, BasicButtonComponent]
         });
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
@@ -103,7 +103,7 @@ describe('ProcessAuditDirective', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(component.onAuditClick).toHaveBeenCalledWith({ format: 'pdf', value: blob, fileName: 'FakeAuditName' });
+            expect(component.onAuditClick).toHaveBeenCalledWith({ "format": 'pdf', "value": blob, "fileName": 'FakeAuditName' });
         });
 
         button.click();
@@ -148,40 +148,40 @@ describe('ProcessAuditDirective', () => {
         component.format = 'json';
         component.download = true;
         const auditJson: ProcessInstanceAuditInfoRepresentation = {
-            processInstanceId: '42516',
-            processInstanceName: 'Fake Process - August 3rd 2017',
-            processDefinitionName: 'Claim Approval Process',
-            processDefinitionVersion: '1',
-            processInstanceStartTime: 'Thu Aug 03 15:32:47 UTC 2017',
-            processInstanceEndTime: null,
+            "processInstanceId": '42516',
+            "processInstanceName": 'Fake Process - August 3rd 2017',
+            "processDefinitionName": 'Claim Approval Process',
+            "processDefinitionVersion": '1',
+            "processInstanceStartTime": 'Thu Aug 03 15:32:47 UTC 2017',
+            "processInstanceEndTime": null,
             // eslint-disable-next-line @cspell/spellchecker
-            processInstanceDurationInMillis: null,
-            processInstanceInitiator: 'MyName MyLastname',
-            entries: [
+            "processInstanceDurationInMillis": null,
+            "processInstanceInitiator": 'MyName MyLastname',
+            "entries": [
                 {
-                    index: 1,
-                    type: 'startForm',
-                    selectedOutcome: null,
-                    formData: [
+                    "index": 1,
+                    "type": 'startForm',
+                    "selectedOutcome": null,
+                    "formData": [
                         {
-                            fieldName: 'User Name',
-                            fieldId: 'username',
-                            value: 'dsassd'
+                            "fieldName": 'User Name',
+                            "fieldId": 'username',
+                            "value": 'dsassd'
                         },
-                        { fieldName: 'Claim Amount', fieldId: 'claimamount', value: '22' }
+                        { "fieldName": 'Claim Amount', "fieldId": 'claimamount', "value": '22' }
                     ],
-                    taskName: null,
-                    taskAssignee: null,
-                    activityId: null,
+                    "taskName": null,
+                    "taskAssignee": null,
+                    "activityId": null,
                     // eslint-disable-next-line @cspell/spellchecker
-                    activityName: null,
-                    activityType: null,
-                    startTime: null,
-                    endTime: null,
-                    durationInMillis: null
+                    "activityName": null,
+                    "activityType": null,
+                    "startTime": null,
+                    "endTime": null,
+                    "durationInMillis": null
                 }
             ],
-            decisionInfo: { calculatedValues: [], appliedRules: [] }
+            "decisionInfo": { "calculatedValues": [], "appliedRules": [] }
         };
         spyOn(service, 'fetchProcessAuditJsonById').and.returnValue(of(auditJson));
         spyOn(component, 'onAuditClick').and.callThrough();
@@ -192,7 +192,7 @@ describe('ProcessAuditDirective', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(component.onAuditClick).toHaveBeenCalledWith({ format: 'json', value: auditJson, fileName: 'FakeAuditName' });
+            expect(component.onAuditClick).toHaveBeenCalledWith({ "format": 'json', "value": auditJson, "fileName": 'FakeAuditName' });
         });
 
         button.click();
@@ -210,7 +210,7 @@ describe('ProcessAuditDirective', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(component.onAuditClick).toHaveBeenCalledWith({ format: 'pdf', value: blob, fileName: 'FakeAuditName' });
+            expect(component.onAuditClick).toHaveBeenCalledWith({ "format": 'pdf', "value": blob, "fileName": 'FakeAuditName' });
         });
 
         button.click();

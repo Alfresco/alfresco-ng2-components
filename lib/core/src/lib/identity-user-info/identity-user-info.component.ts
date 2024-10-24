@@ -26,12 +26,12 @@ import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-identity-user-info',
-    standalone: true,
-    imports: [CommonModule, FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslateModule],
-    templateUrl: './identity-user-info.component.html',
-    styleUrls: ['./identity-user-info.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-identity-user-info',
+    "standalone": true,
+    "imports": [CommonModule, FullNamePipe, MatMenuModule, InitialUsernamePipe, MatButtonModule, MatCardModule, TranslateModule],
+    "templateUrl": './identity-user-info.component.html',
+    "styleUrls": ['./identity-user-info.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class IdentityUserInfoComponent implements OnDestroy {
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
@@ -69,30 +69,30 @@ export class IdentityUserInfoComponent implements OnDestroy {
 
     private destroy$ = new Subject();
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.destroy$.next(true);
         this.destroy$.complete();
     }
 
-    onKeyPress(event: KeyboardEvent) {
+    onKeyPress (event: KeyboardEvent) {
         this.closeUserModal(event);
     }
 
-    private closeUserModal($event: KeyboardEvent) {
+    private closeUserModal ($event: KeyboardEvent) {
         if ($event.keyCode === 27) {
             this.trigger.closeMenu();
         }
     }
 
-    stopClosing(event: Event) {
+    stopClosing (event: Event) {
         event.stopPropagation();
     }
 
-    get showOnRight(): boolean {
+    get showOnRight (): boolean {
         return this.namePosition === 'right';
     }
 
-    get canShow(): boolean {
+    get canShow (): boolean {
         return this.isLoggedIn && !!this.identityUser;
     }
 }

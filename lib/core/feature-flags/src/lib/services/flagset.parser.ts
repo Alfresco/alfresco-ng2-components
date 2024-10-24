@@ -25,27 +25,27 @@ interface SerializedFlagSet {
 }
 
 export class FlagSetParser {
-    static serialize(flags: WritableFlagChangeset): SerializedFlagSet {
+    static serialize (flags: WritableFlagChangeset): SerializedFlagSet {
         return Object.keys(flags).reduce(
             (acc, key) => ({
                 ...acc,
                 [key]: {
-                    current: flags[key].current,
-                    fictive: flags[key].fictive
+                    "current": flags[key].current,
+                    "fictive": flags[key].fictive
                 }
             }),
             {}
         );
     }
 
-    static deserialize(serializedFlags: SerializedFlagSet): WritableFlagChangeset {
+    static deserialize (serializedFlags: SerializedFlagSet): WritableFlagChangeset {
         return Object.keys(serializedFlags).reduce(
             (acc, key) => ({
                 ...acc,
                 [key]: {
-                    current: serializedFlags[key].current,
-                    previous: null,
-                    ...(serializedFlags[key].fictive ? { fictive: true } : {})
+                    "current": serializedFlags[key].current,
+                    "previous": null,
+                    ...(serializedFlags[key].fictive ? { "fictive": true } : {})
                 }
             }),
             {}

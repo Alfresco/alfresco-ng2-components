@@ -30,7 +30,7 @@ describe('DocumentActionsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         documentListService = TestBed.inject(DocumentListService);
         service = TestBed.inject(DocumentActionsService);
@@ -111,7 +111,7 @@ describe('DocumentActionsService', () => {
         const deleteObservable = service.getHandler('delete')(file);
 
         await deleteObservable.subscribe({
-            error: (error) => {
+            "error": (error) => {
                 expect(error.message).toEqual('No permission to delete');
             }
         });

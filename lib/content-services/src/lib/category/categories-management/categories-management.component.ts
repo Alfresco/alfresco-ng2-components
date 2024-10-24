@@ -39,9 +39,9 @@ interface CategoryNameControlErrors {
 }
 
 @Component({
-    selector: 'adf-categories-management',
-    standalone: true,
-    imports: [
+    "selector": 'adf-categories-management',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         AutoFocusDirective,
@@ -52,9 +52,9 @@ interface CategoryNameControlErrors {
         MatListModule,
         MatProgressSpinnerModule
     ],
-    templateUrl: './categories-management.component.html',
-    styleUrls: ['./categories-management.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './categories-management.component.html',
+    "styleUrls": ['./categories-management.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class CategoriesManagementComponent implements OnInit, OnDestroy {
     readonly nameErrorMessagesByErrors = new Map<keyof CategoryNameControlErrors, string>([
@@ -94,7 +94,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      * @param categoryNameControlVisible control visibility.
      */
     @Input()
-    set categoryNameControlVisible(categoryNameControlVisible: boolean) {
+    set categoryNameControlVisible (categoryNameControlVisible: boolean) {
         this._categoryNameControlVisible = categoryNameControlVisible;
         if (categoryNameControlVisible) {
             setTimeout(() => {
@@ -107,7 +107,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         }
     }
 
-    get categoryNameControlVisible(): boolean {
+    get categoryNameControlVisible (): boolean {
         return this._categoryNameControlVisible;
     }
 
@@ -146,9 +146,9 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     @ViewChild('categoryNameInput')
     private categoryNameInputElement: ElementRef;
 
-    constructor(private categoryService: CategoryService) {}
+    constructor (private categoryService: CategoryService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.categoryNameControl.valueChanges
             .pipe(
                 map((name: string) => name.trim()),
@@ -186,55 +186,55 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.cancelExistingCategoriesLoading$.next();
         this.cancelExistingCategoriesLoading$.complete();
     }
 
-    get categoryNameControl(): FormControl<string> {
+    get categoryNameControl (): FormControl<string> {
         return this._categoryNameControl;
     }
 
     /*
      * Returns `true` if categories empty and category panel non editable state, otherwise `false`
      */
-    get showEmptyCategoryMessage(): boolean {
+    get showEmptyCategoryMessage (): boolean {
         return this.categories.length === 0 && !this.categoryNameControlVisible;
     }
 
-    get existingCategories(): Category[] {
+    get existingCategories (): Category[] {
         return this._existingCategories;
     }
 
-    get categoryNameErrorMessageKey(): string {
+    get categoryNameErrorMessageKey (): string {
         return this._categoryNameErrorMessageKey;
     }
 
-    get existingCategoriesLoading(): boolean {
+    get existingCategoriesLoading (): boolean {
         return this._existingCategoriesLoading;
     }
 
-    get typing(): boolean {
+    get typing (): boolean {
         return this._typing;
     }
 
-    get existingCategoriesPanelVisible(): boolean {
+    get existingCategoriesPanelVisible (): boolean {
         return this._existingCategoriesPanelVisible;
     }
 
-    get isCRUDMode(): boolean {
+    get isCRUDMode (): boolean {
         return this.managementMode === CategoriesManagementMode.CRUD;
     }
 
     /**
      * Adds category that has been typed to a categoryNameControl and hides it afterwards.
      */
-    addCategory() {
+    addCategory () {
         if (this.isCRUDMode && !this._typing && !this.categoryNameControl.invalid) {
             const newCatName = this.categoryNameControl.value.trim();
-            const newCat = new Category({ id: newCatName, name: newCatName });
+            const newCat = new Category({ "id": newCatName, "name": newCatName });
             this.categories.push(newCat);
             this.clearCategoryNameInput();
             this._existingCategories = null;
@@ -246,7 +246,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      * Adds existing category to categories list and removes it from existing categories list.
      * @param category - selection list change containing selected category
      */
-    addCategoryToAssign(category: Category) {
+    addCategoryToAssign (category: Category) {
         if (!(this.isCRUDMode || (!this.multiSelect && this.categories.length > 0))) {
             const selectedCategory: Category = category;
             this.categories.push(selectedCategory);
@@ -260,19 +260,19 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
      * Removes the category from categories list and adds it to existing categories list in ASSIGN mode.
      * @param category - category to remove
      */
-    removeCategory(category: Category) {
+    removeCategory (category: Category) {
         this.categories.splice(this.categories.indexOf(category), 1);
         if (!this.isCRUDMode && !!this._existingCategories && !this.initialCategories.some((cat) => cat.id === category.id)) {
             this._existingCategories.push(category);
             this.sortCategoriesList(this._existingCategories);
         }
         this.categoryNameControl.updateValueAndValidity({
-            emitEvent: false
+            "emitEvent": false
         });
         this.categoriesChange.emit(this.categories);
     }
 
-    private onNameControlValueChange(name: string) {
+    private onNameControlValueChange (name: string) {
         this.categoryNameControl.markAsTouched();
         if (name) {
             if (this.isCRUDMode) {
@@ -285,7 +285,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         }
     }
 
-    private searchForExistingCategories(searchTerm: string) {
+    private searchForExistingCategories (searchTerm: string) {
         this.categoryService.searchCategories(searchTerm, 0, this.existingCategoriesListLimit).subscribe((existingCategoriesResult) => {
             this._existingCategories = existingCategoriesResult.list.entries.map((rowEntry) => {
                 const existingCat = new Category();
@@ -304,7 +304,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         });
     }
 
-    private getChildrenCategories(searchTerm: string) {
+    private getChildrenCategories (searchTerm: string) {
         this.categoryService.getSubcategories(this.parentId).subscribe((childrenCategories) => {
             this._existingCategories = childrenCategories.list.entries.map((categoryEntry) => categoryEntry.entry);
             this._existingCategories = this._existingCategories.filter((existingCat) =>
@@ -317,32 +317,32 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
         });
     }
 
-    private validateIfNotAlreadyAdded(nameControl: FormControl<string>): CategoryNameControlErrors | null {
+    private validateIfNotAlreadyAdded (nameControl: FormControl<string>): CategoryNameControlErrors | null {
         return this.categories?.some((category) => this.compareCategories(category, nameControl.value)) && this.isCRUDMode
-            ? { duplicatedCategory: true }
+            ? { "duplicatedCategory": true }
             : null;
     }
 
-    private validateIfNotAlreadyCreated(nameControl: FormControl<string>): Observable<CategoryNameControlErrors | null> {
+    private validateIfNotAlreadyCreated (nameControl: FormControl<string>): Observable<CategoryNameControlErrors | null> {
         return this.existingCategoryLoaded$.pipe(
             map<void, CategoryNameControlErrors | null>(() =>
                 this.existingCategories.some((category) => this.compareCategories(category, nameControl.value)) && this.isCRUDMode
-                    ? { duplicatedExistingCategory: true }
+                    ? { "duplicatedExistingCategory": true }
                     : null
             ),
             first()
         );
     }
 
-    private compareCategories(category1?: Category, cat2Name?: string): boolean {
+    private compareCategories (category1?: Category, cat2Name?: string): boolean {
         return category1?.name.trim().toUpperCase() === cat2Name?.trim().toUpperCase();
     }
 
-    private validateEmptyCategory(categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
-        return categoryNameControl.value.length && !categoryNameControl.value.trim() ? { emptyCategory: true } : null;
+    private validateEmptyCategory (categoryNameControl: FormControl<string>): CategoryNameControlErrors | null {
+        return categoryNameControl.value.length && !categoryNameControl.value.trim() ? { "emptyCategory": true } : null;
     }
 
-    private setCategoryNameControlErrorMessageKey() {
+    private setCategoryNameControlErrorMessageKey () {
         this._categoryNameErrorMessageKey = this.categoryNameControl.invalid
             ? `CATEGORIES_MANAGEMENT.ERRORS.${this.nameErrorMessagesByErrors.get(
                   Object.keys(this.categoryNameControl.errors)[0] as keyof CategoryNameControlErrors
@@ -350,11 +350,11 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             : '';
     }
 
-    private sortCategoriesList(categoriesList: Category[]) {
+    private sortCategoriesList (categoriesList: Category[]) {
         categoriesList.sort((category1, category2) => category1.name.localeCompare(category2.name));
     }
 
-    private clearCategoryNameInput() {
+    private clearCategoryNameInput () {
         this.categoryNameControl.setValue('');
         this.categoryNameControl.markAsUntouched();
     }

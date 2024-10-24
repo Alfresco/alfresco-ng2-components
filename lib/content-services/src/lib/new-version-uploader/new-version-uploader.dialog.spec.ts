@@ -30,26 +30,26 @@ describe('NewVersionUploaderDialog', () => {
     let nativeElement: HTMLElement;
 
     const cssSelectors = {
-        adfVersionUploadButton: '#adf-version-upload-button',
-        adfVersionComparison: '#adf-version-comparison',
-        adfVersionList: '.adf-version-list',
-        title: '[data-automation-id="new-version-uploader-dialog-title"]'
+        "adfVersionUploadButton": '#adf-version-upload-button',
+        "adfVersionComparison": '#adf-version-comparison',
+        "adfVersionList": '.adf-version-list',
+        "title": '[data-automation-id="new-version-uploader-dialog-title"]'
     };
 
     const mockDialogRef = {
-        close: jasmine.createSpy('close'),
-        open: jasmine.createSpy('open')
+        "close": jasmine.createSpy('close'),
+        "open": jasmine.createSpy('open')
     };
     const showVersionsOnly = true;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, NewVersionUploaderDialogComponent],
-            providers: [
-                { provide: MAT_DIALOG_DATA, useValue: { node: mockNode, showVersionsOnly, file: mockFile } },
+            "imports": [ContentTestingModule, NewVersionUploaderDialogComponent],
+            "providers": [
+                { "provide": MAT_DIALOG_DATA, "useValue": { "node": mockNode, showVersionsOnly, "file": mockFile } },
                 {
-                    provide: MatDialogRef,
-                    useValue: mockDialogRef
+                    "provide": MatDialogRef,
+                    "useValue": mockDialogRef
                 }
             ]
         });
@@ -115,9 +115,9 @@ describe('NewVersionUploaderDialog', () => {
             fixture.detectChanges();
             component.handleUpload(mockNode);
             const expectedEmittedValue: any = {
-                action: NewVersionUploaderDataAction.upload,
-                currentVersion: component.data.node,
-                newVersion: mockNode
+                "action": NewVersionUploaderDataAction.upload,
+                "currentVersion": component.data.node,
+                "newVersion": mockNode
             };
             expect(spyOnDialogAction).toHaveBeenCalledWith(expectedEmittedValue);
         });

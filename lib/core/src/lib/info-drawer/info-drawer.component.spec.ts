@@ -34,7 +34,7 @@ describe('InfoDrawerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, InfoDrawerComponent]
+            "imports": [NoopTranslateModule, InfoDrawerComponent]
         });
 
         fixture = TestBed.createComponent(InfoDrawerComponent);
@@ -49,7 +49,7 @@ describe('InfoDrawerComponent', () => {
 
     it('should emit when tab is changed', () => {
         const tabEmitSpy = spyOn(component.currentTab, 'emit');
-        const event = { index: 1, tab: { textLabel: 'DETAILS' } } as MatTabChangeEvent;
+        const event = { "index": 1, "tab": { "textLabel": 'DETAILS' } } as MatTabChangeEvent;
         component.onTabChange(event);
         expect(tabEmitSpy).toHaveBeenCalledWith(1);
     });
@@ -63,7 +63,7 @@ describe('InfoDrawerComponent', () => {
     });
 
     it('should stop propagation on keydown event', () => {
-        const escapeKeyboardEvent = new KeyboardEvent('keydown', { key: ESCAPE.toString() });
+        const escapeKeyboardEvent = new KeyboardEvent('keydown', { "key": ESCAPE.toString() });
         const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
 
         fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);
@@ -72,7 +72,7 @@ describe('InfoDrawerComponent', () => {
     });
 
     it('should stop propagation on keyup event', () => {
-        const escapeKeyboardEvent = new KeyboardEvent('keyup', { key: ESCAPE.toString() });
+        const escapeKeyboardEvent = new KeyboardEvent('keyup', { "key": ESCAPE.toString() });
         const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
 
         fixture.debugElement.triggerEventHandler('keyup', escapeKeyboardEvent);
@@ -82,9 +82,9 @@ describe('InfoDrawerComponent', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [InfoDrawerTabComponent, InfoDrawerComponent],
-    template: `
+    "standalone": true,
+    "imports": [InfoDrawerTabComponent, InfoDrawerComponent],
+    "template": `
         <adf-info-drawer [selectedIndex]="tabIndex" [icon]="icon" title="Fake Title Custom">
             <adf-info-drawer-tab label="Tab1"></adf-info-drawer-tab>
             <adf-info-drawer-tab label="Tab2"></adf-info-drawer-tab>
@@ -106,7 +106,7 @@ describe('Custom InfoDrawer', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, CustomInfoDrawerComponent]
+            "imports": [NoopAnimationsModule, NoopTranslateModule, CustomInfoDrawerComponent]
         });
 
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);
@@ -164,9 +164,9 @@ describe('Custom InfoDrawer', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [InfoDrawerComponent],
-    template: ` <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title"> </adf-info-drawer> `
+    "standalone": true,
+    "imports": [InfoDrawerComponent],
+    "template": ` <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title"> </adf-info-drawer> `
 })
 class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
     showHeader: boolean;
@@ -180,7 +180,7 @@ describe('Header visibility InfoDrawer', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, VisibilityInfoDrawerComponent]
+            "imports": [NoopTranslateModule, VisibilityInfoDrawerComponent]
         });
         fixture = TestBed.createComponent(VisibilityInfoDrawerComponent);
         fixture.detectChanges();

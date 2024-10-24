@@ -33,7 +33,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(ServiceTaskListCloudService);
@@ -41,7 +41,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
     });
 
     it('should append to the call all the parameters', (done) => {
-        const taskRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ServiceTaskQueryCloudRequestModel;
+        const taskRequest = { "appName": 'fakeName', "skipCount": 0, "maxItems": 20, "service": 'fake-service' } as ServiceTaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallQueryParameters);
         service.getServiceTaskByRequest(taskRequest).subscribe((res) => {
             expect(res).toBeDefined();
@@ -54,7 +54,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
     });
 
     it('should concat the app name to the request url', (done) => {
-        const taskRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ServiceTaskQueryCloudRequestModel;
+        const taskRequest = { "appName": 'fakeName', "skipCount": 0, "maxItems": 20, "service": 'fake-service' } as ServiceTaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallUrl);
         service.getServiceTaskByRequest(taskRequest).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
@@ -66,13 +66,13 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
 
     it('should concat the sorting to append as parameters', (done) => {
         const taskRequest = {
-            appName: 'fakeName',
-            skipCount: 0,
-            maxItems: 20,
-            service: 'fake-service',
-            sorting: [
-                { orderBy: 'NAME', direction: 'DESC' },
-                { orderBy: 'TITLE', direction: 'ASC' }
+            "appName": 'fakeName',
+            "skipCount": 0,
+            "maxItems": 20,
+            "service": 'fake-service',
+            "sorting": [
+                { "orderBy": 'NAME', "direction": 'DESC' },
+                { "orderBy": 'TITLE', "direction": 'ASC' }
             ]
         } as ServiceTaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallQueryParameters);
@@ -85,7 +85,7 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
     });
 
     it('should return an error when app name is not specified', (done) => {
-        const taskRequest = { appName: null } as ServiceTaskQueryCloudRequestModel;
+        const taskRequest = { "appName": null } as ServiceTaskQueryCloudRequestModel;
         requestSpy.and.callFake(returnCallUrl);
         service.getServiceTaskByRequest(taskRequest).subscribe(
             () => {},
@@ -104,9 +104,9 @@ describe('Activiti ServiceTaskList Cloud Service', () => {
 
         it('should execute post method if all parameters are provided', async () => {
             const expected = {
-                expectedQueryUrl: 'http://localhost/fakeName/rb/admin/v1/executions/executionId_1/replay/service-task',
-                expectedPayload: {
-                    flowNodeId: 'flowNodeId_1'
+                "expectedQueryUrl": 'http://localhost/fakeName/rb/admin/v1/executions/executionId_1/replay/service-task',
+                "expectedPayload": {
+                    "flowNodeId": 'flowNodeId_1'
                 }
             };
 

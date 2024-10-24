@@ -30,12 +30,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslationService } from '../../../translation';
 
 @Component({
-    selector: 'adf-datatable-column-selector',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatDividerModule, ReactiveFormsModule, MatCheckboxModule],
-    templateUrl: './columns-selector.component.html',
-    styleUrls: ['./columns-selector.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-datatable-column-selector',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatDividerModule, ReactiveFormsModule, MatCheckboxModule],
+    "templateUrl": './columns-selector.component.html',
+    "styleUrls": ['./columns-selector.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     private translationService = inject(TranslationService);
@@ -60,7 +60,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
     searchInputControl = new UntypedFormControl('');
     searchQuery = '';
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.mainMenuTrigger.menuOpened.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             this.updateColumnItems();
         });
@@ -75,28 +75,28 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         });
     }
 
-    private updateColumnItems(): void {
+    private updateColumnItems (): void {
         let columns = this.columns.map((column) => ({ ...column }));
         columns = this.filterColumnItems(columns, this.searchQuery);
         columns = this.sortColumns(columns);
         this.columnItems = columns;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    closeMenu(): void {
+    closeMenu (): void {
         this.mainMenuTrigger.closeMenu();
     }
 
-    private filterString(value: string = '', filterBy: string = ''): string {
+    private filterString (value: string = '', filterBy: string = ''): string {
         const testResult = filterBy ? value.toLowerCase().indexOf(filterBy.toLowerCase()) > -1 : true;
         return testResult ? value : '';
     }
 
-    private filterColumnItems(columns: DataColumn[], query: string): DataColumn[] {
+    private filterColumnItems (columns: DataColumn[], query: string): DataColumn[] {
         const result = [];
 
         for (const column of columns) {
@@ -119,16 +119,16 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    changeColumnVisibility(column: DataColumn): void {
+    changeColumnVisibility (column: DataColumn): void {
         column.isHidden = !column.isHidden;
     }
 
-    apply(): void {
+    apply (): void {
         this.submitColumnsVisibility.emit(this.columnItems);
         this.closeMenu();
     }
 
-    isCheckboxDisabled(column: DataColumn): boolean {
+    isCheckboxDisabled (column: DataColumn): boolean {
         return (
             this.maxColumnsVisible &&
             column.isHidden &&
@@ -136,7 +136,7 @@ export class ColumnsSelectorComponent implements OnInit, OnDestroy {
         );
     }
 
-    private sortColumns(columns: DataColumn[]): DataColumn[] {
+    private sortColumns (columns: DataColumn[]): DataColumn[] {
         if (this.columnsSorting) {
             const shownColumns = columns.filter((column) => !column.isHidden);
             const hiddenColumns = columns.filter((column) => column.isHidden);

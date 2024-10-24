@@ -57,20 +57,20 @@ import { IconComponent } from '../../icon';
 import { ThumbnailService } from '../../common';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
-    enableDownloadPrompt: false,
-    enableDownloadPromptReminder: false,
-    downloadPromptDelay: 50,
-    downloadPromptReminderDelay: 30
+    "enableDownloadPrompt": false,
+    "enableDownloadPromptReminder": false,
+    "downloadPromptDelay": 50,
+    "downloadPromptReminderDelay": 30
 };
 
 @Component({
-    selector: 'adf-viewer',
-    standalone: true,
-    templateUrl: './viewer.component.html',
-    styleUrls: ['./viewer.component.scss'],
-    host: { class: 'adf-viewer' },
-    encapsulation: ViewEncapsulation.None,
-    imports: [
+    "selector": 'adf-viewer',
+    "standalone": true,
+    "templateUrl": './viewer.component.html',
+    "styleUrls": ['./viewer.component.scss'],
+    "host": { "class": 'adf-viewer' },
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [
         NgIf,
         A11yModule,
         ToolbarComponent,
@@ -88,7 +88,7 @@ const DEFAULT_NON_PREVIEW_CONFIG = {
         ViewerToolbarCustomActionsComponent,
         IconComponent
     ],
-    providers: [ViewUtilService]
+    "providers": [ViewUtilService]
 })
 export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     private thumbnailService = inject(ThumbnailService);
@@ -105,10 +105,10 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @ContentChild(ViewerMoreActionsComponent)
     mnuMoreActions: ViewerMoreActionsComponent;
 
-    @ContentChild('viewerExtensions', { static: false })
+    @ContentChild('viewerExtensions', { "static": false })
     viewerTemplateExtensions: TemplateRef<any>;
 
-    get CloseButtonPosition() {
+    get CloseButtonPosition () {
         return CloseButtonPosition;
     }
 
@@ -200,8 +200,8 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
      */
     @Input()
     allowedEditActions: { [key: string]: boolean } = {
-        rotate: true,
-        crop: true
+        "rotate": true,
+        "crop": true
     };
 
     /** media subtitles for the media player*/
@@ -293,14 +293,14 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     public downloadPromptReminderTimer: number;
     public mimeTypeIconUrl: string;
 
-    constructor(
+    constructor (
         private el: ElementRef,
         public dialog: MatDialog,
         private viewUtilsService: ViewUtilService,
         private appConfigService: AppConfigService
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const { blobFile, urlFile, mimeType } = changes;
 
         if (blobFile?.currentValue) {
@@ -317,12 +317,12 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.closeOverlayManager();
         this.configureAndInitDownloadPrompt();
     }
 
-    private closeOverlayManager() {
+    private closeOverlayManager () {
         this.dialog.afterOpened
             .pipe(
                 skipWhile(() => !this.overlayMode),
@@ -352,32 +352,32 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
             });
     }
 
-    onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
+    onNavigateBeforeClick (event: MouseEvent | KeyboardEvent) {
         this.navigateBefore.next(event);
     }
 
-    onNavigateNextClick(event: MouseEvent | KeyboardEvent) {
+    onNavigateNextClick (event: MouseEvent | KeyboardEvent) {
         this.navigateNext.next(event);
     }
 
     /**
      * close the viewer
      */
-    onClose() {
+    onClose () {
         this.showViewer = false;
         this.showViewerChange.emit(this.showViewer);
     }
 
-    toggleRightSidebar() {
+    toggleRightSidebar () {
         this.showRightSidebar = !this.showRightSidebar;
     }
 
-    toggleLeftSidebar() {
+    toggleLeftSidebar () {
         this.showLeftSidebar = !this.showLeftSidebar;
     }
 
     @HostListener('document:keyup', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) {
+    handleKeyboardEvent (event: KeyboardEvent) {
         if (event?.defaultPrevented) {
             return;
         }
@@ -406,7 +406,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     /**
      * Triggers full screen mode with a main content area displayed.
      */
-    enterFullScreen(): void {
+    enterFullScreen (): void {
         if (this.allowFullScreen) {
             const container = this.el.nativeElement.querySelector('.adf-viewer__fullscreen-container');
             if (container) {
@@ -423,24 +423,24 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    onSubmitFile(newImageBlob: Blob) {
+    onSubmitFile (newImageBlob: Blob) {
         this.submitFile.emit(newImageBlob);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.clearDownloadPromptTimeouts();
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    private configureAndInitDownloadPrompt() {
+    private configureAndInitDownloadPrompt () {
         this.configureDownloadPromptProperties();
         if (this.enableDownloadPrompt) {
             this.initDownloadPrompt();
         }
     }
 
-    private configureDownloadPromptProperties() {
+    private configureDownloadPromptProperties () {
         const nonResponsivePreviewConfig = this.appConfigService.get('viewer', DEFAULT_NON_PREVIEW_CONFIG);
 
         this.enableDownloadPrompt = nonResponsivePreviewConfig.enableDownloadPrompt;
@@ -449,13 +449,13 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this.downloadPromptReminderDelay = nonResponsivePreviewConfig.downloadPromptReminderDelay;
     }
 
-    private initDownloadPrompt() {
+    private initDownloadPrompt () {
         this.downloadPromptTimer = window.setTimeout(() => {
             this.showOrClearDownloadPrompt();
         }, this.downloadPromptDelay * 1000);
     }
 
-    private showOrClearDownloadPrompt() {
+    private showOrClearDownloadPrompt () {
         if (!this.urlFile && !this.blobFile) {
             this.showDownloadPrompt();
         } else {
@@ -463,7 +463,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    public clearDownloadPromptTimeouts() {
+    public clearDownloadPromptTimeouts () {
         if (this.downloadPromptTimer) {
             clearTimeout(this.downloadPromptTimer);
         }
@@ -472,11 +472,11 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    private showDownloadPrompt() {
+    private showDownloadPrompt () {
         if (!this.isDialogVisible) {
             this.isDialogVisible = true;
             this.dialog
-                .open(DownloadPromptDialogComponent, { disableClose: true })
+                .open(DownloadPromptDialogComponent, { "disableClose": true })
                 .afterClosed()
                 .pipe(first())
                 .subscribe((result: DownloadPromptActions) => {

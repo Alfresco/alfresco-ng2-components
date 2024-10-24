@@ -22,6 +22,6 @@ import { VersionCompatibilityService } from './version-compatibility.service';
  * @param versionCompatibilityService service dependency
  * @returns factory function
  */
-export function versionCompatibilityFactory(versionCompatibilityService: VersionCompatibilityService) {
+export function versionCompatibilityFactory (versionCompatibilityService: VersionCompatibilityService) {
     return () => versionCompatibilityService;
 }

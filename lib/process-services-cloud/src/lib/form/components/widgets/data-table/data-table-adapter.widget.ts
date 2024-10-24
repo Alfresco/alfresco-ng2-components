@@ -24,28 +24,28 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
     private columnKeys: string[] = [];
     private helper = new DataTablePathParserHelper();
 
-    get selectedRow(): DataRow {
+    get selectedRow (): DataRow {
         return this.adapter.selectedRow;
     }
 
-    get rowsChanged(): Subject<Array<DataRow>> {
+    get rowsChanged (): Subject<Array<DataRow>> {
         return this.adapter.rowsChanged;
     }
 
-    constructor(data: any[], schema: DataColumn[]) {
+    constructor (data: any[], schema: DataColumn[]) {
         this.adapter = new ObjectDataTableAdapter(data, schema);
 
         this.createColumns(schema);
         this.createRows(data);
     }
 
-    private createColumns(schema: DataColumn[]): void {
+    private createColumns (schema: DataColumn[]): void {
         if (schema?.length) {
             this.adapter.setColumns(this.buildColumnsFromSchema(schema));
         }
     }
 
-    private buildColumnsFromSchema(schema: DataColumn[]): ObjectDataColumn[] {
+    private buildColumnsFromSchema (schema: DataColumn[]): ObjectDataColumn[] {
         return schema.map((dataColumn) => {
             this.columnKeys.push(dataColumn.key);
 
@@ -53,13 +53,13 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
         });
     }
 
-    private createRows(data: any[]): void {
+    private createRows (data: any[]): void {
         if (data?.length) {
             this.adapter.setRows(data.map((item) => this.buildDataRowFromItem(item)));
         }
     }
 
-    private buildDataRowFromItem(item: any): ObjectDataRow {
+    private buildDataRowFromItem (item: any): ObjectDataRow {
         const rowData = {};
         this.columnKeys.forEach((path, i) => {
             const rowValue = this.extractPropertyValue(this.helper.splitPathIntoProperties(path), item);
@@ -72,7 +72,7 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
         return new ObjectDataRow(rowData);
     }
 
-    private extractPropertyValue(properties: string[], item: any): string {
+    private extractPropertyValue (properties: string[], item: any): string {
         return properties.reduce((acc, property) => {
             if (!acc) {
                 return undefined;
@@ -87,11 +87,11 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
         }, item);
     }
 
-    getColumns(): Array<DataColumn> {
+    getColumns (): Array<DataColumn> {
         return this.adapter.getColumns();
     }
 
-    getRows(): DataRow[] {
+    getRows (): DataRow[] {
         if (this.isDataSourceValid()) {
             return this.adapter.getRows();
         }
@@ -99,43 +99,43 @@ export class WidgetDataTableAdapter implements DataTableAdapter {
         return [];
     }
 
-    setRows(rows: Array<DataRow>): void {
+    setRows (rows: Array<DataRow>): void {
         this.adapter.setRows(rows);
     }
 
-    setColumns(columns: Array<DataColumn>): void {
+    setColumns (columns: Array<DataColumn>): void {
         this.adapter.setColumns(columns);
     }
 
-    getValue(row: DataRow, col: DataColumn, resolverFn?: (_row: DataRow, _col: DataColumn) => any): any {
+    getValue (row: DataRow, col: DataColumn, resolverFn?: (_row: DataRow, _col: DataColumn) => any): any {
         return this.adapter.getValue(row, col, resolverFn);
     }
 
-    getColumnType(row: DataRow, col: DataColumn): string {
+    getColumnType (row: DataRow, col: DataColumn): string {
         return this.adapter.getColumnType(row, col);
     }
 
-    getSorting(): DataSorting {
+    getSorting (): DataSorting {
         return this.adapter.getSorting();
     }
 
-    setSorting(sorting: DataSorting): void {
+    setSorting (sorting: DataSorting): void {
         this.adapter.setSorting(sorting);
     }
 
-    sort(key?: string, direction?: string): void {
+    sort (key?: string, direction?: string): void {
         this.adapter.sort(key, direction);
     }
 
-    isDataSourceValid(): boolean {
+    isDataSourceValid (): boolean {
         return this.hasAllColumnsLinkedToData() && this.allMandatoryColumnPropertiesHaveValues();
     }
 
-    private allMandatoryColumnPropertiesHaveValues(): boolean {
+    private allMandatoryColumnPropertiesHaveValues (): boolean {
         return this.adapter.getColumns().every((column) => !!column.key);
     }
 
-    private hasAllColumnsLinkedToData(): boolean {
+    private hasAllColumnsLinkedToData (): boolean {
         const availableColumnKeys: string[] = this.adapter.getColumns().map((column) => column.key);
 
         return availableColumnKeys.every((columnKey) => this.adapter.getRows().some((row) => Object.keys(row.obj).includes(columnKey)));

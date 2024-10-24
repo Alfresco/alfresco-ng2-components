@@ -28,7 +28,7 @@ describe('ClipboardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatSnackBarModule]
+            "imports": [NoopTranslateModule, MatSnackBarModule]
         });
         clipboardService = TestBed.inject(ClipboardService);
         notificationService = TestBed.inject(NotificationService);

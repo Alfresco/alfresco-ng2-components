@@ -18,240 +18,240 @@
 export const presetsDefaultModel = {
     '-trashcan-': [
         {
-            key: '$thumbnail',
-            type: 'image',
-            srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-            sortable: false
+            "key": '$thumbnail',
+            "type": 'image',
+            "srTitle": 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
+            "sortable": false
         },
         {
-            key: 'name',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-            cssClass: 'full-width ellipsis-cell',
-            sortable: true
+            "key": 'name',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            "cssClass": 'full-width ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'path',
-            type: 'location',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-            sortable: true
+            "key": 'path',
+            "type": 'location',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
+            "sortable": true
         },
         {
-            key: 'content.sizeInBytes',
-            type: 'fileSize',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-            sortable: true
+            "key": 'content.sizeInBytes',
+            "type": 'fileSize',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
+            "sortable": true
         },
         {
-            key: 'archivedAt',
-            type: 'date',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON',
-            format: 'timeAgo',
-            sortable: true
+            "key": 'archivedAt',
+            "type": 'date',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON',
+            "format": 'timeAgo',
+            "sortable": true
         },
         {
-            key: 'archivedByUser.displayName',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY',
-            sortable: true
+            "key": 'archivedByUser.displayName',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY',
+            "sortable": true
         }
     ],
     '-sites-': [
         {
-            key: '$thumbnail',
-            type: 'image',
-            srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-            sortable: false
+            "key": '$thumbnail',
+            "type": 'image',
+            "srTitle": 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
+            "sortable": false
         },
         {
-            key: 'title',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-            cssClass: 'full-width ellipsis-cell',
-            sortable: true
+            "key": 'title',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            "cssClass": 'full-width ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'visibility',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.STATUS',
-            sortable: true
+            "key": 'visibility',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.STATUS',
+            "sortable": true
         }
     ],
     '-mysites-': [
         {
-            key: '$thumbnail',
-            type: 'image',
-            srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-            sortable: false
+            "key": '$thumbnail',
+            "type": 'image',
+            "srTitle": 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
+            "sortable": false
         },
         {
-            key: 'title',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-            cssClass: 'full-width ellipsis-cell',
-            sortable: true
+            "key": 'title',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            "cssClass": 'full-width ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'visibility',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.STATUS',
-            sortable: true
+            "key": 'visibility',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.STATUS',
+            "sortable": true
         }
     ],
     '-favorites-': [
         {
-            key: '$thumbnail',
-            type: 'image',
-            srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-            sortable: false
+            "key": '$thumbnail',
+            "type": 'image',
+            "srTitle": 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
+            "sortable": false
         },
         {
-            key: 'name',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-            cssClass: 'full-width ellipsis-cell',
-            sortable: true
+            "key": 'name',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            "cssClass": 'full-width ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'path',
-            type: 'location',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-            sortable: true
+            "key": 'path',
+            "type": 'location',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
+            "sortable": true
         },
         {
-            key: 'content.sizeInBytes',
-            type: 'fileSize',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-            sortable: true
+            "key": 'content.sizeInBytes',
+            "type": 'fileSize',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
+            "sortable": true
         },
         {
-            key: 'modifiedAt',
-            type: 'date',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
-            format: 'timeAgo',
-            sortable: true
+            "key": 'modifiedAt',
+            "type": 'date',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
+            "format": 'timeAgo',
+            "sortable": true
         },
         {
-            key: 'modifiedByUser.displayName',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
-            sortable: true
+            "key": 'modifiedByUser.displayName',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
+            "sortable": true
         }
     ],
     '-recent-': [
         {
-            key: '$thumbnail',
-            type: 'image',
-            srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-            sortable: false
+            "key": '$thumbnail',
+            "type": 'image',
+            "srTitle": 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
+            "sortable": false
         },
         {
-            key: 'name',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-            cssClass: 'full-width ellipsis-cell',
-            sortable: true
+            "key": 'name',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            "cssClass": 'full-width ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'path',
-            type: 'location',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-            cssClass: 'ellipsis-cell',
-            sortable: true
+            "key": 'path',
+            "type": 'location',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
+            "cssClass": 'ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'content.sizeInBytes',
-            type: 'fileSize',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-            sortable: true
+            "key": 'content.sizeInBytes',
+            "type": 'fileSize',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
+            "sortable": true
         },
         {
-            key: 'modifiedAt',
-            type: 'date',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
-            format: 'timeAgo',
-            sortable: true
+            "key": 'modifiedAt',
+            "type": 'date',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
+            "format": 'timeAgo',
+            "sortable": true
         }
     ],
     '-sharedlinks-': [
         {
-            key: '$thumbnail',
-            type: 'image',
-            srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-            sortable: false
+            "key": '$thumbnail',
+            "type": 'image',
+            "srTitle": 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
+            "sortable": false
         },
         {
-            key: 'name',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-            cssClass: 'full-width ellipsis-cell',
-            sortable: true
+            "key": 'name',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            "cssClass": 'full-width ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'path',
-            type: 'location',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-            cssClass: 'ellipsis-cell',
-            sortable: true
+            "key": 'path',
+            "type": 'location',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
+            "cssClass": 'ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'content.sizeInBytes',
-            type: 'fileSize',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-            sortable: true
+            "key": 'content.sizeInBytes',
+            "type": 'fileSize',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
+            "sortable": true
         },
         {
-            key: 'modifiedAt',
-            type: 'date',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
-            format: 'timeAgo',
-            sortable: true
+            "key": 'modifiedAt',
+            "type": 'date',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
+            "format": 'timeAgo',
+            "sortable": true
         },
         {
-            key: 'modifiedByUser.displayName',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
-            sortable: true
+            "key": 'modifiedByUser.displayName',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
+            "sortable": true
         },
         {
-            key: 'sharedByUser.displayName',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.SHARED_BY',
-            sortable: true
+            "key": 'sharedByUser.displayName',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.SHARED_BY',
+            "sortable": true
         }
     ],
-    default: [
+    "default": [
         {
-            key: '$thumbnail',
-            type: 'image',
-            srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-            sortable: false
+            "key": '$thumbnail',
+            "type": 'image',
+            "srTitle": 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
+            "sortable": false
         },
         {
-            key: 'name',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-            cssClass: 'full-width ellipsis-cell',
-            sortable: true
+            "key": 'name',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            "cssClass": 'full-width ellipsis-cell',
+            "sortable": true
         },
         {
-            key: 'content.sizeInBytes',
-            type: 'fileSize',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-            sortable: true
+            "key": 'content.sizeInBytes',
+            "type": 'fileSize',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
+            "sortable": true
         },
         {
-            key: 'modifiedAt',
-            type: 'date',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
-            format: 'timeAgo',
-            sortable: true
+            "key": 'modifiedAt',
+            "type": 'date',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
+            "format": 'timeAgo',
+            "sortable": true
         },
         {
-            key: 'modifiedByUser.displayName',
-            type: 'text',
-            title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
-            sortable: true
+            "key": 'modifiedByUser.displayName',
+            "type": 'text',
+            "title": 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
+            "sortable": true
         }
     ]
 };

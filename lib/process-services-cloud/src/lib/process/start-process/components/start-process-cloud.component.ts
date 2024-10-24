@@ -48,10 +48,10 @@ const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
 
 @Component({
-    selector: 'adf-cloud-start-process',
-    templateUrl: './start-process-cloud.component.html',
-    styleUrls: ['./start-process-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-start-process',
+    "templateUrl": './start-process-cloud.component.html',
+    "styleUrls": ['./start-process-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
     @ViewChild(MatAutocompleteTrigger)
@@ -146,18 +146,18 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     formCloud?: FormModel;
     processForm = new FormGroup({
-        processInstanceName: new FormControl('', [
+        "processInstanceName": new FormControl('', [
             Validators.required,
             Validators.maxLength(this.getMaxNameLength()),
             Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')
         ]),
-        processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
+        "processDefinition": new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
     });
 
     private readonly startProcessCloudService = inject(StartProcessCloudService);
     private readonly processNameCloudPipe = inject(ProcessNameCloudPipe);
 
-    get isProcessFormValid(): boolean {
+    get isProcessFormValid (): boolean {
         if (this.hasForm && this.isFormCloudLoaded) {
             return (this.formCloud ? !Object.keys(this.formCloud.values).length : false) || this.formCloud?.isValid || this.isProcessStarting;
         } else {
@@ -165,40 +165,40 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    get disableStartButton(): boolean {
+    get disableStartButton (): boolean {
         return !this.appName || !this.processDefinition.valid || this.isProcessStarting || this.isFormCloudLoading;
     }
 
-    get isProcessDefinitionsEmpty(): boolean {
+    get isProcessDefinitionsEmpty (): boolean {
         return !this.processDefinitionList.length;
     }
 
-    get processInstanceName(): FormControl<string> {
+    get processInstanceName (): FormControl<string> {
         return this.processForm.controls.processInstanceName;
     }
 
-    get processDefinition(): FormControl<string> {
+    get processDefinition (): FormControl<string> {
         return this.processForm.controls.processDefinition;
     }
 
-    get hasForm(): boolean {
+    get hasForm (): boolean {
         return !!this.processDefinitionCurrent?.formKey;
     }
 
-    get defaultStartProcessButtonLabel(): string {
+    get defaultStartProcessButtonLabel (): string {
         return this.translateService.instant('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.START').toUpperCase();
     }
 
-    get defaultCancelProcessButtonLabel(): string {
+    get defaultCancelProcessButtonLabel (): string {
         return this.translateService.instant('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL').toUpperCase();
     }
 
-    constructor(private translateService: TranslationService) {
+    constructor (private translateService: TranslationService) {
         this.startProcessButtonLabel = this.defaultStartProcessButtonLabel;
         this.cancelButtonLabel = this.defaultCancelProcessButtonLabel;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.initFieldValidators();
 
         this.processDefinition.setValue(this.processDefinitionName);
@@ -210,7 +210,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['appName'] && changes['appName'].currentValue !== changes['appName'].previousValue) {
             this.appName = changes['appName'].currentValue;
 
@@ -225,24 +225,24 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     @HostListener('keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent): void {
+    onKeyDown (event: KeyboardEvent): void {
         event.stopPropagation();
     }
 
-    onFormLoaded(form: FormModel) {
+    onFormLoaded (form: FormModel) {
         this.isFormCloudLoaded = true;
         this.formCloud = form;
     }
 
-    private initFieldValidators(): void {
+    private initFieldValidators (): void {
         this.fieldValidators = this.fieldValidators ? [...FORM_FIELD_VALIDATORS, ...this.fieldValidators] : [...FORM_FIELD_VALIDATORS];
     }
 
-    private getMaxNameLength(): number {
+    private getMaxNameLength (): number {
         return this.maxNameLength > MAX_NAME_LENGTH ? MAX_NAME_LENGTH : this.maxNameLength;
     }
 
-    private selectProcessDefinitionByProcessDefinitionName(processDefinitionName: string): void {
+    private selectProcessDefinitionByProcessDefinitionName (processDefinitionName: string): void {
         this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinitionName);
 
         if (this.isProcessFormValid && this.filteredProcesses && this.filteredProcesses.length === 1) {
@@ -250,7 +250,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
+    setProcessDefinitionOnForm (selectedProcessDefinitionName: string) {
         this.isFormCloudLoading = true;
         const processDefinitionCurrent = this.filteredProcesses.find(
             (process: ProcessDefinitionCloud) => process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName
@@ -294,13 +294,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.processPayloadCloud.processDefinitionKey = processDefinitionCurrent.key;
     }
 
-    private getProcessDefinitionListByNameOrKey(processDefinitionName: string): ProcessDefinitionCloud[] {
+    private getProcessDefinitionListByNameOrKey (processDefinitionName: string): ProcessDefinitionCloud[] {
         return this.processDefinitionList.filter(
             (processDefinitionCloud) => !processDefinitionName || this.getProcessDefinition(processDefinitionCloud, processDefinitionName)
         );
     }
 
-    private getProcessIfExists(processDefinition: string): ProcessDefinitionCloud {
+    private getProcessIfExists (processDefinition: string): ProcessDefinitionCloud {
         let matchedProcess = this.processDefinitionList.find((option) => this.getProcessDefinition(option, processDefinition));
         if (!matchedProcess) {
             matchedProcess = new ProcessDefinitionCloud();
@@ -309,12 +309,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         return matchedProcess;
     }
 
-    private getProcessDefinitionByName(processDefinitionName: string): ProcessDefinitionCloud {
+    private getProcessDefinitionByName (processDefinitionName: string): ProcessDefinitionCloud {
         const matchedProcess = processDefinitionName ? this.getProcessIfExists(processDefinitionName) : this.processDefinitionList[0];
         return matchedProcess;
     }
 
-    private selectDefaultProcessDefinition() {
+    private selectDefaultProcessDefinition () {
         const selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
             this.processDefinition.setValue(selectedProcess.name);
@@ -322,7 +322,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    public loadProcessDefinitions() {
+    public loadProcessDefinitions () {
         this.resetErrorMessage();
 
         this.startProcessCloudService
@@ -352,11 +352,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             );
     }
 
-    private isValidName(name: string): boolean {
+    private isValidName (name: string): boolean {
         return !!name;
     }
 
-    private getProcessDefinition(processDefinitionCloud: ProcessDefinitionCloud, processDefinitionName: string): boolean {
+    private getProcessDefinition (processDefinitionCloud: ProcessDefinitionCloud, processDefinitionName: string): boolean {
         return (
             (this.isValidName(processDefinitionCloud.name) &&
                 processDefinitionCloud.name.toLowerCase().includes(processDefinitionName.toLowerCase())) ||
@@ -364,7 +364,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         );
     }
 
-    buildProcessCloudPayload() {
+    buildProcessCloudPayload () {
         this.processPayloadCloud.name = this.processInstanceName.value;
         if (this.variables) {
             this.processPayloadCloud.variables = this.variables;
@@ -375,12 +375,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    onCustomOutcomeClicked(outcome: string) {
+    onCustomOutcomeClicked (outcome: string) {
         this.customOutcome = outcome;
         this.startProcess();
     }
 
-    startProcess() {
+    startProcess () {
         this.isProcessStarting = true;
 
         const action = this.hasForm
@@ -389,28 +389,28 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
                   this.processDefinitionCurrent.formKey,
                   this.processDefinitionCurrent.version,
                   new ProcessWithFormPayloadCloud({
-                      processName: this.processInstanceName.value,
-                      processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
-                      variables: this.variables ?? {},
-                      values: this.formCloud.values,
-                      outcome: this.customOutcome
+                      "processName": this.processInstanceName.value,
+                      "processDefinitionKey": this.processPayloadCloud.processDefinitionKey,
+                      "variables": this.variables ?? {},
+                      "values": this.formCloud.values,
+                      "outcome": this.customOutcome
                   })
               )
             : this.startProcessCloudService.startProcess(
                   this.appName,
                   new ProcessPayloadCloud({
-                      name: this.processInstanceName.value,
-                      processDefinitionKey: this.processPayloadCloud.processDefinitionKey,
-                      variables: this.variables ?? {}
+                      "name": this.processInstanceName.value,
+                      "processDefinitionKey": this.processPayloadCloud.processDefinitionKey,
+                      "variables": this.variables ?? {}
                   })
               );
 
         action.subscribe({
-            next: (res) => {
+            "next": (res) => {
                 this.success.emit(res);
                 this.isProcessStarting = false;
             },
-            error: (err) => {
+            "error": (err) => {
                 this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
                 this.unifyErrorResponse(err);
                 this.error.emit(err);
@@ -419,28 +419,28 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         });
     }
 
-    private unifyErrorResponse(err: any) {
+    private unifyErrorResponse (err: any) {
         if (!err?.response?.body?.entry && err?.response?.body?.message) {
             err.response.body = {
-                entry: JSON.parse(err.response.body.message)
+                "entry": JSON.parse(err.response.body.message)
             };
         }
     }
 
-    cancelStartProcess() {
+    cancelStartProcess () {
         this.cancel.emit();
     }
 
-    private resetErrorMessage() {
+    private resetErrorMessage () {
         this.errorMessageId = '';
     }
 
-    private resetProcessDefinitionList() {
+    private resetProcessDefinitionList () {
         this.processDefinition.setValue('');
         this.filteredProcesses = this.processDefinitionList;
     }
 
-    displayProcessNameOnDropdown(process: any) {
+    displayProcessNameOnDropdown (process: any) {
         if (process) {
             let processName = process;
             if (typeof process !== 'string') {
@@ -450,7 +450,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    displayDropdown(event) {
+    displayDropdown (event) {
         event.stopPropagation();
         if (!this.inputAutocomplete.panelOpen) {
             this.resetProcessDefinitionList();
@@ -460,7 +460,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    processDefinitionNameValidator(): ValidatorFn {
+    processDefinitionNameValidator (): ValidatorFn {
         return (control: AbstractControl): { [key: string]: any } | null => {
             const processDefinitionFieldValue = control.value;
             let processDefinitionNameError = false;
@@ -476,22 +476,22 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         };
     }
 
-    getProcessDefinitionValue(process: ProcessDefinitionCloud): string {
+    getProcessDefinitionValue (process: ProcessDefinitionCloud): string {
         return process.name ? process.name : process.key;
     }
 
-    onFormContentClicked(content: ContentLinkModel) {
+    onFormContentClicked (content: ContentLinkModel) {
         this.formContentClicked.emit(content);
     }
 
-    processDefinitionSelectionChanged(processDefinition: ProcessDefinitionCloud) {
+    processDefinitionSelectionChanged (processDefinition: ProcessDefinitionCloud) {
         if (processDefinition) {
             this.setDefaultProcessName(processDefinition.name);
             this.processDefinitionSelection.emit(processDefinition);
         }
     }
 
-    setDefaultProcessName(processDefinitionName: string): void {
+    setDefaultProcessName (processDefinitionName: string): void {
         const processInstanceDetails: ProcessInstanceCloud = { processDefinitionName };
         const defaultProcessName = this.processNameCloudPipe.transform(this.name, processInstanceDetails);
         this.processInstanceName.setValue(defaultProcessName);
@@ -499,7 +499,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.processInstanceName.markAsTouched();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

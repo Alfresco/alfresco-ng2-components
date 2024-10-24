@@ -20,19 +20,19 @@ import { CookieService } from '../common/services/cookie.service';
 
 @Injectable()
 export class CookieServiceMock extends CookieService {
-    isEnabled(): boolean {
+    isEnabled (): boolean {
         return true;
     }
 
-    getItem(key: string): string | null {
+    getItem (key: string): string | null {
         return this[key]?.data || null;
     }
 
-    setItem(key: string, data: string, expiration: Date | null, path: string | null): void {
+    setItem (key: string, data: string, expiration: Date | null, path: string | null): void {
         this[key] = { data, expiration, path };
     }
 
-    clear() {
+    clear () {
         Object.keys(this).forEach((key) => {
             if (Object.prototype.hasOwnProperty.call(this, key) && typeof this[key] !== 'function') {
                 this[key] = undefined;

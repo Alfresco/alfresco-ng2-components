@@ -22,19 +22,19 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
 import { TagService } from '../../tag/services/tag.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class NodeAspectService {
-    constructor(
+    constructor (
         private nodesApiService: NodesApiService,
         private dialogAspectListService: DialogAspectListService,
         private cardViewContentUpdateService: CardViewContentUpdateService,
         private tagService: TagService
     ) {}
 
-    updateNodeAspects(nodeId: string, selectorAutoFocusedOnClose?: string) {
+    updateNodeAspects (nodeId: string, selectorAutoFocusedOnClose?: string) {
         this.dialogAspectListService.openAspectListDialog(nodeId, selectorAutoFocusedOnClose).subscribe((aspectList) => {
-            this.nodesApiService.updateNode(nodeId, { aspectNames: [...aspectList] }).subscribe((updatedNode) => {
+            this.nodesApiService.updateNode(nodeId, { "aspectNames": [...aspectList] }).subscribe((updatedNode) => {
                 this.nodesApiService.nodeUpdated.next(updatedNode);
                 this.cardViewContentUpdateService.updateNodeAspect(updatedNode);
                 this.tagService.refresh.emit();

@@ -22,7 +22,7 @@ import { StartTaskCloudRequestModel } from '../start-task/models/start-task-clou
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class StartTaskCloudService extends BaseCloudService {
      /**
       * @deprecated in 3.5.0, use TaskCloudService instead.
@@ -30,7 +30,7 @@ export class StartTaskCloudService extends BaseCloudService {
       * @param taskDetails Details of the task to create
       * @returns Details of the newly created task
       */
-    createNewTask(taskDetails: TaskDetailsCloudModel): Observable<TaskDetailsCloudModel> {
+    createNewTask (taskDetails: TaskDetailsCloudModel): Observable<TaskDetailsCloudModel> {
         const url = `${this.getBasePath(taskDetails.appName)}/rb/v1/tasks`;
         const payload = JSON.stringify(new StartTaskCloudRequestModel(taskDetails));
 

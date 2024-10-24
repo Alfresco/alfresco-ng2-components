@@ -24,7 +24,7 @@ export class DataCellEventModel {
     readonly col: DataColumn;
     actions: any[];
 
-    constructor(row: DataRow, col: DataColumn, actions: any[]) {
+    constructor (row: DataRow, col: DataColumn, actions: any[]) {
         this.row = row;
         this.col = col;
         this.actions = actions || [];
@@ -32,7 +32,7 @@ export class DataCellEventModel {
 }
 
 export class DataCellEvent extends BaseEvent<DataCellEventModel> {
-    constructor(row: DataRow, col: DataColumn, actions: any[]) {
+    constructor (row: DataRow, col: DataColumn, actions: any[]) {
         super();
         this.value = new DataCellEventModel(row, col, actions);
     }

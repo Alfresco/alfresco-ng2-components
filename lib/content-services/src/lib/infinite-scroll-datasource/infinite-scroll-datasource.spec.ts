@@ -28,7 +28,7 @@ class TestData {
     testId: number;
     testDescription: string;
 
-    constructor(input?: Partial<TestData>) {
+    constructor (input?: Partial<TestData>) {
         if (input) {
             Object.assign(this, input);
         }
@@ -38,34 +38,34 @@ class TestData {
 class TestDataSource extends InfiniteScrollDatasource<TestData> {
     testDataBatch1: TestData[] = [
         {
-            testId: 1,
-            testDescription: 'test1'
+            "testId": 1,
+            "testDescription": 'test1'
         },
         {
-            testId: 2,
-            testDescription: 'test2'
+            "testId": 2,
+            "testDescription": 'test2'
         },
         {
-            testId: 3,
-            testDescription: 'test3'
+            "testId": 3,
+            "testDescription": 'test3'
         },
         {
-            testId: 4,
-            testDescription: 'test4'
+            "testId": 4,
+            "testDescription": 'test4'
         }
     ];
     testDataBatch2: TestData[] = [
         {
-            testId: 5,
-            testDescription: 'test5'
+            "testId": 5,
+            "testDescription": 'test5'
         },
         {
-            testId: 6,
-            testDescription: 'test6'
+            "testId": 6,
+            "testDescription": 'test6'
         }
     ];
 
-    getNextBatch(pagingOptions: ContentPagingQuery): Observable<TestData[]> {
+    getNextBatch (pagingOptions: ContentPagingQuery): Observable<TestData[]> {
         if (pagingOptions.skipCount === 4) {
             return from([this.testDataBatch2]);
         } else if (pagingOptions.skipCount === 0) {
@@ -77,7 +77,7 @@ class TestDataSource extends InfiniteScrollDatasource<TestData> {
 }
 
 @Component({
-    template: ` <cdk-virtual-scroll-viewport appendOnly itemSize="300" style="height: 500px; width: 100%;">
+    "template": ` <cdk-virtual-scroll-viewport appendOnly itemSize="300" style="height: 500px; width: 100%;">
         <div *cdkVirtualFor="let item of testDatasource" class="test-item" style="display: block; height: 100%; width: 100%;">
             {{ item.testDescription }}
         </div>
@@ -86,7 +86,7 @@ class TestDataSource extends InfiniteScrollDatasource<TestData> {
 class TestComponent implements OnInit {
     testDatasource = new TestDataSource();
 
-    ngOnInit() {
+    ngOnInit () {
         this.testDatasource.batchSize = 4;
     }
 }
@@ -99,8 +99,8 @@ describe('InfiniteScrollDatasource', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, ScrollingModule],
-            declarations: [TestComponent]
+            "imports": [ContentTestingModule, ScrollingModule],
+            "declarations": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -115,7 +115,7 @@ describe('InfiniteScrollDatasource', () => {
 
         expect(component.testDatasource.connect).toHaveBeenCalled();
         expect(component.testDatasource.itemsCount).toBe(4);
-        expect(component.testDatasource.getNextBatch).toHaveBeenCalledWith({ skipCount: 0, maxItems: 4 });
+        expect(component.testDatasource.getNextBatch).toHaveBeenCalledWith({ "skipCount": 0, "maxItems": 4 });
         const renderedItems = getRenderedItems();
         // only 3 elements fit the viewport
         expect(renderedItems.length).toBe(3);
@@ -135,7 +135,7 @@ describe('InfiniteScrollDatasource', () => {
             tick(100);
 
             const renderedItems = getRenderedItems();
-            expect(component.testDatasource.getNextBatch).toHaveBeenCalledWith({ skipCount: 4, maxItems: 4 });
+            expect(component.testDatasource.getNextBatch).toHaveBeenCalledWith({ "skipCount": 4, "maxItems": 4 });
             expect(component.testDatasource.itemsCount).toBe(6);
             expect(renderedItems[3].innerText).toBe('test4');
         });
@@ -151,7 +151,7 @@ describe('InfiniteScrollDatasource', () => {
             tick(100);
 
             const renderedItems = getRenderedItems();
-            expect(component.testDatasource.getNextBatch).toHaveBeenCalledWith({ skipCount: 0, maxItems: 4 });
+            expect(component.testDatasource.getNextBatch).toHaveBeenCalledWith({ "skipCount": 0, "maxItems": 4 });
             expect(renderedItems.length).toBe(3);
             expect(renderedItems[2].innerText).toBe('test3');
         });

@@ -24,17 +24,17 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-header-widget',
-    templateUrl: './header.widget.html',
-    styleUrls: ['./header.widget.scss'],
-    standalone: true,
-    encapsulation: ViewEncapsulation.None,
-    imports: [FieldStylePipe, MatIconModule, MatButtonModule, TranslateModule, NgIf]
+    "selector": 'adf-header-widget',
+    "templateUrl": './header.widget.html',
+    "styleUrls": ['./header.widget.scss'],
+    "standalone": true,
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [FieldStylePipe, MatIconModule, MatButtonModule, TranslateModule, NgIf]
 })
 export class HeaderWidgetComponent {
     @Input() element: ContainerModel;
 
-    onExpanderClicked(content: ContainerModel) {
+    onExpanderClicked (content: ContainerModel) {
         if (content?.isCollapsible()) {
             content.isExpanded = !content.isExpanded;
         }

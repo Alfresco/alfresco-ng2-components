@@ -34,17 +34,17 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
-    clickableTemplate: 'clickableTemplate',
-    multilineTemplate: 'multilineTemplate',
-    chipsTemplate: 'chipsTemplate',
-    emptyTemplate: 'emptyTemplate',
-    defaultTemplate: 'defaultTemplate'
+    "clickableTemplate": 'clickableTemplate',
+    "multilineTemplate": 'multilineTemplate',
+    "chipsTemplate": 'chipsTemplate',
+    "emptyTemplate": 'emptyTemplate',
+    "defaultTemplate": 'defaultTemplate'
 };
 
 @Component({
-    selector: 'adf-card-view-textitem',
-    standalone: true,
-    imports: [
+    "selector": 'adf-card-view-textitem',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatFormFieldModule,
         TranslateModule,
@@ -56,10 +56,10 @@ const templateTypes = {
         MatButtonModule,
         MatSnackBarModule
     ],
-    templateUrl: './card-view-textitem.component.html',
-    styleUrls: ['./card-view-textitem.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-card-view-textitem' }
+    "templateUrl": './card-view-textitem.component.html',
+    "styleUrls": ['./card-view-textitem.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-card-view-textitem' }
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges, OnDestroy {
     @Input()
@@ -82,11 +82,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     templateType: string;
     textInput = new UntypedFormControl();
 
-    constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
+    constructor (private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
         super();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges (changes: SimpleChanges): void {
         if (changes.property?.firstChange) {
             this.textInput.valueChanges
                 .pipe(
@@ -112,7 +112,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    private setTemplateType() {
+    private setTemplateType () {
         if (this.showProperty || this.isEditable) {
             if (this.isClickable) {
                 this.templateType = templateTypes.clickableTemplate;
@@ -126,7 +126,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    resetValue() {
+    resetValue () {
         if (this.isChipViewEnabled) {
             this.editedValue = this.property.value ? Array.from(this.property.value) : [];
         } else {
@@ -137,11 +137,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         this.resetErrorMessages();
     }
 
-    private resetErrorMessages() {
+    private resetErrorMessages () {
         this.errors = [];
     }
 
-    update(): void {
+    update (): void {
         if (this.isEditable) {
             this.resetErrorMessages();
             if (this.property.isValid(this.editedValue)) {
@@ -153,7 +153,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    prepareValueForUpload(property: CardViewTextItemModel, value: string | string[]): string | string[] {
+    prepareValueForUpload (property: CardViewTextItemModel, value: string | string[]): string | string[] {
         if (typeof value === 'string') {
             if (property.multivalued) {
                 return value.split(this.multiValueSeparator.trim()).map((item) => item.trim());
@@ -164,7 +164,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         return value;
     }
 
-    removeValueFromList(itemIndex: number) {
+    removeValueFromList (itemIndex: number) {
         if (Array.isArray(this.editedValue)) {
             this.editedValue.splice(itemIndex, 1);
             this.update();
@@ -172,7 +172,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    addValueToList(newListItem: MatChipInputEvent) {
+    addValueToList (newListItem: MatChipInputEvent) {
         const chipInput = newListItem.chipInput.inputElement;
         let chipValue = newListItem.value.trim() || '';
 
@@ -195,7 +195,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    clicked(): void {
+    clicked (): void {
         if (typeof this.property.clickCallBack === 'function') {
             this.property.clickCallBack();
         } else {
@@ -203,54 +203,54 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    clearValue() {
+    clearValue () {
         this.editedValue = '';
         this.textInput.setValue('');
         this.update();
     }
 
-    copyToClipboard(valueToCopy: string) {
+    copyToClipboard (valueToCopy: string) {
         if (this.copyToClipboardAction) {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }
     }
 
-    undoText(event: KeyboardEvent) {
+    undoText (event: KeyboardEvent) {
         if ((event.ctrlKey || event.metaKey) && event.code === 'KeyZ' && this.textInput.value) {
             this.textInput.setValue('');
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         super.ngOnDestroy();
     }
 
-    get showProperty(): boolean {
+    get showProperty (): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    get showClickableIcon(): boolean {
+    get showClickableIcon (): boolean {
         return this.hasIcon && this.editable;
     }
 
-    get isClickable(): boolean {
+    get isClickable (): boolean {
         return this.property.clickable;
     }
 
-    get hasErrors(): boolean {
+    get hasErrors (): boolean {
         return !!this.errors?.length;
     }
 
-    get isChipViewEnabled(): boolean {
+    get isChipViewEnabled (): boolean {
         return this.property.multivalued && this.useChipsForMultiValueProperty;
     }
 
-    get showLabelForChips(): boolean {
+    get showLabelForChips (): boolean {
         return this.displayLabelForChips;
     }
 
-    private prepareIntLongValue(value: string): string {
+    private prepareIntLongValue (value: string): string {
         return String(Math.trunc(Number(value)));
     }
 }

@@ -19,11 +19,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IdentityGroupModel } from '../models/identity-group.model';
 
 @Pipe({
-    name: 'groupNameInitial'
+    "name": 'groupNameInitial'
 })
 export class InitialGroupNamePipe implements PipeTransform {
 
-    transform(group: IdentityGroupModel): string {
+    transform (group: IdentityGroupModel): string {
         let result = '';
         if (group) {
             result = this.getInitialGroupName(group.name).toUpperCase();
@@ -31,7 +31,7 @@ export class InitialGroupNamePipe implements PipeTransform {
         return result;
     }
 
-    getInitialGroupName(groupName: string) {
+    getInitialGroupName (groupName: string) {
         groupName = (groupName ? groupName[0] : '');
         return groupName;
     }

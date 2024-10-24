@@ -37,8 +37,8 @@ describe('IdentityGroupService', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule],
-            providers: [AdfHttpClient]
+            "imports": [NoopTranslateModule],
+            "providers": [AdfHttpClient]
         });
         service = TestBed.inject(IdentityGroupService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
@@ -47,7 +47,7 @@ describe('IdentityGroupService', () => {
 
     it('should be able to fetch groups based on group name', (done) => {
         requestSpy.and.returnValue(Promise.resolve(mockIdentityGroups));
-        service.findGroupsByName({ name: 'mock' }).subscribe((res) => {
+        service.findGroupsByName({ "name": 'mock' }).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(5);
@@ -93,9 +93,9 @@ describe('IdentityGroupService', () => {
 
     it('Should not able to fetch group roles if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getGroupRoles').and.returnValue(throwError(errorResponse));
@@ -143,9 +143,9 @@ describe('IdentityGroupService', () => {
 
     it('Should not fetch client roles if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getClientRoles').and.returnValue(throwError(errorResponse));
@@ -200,7 +200,7 @@ describe('IdentityGroupService', () => {
     });
 
     it('should be able to fetch the client id', (done) => {
-        requestSpy.and.returnValue(Promise.resolve([{ id: 'mock-app-id', name: 'mock-app-name' }]));
+        requestSpy.and.returnValue(Promise.resolve([{ "id": 'mock-app-id', "name": 'mock-app-name' }]));
         service.getClientIdByApplicationName('mock-app-name').subscribe((clientId) => {
             expect(clientId).toBeDefined();
             expect(clientId).not.toBeNull();
@@ -225,9 +225,9 @@ describe('IdentityGroupService', () => {
 
     it('Should not able to fetch all group if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getGroups').and.returnValue(throwError(errorResponse));
@@ -248,7 +248,7 @@ describe('IdentityGroupService', () => {
     it('should be able to query groups based on first & max params', (done) => {
         spyOn(service, 'getTotalGroupsCount').and.returnValue(of(mockIdentityGroupsCount));
         requestSpy.and.returnValue(Promise.resolve(mockIdentityGroups));
-        service.queryGroups({ first: 0, max: 5 }).subscribe((res) => {
+        service.queryGroups({ "first": 0, "max": 5 }).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.entries.length).toBe(5);
@@ -267,14 +267,14 @@ describe('IdentityGroupService', () => {
 
     it('Should not able to query groups if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'queryGroups').and.returnValue(throwError(errorResponse));
 
-        service.queryGroups({ first: 0, max: 5 }).subscribe(
+        service.queryGroups({ "first": 0, "max": 5 }).subscribe(
             () => {
                 fail('expected an error, not query groups');
             },
@@ -297,9 +297,9 @@ describe('IdentityGroupService', () => {
 
     it('Should not able to create group if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'createGroup').and.returnValue(throwError(errorResponse));
@@ -327,9 +327,9 @@ describe('IdentityGroupService', () => {
 
     it('Should not able to update group if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'updateGroup').and.returnValue(throwError(errorResponse));
@@ -357,9 +357,9 @@ describe('IdentityGroupService', () => {
 
     it('Should not able to delete group if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'deleteGroup').and.returnValue(throwError(errorResponse));

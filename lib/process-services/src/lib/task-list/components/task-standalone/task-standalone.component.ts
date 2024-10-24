@@ -22,12 +22,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-task-standalone',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatCardModule, MatButtonModule],
-    templateUrl: './task-standalone.component.html',
-    styleUrls: ['./task-standalone.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-task-standalone',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatCardModule, MatButtonModule],
+    "templateUrl": './task-standalone.component.html',
+    "styleUrls": ['./task-standalone.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskStandaloneComponent {
     /** Name of the task. */
@@ -62,27 +62,27 @@ export class TaskStandaloneComponent {
     @Output()
     showAttachForm = new EventEmitter<void>();
 
-    onCancelButtonClick(): void {
+    onCancelButtonClick (): void {
         this.cancel.emit();
     }
 
-    onCompleteButtonClick(): void {
+    onCompleteButtonClick (): void {
         this.complete.emit();
     }
 
-    hasCompleteButton(): boolean {
+    hasCompleteButton (): boolean {
         return this.hasCompletePermission && !this.isCompleted;
     }
 
-    hasCancelButton(): boolean {
+    hasCancelButton (): boolean {
         return !this.hideCancelButton && !this.isCompleted;
     }
 
-    hasAttachFormButton(): boolean {
+    hasAttachFormButton (): boolean {
         return !this.isCompleted;
     }
 
-    onShowAttachForm() {
+    onShowAttachForm () {
         this.showAttachForm.emit();
     }
 }

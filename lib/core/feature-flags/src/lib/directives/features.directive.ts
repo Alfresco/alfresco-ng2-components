@@ -22,8 +22,8 @@ import { takeUntil } from 'rxjs/operators';
 
 @Directive({
     /* eslint-disable-next-line @angular-eslint/directive-selector */
-    selector: '[adfForFeatures]',
-    standalone: true
+    "selector": '[adfForFeatures]',
+    "standalone": true
 })
 export class FeaturesDirective implements OnDestroy {
     private hasView = false;
@@ -31,11 +31,11 @@ export class FeaturesDirective implements OnDestroy {
     private destroy$ = new Subject();
 
     @Input()
-    set adfForFeatures(feature: string[] | string) {
+    set adfForFeatures (feature: string[] | string) {
         this.inputUpdate$.next(Array.isArray(feature) ? feature : [feature]);
     }
 
-    constructor(
+    constructor (
         @Inject(FeaturesServiceToken) private featuresService: IFeaturesService,
         private templateRef: TemplateRef<any>,
         private viewContainer: ViewContainerRef
@@ -45,7 +45,7 @@ export class FeaturesDirective implements OnDestroy {
             .subscribe(([flags, features]: any) => this.updateView(flags, features));
     }
 
-    private updateView(flags: FlagChangeset, features: string[]) {
+    private updateView (flags: FlagChangeset, features: string[]) {
         const shouldShow = features.every((feature) => flags[feature]?.current);
 
         if (shouldShow && !this.hasView) {
@@ -57,7 +57,7 @@ export class FeaturesDirective implements OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next({});
         this.destroy$.complete();
     }

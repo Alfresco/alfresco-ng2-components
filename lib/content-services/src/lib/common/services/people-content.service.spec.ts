@@ -26,42 +26,42 @@ import { AlfrescoApiService } from '../../services';
 import { AlfrescoApiServiceMock } from '../../mock';
 
 export const fakeEcmUser2 = {
-    id: 'another-fake-id',
-    firstName: 'another-fake-first-name',
-    lastName: 'another',
-    displayName: 'admin.adf User',
-    email: 'admin.adf@alfresco.com',
-    company: null,
-    enabled: true,
-    emailNotificationsEnabled: true
+    "id": 'another-fake-id',
+    "firstName": 'another-fake-first-name',
+    "lastName": 'another',
+    "displayName": 'admin.adf User',
+    "email": 'admin.adf@alfresco.com',
+    "company": null,
+    "enabled": true,
+    "emailNotificationsEnabled": true
 };
 
 const fakeEcmUserList = new PersonPaging({
-    list: {
-        pagination: {
-            count: 2,
-            hasMoreItems: false,
-            totalItems: 2,
-            skipCount: 0,
-            maxItems: 100
+    "list": {
+        "pagination": {
+            "count": 2,
+            "hasMoreItems": false,
+            "totalItems": 2,
+            "skipCount": 0,
+            "maxItems": 100
         },
-        entries: [{ entry: fakeEcmUser }, { entry: fakeEcmUser2 }]
+        "entries": [{ "entry": fakeEcmUser }, { "entry": fakeEcmUser2 }]
     }
 });
 
 export const createNewPersonMock = {
-    id: 'fake-id',
-    firstName: 'fake-ecm-first-name',
-    lastName: 'fake-ecm-last-name',
-    description: 'i am a fake user for test',
-    password: 'fake-avatar-id',
-    email: 'fakeEcm@ecmUser.com'
+    "id": 'fake-id',
+    "firstName": 'fake-ecm-first-name',
+    "lastName": 'fake-ecm-last-name',
+    "description": 'i am a fake user for test',
+    "password": 'fake-avatar-id',
+    "email": 'fakeEcm@ecmUser.com'
 };
 
 export const fakeEcmAdminUser = {
     ...fakeEcmUser,
-    capabilities: {
-        isAdmin: true
+    "capabilities": {
+        "isAdmin": true
     }
 };
 
@@ -70,11 +70,11 @@ describe('PeopleContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
+            "imports": [HttpClientTestingModule],
+            "providers": [
                 PeopleContentService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+                { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+                { "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }
             ]
         });
 
@@ -82,7 +82,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should be able to fetch person details based on id', async () => {
-        spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser } as any));
+        spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ "entry": fakeEcmUser } as any));
         const person = await peopleContentService.getPerson('fake-id').toPromise();
         expect(person.id).toEqual('fake-id');
         expect(person.email).toEqual('fakeEcm@ecmUser.com');
@@ -106,11 +106,11 @@ describe('PeopleContentService', () => {
     it('should call listPeople api with requested sorting params', async () => {
         const listPeopleSpy = spyOn(peopleContentService.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
         const requestQueryParams: PeopleContentQueryRequestModel = {
-            skipCount: 10,
-            maxItems: 20,
-            sorting: { orderBy: 'firstName', direction: 'asc' }
+            "skipCount": 10,
+            "maxItems": 20,
+            "sorting": { "orderBy": 'firstName', "direction": 'asc' }
         };
-        const expectedValue = { skipCount: 10, maxItems: 20, orderBy: ['firstName ASC'] } as any;
+        const expectedValue = { "skipCount": 10, "maxItems": 20, "orderBy": ['firstName ASC'] } as any;
 
         await peopleContentService.listPeople(requestQueryParams).toPromise();
 
@@ -119,8 +119,8 @@ describe('PeopleContentService', () => {
 
     it('should not call listPeople api with sorting params if sorting is not defined', async () => {
         const listPeopleSpy = spyOn(peopleContentService.peopleApi, 'listPeople').and.returnValue(Promise.resolve(fakeEcmUserList));
-        const requestQueryParams: PeopleContentQueryRequestModel = { skipCount: 10, maxItems: 20, sorting: undefined };
-        const expectedValue = { skipCount: 10, maxItems: 20 };
+        const requestQueryParams: PeopleContentQueryRequestModel = { "skipCount": 10, "maxItems": 20, "sorting": undefined };
+        const expectedValue = { "skipCount": 10, "maxItems": 20 };
 
         await peopleContentService.listPeople(requestQueryParams).toPromise();
 
@@ -128,7 +128,7 @@ describe('PeopleContentService', () => {
     });
 
     it('should be able to create new person', async () => {
-        spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser } as any));
+        spyOn(peopleContentService.peopleApi, 'createPerson').and.returnValue(Promise.resolve({ "entry": fakeEcmUser } as any));
         const newUser = await peopleContentService.createPerson(createNewPersonMock).toPromise();
         expect(newUser.id).toEqual('fake-id');
         expect(newUser.email).toEqual('fakeEcm@ecmUser.com');
@@ -147,7 +147,7 @@ describe('PeopleContentService', () => {
 
     it('Should make the api call to check if the user is a content admin only once', async () => {
         const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(
-            Promise.resolve({ entry: fakeEcmAdminUser } as any)
+            Promise.resolve({ "entry": fakeEcmAdminUser } as any)
         );
 
         const user = await peopleContentService.getCurrentUserInfo().toPromise();
@@ -163,11 +163,11 @@ describe('PeopleContentService', () => {
 
     it('should not change current user on every getPerson call', async () => {
         const getCurrentPersonSpy = spyOn(peopleContentService.peopleApi, 'getPerson').and.returnValue(
-            Promise.resolve({ entry: fakeEcmAdminUser } as any)
+            Promise.resolve({ "entry": fakeEcmAdminUser } as any)
         );
         await peopleContentService.getCurrentUserInfo().toPromise();
 
-        getCurrentPersonSpy.and.returnValue(Promise.resolve({ entry: fakeEcmUser2 } as any));
+        getCurrentPersonSpy.and.returnValue(Promise.resolve({ "entry": fakeEcmUser2 } as any));
         await peopleContentService.getPerson('fake-id').toPromise();
 
         expect(getCurrentPersonSpy.calls.count()).toEqual(2);

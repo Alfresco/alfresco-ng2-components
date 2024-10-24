@@ -34,11 +34,11 @@ describe('ProcessInstanceTasksComponent', () => {
     let loader: HarnessLoader;
     let processService: ProcessService;
 
-    const exampleProcessInstance: ProcessInstanceRepresentation = { id: '123' };
+    const exampleProcessInstance: ProcessInstanceRepresentation = { "id": '123' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            "imports": [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
         processService = TestBed.inject(ProcessService);
@@ -82,18 +82,18 @@ describe('ProcessInstanceTasksComponent', () => {
     it('should display active tasks', async () => {
         const change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
-        component.ngOnChanges({ processInstanceDetails: change });
+        component.ngOnChanges({ "processInstanceDetails": change });
 
-        const items = await loader.getAllHarnesses(MatListItemHarness.with({ ancestor: '[data-automation-id="active-tasks"]' }));
+        const items = await loader.getAllHarnesses(MatListItemHarness.with({ "ancestor": '[data-automation-id="active-tasks"]' }));
         expect(items.length).toBe(1);
     });
 
     it('should display completed tasks', async () => {
         const change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
-        component.ngOnChanges({ processInstanceDetails: change });
+        component.ngOnChanges({ "processInstanceDetails": change });
 
-        const items = await loader.getAllHarnesses(MatListItemHarness.with({ ancestor: '[data-automation-id="completed-tasks"]' }));
+        const items = await loader.getAllHarnesses(MatListItemHarness.with({ "ancestor": '[data-automation-id="completed-tasks"]' }));
         expect(items.length).toBe(1);
     });
 

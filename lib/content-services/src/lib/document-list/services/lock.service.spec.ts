@@ -27,14 +27,14 @@ describe('LockService', () => {
     let service: LockService;
     let authenticationService: AuthenticationService;
 
-    const fakeNodeUnlocked: Node = { name: 'unlocked', isLocked: false, isFile: true } as Node;
-    const fakeFolderNode: Node = { name: 'unlocked', isLocked: false, isFile: false, isFolder: true } as Node;
-    const fakeNodeNoProperty: Node = { name: 'unlocked', isLocked: true, isFile: true, properties: {} } as Node;
+    const fakeNodeUnlocked: Node = { "name": 'unlocked', "isLocked": false, "isFile": true } as Node;
+    const fakeFolderNode: Node = { "name": 'unlocked', "isLocked": false, "isFile": false, "isFolder": true } as Node;
+    const fakeNodeNoProperty: Node = { "name": 'unlocked', "isLocked": true, "isFile": true, "properties": {} } as Node;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
+            "imports": [HttpClientTestingModule],
+            "providers": [{ "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }]
         });
         service = TestBed.inject(LockService);
         authenticationService = TestBed.inject(AuthenticationService);
@@ -54,35 +54,35 @@ describe('LockService', () => {
 
     describe('When the lock is readonly', () => {
         const nodeReadonly: Node = {
-            name: 'readonly-lock-node',
-            isLocked: true,
-            isFile: true,
-            properties: {
+            "name": 'readonly-lock-node',
+            "isLocked": true,
+            "isFile": true,
+            "properties": {
                 'cm:lockType': 'READ_ONLY_LOCK',
                 'cm:lockLifetime': 'PERSISTENT'
             }
         } as Node;
 
         const nodeReadOnlyWithExpiredDate: Node = {
-            name: 'readonly-lock-node',
-            isLocked: true,
-            isFile: true,
-            properties: {
+            "name": 'readonly-lock-node',
+            "isLocked": true,
+            "isFile": true,
+            "properties": {
                 'cm:lockType': 'WRITE_LOCK',
                 'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' },
+                'cm:lockOwner': { "id": 'lock-owner-user' },
                 'cm:expiryDate': subDays(new Date(), 4)
             }
         } as Node;
 
         const nodeReadOnlyWithActiveExpiration: Node = {
-            name: 'readonly-lock-node',
-            isLocked: true,
-            isFile: true,
-            properties: {
+            "name": 'readonly-lock-node',
+            "isLocked": true,
+            "isFile": true,
+            "properties": {
                 'cm:lockType': 'WRITE_LOCK',
                 'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' },
+                'cm:lockOwner': { "id": 'lock-owner-user' },
                 'cm:expiryDate': addDays(new Date(), 4)
             }
         } as Node;
@@ -102,36 +102,36 @@ describe('LockService', () => {
 
     describe('When only the lock owner is allowed', () => {
         const nodeOwnerAllowedLock: Node = {
-            name: 'readonly-lock-node',
-            isLocked: true,
-            isFile: true,
-            properties: {
+            "name": 'readonly-lock-node',
+            "isLocked": true,
+            "isFile": true,
+            "properties": {
                 'cm:lockType': 'WRITE_LOCK',
                 'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' }
+                'cm:lockOwner': { "id": 'lock-owner-user' }
             }
         } as Node;
 
         const nodeOwnerAllowedLockWithExpiredDate: Node = {
-            name: 'readonly-lock-node',
-            isLocked: true,
-            isFile: true,
-            properties: {
+            "name": 'readonly-lock-node',
+            "isLocked": true,
+            "isFile": true,
+            "properties": {
                 'cm:lockType': 'WRITE_LOCK',
                 'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' },
+                'cm:lockOwner': { "id": 'lock-owner-user' },
                 'cm:expiryDate': subDays(new Date(), 4)
             }
         } as Node;
 
         const nodeOwnerAllowedLockWithActiveExpiration: Node = {
-            name: 'readonly-lock-node',
-            isLocked: true,
-            isFile: true,
-            properties: {
+            "name": 'readonly-lock-node',
+            "isLocked": true,
+            "isFile": true,
+            "properties": {
                 'cm:lockType': 'WRITE_LOCK',
                 'cm:lockLifetime': 'PERSISTENT',
-                'cm:lockOwner': { id: 'lock-owner-user' },
+                'cm:lockOwner': { "id": 'lock-owner-user' },
                 'cm:expiryDate': addDays(new Date(), 4)
             }
         } as Node;

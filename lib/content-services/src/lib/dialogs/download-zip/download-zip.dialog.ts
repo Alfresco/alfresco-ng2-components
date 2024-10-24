@@ -23,11 +23,11 @@ import { ContentService } from '../../common/services/content.service';
 import { FileDownloadStatus } from '@alfresco/js-api';
 
 @Component({
-    selector: 'adf-download-zip-dialog',
-    templateUrl: './download-zip.dialog.html',
-    styleUrls: ['./download-zip.dialog.scss'],
-    host: { class: 'adf-download-zip-dialog' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-download-zip-dialog',
+    "templateUrl": './download-zip.dialog.html',
+    "styleUrls": ['./download-zip.dialog.scss'],
+    "host": { "class": 'adf-download-zip-dialog' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class DownloadZipDialogComponent implements OnInit {
     // flag for async threads
@@ -35,7 +35,7 @@ export class DownloadZipDialogComponent implements OnInit {
     downloadId: string;
     percentageDone = 0;
 
-    constructor(
+    constructor (
         private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
         @Inject(MAT_DIALOG_DATA)
         public data: any,
@@ -44,7 +44,7 @@ export class DownloadZipDialogComponent implements OnInit {
         private contentService: ContentService
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.data?.nodeIds?.length > 0) {
             if (!this.cancelled) {
                 this.downloadZip(this.data.nodeIds);
@@ -52,13 +52,13 @@ export class DownloadZipDialogComponent implements OnInit {
         }
     }
 
-    cancelDownload() {
+    cancelDownload () {
         this.cancelled = true;
         this.downloadZipService.cancelDownload(this.downloadId);
         this.dialogRef.close(false);
     }
 
-    downloadZip(nodeIds: string[]) {
+    downloadZip (nodeIds: string[]) {
         if (nodeIds && nodeIds.length > 0) {
             this.downloadZipService.createDownload({ nodeIds }).subscribe((data) => {
                 if (data?.entry?.id) {
@@ -74,7 +74,7 @@ export class DownloadZipDialogComponent implements OnInit {
         }
     }
 
-    waitAndDownload(downloadId: string, url: string, fileName: string) {
+    waitAndDownload (downloadId: string, url: string, fileName: string) {
         if (this.cancelled) {
             return;
         }
@@ -97,7 +97,7 @@ export class DownloadZipDialogComponent implements OnInit {
         });
     }
 
-    download(url: string, fileName: string) {
+    download (url: string, fileName: string) {
         if (url && fileName) {
             const link = document.createElement('a');
 

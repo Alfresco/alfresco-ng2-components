@@ -29,15 +29,15 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'adf-date-editor',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, FormsModule],
-    templateUrl: './date.editor.html',
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
+    "selector": 'adf-date-editor',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, MatDatepickerModule, MatInputModule, FormsModule],
+    "templateUrl": './date.editor.html',
+    "providers": [
+        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
+        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter }
     ],
-    styleUrls: ['./date.editor.scss']
+    "styleUrls": ['./date.editor.scss']
 })
 export class DateEditorComponent implements OnInit {
     DATE_FORMAT: string = 'DD-MM-YYYY';
@@ -57,16 +57,16 @@ export class DateEditorComponent implements OnInit {
     minDate: Date;
     maxDate: Date;
 
-    constructor(private dateAdapter: DateAdapter<Date>) {}
+    constructor (private dateAdapter: DateAdapter<Date>) {}
 
-    ngOnInit() {
+    ngOnInit () {
         const dateAdapter = this.dateAdapter as AdfDateFnsAdapter;
         dateAdapter.displayFormat = this.DATE_FORMAT;
 
         this.value = this.table.getCellValue(this.row, this.column) as Date;
     }
 
-    onDateChanged(newDateValue: MatDatepickerInputEvent<Date> | string) {
+    onDateChanged (newDateValue: MatDatepickerInputEvent<Date> | string) {
         if (typeof newDateValue === 'string') {
             const newValue = DateFnsUtils.parseDate(newDateValue, this.DATE_FORMAT);
 

@@ -34,26 +34,26 @@ export interface TranslationProvider {
  * @param path Path to translation files
  * @returns Provider
  */
-export function provideTranslations(id: string, path: string) {
+export function provideTranslations (id: string, path: string) {
     return {
-        provide: TRANSLATION_PROVIDER,
-        multi: true,
-        useValue: {
-            name: id,
-            source: path
+        "provide": TRANSLATION_PROVIDER,
+        "multi": true,
+        "useValue": {
+            "name": id,
+            "source": path
         }
     };
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TranslationService {
     defaultLang: string;
     userLang: string;
     customLoader: TranslateLoaderService;
 
-    constructor(
+    constructor (
         public translate: TranslateService,
         userPreferencesService: UserPreferencesService,
         @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]
@@ -83,7 +83,7 @@ export class TranslationService {
      * @param name Name for the translation provider
      * @param path Path to the folder
      */
-    addTranslationFolder(name: string = '', path: string = '') {
+    addTranslationFolder (name: string = '', path: string = '') {
         if (!this.customLoader.providerRegistered(name)) {
             this.customLoader.registerProvider(name, path);
 
@@ -100,7 +100,7 @@ export class TranslationService {
      * @param lang Language code for the language to load
      * @param fallback Language code to fall back to if the first one was unavailable
      */
-    loadTranslation(lang: string, fallback?: string) {
+    loadTranslation (lang: string, fallback?: string) {
         this.translate.getTranslation(lang).subscribe(
             () => {
                 this.translate.use(lang);
@@ -118,10 +118,10 @@ export class TranslationService {
      * Triggers a notification callback when the translation language changes.
      * @param lang The new language code
      */
-    onTranslationChanged(lang: string): void {
+    onTranslationChanged (lang: string): void {
         this.translate.onTranslationChange.next({
             lang,
-            translations: this.customLoader.getFullTranslationJSON(lang)
+            "translations": this.customLoader.getFullTranslationJSON(lang)
         });
     }
 
@@ -130,7 +130,7 @@ export class TranslationService {
      * @param lang Code name for the language
      * @returns Translations available for the language
      */
-    use(lang: string): Observable<any> {
+    use (lang: string): Observable<any> {
         this.customLoader.init(lang);
         return this.translate.use(lang);
     }
@@ -141,7 +141,7 @@ export class TranslationService {
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text
      */
-    get(key: string | Array<string>, interpolateParams?: any): Observable<string | any> {
+    get (key: string | Array<string>, interpolateParams?: any): Observable<string | any> {
         return this.translate.get(key, interpolateParams);
     }
 
@@ -151,7 +151,7 @@ export class TranslationService {
      * @param interpolateParams String(s) to be interpolated into the main message
      * @returns Translated text
      */
-    instant(key: string | Array<string>, interpolateParams?: any): string | any {
+    instant (key: string | Array<string>, interpolateParams?: any): string | any {
         return key ? this.translate.instant(key, interpolateParams) : '';
     }
 }

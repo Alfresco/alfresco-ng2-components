@@ -29,16 +29,16 @@ describe('CategorySelectorDialogComponent', () => {
     let selectButton: HTMLButtonElement;
 
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        "close": jasmine.createSpy('close')
     };
 
     const options: CategorySelectorDialogOptions = {
-        select: new Subject<Category[]>()
+        "select": new Subject<Category[]>()
     };
 
     const categories: Category[] = [
-        { id: 'id1', name: 'cat1' },
-        { id: 'id2', name: 'cat3' }
+        { "id": 'id1', "name": 'cat1' },
+        { "id": 'id2', "name": 'cat3' }
     ];
 
     const setCategories = () => {
@@ -48,11 +48,11 @@ describe('CategorySelectorDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, CategorySelectorDialogComponent],
-            providers: [
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: options }
+            "imports": [NoopTranslateModule, MatDialogModule, CategorySelectorDialogComponent],
+            "providers": [
+                { "provide": AppConfigService, "useClass": AppConfigServiceMock },
+                { "provide": MatDialogRef, "useValue": dialogRef },
+                { "provide": MAT_DIALOG_DATA, "useValue": options }
             ]
         });
         dialogRef.close.calls.reset();

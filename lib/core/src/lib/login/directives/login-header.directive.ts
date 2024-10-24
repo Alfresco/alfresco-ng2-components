@@ -19,16 +19,16 @@ import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular
 import { LoginComponent } from '../components/login/login.component';
 
 @Directive({
-    selector: 'adf-login-header',
-    standalone: true
+    "selector": 'adf-login-header',
+    "standalone": true
 })
 export class LoginHeaderDirective implements AfterContentInit {
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private alfrescoLoginComponent: LoginComponent) {}
+    constructor (private alfrescoLoginComponent: LoginComponent) {}
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.alfrescoLoginComponent.headerTemplate = this.template;
     }
 }

@@ -34,33 +34,33 @@ describe('CardViewSelectItemComponent', () => {
     let component: CardViewSelectItemComponent;
     let appConfig: AppConfigService;
     const mockData = [
-        { key: 'one', label: 'One' },
-        { key: 'two', label: 'Two' },
-        { key: 'three', label: 'Three' }
+        { "key": 'one', "label": 'One' },
+        { "key": 'two', "label": 'Two' },
+        { "key": 'three', "label": 'Three' }
     ];
     const mockDataNumber = [
-        { key: 1, label: 'One' },
-        { key: 2, label: 'Two' },
-        { key: 3, label: 'Three' }
+        { "key": 1, "label": 'One' },
+        { "key": 2, "label": 'Two' },
+        { "key": 3, "label": 'Three' }
     ];
     const mockDefaultProps = {
-        label: 'Select box label',
-        value: 'two',
-        options$: of(mockData),
-        key: 'key',
-        editable: true
+        "label": 'Select box label',
+        "value": 'two',
+        "options$": of(mockData),
+        "key": 'key',
+        "editable": true
     };
     const mockDefaultNumbersProps = {
-        label: 'Select box label',
-        value: 2,
-        options$: of(mockDataNumber),
-        key: 'key',
-        editable: true
+        "label": 'Select box label',
+        "value": 2,
+        "options$": of(mockDataNumber),
+        "key": 'key',
+        "editable": true
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, CardViewSelectItemComponent]
+            "imports": [NoopTranslateModule, NoopAnimationsModule, CardViewSelectItemComponent]
         });
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;
@@ -77,7 +77,7 @@ describe('CardViewSelectItemComponent', () => {
         it('should render custom label when editable is set to false', () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
-                editable: false
+                "editable": false
             });
             fixture.detectChanges();
             const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
@@ -88,7 +88,7 @@ describe('CardViewSelectItemComponent', () => {
         it('should render readOnly value is editable property is FALSE', () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
-                editable: false
+                "editable": false
             });
 
             component.ngOnChanges();
@@ -104,7 +104,7 @@ describe('CardViewSelectItemComponent', () => {
         it('should be possible edit selectBox item', async () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
-                editable: true
+                "editable": true
             });
             component.editable = true;
             component.displayNoneOption = true;
@@ -127,7 +127,7 @@ describe('CardViewSelectItemComponent', () => {
         it('should be possible edit selectBox item with numbers', async () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultNumbersProps,
-                editable: true
+                "editable": true
             });
             component.editable = true;
             component.displayNoneOption = true;
@@ -151,7 +151,7 @@ describe('CardViewSelectItemComponent', () => {
         it('should be able to enable None option', async () => {
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
-                editable: true
+                "editable": true
             });
             component.editable = true;
             component.displayNoneOption = true;
@@ -180,7 +180,7 @@ describe('CardViewSelectItemComponent', () => {
             component.editable = true;
             fixture.detectChanges();
 
-            const field = await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-property-value' }));
+            const field = await loader.getHarness(MatFormFieldHarness.with({ "selector": '.adf-property-value' }));
 
             expect(await field.hasLabel()).toBeFalse();
         });
@@ -189,11 +189,11 @@ describe('CardViewSelectItemComponent', () => {
     describe('Filter', () => {
         it('should render a list of filtered options', async () => {
             appConfig.config['content-metadata'] = {
-                selectFilterLimit: 0
+                "selectFilterLimit": 0
             };
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
-                editable: true
+                "editable": true
             });
             component.editable = true;
             component.displayNoneOption = false;
@@ -217,11 +217,11 @@ describe('CardViewSelectItemComponent', () => {
 
         it('should hide filter if options are less then limit', async () => {
             appConfig.config['content-metadata'] = {
-                selectFilterLimit: mockData.length + 1
+                "selectFilterLimit": mockData.length + 1
             };
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
-                editable: true
+                "editable": true
             });
             component.editable = true;
             component.displayNoneOption = false;
@@ -237,11 +237,11 @@ describe('CardViewSelectItemComponent', () => {
 
         it('should show filter if options are greater then limit', async () => {
             appConfig.config['content-metadata'] = {
-                selectFilterLimit: mockData.length - 1
+                "selectFilterLimit": mockData.length - 1
             };
             component.property = new CardViewSelectItemModel({
                 ...mockDefaultProps,
-                editable: true
+                "editable": true
             });
             component.editable = true;
             component.displayNoneOption = false;

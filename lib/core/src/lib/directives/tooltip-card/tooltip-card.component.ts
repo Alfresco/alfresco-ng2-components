@@ -21,15 +21,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'adf-tooltip-card-component',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './tooltip-card.component.html',
-    styleUrls: ['./tooltip-card.component.scss'],
-    animations: [
+    "selector": 'adf-tooltip-card-component',
+    "standalone": true,
+    "imports": [CommonModule],
+    "templateUrl": './tooltip-card.component.html',
+    "styleUrls": ['./tooltip-card.component.scss'],
+    "animations": [
         trigger('tooltip', [
-            transition(':enter', [style({ opacity: 0 }), animate(200, style({ opacity: 1 }))]),
-            transition(':leave', [animate(200, style({ opacity: 0 }))])
+            transition(':enter', [style({ "opacity": 0 }), animate(200, style({ "opacity": 1 }))]),
+            transition(':leave', [animate(200, style({ "opacity": 0 }))])
         ])
     ]
 })
@@ -39,9 +39,9 @@ export class TooltipCardComponent {
     @Input() htmlContent = '';
     @Input() width = '300';
 
-    constructor(private sanitizer: DomSanitizer) {}
+    constructor (private sanitizer: DomSanitizer) {}
 
-    sanitizedHtmlContent(): string {
+    sanitizedHtmlContent (): string {
         return this.sanitizer.sanitize(SecurityContext.HTML, this.htmlContent);
     }
 }

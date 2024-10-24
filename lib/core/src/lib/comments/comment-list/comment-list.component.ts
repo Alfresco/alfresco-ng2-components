@@ -26,12 +26,12 @@ import { TimeAgoPipe } from '../../pipes';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-comment-list',
-    standalone: true,
-    imports: [CommonModule, MatListModule, MatLineModule, TimeAgoPipe, TranslateModule],
-    templateUrl: './comment-list.component.html',
-    styleUrls: ['./comment-list.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-comment-list',
+    "standalone": true,
+    "imports": [CommonModule, MatListModule, MatLineModule, TimeAgoPipe, TranslateModule],
+    "templateUrl": './comment-list.component.html',
+    "styleUrls": ['./comment-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class CommentListComponent {
     /** The comments data used to populate the list. */
@@ -44,11 +44,11 @@ export class CommentListComponent {
 
     private commentsService = inject<CommentsService>(ADF_COMMENTS_SERVICE);
 
-    selectComment(comment: CommentModel): void {
+    selectComment (comment: CommentModel): void {
         this.clickRow.emit(comment);
     }
 
-    getUserImage(userId: string): string {
+    getUserImage (userId: string): string {
         return this.commentsService.getUserImage(userId);
     }
 }

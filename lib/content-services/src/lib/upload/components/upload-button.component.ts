@@ -31,13 +31,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-upload-button',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule],
-    templateUrl: './upload-button.component.html',
-    styleUrls: ['./upload-button.component.scss'],
-    viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent) }],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-upload-button',
+    "standalone": true,
+    "imports": [CommonModule, MatButtonModule, TranslateModule, MatIconModule],
+    "templateUrl": './upload-button.component.html',
+    "styleUrls": ['./upload-button.component.scss'],
+    "viewProviders": [{ "provide": EXTENDIBLE_COMPONENT, "useExisting": forwardRef(() => UploadButtonComponent) }],
+    "encapsulation": ViewEncapsulation.None
 })
 export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodeAllowableOperationSubject {
     private contentService = inject(ContentService);
@@ -70,79 +70,79 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     private hasAllowableOperations: boolean = false;
     protected permissionValue = new Subject<boolean>();
 
-    ngOnInit() {
+    ngOnInit () {
         this.permissionValue.subscribe((permission: boolean) => {
             this.hasAllowableOperations = permission;
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const rootFolderId = changes['rootFolderId'];
         if (rootFolderId?.currentValue) {
             this.checkPermission();
         }
     }
 
-    isButtonDisabled(): boolean {
+    isButtonDisabled (): boolean {
         return this.disabled ? true : undefined;
     }
 
-    onFilesAdded($event: any): void {
+    onFilesAdded ($event: any): void {
         const files = FileUtils.toFileArray($event.currentTarget.files);
 
         if (this.hasAllowableOperations) {
             this.uploadFiles(files);
         } else {
-            this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
+            this.permissionEvent.emit(new PermissionModel({ "type": 'content', "action": 'upload', "permission": 'create' }));
         }
         // reset the value of the input file
         $event.target.value = '';
     }
 
-    onClickUploadButton(): void {
+    onClickUploadButton (): void {
         if (this.file) {
             const files = [this.file];
 
             if (this.hasAllowableOperations) {
                 this.uploadFiles(files);
             } else {
-                this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
+                this.permissionEvent.emit(new PermissionModel({ "type": 'content', "action": 'upload', "permission": 'create' }));
             }
         }
     }
 
-    onDirectoryAdded($event: any): void {
+    onDirectoryAdded ($event: any): void {
         if (this.hasAllowableOperations) {
             const files = FileUtils.toFileArray($event.currentTarget.files);
             this.uploadFiles(files);
         } else {
-            this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
+            this.permissionEvent.emit(new PermissionModel({ "type": 'content', "action": 'upload', "permission": 'create' }));
         }
         // reset the value of the input file
         $event.target.value = '';
     }
 
-    checkPermission() {
+    checkPermission () {
         if (this.rootFolderId) {
             const opts: any = {
-                includeSource: true,
-                include: ['allowableOperations']
+                "includeSource": true,
+                "include": ['allowableOperations']
             };
 
             this.nodesApiService.getNode(this.rootFolderId, opts).subscribe(
                 (res) => this.permissionValue.next(this.nodeHasPermission(res, AllowableOperationsEnum.CREATE)),
                 (error: { error: Error }) => {
                     if (error?.error) {
-                        this.error.emit({ error: error.error.message } as any);
+                        this.error.emit({ "error": error.error.message } as any);
                     } else {
-                        this.error.emit({ error: 'FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR' } as any);
+                        this.error.emit({ "error": 'FILE_UPLOAD.BUTTON.PERMISSION_CHECK_ERROR' } as any);
                     }
                 }
             );
         }
     }
 
-    nodeHasPermission(node: Node, permission: AllowableOperationsEnum | string): boolean {
+    nodeHasPermission (node: Node, permission: AllowableOperationsEnum | string): boolean {
         return this.contentService.hasAllowableOperations(node, permission);
     }
 }

@@ -22,17 +22,17 @@ import { StorageService } from '../../common';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 
 const mockStorage = {
-    access_token: 'my-access_token',
-    id_token: 'my-id_token',
-    getItem(key: string) {
+    "access_token": 'my-access_token',
+    "id_token": 'my-id_token',
+    getItem (key: string) {
         return this[key];
     }
 };
 
 const mockCustomStorage = {
-    access_token: 'my-custom-access_token',
-    id_token: 'my-custom-id_token',
-    getItem(key: string) {
+    "access_token": 'my-custom-access_token',
+    "id_token": 'my-custom-id_token',
+    getItem (key: string) {
         return this[key];
     }
 };
@@ -42,7 +42,7 @@ describe('JwtHelperService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [JwtHelperService, { provide: OAuthStorage, useValue: mockStorage }]
+            "providers": [JwtHelperService, { "provide": OAuthStorage, "useValue": mockStorage }]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
     });
@@ -63,7 +63,7 @@ describe('JwtHelperService', () => {
     describe('RealmRole ', () => {
         it('Should be true if the realm_access contains the single role', () => {
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-                realm_access: { roles: ['role1'] }
+                "realm_access": { "roles": ['role1'] }
             });
 
             const result = jwtHelperService.hasRealmRole('role1');
@@ -72,7 +72,7 @@ describe('JwtHelperService', () => {
 
         it('Should be true if the realm_access contains at least one of the roles', () => {
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-                realm_access: { roles: ['role1'] }
+                "realm_access": { "roles": ['role1'] }
             });
 
             const result = jwtHelperService.hasRealmRoles(['role1', 'role2']);
@@ -81,7 +81,7 @@ describe('JwtHelperService', () => {
 
         it('Should be false if the realm_access does not contain the role', () => {
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-                realm_access: { roles: ['role3'] }
+                "realm_access": { "roles": ['role3'] }
             });
             const result = jwtHelperService.hasRealmRole('role1');
             expect(result).toBeFalsy();
@@ -89,7 +89,7 @@ describe('JwtHelperService', () => {
 
         it('Should be false if the realm_access does not contain at least one of the roles', () => {
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-                realm_access: { roles: ['role1'] }
+                "realm_access": { "roles": ['role1'] }
             });
             const result = jwtHelperService.hasRealmRoles(['role3', 'role2']);
             expect(result).toBeFalsy();
@@ -99,7 +99,7 @@ describe('JwtHelperService', () => {
     describe('ClientRole ', () => {
         it('Should be true if the resource_access contains the single role', () => {
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-                resource_access: { fakeApp: { roles: ['role1'] } }
+                "resource_access": { "fakeApp": { "roles": ['role1'] } }
             });
 
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeApp', ['role1']);
@@ -108,7 +108,7 @@ describe('JwtHelperService', () => {
 
         it('Should be true if the resource_access contains at least one of the roles', () => {
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-                resource_access: { fakeApp: { roles: ['role1'] } }
+                "resource_access": { "fakeApp": { "roles": ['role1'] } }
             });
 
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeApp', ['role1', 'role2']);
@@ -117,7 +117,7 @@ describe('JwtHelperService', () => {
 
         it('Should be false if the resource_access does not contain the role', () => {
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-                resource_access: { fakeApp: { roles: ['role3'] } }
+                "resource_access": { "fakeApp": { "roles": ['role3'] } }
             });
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeApp', ['role1', 'role2']);
             expect(result).toBeFalsy();
@@ -125,7 +125,7 @@ describe('JwtHelperService', () => {
 
         it('Should be false if the resource_access does not contain the client role related to the app', () => {
             spyOn(jwtHelperService, 'decodeToken').and.returnValue({
-                resource_access: { anotherFakeApp: { roles: ['role1'] } }
+                "resource_access": { "anotherFakeApp": { "roles": ['role1'] } }
             });
             const result = jwtHelperService.hasRealmRolesForClientRole('fakeApp', ['role1', 'role2']);
             expect(result).toBeFalsy();
@@ -140,7 +140,7 @@ describe('JwtHelperService with custom storage service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [JwtHelperService, { provide: StorageService, useValue: mockStorage }, { provide: OAuthStorage, useValue: mockCustomStorage }]
+            "providers": [JwtHelperService, { "provide": StorageService, "useValue": mockStorage }, { "provide": OAuthStorage, "useValue": mockCustomStorage }]
         });
         jwtHelperService = TestBed.inject(JwtHelperService);
         defaultStorage = TestBed.inject(StorageService);

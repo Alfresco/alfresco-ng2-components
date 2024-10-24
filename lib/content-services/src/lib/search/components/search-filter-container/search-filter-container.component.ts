@@ -31,9 +31,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
-    selector: 'adf-search-filter-container',
-    standalone: true,
-    imports: [
+    "selector": 'adf-search-filter-container',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatButtonModule,
         MatMenuModule,
@@ -43,9 +43,9 @@ import { MatDialogModule } from '@angular/material/dialog';
         TranslateModule,
         MatDialogModule
     ],
-    templateUrl: './search-filter-container.component.html',
-    styleUrls: ['./search-filter-container.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './search-filter-container.component.html',
+    "styleUrls": ['./search-filter-container.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     /** The column the filter will be applied on. */
@@ -72,30 +72,30 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
         private translationService: TranslationService,
         private focusTrapFactory: ConfigurableFocusTrapFactory
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.category = this.searchFilterQueryBuilder.getCategoryForColumn(this.col.key);
         this.initialValue = this.value?.[this.col.key] ? this.value[this.col.key] : undefined;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    onKeyPressed(event: KeyboardEvent, menuTrigger: MatMenuTrigger) {
+    onKeyPressed (event: KeyboardEvent, menuTrigger: MatMenuTrigger) {
         if (event.key === 'Enter' && this.widgetContainer.selector !== 'check-list') {
             this.onApply();
             menuTrigger.closeMenu();
         }
     }
 
-    onApply() {
+    onApply () {
         if (this.widgetContainer.hasValueSelected()) {
             this.searchFilterQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
             this.filterChange.emit();
@@ -105,36 +105,36 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
         }
     }
 
-    onClearButtonClick(event: Event) {
+    onClearButtonClick (event: Event) {
         event.stopPropagation();
         this.resetSearchFilter();
     }
 
-    resetSearchFilter() {
+    resetSearchFilter () {
         this.widgetContainer.resetInnerWidget();
         this.searchFilterQueryBuilder.removeActiveFilter(this.category.columnKey);
         this.filterChange.emit();
     }
 
-    getTooltipTranslation(columnTitle: string): string {
+    getTooltipTranslation (columnTitle: string): string {
         if (!columnTitle) {
             columnTitle = 'SEARCH.SEARCH_HEADER.TYPE';
         }
-        return this.translationService.instant('SEARCH.SEARCH_HEADER.FILTER_BY', { category: this.translationService.instant(columnTitle) });
+        return this.translationService.instant('SEARCH.SEARCH_HEADER.FILTER_BY', { "category": this.translationService.instant(columnTitle) });
     }
 
-    isActive(): boolean {
+    isActive (): boolean {
         return this.searchFilterQueryBuilder.getActiveFilters().findIndex((f: FilterSearch) => f.key === this.category.columnKey) > -1;
     }
 
-    onMenuOpen() {
+    onMenuOpen () {
         if (this.filterContainer && !this.focusTrap) {
             this.focusTrap = this.focusTrapFactory.create(this.filterContainer.nativeElement);
             this.focusTrap.focusInitialElement();
         }
     }
 
-    onClosed() {
+    onClosed () {
         this.focusTrap.destroy();
         this.focusTrap = null;
     }

@@ -22,30 +22,30 @@ import { LoginSuccessEvent } from '../../models/login-success.event';
 import { LoginComponent } from '../login/login.component';
 
 @Component({
-    selector: 'adf-login-dialog-panel',
-    standalone: true,
-    templateUrl: './login-dialog-panel.component.html',
-    styleUrls: ['./login-dialog-panel.component.scss'],
-    imports: [LoginComponent, LoginHeaderDirective, LoginFooterDirective],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-login-dialog-panel',
+    "standalone": true,
+    "templateUrl": './login-dialog-panel.component.html',
+    "styleUrls": ['./login-dialog-panel.component.scss'],
+    "imports": [LoginComponent, LoginHeaderDirective, LoginFooterDirective],
+    "encapsulation": ViewEncapsulation.None
 })
 export class LoginDialogPanelComponent {
     /** Emitted when the login succeeds. */
     @Output()
     success = new EventEmitter<LoginSuccessEvent>();
 
-    @ViewChild('adfLogin', { static: true })
+    @ViewChild('adfLogin', { "static": true })
     login: LoginComponent;
 
-    submitForm(): void {
+    submitForm (): void {
         this.login.submit();
     }
 
-    onLoginSuccess(event: LoginSuccessEvent) {
+    onLoginSuccess (event: LoginSuccessEvent) {
         this.success.emit(event);
     }
 
-    isValid() {
+    isValid () {
         return this.login?.form ? this.login.form.valid : false;
     }
 }

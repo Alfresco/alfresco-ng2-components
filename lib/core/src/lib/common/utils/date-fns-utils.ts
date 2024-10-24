@@ -27,7 +27,7 @@ const panDate = (num: number = 1): string => {
 };
 
 export class DateFnsUtils {
-    static getLocaleFromString(locale: string): Locale {
+    static getLocaleFromString (locale: string): Locale {
         let dateFnsLocale: Locale;
         switch (locale) {
             case 'ar':
@@ -89,14 +89,14 @@ export class DateFnsUtils {
     }
 
     private static momentToDateFnsMap = {
-        D: 'd',
-        Y: 'y',
-        AZ: 'aa',
-        A: 'a',
-        ll: 'PP',
-        T: `'T'`,
-        ZZ: 'XX',
-        Z: `XXX`
+        "D": 'd',
+        "Y": 'y',
+        "AZ": 'aa',
+        "A": 'a',
+        "ll": 'PP',
+        "T": `'T'`,
+        "ZZ": 'XX',
+        "Z": `XXX`
     };
 
     /**
@@ -104,7 +104,7 @@ export class DateFnsUtils {
      * @param dateDisplayFormat - The Moment.js date format string to convert.
      * @returns The equivalent date-fns format string.
      */
-    static convertMomentToDateFnsFormat(dateDisplayFormat: string): string {
+    static convertMomentToDateFnsFormat (dateDisplayFormat: string): string {
         if (dateDisplayFormat && dateDisplayFormat.trim() !== '') {
             // normalise the input to support double conversion of the same string
             dateDisplayFormat = dateDisplayFormat.replace(`'T'`, 'T');
@@ -123,7 +123,7 @@ export class DateFnsUtils {
      * @param dateFormat - The date format string to use for formatting.
      * @returns The formatted date as a string
      */
-    static formatDate(date: number | Date | string, dateFormat: string): string {
+    static formatDate (date: number | Date | string, dateFormat: string): string {
         if (typeof date === 'string') {
             date = parseISO(date);
         }
@@ -138,7 +138,7 @@ export class DateFnsUtils {
      * @param options.dateOnly - Strip the time and zone
      * @returns The parsed Date object.
      */
-    static parseDate(value: string | Date, dateFormat: string, options?: { dateOnly?: boolean }): Date {
+    static parseDate (value: string | Date, dateFormat: string, options?: { dateOnly?: boolean }): Date {
         if (value) {
             if (typeof value === 'string') {
                 if (options?.dateOnly && value.includes('T')) {
@@ -157,7 +157,7 @@ export class DateFnsUtils {
      * @param value - The date and time string to parse
      * @returns returns the parsed Date object
      */
-    static parseDateTime(value: string): Date {
+    static parseDateTime (value: string): Date {
         return parseISO(value);
     }
 
@@ -167,7 +167,7 @@ export class DateFnsUtils {
      * @param dateFormat The date format
      * @returns `true` if the date is valid, otherwise `false`
      */
-    static isValidDate(dateValue: string, dateFormat: string): boolean {
+    static isValidDate (dateValue: string, dateFormat: string): boolean {
         if (dateValue) {
             const date = this.parseDate(dateValue, dateFormat);
             return isValid(date);
@@ -181,7 +181,7 @@ export class DateFnsUtils {
      * @param target target date to compare
      * @returns `true` if the source date is before the target one, otherwise `false`
      */
-    static isBeforeDate(source: Date, target: Date): boolean {
+    static isBeforeDate (source: Date, target: Date): boolean {
         return isBefore(source, target);
     }
 
@@ -191,19 +191,19 @@ export class DateFnsUtils {
      * @param target target date to compare
      * @returns `true` if the source date is after the target one, otherwise `false`
      */
-    static isAfterDate(source: Date, target: Date): boolean {
+    static isAfterDate (source: Date, target: Date): boolean {
         return isAfter(source, target);
     }
 
-    static utcToLocal(date: Date): Date {
+    static utcToLocal (date: Date): Date {
         return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
     }
 
-    static localToUtc(date: Date): Date {
+    static localToUtc (date: Date): Date {
         return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
 
-    static forceLocal(date: Date | string): Date {
+    static forceLocal (date: Date | string): Date {
         if (typeof date === 'string') {
             date = parseISO(date);
         }
@@ -211,7 +211,7 @@ export class DateFnsUtils {
         return new Date(localDate);
     }
 
-    static forceUtc(date: Date | string): Date {
+    static forceUtc (date: Date | string): Date {
         if (typeof date === 'string') {
             date = parseISO(date);
         }
@@ -219,11 +219,11 @@ export class DateFnsUtils {
         return new Date(utcDate);
     }
 
-    static stringDateContainsTimeZone(value: string): boolean {
+    static stringDateContainsTimeZone (value: string): boolean {
         return /(Z|([+|-]\d\d:?\d\d))$/.test(value);
     }
 
-    static getDate(value: string | number | Date): Date {
+    static getDate (value: string | number | Date): Date {
         let date = new Date(value);
 
         if (typeof value === 'string' && !DateFnsUtils.stringDateContainsTimeZone(value)) {

@@ -21,15 +21,15 @@ import { ApplicationAccessModel } from '../models/application-access.model';
 import { AppConfigService } from '../../app-config/app-config.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class UserAccessService {
     private globalAccess: string[];
     private applicationAccess: ApplicationAccessModel[];
 
-    constructor(private jwtHelperService: JwtHelperService, private appConfigService: AppConfigService) {}
+    constructor (private jwtHelperService: JwtHelperService, private appConfigService: AppConfigService) {}
 
-    fetchUserAccess() {
+    fetchUserAccess () {
         if (this.hasRolesInRealmAccess()) {
             this.fetchAccessFromRealmAccess();
         } else if (this.hasRolesInHxpAuthorization()) {
@@ -37,19 +37,19 @@ export class UserAccessService {
         }
     }
 
-    private fetchAccessFromRealmAccess() {
+    private fetchAccessFromRealmAccess () {
         this.globalAccess = this.jwtHelperService.getValueFromLocalToken<any>(JwtHelperService.REALM_ACCESS).roles;
         this.applicationAccess = this.jwtHelperService.getValueFromLocalToken<any>(JwtHelperService.RESOURCE_ACCESS);
     }
 
-    private fetchAccessFromHxpAuthorization() {
+    private fetchAccessFromHxpAuthorization () {
         this.globalAccess = [];
         const hxpAuthorization = this.jwtHelperService.getValueFromLocalToken<any>(JwtHelperService.HXP_AUTHORIZATION);
         if (hxpAuthorization?.appkey && hxpAuthorization?.role) {
             this.applicationAccess = [
                 {
-                    name: hxpAuthorization.appkey,
-                    roles: hxpAuthorization.role
+                    "name": hxpAuthorization.appkey,
+                    "roles": hxpAuthorization.role
                 }
             ];
         } else {
@@ -57,11 +57,11 @@ export class UserAccessService {
         }
     }
 
-    private hasRolesInRealmAccess(): boolean {
+    private hasRolesInRealmAccess (): boolean {
         return !!this.jwtHelperService.getValueFromLocalToken(JwtHelperService.REALM_ACCESS);
     }
 
-    private hasRolesInHxpAuthorization(): boolean {
+    private hasRolesInHxpAuthorization (): boolean {
         return !!this.jwtHelperService.getValueFromLocalToken(JwtHelperService.HXP_AUTHORIZATION);
     }
 
@@ -70,7 +70,7 @@ export class UserAccessService {
      * @param rolesToCheck List of the roles to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
-    hasGlobalAccess(rolesToCheck: string[]): boolean {
+    hasGlobalAccess (rolesToCheck: string[]): boolean {
         if (rolesToCheck?.length > 0) {
             if (this.hasRolesInRealmAccess()) {
                 return this.globalAccess ? this.globalAccess.some((role: string) => rolesToCheck.includes(role)) : false;
@@ -83,7 +83,7 @@ export class UserAccessService {
         return false;
     }
 
-    private isCurrentAppKeyInToken(): boolean {
+    private isCurrentAppKeyInToken (): boolean {
         const currentAppKey = this.appConfigService.get('application.key');
         return this.applicationAccess?.length ? currentAppKey === this.applicationAccess[0]?.name : false;
     }
@@ -94,7 +94,7 @@ export class UserAccessService {
      * @param rolesToCheck List of the roles to check
      * @returns True if it contains at least one of the given roles, false otherwise
      */
-    hasApplicationAccess(appName: string, rolesToCheck: string[]): boolean {
+    hasApplicationAccess (appName: string, rolesToCheck: string[]): boolean {
         if (rolesToCheck?.length > 0) {
             const appAccess = this.hasRolesInRealmAccess()
                 ? this.applicationAccess[appName]

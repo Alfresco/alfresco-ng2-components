@@ -26,7 +26,7 @@ import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 
 @Component({
-    template: `
+    "template": `
         <adf-search-control [highlight]="true" #search>
             <adf-empty-search-result>
                 <span id="custom-no-result">{{ customMessage }}</span>
@@ -37,10 +37,10 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 export class SimpleSearchTestCustomEmptyComponent {
     customMessage = '';
 
-    @ViewChild(SearchControlComponent, { static: true })
+    @ViewChild(SearchControlComponent, { "static": true })
     searchComponent: SearchControlComponent;
 
-    @ViewChild(SearchTextInputComponent, { static: true })
+    @ViewChild(SearchTextInputComponent, { "static": true })
     searchTextInputComponent: SearchTextInputComponent;
 }
 
@@ -59,8 +59,8 @@ describe('SearchControlComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [SimpleSearchTestCustomEmptyComponent]
+            "imports": [ContentTestingModule],
+            "declarations": [SimpleSearchTestCustomEmptyComponent]
         });
         fixture = TestBed.createComponent(SearchControlComponent);
         debugElement = fixture.debugElement;
@@ -92,7 +92,7 @@ describe('SearchControlComponent', () => {
         });
 
         it('should emit searchChange when search term input changed', (done) => {
-            searchServiceSpy.and.returnValue(of({ entry: { list: [] } }));
+            searchServiceSpy.and.returnValue(of({ "entry": { "list": [] } }));
 
             const searchDisposable = component.searchChange.subscribe((value) => {
                 expect(value).toBe('customSearchTerm');
@@ -225,7 +225,7 @@ describe('SearchControlComponent', () => {
                 const resultElement = element.querySelector<HTMLElement>('#result_option_0');
                 resultElement.focus();
                 expect(resultElement).not.toBe(null);
-                inputDebugElement.nativeElement.dispatchEvent(new KeyboardEvent('keypress', { key: 'TAB' }));
+                inputDebugElement.nativeElement.dispatchEvent(new KeyboardEvent('keypress', { "key": 'TAB' }));
                 fixture.detectChanges();
 
                 expect(element.querySelector('#autocomplete-search-result-list')).not.toBeNull();

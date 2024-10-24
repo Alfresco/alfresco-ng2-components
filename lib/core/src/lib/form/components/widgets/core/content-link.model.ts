@@ -34,7 +34,7 @@ export class ContentLinkModel {
     contentBlob: Blob;
     thumbnailStatus: string;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         this.contentAvailable = obj?.contentAvailable;
         this.created = obj?.created;
         this.createdBy = obj?.createdBy || {};
@@ -49,27 +49,27 @@ export class ContentLinkModel {
         this.nodeId = obj?.nodeId;
     }
 
-    hasPreviewStatus(): boolean {
+    hasPreviewStatus (): boolean {
         return this.previewStatus === 'supported';
     }
 
-    isTypeImage(): boolean {
+    isTypeImage (): boolean {
         return this.simpleType === 'image';
     }
 
-    isTypePdf(): boolean {
+    isTypePdf (): boolean {
         return this.simpleType === 'pdf';
     }
 
-    isTypeDoc(): boolean {
+    isTypeDoc (): boolean {
         return this.simpleType === 'word' || this.simpleType === 'content';
     }
 
-    isThumbnailReady(): boolean {
+    isThumbnailReady (): boolean {
         return this.thumbnailStatus === 'created';
     }
 
-    isThumbnailSupported(): boolean {
+    isThumbnailSupported (): boolean {
         return this.isTypeImage() || ((this.isTypePdf() || this.isTypeDoc()) && this.isThumbnailReady());
     }
 }

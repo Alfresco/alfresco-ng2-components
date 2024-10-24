@@ -26,25 +26,25 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 
 const fakeNode: Node = {
-    name: 'Node',
-    id: 'fake-id',
-    isFile: true,
-    aspectNames: ['exif:exif'],
-    nodeType: 'fn:fakenode',
-    createdByUser: { displayName: 'test-user' },
-    modifiedByUser: { displayName: 'test-user-modified' },
-    properties: []
+    "name": 'Node',
+    "id": 'fake-id',
+    "isFile": true,
+    "aspectNames": ['exif:exif'],
+    "nodeType": 'fn:fakenode',
+    "createdByUser": { "displayName": 'test-user' },
+    "modifiedByUser": { "displayName": 'test-user-modified' },
+    "properties": []
 } as Node;
 
 const fakeContentNode: Node = {
-    name: 'Node Action',
-    id: 'fake-id',
-    nodeType: 'cm:content',
-    isFile: true,
-    aspectNames: ['rn:renditioned', 'cm:versionable', 'cm:titled', 'cm:auditable', 'cm:author', 'cm:thumbnailModification'],
-    createdByUser: { displayName: 'test-user' },
-    modifiedByUser: { displayName: 'test-user-modified' },
-    properties: []
+    "name": 'Node Action',
+    "id": 'fake-id',
+    "nodeType": 'cm:content',
+    "isFile": true,
+    "aspectNames": ['rn:renditioned', 'cm:versionable', 'cm:titled', 'cm:auditable', 'cm:author', 'cm:thumbnailModification'],
+    "createdByUser": { "displayName": 'test-user' },
+    "modifiedByUser": { "displayName": 'test-user-modified' },
+    "properties": []
 } as Node;
 
 describe('ContentMetaDataService', () => {
@@ -54,85 +54,85 @@ describe('ContentMetaDataService', () => {
     let contentPropertyService: ContentTypePropertiesService;
 
     const exifResponse: PropertyGroup = {
-        name: 'exif:exif',
-        title: 'Exif',
-        properties: {
+        "name": 'exif:exif',
+        "title": 'Exif',
+        "properties": {
             'exif:1': {
-                title: 'exif:1:id',
-                name: 'exif:1',
-                dataType: '',
-                mandatory: false,
-                multiValued: false
+                "title": 'exif:1:id',
+                "name": 'exif:1',
+                "dataType": '',
+                "mandatory": false,
+                "multiValued": false
             },
             'exif:2': {
-                title: 'exif:2:id',
-                name: 'exif:2',
-                dataType: '',
-                mandatory: false,
-                multiValued: false
+                "title": 'exif:2:id',
+                "name": 'exif:2',
+                "dataType": '',
+                "mandatory": false,
+                "multiValued": false
             },
             'exif:pixelXDimension': {
-                title: 'Image Width',
-                name: 'exif:pixelXDimension',
-                dataType: 'd:int',
-                mandatory: false,
-                multiValued: false
+                "title": 'Image Width',
+                "name": 'exif:pixelXDimension',
+                "dataType": 'd:int',
+                "mandatory": false,
+                "multiValued": false
             },
             'exif:pixelYDimension': {
-                title: 'Image Height',
-                name: 'exif:pixelYDimension',
-                dataType: 'd:int',
-                mandatory: false,
-                multiValued: false
+                "title": 'Image Height',
+                "name": 'exif:pixelYDimension',
+                "dataType": 'd:int',
+                "mandatory": false,
+                "multiValued": false
             }
         }
     };
 
     const contentResponse: PropertyGroup = {
-        name: 'cm:content',
-        title: '',
-        properties: {
+        "name": 'cm:content',
+        "title": '',
+        "properties": {
             'cm:content': {
-                title: 'cm:content:id',
-                name: 'cm:content',
-                dataType: '',
-                mandatory: false,
-                multiValued: false
+                "title": 'cm:content:id',
+                "name": 'cm:content',
+                "dataType": '',
+                "mandatory": false,
+                "multiValued": false
             }
         }
     };
 
     const verResponse: PropertyGroup = {
-        name: 'cm:versionable',
-        title: 'Versionable',
-        properties: {
+        "name": 'cm:versionable',
+        "title": 'Versionable',
+        "properties": {
             'cm:autoVersion': {
-                title: 'Auto Version',
-                name: 'cm:autoVersion',
-                dataType: 'd:boolean',
-                mandatory: false,
-                multiValued: false
+                "title": 'Auto Version',
+                "name": 'cm:autoVersion',
+                "dataType": 'd:boolean',
+                "mandatory": false,
+                "multiValued": false
             },
             'cm:initialVersion': {
-                title: 'Initial Version',
-                name: 'cm:initialVersion',
-                dataType: 'd:boolean',
-                mandatory: false,
-                multiValued: false
+                "title": 'Initial Version',
+                "name": 'cm:initialVersion',
+                "dataType": 'd:boolean',
+                "mandatory": false,
+                "multiValued": false
             },
             'cm:versionType': {
-                title: 'Version Type',
-                name: 'cm:versionType',
-                dataType: 'd:text',
-                mandatory: false,
-                multiValued: false
+                "title": 'Version Type',
+                "name": 'cm:versionType',
+                "dataType": 'd:text',
+                "mandatory": false,
+                "multiValued": false
             }
         }
     };
 
     const setConfig = (presetName, presetConfig) => {
         appConfig.config['content-metadata'] = {
-            presets: {
+            "presets": {
                 [presetName]: presetConfig
             }
         };
@@ -140,7 +140,7 @@ describe('ContentMetaDataService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(ContentMetadataService);
         contentPropertyService = TestBed.inject(ContentTypePropertiesService);
@@ -159,7 +159,7 @@ describe('ContentMetaDataService', () => {
     });
 
     it('should return the content type property', () => {
-        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ label: 'hello i am a weird content type' } as any));
+        spyOn(contentPropertyService, 'getContentTypeCardItem').and.returnValue(of({ "label": 'hello i am a weird content type' } as any));
 
         service.getContentTypeProperty(fakeNode).subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -207,7 +207,7 @@ describe('ContentMetaDataService', () => {
 
         it('should return response with versionable property', async () => {
             setConfig('default', {
-                includeAll: false,
+                "includeAll": false,
                 'cm:versionable': '*'
             });
 
@@ -224,7 +224,7 @@ describe('ContentMetaDataService', () => {
 
         it('should return response with versionable property twice', async () => {
             setConfig('default', {
-                includeAll: true,
+                "includeAll": true,
                 'cm:versionable': '*'
             });
 
@@ -242,8 +242,8 @@ describe('ContentMetaDataService', () => {
 
         it('should return response with versionable excluded', async () => {
             setConfig('default', {
-                includeAll: true,
-                exclude: 'cm:versionable'
+                "includeAll": true,
+                "exclude": 'cm:versionable'
             });
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
@@ -257,8 +257,8 @@ describe('ContentMetaDataService', () => {
 
         it('should return response with versionable visible when excluded and included set', async () => {
             setConfig('default', {
-                includeAll: true,
-                exclude: 'cm:versionable',
+                "includeAll": true,
+                "exclude": 'cm:versionable',
                 'cm:versionable': '*'
             });
 
@@ -274,8 +274,8 @@ describe('ContentMetaDataService', () => {
 
         it('should not show aspects excluded in content-metadata config', async () => {
             setConfig('default', {
-                includeAll: true,
-                exclude: ['cm:versionable', 'cm:auditable']
+                "includeAll": true,
+                "exclude": ['cm:versionable', 'cm:auditable']
             });
 
             spyOn(classesApi, 'getClass').and.returnValue(Promise.resolve(verResponse));
@@ -290,7 +290,7 @@ describe('ContentMetaDataService', () => {
 
         it('should return response with exif visible even when includeAll is set to false', async () => {
             setConfig('default', {
-                includeAll: false,
+                "includeAll": false,
                 'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
             });
 
@@ -310,7 +310,7 @@ describe('ContentMetaDataService', () => {
 
         it('should return response with exif visible twice when includeAll is set to true', async () => {
             setConfig('default', {
-                includeAll: true,
+                "includeAll": true,
                 'exif:exif': ['exif:pixelXDimension', 'exif:pixelYDimension']
             });
 
@@ -341,13 +341,13 @@ describe('ContentMetaDataService', () => {
         it('should return the node property', (done) => {
             const customLayoutOrientedScheme = [
                 {
-                    id: 'app.content.metadata.customGroup2',
-                    title: 'Properties',
-                    items: [
+                    "id": 'app.content.metadata.customGroup2',
+                    "title": 'Properties',
+                    "items": [
                         {
-                            id: 'app.content.metadata.content',
-                            aspect: 'cm:content',
-                            properties: '*'
+                            "id": 'app.content.metadata.content',
+                            "aspect": 'cm:content',
+                            "properties": '*'
                         }
                     ]
                 }
@@ -369,24 +369,24 @@ describe('ContentMetaDataService', () => {
         it('should filter the exif property', (done) => {
             const customLayoutOrientedScheme = [
                 {
-                    id: 'app.content.metadata.customGroup',
-                    title: 'Exif',
-                    items: [
+                    "id": 'app.content.metadata.customGroup',
+                    "title": 'Exif',
+                    "items": [
                         {
-                            id: 'app.content.metadata.exifAspect2',
-                            aspect: 'exif:exif',
-                            properties: '*'
+                            "id": 'app.content.metadata.exifAspect2',
+                            "aspect": 'exif:exif',
+                            "properties": '*'
                         }
                     ]
                 },
                 {
-                    id: 'app.content.metadata.customGroup2',
-                    title: 'Properties',
-                    items: [
+                    "id": 'app.content.metadata.customGroup2',
+                    "title": 'Properties',
+                    "items": [
                         {
-                            id: 'app.content.metadata.content',
-                            aspect: 'cm:content',
-                            properties: '*'
+                            "id": 'app.content.metadata.content',
+                            "aspect": 'cm:content',
+                            "properties": '*'
                         }
                     ]
                 }
@@ -408,15 +408,15 @@ describe('ContentMetaDataService', () => {
         it('should exclude the property if this property is excluded from config', (done) => {
             const customLayoutOrientedScheme = [
                 {
-                    id: 'app.content.metadata.customGroup',
-                    title: 'Exif',
-                    includeAll: true,
-                    exclude: ['cm:content'],
-                    items: [
+                    "id": 'app.content.metadata.customGroup',
+                    "title": 'Exif',
+                    "includeAll": true,
+                    "exclude": ['cm:content'],
+                    "items": [
                         {
-                            id: 'app.content.metadata.exifAspect2',
-                            aspect: 'exif:exif',
-                            properties: '*'
+                            "id": 'app.content.metadata.exifAspect2',
+                            "aspect": 'exif:exif',
+                            "properties": '*'
                         }
                     ]
                 }
@@ -439,24 +439,24 @@ describe('ContentMetaDataService', () => {
         it('should create the metadata config on the fly when preset config is provided', (done) => {
             const customLayoutOrientedScheme = [
                 {
-                    id: 'app.content.metadata.customGroup',
-                    title: 'Exif',
-                    items: [
+                    "id": 'app.content.metadata.customGroup',
+                    "title": 'Exif',
+                    "items": [
                         {
-                            id: 'app.content.metadata.exifAspect2',
-                            aspect: 'exif:exif',
-                            properties: '*'
+                            "id": 'app.content.metadata.exifAspect2',
+                            "aspect": 'exif:exif',
+                            "properties": '*'
                         }
                     ]
                 },
                 {
-                    id: 'app.content.metadata.customGroup2',
-                    title: 'Properties',
-                    items: [
+                    "id": 'app.content.metadata.customGroup2',
+                    "title": 'Properties',
+                    "items": [
                         {
-                            id: 'app.content.metadata.content',
-                            aspect: 'cm:content',
-                            properties: '*'
+                            "id": 'app.content.metadata.content',
+                            "aspect": 'cm:content',
+                            "properties": '*'
                         }
                     ]
                 }

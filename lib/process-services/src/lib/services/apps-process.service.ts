@@ -22,33 +22,31 @@ import { AlfrescoApiService } from '@alfresco/adf-content-services';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AppsProcessService {
     private _appsApi: RuntimeAppDefinitionsApi;
-    get appsApi(): RuntimeAppDefinitionsApi {
+    get appsApi (): RuntimeAppDefinitionsApi {
         this._appsApi = this._appsApi ?? new RuntimeAppDefinitionsApi(this.apiService.getInstance());
         return this._appsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Gets a list of deployed apps for this user.
-     *
      * @returns The list of deployed apps
      */
-    getDeployedApplications(): Observable<AppDefinitionRepresentation[]> {
+    getDeployedApplications (): Observable<AppDefinitionRepresentation[]> {
         return from(this.appsApi.getAppDefinitions()).pipe(map((response) => response.data || []));
     }
 
     /**
      * Gets a list of deployed apps for this user, where the app name is `name`.
-     *
      * @param name Name of the app
      * @returns The list of deployed apps
      */
-    getDeployedApplicationsByName(name: string): Observable<AppDefinitionRepresentation> {
+    getDeployedApplicationsByName (name: string): Observable<AppDefinitionRepresentation> {
         return this.getDeployedApplications().pipe(map((response) => response.find((app) => app.name === name)));
     }
 }

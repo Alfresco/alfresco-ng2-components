@@ -22,75 +22,75 @@ import { FormFieldMetadata } from '@alfresco/adf-core';
 import { FileSourceTypes, DestinationFolderPathType } from '../models/form-cloud-representation.model';
 
 export const fakeLocalPngResponse = {
-    id: 1155,
-    nodeId: 1155,
-    name: 'a_png_file.png',
-    created: '2017-07-25T17:17:37.099Z',
-    createdBy: {
-        id: 1001,
-        firstName: 'Admin',
-        lastName: 'admin',
-        email: 'admin'
+    "id": 1155,
+    "nodeId": 1155,
+    "name": 'a_png_file.png',
+    "created": '2017-07-25T17:17:37.099Z',
+    "createdBy": {
+        "id": 1001,
+        "firstName": 'Admin',
+        "lastName": 'admin',
+        "email": 'admin'
     },
-    relatedContent: false,
-    contentAvailable: true,
-    link: false,
-    mimeType: 'image/png',
-    content: {
-        mimeType: 'image/png'
+    "relatedContent": false,
+    "contentAvailable": true,
+    "link": false,
+    "mimeType": 'image/png',
+    "content": {
+        "mimeType": 'image/png'
     },
-    simpleType: 'image',
-    previewStatus: 'queued',
-    thumbnailStatus: 'queued',
-    properties: {
+    "simpleType": 'image',
+    "previewStatus": 'queued',
+    "thumbnailStatus": 'queued',
+    "properties": {
         'pfx:property_one': 'testValue',
         'pfx:property_two': true
     }
 };
 
 export const fakeLocalPhysicalRecordResponse = {
-    id: 1155,
-    nodeId: 1155,
-    name: 'a_png_file.png',
-    created: '2017-07-25T17:17:37.099Z',
-    createdBy: {
-        id: 1001,
-        firstName: 'Admin',
-        lastName: 'admin',
-        email: 'admin'
+    "id": 1155,
+    "nodeId": 1155,
+    "name": 'a_png_file.png',
+    "created": '2017-07-25T17:17:37.099Z',
+    "createdBy": {
+        "id": 1001,
+        "firstName": 'Admin',
+        "lastName": 'admin',
+        "email": 'admin'
     },
-    relatedContent: false,
-    contentAvailable: true,
-    link: false,
-    mimeType: null,
-    simpleType: 'image',
-    previewStatus: 'queued',
-    thumbnailStatus: 'queued',
-    properties: {
+    "relatedContent": false,
+    "contentAvailable": true,
+    "link": false,
+    "mimeType": null,
+    "simpleType": 'image',
+    "previewStatus": 'queued',
+    "thumbnailStatus": 'queued',
+    "properties": {
         'pfx:property_one': 'testValue',
         'pfx:property_two': true
     }
 };
 
 export const fakeLocalPngHavingCMProperties = {
-    id: 1155,
-    nodeId: 1155,
-    name: 'a_png_file.png',
-    created: '2017-07-25T17:17:37.099Z',
-    createdBy: {
-        id: 1001,
-        firstName: 'Admin',
-        lastName: 'admin',
-        email: 'admin'
+    "id": 1155,
+    "nodeId": 1155,
+    "name": 'a_png_file.png',
+    "created": '2017-07-25T17:17:37.099Z',
+    "createdBy": {
+        "id": 1001,
+        "firstName": 'Admin',
+        "lastName": 'admin',
+        "email": 'admin'
     },
-    relatedContent: false,
-    contentAvailable: true,
-    link: false,
-    mimeType: null,
-    simpleType: 'image',
-    previewStatus: 'queued',
-    thumbnailStatus: 'queued',
-    properties: {
+    "relatedContent": false,
+    "contentAvailable": true,
+    "link": false,
+    "mimeType": null,
+    "simpleType": 'image',
+    "previewStatus": 'queued',
+    "thumbnailStatus": 'queued',
+    "properties": {
         'pfx:property_one': 'testValue',
         'pfx:property_two': true,
         'a:name': 'Alex',
@@ -101,153 +101,153 @@ export const fakeLocalPngHavingCMProperties = {
 };
 
 export const onlyLocalParams = {
-    fileSource: {
-        serviceId: 'local-file'
+    "fileSource": {
+        "serviceId": 'local-file'
     }
 } as FormFieldMetadata;
 
 export const contentSourceParam = {
-    fileSource: {
-        name: 'mock-alf-content',
-        serviceId: FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID
+    "fileSource": {
+        "name": 'mock-alf-content',
+        "serviceId": FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID
     }
 } as FormFieldMetadata;
 
 export const menuTestSourceParam = {
-    fileSource: {
-        name: 'mock-alf-content',
-        serviceId: FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID
+    "fileSource": {
+        "name": 'mock-alf-content',
+        "serviceId": FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID
     },
-    menuOptions: {
-        show: true,
-        download: true,
-        retrieveMetadata: true,
-        remove: true
+    "menuOptions": {
+        "show": true,
+        "download": true,
+        "retrieveMetadata": true,
+        "remove": true
     }
 } as FormFieldMetadata;
 
 export const allSourceParamsWithRelativePath = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            value: '-shared-/myfiles',
-            type: DestinationFolderPathType.STATIC_TYPE
+    "fileSource": {
+        "name": 'all file sources',
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "destinationFolderPath": {
+            "value": '-shared-/myfiles',
+            "type": DestinationFolderPathType.STATIC_TYPE
         }
     }
 };
 
 export const allSourceParams = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            value: '-root-/myfiles',
-            type: DestinationFolderPathType.STATIC_TYPE
+    "fileSource": {
+        "name": 'all file sources',
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "destinationFolderPath": {
+            "value": '-root-/myfiles',
+            "type": DestinationFolderPathType.STATIC_TYPE
         }
     }
 };
 
 export const displayableCMParams = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            value: '-root-/myfiles',
-            type: DestinationFolderPathType.STATIC_TYPE
+    "fileSource": {
+        "name": 'all file sources',
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "destinationFolderPath": {
+            "value": '-root-/myfiles',
+            "type": DestinationFolderPathType.STATIC_TYPE
         }
     },
-    displayableCMProperties: [
+    "displayableCMProperties": [
         {
-            name: 'name',
-            prefixedName: 'a:name',
-            title: '',
-            dataType: 'd:text',
-            defaultValue: 'Bob'
+            "name": 'name',
+            "prefixedName": 'a:name',
+            "title": '',
+            "dataType": 'd:text',
+            "defaultValue": 'Bob'
         },
         {
-            name: 'age',
-            prefixedName: 'a:age',
-            title: 'Age',
-            dataType: 'd:text',
-            defaultValue: ''
+            "name": 'age',
+            "prefixedName": 'a:age',
+            "title": 'Age',
+            "dataType": 'd:text',
+            "defaultValue": ''
         },
         {
-            name: 'dob',
-            prefixedName: 'a:dob',
-            title: 'Date of Birth',
-            dataType: 'd:date',
-            defaultValue: ''
+            "name": 'dob',
+            "prefixedName": 'a:dob',
+            "title": 'Date of Birth',
+            "dataType": 'd:date',
+            "defaultValue": ''
         },
         {
-            name: 'doj',
-            prefixedName: 'a:doj',
-            title: 'Date of Joining',
-            dataType: 'd:datetime',
-            defaultValue: ''
+            "name": 'doj',
+            "prefixedName": 'a:doj',
+            "title": 'Date of Joining',
+            "dataType": 'd:datetime',
+            "defaultValue": ''
         }
     ]
 };
 
 export const allSourceWithStringTypeEmptyValue = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            value: null,
-            name: 'stringVariableName',
-            type: DestinationFolderPathType.STRING_TYPE
+    "fileSource": {
+        "name": 'all file sources',
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "destinationFolderPath": {
+            "value": null,
+            "name": 'stringVariableName',
+            "type": DestinationFolderPathType.STRING_TYPE
         }
     }
 };
 
 export const allSourceWithWrongAliasParams = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            name: 'staticValue',
-            value: '-wrongAlias-',
-            type: DestinationFolderPathType.STATIC_TYPE
+    "fileSource": {
+        "name": 'all file sources',
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "destinationFolderPath": {
+            "name": 'staticValue',
+            "value": '-wrongAlias-',
+            "type": DestinationFolderPathType.STATIC_TYPE
         }
     }
 };
 
 export const allSourceWithNoAliasParams = {
-    fileSource: {
-        name: 'all file sources',
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        destinationFolderPath: {
-            name: 'staticValue',
-            value: '/noalias/createdFolder',
-            type: DestinationFolderPathType.STATIC_TYPE
+    "fileSource": {
+        "name": 'all file sources',
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "destinationFolderPath": {
+            "name": 'staticValue',
+            "value": '/noalias/createdFolder',
+            "type": DestinationFolderPathType.STATIC_TYPE
         }
     }
 };
 
 export const fakeNode = {
-    id: 'fake',
-    name: 'fake-name',
-    content: {
-        mimeType: 'application/pdf'
+    "id": 'fake',
+    "name": 'fake-name',
+    "content": {
+        "mimeType": 'application/pdf'
     }
 } as Node;
 
 export const fakeNodeWithProperties = {
-    id: 'fake-properties',
-    name: 'fake-properties-name',
-    content: {
-        mimeType: 'application/pdf'
+    "id": 'fake-properties',
+    "name": 'fake-properties-name',
+    "content": {
+        "mimeType": 'application/pdf'
     },
-    properties: {
+    "properties": {
         'pfx:property_one': 'testValue',
         'pfx:property_two': true
     }
 } as Node;
 
 export const expectedValues = {
-    pfx_property_one: 'testValue',
-    pfx_property_two: true
+    "pfx_property_one": 'testValue',
+    "pfx_property_two": true
 };
 
 export const mockNodeId = new Promise<string>((resolve) => {
@@ -261,154 +261,154 @@ export const mockNodeIdBasedOnStringVariableValue = new Promise<string>((resolve
 });
 
 export const fakeLocalPngAnswer = {
-    id: 1155,
-    nodeId: 1155,
-    name: 'a_png_file.png',
-    created: '2017-07-25T17:17:37.099Z',
-    createdBy: {
-        id: 1001,
-        firstName: 'Admin',
-        lastName: 'admin',
-        email: 'admin'
+    "id": 1155,
+    "nodeId": 1155,
+    "name": 'a_png_file.png',
+    "created": '2017-07-25T17:17:37.099Z',
+    "createdBy": {
+        "id": 1001,
+        "firstName": 'Admin',
+        "lastName": 'admin',
+        "email": 'admin'
     },
-    relatedContent: false,
-    contentAvailable: true,
-    link: false,
-    mimeType: 'image/png',
-    simpleType: 'image',
-    previewStatus: 'queued',
-    thumbnailStatus: 'queued'
+    "relatedContent": false,
+    "contentAvailable": true,
+    "link": false,
+    "mimeType": 'image/png',
+    "simpleType": 'image',
+    "previewStatus": 'queued',
+    "thumbnailStatus": 'queued'
 };
 
 export const mockContentFileSource = {
-    label: 'File Source',
-    fileSource: {
-        serviceId: FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID,
-        name: 'Alfresco Content'
+    "label": 'File Source',
+    "fileSource": {
+        "serviceId": FileSourceTypes.ALFRESCO_CONTENT_SOURCES_SERVICE_ID,
+        "name": 'Alfresco Content'
     },
-    key: 'fileSource',
-    editable: true
+    "key": 'fileSource',
+    "editable": true
 };
 
 export const mockAllFileSourceWithStaticPathType = {
-    label: 'File Source',
-    fileSource: {
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        name: 'Alfresco Content and Local',
-        destinationFolderPath: {
-            type: DestinationFolderPathType.STATIC_TYPE,
-            value: '-myfiles-'
+    "label": 'File Source',
+    "fileSource": {
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "name": 'Alfresco Content and Local',
+        "destinationFolderPath": {
+            "type": DestinationFolderPathType.STATIC_TYPE,
+            "value": '-myfiles-'
         }
     },
-    key: 'fileSource',
-    editable: true
+    "key": 'fileSource',
+    "editable": true
 };
 
 export const mockAllFileSourceWithStringVariablePathType = {
-    label: 'File Source',
-    fileSource: {
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        name: 'Alfresco Content and Local',
-        destinationFolderPath: {
-            type: DestinationFolderPathType.STRING_TYPE,
-            name: 'name1',
-            id: 'var1',
-            value: ''
+    "label": 'File Source',
+    "fileSource": {
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "name": 'Alfresco Content and Local',
+        "destinationFolderPath": {
+            "type": DestinationFolderPathType.STRING_TYPE,
+            "name": 'name1',
+            "id": 'var1',
+            "value": ''
         }
     },
-    key: 'fileSource',
-    editable: true
+    "key": 'fileSource',
+    "editable": true
 };
 
 export const mockAllFileSourceWithFolderVariablePathType = {
-    label: 'File Source',
-    fileSource: {
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        name: 'Alfresco Content and Local',
-        destinationFolderPath: {
-            type: DestinationFolderPathType.FOLDER_TYPE,
-            name: 'name2',
-            id: 'var2',
-            value: ''
+    "label": 'File Source',
+    "fileSource": {
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "name": 'Alfresco Content and Local',
+        "destinationFolderPath": {
+            "type": DestinationFolderPathType.FOLDER_TYPE,
+            "name": 'name2',
+            "id": 'var2',
+            "value": ''
         }
     },
-    key: 'fileSource',
-    editable: true
+    "key": 'fileSource',
+    "editable": true
 };
 
 export const mockAllFileSourceWithRenamedFolderVariablePathType = {
-    label: 'File Source',
-    fileSource: {
-        serviceId: FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
-        name: 'Alfresco Content and Local',
-        destinationFolderPath: {
-            type: DestinationFolderPathType.FOLDER_TYPE,
-            name: 'name3',
-            id: 'var2',
-            value: ''
+    "label": 'File Source',
+    "fileSource": {
+        "serviceId": FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID,
+        "name": 'Alfresco Content and Local',
+        "destinationFolderPath": {
+            "type": DestinationFolderPathType.FOLDER_TYPE,
+            "name": 'name3',
+            "id": 'var2',
+            "value": ''
         }
     },
-    key: 'fileSource',
-    editable: true
+    "key": 'fileSource',
+    "editable": true
 };
 
 export const formVariables = [
     {
-        id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
-        name: 'name1',
-        type: 'string',
-        value: 'mock destination folder path'
+        "id": 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+        "name": 'name1',
+        "type": 'string',
+        "value": 'mock destination folder path'
     },
     {
-        id: '3ed9f28a-dbae-463f-b991-47ef06658bb6',
-        name: 'name2',
-        type: 'folder'
+        "id": '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+        "name": 'name2',
+        "type": 'folder'
     },
     {
-        id: 'booleanVar',
-        name: 'bool',
-        type: 'boolean',
-        value: 'true'
+        "id": 'booleanVar',
+        "name": 'bool',
+        "type": 'boolean',
+        "value": 'true'
     }
 ];
 
 export const processVariables = [
     {
-        serviceName: 'mock-variable-mapping-rb',
-        serviceFullName: 'mock-variable-mapping-rb',
-        serviceVersion: '',
-        appName: 'mock-variable-mapping',
-        appVersion: '',
-        serviceType: null,
-        id: 3,
-        type: 'string',
-        name: 'variables.name1',
-        createTime: 1566989626284,
-        lastUpdatedTime: 1566989626284,
-        executionId: null,
-        value: '-root-/pathBasedOnStringvariablevalue',
-        markedAsDeleted: false,
-        processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-        taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-        taskVariable: true
+        "serviceName": 'mock-variable-mapping-rb',
+        "serviceFullName": 'mock-variable-mapping-rb',
+        "serviceVersion": '',
+        "appName": 'mock-variable-mapping',
+        "appVersion": '',
+        "serviceType": null,
+        "id": 3,
+        "type": 'string',
+        "name": 'variables.name1',
+        "createTime": 1566989626284,
+        "lastUpdatedTime": 1566989626284,
+        "executionId": null,
+        "value": '-root-/pathBasedOnStringvariablevalue',
+        "markedAsDeleted": false,
+        "processInstanceId": '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+        "taskId": '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+        "taskVariable": true
     },
     {
-        serviceName: 'mock-variable-mapping-rb',
-        serviceFullName: 'mock-variable-mapping-rb',
-        serviceVersion: '',
-        appName: 'mock-variable-mapping',
-        appVersion: '',
-        serviceType: null,
-        id: 1,
-        type: 'folder',
-        name: 'variables.name2',
-        createTime: 1566989626283,
-        lastUpdatedTime: 1566989626283,
-        executionId: null,
-        value: [{ id: 'mock-folder-id' }],
-        markedAsDeleted: false,
-        processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-        taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-        taskVariable: true
+        "serviceName": 'mock-variable-mapping-rb',
+        "serviceFullName": 'mock-variable-mapping-rb',
+        "serviceVersion": '',
+        "appName": 'mock-variable-mapping',
+        "appVersion": '',
+        "serviceType": null,
+        "id": 1,
+        "type": 'folder',
+        "name": 'variables.name2',
+        "createTime": 1566989626283,
+        "lastUpdatedTime": 1566989626283,
+        "executionId": null,
+        "value": [{ "id": 'mock-folder-id' }],
+        "markedAsDeleted": false,
+        "processInstanceId": '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+        "taskId": '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+        "taskVariable": true
     }
 ];

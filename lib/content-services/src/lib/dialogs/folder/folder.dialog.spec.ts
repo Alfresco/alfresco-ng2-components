@@ -31,7 +31,7 @@ describe('FolderDialogComponent', () => {
 
     let submitButton: HTMLButtonElement;
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        "close": jasmine.createSpy('close')
     };
     let updateNodeSpy: jasmine.Spy;
     let createFolderSpy: jasmine.Spy;
@@ -41,8 +41,8 @@ describe('FolderDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [{ provide: MatDialogRef, useValue: dialogRef }]
+            "imports": [ContentTestingModule],
+            "providers": [{ "provide": MatDialogRef, "useValue": dialogRef }]
         });
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(FolderDialogComponent);
@@ -64,10 +64,10 @@ describe('FolderDialogComponent', () => {
     describe('Edit', () => {
         beforeEach(() => {
             component.data = {
-                folder: {
-                    id: 'node-id',
-                    name: 'folder-name',
-                    properties: {
+                "folder": {
+                    "id": 'node-id',
+                    "name": 'folder-name',
+                    "properties": {
                         ['cm:title']: 'folder-title',
                         ['cm:description']: 'folder-description'
                     }
@@ -109,8 +109,8 @@ describe('FolderDialogComponent', () => {
             expect(submitButton.disabled).toBeTrue();
             expect(component.disableSubmitButton).toBeTrue();
             expect(nodesApi.updateNode).toHaveBeenCalledWith('node-id', {
-                name: 'folder-name-update',
-                properties: {
+                "name": 'folder-name-update',
+                "properties": {
                     'cm:title': 'folder-title-update',
                     'cm:description': 'folder-description-update'
                 }
@@ -131,7 +131,7 @@ describe('FolderDialogComponent', () => {
         });
 
         describe('when submit is successfully', () => {
-            const folder: any = { data: 'folder-data' };
+            const folder: any = { "data": 'folder-data' };
 
             beforeAll(() => {
                 updateNode$.next(folder);
@@ -172,8 +172,8 @@ describe('FolderDialogComponent', () => {
     describe('Create', () => {
         beforeEach(() => {
             component.data = {
-                parentNodeId: 'parentNodeId',
-                folder: null
+                "parentNodeId": 'parentNodeId',
+                "folder": null
             };
             fixture.detectChanges();
         });
@@ -207,12 +207,12 @@ describe('FolderDialogComponent', () => {
 
                 expect(component.disableSubmitButton).toBeTrue();
                 expect(createFolderSpy).toHaveBeenCalledWith('parentNodeId', {
-                    name: 'folder-name-update',
-                    properties: {
+                    "name": 'folder-name-update',
+                    "properties": {
                         'cm:title': 'folder-title-update',
                         'cm:description': 'folder-description-update'
                     },
-                    nodeType: 'cm:folder'
+                    "nodeType": 'cm:folder'
                 });
             });
 
@@ -227,19 +227,19 @@ describe('FolderDialogComponent', () => {
                 expect(submitButton.disabled).toBeTrue();
                 expect(component.disableSubmitButton).toBeTrue();
                 expect(createFolderSpy).toHaveBeenCalledWith('parentNodeId', {
-                    name: 'folder-name-update',
-                    properties: {
+                    "name": 'folder-name-update',
+                    "properties": {
                         'cm:title': 'folder-title-update',
                         'cm:description': 'folder-description-update'
                     },
-                    nodeType: 'cm:sushi'
+                    "nodeType": 'cm:sushi'
                 });
             });
         });
 
         it('should call dialog to close with form data when submit is successfully', () => {
             const folder: any = {
-                data: 'folder-data'
+                "data": 'folder-data'
             };
 
             setFormValues();
@@ -285,7 +285,7 @@ describe('FolderDialogComponent', () => {
 
             it('should raise error for 409', (done) => {
                 const error = {
-                    message: '{ "error": {  "statusCode" : 409 } }'
+                    "message": '{ "error": {  "statusCode" : 409 } }'
                 };
                 createFolderNode$.error(error);
 
@@ -302,7 +302,7 @@ describe('FolderDialogComponent', () => {
 
             it('should raise generic error', (done) => {
                 const error = {
-                    message: '{ "error": {  "statusCode" : 123 } }'
+                    "message": '{ "error": {  "statusCode" : 123 } }'
                 };
                 createFolderNode$.error(error);
 
@@ -322,7 +322,7 @@ describe('FolderDialogComponent', () => {
     /**
      * Set mock values to form
      */
-    function setFormValues() {
+    function setFormValues () {
         component.form.controls['name'].setValue('folder-name-update');
         component.form.controls['title'].setValue('folder-title-update');
         component.form.controls['description'].setValue('folder-description-update');

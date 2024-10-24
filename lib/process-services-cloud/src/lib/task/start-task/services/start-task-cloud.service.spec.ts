@@ -29,13 +29,13 @@ describe('StartTaskCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(TaskCloudService);
     });
 
     it('should able to create a new task ', (done) => {
-        spyOn(service, 'createNewTask').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
+        spyOn(service, 'createNewTask').and.returnValue(of({ "id": 'fake-id', "name": 'fake-name' }));
         service.createNewTask(taskDetailsMock, fakeAppName).subscribe((res: TaskDetailsCloudModel) => {
             expect(res).toBeDefined();
             expect(res.id).toEqual('fake-id');
@@ -46,9 +46,9 @@ describe('StartTaskCloudService', () => {
 
     it('Should not able to create a task if error occurred', () => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'createNewTask').and.returnValue(throwError(errorResponse));

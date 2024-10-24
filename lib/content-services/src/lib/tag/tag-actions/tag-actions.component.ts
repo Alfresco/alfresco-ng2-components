@@ -36,13 +36,13 @@ import { MatButtonModule } from '@angular/material/button';
  */
 
 @Component({
-    selector: 'adf-tag-node-actions-list',
-    standalone: true,
-    imports: [CommonModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatButtonModule],
-    templateUrl: './tag-actions.component.html',
-    styleUrls: ['./tag-actions.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-tag-node-actions-list' }
+    "selector": 'adf-tag-node-actions-list',
+    "standalone": true,
+    "imports": [CommonModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatButtonModule],
+    "templateUrl": './tag-actions.component.html',
+    "styleUrls": ['./tag-actions.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-tag-node-actions-list' }
 })
 export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
     /** The identifier of a node. */
@@ -68,22 +68,22 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private tagService: TagService, private translateService: TranslationService) {}
+    constructor (private tagService: TagService, private translateService: TranslationService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.refreshTag());
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         return this.refreshTag();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    refreshTag() {
+    refreshTag () {
         if (this.nodeId) {
             this.tagService.getTagsByNodeId(this.nodeId).subscribe(
                 (tagPaging: TagPaging) => {
@@ -100,7 +100,7 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    addTag() {
+    addTag () {
         if (this.searchTag(this.newTagName)) {
             this.errorMsg = this.translateService.instant('TAG.MESSAGES.EXIST');
             this.error.emit(this.errorMsg);
@@ -112,17 +112,17 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    searchTag(searchTagName: string) {
+    searchTag (searchTagName: string) {
         if (this.tagsEntries) {
             return this.tagsEntries.find((currentTag) => searchTagName === currentTag.entry.tag);
         }
     }
 
-    cleanErrorMsg() {
+    cleanErrorMsg () {
         this.errorMsg = '';
     }
 
-    removeTag(tag: string) {
+    removeTag (tag: string) {
         this.tagService.removeTag(this.nodeId, tag);
     }
 }

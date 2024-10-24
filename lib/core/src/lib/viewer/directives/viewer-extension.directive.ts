@@ -21,8 +21,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-    selector: 'adf-viewer-extension',
-    standalone: true
+    "selector": 'adf-viewer-extension',
+    "standalone": true
 })
 export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
     @ContentChild(TemplateRef)
@@ -41,10 +41,10 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private viewerComponent: ViewerRenderComponent) {}
+    constructor (private viewerComponent: ViewerRenderComponent) {}
 
-    ngAfterContentInit() {
-        this.templateModel = { template: this.template, isVisible: false };
+    ngAfterContentInit () {
+        this.templateModel = { "template": this.template, "isVisible": false };
         this.viewerComponent.extensionsSupportedByTemplates.push(...this.supportedExtensions);
         this.viewerComponent.extensionTemplates.push(this.templateModel);
 
@@ -53,7 +53,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
@@ -63,7 +63,7 @@ export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
      * @param fileExtension file extension to check
      * @returns `true` if file extension is compatible, otherwise `false`
      */
-    isVisible(fileExtension: string): boolean {
+    isVisible (fileExtension: string): boolean {
         let supportedExtension: string;
 
         if (this.supportedExtensions && this.supportedExtensions instanceof Array) {

@@ -23,7 +23,7 @@ export class PermissionStyleModel {
     isFolder: boolean = true;
     isFile: boolean = true;
 
-    constructor(css: string, permission: AllowableOperationsEnum, isFile: boolean = true, isFolder: boolean = true) {
+    constructor (css: string, permission: AllowableOperationsEnum, isFile: boolean = true, isFolder: boolean = true) {
         this.css = css;
         this.permission = permission;
         this.isFile = isFile;

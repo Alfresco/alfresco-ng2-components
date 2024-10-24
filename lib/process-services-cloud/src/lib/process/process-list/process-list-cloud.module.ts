@@ -24,17 +24,17 @@ import { LocalPreferenceCloudService } from '../../services/local-preference-clo
 import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../services/cloud-token.service';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MaterialModule,
         CoreModule
 
     ],
-    providers: [{
-        provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
-        useClass: LocalPreferenceCloudService
+    "providers": [{
+        "provide": PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
+        "useClass": LocalPreferenceCloudService
     }],
-    declarations: [ProcessListCloudComponent],
-    exports: [ProcessListCloudComponent]
+    "declarations": [ProcessListCloudComponent],
+    "exports": [ProcessListCloudComponent]
 })
 export class ProcessListCloudModule { }

@@ -21,19 +21,19 @@ export class TaskDetailsEvent {
     private _value: TaskRepresentation;
     private _defaultPrevented: boolean = false;
 
-    get value(): TaskRepresentation {
+    get value (): TaskRepresentation {
         return this._value;
     }
 
-    get defaultPrevented() {
+    get defaultPrevented () {
         return this._defaultPrevented;
     }
 
-    constructor(value: TaskRepresentation) {
+    constructor (value: TaskRepresentation) {
         this._value = value;
     }
 
-    preventDefault() {
+    preventDefault () {
         this._defaultPrevented = true;
     }
 }

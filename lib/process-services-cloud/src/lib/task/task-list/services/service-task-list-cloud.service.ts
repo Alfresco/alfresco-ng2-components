@@ -22,15 +22,14 @@ import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.mod
 import { BaseCloudService } from '../../../services/base-cloud.service';
 import { map } from 'rxjs/operators';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class ServiceTaskListCloudService extends BaseCloudService {
     /**
      * Finds a task using an object with optional query properties.
-     *
      * @param requestNode Query object
      * @returns Task information
      */
-    getServiceTaskByRequest(requestNode: ServiceTaskQueryCloudRequestModel): Observable<any> {
+    getServiceTaskByRequest (requestNode: ServiceTaskQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
             const queryUrl = `${this.getBasePath(requestNode.appName)}/query/admin/v1/service-tasks`;
             const queryParams = this.buildQueryParams(requestNode);
@@ -46,12 +45,11 @@ export class ServiceTaskListCloudService extends BaseCloudService {
 
     /**
      * Finds a service task integration context using an object with optional query properties.
-     *
      * @param appName string
      * @param serviceTaskId string
      * @returns Service Task Integration Context information
      */
-    getServiceTaskStatus(appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
+    getServiceTaskStatus (appName: string, serviceTaskId: string): Observable<ServiceTaskIntegrationContextCloudModel> {
         if (appName) {
             const queryUrl = `${this.getBasePath(appName)}/query/admin/v1/service-tasks/${serviceTaskId}/integration-context`;
             return this.get(queryUrl).pipe(map((response: any) => response.entry));
@@ -62,13 +60,12 @@ export class ServiceTaskListCloudService extends BaseCloudService {
 
     /**
      * Replay a service task based on the related execution id and flow-node id
-     *
      * @param appName string
      * @param executionId string
      * @param flowNodeId string
      * @returns Replay task informations
      */
-    replayServiceTaskRequest(appName: string, executionId: string, flowNodeId: string): Observable<any> {
+    replayServiceTaskRequest (appName: string, executionId: string, flowNodeId: string): Observable<any> {
         if (appName && executionId && flowNodeId) {
             const payload = { flowNodeId };
             const queryUrl = `${this.getBasePath(appName)}/rb/admin/v1/executions/${executionId}/replay/service-task`;
@@ -78,7 +75,7 @@ export class ServiceTaskListCloudService extends BaseCloudService {
         }
     }
 
-    protected buildQueryParams(requestNode: ServiceTaskQueryCloudRequestModel): any {
+    protected buildQueryParams (requestNode: ServiceTaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const property in requestNode) {
             if (
@@ -92,15 +89,15 @@ export class ServiceTaskListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    protected isExcludedField(property: string): boolean {
+    protected isExcludedField (property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
-    protected isPropertyValueValid(requestNode: any, property: string): boolean {
+    protected isPropertyValueValid (requestNode: any, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    protected buildSortingParam(models: TaskListCloudSortingModel[]): string {
+    protected buildSortingParam (models: TaskListCloudSortingModel[]): string {
         let finalSorting: string = '';
         if (models) {
             for (const sort of models) {

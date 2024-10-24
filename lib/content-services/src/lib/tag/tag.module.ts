@@ -25,7 +25,7 @@ export const CONTENT_TAG_DIRECTIVES = [TagsCreatorComponent, TagActionsComponent
 
 /** @deprecated use `...CONTENT_TAG_DIRECTIVES` instead or import standalone components directly */
 @NgModule({
-    imports: [...CONTENT_TAG_DIRECTIVES],
-    exports: [...CONTENT_TAG_DIRECTIVES]
+    "imports": [...CONTENT_TAG_DIRECTIVES],
+    "exports": [...CONTENT_TAG_DIRECTIVES]
 })
 export class TagModule {}

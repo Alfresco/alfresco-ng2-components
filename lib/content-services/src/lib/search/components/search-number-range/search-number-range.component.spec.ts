@@ -27,18 +27,18 @@ describe('SearchNumberRangeComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchNumberRangeComponent]
+            "imports": [ContentTestingModule, SearchNumberRangeComponent]
         });
         fixture = TestBed.createComponent(SearchNumberRangeComponent);
         component = fixture.componentInstance;
         component.id = 'contentSize';
         component.context = {
-            queryFragments: {
-                contentSize: ''
+            "queryFragments": {
+                "contentSize": ''
             },
-            filterRawParams: {},
-            populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            "filterRawParams": {},
+            "populateFilters": new ReplaySubject(1),
+            "update": jasmine.createSpy('update')
         } as any;
     });
 
@@ -51,12 +51,12 @@ describe('SearchNumberRangeComponent', () => {
 
     it('should reset form', () => {
         component.ngOnInit();
-        component.form.reset({ from: '10', to: '20' });
+        component.form.reset({ "from": '10', "to": '20' });
         component.reset();
 
         expect(component.from.value).toEqual('');
         expect(component.to.value).toEqual('');
-        expect(component.form.value).toEqual({ from: '', to: '' });
+        expect(component.form.value).toEqual({ "from": '', "to": '' });
     });
 
     it('should update query builder on reset', () => {
@@ -70,13 +70,13 @@ describe('SearchNumberRangeComponent', () => {
     });
 
     it('should update query builder on value changes', () => {
-        component.settings = { field: 'cm:content.size' };
+        component.settings = { "field": 'cm:content.size' };
 
         component.ngOnInit();
         component.apply(
             {
-                from: '10',
-                to: '20'
+                "from": '10',
+                "to": '20'
             },
             true
         );
@@ -90,8 +90,8 @@ describe('SearchNumberRangeComponent', () => {
 
     it('should fetch format from the settings', () => {
         component.settings = {
-            field: 'cm:content.size',
-            format: '<{FROM} TO {TO}>'
+            "field": 'cm:content.size',
+            "format": '<{FROM} TO {TO}>'
         };
         component.ngOnInit();
 
@@ -101,7 +101,7 @@ describe('SearchNumberRangeComponent', () => {
 
     it('should use default format if not provided', () => {
         component.settings = {
-            field: 'cm:content.size'
+            "field": 'cm:content.size'
         };
         component.ngOnInit();
 
@@ -111,12 +111,12 @@ describe('SearchNumberRangeComponent', () => {
 
     it('should format value based on the current pattern', () => {
         component.settings = {
-            field: 'cm:content.size',
-            format: '<{FROM} TO {TO}>'
+            "field": 'cm:content.size',
+            "format": '<{FROM} TO {TO}>'
         };
         component.ngOnInit();
 
-        component.apply({ from: '0', to: '100' }, true);
+        component.apply({ "from": '0', "to": '100' }, true);
         expect(component.context.queryFragments[component.id]).toEqual('cm:content.size:<0 TO 100>');
     });
 
@@ -126,8 +126,8 @@ describe('SearchNumberRangeComponent', () => {
         component.to = new UntypedFormControl('20');
         component.form = new UntypedFormGroup(
             {
-                from: component.from,
-                to: component.to
+                "from": component.from,
+                "to": component.to
             },
             component.formValidator
         );
@@ -167,18 +167,18 @@ describe('SearchNumberRangeComponent', () => {
 
     it('should populate filter state when populate filters event has been observed', () => {
         component.settings = {
-            field: 'cm:content.size'
+            "field": 'cm:content.size'
         };
         component.context.filterLoaded = new ReplaySubject(1);
         spyOn(component.context.filterLoaded, 'next').and.stub();
         spyOn(component.displayValue$, 'next').and.stub();
         fixture.detectChanges();
-        component.context.populateFilters.next({ contentSize: { from: '10', to: '100' } });
+        component.context.populateFilters.next({ "contentSize": { "from": '10', "to": '100' } });
         fixture.detectChanges();
 
         expect(component.displayValue$.next).toHaveBeenCalledWith('10 - 100 ');
-        expect(component.context.filterRawParams[component.id]).toEqual({ from: '10', to: '100' });
-        expect(component.form.value).toEqual({ from: '10', to: '100' });
+        expect(component.context.filterRawParams[component.id]).toEqual({ "from": '10', "to": '100' });
+        expect(component.form.value).toEqual({ "from": '10', "to": '100' });
         expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

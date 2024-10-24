@@ -30,12 +30,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
-    selector: 'functional-group-widget',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, ReactiveFormsModule, MatAutocompleteModule, ErrorWidgetComponent],
-    templateUrl: './functional-group.widget.html',
-    styleUrls: ['./functional-group.widget.scss'],
-    host: {
+    "selector": 'functional-group-widget',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, TranslateModule, MatInputModule, ReactiveFormsModule, MatAutocompleteModule, ErrorWidgetComponent],
+    "templateUrl": './functional-group.widget.html',
+    "styleUrls": ['./functional-group.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -46,7 +46,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {
     minTermLength: number = 1;
@@ -64,11 +64,11 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         switchMap((searchTerm: string) => this.peopleProcessService.getWorkflowGroups(searchTerm, this.groupId).pipe(catchError(() => of([]))))
     );
 
-    constructor(public peopleProcessService: PeopleProcessService, public formService: FormService, public elementRef: ElementRef) {
+    constructor (public peopleProcessService: PeopleProcessService, public formService: FormService, public elementRef: ElementRef) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field) {
             if (this.field.readOnly) {
                 this.searchTerm.disable();
@@ -86,7 +86,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         }
     }
 
-    updateOption(option?: GroupModel) {
+    updateOption (option?: GroupModel) {
         if (option) {
             this.field.value = option;
         } else {
@@ -96,7 +96,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         this.field.updateForm();
     }
 
-    validateGroup(valid: boolean, empty: boolean) {
+    validateGroup (valid: boolean, empty: boolean) {
         const isEmpty = !this.field.required && (empty || valid);
         const hasValue = this.field.required && valid;
 
@@ -111,7 +111,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         }
     }
 
-    getDisplayName(model: GroupModel | string) {
+    getDisplayName (model: GroupModel | string) {
         if (model) {
             return typeof model === 'string' ? model : model.name;
         }

@@ -55,17 +55,17 @@ describe('DataTableWidgetComponent', () => {
         processVariables?: TaskVariableCloud[],
         variables?: TaskVariableCloud[]
     ) =>
-        new FormFieldModel(new FormModel({ taskId: 'fake-task-id', processVariables, variables }), {
-            id: 'fake-datatable-id',
-            name: 'Data Table',
-            type: FormFieldTypes.DATA_TABLE,
-            optionType: 'variable',
+        new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', processVariables, variables }), {
+            "id": 'fake-datatable-id',
+            "name": 'Data Table',
+            "type": FormFieldTypes.DATA_TABLE,
+            "optionType": 'variable',
             schemaDefinition,
             variableConfig
         });
 
     const mockVariableConfig: VariableConfig = {
-        variableName: 'json-form-variable'
+        "variableName": 'json-form-variable'
     };
 
     const checkDataTableErrorMessage = () => {
@@ -84,16 +84,16 @@ describe('DataTableWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         fixture = TestBed.createComponent(DataTableWidgetComponent);
         widget = fixture.componentInstance;
 
         formCloudService = TestBed.inject(FormCloudService);
 
-        widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-            type: FormFieldTypes.DATA_TABLE,
-            name: 'Data Table'
+        widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+            "type": FormFieldTypes.DATA_TABLE,
+            "name": 'Data Table'
         });
     });
 
@@ -163,7 +163,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should properly initialize json response data source based on field value if path is provided', () => {
-        widget.field = getDataVariable({ ...mockVariableConfig, optionsPath: 'response.my-data' }, mockSchemaDefinition, [], []);
+        widget.field = getDataVariable({ ...mockVariableConfig, "optionsPath": 'response.my-data' }, mockSchemaDefinition, [], []);
         widget.field.value = mockJsonNestedResponseEuropeCountriesData;
         fixture.detectChanges();
 
@@ -172,7 +172,7 @@ describe('DataTableWidgetComponent', () => {
 
     it('should properly initialize json response data source based on variable if path is provided', () => {
         widget.field = getDataVariable(
-            { ...mockVariableConfig, optionsPath: 'response.my-data' },
+            { ...mockVariableConfig, "optionsPath": 'response.my-data' },
             mockSchemaDefinition,
             [],
             mockJsonNestedResponseFormVariable
@@ -190,7 +190,7 @@ describe('DataTableWidgetComponent', () => {
     });
 
     it('should properly initialize data source based on process variable', () => {
-        widget.field = getDataVariable({ variableName: 'json-variable' }, mockSchemaDefinition, mockJsonProcessVariables);
+        widget.field = getDataVariable({ "variableName": 'json-variable' }, mockSchemaDefinition, mockJsonProcessVariables);
         fixture.detectChanges();
 
         assertData(mockCountryColumns, mockEuropeCountriesRows);
@@ -222,7 +222,7 @@ describe('DataTableWidgetComponent', () => {
         });
 
         it('path points to single object with appropriate schema definition', () => {
-            widget.field = getDataVariable({ ...mockVariableConfig, optionsPath: 'response.single-object' }, mockSchemaDefinition, [], []);
+            widget.field = getDataVariable({ ...mockVariableConfig, "optionsPath": 'response.single-object' }, mockSchemaDefinition, [], []);
             widget.field.value = mockJsonNestedResponseEuropeCountriesData;
             fixture.detectChanges();
 
@@ -252,7 +252,7 @@ describe('DataTableWidgetComponent', () => {
 
         it('data source is NOT found', () => {
             widget.field = getDataVariable(
-                { variableName: 'not-found-data-source' },
+                { "variableName": 'not-found-data-source' },
                 mockSchemaDefinition,
                 [],
                 mockJsonFormVariableWithIncorrectData
@@ -265,7 +265,7 @@ describe('DataTableWidgetComponent', () => {
 
         it('path is incorrect', () => {
             widget.field = getDataVariable(
-                { ...mockVariableConfig, optionsPath: 'wrong.path' },
+                { ...mockVariableConfig, "optionsPath": 'wrong.path' },
                 mockSchemaDefinition,
                 mockJsonNestedResponseFormVariable,
                 []
@@ -278,7 +278,7 @@ describe('DataTableWidgetComponent', () => {
 
         it('provided data by path is NOT an array or object', () => {
             widget.field = getDataVariable(
-                { ...mockVariableConfig, optionsPath: 'response.no-array-or-object' },
+                { ...mockVariableConfig, "optionsPath": 'response.no-array-or-object' },
                 mockSchemaDefinition,
                 mockJsonNestedResponseFormVariable,
                 []

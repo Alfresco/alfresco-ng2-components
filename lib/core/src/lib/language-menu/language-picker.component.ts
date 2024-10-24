@@ -24,10 +24,10 @@ import { LanguageMenuComponent } from './language-menu.component';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-picker-button',
-    standalone: true,
-    imports: [CommonModule, MatMenuModule, TranslateModule, LanguageMenuComponent, MatIconModule],
-    template: `
+    "selector": 'adf-picker-button',
+    "standalone": true,
+    "imports": [CommonModule, MatMenuModule, TranslateModule, LanguageMenuComponent, MatIconModule],
+    "template": `
         <button mat-menu-item [matMenuTriggerFor]="langMenu">
             <mat-icon>language</mat-icon>
             {{ 'ADF.LANGUAGE' | translate }}

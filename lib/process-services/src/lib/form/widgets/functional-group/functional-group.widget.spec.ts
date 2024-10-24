@@ -28,13 +28,13 @@ describe('FunctionalGroupWidgetComponent', () => {
     let getWorkflowGroupsSpy: jasmine.Spy;
     let element: HTMLElement;
     const groups: GroupModel[] = [
-        { id: '1', name: 'group 1' },
-        { id: '2', name: 'group 2' }
+        { "id": '1', "name": 'group 1' },
+        { "id": '2', "name": 'group 2' }
     ];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);
         getWorkflowGroupsSpy = spyOn(peopleProcessService, 'getWorkflowGroups').and.returnValue(of([]));
@@ -69,7 +69,7 @@ describe('FunctionalGroupWidgetComponent', () => {
     };
 
     it('should setup text from underlying field on init', async () => {
-        const group: GroupModel = { name: 'group-1' };
+        const group: GroupModel = { "name": 'group-1' };
         component.field.value = group;
         component.ngOnInit();
 
@@ -86,7 +86,7 @@ describe('FunctionalGroupWidgetComponent', () => {
         component.ngOnInit();
         expect(component.groupId).toBeUndefined();
 
-        component.field.params = { restrictWithGroup: { id: '<id>' } };
+        component.field.params = { "restrictWithGroup": { "id": '<id>' } };
         component.ngOnInit();
         expect(component.groupId).toBe('<id>');
     });
@@ -145,9 +145,9 @@ describe('FunctionalGroupWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            component.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.FUNCTIONAL_GROUP,
-                required: true
+            component.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.FUNCTIONAL_GROUP,
+                "required": true
             });
         });
 

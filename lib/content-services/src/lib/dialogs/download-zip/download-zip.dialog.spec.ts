@@ -32,22 +32,22 @@ describe('DownloadZipDialogComponent', () => {
     let element: HTMLElement;
     let downloadZipService: DownloadZipService;
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        "close": jasmine.createSpy('close')
     };
 
     const dataMock = {
-        nodeIds: ['123']
+        "nodeIds": ['123']
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, NoopAnimationsModule],
-            providers: [
+            "imports": [NoopTranslateModule, MatDialogModule, NoopAnimationsModule],
+            "providers": [
                 DownloadZipService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: dataMock },
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }
+                { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+                { "provide": MatDialogRef, "useValue": dialogRef },
+                { "provide": MAT_DIALOG_DATA, "useValue": dataMock },
+                { "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }
             ]
         });
         dialogRef.close.calls.reset();
@@ -81,7 +81,7 @@ describe('DownloadZipDialogComponent', () => {
 
     it('should not call downloadZip when it contains zero nodeIds', () => {
         component.data = {
-            nodeIds: []
+            "nodeIds": []
         };
         spyOn(component, 'downloadZip');
 
@@ -171,13 +171,13 @@ describe('DownloadZipDialogComponent', () => {
     it('should waitForDownload and display correct download %', () => {
         const downloadEntry$: Observable<DownloadEntry> = new Observable((observer) => {
             observer.next({
-                entry: {
-                    filesAdded: 10,
-                    bytesAdded: 1000,
-                    id: '1',
-                    totalFiles: 10,
-                    totalBytes: 1000,
-                    status: FileDownloadStatus.DONE
+                "entry": {
+                    "filesAdded": 10,
+                    "bytesAdded": 1000,
+                    "id": '1',
+                    "totalFiles": 10,
+                    "totalBytes": 1000,
+                    "status": FileDownloadStatus.DONE
                 }
             });
             observer.complete();

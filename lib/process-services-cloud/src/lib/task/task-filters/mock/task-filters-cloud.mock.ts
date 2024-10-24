@@ -21,310 +21,310 @@ import { TaskFilterCloudModel, ServiceTaskFilterCloudModel, AssignmentType, Task
 
 export const fakeGlobalFilter: any[] = [
     {
-        appName: 'fake-app-name',
-        name: 'FakeInvolvedTasks',
-        key: 'fake-involved-tasks',
-        icon: 'adjust',
-        id: '10',
-        status: 'ASSIGNED',
-        assignee: 'AssignedTaskUser',
-        showCounter: true
+        "appName": 'fake-app-name',
+        "name": 'FakeInvolvedTasks',
+        "key": 'fake-involved-tasks',
+        "icon": 'adjust',
+        "id": '10',
+        "status": 'ASSIGNED',
+        "assignee": 'AssignedTaskUser',
+        "showCounter": true
     },
     {
-        name: 'FakeMyTasks1',
-        key: 'fake-my-task1',
-        icon: 'done',
-        id: '11',
-        status: 'open',
-        assignee: 'fake-assignee',
-        showCounter: false
+        "name": 'FakeMyTasks1',
+        "key": 'fake-my-task1',
+        "icon": 'done',
+        "id": '11',
+        "status": 'open',
+        "assignee": 'fake-assignee',
+        "showCounter": false
     },
     {
-        name: 'FakeMyTasks2',
-        key: 'fake-my-task2',
-        icon: 'inbox',
-        id: '12',
-        status: 'open',
-        assignee: 'fake-assignee'
+        "name": 'FakeMyTasks2',
+        "key": 'fake-my-task2',
+        "icon": 'inbox',
+        "id": '12',
+        "status": 'open',
+        "assignee": 'fake-assignee'
     }
 ];
 
 export const fakeGlobalServiceFilters: ServiceTaskFilterCloudModel[] = [
     {
-        name: 'FakeServiceTasks',
-        key: 'fake-involved-tasks',
-        icon: 'adjust',
-        id: '10',
-        status: 'open'
+        "name": 'FakeServiceTasks',
+        "key": 'fake-involved-tasks',
+        "icon": 'adjust',
+        "id": '10',
+        "status": 'open'
     } as ServiceTaskFilterCloudModel,
     {
-        name: 'FakeMyServiceTasks1',
-        key: 'fake-my-task1',
-        icon: 'done',
-        id: '11',
-        status: 'open'
+        "name": 'FakeMyServiceTasks1',
+        "key": 'fake-my-task1',
+        "icon": 'done',
+        "id": '11',
+        "status": 'open'
     } as ServiceTaskFilterCloudModel,
     {
-        name: 'FakeMyServiceTasks2',
-        key: 'fake-my-task2',
-        icon: 'inbox',
-        id: '12',
-        status: 'open'
+        "name": 'FakeMyServiceTasks2',
+        "key": 'fake-my-task2',
+        "icon": 'inbox',
+        "id": '12',
+        "status": 'open'
     } as ServiceTaskFilterCloudModel
 ];
 
 export const fakeFilter = new TaskFilterCloudModel({
-    name: 'FakeInvolvedTasks',
-    icon: 'adjust',
-    id: 'mock-task-filter-id',
-    status: TaskStatusFilter.CREATED,
-    appName: 'mock-app-name',
-    processDefinitionId: 'process-def-id',
-    assignee: 'fake-involved',
-    assignment: AssignmentType.NONE,
-    order: 'ASC',
-    sort: 'id',
-    completedBy: {
-        id: 'mock-id',
-        username: 'testCompletedByUser'
+    "name": 'FakeInvolvedTasks',
+    "icon": 'adjust',
+    "id": 'mock-task-filter-id',
+    "status": TaskStatusFilter.CREATED,
+    "appName": 'mock-app-name',
+    "processDefinitionId": 'process-def-id',
+    "assignee": 'fake-involved',
+    "assignment": AssignmentType.NONE,
+    "order": 'ASC',
+    "sort": 'id',
+    "completedBy": {
+        "id": 'mock-id',
+        "username": 'testCompletedByUser'
     }
 });
 
 export const fakeServiceFilter = {
-    name: 'FakeInvolvedTasks',
-    icon: 'adjust',
-    id: 'mock-task-filter-id',
-    status: 'COMPLETED',
-    appName: 'mock-app-name',
-    processDefinitionId: 'process-def-id',
-    activityName: 'fake-activity',
-    order: 'ASC',
-    sort: 'id'
+    "name": 'FakeInvolvedTasks',
+    "icon": 'adjust',
+    "id": 'mock-task-filter-id',
+    "status": 'COMPLETED',
+    "appName": 'mock-app-name',
+    "processDefinitionId": 'process-def-id',
+    "activityName": 'fake-activity',
+    "order": 'ASC',
+    "sort": 'id'
 } as ServiceTaskFilterCloudModel;
 
 export const fakeAllTaskFilter = new TaskFilterCloudModel({
-    name: 'AllTasks',
-    icon: 'adjust',
-    id: 'mock-task-filter-id',
-    status: TaskStatusFilter.ALL,
-    appName: 'mock-app-name',
-    processDefinitionId: 'process-def-id',
-    assignee: 'fake-involved',
-    order: 'ASC',
-    sort: 'id'
+    "name": 'AllTasks',
+    "icon": 'adjust',
+    "id": 'mock-task-filter-id',
+    "status": TaskStatusFilter.ALL,
+    "appName": 'mock-app-name',
+    "processDefinitionId": 'process-def-id',
+    "assignee": 'fake-involved',
+    "order": 'ASC',
+    "sort": 'id'
 });
 
 export const fakeTaskCloudPreferenceList = {
-    list: {
-        entries: [
+    "list": {
+        "entries": [
             {
-                entry: {
-                    key: 'task-filters-fakeAppName-mock-username',
-                    value: JSON.stringify([
+                "entry": {
+                    "key": 'task-filters-fakeAppName-mock-username',
+                    "value": JSON.stringify([
                         {
-                            name: 'FAKE_TASK_1',
-                            id: '1',
-                            key: 'all-fake-task',
-                            icon: 'adjust',
-                            appName: 'fakeAppName',
-                            sort: 'startDate',
-                            status: 'ALL',
-                            order: 'DESC'
+                            "name": 'FAKE_TASK_1',
+                            "id": '1',
+                            "key": 'all-fake-task',
+                            "icon": 'adjust',
+                            "appName": 'fakeAppName',
+                            "sort": 'startDate',
+                            "status": 'ALL',
+                            "order": 'DESC'
                         },
                         {
-                            name: 'FAKE_TASK_2',
-                            id: '2',
-                            key: 'run-fake-task',
-                            icon: 'adjust',
-                            appName: 'fakeAppName',
-                            sort: 'startDate',
-                            status: 'RUNNING',
-                            order: 'DESC'
+                            "name": 'FAKE_TASK_2',
+                            "id": '2',
+                            "key": 'run-fake-task',
+                            "icon": 'adjust',
+                            "appName": 'fakeAppName',
+                            "sort": 'startDate',
+                            "status": 'RUNNING',
+                            "order": 'DESC'
                         },
                         {
-                            name: 'FAKE_TASK_3',
-                            id: '3',
-                            key: 'complete-fake-task',
-                            icon: 'adjust',
-                            appName: 'fakeAppName',
-                            sort: 'startDate',
-                            status: 'COMPLETED',
-                            order: 'DESC'
+                            "name": 'FAKE_TASK_3',
+                            "id": '3',
+                            "key": 'complete-fake-task',
+                            "icon": 'adjust',
+                            "appName": 'fakeAppName',
+                            "sort": 'startDate',
+                            "status": 'COMPLETED',
+                            "order": 'DESC'
                         }
                     ])
                 }
             },
             {
-                entry: {
-                    key: 'mock-key-2',
-                    value: {
-                        name: 'FAKE_TASK_2',
-                        id: '2',
-                        key: 'run-fake-task',
-                        icon: 'adjust',
-                        appName: 'fakeAppName',
-                        sort: 'startDate',
-                        status: 'RUNNING',
-                        order: 'DESC'
+                "entry": {
+                    "key": 'mock-key-2',
+                    "value": {
+                        "name": 'FAKE_TASK_2',
+                        "id": '2',
+                        "key": 'run-fake-task',
+                        "icon": 'adjust',
+                        "appName": 'fakeAppName',
+                        "sort": 'startDate',
+                        "status": 'RUNNING',
+                        "order": 'DESC'
                     }
                 }
             },
             {
-                entry: {
-                    key: 'mock-key-3',
-                    value: {
-                        name: 'FAKE_TASK_3',
-                        id: '3',
-                        key: 'complete-fake-task',
-                        icon: 'adjust',
-                        appName: 'fakeAppName',
-                        sort: 'startDate',
-                        status: 'COMPLETED`',
-                        order: 'DESC'
+                "entry": {
+                    "key": 'mock-key-3',
+                    "value": {
+                        "name": 'FAKE_TASK_3',
+                        "id": '3',
+                        "key": 'complete-fake-task',
+                        "icon": 'adjust',
+                        "appName": 'fakeAppName',
+                        "sort": 'startDate',
+                        "status": 'COMPLETED`',
+                        "order": 'DESC'
                     }
                 }
             }
         ],
-        pagination: {
-            skipCount: 0,
-            maxItems: 100,
-            count: 3,
-            hasMoreItems: false,
-            totalItems: 3
+        "pagination": {
+            "skipCount": 0,
+            "maxItems": 100,
+            "count": 3,
+            "hasMoreItems": false,
+            "totalItems": 3
         }
     }
 };
 
 export const fakeEmptyTaskCloudPreferenceList = {
-    list: {
-        entries: [],
-        pagination: {
-            skipCount: 0,
-            maxItems: 100,
-            count: 0,
-            hasMoreItems: false,
-            totalItems: 0
+    "list": {
+        "entries": [],
+        "pagination": {
+            "skipCount": 0,
+            "maxItems": 100,
+            "count": 0,
+            "hasMoreItems": false,
+            "totalItems": 0
         }
     }
 };
 
 export const fakePreferenceWithNoTaskFilterPreference = {
-    list: {
-        entries: [
+    "list": {
+        "entries": [
             {
-                entry: {
-                    key: 'my-mock-key-1',
-                    value: 'my-mock-value-2'
+                "entry": {
+                    "key": 'my-mock-key-1',
+                    "value": 'my-mock-value-2'
                 }
             },
             {
-                entry: {
-                    key: 'my-mock-key-2',
-                    value: 'my-mock-key-2'
+                "entry": {
+                    "key": 'my-mock-key-2',
+                    "value": 'my-mock-key-2'
                 }
             }
         ],
-        pagination: {
-            skipCount: 0,
-            maxItems: 100,
-            count: 4,
-            hasMoreItems: false,
-            totalItems: 2
+        "pagination": {
+            "skipCount": 0,
+            "maxItems": 100,
+            "count": 4,
+            "hasMoreItems": false,
+            "totalItems": 2
         }
     }
 };
 
 export const fakeTaskFilter = new TaskFilterCloudModel({
-    name: 'FAKE_TASK_1',
-    id: '1',
-    key: 'all-fake-task',
-    icon: 'adjust',
-    appName: 'fakeAppName',
-    sort: 'startDate',
-    order: 'DESC',
-    status: 'ALL'
+    "name": 'FAKE_TASK_1',
+    "id": '1',
+    "key": 'all-fake-task',
+    "icon": 'adjust',
+    "appName": 'fakeAppName',
+    "sort": 'startDate',
+    "order": 'DESC',
+    "status": 'ALL'
 });
 
 export const fakeTaskCloudFilters: TaskFilterCloudModel[] = [
     new TaskFilterCloudModel({
-        name: 'FAKE_TASK_1',
-        id: '1',
-        key: 'completed-fake-task',
-        icon: 'adjust',
-        appName: 'fakeAppName',
-        sort: 'startDate',
-        status: TaskStatusFilter.COMPLETED,
-        order: 'DESC'
+        "name": 'FAKE_TASK_1',
+        "id": '1',
+        "key": 'completed-fake-task',
+        "icon": 'adjust',
+        "appName": 'fakeAppName',
+        "sort": 'startDate',
+        "status": TaskStatusFilter.COMPLETED,
+        "order": 'DESC'
     }),
     new TaskFilterCloudModel({
-        name: 'FAKE_TASK_2',
-        id: '2',
-        key: 'run-fake-task',
-        icon: 'adjust',
-        appName: 'fakeAppName',
-        sort: 'startDate',
-        status: TaskStatusFilter.ASSIGNED,
-        order: 'DESC'
+        "name": 'FAKE_TASK_2',
+        "id": '2',
+        "key": 'run-fake-task',
+        "icon": 'adjust',
+        "appName": 'fakeAppName',
+        "sort": 'startDate',
+        "status": TaskStatusFilter.ASSIGNED,
+        "order": 'DESC'
     }),
     new TaskFilterCloudModel({
-        name: 'FAKE_TASK_3',
-        id: '3',
-        key: 'complete-fake-task',
-        icon: 'adjust',
-        appName: 'fakeAppName',
-        sort: 'startDate',
-        status: TaskStatusFilter.COMPLETED,
-        order: 'DESC'
+        "name": 'FAKE_TASK_3',
+        "id": '3',
+        "key": 'complete-fake-task',
+        "icon": 'adjust',
+        "appName": 'fakeAppName',
+        "sort": 'startDate',
+        "status": TaskStatusFilter.COMPLETED,
+        "order": 'DESC'
     })
 ];
 
 export const taskNotifications = [
     {
-        eventType: 'TASK_ASSIGNED',
-        entity: assignedTaskDetailsCloudMock
+        "eventType": 'TASK_ASSIGNED',
+        "entity": assignedTaskDetailsCloudMock
     }
 ];
 
 export const taskCloudEngineEventsMock = {
-    data: {
-        engineEvents: taskNotifications
+    "data": {
+        "engineEvents": taskNotifications
     }
 };
 
 export const defaultTaskFiltersMock: TaskFilterCloudModel[] = [
     new TaskFilterCloudModel({
-        name: 'CREATED_TASK_FILTER',
-        id: '1',
-        key: 'created',
-        icon: 'adjust',
-        appName: 'fakeAppName',
-        sort: 'startDate',
-        status: TaskStatusFilter.CREATED,
-        order: 'DESC'
+        "name": 'CREATED_TASK_FILTER',
+        "id": '1',
+        "key": 'created',
+        "icon": 'adjust',
+        "appName": 'fakeAppName',
+        "sort": 'startDate',
+        "status": TaskStatusFilter.CREATED,
+        "order": 'DESC'
     }),
     new TaskFilterCloudModel({
-        name: 'ASSIGNED_TASK_FILTER',
-        id: '2',
-        key: 'assigned',
-        icon: 'adjust',
-        appName: 'fakeAppName',
-        sort: 'startDate',
-        status: TaskStatusFilter.ASSIGNED,
-        order: 'DESC'
+        "name": 'ASSIGNED_TASK_FILTER',
+        "id": '2',
+        "key": 'assigned',
+        "icon": 'adjust',
+        "appName": 'fakeAppName',
+        "sort": 'startDate',
+        "status": TaskStatusFilter.ASSIGNED,
+        "order": 'DESC'
     }),
     new TaskFilterCloudModel({
-        name: 'COMPLETED_TASK_FILTER',
-        id: '3',
-        key: 'complete-fake-task',
-        icon: 'adjust',
-        appName: 'fakeAppName',
-        sort: 'startDate',
-        status: TaskStatusFilter.COMPLETED,
-        order: 'DESC'
+        "name": 'COMPLETED_TASK_FILTER',
+        "id": '3',
+        "key": 'complete-fake-task',
+        "icon": 'adjust',
+        "appName": 'fakeAppName',
+        "sort": 'startDate',
+        "status": TaskStatusFilter.COMPLETED,
+        "order": 'DESC'
     })
 ];
 
 export const fakeFilterNotification: TaskDetailsCloudModel = {
-    status: TaskStatusFilter.ASSIGNED,
-    assignee: 'AssignedTaskUser'
+    "status": TaskStatusFilter.ASSIGNED,
+    "assignee": 'AssignedTaskUser'
 } as TaskDetailsCloudModel;

@@ -29,7 +29,7 @@ describe('Text View component', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, TxtViewerComponent]
+            "imports": [CoreTestingModule, TxtViewerComponent]
         });
         fixture = TestBed.createComponent(TxtViewerComponent);
 
@@ -46,7 +46,7 @@ describe('Text View component', () => {
             const urlFile = './fake-test-file.txt';
             const change = new SimpleChange(null, urlFile, true);
 
-            await component.ngOnChanges({ urlFile: change });
+            await component.ngOnChanges({ "urlFile": change });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -55,11 +55,11 @@ describe('Text View component', () => {
         });
 
         it('Should text container be present with Blob file', async () => {
-            const blobFile = new Blob(['text example'], { type: 'text/txt' });
+            const blobFile = new Blob(['text example'], { "type": 'text/txt' });
 
             const change = new SimpleChange(null, blobFile, true);
 
-            await component.ngOnChanges({ blobFile: change });
+            await component.ngOnChanges({ "blobFile": change });
 
             fixture.detectChanges();
             await fixture.whenStable();

@@ -32,8 +32,8 @@ describe('TreeService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [],
-            providers: [TreeService]
+            "imports": [],
+            "providers": [TreeService]
         });
         service = TestBed.inject(TreeService);
     });

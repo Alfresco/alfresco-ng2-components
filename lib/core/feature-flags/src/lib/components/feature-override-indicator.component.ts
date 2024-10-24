@@ -22,10 +22,10 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-feature-flags-override-indicator',
-    standalone: true,
-    imports: [CommonModule],
-    styles: [
+    "selector": 'adf-feature-flags-override-indicator',
+    "standalone": true,
+    "imports": [CommonModule],
+    "styles": [
         `
             .adf-activity-indicator {
                 font-size: 0.885rem;
@@ -42,12 +42,12 @@ import { Subject } from 'rxjs';
             }
         `
     ],
-    template: `
+    "template": `
         <span [ngClass]="['activity-indicator', size]" *ngIf="isEnabled; else inActive">🟢</span>
         <ng-template #inActive><span [ngClass]="['activity-indicator', size]">🔴</span></ng-template>
     `,
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class FlagsOverrideComponent implements OnDestroy {
     isEnabled = false;
@@ -56,7 +56,7 @@ export class FlagsOverrideComponent implements OnDestroy {
     @Input()
     size: 'small' | 'medium' | 'large' = 'medium';
 
-    constructor(
+    constructor (
         @Inject(FeaturesServiceToken)
         private featuresService: IDebugFeaturesService,
         changeDetectorRef: ChangeDetectorRef
@@ -72,7 +72,7 @@ export class FlagsOverrideComponent implements OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

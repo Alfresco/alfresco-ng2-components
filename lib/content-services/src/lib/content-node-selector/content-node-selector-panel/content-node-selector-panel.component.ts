@@ -61,9 +61,9 @@ export type ValidationFunction = (entry: Node) => boolean;
 export const defaultValidation = () => true;
 
 @Component({
-    selector: 'adf-content-node-selector-panel',
-    standalone: true,
-    imports: [
+    "selector": 'adf-content-node-selector-panel',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatFormFieldModule,
         TranslateModule,
@@ -86,17 +86,17 @@ export const defaultValidation = () => true;
         CustomEmptyContentTemplateDirective,
         SearchPanelComponent
     ],
-    templateUrl: './content-node-selector-panel.component.html',
-    styleUrls: ['./content-node-selector-panel.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-content-node-selector-panel' },
-    providers: [SearchQueryBuilderService]
+    "templateUrl": './content-node-selector-panel.component.html',
+    "styleUrls": ['./content-node-selector-panel.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-content-node-selector-panel' },
+    "providers": [SearchQueryBuilderService]
 })
 export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     DEFAULT_PAGINATION: Pagination = new Pagination({
-        maxItems: 25,
-        skipCount: 0
+        "maxItems": 25,
+        "skipCount": 0
     });
 
     private showSiteList = true;
@@ -144,11 +144,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * for more information.
      */
     @Input()
-    set rowFilter(rowFilter: RowFilter) {
+    set rowFilter (rowFilter: RowFilter) {
         this.createRowFilter(rowFilter);
     }
 
-    get rowFilter(): RowFilter {
+    get rowFilter (): RowFilter {
         return this._rowFilter;
     }
 
@@ -159,12 +159,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Used to filter out the corresponding items from the displayed nodes
      */
     @Input()
-    set excludeSiteContent(excludeSiteContent: string[]) {
+    set excludeSiteContent (excludeSiteContent: string[]) {
         this._excludeSiteContent = excludeSiteContent;
         this.createRowFilter(this._rowFilter);
     }
 
-    get excludeSiteContent(): string[] {
+    get excludeSiteContent (): string[] {
         return this._excludeSiteContent;
     }
 
@@ -202,31 +202,31 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /** Toggle search input rendering */
     @Input()
-    set showSearch(value: boolean) {
+    set showSearch (value: boolean) {
         if (value !== undefined && value !== null) {
             this.showSearchField = value;
         }
     }
 
-    get showSearch(): boolean {
+    get showSearch (): boolean {
         return this.showSearchField;
     }
 
     /** Toggle sites list dropdown rendering */
     @Input()
-    set showDropdownSiteList(value: boolean) {
+    set showDropdownSiteList (value: boolean) {
         if (value !== undefined && value !== null) {
             this.showSiteList = value;
         }
     }
 
-    get showDropdownSiteList(): boolean {
+    get showDropdownSiteList (): boolean {
         return this.showSiteList;
     }
 
     /** Shows the files and folders in the search result */
     @Input()
-    set showFilesInResult(value: boolean) {
+    set showFilesInResult (value: boolean) {
         if (value !== undefined && value !== null) {
             const showFilesQuery = `TYPE:'cm:folder'${value ? ` OR TYPE:'cm:content'` : ''}`;
             this.queryBuilderService.addFilterQuery(showFilesQuery);
@@ -235,11 +235,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /** Shows the node counter in the breadcrumb */
     @Input()
-    set showNodeCounter(value: boolean) {
+    set showNodeCounter (value: boolean) {
         this.showCounter = value ?? false;
     }
 
-    get showNodeCounter(): boolean {
+    get showNodeCounter (): boolean {
         return this.showCounter;
     }
 
@@ -267,10 +267,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     folderLoaded: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('documentList', { static: true })
+    @ViewChild('documentList', { "static": true })
     documentList: DocumentListComponent;
 
-    @ViewChild(HighlightDirective, { static: true })
+    @ViewChild(HighlightDirective, { "static": true })
     highlighter: HighlightDirective;
 
     nodePaging: NodePaging | null = null;
@@ -288,7 +288,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     hasValidQuery: boolean = false;
     showHeader = ShowHeaderMode.Never;
 
-    @ViewChild(InfinitePaginationComponent, { static: true })
+    @ViewChild(InfinitePaginationComponent, { "static": true })
     infinitePaginationComponent: InfinitePaginationComponent;
 
     infiniteScroll: boolean = false;
@@ -305,7 +305,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private customResourcesService: CustomResourcesService,
         private queryBuilderService: SearchQueryBuilderService,
         private userPreferencesService: UserPreferencesService,
@@ -315,24 +315,24 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
     ) {}
 
-    set chosenNode(value: Node[]) {
+    set chosenNode (value: Node[]) {
         this._chosenNode = value;
         this.select.next(value);
     }
 
-    get chosenNode() {
+    get chosenNode () {
         return this._chosenNode;
     }
 
-    get emptyList(): boolean {
+    get emptyList (): boolean {
         return this._emptyList;
     }
 
-    getSelectedCount(): number {
+    getSelectedCount (): number {
         return this.chosenNode?.length || 0;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.searchInput.valueChanges.pipe(debounceTime(this.debounceSearch), takeUntil(this.onDestroy$)).subscribe((searchValue: string) => {
             this.searchTerm = searchValue;
             this.queryBuilderService.userQuery = searchValue.length > 0 ? `${searchValue}*` : searchValue;
@@ -385,20 +385,20 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    toggleSearchPanel() {
+    toggleSearchPanel () {
         this.searchPanelExpanded = !this.searchPanelExpanded;
     }
 
-    hasCustomModels(): boolean {
+    hasCustomModels (): boolean {
         return this.contentNodeSelectorPanelService?.customModels?.length > 0;
     }
 
-    private onFileUploadEvent() {
+    private onFileUploadEvent () {
         this.uploadService.fileUploadComplete
             .pipe(debounceTime(500), takeUntil(this.onDestroy$))
             .subscribe((fileUploadEvent: FileUploadCompleteEvent) => {
@@ -411,14 +411,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             });
     }
 
-    private onFileUploadDeletedEvent() {
+    private onFileUploadDeletedEvent () {
         this.uploadService.fileUploadDeleted.pipe(takeUntil(this.onDestroy$)).subscribe((deletedFileEvent: FileUploadDeleteEvent) => {
             this.documentList.unselectRowFromNodeId(deletedFileEvent.file.data.entry.id);
             this.documentList.reloadWithoutResettingSelection();
         });
     }
 
-    private getStartSite() {
+    private getStartSite () {
         this.nodesApiService.getNode(this.currentFolderId).subscribe((startNodeEntry) => {
             this.startSiteGuid = this.sitesService.getSiteNameFromNodePath(startNodeEntry);
             if (this.startSiteGuid) {
@@ -431,7 +431,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         });
     }
 
-    private createRowFilter(filter?: RowFilter) {
+    private createRowFilter (filter?: RowFilter) {
         if (!filter) {
             filter = () => true;
         }
@@ -439,7 +439,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             filter(value, index, array) && !this.isExcludedSiteContent(value);
     }
 
-    private isExcludedSiteContent(row: ShareDataRow): boolean {
+    private isExcludedSiteContent (row: ShareDataRow): boolean {
         const entry = row.node.entry;
         if (this._excludeSiteContent?.length && entry?.properties?.['st:componentId']) {
             const excludedItem = this._excludeSiteContent.find((id: string) => entry.properties['st:componentId'] === id);
@@ -452,7 +452,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Updates the site attribute and starts a new search
      * @param chosenSite SiteEntry to search within
      */
-    siteChanged(chosenSite: SiteEntry): void {
+    siteChanged (chosenSite: SiteEntry): void {
         this.siteId = chosenSite.entry.guid;
         this.setTitleIfCustomSite(chosenSite);
         this.siteChange.emit(chosenSite.entry.title);
@@ -463,7 +463,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Get current breadcrumb folder node
      * @returns the actually selected|entered folder node or null in case of searching for the breadcrumb
      */
-    get breadcrumbFolderNode(): Node | null {
+    get breadcrumbFolderNode (): Node | null {
         let folderNode: Node;
 
         if (this.showingSearchResults && this.selectionWithoutValidation?.length) {
@@ -479,7 +479,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Prepares the dialog for a new search
      * @param searchRequest request options
      */
-    prepareDialogForNewSearch(searchRequest: SearchRequest): void {
+    prepareDialogForNewSearch (searchRequest: SearchRequest): void {
         this.target = searchRequest ? null : this.documentList;
         if (this.target) {
             this.infinitePaginationComponent.reset();
@@ -494,7 +494,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /**
      * Clear the search input and reset to last folder node in which search was performed
      */
-    clear(): void {
+    clear (): void {
         this.searchTerm = '';
         this.queryBuilderService.userQuery = '';
         this.queryBuilderService.update();
@@ -503,14 +503,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /**
      * Resets the folder to be shown with the site selection or the initial landing folder
      */
-    resetFolderToShow(): void {
+    resetFolderToShow (): void {
         this.folderIdToShow = this.siteId || this.currentFolderId;
     }
 
     /**
      * Clear the search input and search related data
      */
-    clearSearch() {
+    clearSearch () {
         this.searchTerm = '';
         this.nodePaging = null;
         this.resetPagination();
@@ -519,7 +519,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.showingSearch.emit(this.showingSearchResults);
     }
 
-    private addCorrespondingNodeIdsQuery() {
+    private addCorrespondingNodeIdsQuery () {
         let extraParentFiltering = '';
 
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
@@ -540,9 +540,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         }
     }
 
-    private setSearchScopeToNodes() {
+    private setSearchScopeToNodes () {
         const scope: RequestScope = {
-            locations: 'nodes'
+            "locations": 'nodes'
         };
         this.queryBuilderService.setScope(scope);
     }
@@ -551,7 +551,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Show the results of the search
      * @param results Search results
      */
-    private showSearchResults(results: NodePaging): void {
+    private showSearchResults (results: NodePaging): void {
         this.showingSearchResults = true;
         this.loadingSearchResults = false;
         this.showingSearch.emit(this.showingSearchResults);
@@ -563,7 +563,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      * @param $event node event
      */
-    onFolderChange($event: NodeEntryEvent): void {
+    onFolderChange ($event: NodeEntryEvent): void {
         this.folderIdToShow = $event.value.id;
         this.showingSearchResults = false;
         this.infiniteScroll = false;
@@ -577,7 +577,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Attempts to set the currently loaded node
      * @param nodePaging pagination model
      */
-    onFolderLoaded(nodePaging: NodePaging): void {
+    onFolderLoaded (nodePaging: NodePaging): void {
         setTimeout(() => {
             this._emptyList = !this.documentList.data.getRows().length;
         });
@@ -592,7 +592,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Updates pagination.hasMoreItems to false after filtering only folders during 'COPY' and 'MOVE' action
      * @param nodePaging pagination model
      */
-    updatePaginationAfterRowFilter(nodePaging: NodePaging): void {
+    updatePaginationAfterRowFilter (nodePaging: NodePaging): void {
         if (this.documentList.data.getRows().length < nodePaging.list.pagination.maxItems) {
             nodePaging.list.pagination.hasMoreItems = false;
         }
@@ -602,7 +602,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Returns whether breadcrumb has to be shown or not
      * @returns `true` if needs to show the breadcrumb, otherwise `false`
      */
-    showBreadcrumbs() {
+    showBreadcrumbs () {
         return !this.showingSearchResults || this.chosenNode;
     }
 
@@ -610,7 +610,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Loads the next batch of search results
      * @param pagination Pagination object
      */
-    getNextPageOfSearch(pagination: Pagination): void {
+    getNextPageOfSearch (pagination: Pagination): void {
         this.infiniteScroll = true;
         this.queryBuilderService.paging.maxItems = pagination.maxItems;
         this.queryBuilderService.paging.skipCount = pagination.skipCount;
@@ -624,7 +624,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * Selects node as chosen if it has the right permission, clears the selection otherwise
      * @param entry node entry
      */
-    private attemptNodeSelection(entry: Node): void {
+    private attemptNodeSelection (entry: Node): void {
         if (entry && this.isSelectionValid(entry)) {
             this.chosenNode = [entry];
         }
@@ -633,7 +633,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /**
      * Clears the chosen node
      */
-    resetChosenNode(): void {
+    resetChosenNode (): void {
         this.chosenNode = null;
     }
 
@@ -641,13 +641,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      * It filters and emit the selection coming from the document list
      * @param nodesEntries selected nodes
      */
-    onCurrentSelection(nodesEntries: NodeEntry[]): void {
+    onCurrentSelection (nodesEntries: NodeEntry[]): void {
         const validNodesEntity = nodesEntries.filter((node) => this.isSelectionValid(node.entry));
         this.chosenNode = validNodesEntity.map((node) => node.entry);
         this.selectionWithoutValidation = nodesEntries.map((node) => node.entry);
     }
 
-    setTitleIfCustomSite(site: SiteEntry) {
+    setTitleIfCustomSite (site: SiteEntry) {
         if (this.customResourcesService.isCustomSource(site.entry.guid)) {
             this.breadcrumbFolderTitle = site.entry.title;
             if (this.documentList.folderNode.path.elements) {
@@ -659,15 +659,15 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         }
     }
 
-    hasPreselectNodes(): boolean {
+    hasPreselectNodes (): boolean {
         return this.preselectedNodes?.length > 0;
     }
 
-    isSingleSelectionMode(): boolean {
+    isSingleSelectionMode (): boolean {
         return this.selectionMode === 'single';
     }
 
-    getPreselectNodesBasedOnSelectionMode(): NodeEntry[] {
+    getPreselectNodesBasedOnSelectionMode (): NodeEntry[] {
         let selectedNodes: NodeEntry[] = [];
 
         if (this.currentUploadBatch?.length) {
@@ -681,10 +681,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         return selectedNodes;
     }
 
-    private resetPagination(): void {
+    private resetPagination (): void {
         this.queryBuilderService.paging = {
-            maxItems: this.pageSize,
-            skipCount: this.DEFAULT_PAGINATION.skipCount
+            "maxItems": this.pageSize,
+            "skipCount": this.DEFAULT_PAGINATION.skipCount
         };
     }
 }

@@ -27,61 +27,61 @@ import { OauthConfigModel } from '../models/oauth-config.model';
  * @param authConfigService auth config service
  * @returns factory function
  */
-export function authConfigFactory(authConfigService: AuthConfigService): Promise<AuthConfig> {
+export function authConfigFactory (authConfigService: AuthConfigService): Promise<AuthConfig> {
     return authConfigService.loadConfig();
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AuthConfigService {
-    constructor(private appConfigService: AppConfigService, @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig) {}
+    constructor (private appConfigService: AppConfigService, @Inject(AUTH_MODULE_CONFIG) private readonly authModuleConfig: AuthModuleConfig) {}
 
     private _authConfig!: AuthConfig;
-    get authConfig(): AuthConfig {
+    get authConfig (): AuthConfig {
         return this._authConfig;
     }
 
-    loadConfig(): Promise<AuthConfig> {
+    loadConfig (): Promise<AuthConfig> {
         return this.appConfigService.onLoad.pipe(take(1)).toPromise().then(this.loadAppConfig.bind(this));
     }
 
-    loadAppConfig(): AuthConfig {
+    loadAppConfig (): AuthConfig {
         const oauth2 = this.appConfigService.oauth2;
         const origin = this.getLocationOrigin();
         const redirectUri = this.getRedirectUri();
-        const customQueryParams = oauth2.audience ? { audience: oauth2.audience } : {};
+        const customQueryParams = oauth2.audience ? { "audience": oauth2.audience } : {};
         const clockSkewInSec = this.getClockSkewInSec(oauth2);
         const sessionChecksEnabled = this.getSessionCheckEnabled(oauth2);
 
         return new AuthConfig({
             ...oauth2,
-            oidc: oauth2.implicitFlow || oauth2.codeFlow || false,
-            issuer: oauth2.host,
-            nonceStateSeparator: '~',
+            "oidc": oauth2.implicitFlow || oauth2.codeFlow || false,
+            "issuer": oauth2.host,
+            "nonceStateSeparator": '~',
             redirectUri,
-            silentRefreshRedirectUri: oauth2.redirectSilentIframeUri,
-            postLogoutRedirectUri: this.generatePostLogoutUri(origin, oauth2.redirectUriLogout),
-            clientId: oauth2.clientId,
-            scope: oauth2.scope,
-            dummyClientSecret: oauth2.secret || '',
-            logoutUrl: oauth2.logoutUrl,
+            "silentRefreshRedirectUri": oauth2.redirectSilentIframeUri,
+            "postLogoutRedirectUri": this.generatePostLogoutUri(origin, oauth2.redirectUriLogout),
+            "clientId": oauth2.clientId,
+            "scope": oauth2.scope,
+            "dummyClientSecret": oauth2.secret || '',
+            "logoutUrl": oauth2.logoutUrl,
             customQueryParams,
-            ...(oauth2.codeFlow && { responseType: 'code' }),
+            ...(oauth2.codeFlow && { "responseType": 'code' }),
             ...clockSkewInSec,
             ...sessionChecksEnabled
         });
     }
 
-    getSessionCheckEnabled(oauth2: OauthConfigModel) {
-        return typeof oauth2.sessionChecksEnabled === 'boolean' ? { sessionChecksEnabled: oauth2.sessionChecksEnabled } : {};
+    getSessionCheckEnabled (oauth2: OauthConfigModel) {
+        return typeof oauth2.sessionChecksEnabled === 'boolean' ? { "sessionChecksEnabled": oauth2.sessionChecksEnabled } : {};
     }
 
-    getClockSkewInSec(oauth2: OauthConfigModel) {
-        return typeof oauth2.clockSkewInSec === 'number' ? { clockSkewInSec: oauth2.clockSkewInSec } : {};
+    getClockSkewInSec (oauth2: OauthConfigModel) {
+        return typeof oauth2.clockSkewInSec === 'number' ? { "clockSkewInSec": oauth2.clockSkewInSec } : {};
     }
 
-    getRedirectUri(): string {
+    getRedirectUri (): string {
         // required for this package as we handle the returned token on this view, with is provided by the AuthModule
         const viewUrl = `view/authentication-confirmation`;
         const useHash = this.authModuleConfig.useHash;
@@ -103,11 +103,11 @@ export class AuthConfigService {
         return (oauth2.codeFlow || oauth2.implicitFlow) && useHash ? `${redirectUri}/?` : redirectUri;
     }
 
-    private getLocationOrigin() {
+    private getLocationOrigin () {
         return window.location.origin;
     }
 
-    private generatePostLogoutUri(hostUri: string = '', redirectUriLogout: string = ''): string {
+    private generatePostLogoutUri (hostUri: string = '', redirectUriLogout: string = ''): string {
         const hostUriWithoutSlash = hostUri.endsWith('/') ? hostUri.substring(0, hostUri.length - 1) : hostUri;
         const redirectUriLogoutWithoutSlash = redirectUriLogout.startsWith('/') ? redirectUriLogout.substring(1) : redirectUriLogout;
 

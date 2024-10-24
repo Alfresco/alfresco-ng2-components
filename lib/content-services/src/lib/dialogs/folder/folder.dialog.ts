@@ -31,9 +31,9 @@ import { AutoFocusDirective } from '../../directives';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-folder-dialog',
-    standalone: true,
-    imports: [
+    "selector": 'adf-folder-dialog',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatDialogModule,
         TranslateModule,
@@ -43,10 +43,10 @@ import { MatButtonModule } from '@angular/material/button';
         AutoFocusDirective,
         MatButtonModule
     ],
-    templateUrl: './folder.dialog.html',
-    styleUrls: ['./folder.dialog.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-folder-dialog' }
+    "templateUrl": './folder.dialog.html',
+    "styleUrls": ['./folder.dialog.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-folder-dialog' }
 })
 export class FolderDialogComponent implements OnInit {
     /**
@@ -70,30 +70,30 @@ export class FolderDialogComponent implements OnInit {
 
     disableSubmitButton = false;
 
-    get editing(): boolean {
+    get editing (): boolean {
         return !!this.data.folder;
     }
 
-    get name(): string {
+    get name (): string {
         return this.getTrimmedValue(this.form.value.name);
     }
 
-    get title(): string {
+    get title (): string {
         return this.getTrimmedValue(this.form.value.title);
     }
 
-    get description(): string {
+    get description (): string {
         return this.getTrimmedValue(this.form.value.description);
     }
 
-    private get properties(): { [key: string]: string } {
+    private get properties (): { [key: string]: string } {
         return {
             'cm:title': this.title,
             'cm:description': this.description
         };
     }
 
-    constructor(
+    constructor (
         private formBuilder: UntypedFormBuilder,
         private dialog: MatDialogRef<FolderDialogComponent>,
         private nodesApi: NodesApiService,
@@ -109,7 +109,7 @@ export class FolderDialogComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
+    ngOnInit () {
         const { folder } = this.data;
         let name = '';
         let title = '';
@@ -124,17 +124,17 @@ export class FolderDialogComponent implements OnInit {
         }
 
         const validators = {
-            name: [Validators.required, forbidSpecialCharacters, forbidEndingDot, forbidOnlySpaces]
+            "name": [Validators.required, forbidSpecialCharacters, forbidEndingDot, forbidOnlySpaces]
         };
 
         this.form = this.formBuilder.group({
-            name: [name, validators.name],
-            title: [title],
-            description: [description]
+            "name": [name, validators.name],
+            "title": [title],
+            "description": [description]
         });
     }
 
-    submit() {
+    submit () {
         this.disableSubmitButton = true;
 
         (this.editing ? this.edit() : this.create()).subscribe(
@@ -146,12 +146,12 @@ export class FolderDialogComponent implements OnInit {
         );
     }
 
-    handleError(error: any): any {
+    handleError (error: any): any {
         let errorMessage = 'CORE.MESSAGES.ERRORS.GENERIC';
 
         try {
             const {
-                error: { statusCode }
+                "error": { statusCode }
             } = JSON.parse(error.message);
 
             if (statusCode === 409) {
@@ -166,19 +166,19 @@ export class FolderDialogComponent implements OnInit {
         return error;
     }
 
-    private create(): Observable<Node> {
+    private create (): Observable<Node> {
         const parentNodeId = this.data.parentNodeId;
 
-        return this.nodesApi.createFolder(parentNodeId, { name: this.name, properties: this.properties, nodeType: this.nodeType });
+        return this.nodesApi.createFolder(parentNodeId, { "name": this.name, "properties": this.properties, "nodeType": this.nodeType });
     }
 
-    private edit(): Observable<Node> {
+    private edit (): Observable<Node> {
         const nodeId = this.data.folder.id;
 
-        return this.nodesApi.updateNode(nodeId, { name: this.name, properties: this.properties });
+        return this.nodesApi.updateNode(nodeId, { "name": this.name, "properties": this.properties });
     }
 
-    private getTrimmedValue(value: string): string {
+    private getTrimmedValue (value: string): string {
         return (value || '').trim();
     }
 }

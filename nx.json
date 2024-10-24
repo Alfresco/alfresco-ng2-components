@@ -1,8 +1,5 @@
 {
   "defaultProject": "demoshell",
-  "affected": {
-    "defaultBase": "develop"
-  },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
@@ -48,5 +45,6 @@
       "!{projectRoot}/tsconfig.storybook.json"
     ]
   },
-  "cacheDirectory": "nxcache"
+  "cacheDirectory": "nxcache",
+  "defaultBase": "develop"
 }

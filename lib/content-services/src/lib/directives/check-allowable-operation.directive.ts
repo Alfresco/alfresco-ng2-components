@@ -24,8 +24,8 @@ import { ContentService } from '../common/services/content.service';
 import { NodeAllowableOperationSubject } from '../interfaces/node-allowable-operation-subject.interface';
 
 @Directive({
-    standalone: true,
-    selector: '[adf-check-allowable-operation]'
+    "standalone": true,
+    "selector": '[adf-check-allowable-operation]'
 })
 export class CheckAllowableOperationDirective implements OnChanges {
     /**
@@ -39,7 +39,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
     @Input('adf-nodes')
     nodes: NodeEntry[] = [];
 
-    constructor(
+    constructor (
         private elementRef: ElementRef,
         private renderer: Renderer2,
         private contentService: ContentService,
@@ -51,7 +51,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
         private parentComponent?: NodeAllowableOperationSubject
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes.nodes && !changes.nodes.firstChange) {
             this.updateElement();
         }
@@ -61,7 +61,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
      * Updates disabled state for the decorated element
      * @returns the new state
      */
-    updateElement(): boolean {
+    updateElement (): boolean {
         const enable = this.hasAllowableOperations(this.nodes, this.permission);
 
         if (enable) {
@@ -73,7 +73,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
         return enable;
     }
 
-    private enable(): void {
+    private enable (): void {
         if (this.parentComponent) {
             this.parentComponent.disabled = false;
             this.changeDetector.detectChanges();
@@ -82,7 +82,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
         }
     }
 
-    private disable(): void {
+    private disable (): void {
         if (this.parentComponent) {
             this.parentComponent.disabled = true;
             this.changeDetector.detectChanges();
@@ -94,14 +94,14 @@ export class CheckAllowableOperationDirective implements OnChanges {
     /**
      * Enables decorated element
      */
-    enableElement(): void {
+    enableElement (): void {
         this.renderer.removeAttribute(this.elementRef.nativeElement, 'disabled');
     }
 
     /**
      * Disables decorated element
      */
-    disableElement(): void {
+    disableElement (): void {
         this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
     }
 
@@ -111,7 +111,7 @@ export class CheckAllowableOperationDirective implements OnChanges {
      * @param  permission Permission to check for each node
      * @returns `true` if there are allowable operations, otherwise `false`
      */
-    hasAllowableOperations(nodes: NodeEntry[], permission: string): boolean {
+    hasAllowableOperations (nodes: NodeEntry[], permission: string): boolean {
         if (nodes && nodes.length > 0) {
             return nodes.every((node) => this.contentService.hasAllowableOperations(node.entry, permission));
         }

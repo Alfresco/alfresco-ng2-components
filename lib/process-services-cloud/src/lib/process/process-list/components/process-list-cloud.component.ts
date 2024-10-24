@@ -60,10 +60,10 @@ import { VariableMapperService } from '../../../services/variable-mapper.sevice'
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
 @Component({
-    selector: 'adf-cloud-process-list',
-    templateUrl: './process-list-cloud.component.html',
-    styleUrls: ['./process-list-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-process-list',
+    "templateUrl": './process-list-cloud.component.html',
+    "styleUrls": ['./process-list-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ProcessListCloudComponent
     extends DataTableSchema<ProcessListDataColumnCustomData>
@@ -244,9 +244,9 @@ export class ProcessListCloudComponent
     requestNode: ProcessQueryCloudRequestModel;
     dataAdapter: ProcessListDatatableAdapter;
 
-    private defaultSorting = { key: 'startDate', direction: 'desc' };
+    private defaultSorting = { "key": 'startDate', "direction": 'desc' };
 
-    constructor(
+    constructor (
         private processListCloudService: ProcessListCloudService,
         appConfigService: AppConfigService,
         private userPreferences: UserPreferencesService,
@@ -259,13 +259,13 @@ export class ProcessListCloudComponent
             this.size = pageSize;
         });
         this.pagination = new BehaviorSubject<PaginationModel>({
-            maxItems: this.size,
-            skipCount: 0,
-            totalItems: 0
+            "maxItems": this.size,
+            "skipCount": 0,
+            "totalItems": 0
         });
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.cloudPreferenceService
             .getPreferences(this.appName)
             .pipe(
@@ -279,9 +279,9 @@ export class ProcessListCloudComponent
                     const columnsWidths = preferencesList.find((preference) => preference.entry.key === ProcessListCloudPreferences.columnsWidths);
 
                     return {
-                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility,
-                        columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
+                        "columnsOrder": columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
+                        "columnsVisibility": columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : this.columnsVisibility,
+                        "columnsWidths": columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
                     };
                 })
             )
@@ -302,12 +302,12 @@ export class ProcessListCloudComponent
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (this.isPropertyChanged(changes, 'sorting')) {
             this.formatSorting(changes['sorting'].currentValue);
         }
@@ -316,11 +316,11 @@ export class ProcessListCloudComponent
         }
     }
 
-    getCurrentId(): string {
+    getCurrentId (): string {
         return this.currentInstanceId;
     }
 
-    reload() {
+    reload () {
         if (this.appName || this.appName === '') {
             this.load();
         } else {
@@ -328,7 +328,7 @@ export class ProcessListCloudComponent
         }
     }
 
-    private load() {
+    private load () {
         this.isLoading = true;
 
         this.isColumnSchemaCreated$
@@ -355,7 +355,7 @@ export class ProcessListCloudComponent
             );
     }
 
-    private isAnyPropertyChanged(changes: SimpleChanges): boolean {
+    private isAnyPropertyChanged (changes: SimpleChanges): boolean {
         for (const property in changes) {
             if (this.isPropertyChanged(changes, property)) {
                 return true;
@@ -364,46 +364,45 @@ export class ProcessListCloudComponent
         return false;
     }
 
-    private isPropertyChanged(changes: SimpleChanges, property: string): boolean {
+    private isPropertyChanged (changes: SimpleChanges, property: string): boolean {
         return Object.prototype.hasOwnProperty.call(changes, property);
     }
 
-    isListEmpty(): boolean {
+    isListEmpty (): boolean {
         return !this.rows || this.rows.length === 0;
     }
 
     /**
      * Resets the pagination values
      */
-    resetPagination() {
+    resetPagination () {
         this.skipCount = 0;
         this.size = this.userPreferences.paginationSize;
         this.pagination.next({
-            skipCount: 0,
-            maxItems: this.size
+            "skipCount": 0,
+            "maxItems": this.size
         });
     }
 
     /**
      * Resets the pagination values and
      * Reloads the process list
-     *
      * @param pagination Pagination values to be set
      */
-    updatePagination(pagination: PaginationModel) {
+    updatePagination (pagination: PaginationModel) {
         this.size = pagination.maxItems;
         this.skipCount = pagination.skipCount;
         this.pagination.next(pagination);
         this.reload();
     }
 
-    onSortingChanged(event: CustomEvent) {
+    onSortingChanged (event: CustomEvent) {
         this.setSorting(event.detail);
         this.formatSorting(this.sorting);
         this.reload();
     }
 
-    onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
+    onColumnOrderChanged (columnsWithNewOrder: DataColumn[]): void {
         this.columnsOrder = columnsWithNewOrder.map((column) => column.id);
         this.createColumns();
 
@@ -412,7 +411,7 @@ export class ProcessListCloudComponent
         }
     }
 
-    onColumnsVisibilityChange(columns: DataColumn[]): void {
+    onColumnsVisibilityChange (columns: DataColumn[]): void {
         this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
             if (column.isHidden !== undefined) {
                 visibleColumnsMap[column.id] = !column.isHidden;
@@ -429,7 +428,7 @@ export class ProcessListCloudComponent
         }
     }
 
-    onColumnsWidthChanged(columns: DataColumn[]): void {
+    onColumnsWidthChanged (columns: DataColumn[]): void {
         const newColumnsWidths = columns.reduce((widthsColumnsMap, column) => {
             if (column.width) {
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
@@ -446,22 +445,22 @@ export class ProcessListCloudComponent
         }
     }
 
-    onRowClick(item: DataRowEvent) {
+    onRowClick (item: DataRowEvent) {
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
 
-    onRowSelect(event: CustomEvent) {
+    onRowSelect (event: CustomEvent) {
         this.selectedInstances = [...event.detail.selection];
         this.rowsSelected.emit(this.selectedInstances);
     }
 
-    onRowUnselect(event: CustomEvent) {
+    onRowUnselect (event: CustomEvent) {
         this.selectedInstances = [...event.detail.selection];
         this.rowsSelected.emit(this.selectedInstances);
     }
 
-    onRowKeyUp(event: CustomEvent) {
+    onRowKeyUp (event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
             this.currentInstanceId = event.detail.row.getValue('id');
@@ -469,72 +468,72 @@ export class ProcessListCloudComponent
         }
     }
 
-    onShowRowActionsMenu(event: DataCellEvent) {
+    onShowRowActionsMenu (event: DataCellEvent) {
         this.showRowActionsMenu.emit(event);
     }
 
-    onShowRowContextMenu(event: DataCellEvent) {
+    onShowRowContextMenu (event: DataCellEvent) {
         this.showRowContextMenu.emit(event);
     }
 
-    onExecuteRowAction(row: DataRowActionEvent) {
+    onExecuteRowAction (row: DataRowActionEvent) {
         this.executeRowAction.emit(row);
     }
 
-    private createRequestNode(): ProcessQueryCloudRequestModel {
+    private createRequestNode (): ProcessQueryCloudRequestModel {
         const requestNode = {
-            appName: this.appName,
-            appVersion: this.getAppVersions(),
-            maxItems: this.size,
-            skipCount: this.skipCount,
-            initiator: this.initiator,
-            id: this.id,
-            environmentId: this.environmentId,
-            name: this.name,
-            processDefinitionId: this.processDefinitionId,
-            processDefinitionName: this.processDefinitionName,
-            processDefinitionKey: this.processDefinitionKey,
-            status: this.status,
-            businessKey: this.businessKey,
-            lastModifiedFrom: this.lastModifiedFrom,
-            lastModifiedTo: this.lastModifiedTo,
-            startFrom: this.startFrom,
-            startTo: this.startTo,
-            completedFrom: this.completedFrom,
-            completedTo: this.completedTo,
-            suspendedFrom: this.suspendedFrom,
-            suspendedTo: this.suspendedTo,
-            completedDate: this.completedDate,
-            sorting: this.sorting,
-            variableKeys: this.getVariableDefinitionsRequestModel()
+            "appName": this.appName,
+            "appVersion": this.getAppVersions(),
+            "maxItems": this.size,
+            "skipCount": this.skipCount,
+            "initiator": this.initiator,
+            "id": this.id,
+            "environmentId": this.environmentId,
+            "name": this.name,
+            "processDefinitionId": this.processDefinitionId,
+            "processDefinitionName": this.processDefinitionName,
+            "processDefinitionKey": this.processDefinitionKey,
+            "status": this.status,
+            "businessKey": this.businessKey,
+            "lastModifiedFrom": this.lastModifiedFrom,
+            "lastModifiedTo": this.lastModifiedTo,
+            "startFrom": this.startFrom,
+            "startTo": this.startTo,
+            "completedFrom": this.completedFrom,
+            "completedTo": this.completedTo,
+            "suspendedFrom": this.suspendedFrom,
+            "suspendedTo": this.suspendedTo,
+            "completedDate": this.completedDate,
+            "sorting": this.sorting,
+            "variableKeys": this.getVariableDefinitionsRequestModel()
         };
 
         return new ProcessQueryCloudRequestModel(requestNode);
     }
 
-    getAppVersions(): string {
+    getAppVersions (): string {
         return this.appVersion instanceof Array ? this.appVersion.join(',') : this.appVersion ? String(this.appVersion) : '';
     }
 
-    setSorting(sortDetail) {
+    setSorting (sortDetail) {
         const sorting = sortDetail
             ? {
-                  orderBy: sortDetail.key,
-                  direction: sortDetail.direction.toUpperCase()
+                  "orderBy": sortDetail.key,
+                  "direction": sortDetail.direction.toUpperCase()
               }
             : { ...this.defaultSorting };
         this.sorting = [new ProcessListCloudSortingModel(sorting)];
     }
 
-    formatSorting(sorting: ProcessListCloudSortingModel[]) {
+    formatSorting (sorting: ProcessListCloudSortingModel[]) {
         this.formattedSorting = this.isValidSorting(sorting) ? [sorting[0].orderBy, sorting[0].direction.toLocaleLowerCase()] : null;
     }
 
-    isValidSorting(sorting: ProcessListCloudSortingModel[]) {
+    isValidSorting (sorting: ProcessListCloudSortingModel[]) {
         return sorting.length && sorting[0].orderBy && sorting[0].direction;
     }
 
-    private getVariableDefinitionsRequestModel(): string[] | undefined {
+    private getVariableDefinitionsRequestModel (): string[] | undefined {
         const displayedVariableColumns = this.columns
             .filter((column) => column.customData?.columnType === PROCESS_LIST_CUSTOM_VARIABLE_COLUMN && column.isHidden !== true)
             .map((column) => {

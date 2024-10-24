@@ -39,7 +39,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 const DEFAULT_SKIP_COUNT = 0;
 const DEFAULT_INCLUDE = 'inUse';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class SecurityControlsService {
     private groupsPaginatedSource = new Subject<SecurityControlsGroupResponse>();
     groupsPaginated$ = this.groupsPaginatedSource.asObservable();
@@ -59,21 +59,21 @@ export class SecurityControlsService {
     private securityGroup: SecurityGroupsApi;
     private securityMark: SecurityMarksApi;
     private authorityClearance: AuthorityClearanceApi;
-    constructor(private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
+    constructor (private apiService: AlfrescoApiService, private userPreferencesService: UserPreferencesService) {}
 
-    get groupsApi(): SecurityGroupsApi {
+    get groupsApi (): SecurityGroupsApi {
         return this.securityGroup || (this.securityGroup = new SecurityGroupsApi(this.apiService.getInstance()));
     }
 
-    get marksApi(): SecurityMarksApi {
+    get marksApi (): SecurityMarksApi {
         return this.securityMark || (this.securityMark = new SecurityMarksApi(this.apiService.getInstance()));
     }
 
-    get authorityClearanceApi(): AuthorityClearanceApi {
+    get authorityClearanceApi (): AuthorityClearanceApi {
         return this.authorityClearance || (this.authorityClearance = new AuthorityClearanceApi(this.apiService.getInstance()));
     }
 
-    get reloadAuthorityClearance(): Subject<void> {
+    get reloadAuthorityClearance (): Subject<void> {
         return this._reloadAuthorityClearance;
     }
 
@@ -84,7 +84,7 @@ export class SecurityControlsService {
      * @param include Additional information about the security group
      * @returns Promise<SecurityControlsGroupResponse>
      */
-    getSecurityGroup(
+    getSecurityGroup (
         skipCount = DEFAULT_SKIP_COUNT,
         maxItems = this.userPreferencesService.paginationSize,
         include = DEFAULT_INCLUDE
@@ -100,8 +100,8 @@ export class SecurityControlsService {
                 .then((response) => {
                     this.groupsPaginatedSource.next(
                         (securityControlsGroupResponse = {
-                            pagination: response.list.pagination,
-                            entries: response.list.entries.map((group) => group.entry)
+                            "pagination": response.list.pagination,
+                            "entries": response.list.entries.map((group) => group.entry)
                         })
                     );
                     resolve(securityControlsGroupResponse);
@@ -115,13 +115,13 @@ export class SecurityControlsService {
      * @param input securityGroupBody.
      * @returns Observable<SecurityGroupEntry>
      */
-    createSecurityGroup(input: SecurityGroupBody): Observable<SecurityGroupEntry> {
+    createSecurityGroup (input: SecurityGroupBody): Observable<SecurityGroupEntry> {
         this.loadingSource.next(true);
         const payload: SecurityGroupBody = {
             ...input
         };
         const opts: GsGroupInclude = {
-            include: DEFAULT_INCLUDE
+            "include": DEFAULT_INCLUDE
         };
         const promise = this.groupsApi.createSecurityGroup(payload, opts);
 
@@ -134,7 +134,7 @@ export class SecurityControlsService {
      * @param input securityMarkBody[].
      * @returns Promise<SecurityMarkPaging | SecurityMarkEntry>
      */
-    createSecurityMarks(securityGroupId: string, input: SecurityMarkBody[]): Promise<SecurityMarkPaging | SecurityMarkEntry> {
+    createSecurityMarks (securityGroupId: string, input: SecurityMarkBody[]): Promise<SecurityMarkPaging | SecurityMarkEntry> {
         this.loadingSource.next(true);
         const promise = this.marksApi
             .createSecurityMarks(securityGroupId, input)
@@ -157,7 +157,7 @@ export class SecurityControlsService {
      * @param skipCount The number of entities that exist in the collection before those included in this list.
      * @returns Promise<SecurityControlsMarkResponse>
      */
-    getSecurityMark(securityGroupId: string, skipCount = DEFAULT_SKIP_COUNT): Promise<SecurityControlsMarkResponse> {
+    getSecurityMark (securityGroupId: string, skipCount = DEFAULT_SKIP_COUNT): Promise<SecurityControlsMarkResponse> {
         let securityControlsMarkResponse: SecurityControlsMarkResponse;
         return new Promise((resolve, reject) => {
             this.marksApi
@@ -167,8 +167,8 @@ export class SecurityControlsService {
                 .then((response) => {
                     this.marksPaginatedSource.next(
                         (securityControlsMarkResponse = {
-                            pagination: response.list.pagination,
-                            entries: response.list.entries.map((mark) => mark.entry)
+                            "pagination": response.list.pagination,
+                            "entries": response.list.entries.map((mark) => mark.entry)
                         })
                     );
                     resolve(securityControlsMarkResponse);
@@ -184,7 +184,7 @@ export class SecurityControlsService {
      * @param opts additional information about the security group
      * @returns Promise<SecurityGroupEntry>
      */
-    updateSecurityGroup(securityGroupId: string, input: SecurityGroupBody, opts?: any): Promise<SecurityGroupEntry> {
+    updateSecurityGroup (securityGroupId: string, input: SecurityGroupBody, opts?: any): Promise<SecurityGroupEntry> {
         this.loadingSource.next(true);
         const payload: SecurityGroupBody = {
             ...input
@@ -215,7 +215,7 @@ export class SecurityControlsService {
      * @param input securityMarkBody.
      * @returns Promise<SecurityMarkEntry>
      */
-    updateSecurityMark(securityGroupId: string, securityMarkId: string, input: SecurityMarkBody): Promise<SecurityMarkEntry> {
+    updateSecurityMark (securityGroupId: string, securityMarkId: string, input: SecurityMarkBody): Promise<SecurityMarkEntry> {
         this.loadingSource.next(true);
         const payload: SecurityMarkBody = {
             ...input
@@ -239,7 +239,7 @@ export class SecurityControlsService {
      * @param securityGroupId The key for the security group id.
      * @returns Observable<void>
      */
-    deleteSecurityGroup(securityGroupId: string): Observable<void> {
+    deleteSecurityGroup (securityGroupId: string): Observable<void> {
         this.loadingSource.next(true);
         const promise = this.groupsApi.deleteSecurityGroup(securityGroupId);
 
@@ -252,7 +252,7 @@ export class SecurityControlsService {
      * @param securityMarkId The key for the security mark id.
      * @returns Promise<SecurityMarkEntry>
      */
-    deleteSecurityMark(securityGroupId: string, securityMarkId: string): Promise<SecurityMarkEntry> {
+    deleteSecurityMark (securityGroupId: string, securityMarkId: string): Promise<SecurityMarkEntry> {
         this.loadingSource.next(true);
         const promise = this.marksApi
             .deleteSecurityMark(securityGroupId, securityMarkId)
@@ -275,7 +275,7 @@ export class SecurityControlsService {
      * @param maxItems The maximum number of items to return in the list. Default is specified by UserPreferencesService.
      * @returns Observable<AuthorityClearanceGroupPaging>
      */
-    getClearancesForAuthority(
+    getClearancesForAuthority (
         authorityName: string,
         skipCount = DEFAULT_SKIP_COUNT,
         maxItems = this.userPreferencesService.paginationSize
@@ -296,7 +296,7 @@ export class SecurityControlsService {
      * @param securityMarksList NodeSecurityMarkBody[]
      * @returns Observable<SecurityMarkEntry | SecurityMarkPaging>
      */
-    updateClearancesForAuthority(
+    updateClearancesForAuthority (
         authorityName: string,
         securityMarksList: NodeSecurityMarkBody[]
     ): Observable<SecurityMarkEntry | SecurityMarkPaging> {
@@ -311,7 +311,7 @@ export class SecurityControlsService {
         );
     }
 
-    reloadSecurityGroups() {
+    reloadSecurityGroups () {
         this.reloadSecurityControls.next();
     }
 }

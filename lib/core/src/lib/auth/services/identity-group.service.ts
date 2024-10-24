@@ -30,11 +30,11 @@ import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityGroupServiceInterface } from '../interfaces/identity-group.interface';
 import { OAuth2Service } from './oauth2.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class IdentityGroupService implements IdentityGroupServiceInterface {
-    constructor(private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
+    constructor (private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
 
-    private get identityHost(): string {
+    private get identityHost (): string {
         return `${this.appConfigService.get('identityHost')}`;
     }
 
@@ -42,7 +42,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * Gets all groups.
      * @returns Array of group information objects
      */
-    getGroups(): Observable<IdentityGroupModel[]> {
+    getGroups (): Observable<IdentityGroupModel[]> {
         const url = `${this.identityHost}/groups`;
         return this.oAuth2Service.get({ url });
     }
@@ -52,7 +52,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param groupId Id of the group.
      * @returns Array of available roles information objects
      */
-    getAvailableRoles(groupId: string): Observable<IdentityRoleModel[]> {
+    getAvailableRoles (groupId: string): Observable<IdentityRoleModel[]> {
         const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm/available`;
         return this.oAuth2Service.get({ url });
     }
@@ -62,7 +62,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param groupId Id of the group.
      * @returns Array of available roles
      */
-    getAssignedRoles(groupId: string): Observable<IdentityRoleModel[]> {
+    getAssignedRoles (groupId: string): Observable<IdentityRoleModel[]> {
         const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm`;
         return this.oAuth2Service.get({ url });
     }
@@ -73,7 +73,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param roles Array of roles to assign
      * @returns request result
      */
-    assignRoles(groupId: string, roles: IdentityRoleModel[]): Observable<any> {
+    assignRoles (groupId: string, roles: IdentityRoleModel[]): Observable<any> {
         const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm`;
         const bodyParam = JSON.stringify(roles);
 
@@ -86,7 +86,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param roles Array of roles to remove
      * @returns request result
      */
-    removeRoles(groupId: string, roles: IdentityRoleModel[]): Observable<any> {
+    removeRoles (groupId: string, roles: IdentityRoleModel[]): Observable<any> {
         const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm`;
         const bodyParam = JSON.stringify(roles);
 
@@ -98,7 +98,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param groupId Id of the group
      * @returns Array of effective roles
      */
-    getEffectiveRoles(groupId: string): Observable<IdentityRoleModel[]> {
+    getEffectiveRoles (groupId: string): Observable<IdentityRoleModel[]> {
         const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm/composite`;
         return this.oAuth2Service.get({ url });
     }
@@ -108,9 +108,9 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param requestQuery query settings
      * @returns Array of user information objects
      */
-    queryGroups(requestQuery: IdentityGroupQueryCloudRequestModel): Observable<IdentityGroupQueryResponse> {
+    queryGroups (requestQuery: IdentityGroupQueryCloudRequestModel): Observable<IdentityGroupQueryResponse> {
         const url = `${this.identityHost}/groups`;
-        const queryParams = { first: requestQuery.first || 0, max: requestQuery.max || 5 };
+        const queryParams = { "first": requestQuery.first || 0, "max": requestQuery.max || 5 };
 
         return this.getTotalGroupsCount().pipe(
             switchMap((totalCount: IdentityGroupCountModel) =>
@@ -118,13 +118,13 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
                     map(
                         (response) =>
                             ({
-                                entries: response,
-                                pagination: {
-                                    skipCount: requestQuery.first,
-                                    maxItems: requestQuery.max,
-                                    count: totalCount.count,
-                                    hasMoreItems: false,
-                                    totalItems: totalCount.count
+                                "entries": response,
+                                "pagination": {
+                                    "skipCount": requestQuery.first,
+                                    "maxItems": requestQuery.max,
+                                    "count": totalCount.count,
+                                    "hasMoreItems": false,
+                                    "totalItems": totalCount.count
                                 }
                             } as IdentityGroupQueryResponse)
                     )
@@ -137,7 +137,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * Gets groups total count.
      * @returns Number of groups count.
      */
-    getTotalGroupsCount(): Observable<IdentityGroupCountModel> {
+    getTotalGroupsCount (): Observable<IdentityGroupCountModel> {
         const url = `${this.identityHost}/groups/count`;
         return this.oAuth2Service.get({ url });
     }
@@ -147,7 +147,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param newGroup Object of containing the new group details.
      * @returns Empty response when the group created.
      */
-    createGroup(newGroup: IdentityGroupModel): Observable<any> {
+    createGroup (newGroup: IdentityGroupModel): Observable<any> {
         const url = `${this.identityHost}/groups`;
         const bodyParam = newGroup;
 
@@ -160,7 +160,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param updatedGroup Object of containing the group details
      * @returns Empty response when the group updated.
      */
-    updateGroup(groupId: string, updatedGroup: IdentityGroupModel): Observable<any> {
+    updateGroup (groupId: string, updatedGroup: IdentityGroupModel): Observable<any> {
         const url = `${this.identityHost}/groups/${groupId}`;
         const bodyParam = JSON.stringify(updatedGroup);
 
@@ -172,7 +172,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param groupId Id of the group.
      * @returns Empty response when the group deleted.
      */
-    deleteGroup(groupId: string): Observable<any> {
+    deleteGroup (groupId: string): Observable<any> {
         const url = `${this.identityHost}/groups/${groupId}`;
         return this.oAuth2Service.delete({ url });
     }
@@ -182,12 +182,12 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param searchParams Object containing the name filter string
      * @returns List of group information
      */
-    findGroupsByName(searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
+    findGroupsByName (searchParams: IdentityGroupSearchParam): Observable<IdentityGroupModel[]> {
         if (searchParams.name === '') {
             return of([]);
         }
         const url = `${this.identityHost}/groups`;
-        const queryParams = { search: searchParams.name };
+        const queryParams = { "search": searchParams.name };
 
         return this.oAuth2Service.get({ url, queryParams });
     }
@@ -197,7 +197,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param groupId Id of the target group
      * @returns Group details
      */
-    getGroupRoles(groupId: string): Observable<IdentityRoleModel[]> {
+    getGroupRoles (groupId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildRolesUrl(groupId);
         return this.oAuth2Service.get({ url });
     }
@@ -208,7 +208,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param roleNames Array of role names
      * @returns True if the group has one or more of the roles, false otherwise
      */
-    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean> {
+    checkGroupHasRole (groupId: string, roleNames: string[]): Observable<boolean> {
         return this.getGroupRoles(groupId).pipe(
             map((groupRoles) => {
                 let hasRole = false;
@@ -231,9 +231,9 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param applicationName Name of the app
      * @returns client Id string
      */
-    getClientIdByApplicationName(applicationName: string): Observable<string> {
+    getClientIdByApplicationName (applicationName: string): Observable<string> {
         const url = `${this.identityHost}/clients`;
-        const queryParams = { clientId: applicationName };
+        const queryParams = { "clientId": applicationName };
 
         return this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(map((response) => (response && response.length > 0 ? response[0].id : '')));
     }
@@ -244,7 +244,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param clientId Id of the client
      * @returns List of roles
      */
-    getClientRoles(groupId: string, clientId: string): Observable<IdentityRoleModel[]> {
+    getClientRoles (groupId: string, clientId: string): Observable<IdentityRoleModel[]> {
         const url = `${this.identityHost}/groups/${groupId}/role-mappings/clients/${clientId}`;
         return this.oAuth2Service.get({ url });
     }
@@ -255,7 +255,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param clientId Id of the client
      * @returns True if the group has the client app, false otherwise
      */
-    checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
+    checkGroupHasClientApp (groupId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(map((response) => response && response.length > 0));
     }
 
@@ -266,7 +266,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
      * @param roleNames Array of role names to check
      * @returns True if the group has one or more of the roles, false otherwise
      */
-    checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+    checkGroupHasAnyClientAppRole (groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(
             map((clientRoles: any[]) => {
                 let hasRole = false;
@@ -285,7 +285,7 @@ export class IdentityGroupService implements IdentityGroupServiceInterface {
         );
     }
 
-    private buildRolesUrl(groupId: string): string {
+    private buildRolesUrl (groupId: string): string {
         return `${this.identityHost}/groups/${groupId}/role-mappings/realm/composite`;
     }
 }

@@ -25,10 +25,10 @@ import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
 
 @Component({
-    selector: 'adf-cloud-process-filters',
-    templateUrl: './process-filters-cloud.component.html',
-    styleUrls: ['./process-filters-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-process-filters',
+    "templateUrl": './process-filters-cloud.component.html',
+    "styleUrls": ['./process-filters-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
     /** (required) The application name */
@@ -78,7 +78,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     private readonly appConfigService = inject(AppConfigService);
     private readonly processListCloudService = inject(ProcessListCloudService);
 
-    ngOnInit() {
+    ngOnInit () {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         if (this.appName === '') {
             this.getFilters(this.appName);
@@ -87,7 +87,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         this.getFilterKeysAfterExternalRefreshing();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const appName = changes['appName'];
         const filter = changes['filterParam'];
         if (appName?.currentValue) {
@@ -99,14 +99,13 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Fetch the filter list based on appName
-     *
      * @param appName application name
      */
-    getFilters(appName: string): void {
+    getFilters (appName: string): void {
         this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
 
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe({
-            next: (res) => {
+            "next": (res) => {
                 this.resetFilter();
                 this.filters = res || [];
                 this.initFilterCounters();
@@ -114,7 +113,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
                 this.success.emit(res);
                 this.updateFilterCounters();
             },
-            error: (err: any) => {
+            "error": (err: any) => {
                 this.error.emit(err);
             }
         });
@@ -123,16 +122,15 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     /**
      * Initialize counter collection for filters
      */
-    initFilterCounters() {
+    initFilterCounters () {
         this.filters.forEach((filter) => (this.counters[filter.key] = 0));
     }
 
     /**
      * Pass the selected filter as next
-     *
      * @param paramFilter filter model
      */
-    selectFilter(paramFilter: FilterParamsModel) {
+    selectFilter (paramFilter: FilterParamsModel) {
         if (!paramFilter) {
             return;
         }
@@ -151,12 +149,11 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Check equality of the filter names by translating the given name strings
-     *
      * @param name1 source name
      * @param name2 target name
      * @returns `true` if filter names are equal, otherwise `false`
      */
-    private checkFilterNamesEquality(name1: string, name2: string): boolean {
+    private checkFilterNamesEquality (name1: string, name2: string): boolean {
         const translatedName1 = this.translationService.instant(name1);
         const translatedName2 = this.translationService.instant(name2);
 
@@ -165,10 +162,9 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Selects and emits the given filter
-     *
      * @param newParamFilter new parameter filter
      */
-    selectFilterAndEmit(newParamFilter: FilterParamsModel) {
+    selectFilterAndEmit (newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
             this.filterSelected.emit(this.currentFilter);
@@ -179,19 +175,17 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Select filter with the id
-     *
      * @param id filter id
      */
-    selectFilterById(id: string) {
+    selectFilterById (id: string) {
         this.selectFilterAndEmit({ id });
     }
 
     /**
      * Selects and emits the clicked filter
-     *
      * @param filter filter model
      */
-    onFilterClick(filter: ProcessFilterCloudModel) {
+    onFilterClick (filter: ProcessFilterCloudModel) {
         if (filter) {
             this.selectFilter(filter);
             this.filterClicked.emit(this.currentFilter);
@@ -205,7 +199,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     /**
      * Select as default process filter the first in the list
      */
-    selectDefaultProcessFilter() {
+    selectDefaultProcessFilter () {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         }
@@ -213,40 +207,38 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      * Get current filter
-     *
      * @returns filter model
      */
-    getCurrentFilter(): ProcessFilterCloudModel {
+    getCurrentFilter (): ProcessFilterCloudModel {
         return this.currentFilter;
     }
 
     /**
      * Check if the filter list is empty
-     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
-    isFilterListEmpty(): boolean {
+    isFilterListEmpty (): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
     /**
      * Reset the filters
      */
-    private resetFilter() {
+    private resetFilter () {
         this.filters = [];
         this.currentFilter = undefined;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    isActiveFilter(filter: ProcessFilterCloudModel): boolean {
+    isActiveFilter (filter: ProcessFilterCloudModel): boolean {
         return this.currentFilter.name === filter.name;
     }
 
-    initProcessNotification(): void {
+    initProcessNotification (): void {
         if (this.appName && this.enableNotifications) {
             this.processFilterCloudService
                 .getProcessNotificationSubscription(this.appName)
@@ -260,7 +252,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     /**
      * Iterate over filters and update counters
      */
-    updateFilterCounters(): void {
+    updateFilterCounters (): void {
         this.filters.forEach((filter: ProcessFilterCloudModel) => {
             this.updateFilterCounter(filter);
         });
@@ -270,7 +262,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
      *  Get current value for filter and check if value has changed
      * @param filter filter
      */
-    updateFilterCounter(filter: ProcessFilterCloudModel): void {
+    updateFilterCounter (filter: ProcessFilterCloudModel): void {
         this.processListCloudService
             .getProcessCounter(filter.appName, filter.status)
             .pipe(
@@ -286,7 +278,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
             });
     }
 
-    checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number): void {
+    checkIfFilterValuesHasBeenUpdated (filterKey: string, filterValue: number): void {
         if (!this.currentFiltersValues[filterKey]) {
             this.currentFiltersValues[filterKey] = filterValue;
             return;
@@ -298,7 +290,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         }
     }
 
-    isFilterUpdated(filterName: string): boolean {
+    isFilterUpdated (filterName: string): boolean {
         return this.updatedFiltersSet.has(filterName);
     }
 
@@ -306,7 +298,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
      * Get filer key when filter was refreshed by external action
      *
      */
-    getFilterKeysAfterExternalRefreshing(): void {
+    getFilterKeysAfterExternalRefreshing (): void {
         this.processFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
             this.updatedFiltersSet.delete(filterKey);
         });

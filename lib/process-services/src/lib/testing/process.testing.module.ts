@@ -23,11 +23,11 @@ import { ProcessFormRenderingService } from '../form/process-form-rendering.serv
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 @NgModule({
-    imports: [CoreModule.forRoot(), ProcessModule.forRoot(), NoopAuthModule, NoopAnimationsModule, NoopTranslateModule],
-    providers: [
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+    "imports": [CoreModule.forRoot(), ProcessModule.forRoot(), NoopAuthModule, NoopAnimationsModule, NoopTranslateModule],
+    "providers": [
+        { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+        { "provide": FormRenderingService, "useClass": ProcessFormRenderingService }
     ],
-    exports: [CoreModule, ProcessModule]
+    "exports": [CoreModule, ProcessModule]
 })
 export class ProcessTestingModule {}

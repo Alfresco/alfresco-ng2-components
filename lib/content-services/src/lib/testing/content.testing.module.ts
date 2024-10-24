@@ -26,16 +26,16 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { AlfrescoApiServiceMock } from '../mock';
 
 @NgModule({
-    imports: [NoopAnimationsModule, CoreModule, NoopAuthModule, NoopTranslateModule, ContentModule, MatIconTestingModule],
-    providers: [
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+    "imports": [NoopAnimationsModule, CoreModule, NoopAuthModule, NoopTranslateModule, ContentModule, MatIconTestingModule],
+    "providers": [
+        { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
         {
-            provide: APP_INITIALIZER,
-            useFactory: versionCompatibilityFactory,
-            deps: [VersionCompatibilityService],
-            multi: true
+            "provide": APP_INITIALIZER,
+            "useFactory": versionCompatibilityFactory,
+            "deps": [VersionCompatibilityService],
+            "multi": true
         }
     ],
-    exports: [NoopAnimationsModule, CoreModule, ContentModule]
+    "exports": [NoopAnimationsModule, CoreModule, ContentModule]
 })
 export class ContentTestingModule {}

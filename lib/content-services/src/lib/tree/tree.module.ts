@@ -20,7 +20,7 @@ import { TreeComponent } from './components/tree.component';
 
 /** @deprecated use `TreeComponent` standalone component instead */
 @NgModule({
-    imports: [TreeComponent],
-    exports: [TreeComponent]
+    "imports": [TreeComponent],
+    "exports": [TreeComponent]
 })
 export class TreeModule {}

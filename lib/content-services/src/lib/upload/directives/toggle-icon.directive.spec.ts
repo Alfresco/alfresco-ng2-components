@@ -20,10 +20,10 @@ import { ToggleIconDirective } from './toggle-icon.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 @Component({
-    selector: 'adf-test-component',
-    standalone: true,
-    imports: [ToggleIconDirective],
-    template: ` <button id="testButton" adf-toggle-icon>test</button> `
+    "selector": 'adf-test-component',
+    "standalone": true,
+    "imports": [ToggleIconDirective],
+    "template": ` <button id="testButton" adf-toggle-icon>test</button> `
 })
 class TestComponent {
     @ViewChild(ToggleIconDirective)
@@ -36,7 +36,7 @@ describe('ToggleIconDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TestComponent]
+            "imports": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

@@ -31,11 +31,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-search-filter-autocomplete-chips',
-    standalone: true,
-    imports: [CommonModule, SearchChipAutocompleteInputComponent, TranslateModule, MatButtonModule],
-    templateUrl: './search-filter-autocomplete-chips.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-filter-autocomplete-chips',
+    "standalone": true,
+    "imports": [CommonModule, SearchChipAutocompleteInputComponent, TranslateModule, MatButtonModule],
+    "templateUrl": './search-filter-autocomplete-chips.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit, OnDestroy {
     id: string;
@@ -53,11 +53,11 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
     private readonly destroy$ = new Subject<void>();
 
-    constructor(private tagService: TagService, private categoryService: CategoryService) {
+    constructor (private tagService: TagService, private categoryService: CategoryService) {
         this.options = new SearchFilterList<AutocompleteOption[]>();
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.settings) {
             this.setOptions();
             if (this.startValue?.length > 0) {
@@ -82,31 +82,31 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    reset(updateContext = true) {
+    reset (updateContext = true) {
         this.selectedOptions = [];
         this.context.filterRawParams[this.id] = undefined;
         this.resetSubject$.next();
         this.updateQuery(updateContext);
     }
 
-    submitValues() {
+    submitValues () {
         this.updateQuery();
     }
 
-    hasValidValue(): boolean {
+    hasValidValue (): boolean {
         return !!this.selectedOptions;
     }
 
-    getCurrentValue(): AutocompleteOption[] {
+    getCurrentValue (): AutocompleteOption[] {
         return this.selectedOptions;
     }
 
-    onOptionsChange(selectedOptions: AutocompleteOption[]) {
+    onOptionsChange (selectedOptions: AutocompleteOption[]) {
         this.selectedOptions = selectedOptions;
         if (this.enableChangeUpdate) {
             this.updateQuery();
@@ -114,23 +114,23 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         }
     }
 
-    setValue(value: AutocompleteOption[]) {
+    setValue (value: AutocompleteOption[]) {
         this.selectedOptions = value;
         this.displayValue$.next(this.selectedOptions.join(', '));
         this.submitValues();
     }
 
-    onInputChange(value: string) {
+    onInputChange (value: string) {
         if (this.settings.field === AutocompleteField.CATEGORIES && value) {
             this.searchForExistingCategories(value);
         }
     }
 
-    optionComparator(option1: AutocompleteOption, option2: AutocompleteOption): boolean {
+    optionComparator (option1: AutocompleteOption, option2: AutocompleteOption): boolean {
         return option1.id ? option1.id.toUpperCase() === option2.id.toUpperCase() : option1.value.toUpperCase() === option2.value.toUpperCase();
     }
 
-    private updateQuery(updateContext = true) {
+    private updateQuery (updateContext = true) {
         this.context.filterRawParams[this.id] = this.selectedOptions.length > 0 ? this.selectedOptions : undefined;
         this.displayValue$.next(this.selectedOptions.map((option) => option.value).join(', '));
         if (this.context && this.settings && this.settings.field) {
@@ -147,13 +147,13 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         }
     }
 
-    private setOptions() {
+    private setOptions () {
         switch (this.settings.field) {
             case AutocompleteField.TAG:
                 this.tagService.getAllTheTags().subscribe((tagPaging) => {
                     this.autocompleteOptionsSubject$.next(
                         tagPaging.list.entries.map((tag) => ({
-                            value: tag.entry.tag
+                            "value": tag.entry.tag
                         }))
                     );
                 });
@@ -166,13 +166,13 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
         }
     }
 
-    private searchForExistingCategories(searchTerm: string) {
+    private searchForExistingCategories (searchTerm: string) {
         this.categoryService.searchCategories(searchTerm, 0, 15).subscribe((existingCategoriesResult) => {
             this.autocompleteOptionsSubject$.next(
                 existingCategoriesResult.list.entries.map((rowEntry) => {
                     const path = rowEntry.entry.path.name.split('/').splice(3).join('/');
                     const fullPath = path ? `${path}/${rowEntry.entry.name}` : rowEntry.entry.name;
-                    return { id: rowEntry.entry.id, value: rowEntry.entry.name, fullPath };
+                    return { "id": rowEntry.entry.id, "value": rowEntry.entry.name, fullPath };
                 })
             );
         });

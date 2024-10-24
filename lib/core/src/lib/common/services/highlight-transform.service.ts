@@ -23,7 +23,7 @@ export interface HighlightTransformResult {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class HighlightTransformService {
     /**
@@ -33,7 +33,7 @@ export class HighlightTransformService {
      * @param wrapperClass CSS class used to provide highlighting style
      * @returns New text along with boolean value to indicate whether anything was highlighted
      */
-    public highlight(text: string, search: string, wrapperClass: string = 'adf-highlight'): HighlightTransformResult {
+    public highlight (text: string, search: string, wrapperClass: string = 'adf-highlight'): HighlightTransformResult {
         let isMatching = false;
         let result = text;
 
@@ -50,13 +50,13 @@ export class HighlightTransformService {
                 isMatching = true;
                 return `<span class="${wrapperClass}">${match}</span>`;
             });
-            return { text: result, changed: isMatching };
+            return { "text": result, "changed": isMatching };
         } else {
-            return { text: result, changed: isMatching };
+            return { "text": result, "changed": isMatching };
         }
     }
 
-    private removeHtmlTags(text: string): string {
+    private removeHtmlTags (text: string): string {
         return text.split('>').pop().split('<')[0];
     }
 }

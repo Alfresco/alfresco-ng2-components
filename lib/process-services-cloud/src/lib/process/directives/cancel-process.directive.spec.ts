@@ -22,13 +22,13 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 import { IdentityUserService } from '../../people/services/identity-user.service';
 
-const processDetailsMockRunning: ProcessInstanceCloud = { initiator: 'usermock', status: 'RUNNING' };
-const processDetailsMockCompleted: ProcessInstanceCloud = { initiator: 'usermock', status: 'COMPLETED' };
+const processDetailsMockRunning: ProcessInstanceCloud = { "initiator": 'usermock', "status": 'RUNNING' };
+const processDetailsMockCompleted: ProcessInstanceCloud = { "initiator": 'usermock', "status": 'COMPLETED' };
 
 describe('CancelProcessDirective', () => {
     @Component({
-        selector: 'adf-cloud-cancel-process-test-component',
-        template: '<button adf-cloud-cancel-process></button>'
+        "selector": 'adf-cloud-cancel-process-test-component',
+        "template": '<button adf-cloud-cancel-process></button>'
     })
     class TestComponent {
         @ViewChild(CancelProcessDirective)
@@ -41,13 +41,13 @@ describe('CancelProcessDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [TestComponent]
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         identityUserService = TestBed.inject(IdentityUserService);
-        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'usermock' });
+        spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ "username": 'usermock' });
         fixture.detectChanges();
     });
 

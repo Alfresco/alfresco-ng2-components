@@ -31,12 +31,12 @@ describe('AttachFileWidgetDialogComponent', () => {
     let widget: AttachFileWidgetDialogComponent;
     let fixture: ComponentFixture<AttachFileWidgetDialogComponent>;
     const data: AttachFileWidgetDialogComponentData = {
-        title: 'Choose along citizen...',
-        actionName: 'Choose',
-        currentFolderId: '-my-',
-        selected: new EventEmitter<any>(),
-        ecmHost: 'https://fakeUrl.com',
-        isSelectionValid: (entry: Node) => entry.isFile
+        "title": 'Choose along citizen...',
+        "actionName": 'Choose',
+        "currentFolderId": '-my-',
+        "selected": new EventEmitter<any>(),
+        "ecmHost": 'https://fakeUrl.com',
+        "isSelectionValid": (entry: Node) => entry.isFile
     };
     let element: HTMLInputElement;
     let siteService: SitesService;
@@ -46,16 +46,16 @@ describe('AttachFileWidgetDialogComponent', () => {
     let authService: AuthenticationService;
     let closeSpy: jasmine.Spy;
 
-    const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
+    const fakeSite = new SiteEntry({ "entry": { "id": 'fake-site', "guid": 'fake-site', "title": 'fake-site', "visibility": 'visible' } });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, AttachFileWidgetDialogComponent],
-            providers: [
-                { provide: MAT_DIALOG_DATA, useValue: data },
-                { provide: MatDialogRef, useValue: { close: () => of() } }
+            "imports": [ProcessTestingModule, AttachFileWidgetDialogComponent],
+            "providers": [
+                { "provide": MAT_DIALOG_DATA, "useValue": data },
+                { "provide": MatDialogRef, "useValue": { "close": () => of() } }
             ],
-            schemas: [NO_ERRORS_SCHEMA]
+            "schemas": [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(AttachFileWidgetDialogComponent);
         widget = fixture.componentInstance;
@@ -68,17 +68,17 @@ describe('AttachFileWidgetDialogComponent', () => {
         closeSpy = spyOn(matDialogRef, 'close');
 
         authService = fixture.debugElement.injector.get(AuthenticationService);
-        spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(authService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
         authService.onLogin = new Subject<any>();
 
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { path: { elements: [] } } } as NodeEntry));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ "entry": { "path": { "elements": [] } } } as NodeEntry));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
         spyOn(nodeService, 'getNode').and.returnValue(
-            of(new Node({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] } }))
+            of(new Node({ "id": 'fake-node', "path": { "elements": [{ "nodeType": 'st:site', "name": 'fake-site' }] } }))
         );
 
         spyOn(siteService, 'getSite').and.returnValue(of(fakeSite));
-        spyOn(siteService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
+        spyOn(siteService, 'getSites').and.returnValue(of(new SitePaging({ "list": new SitePagingList({ "entries": [] }) })));
         isLoggedInSpy = spyOn(widget, 'isLoggedIn').and.returnValue(false);
     });
 
@@ -143,7 +143,7 @@ describe('AttachFileWidgetDialogComponent', () => {
                 expect(nodeList[0].isFile).toBeTruthy();
                 done();
             });
-            const fakeNode: Node = new Node({ id: 'fake', isFile: true });
+            const fakeNode: Node = new Node({ "id": 'fake', "isFile": true });
             contentNodePanel.componentInstance.select.emit([fakeNode]);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -154,9 +154,9 @@ describe('AttachFileWidgetDialogComponent', () => {
 
         it('[C594015] should not be able to choose a folder', () => {
             spyOn(widget, 'onSelect');
-            const fakeFolderNode: Node = new Node({ id: 'fakeFolder', isFile: false, isFolder: true });
+            const fakeFolderNode: Node = new Node({ "id": 'fakeFolder', "isFile": false, "isFolder": true });
 
-            contentNodePanel.componentInstance.onCurrentSelection([{ entry: fakeFolderNode }]);
+            contentNodePanel.componentInstance.onCurrentSelection([{ "entry": fakeFolderNode }]);
             fixture.detectChanges();
 
             const chooseButton: HTMLButtonElement = element.querySelector('[data-automation-id="attach-file-dialog-actions-choose"]');
@@ -179,8 +179,8 @@ describe('AttachFileWidgetDialogComponent', () => {
         beforeEach(() => {
             widget.data = {
                 ...widget.data,
-                loginOnly: true,
-                registerExternalHost: () => {}
+                "loginOnly": true,
+                "registerExternalHost": () => {}
             };
         });
 
@@ -217,7 +217,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         });
 
         it('should be enabled when a node is chosen', () => {
-            widget.onSelect([new Node({ id: 'fake' })]);
+            widget.onSelect([new Node({ "id": 'fake' })]);
             fixture.detectChanges();
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="attach-file-dialog-actions-choose"]'));
 
@@ -225,7 +225,7 @@ describe('AttachFileWidgetDialogComponent', () => {
         });
 
         it('should be disabled when no node chosen', () => {
-            widget.onSelect([new Node({ id: 'fake' })]);
+            widget.onSelect([new Node({ "id": 'fake' })]);
             fixture.detectChanges();
 
             const actionButtonWithNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="attach-file-dialog-actions-choose"]'));

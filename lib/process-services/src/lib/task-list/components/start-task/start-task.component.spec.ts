@@ -37,20 +37,20 @@ describe('StartTaskComponent', () => {
 
     const fakeForms$ = [
         {
-            id: 123,
-            name: 'Display Data'
+            "id": 123,
+            "name": 'Display Data'
         },
         {
-            id: 1111,
-            name: 'Employee Info'
+            "id": 1111,
+            "name": 'Employee Info'
         }
     ];
 
-    const testUser = { id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com' };
+    const testUser = { "id": 1001, "firstName": 'fakeName', "email": 'fake@app.activiti.com' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, StartTaskComponent]
+            "imports": [ProcessTestingModule, StartTaskComponent]
         });
         fixture = TestBed.createComponent(StartTaskComponent);
         component = fixture.componentInstance;
@@ -80,10 +80,10 @@ describe('StartTaskComponent', () => {
         beforeEach(() => {
             createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(
                 of({
-                    id: 91,
-                    name: 'fakeName',
-                    formKey: null,
-                    assignee: null
+                    "id": 91,
+                    "name": 'fakeName',
+                    "formKey": null,
+                    "assignee": null
                 } as any)
             );
         });
@@ -105,10 +105,10 @@ describe('StartTaskComponent', () => {
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
-                id: 91,
-                name: 'fakeName',
-                formKey: null,
-                assignee: null
+                "id": 91,
+                "name": 'fakeName',
+                "formKey": null,
+                "assignee": null
             });
         });
 
@@ -137,10 +137,10 @@ describe('StartTaskComponent', () => {
         beforeEach(() => {
             spyOn(service, 'createNewTask').and.returnValue(
                 of({
-                    id: 91,
-                    name: 'fakeName',
-                    formKey: null,
-                    assignee: null
+                    "id": 91,
+                    "name": 'fakeName',
+                    "formKey": null,
+                    "assignee": null
                 } as any)
             );
         });
@@ -148,10 +148,10 @@ describe('StartTaskComponent', () => {
         it('should attach form to the task when a form is selected', () => {
             spyOn(service, 'attachFormToATask').and.returnValue(
                 of({
-                    id: 91,
-                    name: 'fakeName',
-                    formKey: 1204,
-                    assignee: null
+                    "id": 91,
+                    "name": 'fakeName',
+                    "formKey": 1204,
+                    "assignee": null
                 })
             );
             const successSpy = spyOn(component.success, 'emit');
@@ -163,20 +163,20 @@ describe('StartTaskComponent', () => {
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
-                id: 91,
-                name: 'fakeName',
-                formKey: 1204,
-                assignee: null
+                "id": 91,
+                "name": 'fakeName',
+                "formKey": 1204,
+                "assignee": null
             });
         });
 
         it('should not attach form to the task when a no form is selected', () => {
             spyOn(service, 'attachFormToATask').and.returnValue(
                 of({
-                    id: 91,
-                    name: 'fakeName',
-                    formKey: null,
-                    assignee: null
+                    "id": 91,
+                    "name": 'fakeName',
+                    "formKey": null,
+                    "assignee": null
                 })
             );
             const successSpy = spyOn(component.success, 'emit');
@@ -188,10 +188,10 @@ describe('StartTaskComponent', () => {
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
-                id: 91,
-                name: 'fakeName',
-                formKey: null,
-                assignee: null
+                "id": 91,
+                "name": 'fakeName',
+                "formKey": null,
+                "assignee": null
             });
         });
     });
@@ -200,26 +200,26 @@ describe('StartTaskComponent', () => {
         beforeEach(() => {
             spyOn(service, 'createNewTask').and.returnValue(
                 of({
-                    id: 91,
-                    name: 'fakeName',
-                    formKey: null,
-                    assignee: null
+                    "id": 91,
+                    "name": 'fakeName',
+                    "formKey": null,
+                    "assignee": null
                 } as any)
             );
             spyOn(service, 'attachFormToATask').and.returnValue(
                 of({
-                    id: 91,
-                    name: 'fakeName',
-                    formKey: 1204,
-                    assignee: null
+                    "id": 91,
+                    "name": 'fakeName',
+                    "formKey": 1204,
+                    "assignee": null
                 })
             );
             spyOn(service, 'assignTaskByUserId').and.returnValue(
                 of({
-                    id: 91,
-                    name: 'fakeName',
-                    formKey: 1204,
-                    assignee: testUser
+                    "id": 91,
+                    "name": 'fakeName',
+                    "formKey": 1204,
+                    "assignee": testUser
                 } as any)
             );
         });
@@ -234,10 +234,10 @@ describe('StartTaskComponent', () => {
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
-                id: 91,
-                name: 'fakeName',
-                formKey: 1204,
-                assignee: testUser
+                "id": 91,
+                "name": 'fakeName',
+                "formKey": 1204,
+                "assignee": testUser
             });
         });
 
@@ -252,10 +252,10 @@ describe('StartTaskComponent', () => {
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
-                id: 91,
-                name: 'fakeName',
-                formKey: 1204,
-                assignee: testUser
+                "id": 91,
+                "name": 'fakeName',
+                "formKey": 1204,
+                "assignee": testUser
             });
         });
 
@@ -270,17 +270,17 @@ describe('StartTaskComponent', () => {
             const createTaskButton = element.querySelector<HTMLElement>('#button-start');
             createTaskButton.click();
             expect(successSpy).toHaveBeenCalledWith({
-                id: 91,
-                name: 'fakeName',
-                formKey: 1204,
-                assignee: null
+                "id": 91,
+                "name": 'fakeName',
+                "formKey": 1204,
+                "assignee": null
             });
         });
     });
 
     it('should not attach a form when a form id is not selected', () => {
         const attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(of([]));
-        spyOn(service, 'createNewTask').and.returnValue(of(new TaskRepresentation({ id: 'task-id' })));
+        spyOn(service, 'createNewTask').and.returnValue(of(new TaskRepresentation({ "id": 'task-id' })));
         component.taskForm.controls['name'].setValue('fakeName');
         fixture.detectChanges();
         const createTaskButton = element.querySelector<HTMLElement>('#button-start');
@@ -299,7 +299,7 @@ describe('StartTaskComponent', () => {
     it('should render start task button with primary color', async () => {
         fixture.detectChanges();
 
-        const buttonEl = await (await loader.getHarness(MatButtonHarness.with({ selector: '#button-start' }))).host();
+        const buttonEl = await (await loader.getHarness(MatButtonHarness.with({ "selector": '#button-start' }))).host();
         expect(await buttonEl.getAttribute('color')).toBe('primary');
     });
 
@@ -351,10 +351,10 @@ describe('StartTaskComponent', () => {
     });
 
     it('should get formatted fullname', () => {
-        const testUser1 = { id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' };
-        const testUser2 = { id: 1002, firstName: '', lastName: 'Adams', email: 'adams@app.activiti.com' };
-        const testUser3 = { id: 1003, firstName: 'Wilbur', lastName: '', email: 'wilbur@app.activiti.com' };
-        const testUser4 = { id: 1004, firstName: '', lastName: '', email: 'test@app.activiti.com' };
+        const testUser1 = { "id": 1001, "firstName": 'Wilbur', "lastName": 'Adams', "email": 'wilbur@app.activiti.com' };
+        const testUser2 = { "id": 1002, "firstName": '', "lastName": 'Adams', "email": 'adams@app.activiti.com' };
+        const testUser3 = { "id": 1003, "firstName": 'Wilbur', "lastName": '', "email": 'wilbur@app.activiti.com' };
+        const testUser4 = { "id": 1004, "firstName": '', "lastName": '', "email": 'test@app.activiti.com' };
 
         const testFullName1 = component.getDisplayUser(testUser1.firstName, testUser1.lastName, ' ');
         const testFullName2 = component.getDisplayUser(testUser2.firstName, testUser2.lastName, ' ');

@@ -30,12 +30,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-task-filters',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, IconComponent],
-    templateUrl: './task-filters.component.html',
-    styleUrls: ['./task-filters.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-task-filters',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatButtonModule, IconComponent],
+    "templateUrl": './task-filters.component.html',
+    "styleUrls": ['./task-filters.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
@@ -82,7 +82,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     private iconsMDL: IconModel;
 
-    constructor(
+    constructor (
         private taskFilterService: TaskFilterService,
         private taskListService: TaskListService,
         private appsProcessService: AppsProcessService,
@@ -90,7 +90,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         private activatedRoute: ActivatedRoute
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.iconsMDL = new IconModel();
         this.router.events
             .pipe(
@@ -107,7 +107,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const appName = changes['appName'];
         const appId = changes['appId'];
         const filterParam = changes['filterParam'];
@@ -120,16 +120,15 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isActiveRoute(filterActive: UserTaskFilterRepresentation): boolean {
+    isActiveRoute (filterActive: UserTaskFilterRepresentation): boolean {
         return (this.isTaskActive || this.isTaskRoute) && this.currentFilter === filterActive;
     }
 
     /**
      * Return the filter list filtered by appId
-     *
      * @param appId - optional
      */
-    getFiltersByAppId(appId?: number) {
+    getFiltersByAppId (appId?: number) {
         this.taskFilterService.getTaskListFilters(appId).subscribe(
             (res) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
@@ -149,10 +148,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Return the filter list filtered by appName
-     *
      * @param appName application name
      */
-    getFiltersByAppName(appName: string): void {
+    getFiltersByAppName (appName: string): void {
         this.appsProcessService.getDeployedApplicationsByName(appName).subscribe(
             (application) => {
                 this.getFiltersByAppId(application.id);
@@ -165,10 +163,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Create default filters by appId
-     *
      * @param appId application id
      */
-    private createFiltersByAppId(appId?: number): void {
+    private createFiltersByAppId (appId?: number): void {
         this.taskFilterService.createDefaultFilters(appId).subscribe(
             (resDefault) => {
                 this.resetFilter();
@@ -184,10 +181,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Pass the selected filter as next
-     *
      * @param newFilter new filter model
      */
-    public selectFilter(newFilter: UserTaskFilterRepresentation): void {
+    public selectFilter (newFilter: UserTaskFilterRepresentation): void {
         if (newFilter) {
             this.currentFilter = this.filters.find(
                 (entry, index) =>
@@ -198,27 +194,25 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private selectFilterAndEmit(newFilter: UserTaskFilterRepresentation) {
+    private selectFilterAndEmit (newFilter: UserTaskFilterRepresentation) {
         this.selectFilter(newFilter);
         this.filterSelected.emit(this.currentFilter);
     }
 
     /**
      * Selects and emits the clicked filter.
-     *
      * @param filterParams filter parameters model
      */
-    onFilterClick(filterParams: UserTaskFilterRepresentation) {
+    onFilterClick (filterParams: UserTaskFilterRepresentation) {
         this.selectFilter(filterParams);
         this.filterClicked.emit(this.currentFilter);
     }
 
     /**
      * Select filter with task
-     *
      * @param taskId task id
      */
-    selectFilterWithTask(taskId: string): void {
+    selectFilterWithTask (taskId: string): void {
         const filteredFilterList: UserTaskFilterRepresentation[] = [];
         this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
             (filterModel) => {
@@ -238,41 +232,38 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Get the current filter
-     *
      * @returns filter model
      */
-    getCurrentFilter(): UserTaskFilterRepresentation {
+    getCurrentFilter (): UserTaskFilterRepresentation {
         return this.currentFilter;
     }
 
     /**
      * Check if the filter list is empty
-     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
-    isFilterListEmpty(): boolean {
+    isFilterListEmpty (): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
     /**
      * Get the material icons equivalent of the glyphicon icon
-     *
      * @param icon glyphicon name
      * @returns material icons equivalent of the icon
      */
-    getFilterIcon(icon: string): string {
+    getFilterIcon (icon: string): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 
     /**
      * Reset the filters properties
      */
-    private resetFilter() {
+    private resetFilter () {
         this.filters = [];
         this.currentFilter = undefined;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

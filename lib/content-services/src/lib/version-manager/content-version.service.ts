@@ -20,18 +20,18 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { ContentApi } from '@alfresco/js-api';
 import { Observable, of } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class ContentVersionService {
     private _contentApi: ContentApi;
 
-    get contentApi(): ContentApi {
+    get contentApi (): ContentApi {
         if (!this._contentApi) {
             this._contentApi = new ContentApi(this.alfrescoApi.getInstance());
         }
         return this._contentApi;
     }
 
-    constructor(private alfrescoApi: AlfrescoApiService) {}
+    constructor (private alfrescoApi: AlfrescoApiService) {}
 
     /**
      * Get content URL for the given nodeId and specific version.
@@ -40,7 +40,7 @@ export class ContentVersionService {
      * @param attachment Retrieve content as an attachment for download
      * @returns The URL address pointing to the content.
      */
-    getVersionContentUrl(nodeId: string, versionId: string, attachment?: boolean): Observable<string> {
+    getVersionContentUrl (nodeId: string, versionId: string, attachment?: boolean): Observable<string> {
         let nodeDownloadUrl = this.contentApi.getContentUrl(nodeId, attachment);
         nodeDownloadUrl = nodeDownloadUrl.replace('/content', '/versions/' + versionId + '/content');
 

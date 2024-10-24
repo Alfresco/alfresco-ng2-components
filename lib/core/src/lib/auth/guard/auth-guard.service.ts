@@ -26,10 +26,10 @@ import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AuthGuardService {
-    constructor(
+    constructor (
         private authenticationService: AuthenticationService,
         private basicAlfrescoAuthService: BasicAlfrescoAuthService,
         private oidcAuthenticationService: OidcAuthenticationService,
@@ -39,11 +39,11 @@ export class AuthGuardService {
         private storageService: StorageService
     ) {}
 
-    get withCredentials(): boolean {
+    get withCredentials (): boolean {
         return this.appConfigService.get<boolean>('auth.withCredentials', false);
     }
 
-    async redirectSSOSuccessURL(): Promise<boolean> {
+    async redirectSSOSuccessURL (): Promise<boolean> {
         const redirectFragment = this.storageService.getItem('loginFragment');
 
         if (redirectFragment && this.getLoginRoute() !== redirectFragment) {
@@ -55,16 +55,16 @@ export class AuthGuardService {
         return true;
     }
 
-    isLoginFragmentPresent(): boolean {
+    isLoginFragmentPresent (): boolean {
         return !!this.storageService.getItem('loginFragment');
     }
 
-    async redirectToUrl(url: string): Promise<boolean> {
+    async redirectToUrl (url: string): Promise<boolean> {
         let urlToRedirect = `/${this.getLoginRoute()}`;
 
         if (!this.authenticationService.isOauth()) {
             this.basicAlfrescoAuthService.setRedirect({
-                provider: this.getProvider(),
+                "provider": this.getProvider(),
                 url
             });
 
@@ -84,30 +84,30 @@ export class AuthGuardService {
         return false;
     }
 
-    async navigate(url: string): Promise<boolean> {
+    async navigate (url: string): Promise<boolean> {
         this.dialog.closeAll();
         await this.router.navigateByUrl(this.router.parseUrl(url));
         return false;
     }
 
-    private getOauthConfig(): OauthConfigModel {
+    private getOauthConfig (): OauthConfigModel {
         return this.appConfigService?.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
     }
 
-    private getLoginRoute(): string {
+    private getLoginRoute (): string {
         return this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE, 'login');
     }
 
-    private getProvider(): string {
+    private getProvider (): string {
         return this.appConfigService.get<string>(AppConfigValues.PROVIDERS, 'ALL');
     }
 
-    isOAuthWithoutSilentLogin(): boolean {
+    isOAuthWithoutSilentLogin (): boolean {
         const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
         return this.authenticationService.isOauth() && !!oauth && !oauth.silentLogin;
     }
 
-    isSilentLogin(): boolean {
+    isSilentLogin (): boolean {
         const oauth = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
 
         return this.authenticationService.isOauth() && oauth && oauth.silentLogin;

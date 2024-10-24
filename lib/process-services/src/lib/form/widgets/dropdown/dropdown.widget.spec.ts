@@ -43,14 +43,14 @@ describe('DropdownWidgetComponent', () => {
     let loader: HarnessLoader;
 
     const fakeOptionList: FormFieldOption[] = [
-        { id: 'opt_1', name: 'option_1' },
-        { id: 'opt_2', name: 'option_2' },
-        { id: 'opt_3', name: 'option_3' }
+        { "id": 'opt_1', "name": 'option_1' },
+        { "id": 'opt_2', "name": 'option_2' },
+        { "id": 'opt_3', "name": 'option_3' }
     ];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, DropdownWidgetComponent]
+            "imports": [CoreTestingModule, DropdownWidgetComponent]
         });
         fixture = TestBed.createComponent(DropdownWidgetComponent);
         widget = fixture.componentInstance;
@@ -69,7 +69,7 @@ describe('DropdownWidgetComponent', () => {
         widget.ngOnInit();
         expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
 
-        widget.field = new FormFieldModel(null, { restUrl: null });
+        widget.field = new FormFieldModel(null, { "restUrl": null });
         widget.ngOnInit();
         expect(taskFormService.getRestFieldValues).not.toHaveBeenCalled();
     });
@@ -82,7 +82,7 @@ describe('DropdownWidgetComponent', () => {
         beforeEach(() => {
             getRestFieldValuesSpy = spyOn(taskFormService, 'getRestFieldValues').and.returnValue(of([]));
 
-            widget.field = new FormFieldModel(new FormModel({ taskId }), { id: fieldId, restUrl: '<url>', optionType: 'rest' });
+            widget.field = new FormFieldModel(new FormModel({ taskId }), { "id": fieldId, "restUrl": '<url>', "optionType": 'rest' });
         });
 
         it('should request options from service when form is NOT readonly', () => {
@@ -101,8 +101,8 @@ describe('DropdownWidgetComponent', () => {
     });
 
     it('should NOT display any error when widget is readonly', () => {
-        widget.field = new FormFieldModel(new FormModel({}, undefined, false), { readOnly: true });
-        widget.field.validationSummary = { message: 'Some error occurred' } as ErrorMessageModel;
+        widget.field = new FormFieldModel(new FormModel({}, undefined, false), { "readOnly": true });
+        widget.field.validationSummary = { "message": 'Some error occurred' } as ErrorMessageModel;
 
         widget.ngOnInit();
         fixture.detectChanges();
@@ -111,7 +111,7 @@ describe('DropdownWidgetComponent', () => {
     });
 
     it('should NOT preserve empty option when loading fields', () => {
-        const restFieldValue: FormFieldOption = { id: '1', name: 'Option1' } as FormFieldOption;
+        const restFieldValue: FormFieldOption = { "id": '1', "name": 'Option1' } as FormFieldOption;
         spyOn(taskFormService, 'getRestFieldValues').and.callFake(
             () =>
                 new Observable((observer) => {
@@ -120,14 +120,14 @@ describe('DropdownWidgetComponent', () => {
                 })
         );
 
-        const form = new FormModel({ taskId: '<id>' });
-        const emptyOption: FormFieldOption = { id: 'empty', name: 'Empty' } as FormFieldOption;
+        const form = new FormModel({ "taskId": '<id>' });
+        const emptyOption: FormFieldOption = { "id": 'empty', "name": 'Empty' } as FormFieldOption;
         widget.field = new FormFieldModel(form, {
-            id: '<id>',
-            restUrl: '/some/url/address',
-            optionType: 'rest',
-            hasEmptyValue: true,
-            options: [emptyOption]
+            "id": '<id>',
+            "restUrl": '/some/url/address',
+            "optionType": 'rest',
+            "hasEmptyValue": true,
+            "options": [emptyOption]
         });
         widget.ngOnInit();
 
@@ -138,10 +138,10 @@ describe('DropdownWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                id: 'dropdown-id',
-                type: FormFieldTypes.DROPDOWN,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "id": 'dropdown-id',
+                "type": FormFieldTypes.DROPDOWN,
+                "required": true
             });
 
             widget.ngOnInit();
@@ -160,7 +160,7 @@ describe('DropdownWidgetComponent', () => {
         it('should be invalid if no default option after interaction', async () => {
             expect(element.querySelector('.adf-invalid')).toBeFalsy();
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown-id' }));
             await dropdown.focus();
             await dropdown.blur();
 
@@ -186,15 +186,15 @@ describe('DropdownWidgetComponent', () => {
             beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(taskFormService, 'getRestFieldValues').and.callFake(() => of(fakeOptionList));
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown',
-                    readOnly: false,
-                    restUrl: 'fake-rest-url',
-                    optionType: 'rest'
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                    "id": 'dropdown-id',
+                    "name": 'date-name',
+                    "type": 'dropdown',
+                    "readOnly": false,
+                    "restUrl": 'fake-rest-url',
+                    "optionType": 'rest'
                 });
-                widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                widget.field.emptyOption = { "id": 'empty', "name": 'Choose one...' };
                 widget.field.isVisible = true;
                 widget.ngOnInit();
 
@@ -202,7 +202,7 @@ describe('DropdownWidgetComponent', () => {
             });
 
             it('should show visible dropdown widget', async () => {
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown-id' }));
                 await dropdown.open();
                 const options = await dropdown.getOptions();
 
@@ -219,7 +219,7 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown-id' }));
                 expect(await dropdown.getValueText()).toBe('option_2');
             });
 
@@ -229,7 +229,7 @@ describe('DropdownWidgetComponent', () => {
 
                 await (await loader.getHarness(MatSelectHarness)).open();
 
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown-id' }));
                 expect(await dropdown.getValueText()).toBe('Choose one...');
                 expect(await widget.field.value).toBe('empty');
             });
@@ -239,21 +239,21 @@ describe('DropdownWidgetComponent', () => {
             beforeEach(() => {
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(processDefinitionService, 'getRestFieldValuesByProcessId').and.callFake(() => of(fakeOptionList));
-                widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown',
-                    readOnly: false,
-                    restUrl: 'fake-rest-url',
-                    optionType: 'rest'
+                widget.field = new FormFieldModel(new FormModel({ "processDefinitionId": 'fake-process-id' }), {
+                    "id": 'dropdown-id',
+                    "name": 'date-name',
+                    "type": 'dropdown',
+                    "readOnly": false,
+                    "restUrl": 'fake-rest-url',
+                    "optionType": 'rest'
                 });
-                widget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                widget.field.emptyOption = { "id": 'empty', "name": 'Choose one...' };
                 widget.field.isVisible = true;
                 fixture.detectChanges();
             });
 
             it('should show visible dropdown widget', async () => {
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown-id' }));
                 await dropdown.open();
                 const options = await dropdown.getOptions();
 
@@ -270,7 +270,7 @@ describe('DropdownWidgetComponent', () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown-id' }));
                 expect(await dropdown.getValueText()).toBe('option_2');
             });
 
@@ -279,18 +279,18 @@ describe('DropdownWidgetComponent', () => {
                 widget.ngOnInit();
                 await (await loader.getHarness(MatSelectHarness)).open();
 
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown-id' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown-id' }));
                 expect(await dropdown.getValueText()).toBe('Choose one...');
                 expect(await widget.field.value).toBe('empty');
             });
 
             it('should be disabled when the field is readonly', async () => {
-                widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown',
-                    readOnly: true,
-                    restUrl: 'fake-rest-url'
+                widget.field = new FormFieldModel(new FormModel({ "processDefinitionId": 'fake-process-id' }), {
+                    "id": 'dropdown-id',
+                    "name": 'date-name',
+                    "type": 'dropdown',
+                    "readOnly": true,
+                    "restUrl": 'fake-rest-url'
                 });
                 widget.ngOnInit();
 
@@ -303,13 +303,13 @@ describe('DropdownWidgetComponent', () => {
             });
 
             it('should show the option value when the field is readonly', async () => {
-                widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'readonly',
-                    value: 'FakeValue',
-                    readOnly: true,
-                    params: { field: { name: 'date-name', type: 'dropdown' } }
+                widget.field = new FormFieldModel(new FormModel({ "processDefinitionId": 'fake-process-id' }), {
+                    "id": 'dropdown-id',
+                    "name": 'date-name',
+                    "type": 'readonly',
+                    "value": 'FakeValue',
+                    "readOnly": true,
+                    "params": { "field": { "name": 'date-name', "type": 'dropdown' } }
                 });
                 widget.ngOnInit();
 

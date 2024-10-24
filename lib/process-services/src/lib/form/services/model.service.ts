@@ -22,32 +22,31 @@ import { ModelsApi } from '@alfresco/js-api';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ModelService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     private _modelsApi: ModelsApi;
-    get modelsApi(): ModelsApi {
+    get modelsApi (): ModelsApi {
         this._modelsApi = this._modelsApi ?? new ModelsApi(this.apiService.getInstance());
         return this._modelsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Create a Form.
-     *
      * @param formName Name of the new form
      * @returns The new form
      */
-    createForm(formName: string): Observable<any> {
+    createForm (formName: string): Observable<any> {
         const dataModel = {
-            name: formName,
-            description: '',
-            modelType: 2,
-            stencilSet: 0
+            "name": formName,
+            "description": '',
+            "modelType": 2,
+            "stencilSet": 0
         };
 
         return from(this.modelsApi.createModel(dataModel));
@@ -55,12 +54,11 @@ export class ModelService {
 
     /**
      * Gets all the forms.
-     *
      * @returns List of form models
      */
-    getForms(): Observable<any> {
+    getForms (): Observable<any> {
         const opts = {
-            modelType: 2
+            "modelType": 2
         };
 
         return from(this.modelsApi.getModels(opts)).pipe(
@@ -71,23 +69,21 @@ export class ModelService {
 
     /**
      * Creates a JSON array representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
-    toJsonArray(res: any) {
+    toJsonArray (res: any) {
         return res?.data || [];
     }
 
     /**
      * Searches for a form by name.
-     *
      * @param name The form name to search for
      * @returns Form model(s) matching the search name
      */
-    searchFrom(name: string): Observable<any> {
+    searchFrom (name: string): Observable<any> {
         const opts = {
-            modelType: 2
+            "modelType": 2
         };
 
         return from(this.modelsApi.getModels(opts)).pipe(
@@ -98,15 +94,14 @@ export class ModelService {
 
     /**
      * Gets the form definition with a given name.
-     *
      * @param name The form name
      * @returns Form definition
      */
-    getFormDefinitionByName(name: string): Observable<any> {
+    getFormDefinitionByName (name: string): Observable<any> {
         const opts = {
-            filter: 'myReusableForms',
-            filterText: name,
-            modelType: 2
+            "filter": 'myReusableForms',
+            "filterText": name,
+            "modelType": 2
         };
 
         return from(this.modelsApi.getModels(opts)).pipe(
@@ -117,11 +112,10 @@ export class ModelService {
 
     /**
      * Gets the ID of a form.
-     *
      * @param form Object representing a form
      * @returns ID string
      */
-    getFormId(form: any): string {
+    getFormId (form: any): string {
         let result = null;
 
         if (form?.data?.length > 0) {
@@ -132,11 +126,10 @@ export class ModelService {
     }
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */
-    private handleError(error: any): Observable<any> {
+    private handleError (error: any): Observable<any> {
         let errMsg = ModelService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : ModelService.GENERIC_ERROR_MESSAGE;

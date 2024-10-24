@@ -27,9 +27,9 @@ import { IdentityUserService } from '../../../../people/services/identity-user.s
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
-    selector: 'people-cloud-widget',
-    templateUrl: './people-cloud.widget.html',
-    host: {
+    "selector": 'people-cloud-widget',
+    "templateUrl": './people-cloud.widget.html',
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -40,7 +40,7 @@ import { IdentityUserService } from '../../../../people/services/identity-user.s
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class PeopleCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
@@ -56,11 +56,11 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     groupsRestriction: string[];
     validate = false;
 
-    constructor(formService: FormService, private identityUserService: IdentityUserService) {
+    constructor (formService: FormService, private identityUserService: IdentityUserService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field) {
             this.roles = this.field.roles;
             this.mode = this.field.optionType as ComponentSelectionMode;
@@ -70,7 +70,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
             this.validate = this.field.readOnly ? false : true;
         }
 
-        this.search = new UntypedFormControl({value: '', disabled: this.field.readOnly}, []);
+        this.search = new UntypedFormControl({"value": '', "disabled": this.field.readOnly}, []);
 
         this.search.statusChanges
             .pipe(
@@ -99,17 +99,17 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    onChangedUser(users: IdentityUserModel[]): void {
+    onChangedUser (users: IdentityUserModel[]): void {
         this.field.value = users?.length ? [...users] : null;
         this.onFieldChanged(this.field);
     }
 
-    isMultipleMode(): boolean {
+    isMultipleMode (): boolean {
         return this.mode === 'multiple';
     }
 }

@@ -23,7 +23,7 @@ import { map, catchError } from 'rxjs/operators';
 import { CustomModelApi } from '@alfresco/js-api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class EcmModelService {
     public static MODEL_NAMESPACE: string = 'activitiForms';
@@ -33,14 +33,14 @@ export class EcmModelService {
     error = new EventEmitter<any>();
 
     private _customModelApi: CustomModelApi;
-    get customModelApi(): CustomModelApi {
+    get customModelApi (): CustomModelApi {
         this._customModelApi = this._customModelApi ?? new CustomModelApi(this.apiService.getInstance());
         return this._customModelApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
-    public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
+    public createEcmTypeForActivitiForm (formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {
             this.searchActivitiEcmModel().subscribe(
                 (model) => {
@@ -61,13 +61,13 @@ export class EcmModelService {
         });
     }
 
-    searchActivitiEcmModel() {
+    searchActivitiEcmModel () {
         return this.getEcmModels().pipe(
             map((ecmModels: any) => ecmModels.list.entries.find((model) => model.entry.name === EcmModelService.MODEL_NAME))
         );
     }
 
-    createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
+    createActivitiEcmModel (formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {
             this.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(
                 () => {
@@ -86,7 +86,7 @@ export class EcmModelService {
         });
     }
 
-    saveFomType(formName: string, form: FormModel): Observable<any> {
+    saveFomType (formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {
             this.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                 (ecmType) => {
@@ -105,7 +105,7 @@ export class EcmModelService {
         });
     }
 
-    public createEcmTypeWithProperties(formName: string, form: FormModel): Observable<any> {
+    public createEcmTypeWithProperties (formName: string, form: FormModel): Observable<any> {
         return new Observable((observer) => {
             this.createEcmType(formName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(
                 (typeCreated) => {
@@ -122,41 +122,41 @@ export class EcmModelService {
         });
     }
 
-    public searchEcmType(typeName: string, modelName: string): Observable<any> {
+    public searchEcmType (typeName: string, modelName: string): Observable<any> {
         return this.getEcmType(modelName).pipe(
             map((customTypes: any) => customTypes.list.entries.find((type) => type.entry.prefixedName === typeName || type.entry.title === typeName))
         );
     }
 
-    public activeEcmModel(modelName: string): Observable<any> {
+    public activeEcmModel (modelName: string): Observable<any> {
         return from(this.customModelApi.activateCustomModel(modelName)).pipe(
             map(this.toJson),
             catchError((err) => this.handleError(err))
         );
     }
 
-    public createEcmModel(modelName: string, nameSpace: string): Observable<any> {
+    public createEcmModel (modelName: string, nameSpace: string): Observable<any> {
         return from(this.customModelApi.createCustomModel('DRAFT', '', modelName, modelName, nameSpace)).pipe(
             map(this.toJson),
             catchError((err) => this.handleError(err))
         );
     }
 
-    public getEcmModels(): Observable<any> {
+    public getEcmModels (): Observable<any> {
         return from(this.customModelApi.getAllCustomModel()).pipe(
             map(this.toJson),
             catchError((err) => this.handleError(err))
         );
     }
 
-    public getEcmType(modelName: string): Observable<any> {
+    public getEcmType (modelName: string): Observable<any> {
         return from(this.customModelApi.getAllCustomType(modelName)).pipe(
             map(this.toJson),
             catchError((err) => this.handleError(err))
         );
     }
 
-    public createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
+    public createEcmType (typeName: string, modelName: string, parentType: string): Observable<any> {
         const name = this.cleanNameType(typeName);
 
         return from(this.customModelApi.createCustomType(modelName, name, parentType, typeName, '')).pipe(
@@ -165,7 +165,7 @@ export class EcmModelService {
         );
     }
 
-    public addPropertyToAType(modelName: string, typeName: string, formFields: any) {
+    public addPropertyToAType (modelName: string, typeName: string, formFields: any) {
         const name = this.cleanNameType(typeName);
 
         const properties = [];
@@ -173,13 +173,13 @@ export class EcmModelService {
             for (const key in formFields.values) {
                 if (key) {
                     properties.push({
-                        name: key,
-                        title: key,
-                        description: key,
-                        dataType: 'd:text',
-                        multiValued: false,
-                        mandatory: false,
-                        mandatoryEnforced: false
+                        "name": key,
+                        "title": key,
+                        "description": key,
+                        "dataType": 'd:text',
+                        "multiValued": false,
+                        "mandatory": false,
+                        "mandatoryEnforced": false
                     });
                 }
             }
@@ -191,7 +191,7 @@ export class EcmModelService {
         );
     }
 
-    cleanNameType(name: string): string {
+    cleanNameType (name: string): string {
         let cleanName = name;
         if (name.indexOf(':') !== -1) {
             cleanName = name.split(':')[1];
@@ -199,11 +199,11 @@ export class EcmModelService {
         return cleanName.replace(/[^a-zA-Z ]/g, '');
     }
 
-    toJson(res: any) {
+    toJson (res: any) {
         return res || {};
     }
 
-    private handleError(err: any): any {
+    private handleError (err: any): any {
         this.error.next(err);
     }
 }

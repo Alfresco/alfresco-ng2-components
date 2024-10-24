@@ -27,10 +27,10 @@ import { ContentActionListComponent } from './content-action-list.component';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'content-action',
-    standalone: true,
-    template: '',
-    providers: [DocumentActionsService, FolderActionsService]
+    "selector": 'content-action',
+    "standalone": true,
+    "template": '',
+    "providers": [DocumentActionsService, FolderActionsService]
 })
 export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
     /** The title of the action as shown in the menu. */
@@ -92,13 +92,13 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
 
     private subscriptions: Subscription[] = [];
 
-    constructor(
+    constructor (
         private list: ContentActionListComponent,
         private documentActions: DocumentActionsService,
         private folderActions: FolderActionsService
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.target === ContentActionTarget.All) {
             this.folderActionModel = this.generateAction(ContentActionTarget.Folder);
             this.documentActionModel = this.generateAction(ContentActionTarget.Document);
@@ -107,7 +107,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes.visible && !changes.visible.firstChange) {
             if (this.documentActionModel) {
                 this.documentActionModel.visible = changes.visible.currentValue;
@@ -127,7 +127,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
 
@@ -142,29 +142,29 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    register(model: ContentActionModel): boolean {
+    register (model: ContentActionModel): boolean {
         if (this.list) {
             return this.list.registerAction(model);
         }
         return false;
     }
 
-    unregister(model: ContentActionModel): boolean {
+    unregister (model: ContentActionModel): boolean {
         if (this.list) {
             return this.list.unregisterAction(model);
         }
         return false;
     }
 
-    private generateAction(target: string): ContentActionModel {
+    private generateAction (target: string): ContentActionModel {
         const model = new ContentActionModel({
-            title: this.title,
-            icon: this.icon,
-            permission: this.permission,
-            disableWithNoPermission: this.disableWithNoPermission,
+            "title": this.title,
+            "icon": this.icon,
+            "permission": this.permission,
+            "disableWithNoPermission": this.disableWithNoPermission,
             target,
-            disabled: this.disabled,
-            visible: this.visible
+            "disabled": this.disabled,
+            "visible": this.visible
         });
         if (this.handler) {
             model.handler = this.getSystemHandler(target, this.handler);
@@ -180,7 +180,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
         return model;
     }
 
-    getSystemHandler(target: string, name: string): ContentActionHandler {
+    getSystemHandler (target: string, name: string): ContentActionHandler {
         if (target) {
             target = target.toLowerCase();
 

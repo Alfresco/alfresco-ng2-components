@@ -23,11 +23,11 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-card-view-boolitem',
-    standalone: true,
-    imports: [CommonModule, MatCheckboxModule, TranslateModule],
-    templateUrl: './card-view-boolitem.component.html',
-    styles: [
+    "selector": 'adf-card-view-boolitem',
+    "standalone": true,
+    "imports": [CommonModule, MatCheckboxModule, TranslateModule],
+    "templateUrl": './card-view-boolitem.component.html',
+    "styles": [
         `
             .adf-property-value {
                 padding: 15px 0;
@@ -39,7 +39,7 @@ export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemMode
     @Input()
     editable: boolean;
 
-    changed(change: MatCheckboxChange) {
+    changed (change: MatCheckboxChange) {
         this.cardViewUpdateService.update({ ...this.property } as CardViewBoolItemModel, change.checked);
         this.property.value = change.checked;
     }

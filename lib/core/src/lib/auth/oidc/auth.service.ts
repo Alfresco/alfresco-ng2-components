@@ -22,38 +22,51 @@ import { Observable } from 'rxjs';
  * Provide authentication/authorization through OAuth2/OIDC protocol.
  */
 export abstract class AuthService {
-    abstract onLogin: Observable<any>;
+  abstract onLogin: Observable<any>;
 
-    abstract onTokenReceived: Observable<any>;
+  /**
+   * An observable that emits a value when a logout event occurs.
+   * Implement this observable to handle any necessary cleanup or state updates
+   * when a user logs out of the application.
+   */
+  abstract onLogout$: Observable<void>;
 
-    /** Subscribe to whether the user has valid Id/Access tokens.  */
-    abstract authenticated$: Observable<boolean>;
+  abstract onTokenReceived: Observable<any>;
 
-    /** Get whether the user has valid Id/Access tokens. */
-    abstract authenticated: boolean;
+  /**
+   * An abstract observable that emits a boolean value indicating whether the discovery document
+   * has been successfully loaded.
+   */
+  abstract isDiscoveryDocumentLoaded$: Observable<boolean>;
 
-    /** Subscribe to errors reaching the IdP. */
-    abstract idpUnreachable$: Observable<Error>;
+  /** Subscribe to whether the user has valid Id/Access tokens.  */
+  abstract authenticated$: Observable<boolean>;
 
-    /**
-     * Initiate the IdP login flow.
-     */
-    abstract login(currentUrl?: string): Promise<void> | void;
+  /** Get whether the user has valid Id/Access tokens. */
+  abstract authenticated: boolean;
 
-    abstract baseAuthLogin(username: string, password: string): Observable<TokenResponse>;
+  /** Subscribe to errors reaching the IdP. */
+  abstract idpUnreachable$: Observable<Error>;
 
-    /**
-     * Disconnect from IdP.
-     * @returns Promise may be returned depending on implementation
-     */
-    abstract logout(): Promise<void> | void;
+  /**
+   * Initiate the IdP login flow.
+   */
+  abstract login(currentUrl?: string): Promise<void> | void;
 
-    /**
-     * Complete the login flow.
-     *
-     * In browsers, checks URL for auth and stored state. Call this once the application returns from IdP.
-     * @returns Promise, resolve with stored state, reject if unable to reach IdP
-     */
-    abstract loginCallback(loginOptions?: LoginOptions): Promise<string | undefined>;
-    abstract updateIDPConfiguration(...args: any[]): void;
+  abstract baseAuthLogin(username: string, password: string): Observable<TokenResponse> ;
+
+  /**
+   * Disconnect from IdP.
+   * @returns Promise may be returned depending on implementation
+   */
+  abstract logout(): Promise<void> | void;
+
+  /**
+   * Complete the login flow.
+   *
+   * In browsers, checks URL for auth and stored state. Call this once the application returns from IdP.
+   * @returns Promise, resolve with stored state, reject if unable to reach IdP
+   */
+  abstract loginCallback(loginOptions?: LoginOptions): Promise<string | undefined>;
+  abstract updateIDPConfiguration(...args: any[]): void;
 }

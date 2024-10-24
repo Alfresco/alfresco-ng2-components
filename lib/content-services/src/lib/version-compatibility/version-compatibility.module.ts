@@ -20,7 +20,7 @@ import { VersionCompatibilityDirective } from './version-compatibility.directive
 
 /** @deprecated use `VersionCompatibilityDirective` instead */
 @NgModule({
-    imports: [VersionCompatibilityDirective],
-    exports: [VersionCompatibilityDirective]
+    "imports": [VersionCompatibilityDirective],
+    "exports": [VersionCompatibilityDirective]
 })
 export class VersionCompatibilityModule {}

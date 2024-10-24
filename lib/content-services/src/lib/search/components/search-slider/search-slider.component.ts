@@ -28,13 +28,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-search-slider',
-    standalone: true,
-    imports: [CommonModule, MatSliderModule, FormsModule, MatButtonModule, TranslateModule],
-    templateUrl: './search-slider.component.html',
-    styleUrls: ['./search-slider.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-slider' }
+    "selector": 'adf-search-slider',
+    "standalone": true,
+    "imports": [CommonModule, MatSliderModule, FormsModule, MatButtonModule, TranslateModule],
+    "templateUrl": './search-slider.component.html',
+    "styleUrls": ['./search-slider.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-slider' }
 })
 export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
     /** The numeric value represented by the slider. */
@@ -56,7 +56,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
 
     private readonly destroy$ = new Subject<void>();
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.settings) {
             if (Object.prototype.hasOwnProperty.call(this.settings, 'min')) {
                 this.min = this.settings['min'];
@@ -91,47 +91,47 @@ export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    clear() {
+    clear () {
         this.value = this.min || 0;
         if (this.enableChangeUpdate) {
             this.updateQuery(null);
         }
     }
 
-    reset(updateContext = true) {
+    reset (updateContext = true) {
         this.value = this.min || 0;
         this.updateQuery(null, updateContext);
     }
 
-    onChangedHandler() {
+    onChangedHandler () {
         if (this.enableChangeUpdate) {
             this.updateQuery(this.value);
         }
     }
 
-    submitValues() {
+    submitValues () {
         this.updateQuery(this.value);
     }
 
-    hasValidValue() {
+    hasValidValue () {
         return !!this.value;
     }
 
-    getCurrentValue() {
+    getCurrentValue () {
         return this.value;
     }
 
-    setValue(value: any) {
+    setValue (value: any) {
         this.value = value;
         this.submitValues();
     }
 
-    private updateQuery(value: number | null, updateContext = true) {
+    private updateQuery (value: number | null, updateContext = true) {
         this.context.filterRawParams[this.id] = value;
         this.displayValue$.next(this.value ? `${this.value} ${this.settings.unit ?? ''}` : '');
         if (this.id && this.context && this.settings && this.settings.field) {

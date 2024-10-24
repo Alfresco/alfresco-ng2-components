@@ -30,7 +30,7 @@ export const CONTENT_VERSION_DIRECTIVES = [
 
 /** @deprecated use `...CONTENT_VERSION_DIRECTIVES` instead */
 @NgModule({
-    imports: [...CONTENT_VERSION_DIRECTIVES],
-    exports: [...CONTENT_VERSION_DIRECTIVES]
+    "imports": [...CONTENT_VERSION_DIRECTIVES],
+    "exports": [...CONTENT_VERSION_DIRECTIVES]
 })
 export class VersionManagerModule {}

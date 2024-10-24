@@ -25,17 +25,17 @@ import { TaskFormCloudComponent } from './components/task-form-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
-    imports: [
+    "imports": [
         CoreModule,
         CommonModule,
         MaterialModule,
         FormCloudModule,
         TaskDirectiveModule
     ],
-    declarations: [
+    "declarations": [
         TaskFormCloudComponent
     ],
-    exports: [
+    "exports": [
         TaskFormCloudComponent
     ]
 })

@@ -39,10 +39,9 @@ describe('TaskAssignmentFilterComponent', () => {
 
     /**
      * select the assignment type
-     *
      * @param type type to select
      */
-    function selectAssignmentType(type: AssignmentType) {
+    function selectAssignmentType (type: AssignmentType) {
         const assignmentTypeChangeSpy = spyOn(component.assignmentTypeChange, 'emit');
 
         const assignmentTypeSelect: DebugElement = fixture.debugElement.query(By.css(`[data-automation-id="adf-task-assignment-filter-select"]`));
@@ -58,7 +57,7 @@ describe('TaskAssignmentFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, GroupCloudModule, TaskFiltersCloudModule]
+            "imports": [ProcessServiceCloudTestingModule, GroupCloudModule, TaskFiltersCloudModule]
         });
     });
 
@@ -68,11 +67,11 @@ describe('TaskAssignmentFilterComponent', () => {
             component = fixture.componentInstance;
             identityUserService = TestBed.inject(IdentityUserService);
             component.taskFilterProperty = {
-                key: 'assignment',
-                label: 'mock-filter',
-                value: {},
-                type: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
+                "key": 'assignment',
+                "label": 'mock-filter',
+                "value": {},
+                "type": 'assignment',
+                "attributes": { "assignedUsers": 'assignedUsers', "candidateGroups": 'candidateGroups' }
             };
             loader = TestbedHarnessEnvironment.loader(fixture);
             fixture.detectChanges();
@@ -81,7 +80,7 @@ describe('TaskAssignmentFilterComponent', () => {
         afterEach(() => fixture.destroy());
 
         it('should display all available assignment types', async () => {
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '[data-automation-id="adf-task-assignment-filter-select"]' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '[data-automation-id="adf-task-assignment-filter-select"]' }));
             await dropdown.open();
 
             const assignmentTypeOptions = await dropdown.getOptions();
@@ -138,21 +137,21 @@ describe('TaskAssignmentFilterComponent', () => {
 
         it('should CREATED status set assignment type to UNASSIGNED', () => {
             const createdStatusChange = new SimpleChange(null, TaskStatusFilter.CREATED, true);
-            component.ngOnChanges({ status: createdStatusChange });
+            component.ngOnChanges({ "status": createdStatusChange });
 
             expect(component.assignmentType).toEqual(AssignmentType.UNASSIGNED);
         });
 
         it('should ASSIGNED status set assignment type to ASSIGNED_TO', () => {
             const createdStatusChange = new SimpleChange(null, TaskStatusFilter.ASSIGNED, true);
-            component.ngOnChanges({ status: createdStatusChange });
+            component.ngOnChanges({ "status": createdStatusChange });
 
             expect(component.assignmentType).toEqual(AssignmentType.ASSIGNED_TO);
         });
 
         it('should ALL status set assignment type to NONE', () => {
             const createdStatusChange = new SimpleChange(null, TaskStatusFilter.ALL, true);
-            component.ngOnChanges({ status: createdStatusChange });
+            component.ngOnChanges({ "status": createdStatusChange });
 
             expect(component.assignmentType).toEqual(AssignmentType.NONE);
         });
@@ -168,11 +167,11 @@ describe('TaskAssignmentFilterComponent', () => {
 
         it('should set assignment type to ASSIGNED_TO if initial assignedUsers exists', () => {
             component.taskFilterProperty = {
-                key: 'assignment',
-                label: 'mock-filter',
-                value: { assignedUsers: mockFoodUsers },
-                type: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
+                "key": 'assignment',
+                "label": 'mock-filter',
+                "value": { "assignedUsers": mockFoodUsers },
+                "type": 'assignment',
+                "attributes": { "assignedUsers": 'assignedUsers', "candidateGroups": 'candidateGroups' }
             };
             fixture.detectChanges();
 
@@ -181,11 +180,11 @@ describe('TaskAssignmentFilterComponent', () => {
 
         it('should set assignment type to CANDIDATE_GROUPS if initial candidateGroups exists', () => {
             component.taskFilterProperty = {
-                key: 'assignment',
-                label: 'mock-filter',
-                value: { candidateGroups: mockFoodGroups },
-                type: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
+                "key": 'assignment',
+                "label": 'mock-filter',
+                "value": { "candidateGroups": mockFoodGroups },
+                "type": 'assignment',
+                "attributes": { "assignedUsers": 'assignedUsers', "candidateGroups": 'candidateGroups' }
             };
             fixture.detectChanges();
 
@@ -194,11 +193,11 @@ describe('TaskAssignmentFilterComponent', () => {
 
         it('should set assignment type to NONE if initial value is empty', () => {
             component.taskFilterProperty = {
-                key: 'assignment',
-                label: 'mock-filter',
-                value: {},
-                type: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups' }
+                "key": 'assignment',
+                "label": 'mock-filter',
+                "value": {},
+                "type": 'assignment',
+                "attributes": { "assignedUsers": 'assignedUsers', "candidateGroups": 'candidateGroups' }
             };
             fixture.detectChanges();
 

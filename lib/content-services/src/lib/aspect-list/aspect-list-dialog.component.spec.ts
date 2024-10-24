@@ -30,41 +30,41 @@ import { AspectListComponent } from './aspect-list.component';
 
 const aspectListMock: AspectEntry[] = [
     {
-        entry: {
-            parentId: 'frs:aspectZero',
-            id: 'frs:AspectOne',
-            description: 'First Aspect with random description',
-            title: 'FirstAspect',
-            properties: [
+        "entry": {
+            "parentId": 'frs:aspectZero',
+            "id": 'frs:AspectOne',
+            "description": 'First Aspect with random description',
+            "title": 'FirstAspect',
+            "properties": [
                 {
-                    id: 'channelPassword',
-                    title: 'The authenticated channel password',
-                    dataType: 'd:encrypted'
+                    "id": 'channelPassword',
+                    "title": 'The authenticated channel password',
+                    "dataType": 'd:encrypted'
                 },
                 {
-                    id: 'channelUsername',
-                    title: 'The authenticated channel username',
-                    dataType: 'd:encrypted'
+                    "id": 'channelUsername',
+                    "title": 'The authenticated channel username',
+                    "dataType": 'd:encrypted'
                 }
             ]
         }
     },
     {
-        entry: {
-            parentId: 'frs:AspectZer',
-            id: 'frs:SecondAspect',
-            description: 'Second Aspect description',
-            title: 'SecondAspect',
-            properties: [
+        "entry": {
+            "parentId": 'frs:AspectZer',
+            "id": 'frs:SecondAspect',
+            "description": 'Second Aspect description',
+            "title": 'SecondAspect',
+            "properties": [
                 {
-                    id: 'assetId',
-                    title: 'Published Asset Id',
-                    dataType: 'd:text'
+                    "id": 'assetId',
+                    "title": 'Published Asset Id',
+                    "dataType": 'd:text'
                 },
                 {
-                    id: 'assetUrl',
-                    title: 'Published Asset URL',
-                    dataType: 'd:text'
+                    "id": 'assetUrl',
+                    "title": 'Published Asset URL',
+                    "dataType": 'd:text'
                 }
             ]
         }
@@ -73,21 +73,21 @@ const aspectListMock: AspectEntry[] = [
 
 const customAspectListMock: AspectEntry[] = [
     {
-        entry: {
-            parentId: 'cst:customAspect',
-            id: 'cst:customAspect',
-            description: 'Custom Aspect with random description',
-            title: 'CustomAspect',
-            properties: [
+        "entry": {
+            "parentId": 'cst:customAspect',
+            "id": 'cst:customAspect',
+            "description": 'Custom Aspect with random description',
+            "title": 'CustomAspect',
+            "properties": [
                 {
-                    id: 'channelPassword',
-                    title: 'The authenticated channel password',
-                    dataType: 'd:propA'
+                    "id": 'channelPassword',
+                    "title": 'The authenticated channel password',
+                    "dataType": 'd:propA'
                 },
                 {
-                    id: 'channelUsername',
-                    title: 'The authenticated channel username',
-                    dataType: 'd:propB'
+                    "id": 'channelUsername',
+                    "title": 'The authenticated channel username',
+                    "dataType": 'd:propB'
                 }
             ]
         }
@@ -100,28 +100,28 @@ describe('AspectListDialogComponent', () => {
     let nodeService: NodesApiService;
     let data: AspectListDialogComponentData;
     const event = new KeyboardEvent('keydown', {
-        bubbles: true,
-        keyCode: 27
+        "bubbles": true,
+        "keyCode": 27
     } as KeyboardEventInit);
 
     beforeEach(async () => {
         data = {
-            title: 'Title',
-            description: 'Description that can be longer or shorter',
-            overTableMessage: 'Over here',
-            select: new Subject<string[]>(),
-            excludedAspects: []
+            "title": 'Title',
+            "description": 'Description that can be longer or shorter',
+            "overTableMessage": 'Over here',
+            "select": new Subject<string[]>(),
+            "excludedAspects": []
         };
         await TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule],
-            providers: [
-                { provide: MAT_DIALOG_DATA, useValue: data },
+            "imports": [ContentTestingModule, MatDialogModule],
+            "providers": [
+                { "provide": MAT_DIALOG_DATA, "useValue": data },
                 {
-                    provide: MatDialogRef,
-                    useValue: {
-                        keydownEvents: () => of(event),
-                        backdropClick: () => of(null),
-                        close: jasmine.createSpy('close')
+                    "provide": MatDialogRef,
+                    "useValue": {
+                        "keydownEvents": () => of(event),
+                        "backdropClick": () => of(null),
+                        "close": jasmine.createSpy('close')
                     }
                 }
             ]
@@ -251,7 +251,7 @@ describe('AspectListDialogComponent', () => {
             spyOn(aspectListService, 'getVisibleAspects').and.returnValue(['frs:AspectOne']);
             spyOn(aspectListService, 'getCustomAspects').and.returnValue(of(customAspectListMock));
             spyOn(nodeService, 'getNode').and.returnValue(
-                of(new Node({ id: 'fake-node-id', aspectNames: ['frs:AspectOne', 'cst:customAspect'] })).pipe(delay(0))
+                of(new Node({ "id": 'fake-node-id', "aspectNames": ['frs:AspectOne', 'cst:customAspect'] })).pipe(delay(0))
             );
             fixture = TestBed.createComponent(AspectListDialogComponent);
             fixture.detectChanges();

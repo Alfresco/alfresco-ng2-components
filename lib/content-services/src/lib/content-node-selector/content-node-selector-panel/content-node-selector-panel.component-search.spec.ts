@@ -32,18 +32,18 @@ import { SitesService } from '../../common/services/sites.service';
 import { NodesApiService } from '../../common/services/nodes-api.service';
 
 const fakeResultSetPaging: ResultSetPaging = {
-    list: {
-        pagination: {
-            totalItems: 1
+    "list": {
+        "pagination": {
+            "totalItems": 1
         },
-        entries: [
+        "entries": [
             {
-                entry: {
-                    id: '123',
-                    name: 'MyFolder',
-                    isFile: false,
-                    isFolder: true,
-                    nodeType: 'mock'
+                "entry": {
+                    "id": '123',
+                    "name": 'MyFolder',
+                    "isFile": false,
+                    "isFolder": true,
+                    "nodeType": 'mock'
                 }
             }
         ]
@@ -57,7 +57,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
     let nodeService: NodesApiService;
     let sitesService: SitesService;
     let searchSpy: jasmine.Spy;
-    const fakeNodeEntry = new Node({ id: 'fakeId' });
+    const fakeNodeEntry = new Node({ "id": 'fakeId' });
     const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
     let searchQueryBuilderService: SearchQueryBuilderService;
 
@@ -75,8 +75,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
     });
 
@@ -95,18 +95,18 @@ describe('ContentNodeSelectorPanelComponent', () => {
             spyOn(nodeService, 'getNode').and.returnValue(
                 of(
                     new Node({
-                        id: 'fake-node',
-                        path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] }
+                        "id": 'fake-node',
+                        "path": { "elements": [{ "nodeType": 'st:site', "name": 'fake-site' }] }
                     })
                 )
             );
             searchSpy = spyOn(searchQueryBuilderService, 'execute');
             const fakeSite = new SiteEntry({
-                entry: {
-                    id: 'fake-site',
-                    guid: 'fake-site',
-                    title: 'fake-site',
-                    visibility: 'visible'
+                "entry": {
+                    "id": 'fake-site',
+                    "guid": 'fake-site',
+                    "title": 'fake-site',
+                    "visibility": 'visible'
                 }
             });
             spyOn(sitesService, 'getSite').and.returnValue(of(fakeSite));
@@ -120,7 +120,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy: jasmine.Spy;
             let customResourcesService: CustomResourcesService;
-            const entry: Node = { id: 'fakeid' } as Node;
+            const entry: Node = { "id": 'fakeid' } as Node;
 
             beforeEach(() => {
                 const documentListService = TestBed.inject(DocumentListService);
@@ -131,16 +131,16 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(documentListService, 'getFolder').and.returnValue(
                     of(
                         new NodePaging({
-                            list: {
-                                pagination: {},
-                                entries: [],
-                                source: new Node()
+                            "list": {
+                                "pagination": {},
+                                "entries": [],
+                                "source": new Node()
                             }
                         })
                     )
                 );
 
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ "list": new SitePagingList({ "entries": [] }) })));
 
                 customResourcesService = TestBed.inject(CustomResourcesService);
                 getCorrespondingNodeIdsSpy = spyOn(customResourcesService, 'getCorrespondingNodeIds').and.callFake((id) => {
@@ -221,7 +221,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 const expectedRequest = mockSearchRequest;
                 expectedRequest.filterQueries.push({
-                    query: `TYPE:'cm:folder' OR TYPE:'cm:content'`
+                    "query": `TYPE:'cm:folder' OR TYPE:'cm:content'`
                 });
 
                 tick(debounceSearch);
@@ -241,9 +241,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should update the breadcrumb when changing to a custom site', async () => {
-                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                component.documentList.folderNode = { "id": 'fakeNodeId', "isFolder": true, "path": {} } as Node;
 
-                component.siteChanged({ entry: { guid: '-mysites-', title: 'My Sites' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": '-mysites-', "title": 'My Sites' } } as SiteEntry);
 
                 expect(component.breadcrumbFolderTitle).toBe('My Sites');
             });
@@ -255,18 +255,18 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(searchSpy.calls.count()).toBe(1);
 
-                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": 'namek' } } as SiteEntry);
 
                 const expectedRequest = mockSearchRequest;
-                expectedRequest.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/namek'` }];
+                expectedRequest.filterQueries = [{ "query": `ANCESTOR:'workspace://SpacesStore/namek'` }];
 
                 expect(searchSpy.calls.count()).toBe(2);
                 expect(searchSpy).toHaveBeenCalledWith(false, expectedRequest);
             }));
 
             it('should create the query with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
-                component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
-                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                component.dropdownSiteList = { "list": { "entries": [{ "entry": { "guid": '-sites-' } }, { "entry": { "guid": 'namek' } }] } } as SitePaging;
+                component.documentList.folderNode = { "id": 'fakeNodeId', "isFolder": true, "path": {} } as Node;
                 fixture.detectChanges();
 
                 typeToSearchBox('search-term');
@@ -275,12 +275,12 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(searchSpy.calls.count()).toBe(1);
 
-                component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": '-sites-' } } as SiteEntry);
 
                 const expectedRequest = mockSearchRequest;
                 expectedRequest.filterQueries = [
                     {
-                        query: `ANCESTOR:'workspace://SpacesStore/-sites-' OR ANCESTOR:'workspace://SpacesStore/123456testId' OR ANCESTOR:'workspace://SpacesStore/09876543testId'`
+                        "query": `ANCESTOR:'workspace://SpacesStore/-sites-' OR ANCESTOR:'workspace://SpacesStore/123456testId' OR ANCESTOR:'workspace://SpacesStore/09876543testId'`
                     }
                 ];
 
@@ -291,20 +291,20 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {
-                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                component.documentList.folderNode = { "id": 'fakeNodeId', "isFolder": true, "path": {} } as Node;
 
                 typeToSearchBox('vegeta');
 
                 tick(debounceSearch);
 
-                component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": '-sites-' } } as SiteEntry);
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
                 expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
             }));
 
             it('should get the corresponding node ids on search when a known alias is selected from CUSTOM dropdown', fakeAsync(() => {
-                component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
-                component.documentList.folderNode = { id: 'fakeNodeId', isFolder: true, path: {} } as Node;
+                component.dropdownSiteList = { "list": { "entries": [{ "entry": { "guid": '-sites-' } }, { "entry": { "guid": 'namek' } }] } } as SitePaging;
+                component.documentList.folderNode = { "id": 'fakeNodeId', "isFolder": true, "path": {} } as Node;
 
                 fixture.detectChanges();
 
@@ -312,13 +312,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 tick(debounceSearch);
 
-                component.siteChanged({ entry: { guid: '-sites-' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": '-sites-' } } as SiteEntry);
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(1);
                 expect(getCorrespondingNodeIdsSpy.calls.mostRecent().args[0]).toEqual('-sites-');
             }));
 
             it('should NOT get the corresponding node ids on search when NOTHING is selected from dropdown', fakeAsync(() => {
-                component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
+                component.dropdownSiteList = { "list": { "entries": [{ "entry": { "guid": '-sites-' } }, { "entry": { "guid": 'namek' } }] } } as SitePaging;
                 fixture.detectChanges();
 
                 typeToSearchBox('vegeta');
@@ -334,13 +334,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0, 'getCorrespondingNodeIdsSpy should not be called');
 
-                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": 'namek' } } as SiteEntry);
 
                 expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
             }));
 
             it('should NOT get the corresponding node ids on search when NO known alias is selected from CUSTOM dropdown', fakeAsync(() => {
-                component.dropdownSiteList = { list: { entries: [{ entry: { guid: '-sites-' } }, { entry: { guid: 'namek' } }] } } as SitePaging;
+                component.dropdownSiteList = { "list": { "entries": [{ "entry": { "guid": '-sites-' } }, { "entry": { "guid": 'namek' } }] } } as SitePaging;
                 fixture.detectChanges();
 
                 typeToSearchBox('vegeta');
@@ -348,7 +348,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(getCorrespondingNodeIdsSpy.calls.count()).toBe(0);
 
-                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": 'namek' } } as SiteEntry);
 
                 expect(getCorrespondingNodeIdsSpy).not.toHaveBeenCalled();
             }));
@@ -382,8 +382,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.chosenNode = [entry];
 
                 component.nodePaging = {
-                    list: {
-                        entries: [{ entry }]
+                    "list": {
+                        "entries": [{ entry }]
                     }
                 };
                 component.searchTerm = 'piccolo';
@@ -405,7 +405,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 tick(debounceSearch);
 
                 const expectedRequest = mockSearchRequest;
-                expectedRequest.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/my-root-id'` }];
+                expectedRequest.filterQueries = [{ "query": `ANCESTOR:'workspace://SpacesStore/my-root-id'` }];
 
                 expect(searchSpy).toHaveBeenCalledWith(false, expectedRequest);
             }));
@@ -416,7 +416,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(customResourcesService, 'hasCorrespondingNodeIds').and.returnValue(true);
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
 
-                await searchQueryBuilderService.execute(true, { query: { query: 'search' } });
+                await searchQueryBuilderService.execute(true, { "query": { "query": 'search' } });
 
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
@@ -442,8 +442,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.chosenNode = [entry];
 
                 component.nodePaging = {
-                    list: {
-                        entries: [{ entry }]
+                    "list": {
+                        "entries": [{ entry }]
                     }
                 };
                 component.searchTerm = 'piccolo';
@@ -460,7 +460,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 getCorrespondingNodeIdsSpy.and.throwError('Failed');
                 const showingSearchSpy = spyOn(component.showingSearch, 'emit');
-                await searchQueryBuilderService.execute(true, { query: { query: 'search' } });
+                await searchQueryBuilderService.execute(true, { "query": { "query": 'search' } });
 
                 triggerSearchResults(fakeResultSetPaging);
                 fixture.detectChanges();
@@ -474,10 +474,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.userQuery = 'search-term*';
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
-                component.siteChanged({ entry: { guid: 'my-site-id' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": 'my-site-id' } } as SiteEntry);
 
                 const expectedRequest = mockSearchRequest;
-                expectedRequest.filterQueries = [{ query: `ANCESTOR:'workspace://SpacesStore/my-site-id'` }];
+                expectedRequest.filterQueries = [{ "query": `ANCESTOR:'workspace://SpacesStore/my-site-id'` }];
 
                 expect(searchSpy).toHaveBeenCalledWith(false, expectedRequest);
             });
@@ -542,7 +542,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 expect(searchSpy.calls.count()).toBe(1);
 
-                component.siteChanged({ entry: { guid: 'namek' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": 'namek' } } as SiteEntry);
 
                 expect(searchSpy.calls.count()).toBe(2);
 
@@ -569,19 +569,19 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(documentList).not.toBeNull();
                 expect(
                     documentList.componentInstance.rowFilter({
-                        node: {
-                            entry: new Node({
-                                name: 'impossible-name',
-                                id: 'name'
+                        "node": {
+                            "entry": new Node({
+                                "name": 'impossible-name',
+                                "id": 'name'
                             })
                         }
                     })
                 ).toBe(
                     filter({
-                        node: {
-                            entry: new Node({
-                                name: 'impossible-name',
-                                id: 'name'
+                        "node": {
+                            "entry": new Node({
+                                "name": 'impossible-name',
+                                "id": 'name'
                             })
                         }
                     } as ShareDataRow)
@@ -597,8 +597,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 expect(documentList).not.toBeNull();
                 expect(documentList.componentInstance.rowFilter).toBeTruthy();
 
-                const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
-                expect(documentList.componentInstance.rowFilter({ node: { entry: testSiteContent } }, null, null)).toBe(false);
+                const testSiteContent = new Node({ "id": 'blog-id', "properties": { 'st:componentId': 'blog' } });
+                expect(documentList.componentInstance.rowFilter({ "node": { "entry": testSiteContent } }, null, null)).toBe(false);
             });
 
             it('should pass through the imageResolver to the documentList', async () => {
@@ -693,13 +693,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
             }));
 
             it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', (done) => {
-                component.siteChanged({ entry: { guid: 'Kame-Sennin Muten Roshi' } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": 'Kame-Sennin Muten Roshi' } } as SiteEntry);
                 fixture.detectChanges();
 
                 let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
                 expect(documentList.componentInstance.currentFolderId).toBe('Kame-Sennin Muten Roshi');
 
-                component.siteChanged({ entry: { guid: undefined } } as SiteEntry);
+                component.siteChanged({ "entry": { "guid": undefined } } as SiteEntry);
                 fixture.detectChanges();
 
                 documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
@@ -720,10 +720,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
                     fixture.detectChanges();
 
                     component.getNextPageOfSearch({
-                        hasMoreItems: false,
-                        skipCount: 10,
-                        maxItems: 45,
-                        totalItems: 0
+                        "hasMoreItems": false,
+                        "skipCount": 10,
+                        "maxItems": 45,
+                        "totalItems": 0
                     });
 
                     fixture.detectChanges();
@@ -770,7 +770,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 }));
 
                 it('Should set the scope to nodes when the component inits', () => {
-                    const expectedScope: RequestScope = { locations: 'nodes' };
+                    const expectedScope: RequestScope = { "locations": 'nodes' };
                     const setScopeSpy = spyOn(searchQueryBuilderService, 'setScope');
                     component.ngOnInit();
 

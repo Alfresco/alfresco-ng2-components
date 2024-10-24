@@ -19,10 +19,10 @@ import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class UrlService {
-    constructor(private sanitizer: DomSanitizer) {}
+    constructor (private sanitizer: DomSanitizer) {}
 
     /**
      * Creates a trusted object URL from the Blob.
@@ -30,7 +30,7 @@ export class UrlService {
      * @param  blob Data to wrap into object URL
      * @returns URL string
      */
-    createTrustedUrl(blob: Blob): string {
+    createTrustedUrl (blob: Blob): string {
         const url = window.URL.createObjectURL(blob);
         return this.sanitizer.bypassSecurityTrustUrl(url) as string;
     }

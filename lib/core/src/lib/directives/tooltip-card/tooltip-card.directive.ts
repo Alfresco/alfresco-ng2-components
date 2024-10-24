@@ -21,8 +21,8 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { TooltipCardComponent } from './tooltip-card.component';
 
 @Directive({
-    selector: '[adf-tooltip-card]',
-    standalone: true
+    "selector": '[adf-tooltip-card]',
+    "standalone": true
 })
 export class TooltipCardDirective implements OnInit, OnDestroy {
     @Input('adf-tooltip-card') text = '';
@@ -38,23 +38,23 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
 
     private overlayRef: OverlayRef;
 
-    constructor(private overlay: Overlay, private overlayPositionBuilder: OverlayPositionBuilder, private elementRef: ElementRef) {}
+    constructor (private overlay: Overlay, private overlayPositionBuilder: OverlayPositionBuilder, private elementRef: ElementRef) {}
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         if (this.overlayRef) {
             this.hide();
         }
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         const positionStrategy = this.overlayPositionBuilder.flexibleConnectedTo(this.elementRef).withPositions([
             {
-                originX: this.originX,
-                originY: this.originY,
-                overlayX: this.overlayX,
-                overlayY: this.overlayY,
-                offsetY: this.offsetY,
-                offsetX: this.offsetX
+                "originX": this.originX,
+                "originY": this.originY,
+                "overlayX": this.overlayX,
+                "overlayY": this.overlayY,
+                "offsetY": this.offsetY,
+                "offsetX": this.offsetX
             }
         ]);
 
@@ -62,7 +62,7 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
     }
 
     @HostListener('mouseenter')
-    show() {
+    show () {
         const tooltipRef: ComponentRef<TooltipCardComponent> = this.overlayRef?.attach(new ComponentPortal(TooltipCardComponent));
         tooltipRef.instance.text = this.text;
         tooltipRef.instance.image = this.image;
@@ -71,7 +71,7 @@ export class TooltipCardDirective implements OnInit, OnDestroy {
     }
 
     @HostListener('mouseleave')
-    hide() {
+    hide () {
         this.overlayRef?.detach();
     }
 }

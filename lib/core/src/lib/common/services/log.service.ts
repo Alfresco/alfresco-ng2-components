@@ -26,10 +26,10 @@ import { Subject } from 'rxjs';
  * @deprecated This service is deprecated and will be removed in future versions.
  */
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class LogService {
-    get currentLogLevel(): number {
+    get currentLogLevel (): number {
         const configLevel: string = this.appConfig.get<string>(AppConfigValues.LOG_LEVEL);
 
         if (configLevel) {
@@ -41,7 +41,7 @@ export class LogService {
 
     onMessage: Subject<any>;
 
-    constructor(private appConfig: AppConfigService) {
+    constructor (private appConfig: AppConfigService) {
         this.onMessage = new Subject();
     }
 
@@ -50,7 +50,7 @@ export class LogService {
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
-    error(message?: any, ...optionalParams: any[]) {
+    error (message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.ERROR) {
             this.messageBus(message, 'ERROR');
 
@@ -63,7 +63,7 @@ export class LogService {
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
-    debug(message?: any, ...optionalParams: any[]) {
+    debug (message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.DEBUG) {
             this.messageBus(message, 'DEBUG');
 
@@ -76,7 +76,7 @@ export class LogService {
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
-    info(message?: any, ...optionalParams: any[]) {
+    info (message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.INFO) {
             this.messageBus(message, 'INFO');
 
@@ -89,7 +89,7 @@ export class LogService {
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
-    log(message?: any, ...optionalParams: any[]) {
+    log (message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.TRACE) {
             this.messageBus(message, 'LOG');
 
@@ -102,7 +102,7 @@ export class LogService {
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
-    trace(message?: any, ...optionalParams: any[]) {
+    trace (message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.TRACE) {
             this.messageBus(message, 'TRACE');
 
@@ -115,7 +115,7 @@ export class LogService {
      * @param message Message to log
      * @param optionalParams Interpolation values for the message in "printf" format
      */
-    warn(message?: any, ...optionalParams: any[]) {
+    warn (message?: any, ...optionalParams: any[]) {
         if (this.currentLogLevel >= LogLevelsEnum.WARN) {
             this.messageBus(message, 'WARN');
 
@@ -129,7 +129,7 @@ export class LogService {
      * @param message Message to show if test is false
      * @param optionalParams Interpolation values for the message in "printf" format
      */
-    assert(test?: boolean, message?: string, ...optionalParams: any[]) {
+    assert (test?: boolean, message?: string, ...optionalParams: any[]) {
         if (this.currentLogLevel !== LogLevelsEnum.SILENT) {
             this.messageBus(message, 'ASSERT');
 
@@ -142,7 +142,7 @@ export class LogService {
      * @param groupTitle Title shown at the start of the group
      * @param optionalParams Interpolation values for the title in "printf" format
      */
-    group(groupTitle?: string, ...optionalParams: any[]) {
+    group (groupTitle?: string, ...optionalParams: any[]) {
         if (this.currentLogLevel !== LogLevelsEnum.SILENT) {
             console.group(groupTitle, ...optionalParams);
         }
@@ -151,7 +151,7 @@ export class LogService {
     /**
      * Ends a indented group of log messages.
      */
-    groupEnd() {
+    groupEnd () {
         if (this.currentLogLevel !== LogLevelsEnum.SILENT) {
             console.groupEnd();
         }
@@ -162,7 +162,7 @@ export class LogService {
      * @param level Level name
      * @returns Numeric log level
      */
-    getLogLevel(level: string): number {
+    getLogLevel (level: string): number {
         const referencedLevel = logLevels.find((currentLevel: any) => currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase());
 
         return referencedLevel ? referencedLevel.level : 5;
@@ -173,7 +173,7 @@ export class LogService {
      * @param text Message text
      * @param logLevel Log level for the message
      */
-    messageBus(text: string, logLevel: string) {
-        this.onMessage.next({ text, type: logLevel });
+    messageBus (text: string, logLevel: string) {
+        this.onMessage.next({ text, "type": logLevel });
     }
 }

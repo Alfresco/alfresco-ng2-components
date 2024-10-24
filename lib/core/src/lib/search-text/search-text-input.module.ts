@@ -23,7 +23,7 @@ export const SEARCH_TEXT_INPUT_DIRECTIVES = [SearchTextInputComponent, SearchTri
 
 /** @deprecated use `...SEARCH_TEXT_INPUT_DIRECTIVES` or import the individual directives */
 @NgModule({
-    imports: [...SEARCH_TEXT_INPUT_DIRECTIVES],
-    exports: [...SEARCH_TEXT_INPUT_DIRECTIVES]
+    "imports": [...SEARCH_TEXT_INPUT_DIRECTIVES],
+    "exports": [...SEARCH_TEXT_INPUT_DIRECTIVES]
 })
 export class SearchTextModule {}

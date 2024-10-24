@@ -43,15 +43,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
-        { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
+    "providers": [
+        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
+        { "provide": MAT_DATETIME_FORMATS, "useValue": ADF_DATETIME_FORMATS },
+        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter },
+        { "provide": DatetimeAdapter, "useClass": AdfDateTimeFnsAdapter }
     ],
-    selector: 'adf-card-view-dateitem',
-    standalone: true,
-    imports: [
+    "selector": 'adf-card-view-dateitem',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatIconModule,
@@ -61,10 +61,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatDatepickerModule,
         MatSnackBarModule
     ],
-    templateUrl: './card-view-dateitem.component.html',
-    styleUrls: ['./card-view-dateitem.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-card-view-dateitem' }
+    "templateUrl": './card-view-dateitem.component.html',
+    "styleUrls": ['./card-view-dateitem.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-card-view-dateitem' }
 })
 export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
     @Input()
@@ -78,7 +78,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     valueDate: Date;
 
-    constructor(
+    constructor (
         private dateAdapter: DateAdapter<Date>,
         private userPreferencesService: UserPreferencesService,
         private clipboardService: ClipboardService,
@@ -87,7 +87,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         super();
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.destroy$))
@@ -104,23 +104,23 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         super.ngOnDestroy();
     }
 
-    get showProperty(): boolean {
+    get showProperty (): boolean {
         return this.displayEmpty || !this.property.isEmpty();
     }
 
-    get showClearAction(): boolean {
+    get showClearAction (): boolean {
         return this.displayClearAction && (!this.property.isEmpty() || !!this.property.default);
     }
 
-    showDatePicker(): void {
+    showDatePicker (): void {
         this.datepicker.open();
     }
 
-    onDateChanged(event: MatDatetimepickerInputEvent<Date>) {
+    onDateChanged (event: MatDatetimepickerInputEvent<Date>) {
         if (event.value) {
             if (isValid(event.value)) {
                 this.property.value = new Date(event.value);
@@ -134,21 +134,21 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         }
     }
 
-    onDateClear() {
+    onDateClear () {
         this.valueDate = null;
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, null);
         this.property.value = null;
         this.property.default = null;
     }
 
-    copyToClipboard(valueToCopy: string | string[]) {
+    copyToClipboard (valueToCopy: string | string[]) {
         if (typeof valueToCopy === 'string') {
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }
     }
 
-    addDateToList(event: MatDatetimepickerInputEvent<Date>) {
+    addDateToList (event: MatDatetimepickerInputEvent<Date>) {
         if (event.value) {
             if (isValid(event.value) && this.property.multivalued && Array.isArray(this.property.value)) {
                 let localDate = new Date(event.value);
@@ -161,18 +161,18 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         }
     }
 
-    removeValueFromList(itemIndex: number) {
+    removeValueFromList (itemIndex: number) {
         if (this.property.multivalued && Array.isArray(this.property.value)) {
             this.property.value.splice(itemIndex, 1);
             this.update();
         }
     }
 
-    update() {
+    update () {
         this.cardViewUpdateService.update({ ...this.property } as CardViewDateItemModel, this.property.value);
     }
 
-    private initSingleValueProperty() {
+    private initSingleValueProperty () {
         if (this.property.value && !Array.isArray(this.property.value)) {
             const date = new Date(this.property.value);
             this.property.value = date;
@@ -180,7 +180,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         }
     }
 
-    private initMultivaluedProperty() {
+    private initMultivaluedProperty () {
         if (!this.property.value) {
             this.property.value = [];
         }

@@ -33,9 +33,9 @@ import { ErrorWidgetComponent } from '@alfresco/adf-core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'row-editor',
-    standalone: true,
-    imports: [
+    "selector": 'row-editor',
+    "standalone": true,
+    "imports": [
         CommonModule,
         DropdownEditorComponent,
         DateEditorComponent,
@@ -46,8 +46,8 @@ import { MatButtonModule } from '@angular/material/button';
         ErrorWidgetComponent,
         MatButtonModule
     ],
-    templateUrl: './row.editor.html',
-    styleUrls: ['./row.editor.css']
+    "templateUrl": './row.editor.html',
+    "styleUrls": ['./row.editor.css']
 })
 export class RowEditorComponent {
     @Input()
@@ -67,34 +67,34 @@ export class RowEditorComponent {
 
     validationSummary: DynamicRowValidationSummary;
 
-    constructor() {
-        this.validationSummary = new DynamicRowValidationSummary({ isValid: true, message: '' });
+    constructor () {
+        this.validationSummary = new DynamicRowValidationSummary({ "isValid": true, "message": '' });
     }
 
-    onCancelChanges() {
+    onCancelChanges () {
         this.cancel.emit({
-            table: this.table,
-            row: this.row,
-            column: this.column
+            "table": this.table,
+            "row": this.row,
+            "column": this.column
         });
     }
 
-    onSaveChanges() {
+    onSaveChanges () {
         this.validate();
         if (this.isValid()) {
             this.save.emit({
-                table: this.table,
-                row: this.row,
-                column: this.column
+                "table": this.table,
+                "row": this.row,
+                "column": this.column
             });
         }
     }
 
-    private isValid(): boolean {
+    private isValid (): boolean {
         return this.validationSummary?.isValid;
     }
 
-    private validate() {
+    private validate () {
         this.validationSummary = this.table.validateRow(this.row);
     }
 }

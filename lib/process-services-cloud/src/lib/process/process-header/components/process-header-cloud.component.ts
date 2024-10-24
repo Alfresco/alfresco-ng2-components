@@ -30,11 +30,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-cloud-process-header',
-    templateUrl: './process-header-cloud.component.html',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./process-header-cloud.component.scss'],
-    host: { class: 'adf-cloud-process-header' }
+    "selector": 'adf-cloud-process-header',
+    "templateUrl": './process-header-cloud.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "styleUrls": ['./process-header-cloud.component.scss'],
+    "host": { "class": 'adf-cloud-process-header' }
 })
 export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy {
     /** (Required) The name of the application. */
@@ -56,30 +56,30 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private processCloudService: ProcessCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.dateFormat = this.appConfig.get('adf-cloud-process-header.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
 
         this.processCloudService.dataChangesDetected.pipe(takeUntil(this.onDestroy$)).subscribe((processDetails) => this.onLoaded(processDetails));
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         if ((this.appName || this.appName === '') && this.processInstanceId) {
             this.loadProcessInstanceDetails(this.appName, this.processInstanceId);
         }
     }
 
-    private loadProcessInstanceDetails(appName: string, processInstanceId: string) {
+    private loadProcessInstanceDetails (appName: string, processInstanceId: string) {
         this.processCloudService.getProcessInstanceById(appName, processInstanceId).subscribe((result) => this.onLoaded(result));
     }
 
-    private onLoaded(processInstanceDetails: ProcessInstanceCloud) {
+    private onLoaded (processInstanceDetails: ProcessInstanceCloud) {
         this.processInstanceDetails = processInstanceDetails;
         this.refreshData();
 
@@ -89,7 +89,7 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy
     /**
      * Refresh the card data
      */
-    refreshData() {
+    refreshData () {
         if (this.processInstanceDetails) {
             const defaultProperties = this.initDefaultProperties();
             const filteredProperties = this.appConfig.get<string[]>('adf-cloud-process-header.presets.properties');
@@ -97,63 +97,63 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy
         }
     }
 
-    private initDefaultProperties(): any[] {
+    private initDefaultProperties (): any[] {
         return [
             new CardViewTextItemModel({
-                label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.ID',
-                value: this.processInstanceDetails.id,
-                key: 'id'
+                "label": 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.ID',
+                "value": this.processInstanceDetails.id,
+                "key": 'id'
             }),
             new CardViewTextItemModel({
-                label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME',
-                value: this.processInstanceDetails.name,
-                key: 'name',
-                default: this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME_DEFAULT')
+                "label": 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME',
+                "value": this.processInstanceDetails.name,
+                "key": 'name',
+                "default": this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME_DEFAULT')
             }),
             new CardViewTextItemModel({
-                label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.STATUS',
-                value: this.processInstanceDetails.status,
-                key: 'status'
+                "label": 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.STATUS',
+                "value": this.processInstanceDetails.status,
+                "key": 'status'
             }),
             new CardViewTextItemModel({
-                label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.INITIATOR',
-                value: this.processInstanceDetails.initiator,
-                key: 'initiator'
+                "label": 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.INITIATOR',
+                "value": this.processInstanceDetails.initiator,
+                "key": 'initiator'
             }),
             new CardViewDateItemModel({
-                label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.START_DATE',
-                value: this.processInstanceDetails.startDate,
-                key: 'startDate',
-                format: this.dateFormat,
-                locale: this.dateLocale
+                "label": 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.START_DATE',
+                "value": this.processInstanceDetails.startDate,
+                "key": 'startDate',
+                "format": this.dateFormat,
+                "locale": this.dateLocale
             }),
             new CardViewDateItemModel({
-                label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.LAST_MODIFIED',
-                value: this.processInstanceDetails.lastModified,
-                key: 'lastModified',
-                format: this.dateFormat,
-                locale: this.dateLocale
+                "label": 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.LAST_MODIFIED',
+                "value": this.processInstanceDetails.lastModified,
+                "key": 'lastModified',
+                "format": this.dateFormat,
+                "locale": this.dateLocale
             }),
             new CardViewTextItemModel({
-                label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.PARENT_ID',
-                value: this.processInstanceDetails.parentId,
-                key: 'parentId',
-                default: this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NONE')
+                "label": 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.PARENT_ID',
+                "value": this.processInstanceDetails.parentId,
+                "key": 'parentId',
+                "default": this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NONE')
             }),
             new CardViewTextItemModel({
-                label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.BUSINESS_KEY',
-                value: this.processInstanceDetails.businessKey,
-                key: 'businessKey',
-                default: this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NONE')
+                "label": 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.BUSINESS_KEY',
+                "value": this.processInstanceDetails.businessKey,
+                "key": 'businessKey',
+                "default": this.translationService.instant('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NONE')
             })
         ];
     }
 
-    private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
+    private isValidSelection (filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

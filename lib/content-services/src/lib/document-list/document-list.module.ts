@@ -42,7 +42,7 @@ export const DOCUMENT_LIST_DIRECTIVES = [
 
 /** @deprecated use `...DOCUMENT_LIST_DIRECTIVES` or import standalone components */
 @NgModule({
-    imports: [...DOCUMENT_LIST_DIRECTIVES],
-    exports: [...DOCUMENT_LIST_DIRECTIVES]
+    "imports": [...DOCUMENT_LIST_DIRECTIVES],
+    "exports": [...DOCUMENT_LIST_DIRECTIVES]
 })
 export class DocumentListModule {}

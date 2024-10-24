@@ -26,17 +26,17 @@ import { By } from '@angular/platform-browser';
 
 describe('ClaimTaskCloudDirective', () => {
     @Component({
-        selector: 'adf-cloud-claim-test-component',
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock" (error)="onError($event)"></button>'
+        "selector": 'adf-cloud-claim-test-component',
+        "template": '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock" (error)="onError($event)"></button>'
     })
     class TestComponent {
         taskMock = 'test1234';
         appNameMock = 'simple-app';
 
-        @ViewChild(ClaimTaskCloudDirective, { static: false })
+        @ViewChild(ClaimTaskCloudDirective, { "static": false })
         claimTaskDirective: ClaimTaskCloudDirective;
 
-        onError(error: Error) {
+        onError (error: Error) {
             return error;
         }
     }
@@ -46,8 +46,8 @@ describe('ClaimTaskCloudDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [TestComponent]
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [TestComponent]
         });
         taskCloudService = TestBed.inject(TaskCloudService);
         fixture = TestBed.createComponent(TestComponent);
@@ -62,7 +62,7 @@ describe('ClaimTaskCloudDirective', () => {
     });
 
     it('should emit error on api fail', async () => {
-        const error = { message: 'task key not found' };
+        const error = { "message": 'task key not found' };
         spyOn(taskCloudService, 'claimTask').and.returnValue(throwError(error));
         spyOn(fixture.componentInstance, 'onError').and.callThrough();
         const button = fixture.nativeElement.querySelector('button');
@@ -94,8 +94,8 @@ describe('ClaimTaskCloudDirective', () => {
 
 describe('Claim Task Directive validation errors', () => {
     @Component({
-        selector: 'adf-cloud-claim-no-fields-validation-component',
-        template: '<button adf-cloud-claim-task></button>'
+        "selector": 'adf-cloud-claim-no-fields-validation-component',
+        "template": '<button adf-cloud-claim-task></button>'
     })
     class ClaimTestMissingInputDirectiveComponent {
         appName = 'simple-app';
@@ -107,8 +107,8 @@ describe('Claim Task Directive validation errors', () => {
     }
 
     @Component({
-        selector: 'adf-cloud-claim-no-taskid-validation-component',
-        template: '<button adf-cloud-claim-task [appName]="appName"></button>'
+        "selector": 'adf-cloud-claim-no-taskid-validation-component',
+        "template": '<button adf-cloud-claim-task [appName]="appName"></button>'
     })
     class ClaimTestMissingTaskIdDirectiveComponent {
         appName = 'simple-app';
@@ -118,8 +118,8 @@ describe('Claim Task Directive validation errors', () => {
     }
 
     @Component({
-        selector: 'adf-cloud-claim-undefined-appname-component',
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
+        "selector": 'adf-cloud-claim-undefined-appname-component',
+        "template": '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
     })
     class ClaimTestInvalidAppNameUndefinedDirectiveComponent {
         appNameUndefined = undefined;
@@ -130,14 +130,14 @@ describe('Claim Task Directive validation errors', () => {
     }
 
     @Component({
-        selector: 'adf-cloud-claim-null-appname-component',
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
+        "selector": 'adf-cloud-claim-null-appname-component',
+        "template": '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
     })
     class ClaimTestInvalidAppNameNullDirectiveComponent {
         appNameNull = null;
         taskMock = 'test1234';
 
-        @ViewChild(ClaimTaskCloudDirective, { static: false })
+        @ViewChild(ClaimTaskCloudDirective, { "static": false })
         claimTaskValidationDirective: ClaimTaskCloudDirective;
     }
 
@@ -145,8 +145,8 @@ describe('Claim Task Directive validation errors', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [
                 ClaimTestMissingTaskIdDirectiveComponent,
                 ClaimTestInvalidAppNameUndefinedDirectiveComponent,
                 ClaimTestInvalidAppNameNullDirectiveComponent,

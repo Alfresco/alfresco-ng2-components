@@ -26,7 +26,7 @@ export const TEMPLATE_DIRECTIVES = [ErrorContentComponent, EmptyContentComponent
  * Consider using `...TEMPLATE_DIRECTIVES` or importing components directly instead.
  */
 @NgModule({
-    imports: [...TEMPLATE_DIRECTIVES],
-    exports: [...TEMPLATE_DIRECTIVES]
+    "imports": [...TEMPLATE_DIRECTIVES],
+    "exports": [...TEMPLATE_DIRECTIVES]
 })
 export class TemplateModule {}

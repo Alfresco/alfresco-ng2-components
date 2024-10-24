@@ -20,84 +20,84 @@ import { TaskVariableCloud } from '../../../../models/task-variable-cloud.model'
 
 export const mockSchemaDefinition: DataColumn[] = [
     {
-        type: 'text',
-        key: 'id',
-        title: 'Country ID',
-        sortable: true,
-        draggable: true
+        "type": 'text',
+        "key": 'id',
+        "title": 'Country ID',
+        "sortable": true,
+        "draggable": true
     },
     {
-        type: 'text',
-        key: 'name',
-        title: 'Country Name',
-        sortable: true,
-        draggable: true
+        "type": 'text',
+        "key": 'name',
+        "title": 'Country Name',
+        "sortable": true,
+        "draggable": true
     }
 ];
 
 export const mockSchemaDefinitionWithNestedKeys: DataColumn[] = [
     {
-        type: 'text',
-        key: 'countries.europeCountry.id',
-        title: 'Country ID',
-        sortable: true,
-        draggable: true
+        "type": 'text',
+        "key": 'countries.europeCountry.id',
+        "title": 'Country ID',
+        "sortable": true,
+        "draggable": true
     },
     {
-        type: 'text',
-        key: 'countries.europeCountry.name',
-        title: 'Country Name',
-        sortable: true,
-        draggable: true
+        "type": 'text',
+        "key": 'countries.europeCountry.name',
+        "title": 'Country Name',
+        "sortable": true,
+        "draggable": true
     }
 ];
 
 export const mockCountryColumns: DataColumn[] = [
-    new ObjectDataColumn({ key: 'id', type: 'text', title: 'Country ID', sortable: true, draggable: true }),
-    new ObjectDataColumn({ key: 'name', type: 'text', title: 'Country Name', sortable: true, draggable: true })
+    new ObjectDataColumn({ "key": 'id', "type": 'text', "title": 'Country ID', "sortable": true, "draggable": true }),
+    new ObjectDataColumn({ "key": 'name', "type": 'text', "title": 'Country Name', "sortable": true, "draggable": true })
 ];
 
 export const mockNestedCountryColumns: DataColumn[] = [
-    new ObjectDataColumn({ key: 'countries.europeCountry.id', type: 'text', title: 'Country ID', sortable: true, draggable: true }),
-    new ObjectDataColumn({ key: 'countries.europeCountry.name', type: 'text', title: 'Country Name', sortable: true, draggable: true })
+    new ObjectDataColumn({ "key": 'countries.europeCountry.id', "type": 'text', "title": 'Country ID', "sortable": true, "draggable": true }),
+    new ObjectDataColumn({ "key": 'countries.europeCountry.name', "type": 'text', "title": 'Country Name', "sortable": true, "draggable": true })
 ];
 
 export const mockInvalidSchemaDefinition: DataColumn[] = [
     {
-        type: 'text',
-        key: '',
-        title: 'Country ID',
-        sortable: true,
-        draggable: true
+        "type": 'text',
+        "key": '',
+        "title": 'Country ID',
+        "sortable": true,
+        "draggable": true
     },
     {
-        type: 'text',
-        key: undefined,
-        title: 'Country Name',
-        sortable: true,
-        draggable: true
+        "type": 'text',
+        "key": undefined,
+        "title": 'Country Name',
+        "sortable": true,
+        "draggable": true
     }
 ];
 
 export const mockEuropeCountriesData = [
     {
-        id: 'PL',
-        name: 'Poland'
+        "id": 'PL',
+        "name": 'Poland'
     },
     {
-        id: 'IT',
-        name: 'Italy'
+        "id": 'IT',
+        "name": 'Italy'
     },
     {
-        id: 'UK',
-        name: 'United Kingdom'
+        "id": 'UK',
+        "name": 'United Kingdom'
     }
 ];
 
 export const mockEuropeCountriesRows: DataRow[] = [
-    new ObjectDataRow({ id: 'IT', name: 'Italy' }),
-    new ObjectDataRow({ id: 'PL', name: 'Poland' }),
-    new ObjectDataRow({ id: 'UK', name: 'United Kingdom' })
+    new ObjectDataRow({ "id": 'IT', "name": 'Italy' }),
+    new ObjectDataRow({ "id": 'PL', "name": 'Poland' }),
+    new ObjectDataRow({ "id": 'UK', "name": 'United Kingdom' })
 ];
 
 export const mockNestedEuropeCountriesRows: DataRow[] = [
@@ -107,19 +107,19 @@ export const mockNestedEuropeCountriesRows: DataRow[] = [
 ];
 
 export const mockJsonResponseEuropeCountriesData = {
-    data: mockEuropeCountriesData
+    "data": mockEuropeCountriesData
 };
 
 export const mockJsonNestedResponseEuropeCountriesData = {
-    response: {
-        empty: [],
+    "response": {
+        "empty": [],
         'my-data': mockEuropeCountriesData,
         'single-object': mockEuropeCountriesData[0],
         'no-array-or-object': 'string-value',
-        data: [
+        "data": [
             {
-                id: 'HR',
-                name: 'Croatia'
+                "id": 'HR',
+                "name": 'Croatia'
             }
         ]
     }
@@ -127,26 +127,26 @@ export const mockJsonNestedResponseEuropeCountriesData = {
 
 export const mockNestedEuropeCountriesData = [
     {
-        countries: {
-            europeCountry: {
-                id: 'PL',
-                name: 'Poland'
+        "countries": {
+            "europeCountry": {
+                "id": 'PL',
+                "name": 'Poland'
             }
         }
     },
     {
-        countries: {
-            europeCountry: {
-                id: 'IT',
-                name: 'Italy'
+        "countries": {
+            "europeCountry": {
+                "id": 'IT',
+                "name": 'Italy'
             }
         }
     },
     {
-        countries: {
-            europeCountry: {
-                id: 'UK',
-                name: 'United Kingdom'
+        "countries": {
+            "europeCountry": {
+                "id": 'UK',
+                "name": 'United Kingdom'
             }
         }
     }
@@ -154,51 +154,51 @@ export const mockNestedEuropeCountriesData = [
 
 export const mockAmericaCountriesData = [
     {
-        id: 'CA',
-        name: 'Canada'
+        "id": 'CA',
+        "name": 'Canada'
     },
     {
-        id: 'US',
-        name: 'United States'
+        "id": 'US',
+        "name": 'United States'
     },
     {
-        id: 'MX',
-        name: 'Mexico'
+        "id": 'MX',
+        "name": 'Mexico'
     }
 ];
 
 export const mockAmericaCountriesRows: DataRow[] = [
-    new ObjectDataRow({ id: 'CA', name: 'Canada' }),
-    new ObjectDataRow({ id: 'MX', name: 'Mexico' }),
-    new ObjectDataRow({ id: 'US', name: 'United States' })
+    new ObjectDataRow({ "id": 'CA', "name": 'Canada' }),
+    new ObjectDataRow({ "id": 'MX', "name": 'Mexico' }),
+    new ObjectDataRow({ "id": 'US', "name": 'United States' })
 ];
 
 export const mockCountriesIncorrectData = [
     {
-        id: 'PL'
+        "id": 'PL'
     },
     {
-        id: 'IT'
+        "id": 'IT'
     }
 ];
 
 export const mockJsonFormVariableWithIncorrectData = [
-    new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesIncorrectData, type: 'json', id: 'fake-id-1' })
+    new TaskVariableCloud({ "name": 'json-form-variable', "value": mockCountriesIncorrectData, "type": 'json', "id": 'fake-id-1' })
 ];
 
 export const mockJsonFormVariable = [
-    new TaskVariableCloud({ name: 'json-form-variable', value: mockEuropeCountriesData, type: 'json', id: 'fake-id-1' })
+    new TaskVariableCloud({ "name": 'json-form-variable', "value": mockEuropeCountriesData, "type": 'json', "id": 'fake-id-1' })
 ];
 
 export const mockJsonResponseFormVariable = [
-    new TaskVariableCloud({ name: 'json-form-variable', value: mockJsonResponseEuropeCountriesData, type: 'json', id: 'fake-id-1' })
+    new TaskVariableCloud({ "name": 'json-form-variable', "value": mockJsonResponseEuropeCountriesData, "type": 'json', "id": 'fake-id-1' })
 ];
 
 export const mockJsonNestedResponseFormVariable = [
-    new TaskVariableCloud({ name: 'json-form-variable', value: mockJsonNestedResponseEuropeCountriesData, type: 'json', id: 'fake-id-1' })
+    new TaskVariableCloud({ "name": 'json-form-variable', "value": mockJsonNestedResponseEuropeCountriesData, "type": 'json', "id": 'fake-id-1' })
 ];
 
 export const mockJsonProcessVariables = [
-    new TaskVariableCloud({ name: 'variables.json-variable', value: mockEuropeCountriesData, type: 'json', id: 'fake-id-1' }),
-    new TaskVariableCloud({ name: 'variables.different-variable', value: 'fake-value', type: 'json', id: 'fake-id-2' })
+    new TaskVariableCloud({ "name": 'variables.json-variable', "value": mockEuropeCountriesData, "type": 'json', "id": 'fake-id-1' }),
+    new TaskVariableCloud({ "name": 'variables.different-variable', "value": 'fake-value', "type": 'json', "id": 'fake-id-2' })
 ];

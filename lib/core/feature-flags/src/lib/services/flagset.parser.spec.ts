@@ -21,22 +21,22 @@ describe('FlagSetParser', () => {
     describe('serialize', () => {
         it('should serialize flags correctly', () => {
             const flags = {
-                feature1: {
-                    current: true,
-                    previous: null
+                "feature1": {
+                    "current": true,
+                    "previous": null
                 },
-                feature2: {
-                    current: false,
-                    previous: true,
-                    fictive: true
+                "feature2": {
+                    "current": false,
+                    "previous": true,
+                    "fictive": true
                 }
             };
 
             const serializedFlags = FlagSetParser.serialize(flags);
 
             expect(serializedFlags).toEqual({
-                feature1: { current: true, fictive: undefined },
-                feature2: { current: false, fictive: true }
+                "feature1": { "current": true, "fictive": undefined },
+                "feature2": { "current": false, "fictive": true }
             });
         });
 
@@ -52,17 +52,17 @@ describe('FlagSetParser', () => {
     describe('deserialize', () => {
         it('should deserialize flags correctly', () => {
             const serializedFlags = {
-                feature1: { current: true },
-                feature2: { current: false },
-                feature3: { current: true }
+                "feature1": { "current": true },
+                "feature2": { "current": false },
+                "feature3": { "current": true }
             };
 
             const flags = FlagSetParser.deserialize(serializedFlags);
 
             expect(flags).toEqual({
-                feature1: { current: true, previous: null },
-                feature2: { current: false, previous: null },
-                feature3: { current: true, previous: null }
+                "feature1": { "current": true, "previous": null },
+                "feature2": { "current": false, "previous": null },
+                "feature3": { "current": true, "previous": null }
             });
         });
 

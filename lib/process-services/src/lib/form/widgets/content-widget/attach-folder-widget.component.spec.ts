@@ -25,17 +25,17 @@ import { Node } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 const fakeNode = {
-    id: 'fake',
-    name: 'fake-name'
+    "id": 'fake',
+    "name": 'fake-name'
 } as Node;
 
 const definedSourceParams = {
-    folderSource: {
-        serviceId: 'goofy-sources',
-        name: 'pippo-baudo',
-        selectedFolder: {
-            accountId: 'goku-share-account-id',
-            pathId: 'fake-pippo-baudo-id'
+    "folderSource": {
+        "serviceId": 'goofy-sources',
+        "name": 'pippo-baudo',
+        "selectedFolder": {
+            "accountId": 'goku-share-account-id',
+            "pathId": 'fake-pippo-baudo-id'
         }
     }
 };
@@ -49,7 +49,7 @@ describe('AttachFolderWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, AttachFolderWidgetComponent]
+            "imports": [ProcessTestingModule, AttachFolderWidgetComponent]
         });
         fixture = TestBed.createComponent(AttachFolderWidgetComponent);
         widget = fixture.componentInstance;
@@ -65,9 +65,9 @@ describe('AttachFolderWidgetComponent', () => {
     it('should be rendered correctly', () => {
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
-            type: 'select-folder',
-            id: 'fake-widget',
-            value: null
+            "type": 'select-folder',
+            "id": 'fake-widget',
+            "value": null
         });
         fixture.detectChanges();
         expect(element.querySelector('#folder-fake-widget-button')).toBeDefined();
@@ -78,9 +78,9 @@ describe('AttachFolderWidgetComponent', () => {
         spyOn(contentNodeDialogService, 'openFolderBrowseDialogBySite').and.returnValue(of([fakeNode]));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
-            type: 'select-folder',
-            id: 'fake-widget',
-            value: null
+            "type": 'select-folder',
+            "id": 'fake-widget',
+            "value": null
         });
         fixture.detectChanges();
         await fixture.whenStable();
@@ -97,10 +97,10 @@ describe('AttachFolderWidgetComponent', () => {
         spyOn(contentNodeDialogService, 'openFolderBrowseDialogByFolderId').and.returnValue(of([fakeNode]));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
-            type: 'select-folder',
-            id: 'fake-widget',
-            value: null,
-            params: definedSourceParams
+            "type": 'select-folder',
+            "id": 'fake-widget',
+            "value": null,
+            "params": definedSourceParams
         });
 
         fixture.detectChanges();
@@ -118,9 +118,9 @@ describe('AttachFolderWidgetComponent', () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNode));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
-            type: 'select-folder',
-            id: 'fake-widget',
-            value: 'fake-pippo-baudo-id'
+            "type": 'select-folder',
+            "id": 'fake-widget',
+            "value": 'fake-pippo-baudo-id'
         });
 
         fixture.detectChanges();
@@ -134,9 +134,9 @@ describe('AttachFolderWidgetComponent', () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNode));
         expect(widget).not.toBeNull();
         widget.field = new FormFieldModel(new FormModel(), {
-            type: 'select-folder',
-            id: 'fake-widget',
-            value: 'fake-pippo-baudo-id'
+            "type": 'select-folder',
+            "id": 'fake-widget',
+            "value": 'fake-pippo-baudo-id'
         });
 
         fixture.detectChanges();

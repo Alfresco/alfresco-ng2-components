@@ -26,11 +26,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-    selector: 'adf-amount-editor',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatInputModule],
-    templateUrl: './amount.editor.html',
-    styleUrls: ['./amount.editor.scss']
+    "selector": 'adf-amount-editor',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, MatInputModule],
+    "templateUrl": './amount.editor.html',
+    "styleUrls": ['./amount.editor.scss']
 })
 export class AmountEditorComponent implements OnInit {
     @Input()
@@ -44,11 +44,11 @@ export class AmountEditorComponent implements OnInit {
 
     displayName: string;
 
-    ngOnInit() {
+    ngOnInit () {
         this.displayName = this.table.getDisplayText(this.column);
     }
 
-    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
+    onValueChanged (row: DynamicTableRow, column: DynamicTableColumn, event: any) {
         const value: number = Number(event.target.value);
         row.value[column.id] = value;
     }

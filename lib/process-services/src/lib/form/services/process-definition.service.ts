@@ -24,40 +24,38 @@ import { catchError } from 'rxjs/operators';
 import { DynamicTableColumnOption } from '../widgets/dynamic-table/editors/models/dynamic-table-column-option.model';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ProcessDefinitionService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     private _processDefinitionsApi: ProcessDefinitionsApi;
-    get processDefinitionsApi(): ProcessDefinitionsApi {
+    get processDefinitionsApi (): ProcessDefinitionsApi {
         this._processDefinitionsApi = this._processDefinitionsApi ?? new ProcessDefinitionsApi(this.apiService.getInstance());
         return this._processDefinitionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.
-     *
      * @param processDefinitionId Process identifier
      * @param field Field identifier
      * @returns Field values
      */
-    getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<FormFieldOption[]> {
+    getRestFieldValuesByProcessId (processDefinitionId: string, field: string): Observable<FormFieldOption[]> {
         return from(this.processDefinitionsApi.getRestFieldValues(processDefinitionId, field)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
      * Gets column values of fields populated by a REST backend using a process ID.
-     *
      * @param processDefinitionId Process identifier
      * @param field Field identifier
      * @param column Column identifier
      * @returns Field values
      */
-    getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<DynamicTableColumnOption[]> {
+    getRestFieldValuesColumnByProcessId (processDefinitionId: string, field: string, column?: string): Observable<DynamicTableColumnOption[]> {
         return from(this.processDefinitionsApi.getRestTableFieldValues(processDefinitionId, field, column)).pipe(
             catchError((err) => this.handleError(err))
         );
@@ -65,11 +63,10 @@ export class ProcessDefinitionService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
-    toJson(res: any) {
+    toJson (res: any) {
         if (res) {
             return res || {};
         }
@@ -78,11 +75,10 @@ export class ProcessDefinitionService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */
-    private handleError(error: any): Observable<any> {
+    private handleError (error: any): Observable<any> {
         let errMsg = ProcessDefinitionService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = error.message

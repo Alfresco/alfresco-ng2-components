@@ -26,11 +26,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-    selector: 'adf-text-editor',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatInputModule],
-    templateUrl: './text.editor.html',
-    styleUrls: ['./text.editor.scss']
+    "selector": 'adf-text-editor',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, MatInputModule],
+    "templateUrl": './text.editor.html',
+    "styleUrls": ['./text.editor.scss']
 })
 export class TextEditorComponent implements OnInit {
     @Input()
@@ -44,11 +44,11 @@ export class TextEditorComponent implements OnInit {
 
     displayName: string;
 
-    ngOnInit() {
+    ngOnInit () {
         this.displayName = this.table.getDisplayText(this.column);
     }
 
-    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
+    onValueChanged (row: DynamicTableRow, column: DynamicTableColumn, event: any) {
         const value: any = event.target.value;
         row.value[column.id] = value;
     }

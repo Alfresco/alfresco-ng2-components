@@ -19,10 +19,10 @@ import { NgModule } from '@angular/core';
 import { ProcessNameCloudPipe } from './process-name-cloud.pipe';
 
 @NgModule({
-    declarations: [
+    "declarations": [
         ProcessNameCloudPipe
     ],
-    exports: [
+    "exports": [
         ProcessNameCloudPipe
     ]
 })

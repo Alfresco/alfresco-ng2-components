@@ -40,9 +40,9 @@ import { TaskStandaloneComponent } from '../task-standalone/task-standalone.comp
 import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
 
 @Component({
-    selector: 'adf-task-form',
-    standalone: true,
-    imports: [
+    "selector": 'adf-task-form',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatCardModule,
         EmptyContentComponent,
@@ -55,9 +55,9 @@ import { FormComponent, FormCustomOutcomesComponent } from '../../../form';
         FormComponent,
         FormCustomOutcomesComponent
     ],
-    templateUrl: './task-form.component.html',
-    styleUrls: ['./task-form.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './task-form.component.html',
+    "styleUrls": ['./task-form.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskFormComponent implements OnInit, OnChanges {
     /** (**required**) The id of the task whose details we are asking for. */
@@ -158,14 +158,14 @@ export class TaskFormComponent implements OnInit, OnChanges {
     private peopleProcessService = inject(PeopleProcessService);
     private translationService = inject(TranslationService);
 
-    ngOnInit() {
+    ngOnInit () {
         this.peopleProcessService.getCurrentUserInfo().subscribe((user) => {
             this.currentLoggedUser = user;
         });
         this.loadTask(this.taskId);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const taskId = changes['taskId'];
         if (taskId?.currentValue) {
             this.loadTask(this.taskId);
@@ -173,7 +173,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
         }
     }
 
-    loadTask(taskId: string) {
+    loadTask (taskId: string) {
         this.loading = true;
         if (taskId) {
             this.taskListService.getTaskDetails(taskId).subscribe((res) => {
@@ -194,86 +194,86 @@ export class TaskFormComponent implements OnInit, OnChanges {
         }
     }
 
-    onFormSaved(savedForm: FormModel) {
+    onFormSaved (savedForm: FormModel) {
         this.formSaved.emit(savedForm);
     }
 
-    onFormCompleted(form: FormModel) {
+    onFormCompleted (form: FormModel) {
         this.formCompleted.emit(form);
     }
 
-    onFormLoaded(form: FormModel): void {
+    onFormLoaded (form: FormModel): void {
         this.formLoaded.emit(form);
     }
 
-    onFormContentClick(content: ContentLinkModel): void {
+    onFormContentClick (content: ContentLinkModel): void {
         this.formContentClicked.emit(content);
     }
 
-    onFormExecuteOutcome(outcome: FormOutcomeEvent) {
+    onFormExecuteOutcome (outcome: FormOutcomeEvent) {
         this.executeOutcome.emit(outcome);
     }
 
-    onFormError(error: any) {
+    onFormError (error: any) {
         this.formError.emit(error);
     }
 
-    onError(error: any) {
+    onError (error: any) {
         this.error.emit(error);
     }
 
-    onCompleteTask() {
+    onCompleteTask () {
         this.taskListService.completeTask(this.taskDetails.id).subscribe(
             () => this.completed.emit(),
             (error) => this.error.emit(error)
         );
     }
 
-    onCancel() {
+    onCancel () {
         this.cancel.emit();
     }
 
-    onShowAttachForm() {
+    onShowAttachForm () {
         this.showAttachForm.emit();
     }
 
-    hasFormKey(): boolean {
+    hasFormKey (): boolean {
         return !!this.taskDetails?.formKey;
     }
 
-    isStandaloneTask(): boolean {
+    isStandaloneTask (): boolean {
         return !this.taskDetails?.processDefinitionId;
     }
 
-    isCompletedTask(): boolean {
+    isCompletedTask (): boolean {
         return !!this.taskDetails?.endDate;
     }
 
-    isCompleteButtonVisible(): boolean {
+    isCompleteButtonVisible (): boolean {
         return !this.hasFormKey() && this.isTaskActive() && this.isCompleteButtonEnabled();
     }
 
-    isTaskActive() {
+    isTaskActive () {
         return this.taskDetails?.duration === null;
     }
 
-    isAssigned(): boolean {
+    isAssigned (): boolean {
         return !!this.taskDetails.assignee;
     }
 
-    isAssignedToMe(): boolean {
+    isAssignedToMe (): boolean {
         return this.isAssigned() && this.hasEmailAddress() ? this.isEmailEqual() : this.isExternalIdEqual();
     }
 
-    isCompleteButtonEnabled(): boolean {
+    isCompleteButtonEnabled (): boolean {
         return this.isAssignedToMe() || this.canInitiatorComplete();
     }
 
-    canInitiatorComplete(): boolean {
+    canInitiatorComplete (): boolean {
         return !!this.taskDetails?.initiatorCanCompleteTask;
     }
 
-    isReadOnlyForm(): boolean {
+    isReadOnlyForm (): boolean {
         let readOnlyForm: boolean;
         if (this.isCandidateMember()) {
             readOnlyForm = this.internalReadOnlyForm || !this.isAssignedToMe();
@@ -285,7 +285,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
         return readOnlyForm;
     }
 
-    isCurrentUserInvolved(): boolean {
+    isCurrentUserInvolved (): boolean {
         let isInvolved = false;
         if (this.taskDetails.involvedPeople && this.currentLoggedUser) {
             const userInvolved = this.taskDetails.involvedPeople.find(
@@ -305,63 +305,63 @@ export class TaskFormComponent implements OnInit, OnChanges {
         return isInvolved;
     }
 
-    canCurrentUserAsInitiatorComplete(): boolean {
+    canCurrentUserAsInitiatorComplete (): boolean {
         return this.canInitiatorComplete() && this.isProcessInitiator();
     }
 
-    isProcessInitiator(): boolean {
+    isProcessInitiator (): boolean {
         return this.currentLoggedUser && this.currentLoggedUser.id === +this.taskDetails.processInstanceStartUserId;
     }
 
-    isSaveButtonVisible(): boolean {
+    isSaveButtonVisible (): boolean {
         return this.showFormSaveButton && (!this.canInitiatorComplete() || this.isAssignedToMe() || this.isCurrentUserInvolved());
     }
 
-    canCompleteNoFormTask(): boolean {
+    canCompleteNoFormTask (): boolean {
         return this.isReadOnlyForm();
     }
 
-    getCompletedTaskTranslatedMessage(): Observable<string> {
-        return this.translationService.get('ADF_TASK_FORM.COMPLETED_TASK.TITLE', { taskName: this.taskDetails.name });
+    getCompletedTaskTranslatedMessage (): Observable<string> {
+        return this.translationService.get('ADF_TASK_FORM.COMPLETED_TASK.TITLE', { "taskName": this.taskDetails.name });
     }
 
-    isCandidateMember(): boolean {
+    isCandidateMember (): boolean {
         return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
     }
 
-    isTaskClaimable(): boolean {
+    isTaskClaimable (): boolean {
         return this.isCandidateMember() && !this.isAssigned();
     }
 
-    isTaskClaimedByCandidateMember(): boolean {
+    isTaskClaimedByCandidateMember (): boolean {
         return this.isCandidateMember() && this.isAssignedToMe() && !this.isCompletedTask();
     }
 
-    reloadTask() {
+    reloadTask () {
         this.loadTask(this.taskId);
     }
 
-    onClaimTask(taskId: string) {
+    onClaimTask (taskId: string) {
         this.taskClaimed.emit(taskId);
     }
 
-    onClaimTaskError(error: any) {
+    onClaimTaskError (error: any) {
         this.error.emit(error);
     }
 
-    onUnclaimTask(taskId: string) {
+    onUnclaimTask (taskId: string) {
         this.taskUnclaimed.emit(taskId);
     }
 
-    onUnclaimTaskError(error: any) {
+    onUnclaimTaskError (error: any) {
         this.error.emit(error);
     }
 
-    private hasEmailAddress(): boolean {
+    private hasEmailAddress (): boolean {
         return !!this.taskDetails.assignee.email;
     }
 
-    private isEmailEqual(): boolean {
+    private isEmailEqual (): boolean {
         return (
             this.taskDetails.assignee &&
             this.currentLoggedUser &&
@@ -369,7 +369,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
         );
     }
 
-    private isExternalIdEqual(): boolean {
+    private isExternalIdEqual (): boolean {
         return this.taskDetails.assignee && this.currentLoggedUser && this.taskDetails.assignee.externalId === this.currentLoggedUser.externalId;
     }
 }

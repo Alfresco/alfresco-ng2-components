@@ -22,10 +22,10 @@ import { CommonModule } from '@angular/common';
 import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 
 @Component({
-    selector: 'adf-trashcan-name-column',
-    standalone: true,
-    imports: [CommonModule, NodeNameTooltipPipe],
-    template: `
+    "selector": 'adf-trashcan-name-column',
+    "standalone": true,
+    "imports": [CommonModule, NodeNameTooltipPipe],
+    "template": `
         <ng-container *ngIf="!isLibrary">
             <span class="adf-datatable-cell-value" title="{{ node | adfNodeNameTooltip }}">{{ displayText }}</span>
         </ng-container>
@@ -33,9 +33,9 @@ import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
             <span class="adf-datatable-cell-value" title="{{ displayTooltip }}">{{ displayText }}</span>
         </ng-container>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell adf-trashcan-name-column' }
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-datatable-content-cell adf-trashcan-name-column' }
 })
 export class TrashcanNameColumnComponent implements OnInit {
     @Input()
@@ -46,7 +46,7 @@ export class TrashcanNameColumnComponent implements OnInit {
     displayTooltip: string;
     node: NodeEntry;
 
-    ngOnInit() {
+    ngOnInit () {
         this.node = this.context.row.node;
         const rows: Array<ShareDataRow> = this.context.data.rows || [];
 
@@ -64,7 +64,7 @@ export class TrashcanNameColumnComponent implements OnInit {
         }
     }
 
-    makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
+    makeLibraryTitle (library: any, rows: Array<ShareDataRow>): string {
         const entries = rows.map((r: ShareDataRow) => r.node.entry);
         const { id } = library;
         const title = library.properties['cm:title'];

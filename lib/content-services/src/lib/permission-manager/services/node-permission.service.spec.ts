@@ -38,25 +38,25 @@ describe('NodePermissionService', () => {
     let searchApiService: SearchService;
     const fakePermissionElements: PermissionElement[] = [
         {
-            authorityId: fakeAuthorityResults[0].entry.properties['cm:userName'],
-            name: 'Consumer',
-            accessStatus: 'ALLOWED'
+            "authorityId": fakeAuthorityResults[0].entry.properties['cm:userName'],
+            "name": 'Consumer',
+            "accessStatus": 'ALLOWED'
         },
         {
-            authorityId: fakeAuthorityResults[1].entry.properties['cm:userName'],
-            name: 'Consumer',
-            accessStatus: 'ALLOWED'
+            "authorityId": fakeAuthorityResults[1].entry.properties['cm:userName'],
+            "name": 'Consumer',
+            "accessStatus": 'ALLOWED'
         },
         {
-            authorityId: fakeAuthorityResults[2].entry.properties['cm:authorityName'],
-            name: 'Consumer',
-            accessStatus: 'ALLOWED'
+            "authorityId": fakeAuthorityResults[2].entry.properties['cm:authorityName'],
+            "name": 'Consumer',
+            "accessStatus": 'ALLOWED'
         }
     ];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(NodePermissionService);
         searchApiService = TestBed.inject(SearchService);
@@ -66,8 +66,8 @@ describe('NodePermissionService', () => {
     const returnUpdatedNode = (nodeBody: Node) =>
         of(
             new Node({
-                id: 'fake-updated-node',
-                permissions: nodeBody.permissions
+                "id": 'fake-updated-node',
+                "permissions": nodeBody.permissions
             })
         );
 
@@ -98,9 +98,9 @@ describe('NodePermissionService', () => {
     it('should be able to update a locally set permission role', (done) => {
         const fakeAccessStatus: any = 'DENIED';
         const fakePermission: PermissionElement = {
-            authorityId: 'GROUP_EVERYONE',
-            name: 'Contributor',
-            accessStatus: fakeAccessStatus
+            "authorityId": 'GROUP_EVERYONE',
+            "name": 'Contributor',
+            "accessStatus": fakeAccessStatus
         };
 
         spyOn(nodeService, 'updateNode').and.callFake((_, permissionBody) => returnUpdatedNode(permissionBody));
@@ -118,9 +118,9 @@ describe('NodePermissionService', () => {
 
     it('should be able to remove a locally set permission', (done) => {
         const fakePermission = {
-            authorityId: 'FAKE_PERSON_1',
-            name: 'Contributor',
-            accessStatus: 'ALLOWED'
+            "authorityId": 'FAKE_PERSON_1',
+            "name": 'Contributor',
+            "accessStatus": 'ALLOWED'
         } as PermissionElement;
         spyOn(nodeService, 'updateNode').and.callFake((_, permissionBody) => returnUpdatedNode(permissionBody));
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeToRemovePermission));
@@ -186,9 +186,9 @@ describe('NodePermissionService', () => {
 
         const fakeDuplicateAuthority: PermissionElement[] = [
             {
-                authorityId: 'GROUP_EVERYONE',
-                accessStatus: 'ALLOWED',
-                name: 'Contributor'
+                "authorityId": 'GROUP_EVERYONE',
+                "accessStatus": 'ALLOWED',
+                "name": 'Contributor'
             }
         ];
 

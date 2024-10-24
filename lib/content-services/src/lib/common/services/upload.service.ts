@@ -30,7 +30,7 @@ const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class UploadService {
     queue: FileModel[] = [];
@@ -57,19 +57,19 @@ export class UploadService {
     private isThumbnailGenerationEnabled: boolean;
 
     private _uploadApi: UploadApi;
-    get uploadApi(): UploadApi {
+    get uploadApi (): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
     }
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
     private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
+    get versionsApi (): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
@@ -78,13 +78,13 @@ export class UploadService {
     protected appConfigService = inject(AppConfigService);
     protected discoveryApiService = inject(DiscoveryApiService);
 
-    constructor() {
+    constructor () {
         this.discoveryApiService.ecmProductInfo$.pipe(filter((info) => !!info)).subscribe(({ status }) => {
             this.isThumbnailGenerationEnabled = status.isThumbnailGenerationEnabled;
         });
     }
 
-    clearCache() {
+    clearCache () {
         this.cache = {};
     }
 
@@ -92,7 +92,7 @@ export class UploadService {
      * Returns the number of concurrent threads for uploading.
      * @returns Number of concurrent threads (default 1)
      */
-    getThreadsCount(): number {
+    getThreadsCount (): number {
         return this.appConfigService.get<number>('upload.threads', 1);
     }
 
@@ -100,7 +100,7 @@ export class UploadService {
      * Checks whether the service still has files uploading or awaiting upload.
      * @returns True if files in the queue are still uploading, false otherwise
      */
-    isUploading(): boolean {
+    isUploading (): boolean {
         const finishedFileStates = [
             FileUploadStatus.Complete,
             FileUploadStatus.Cancelled,
@@ -118,7 +118,7 @@ export class UploadService {
      * Gets the file Queue
      * @returns Array of files that form the queue
      */
-    getQueue(): FileModel[] {
+    getQueue (): FileModel[] {
         return this.queue;
     }
 
@@ -127,7 +127,7 @@ export class UploadService {
      * @param files One or more separate parameters or an array of files to queue
      * @returns Array of files that were not blocked from upload by the ignore list
      */
-    addToQueue(...files: FileModel[]): FileModel[] {
+    addToQueue (...files: FileModel[]): FileModel[] {
         const allowedFiles = files.filter((currentFile) => this.filterElement(currentFile));
         this.queue = this.queue.concat(allowedFiles);
         this.queueChanged.next(this.queue);
@@ -139,7 +139,7 @@ export class UploadService {
      * @param successEmitter Emitter to invoke on file success status change
      * @param errorEmitter Emitter to invoke on file error status change
      */
-    uploadFilesInTheQueue(successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): void {
+    uploadFilesInTheQueue (successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): void {
         const files = this.getFilesToUpload();
 
         if (files && files.length > 0) {
@@ -169,7 +169,7 @@ export class UploadService {
      * to prevent having files that were aborted but still uploaded.
      * @param files One or more separate parameters or an array of files specifying uploads to cancel
      */
-    cancelUpload(...files: FileModel[]) {
+    cancelUpload (...files: FileModel[]) {
         files.forEach((file) => {
             const promise = this.cache[file.name];
             if (promise) {
@@ -191,7 +191,7 @@ export class UploadService {
     }
 
     /** Clears the upload queue */
-    clearQueue() {
+    clearQueue () {
         this.queue = [];
         this.totalComplete = 0;
         this.totalAborted = 0;
@@ -203,9 +203,9 @@ export class UploadService {
      * @param file The target file
      * @returns Promise that is resolved if the upload is successful or error otherwise
      */
-    getUploadPromise(file: FileModel): any {
+    getUploadPromise (file: FileModel): any {
         const opts: any = {
-            include: ['allowableOperations']
+            "include": ['allowableOperations']
         };
 
         if (this.isThumbnailGenerationEnabled) {
@@ -232,14 +232,14 @@ export class UploadService {
         if (file.id) {
             return this.nodesApi.updateNodeContent(file.id, file.file as any, opts);
         } else {
-            const nodeBody: NodeBodyCreate = { ...file.options, name: file.name, nodeType: file.options.nodeType };
+            const nodeBody: NodeBodyCreate = { ...file.options, "name": file.name, "nodeType": file.options.nodeType };
             delete nodeBody['versioningEnabled'];
 
             return this.uploadApi.uploadFile(file.file, file.options.path, file.options.parentId, nodeBody, opts);
         }
     }
 
-    private getFilesToUpload(): FileModel[] {
+    private getFilesToUpload (): FileModel[] {
         const cached = Object.keys(this.cache);
         const threadsCount = this.getThreadsCount();
 
@@ -254,7 +254,7 @@ export class UploadService {
         return files;
     }
 
-    private beginUpload(file: FileModel, successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): any {
+    private beginUpload (file: FileModel, successEmitter?: EventEmitter<any>, errorEmitter?: EventEmitter<any>): any {
         const promise = this.getUploadPromise(file);
         promise
             .on('progress', (progress: FileUploadProgress) => {
@@ -263,13 +263,13 @@ export class UploadService {
             .on('abort', () => {
                 this.onUploadAborted(file);
                 if (successEmitter) {
-                    successEmitter.emit({ value: 'File aborted' });
+                    successEmitter.emit({ "value": 'File aborted' });
                 }
             })
             .on('error', (err) => {
                 this.onUploadError(file, err);
                 if (errorEmitter) {
-                    errorEmitter.emit({ value: 'Error file uploaded' });
+                    errorEmitter.emit({ "value": 'Error file uploaded' });
                 }
             })
             .on('success', (data) => {
@@ -281,12 +281,12 @@ export class UploadService {
                         this.deleteAbortedNodeVersion(data.entry.id, data.entry.properties['cm:versionLabel']);
                     }
                     if (successEmitter) {
-                        successEmitter.emit({ value: 'File deleted' });
+                        successEmitter.emit({ "value": 'File deleted' });
                     }
                 } else {
                     this.onUploadComplete(file, data);
                     if (successEmitter) {
-                        successEmitter.emit({ value: data });
+                        successEmitter.emit({ "value": data });
                     }
                 }
             })
@@ -295,7 +295,7 @@ export class UploadService {
         return promise;
     }
 
-    private onUploadStarting(file: FileModel): void {
+    private onUploadStarting (file: FileModel): void {
         if (file) {
             file.status = FileUploadStatus.Starting;
             const event = new FileUploadEvent(file, FileUploadStatus.Starting);
@@ -304,7 +304,7 @@ export class UploadService {
         }
     }
 
-    private onUploadProgress(file: FileModel, progress: FileUploadProgress): void {
+    private onUploadProgress (file: FileModel, progress: FileUploadProgress): void {
         if (file) {
             file.progress = progress;
             file.status = FileUploadStatus.Progress;
@@ -315,7 +315,7 @@ export class UploadService {
         }
     }
 
-    private onUploadError(file: FileModel, error: { status?: number }): void {
+    private onUploadError (file: FileModel, error: { status?: number }): void {
         if (file) {
             file.errorCode = error?.status;
             file.status = FileUploadStatus.Error;
@@ -332,7 +332,7 @@ export class UploadService {
         }
     }
 
-    private onUploadComplete(file: FileModel, data: any): void {
+    private onUploadComplete (file: FileModel, data: any): void {
         if (file) {
             file.status = FileUploadStatus.Complete;
             file.data = data;
@@ -348,7 +348,7 @@ export class UploadService {
         }
     }
 
-    private onUploadAborted(file: FileModel): void {
+    private onUploadAborted (file: FileModel): void {
         if (file) {
             file.status = FileUploadStatus.Aborted;
             this.totalAborted++;
@@ -359,7 +359,7 @@ export class UploadService {
         }
     }
 
-    private onUploadCancelled(file: FileModel): void {
+    private onUploadCancelled (file: FileModel): void {
         if (file) {
             file.status = FileUploadStatus.Cancelled;
 
@@ -369,7 +369,7 @@ export class UploadService {
         }
     }
 
-    private onUploadDeleted(file: FileModel): void {
+    private onUploadDeleted (file: FileModel): void {
         if (file) {
             file.status = FileUploadStatus.Deleted;
             this.totalComplete--;
@@ -380,7 +380,7 @@ export class UploadService {
         }
     }
 
-    private getAction(file: FileModel) {
+    private getAction (file: FileModel) {
         const actions = {
             [FileUploadStatus.Pending]: () => this.onUploadCancelled(file),
             [FileUploadStatus.Deleted]: () => this.onUploadDeleted(file),
@@ -390,19 +390,19 @@ export class UploadService {
         return actions[file.status];
     }
 
-    private deleteAbortedNode(nodeId: string) {
-        this.nodesApi.deleteNode(nodeId, { permanent: true }).then(() => (this.abortedFile = undefined));
+    private deleteAbortedNode (nodeId: string) {
+        this.nodesApi.deleteNode(nodeId, { "permanent": true }).then(() => (this.abortedFile = undefined));
     }
 
-    private deleteAbortedNodeVersion(nodeId: string, versionId: string) {
+    private deleteAbortedNodeVersion (nodeId: string, versionId: string) {
         this.versionsApi.deleteVersion(nodeId, versionId).then(() => (this.abortedFile = undefined));
     }
 
-    private isSaveToAbortFile(file: FileModel): boolean {
+    private isSaveToAbortFile (file: FileModel): boolean {
         return file.size > MIN_CANCELLABLE_FILE_SIZE && file.progress.percent < MAX_CANCELLABLE_FILE_PERCENTAGE;
     }
 
-    private filterElement(file: FileModel) {
+    private filterElement (file: FileModel) {
         this.excludedFileList = this.appConfigService.get<string[]>('files.excluded');
         this.excludedFoldersList = this.appConfigService.get<string[]>('folders.excluded');
         let isAllowed = true;
@@ -419,7 +419,7 @@ export class UploadService {
         return isAllowed;
     }
 
-    private isParentFolderAllowed(file: FileModel): boolean {
+    private isParentFolderAllowed (file: FileModel): boolean {
         let isAllowed: boolean = true;
         const currentFile: any = file.file;
         const fileRelativePath = currentFile.webkitRelativePath ? currentFile.webkitRelativePath : file.options.path;
@@ -435,7 +435,7 @@ export class UploadService {
         return isAllowed;
     }
 
-    private isFileNameAllowed(file: FileModel): boolean {
+    private isFileNameAllowed (file: FileModel): boolean {
         return (
             this.excludedFileList.filter((pattern) => {
                 const minimatch = new Minimatch(pattern, this.matchingOptions);

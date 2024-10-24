@@ -27,23 +27,23 @@ import { ErrorMessageModel } from '../core';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    selector: 'error-widget',
-    standalone: true,
-    templateUrl: './error.component.html',
-    styleUrls: ['./error.component.scss'],
-    animations: [
+    "selector": 'error-widget',
+    "standalone": true,
+    "templateUrl": './error.component.html',
+    "styleUrls": ['./error.component.scss'],
+    "animations": [
         trigger('transitionMessages', [
-            state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),
+            state('enter', style({ "opacity": 1, "transform": 'translateY(0%)' })),
             transition('void => enter', [
                 style({
-                    opacity: 0,
-                    transform: 'translateY(-100%)'
+                    "opacity": 0,
+                    "transform": 'translateY(-100%)'
                 }),
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')
             ])
         ])
     ],
-    host: {
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -54,8 +54,8 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, MatIconModule, TranslateModule],
-    encapsulation: ViewEncapsulation.None
+    "imports": [NgIf, MatIconModule, TranslateModule],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
     @Input()
@@ -68,11 +68,11 @@ export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
 
     subscriptAnimationState: string = '';
 
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['required']) {
             this.required = changes.required.currentValue;
             this.subscriptAnimationState = 'enter';

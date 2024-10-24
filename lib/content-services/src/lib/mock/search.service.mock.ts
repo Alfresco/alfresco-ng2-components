@@ -16,27 +16,27 @@
  */
 
 export const fakeSearch = {
-    list: {
-        pagination: {
-            count: 1,
-            hasMoreItems: false,
-            totalItems: 1,
-            skipCount: 0,
-            maxItems: 100
+    "list": {
+        "pagination": {
+            "count": 1,
+            "hasMoreItems": false,
+            "totalItems": 1,
+            "skipCount": 0,
+            "maxItems": 100
         },
-        entries: [
+        "entries": [
             {
-                entry: {
-                    id: '123',
-                    name: 'MyDoc',
-                    content: {
-                        mimetype: 'text/plain'
+                "entry": {
+                    "id": '123',
+                    "name": 'MyDoc',
+                    "content": {
+                        "mimetype": 'text/plain'
                     },
-                    createdByUser: {
-                        displayName: 'John Doe'
+                    "createdByUser": {
+                        "displayName": 'John Doe'
                     },
-                    modifiedByUser: {
-                        displayName: 'John Doe'
+                    "modifiedByUser": {
+                        "displayName": 'John Doe'
                     }
                 }
             }
@@ -45,19 +45,19 @@ export const fakeSearch = {
 };
 
 export const mockError = {
-    error: {
-        errorKey: 'Search failed',
-        statusCode: 400,
-        briefSummary: '08220082 search failed',
-        stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-        descriptionURL: 'https://api-explorer.alfresco.com'
+    "error": {
+        "errorKey": 'Search failed',
+        "statusCode": 400,
+        "briefSummary": '08220082 search failed',
+        "stackTrace": 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+        "descriptionURL": 'https://api-explorer.alfresco.com'
     }
 };
 
 export const searchMockApi = {
-    core: {
-        queriesApi: {
-            findNodes: () => Promise.resolve(fakeSearch)
+    "core": {
+        "queriesApi": {
+            "findNodes": () => Promise.resolve(fakeSearch)
         }
     }
 };

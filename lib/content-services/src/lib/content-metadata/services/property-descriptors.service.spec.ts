@@ -27,7 +27,7 @@ describe('PropertyDescriptorLoaderService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(PropertyDescriptorsService);
         classesApi = service['classesApi'];
@@ -47,19 +47,19 @@ describe('PropertyDescriptorLoaderService', () => {
 
     it('should merge the forked values', (done) => {
         const exifResponse: PropertyGroup = {
-            name: 'exif:exif',
-            title: '',
-            properties: {
-                'exif:1': { title: 'exif:1:id', name: 'exif:1', dataType: '', mandatory: false, multiValued: false },
-                'exif:2': { title: 'exif:2:id', name: 'exif:2', dataType: '', mandatory: false, multiValued: false }
+            "name": 'exif:exif',
+            "title": '',
+            "properties": {
+                'exif:1': { "title": 'exif:1:id', "name": 'exif:1', "dataType": '', "mandatory": false, "multiValued": false },
+                'exif:2': { "title": 'exif:2:id', "name": 'exif:2', "dataType": '', "mandatory": false, "multiValued": false }
             }
         };
 
         const contentResponse: PropertyGroup = {
-            name: 'cm:content',
-            title: '',
-            properties: {
-                'cm:content': { title: 'cm:content:id', name: 'cm:content', dataType: '', mandatory: false, multiValued: false }
+            "name": 'cm:content',
+            "title": '',
+            "properties": {
+                'cm:content': { "title": 'cm:content:id', "name": 'cm:content', "dataType": '', "mandatory": false, "multiValued": false }
             }
         };
 
@@ -69,11 +69,11 @@ describe('PropertyDescriptorLoaderService', () => {
         spyOn(classesApi, 'getClass').and.callFake(() => Promise.resolve(apiResponses[counter++]));
 
         service.load(['exif:exif', 'cm:content']).subscribe({
-            next: (data) => {
+            "next": (data) => {
                 expect(data['exif:exif']).toBe(exifResponse);
                 expect(data['cm:content']).toBe(contentResponse);
             },
-            complete: () => done()
+            "complete": () => done()
         });
     });
 });

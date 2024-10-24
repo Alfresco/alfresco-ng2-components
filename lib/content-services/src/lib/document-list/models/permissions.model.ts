@@ -20,7 +20,7 @@ export class PermissionModel {
     action: string;
     permission: string;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         if (obj) {
             this.type = obj.type || null;
             this.action = obj.action || null;

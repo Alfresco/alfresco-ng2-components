@@ -24,8 +24,8 @@ export const INPUT_FOCUS_CSS_CLASS = 'adf-file-draggable-input-focus';
 export const DROP_EFFECT = 'copy';
 
 @Directive({
-    selector: '[adf-file-draggable]',
-    standalone: true
+    "selector": '[adf-file-draggable]',
+    "standalone": true
 })
 export class FileDraggableDirective implements OnInit, OnDestroy {
     files: File[];
@@ -44,11 +44,11 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     private element: HTMLElement;
 
-    constructor(el: ElementRef, private ngZone: NgZone) {
+    constructor (el: ElementRef, private ngZone: NgZone) {
         this.element = el.nativeElement;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.ngZone.runOutsideAngular(() => {
             this.element.addEventListener('dragenter', this.onDragEnter.bind(this));
             this.element.addEventListener('dragover', this.onDragOver.bind(this));
@@ -57,7 +57,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.element.removeEventListener('dragenter', this.onDragEnter);
         this.element.removeEventListener('dragover', this.onDragOver);
         this.element.removeEventListener('dragleave', this.onDragLeave);
@@ -68,7 +68,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * Method called when files is dropped in the drag and drop area.
      * @param event DOM event.
      */
-    onDropFiles(event: any): void {
+    onDropFiles (event: any): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
 
@@ -112,7 +112,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * Change the style of the drag area when a file drag in.
      * @param event - DOM event.
      */
-    onDragEnter(event: DragEvent): void {
+    onDragEnter (event: DragEvent): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
 
@@ -128,7 +128,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * Change the style of the drag area when a file drag out.
      * @param event - DOM event.
      */
-    onDragLeave(event: Event): void {
+    onDragLeave (event: Event): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.element.classList.remove(INPUT_FOCUS_CSS_CLASS);
@@ -139,7 +139,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * Change the style of the drag area when a file is over the drag area.
      * @param event drag event
      */
-    onDragOver(event: DragEvent): void {
+    onDragOver (event: DragEvent): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
 
@@ -155,7 +155,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * Prevent default and stop propagation of the DOM event.
      * @param event DOM event
      */
-    preventDefault(event: Event): void {
+    preventDefault (event: Event): void {
         event.stopPropagation();
         event.preventDefault();
     }

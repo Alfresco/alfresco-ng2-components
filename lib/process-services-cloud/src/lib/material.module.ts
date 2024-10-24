@@ -39,8 +39,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
-    providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }],
-    imports: [
+    "providers": [{ "provide": MAT_FORM_FIELD_DEFAULT_OPTIONS, "useValue": { "floatLabel": 'never' } }],
+    "imports": [
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -64,7 +64,7 @@ import { MatTabsModule } from '@angular/material/tabs';
         MatMenuModule,
         MatExpansionModule
     ],
-    exports: [
+    "exports": [
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,

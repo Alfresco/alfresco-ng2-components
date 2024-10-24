@@ -23,11 +23,11 @@ declare let moment: any;
  * @deprecated this pipe is deprecated and should no longer be used
  */
 @Pipe({
-    name: 'adfMomentDate',
-    standalone: true
+    "name": 'adfMomentDate',
+    "standalone": true
 })
 export class MomentDatePipe implements PipeTransform {
-    transform(value: any, dateFormat: string): any {
+    transform (value: any, dateFormat: string): any {
         return moment(value, dateFormat);
     }
 }

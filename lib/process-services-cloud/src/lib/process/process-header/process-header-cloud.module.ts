@@ -22,13 +22,13 @@ import { CoreModule } from '@alfresco/adf-core';
 import { ProcessHeaderCloudComponent } from './components/process-header-cloud.component';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         MaterialModule,
         CoreModule
 
     ],
-    declarations: [ProcessHeaderCloudComponent],
-    exports: [ProcessHeaderCloudComponent]
+    "declarations": [ProcessHeaderCloudComponent],
+    "exports": [ProcessHeaderCloudComponent]
 })
 export class ProcessHeaderCloudModule { }

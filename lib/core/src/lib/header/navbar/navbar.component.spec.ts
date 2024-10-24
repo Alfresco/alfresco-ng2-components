@@ -27,7 +27,7 @@ describe('NavbarComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CommonModule, RouterModule.forRoot([]), MatButtonModule, NavbarComponent]
+            "imports": [CommonModule, RouterModule.forRoot([]), MatButtonModule, NavbarComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(NavbarComponent);
@@ -37,8 +37,8 @@ describe('NavbarComponent', () => {
 
     it('should render correct number of navbar items', () => {
         const testItems = [
-            { label: 'Home', routerLink: '/home' },
-            { label: 'About', routerLink: '/about' }
+            { "label": 'Home', "routerLink": '/home' },
+            { "label": 'About', "routerLink": '/about' }
         ];
         component.items = testItems;
         fixture.detectChanges();
@@ -48,8 +48,8 @@ describe('NavbarComponent', () => {
 
     it('should render navbar items with correct label and router-link', () => {
         const testItems = [
-            { label: 'Home', routerLink: '/home' },
-            { label: 'About', routerLink: '/about' }
+            { "label": 'Home', "routerLink": '/home' },
+            { "label": 'About', "routerLink": '/about' }
         ];
         component.items = testItems;
         fixture.detectChanges();

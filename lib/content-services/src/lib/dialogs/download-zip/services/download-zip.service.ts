@@ -21,23 +21,23 @@ import { Observable, from } from 'rxjs';
 import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class DownloadZipService {
     private _downloadsApi: DownloadsApi;
-    get downloadsApi(): DownloadsApi {
+    get downloadsApi (): DownloadsApi {
         this._downloadsApi = this._downloadsApi ?? new DownloadsApi(this.apiService.getInstance());
         return this._downloadsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Creates a new download.
      * @param payload Object containing the node IDs of the items to add to the ZIP file
      * @returns Status object for the download
      */
-    createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
+    createDownload (payload: DownloadBodyCreate): Observable<DownloadEntry> {
         return from(this.downloadsApi.createDownload(payload));
     }
 
@@ -46,7 +46,7 @@ export class DownloadZipService {
      * @param downloadId ID of the download node
      * @returns Status object for the download
      */
-    getDownload(downloadId: string): Observable<DownloadEntry> {
+    getDownload (downloadId: string): Observable<DownloadEntry> {
         return from(this.downloadsApi.getDownload(downloadId));
     }
 
@@ -54,7 +54,7 @@ export class DownloadZipService {
      * Cancels a download.
      * @param downloadId ID of the target download node
      */
-    cancelDownload(downloadId: string) {
+    cancelDownload (downloadId: string) {
         this.downloadsApi.cancelDownload(downloadId);
     }
 }

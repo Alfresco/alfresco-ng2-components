@@ -24,30 +24,30 @@ import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-conten
 declare let jasmine: any;
 
 const firstInvolvedUser: LightUserRepresentation = {
-    id: 1,
-    email: 'fake-user1@fake.com',
-    firstName: 'fakeName1',
-    lastName: 'fakeLast1'
+    "id": 1,
+    "email": 'fake-user1@fake.com',
+    "firstName": 'fakeName1',
+    "lastName": 'fakeLast1'
 };
 
 const secondInvolvedUser: LightUserRepresentation = {
-    id: 2,
-    email: 'fake-user2@fake.com',
-    firstName: 'fakeName2',
-    lastName: 'fakeLast2'
+    "id": 2,
+    "email": 'fake-user2@fake.com',
+    "firstName": 'fakeName2',
+    "lastName": 'fakeLast2'
 };
 
 const fakeInvolveUserList: LightUserRepresentation[] = [firstInvolvedUser, secondInvolvedUser];
 
-const errorResponse = { error: new Error('Unsuccessful HTTP response') };
+const errorResponse = { "error": new Error('Unsuccessful HTTP response') };
 
 describe('PeopleProcessService', () => {
     let service: PeopleProcessService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            "imports": [CoreTestingModule],
+            "providers": [{ "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(PeopleProcessService);
     });
@@ -72,9 +72,9 @@ describe('PeopleProcessService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { data: fakeInvolveUserList }
+                "status": 200,
+                "contentType": 'json',
+                "responseText": { "data": fakeInvolveUserList }
             });
         }));
 
@@ -87,9 +87,9 @@ describe('PeopleProcessService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: { data: fakeInvolveUserList }
+                "status": 200,
+                "contentType": 'json',
+                "responseText": { "data": fakeInvolveUserList }
             });
         }));
 
@@ -106,9 +106,9 @@ describe('PeopleProcessService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {}
+                "status": 200,
+                "contentType": 'json',
+                "responseText": {}
             });
         }));
 
@@ -121,7 +121,7 @@ describe('PeopleProcessService', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
+                "status": 403
             });
         }));
 
@@ -132,7 +132,7 @@ describe('PeopleProcessService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
+                "status": 200
             });
         }));
 
@@ -145,7 +145,7 @@ describe('PeopleProcessService', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
+                "status": 403
             });
         }));
 
@@ -156,7 +156,7 @@ describe('PeopleProcessService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
+                "status": 200
             });
         }));
 
@@ -169,7 +169,7 @@ describe('PeopleProcessService', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
+                "status": 403
             });
         }));
     });

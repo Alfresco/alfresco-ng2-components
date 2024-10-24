@@ -25,9 +25,9 @@ import { NewVersionUploaderDialogData } from '@alfresco/adf-content-services';
 export const RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
 @Component({
-    selector: 'adf-cloud-file-properties-table',
-    templateUrl: './file-properties-table-cloud.component.html',
-    styleUrls: ['./file-properties-table-cloud.component.scss']
+    "selector": 'adf-cloud-file-properties-table',
+    "templateUrl": './file-properties-table-cloud.component.html',
+    "styleUrls": ['./file-properties-table-cloud.component.scss']
 })
 export class FilePropertiesTableCloudComponent {
     @Input()
@@ -66,43 +66,43 @@ export class FilePropertiesTableCloudComponent {
     @Output()
     removeAttachFile: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private localizedDatePipe: LocalizedDatePipe, private thumbnailService: ThumbnailService) {}
+    constructor (private localizedDatePipe: LocalizedDatePipe, private thumbnailService: ThumbnailService) {}
 
-    onRowClicked(file?: Node) {
+    onRowClicked (file?: Node) {
         this.rowClick.emit(file);
     }
 
-    onAttachFileClicked(nodeSelector: any) {
+    onAttachFileClicked (nodeSelector: any) {
         this.attachFileClick.emit(nodeSelector);
     }
 
-    downloadContent(file: Node) {
+    downloadContent (file: Node) {
         this.downloadFile.emit(file);
     }
 
-    onUploadNewFileVersion(customEvent: any, node: Node) {
+    onUploadNewFileVersion (customEvent: any, node: Node) {
         const newVersionUploaderDialogData: NewVersionUploaderDialogData = {
-            file: customEvent.detail.files[0].file,
+            "file": customEvent.detail.files[0].file,
             node,
-            showComments: true,
-            allowDownload: true
+            "showComments": true,
+            "allowDownload": true
         };
         this.uploadNewFileVersion.emit(newVersionUploaderDialogData);
     }
 
-    contentModelFormFileHandler(file?: any) {
+    contentModelFormFileHandler (file?: any) {
         this.contentModelFileHandler.emit(file);
     }
 
-    onRemoveAttachFile(file: any) {
+    onRemoveAttachFile (file: any) {
         this.removeAttachFile.emit(file);
     }
 
-    getIcon(mimeType: string): string {
+    getIcon (mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    getColumnValue(file, displayableCMProperty): string {
+    getColumnValue (file, displayableCMProperty): string {
         if (!file.properties[displayableCMProperty.prefixedName]) {
             const fieldProperty = this.field.params.displayableCMProperties?.find((property) => property.name === displayableCMProperty.name);
             return fieldProperty.defaultValue ? this.checkDateTypeAndTransform(displayableCMProperty.dataType, fieldProperty.defaultValue) : '--';
@@ -112,7 +112,7 @@ export class FilePropertiesTableCloudComponent {
             : '--';
     }
 
-    checkDateTypeAndTransform(dataType, value): string {
+    checkDateTypeAndTransform (dataType, value): string {
         if (dataType === 'd:date') {
             return this.localizedDatePipe.transform(value);
         } else if (dataType === 'd:datetime') {
@@ -121,7 +121,7 @@ export class FilePropertiesTableCloudComponent {
         return value;
     }
 
-    displayMenuOption(option: string): boolean {
+    displayMenuOption (option: string): boolean {
         return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== RETRIEVE_METADATA_OPTION;
     }
 }

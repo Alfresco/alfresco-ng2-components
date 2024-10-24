@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    template: `
+    "template": `
     <button id="sample-button-permission" adf-inherit-permission [nodeId]="nodeId"
             (updated)="onUpdate($event)"> PERMISSION </button>
         <span id="update-notification" *ngIf="updatedNode"> NODE UPDATED </span>
@@ -29,9 +29,9 @@ export class SimpleInheritedPermissionTestComponent {
     nodeId: string = 'fake-node-id';
     updatedNode: boolean = false;
 
-    constructor() {}
+    constructor () {}
 
-    onUpdate(node: any) {
+    onUpdate (node: any) {
         this.updatedNode = node.permissions?.isInheritanceEnabled ?? false;
     }
 }

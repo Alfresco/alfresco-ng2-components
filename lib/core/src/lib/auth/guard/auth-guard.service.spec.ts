@@ -43,23 +43,23 @@ describe('AuthGuardService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, RouterTestingModule, NoopAuthModule],
-            providers: [
+            "imports": [NoopTranslateModule, MatDialogModule, RouterTestingModule, NoopAuthModule],
+            "providers": [
                 AppConfigService,
-                { provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of(), init: () => {} } },
+                { "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of(), "init": () => {} } },
                 {
-                    provide: OidcAuthenticationService,
-                    useValue: {
-                        ssoLogin: () => {},
-                        isPublicUrl: () => false,
-                        hasValidIdToken: () => false,
-                        shouldPerformSsoLogin$: of(true)
+                    "provide": OidcAuthenticationService,
+                    "useValue": {
+                        "ssoLogin": () => {},
+                        "isPublicUrl": () => false,
+                        "hasValidIdToken": () => false,
+                        "shouldPerformSsoLogin$": of(true)
                     }
                 }
             ]
         });
         localStorage.clear();
-        state = { url: 'some-url' } as RouterStateSnapshot;
+        state = { "url": 'some-url' } as RouterStateSnapshot;
         authService = TestBed.inject(AuthenticationService);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
         oidcAuthenticationService = TestBed.inject(OidcAuthenticationService);
@@ -165,8 +165,8 @@ describe('AuthGuardService', () => {
         await TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL',
-            url: 'some-url'
+            "provider": 'ALL',
+            "url": 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
     });
@@ -180,8 +180,8 @@ describe('AuthGuardService', () => {
         await TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL',
-            url: 'some-url;q=query'
+            "provider": 'ALL',
+            "url": 'some-url;q=query'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url;q=query'));
     });
@@ -193,8 +193,8 @@ describe('AuthGuardService', () => {
         await TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL',
-            url: 'some-url'
+            "provider": 'ALL',
+            "url": 'some-url'
         });
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/fakeLoginRoute?redirectUrl=some-url'));
     });
@@ -206,8 +206,8 @@ describe('AuthGuardService', () => {
         await TestBed.runInInjectionContext(() => AuthGuard(route, state));
 
         expect(basicAlfrescoAuthService.setRedirect).toHaveBeenCalledWith({
-            provider: 'ALL',
-            url: '/'
+            "provider": 'ALL',
+            "url": '/'
         });
     });
 });

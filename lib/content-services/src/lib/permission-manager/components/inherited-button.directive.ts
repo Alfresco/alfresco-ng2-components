@@ -23,10 +23,10 @@ import { NodesApiService } from '../../common/services/nodes-api.service';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 
 @Directive({
-    selector: 'button[adf-inherit-permission], mat-button-toggle[adf-inherit-permission]',
-    standalone: true,
-    host: {
-        role: 'button',
+    "selector": 'button[adf-inherit-permission], mat-button-toggle[adf-inherit-permission]',
+    "standalone": true,
+    "host": {
+        "role": 'button',
         '(click)': 'onInheritPermissionClicked()'
     }
 })
@@ -43,13 +43,13 @@ export class InheritPermissionDirective {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private nodeService: NodesApiService, private contentService: ContentService) {}
+    constructor (private nodeService: NodesApiService, private contentService: ContentService) {}
 
-    onInheritPermissionClicked() {
+    onInheritPermissionClicked () {
         this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {
             if (this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
-                const nodeBody = { permissions: { isInheritanceEnabled: !node?.permissions?.isInheritanceEnabled ?? false } };
-                this.nodeService.updateNode(this.nodeId, nodeBody, { include: ['permissions'] }).subscribe(
+                const nodeBody = { "permissions": { "isInheritanceEnabled": !node?.permissions?.isInheritanceEnabled ?? false } };
+                this.nodeService.updateNode(this.nodeId, nodeBody, { "include": ['permissions'] }).subscribe(
                     (nodeUpdated: Node) => {
                         this.updated.emit(nodeUpdated);
                     },

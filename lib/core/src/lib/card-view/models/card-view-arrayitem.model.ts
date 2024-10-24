@@ -31,12 +31,12 @@ export class CardViewArrayItemModel extends CardViewBaseItemModel implements Car
     value: Observable<CardViewArrayItem[]>;
     noOfItemsToDisplay: number;
 
-    constructor(cardViewArrayItemProperties: CardViewArrayItemProperties) {
+    constructor (cardViewArrayItemProperties: CardViewArrayItemProperties) {
         super(cardViewArrayItemProperties);
         this.noOfItemsToDisplay = cardViewArrayItemProperties.noOfItemsToDisplay;
     }
 
-    get displayValue(): Observable<CardViewArrayItem[]> {
+    get displayValue (): Observable<CardViewArrayItem[]> {
         return this.value;
     }
 }

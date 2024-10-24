@@ -28,10 +28,10 @@ import { map, takeUntil } from 'rxjs/operators';
 const PRESET_KEY = 'adf-cloud-service-task-list.presets';
 
 @Component({
-    selector: 'adf-cloud-service-task-list',
-    templateUrl: './base-task-list-cloud.component.html',
-    styleUrls: ['./base-task-list-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-service-task-list',
+    "templateUrl": './base-task-list-cloud.component.html',
+    "styleUrls": ['./base-task-list-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent implements OnDestroy {
     @Input()
@@ -44,7 +44,7 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    constructor(
+    constructor (
         private serviceTaskListCloudService: ServiceTaskListCloudService,
         appConfigService: AppConfigService,
         taskCloudService: TaskCloudService,
@@ -54,12 +54,12 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroyServiceTaskList$.next(true);
         this.onDestroyServiceTaskList$.complete();
     }
 
-    reload() {
+    reload () {
         this.isReloadingSubject$.next(true);
 
         this.requestNode = this.createRequestNode();
@@ -84,28 +84,28 @@ export class ServiceTaskListCloudComponent extends BaseTaskListCloudComponent im
         }
     }
 
-    createRequestNode(): ServiceTaskQueryCloudRequestModel {
+    createRequestNode (): ServiceTaskQueryCloudRequestModel {
         const requestNode: ServiceTaskQueryCloudRequestModel = {
-            appName: this.appName,
-            maxItems: this.size,
-            skipCount: this.skipCount,
-            sorting: this.sorting,
-            id: this.queryParams?.serviceTaskId,
-            environmentId: this.queryParams?.environmentId,
-            activityName: this.queryParams?.activityName,
-            activityType: this.queryParams?.activityType,
-            completedDate: this.queryParams?.completedDate,
-            elementId: this.queryParams?.elementId,
-            executionId: this.queryParams?.executionId,
-            processDefinitionId: this.queryParams?.processDefinitionId,
-            processDefinitionKey: this.queryParams?.processDefinitionKey,
-            processDefinitionVersion: this.queryParams?.processDefinitionVersion,
-            processInstanceId: this.queryParams?.processInstanceId,
-            serviceFullName: this.queryParams?.serviceFullName,
-            serviceName: this.queryParams?.serviceName,
-            serviceVersion: this.queryParams?.serviceVersion,
-            startedDate: this.queryParams?.startedDate,
-            status: this.queryParams?.status
+            "appName": this.appName,
+            "maxItems": this.size,
+            "skipCount": this.skipCount,
+            "sorting": this.sorting,
+            "id": this.queryParams?.serviceTaskId,
+            "environmentId": this.queryParams?.environmentId,
+            "activityName": this.queryParams?.activityName,
+            "activityType": this.queryParams?.activityType,
+            "completedDate": this.queryParams?.completedDate,
+            "elementId": this.queryParams?.elementId,
+            "executionId": this.queryParams?.executionId,
+            "processDefinitionId": this.queryParams?.processDefinitionId,
+            "processDefinitionKey": this.queryParams?.processDefinitionKey,
+            "processDefinitionVersion": this.queryParams?.processDefinitionVersion,
+            "processInstanceId": this.queryParams?.processInstanceId,
+            "serviceFullName": this.queryParams?.serviceFullName,
+            "serviceName": this.queryParams?.serviceName,
+            "serviceVersion": this.queryParams?.serviceVersion,
+            "startedDate": this.queryParams?.startedDate,
+            "status": this.queryParams?.status
         } as ServiceTaskQueryCloudRequestModel;
         return requestNode;
     }

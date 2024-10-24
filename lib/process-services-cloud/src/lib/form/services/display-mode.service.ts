@@ -20,41 +20,41 @@ import { Observable, Subject } from 'rxjs';
 import { FormCloudDisplayMode, FormCloudDisplayModeChange, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class DisplayModeService {
     public static readonly DEFAULT_DISPLAY_MODE_CONFIGURATIONS: FormCloudDisplayModeConfiguration[] = [
         {
-            displayMode: FormCloudDisplayMode.inline,
-            default: true
+            "displayMode": FormCloudDisplayMode.inline,
+            "default": true
         }
     ];
 
     public static readonly IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS: FormCloudDisplayModeConfiguration[] = [
         ...DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS,
         {
-            displayMode: FormCloudDisplayMode.fullScreen,
-            options: {
-                onDisplayModeOn: () => {},
-                onDisplayModeOff: (id: string) => DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
-                onCompleteTask: (id: string) => DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id }),
-                onSaveTask: () => {},
-                fullscreen: true,
-                displayToolbar: true,
-                displayCloseButton: true,
-                trapFocus: true
+            "displayMode": FormCloudDisplayMode.fullScreen,
+            "options": {
+                "onDisplayModeOn": () => {},
+                "onDisplayModeOff": (id: string) => DisplayModeService.changeDisplayMode({ "displayMode": FormCloudDisplayMode.inline, id }),
+                "onCompleteTask": (id: string) => DisplayModeService.changeDisplayMode({ "displayMode": FormCloudDisplayMode.inline, id }),
+                "onSaveTask": () => {},
+                "fullscreen": true,
+                "displayToolbar": true,
+                "displayCloseButton": true,
+                "trapFocus": true
             }
         },
         {
-            displayMode: FormCloudDisplayMode.standalone,
-            options: {
-                onDisplayModeOn: () => {},
-                onDisplayModeOff: () => {},
-                onCompleteTask: () => {},
-                onSaveTask: () => {},
-                fullscreen: true,
-                displayToolbar: false,
-                trapFocus: true
+            "displayMode": FormCloudDisplayMode.standalone,
+            "options": {
+                "onDisplayModeOn": () => {},
+                "onDisplayModeOff": () => {},
+                "onCompleteTask": () => {},
+                "onSaveTask": () => {},
+                "fullscreen": true,
+                "displayToolbar": false,
+                "trapFocus": true
             }
         }
     ];
@@ -65,15 +65,15 @@ export class DisplayModeService {
 
     static readonly displayMode$: Observable<FormCloudDisplayModeChange> = DisplayModeService.displayMode.asObservable();
 
-    static changeDisplayMode(change: FormCloudDisplayModeChange) {
+    static changeDisplayMode (change: FormCloudDisplayModeChange) {
         DisplayModeService.displayMode.next(change);
     }
 
-    getDefaultDisplayModeConfigurations(): FormCloudDisplayModeConfiguration[] {
+    getDefaultDisplayModeConfigurations (): FormCloudDisplayModeConfiguration[] {
         return DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS;
     }
 
-    getDisplayModeConfigurations(availableConfigurations?: FormCloudDisplayModeConfiguration[]): FormCloudDisplayModeConfiguration[] {
+    getDisplayModeConfigurations (availableConfigurations?: FormCloudDisplayModeConfiguration[]): FormCloudDisplayModeConfiguration[] {
         if (availableConfigurations && availableConfigurations.length > 0) {
             return availableConfigurations;
         } else {
@@ -81,7 +81,7 @@ export class DisplayModeService {
         }
     }
 
-    getDisplayMode(displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]): string {
+    getDisplayMode (displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]): string {
         const configuration = this.findConfiguration(displayMode, availableConfigurations);
 
         if (configuration) {
@@ -95,11 +95,11 @@ export class DisplayModeService {
         }
     }
 
-    findConfiguration(displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]): FormCloudDisplayModeConfiguration {
+    findConfiguration (displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]): FormCloudDisplayModeConfiguration {
         return this.getDisplayModeConfigurations(availableConfigurations).find((config) => config.displayMode === displayMode);
     }
 
-    onCompleteTask(id?: string, displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {
+    onCompleteTask (id?: string, displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {
         const configuration = this.findConfiguration(displayMode, availableConfigurations);
 
         if (configuration?.options?.onCompleteTask) {
@@ -107,7 +107,7 @@ export class DisplayModeService {
         }
     }
 
-    onSaveTask(id?: string, displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {
+    onSaveTask (id?: string, displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {
         const configuration = this.findConfiguration(displayMode, availableConfigurations);
 
         if (configuration?.options?.onSaveTask) {
@@ -115,7 +115,7 @@ export class DisplayModeService {
         }
     }
 
-    onDisplayModeOff(id?: string, displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {
+    onDisplayModeOff (id?: string, displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {
         const configuration = this.findConfiguration(displayMode, availableConfigurations);
 
         if (configuration?.options?.onDisplayModeOff) {
@@ -123,7 +123,7 @@ export class DisplayModeService {
         }
     }
 
-    onDisplayModeOn(id?: string, displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {
+    onDisplayModeOn (id?: string, displayMode?: string, availableConfigurations?: FormCloudDisplayModeConfiguration[]) {
         const configuration = this.findConfiguration(displayMode, availableConfigurations);
 
         if (configuration?.options?.onDisplayModeOn) {
@@ -131,7 +131,7 @@ export class DisplayModeService {
         }
     }
 
-    switchToDisplayMode(
+    switchToDisplayMode (
         id?: string,
         newDisplayMode?: string,
         oldDisplayMode?: string,
@@ -146,7 +146,7 @@ export class DisplayModeService {
             }
 
             if (newConfiguration) {
-                DisplayModeService.changeDisplayMode({ id, displayMode: newConfiguration.displayMode });
+                DisplayModeService.changeDisplayMode({ id, "displayMode": newConfiguration.displayMode });
                 this.onDisplayModeOn(id, newDisplayMode, availableConfigurations);
                 return newConfiguration.displayMode;
             } else {

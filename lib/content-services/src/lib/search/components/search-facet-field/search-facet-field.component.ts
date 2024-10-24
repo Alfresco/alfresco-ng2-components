@@ -33,12 +33,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'adf-search-facet-field',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatCheckboxModule],
-    templateUrl: './search-facet-field.component.html',
-    styleUrls: ['./search-facet-field.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-facet-field',
+    "standalone": true,
+    "imports": [CommonModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, TranslateModule, FormsModule, MatCheckboxModule],
+    "templateUrl": './search-facet-field.component.html',
+    "styleUrls": ['./search-facet-field.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFacetFieldComponent implements FacetWidget {
     private queryBuilder = inject(SearchQueryBuilderService);
@@ -50,11 +50,11 @@ export class SearchFacetFieldComponent implements FacetWidget {
 
     displayValue$: Subject<string> = new Subject<string>();
 
-    get canUpdateOnChange() {
+    get canUpdateOnChange () {
         return this.field.settings?.allowUpdateOnChange ?? true;
     }
 
-    onToggleBucket(event: MatCheckboxChange, field: FacetField, bucket: FacetFieldBucket) {
+    onToggleBucket (event: MatCheckboxChange, field: FacetField, bucket: FacetFieldBucket) {
         if (event && bucket) {
             if (event.checked) {
                 this.selectFacetBucket(field, bucket);
@@ -64,7 +64,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
         }
     }
 
-    selectFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
+    selectFacetBucket (field: FacetField, bucket: FacetFieldBucket) {
         if (bucket) {
             bucket.checked = true;
             this.queryBuilder.addUserFacetBucket(field.field, bucket);
@@ -76,7 +76,7 @@ export class SearchFacetFieldComponent implements FacetWidget {
         }
     }
 
-    unselectFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
+    unselectFacetBucket (field: FacetField, bucket: FacetFieldBucket) {
         if (bucket) {
             bucket.checked = false;
             this.queryBuilder.removeUserFacetBucket(field.field, bucket);
@@ -88,14 +88,14 @@ export class SearchFacetFieldComponent implements FacetWidget {
         }
     }
 
-    canResetSelectedBuckets(field: FacetField): boolean {
+    canResetSelectedBuckets (field: FacetField): boolean {
         if (field?.buckets) {
             return field.buckets.items.some((bucket) => bucket.checked);
         }
         return false;
     }
 
-    resetSelectedBuckets(field: FacetField) {
+    resetSelectedBuckets (field: FacetField) {
         if (field?.buckets) {
             for (const bucket of field.buckets.items) {
                 bucket.checked = false;
@@ -108,11 +108,11 @@ export class SearchFacetFieldComponent implements FacetWidget {
         }
     }
 
-    getBucketCountDisplay(bucket: FacetFieldBucket): string {
+    getBucketCountDisplay (bucket: FacetFieldBucket): string {
         return bucket.count === null ? '' : `(${bucket.count})`;
     }
 
-    updateDisplayValue(): void {
+    updateDisplayValue (): void {
         if (!this.field.buckets?.items) {
             this.displayValue$.next('');
         } else {
@@ -124,13 +124,13 @@ export class SearchFacetFieldComponent implements FacetWidget {
         }
     }
 
-    reset(): void {
+    reset (): void {
         this.resetSelectedBuckets(this.field);
         this.updateDisplayValue();
         this.queryBuilder.update();
     }
 
-    submitValues(): void {
+    submitValues (): void {
         this.updateDisplayValue();
         this.queryBuilder.update();
     }

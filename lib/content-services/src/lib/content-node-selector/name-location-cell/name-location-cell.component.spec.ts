@@ -27,17 +27,17 @@ describe('NameLocationCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NameLocationCellComponent]
+            "imports": [NameLocationCellComponent]
         });
         fixture = TestBed.createComponent(NameLocationCellComponent);
         component = fixture.componentInstance;
 
         rowData = {
-            getValue: (key): any => {
+            "getValue": (key): any => {
                 if (key === 'name') {
                     return 'file-name';
                 } else if (key === 'path') {
-                    return { name: '/path/to/location' };
+                    return { "name": '/path/to/location' };
                 }
                 return undefined;
             }

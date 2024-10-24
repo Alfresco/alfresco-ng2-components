@@ -28,7 +28,7 @@ describe('UserRoleColumnComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ContentTestingModule, NoopAnimationsModule, UserRoleColumnComponent]
+            "imports": [ContentTestingModule, NoopAnimationsModule, UserRoleColumnComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(UserRoleColumnComponent);
@@ -38,12 +38,12 @@ describe('UserRoleColumnComponent', () => {
 
     it('should emit roleChanged event when a new role is selected', () => {
         spyOn(component.roleChanged, 'emit');
-        const role: RoleModel = { role: 'admin', label: 'Admin' };
+        const role: RoleModel = { "role": 'admin', "label": 'Admin' };
         component.roles = [role];
         fixture.detectChanges();
 
         const select = fixture.debugElement.query(By.css('.adf-role-selector'));
-        select.triggerEventHandler('selectionChange', { value: role.role });
+        select.triggerEventHandler('selectionChange', { "value": role.role });
 
         expect(component.roleChanged.emit).toHaveBeenCalledWith(role.role);
     });

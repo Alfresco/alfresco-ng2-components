@@ -22,26 +22,26 @@ import { DataTableCellComponent } from '../datatable-cell/datatable-cell.compone
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, MatIconModule],
-    selector: 'adf-icon-cell',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+    "standalone": true,
+    "imports": [CommonModule, MatIconModule],
+    "selector": 'adf-icon-cell',
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "template": `
         <ng-container *ngIf="icon">
             <mat-icon [title]="tooltip" aria-hidden="true">{{ icon }}</mat-icon>
         </ng-container>
     `,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' }
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-datatable-content-cell' }
 })
 export class IconCellComponent extends DataTableCellComponent implements OnInit {
     icon: string = '';
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {
+    constructor (private changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         super.ngOnInit();
         this.value$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
             const newIcon = this.validateIconValue(value) ? value : '';
@@ -52,7 +52,7 @@ export class IconCellComponent extends DataTableCellComponent implements OnInit 
         });
     }
 
-    private validateIconValue(value: any): boolean {
+    private validateIconValue (value: any): boolean {
         return typeof value === 'string';
     }
 }

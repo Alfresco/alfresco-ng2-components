@@ -30,7 +30,7 @@ export const CONTENT_NODE_SELECTOR_DIRECTIVES = [
 
 /** @deprecated use `...CONTENT_NODE_SELECTOR_DIRECTIVES` or import the individual components */
 @NgModule({
-    imports: [...CONTENT_NODE_SELECTOR_DIRECTIVES],
-    exports: [...CONTENT_NODE_SELECTOR_DIRECTIVES]
+    "imports": [...CONTENT_NODE_SELECTOR_DIRECTIVES],
+    "exports": [...CONTENT_NODE_SELECTOR_DIRECTIVES]
 })
 export class ContentNodeSelectorModule {}

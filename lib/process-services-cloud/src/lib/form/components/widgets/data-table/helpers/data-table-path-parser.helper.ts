@@ -19,7 +19,7 @@ export class DataTablePathParserHelper {
     private readonly removeSquareBracketsRegEx = /^\[(.*)\]$/;
     private readonly indexReferencesRegEx = /(\[\d+\])+$/;
 
-    retrieveDataFromPath(data: any, path: string): any[] {
+    retrieveDataFromPath (data: any, path: string): any[] {
         if (!path) {
             return [];
         }
@@ -46,7 +46,7 @@ export class DataTablePathParserHelper {
         return this.retrieveDataFromPath(nestedData, properties.join('.'));
     }
 
-    splitPathIntoProperties(path: string): string[] {
+    splitPathIntoProperties (path: string): string[] {
         const properties: string[] = [];
         const separator = '.';
         const openBracket = '[';
@@ -91,7 +91,7 @@ export class DataTablePathParserHelper {
         return properties;
     }
 
-    getIndexReferencesFromProperty(property: string): number[] {
+    getIndexReferencesFromProperty (property: string): number[] {
         const match = this.indexReferencesRegEx.exec(property);
         if (!match) {
             return [];
@@ -103,7 +103,7 @@ export class DataTablePathParserHelper {
         return numbersFromBrackets;
     }
 
-    extractPurePropertyName(property: string): string {
+    extractPurePropertyName (property: string): string {
         const propertyIndexReferences = this.getIndexReferencesFromProperty(property);
         const numberOfIndexReferences = propertyIndexReferences.length;
 
@@ -116,21 +116,21 @@ export class DataTablePathParserHelper {
         }
     }
 
-    private removeSquareBracketsAndIndexReferencesFromProperty(property: string): string {
+    private removeSquareBracketsAndIndexReferencesFromProperty (property: string): string {
         const propertyWithoutIndexReferences = property?.replace(this.indexReferencesRegEx, '');
 
         return this.removeSquareBracketsFromProperty(propertyWithoutIndexReferences);
     }
 
-    private removeSquareBracketsFromProperty(property: string): string {
+    private removeSquareBracketsFromProperty (property: string): string {
         return property?.replace(this.removeSquareBracketsRegEx, '$1');
     }
 
-    private isPropertyExistsInData(data: any, property: string): boolean {
+    private isPropertyExistsInData (data: any, property: string): boolean {
         return Object.prototype.hasOwnProperty.call(data, property);
     }
 
-    private isDataArrayOrObject(data: any): boolean {
+    private isDataArrayOrObject (data: any): boolean {
         if (data == null) {
             return false;
         }

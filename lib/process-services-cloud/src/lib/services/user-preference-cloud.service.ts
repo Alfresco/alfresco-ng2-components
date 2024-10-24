@@ -20,15 +20,14 @@ import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 import { throwError, Observable } from 'rxjs';
 import { BaseCloudService } from './base-cloud.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class UserPreferenceCloudService extends BaseCloudService implements PreferenceCloudServiceInterface {
     /**
      * Gets user preferences
-     *
      * @param appName Name of the target app
      * @returns List of user preferences
      */
-    getPreferences(appName: string): Observable<any> {
+    getPreferences (appName: string): Observable<any> {
         if (appName) {
             const url = `${this.getBasePath(appName)}/preference/v1/preferences`;
             return this.get(url);
@@ -39,12 +38,11 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
 
     /**
      * Gets user preference.
-     *
      * @param appName Name of the target app
      * @param key Key of the target preference
      * @returns Observable of user preference
      */
-    getPreferenceByKey(appName: string, key: string): Observable<any> {
+    getPreferenceByKey (appName: string, key: string): Observable<any> {
         if (appName) {
             const url = `${this.getBasePath(appName)}/preference/v1/preferences/${key}`;
             return this.get(url);
@@ -55,13 +53,12 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
 
     /**
      * Creates user preference.
-     *
      * @param appName Name of the target app
      * @param key Key of the target preference
      * @param newPreference Details of new user preference
      * @returns Observable of created user preferences
      */
-    createPreference(appName: string, key: string, newPreference: any): Observable<any> {
+    createPreference (appName: string, key: string, newPreference: any): Observable<any> {
         if (appName) {
             const url = `${this.getBasePath(appName)}/preference/v1/preferences/${key}`;
             const payload = JSON.stringify(newPreference);
@@ -74,24 +71,22 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
 
     /**
      * Updates user preference.
-     *
      * @param appName Name of the target app
      * @param key Key of the target preference
      * @param updatedPreference Details of updated preference
      * @returns Observable of updated user preferences
      */
-    updatePreference(appName: string, key: string, updatedPreference: any): Observable<any> {
+    updatePreference (appName: string, key: string, updatedPreference: any): Observable<any> {
         return this.createPreference(appName, key, updatedPreference);
     }
 
     /**
      * Deletes user preference by given preference key.
-     *
      * @param appName Name of the target app
      * @param key Key of the target preference
      * @returns Observable of delete operation status
      */
-    deletePreference(appName: string, key: string): Observable<any> {
+    deletePreference (appName: string, key: string): Observable<any> {
         if (appName) {
             const url = `${this.getBasePath(appName)}/preference/v1/preferences/${key}`;
             return this.delete(url);

@@ -23,7 +23,7 @@ export const CONTENT_NODE_SHARE_DIRECTIVES = [ShareDialogComponent, NodeSharedDi
 
 /** @deprecated use `...CONTENT_NODE_SHARE_DIRECTIVES` or import each directive individually */
 @NgModule({
-    imports: [...CONTENT_NODE_SHARE_DIRECTIVES],
-    exports: [...CONTENT_NODE_SHARE_DIRECTIVES]
+    "imports": [...CONTENT_NODE_SHARE_DIRECTIVES],
+    "exports": [...CONTENT_NODE_SHARE_DIRECTIVES]
 })
 export class ContentNodeShareModule {}

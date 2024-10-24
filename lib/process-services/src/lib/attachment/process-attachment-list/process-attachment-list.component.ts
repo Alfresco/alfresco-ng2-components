@@ -43,9 +43,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'adf-process-attachment-list',
-    standalone: true,
-    imports: [
+    "selector": 'adf-process-attachment-list',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatProgressSpinnerModule,
@@ -56,9 +56,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         DataColumnComponent,
         LoadingContentTemplateDirective
     ],
-    styleUrls: ['./process-attachment-list.component.scss'],
-    templateUrl: './process-attachment-list.component.html',
-    encapsulation: ViewEncapsulation.None
+    "styleUrls": ['./process-attachment-list.component.scss'],
+    "templateUrl": './process-attachment-list.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {
     @ContentChild(EmptyListComponent)
@@ -100,61 +100,61 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
     attachments: any[] = [];
     isLoading: boolean = false;
 
-    constructor(
+    constructor (
         private processContentService: ProcessContentService,
         private downloadService: DownloadService,
         private thumbnailService: ThumbnailService,
         private ngZone: NgZone
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['processInstanceId']?.currentValue) {
             this.loadAttachmentsByProcessInstanceId(changes['processInstanceId'].currentValue);
         }
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         if (this.emptyTemplate) {
             this.hasCustomTemplate = true;
         }
     }
 
-    reset() {
+    reset () {
         this.attachments = [];
     }
 
-    reload(): void {
+    reload (): void {
         this.ngZone.run(() => {
             this.loadAttachmentsByProcessInstanceId(this.processInstanceId);
         });
     }
 
-    add(content: any): void {
+    add (content: any): void {
         this.ngZone.run(() => {
             this.attachments.push({
-                id: content.id,
-                name: content.name,
-                created: content.created,
-                createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                "id": content.id,
+                "name": content.name,
+                "created": content.created,
+                "createdBy": content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                "icon": this.thumbnailService.getMimeTypeIcon(content.mimeType)
             });
         });
     }
 
-    onShowRowActionsMenu(event: any) {
+    onShowRowActionsMenu (event: any) {
         const viewAction = {
-            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT',
-            name: 'view'
+            "title": 'ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT',
+            "name": 'view'
         };
 
         const removeAction = {
-            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT',
-            name: 'remove'
+            "title": 'ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT',
+            "name": 'remove'
         };
 
         const downloadAction = {
-            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
-            name: 'download'
+            "title": 'ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
+            "name": 'download'
         };
 
         event.value.actions = [viewAction, downloadAction];
@@ -164,7 +164,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         }
     }
 
-    onExecuteRowAction(event: any) {
+    onExecuteRowAction (event: any) {
         const args = event.value;
         const action = args.action;
         if (action.name === 'view') {
@@ -176,12 +176,12 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         }
     }
 
-    openContent(event: any): void {
+    openContent (event: any): void {
         const content = event.value.obj;
         this.emitDocumentContent(content);
     }
 
-    emitDocumentContent(content: any) {
+    emitDocumentContent (content: any) {
         this.processContentService.getContentPreview(content.id).subscribe(
             (blob: Blob) => {
                 content.contentBlob = blob;
@@ -193,7 +193,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         );
     }
 
-    downloadContent(content: any): void {
+    downloadContent (content: any): void {
         this.processContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.downloadService.downloadBlob(blob, content.name),
             (err) => {
@@ -202,7 +202,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         );
     }
 
-    private loadAttachmentsByProcessInstanceId(processInstanceId: string) {
+    private loadAttachmentsByProcessInstanceId (processInstanceId: string) {
         if (processInstanceId) {
             this.reset();
             this.isLoading = true;
@@ -211,11 +211,11 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
                 (res) => {
                     res.data.forEach((content) => {
                         this.attachments.push({
-                            id: content.id,
-                            name: content.name,
-                            created: content.created,
-                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                            "id": content.id,
+                            "name": content.name,
+                            "created": content.created,
+                            "createdBy": content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                            "icon": this.thumbnailService.getMimeTypeIcon(content.mimeType)
                         });
                     });
                     this.success.emit(this.attachments);
@@ -229,7 +229,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         }
     }
 
-    private deleteAttachmentById(contentId: number) {
+    private deleteAttachmentById (contentId: number) {
         if (contentId) {
             this.processContentService.deleteRelatedContent(contentId).subscribe(
                 () => {

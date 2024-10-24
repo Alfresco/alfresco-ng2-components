@@ -20,9 +20,9 @@ import { FeaturesServiceToken, FlagSet } from '../interfaces/features.interface'
 import { DebugFeaturesService } from './debug-features.service';
 @Injectable()
 export class QaFeaturesHelper {
-    constructor(private applicationRef: ApplicationRef, @Inject(FeaturesServiceToken) private debugFeaturesService: DebugFeaturesService) {}
+    constructor (private applicationRef: ApplicationRef, @Inject(FeaturesServiceToken) private debugFeaturesService: DebugFeaturesService) {}
 
-    isOn(key: string): boolean {
+    isOn (key: string): boolean {
         let isOn = false;
         this.debugFeaturesService.isOn$(key).subscribe((on) => {
             isOn = on;
@@ -31,22 +31,22 @@ export class QaFeaturesHelper {
         return isOn;
     }
 
-    resetFlags(flags: FlagSet): void {
+    resetFlags (flags: FlagSet): void {
         this.debugFeaturesService.resetFlags(flags);
         this.applicationRef.tick();
     }
 
-    enable(): void {
+    enable (): void {
         this.debugFeaturesService.enable(true);
         this.applicationRef.tick();
     }
 
-    disable(): void {
+    disable (): void {
         this.debugFeaturesService.enable(false);
         this.applicationRef.tick();
     }
 
-    isEnabled(): boolean {
+    isEnabled (): boolean {
         let enabled = false;
         this.debugFeaturesService.isEnabled$().subscribe((isEnabled) => {
             enabled = isEnabled;

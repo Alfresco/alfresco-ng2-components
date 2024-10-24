@@ -22,7 +22,7 @@ export class RequestPaginationModel {
 
     merge?: boolean = false;
 
-    constructor(input?: any) {
+    constructor (input?: any) {
         if (input) {
             Object.assign(this, input);
         }

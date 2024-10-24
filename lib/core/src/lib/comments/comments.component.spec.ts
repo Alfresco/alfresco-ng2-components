@@ -34,11 +34,11 @@ describe('CommentsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, CommentsComponent],
-            providers: [
+            "imports": [NoopAnimationsModule, NoopTranslateModule, CommentsComponent],
+            "providers": [
                 {
-                    provide: ADF_COMMENTS_SERVICE,
-                    useClass: CommentsServiceMock
+                    "provide": ADF_COMMENTS_SERVICE,
+                    "useClass": CommentsServiceMock
                 }
             ]
         });
@@ -57,7 +57,7 @@ describe('CommentsComponent', () => {
 
     it('should load comments when id specified', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ id: change });
+        component.ngOnChanges({ "id": change });
 
         expect(getCommentSpy).toHaveBeenCalled();
     });
@@ -67,7 +67,7 @@ describe('CommentsComponent', () => {
         getCommentSpy.and.returnValue(throwError({}));
 
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ id: change });
+        component.ngOnChanges({ "id": change });
 
         expect(emitSpy).toHaveBeenCalled();
     });
@@ -79,7 +79,7 @@ describe('CommentsComponent', () => {
 
     it('should display comments when the entity has comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ id: change });
+        component.ngOnChanges({ "id": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -90,7 +90,7 @@ describe('CommentsComponent', () => {
 
     it('should display comments count when the entity has comments', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ id: change });
+        component.ngOnChanges({ "id": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -111,7 +111,7 @@ describe('CommentsComponent', () => {
 
     it('should display comments input by default', async () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ id: change });
+        component.ngOnChanges({ "id": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -138,7 +138,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should fetch new comments when id changed', () => {
-            component.ngOnChanges({ id: change });
+            component.ngOnChanges({ "id": change });
             expect(getCommentSpy).toHaveBeenCalledWith('456');
         });
 
@@ -148,7 +148,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should not fetch new comments when id changed to null', () => {
-            component.ngOnChanges({ id: nullChange });
+            component.ngOnChanges({ "id": nullChange });
             expect(getCommentSpy).not.toHaveBeenCalled();
         });
     });
@@ -225,7 +225,7 @@ describe('CommentsComponent', () => {
         });
 
         it('should clear comment when escape key is pressed', async () => {
-            const event = new KeyboardEvent('keydown', { key: 'Escape' });
+            const event = new KeyboardEvent('keydown', { "key": 'Escape' });
             let element = fixture.nativeElement.querySelector('#comment-input');
             element.dispatchEvent(event);
 

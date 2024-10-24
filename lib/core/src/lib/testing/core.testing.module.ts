@@ -22,6 +22,6 @@ import { NoopTranslateModule } from './noop-translate.module';
 import { NoopAuthModule } from './noop-auth.module';
 
 @NgModule({
-    imports: [NoopAnimationsModule, CoreModule.forRoot(), NoopTranslateModule, NoopAuthModule]
+    "imports": [NoopAnimationsModule, CoreModule.forRoot(), NoopTranslateModule, NoopAuthModule]
 })
 export class CoreTestingModule {}

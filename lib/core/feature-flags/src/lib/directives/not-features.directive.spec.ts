@@ -23,7 +23,7 @@ import { provideMockFeatureFlags } from '../mocks/features-service-mock.factory'
 import { NotFeaturesDirective } from './not-features.directive';
 
 @Component({
-    template: `
+    "template": `
         <div>
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
@@ -34,7 +34,7 @@ class TestWithEnabledFlagComponent {
 }
 
 @Component({
-    template: `
+    "template": `
         <div>
             <div id="underFeatureFlag" *adfNotForFeatures="features"></div>
         </div>
@@ -50,16 +50,16 @@ describe('NotFeaturesDirective', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, NotFeaturesDirective],
-            providers: [
+            "imports": [CommonModule, NotFeaturesDirective],
+            "providers": [
                 provideMockFeatureFlags({
-                    feature1: true,
-                    feature2: false,
-                    feature3: true
+                    "feature1": true,
+                    "feature2": false,
+                    "feature3": true
                 }),
                 NotFeaturesDirective
             ],
-            declarations: [TestWithEnabledFlagComponent, TestWithDisabledFlagComponent]
+            "declarations": [TestWithEnabledFlagComponent, TestWithDisabledFlagComponent]
         });
         enabledFixture = TestBed.createComponent(TestWithEnabledFlagComponent);
         enabledFixture.detectChanges();

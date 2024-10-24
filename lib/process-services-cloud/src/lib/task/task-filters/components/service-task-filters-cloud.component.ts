@@ -24,10 +24,10 @@ import { ServiceTaskFilterCloudService } from '../services/service-task-filter-c
 import { TranslationService } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-cloud-service-task-filters',
-    templateUrl: './base-task-filters-cloud.component.html',
-    styleUrls: ['./base-task-filters-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-service-task-filters',
+    "templateUrl": './base-task-filters-cloud.component.html',
+    "styleUrls": ['./base-task-filters-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
     /** Emitted when a filter is being selected based on the filterParam input. */
@@ -45,11 +45,11 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     private readonly serviceTaskFilterCloudService = inject(ServiceTaskFilterCloudService);
     private readonly translationService = inject(TranslationService);
 
-    ngOnInit() {
+    ngOnInit () {
         this.getFilters(this.appName);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const appName = changes['appName'];
         const filter = changes['filterParam'];
         if (appName && appName.currentValue !== appName.previousValue) {
@@ -61,10 +61,9 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Load the filter list filtered by appName
-     *
      * @param appName application name
      */
-    getFilters(appName: string): void {
+    getFilters (appName: string): void {
         this.filters$ = this.serviceTaskFilterCloudService.getTaskListFilters(appName);
 
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
@@ -82,10 +81,9 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Select filter
-     *
      * @param paramFilter filter model
      */
-    selectFilter(paramFilter: FilterParamsModel) {
+    selectFilter (paramFilter: FilterParamsModel) {
         if (!paramFilter) {
             return;
         }
@@ -103,7 +101,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
             ); // fallback to preserve the previous behavior
     }
 
-    public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
+    public selectFilterAndEmit (newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
 
@@ -117,10 +115,9 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Selects and emits the clicked filter.
-     *
      * @param filter filter to select
      */
-    onFilterClick(filter: FilterParamsModel) {
+    onFilterClick (filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
             this.filterClicked.emit(this.currentFilter);
@@ -132,7 +129,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     /**
      * Select as default task filter the first in the list
      */
-    public selectDefaultTaskFilter() {
+    public selectDefaultTaskFilter () {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         }
@@ -140,17 +137,16 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
 
     /**
      * Check if the filter list is empty
-     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
-    isFilterListEmpty(): boolean {
+    isFilterListEmpty (): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
     /**
      * Reset the filters properties
      */
-    private resetFilter() {
+    private resetFilter () {
         this.filters = [];
         this.currentFilter = undefined;
     }

@@ -31,11 +31,11 @@ describe('OidcAuthGuard', () => {
 
     beforeEach(() => {
         const routerSpyObj = jasmine.createSpyObj('Router', ['navigateByUrl']);
-        const authSpy = jasmine.createSpyObj('AuthService', ['loginCallback'], { onLogout$: fakeLogoutSubject.asObservable() });
+        const authSpy = jasmine.createSpyObj('AuthService', ['loginCallback'], { "onLogout$": fakeLogoutSubject.asObservable() });
 
         TestBed.configureTestingModule({
-            providers: [OidcAuthGuard, { provide: AuthService, useValue: authSpy }, { provide: Router, useValue: routerSpyObj }],
-            imports: [RouterTestingModule]
+            "providers": [OidcAuthGuard, { "provide": AuthService, "useValue": authSpy }, { "provide": Router, "useValue": routerSpyObj }],
+            "imports": [RouterTestingModule]
         });
 
         routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
@@ -48,7 +48,7 @@ describe('OidcAuthGuard', () => {
         try {
             await TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
             expect(authServiceSpy.loginCallback).toHaveBeenCalled();
-            expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/fake-route', { replaceUrl: true });
+            expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/fake-route', { "replaceUrl": true });
         } catch {
             fail('Expected no error to be thrown');
         }
@@ -59,7 +59,7 @@ describe('OidcAuthGuard', () => {
 
         try {
             await TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
-            expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/', { replaceUrl: true });
+            expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/', { "replaceUrl": true });
         } catch (error) {
             fail('Expected no error to be thrown');
         }
@@ -88,7 +88,7 @@ describe('OidcAuthGuard', () => {
             const runInInjectionContext = TestBed.runInInjectionContext(() => OidcAuthGuard(route, state));
             fakeLogoutSubject.next();
             await runInInjectionContext;
-            expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/test-route', { replaceUrl: true });
+            expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/test-route', { "replaceUrl": true });
         } catch (error) {
             fail('Expected no error to be thrown');
         }

@@ -30,13 +30,13 @@ import {
 import { FlagSetParser } from './flagset.parser';
 import { StorageService } from '@alfresco/adf-core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class StorageFeaturesService implements IFeaturesService, IWritableFeaturesService {
     private currentFlagState: WritableFlagChangeset = {};
     private flags = new BehaviorSubject<WritableFlagChangeset>({});
     private flags$ = this.flags.asObservable();
 
-    constructor(
+    constructor (
         private storageService: StorageService,
         @Optional() @Inject(WritableFeaturesServiceConfigToken) private config?: WritableFeaturesServiceConfig
     ) {
@@ -46,62 +46,62 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
         });
     }
 
-    get storageKey(): string {
+    get storageKey (): string {
         return this.config?.storageKey || 'feature-flags';
     }
 
-    init(): Observable<WritableFlagChangeset> {
+    init (): Observable<WritableFlagChangeset> {
         const storedFlags = JSON.parse(this.storageService.getItem(this.storageKey) || '{}');
         const initialFlagChangeSet = FlagSetParser.deserialize(storedFlags);
         this.flags.next(initialFlagChangeSet);
         return of(initialFlagChangeSet);
     }
 
-    isOn$(key: string): Observable<boolean> {
+    isOn$ (key: string): Observable<boolean> {
         return this.flags$.pipe(map((flags) => !!flags[key]?.current));
     }
 
-    isOff$(key: string): Observable<boolean> {
+    isOff$ (key: string): Observable<boolean> {
         return this.flags$.pipe(map((flags) => !flags[key]?.current));
     }
 
-    getFlags$(): Observable<WritableFlagChangeset> {
+    getFlags$ (): Observable<WritableFlagChangeset> {
         return this.flags$;
     }
 
-    setFlag(key: string, value: any): void {
+    setFlag (key: string, value: any): void {
         let fictive = {};
         if (!this.currentFlagState[key]) {
-            fictive = { fictive: true };
+            fictive = { "fictive": true };
         } else {
-            fictive = this.currentFlagState[key]?.fictive ? { fictive: true } : {};
+            fictive = this.currentFlagState[key]?.fictive ? { "fictive": true } : {};
         }
 
         this.flags.next({
             ...this.currentFlagState,
             [key]: {
-                current: value,
-                previous: this.currentFlagState[key]?.current ?? null,
+                "current": value,
+                "previous": this.currentFlagState[key]?.current ?? null,
                 ...fictive
             }
         });
     }
 
-    removeFlag(key: string): void {
+    removeFlag (key: string): void {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [key]: _, ...flags } = this.currentFlagState;
         this.flags.next(flags);
     }
 
-    resetFlags(flags: FlagSet): void {
+    resetFlags (flags: FlagSet): void {
         this.flags.next(
             Object.keys(flags).reduce(
                 (acc, key) => ({
                     ...acc,
                     [key]: {
-                        current: flags[key],
-                        previous: null,
-                        fictive: true
+                        "current": flags[key],
+                        "previous": null,
+                        "fictive": true
                     }
                 }),
                 {}
@@ -109,14 +109,14 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
         );
     }
 
-    mergeFlags(flags: FlagChangeset): void {
+    mergeFlags (flags: FlagChangeset): void {
         const mergedFlags: WritableFlagChangeset = Object.keys(flags).reduce((acc, key) => {
             const current = this.currentFlagState[key]?.current;
             return {
                 ...acc,
                 [key]: {
-                    current: current ?? flags[key].current,
-                    previous: current ?? null
+                    "current": current ?? flags[key].current,
+                    "previous": current ?? null
                 }
             };
         }, {});
@@ -125,9 +125,9 @@ export class StorageFeaturesService implements IFeaturesService, IWritableFeatur
             .filter((key) => !flags[key])
             .forEach((key) => {
                 mergedFlags[key] = {
-                    current: this.currentFlagState[key].current,
-                    previous: this.currentFlagState[key].previous,
-                    fictive: true
+                    "current": this.currentFlagState[key].current,
+                    "previous": this.currentFlagState[key].previous,
+                    "fictive": true
                 };
             });
 

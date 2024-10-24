@@ -39,18 +39,18 @@ describe('UnsavedChangesGuard', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatDialogModule, NoopAuthModule],
-            providers: [
+            "imports": [MatDialogModule, NoopAuthModule],
+            "providers": [
                 {
-                    provide: AuthenticationService,
-                    useValue: {
-                        isLoggedIn: () => true
+                    "provide": AuthenticationService,
+                    "useValue": {
+                        "isLoggedIn": () => true
                     }
                 },
                 {
-                    provide: AuthGuardService,
-                    useValue: {
-                        get withCredentials() {
+                    "provide": AuthGuardService,
+                    "useValue": {
+                        get "withCredentials" () {
                             return false;
                         }
                     }
@@ -71,7 +71,7 @@ describe('UnsavedChangesGuard', () => {
             afterClosed$ = new Subject<boolean>();
             dialog = TestBed.inject(MatDialog);
             spyOn(dialog, 'open').and.returnValue({
-                afterClosed: () => afterClosed$ as Observable<boolean>
+                "afterClosed": () => afterClosed$ as Observable<boolean>
             } as MatDialogRef<UnsavedChangesDialogComponent>);
         });
 

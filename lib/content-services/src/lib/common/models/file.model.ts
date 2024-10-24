@@ -98,7 +98,7 @@ export class FileModel {
     options: FileUploadOptions;
     data: any;
 
-    constructor(file: File, options?: FileUploadOptions, id?: string) {
+    constructor (file: File, options?: FileUploadOptions, id?: string) {
         this.file = file;
         this.id = id;
         this.name = file.name;
@@ -107,21 +107,21 @@ export class FileModel {
         this.errorCode = null;
 
         this.progress = {
-            loaded: 0,
-            total: 0,
-            percent: 0
+            "loaded": 0,
+            "total": 0,
+            "percent": 0
         };
 
         this.options = Object.assign(
             {},
             {
-                newVersion: false
+                "newVersion": false
             },
             options
         );
     }
 
-    get extension(): string {
+    get extension (): string {
         return this.name.slice((Math.max(0, this.name.lastIndexOf('.')) || Infinity) + 1);
     }
 }

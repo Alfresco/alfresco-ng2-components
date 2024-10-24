@@ -30,13 +30,13 @@ describe('FlagsComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [FlagsComponent, NoopTranslateModule, FeaturesDirective, NoopAnimationsModule],
-            providers: [
-                { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
+            "imports": [FlagsComponent, NoopTranslateModule, FeaturesDirective, NoopAnimationsModule],
+            "providers": [
+                { "provide": WritableFeaturesServiceToken, "useClass": StorageFeaturesService },
                 provideMockFeatureFlags({
-                    feature1: true,
-                    feature2: false,
-                    feature3: true
+                    "feature1": true,
+                    "feature2": false,
+                    "feature3": true
                 })
             ]
         }).compileComponents();
@@ -51,9 +51,9 @@ describe('FlagsComponent', () => {
     it('should initialize flags$', (done) => {
         component.flags$.subscribe((flags) => {
             expect(flags).toEqual([
-                { fictive: false, flag: 'feature1', value: true },
-                { fictive: false, flag: 'feature2', value: false },
-                { fictive: false, flag: 'feature3', value: true }
+                { "fictive": false, "flag": 'feature1', "value": true },
+                { "fictive": false, "flag": 'feature2', "value": false },
+                { "fictive": false, "flag": 'feature3', "value": true }
             ]);
             done();
         });
@@ -76,7 +76,7 @@ describe('FlagsComponent', () => {
     it('should filter flags when when onClearInput is called', (done) => {
         (component as any).onInputChange('feature1');
         component.flags$.subscribe((flags) => {
-            expect(flags).toEqual([{ fictive: false, flag: 'feature1', value: true }]);
+            expect(flags).toEqual([{ "fictive": false, "flag": 'feature1', "value": true }]);
             done();
         });
     });

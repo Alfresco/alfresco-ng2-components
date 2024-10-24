@@ -21,11 +21,11 @@ import { ContainerModel } from '../components/widgets/core/container.model';
 import { predefinedTheme } from '../components/widgets/core/predefined-theme';
 
 @Pipe({
-    name: 'adfFieldStyle',
-    standalone: true
+    "name": 'adfFieldStyle',
+    "standalone": true
 })
 export class FieldStylePipe implements PipeTransform {
-    transform(field: FormFieldModel | ContainerModel): string {
+    transform (field: FormFieldModel | ContainerModel): string {
         if (!field.style) {
             return '';
         }
@@ -37,7 +37,7 @@ export class FieldStylePipe implements PipeTransform {
         return styles ? this.flattenStyles(styles) : '';
     }
 
-    private flattenStyles(styles: { [key: string]: string }): string {
+    private flattenStyles (styles: { [key: string]: string }): string {
         return Object.entries(styles)
             .map(([key, value]) => `${key}:${value};`)
             .join('');

@@ -29,11 +29,11 @@ describe('UnsavedChangesDialog', () => {
 
     const setupBeforeEach = (unsavedChangesDialogData?: UnsavedChangesDialogData) => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [
+            "imports": [CoreTestingModule],
+            "providers": [
                 {
-                    provide: MAT_DIALOG_DATA,
-                    useValue: unsavedChangesDialogData ?? {}
+                    "provide": MAT_DIALOG_DATA,
+                    "useValue": unsavedChangesDialogData ?? {}
                 }
             ]
         });
@@ -84,10 +84,10 @@ describe('UnsavedChangesDialog', () => {
 
         beforeEach(() => {
             setupBeforeEach({
-                headerText: 'headerText',
-                descriptionText: 'descriptionText',
-                confirmButtonText: 'confirmButtonText',
-                checkboxText: 'checkboxText'
+                "headerText": 'headerText',
+                "descriptionText": 'descriptionText',
+                "confirmButtonText": 'confirmButtonText',
+                "checkboxText": 'checkboxText'
             });
             userPreferencesServiceSetSpy = spyOn(userPreferencesService, 'set');
             fixture.detectChanges();
@@ -102,13 +102,13 @@ describe('UnsavedChangesDialog', () => {
         });
 
         it('should call UserPreferences Service and update it to true when checkbox is checked', () => {
-            const event = { checked: true };
+            const event = { "checked": true };
             savePreferenceCheckbox.triggerEventHandler('change', event);
             expect(userPreferencesServiceSetSpy).toHaveBeenCalledWith(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, 'true');
         });
 
         it('should call UserPreferences Service and update it to false when checkbox is unchecked', () => {
-            const event = { checked: false };
+            const event = { "checked": false };
             savePreferenceCheckbox.triggerEventHandler('change', event);
             expect(userPreferencesServiceSetSpy).toHaveBeenCalledWith(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, 'false');
         });

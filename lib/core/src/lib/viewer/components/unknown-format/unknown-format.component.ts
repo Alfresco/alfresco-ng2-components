@@ -20,11 +20,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-viewer-unknown-format',
-    standalone: true,
-    templateUrl: './unknown-format.component.html',
-    styleUrls: ['./unknown-format.component.scss'],
-    imports: [MatIconModule, TranslateModule],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-viewer-unknown-format',
+    "standalone": true,
+    "templateUrl": './unknown-format.component.html',
+    "styleUrls": ['./unknown-format.component.scss'],
+    "imports": [MatIconModule, TranslateModule],
+    "encapsulation": ViewEncapsulation.None
 })
 export class UnknownFormatComponent {}

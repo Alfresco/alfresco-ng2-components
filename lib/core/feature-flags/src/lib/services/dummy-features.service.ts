@@ -22,19 +22,19 @@ import { IFeaturesService, FlagChangeset } from '../interfaces/features.interfac
 
 @Injectable()
 export class DummyFeaturesService implements IFeaturesService {
-    init(): Observable<FlagChangeset> {
+    init (): Observable<FlagChangeset> {
         return of();
     }
 
-    isOn$(): Observable<boolean> {
+    isOn$ (): Observable<boolean> {
         return of(false);
     }
 
-    isOff$(_key: string): Observable<boolean> {
+    isOff$ (_key: string): Observable<boolean> {
         return of(true);
     }
 
-    getFlags$(): Observable<FlagChangeset> {
+    getFlags$ (): Observable<FlagChangeset> {
         return of({});
     }
 }

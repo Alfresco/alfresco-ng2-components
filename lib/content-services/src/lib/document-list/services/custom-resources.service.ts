@@ -41,51 +41,51 @@ import { map } from 'rxjs/operators';
 
 const CREATE_PERMISSION: string = 'create';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class CustomResourcesService {
     private _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
+    get peopleApi (): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
         return this._peopleApi;
     }
 
     private _sitesApi: SitesApi;
-    get sitesApi(): SitesApi {
+    get sitesApi (): SitesApi {
         this._sitesApi = this._sitesApi ?? new SitesApi(this.apiService.getInstance());
         return this._sitesApi;
     }
 
     private _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
+    get trashcanApi (): TrashcanApi {
         this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
         return this._trashcanApi;
     }
 
     private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
+    get searchApi (): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
 
     private _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
+    get sharedLinksApi (): SharedlinksApi {
         this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
         return this._sharedLinksApi;
     }
 
     private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
+    get favoritesApi (): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
         return this._favoritesApi;
     }
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Gets files recently accessed by a user.
@@ -94,7 +94,7 @@ export class CustomResourcesService {
      * @param filters Specifies additional filters to apply (joined with **AND**)
      * @returns List of nodes for the recently used files
      */
-    getRecentFiles(personId: string, pagination: PaginationModel, filters?: string[]): Observable<ResultSetPaging> {
+    getRecentFiles (personId: string, pagination: PaginationModel, filters?: string[]): Observable<ResultSetPaging> {
         const defaultFilter = [
             'TYPE:"content"',
             '-PATH:"//cm:wiki/*"',
@@ -123,34 +123,34 @@ export class CustomResourcesService {
                 (person) => {
                     const username = person.entry.id;
                     const filterQueries = [
-                        { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                        { query: `cm:modifier:'${username}' OR cm:creator:'${username}'` },
-                        { query: defaultFilter.join(' AND ') }
+                        { "query": `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
+                        { "query": `cm:modifier:'${username}' OR cm:creator:'${username}'` },
+                        { "query": defaultFilter.join(' AND ') }
                     ];
 
                     if (filters && filters.length > 0) {
                         filterQueries.push({
-                            query: filters.join()
+                            "query": filters.join()
                         });
                     }
 
                     const query: SearchRequest = {
-                        query: {
-                            query: '*',
-                            language: SEARCH_LANGUAGE.AFTS
+                        "query": {
+                            "query": '*',
+                            "language": SEARCH_LANGUAGE.AFTS
                         },
                         filterQueries,
-                        include: ['path', 'properties', 'allowableOperations', 'aspectNames'],
-                        sort: [
+                        "include": ['path', 'properties', 'allowableOperations', 'aspectNames'],
+                        "sort": [
                             {
-                                type: 'FIELD',
-                                field: 'cm:modified',
-                                ascending: false
+                                "type": 'FIELD',
+                                "field": 'cm:modified',
+                                "ascending": false
                             }
                         ],
-                        paging: {
-                            maxItems: pagination.maxItems,
-                            skipCount: pagination.skipCount
+                        "paging": {
+                            "maxItems": pagination.maxItems,
+                            "skipCount": pagination.skipCount
                         }
                     };
 
@@ -180,23 +180,23 @@ export class CustomResourcesService {
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of favorite files
      */
-    loadFavorites(pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<FavoritePaging> {
+    loadFavorites (pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<FavoritePaging> {
         const includeFieldsRequest = this.getIncludesFields(includeFields);
         const defaultPredicate = '(EXISTS(target/file) OR EXISTS(target/folder))';
 
         const options = {
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount,
-            where: where ? `${where} AND ${defaultPredicate}` : defaultPredicate,
-            include: includeFieldsRequest
+            "maxItems": pagination.maxItems,
+            "skipCount": pagination.skipCount,
+            "where": where ? `${where} AND ${defaultPredicate}` : defaultPredicate,
+            "include": includeFieldsRequest
         };
 
         return new Observable((observer) => {
             this.favoritesApi.listFavorites('-me-', options).then(
                 (result) => {
                     const page: FavoritePaging = {
-                        list: {
-                            entries: result.list.entries.map(({ entry }: any) => {
+                        "list": {
+                            "entries": result.list.entries.map(({ entry }: any) => {
                                 const target = entry.target.file || entry.target.folder;
                                 target.properties = {
                                     ...(target.properties || {
@@ -209,10 +209,10 @@ export class CustomResourcesService {
                                 target.allowableOperations = entry?.allowableOperations ?? [];
 
                                 return {
-                                    entry: target
+                                    "entry": target
                                 };
                             }),
-                            pagination: result.list.pagination
+                            "pagination": result.list.pagination
                         }
                     };
 
@@ -233,11 +233,11 @@ export class CustomResourcesService {
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
      */
-    loadMemberSites(pagination: PaginationModel, where?: string): Observable<SiteMemberPaging> {
+    loadMemberSites (pagination: PaginationModel, where?: string): Observable<SiteMemberPaging> {
         const options = {
-            include: ['properties'],
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount,
+            "include": ['properties'],
+            "maxItems": pagination.maxItems,
+            "skipCount": pagination.skipCount,
             where
         };
 
@@ -245,15 +245,15 @@ export class CustomResourcesService {
             this.sitesApi.listSiteMembershipsForPerson('-me-', options).then(
                 (result: SiteRolePaging) => {
                     const page: SiteMemberPaging = new SiteMemberPaging({
-                        list: {
-                            entries: result.list.entries.map(({ entry: { site } }: any) => {
+                        "list": {
+                            "entries": result.list.entries.map(({ "entry": { site } }: any) => {
                                 site.allowableOperations = site.allowableOperations ? site.allowableOperations : [CREATE_PERMISSION];
                                 site.name = site.name || site.title;
                                 return {
-                                    entry: site
+                                    "entry": site
                                 };
                             }),
-                            pagination: result.list.pagination
+                            "pagination": result.list.pagination
                         }
                     });
 
@@ -274,11 +274,11 @@ export class CustomResourcesService {
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
      */
-    loadSites(pagination: PaginationModel, where?: string): Observable<SitePaging> {
+    loadSites (pagination: PaginationModel, where?: string): Observable<SitePaging> {
         const options = {
-            include: ['properties', 'aspectNames'],
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount,
+            "include": ['properties', 'aspectNames'],
+            "maxItems": pagination.maxItems,
+            "skipCount": pagination.skipCount,
             where
         };
 
@@ -306,13 +306,13 @@ export class CustomResourcesService {
      * @param includeFields List of data field names to include in the results
      * @returns List of deleted items
      */
-    loadTrashcan(pagination: PaginationModel, includeFields: string[] = []): Observable<DeletedNodesPaging> {
+    loadTrashcan (pagination: PaginationModel, includeFields: string[] = []): Observable<DeletedNodesPaging> {
         const includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
-            include: includeFieldsRequest,
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount
+            "include": includeFieldsRequest,
+            "maxItems": pagination.maxItems,
+            "skipCount": pagination.skipCount
         };
 
         return from(this.trashcanApi.listDeletedNodes(options));
@@ -325,13 +325,13 @@ export class CustomResourcesService {
      * @param where A string to restrict the returned objects by using a predicate
      * @returns List of shared links
      */
-    loadSharedLinks(pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<SharedLinkPaging> {
+    loadSharedLinks (pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<SharedLinkPaging> {
         const includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
-            include: includeFieldsRequest,
-            maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount,
+            "include": includeFieldsRequest,
+            "maxItems": pagination.maxItems,
+            "skipCount": pagination.skipCount,
             where
         };
 
@@ -343,7 +343,7 @@ export class CustomResourcesService {
      * @param folderId Folder ID name to check
      * @returns True if the ID is a well-known name, false otherwise
      */
-    isCustomSource(folderId: string): boolean {
+    isCustomSource (folderId: string): boolean {
         let isCustomSources = false;
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
 
@@ -359,7 +359,7 @@ export class CustomResourcesService {
      * @param folderId Folder ID name to check
      * @returns True if the ID is one of the supported sources, false otherwise
      */
-    isSupportedSource(folderId: string): boolean {
+    isSupportedSource (folderId: string): boolean {
         let isSupportedSources = false;
         const sources = ['-my-', '-root-', '-shared-'];
 
@@ -378,7 +378,7 @@ export class CustomResourcesService {
      * @param where  Filters the Node list using the *where* condition of the REST API (for example, isFolder=true). See the REST API documentation for more information.
      * @returns List of items contained in the folder
      */
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = [], where?: string): any {
+    loadFolderByNodeId (nodeId: string, pagination: PaginationModel, includeFields: string[] = [], where?: string): any {
         if (nodeId === '-trashcan-') {
             return this.loadTrashcan(pagination, includeFields);
         } else if (nodeId === '-sharedlinks-') {
@@ -402,7 +402,7 @@ export class CustomResourcesService {
      * @param pagination Specifies how to paginate the results
      * @returns List of node IDs
      */
-    getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
+    getCorrespondingNodeIds (nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
         if (this.isCustomSource(nodeId)) {
             return this.loadFolderByNodeId(nodeId, pagination).pipe(
                 map((result: any): string[] => result.list.entries.map((node: any): string => this.getIdFromEntry(node, nodeId)))
@@ -421,7 +421,7 @@ export class CustomResourcesService {
      * @param nodeId ID of the node object
      * @returns ID value
      */
-    getIdFromEntry(node: any, nodeId: string): string {
+    getIdFromEntry (node: any, nodeId: string): string {
         if (nodeId === '-sharedlinks-') {
             return node.entry.nodeId;
         } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
@@ -438,11 +438,11 @@ export class CustomResourcesService {
      * @param nodeId Node to check
      * @returns True if the alias has a corresponding node ID, false otherwise
      */
-    hasCorrespondingNodeIds(nodeId: string): boolean {
+    hasCorrespondingNodeIds (nodeId: string): boolean {
         return this.isCustomSource(nodeId) || this.isSupportedSource(nodeId);
     }
 
-    private getIncludesFields(includeFields: string[]): string[] {
+    private getIncludesFields (includeFields: string[]): string[] {
         return ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields].filter(
             (element, index, array) => index === array.indexOf(element)
         );

@@ -30,7 +30,7 @@ describe('TagNodeList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TagNodeListComponent]
+            "imports": [ContentTestingModule, TagNodeListComponent]
         });
         fixture = TestBed.createComponent(TagNodeListComponent);
         component = fixture.componentInstance;
@@ -94,19 +94,19 @@ describe('TagNodeList', () => {
 
             beforeEach(() => {
                 tagEntry = {
-                    id: 'some id',
-                    tag: 'some tag'
+                    "id": 'some id',
+                    "tag": 'some tag'
                 };
                 tagEntries = [
                     {
-                        entry: tagEntry
+                        "entry": tagEntry
                     }
                 ];
                 getTagsByNodeIdSpy.and.returnValue(
                     of({
-                        list: {
-                            entries: tagEntries,
-                            pagination: undefined
+                        "list": {
+                            "entries": tagEntries,
+                            "pagination": undefined
                         }
                     })
                 );
@@ -120,8 +120,8 @@ describe('TagNodeList', () => {
                 fixture.detectChanges();
                 expect(dynamicChipListComponent.chips).toEqual([
                     {
-                        id: tagEntry.id,
-                        name: tagEntry.tag
+                        "id": tagEntry.id,
+                        "name": tagEntry.tag
                     }
                 ]);
                 expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(component.nodeId);
@@ -144,8 +144,8 @@ describe('TagNodeList', () => {
                 fixture.detectChanges();
                 expect(dynamicChipListComponent.chips).toEqual([
                     {
-                        id: tagEntry.id,
-                        name: tagEntry.tag
+                        "id": tagEntry.id,
+                        "name": tagEntry.tag
                     }
                 ]);
                 expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(component.nodeId);
@@ -168,8 +168,8 @@ describe('TagNodeList', () => {
                 fixture.detectChanges();
                 expect(dynamicChipListComponent.chips).toEqual([
                     {
-                        id: tagEntry.id,
-                        name: tagEntry.tag
+                        "id": tagEntry.id,
+                        "name": tagEntry.tag
                     }
                 ]);
                 expect(tagService.getTagsByNodeId).toHaveBeenCalledWith(component.nodeId);
@@ -194,8 +194,8 @@ describe('TagNodeList', () => {
                 fixture.detectChanges();
                 expect(dynamicChipListComponent.chips).toEqual([
                     {
-                        id: tagEntry.id,
-                        name: tagEntry.tag
+                        "id": tagEntry.id,
+                        "name": tagEntry.tag
                     }
                 ]);
                 expect(tagService.removeTag).toHaveBeenCalledWith(component.nodeId, tag);

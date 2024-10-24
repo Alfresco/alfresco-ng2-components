@@ -19,16 +19,16 @@ import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { NotificationService } from '../notifications/services/notification.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class ClipboardService {
-    constructor(@Inject(DOCUMENT) private document: any, private notificationService: NotificationService) {}
+    constructor (@Inject(DOCUMENT) private document: any, private notificationService: NotificationService) {}
 
     /**
      * Checks if the target element can have its text copied.
      * @param target Target HTML element
      * @returns True if the text can be copied, false otherwise
      */
-    isTargetValid(target: HTMLInputElement | HTMLTextAreaElement) {
+    isTargetValid (target: HTMLInputElement | HTMLTextAreaElement) {
         if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
             return !target.hasAttribute('disabled');
         }
@@ -40,7 +40,7 @@ export class ClipboardService {
      * @param target HTML element to be copied
      * @param message Snackbar message to alert when copying happens
      */
-    copyToClipboard(target: HTMLInputElement | HTMLTextAreaElement, message?: string) {
+    copyToClipboard (target: HTMLInputElement | HTMLTextAreaElement, message?: string) {
         if (this.isTargetValid(target)) {
             try {
                 target.select();
@@ -62,7 +62,7 @@ export class ClipboardService {
      * @param content Text to copy
      * @param message Snackbar message to alert when copying happens
      */
-    copyContentToClipboard(content: string, message: string) {
+    copyContentToClipboard (content: string, message: string) {
         try {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(content);
@@ -80,7 +80,7 @@ export class ClipboardService {
         }
     }
 
-    private notify(message) {
+    private notify (message) {
         if (message) {
             this.notificationService.openSnackMessage(message);
         }

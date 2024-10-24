@@ -22,11 +22,11 @@ import { TreeResponse } from '../models/tree-response.interface';
 import { TreeService } from '../services/tree.service';
 import { treeNodesMockExpanded } from './tree-node.mock';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class TreeServiceMock extends TreeService<TreeNode> {
-    public getSubNodes(parentNodeId: string, skipCount?: number, maxItems?: number): Observable<TreeResponse<TreeNode>> {
+    public getSubNodes (parentNodeId: string, skipCount?: number, maxItems?: number): Observable<TreeResponse<TreeNode>> {
         if (parentNodeId) {
-            return of({ pagination: { skipCount, maxItems }, entries: Array.from(treeNodesMockExpanded) });
+            return of({ "pagination": { skipCount, maxItems }, "entries": Array.from(treeNodesMockExpanded) });
         }
         return of();
     }

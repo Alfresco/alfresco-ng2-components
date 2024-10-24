@@ -29,11 +29,11 @@ import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    selector: 'number-widget',
-    standalone: true,
-    templateUrl: './number.widget.html',
-    styleUrls: ['./number.widget.scss'],
-    host: {
+    "selector": 'number-widget',
+    "standalone": true,
+    "templateUrl": './number.widget.html',
+    "styleUrls": ['./number.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -44,18 +44,18 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
-    providers: [DecimalNumberPipe],
-    encapsulation: ViewEncapsulation.None
+    "imports": [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
+    "providers": [DecimalNumberPipe],
+    "encapsulation": ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
     displayValue: number;
 
-    constructor(public formService: FormService, private decimalNumberPipe: DecimalNumberPipe) {
+    constructor (public formService: FormService, private decimalNumberPipe: DecimalNumberPipe) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field.readOnly) {
             this.displayValue = this.decimalNumberPipe.transform(this.field.value);
         } else {

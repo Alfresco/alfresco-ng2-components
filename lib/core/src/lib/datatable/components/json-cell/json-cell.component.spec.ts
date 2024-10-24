@@ -33,7 +33,7 @@ describe('JsonCellComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [JsonCellComponent]
+            "imports": [JsonCellComponent]
         });
         fixture = TestBed.createComponent(JsonCellComponent);
         component = fixture.componentInstance;
@@ -42,15 +42,15 @@ describe('JsonCellComponent', () => {
 
     beforeEach(() => {
         rowData = {
-            name: '1',
-            entity: {
-                name: 'test',
-                description: 'this is a test',
-                version: 1
+            "name": '1',
+            "entity": {
+                "name": 'test',
+                "description": 'this is a test',
+                "version": 1
             }
         };
 
-        columnData = { format: '/somewhere', type: 'json', key: 'entity' };
+        columnData = { "format": '/somewhere', "type": 'json', "key": 'entity' };
 
         dataTableAdapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
 

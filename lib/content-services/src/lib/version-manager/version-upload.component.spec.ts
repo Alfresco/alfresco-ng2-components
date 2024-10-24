@@ -30,27 +30,27 @@ describe('VersionUploadComponent', () => {
     let contentService: ContentService;
 
     const node: Node = new Node({
-        id: '1234',
-        name: 'TEST-NODE',
-        isFile: true,
-        nodeType: 'FAKE',
-        isFolder: false,
-        modifiedAt: new Date(),
-        modifiedByUser: null,
-        createdAt: new Date(),
-        createdByUser: null,
-        content: {
-            mimeType: 'text/html',
-            mimeTypeName: 'HTML',
-            sizeInBytes: 13
+        "id": '1234',
+        "name": 'TEST-NODE',
+        "isFile": true,
+        "nodeType": 'FAKE',
+        "isFolder": false,
+        "modifiedAt": new Date(),
+        "modifiedByUser": null,
+        "createdAt": new Date(),
+        "createdByUser": null,
+        "content": {
+            "mimeType": 'text/html',
+            "mimeTypeName": 'HTML',
+            "sizeInBytes": 13
         }
     });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [UploadService],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "providers": [UploadService],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(VersionUploadComponent);
         component = fixture.componentInstance;

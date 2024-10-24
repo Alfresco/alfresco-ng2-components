@@ -31,7 +31,7 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
 
     localizedDatePipe: LocalizedDatePipe;
 
-    constructor(cardViewDateItemProperties: CardViewDateItemProperties) {
+    constructor (cardViewDateItemProperties: CardViewDateItemProperties) {
         super(cardViewDateItemProperties);
 
         if (cardViewDateItemProperties.format) {
@@ -43,7 +43,7 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
         }
     }
 
-    get displayValue(): string | string[] {
+    get displayValue (): string | string[] {
         if (this.multivalued) {
             if (this.value && Array.isArray(this.value)) {
                 return this.value.map((date) => this.transformDate(this.prepareDate(date)));
@@ -55,12 +55,12 @@ export class CardViewDateItemModel extends CardViewBaseItemModel<DateItemType> i
         }
     }
 
-    transformDate(value: Date | string | number): string {
+    transformDate (value: Date | string | number): string {
         this.localizedDatePipe = new LocalizedDatePipe();
         return this.localizedDatePipe.transform(value, this.format, this.locale);
     }
 
-    private prepareDate(date: Date): Date {
+    private prepareDate (date: Date): Date {
         if (this.type === 'date') {
             const dateInstance = date instanceof Date ? date : new Date(date);
             return DateFnsUtils.forceLocal(dateInstance);

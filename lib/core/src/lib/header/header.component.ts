@@ -25,19 +25,19 @@ import { NavbarComponent } from './navbar/navbar.component';
 export type HeaderVariant = 'minimal' | 'extended';
 
 @Component({
-    selector: 'adf-header',
-    standalone: true,
-    imports: [CommonModule, ...TOOLBAR_DIRECTIVES, NavbarComponent],
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
-    host: { class: 'adf-header' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-header',
+    "standalone": true,
+    "imports": [CommonModule, ...TOOLBAR_DIRECTIVES, NavbarComponent],
+    "templateUrl": './header.component.html',
+    "styleUrls": ['./header.component.scss'],
+    "host": { "class": 'adf-header' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class HeaderComponent {
     @Input() variant: HeaderVariant = 'minimal';
 
     @HostBinding('style.--adf-toolbar-title-width')
-    get width() {
+    get width () {
         return this.variant === 'extended' ? '100%' : 'auto';
     }
 

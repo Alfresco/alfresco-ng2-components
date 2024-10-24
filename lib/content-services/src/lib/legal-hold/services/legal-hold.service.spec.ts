@@ -29,24 +29,24 @@ describe('LegalHoldsService', () => {
     const nodeId = 'mockNodeId';
     const holdId = 'holdId';
     const mockBulkResponse: BulkAssignHoldResponseEntry = {
-        entry: {
-            totalItems: 3,
-            bulkStatusId: 'bulkStatus'
+        "entry": {
+            "totalItems": 3,
+            "bulkStatusId": 'bulkStatus'
         }
     };
     const mockBulkStatusResponse: HoldBulkStatusEntry = {
-        entry: {
-            bulkStatusId: 'bulkStatus',
-            status: 'IN_PROGRESS',
-            totalItems: 3,
-            processedItems: 2,
-            errorsCount: 0,
-            startTime: new Date('2024'),
-            holdBulkOperation: {
-                op: 'ADD',
-                query: {
-                    query: 'mockQuery',
-                    language: SEARCH_LANGUAGE.AFTS
+        "entry": {
+            "bulkStatusId": 'bulkStatus',
+            "status": 'IN_PROGRESS',
+            "totalItems": 3,
+            "processedItems": 2,
+            "errorsCount": 0,
+            "startTime": new Date('2024'),
+            "holdBulkOperation": {
+                "op": 'ADD',
+                "query": {
+                    "query": 'mockQuery',
+                    "language": SEARCH_LANGUAGE.AFTS
                 }
             }
         }
@@ -54,31 +54,31 @@ describe('LegalHoldsService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(LegalHoldService);
 
         legalHolds = {
-            list: {
-                entries: [legalHoldEntry]
+            "list": {
+                "entries": [legalHoldEntry]
             }
         } as HoldPaging;
 
         legalHoldEntry = {
-            entry: {
-                id: holdId,
-                name: 'some name',
-                reason: 'some reason',
-                description: 'some description'
+            "entry": {
+                "id": holdId,
+                "name": 'some name',
+                "reason": 'some reason',
+                "description": 'some description'
             }
         };
 
         returnedHolds = [
             {
-                id: holdId,
-                name: 'some name',
-                reason: 'some reason',
-                description: 'some description'
+                "id": holdId,
+                "name": 'some name',
+                "reason": 'some reason',
+                "description": 'some description'
             }
         ] as Hold[];
 
@@ -103,7 +103,7 @@ describe('LegalHoldsService', () => {
 
     describe('assignHold', () => {
         it('should assign node to existing hold', (done) => {
-            const mockResponse = { entry: { id: holdId } } as HoldEntry;
+            const mockResponse = { "entry": { "id": holdId } } as HoldEntry;
             spyOn(service.legalHoldApi, 'assignHold').and.returnValue(Promise.resolve(mockResponse));
 
             service.assignHold(nodeId, holdId).subscribe((holds) => {
@@ -116,7 +116,7 @@ describe('LegalHoldsService', () => {
 
     describe('assignHolds', () => {
         it('should assign nodes to existing hold', (done) => {
-            const nodeIds = [{ id: 'qwe' }, { id: 'abc' }];
+            const nodeIds = [{ "id": 'qwe' }, { "id": 'abc' }];
             spyOn(service.legalHoldApi, 'assignHolds').and.returnValue(Promise.resolve(legalHolds));
 
             service.assignHolds(nodeIds, holdId).subscribe((holds) => {
@@ -141,8 +141,8 @@ describe('LegalHoldsService', () => {
     describe('createHold', () => {
         it('should create new hold', (done) => {
             const mockHold = {
-                name: 'Hold 1',
-                reason: 'reason 1'
+                "name": 'Hold 1',
+                "reason": 'reason 1'
             };
             spyOn(service.legalHoldApi, 'createHold').and.returnValue(Promise.resolve(legalHoldEntry));
 
@@ -158,12 +158,12 @@ describe('LegalHoldsService', () => {
         it('should create list of holds', (done) => {
             const mockHolds = [
                 {
-                    name: 'Hold 1',
-                    reason: 'reason 1'
+                    "name": 'Hold 1',
+                    "reason": 'reason 1'
                 },
                 {
-                    name: 'Hold 2',
-                    reason: 'reason 2'
+                    "name": 'Hold 2',
+                    "reason": 'reason 2'
                 }
             ];
             spyOn(service.legalHoldApi, 'createHolds').and.returnValue(Promise.resolve(legalHolds));
@@ -179,8 +179,8 @@ describe('LegalHoldsService', () => {
     describe('bulkAssignHold', () => {
         it('should add nodes to hold based on search query results', (done) => {
             const query: RequestQuery = {
-                query: 'mockQuery',
-                language: SEARCH_LANGUAGE.AFTS
+                "query": 'mockQuery',
+                "language": SEARCH_LANGUAGE.AFTS
             };
 
             service.bulkAssignHold(nodeId, query).subscribe((response) => {
@@ -195,8 +195,8 @@ describe('LegalHoldsService', () => {
         it('should add nodes to hold based on search query results', (done) => {
             const folderId = 'mockFolderId';
             const query: RequestQuery = {
-                query: `ANCESTOR:'workspace://SpacesStore/${folderId}' and TYPE:content`,
-                language: SEARCH_LANGUAGE.AFTS
+                "query": `ANCESTOR:'workspace://SpacesStore/${folderId}' and TYPE:content`,
+                "language": SEARCH_LANGUAGE.AFTS
             };
 
             service.bulkAssignHoldToFolder(nodeId, folderId, SEARCH_LANGUAGE.AFTS).subscribe((response) => {

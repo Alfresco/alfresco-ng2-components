@@ -25,10 +25,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    standalone: true,
-    templateUrl: './json.widget.html',
-    styleUrls: ['./json.widget.scss'],
-    host: {
+    "standalone": true,
+    "templateUrl": './json.widget.html',
+    "styleUrls": ['./json.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -39,28 +39,28 @@ import { TranslateModule } from '@ngx-translate/core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [TranslateModule, MatFormFieldModule, MatButtonModule],
-    encapsulation: ViewEncapsulation.None
+    "imports": [TranslateModule, MatFormFieldModule, MatButtonModule],
+    "encapsulation": ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService, private dialog: MatDialog) {
+    constructor (public formService: FormService, private dialog: MatDialog) {
         super(formService);
     }
 
-    view() {
+    view () {
         const rawValue = this.field.value;
         const value = typeof rawValue === 'object' ? JSON.stringify(rawValue || {}, null, 2) : rawValue;
 
         const settings: EditJsonDialogSettings = {
-            title: this.field.name,
-            editable: false,
+            "title": this.field.name,
+            "editable": false,
             value
         };
 
         this.dialog.open(EditJsonDialogComponent, {
-            data: settings,
-            minWidth: '50%',
-            minHeight: '50%'
+            "data": settings,
+            "minWidth": '50%',
+            "minHeight": '50%'
         });
     }
 }

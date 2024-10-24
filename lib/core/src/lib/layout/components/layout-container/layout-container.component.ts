@@ -22,16 +22,16 @@ import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
-    selector: 'adf-layout-container',
-    standalone: true,
-    imports: [CommonModule, MatSidenavModule],
-    templateUrl: './layout-container.component.html',
-    styleUrls: ['./layout-container.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    animations: [
+    "selector": 'adf-layout-container',
+    "standalone": true,
+    "imports": [CommonModule, MatSidenavModule],
+    "templateUrl": './layout-container.component.html',
+    "styleUrls": ['./layout-container.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "animations": [
         trigger('sidenavAnimation', [
-            state('expanded', style({ width: '{{ width }}px' }), { params: { width: 0 } }),
-            state('compact', style({ width: '{{ width }}px' }), { params: { width: 0 } }),
+            state('expanded', style({ "width": '{{ width }}px' }), { "params": { "width": 0 } }),
+            state('compact', style({ "width": '{{ width }}px' }), { "params": { "width": 0 } }),
             transition('compact <=> expanded', animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'))
         ]),
         trigger('contentAnimationLeft', [
@@ -41,7 +41,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
                     'margin-left': '{{ margin-left }}px',
                     'margin-right': '{{ margin-right }}px'
                 }),
-                { params: { 'margin-left': 0, 'margin-right': 0 } }
+                { "params": { 'margin-left': 0, 'margin-right': 0 } }
             ),
             state(
                 'compact',
@@ -49,7 +49,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
                     'margin-left': '{{ margin-left }}px',
                     'margin-right': '{{ margin-right }}px'
                 }),
-                { params: { 'margin-left': 0, 'margin-right': 0 } }
+                { "params": { 'margin-left': 0, 'margin-right': 0 } }
             ),
             transition('expanded <=> compact', animate('400ms cubic-bezier(0.25, 0.8, 0.25, 1)'))
         ])
@@ -71,41 +71,41 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     /** Layout text orientation 'ltr' | 'rtl' */
     @Input() direction: Direction = 'ltr';
 
-    @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
+    @ViewChild(MatSidenav, { "static": true }) sidenav: MatSidenav;
 
     sidenavAnimationState: any;
     contentAnimationState: any;
 
-    SIDENAV_STATES = { MOBILE: {}, EXPANDED: {}, COMPACT: {} };
-    CONTENT_STATES = { MOBILE: {}, EXPANDED: {}, COMPACT: {} };
+    SIDENAV_STATES = { "MOBILE": {}, "EXPANDED": {}, "COMPACT": {} };
+    CONTENT_STATES = { "MOBILE": {}, "EXPANDED": {}, "COMPACT": {} };
 
-    constructor() {
+    constructor () {
         this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     }
 
-    ngOnInit() {
-        this.SIDENAV_STATES.MOBILE = { value: 'expanded', params: { width: this.sidenavMax } };
-        this.SIDENAV_STATES.EXPANDED = { value: 'expanded', params: { width: this.sidenavMax } };
-        this.SIDENAV_STATES.COMPACT = { value: 'compact', params: { width: this.sidenavMin } };
+    ngOnInit () {
+        this.SIDENAV_STATES.MOBILE = { "value": 'expanded', "params": { "width": this.sidenavMax } };
+        this.SIDENAV_STATES.EXPANDED = { "value": 'expanded', "params": { "width": this.sidenavMax } };
+        this.SIDENAV_STATES.COMPACT = { "value": 'compact', "params": { "width": this.sidenavMin } };
 
-        this.CONTENT_STATES.MOBILE = { value: 'expanded' };
+        this.CONTENT_STATES.MOBILE = { "value": 'expanded' };
 
         this.mediaQueryList?.addListener(this.onMediaQueryChange);
 
         this.updateSidenavState();
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.mediaQueryList?.removeListener(this.onMediaQueryChange);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes?.direction) {
             this.contentAnimationState = this.toggledContentAnimation;
         }
     }
 
-    toggleMenu(): void {
+    toggleMenu (): void {
         if (this.isMobileScreenSize) {
             this.sidenav.toggle();
         } else {
@@ -114,63 +114,63 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    get isMobileScreenSize(): boolean {
+    get isMobileScreenSize (): boolean {
         return !!this.mediaQueryList?.matches;
     }
 
-    getContentAnimationState(): any {
+    getContentAnimationState (): any {
         return this.contentAnimationState;
     }
 
-    private get toggledSidenavAnimation(): any {
+    private get toggledSidenavAnimation (): any {
         return this.sidenavAnimationState === this.SIDENAV_STATES.EXPANDED ? this.SIDENAV_STATES.COMPACT : this.SIDENAV_STATES.EXPANDED;
     }
 
-    private get toggledContentAnimation(): any {
+    private get toggledContentAnimation (): any {
         if (this.isMobileScreenSize) {
             return this.CONTENT_STATES.MOBILE;
         }
 
         if (this.sidenavAnimationState === this.SIDENAV_STATES.EXPANDED) {
             if (this.position === 'start' && this.direction === 'ltr') {
-                return { value: 'compact', params: { 'margin-left': this.sidenavMax } };
+                return { "value": 'compact', "params": { 'margin-left': this.sidenavMax } };
             }
 
             if (this.position === 'start' && this.direction === 'rtl') {
-                return { value: 'compact', params: { 'margin-right': this.sidenavMax } };
+                return { "value": 'compact', "params": { 'margin-right': this.sidenavMax } };
             }
 
             if (this.position === 'end' && this.direction === 'ltr') {
-                return { value: 'compact', params: { 'margin-right': this.sidenavMax } };
+                return { "value": 'compact', "params": { 'margin-right': this.sidenavMax } };
             }
 
             if (this.position === 'end' && this.direction === 'rtl') {
-                return { value: 'compact', params: { 'margin-left': this.sidenavMax } };
+                return { "value": 'compact', "params": { 'margin-left': this.sidenavMax } };
             }
         } else {
             if (this.position === 'start' && this.direction === 'ltr') {
-                return { value: 'expanded', params: { 'margin-left': this.sidenavMin } };
+                return { "value": 'expanded', "params": { 'margin-left': this.sidenavMin } };
             }
 
             if (this.position === 'start' && this.direction === 'rtl') {
-                return { value: 'expanded', params: { 'margin-right': this.sidenavMin } };
+                return { "value": 'expanded', "params": { 'margin-right': this.sidenavMin } };
             }
 
             if (this.position === 'end' && this.direction === 'ltr') {
-                return { value: 'expanded', params: { 'margin-right': this.sidenavMin } };
+                return { "value": 'expanded', "params": { 'margin-right': this.sidenavMin } };
             }
 
             if (this.position === 'end' && this.direction === 'rtl') {
-                return { value: 'expanded', params: { 'margin-left': this.sidenavMin } };
+                return { "value": 'expanded', "params": { 'margin-left': this.sidenavMin } };
             }
         }
     }
 
-    private onMediaQueryChange(): void {
+    private onMediaQueryChange (): void {
         this.updateSidenavState();
     }
 
-    private updateSidenavState(): void {
+    private updateSidenavState (): void {
         if (this.isMobileScreenSize) {
             this.sidenavAnimationState = this.SIDENAV_STATES.MOBILE;
             this.contentAnimationState = this.CONTENT_STATES.MOBILE;

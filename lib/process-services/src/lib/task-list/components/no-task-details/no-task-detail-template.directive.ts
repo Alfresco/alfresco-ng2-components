@@ -23,16 +23,16 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
  */
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: 'adf-no-task-details-template, no-task-details-template',
-    standalone: true
+    "selector": 'adf-no-task-details-template, no-task-details-template',
+    "standalone": true
 })
 export class NoTaskDetailsTemplateDirective implements AfterContentInit {
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private activitiTaskDetails: TaskDetailsComponent) {}
+    constructor (private activitiTaskDetails: TaskDetailsComponent) {}
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.activitiTaskDetails.noTaskDetailsTemplateComponent = this.template;
     }
 }

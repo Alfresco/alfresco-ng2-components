@@ -20,11 +20,11 @@ import { FlagsOverrideToken } from '../interfaces/features.interface';
 
 export const isFlagsOverrideOn = () => () => inject(FlagsOverrideToken) ?? false;
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class IsFlagsOverrideOn {
-    constructor(@Optional() @Inject(FlagsOverrideToken) private devToolsToken: boolean) {}
+    constructor (@Optional() @Inject(FlagsOverrideToken) private devToolsToken: boolean) {}
 
-    canMatch(): boolean {
+    canMatch (): boolean {
         return !!this.devToolsToken;
     }
 }

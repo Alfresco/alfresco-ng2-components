@@ -23,31 +23,31 @@ import { AdfHttpClient } from './adf-http-client.service';
 import { AlfrescoApiResponseError } from './alfresco-api/alfresco-api.response-error';
 
 const securityOptions: SecurityOptions = {
-    authentications: {},
-    defaultHeaders: {},
-    isBpmRequest: false,
-    enableCsrf: true,
-    withCredentials: false
+    "authentications": {},
+    "defaultHeaders": {},
+    "isBpmRequest": false,
+    "enableCsrf": true,
+    "withCredentials": false
 };
 
 const emitter = {
-    emit: () => {},
-    off: () => {},
-    on: () => {},
-    once: () => {}
+    "emit": () => {},
+    "off": () => {},
+    "on": () => {},
+    "once": () => {}
 };
 
 const emitters: Emitters = {
-    eventEmitter: emitter,
-    apiClientEmitter: emitter
+    "eventEmitter": emitter,
+    "apiClientEmitter": emitter
 };
 
 const mockResponse = {
-    data: [
+    "data": [
         {
-            id: 14,
-            name: 'nameFake1',
-            created: '2017-03-01T12:25:17.189+0000'
+            "id": 14,
+            "name": 'nameFake1',
+            "created": '2017-03-01T12:25:17.189+0000'
         }
     ]
 };
@@ -58,8 +58,8 @@ describe('AdfHttpClient', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [AdfHttpClient]
+            "imports": [HttpClientTestingModule],
+            "providers": [AdfHttpClient]
         });
         angularHttpClient = TestBed.inject(AdfHttpClient);
         controller = TestBed.inject(HttpTestingController);
@@ -72,13 +72,13 @@ describe('AdfHttpClient', () => {
 
         it('should deserialize incoming request based on return type', (done) => {
             const options: RequestOptions = {
-                path: '',
-                httpMethod: 'POST',
-                returnType: ResultListDataRepresentationTaskRepresentation,
-                headerParams: {
+                "path": '',
+                "httpMethod": 'POST',
+                "returnType": ResultListDataRepresentationTaskRepresentation,
+                "headerParams": {
                     'Content-Type': 'application/json'
                 },
-                accepts: ['application/json']
+                "accepts": ['application/json']
             };
 
             angularHttpClient
@@ -99,9 +99,9 @@ describe('AdfHttpClient', () => {
 
         it('should return parsed json object when responseType is json', (done) => {
             const options: RequestOptions = {
-                path: '',
-                httpMethod: 'POST',
-                responseType: 'json'
+                "path": '',
+                "httpMethod": 'POST',
+                "responseType": 'json'
             };
 
             angularHttpClient
@@ -120,8 +120,8 @@ describe('AdfHttpClient', () => {
 
         it('should emit unauthorized message for 401 request', (done) => {
             const options: RequestOptions = {
-                path: '',
-                httpMethod: 'POST'
+                "path": '',
+                "httpMethod": 'POST'
             };
 
             const spy = spyOn(emitter, 'emit').and.callThrough();
@@ -134,7 +134,7 @@ describe('AdfHttpClient', () => {
             const req = controller.expectOne('http://example.com');
             expect(req.request.method).toEqual('POST');
 
-            req.flush('<div></div>', { status: 401, statusText: 'unauthorized' });
+            req.flush('<div></div>', { "status": 401, "statusText": 'unauthorized' });
         });
     });
 
@@ -145,33 +145,33 @@ describe('AdfHttpClient', () => {
 
         it('should behave...', () => {
             const requestOptions: RequestOptions = {
-                path: '/nodes/{nodeId}/children',
-                httpMethod: 'POST',
-                queryParams: {
-                    autoRename: true,
-                    include: 'allowableOperations',
-                    fields: null
+                "path": '/nodes/{nodeId}/children',
+                "httpMethod": 'POST',
+                "queryParams": {
+                    "autoRename": true,
+                    "include": 'allowableOperations',
+                    "fields": null
                 },
-                formParams: {
-                    filedata: new File([], 'file.txt'),
-                    relativePath: '',
-                    include: ['allowableOperations'],
-                    renditions: 'doclib',
-                    autoRename: true,
-                    nodeType: 'cm:content'
+                "formParams": {
+                    "filedata": new File([], 'file.txt'),
+                    "relativePath": '',
+                    "include": ['allowableOperations'],
+                    "renditions": 'doclib',
+                    "autoRename": true,
+                    "nodeType": 'cm:content'
                 },
-                bodyParam: {
-                    name: 'demo.txt',
-                    nodeType: 'cm:content',
-                    relativePath: '',
-                    newVersion: false,
-                    majorVersion: false,
-                    parentId: '-my-',
-                    path: ''
+                "bodyParam": {
+                    "name": 'demo.txt',
+                    "nodeType": 'cm:content',
+                    "relativePath": '',
+                    "newVersion": false,
+                    "majorVersion": false,
+                    "parentId": '-my-',
+                    "path": ''
                 },
-                contentType: 'multipart/form-data',
-                accept: 'application/json',
-                returnType: null
+                "contentType": 'multipart/form-data',
+                "accept": 'application/json',
+                "returnType": null
             };
 
             angularHttpClient.request('http://example.com', requestOptions, securityOptions, emitters).catch((error) => fail(error));
@@ -196,14 +196,14 @@ describe('AdfHttpClient', () => {
 
     it('should return a Error type on failed promise, for backward compatibility, with string value to prevent JSON.parse from crashing when we try to get status code from message', (done) => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST'
+            "path": '',
+            "httpMethod": 'POST'
         };
 
         const errorResponse = {
-            error: {
-                errorKey: 'Cant perform action',
-                statusCode: 403
+            "error": {
+                "errorKey": 'Cant perform action',
+                "statusCode": 403
             }
         };
 
@@ -217,14 +217,14 @@ describe('AdfHttpClient', () => {
         const req = controller.expectOne('http://example.com');
         expect(req.request.method).toEqual('POST');
 
-        req.flush(errorResponse, { status: 403, statusText: 'Forbidden' });
+        req.flush(errorResponse, { "status": 403, "statusText": 'Forbidden' });
     });
 
     it('should return a Error type on failed promise with response body', (done) => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            responseType: 'blob'
+            "path": '',
+            "httpMethod": 'POST',
+            "responseType": 'blob'
         };
 
         const errorResponse = new Blob();
@@ -237,17 +237,17 @@ describe('AdfHttpClient', () => {
 
         const req = controller.expectOne('http://example.com');
 
-        req.flush(errorResponse, { status: 400, statusText: 'Bad request' });
+        req.flush(errorResponse, { "status": 400, "statusText": 'Bad request' });
     });
 
     it('should correctly handle queryParams with arrays', () => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            queryParams: {
-                skipCount: 0,
-                status: ['RUNNING', 'SUSPENDED'],
-                sort: 'startDate,DESC'
+            "path": '',
+            "httpMethod": 'POST',
+            "queryParams": {
+                "skipCount": 0,
+                "status": ['RUNNING', 'SUSPENDED'],
+                "sort": 'startDate,DESC'
             }
         };
 
@@ -260,13 +260,13 @@ describe('AdfHttpClient', () => {
         );
         expect(req.request.method).toEqual('POST');
 
-        req.flush(null, { status: 200, statusText: 'Ok' });
+        req.flush(null, { "status": 200, "statusText": 'Ok' });
     });
 
     it('should convert null values to empty stirng for backward compatibility', (done) => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'GET'
+            "path": '',
+            "httpMethod": 'GET'
         };
 
         angularHttpClient
@@ -279,15 +279,15 @@ describe('AdfHttpClient', () => {
 
         const req = controller.expectOne('http://example.com');
 
-        req.flush(null, { status: 200, statusText: 'Ok' });
+        req.flush(null, { "status": 200, "statusText": 'Ok' });
     });
 
     it('should correctly decode types to string', () => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            queryParams: {
-                lastModifiedFrom: '2022-08-17T00:00:00.000+02:00'
+            "path": '',
+            "httpMethod": 'POST',
+            "queryParams": {
+                "lastModifiedFrom": '2022-08-17T00:00:00.000+02:00'
             }
         };
 
@@ -295,15 +295,15 @@ describe('AdfHttpClient', () => {
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000%2B02%3A00');
 
-        req.flush(null, { status: 200, statusText: 'Ok' });
+        req.flush(null, { "status": 200, "statusText": 'Ok' });
     });
 
     it('should correctly decode Date types to string ', () => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            queryParams: {
-                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
+            "path": '',
+            "httpMethod": 'POST',
+            "queryParams": {
+                "lastModifiedFrom": new Date('2022-08-17T00:00:00.000Z')
             }
         };
 
@@ -311,16 +311,16 @@ describe('AdfHttpClient', () => {
 
         const req = controller.expectOne('http://example.com?lastModifiedFrom=2022-08-17T00%3A00%3A00.000Z');
 
-        req.flush(null, { status: 200, statusText: 'Ok' });
+        req.flush(null, { "status": 200, "statusText": 'Ok' });
     });
 
     it('should set Content-type to multipart/form-data if contentTypes array contains only multipart/form-data element', () => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            contentTypes: ['multipart/form-data'],
-            queryParams: {
-                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
+            "path": '',
+            "httpMethod": 'POST',
+            "contentTypes": ['multipart/form-data'],
+            "queryParams": {
+                "lastModifiedFrom": new Date('2022-08-17T00:00:00.000Z')
             }
         };
 
@@ -330,16 +330,16 @@ describe('AdfHttpClient', () => {
 
         expect(req.request.headers.get('Content-Type')).toEqual('multipart/form-data');
 
-        req.flush(null, { status: 200, statusText: 'Ok' });
+        req.flush(null, { "status": 200, "statusText": 'Ok' });
     });
 
     it('should set Content-type header to application/json if contentTypes array contains application/json', () => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            contentTypes: ['multipart/form-data', 'application/json'],
-            queryParams: {
-                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
+            "path": '',
+            "httpMethod": 'POST',
+            "contentTypes": ['multipart/form-data', 'application/json'],
+            "queryParams": {
+                "lastModifiedFrom": new Date('2022-08-17T00:00:00.000Z')
             }
         };
 
@@ -349,15 +349,15 @@ describe('AdfHttpClient', () => {
 
         expect(req.request.headers.get('Content-Type')).toEqual('application/json');
 
-        req.flush(null, { status: 200, statusText: 'Ok' });
+        req.flush(null, { "status": 200, "statusText": 'Ok' });
     });
 
     it('should set Content-type to application/json if contentTypes is not passed to the request options', () => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            queryParams: {
-                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
+            "path": '',
+            "httpMethod": 'POST',
+            "queryParams": {
+                "lastModifiedFrom": new Date('2022-08-17T00:00:00.000Z')
             }
         };
 
@@ -367,15 +367,15 @@ describe('AdfHttpClient', () => {
 
         expect(req.request.headers.get('Content-Type')).toEqual('application/json');
 
-        req.flush(null, { status: 200, statusText: 'Ok' });
+        req.flush(null, { "status": 200, "statusText": 'Ok' });
     });
 
     it('should set Accept header to application/json if accepts is not passed to the request options', () => {
         const options: RequestOptions = {
-            path: '',
-            httpMethod: 'POST',
-            queryParams: {
-                lastModifiedFrom: new Date('2022-08-17T00:00:00.000Z')
+            "path": '',
+            "httpMethod": 'POST',
+            "queryParams": {
+                "lastModifiedFrom": new Date('2022-08-17T00:00:00.000Z')
             }
         };
 
@@ -385,6 +385,6 @@ describe('AdfHttpClient', () => {
 
         expect(req.request.headers.get('Accept')).toEqual('application/json');
 
-        req.flush(null, { status: 200, statusText: 'Ok' });
+        req.flush(null, { "status": 200, "statusText": 'Ok' });
     });
 });

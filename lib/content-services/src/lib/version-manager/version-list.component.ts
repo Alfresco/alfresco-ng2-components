@@ -36,11 +36,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { VersionCompatibilityDirective } from '../version-compatibility';
 
 export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry> {
-    constructor(private versionsApi: VersionsApi, private node: Node) {
+    constructor (private versionsApi: VersionsApi, private node: Node) {
         super();
     }
 
-    getNextBatch(pagingOptions: ContentPagingQuery): Observable<VersionEntry[]> {
+    getNextBatch (pagingOptions: ContentPagingQuery): Observable<VersionEntry[]> {
         return from(this.versionsApi.listVersionHistory(this.node.id, pagingOptions)).pipe(
             take(1),
             map((versionPaging) => versionPaging.list.entries)
@@ -49,9 +49,9 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
 }
 
 @Component({
-    selector: 'adf-version-list',
-    standalone: true,
-    imports: [
+    "selector": 'adf-version-list',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatProgressBarModule,
         MatListModule,
@@ -64,27 +64,27 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
         MatButtonModule,
         VersionCompatibilityDirective
     ],
-    templateUrl: './version-list.component.html',
-    styleUrls: ['./version-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-version-list' }
+    "templateUrl": './version-list.component.html',
+    "styleUrls": ['./version-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-version-list' }
 })
 export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
     private onDestroy$ = new Subject<void>();
     private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
+    get contentApi (): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.alfrescoApi.getInstance());
         return this._contentApi;
     }
 
     private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
+    get versionsApi (): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.alfrescoApi.getInstance());
         return this._versionsApi;
     }
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
         return this._nodesApi;
     }
@@ -132,14 +132,14 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
     @ViewChild('viewport')
     viewport: CdkVirtualScrollViewport;
 
-    constructor(
+    constructor (
         private alfrescoApi: AlfrescoApiService,
         private contentService: ContentService,
         private contentVersionService: ContentVersionService,
         private dialog: MatDialog
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.versionsDataSource = new VersionListDataSource(this.versionsApi, this.node);
         this.versionsDataSource.isLoading.pipe(takeUntil(this.onDestroy$)).subscribe((isLoading) => {
             this.isLoading = isLoading;
@@ -147,44 +147,44 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
         });
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         if (this.versionsDataSource) {
             this.loadVersionHistory();
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 
-    canUpdate(): boolean {
+    canUpdate (): boolean {
         return this.contentService.hasAllowableOperations(this.node, 'update') && this.versionsDataSource.itemsCount > 1;
     }
 
-    canDelete(): boolean {
+    canDelete (): boolean {
         return this.contentService.hasAllowableOperations(this.node, 'delete') && this.versionsDataSource.itemsCount > 1;
     }
 
-    restore(versionId: string) {
+    restore (versionId: string) {
         if (this.canUpdate()) {
             this.versionsApi
-                .revertVersion(this.node.id, versionId, { majorVersion: true, comment: '' })
-                .then(() => this.nodesApi.getNode(this.node.id, { include: ['permissions', 'path', 'isFavorite', 'allowableOperations'] }))
+                .revertVersion(this.node.id, versionId, { "majorVersion": true, "comment": '' })
+                .then(() => this.nodesApi.getNode(this.node.id, { "include": ['permissions', 'path', 'isFavorite', 'allowableOperations'] }))
                 .then((node) => this.onVersionRestored(node));
         }
     }
 
-    onViewVersion(versionId: string) {
+    onViewVersion (versionId: string) {
         this.viewVersion.emit(versionId);
     }
 
-    loadVersionHistory() {
+    loadVersionHistory () {
         this.viewport.scrollToIndex(0);
         this.versionsDataSource.reset();
     }
 
-    downloadVersion(versionId: string) {
+    downloadVersion (versionId: string) {
         if (this.allowDownload) {
             this.contentVersionService
                 .getVersionContentUrl(this.node.id, versionId, true)
@@ -193,16 +193,16 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    deleteVersion(versionId: string) {
+    deleteVersion (versionId: string) {
         if (this.canUpdate()) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                data: {
-                    title: 'ADF_VERSION_LIST.CONFIRM_DELETE.TITLE',
-                    message: 'ADF_VERSION_LIST.CONFIRM_DELETE.MESSAGE',
-                    yesLabel: 'ADF_VERSION_LIST.CONFIRM_DELETE.YES_LABEL',
-                    noLabel: 'ADF_VERSION_LIST.CONFIRM_DELETE.NO_LABEL'
+                "data": {
+                    "title": 'ADF_VERSION_LIST.CONFIRM_DELETE.TITLE',
+                    "message": 'ADF_VERSION_LIST.CONFIRM_DELETE.MESSAGE',
+                    "yesLabel": 'ADF_VERSION_LIST.CONFIRM_DELETE.YES_LABEL',
+                    "noLabel": 'ADF_VERSION_LIST.CONFIRM_DELETE.NO_LABEL'
                 },
-                minWidth: '250px'
+                "minWidth": '250px'
             });
 
             dialogRef
@@ -216,17 +216,17 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    onVersionDeleted(node: any) {
+    onVersionDeleted (node: any) {
         this.loadVersionHistory();
         this.deleted.emit(node);
     }
 
-    onVersionRestored(node: NodeEntry) {
+    onVersionRestored (node: NodeEntry) {
         this.loadVersionHistory();
         this.restored.emit(node?.entry);
     }
 
-    downloadContent(url: string) {
+    downloadContent (url: string) {
         if (url) {
             const link = document.createElement('a');
 

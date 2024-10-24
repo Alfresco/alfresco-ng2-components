@@ -68,11 +68,11 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
 
 const mockOauth2Auth: any = {
-    oauth2Auth: {
-        callCustomApi: () => Promise.resolve()
+    "oauth2Auth": {
+        "callCustomApi": () => Promise.resolve()
     },
-    isEcmLoggedIn: jasmine.createSpy('isEcmLoggedIn'),
-    reply: jasmine.createSpy('reply')
+    "isEcmLoggedIn": jasmine.createSpy('isEcmLoggedIn'),
+    "reply": jasmine.createSpy('reply')
 };
 
 describe('FormCloudComponent', () => {
@@ -86,8 +86,8 @@ describe('FormCloudComponent', () => {
     let documentRootLoader: HarnessLoader;
 
     @Component({
-        selector: 'adf-cloud-custom-widget',
-        template: '<div></div>'
+        "selector": 'adf-cloud-custom-widget',
+        "template": '<div></div>'
     })
     // eslint-disable-next-line @angular-eslint/component-class-suffix
     class CustomWidget {
@@ -107,13 +107,13 @@ describe('FormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            providers: [
+            "imports": [ProcessServiceCloudTestingModule],
+            "providers": [
                 {
-                    provide: VersionCompatibilityService,
-                    useValue: {}
+                    "provide": VersionCompatibilityService,
+                    "useValue": {}
                 },
-                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+                { "provide": FormRenderingService, "useClass": CloudFormRenderingService }
             ]
         });
         const apiService = TestBed.inject(AlfrescoApiService);
@@ -263,14 +263,14 @@ describe('FormCloudComponent', () => {
     it('should enable custom outcome buttons', () => {
         const formModel = new FormModel();
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: 'action1', name: 'Action 1' });
+        const outcome = new FormOutcomeModel(formModel, { "id": 'action1', "name": 'Action 1' });
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
     });
 
     it('should allow controlling [complete] button visibility', () => {
         const formModel = new FormModel();
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, { "id": '$save', "name": FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -283,7 +283,7 @@ describe('FormCloudComponent', () => {
         const formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, { "id": '$complete', "name": FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -293,23 +293,23 @@ describe('FormCloudComponent', () => {
         const formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, { "id": '$save', "name": FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
     it('should show [custom-outcome] button with readOnly form and selected custom-outcome', () => {
-        const formModel = new FormModel({ selectedOutcome: 'custom-outcome' });
+        const formModel = new FormModel({ "selectedOutcome": 'custom-outcome' });
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, { id: '$customoutome', name: 'custom-outcome' });
+        let outcome = new FormOutcomeModel(formModel, { "id": '$customoutome', "name": 'custom-outcome' });
 
         formComponent.showCompleteButton = true;
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
 
-        outcome = new FormOutcomeModel(formModel, { id: '$customoutome2', name: 'custom-outcome2' });
+        outcome = new FormOutcomeModel(formModel, { "id": '$customoutome2', "name": 'custom-outcome2' });
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
@@ -317,7 +317,7 @@ describe('FormCloudComponent', () => {
         const formModel = new FormModel();
         formModel.readOnly = false;
         formComponent.form = formModel;
-        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, { "id": '$save', "name": FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -337,7 +337,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'getTaskForm').and.callFake(
             (currentTaskId) =>
                 new Observable((observer) => {
-                    observer.next({ formRepresentation: { taskId: currentTaskId } });
+                    observer.next({ "formRepresentation": { "taskId": currentTaskId } });
                     observer.complete();
                 })
         );
@@ -346,7 +346,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'getTask').and.callFake(
             (currentTaskId) =>
                 new Observable((observer) => {
-                    observer.next({ formRepresentation: { taskId: currentTaskId } } as any);
+                    observer.next({ "formRepresentation": { "taskId": currentTaskId } } as any);
                     observer.complete();
                 })
         );
@@ -364,7 +364,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'getTaskForm').and.callFake(
             (currentTaskId) =>
                 new Observable((observer) => {
-                    observer.next({ taskId: currentTaskId });
+                    observer.next({ "taskId": currentTaskId });
                     observer.complete();
                 })
         );
@@ -394,7 +394,7 @@ describe('FormCloudComponent', () => {
     });
 
     it('should refresh visibility when the form is loaded', () => {
-        spyOn(formCloudService, 'getForm').and.returnValue(of({ formRepresentation: {} } as any));
+        spyOn(formCloudService, 'getForm').and.returnValue(of({ "formRepresentation": {} } as any));
         const formId = '123';
         const appName = 'test-app';
 
@@ -415,7 +415,7 @@ describe('FormCloudComponent', () => {
         formComponent.appName = appName;
         formComponent.appVersion = 1;
         const change = new SimpleChange(null, taskId, true);
-        formComponent.ngOnChanges({ taskId: change });
+        formComponent.ngOnChanges({ "taskId": change });
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(appName, taskId, 1);
     });
@@ -428,7 +428,7 @@ describe('FormCloudComponent', () => {
         formComponent.appName = appName;
         formComponent.appVersion = 1;
         const change = new SimpleChange(null, formId, true);
-        formComponent.ngOnChanges({ formId: change });
+        formComponent.ngOnChanges({ "formId": change });
 
         expect(formComponent.getFormById).toHaveBeenCalledWith(appName, formId, 1);
     });
@@ -449,7 +449,7 @@ describe('FormCloudComponent', () => {
         spyOn(formComponent, 'getFormByTaskId').and.stub();
         spyOn(formComponent, 'getFormById').and.stub();
 
-        formComponent.ngOnChanges({ tag: new SimpleChange(null, 'hello world', false) });
+        formComponent.ngOnChanges({ "tag": new SimpleChange(null, 'hello world', false) });
 
         expect(formComponent.getFormByTaskId).not.toHaveBeenCalled();
         expect(formComponent.getFormById).not.toHaveBeenCalled();
@@ -458,7 +458,7 @@ describe('FormCloudComponent', () => {
     it('should complete form on custom outcome click', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcome = new FormOutcomeModel(formModel, { "id": 'custom1', "name": outcomeName });
 
         let saved = false;
         formComponent.form = formModel;
@@ -474,9 +474,9 @@ describe('FormCloudComponent', () => {
     it('should save form on [save] outcome click', () => {
         const formModel = new FormModel();
         const outcome = new FormOutcomeModel(formModel, {
-            id: FormCloudComponent.SAVE_OUTCOME_ID,
-            name: 'Save',
-            isSystem: true
+            "id": FormCloudComponent.SAVE_OUTCOME_ID,
+            "name": 'Save',
+            "isSystem": true
         });
 
         formComponent.form = formModel;
@@ -490,9 +490,9 @@ describe('FormCloudComponent', () => {
     it('should complete form on [complete] outcome click', () => {
         const formModel = new FormModel();
         const outcome = new FormOutcomeModel(formModel, {
-            id: FormCloudComponent.COMPLETE_OUTCOME_ID,
-            name: 'Complete',
-            isSystem: true
+            "id": FormCloudComponent.COMPLETE_OUTCOME_ID,
+            "name": 'Complete',
+            "isSystem": true
         });
 
         formComponent.form = formModel;
@@ -506,9 +506,9 @@ describe('FormCloudComponent', () => {
     it('should emit form saved event on custom outcome click', () => {
         const formModel = new FormModel();
         const outcome = new FormOutcomeModel(formModel, {
-            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
-            name: 'Custom',
-            isSystem: true
+            "id": FormCloudComponent.CUSTOM_OUTCOME_ID,
+            "name": 'Custom',
+            "isSystem": true
         });
 
         let saved = false;
@@ -523,7 +523,7 @@ describe('FormCloudComponent', () => {
     it('should do nothing when clicking outcome for readonly form', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcome = new FormOutcomeModel(formModel, { "id": 'custom1', "name": outcomeName });
 
         formComponent.form = formModel;
         spyOn(formComponent, 'completeTaskForm').and.stub();
@@ -542,7 +542,7 @@ describe('FormCloudComponent', () => {
     it('should require loaded form when clicking outcome', () => {
         const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcome = new FormOutcomeModel(formModel, { "id": 'custom1', "name": outcomeName });
 
         formComponent.readOnly = false;
         formComponent.form = null;
@@ -551,7 +551,7 @@ describe('FormCloudComponent', () => {
 
     it('should not execute unknown system outcome', () => {
         const formModel = new FormModel();
-        const outcome = new FormOutcomeModel(formModel, { id: 'unknown', name: 'Unknown', isSystem: true });
+        const outcome = new FormOutcomeModel(formModel, { "id": 'unknown', "name": 'Unknown', "isSystem": true });
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
@@ -559,12 +559,12 @@ describe('FormCloudComponent', () => {
 
     it('should require custom action name to complete form', () => {
         const formModel = new FormModel();
-        let outcome = new FormOutcomeModel(formModel, { id: 'custom' });
+        let outcome = new FormOutcomeModel(formModel, { "id": 'custom' });
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
 
-        outcome = new FormOutcomeModel(formModel, { id: 'custom', name: 'Custom' });
+        outcome = new FormOutcomeModel(formModel, { "id": 'custom', "name": 'Custom' });
         spyOn(formComponent, 'completeTaskForm').and.stub();
         expect(formComponent.onOutcomeClicked(outcome)).toBeTruthy();
     });
@@ -575,7 +575,7 @@ describe('FormCloudComponent', () => {
 
         spyOn(formCloudService, 'getTask').and.returnValue(of({}));
         spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
-        spyOn(formCloudService, 'getTaskForm').and.returnValue(of({ taskId, selectedOutcome: 'custom-outcome' }));
+        spyOn(formCloudService, 'getTaskForm').and.returnValue(of({ taskId, "selectedOutcome": 'custom-outcome' }));
 
         formComponent.formLoaded.subscribe(() => {
             expect(formCloudService.getTaskForm).toHaveBeenCalledWith(appName, taskId, 1);
@@ -626,8 +626,8 @@ describe('FormCloudComponent', () => {
         const appName = 'test-app';
         const formId = 'form-de8895be-d0d7-4434-beef-559b15305d72';
         const variables: TaskVariableCloud[] = [
-            new TaskVariableCloud({ name: 'var1', value: 'value1' }),
-            new TaskVariableCloud({ name: 'var2', value: 'value2' })
+            new TaskVariableCloud({ "name": 'var1', "value": 'value1' }),
+            new TaskVariableCloud({ "name": 'var2', "value": 'value2' })
         ];
         formComponent.formLoaded.subscribe(() => {
             expect(formComponent.form).toBeDefined();
@@ -664,7 +664,7 @@ describe('FormCloudComponent', () => {
         const formValues: any[] = [];
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
-        formComponent.ngOnChanges({ data: change });
+        formComponent.ngOnChanges({ "data": change });
     });
 
     it('should save task form and raise corresponding event', () => {
@@ -688,9 +688,9 @@ describe('FormCloudComponent', () => {
         const processInstanceId = '333-444';
 
         const formModel = new FormModel({
-            id: '23',
+            "id": '23',
             taskId,
-            fields: [{ id: 'field1' }, { id: 'field2' }]
+            "fields": [{ "id": 'field1' }, { "id": 'field2' }]
         });
         formComponent.form = formModel;
         formComponent.taskId = taskId;
@@ -712,9 +712,9 @@ describe('FormCloudComponent', () => {
         const taskId = '123-223';
         const appName = 'test-app';
         const formModel = new FormModel({
-            id: '23',
+            "id": '23',
             taskId,
-            fields: [{ id: 'field1' }, { id: 'field2' }]
+            "fields": [{ "id": 'field1' }, { "id": 'field2' }]
         });
         formComponent.form = formModel;
         formComponent.taskId = taskId;
@@ -779,9 +779,9 @@ describe('FormCloudComponent', () => {
         const processInstanceId = '333-444';
 
         const formModel = new FormModel({
-            id: '23',
+            "id": '23',
             taskId,
-            fields: [{ id: 'field1' }, { id: 'field2' }]
+            "fields": [{ "id": 'field1' }, { "id": 'field2' }]
         });
 
         formComponent.appVersion = appVersion;
@@ -805,9 +805,9 @@ describe('FormCloudComponent', () => {
 
     it('should open confirmation dialog on complete task', async () => {
         formComponent.form = new FormModel({
-            confirmMessage: {
-                show: true,
-                message: 'Are you sure you want to submit the form?'
+            "confirmMessage": {
+                "show": true,
+                "message": 'Are you sure you want to submit the form?'
             }
         });
 
@@ -821,13 +821,13 @@ describe('FormCloudComponent', () => {
     });
 
     it('should submit form when user confirms', () => {
-        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(true) } as any);
+        spyOn(matDialog, 'open').and.returnValue({ "afterClosed": () => of(true) } as any);
         fixture.detectChanges();
 
         const formModel = new FormModel({
-            confirmMessage: {
-                show: true,
-                message: 'Are you sure you want to submit the form?'
+            "confirmMessage": {
+                "show": true,
+                "message": 'Are you sure you want to submit the form?'
             }
         } as any);
         formComponent.form = formModel;
@@ -842,12 +842,12 @@ describe('FormCloudComponent', () => {
 
     it('should not confirm form if user rejects', () => {
         const outcome = 'complete';
-        spyOn(matDialog, 'open').and.returnValue({ afterClosed: () => of(false) } as any);
+        spyOn(matDialog, 'open').and.returnValue({ "afterClosed": () => of(false) } as any);
 
         const formModel = new FormModel({
-            confirmMessage: {
-                show: true,
-                message: 'Are you sure you want to submit the form?'
+            "confirmMessage": {
+                "show": true,
+                "message": 'Are you sure you want to submit the form?'
             }
         });
 
@@ -866,8 +866,8 @@ describe('FormCloudComponent', () => {
 
     it('should parse form from json', () => {
         const form = formComponent.parseForm({
-            id: '1',
-            fields: [{ id: 'field1', type: FormFieldTypes.CONTAINER }]
+            "id": '1',
+            "fields": [{ "id": 'field1', "type": FormFieldTypes.CONTAINER }]
         });
 
         expect(form).toBeDefined();
@@ -878,8 +878,8 @@ describe('FormCloudComponent', () => {
 
     it('should prevent default outcome execution', () => {
         const outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
-            name: 'Custom'
+            "id": FormCloudComponent.CUSTOM_OUTCOME_ID,
+            "name": 'Custom'
         });
 
         formComponent.form = new FormModel();
@@ -895,8 +895,8 @@ describe('FormCloudComponent', () => {
 
     it('should not prevent default outcome execution', () => {
         const outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
-            name: 'Custom'
+            "id": FormCloudComponent.CUSTOM_OUTCOME_ID,
+            "name": 'Custom'
         });
 
         formComponent.form = new FormModel();
@@ -932,8 +932,8 @@ describe('FormCloudComponent', () => {
         formComponent.form = formModel;
 
         const outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
-            name: 'Custom'
+            "id": FormCloudComponent.CUSTOM_OUTCOME_ID,
+            "name": 'Custom'
         });
 
         expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
@@ -996,9 +996,9 @@ describe('FormCloudComponent', () => {
         formModel.isValid = false;
 
         const customOutcome = new FormOutcomeModel(new FormModel(), {
-            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
-            name: 'Custom',
-            skipValidation: true
+            "id": FormCloudComponent.CUSTOM_OUTCOME_ID,
+            "name": 'Custom',
+            "skipValidation": true
         });
 
         expect(formComponent.isOutcomeButtonEnabled(customOutcome)).toBeTruthy();
@@ -1023,8 +1023,8 @@ describe('FormCloudComponent', () => {
         spyOn(formComponent.executeOutcome, 'emit');
 
         const outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormCloudComponent.CUSTOM_OUTCOME_ID,
-            name: 'Custom'
+            "id": FormCloudComponent.CUSTOM_OUTCOME_ID,
+            "name": 'Custom'
         });
 
         formComponent.form = new FormModel();
@@ -1046,8 +1046,8 @@ describe('FormCloudComponent', () => {
         expect(radioField.value).toBeNull();
 
         const formValues: any[] = [
-            { name: 'text1', value: 'test' },
-            { name: 'number1', value: 99 }
+            { "name": 'text1', "value": 'test' },
+            { "name": 'number1', "value": 99 }
         ];
 
         const change = new SimpleChange(null, formValues, false);
@@ -1063,7 +1063,7 @@ describe('FormCloudComponent', () => {
             done();
         });
 
-        formComponent.ngOnChanges({ data: change });
+        formComponent.ngOnChanges({ "data": change });
     });
 
     it('should work with empty form JSON representaiton when refreashing form', () => {
@@ -1071,12 +1071,12 @@ describe('FormCloudComponent', () => {
         formComponent.formCloudRepresentationJSON = undefined;
 
         const formValues: any[] = [
-            { name: 'text1', value: 'test' },
-            { name: 'number1', value: 99 }
+            { "name": 'text1', "value": 'test' },
+            { "name": 'number1', "value": 99 }
         ];
         const change = new SimpleChange(null, formValues, false);
 
-        expect(() => formComponent.ngOnChanges({ data: change })).not.toThrow();
+        expect(() => formComponent.ngOnChanges({ "data": change })).not.toThrow();
     });
 
     it('should refresh radio buttons value when id is given to data', () => {
@@ -1085,10 +1085,10 @@ describe('FormCloudComponent', () => {
         let formFields = formComponent.form.getFormFields();
         let radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
 
-        const formValues: any[] = [{ name: 'radiobuttons1', value: 'option_2' }];
+        const formValues: any[] = [{ "name": 'radiobuttons1', "value": 'option_2' }];
         const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
-        formComponent.ngOnChanges({ data: change });
+        formComponent.ngOnChanges({ "data": change });
 
         formFields = formComponent.form.getFormFields();
         radioFieldById = formFields.find((field) => field.id === 'radiobuttons1');
@@ -1098,9 +1098,9 @@ describe('FormCloudComponent', () => {
     it('should disable complete & save buttons on [complete] outcome click', () => {
         const formModel = new FormModel();
         const outcome = new FormOutcomeModel(formModel, {
-            id: FormCloudComponent.COMPLETE_OUTCOME_ID,
-            name: 'COMPLETE',
-            isSystem: true
+            "id": FormCloudComponent.COMPLETE_OUTCOME_ID,
+            "name": 'COMPLETE',
+            "isSystem": true
         });
         formComponent.form = formModel;
 
@@ -1121,19 +1121,19 @@ describe('FormCloudComponent', () => {
                 '333-444',
                 '123',
                 {
-                    pfx_property_one: 'testValue',
-                    pfx_property_two: true,
-                    pfx_property_three: 'opt_1',
-                    pfx_property_four: 'option_2',
-                    pfx_property_five: 'orange',
-                    pfx_property_none: 'no_form_field'
+                    "pfx_property_one": 'testValue',
+                    "pfx_property_two": true,
+                    "pfx_property_three": 'opt_1',
+                    "pfx_property_four": 'option_2',
+                    "pfx_property_five": 'orange',
+                    "pfx_property_none": 'no_form_field'
                 },
                 'Complete',
                 123
             )
             .subscribe({
-                next: () => done.fail('expected an error, not data'),
-                error: (error) => {
+                "next": () => done.fail('expected an error, not data'),
+                "error": (error) => {
                     expect(error).toBe(errorMessage);
                     expect(formComponent.disableSaveButton).toBeFalse();
                     expect(formComponent.disableCompleteButton).toBeFalse();
@@ -1165,9 +1165,9 @@ describe('FormCloudComponent', () => {
     it('should disable save button on [save] outcome click', () => {
         const formModel = new FormModel();
         const outcome = new FormOutcomeModel(formModel, {
-            id: FormCloudComponent.SAVE_OUTCOME_ID,
-            name: 'SAVE',
-            isSystem: true
+            "id": FormCloudComponent.SAVE_OUTCOME_ID,
+            "name": 'SAVE',
+            "isSystem": true
         });
         formComponent.form = formModel;
 
@@ -1184,7 +1184,7 @@ describe('FormCloudComponent', () => {
             formComponent.formId = formId;
             formComponent.appVersion = 1;
 
-            formComponent.ngOnChanges({ appName: new SimpleChange(null, appName, true) });
+            formComponent.ngOnChanges({ "appName": new SimpleChange(null, appName, true) });
             expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
 
             fixture.detectChanges();
@@ -1206,7 +1206,7 @@ describe('FormCloudComponent', () => {
             formComponent.formId = formId;
             formComponent.appVersion = 1;
 
-            formComponent.ngOnChanges({ appName: new SimpleChange(null, appName, true) });
+            formComponent.ngOnChanges({ "appName": new SimpleChange(null, appName, true) });
             expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
 
             fixture.detectChanges();
@@ -1229,12 +1229,11 @@ describe('FormCloudComponent', () => {
 
         /**
          * Helper function for loading the form in the tests
-         *
          * @param form The form model to be loaded
          */
-        async function loadForm(form?: any): Promise<void> {
+        async function loadForm (form?: any): Promise<void> {
             formComponent.ngOnChanges({
-                form: { currentValue: formComponent.parseForm(form || {}), firstChange: true, isFirstChange: () => true, previousValue: undefined }
+                "form": { "currentValue": formComponent.parseForm(form || {}), "firstChange": true, "isFirstChange": () => true, "previousValue": undefined }
             });
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1273,7 +1272,7 @@ describe('FormCloudComponent', () => {
         });
 
         it('should be in fullScreen mode if it is forced', async () => {
-            await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+            await loadForm({ "displayMode": FormCloudDisplayMode.fullScreen });
 
             const fullScreenModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-fullscreen-container'));
             const inlineModeContainer = fixture.debugElement.query(By.css('.adf-cloud-form-container.adf-cloud-form-inline-container'));
@@ -1294,7 +1293,7 @@ describe('FormCloudComponent', () => {
             fixture.detectChanges();
 
             const fullScreenButton = await documentRootLoader.getHarness(
-                MatButtonHarness.with({ selector: `[data-automation-id="adf-cloud-form-fullscreen-button"]` })
+                MatButtonHarness.with({ "selector": `[data-automation-id="adf-cloud-form-fullscreen-button"]` })
             );
             await fullScreenButton.click();
 
@@ -1307,7 +1306,7 @@ describe('FormCloudComponent', () => {
 
         it('should not display full screen button on header when header is displayed but in fullScreen mode', async () => {
             formComponent.showTitle = true;
-            await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+            await loadForm({ "displayMode": FormCloudDisplayMode.fullScreen });
 
             const fullScreenButton = fixture.debugElement.query(By.css('.adf-cloud-form-fullscreen-button'));
             expect(fullScreenButton).toBeNull();
@@ -1324,7 +1323,7 @@ describe('FormCloudComponent', () => {
         });
 
         it('should set fullScreen mode from the form service notification', () => {
-            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
+            DisplayModeService.changeDisplayMode({ "displayMode": FormCloudDisplayMode.fullScreen, "id": formComponent.id });
 
             expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
             expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
@@ -1333,7 +1332,7 @@ describe('FormCloudComponent', () => {
             displayModeOnSpy.calls.reset();
             displayModeOffSpy.calls.reset();
 
-            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: formComponent.id });
+            DisplayModeService.changeDisplayMode({ "displayMode": FormCloudDisplayMode.inline, "id": formComponent.id });
 
             expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
             expect(displayModeOnSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
@@ -1341,7 +1340,7 @@ describe('FormCloudComponent', () => {
         });
 
         it('should not change the display mode when the notification change is from a different id', () => {
-            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.fullScreen, id: formComponent.id });
+            DisplayModeService.changeDisplayMode({ "displayMode": FormCloudDisplayMode.fullScreen, "id": formComponent.id });
 
             expect(formComponent.displayMode).toBe(FormCloudDisplayMode.fullScreen);
             expect(displayModeOffSpy).toHaveBeenCalledWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
@@ -1350,7 +1349,7 @@ describe('FormCloudComponent', () => {
             displayModeOnSpy.calls.reset();
             displayModeOffSpy.calls.reset();
 
-            DisplayModeService.changeDisplayMode({ displayMode: FormCloudDisplayMode.inline, id: 'otherId' });
+            DisplayModeService.changeDisplayMode({ "displayMode": FormCloudDisplayMode.inline, "id": 'otherId' });
             expect(displayModeOffSpy).not.toHaveBeenCalled();
             expect(displayModeOnSpy).not.toHaveBeenCalled();
 
@@ -1359,7 +1358,7 @@ describe('FormCloudComponent', () => {
 
         describe('fullScreen Mode', () => {
             beforeEach(async () => {
-                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+                await loadForm({ "displayMode": FormCloudDisplayMode.fullScreen });
             });
 
             it('should emit display mode turned on with the fullScreen configuration', () => {
@@ -1376,7 +1375,7 @@ describe('FormCloudComponent', () => {
             it('should display the toolbar with the task title when the task name is provided and toolbar is enabled', async () => {
                 const taskName = 'task-name';
 
-                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen, taskName });
+                await loadForm({ "displayMode": FormCloudDisplayMode.fullScreen, taskName });
 
                 const cloudFormToolbarDisplayName: HTMLSpanElement =
                     fixture.debugElement.nativeElement.querySelector('.adf-cloud-form__display-name');
@@ -1387,18 +1386,18 @@ describe('FormCloudComponent', () => {
             it('should not display the toolbar with the task title when the toolbar option is disabled', async () => {
                 formComponent.displayModeConfigurations = [
                     {
-                        displayMode: FormCloudDisplayMode.fullScreen,
-                        options: {
-                            onCompleteTask: () => {},
-                            onDisplayModeOff: () => {},
-                            onDisplayModeOn: () => {},
-                            onSaveTask: () => {},
-                            displayToolbar: false
+                        "displayMode": FormCloudDisplayMode.fullScreen,
+                        "options": {
+                            "onCompleteTask": () => {},
+                            "onDisplayModeOff": () => {},
+                            "onDisplayModeOn": () => {},
+                            "onSaveTask": () => {},
+                            "displayToolbar": false
                         }
                     }
                 ];
 
-                await loadForm({ displayMode: FormCloudDisplayMode.fullScreen });
+                await loadForm({ "displayMode": FormCloudDisplayMode.fullScreen });
 
                 const cloudFormToolbar: HTMLSpanElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-form-toolbar');
                 expect(cloudFormToolbar).toBeNull();
@@ -1414,7 +1413,7 @@ describe('FormCloudComponent', () => {
                 displayModeOffSpy.calls.reset();
 
                 const closeButton = await documentRootLoader.getHarness(
-                    MatButtonHarness.with({ selector: `[data-automation-id="adf-cloud-form-close-button"]` })
+                    MatButtonHarness.with({ "selector": `[data-automation-id="adf-cloud-form-close-button"]` })
                 );
                 await closeButton.click();
 
@@ -1446,8 +1445,8 @@ describe('FormCloudComponent', () => {
                 );
                 expect(onCompleteTaskSpy).toHaveBeenCalledOnceWith(formComponent.id);
                 expect(formRenderingServiceChangeDisplayModeSpy).toHaveBeenCalledOnceWith({
-                    id: formComponent.id,
-                    displayMode: FormCloudDisplayMode.inline
+                    "id": formComponent.id,
+                    "displayMode": FormCloudDisplayMode.inline
                 });
                 expect(displayModeOffSpy).toHaveBeenCalledOnceWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[1]);
                 expect(displayModeOnSpy).toHaveBeenCalledOnceWith(DisplayModeService.IMPLEMENTED_DISPLAY_MODE_CONFIGURATIONS[0]);
@@ -1465,14 +1464,14 @@ describe('Multilingual Form', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                AuthModule.forRoot({ useHash: true }),
+            "imports": [
+                AuthModule.forRoot({ "useHash": true }),
                 NoopAnimationsModule,
                 TranslateModule.forRoot(),
                 CoreModule.forRoot(),
                 ProcessServicesCloudModule.forRoot()
             ],
-            providers: [provideTranslations('app', 'resources')]
+            "providers": [provideTranslations('app', 'resources')]
         });
         translateService = TestBed.inject(TranslateService);
         formCloudService = TestBed.inject(FormCloudService);
@@ -1490,7 +1489,7 @@ describe('Multilingual Form', () => {
         formComponent.formId = formId;
         formComponent.appVersion = 1;
 
-        formComponent.ngOnChanges({ appName: new SimpleChange(null, appName, true) });
+        formComponent.ngOnChanges({ "appName": new SimpleChange(null, appName, true) });
         expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
 
         await translateService.use('fr').toPromise();
@@ -1526,12 +1525,12 @@ describe('retrieve metadata on submit', () => {
     let formService: FormService;
 
     const fakeNodeWithProperties = {
-        id: 'fake-properties',
-        name: 'fake-properties-name',
-        content: {
-            mimeType: 'application/pdf'
+        "id": 'fake-properties',
+        "name": 'fake-properties-name',
+        "content": {
+            "mimeType": 'application/pdf'
         },
-        properties: {
+        "properties": {
             'pfx:property_one': 'testValue',
             'pfx:property_two': true
         }
@@ -1539,12 +1538,12 @@ describe('retrieve metadata on submit', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AuthModule.forRoot({ useHash: true }), NoopAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot(), FormCloudModule],
-            providers: [
+            "imports": [AuthModule.forRoot({ "useHash": true }), NoopAnimationsModule, TranslateModule.forRoot(), CoreModule.forRoot(), FormCloudModule],
+            "providers": [
                 provideTranslations('app', 'resources'),
                 {
-                    provide: VersionCompatibilityService,
-                    useValue: {}
+                    "provide": VersionCompatibilityService,
+                    "useValue": {}
                 }
             ]
         });
@@ -1568,12 +1567,12 @@ describe('retrieve metadata on submit', () => {
         const formDataRefreshed = spyOn<any>(formComponent.formDataRefreshed, 'emit').and.callThrough();
 
         const values = {
-            pfx_property_one: 'testValue',
-            pfx_property_two: true,
-            pfx_property_three: 'opt_1',
-            pfx_property_four: 'option_2',
-            pfx_property_five: 'orange',
-            pfx_property_none: 'no_form_field'
+            "pfx_property_one": 'testValue',
+            "pfx_property_two": true,
+            "pfx_property_three": 'opt_1',
+            "pfx_property_four": 'option_2',
+            "pfx_property_five": 'orange',
+            "pfx_property_none": 'no_form_field'
         };
 
         formService.updateFormValuesRequested.next(values);
@@ -1581,8 +1580,8 @@ describe('retrieve metadata on submit', () => {
         expect(addValuesNotPresent).toHaveBeenCalledWith(values);
         expect(formComponent.form.values['pfx_property_one']).toBe('testValue');
         expect(formComponent.form.values['pfx_property_two']).toBe(true);
-        expect(formComponent.form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1' });
-        expect(formComponent.form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2' });
+        expect(formComponent.form.values['pfx_property_three']).toEqual({ "id": 'opt_1', "name": 'Option 1' });
+        expect(formComponent.form.values['pfx_property_four']).toEqual({ "id": 'option_2', "name": 'Option: 2' });
         expect(formComponent.form.values['pfx_property_five']).toEqual('green');
         expect(formDataRefreshed).toHaveBeenCalled();
     });
@@ -1622,7 +1621,7 @@ describe('retrieve metadata on submit', () => {
     });
 
     it('should stop propagation on keydown event', () => {
-        const escapeKeyboardEvent = new KeyboardEvent('keydown', { key: ESCAPE.toString() });
+        const escapeKeyboardEvent = new KeyboardEvent('keydown', { "key": ESCAPE.toString() });
         const stopPropagationSpy = spyOn(escapeKeyboardEvent, 'stopPropagation');
 
         fixture.debugElement.triggerEventHandler('keydown', escapeKeyboardEvent);

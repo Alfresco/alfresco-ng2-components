@@ -42,17 +42,17 @@ interface TagNameControlErrors {
 }
 
 const DEFAULT_TAGS_SORTING = {
-    orderBy: 'tag',
-    direction: 'asc'
+    "orderBy": 'tag',
+    "direction": 'asc'
 };
 
 /**
  * Allows to create multiple tags. That component contains input and two lists. Top list is all created tags, bottom list is searched tags based on input's value.
  */
 @Component({
-    selector: 'adf-tags-creator',
-    standalone: true,
-    imports: [
+    "selector": 'adf-tags-creator',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatInputModule,
         ReactiveFormsModule,
@@ -64,9 +64,9 @@ const DEFAULT_TAGS_SORTING = {
         MatListModule,
         MatProgressSpinnerModule
     ],
-    templateUrl: './tags-creator.component.html',
-    styleUrls: ['./tags-creator.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './tags-creator.component.html',
+    "styleUrls": ['./tags-creator.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TagsCreatorComponent implements OnInit, OnDestroy {
     /**
@@ -88,7 +88,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * @param tags tags which should be displayed as default tags for top list.
      */
     @Input()
-    set tags(tags: string[]) {
+    set tags (tags: string[]) {
         this._tags = [...tags];
         this._initialExistingTags = null;
         this._existingTags = null;
@@ -99,7 +99,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         }
     }
 
-    get tags(): string[] {
+    get tags (): string[] {
         return this._tags;
     }
 
@@ -108,7 +108,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * @param tagNameControlVisible true if input should be visible, false otherwise.
      */
     @Input()
-    set tagNameControlVisible(tagNameControlVisible: boolean) {
+    set tagNameControlVisible (tagNameControlVisible: boolean) {
         this._tagNameControlVisible = tagNameControlVisible;
         if (tagNameControlVisible) {
             this._existingTagsPanelVisible = true;
@@ -125,7 +125,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.existingTagsPanelVisibilityChange.emit(this.existingTagsPanelVisible);
     }
 
-    get tagNameControlVisible(): boolean {
+    get tagNameControlVisible (): boolean {
         return this._tagNameControlVisible;
     }
 
@@ -174,9 +174,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     @ViewChild('tagNameInput')
     private tagNameInputElement: ElementRef;
 
-    constructor(private tagService: TagService, private notificationService: NotificationService) {}
+    constructor (private tagService: TagService, private notificationService: NotificationService) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.tagNameControl.valueChanges
             .pipe(
                 map((name: string) => name.trim()),
@@ -208,7 +208,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         this.setTagNameControlErrorMessageKey();
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.cancelExistingTagsLoading$.next();
@@ -216,42 +216,42 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     }
 
     @HostBinding('class.adf-creator-with-existing-tags-panel')
-    get hostClass(): boolean {
+    get hostClass (): boolean {
         return this.existingTagsPanelVisible;
     }
 
-    get tagNameControl(): FormControl<string> {
+    get tagNameControl (): FormControl<string> {
         return this._tagNameControl;
     }
 
     /*
      * Returns `true` if tags empty and non editable state, otherwise `false`
      */
-    get showEmptyTagMessage(): boolean {
+    get showEmptyTagMessage (): boolean {
         return this.tags?.length === 0 && !this.tagNameControlVisible;
     }
 
-    get existingTags(): TagEntry[] {
+    get existingTags (): TagEntry[] {
         return this._existingTags;
     }
 
-    get tagNameErrorMessageKey(): string {
+    get tagNameErrorMessageKey (): string {
         return this._tagNameErrorMessageKey;
     }
 
-    get spinnerVisible(): boolean {
+    get spinnerVisible (): boolean {
         return this._spinnerVisible;
     }
 
-    get typing(): boolean {
+    get typing (): boolean {
         return this._typing;
     }
 
-    get tagsListScrollbarVisible(): boolean {
+    get tagsListScrollbarVisible (): boolean {
         return this._tagsListScrollbarVisible;
     }
 
-    get existingTagsPanelVisible(): boolean {
+    get existingTagsPanelVisible (): boolean {
         return this._existingTagsPanelVisible;
     }
 
@@ -259,7 +259,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * Add tags to top list using value which is set in input. Adding tag is not allowed when value in input is invalid
      * or if user is still typing what means that validation for input is not called yet.
      */
-    addTag(): void {
+    addTag (): void {
         if (!this._typing && !this.tagNameControl.invalid) {
             this.tags.push(this.tagNameControl.value.trim());
             this.clearTagNameInput();
@@ -273,9 +273,9 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * (list of existing tags) after removing so user can reselect it again later.
      * @param tag tag's name which should be removed from top list.
      */
-    removeTag(tag: string): void {
+    removeTag (tag: string): void {
         this.removeTagFromArray(this.tags, tag);
-        this.tagNameControl.updateValueAndValidity({ emitEvent: false });
+        this.tagNameControl.updateValueAndValidity({ "emitEvent": false });
         this.updateExistingTagsListOnRemoveFromTagsToConfirm(tag);
         this.exactTagSet$.next();
         this.checkScrollbarVisibility();
@@ -286,7 +286,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * Called when user selects any tag from list of existing tags. It moves tag from existing tags list to top list.
      * @param selectedTag changes
      */
-    addExistingTagToTagsToAssign(selectedTag: TagEntry): void {
+    addExistingTagToTagsToAssign (selectedTag: TagEntry): void {
         if (!this.isOnlyCreateMode()) {
             this.tags.push(selectedTag.entry.tag);
             this.removeTagFromArray(this.existingTags, selectedTag);
@@ -300,20 +300,20 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
      * Checks if component is in Create mode.
      * @returns `true` if `Create` mode, `false` otherwise.
      */
-    isOnlyCreateMode(): boolean {
+    isOnlyCreateMode (): boolean {
         return this.mode === TagsCreatorMode.CREATE;
     }
 
-    private onTagNameControlValueChange(name: string): void {
+    private onTagNameControlValueChange (name: string): void {
         this.tagNameControl.markAsTouched();
         this.loadTags(name);
     }
 
-    private loadTags(name: string) {
+    private loadTags (name: string) {
         if (name && !this.tagNameControl.hasError('specialCharacters')) {
             forkJoin({
-                exactResult: this.tagService.findTagByName(name),
-                searchedResult: this.tagService.searchTags(name, DEFAULT_TAGS_SORTING, false, 0, this.existingTagsListLimit)
+                "exactResult": this.tagService.findTagByName(name),
+                "searchedResult": this.tagService.searchTags(name, DEFAULT_TAGS_SORTING, false, 0, this.existingTagsListLimit)
             })
                 .pipe(
                     takeUntil(this.cancelExistingTagsLoading$),
@@ -345,7 +345,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         }
     }
 
-    private removeExactTagFromSearchedResult(searchedResult: TagPaging): void {
+    private removeExactTagFromSearchedResult (searchedResult: TagPaging): void {
         const exactTagIndex = searchedResult.list.entries.findIndex((row) => this.compareTags(row.entry.tag, this.existingExactTag.entry.tag));
 
         if (exactTagIndex > -1) {
@@ -353,33 +353,33 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         }
     }
 
-    private validateIfNotExistingTag(tagNameControl: FormControl<string>): Observable<TagNameControlErrors | null> {
+    private validateIfNotExistingTag (tagNameControl: FormControl<string>): Observable<TagNameControlErrors | null> {
         return this.exactTagSet$.pipe(
             map<void, TagNameControlErrors | null>(() =>
-                this.compareTags(tagNameControl.value, this.existingExactTag?.entry?.tag) ? { duplicatedExistingTag: true } : null
+                this.compareTags(tagNameControl.value, this.existingExactTag?.entry?.tag) ? { "duplicatedExistingTag": true } : null
             ),
             first()
         );
     }
 
-    private validateIfNotAlreadyAdded(tagNameControl: FormControl<string>): TagNameControlErrors | null {
-        return this.tags.some((tag) => this.compareTags(tag, tagNameControl.value)) ? { duplicatedAddedTag: true } : null;
+    private validateIfNotAlreadyAdded (tagNameControl: FormControl<string>): TagNameControlErrors | null {
+        return this.tags.some((tag) => this.compareTags(tag, tagNameControl.value)) ? { "duplicatedAddedTag": true } : null;
     }
 
-    private compareTags(tagName1?: string, tagName2?: string): boolean {
+    private compareTags (tagName1?: string, tagName2?: string): boolean {
         return tagName1?.trim().toUpperCase() === tagName2?.trim().toUpperCase();
     }
 
-    private validateEmptyTag(tagNameControl: FormControl<string>): TagNameControlErrors | null {
-        return tagNameControl.value.length && !tagNameControl.value.trim() ? { emptyTag: true } : null;
+    private validateEmptyTag (tagNameControl: FormControl<string>): TagNameControlErrors | null {
+        return tagNameControl.value.length && !tagNameControl.value.trim() ? { "emptyTag": true } : null;
     }
 
-    private validateSpecialCharacters(tagNameControl: FormControl<string>): TagNameControlErrors | null {
+    private validateSpecialCharacters (tagNameControl: FormControl<string>): TagNameControlErrors | null {
         const specialSymbolsRegex = /[{}()^':"\\|<>/?.*]/;
-        return tagNameControl.value.length && specialSymbolsRegex.test(tagNameControl.value) ? { specialCharacters: true } : null;
+        return tagNameControl.value.length && specialSymbolsRegex.test(tagNameControl.value) ? { "specialCharacters": true } : null;
     }
 
-    private setTagNameControlErrorMessageKey(): void {
+    private setTagNameControlErrorMessageKey (): void {
         this._tagNameErrorMessageKey = this.tagNameControl.invalid
             ? `TAG.TAGS_CREATOR.ERRORS.${this.nameErrorMessagesByErrors.get(
                   Object.keys(this.tagNameControl.errors)[0] as keyof TagNameControlErrors
@@ -387,17 +387,17 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
             : '';
     }
 
-    private checkScrollbarVisibility(): void {
+    private checkScrollbarVisibility (): void {
         setTimeout(() => {
             this._tagsListScrollbarVisible = this.tagsListElement.nativeElement.scrollHeight > this.tagsListElement.nativeElement.clientHeight;
         });
     }
 
-    private removeTagFromArray<T>(tags: T[], tag: T) {
+    private removeTagFromArray<T> (tags: T[], tag: T) {
         tags.splice(tags.indexOf(tag), 1);
     }
 
-    private updateExistingTagsListOnRemoveFromTagsToConfirm(tag: string) {
+    private updateExistingTagsListOnRemoveFromTagsToConfirm (tag: string) {
         const entryForTagAddedToExistingTags = this._initialExistingTags?.find((tagEntry) => tagEntry.entry.tag === tag);
         if (entryForTagAddedToExistingTags) {
             this.existingTags.unshift(entryForTagAddedToExistingTags);
@@ -414,15 +414,15 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
         }
     }
 
-    private sortExistingTags() {
+    private sortExistingTags () {
         this.existingTags.sort((tagEntry1, tagEntry2) => tagEntry1.entry.tag.localeCompare(tagEntry2.entry.tag));
     }
 
-    private excludeAlreadyAddedTags(tags: TagEntry[]) {
+    private excludeAlreadyAddedTags (tags: TagEntry[]) {
         this._existingTags = tags.filter((tag) => !this.tags.includes(tag.entry.tag));
     }
 
-    private clearTagNameInput() {
+    private clearTagNameInput () {
         this.tagNameControl.setValue('');
         this.tagNameControl.markAsUntouched();
     }

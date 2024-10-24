@@ -23,18 +23,18 @@ import { map } from 'rxjs/operators';
 import { ClassesApi } from '@alfresco/js-api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class PropertyDescriptorsService {
     private _classesApi: ClassesApi;
-    get classesApi(): ClassesApi {
+    get classesApi (): ClassesApi {
         this._classesApi = this._classesApi ?? new ClassesApi(this.alfrescoApiService.getInstance());
         return this._classesApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor (private alfrescoApiService: AlfrescoApiService) {}
 
-    load(groupNames: string[]): Observable<PropertyGroupContainer> {
+    load (groupNames: string[]): Observable<PropertyGroupContainer> {
         const groupFetchStreams = groupNames
             .map((groupName) => groupName.replace(':', '_'))
             .map((groupName) => defer(() => this.classesApi.getClass(groupName)));
@@ -42,7 +42,7 @@ export class PropertyDescriptorsService {
         return forkJoin(groupFetchStreams).pipe(map(this.convertToObject));
     }
 
-    private convertToObject(propertyGroupsArray: PropertyGroup[]): PropertyGroupContainer {
+    private convertToObject (propertyGroupsArray: PropertyGroup[]): PropertyGroupContainer {
         return propertyGroupsArray.reduce(
             (propertyGroups, propertyGroup) =>
                 Object.assign({}, propertyGroups, {

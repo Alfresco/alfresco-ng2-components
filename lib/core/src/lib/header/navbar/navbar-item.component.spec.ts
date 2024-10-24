@@ -26,7 +26,7 @@ describe('NavbarItemComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [NavbarItemComponent, RouterTestingModule]
+            "imports": [NavbarItemComponent, RouterTestingModule]
         }).compileComponents();
 
         fixture = TestBed.createComponent(NavbarItemComponent);

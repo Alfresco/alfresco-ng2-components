@@ -21,15 +21,15 @@ import { AspectPaging, AspectsApi, AspectEntry } from '@alfresco/js-api';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AlfrescoApiService } from '../../services';
 
-const stdAspect1: AspectEntry = { entry: { id: 'std:standardAspectOne', description: 'Standard Aspect One', title: 'StandardAspectOne' } };
-const stdAspect2: AspectEntry = { entry: { id: 'std:standardAspectTwo', description: 'Standard Aspect Two', title: 'StandardAspectTwo' } };
-const stdAspect3: AspectEntry = { entry: { id: 'std:standardAspectThree', description: 'Standard Aspect Three', title: 'StandardAspectThree' } };
-const standardAspectPagingMock: AspectPaging = { list: { entries: [stdAspect1, stdAspect2, stdAspect3] } };
+const stdAspect1: AspectEntry = { "entry": { "id": 'std:standardAspectOne', "description": 'Standard Aspect One', "title": 'StandardAspectOne' } };
+const stdAspect2: AspectEntry = { "entry": { "id": 'std:standardAspectTwo', "description": 'Standard Aspect Two', "title": 'StandardAspectTwo' } };
+const stdAspect3: AspectEntry = { "entry": { "id": 'std:standardAspectThree', "description": 'Standard Aspect Three', "title": 'StandardAspectThree' } };
+const standardAspectPagingMock: AspectPaging = { "list": { "entries": [stdAspect1, stdAspect2, stdAspect3] } };
 
-const cstAspect1: AspectEntry = { entry: { id: 'cst:customAspectOne', description: 'Custom Aspect One', title: 'CustomAspectOne' } };
-const cstAspect2: AspectEntry = { entry: { id: 'cst:customAspectTwo', description: 'Custom Aspect Two', title: 'CustomAspectTwo' } };
-const cstAspect3: AspectEntry = { entry: { id: 'cst:customAspectThree', description: 'Custom Aspect Three', title: 'CustomAspectThree' } };
-const customAspectPagingMock: AspectPaging = { list: { entries: [cstAspect1, cstAspect2, cstAspect3] } };
+const cstAspect1: AspectEntry = { "entry": { "id": 'cst:customAspectOne', "description": 'Custom Aspect One', "title": 'CustomAspectOne' } };
+const cstAspect2: AspectEntry = { "entry": { "id": 'cst:customAspectTwo', "description": 'Custom Aspect Two', "title": 'CustomAspectTwo' } };
+const cstAspect3: AspectEntry = { "entry": { "id": 'cst:customAspectThree', "description": 'Custom Aspect Three', "title": 'CustomAspectThree' } };
+const customAspectPagingMock: AspectPaging = { "list": { "entries": [cstAspect1, cstAspect2, cstAspect3] } };
 
 describe('AspectListService', () => {
     let aspectListService: AspectListService;
@@ -38,7 +38,7 @@ describe('AspectListService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule]
+            "imports": [HttpClientTestingModule]
         });
 
         aspectListService = TestBed.inject(AspectListService);

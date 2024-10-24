@@ -18,41 +18,41 @@
 import { ProcessInstanceRepresentation, ProcessDefinitionRepresentation } from '@alfresco/js-api';
 
 export const newProcess: ProcessInstanceRepresentation = {
-    id: '32323',
-    name: 'Process'
+    "id": '32323',
+    "name": 'Process'
 };
 
 export const testProcessDef: ProcessDefinitionRepresentation = {
-    id: 'my:process1',
-    name: 'My Process 1',
-    hasStartForm: false
+    "id": 'my:process1',
+    "name": 'My Process 1',
+    "hasStartForm": false
 };
 
 export const testProcessDefinitions: ProcessDefinitionRepresentation[] = [
     {
-        id: 'my:process1',
-        name: 'My Process 1',
-        hasStartForm: false
+        "id": 'my:process1',
+        "name": 'My Process 1',
+        "hasStartForm": false
     }
 ];
 
 export const testMultipleProcessDefs: ProcessDefinitionRepresentation[] = [
     {
-        id: 'my:process1',
-        name: 'My Process 1',
-        hasStartForm: false
+        "id": 'my:process1',
+        "name": 'My Process 1',
+        "hasStartForm": false
     },
     {
-        id: 'my:process2',
-        name: 'My Process 2',
-        hasStartForm: true
+        "id": 'my:process2',
+        "name": 'My Process 2',
+        "hasStartForm": true
     }
 ];
 
 export const testProcessDefWithForm: ProcessDefinitionRepresentation[] = [
     {
-        id: 'my:process1',
-        name: 'My Process 1',
-        hasStartForm: true
+        "id": 'my:process1',
+        "name": 'My Process 1',
+        "hasStartForm": true
     }
 ];

@@ -25,10 +25,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class RenderingQueueServices {
     renderingStates = {
-        INITIAL: 0,
-        RUNNING: 1,
-        PAUSED: 2,
-        FINISHED: 3
+        "INITIAL": 0,
+        "RUNNING": 1,
+        "PAUSED": 2,
+        "FINISHED": 3
     };
 
     CLEANUP_TIMEOUT: number = 30000;
@@ -46,7 +46,7 @@ export class RenderingQueueServices {
      * Set the instance of the PDF Viewer
      * @param pdfViewer viewer instance
      */
-    setViewer(pdfViewer): void {
+    setViewer (pdfViewer): void {
         this.pdfViewer = pdfViewer;
     }
 
@@ -54,7 +54,7 @@ export class RenderingQueueServices {
      * Sets the instance of the PDF Thumbnail Viewer
      * @param pdfThumbnailViewer viewer instance
      */
-    setThumbnailViewer(pdfThumbnailViewer): void {
+    setThumbnailViewer (pdfThumbnailViewer): void {
         this.pdfThumbnailViewer = pdfThumbnailViewer;
     }
 
@@ -63,11 +63,11 @@ export class RenderingQueueServices {
      * @param view view to render
      * @returns `true` if the view has higher priority, otherwise `false`
      */
-    isHighestPriority(view: any): boolean {
+    isHighestPriority (view: any): boolean {
         return this.highestPriorityPage === view.renderingId;
     }
 
-    renderHighestPriority(currentlyVisiblePages) {
+    renderHighestPriority (currentlyVisiblePages) {
         if (this.idleTimeout) {
             clearTimeout(this.idleTimeout);
             this.idleTimeout = null;
@@ -94,7 +94,7 @@ export class RenderingQueueServices {
         }
     }
 
-    getHighestPriority(visible, views, scrolledDown) {
+    getHighestPriority (visible, views, scrolledDown) {
         // The state has changed figure out which page has the highest priority to
         // render next (if any).
         // Priority:
@@ -131,7 +131,7 @@ export class RenderingQueueServices {
         return null;
     }
 
-    hasViewer(): boolean {
+    hasViewer (): boolean {
         return !!this.pdfViewer;
     }
 
@@ -140,7 +140,7 @@ export class RenderingQueueServices {
      * @param view the View instance to check
      * @returns `true` if rendering is finished, otherwise `false`
      */
-    isViewFinished(view): boolean {
+    isViewFinished (view): boolean {
         return view.renderingState === this.renderingStates.FINISHED;
     }
 
@@ -151,7 +151,7 @@ export class RenderingQueueServices {
      * @param view View instance to render
      * @returns the rendered state of the view
      */
-    renderView(view: any): boolean {
+    renderView (view: any): boolean {
         const state = view.renderingState;
         switch (state) {
             case this.renderingStates.FINISHED: {

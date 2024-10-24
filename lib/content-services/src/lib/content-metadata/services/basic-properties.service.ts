@@ -20,12 +20,12 @@ import { Node } from '@alfresco/js-api';
 import { CardViewDateItemModel, CardViewItemMatchValidator, CardViewTextItemModel, FileSizePipe, TranslationService } from '@alfresco/adf-core';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class BasicPropertiesService {
     private translationService = inject(TranslationService);
 
-    getProperties(node: Node) {
+    getProperties (node: Node) {
         const sizeInBytes = node.content ? node.content.sizeInBytes : '';
         const mimeTypeName = node.content ? node.content.mimeTypeName : '';
         const author = node.properties ? node.properties['cm:author'] : '';
@@ -34,69 +34,69 @@ export class BasicPropertiesService {
 
         return [
             new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.NAME',
-                value: node.name,
-                key: 'properties.cm:name',
-                editable: true,
-                validators: [new CardViewItemMatchValidator('[\\/\\*\\\\"\\\\]')]
+                "label": 'CORE.METADATA.BASIC.NAME',
+                "value": node.name,
+                "key": 'properties.cm:name',
+                "editable": true,
+                "validators": [new CardViewItemMatchValidator('[\\/\\*\\\\"\\\\]')]
             }),
             new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.TITLE',
-                value: title,
-                key: 'properties.cm:title',
-                editable: true
+                "label": 'CORE.METADATA.BASIC.TITLE',
+                "value": title,
+                "key": 'properties.cm:title',
+                "editable": true
             }),
             new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.CREATOR',
-                value: node.createdByUser.displayName,
-                key: 'createdByUser.displayName',
-                editable: false
+                "label": 'CORE.METADATA.BASIC.CREATOR',
+                "value": node.createdByUser.displayName,
+                "key": 'createdByUser.displayName',
+                "editable": false
             }),
             new CardViewDateItemModel({
-                label: 'CORE.METADATA.BASIC.CREATED_DATE',
-                value: node.createdAt,
-                key: 'createdAt',
-                editable: false,
-                format: 'mediumDate'
+                "label": 'CORE.METADATA.BASIC.CREATED_DATE',
+                "value": node.createdAt,
+                "key": 'createdAt',
+                "editable": false,
+                "format": 'mediumDate'
             }),
             new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.SIZE',
-                value: sizeInBytes,
-                key: 'content.sizeInBytes',
-                pipes: [{ pipe: new FileSizePipe(this.translationService) }],
-                editable: false
+                "label": 'CORE.METADATA.BASIC.SIZE',
+                "value": sizeInBytes,
+                "key": 'content.sizeInBytes',
+                "pipes": [{ "pipe": new FileSizePipe(this.translationService) }],
+                "editable": false
             }),
             new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.MODIFIER',
-                value: node.modifiedByUser.displayName,
-                key: 'modifiedByUser.displayName',
-                editable: false
+                "label": 'CORE.METADATA.BASIC.MODIFIER',
+                "value": node.modifiedByUser.displayName,
+                "key": 'modifiedByUser.displayName',
+                "editable": false
             }),
             new CardViewDateItemModel({
-                label: 'CORE.METADATA.BASIC.MODIFIED_DATE',
-                value: node.modifiedAt,
-                key: 'modifiedAt',
-                editable: false,
-                format: 'mediumDate'
+                "label": 'CORE.METADATA.BASIC.MODIFIED_DATE',
+                "value": node.modifiedAt,
+                "key": 'modifiedAt',
+                "editable": false,
+                "format": 'mediumDate'
             }),
             new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.MIMETYPE',
-                value: mimeTypeName,
-                key: 'content.mimeTypeName',
-                editable: false
+                "label": 'CORE.METADATA.BASIC.MIMETYPE',
+                "value": mimeTypeName,
+                "key": 'content.mimeTypeName',
+                "editable": false
             }),
             new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.AUTHOR',
-                value: author,
-                key: 'properties.cm:author',
-                editable: true
+                "label": 'CORE.METADATA.BASIC.AUTHOR',
+                "value": author,
+                "key": 'properties.cm:author',
+                "editable": true
             }),
             new CardViewTextItemModel({
-                label: 'CORE.METADATA.BASIC.DESCRIPTION',
-                value: description,
-                key: 'properties.cm:description',
-                multiline: true,
-                editable: true
+                "label": 'CORE.METADATA.BASIC.DESCRIPTION',
+                "value": description,
+                "key": 'properties.cm:description',
+                "multiline": true,
+                "editable": true
             })
         ];
     }

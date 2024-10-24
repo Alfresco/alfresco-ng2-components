@@ -19,20 +19,20 @@ import { Injectable } from '@angular/core';
 import { SearchCategory } from '../../search/models/search-category.interface';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContentNodeSelectorPanelService {
     propertyTypes = ['d:text', 'd:date', 'd:datetime'];
     modelPropertyTypeToSearchFilterTypeMap = new Map<string, string>();
     customModels: any[];
 
-    constructor() {
+    constructor () {
         this.modelPropertyTypeToSearchFilterTypeMap.set(this.propertyTypes[0], 'text');
         this.modelPropertyTypeToSearchFilterTypeMap.set(this.propertyTypes[1], 'date-range');
         this.modelPropertyTypeToSearchFilterTypeMap.set(this.propertyTypes[2], 'datetime-range');
     }
 
-    convertCustomModelPropertiesToSearchCategories(): SearchCategory[] {
+    convertCustomModelPropertiesToSearchCategories (): SearchCategory[] {
         const searchConfig: SearchCategory[] = [];
         this.customModels?.forEach((propertyModel) => {
             searchConfig.push(this.convertModelPropertyIntoSearchFilter(propertyModel));
@@ -41,20 +41,20 @@ export class ContentNodeSelectorPanelService {
         return searchConfig;
     }
 
-    convertModelPropertyIntoSearchFilter(modelProperty: any): SearchCategory {
+    convertModelPropertyIntoSearchFilter (modelProperty: any): SearchCategory {
         let filterSearch: SearchCategory;
         if (this.isTypeSupported(modelProperty.dataType)) {
             filterSearch = {
-                id: modelProperty.prefixedName,
-                name: modelProperty.prefixedName,
-                expanded: false,
-                enabled: true,
-                component: {
-                    selector: this.modelPropertyTypeToSearchFilterTypeMap.get(modelProperty.dataType),
-                    settings: {
-                        pattern: `${modelProperty.prefixedName}:'(.*?)'`,
-                        field: `${modelProperty.prefixedName}`,
-                        placeholder: `Enter the ${modelProperty.name}`
+                "id": modelProperty.prefixedName,
+                "name": modelProperty.prefixedName,
+                "expanded": false,
+                "enabled": true,
+                "component": {
+                    "selector": this.modelPropertyTypeToSearchFilterTypeMap.get(modelProperty.dataType),
+                    "settings": {
+                        "pattern": `${modelProperty.prefixedName}:'(.*?)'`,
+                        "field": `${modelProperty.prefixedName}`,
+                        "placeholder": `Enter the ${modelProperty.name}`
                     }
                 }
             };
@@ -62,7 +62,7 @@ export class ContentNodeSelectorPanelService {
         return filterSearch;
     }
 
-    isTypeSupported(dataType: string): boolean {
+    isTypeSupported (dataType: string): boolean {
         return this.propertyTypes.includes(dataType);
     }
 }

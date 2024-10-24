@@ -32,59 +32,59 @@ describe('DateCellValidator', () => {
     });
 
     it('should support only editable columns', () => {
-        const readonly = { editable: false, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
+        const readonly = { "editable": false, "type": DateCellValidator.DATE_TYPE } as DynamicTableColumn;
         expect(validator.isSupported(readonly)).toBeFalse();
 
-        const editable =  { editable: true, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
+        const editable =  { "editable": true, "type": DateCellValidator.DATE_TYPE } as DynamicTableColumn;
         expect(validator.isSupported(editable)).toBeTrue();
     });
 
     it('should support only date column type', () => {
-        const date = { editable: true, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
+        const date = { "editable": true, "type": DateCellValidator.DATE_TYPE } as DynamicTableColumn;
         expect(validator.isSupported(date)).toBeTrue();
 
-        const unsupported = { editable: true, type: 'unknown' } as DynamicTableColumn;
+        const unsupported = { "editable": true, "type": 'unknown' } as DynamicTableColumn;
         expect(validator.isSupported(unsupported)).toBeFalse();
     });
 
     it('should skip validating unsupported columns', () => {
-        const column = { editable: true, type: 'unknown' } as DynamicTableColumn;
+        const column = { "editable": true, "type": 'unknown' } as DynamicTableColumn;
         const row = {} as DynamicTableRow;
 
         expect(validator.validate(row, column)).toBeTrue();
     });
 
     it('should reject when required column has no value', () => {
-        const column = { id: 'col1', required: true,  editable: true, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
-        const row = { value: { col1: null } } as DynamicTableRow;
+        const column = { "id": 'col1', "required": true,  "editable": true, "type": DateCellValidator.DATE_TYPE } as DynamicTableColumn;
+        const row = { "value": { "col1": null } } as DynamicTableRow;
 
         expect(validator.validate(row, column)).toBeFalse();
     });
 
     it('should approve when optional column has no value', () => {
-        const column = { id: 'col1', required: false, editable: true, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
-        const row = { value: { col1: null } } as DynamicTableRow;
+        const column = { "id": 'col1', "required": false, "editable": true, "type": DateCellValidator.DATE_TYPE } as DynamicTableColumn;
+        const row = { "value": { "col1": null } } as DynamicTableRow;
 
         expect(validator.validate(row, column)).toBeTrue();
     });
 
     it('should approve the valid datetime value', () => {
-        const column = { id: 'col1', required: true, editable: true, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
-        const row = { value: { col1: '2023-10-12T10:59:24.773Z' } } as DynamicTableRow;
+        const column = { "id": 'col1', "required": true, "editable": true, "type": DateCellValidator.DATE_TYPE } as DynamicTableColumn;
+        const row = { "value": { "col1": '2023-10-12T10:59:24.773Z' } } as DynamicTableRow;
 
         expect(validator.validate(row, column)).toBeTrue();
     });
 
     it('should reject invalid datetime value', () => {
-        const column = { id: 'col1', required: true, editable: true, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
-        const row = { value: { col1: '!2023-10-12T10:59:24.773Z' } } as DynamicTableRow;
+        const column = { "id": 'col1', "required": true, "editable": true, "type": DateCellValidator.DATE_TYPE } as DynamicTableColumn;
+        const row = { "value": { "col1": '!2023-10-12T10:59:24.773Z' } } as DynamicTableRow;
 
         expect(validator.validate(row, column)).toBeFalse();
     });
 
     it('should update validation summary of rejection', () => {
-        const column = { id: 'col1', name: 'created_on', required: true, editable: true, type: DateCellValidator.DATE_TYPE } as DynamicTableColumn;
-        const row = { value: { col1: '!2023-10-12T10:59:24.773Z' } } as DynamicTableRow;
+        const column = { "id": 'col1', "name": 'created_on', "required": true, "editable": true, "type": DateCellValidator.DATE_TYPE } as DynamicTableColumn;
+        const row = { "value": { "col1": '!2023-10-12T10:59:24.773Z' } } as DynamicTableRow;
         const summary = new DynamicRowValidationSummary();
 
         expect(validator.validate(row, column, summary)).toBeFalse();

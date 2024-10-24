@@ -37,9 +37,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
 @Component({
-    selector: 'adf-search-date-range',
-    standalone: true,
-    imports: [
+    "selector": 'adf-search-date-range',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatRadioModule,
         ReactiveFormsModule,
@@ -49,14 +49,14 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
         MatSelectModule,
         MatDatepickerModule
     ],
-    templateUrl: './search-date-range.component.html',
-    styleUrls: ['./search-date-range.component.scss'],
-    providers: [
-        { provide: DateAdapter, useClass: DateFnsAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
+    "templateUrl": './search-date-range.component.html',
+    "styleUrls": ['./search-date-range.component.scss'],
+    "providers": [
+        { "provide": DateAdapter, "useClass": DateFnsAdapter, "deps": [MAT_DATE_LOCALE] },
+        { "provide": MAT_DATE_FORMATS, "useValue": MAT_DATE_FNS_FORMATS }
     ],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-date-range' }
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-date-range' }
 })
 export class SearchDateRangeComponent implements OnInit, OnDestroy {
     @Input()
@@ -66,7 +66,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     @Input()
     field: string;
     @Input()
-    set initialValue(value: SearchDateRange) {
+    set initialValue (value: SearchDateRange) {
         if (value) {
             this.form.patchValue(value);
         }
@@ -78,11 +78,11 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     valid = new EventEmitter<boolean>();
 
     form = this.formBuilder.group<SearchDateRange>({
-        dateRangeType: DateRangeType.ANY,
-        inLastValueType: InLastDateType.DAYS,
-        inLastValue: undefined,
-        betweenStartDate: undefined,
-        betweenEndDate: undefined
+        "dateRangeType": DateRangeType.ANY,
+        "inLastValueType": InLastDateType.DAYS,
+        "inLastValue": undefined,
+        "betweenStartDate": undefined,
+        "betweenEndDate": undefined
     });
     betweenStartDateFormControl = this.form.controls.betweenStartDate;
     betweenEndDateFormControl = this.form.controls.betweenEndDate;
@@ -92,7 +92,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;
 
-    constructor(
+    constructor (
         private formBuilder: FormBuilder,
         private userPreferencesService: UserPreferencesService,
         private dateAdapter: DateAdapter<DateFnsAdapter>,
@@ -102,13 +102,13 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     readonly endDateValidator = (formControl: UntypedFormControl): { [key: string]: boolean } | null => {
         if (isBefore(formControl.value, this.betweenStartDateFormControl.value) || isAfter(formControl.value, this.convertedMaxDate)) {
             return {
-                invalidDate: true
+                "invalidDate": true
             };
         }
         return {};
     };
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.dateFormatConfig.display.dateInput = this.dateFormat;
         this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ? parse(this.maxDate, this.dateFormat, new Date()) : new Date());
         this.userPreferencesService
@@ -121,12 +121,12 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
         this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onChange());
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    private updateValidators(dateRangeType: DateRangeType) {
+    private updateValidators (dateRangeType: DateRangeType) {
         switch (dateRangeType) {
             case DateRangeType.BETWEEN:
                 this.betweenStartDateFormControl.setValidators(Validators.required);
@@ -149,33 +149,33 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
         this.form.controls.inLastValue.updateValueAndValidity();
     }
 
-    private onChange(): void {
+    private onChange (): void {
         if (this.form.valid) {
             this.changed.emit(this.form.value);
         }
         this.valid.emit(this.form.valid);
     }
 
-    dateChanged(event: Event, formControl: UntypedFormControl) {
+    dateChanged (event: Event, formControl: UntypedFormControl) {
         if (event?.target['value']?.trim()) {
             const date = parse(event.target['value'], this.dateFormat, new Date());
             if (!isValid(date)) {
                 formControl.setErrors({
                     ...formControl.errors,
-                    required: false,
-                    invalidDate: true
+                    "required": false,
+                    "invalidDate": true
                 });
             } else {
                 formControl.setErrors({
                     ...formControl.errors,
-                    invalidDate: false
+                    "invalidDate": false
                 });
                 formControl.setValue(date);
             }
         }
     }
 
-    narrowDownAllowedCharacters(event: Event) {
+    narrowDownAllowedCharacters (event: Event) {
         if (parseInt((event.target as HTMLInputElement).value, 10) === 0) {
             (event.target as HTMLInputElement).value = '';
         } else {
@@ -183,7 +183,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
         }
     }
 
-    preventIncorrectNumberCharacters(event: KeyboardEvent): boolean {
+    preventIncorrectNumberCharacters (event: KeyboardEvent): boolean {
         switch (event.key) {
             case '.':
             case '-':

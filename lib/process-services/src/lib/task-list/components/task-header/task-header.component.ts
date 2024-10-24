@@ -38,12 +38,12 @@ import { ClaimTaskDirective } from '../task-form/claim-task.directive';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-task-header',
-    standalone: true,
-    imports: [CommonModule, MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslateModule, CardViewComponent],
-    templateUrl: './task-header.component.html',
-    styleUrls: ['./task-header.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-task-header',
+    "standalone": true,
+    "imports": [CommonModule, MatCardModule, MatButtonModule, UnclaimTaskDirective, ClaimTaskDirective, TranslateModule, CardViewComponent],
+    "templateUrl": './task-header.component.html',
+    "styleUrls": ['./task-header.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskHeaderComponent implements OnChanges, OnInit {
     /** The name of the form. */
@@ -73,7 +73,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     private currentUserId: number;
 
-    constructor(
+    constructor (
         private peopleProcessService: PeopleProcessService,
         private translationService: TranslationService,
         private appConfig: AppConfigService
@@ -82,12 +82,12 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.loadCurrentBpmUserId();
         this.initData();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const taskDetailsChange = changes['taskDetails'];
         if (taskDetailsChange?.currentValue?.id !== taskDetailsChange?.previousValue?.id) {
             this.initData();
@@ -99,7 +99,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     /**
      * Refresh the card data
      */
-    initData() {
+    initData () {
         if (this.taskDetails) {
             const parentInfoMap = this.getParentInfo();
             const defaultProperties = this.initDefaultProperties(parentInfoMap);
@@ -111,16 +111,16 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     /**
      * Refresh the card data
      */
-    refreshData() {
+    refreshData () {
         this.properties = this.properties.map((cardItem) => {
             if (cardItem.key === 'formName' && cardItem.value !== this.formName) {
                 return new CardViewTextItemModel({
-                    label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
-                    value: this.formName,
-                    key: 'formName',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
-                    clickable: this.isFormClickable(),
-                    icon: 'create'
+                    "label": 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
+                    "value": this.formName,
+                    "key": 'formName',
+                    "default": this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
+                    "clickable": this.isFormClickable(),
+                    "icon": 'create'
                 });
             } else {
                 return cardItem;
@@ -130,10 +130,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     /**
      * Get the process parent information
-     *
      * @returns a map of process instance and definition
      */
-    private getParentInfo(): Map<string, string> {
+    private getParentInfo (): Map<string, string> {
         if (this.taskDetails.processInstanceId && this.taskDetails.processDefinitionName) {
             return new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
         }
@@ -142,214 +141,202 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     /**
      * Check if the task has an assignee
-     *
      * @returns `true` if the task has an assignee, otherwise `false`
      */
-    hasAssignee(): boolean {
+    hasAssignee (): boolean {
         return !!this.taskDetails.assignee;
     }
 
     /**
      * Check if the task is assigned to a user
-     *
      * @param userId the id of the user to check
      * @returns `true` if the task assigned to a user, otherwise `false`
      */
-    isAssignedTo(userId: number): boolean {
+    isAssignedTo (userId: number): boolean {
         return this.hasAssignee() ? this.taskDetails.assignee.id === userId : false;
     }
 
     /**
      * Check if the task is assigned to the current user
-     *
      * @returns `true` if the task assigned to current user, otherwise `false`
      */
-    isAssignedToCurrentUser(): boolean {
+    isAssignedToCurrentUser (): boolean {
         return this.hasAssignee() && this.isAssignedTo(this.currentUserId);
     }
 
     /**
      * Check if the user is a candidate member
-     *
      * @returns `true` if user is a candidate member, otherwise false
      */
-    isCandidateMember(): boolean {
+    isCandidateMember (): boolean {
         return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
     }
 
     /**
      * Check if the task is claimable
-     *
      * @returns `true` if task can be claimed, otherwise `false`
      */
-    isTaskClaimable(): boolean {
+    isTaskClaimable (): boolean {
         return !this.hasAssignee() && this.isCandidateMember();
     }
 
     /**
      * Return true if the task claimed by candidate member.
-     *
      * @returns `true` if the task is claimed, otherwise `false`
      */
-    isTaskClaimedByCandidateMember(): boolean {
+    isTaskClaimedByCandidateMember (): boolean {
         return this.isCandidateMember() && this.isAssignedToCurrentUser() && !this.isCompleted();
     }
 
     /**
      * Get the status of the task
-     *
      * @returns `Completed` or `Running`
      */
-    getTaskStatus(): 'Completed' | 'Running' {
+    getTaskStatus (): 'Completed' | 'Running' {
         return this.taskDetails?.isCompleted() ? 'Completed' : 'Running';
     }
 
     /**
      * Emit the claim event
-     *
      * @param taskId the id of the task to claim
      */
-    onClaimTask(taskId: string) {
+    onClaimTask (taskId: string) {
         this.claim.emit(taskId);
     }
 
     /**
      * Emit the unclaim event
-     *
      * @param taskId the id of the task to unclaim
      */
-    onUnclaimTask(taskId: string) {
+    onUnclaimTask (taskId: string) {
         this.unclaim.emit(taskId);
     }
 
     /**
      * Returns the task completion state
-     *
      * @returns `true` if the task is completed, otherwise `false`
      */
-    isCompleted(): boolean {
+    isCompleted (): boolean {
         return !!this.taskDetails?.endDate;
     }
 
     /**
      * Check if the form is clickable
-     *
      * @returns `true` if the form is clickable, otherwise `false`
      */
-    isFormClickable(): boolean {
+    isFormClickable (): boolean {
         return !!this.formName && !this.isCompleted();
     }
 
     /**
      * Get the task duration
-     *
      * @returns the task duration in milliseconds
      */
-    getTaskDuration(): string {
+    getTaskDuration (): string {
         return this.taskDetails.duration ? `${this.taskDetails.duration} ms` : '';
     }
 
-    private initDefaultProperties(parentInfoMap: Map<string, string>): any[] {
+    private initDefaultProperties (parentInfoMap: Map<string, string>): any[] {
         return [
             new CardViewTextItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
-                value: this.taskDetails.getFullName(),
-                key: 'assignee',
-                default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
-                clickable: !this.isCompleted(),
-                icon: 'create'
+                "label": 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
+                "value": this.taskDetails.getFullName(),
+                "key": 'assignee',
+                "default": this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
+                "clickable": !this.isCompleted(),
+                "icon": 'create'
             }),
             new CardViewTextItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.STATUS',
-                value: this.getTaskStatus(),
-                key: 'status'
+                "label": 'ADF_TASK_LIST.PROPERTIES.STATUS',
+                "value": this.getTaskStatus(),
+                "key": 'status'
             }),
             new CardViewIntItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
-                value: this.taskDetails.priority,
-                key: 'priority',
-                editable: true,
-                validators: [new CardViewItemLengthValidator(1, 10)]
+                "label": 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
+                "value": this.taskDetails.priority,
+                "key": 'priority',
+                "editable": true,
+                "validators": [new CardViewItemLengthValidator(1, 10)]
             }),
             new CardViewDateItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.DUE_DATE',
-                value: this.taskDetails.dueDate,
-                key: 'dueDate',
-                default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT'),
-                editable: true,
-                format: this.dateFormat,
-                locale: this.dateLocale
+                "label": 'ADF_TASK_LIST.PROPERTIES.DUE_DATE',
+                "value": this.taskDetails.dueDate,
+                "key": 'dueDate',
+                "default": this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT'),
+                "editable": true,
+                "format": this.dateFormat,
+                "locale": this.dateLocale
             }),
             new CardViewTextItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.CATEGORY',
-                value: this.taskDetails.category,
-                key: 'category',
-                default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT')
+                "label": 'ADF_TASK_LIST.PROPERTIES.CATEGORY',
+                "value": this.taskDetails.category,
+                "key": 'category',
+                "default": this.translationService.instant('ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT')
             }),
             new CardViewMapItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
-                value: parentInfoMap,
-                key: 'parentName',
-                default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT'),
-                clickable: true
+                "label": 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
+                "value": parentInfoMap,
+                "key": 'parentName',
+                "default": this.translationService.instant('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT'),
+                "clickable": true
             }),
             new CardViewDateItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.CREATED',
-                value: this.taskDetails.created,
-                key: 'created',
-                format: this.dateFormat,
-                locale: this.dateLocale
+                "label": 'ADF_TASK_LIST.PROPERTIES.CREATED',
+                "value": this.taskDetails.created,
+                "key": 'created',
+                "format": this.dateFormat,
+                "locale": this.dateLocale
             }),
             new CardViewTextItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.DURATION',
-                value: this.getTaskDuration(),
-                key: 'duration'
+                "label": 'ADF_TASK_LIST.PROPERTIES.DURATION',
+                "value": this.getTaskDuration(),
+                "key": 'duration'
             }),
             new CardViewTextItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.PARENT_TASK_ID',
-                value: this.taskDetails.parentTaskId,
-                key: 'parentTaskId'
+                "label": 'ADF_TASK_LIST.PROPERTIES.PARENT_TASK_ID',
+                "value": this.taskDetails.parentTaskId,
+                "key": 'parentTaskId'
             }),
             new CardViewDateItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.END_DATE',
-                value: this.taskDetails.endDate,
-                key: 'endDate',
-                format: this.dateFormat,
-                locale: this.dateLocale
+                "label": 'ADF_TASK_LIST.PROPERTIES.END_DATE',
+                "value": this.taskDetails.endDate,
+                "key": 'endDate',
+                "format": this.dateFormat,
+                "locale": this.dateLocale
             }),
             new CardViewTextItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.ID',
-                value: this.taskDetails.id,
-                key: 'id'
+                "label": 'ADF_TASK_LIST.PROPERTIES.ID',
+                "value": this.taskDetails.id,
+                "key": 'id'
             }),
             new CardViewTextItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION',
-                value: this.taskDetails.description,
-                key: 'description',
-                default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT'),
-                multiline: true,
-                editable: true,
-                validators: [new TaskDescriptionValidator()]
+                "label": 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION',
+                "value": this.taskDetails.description,
+                "key": 'description',
+                "default": this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT'),
+                "multiline": true,
+                "editable": true,
+                "validators": [new TaskDescriptionValidator()]
             }),
             new CardViewTextItemModel({
-                label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
-                value: this.formName,
-                key: 'formName',
-                default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
-                clickable: this.isFormClickable(),
-                icon: 'create'
+                "label": 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
+                "value": this.formName,
+                "key": 'formName',
+                "default": this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
+                "clickable": this.isFormClickable(),
+                "icon": 'create'
             })
         ];
     }
 
-    private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
+    private isValidSelection (filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
     }
 
     /**
      * Loads current bpm userId
      */
-    private loadCurrentBpmUserId(): void {
+    private loadCurrentBpmUserId (): void {
         this.peopleProcessService.getCurrentUserInfo().subscribe((res) => {
             this.currentUserId = res ? +res.id : null;
         });

@@ -48,16 +48,16 @@ describe('TaskFilterCloudService', () => {
     let getCurrentUserInfoSpy: jasmine.Spy;
 
     const identityUserMock = {
-        username: 'fakeusername',
-        firstName: 'fake-identity-first-name',
-        lastName: 'fake-identity-last-name',
-        email: 'fakeIdentity@email.com'
+        "username": 'fakeusername',
+        "firstName": 'fake-identity-first-name',
+        "lastName": 'fake-identity-last-name',
+        "email": 'fakeIdentity@email.com'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
-            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService }]
+            "imports": [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
+            "providers": [{ "provide": TASK_FILTERS_SERVICE_TOKEN, "useClass": UserPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
         notificationCloudService = TestBed.inject(NotificationCloudService);
@@ -257,16 +257,16 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     let storageService: StorageService;
 
     const identityUserMock = {
-        username: 'fakeusername',
-        firstName: 'fake-identity-first-name',
-        lastName: 'fake-identity-last-name',
-        email: 'fakeIdentity@email.com'
+        "username": 'fakeusername',
+        "firstName": 'fake-identity-first-name',
+        "lastName": 'fake-identity-last-name',
+        "email": 'fakeIdentity@email.com'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
-            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            "imports": [HttpClientTestingModule, ProcessServiceCloudTestingModule, ApolloModule],
+            "providers": [{ "provide": TASK_FILTERS_SERVICE_TOKEN, "useClass": LocalPreferenceCloudService }]
         });
         service = TestBed.inject(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;

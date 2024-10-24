@@ -24,17 +24,17 @@ import { SavedSearch } from '../interfaces/saved-search.interface';
 import { AuthenticationService } from '@alfresco/adf-core';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class SavedSearchesService {
     private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
+    get searchApi (): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
         return this._searchApi;
     }
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
@@ -45,21 +45,19 @@ export class SavedSearchesService {
     private currentUserLocalStorageKey: string;
     private createFileAttempt = false;
 
-    constructor(private readonly apiService: AlfrescoApiService, private readonly authService: AuthenticationService) {}
+    constructor (private readonly apiService: AlfrescoApiService, private readonly authService: AuthenticationService) {}
 
-    innit(): void {
+    innit (): void {
         this.fetchSavedSearches();
     }
 
     /**
      * Gets a list of saved searches by user.
-     *
      * @returns SavedSearch list containing user saved searches
      */
-    getSavedSearches(): Observable<SavedSearch[]> {
+    getSavedSearches (): Observable<SavedSearch[]> {
         return this.getSavedSearchesNodeId().pipe(
-            concatMap(() => {
-                return from(
+            concatMap(() => from(
                     this.nodesApi.getNodeContent(this.savedSearchFileNodeId).then((content) => this.mapFileContentToSavedSearches(content))
                 ).pipe(
                     catchError((error) => {
@@ -70,22 +68,20 @@ export class SavedSearchesService {
                         }
                         return throwError(() => error);
                     })
-                );
-            })
+                ))
         );
     }
 
     /**
      * Gets a list of saved searches by user.
-     *
      * @param newSaveSearch object { name: string, description: string, encodedUrl: string }
      * @returns Adds and saves search also updating current saved search state
      */
-    saveSearch(newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
+    saveSearch (newSaveSearch: Pick<SavedSearch, 'name' | 'description' | 'encodedUrl'>): Observable<NodeEntry> {
         return this.getSavedSearches().pipe(
             take(1),
             switchMap((savedSearches: Array<SavedSearch>) => {
-                const updatedSavedSearches = [...savedSearches, { ...newSaveSearch, order: savedSearches.length }];
+                const updatedSavedSearches = [...savedSearches, { ...newSaveSearch, "order": savedSearches.length }];
                 return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSavedSearches))).pipe(
                     tap(() => this.savedSearches$.next(updatedSavedSearches))
                 );
@@ -93,7 +89,7 @@ export class SavedSearchesService {
         );
     }
 
-    private getSavedSearchesNodeId(): Observable<string> {
+    private getSavedSearchesNodeId (): Observable<string> {
         const localStorageKey = this.getLocalStorageKey();
         if (this.currentUserLocalStorageKey && this.currentUserLocalStorageKey !== localStorageKey) {
             this.savedSearches$.next([]);
@@ -107,9 +103,9 @@ export class SavedSearchesService {
                 concatMap((parentNodeId) =>
                     from(
                         this.searchApi.search({
-                            query: {
-                                language: SEARCH_LANGUAGE.AFTS,
-                                query: `cm:name:"saved-searches.json" AND PARENT:"${parentNodeId}"`
+                            "query": {
+                                "language": SEARCH_LANGUAGE.AFTS,
+                                "query": `cm:name:"saved-searches.json" AND PARENT:"${parentNodeId}"`
                             }
                         })
                     ).pipe(
@@ -138,19 +134,19 @@ export class SavedSearchesService {
             return of(savedSearchesNodeId);
         }
     }
-    private createSavedSearchesNode(parentNodeId: string): Observable<NodeEntry> {
-        return from(this.nodesApi.createNode(parentNodeId, { name: 'saved-searches.json', nodeType: 'cm:content' }));
+    private createSavedSearchesNode (parentNodeId: string): Observable<NodeEntry> {
+        return from(this.nodesApi.createNode(parentNodeId, { "name": 'saved-searches.json', "nodeType": 'cm:content' }));
     }
 
-    private async mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {
+    private async mapFileContentToSavedSearches (blob: Blob): Promise<Array<SavedSearch>> {
         return blob.text().then((content) => (content ? JSON.parse(content) : []));
     }
 
-    private getLocalStorageKey(): string {
+    private getLocalStorageKey (): string {
         return `saved-searches-node-id__${this.authService.getUsername()}`;
     }
 
-    private fetchSavedSearches(): void {
+    private fetchSavedSearches (): void {
         this.getSavedSearches()
             .pipe(take(1))
             .subscribe((searches) => this.savedSearches$.next(searches));

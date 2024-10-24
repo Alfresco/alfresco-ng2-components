@@ -23,10 +23,10 @@ import { EcmUserModel } from '../../../common/models/ecm-user.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'adf-user-name-column',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+    "selector": 'adf-user-name-column',
+    "standalone": true,
+    "imports": [CommonModule],
+    "template": `
         <div class="adf-ellipsis-cell" [attr.data-automation-id]="displayText$ | async">
             <span class="adf-user-name-column" title="{{ displayText$ | async }}"> {{ displayText$ | async }}</span>
             <br />
@@ -35,9 +35,9 @@ import { CommonModule } from '@angular/common';
             </span>
         </div>
     `,
-    styleUrls: ['./user-name-column.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' }
+    "styleUrls": ['./user-name-column.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-user-name-column adf-datatable-content-cell adf-expand-cell-5 adf-ellipsis-cell' }
 })
 export class UserNameColumnComponent implements OnInit {
     @Input()
@@ -49,12 +49,12 @@ export class UserNameColumnComponent implements OnInit {
     displayText$ = new BehaviorSubject<string>('');
     subTitleText$ = new BehaviorSubject<string>('');
 
-    constructor(private nodePermissionService: NodePermissionService) {}
+    constructor (private nodePermissionService: NodePermissionService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.context != null) {
             const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
-            const permissionGroup = authorityId ? ({ displayName: authorityId } as Group) : null;
+            const permissionGroup = authorityId ? ({ "displayName": authorityId } as Group) : null;
             this.updatePerson(person);
             this.updateGroup(group || permissionGroup);
         }
@@ -66,14 +66,14 @@ export class UserNameColumnComponent implements OnInit {
         }
     }
 
-    private updatePerson(person: EcmUserModel) {
+    private updatePerson (person: EcmUserModel) {
         if (person) {
             this.displayText$.next(`${person.firstName ?? ''} ${person.lastName ?? ''}`);
             this.subTitleText$.next(person.email ?? '');
         }
     }
 
-    private updateGroup(group: Group) {
+    private updateGroup (group: Group) {
         if (group) {
             this.displayText$.next(group.displayName || group.id);
         }

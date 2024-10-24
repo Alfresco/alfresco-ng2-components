@@ -19,22 +19,22 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 
 @Pipe({
-    name: 'adfNodeNameTooltip',
-    standalone: true
+    "name": 'adfNodeNameTooltip',
+    "standalone": true
 })
 export class NodeNameTooltipPipe implements PipeTransform {
-    transform(node: NodeEntry): string {
+    transform (node: NodeEntry): string {
         if (node) {
             return this.getNodeTooltip(node);
         }
         return null;
     }
 
-    private containsLine(lines: string[], line: string): boolean {
+    private containsLine (lines: string[], line: string): boolean {
         return lines.some((item: string) => item.toLowerCase() === line.toLowerCase());
     }
 
-    private removeDuplicateLines(lines: string[]): string[] {
+    private removeDuplicateLines (lines: string[]): string[] {
         const reducer = (acc: string[], line: string): string[] => {
             if (!this.containsLine(acc, line)) {
                 acc.push(line);
@@ -45,13 +45,13 @@ export class NodeNameTooltipPipe implements PipeTransform {
         return lines.reduce(reducer, []);
     }
 
-    private getNodeTooltip(node: NodeEntry): string {
+    private getNodeTooltip (node: NodeEntry): string {
         if (!node?.entry) {
             return null;
         }
 
         const {
-            entry: { properties, name }
+            "entry": { properties, name }
         } = node;
         const lines = [name];
 

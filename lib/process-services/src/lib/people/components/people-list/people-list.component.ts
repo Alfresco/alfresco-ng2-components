@@ -22,17 +22,17 @@ import { LightUserRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'adf-people-list',
-    standalone: true,
-    imports: [CommonModule, DataTableComponent],
-    templateUrl: './people-list.component.html',
-    styleUrls: ['./people-list.component.scss']
+    "selector": 'adf-people-list',
+    "standalone": true,
+    "imports": [CommonModule, DataTableComponent],
+    "templateUrl": './people-list.component.html',
+    "styleUrls": ['./people-list.component.scss']
 })
 export class PeopleListComponent implements AfterContentInit {
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
-    @ViewChild('dataTable', { static: true })
+    @ViewChild('dataTable', { "static": true })
     peopleDataTable: DataTableComponent;
 
     /** The array of user data used to populate the people list. */
@@ -54,31 +54,31 @@ export class PeopleListComponent implements AfterContentInit {
     user: LightUserRepresentation;
     showHeader = ShowHeaderMode.Never;
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.peopleDataTable.columnList = this.columnList;
     }
 
-    selectUser(event: any) {
+    selectUser (event: any) {
         this.user = event.value.obj;
         this.clickRow.emit(this.user);
     }
 
-    hasActions(): boolean {
+    hasActions (): boolean {
         return this.actions;
     }
 
-    onShowRowActionsMenu(event: DataCellEvent) {
+    onShowRowActionsMenu (event: DataCellEvent) {
         const removeAction = {
-            title: 'Remove',
-            name: 'remove'
+            "title": 'Remove',
+            "name": 'remove'
         };
 
         event.value.actions = [removeAction];
     }
 
-    onExecuteRowAction(event: any) {
+    onExecuteRowAction (event: any) {
         const args = event.value;
         const action = args.action;
-        this.clickAction.emit({ type: action.name, value: args.row.obj });
+        this.clickAction.emit({ "type": action.name, "value": args.row.obj });
     }
 }

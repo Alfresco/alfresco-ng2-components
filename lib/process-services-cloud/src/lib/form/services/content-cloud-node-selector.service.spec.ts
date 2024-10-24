@@ -32,27 +32,27 @@ describe('ContentCloudNodeSelectorService', () => {
     let showWarningSpy: jasmine.Spy;
 
     const relativePathNodeResponseBody = {
-        entry: {
-            id: 'mock-relative-path-node-id'
+        "entry": {
+            "id": 'mock-relative-path-node-id'
         }
     };
 
     const aliasNodeResponseBody = {
-        entry: {
-            id: 'mock-alias-node-id'
+        "entry": {
+            "id": 'mock-alias-node-id'
         }
     };
 
     const folderVariableValueResponseBody = {
-        entry: {
-            id: 'mock-folder-id'
+        "entry": {
+            "id": 'mock-folder-id'
         }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, MatDialogModule],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            "imports": [ProcessServiceCloudTestingModule, MatDialogModule],
+            "providers": [{ "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(ContentCloudNodeSelectorService);
         notificationService = TestBed.inject(NotificationService);
@@ -60,10 +60,10 @@ describe('ContentCloudNodeSelectorService', () => {
 
         showWarningSpy = spyOn(notificationService, 'showWarning');
         openDialogSpy = spyOn(dialog, 'open').and.returnValue({
-            afterOpened: () => of({}),
-            afterClosed: () => of({}),
-            componentInstance: {
-                error: new Subject<any>()
+            "afterOpened": () => of({}),
+            "afterClosed": () => of({}),
+            "componentInstance": {
+                "error": new Subject<any>()
             }
         } as any);
         getNodeSpy = spyOn(service.nodesApi, 'getNode');
@@ -72,19 +72,19 @@ describe('ContentCloudNodeSelectorService', () => {
     it('should be able to fetch nodeId from given relative path', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(relativePathNodeResponseBody));
         const relativePathNodeEntry = await service.getNodeIdFromPath({
-            alias: 'mock-alias',
-            path: 'mock-relativePath'
+            "alias": 'mock-alias',
+            "path": 'mock-relativePath'
         });
 
         expect(relativePathNodeEntry).toBe(relativePathNodeResponseBody.entry.id);
         expect(getNodeSpy).toHaveBeenCalledWith('mock-alias', {
-            relativePath: 'mock-relativePath'
+            "relativePath": 'mock-relativePath'
         });
     });
 
     it('should fetch nodeId based on alias if the relative path is undefined', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(aliasNodeResponseBody));
-        const aliasNodeId = await service.getNodeIdFromPath({ alias: 'mock-alias', path: undefined });
+        const aliasNodeId = await service.getNodeIdFromPath({ "alias": 'mock-alias', "path": undefined });
 
         expect(getNodeSpy).toHaveBeenCalledWith('mock-alias', undefined);
         expect(aliasNodeId).toEqual('mock-alias-node-id');
@@ -100,7 +100,7 @@ describe('ContentCloudNodeSelectorService', () => {
 
     it('should return defined alias nodeId if the relative path does not exist', async () => {
         getNodeSpy.and.returnValues(Promise.reject(new Error('Relative does not exists')), Promise.resolve(aliasNodeResponseBody));
-        const aliasNodeId = await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
+        const aliasNodeId = await service.getNodeIdFromPath({ "alias": 'mock-alias', "path": 'mock-relativePath' });
 
         expect(getNodeSpy).toHaveBeenCalledTimes(2);
         expect(aliasNodeId).toEqual('mock-alias-node-id');
@@ -123,7 +123,7 @@ describe('ContentCloudNodeSelectorService', () => {
 
     it('should be able to fetch nodeId from given alias', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(aliasNodeResponseBody));
-        const aliasNodeId = await service.getNodeIdFromPath({ alias: 'mock-alias', path: undefined });
+        const aliasNodeId = await service.getNodeIdFromPath({ "alias": 'mock-alias', "path": undefined });
 
         expect(getNodeSpy).toHaveBeenCalledWith('mock-alias', undefined);
         expect(aliasNodeId).toEqual('mock-alias-node-id');
@@ -141,7 +141,7 @@ describe('ContentCloudNodeSelectorService', () => {
         try {
             expect(service.sourceNodeNotFound).toBe(false);
 
-            await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
+            await service.getNodeIdFromPath({ "alias": 'mock-alias', "path": 'mock-relativePath' });
             fail('An error should have been thrown');
         } catch (error) {
             expect(error.message).toEqual('Relative path does not exists');
@@ -175,7 +175,7 @@ describe('ContentCloudNodeSelectorService', () => {
 
     it('should not show a notification if the relative path is valid', async () => {
         getNodeSpy.and.returnValue(Promise.resolve(relativePathNodeResponseBody));
-        await service.getNodeIdFromPath({ alias: 'mock-alias', path: 'mock-relativePath' });
+        await service.getNodeIdFromPath({ "alias": 'mock-alias', "path": 'mock-relativePath' });
         service.openUploadFileDialog('nodeId', 'single', true, true);
 
         expect(openDialogSpy).toHaveBeenCalled();

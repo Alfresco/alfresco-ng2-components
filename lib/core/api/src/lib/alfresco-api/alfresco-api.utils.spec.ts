@@ -23,7 +23,7 @@ describe('AlfrescoApiUtils', () => {
         /**
          * Mock function for tests
          */
-        function mockFUnction() {}
+        function mockFUnction () {}
 
         it('should return true for class and functions', () => {
             expect(isConstructor(MockClass)).toBe(true);
@@ -52,8 +52,8 @@ describe('AlfrescoApiUtils', () => {
     describe('getQueryParamsWithCustomEncoder', () => {
         it('should return queryParams with removed undefined values', () => {
             const actual = getQueryParamsWithCustomEncoder({
-                key1: 'value1',
-                key2: undefined
+                "key1": 'value1',
+                "key2": undefined
             });
 
             expect(actual?.has('key2')).toBe(false);
@@ -61,8 +61,8 @@ describe('AlfrescoApiUtils', () => {
 
         it('should handle array values', () => {
             const actual = getQueryParamsWithCustomEncoder({
-                key1: 'value1',
-                key2: [undefined, 'value2', null, 'value3', '']
+                "key1": 'value1',
+                "key2": [undefined, 'value2', null, 'value3', '']
             });
 
             expect(actual?.get('key2')).toEqual('value2');
@@ -73,20 +73,20 @@ describe('AlfrescoApiUtils', () => {
     describe('removeUndefinedValues', () => {
         it('should return queryParams with removed undefined values', () => {
             const actual = removeNilValues({
-                key1: 'value1',
-                key2: undefined,
-                key3: null
+                "key1": 'value1',
+                "key2": undefined,
+                "key3": null
             });
 
             expect(actual).toEqual({
-                key1: 'value1'
+                "key1": 'value1'
             });
         });
 
         it('should handle array values', () => {
             const actual = getQueryParamsWithCustomEncoder({
-                key1: 'value1',
-                key2: [undefined, 'value2', null, 'value3', '']
+                "key1": 'value1',
+                "key2": [undefined, 'value2', null, 'value3', '']
             });
 
             expect(actual?.get('key2')).toEqual('value2');

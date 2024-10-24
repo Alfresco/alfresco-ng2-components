@@ -20,7 +20,7 @@ export class PathInfo {
     name?: string;
     isComplete?: boolean;
 
-    constructor(input?: Partial<PathInfo>) {
+    constructor (input?: Partial<PathInfo>) {
         if (input) {
             Object.assign(this, input);
         }

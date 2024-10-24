@@ -37,9 +37,9 @@ import { NodePathColumnComponent } from '../node-path-column/node-path-column.co
 import { UserRoleColumnComponent } from '../user-role-column/user-role-column.component';
 
 @Component({
-    selector: 'adf-permission-container',
-    standalone: true,
-    imports: [
+    "selector": 'adf-permission-container',
+    "standalone": true,
+    "imports": [
         CommonModule,
         DataTableComponent,
         DataColumnListComponent,
@@ -55,9 +55,9 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
         NodePathColumnComponent,
         UserRoleColumnComponent
     ],
-    templateUrl: './permission-container.component.html',
-    styleUrls: ['./permission-container.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './permission-container.component.html',
+    "styleUrls": ['./permission-container.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class PermissionContainerComponent implements OnChanges {
     @Input()
@@ -95,19 +95,19 @@ export class PermissionContainerComponent implements OnChanges {
 
     bulkSelectionRole: string;
 
-    ngOnChanges(): void {
+    ngOnChanges (): void {
         this.bulkSelectionRole = '';
     }
 
-    updateRole(role: string, permission: PermissionDisplayModel) {
+    updateRole (role: string, permission: PermissionDisplayModel) {
         this.update.emit({ role, permission });
     }
 
-    bulkRoleUpdate(role: string) {
+    bulkRoleUpdate (role: string) {
         this.updateAll.emit(role);
     }
 
-    removePermission(event: Event, permissionRow: PermissionDisplayModel) {
+    removePermission (event: Event, permissionRow: PermissionDisplayModel) {
         event.stopPropagation();
         this.delete.emit(permissionRow);
     }

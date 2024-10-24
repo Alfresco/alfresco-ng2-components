@@ -60,14 +60,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { NodeDownloadDirective } from '../../directives';
 
 @Component({
-    selector: 'adf-alfresco-viewer',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
-    templateUrl: './alfresco-viewer.component.html',
-    styleUrls: ['./alfresco-viewer.component.scss'],
-    host: { class: 'adf-alfresco-viewer' },
-    encapsulation: ViewEncapsulation.None,
-    providers: [ViewUtilService]
+    "selector": 'adf-alfresco-viewer',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatButtonModule, MatIconModule, ...VIEWER_DIRECTIVES, NodeDownloadDirective],
+    "templateUrl": './alfresco-viewer.component.html',
+    "styleUrls": ['./alfresco-viewer.component.scss'],
+    "host": { "class": 'adf-alfresco-viewer' },
+    "encapsulation": ViewEncapsulation.None,
+    "providers": [ViewUtilService]
 })
 export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @ViewChild('adfViewer')
@@ -88,7 +88,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     @ContentChild(ViewerOpenWithComponent)
     openWith: ViewerOpenWithComponent;
 
-    @ContentChild('viewerExtensions', { static: false })
+    @ContentChild('viewerExtensions', { "static": false })
     viewerExtensions: TemplateRef<any>;
 
     /** Node Id of the file to load. */
@@ -216,38 +216,38 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
     tracks: Track[] = [];
     readOnly: boolean = true;
     allowedEditActions: { [key: string]: boolean } = {
-        rotate: true,
-        crop: true
+        "rotate": true,
+        "crop": true
     };
 
-    sidebarRightTemplateContext: { node: Node } = { node: null };
-    sidebarLeftTemplateContext: { node: Node } = { node: null };
+    sidebarRightTemplateContext: { node: Node } = { "node": null };
+    sidebarLeftTemplateContext: { node: Node } = { "node": null };
 
     private _sharedLinksApi: SharedlinksApi;
-    get sharedLinksApi(): SharedlinksApi {
+    get sharedLinksApi (): SharedlinksApi {
         this._sharedLinksApi = this._sharedLinksApi ?? new SharedlinksApi(this.apiService.getInstance());
         return this._sharedLinksApi;
     }
 
     private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
+    get versionsApi (): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
     private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
+    get contentApi (): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
 
-    constructor(
+    constructor (
         private apiService: AlfrescoApiService,
         private nodesApiService: NodesApiService,
         private renditionService: RenditionService,
@@ -261,7 +261,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         renditionService.maxRetries = this.maxRetries;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.nodesApiService.nodeUpdated
             .pipe(
                 filter(
@@ -273,7 +273,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
             .subscribe((node) => this.onNodeUpdated(node));
     }
 
-    private async onNodeUpdated(node: Node) {
+    private async onNodeUpdated (node: Node) {
         if (node && node.id === this.nodeId) {
             this.generateCacheBusterNumber();
 
@@ -281,11 +281,11 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private getNodeVersionProperty(node: Node): string {
+    private getNodeVersionProperty (node: Node): string {
         return node?.properties['cm:versionLabel'] ?? '';
     }
 
-    private async setupSharedLink() {
+    private async setupSharedLink () {
         this.allowGoBack = false;
 
         try {
@@ -298,9 +298,9 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private async setupNode() {
+    private async setupNode () {
         try {
-            this.nodeEntry = await this.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] });
+            this.nodeEntry = await this.nodesApi.getNode(this.nodeId, { "include": ['allowableOperations'] });
             if (this.versionId) {
                 this.versionEntry = await this.versionsApi.getVersion(this.nodeId, this.versionId);
                 await this.setUpNodeFile(this.nodeEntry.entry, this.versionEntry.entry);
@@ -313,7 +313,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private async setUpNodeFile(nodeData: Node, versionData?: Version): Promise<void> {
+    private async setUpNodeFile (nodeData: Node, versionData?: Version): Promise<void> {
         this.readOnly = !this.contentService.hasAllowableOperations(nodeData, 'update');
         let mimeType: string;
         let urlFileContent: string;
@@ -359,7 +359,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.sidebarLeftTemplateContext.node = nodeData;
     }
 
-    private async setUpSharedLinkFile(details: any) {
+    private async setUpSharedLinkFile (details: any) {
         let mimeType = details.entry.content.mimeType;
         const fileExtension = this.viewUtilService.getFileExtension(details.entry.name);
         this.fileName = details.entry.name;
@@ -367,25 +367,25 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         const viewerType = this.viewUtilService.getViewerType(fileExtension, mimeType);
 
         if (viewerType === 'unknown') {
-            ({ url: urlFileContent, mimeType } = await this.getSharedLinkRendition(this.sharedLinkId));
+            ({ "url": urlFileContent, mimeType } = await this.getSharedLinkRendition(this.sharedLinkId));
         }
         this.mimeType = mimeType;
         this.urlFileContent = urlFileContent;
     }
 
-    private async getSharedLinkRendition(sharedId: string): Promise<{ url: string; mimeType: string }> {
+    private async getSharedLinkRendition (sharedId: string): Promise<{ url: string; mimeType: string }> {
         try {
             const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'pdf');
             if (rendition.entry.status.toString() === 'CREATED') {
                 const urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
-                return { url: urlFileContent, mimeType: 'application/pdf' };
+                return { "url": urlFileContent, "mimeType": 'application/pdf' };
             }
         } catch (error) {
             try {
                 const rendition: RenditionEntry = await this.sharedLinksApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
                     const urlFileContent = this.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
-                    return { url: urlFileContent, mimeType: 'image/png' };
+                    return { "url": urlFileContent, "mimeType": 'image/png' };
                 }
             } catch (renditionError) {
                 return null;
@@ -395,18 +395,18 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         return null;
     }
 
-    private generateCacheBusterNumber() {
+    private generateCacheBusterNumber () {
         this.cacheBusterNumber = Date.now();
     }
 
     /**
      * close the viewer
      */
-    onClose() {
+    onClose () {
         this.showViewerChange.emit(this.showViewer);
     }
 
-    onPrintContent(event: MouseEvent) {
+    onPrintContent (event: MouseEvent) {
         if (this.allowPrint) {
             if (!event.defaultPrevented) {
                 this.renditionService.printFileGeneric(this.nodeId, this.mimeType);
@@ -414,16 +414,16 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    onSubmitFile(newImageBlob: Blob) {
+    onSubmitFile (newImageBlob: Blob) {
         if (this?.nodeEntry?.entry?.id && !this.readOnly) {
-            const newImageFile: File = new File([newImageBlob], this?.nodeEntry?.entry?.name, { type: this?.nodeEntry?.entry?.content?.mimeType });
+            const newImageFile: File = new File([newImageBlob], this?.nodeEntry?.entry?.name, { "type": this?.nodeEntry?.entry?.content?.mimeType });
             const newFile = new FileModel(
                 newImageFile,
                 {
-                    majorVersion: false,
-                    newVersion: true,
-                    parentId: this?.nodeEntry?.entry?.parentId,
-                    nodeType: this?.nodeEntry?.entry?.content?.mimeType
+                    "majorVersion": false,
+                    "newVersion": true,
+                    "parentId": this?.nodeEntry?.entry?.parentId,
+                    "nodeType": this?.nodeEntry?.entry?.content?.mimeType
                 },
                 this?.nodeEntry?.entry?.id
             );
@@ -432,19 +432,19 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    onNavigateBeforeClick(event: MouseEvent | KeyboardEvent) {
+    onNavigateBeforeClick (event: MouseEvent | KeyboardEvent) {
         this.navigateBefore.next(event);
     }
 
-    onNavigateNextClick(event: MouseEvent | KeyboardEvent) {
+    onNavigateNextClick (event: MouseEvent | KeyboardEvent) {
         this.navigateNext.next(event);
     }
 
-    isSourceDefined(): boolean {
+    isSourceDefined (): boolean {
         return !!(this.nodeId || this.sharedLinkId);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (this.showViewer) {
             if (!this.isSourceDefined()) {
                 throw new Error('A content source attribute value is missing.');
@@ -458,12 +458,12 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    onDownloadFile() {
+    onDownloadFile () {
         this.nodeActionsService.downloadNode(this.nodeEntry);
     }
 }

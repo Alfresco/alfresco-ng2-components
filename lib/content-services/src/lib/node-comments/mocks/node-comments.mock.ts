@@ -20,57 +20,57 @@ import { EcmCompanyModel } from '../../common/models/ecm-company.model';
 import { EcmUserModel } from '../../common/models/ecm-user.model';
 
 export const fakeUser1 = new User({
-    enabled: true,
-    firstName: 'firstName',
-    lastName: 'lastName',
-    email: 'fake-email@dom.com',
-    id: 'fake-email@dom.com',
-    avatarId: '123-123-123'
+    "enabled": true,
+    "firstName": 'firstName',
+    "lastName": 'lastName',
+    "email": 'fake-email@dom.com',
+    "id": 'fake-email@dom.com',
+    "avatarId": '123-123-123'
 });
 
 export const fakeUser2 = new User({
-    enabled: true,
-    firstName: 'some',
-    lastName: 'one',
-    email: 'some-one@somegroup.com',
-    id: 'fake-email@dom.com',
-    avatarId: '001-001-001'
+    "enabled": true,
+    "firstName": 'some',
+    "lastName": 'one',
+    "email": 'some-one@somegroup.com',
+    "id": 'fake-email@dom.com',
+    "avatarId": '001-001-001'
 });
 
 export const fakeContentComments = {
-    list: {
-        pagination: {
-            count: 4,
-            hasMoreItems: false,
-            totalItems: 4,
-            skipCount: 0,
-            maxItems: 100
+    "list": {
+        "pagination": {
+            "count": 4,
+            "hasMoreItems": false,
+            "totalItems": 4,
+            "skipCount": 0,
+            "maxItems": 100
         },
-        entries: [
+        "entries": [
             {
-                entry: {
-                    createdAt: '2018-03-27T10:55:45.725+0000',
-                    createdBy: fakeUser1,
-                    edited: false,
-                    modifiedAt: '2018-03-27T10:55:45.725+0000',
-                    canEdit: true,
-                    modifiedBy: fakeUser1,
-                    canDelete: true,
-                    id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
-                    content: 'fake-message-1'
+                "entry": {
+                    "createdAt": '2018-03-27T10:55:45.725+0000',
+                    "createdBy": fakeUser1,
+                    "edited": false,
+                    "modifiedAt": '2018-03-27T10:55:45.725+0000',
+                    "canEdit": true,
+                    "modifiedBy": fakeUser1,
+                    "canDelete": true,
+                    "id": '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
+                    "content": 'fake-message-1'
                 }
             },
             {
-                entry: {
-                    createdAt: '2018-03-27T10:55:45.725+0000',
-                    createdBy: fakeUser2,
-                    edited: false,
-                    modifiedAt: '2018-03-27T10:55:45.725+0000',
-                    canEdit: true,
-                    modifiedBy: fakeUser2,
-                    canDelete: true,
-                    id: '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
-                    content: 'fake-message-2'
+                "entry": {
+                    "createdAt": '2018-03-27T10:55:45.725+0000',
+                    "createdBy": fakeUser2,
+                    "edited": false,
+                    "modifiedAt": '2018-03-27T10:55:45.725+0000',
+                    "canEdit": true,
+                    "modifiedBy": fakeUser2,
+                    "canDelete": true,
+                    "id": '35a0cea7-b6d0-4abc-9030-f4e461dd1ac7',
+                    "content": 'fake-message-2'
                 }
             }
         ]
@@ -78,132 +78,132 @@ export const fakeContentComments = {
 };
 
 export const fakeContentComment = {
-    entry: {
-        createdAt: '2018-03-29T11:49:51.735+0000',
-        createdBy: fakeUser1,
-        edited: false,
-        modifiedAt: '2018-03-29T11:49:51.735+0000',
-        canEdit: true,
-        modifiedBy: fakeUser1,
-        canDelete: true,
-        id: '4d07cdc5-f00c-4391-b39d-a842b12478b2',
-        content: 'fake-comment-message'
+    "entry": {
+        "createdAt": '2018-03-29T11:49:51.735+0000',
+        "createdBy": fakeUser1,
+        "edited": false,
+        "modifiedAt": '2018-03-29T11:49:51.735+0000',
+        "canEdit": true,
+        "modifiedBy": fakeUser1,
+        "canDelete": true,
+        "id": '4d07cdc5-f00c-4391-b39d-a842b12478b2',
+        "content": 'fake-comment-message'
     }
 };
 
 const fakeCompany: EcmCompanyModel = {
-    organization: '',
-    address1: '',
-    address2: '',
-    address3: '',
-    postcode: '',
-    telephone: '',
-    fax: '',
-    email: ''
+    "organization": '',
+    "address1": '',
+    "address2": '',
+    "address3": '',
+    "postcode": '',
+    "telephone": '',
+    "fax": '',
+    "email": ''
 };
 
 const johnDoe: EcmUserModel = {
-    id: '1',
-    email: 'john.doe@alfresco.com',
-    firstName: 'John',
-    lastName: 'Doe',
-    company: fakeCompany,
-    enabled: true,
-    isAdmin: undefined,
-    avatarId: '001'
+    "id": '1',
+    "email": 'john.doe@alfresco.com',
+    "firstName": 'John',
+    "lastName": 'Doe',
+    "company": fakeCompany,
+    "enabled": true,
+    "isAdmin": undefined,
+    "avatarId": '001'
 };
 
 const janeEod: EcmUserModel = {
-    id: '2',
-    email: 'jane.eod@alfresco.com',
-    firstName: 'Jane',
-    lastName: 'Eod',
-    company: fakeCompany,
-    enabled: true,
-    isAdmin: undefined
+    "id": '2',
+    "email": 'jane.eod@alfresco.com',
+    "firstName": 'Jane',
+    "lastName": 'Eod',
+    "company": fakeCompany,
+    "enabled": true,
+    "isAdmin": undefined
 };
 
 const robertSmith: EcmUserModel = {
-    id: '3',
-    email: 'robert.smith@alfresco.com',
-    firstName: 'Robert',
-    lastName: 'Smith',
-    company: fakeCompany,
-    enabled: true,
-    isAdmin: undefined
+    "id": '3',
+    "email": 'robert.smith@alfresco.com',
+    "firstName": 'Robert',
+    "lastName": 'Smith',
+    "company": fakeCompany,
+    "enabled": true,
+    "isAdmin": undefined
 };
 
 export const testUser: EcmUserModel = {
-    id: '44',
-    email: 'test.user@hyland.com',
-    firstName: 'Test',
-    lastName: 'User',
-    company: fakeCompany,
-    enabled: true,
-    isAdmin: undefined,
-    avatarId: '044'
+    "id": '44',
+    "email": 'test.user@hyland.com',
+    "firstName": 'Test',
+    "lastName": 'User',
+    "company": fakeCompany,
+    "enabled": true,
+    "isAdmin": undefined,
+    "avatarId": '044'
 };
 
 export const getDateXMinutesAgo = (minutes: number) => new Date(new Date().getTime() - minutes * 60000);
 
 export const commentsNodeData: CommentModel[] = [
     new CommentModel({
-        id: 1,
-        message: `I've done this component, is it cool?`,
-        created: getDateXMinutesAgo(30),
-        createdBy: new User(johnDoe),
-        isSelected: false
+        "id": 1,
+        "message": `I've done this component, is it cool?`,
+        "created": getDateXMinutesAgo(30),
+        "createdBy": new User(johnDoe),
+        "isSelected": false
     }),
     new CommentModel({
-        id: 2,
-        message: 'Yeah',
-        created: getDateXMinutesAgo(15),
-        createdBy: new User(janeEod),
-        isSelected: false
+        "id": 2,
+        "message": 'Yeah',
+        "created": getDateXMinutesAgo(15),
+        "createdBy": new User(janeEod),
+        "isSelected": false
     }),
     new CommentModel({
-        id: 3,
-        message: '+1',
-        created: getDateXMinutesAgo(12),
-        createdBy: new User(robertSmith),
-        isSelected: false
+        "id": 3,
+        "message": '+1',
+        "created": getDateXMinutesAgo(12),
+        "createdBy": new User(robertSmith),
+        "isSelected": false
     }),
     new CommentModel({
-        id: 4,
-        message: 'ty',
-        created: new Date(),
-        createdBy: new User(johnDoe),
-        isSelected: false
+        "id": 4,
+        "message": 'ty',
+        "created": new Date(),
+        "createdBy": new User(johnDoe),
+        "isSelected": false
     })
 ];
 
 export const commentsTaskData: CommentModel[] = [
     new CommentModel({
-        id: 1,
-        message: `I've done this task, what's next?`,
-        created: getDateXMinutesAgo(30),
-        createdBy: new User(johnDoe),
-        isSelected: false
+        "id": 1,
+        "message": `I've done this task, what's next?`,
+        "created": getDateXMinutesAgo(30),
+        "createdBy": new User(johnDoe),
+        "isSelected": false
     }),
     new CommentModel({
-        id: 2,
-        message: `I've assigned you another one 🤠`,
-        created: getDateXMinutesAgo(15),
-        createdBy: new User(janeEod),
-        isSelected: false
+        "id": 2,
+        "message": `I've assigned you another one 🤠`,
+        "created": getDateXMinutesAgo(15),
+        "createdBy": new User(janeEod),
+        "isSelected": false
     }),
     new CommentModel({
-        id: 3,
-        message: '+1',
-        created: getDateXMinutesAgo(12),
-        createdBy: new User(robertSmith),
-        isSelected: false
+        "id": 3,
+        "message": '+1',
+        "created": getDateXMinutesAgo(12),
+        "createdBy": new User(robertSmith),
+        "isSelected": false
     }),
     new CommentModel({
-        id: 4,
-        message: 'Cheers',
-        created: new Date(),
-        createdBy: new User(johnDoe),
-        isSelected: false
+        "id": 4,
+        "message": 'Cheers',
+        "created": new Date(),
+        "createdBy": new User(johnDoe),
+        "isSelected": false
     })
 ];

@@ -26,25 +26,25 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 
 @Component({
-    template: ``
+    "template": ``
 })
 class TestPaginatedComponent implements PaginatedComponent {
     private _pagination: BehaviorSubject<PaginationModel>;
 
-    get pagination(): BehaviorSubject<PaginationModel> {
+    get pagination (): BehaviorSubject<PaginationModel> {
         if (!this._pagination) {
             const defaultPagination = {
-                maxItems: 10,
-                skipCount: 0,
-                totalItems: 0,
-                hasMoreItems: false
+                "maxItems": 10,
+                "skipCount": 0,
+                "totalItems": 0,
+                "hasMoreItems": false
             };
             this._pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
         }
         return this._pagination;
     }
 
-    updatePagination(pagination: PaginationModel) {
+    updatePagination (pagination: PaginationModel) {
         this.pagination.next(pagination);
     }
 }
@@ -57,8 +57,8 @@ describe('InfinitePaginationComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [TestPaginatedComponent]
+            "imports": [CoreTestingModule],
+            "declarations": [TestPaginatedComponent]
         });
         fixture = TestBed.createComponent(InfinitePaginationComponent);
         component = fixture.componentInstance;
@@ -66,8 +66,8 @@ describe('InfinitePaginationComponent', () => {
 
         component.target = TestBed.createComponent(TestPaginatedComponent).componentInstance;
         pagination = {
-            skipCount: 0,
-            hasMoreItems: false
+            "skipCount": 0,
+            "hasMoreItems": false
         };
     });
 
@@ -107,7 +107,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should NOT show the load more button if there are no more elements to load', (done) => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 30, hasMoreItems: false };
+            pagination = { "maxItems": 444, "skipCount": 25, "totalItems": 30, "hasMoreItems": false };
 
             component.target.pagination.next(pagination);
 
@@ -123,7 +123,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should  show the load more button if there are  more elements to load', (done) => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+            pagination = { "maxItems": 444, "skipCount": 25, "totalItems": 55, "hasMoreItems": true };
 
             component.target.pagination.next(pagination);
 
@@ -148,7 +148,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should trigger the loadMore event with skipcount 0 to reload all the elements', (done) => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+            pagination = { "maxItems": 444, "skipCount": 25, "totalItems": 55, "hasMoreItems": true };
 
             component.target.pagination.next(pagination);
 
@@ -166,7 +166,7 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should trigger the loadMore event with merge true to reload all the elements', (done) => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+            pagination = { "maxItems": 444, "skipCount": 25, "totalItems": 55, "hasMoreItems": true };
 
             component.target.pagination.next(pagination);
 
@@ -188,7 +188,7 @@ describe('InfinitePaginationComponent', () => {
         let spyTarget;
 
         beforeEach(() => {
-            pagination = { maxItems: 444, skipCount: 0, totalItems: 888, hasMoreItems: true };
+            pagination = { "maxItems": 444, "skipCount": 0, "totalItems": 888, "hasMoreItems": true };
 
             spyTarget = spyOn(component.target, 'updatePagination').and.callThrough();
         });
@@ -209,10 +209,10 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                skipCount: 0,
-                maxItems: 50,
-                hasMoreItems: false,
-                merge: true
+                "skipCount": 0,
+                "maxItems": 50,
+                "hasMoreItems": false,
+                "merge": true
             });
         });
 
@@ -224,10 +224,10 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                maxItems: 14,
-                skipCount: 0,
-                hasMoreItems: false,
-                merge: true
+                "maxItems": 14,
+                "skipCount": 0,
+                "hasMoreItems": false,
+                "merge": true
             });
         });
 
@@ -236,7 +236,7 @@ describe('InfinitePaginationComponent', () => {
             fixture.destroy();
 
             const emitNewPaginationEvent = () => {
-                const newPagination = { maxItems: 1, skipCount: 0, totalItems: 2, hasMoreItems: true };
+                const newPagination = { "maxItems": 1, "skipCount": 0, "totalItems": 2, "hasMoreItems": true };
                 component.target.pagination.next(newPagination);
             };
 

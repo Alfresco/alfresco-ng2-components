@@ -28,7 +28,7 @@ import { StoragePrefixFactory } from './app-config-storage-prefix.factory';
  * @param storagePrefixFactory prefix factory
  * @returns factory function
  */
-export function loadAppConfig(
+export function loadAppConfig (
     appConfigService: AppConfigService,
     storageService: StorageService,
     adfHttpClient: AdfHttpClient,

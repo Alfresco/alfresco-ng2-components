@@ -26,12 +26,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-content',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatCardModule, MatIconModule, MatButtonModule],
-    templateUrl: './content.widget.html',
-    styleUrls: ['./content.widget.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-content',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatCardModule, MatIconModule, MatButtonModule],
+    "templateUrl": './content.widget.html',
+    "styleUrls": ['./content.widget.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ContentWidgetComponent implements OnChanges {
     /** The content id to show. */
@@ -60,21 +60,21 @@ export class ContentWidgetComponent implements OnChanges {
 
     content: ContentLinkModel;
 
-    constructor(
+    constructor (
         protected formService: FormService,
         private downloadService: DownloadService,
         private urlService: UrlService,
         private processContentService: ProcessContentService
     ) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const contentId = changes['id'];
         if (contentId?.currentValue) {
             this.loadContent(contentId.currentValue);
         }
     }
 
-    loadContent(id: number) {
+    loadContent (id: number) {
         this.processContentService.getFileContent(id).subscribe(
             (response: ContentLinkModel) => {
                 this.content = new ContentLinkModel(response);
@@ -87,7 +87,7 @@ export class ContentWidgetComponent implements OnChanges {
         );
     }
 
-    loadThumbnailUrl(content: ContentLinkModel) {
+    loadThumbnailUrl (content: ContentLinkModel) {
         if (this.content.isThumbnailSupported()) {
             let observable: Observable<any>;
 
@@ -111,7 +111,7 @@ export class ContentWidgetComponent implements OnChanges {
         }
     }
 
-    openViewer(content: ContentLinkModel): void {
+    openViewer (content: ContentLinkModel): void {
         let fetch = this.processContentService.getContentPreview(content.id);
         if (content.isTypeImage() || content.isTypePdf()) {
             fetch = this.processContentService.getFileRawContent(content.id);
@@ -130,10 +130,9 @@ export class ContentWidgetComponent implements OnChanges {
 
     /**
      * Invoke content download.
-     *
      * @param content content link model
      */
-    download(content: ContentLinkModel): void {
+    download (content: ContentLinkModel): void {
         this.processContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.downloadService.downloadBlob(blob, content.name),
             (error) => {

@@ -19,21 +19,21 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IdentityGroupFilterInterface } from '../services/identity-group-filter.interface';
 
 export const mockSearchGroupByRoles: IdentityGroupFilterInterface = {
-    roles: ['fake-role-1', 'fake-role-2'],
-    withinApplication: ''
+    "roles": ['fake-role-1', 'fake-role-2'],
+    "withinApplication": ''
 };
 
 export const mockSearchGroupByRolesAndApp: IdentityGroupFilterInterface = {
-    roles: ['fake-role-1', 'fake-role-2'],
-    withinApplication: 'fake-app-name'
+    "roles": ['fake-role-1', 'fake-role-2'],
+    "withinApplication": 'fake-app-name'
 };
 
 export const mockSearchGroupByApp: IdentityGroupFilterInterface = {
-    roles: [],
-    withinApplication: 'fake-app-name'
+    "roles": [],
+    "withinApplication": 'fake-app-name'
 };
 
 export const mockHttpErrorResponse = new HttpErrorResponse({
-    error: 'Mock Error',
-    status: 404, statusText: 'Not Found'
+    "error": 'Mock Error',
+    "status": 404, "statusText": 'Not Found'
 });

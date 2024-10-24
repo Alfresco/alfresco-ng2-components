@@ -29,8 +29,8 @@ describe('FilePropertiesTableCloudComponent', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, MatTableModule, MatIconModule],
-            declarations: [FilePropertiesTableCloudComponent]
+            "imports": [ProcessServiceCloudTestingModule, MatTableModule, MatIconModule],
+            "declarations": [FilePropertiesTableCloudComponent]
         }).compileComponents();
     });
 
@@ -40,25 +40,25 @@ describe('FilePropertiesTableCloudComponent', () => {
 
         widget.uploadedFiles = [
             {
-                id: 'id',
-                name: 'download.png',
-                mimeType: 'image/png',
-                isExternal: true,
-                isFile: true,
-                isFolder: false,
-                content: {
-                    mimeType: 'image/png'
+                "id": 'id',
+                "name": 'download.png',
+                "mimeType": 'image/png',
+                "isExternal": true,
+                "isFile": true,
+                "isFolder": false,
+                "content": {
+                    "mimeType": 'image/png'
                 }
             },
             {
-                id: 'id2',
-                name: 'download2.png',
-                mimeType: 'image/png',
-                isExternal: true,
-                isFile: true,
-                isFolder: false,
-                content: {
-                    mimeType: 'image/png'
+                "id": 'id2',
+                "name": 'download2.png',
+                "mimeType": 'image/png',
+                "isExternal": true,
+                "isFile": true,
+                "isFolder": false,
+                "content": {
+                    "mimeType": 'image/png'
                 }
             }
         ];

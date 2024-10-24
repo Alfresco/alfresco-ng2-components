@@ -49,7 +49,7 @@ describe('WidgetVisibilityService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         service = TestBed.inject(WidgetVisibilityService);
     });
@@ -255,16 +255,16 @@ describe('WidgetVisibilityService', () => {
         let fakeFormWithField: FormModel;
 
         const jsonFieldFake: { id: string; value: string; visibilityCondition?: WidgetVisibilityModel } = {
-            id: 'FAKE_FORM_FIELD_ID',
-            value: 'FAKE_FORM_FIELD_VALUE',
-            visibilityCondition: undefined
+            "id": 'FAKE_FORM_FIELD_ID',
+            "value": 'FAKE_FORM_FIELD_VALUE',
+            "visibilityCondition": undefined
         };
         const fakeForm = new FormModel({
-            variables: [
+            "variables": [
                 {
-                    name: 'FORM_VARIABLE_TEST',
-                    type: 'string',
-                    value: 'form_value_test'
+                    "name": 'FORM_VARIABLE_TEST',
+                    "type": 'string',
+                    "value": 'form_value_test'
                 }
             ]
         });
@@ -587,10 +587,10 @@ describe('WidgetVisibilityService', () => {
             });
 
             it('should be able to return object when rightValue is an object', () => {
-                visibilityObjTest.rightValue = { key: 'value' };
+                visibilityObjTest.rightValue = { "key": 'value' };
                 const rightValue: any = service.getRightValue(formTest, visibilityObjTest);
 
-                expect(rightValue).toEqual({ key: 'value' });
+                expect(rightValue).toEqual({ "key": 'value' });
             });
 
             it('should return null when rightValue is undefined or null', () => {
@@ -657,9 +657,9 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
             const tab = new TabModel(fakeFormWithField, {
-                id: 'fake-tab-id',
-                title: 'fake-tab-title',
-                isVisible: true
+                "id": 'fake-tab-id',
+                "title": 'fake-tab-title',
+                "isVisible": true
             });
             tab.visibilityCondition = visibilityObjTest;
             fakeFormWithField.tabs.push(tab);
@@ -672,9 +672,9 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
             const tab = new TabModel(fakeFormWithField, {
-                id: 'fake-tab-id',
-                title: 'fake-tab-title',
-                isVisible: true
+                "id": 'fake-tab-id',
+                "title": 'fake-tab-title',
+                "isVisible": true
             });
             tab.visibilityCondition = visibilityObjTest;
             service.refreshEntityVisibility(tab);
@@ -688,11 +688,11 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.rightFormFieldId = 'LEFT_FORM_FIELD_ID';
             const contModel = new ContainerModel(
                 new FormFieldModel(fakeFormWithField, {
-                    id: 'fake-container-id',
-                    type: FormFieldTypes.GROUP,
-                    name: 'fake-container-name',
-                    isVisible: true,
-                    visibilityCondition: visibilityObjTest
+                    "id": 'fake-container-id',
+                    "type": FormFieldTypes.GROUP,
+                    "name": 'fake-container-name',
+                    "isVisible": true,
+                    "visibilityCondition": visibilityObjTest
                 })
             );
 
@@ -707,11 +707,11 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
             const contModel = new ContainerModel(
                 new FormFieldModel(fakeFormWithField, {
-                    id: 'fake-container-id',
-                    type: FormFieldTypes.GROUP,
-                    name: 'fake-container-name',
-                    isVisible: true,
-                    visibilityCondition: visibilityObjTest
+                    "id": 'fake-container-id',
+                    "type": FormFieldTypes.GROUP,
+                    "name": 'fake-container-name',
+                    "isVisible": true,
+                    "visibilityCondition": visibilityObjTest
                 })
             );
             service.refreshEntityVisibility(contModel.field);
@@ -741,43 +741,43 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.nextCondition = undefined;
 
             const radioBoxForm = new FormModel({
-                id: '9999',
-                name: 'CHECKBOX_VISIBILITY',
-                processDefinitionId: 'PROCESS_TEST:9:9999',
-                processDefinitionName: 'PROCESS_TEST',
-                processDefinitionKey: 'PROCESS_TEST',
-                taskId: '999',
-                taskName: 'TEST',
-                fields: [
+                "id": '9999',
+                "name": 'CHECKBOX_VISIBILITY',
+                "processDefinitionId": 'PROCESS_TEST:9:9999',
+                "processDefinitionName": 'PROCESS_TEST',
+                "processDefinitionKey": 'PROCESS_TEST',
+                "taskId": '999',
+                "taskName": 'TEST',
+                "fields": [
                     {
-                        fieldType: 'ContainerRepresentation',
-                        id: '000000000000000000',
-                        name: 'Label',
-                        type: 'container',
-                        value: null,
-                        numberOfColumns: 2,
-                        fields: {
+                        "fieldType": 'ContainerRepresentation',
+                        "id": '000000000000000000',
+                        "name": 'Label',
+                        "type": 'container',
+                        "value": null,
+                        "numberOfColumns": 2,
+                        "fields": {
                             '1': [
                                 {
-                                    id: 'radioboxField',
-                                    name: 'radioboxField test',
-                                    type: 'radio-buttons',
-                                    options: [
+                                    "id": 'radioboxField',
+                                    "name": 'radioboxField test',
+                                    "type": 'radio-buttons',
+                                    "options": [
                                         {
-                                            id: 'radioBoxYes',
-                                            name: 'Yes'
+                                            "id": 'radioBoxYes',
+                                            "name": 'Yes'
                                         },
                                         {
-                                            id: 'radioBoxNo',
-                                            name: 'No'
+                                            "id": 'radioBoxNo',
+                                            "name": 'No'
                                         }
                                     ]
                                 },
                                 {
-                                    id: 'textBoxTest',
-                                    name: 'textbox test',
-                                    type: 'people',
-                                    visibilityCondition: visibilityObjTest
+                                    "id": 'textBoxTest',
+                                    "name": 'textbox test',
+                                    "type": 'people',
+                                    "visibilityCondition": visibilityObjTest
                                 }
                             ]
                         }

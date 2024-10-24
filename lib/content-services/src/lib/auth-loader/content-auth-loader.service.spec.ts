@@ -29,21 +29,21 @@ describe('ContentAuthLoaderService', () => {
     beforeEach(() => {
         onLoginSubject = new Subject<void>();
         TestBed.configureTestingModule({
-            providers: [
+            "providers": [
                 ContentAuthLoaderService,
                 {
-                    provide: AuthenticationService,
-                    useValue: {
-                        onLogin: onLoginSubject.asObservable(),
-                        isOauth: () => false,
-                        isALLProvider: () => false,
-                        isECMProvider: () => false
+                    "provide": AuthenticationService,
+                    "useValue": {
+                        "onLogin": onLoginSubject.asObservable(),
+                        "isOauth": () => false,
+                        "isALLProvider": () => false,
+                        "isECMProvider": () => false
                     }
                 },
                 {
-                    provide: BasicAlfrescoAuthService,
-                    useValue: {
-                        requireAlfTicket: jasmine.createSpy()
+                    "provide": BasicAlfrescoAuthService,
+                    "useValue": {
+                        "requireAlfTicket": jasmine.createSpy()
                     }
                 }
             ]

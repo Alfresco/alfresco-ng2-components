@@ -23,13 +23,13 @@ import { CommonModule } from '@angular/common';
 import { LocalizedDatePipe, TimeAgoPipe } from '../../../pipes';
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, LocalizedDatePipe, TimeAgoPipe],
-    selector: 'adf-date-cell',
-    templateUrl: './date-cell.component.html',
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' },
-    changeDetection: ChangeDetectionStrategy.OnPush
+    "standalone": true,
+    "imports": [CommonModule, LocalizedDatePipe, TimeAgoPipe],
+    "selector": 'adf-date-cell',
+    "templateUrl": './date-cell.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-datatable-content-cell' },
+    "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class DateCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
@@ -40,17 +40,17 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
     private readonly appConfig: AppConfigService = inject(AppConfigService);
 
     readonly defaultDateConfig: DateConfig = {
-        format: 'medium',
-        tooltipFormat: 'medium',
-        locale: undefined
+        "format": 'medium',
+        "tooltipFormat": 'medium',
+        "locale": undefined
     };
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         super.ngOnInit();
         this.setConfig();
     }
 
-    private setConfig(): void {
+    private setConfig (): void {
         if (this.dateConfig) {
             this.setCustomConfig();
         } else {
@@ -58,31 +58,31 @@ export class DateCellComponent extends DataTableCellComponent implements OnInit 
         }
     }
 
-    private setCustomConfig(): void {
+    private setCustomConfig (): void {
         this.config.format = this.dateConfig?.format || this.getDefaultFormat();
         this.config.tooltipFormat = this.dateConfig?.tooltipFormat || this.getDefaultTooltipFormat();
         this.config.locale = this.dateConfig?.locale || this.getDefaultLocale();
     }
 
-    private setDefaultConfig(): void {
+    private setDefaultConfig (): void {
         this.config.format = this.getDefaultFormat();
         this.config.tooltipFormat = this.getDefaultTooltipFormat();
         this.config.locale = this.getDefaultLocale();
     }
 
-    private getDefaultFormat(): string {
+    private getDefaultFormat (): string {
         return this.column?.format || this.getAppConfigPropertyValue('dateValues.defaultDateFormat', this.defaultDateConfig.format);
     }
 
-    private getDefaultLocale(): string {
+    private getDefaultLocale (): string {
         return this.getAppConfigPropertyValue('dateValues.defaultLocale', this.defaultDateConfig.locale);
     }
 
-    private getDefaultTooltipFormat(): string {
+    private getDefaultTooltipFormat (): string {
         return this.getAppConfigPropertyValue('dateValues.defaultTooltipDateFormat', this.defaultDateConfig.tooltipFormat);
     }
 
-    private getAppConfigPropertyValue(key: string, defaultValue: string): string {
+    private getAppConfigPropertyValue (key: string, defaultValue: string): string {
         return this.appConfig.get(key, defaultValue);
     }
 }

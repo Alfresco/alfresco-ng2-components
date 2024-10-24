@@ -22,12 +22,12 @@ import { AppConfigServiceMock } from '../../common';
 import { NoopTranslateModule } from '../../testing/noop-translate.module';
 
 const aboutGithubDetails = {
-    url: 'https://github.com/componany/repository/commits/',
-    defaultUrl: 'https://github.com/Alfresco/alfresco-ng2-components/commits/',
-    version: '0.0.7',
-    ecmHost: 'https://mock.ecmhost.com',
-    bpmHost: 'https://mock.bpmhost.com',
-    appName: 'mock-application-name'
+    "url": 'https://github.com/componany/repository/commits/',
+    "defaultUrl": 'https://github.com/Alfresco/alfresco-ng2-components/commits/',
+    "version": '0.0.7',
+    "ecmHost": 'https://mock.ecmhost.com',
+    "bpmHost": 'https://mock.bpmhost.com',
+    "appName": 'mock-application-name'
 };
 
 describe('AboutServerSettingsComponent', () => {
@@ -37,15 +37,15 @@ describe('AboutServerSettingsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule],
-            providers: [{ provide: AppConfigService, useClass: AppConfigServiceMock }]
+            "imports": [NoopTranslateModule],
+            "providers": [{ "provide": AppConfigService, "useClass": AppConfigServiceMock }]
         });
         fixture = TestBed.createComponent(AboutServerSettingsComponent);
         component = fixture.componentInstance;
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = Object.assign(appConfigService.config, {
-            ecmHost: aboutGithubDetails.ecmHost,
-            bpmHost: aboutGithubDetails.bpmHost
+            "ecmHost": aboutGithubDetails.ecmHost,
+            "bpmHost": aboutGithubDetails.bpmHost
         });
         fixture.detectChanges();
     });

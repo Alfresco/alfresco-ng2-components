@@ -24,11 +24,11 @@ import { map } from 'rxjs/operators';
 import { PeopleProcessService } from './people-process.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TaskCommentsService implements CommentsService {
     private _commentsApi: ActivitiCommentsApi;
-    get commentsApi(): ActivitiCommentsApi {
+    get commentsApi (): ActivitiCommentsApi {
         this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
         return this._commentsApi;
     }
@@ -38,26 +38,24 @@ export class TaskCommentsService implements CommentsService {
 
     /**
      * Gets all comments that have been added to a task.
-     *
      * @param id ID of the target task
      * @returns Details for each comment
      */
-    get(id: string): Observable<CommentModel[]> {
+    get (id: string): Observable<CommentModel[]> {
         return from(this.commentsApi.getTaskComments(id)).pipe(map((response) => response.data.map((comment) => new CommentModel(comment))));
     }
 
     /**
      * Adds a comment to a task.
-     *
      * @param id ID of the target task
      * @param message Text for the comment
      * @returns Details about the comment
      */
-    add(id: string, message: string): Observable<CommentModel> {
+    add (id: string, message: string): Observable<CommentModel> {
         return from(this.commentsApi.addTaskComment({ message }, id)).pipe(map((response) => new CommentModel(response)));
     }
 
-    getUserImage(userId: string): string {
+    getUserImage (userId: string): string {
         return this.peopleProcessService.getUserImage(userId);
     }
 }

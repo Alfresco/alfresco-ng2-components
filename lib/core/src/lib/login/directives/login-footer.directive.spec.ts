@@ -26,11 +26,11 @@ describe('LoginFooterDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [
+            "imports": [CoreTestingModule],
+            "providers": [
                 {
-                    provide: OidcAuthenticationService,
-                    useValue: {}
+                    "provide": OidcAuthenticationService,
+                    "useValue": {}
                 }
             ]
         });

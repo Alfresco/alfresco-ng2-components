@@ -42,7 +42,7 @@ export class EcmUserModel {
     properties?: { [key: string]: string };
     capabilities?: Capabilities;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         this.id = obj?.id || null;
         this.firstName = obj?.firstName;
         this.lastName = obj?.lastName;
@@ -66,7 +66,7 @@ export class EcmUserModel {
         this.capabilities = obj?.capabilities;
     }
 
-    isAdmin(): boolean {
+    isAdmin (): boolean {
         return this.capabilities?.isAdmin;
     }
 }

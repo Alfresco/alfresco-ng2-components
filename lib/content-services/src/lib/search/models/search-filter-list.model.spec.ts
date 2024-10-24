@@ -20,7 +20,7 @@ import { SearchFilterList } from './search-filter-list.model';
 export class Payload {
     name: string;
 
-    constructor(public id: number) {
+    constructor (public id: number) {
         this.name = `Payload_${id}`;
     }
 }

@@ -41,12 +41,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-search-chip-autocomplete-input',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatChipsModule, TranslateModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule],
-    templateUrl: './search-chip-autocomplete-input.component.html',
-    styleUrls: ['./search-chip-autocomplete-input.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-chip-autocomplete-input',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, MatChipsModule, TranslateModule, MatIconModule, ReactiveFormsModule, MatAutocompleteModule],
+    "templateUrl": './search-chip-autocomplete-input.component.html',
+    "styleUrls": ['./search-chip-autocomplete-input.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, OnChanges {
     @ViewChild('optionInput')
@@ -92,11 +92,11 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     private onDestroy$ = new Subject<void>();
     private _activeAnyOption = false;
 
-    set activeAnyOption(active: boolean) {
+    set activeAnyOption (active: boolean) {
         this._activeAnyOption = active;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.formCtrl.valueChanges
             .pipe(
                 startWith(''),
@@ -112,7 +112,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
         this.selectedOptions = this.preselectedOptions ?? [];
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes.autocompleteOptions) {
             this.filteredOptions =
                 changes.autocompleteOptions.currentValue?.length > 0
@@ -121,12 +121,12 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 
-    add(event: MatChipInputEvent) {
+    add (event: MatChipInputEvent) {
         if (!this._activeAnyOption) {
             let value = (event.value || '').trim();
             if (this.formatChipValue) {
@@ -147,7 +147,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
         }
     }
 
-    remove(value: AutocompleteOption) {
+    remove (value: AutocompleteOption) {
         const index = this.selectedOptions.indexOf(value);
 
         if (index >= 0) {
@@ -156,7 +156,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
         }
     }
 
-    selected(event: MatAutocompleteSelectedEvent) {
+    selected (event: MatAutocompleteSelectedEvent) {
         this.selectedOptions.push(event.option.value);
         this.optionInput.nativeElement.value = '';
         this.formCtrl.setValue('');
@@ -172,24 +172,24 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
      * @param option - The option to check for selection.
      * @returns `true` if the option is selected, `false` otherwise.
      */
-    isOptionSelected(option: AutocompleteOption): boolean {
+    isOptionSelected (option: AutocompleteOption): boolean {
         const compare = this.compareOption;
         const array = this.selectedOptions;
 
         return compare ? array.some((arrayValue) => compare(option, arrayValue)) : array.includes(option);
     }
 
-    private isAdded(value: string): boolean {
+    private isAdded (value: string): boolean {
         const valueLowerCase = value.toLowerCase();
         return this.selectedOptions.some((option) => option.value.toLowerCase() === valueLowerCase);
     }
 
-    private isExists(value: string): boolean {
+    private isExists (value: string): boolean {
         const valueLowerCase = value.toLowerCase();
         return this.allowOnlyPredefinedValues ? this.autocompleteOptions.some((option) => option.value.toLowerCase() === valueLowerCase) : true;
     }
 
-    private reset() {
+    private reset () {
         this.selectedOptions = [];
         this.optionsChanged.emit(this.selectedOptions);
         this.formCtrl.setValue('');

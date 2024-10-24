@@ -23,11 +23,11 @@ import { map, tap } from 'rxjs/operators';
 import { TagBody, TagEntry, TagPaging, TagsApi } from '@alfresco/js-api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TagService {
     private _tagsApi: TagsApi;
-    get tagsApi(): TagsApi {
+    get tagsApi (): TagsApi {
         this._tagsApi = this._tagsApi ?? new TagsApi(this.apiService.getInstance());
         return this._tagsApi;
     }
@@ -36,7 +36,7 @@ export class TagService {
     @Output()
     refresh = new EventEmitter();
 
-    constructor(
+    constructor (
         private apiService: AlfrescoApiService,
         private userPreferencesService: UserPreferencesService,
         private appConfigService: AppConfigService
@@ -47,7 +47,7 @@ export class TagService {
      * @param nodeId ID of the target node
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
-    getTagsByNodeId(nodeId: string): Observable<TagPaging> {
+    getTagsByNodeId (nodeId: string): Observable<TagPaging> {
         return from(this.tagsApi.listTagsForNode(nodeId));
     }
 
@@ -57,10 +57,10 @@ export class TagService {
      * @param includedCounts True if count field should be included in response object for each tag, false otherwise.
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
-    getAllTheTags(opts?: any, includedCounts?: boolean): Observable<TagPaging> {
+    getAllTheTags (opts?: any, includedCounts?: boolean): Observable<TagPaging> {
         return from(
             this.tagsApi.listTags({
-                include: includedCounts ? ['count'] : undefined,
+                "include": includedCounts ? ['count'] : undefined,
                 ...opts
             })
         );
@@ -72,7 +72,7 @@ export class TagService {
      * @param tagName Name of the tag to add
      * @returns TagEntry object (defined in JS-API) with details of the new tag
      */
-    addTag(nodeId: string, tagName: string): Observable<TagEntry> {
+    addTag (nodeId: string, tagName: string): Observable<TagEntry> {
         const tagBody = new TagBody();
         tagBody.tag = tagName;
 
@@ -85,7 +85,7 @@ export class TagService {
      * @param tag Name of the tag to remove
      * @returns Null object when the operation completes
      */
-    removeTag(nodeId: string, tag: string): Observable<void> {
+    removeTag (nodeId: string, tag: string): Observable<void> {
         return from(this.tagsApi.deleteTagFromNode(nodeId, tag)).pipe(tap(() => this.refresh.emit()));
     }
 
@@ -94,7 +94,7 @@ export class TagService {
      * @param tags list of tags to create.
      * @returns Created tags.
      */
-    createTags(tags: TagBody[]): Observable<TagEntry[]> {
+    createTags (tags: TagBody[]): Observable<TagEntry[]> {
         return from(this.tagsApi.createTags(tags)).pipe(tap((tagEntries) => this.refresh.emit(tagEntries)));
     }
 
@@ -104,7 +104,7 @@ export class TagService {
      * @param tagBody The updated tag.
      * @returns Updated tag.
      */
-    updateTag(tagId: string, tagBody: TagBody): Observable<TagEntry> {
+    updateTag (tagId: string, tagBody: TagBody): Observable<TagEntry> {
         return from(this.tagsApi.updateTag(tagId, tagBody)).pipe(tap((tagEntry) => this.refresh.emit(tagEntry)));
     }
 
@@ -118,9 +118,9 @@ export class TagService {
      * @param maxItems Specify max number of returned tags. Default is specified by UserPreferencesService.
      * @returns Found tags which name contains searched name.
      */
-    searchTags(
+    searchTags (
         name: string,
-        sorting = { orderBy: 'tag', direction: 'asc' },
+        sorting = { "orderBy": 'tag', "direction": 'asc' },
         includedCounts?: boolean,
         skipCount = 0,
         maxItems?: number
@@ -128,11 +128,11 @@ export class TagService {
         maxItems = maxItems || this.userPreferencesService.paginationSize;
         return this.getAllTheTags(
             {
-                tag: `*${name}*`,
+                "tag": `*${name}*`,
                 skipCount,
                 maxItems,
                 sorting,
-                matching: true
+                "matching": true
             },
             includedCounts
         );
@@ -143,8 +143,8 @@ export class TagService {
      * @param name Value for name which should be used during finding exact tag.
      * @returns Found tag which name matches exactly to passed name.
      */
-    findTagByName(name: string): Observable<TagEntry> {
-        return this.getAllTheTags({ tag: name }).pipe(map((result) => result.list.entries[0]));
+    findTagByName (name: string): Observable<TagEntry> {
+        return this.getAllTheTags({ "tag": name }).pipe(map((result) => result.list.entries[0]));
     }
 
     /**
@@ -154,7 +154,7 @@ export class TagService {
      * @param tagId of the tag to be deleted
      * @returns Null object when the operation completes
      */
-    deleteTag(tagId: string): Observable<void> {
+    deleteTag (tagId: string): Observable<void> {
         return from(this.tagsApi.deleteTag(tagId)).pipe(tap(() => this.refresh.emit()));
     }
 
@@ -164,7 +164,7 @@ export class TagService {
      * @param tags List of tags to create and assign or just assign if they already exist.
      * @returns Just linked tags to node or single tag if linked only one tag.
      */
-    assignTagsToNode(nodeId: string, tags: TagBody[]): Observable<TagPaging | TagEntry> {
+    assignTagsToNode (nodeId: string, tags: TagBody[]): Observable<TagPaging | TagEntry> {
         return from(this.tagsApi.assignTagsToNode(nodeId, tags)).pipe(tap((data) => this.refresh.emit(data)));
     }
 
@@ -172,7 +172,7 @@ export class TagService {
      * Checks if tags plugin is enabled.
      * @returns boolean true if tags plugin is enabled, false otherwise.
      */
-    areTagsEnabled(): boolean {
+    areTagsEnabled (): boolean {
         return this.appConfigService.get('plugins.tagsEnabled', true);
     }
 }

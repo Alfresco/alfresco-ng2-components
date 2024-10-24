@@ -35,14 +35,14 @@ const MAX_NAME_LENGTH = 255;
 const DATE_FORMAT: string = 'dd/MM/yyyy';
 
 @Component({
-    selector: 'adf-cloud-start-task',
-    templateUrl: './start-task-cloud.component.html',
-    styleUrls: ['./start-task-cloud.component.scss'],
-    providers: [
-        { provide: DateAdapter, useClass: DateFnsAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_FNS_FORMATS }
+    "selector": 'adf-cloud-start-task',
+    "templateUrl": './start-task-cloud.component.html',
+    "styleUrls": ['./start-task-cloud.component.scss'],
+    "providers": [
+        { "provide": DateAdapter, "useClass": DateFnsAdapter },
+        { "provide": MAT_DATE_FORMATS, "useValue": MAT_DATE_FNS_FORMATS }
     ],
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class StartTaskCloudComponent implements OnInit, OnDestroy {
     /** (required) Name of the app. */
@@ -101,7 +101,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     private groupForm = new UntypedFormControl('');
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private taskService: TaskCloudService,
         private dateAdapter: DateAdapter<DateFnsAdapter>,
         private userPreferencesService: UserPreferencesService,
@@ -109,7 +109,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         private identityUserService: IdentityUserService
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
@@ -119,34 +119,34 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.loadDefaultPriorities();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    buildForm() {
+    buildForm () {
         this.taskForm = this.formBuilder.group({
-            name: new UntypedFormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
-            priority: new UntypedFormControl(''),
-            description: new UntypedFormControl('', [this.whitespaceValidator]),
-            formKey: new UntypedFormControl()
+            "name": new UntypedFormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
+            "priority": new UntypedFormControl(''),
+            "description": new UntypedFormControl('', [this.whitespaceValidator]),
+            "formKey": new UntypedFormControl()
         });
     }
 
-    private getMaxNameLength(): number {
+    private getMaxNameLength (): number {
         return this.maxNameLength > MAX_NAME_LENGTH ? MAX_NAME_LENGTH : this.maxNameLength;
     }
 
-    private loadCurrentUser() {
+    private loadCurrentUser () {
         this.currentUser = this.identityUserService.getCurrentUserInfo();
         this.assigneeName = this.currentUser.username;
     }
 
-    private loadDefaultPriorities() {
+    private loadDefaultPriorities () {
         this.priorities = this.taskService.priorities;
     }
 
-    public saveTask() {
+    public saveTask () {
         this.submitted = true;
         const newTask = Object.assign(this.taskForm.value);
         newTask.dueDate = this.dueDate;
@@ -157,7 +157,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.createNewTask(new StartTaskCloudRequestModel(newTask));
     }
 
-    private createNewTask(newTask: StartTaskCloudRequestModel) {
+    private createNewTask (newTask: StartTaskCloudRequestModel) {
         this.taskService.createNewTask(newTask, this.appName).subscribe(
             (res: any) => {
                 this.submitted = false;
@@ -170,11 +170,11 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         );
     }
 
-    public onCancel() {
+    public onCancel () {
         this.cancel.emit();
     }
 
-    onDateChanged(newDateValue) {
+    onDateChanged (newDateValue) {
         this.dateError = false;
 
         if (newDateValue) {
@@ -186,53 +186,53 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         }
     }
 
-    onAssigneeSelect(assignee: IdentityUserModel) {
+    onAssigneeSelect (assignee: IdentityUserModel) {
         this.assigneeName = assignee ? assignee.username : '';
     }
 
-    onAssigneeRemove() {
+    onAssigneeRemove () {
         this.assigneeName = '';
     }
 
-    onCandidateGroupSelect(candidateGroup: any) {
+    onCandidateGroupSelect (candidateGroup: any) {
         if (candidateGroup.name) {
             this.candidateGroupNames.push(candidateGroup.name);
         }
     }
 
-    onCandidateGroupRemove(candidateGroup: any) {
+    onCandidateGroupRemove (candidateGroup: any) {
         if (candidateGroup.name) {
             this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => name !== candidateGroup.name);
         }
     }
 
-    canStartTask(): boolean {
+    canStartTask (): boolean {
         return !(this.dateError || !this.taskForm.valid || this.submitted || this.assignee.hasError() || this.candidateGroups.hasError());
     }
 
-    public whitespaceValidator(control: UntypedFormControl) {
+    public whitespaceValidator (control: UntypedFormControl) {
         const isWhitespace = (control.value || '').trim().length === 0;
         const isControlValid = control.value.length === 0 || !isWhitespace;
-        return isControlValid ? null : { whitespace: true };
+        return isControlValid ? null : { "whitespace": true };
     }
 
-    get nameController(): UntypedFormControl {
+    get nameController (): UntypedFormControl {
         return this.taskForm.get('name') as UntypedFormControl;
     }
 
-    get priorityController(): UntypedFormControl {
+    get priorityController (): UntypedFormControl {
         return this.taskForm.get('priority') as UntypedFormControl;
     }
 
-    get assigneeFormControl(): UntypedFormControl {
+    get assigneeFormControl (): UntypedFormControl {
         return this.assigneeForm;
     }
 
-    get candidateUserFormControl(): UntypedFormControl {
+    get candidateUserFormControl (): UntypedFormControl {
         return this.groupForm;
     }
 
-    onFormSelect(formKey: string) {
+    onFormSelect (formKey: string) {
         this.formKey = formKey || '';
     }
 }

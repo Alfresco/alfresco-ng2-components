@@ -29,7 +29,7 @@ import { TASK_COMMENTS_DIRECTIVES } from './task-comments';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
-    imports: [
+    "imports": [
         ...PROCESS_COMMENTS_DIRECTIVES,
         ...PROCESS_LIST_DIRECTIVES,
         ...TASK_LIST_DIRECTIVES,
@@ -39,11 +39,11 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
         ...PEOPLE_DIRECTIVES,
         ...FORM_DIRECTIVES
     ],
-    providers: [
+    "providers": [
         provideTranslations('adf-process-services', 'assets/adf-process-services'),
-        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'never' } }
+        { "provide": MAT_FORM_FIELD_DEFAULT_OPTIONS, "useValue": { "floatLabel": 'never' } }
     ],
-    exports: [
+    "exports": [
         ...PROCESS_COMMENTS_DIRECTIVES,
         ...PROCESS_LIST_DIRECTIVES,
         ...TASK_LIST_DIRECTIVES,
@@ -55,13 +55,13 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     ]
 })
 export class ProcessModule {
-    static forRoot(): ModuleWithProviders<ProcessModule> {
+    static forRoot (): ModuleWithProviders<ProcessModule> {
         return {
-            ngModule: ProcessModule,
-            providers: [
+            "ngModule": ProcessModule,
+            "providers": [
                 provideTranslations('adf-process-services', 'assets/adf-process-services'),
                 FormRenderingService,
-                { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+                { "provide": FormRenderingService, "useClass": ProcessFormRenderingService }
             ]
         };
     }

@@ -49,7 +49,7 @@ import { FormSpinnerComponent } from './components/spinner/form-spinner.componen
 import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.service';
 
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         OverlayModule,
         MaterialModule,
@@ -68,7 +68,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         ...CONTENT_METADATA_DIRECTIVES,
         FormStylePipe
     ],
-    declarations: [
+    "declarations": [
         FormCloudComponent,
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
@@ -84,7 +84,7 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         DisplayRichTextWidgetComponent,
         FormSpinnerComponent
     ],
-    exports: [
+    "exports": [
         FormCloudComponent,
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
@@ -97,6 +97,6 @@ import { FormCloudSpinnerService } from './services/spinner/form-cloud-spinner.s
         FileViewerWidgetComponent,
         DisplayRichTextWidgetComponent
     ],
-    providers: [FormCloudSpinnerService]
+    "providers": [FormCloudSpinnerService]
 })
 export class FormCloudModule {}

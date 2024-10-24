@@ -26,13 +26,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-breadcrumb',
-    standalone: true,
-    imports: [CommonModule, MatIconModule, TranslateModule, MatSelectModule],
-    templateUrl: './breadcrumb.component.html',
-    styleUrls: ['./breadcrumb.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-breadcrumb' }
+    "selector": 'adf-breadcrumb',
+    "standalone": true,
+    "imports": [CommonModule, MatIconModule, TranslateModule, MatSelectModule],
+    "templateUrl": './breadcrumb.component.html',
+    "styleUrls": ['./breadcrumb.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-breadcrumb' }
 })
 export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     /** Active node, builds UI based on folderNode.path.elements collection. */
@@ -88,7 +88,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    get hasRoot(): boolean {
+    get hasRoot (): boolean {
         return !!this.root;
     }
 
@@ -100,7 +100,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     navigate = new EventEmitter<PathElement>();
 
-    ngOnInit() {
+    ngOnInit () {
         this.transform = this.transform ? this.transform : null;
 
         if (this.target) {
@@ -111,11 +111,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges(): void {
+    ngOnChanges (): void {
         this.recalculateNodes();
     }
 
-    protected recalculateNodes(): void {
+    protected recalculateNodes (): void {
         const node: Node = this.transform ? this.transform(this.folderNode) : this.folderNode;
 
         this.route = this.parseRoute(node);
@@ -130,24 +130,24 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    open(): void {
+    open (): void {
         if (this.dropdown) {
             this.dropdown.open();
             this.dropdown.focus();
         }
     }
 
-    hasPreviousNodes(): boolean {
+    hasPreviousNodes (): boolean {
         return !!this.previousNodes;
     }
 
-    parseRoute(node: Node): PathElement[] {
+    parseRoute (node: Node): PathElement[] {
         if (node?.path) {
             const route = (node.path.elements || []).slice();
 
             route.push({
-                id: node.id,
-                name: node.name,
+                "id": node.id,
+                "name": node.name,
                 node
             } as PathElement);
 
@@ -170,7 +170,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return [];
     }
 
-    private getElementPosition(route: PathElement[], nodeId: string): number {
+    private getElementPosition (route: PathElement[], nodeId: string): number {
         let position: number = -1;
 
         if (route && route.length > 0 && nodeId) {
@@ -180,11 +180,11 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         return position;
     }
 
-    breadcrumbItemIsAnchor(lastItem): boolean {
+    breadcrumbItemIsAnchor (lastItem): boolean {
         return !this.readOnly && !lastItem;
     }
 
-    onRoutePathClick(route: PathElement, event?: Event): void {
+    onRoutePathClick (route: PathElement, event?: Event): void {
         if (event && event.type === 'click') {
             event.preventDefault();
         }
@@ -192,7 +192,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         this.onRouteClick(route);
     }
 
-    onRouteClick(route: PathElement) {
+    onRouteClick (route: PathElement) {
         if (route && !this.readOnly) {
             this.navigate.emit(route);
 
@@ -202,7 +202,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

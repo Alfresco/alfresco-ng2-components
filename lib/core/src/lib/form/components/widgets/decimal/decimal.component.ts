@@ -26,11 +26,11 @@ import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    selector: 'adf-decimal',
-    standalone: true,
-    templateUrl: './decimal.component.html',
-    styleUrls: ['./decimal.component.scss'],
-    host: {
+    "selector": 'adf-decimal',
+    "standalone": true,
+    "templateUrl": './decimal.component.html',
+    "styleUrls": ['./decimal.component.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -41,11 +41,11 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
-    encapsulation: ViewEncapsulation.None
+    "imports": [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent],
+    "encapsulation": ViewEncapsulation.None
 })
 export class DecimalWidgetComponent extends WidgetComponent {
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 }

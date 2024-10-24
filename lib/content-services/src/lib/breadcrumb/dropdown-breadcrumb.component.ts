@@ -24,13 +24,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-dropdown-breadcrumb',
-    standalone: true,
-    imports: [CommonModule, MatIconModule, MatSelectModule, TranslateModule],
-    templateUrl: './dropdown-breadcrumb.component.html',
-    styleUrls: ['./dropdown-breadcrumb.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-dropdown-breadcrumb' }
+    "selector": 'adf-dropdown-breadcrumb',
+    "standalone": true,
+    "imports": [CommonModule, MatIconModule, MatSelectModule, TranslateModule],
+    "templateUrl": './dropdown-breadcrumb.component.html',
+    "styleUrls": ['./dropdown-breadcrumb.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-dropdown-breadcrumb' }
 })
 export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements OnChanges {
     @ViewChild('dropdown')
@@ -42,7 +42,7 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
     /**
      * Calculate the current and previous nodes from the route array
      */
-    protected recalculateNodes(): void {
+    protected recalculateNodes (): void {
         const node: Node = this.transform ? this.transform(this.folderNode) : this.folderNode;
 
         this.route = this.parseRoute(node);
@@ -53,7 +53,7 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
     /**
      * Opens the node picker menu
      */
-    open(): void {
+    open (): void {
         if (this.dropdown) {
             this.dropdown.open();
             this.dropdown.focus();
@@ -64,7 +64,7 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
      * Check if route has more than one element (means: we are not in the root directory)
      * @returns `true` if there are previous nodes, otherwise `false`
      */
-    hasPreviousNodes(): boolean {
+    hasPreviousNodes (): boolean {
         return this.previousNodes.length > 0;
     }
 }

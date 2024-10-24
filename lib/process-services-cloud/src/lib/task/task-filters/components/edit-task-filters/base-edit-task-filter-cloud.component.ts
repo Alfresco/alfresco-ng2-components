@@ -115,12 +115,12 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     toggleFilterActions: boolean = false;
     selectedStatus: TaskStatusFilter;
     sortDirections: DropdownOption[] = [
-        { value: 'ASC', label: 'ADF_CLOUD_TASK_FILTERS.DIRECTION.ASCENDING' },
-        { value: 'DESC', label: 'ADF_CLOUD_TASK_FILTERS.DIRECTION.DESCENDING' }
+        { "value": 'ASC', "label": 'ADF_CLOUD_TASK_FILTERS.DIRECTION.ASCENDING' },
+        { "value": 'DESC', "label": 'ADF_CLOUD_TASK_FILTERS.DIRECTION.DESCENDING' }
     ];
     allProcessDefinitionNamesOption: DropdownOption = {
-        value: '',
-        label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL'
+        "value": '',
+        "label": 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL'
     };
 
     /** Task Filter to use. */
@@ -144,46 +144,46 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     protected formBuilder = inject(UntypedFormBuilder);
     protected dateAdapter = inject<DateAdapter<Date>>(DateAdapter);
 
-    ngOnInit() {
+    ngOnInit () {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((locale) => this.dateAdapter.setLocale(locale));
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const { id } = changes;
         if (id && id.currentValue !== id.previousValue) {
             this.retrieveTaskFilterAndBuildForm();
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    createFilterActions(): TaskFilterAction[] {
+    createFilterActions (): TaskFilterAction[] {
         return [
             {
-                actionType: ACTION_SAVE,
-                icon: 'adf:save',
-                tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE'
+                "actionType": ACTION_SAVE,
+                "icon": 'adf:save',
+                "tooltip": 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE'
             },
             {
-                actionType: ACTION_SAVE_AS,
-                icon: 'adf:save-as',
-                tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS'
+                "actionType": ACTION_SAVE_AS,
+                "icon": 'adf:save-as',
+                "tooltip": 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS'
             },
             {
-                actionType: ACTION_DELETE,
-                icon: 'delete',
-                tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE'
+                "actionType": ACTION_DELETE,
+                "icon": 'delete',
+                "tooltip": 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE'
             }
         ];
     }
 
-    hasFormChanged(action: TaskFilterAction): boolean {
+    hasFormChanged (action: TaskFilterAction): boolean {
         if (action.actionType === ACTION_SAVE) {
             return !this.formHasBeenChanged;
         }
@@ -197,39 +197,38 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         return false;
     }
 
-    onExpand(): void {
+    onExpand (): void {
         this.toggleFilterActions = true;
     }
 
-    onClose(): void {
+    onClose (): void {
         this.toggleFilterActions = false;
     }
 
-    isDisabledAction(action: TaskFilterAction): boolean {
+    isDisabledAction (action: TaskFilterAction): boolean {
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
 
-    protected deepCompare(left: any, right: any): boolean {
+    protected deepCompare (left: any, right: any): boolean {
         return JSON.stringify(left).toLowerCase() === JSON.stringify(right).toLowerCase();
     }
 
     /**
      * Get the sanitized filter name
-     *
      * @param filterName filter name
      * @returns sanitized filter name
      */
-    getSanitizeFilterName(filterName: string): string {
+    getSanitizeFilterName (filterName: string): string {
         const nameWithHyphen = this.replaceSpaceWithHyphen(filterName.trim());
         return nameWithHyphen.toLowerCase();
     }
 
-    private replaceSpaceWithHyphen(name: string): string {
+    private replaceSpaceWithHyphen (name: string): string {
         const regExt = new RegExp(' ', 'g');
         return name.replace(regExt, '-');
     }
 
-    executeFilterActions(action: TaskFilterAction): void {
+    executeFilterActions (action: TaskFilterAction): void {
         if (action.actionType === ACTION_SAVE) {
             this.save(action);
         } else if (action.actionType === ACTION_SAVE_AS) {
@@ -239,51 +238,51 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         }
     }
 
-    getRunningApplications() {
+    getRunningApplications () {
         this.appsProcessCloudService
             .getDeployedApplicationsByStatus(APP_RUNNING_STATUS, this.role)
             .subscribe((applications) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
                         this.applicationNames.push({
-                            label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList),
-                            value: application.name
+                            "label": this.appsProcessCloudService.getApplicationLabel(application, this.environmentList),
+                            "value": application.name
                         });
                     });
                 }
             });
     }
 
-    getProcessDefinitions() {
+    getProcessDefinitions () {
         this.taskCloudService.getProcessDefinitions(this.appName).subscribe((processDefinitions) => {
             if (processDefinitions && processDefinitions.length > 0) {
                 this.processDefinitionNames.push(this.allProcessDefinitionNamesOption);
                 processDefinitions.map((processDefinition) => {
-                    this.processDefinitionNames.push({ label: processDefinition.name, value: processDefinition.name });
+                    this.processDefinitionNames.push({ "label": processDefinition.name, "value": processDefinition.name });
                 });
             }
         });
     }
 
-    checkMandatoryActions(): void {
+    checkMandatoryActions (): void {
         if (this.actions === undefined || this.actions.length === 0) {
             this.actions = [...DEFAULT_ACTIONS];
         }
     }
 
-    private isValidAction(actions: string[], action: any): boolean {
+    private isValidAction (actions: string[], action: any): boolean {
         return actions ? actions.indexOf(action.actionType) >= 0 : true;
     }
 
-    isFormValid(): boolean {
+    isFormValid (): boolean {
         return this.editTaskFilterForm.valid;
     }
 
-    getPropertyController(property: TaskFilterProperties): AbstractControl {
+    getPropertyController (property: TaskFilterProperties): AbstractControl {
         return this.editTaskFilterForm.get(property.key);
     }
 
-    onDateChanged(newDateValue: string | Date, dateProperty: TaskFilterProperties) {
+    onDateChanged (newDateValue: string | Date, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
             let date: Date;
 
@@ -299,18 +298,18 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
                 controller.setValue(date.toISOString());
                 controller.setErrors(null);
             } else {
-                controller.setErrors({ invalid: true });
+                controller.setErrors({ "invalid": true });
             }
         }
     }
 
-    onDateRangeFilterChanged(dateRange: DateRangeFilter, property: TaskFilterProperties) {
+    onDateRangeFilterChanged (dateRange: DateRangeFilter, property: TaskFilterProperties) {
         this.editTaskFilterForm.get(property.attributes?.from).setValue(dateRange.startDate ? dateRange.startDate : null);
         this.editTaskFilterForm.get(property.attributes?.to).setValue(dateRange.endDate ? dateRange.endDate : null);
         this.editTaskFilterForm.get(property.attributes.dateType).setValue(DateCloudFilterType.RANGE);
     }
 
-    onChangedUser(users: IdentityUserModel[], userProperty: TaskFilterProperties) {
+    onChangedUser (users: IdentityUserModel[], userProperty: TaskFilterProperties) {
         let selectedUsers;
         if (userProperty.selectionMode === 'single') {
             selectedUsers = users[0];
@@ -320,17 +319,17 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.getPropertyController(userProperty).setValue(selectedUsers);
     }
 
-    onAssignedUsersChange(assignedUsers: IdentityUserModel[]) {
+    onAssignedUsersChange (assignedUsers: IdentityUserModel[]) {
         this.editTaskFilterForm.get('candidateGroups').setValue(undefined);
         this.editTaskFilterForm.get('assignedUsers').setValue(assignedUsers);
     }
 
-    onAssignedGroupsChange(groups: IdentityGroupModel[]) {
+    onAssignedGroupsChange (groups: IdentityGroupModel[]) {
         this.editTaskFilterForm.get('assignedUsers').setValue(undefined);
         this.editTaskFilterForm.get('candidateGroups').setValue(groups);
     }
 
-    onAssignmentTypeChange(assignmentType: AssignmentType) {
+    onAssignmentTypeChange (assignmentType: AssignmentType) {
         switch (assignmentType) {
             case AssignmentType.UNASSIGNED:
                 this.editTaskFilterForm.get('status').setValue(TaskStatusFilter.CREATED);
@@ -350,7 +349,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         }
     }
 
-    onStatusChange(status: MatSelectChange) {
+    onStatusChange (status: MatSelectChange) {
         if (status.value === TaskStatusFilter.CREATED) {
             this.resetAssignmentTypeValues();
         }
@@ -358,51 +357,51 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         this.selectedStatus = status.value;
     }
 
-    private resetAssignmentTypeValues() {
+    private resetAssignmentTypeValues () {
         this.editTaskFilterForm.get('assignedUsers').setValue(undefined);
         this.editTaskFilterForm.get('candidateGroups').setValue(undefined);
     }
 
-    hasError(property: TaskFilterProperties): boolean {
+    hasError (property: TaskFilterProperties): boolean {
         const controller = this.getPropertyController(property);
         return !!controller.errors?.invalid;
     }
 
-    hasLastModifiedProperty(): boolean {
+    hasLastModifiedProperty (): boolean {
         return this.filterProperties.indexOf(LAST_MODIFIED_PROPERTY) >= 0;
     }
 
-    get createSortProperties(): FilterOptions[] {
+    get createSortProperties (): FilterOptions[] {
         this.checkMandatorySortProperties();
 
-        return this.sortProperties.map((property: string) => ({ label: property, value: property }));
+        return this.sortProperties.map((property: string) => ({ "label": property, "value": property }));
     }
 
-    createAndFilterActions(): TaskFilterAction[] {
+    createAndFilterActions (): TaskFilterAction[] {
         this.checkMandatoryActions();
         return this.createFilterActions().filter((action) => this.isValidAction(this.actions, action));
     }
 
-    isValidProperty(filterProperties: string[], key: string): boolean {
+    isValidProperty (filterProperties: string[], key: string): boolean {
         return filterProperties ? filterProperties.indexOf(key) >= 0 : true;
     }
 
-    checkForProperty(property: string): boolean {
+    checkForProperty (property: string): boolean {
         return this.filterProperties ? this.filterProperties.indexOf(property) >= 0 : false;
     }
 
-    hasSortProperty(): boolean {
+    hasSortProperty (): boolean {
         return this.filterProperties.indexOf(SORT_PROPERTY) >= 0;
     }
 
-    removeOrderProperty(filteredProperties: TaskFilterProperties[]): TaskFilterProperties[] {
+    removeOrderProperty (filteredProperties: TaskFilterProperties[]): TaskFilterProperties[] {
         if (filteredProperties?.length > 0) {
             return filteredProperties.filter((property) => property.key !== ORDER_PROPERTY);
         }
         return [];
     }
 
-    createAndFilterProperties() {
+    createAndFilterProperties () {
         this.checkMandatoryFilterProperties();
 
         if (this.checkForProperty(APPLICATION_NAME)) {
@@ -427,7 +426,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
     /**
      * Check for edit task filter form changes
      */
-    onFilterChange() {
+    onFilterChange () {
         this.editTaskFilterForm.valueChanges
             .pipe(
                 debounceTime(500),
@@ -439,7 +438,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             });
     }
 
-    getFormControlsConfig(taskFilterProperties: TaskFilterProperties[]): any {
+    getFormControlsConfig (taskFilterProperties: TaskFilterProperties[]): any {
         const properties = taskFilterProperties.map((property) => {
             if (property.attributes) {
                 return this.getAttributesControlConfig(property);
@@ -450,24 +449,24 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         return properties.reduce((result, current) => Object.assign(result, current), {});
     }
 
-    private getAttributesControlConfig(property: TaskFilterProperties) {
+    private getAttributesControlConfig (property: TaskFilterProperties) {
         return Object.values(property.attributes).reduce((result, key) => {
             result[key] = property.value[key];
             return result;
         }, {});
     }
 
-    buildForm(taskFilterProperties: TaskFilterProperties[]) {
+    buildForm (taskFilterProperties: TaskFilterProperties[]) {
         this.formHasBeenChanged = false;
         this.editTaskFilterForm = this.formBuilder.group(this.getFormControlsConfig(taskFilterProperties));
         this.onFilterChange();
     }
 
-    onDateTypeChange(dateType: DateCloudFilterType, property: TaskFilterProperties) {
+    onDateTypeChange (dateType: DateCloudFilterType, property: TaskFilterProperties) {
         this.editTaskFilterForm.get(property.attributes.dateType).setValue(dateType);
     }
 
-    protected retrieveTaskFilterAndBuildForm() {
+    protected retrieveTaskFilterAndBuildForm () {
         this.isLoading = true;
 
         this.getTaskFilterById(this.appName, this.id)
@@ -483,7 +482,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             });
     }
 
-    delete(deleteAction: TaskFilterAction): void {
+    delete (deleteAction: TaskFilterAction): void {
         this.deleteFilter(this.taskFilter)
             .pipe(
                 filter((filters) => {
@@ -497,7 +496,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             .subscribe(() => {});
     }
 
-    save(saveAction: TaskFilterAction): void {
+    save (saveAction: TaskFilterAction): void {
         this.updateFilter(this.changedTaskFilter)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => {
@@ -507,23 +506,23 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
             });
     }
 
-    saveAs(saveAsAction: TaskFilterAction): void {
+    saveAs (saveAsAction: TaskFilterAction): void {
         const dialogRef = this.dialog.open(TaskFilterDialogCloudComponent, {
-            data: {
-                name: this.translateService.instant((this.taskFilter as any)?.name)
+            "data": {
+                "name": this.translateService.instant((this.taskFilter as any)?.name)
             },
-            height: 'auto',
-            minWidth: '30%'
+            "height": 'auto',
+            "minWidth": '30%'
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result && result.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
                 const filterId = Math.random().toString(36).substr(2, 9);
                 const filterKey = this.getSanitizeFilterName(result.name);
                 const newFilter = {
-                    name: result.name,
-                    icon: result.icon,
-                    id: filterId,
-                    key: 'custom-' + filterKey
+                    "name": result.name,
+                    "icon": result.icon,
+                    "id": filterId,
+                    "key": 'custom-' + filterKey
                 };
                 const resultFilter: T = Object.assign({}, this.changedTaskFilter, newFilter);
                 this.addFilter(resultFilter).subscribe(() => {
@@ -534,13 +533,13 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         });
     }
 
-    checkMandatoryFilterProperties() {
+    checkMandatoryFilterProperties () {
         if (this.filterProperties === undefined || this.filterProperties.length === 0) {
             this.filterProperties = this.getDefaultFilterProperties();
         }
     }
 
-    checkMandatorySortProperties(): void {
+    checkMandatorySortProperties (): void {
         if (this.sortProperties === undefined || this.sortProperties.length === 0) {
             this.sortProperties = this.getDefaultSortProperties();
         }

@@ -32,16 +32,16 @@ describe('LibraryDialogComponent', () => {
     let sitesService: SitesService;
     let findSitesSpy;
     let notificationService: NotificationService;
-    const findSitesResponse = { list: { entries: [] } };
+    const findSitesResponse = { "list": { "entries": [] } };
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        "close": jasmine.createSpy('close')
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, LibraryDialogComponent],
-            providers: [{ provide: MatDialogRef, useValue: dialogRef }],
-            schemas: [NO_ERRORS_SCHEMA]
+            "imports": [ContentTestingModule, LibraryDialogComponent],
+            "providers": [{ "provide": MatDialogRef, "useValue": dialogRef }],
+            "schemas": [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(LibraryDialogComponent);
         component = fixture.componentInstance;
@@ -109,14 +109,14 @@ describe('LibraryDialogComponent', () => {
         fixture.detectChanges();
 
         expect(component.form.controls.id.errors).toEqual({
-            message: 'LIBRARY.ERRORS.EXISTENT_SITE'
+            "message": 'LIBRARY.ERRORS.EXISTENT_SITE'
         });
         expect(component.form.valid).toBe(false);
     }));
 
     it('should create site when form is valid', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        spyOn(sitesService, 'createSite').and.returnValue(of({ entry: { id: 'fake-id' } } as SiteEntry).pipe(delay(100)));
+        spyOn(sitesService, 'createSite').and.returnValue(of({ "entry": { "id": 'fake-id' } } as SiteEntry).pipe(delay(100)));
         spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
         fixture.detectChanges();
@@ -139,10 +139,10 @@ describe('LibraryDialogComponent', () => {
         expect(component.disableCreateButton).toBe(false);
 
         expect(sitesService.createSite).toHaveBeenCalledWith({
-            id: 'library-title',
-            title: 'library title',
-            description: '',
-            visibility: 'PUBLIC'
+            "id": 'library-title',
+            "title": 'library title',
+            "description": '',
+            "visibility": 'PUBLIC'
         });
     }));
 
@@ -166,7 +166,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should notify when library title is already used', fakeAsync(() => {
         spyOn(sitesService, 'getSite').and.returnValue(of(null));
-        findSitesSpy.and.returnValue(Promise.resolve({ list: { entries: [{ entry: { title: 'TEST', id: 'library-id' } }] } }));
+        findSitesSpy.and.returnValue(Promise.resolve({ "list": { "entries": [{ "entry": { "title": 'TEST', "id": 'library-id' } }] } }));
 
         fixture.detectChanges();
         component.form.controls.title.setValue('test');
@@ -179,7 +179,7 @@ describe('LibraryDialogComponent', () => {
 
     it('should notify on 409 conflict error (might be in trash)', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-        const error = { message: '{ "error": { "statusCode": 409 } }' };
+        const error = { "message": '{ "error": { "statusCode": 409 } }' };
         spyOn(sitesService, 'createSite').and.callFake(() => throwError(error));
         spyOn(sitesService, 'getSite').and.callFake(() => throwError('error'));
 
@@ -194,7 +194,7 @@ describe('LibraryDialogComponent', () => {
         flush();
 
         expect(component.form.controls.id.errors).toEqual({
-            message: 'LIBRARY.ERRORS.CONFLICT'
+            "message": 'LIBRARY.ERRORS.CONFLICT'
         });
     }));
 

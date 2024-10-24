@@ -34,8 +34,8 @@ import { ProcessServicesCloudModule } from '../process-services-cloud.module';
 import { RouterTestingModule } from '@angular/router/testing';
 
 @NgModule({
-    imports: [
-        AuthModule.forRoot({ useHash: true }),
+    "imports": [
+        AuthModule.forRoot({ "useHash": true }),
         HttpClientModule,
         NoopAnimationsModule,
         RouterTestingModule,
@@ -43,12 +43,12 @@ import { RouterTestingModule } from '@angular/router/testing';
         CoreModule.forRoot(),
         ProcessServicesCloudModule.forRoot()
     ],
-    providers: [
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock },
-        { provide: JWT_STORAGE_SERVICE, useClass: StorageService }
+    "providers": [
+        { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+        { "provide": AppConfigService, "useClass": AppConfigServiceMock },
+        { "provide": TranslationService, "useClass": TranslationMock },
+        { "provide": JWT_STORAGE_SERVICE, "useClass": StorageService }
     ],
-    exports: [NoopAnimationsModule, TranslateModule, CoreModule, ProcessServicesCloudModule]
+    "exports": [NoopAnimationsModule, TranslateModule, CoreModule, ProcessServicesCloudModule]
 })
 export class ProcessServiceCloudTestingModule {}

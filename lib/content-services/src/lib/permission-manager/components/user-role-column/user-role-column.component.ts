@@ -28,10 +28,10 @@ export interface RoleModelOption {
 }
 
 @Component({
-    selector: 'adf-user-role-column',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatSelectModule, TranslateModule],
-    template: `
+    "selector": 'adf-user-role-column',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, MatSelectModule, TranslateModule],
+    "template": `
         <mat-form-field class="adf-role-selector-field" *ngIf="!readonly" subscriptSizing="dynamic">
             <mat-select
                 class="adf-role-selector"
@@ -52,9 +52,9 @@ export interface RoleModelOption {
             {{ i18nValue | translate }}
         </span>
     `,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },
-    styleUrls: ['./user-role-column.component.scss']
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-user-role-column adf-datatable-content-cell adf-expand-cell-4' },
+    "styleUrls": ['./user-role-column.component.scss']
 })
 export class UserRoleColumnComponent implements OnChanges {
     @Input()
@@ -77,26 +77,26 @@ export class UserRoleColumnComponent implements OnChanges {
     /* dropdown options, including i18n support */
     options: RoleModelOption[] = [];
 
-    onRoleChanged(newRole: string) {
+    onRoleChanged (newRole: string) {
         this.value = newRole;
         this.roleChanged.emit(newRole);
     }
 
-    private i18nRoleValue(value: string): string {
+    private i18nRoleValue (value: string): string {
         if (value) {
             return `ADF.ROLES.${value.toUpperCase()}`;
         }
         return value;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes.value) {
             this.i18nValue = this.i18nRoleValue(changes.value.currentValue);
         }
 
         if (changes.roles) {
             const roles: RoleModel[] = changes.roles.currentValue || [];
-            this.options = roles.map((role) => ({ label: this.i18nRoleValue(role.label), role: role.role }));
+            this.options = roles.map((role) => ({ "label": this.i18nRoleValue(role.label), "role": role.role }));
         }
     }
 }

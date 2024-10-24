@@ -27,10 +27,10 @@ describe('DecimalRenderMiddlewareService', () => {
 
         const form = new FormModel();
         formFieldModel = new FormFieldModel(form, {
-            type: FormFieldTypes.DECIMAL,
-            id: 'id',
-            precision: 3,
-            value: '10.1060'
+            "type": FormFieldTypes.DECIMAL,
+            "id": 'id',
+            "precision": 3,
+            "value": '10.1060'
         });
     });
 

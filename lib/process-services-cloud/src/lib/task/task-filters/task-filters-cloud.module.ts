@@ -34,7 +34,7 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-    imports: [
+    "imports": [
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -47,7 +47,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         PeopleCloudModule,
         MatProgressSpinnerModule
     ],
-    declarations: [
+    "declarations": [
         TaskFiltersCloudComponent,
         ServiceTaskFiltersCloudComponent,
         EditTaskFilterCloudComponent,
@@ -55,6 +55,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         TaskFilterDialogCloudComponent,
         TaskAssignmentFilterCloudComponent
     ],
-    exports: [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
+    "exports": [TaskFiltersCloudComponent, ServiceTaskFiltersCloudComponent, EditTaskFilterCloudComponent, EditServiceTaskFilterCloudComponent]
 })
 export class TaskFiltersCloudModule {}

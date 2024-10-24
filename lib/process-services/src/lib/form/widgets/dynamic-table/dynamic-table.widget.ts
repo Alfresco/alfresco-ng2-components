@@ -30,12 +30,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { RowEditorComponent } from './editors/row-editor/row.editor';
 
 @Component({
-    selector: 'dynamic-table-widget',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatCheckboxModule, MatButtonModule, MatIconModule, RowEditorComponent, ErrorWidgetComponent],
-    templateUrl: './dynamic-table.widget.html',
-    styleUrls: ['./dynamic-table.widget.scss'],
-    host: {
+    "selector": 'dynamic-table-widget',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatCheckboxModule, MatButtonModule, MatIconModule, RowEditorComponent, ErrorWidgetComponent],
+    "templateUrl": './dynamic-table.widget.html',
+    "styleUrls": ['./dynamic-table.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -46,7 +46,7 @@ import { RowEditorComponent } from './editors/row-editor/row.editor';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
     content: DynamicTableModel;
@@ -56,7 +56,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     private selectArrayCode = [32, 0, 13];
 
-    constructor(
+    constructor (
         public formService: FormService,
         public elementRef: ElementRef,
         private visibilityService: WidgetVisibilityService,
@@ -65,14 +65,14 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field) {
             this.content = new DynamicTableModel(this.field, this.formService);
             this.visibilityService.refreshVisibility(this.field.form);
         }
     }
 
-    forceFocusOnAddButton() {
+    forceFocusOnAddButton () {
         if (this.content) {
             this.cd.detectChanges();
             const buttonAddRow = this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row') as HTMLButtonElement;
@@ -82,11 +82,11 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    private isDynamicTableReady(buttonAddRow: HTMLButtonElement) {
+    private isDynamicTableReady (buttonAddRow: HTMLButtonElement) {
         return this.field && !this.editMode && buttonAddRow;
     }
 
-    isValid() {
+    isValid () {
         let valid = true;
 
         if (this.content?.field) {
@@ -96,27 +96,27 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         return valid;
     }
 
-    onRowClicked(row: DynamicTableRow) {
+    onRowClicked (row: DynamicTableRow) {
         if (this.content) {
             this.content.selectedRow = row;
         }
     }
 
-    onKeyPressed($event: KeyboardEvent, row: DynamicTableRow) {
+    onKeyPressed ($event: KeyboardEvent, row: DynamicTableRow) {
         if (this.content && this.isEnterOrSpacePressed($event.keyCode)) {
             this.content.selectedRow = row;
         }
     }
 
-    private isEnterOrSpacePressed(keyCode: number) {
+    private isEnterOrSpacePressed (keyCode: number) {
         return this.selectArrayCode.indexOf(keyCode) !== -1;
     }
 
-    hasSelection(): boolean {
+    hasSelection (): boolean {
         return !!this.content?.selectedRow;
     }
 
-    moveSelectionUp(): boolean {
+    moveSelectionUp (): boolean {
         if (this.content && !this.readOnly) {
             this.content.moveRow(this.content.selectedRow, -1);
             return true;
@@ -124,7 +124,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         return false;
     }
 
-    moveSelectionDown(): boolean {
+    moveSelectionDown (): boolean {
         if (this.content && !this.readOnly) {
             this.content.moveRow(this.content.selectedRow, 1);
             return true;
@@ -132,7 +132,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         return false;
     }
 
-    deleteSelection(): boolean {
+    deleteSelection (): boolean {
         if (this.content && !this.readOnly) {
             this.content.deleteRow(this.content.selectedRow);
             return true;
@@ -140,12 +140,12 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         return false;
     }
 
-    addNewRow(): boolean {
+    addNewRow (): boolean {
         if (this.content && !this.readOnly) {
             this.editRow = {
-                isNew: true,
-                selected: false,
-                value: {}
+                "isNew": true,
+                "selected": false,
+                "value": {}
             };
             this.editMode = true;
             return true;
@@ -153,7 +153,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         return false;
     }
 
-    editSelection(): boolean {
+    editSelection (): boolean {
         if (this.content && !this.readOnly) {
             this.editRow = this.copyRow(this.content.selectedRow);
             this.editMode = true;
@@ -162,7 +162,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         return false;
     }
 
-    getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
+    getCellValue (row: DynamicTableRow, column: DynamicTableColumn): any {
         if (this.content) {
             const cellValue = this.content.getCellValue(row, column);
             if (column.type === 'Amount') {
@@ -173,7 +173,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         return null;
     }
 
-    onSaveChanges() {
+    onSaveChanges () {
         if (this.content) {
             if (this.editRow.isNew) {
                 const row = this.copyRow(this.editRow);
@@ -189,17 +189,17 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
         this.forceFocusOnAddButton();
     }
 
-    onCancelChanges() {
+    onCancelChanges () {
         this.editMode = false;
         this.editRow = null;
         this.forceFocusOnAddButton();
     }
 
-    copyRow(row: DynamicTableRow): DynamicTableRow {
-        return { value: this.copyObject(row.value) } as DynamicTableRow;
+    copyRow (row: DynamicTableRow): DynamicTableRow {
+        return { "value": this.copyObject(row.value) } as DynamicTableRow;
     }
 
-    private copyObject(obj: any): any {
+    private copyObject (obj: any): any {
         let result = obj;
 
         if (typeof obj === 'object' && obj !== null && obj !== undefined) {

@@ -24,28 +24,28 @@ import { SearchAiInputState } from '../models/search-ai-input-state';
 import { AlfrescoApiService } from '../../services';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class SearchAiService {
     private toggleSearchAiInput = new BehaviorSubject<SearchAiInputState>({
-        active: false
+        "active": false
     });
     private _searchAiApi: SearchAiApi;
 
-    get searchAiApi(): SearchAiApi {
+    get searchAiApi (): SearchAiApi {
         this._searchAiApi = this._searchAiApi ?? new SearchAiApi(this.apiService.getInstance());
         return this._searchAiApi;
     }
 
     toggleSearchAiInput$ = this.toggleSearchAiInput.asObservable();
 
-    constructor(private apiService: AlfrescoApiService, private translateService: TranslateService) {}
+    constructor (private apiService: AlfrescoApiService, private translateService: TranslateService) {}
 
     /**
      * Update the state of the search AI input.
      * @param state The new state of the search AI input.
      */
-    updateSearchAiInputState(state: SearchAiInputState): void {
+    updateSearchAiInputState (state: SearchAiInputState): void {
         this.toggleSearchAiInput.next(state);
     }
 
@@ -54,7 +54,7 @@ export class SearchAiService {
      * @param question The question to ask.
      * @returns QuestionModel object containing information about questions.
      */
-    ask(question: QuestionRequest): Observable<QuestionModel> {
+    ask (question: QuestionRequest): Observable<QuestionModel> {
         return from(this.searchAiApi.ask([question]));
     }
 
@@ -63,7 +63,7 @@ export class SearchAiService {
      * @param questionId The ID of the question to get an answer for.
      * @returns AiAnswerEntry object containing the answer.
      */
-    getAnswer(questionId: string): Observable<AiAnswerEntry> {
+    getAnswer (questionId: string): Observable<AiAnswerEntry> {
         return from(this.searchAiApi.getAnswer(questionId));
     }
 
@@ -71,7 +71,7 @@ export class SearchAiService {
      * Get the knowledge retrieval configuration.
      * @returns KnowledgeRetrievalConfigEntry object containing the configuration.
      */
-    getConfig(): Observable<KnowledgeRetrievalConfigEntry> {
+    getConfig (): Observable<KnowledgeRetrievalConfigEntry> {
         return from(this.searchAiApi.getConfig());
     }
 
@@ -81,20 +81,20 @@ export class SearchAiService {
      * @param maxSelectedNodes max number of selected nodes. Default 100.
      * @returns string with error if any condition is not met, empty string otherwise.
      */
-    checkSearchAvailability(selectedNodesState: SelectionState, maxSelectedNodes = 100): string {
+    checkSearchAvailability (selectedNodesState: SelectionState, maxSelectedNodes = 100): string {
         const messages: {
             key: string;
             [parameter: string]: number | string;
         }[] = [];
         if (selectedNodesState.count > maxSelectedNodes) {
             messages.push({
-                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED',
-                maxFiles: maxSelectedNodes
+                "key": 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED',
+                "maxFiles": maxSelectedNodes
             });
         }
         if (selectedNodesState.nodes.some((node) => node.entry.isFolder)) {
             messages.push({
-                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.FOLDER_SELECTED'
+                "key": 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.FOLDER_SELECTED'
             });
         }
         return messages.map((message) => this.translateService.instant(message.key, message)).join(' ');

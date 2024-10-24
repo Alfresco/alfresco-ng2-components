@@ -23,9 +23,9 @@ describe('CardViewFloatItemModel', () => {
 
     beforeEach(() => {
         properties = {
-            label: 'Tribe',
-            value: undefined,
-            key: 'tribe'
+            "label": 'Tribe',
+            "value": undefined,
+            "key": 'tribe'
         };
     });
 

@@ -22,7 +22,7 @@ export class UploadWidgetContentLinkModelOptions {
 export class UploadWidgetContentLinkModel extends ContentLinkModel {
     uploadWidgetId: string;
 
-    constructor(obj?: any, uploadWidgetId?: string, public options?: UploadWidgetContentLinkModelOptions) {
+    constructor (obj?: any, uploadWidgetId?: string, public options?: UploadWidgetContentLinkModelOptions) {
         super(obj);
         this.uploadWidgetId = uploadWidgetId;
     }

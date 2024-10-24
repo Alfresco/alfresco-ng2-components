@@ -16,39 +16,39 @@
  */
 
 export const exampleData = {
-    time: 1663761278752,
-    blocks: [
+    "time": 1663761278752,
+    "blocks": [
         {
-            id: 'yOV_DfEQhC',
-            type: 'paragraph',
-            data: {
-                text: 'text value'
+            "id": 'yOV_DfEQhC',
+            "type": 'paragraph',
+            "data": {
+                "text": 'text value'
             }
         },
         {
-            id: 'IZwymOWyds',
-            type: 'header',
-            data: {
-                text: 'Heading value',
-                level: 2
+            "id": 'IZwymOWyds',
+            "type": 'header',
+            "data": {
+                "text": 'Heading value',
+                "level": 2
             }
         },
         {
-            id: '3JJj6A8XFO',
-            type: 'list',
-            data: {
-                style: 'unordered',
-                items: ['unordered list item A', 'unordered list item B']
+            "id": '3JJj6A8XFO',
+            "type": 'list',
+            "data": {
+                "style": 'unordered',
+                "items": ['unordered list item A', 'unordered list item B']
             }
         },
         {
-            id: 'q98W4eK4Nj',
-            type: 'list',
-            data: {
-                style: 'ordered',
-                items: ['ordered list item 1', 'ordered list item 2']
+            "id": 'q98W4eK4Nj',
+            "type": 'list',
+            "data": {
+                "style": 'ordered',
+                "items": ['ordered list item 1', 'ordered list item 2']
             }
         }
     ],
-    version: '2.25.0'
+    "version": '2.25.0'
 };

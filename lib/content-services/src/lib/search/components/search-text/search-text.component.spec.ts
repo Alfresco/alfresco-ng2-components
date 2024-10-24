@@ -31,23 +31,23 @@ describe('SearchTextComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchTextComponent);
         component = fixture.componentInstance;
         component.id = 'text';
         component.settings = {
-            pattern: `cm:name:'(.*?)'`,
-            field: 'cm:name',
-            placeholder: 'Enter the name'
+            "pattern": `cm:name:'(.*?)'`,
+            "field": 'cm:name',
+            "placeholder": 'Enter the name'
         };
         component.context = {
-            queryFragments: {
-                slider: ''
+            "queryFragments": {
+                "slider": ''
             },
-            filterRawParams: {},
-            populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            "filterRawParams": {},
+            "populateFilters": new ReplaySubject(1),
+            "update": jasmine.createSpy('update')
         } as any;
 
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -70,8 +70,8 @@ describe('SearchTextComponent', () => {
 
     it('should update query builder on change', () => {
         component.onChangedHandler({
-            target: {
-                value: 'top-secret.doc'
+            "target": {
+                "value": 'top-secret.doc'
             }
         });
 
@@ -83,8 +83,8 @@ describe('SearchTextComponent', () => {
 
     it('should reset query builder', () => {
         component.onChangedHandler({
-            target: {
-                value: 'top-secret.doc'
+            "target": {
+                "value": 'top-secret.doc'
             }
         });
 
@@ -93,8 +93,8 @@ describe('SearchTextComponent', () => {
         expect(component.context.filterRawParams[component.id]).toBe('top-secret.doc');
 
         component.onChangedHandler({
-            target: {
-                value: ''
+            "target": {
+                "value": ''
             }
         });
 
@@ -150,7 +150,7 @@ describe('SearchTextComponent', () => {
         spyOn(component.context.filterLoaded, 'next').and.stub();
         spyOn(component.displayValue$, 'next').and.stub();
         fixture.detectChanges();
-        component.context.populateFilters.next({ text: 'secret.pdf' });
+        component.context.populateFilters.next({ "text": 'secret.pdf' });
         fixture.detectChanges();
 
         expect(component.displayValue$.next).toHaveBeenCalledWith('secret.pdf');

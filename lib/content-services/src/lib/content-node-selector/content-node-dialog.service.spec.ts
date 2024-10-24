@@ -25,32 +25,32 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { SitesService } from '../common';
 
 const fakeNodeEntry = {
-    entry: {
-        id: 'fake',
-        name: 'fake-name'
+    "entry": {
+        "id": 'fake',
+        "name": 'fake-name'
     }
 } as NodeEntry;
 
 const fakeNode = {
-    id: 'fake',
-    name: 'fake-name'
+    "id": 'fake',
+    "name": 'fake-name'
 } as Node;
 
 const fakeSiteList: SitePaging = new SitePaging({
-    list: {
-        pagination: {
-            count: 1,
-            hasMoreItems: false,
-            totalItems: 1,
-            skipCount: 0,
-            maxItems: 100
+    "list": {
+        "pagination": {
+            "count": 1,
+            "hasMoreItems": false,
+            "totalItems": 1,
+            "skipCount": 0,
+            "maxItems": 100
         },
-        entries: [
+        "entries": [
             {
-                entry: new Site({
-                    id: 'FAKE',
-                    guid: 'FAKE-GUID',
-                    title: 'FAKE-SITE-TITLE'
+                "entry": new Site({
+                    "id": 'FAKE',
+                    "guid": 'FAKE-GUID',
+                    "title": 'FAKE-SITE-TITLE'
                 })
             }
         ]
@@ -67,7 +67,7 @@ describe('ContentNodeDialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(ContentNodeDialogService);
         documentListService = TestBed.inject(DocumentListService);
@@ -75,18 +75,18 @@ describe('ContentNodeDialogService', () => {
         sitesService = TestBed.inject(SitesService);
         afterOpenObservable = new Subject<any>();
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
-            afterOpen: () => afterOpenObservable,
-            afterClosed: () => of({}),
-            componentInstance: {
-                error: new Subject<any>()
+            "afterOpen": () => afterOpenObservable,
+            "afterClosed": () => of({}),
+            "componentInstance": {
+                "error": new Subject<any>()
             }
         } as any);
     });
 
     it('should not open the lock node dialog if have no permission', () => {
         const testNode = {
-            id: 'fake',
-            isFile: false
+            "id": 'fake',
+            "isFile": false
         } as Node;
 
         service.openLockNodeDialog(testNode).subscribe(
@@ -137,49 +137,49 @@ describe('ContentNodeDialogService', () => {
 
     describe('for the copy/move dialog', () => {
         const siteNode: Node = {
-            id: 'site-node-id',
-            nodeType: 'st:site'
+            "id": 'site-node-id',
+            "nodeType": 'st:site'
         } as Node;
         const sites: Node = {
-            id: 'sites-id',
-            nodeType: 'st:sites'
+            "id": 'sites-id',
+            "nodeType": 'st:sites'
         } as Node;
         const site: Site = {
-            id: 'site-id',
-            guid: 'any-guid'
+            "id": 'site-id',
+            "guid": 'any-guid'
         } as Site;
         const nodeEntryWithRightPermissions: Node = {
-            id: 'node-id',
-            allowableOperations: ['create']
+            "id": 'node-id',
+            "allowableOperations": ['create']
         } as Node;
         const nodeEntryNoPermissions: Node = {
-            id: 'node-id',
-            allowableOperations: []
+            "id": 'node-id',
+            "allowableOperations": []
         } as Node;
 
         const siteFixture = [
             {
-                node: siteNode,
-                expected: false
+                "node": siteNode,
+                "expected": false
             },
             {
-                node: sites,
-                expected: false
+                "node": sites,
+                "expected": false
             },
             {
-                node: site,
-                expected: false
+                "node": site,
+                "expected": false
             }
         ];
 
         const permissionFixture = [
             {
-                node: nodeEntryWithRightPermissions,
-                expected: true
+                "node": nodeEntryWithRightPermissions,
+                "expected": true
             },
             {
-                node: nodeEntryNoPermissions,
-                expected: false
+                "node": nodeEntryNoPermissions,
+                "expected": false
             }
         ];
 
@@ -188,7 +188,7 @@ describe('ContentNodeDialogService', () => {
         beforeEach(() => {
             spyOnDialogOpen.and.callFake((_: any, config: any) => {
                 testContentNodeSelectorComponentData = config.data;
-                return { componentInstance: {}, afterClosed: () => of(null) };
+                return { "componentInstance": {}, "afterClosed": () => of(null) };
             });
             service.openCopyMoveDialog(NodeAction.CHOOSE, fakeNode, '!update');
         });

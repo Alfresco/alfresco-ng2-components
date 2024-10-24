@@ -29,7 +29,7 @@ describe('SearchComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SimpleSearchTestComponent]
+            "imports": [ContentTestingModule, SimpleSearchTestComponent]
         });
         fixture = TestBed.createComponent(SimpleSearchTestComponent);
         component = fixture.componentInstance;
@@ -72,7 +72,7 @@ describe('SearchComponent', () => {
         });
 
         it('should emit error event when search call fail', (done) => {
-            spyOn(searchService, 'search').and.returnValue(throwError({ status: 402 }));
+            spyOn(searchService, 'search').and.returnValue(throwError({ "status": 402 }));
             component.setSearchWordTo('searchTerm');
             fixture.detectChanges();
             fixture.whenStable().then(() => {

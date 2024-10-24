@@ -23,37 +23,37 @@ import { LoginDialogPanelComponent } from '../login-dialog-panel/login-dialog-pa
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
 
 @Component({
-    selector: 'adf-login-dialog',
-    standalone: true,
-    templateUrl: './login-dialog.component.html',
-    styleUrls: ['./login-dialog.component.scss'],
-    imports: [MatDialogModule, LoginDialogPanelComponent, TranslateModule, MatButtonModule],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-login-dialog',
+    "standalone": true,
+    "templateUrl": './login-dialog.component.html',
+    "styleUrls": ['./login-dialog.component.scss'],
+    "imports": [MatDialogModule, LoginDialogPanelComponent, TranslateModule, MatButtonModule],
+    "encapsulation": ViewEncapsulation.None
 })
 export class LoginDialogComponent {
-    @ViewChild('adfLoginPanel', { static: true })
+    @ViewChild('adfLoginPanel', { "static": true })
     loginPanel: LoginDialogPanelComponent;
 
     buttonActionName = '';
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: LoginDialogComponentData) {
+    constructor (@Inject(MAT_DIALOG_DATA) public data: LoginDialogComponentData) {
         this.buttonActionName = data.actionName ? `LOGIN.DIALOG.${data.actionName.toUpperCase()}` : 'LOGIN.DIALOG.CHOOSE';
     }
 
-    close() {
+    close () {
         this.data.logged.complete();
     }
 
-    submitForm(): void {
+    submitForm (): void {
         this.loginPanel.submitForm();
     }
 
-    onLoginSuccess(event: any) {
+    onLoginSuccess (event: any) {
         this.data.logged.next(event);
         this.close();
     }
 
-    isFormValid() {
+    isFormValid () {
         return this.loginPanel ? this.loginPanel.isValid() : false;
     }
 }

@@ -24,8 +24,8 @@ export const CONTENT_PIPES = [NodeNameTooltipPipe] as const;
  * @deprecated Use the individual pipe modules instead.
  */
 @NgModule({
-    imports: [...CONTENT_PIPES],
-    providers: [...CONTENT_PIPES],
-    exports: [...CONTENT_PIPES]
+    "imports": [...CONTENT_PIPES],
+    "providers": [...CONTENT_PIPES],
+    "exports": [...CONTENT_PIPES]
 })
 export class ContentPipeModule {}

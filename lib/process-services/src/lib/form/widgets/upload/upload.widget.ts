@@ -29,12 +29,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'upload-widget',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatListModule, MatButtonModule, MatIconModule, ErrorWidgetComponent],
-    templateUrl: './upload.widget.html',
-    styleUrls: ['./upload.widget.scss'],
-    host: {
+    "selector": 'upload-widget',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatListModule, MatButtonModule, MatIconModule, ErrorWidgetComponent],
+    "templateUrl": './upload.widget.html',
+    "styleUrls": ['./upload.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -45,7 +45,7 @@ import { MatIconModule } from '@angular/material/icon';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     hasFile: boolean;
@@ -56,24 +56,24 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(public formService: FormService, private thumbnailService: ThumbnailService, public processContentService: ProcessContentService) {
+    constructor (public formService: FormService, private thumbnailService: ThumbnailService, public processContentService: ProcessContentService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field?.value?.length > 0) {
             this.hasFile = true;
         }
         this.getMultipleFileParam();
     }
 
-    removeFile(file: any) {
+    removeFile (file: any) {
         if (this.field) {
             this.removeElementFromList(file);
         }
     }
 
-    onFileChanged(event: any) {
+    onFileChanged (event: any) {
         const files = event.target.files;
         let filesSaved = [];
 
@@ -96,7 +96,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    private uploadRawContent(file): Observable<any> {
+    private uploadRawContent (file): Observable<any> {
         return this.processContentService.createTemporaryRawRelatedContent(file).pipe(
             map((response: any) => {
                 response.contentBlob = file;
@@ -105,13 +105,13 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         );
     }
 
-    getMultipleFileParam() {
+    getMultipleFileParam () {
         if (this.field?.params?.multiple) {
             this.multipleOption = this.field.params.multiple ? 'multiple' : '';
         }
     }
 
-    private removeElementFromList(file: any) {
+    private removeElementFromList (file: any) {
         const index = this.field.value.indexOf(file);
 
         if (index !== -1) {
@@ -128,11 +128,11 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    getIcon(mimeType: string): string {
+    getIcon (mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    fileClicked(contentLinkModel: any): void {
+    fileClicked (contentLinkModel: any): void {
         const file = new ContentLinkModel(contentLinkModel);
         let fetch = this.processContentService.getContentPreview(file.id);
         if (file.isTypeImage() || file.isTypePdf()) {

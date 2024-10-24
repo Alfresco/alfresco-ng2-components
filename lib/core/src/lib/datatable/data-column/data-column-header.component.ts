@@ -21,17 +21,17 @@ import { AfterContentInit, Component, ContentChild, TemplateRef } from '@angular
 import { DataColumnComponent } from './data-column.component';
 
 @Component({
-    selector: 'adf-data-column-header',
-    standalone: true,
-    template: ''
+    "selector": 'adf-data-column-header',
+    "standalone": true,
+    "template": ''
 })
 export class DateColumnHeaderComponent implements AfterContentInit {
     @ContentChild(TemplateRef)
     public header: TemplateRef<any>;
 
-    constructor(private columnComponent: DataColumnComponent) {}
+    constructor (private columnComponent: DataColumnComponent) {}
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         if (this.columnComponent) {
             this.columnComponent.header = this.header;
         }

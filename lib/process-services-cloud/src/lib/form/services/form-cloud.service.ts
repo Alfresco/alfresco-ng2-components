@@ -28,17 +28,17 @@ import { FormCloudServiceInterface } from './form-cloud.service.interface';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class FormCloudService extends BaseCloudService implements FormCloudServiceInterface {
 
     private _uploadApi: UploadApi;
-    get uploadApi(): UploadApi {
+    get uploadApi (): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
     }
 
-    constructor(
+    constructor (
         adfHttpClient: AdfHttpClient
     ) {
         super(adfHttpClient);
@@ -46,23 +46,22 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets the form definition of a task.
-     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param version Version of the form
      * @returns Form definition
      */
-    getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
+    getTaskForm (appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
             switchMap(task => this.getForm(appName, task.formKey, version).pipe(
                 map((form: FormContent) => {
                     const flattenForm = {
                         ...form.formRepresentation,
                         ...form.formRepresentation.formDefinition,
-                        taskId: task.id,
-                        taskName: task.name,
-                        processDefinitionId: task.processDefinitionId,
-                        processInstanceId: task.processInstanceId
+                        "taskId": task.id,
+                        "taskName": task.name,
+                        "processDefinitionId": task.processDefinitionId,
+                        "processInstanceId": task.processInstanceId
                     };
                     delete flattenForm.formDefinition;
                     return flattenForm;
@@ -73,7 +72,6 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Saves a task form.
-     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param processInstanceId ID of processInstance
@@ -81,7 +79,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      * @param values Form values object
      * @returns Updated task details
      */
-    saveTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, values: FormValues): Observable<TaskDetailsCloudModel> {
+    saveTaskForm (appName: string, taskId: string, processInstanceId: string, formId: string, values: FormValues): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
         const saveFormRepresentation: any = {
             values,
@@ -94,7 +92,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         );
     }
 
-    createTemporaryRawRelatedContent(file: any, nodeId: string, contentHost: string): Observable<any> {
+    createTemporaryRawRelatedContent (file: any, nodeId: string, contentHost: string): Observable<any> {
 
         const changedConfig = this.apiService.lastConfig;
         changedConfig.provider = 'ALL';
@@ -105,7 +103,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
             '',
             nodeId,
             null,
-            { overwrite: true }
+            { "overwrite": true }
         )).pipe(
             map((res: any) => res.entry)
         );
@@ -113,7 +111,6 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Completes a task form.
-     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @param processInstanceId ID of processInstance
@@ -123,10 +120,10 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
      * @param version of the form
      * @returns Updated task details
      */
-    completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
+    completeTaskForm (appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
         const completeFormRepresentation = {
-            values: formValues,
+            "values": formValues,
             taskId,
             processInstanceId
         } as CompleteFormRepresentation;
@@ -142,12 +139,11 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets details of a task
-     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @returns Details of the task
      */
-    getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    getTask (appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
         return this.get(apiUrl).pipe(
@@ -157,12 +153,11 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets the variables of a task.
-     *
      * @param appName Name of the app
      * @param taskId ID of the target task
      * @returns Task variables
      */
-    getTaskVariables(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
+    getTaskVariables (appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/variables`;
         let skipCount = 0;
         const maxItems = 1000;
@@ -182,13 +177,12 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Gets a form definition.
-     *
      * @param appName Name of the app
      * @param formKey key of the target task
      * @param version Version of the form
      * @returns Form definition
      */
-    getForm(appName: string, formKey: string, version?: number): Observable<FormContent> {
+    getForm (appName: string, formKey: string, version?: number): Observable<FormContent> {
         let url = `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
 
         if (version) {
@@ -198,7 +192,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return this.get(url);
     }
 
-    getRestWidgetData(formName: string, widgetId: string, body: any = {}): Observable<FormFieldOption[]> {
+    getRestWidgetData (formName: string, widgetId: string, body: any = {}): Observable<FormFieldOption[]> {
         const appName = this.appConfigService.get('alfresco-deployed-apps')[0]?.name;
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formName}/values/${widgetId}`;
         return this.post(apiUrl, body);
@@ -206,13 +200,12 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
 
     /**
      * Parses JSON data to create a corresponding form.
-     *
      * @param json JSON data to create the form
      * @param data Values for the form's fields
      * @param readOnly Toggles whether or not the form should be read-only
      * @returns Form created from the JSON specification
      */
-    parseForm(json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormModel {
+    parseForm (json: any, data?: TaskVariableCloud[], readOnly: boolean = false): FormModel {
         if (json) {
             const flattenForm = {
                 ...json.formRepresentation,
@@ -230,7 +223,7 @@ export class FormCloudService extends BaseCloudService implements FormCloudServi
         return null;
     }
 
-    getPreviewState(): boolean {
+    getPreviewState (): boolean {
         return false;
     }
 }

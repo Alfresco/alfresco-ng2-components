@@ -27,9 +27,9 @@ import { VersionUploadComponent } from '../version-manager/version-upload.compon
 import { VersionListComponent } from '../version-manager/version-list.component';
 
 @Component({
-    selector: 'adf-new-version-uploader-dialog',
-    standalone: true,
-    imports: [
+    "selector": 'adf-new-version-uploader-dialog',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatDialogModule,
         TranslateModule,
@@ -38,9 +38,9 @@ import { VersionListComponent } from '../version-manager/version-list.component'
         VersionUploadComponent,
         VersionListComponent
     ],
-    templateUrl: './new-version-uploader.dialog.html',
-    styleUrls: ['./new-version-uploader.dialog.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './new-version-uploader.dialog.html',
+    "styleUrls": ['./new-version-uploader.dialog.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class NewVersionUploaderDialogComponent implements OnInit {
     /**
@@ -57,16 +57,16 @@ export class NewVersionUploaderDialogComponent implements OnInit {
     @Output()
     uploadError = new EventEmitter<any>();
 
-    constructor(
+    constructor (
         @Inject(MAT_DIALOG_DATA) public data: NewVersionUploaderDialogData,
         private dialogRef: MatDialogRef<NewVersionUploaderDialogComponent>
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.setDialogTitle();
     }
 
-    private setDialogTitle() {
+    private setDialogTitle () {
         if (!this.data.title) {
             this.title = this.data.showVersionsOnly ? 'ADF-NEW-VERSION-UPLOADER.DIALOG_LIST.TITLE' : 'ADF-NEW-VERSION-UPLOADER.DIALOG_UPLOAD.TITLE';
         } else {
@@ -74,24 +74,24 @@ export class NewVersionUploaderDialogComponent implements OnInit {
         }
     }
 
-    handleUpload(newFileVersion) {
-        this.dialogAction.emit({ action: NewVersionUploaderDataAction.upload, newVersion: newFileVersion, currentVersion: this.data.node });
+    handleUpload (newFileVersion) {
+        this.dialogAction.emit({ "action": NewVersionUploaderDataAction.upload, "newVersion": newFileVersion, "currentVersion": this.data.node });
         this.dialogRef.close();
     }
 
-    handleCancel() {
+    handleCancel () {
         this.dialogRef.close();
     }
 
-    onUploadError(error) {
+    onUploadError (error) {
         this.uploadError.emit(error);
     }
 
-    onViewingVersion(versionId: string) {
-        this.dialogAction.emit({ action: NewVersionUploaderDataAction.view, versionId });
+    onViewingVersion (versionId: string) {
+        this.dialogAction.emit({ "action": NewVersionUploaderDataAction.view, versionId });
     }
 
-    refresh(node: Node) {
-        this.dialogAction.emit({ action: NewVersionUploaderDataAction.refresh, node });
+    refresh (node: Node) {
+        this.dialogAction.emit({ "action": NewVersionUploaderDataAction.refresh, node });
     }
 }

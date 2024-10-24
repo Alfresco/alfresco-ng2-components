@@ -26,8 +26,8 @@ import { ContentService } from '../common/services/content.service';
 const DIALOG_WIDTH: number = 400;
 
 @Directive({
-    selector: '[adf-edit-folder]',
-    standalone: true
+    "selector": '[adf-edit-folder]',
+    "standalone": true
 })
 export class FolderEditDirective {
     /** Folder node to edit. */
@@ -47,28 +47,28 @@ export class FolderEditDirective {
     success = new EventEmitter<Node>();
 
     @HostListener('click', ['$event'])
-    onClick(event) {
+    onClick (event) {
         event.preventDefault();
         if (this.folder) {
             this.openDialog();
         }
     }
 
-    constructor(public dialogRef: MatDialog, public elementRef: ElementRef, public content: ContentService) {}
+    constructor (public dialogRef: MatDialog, public elementRef: ElementRef, public content: ContentService) {}
 
-    private get dialogConfig() {
+    private get dialogConfig () {
         const { folder } = this;
 
         return {
-            data: {
+            "data": {
                 folder,
-                editTitle: this.title
+                "editTitle": this.title
             },
-            width: `${DIALOG_WIDTH}px`
+            "width": `${DIALOG_WIDTH}px`
         };
     }
 
-    private openDialog(): void {
+    private openDialog (): void {
         const { dialogRef, dialogConfig, content } = this;
         const dialogInstance = dialogRef.open(FolderDialogComponent, dialogConfig);
 

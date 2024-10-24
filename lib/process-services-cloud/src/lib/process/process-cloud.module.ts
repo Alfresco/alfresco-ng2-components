@@ -25,7 +25,7 @@ import { ProcessDirectiveModule } from './directives/process-directive.module';
 import { ProcessNameCloudPipe } from '../pipes/process-name-cloud.pipe';
 
 @NgModule({
-    imports: [
+    "imports": [
         CoreModule,
         ProcessFiltersCloudModule,
         ProcessListCloudModule,
@@ -33,7 +33,7 @@ import { ProcessNameCloudPipe } from '../pipes/process-name-cloud.pipe';
         ProcessHeaderCloudModule,
         ProcessDirectiveModule
     ],
-    exports: [ProcessFiltersCloudModule, ProcessListCloudModule, StartProcessCloudModule, ProcessHeaderCloudModule, ProcessDirectiveModule],
-    providers: [ProcessNameCloudPipe, LocalizedDatePipe]
+    "exports": [ProcessFiltersCloudModule, ProcessListCloudModule, StartProcessCloudModule, ProcessHeaderCloudModule, ProcessDirectiveModule],
+    "providers": [ProcessNameCloudPipe, LocalizedDatePipe]
 })
 export class ProcessCloudModule {}

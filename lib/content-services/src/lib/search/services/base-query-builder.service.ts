@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Subject, Observable, from, ReplaySubject } from 'rxjs';
+import { Subject, Observable, from, ReplaySubject, BehaviorSubject } from 'rxjs';
 import { AppConfigService } from '@alfresco/adf-core';
 import {
     SearchRequest,
@@ -37,16 +37,24 @@ import { FacetField } from '../models/facet-field.interface';
 import { FacetFieldBucket } from '../models/facet-field-bucket.interface';
 import { SearchForm } from '../models/search-form.interface';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { Buffer } from 'buffer';
+import { inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export abstract class BaseQueryBuilderService {
+    private readonly router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
     private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
+    get searchApi (): SearchApi {
         this._searchApi = this._searchApi ?? new SearchApi(this.alfrescoApiService.getInstance());
         return this._searchApi;
     }
 
     /*  Stream that emits the search configuration whenever the user change the search forms */
     configUpdated = new Subject<SearchConfiguration>();
+
+    /*  Stream that emits the event each time when search filter finishes loading initial value */
+    filterLoaded = new Subject<void>();
 
     /*  Stream that emits the query before search whenever user search  */
     updated = new Subject<SearchRequest>();
@@ -60,35 +68,40 @@ export abstract class BaseQueryBuilderService {
     /*  Stream that emits search forms  */
     searchForms = new ReplaySubject<SearchForm[]>(1);
 
+    /*  Stream that emits the initial value for some or all search filters */
+    populateFilters = new BehaviorSubject<{ [key: string]: any }>({});
+
     categories: SearchCategory[] = [];
     queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
+    filterRawParams: { [key: string]: any } = {};
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: SearchSortingDefinition[] = [];
     sortingOptions: SearchSortingDefinition[] = [];
+    private encodedQuery: string;
     private scope: RequestScope;
     private selectedConfiguration: number;
     private _userQuery = '';
 
     protected userFacetBuckets: { [key: string]: FacetFieldBucket[] } = {};
 
-    get userQuery(): string {
+    get userQuery (): string {
         return this._userQuery;
     }
 
-    set userQuery(value: string) {
+    set userQuery (value: string) {
         value = (value || '').trim();
         this._userQuery = value ? `(${value})` : '';
     }
 
     config: SearchConfiguration = {
-        categories: []
+        "categories": []
     };
 
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    protected constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
+    protected constructor (protected readonly appConfig: AppConfigService, protected readonly alfrescoApiService: AlfrescoApiService) {
         this.resetToDefaults();
     }
 
@@ -96,7 +109,14 @@ export abstract class BaseQueryBuilderService {
 
     public abstract isFilterServiceActive(): boolean;
 
-    public resetToDefaults() {
+    public resetToDefaults (withNavigate = false) {
+        if (withNavigate) {
+            this.router.navigate([], {
+                "queryParams": { "q": null },
+                "relativeTo": this.activatedRoute,
+                "queryParamsHandling": 'merge'
+            });
+        }
         const currentConfig = this.getDefaultConfiguration();
         this.resetSearchOptions();
         this.configUpdated.next(currentConfig);
@@ -104,7 +124,7 @@ export abstract class BaseQueryBuilderService {
         this.setUpSearchConfiguration(currentConfig);
     }
 
-    public getDefaultConfiguration(): SearchConfiguration | undefined {
+    public getDefaultConfiguration (): SearchConfiguration | undefined {
         const configurations = this.loadConfiguration();
 
         if (Array.isArray(configurations)) {
@@ -117,7 +137,7 @@ export abstract class BaseQueryBuilderService {
         return configurations;
     }
 
-    public updateSelectedConfiguration(index: number): void {
+    public updateSelectedConfiguration (index: number): void {
         const currentConfig = this.loadConfiguration();
         if (Array.isArray(currentConfig) && currentConfig[index] !== undefined) {
             this.selectedConfiguration = index;
@@ -129,7 +149,7 @@ export abstract class BaseQueryBuilderService {
         }
     }
 
-    private resetSearchOptions(): void {
+    private resetSearchOptions (): void {
         this.categories = [];
         this.queryFragments = {};
         this.filterQueries = [];
@@ -137,31 +157,34 @@ export abstract class BaseQueryBuilderService {
         this.sortingOptions = [];
         this.userFacetBuckets = {};
         this.scope = null;
+        this.filterRawParams = {};
+        this._userQuery = '';
+        this.populateFilters.next({});
     }
 
-    public getSearchFormDetails(): SearchForm[] {
+    public getSearchFormDetails (): SearchForm[] {
         const configurations = this.loadConfiguration();
         if (Array.isArray(configurations)) {
             return configurations.map((configuration, index) => ({
                 index,
-                name: configuration.name || 'SEARCH.UNKNOWN_CONFIGURATION',
-                default: configuration.default || false,
-                selected: this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
+                "name": configuration.name || 'SEARCH.UNKNOWN_CONFIGURATION',
+                "default": configuration.default || false,
+                "selected": this.selectedConfiguration !== undefined ? index === this.selectedConfiguration : configuration.default
             }));
         } else if (configurations) {
             return [
                 {
-                    index: 0,
-                    name: configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION',
-                    default: true,
-                    selected: true
+                    "index": 0,
+                    "name": configurations.name || 'SEARCH.UNKNOWN_CONFIGURATION',
+                    "default": true,
+                    "selected": true
                 }
             ];
         }
         return [];
     }
 
-    private setUpSearchConfiguration(currentConfiguration: SearchConfiguration) {
+    private setUpSearchConfiguration (currentConfiguration: SearchConfiguration) {
         if (currentConfiguration) {
             this.config = JSON.parse(JSON.stringify(currentConfiguration));
             this.categories = (this.config.categories || []).filter((category) => category.enabled);
@@ -179,7 +202,7 @@ export abstract class BaseQueryBuilderService {
      * @param field The target field
      * @param bucket Bucket to add
      */
-    addUserFacetBucket(field: string, bucket: FacetFieldBucket) {
+    addUserFacetBucket (field: string, bucket: FacetFieldBucket) {
         if (field && bucket) {
             const buckets = this.userFacetBuckets[field] || [];
             const existing = buckets.find((facetBucket) => facetBucket.label === bucket.label);
@@ -195,7 +218,7 @@ export abstract class BaseQueryBuilderService {
      * @param field The target fields
      * @returns Bucket array
      */
-    getUserFacetBuckets(field: string) {
+    getUserFacetBuckets (field: string) {
         return this.userFacetBuckets[field] || [];
     }
 
@@ -204,7 +227,7 @@ export abstract class BaseQueryBuilderService {
      * @param field The target field
      * @param bucket Bucket to remove
      */
-    removeUserFacetBucket(field: string, bucket: FacetFieldBucket) {
+    removeUserFacetBucket (field: string, bucket: FacetFieldBucket) {
         if (field && bucket) {
             const buckets = this.userFacetBuckets[field] || [];
             this.userFacetBuckets[field] = buckets.filter((facetBucket) => facetBucket.label !== bucket.label);
@@ -215,7 +238,7 @@ export abstract class BaseQueryBuilderService {
      * Adds a filter query to the current query.
      * @param query Query string to add
      */
-    addFilterQuery(query: string): void {
+    addFilterQuery (query: string): void {
         if (query) {
             const existing = this.filterQueries.find((filterQuery) => filterQuery.query === query);
             if (!existing) {
@@ -228,7 +251,7 @@ export abstract class BaseQueryBuilderService {
      * Removes an existing filter query.
      * @param query The query to remove
      */
-    removeFilterQuery(query: string): void {
+    removeFilterQuery (query: string): void {
         if (query) {
             this.filterQueries = this.filterQueries.filter((filterQuery) => filterQuery.query !== query);
         }
@@ -239,7 +262,7 @@ export abstract class BaseQueryBuilderService {
      * @param label Label of the query
      * @returns Facet query data
      */
-    getFacetQuery(label: string): FacetQuery {
+    getFacetQuery (label: string): FacetQuery {
         if (label && this.hasFacetQueries) {
             const result = this.config.facetQueries.queries.find((query) => query.label === label);
             if (result) {
@@ -254,7 +277,7 @@ export abstract class BaseQueryBuilderService {
      * @param label Label of the facet field
      * @returns Facet field data
      */
-    getFacetField(label: string): FacetField {
+    getFacetField (label: string): FacetField {
         if (label) {
             const fields = this.config.facetFields.fields || [];
             const result = fields.find((field) => field.label === label);
@@ -266,11 +289,11 @@ export abstract class BaseQueryBuilderService {
         return null;
     }
 
-    setScope(scope: RequestScope) {
+    setScope (scope: RequestScope) {
         this.scope = scope;
     }
 
-    getScope(): RequestScope {
+    getScope (): RequestScope {
         return this.scope;
     }
 
@@ -278,19 +301,23 @@ export abstract class BaseQueryBuilderService {
      * Builds the current query and triggers the `updated` event.
      * @param queryBody query settings
      */
-    update(queryBody?: SearchRequest): void {
+    update (queryBody?: SearchRequest): void {
         const query = queryBody ? queryBody : this.buildQuery();
         this.updated.next(query);
     }
 
     /**
      * Builds and executes the current query.
+     * @param updateQueryParams whether query params should be updated with encoded query
      * @param queryBody query settings
      */
-    async execute(queryBody?: SearchRequest) {
+    async execute (updateQueryParams = true, queryBody?: SearchRequest) {
         try {
             const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
+                if (updateQueryParams) {
+                    this.updateSearchQueryParams();
+                }
                 const resultSetPaging: ResultSetPaging = await this.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
@@ -298,17 +325,17 @@ export abstract class BaseQueryBuilderService {
             this.error.next(error);
 
             this.executed.next({
-                list: {
-                    pagination: {
-                        totalItems: 0
+                "list": {
+                    "pagination": {
+                        "totalItems": 0
                     },
-                    entries: []
+                    "entries": []
                 }
             });
         }
     }
 
-    search(queryBody: SearchRequest): Observable<ResultSetPaging> {
+    search (queryBody: SearchRequest): Observable<ResultSetPaging> {
         const promise = this.searchApi.search(queryBody);
 
         promise.then((resultSetPaging) => {
@@ -322,7 +349,7 @@ export abstract class BaseQueryBuilderService {
      * Builds the current query.
      * @returns The finished query
      */
-    buildQuery(): SearchRequest {
+    buildQuery (): SearchRequest {
         const query = this.getFinalQuery();
 
         const include = this.config.include || [];
@@ -332,19 +359,19 @@ export abstract class BaseQueryBuilderService {
 
         if (query) {
             const result: SearchRequest = {
-                query: {
+                "query": {
                     query,
-                    language: SEARCH_LANGUAGE.AFTS
+                    "language": SEARCH_LANGUAGE.AFTS
                 },
                 include,
-                paging: this.paging,
-                fields: this.config.fields,
-                filterQueries: this.filterQueries,
-                facetQueries: this.facetQueries,
-                facetIntervals: this.facetIntervals,
-                facetFields: this.facetFields,
-                sort: this.sort,
-                highlight: this.highlight
+                "paging": this.paging,
+                "fields": this.config.fields,
+                "filterQueries": this.filterQueries,
+                "facetQueries": this.facetQueries,
+                "facetIntervals": this.facetIntervals,
+                "facetFields": this.facetFields,
+                "sort": this.sort,
+                "highlight": this.highlight
             };
 
             if (this.scope) {
@@ -362,7 +389,7 @@ export abstract class BaseQueryBuilderService {
      * Gets the primary sorting definition.
      * @returns The primary sorting definition
      */
-    getPrimarySorting(): SearchSortingDefinition {
+    getPrimarySorting (): SearchSortingDefinition {
         if (this.sorting?.length > 0) {
             return this.sorting[0];
         }
@@ -373,7 +400,7 @@ export abstract class BaseQueryBuilderService {
      * Gets all pre-configured sorting options that users can choose from.
      * @returns Pre-configured sorting options
      */
-    getSortingOptions(): SearchSortingDefinition[] {
+    getSortingOptions (): SearchSortingDefinition[] {
         return this.config?.sorting?.options || [];
     }
 
@@ -382,7 +409,7 @@ export abstract class BaseQueryBuilderService {
      * @param query Target query
      * @returns Query group
      */
-    getQueryGroup(query: FacetQuery): string {
+    getQueryGroup (query: FacetQuery): string {
         return query.group || this.config.facetQueries.label || 'Facet Queries';
     }
 
@@ -390,7 +417,7 @@ export abstract class BaseQueryBuilderService {
      * Checks if FacetQueries has been defined
      * @returns True if defined, false otherwise
      */
-    get hasFacetQueries(): boolean {
+    get hasFacetQueries (): boolean {
         return this.config?.facetQueries?.queries?.length > 0;
     }
 
@@ -398,23 +425,23 @@ export abstract class BaseQueryBuilderService {
      * Checks if FacetIntervals has been defined
      * @returns True if defined, false otherwise
      */
-    get hasFacetIntervals(): boolean {
+    get hasFacetIntervals (): boolean {
         return this.config?.facetIntervals?.intervals?.length > 0;
     }
 
-    get hasFacetHighlight(): boolean {
+    get hasFacetHighlight (): boolean {
         return !!this.config?.highlight;
     }
 
-    protected get sort(): RequestSortDefinitionInner[] {
+    protected get sort (): RequestSortDefinitionInner[] {
         return this.sorting.map((def) => ({
-            type: def.type,
-            field: def.field,
-            ascending: def.ascending
+            "type": def.type,
+            "field": def.field,
+            "ascending": def.ascending
         }));
     }
 
-    protected get facetQueries(): FacetQuery[] {
+    protected get facetQueries (): FacetQuery[] {
         if (this.hasFacetQueries) {
             return this.config.facetQueries.queries.map((query) => {
                 query.group = this.getQueryGroup(query);
@@ -425,24 +452,24 @@ export abstract class BaseQueryBuilderService {
         return null;
     }
 
-    protected get facetIntervals(): any {
+    protected get facetIntervals (): any {
         if (this.hasFacetIntervals) {
             const configIntervals = this.config.facetIntervals;
 
             return {
-                intervals: configIntervals.intervals.map(
+                "intervals": configIntervals.intervals.map(
                     (interval) =>
                         ({
-                            label: this.getSupportedLabel(interval.label),
-                            field: interval.field,
-                            sets: interval.sets.map(
+                            "label": this.getSupportedLabel(interval.label),
+                            "field": interval.field,
+                            "sets": interval.sets.map(
                                 (set) =>
                                     ({
-                                        label: this.getSupportedLabel(set.label),
-                                        start: set.start,
-                                        end: set.end,
-                                        startInclusive: set.startInclusive,
-                                        endInclusive: set.endInclusive
+                                        "label": this.getSupportedLabel(set.label),
+                                        "start": set.start,
+                                        "end": set.end,
+                                        "startInclusive": set.startInclusive,
+                                        "endInclusive": set.endInclusive
                                     } as any)
                             )
                         } as any)
@@ -453,13 +480,15 @@ export abstract class BaseQueryBuilderService {
         return null;
     }
 
-    protected get highlight(): RequestHighlight {
+    protected get highlight (): RequestHighlight {
         return this.hasFacetHighlight ? this.config.highlight : null;
     }
 
-    protected getFinalQuery(): string {
+    protected getFinalQuery (): string {
         let query = '';
-
+        if (this.userQuery) {
+            this.filterRawParams['userQuery'] = this.userQuery;
+        }
         this.categories.forEach((facet) => {
             const customQuery = this.queryFragments[facet.id];
             if (customQuery) {
@@ -490,20 +519,20 @@ export abstract class BaseQueryBuilderService {
         return result;
     }
 
-    protected get facetFields(): RequestFacetFields {
+    protected get facetFields (): RequestFacetFields {
         const facetFields = this.config.facetFields?.fields;
 
         if (facetFields?.length > 0) {
             return {
-                facets: facetFields.map(
+                "facets": facetFields.map(
                     (facet) =>
                         ({
-                            field: facet.field,
-                            mincount: facet.mincount,
-                            label: this.getSupportedLabel(facet.label),
-                            limit: facet.limit,
-                            offset: facet.offset,
-                            prefix: facet.prefix
+                            "field": facet.field,
+                            "mincount": facet.mincount,
+                            "label": this.getSupportedLabel(facet.label),
+                            "limit": facet.limit,
+                            "offset": facet.offset,
+                            "prefix": facet.prefix
                         } as any)
                 )
             };
@@ -517,11 +546,44 @@ export abstract class BaseQueryBuilderService {
      * @param configLabel Original label text
      * @returns Label, possibly with quotes if it contains spaces
      */
-    getSupportedLabel(configLabel: string): string {
+    getSupportedLabel (configLabel: string): string {
         const spaceInsideLabelIndex = configLabel.search(/\s/g);
         if (spaceInsideLabelIndex > -1) {
             return `"${configLabel}"`;
         }
         return configLabel;
+    }
+
+    /**
+     * Encodes filter configuration stored in filterRawParams object.
+     */
+    encodeQuery () {
+        this.encodedQuery = Buffer.from(JSON.stringify(this.filterRawParams)).toString('base64');
+    }
+
+    /**
+     * Encodes existing filters configuration and updates search query param value.
+     */
+    updateSearchQueryParams () {
+        this.encodeQuery();
+        this.router.navigate([], {
+            "relativeTo": this.activatedRoute,
+            "queryParams": { "q": this.encodedQuery },
+            "queryParamsHandling": 'merge'
+        });
+    }
+
+    /**
+     * Builds search query with provided user query, executes query, encodes latest filter config and navigates to search.
+     * @param query user query to search for
+     * @param searchUrl search url to navigate to
+     */
+    async navigateToSearch (query: string, searchUrl: string) {
+        this.userQuery = query;
+        await this.execute();
+        await this.router.navigate([searchUrl], {
+            "queryParams": { "q": this.encodedQuery },
+            "queryParamsHandling": 'merge'
+        });
     }
 }

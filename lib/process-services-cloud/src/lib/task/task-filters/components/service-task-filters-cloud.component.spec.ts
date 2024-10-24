@@ -36,8 +36,8 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
-            providers: [{ provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            "imports": [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+            "providers": [{ "provide": TASK_FILTERS_SERVICE_TOKEN, "useClass": LocalPreferenceCloudService }]
         });
         fixture = TestBed.createComponent(ServiceTaskFiltersCloudComponent);
         component = fixture.componentInstance;
@@ -53,7 +53,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should attach specific icon for each filter if hasIcon is true', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
 
-        component.ngOnChanges({ appName: change });
+        component.ngOnChanges({ "appName": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -75,7 +75,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should not attach icons for each filter if hasIcon is false', async () => {
         component.showIcons = false;
         const change = new SimpleChange(undefined, 'my-app-1', true);
-        component.ngOnChanges({ appName: change });
+        component.ngOnChanges({ "appName": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -87,7 +87,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should display the filters', async () => {
         const change = new SimpleChange(undefined, 'my-app-1', true);
 
-        component.ngOnChanges({ appName: change });
+        component.ngOnChanges({ "appName": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -114,7 +114,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         let lastValue: any;
         component.error.subscribe((err) => (lastValue = err));
 
-        component.ngOnChanges({ appName: change });
+        component.ngOnChanges({ "appName": change });
         fixture.detectChanges();
         expect(lastValue).toBeDefined();
     });
@@ -123,7 +123,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
-        component.ngOnChanges({ appName: change });
+        component.ngOnChanges({ "appName": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -133,32 +133,32 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     it('should select the service task filter based on the input by name param', async () => {
         const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
-        const change = new SimpleChange(null, { name: 'FakeMyServiceTasks1' }, true);
+        const change = new SimpleChange(null, { "name": 'FakeMyServiceTasks1' }, true);
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ filterParam: change });
+        component.ngOnChanges({ "filterParam": change });
 
         expect(component.currentFilter).toEqual(fakeGlobalServiceFilters[1]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(fakeGlobalServiceFilters[1]);
     });
 
     it('should not select any service task filter if filter input does not exist', async () => {
-        const change = new SimpleChange(null, { name: 'nonexistentFilter' }, true);
+        const change = new SimpleChange(null, { "name": 'nonexistentFilter' }, true);
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ filterParam: change });
+        component.ngOnChanges({ "filterParam": change });
 
         expect(component.currentFilter).toBeUndefined();
     });
 
     it('should select the service task filter based on the input by index param', async () => {
         const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
-        const change = new SimpleChange(null, { index: 2 }, true);
+        const change = new SimpleChange(null, { "index": 2 }, true);
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ filterParam: change });
+        component.ngOnChanges({ "filterParam": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -169,11 +169,11 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     it('should select the service task filter based on the input by id param', async () => {
         const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
-        const change = new SimpleChange(null, { id: '12' }, true);
+        const change = new SimpleChange(null, { "id": '12' }, true);
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ filterParam: change });
+        component.ngOnChanges({ "filterParam": change });
 
         expect(component.currentFilter).toEqual(fakeGlobalServiceFilters[2]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(fakeGlobalServiceFilters[2]);
@@ -181,11 +181,11 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     it('should select the service task filter based on the input by key param', async () => {
         const filterSelectedSpy = spyOn(component.filterSelected, 'emit');
-        const change = new SimpleChange(null, { key: 'fake-involved-tasks' }, true);
+        const change = new SimpleChange(null, { "key": 'fake-involved-tasks' }, true);
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ filterParam: change });
+        component.ngOnChanges({ "filterParam": change });
 
         expect(component.currentFilter).toEqual(fakeGlobalServiceFilters[0]);
         expect(filterSelectedSpy).toHaveBeenCalledWith(fakeGlobalServiceFilters[0]);
@@ -208,11 +208,11 @@ describe('ServiceTaskFiltersCloudComponent', () => {
 
     it('should not emit a filter clicked event when a filter is selected through the filterParam input (filterClicked emits only through a UI click action)', async () => {
         const filterClickedSpy = spyOn(component.filterClicked, 'emit');
-        const change = new SimpleChange(null, { id: '10' }, true);
+        const change = new SimpleChange(null, { "id": '10' }, true);
 
         fixture.detectChanges();
         await fixture.whenStable();
-        component.ngOnChanges({ filterParam: change });
+        component.ngOnChanges({ "filterParam": change });
 
         expect(component.currentFilter).toBe(fakeGlobalServiceFilters[0]);
         expect(filterClickedSpy).not.toHaveBeenCalled();
@@ -221,7 +221,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
     it('should reset the filter when the param is undefined', () => {
         const change = new SimpleChange(null, undefined, false);
         component.currentFilter = fakeGlobalServiceFilters[0];
-        component.ngOnChanges({ filterParam: change });
+        component.ngOnChanges({ "filterParam": change });
 
         expect(component.currentFilter).toBe(undefined);
     });
@@ -231,7 +231,7 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         const appName = 'my-app-1';
 
         const change = new SimpleChange(null, appName, true);
-        component.ngOnChanges({ appName: change });
+        component.ngOnChanges({ "appName": change });
 
         expect(component.getFilters).toHaveBeenCalledWith(appName);
     });
@@ -241,13 +241,13 @@ describe('ServiceTaskFiltersCloudComponent', () => {
         const appName = 'fake-app-name';
 
         const change = new SimpleChange(null, appName, true);
-        component.ngOnChanges({ appName: change });
+        component.ngOnChanges({ "appName": change });
 
         expect(component.getFilters).toHaveBeenCalledWith(appName);
     });
 
     it('should return the current filter after one is selected', () => {
-        const filter = { name: 'FakeMyServiceTasks2' };
+        const filter = { "name": 'FakeMyServiceTasks2' };
         component.filters = fakeGlobalServiceFilters;
 
         expect(component.currentFilter).toBeUndefined();

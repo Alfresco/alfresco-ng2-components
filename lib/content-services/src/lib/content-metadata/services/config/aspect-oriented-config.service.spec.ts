@@ -30,125 +30,125 @@ describe('AspectOrientedConfigService', () => {
             expectations: OrganisedPropertyGroup[];
         }
 
-        const property1 = { name: 'property1' } as Property;
-        const property2 = { name: 'property2' } as Property;
-        const property3 = { name: 'property3' } as Property;
-        const property4 = { name: 'property4' } as Property;
+        const property1 = { "name": 'property1' } as Property;
+        const property2 = { "name": 'property2' } as Property;
+        const property3 = { "name": 'property3' } as Property;
+        const property4 = { "name": 'property4' } as Property;
 
         const propertyGroups: PropertyGroupContainer = {
-            berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },
-            zestiria: { title: 'Zestiria', description: '', name: 'zestiria', properties: { property3, property4 } }
+            "berseria": { "title": 'Berseria', "description": '', "name": 'berseria', "properties": { property1, property2 } },
+            "zestiria": { "title": 'Zestiria', "description": '', "name": 'zestiria', "properties": { property3, property4 } }
         };
 
         const testCases: TestCase[] = [
             {
-                name: 'Empty config',
-                config: {},
-                expectations: []
+                "name": 'Empty config',
+                "config": {},
+                "expectations": []
             },
             {
-                name: 'One property from One group',
-                config: {
-                    berseria: ['property1']
+                "name": 'One property from One group',
+                "config": {
+                    "berseria": ['property1']
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Berseria',
-                        properties: [property1]
+                        "title": 'Berseria',
+                        "properties": [property1]
                     }
                 ]
             },
             {
-                name: 'More properties from One group',
-                config: {
-                    berseria: ['property1', 'property2']
+                "name": 'More properties from One group',
+                "config": {
+                    "berseria": ['property1', 'property2']
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Berseria',
-                        properties: [property1, property2]
+                        "title": 'Berseria',
+                        "properties": [property1, property2]
                     }
                 ]
             },
             {
-                name: 'One-one properties from More group',
-                config: {
-                    berseria: ['property1'],
-                    zestiria: ['property3']
+                "name": 'One-one properties from More group',
+                "config": {
+                    "berseria": ['property1'],
+                    "zestiria": ['property3']
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Berseria',
-                        properties: [property1]
+                        "title": 'Berseria',
+                        "properties": [property1]
                     },
                     {
-                        title: 'Zestiria',
-                        properties: [property3]
+                        "title": 'Zestiria',
+                        "properties": [property3]
                     }
                 ]
             },
             {
-                name: 'More properties from More groups',
-                config: {
-                    zestiria: ['property4', 'property3'],
-                    berseria: ['property2', 'property1']
+                "name": 'More properties from More groups',
+                "config": {
+                    "zestiria": ['property4', 'property3'],
+                    "berseria": ['property2', 'property1']
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Zestiria',
-                        properties: [property4, property3]
+                        "title": 'Zestiria',
+                        "properties": [property4, property3]
                     },
                     {
-                        title: 'Berseria',
-                        properties: [property2, property1]
+                        "title": 'Berseria',
+                        "properties": [property2, property1]
                     }
                 ]
             },
             {
-                name: 'Wildcard',
-                config: {
-                    berseria: '*',
-                    zestiria: ['property4']
+                "name": 'Wildcard',
+                "config": {
+                    "berseria": '*',
+                    "zestiria": ['property4']
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Berseria',
-                        properties: [property1, property2]
+                        "title": 'Berseria',
+                        "properties": [property1, property2]
                     },
                     {
-                        title: 'Zestiria',
-                        properties: [property4]
+                        "title": 'Zestiria',
+                        "properties": [property4]
                     }
                 ]
             },
             {
-                name: 'Not existing group',
-                config: {
-                    berseria: '*',
+                "name": 'Not existing group',
+                "config": {
+                    "berseria": '*',
                     'not-existing-group': '*',
-                    zestiria: ['property4']
+                    "zestiria": ['property4']
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Berseria',
-                        properties: [property1, property2]
+                        "title": 'Berseria',
+                        "properties": [property1, property2]
                     },
                     {
-                        title: 'Zestiria',
-                        properties: [property4]
+                        "title": 'Zestiria',
+                        "properties": [property4]
                     }
                 ]
             },
             {
-                name: 'Not existing property',
-                config: {
-                    berseria: ['not-existing-property'],
-                    zestiria: ['property4']
+                "name": 'Not existing property',
+                "config": {
+                    "berseria": ['not-existing-property'],
+                    "zestiria": ['property4']
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Zestiria',
-                        properties: [property4]
+                        "title": 'Zestiria',
+                        "properties": [property4]
                     }
                 ]
             }
@@ -177,30 +177,30 @@ describe('AspectOrientedConfigService', () => {
     });
 
     describe('appendAllPreset', () => {
-        const property1 = { name: 'property1' } as Property;
-        const property2 = { name: 'property2' } as Property;
-        const property3 = { name: 'property3' } as Property;
-        const property4 = { name: 'property4' } as Property;
+        const property1 = { "name": 'property1' } as Property;
+        const property2 = { "name": 'property2' } as Property;
+        const property3 = { "name": 'property3' } as Property;
+        const property4 = { "name": 'property4' } as Property;
 
         const propertyGroups: PropertyGroupContainer = {
-            berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },
-            zestiria: { title: 'Zestiria', description: '', name: 'zestiria', properties: { property3, property4 } }
+            "berseria": { "title": 'Berseria', "description": '', "name": 'berseria', "properties": { property1, property2 } },
+            "zestiria": { "title": 'Zestiria', "description": '', "name": 'zestiria', "properties": { property3, property4 } }
         };
 
         it(`should return all the propertyGorups`, () => {
             const testCase = {
-                name: 'Not existing property',
-                config: {
-                    includeAll: true
+                "name": 'Not existing property',
+                "config": {
+                    "includeAll": true
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Berseria',
-                        properties: [property1, property2]
+                        "title": 'Berseria',
+                        "properties": [property1, property2]
                     },
                     {
-                        title: 'Zestiria',
-                        properties: [property3, property4]
+                        "title": 'Zestiria',
+                        "properties": [property3, property4]
                     }
                 ]
             };
@@ -224,20 +224,20 @@ describe('AspectOrientedConfigService', () => {
 
         it(`should set as readOnly the properties defined in the config inside readOnlyAspects`, () => {
             const testCase = {
-                name: 'Not existing property',
-                config: {
-                    includeAll: true,
-                    readOnlyAspects: ['berseria'],
-                    readOnlyProperties: ['property3']
+                "name": 'Not existing property',
+                "config": {
+                    "includeAll": true,
+                    "readOnlyAspects": ['berseria'],
+                    "readOnlyProperties": ['property3']
                 },
-                expectations: [
+                "expectations": [
                     {
-                        title: 'Berseria',
-                        properties: [property1, property2]
+                        "title": 'Berseria',
+                        "properties": [property1, property2]
                     },
                     {
-                        title: 'Zestiria',
-                        properties: [property3, property4]
+                        "title": 'Zestiria',
+                        "properties": [property3, property4]
                     }
                 ]
             };

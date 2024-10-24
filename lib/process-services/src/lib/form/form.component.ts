@@ -60,12 +60,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-form',
-    standalone: true,
-    imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslateModule, FormRendererComponent, FormatSpacePipe],
-    templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-form',
+    "standalone": true,
+    "imports": [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslateModule, FormRendererComponent, FormatSpacePipe],
+    "templateUrl": './form.component.html',
+    "styleUrls": ['./form.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
     protected formService = inject(FormService);
@@ -134,11 +134,11 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor() {
+    constructor () {
         super();
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.formService.formContentClicked.pipe(takeUntil(this.onDestroy$)).subscribe((content) => this.formContentClicked.emit(content));
 
         this.formService.validateForm.pipe(takeUntil(this.onDestroy$)).subscribe((validateFormEvent) => {
@@ -149,12 +149,12 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const taskId = changes['taskId'];
         if (taskId?.currentValue) {
             this.getFormByTaskId(taskId.currentValue);
@@ -189,11 +189,11 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     /**
      * Invoked when user clicks form refresh button.
      */
-    onRefreshClicked() {
+    onRefreshClicked () {
         this.loadForm();
     }
 
-    loadForm() {
+    loadForm () {
         if (this.taskId) {
             this.getFormByTaskId(this.taskId);
             return;
@@ -210,7 +210,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         }
     }
 
-    findProcessVariablesByTaskId(taskId: string): Observable<TaskProcessVariableModel[]> {
+    findProcessVariablesByTaskId (taskId: string): Observable<TaskProcessVariableModel[]> {
         return this.taskService.getTask(taskId).pipe(
             switchMap((task) => {
                 if (this.isAProcessTask(task)) {
@@ -222,11 +222,11 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         );
     }
 
-    isAProcessTask(taskRepresentation) {
+    isAProcessTask (taskRepresentation) {
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
 
-    getFormByTaskId(taskId: string): Promise<FormModel> {
+    getFormByTaskId (taskId: string): Promise<FormModel> {
         return new Promise<FormModel>((resolve) => {
             this.findProcessVariablesByTaskId(taskId).subscribe((taskProcessVariables) => {
                 this.taskFormService.getTaskForm(taskId).subscribe(
@@ -247,7 +247,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         });
     }
 
-    getFormDefinitionByFormId(formId: number) {
+    getFormDefinitionByFormId (formId: number) {
         this.editorService.getFormDefinitionById(formId).subscribe(
             (form) => {
                 this.formName = form.name;
@@ -262,7 +262,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         );
     }
 
-    getFormDefinitionByFormName(formName: string) {
+    getFormDefinitionByFormName (formName: string) {
         this.modelService.getFormDefinitionByName(formName).subscribe(
             (id) => {
                 this.editorService.getFormDefinitionById(id).subscribe(
@@ -283,7 +283,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         );
     }
 
-    saveTaskForm() {
+    saveTaskForm () {
         if (this.form?.taskId) {
             this.taskFormService.saveTaskForm(this.form.taskId, this.form.values).subscribe(
                 () => {
@@ -295,7 +295,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         }
     }
 
-    completeTaskForm(outcome?: string) {
+    completeTaskForm (outcome?: string) {
         if (this.form?.taskId) {
             this.taskFormService.completeTaskForm(this.form.taskId, this.form.values, outcome).subscribe(
                 () => {
@@ -307,11 +307,11 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         }
     }
 
-    handleError(err: any): any {
+    handleError (err: any): any {
         this.error.emit(err);
     }
 
-    parseForm(formRepresentationJSON: any): FormModel {
+    parseForm (formRepresentationJSON: any): FormModel {
         if (formRepresentationJSON) {
             const form = new FormModel(formRepresentationJSON, this.data, this.readOnly, this.formService, this.enableFixedSpacedForm);
             if (!formRepresentationJSON.fields) {
@@ -327,21 +327,20 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     /**
      * Get custom set of outcomes for a Form Definition.
-     *
      * @param form Form definition model.
      * @returns list of form outcomes
      */
-    getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
-        return [new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })];
+    getFormDefinitionOutcomes (form: FormModel): FormOutcomeModel[] {
+        return [new FormOutcomeModel(form, { "id": '$save', "name": FormOutcomeModel.SAVE_ACTION, "isSystem": true })];
     }
 
-    checkVisibility(field: FormFieldModel) {
+    checkVisibility (field: FormFieldModel) {
         if (field?.form) {
             this.visibilityService.refreshVisibility(field.form);
         }
     }
 
-    loadFormFromActiviti(nodeType: string): any {
+    loadFormFromActiviti (nodeType: string): any {
         this.modelService.searchFrom(nodeType).subscribe(
             (form) => {
                 if (!form) {
@@ -360,11 +359,10 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     /**
      * Creates a Form with a field for each metadata property.
-     *
      * @param formName Name of the new form
      * @returns The new form
      */
-    createFormFromANode(formName: string): Observable<any> {
+    createFormFromANode (formName: string): Observable<any> {
         return new Observable((observer) => {
             this.modelService.createForm(formName).subscribe(
                 (form) => {
@@ -393,7 +391,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         });
     }
 
-    protected storeFormAsMetadata() {
+    protected storeFormAsMetadata () {
         if (this.saveMetadata) {
             this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(
                 (type) => {
@@ -412,37 +410,37 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         }
     }
 
-    protected onFormLoaded(form: FormModel) {
+    protected onFormLoaded (form: FormModel) {
         this.formLoaded.emit(form);
         this.formService.formLoaded.next(new FormEvent(form));
     }
 
-    protected onFormDataRefreshed(form: FormModel) {
+    protected onFormDataRefreshed (form: FormModel) {
         this.formDataRefreshed.emit(form);
         this.formService.formDataRefreshed.next(new FormEvent(form));
     }
 
-    protected onTaskSaved(form: FormModel) {
+    protected onTaskSaved (form: FormModel) {
         this.formSaved.emit(form);
         this.formService.taskSaved.next(new FormEvent(form));
     }
 
-    protected onTaskSavedError(form: FormModel, error: any) {
+    protected onTaskSavedError (form: FormModel, error: any) {
         this.handleError(error);
         this.formService.taskSavedError.next(new FormErrorEvent(form, error));
     }
 
-    protected onTaskCompleted(form: FormModel) {
+    protected onTaskCompleted (form: FormModel) {
         this.formCompleted.emit(form);
         this.formService.taskCompleted.next(new FormEvent(form));
     }
 
-    protected onTaskCompletedError(form: FormModel, error: any) {
+    protected onTaskCompletedError (form: FormModel, error: any) {
         this.handleError(error);
         this.formService.taskCompletedError.next(new FormErrorEvent(form, error));
     }
 
-    protected onExecuteOutcome(outcome: FormOutcomeModel): boolean {
+    protected onExecuteOutcome (outcome: FormOutcomeModel): boolean {
         const args = new FormOutcomeEvent(outcome);
 
         this.formService.executeOutcome.next(args);
@@ -454,20 +452,20 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
         return !args.defaultPrevented;
     }
 
-    private refreshFormData() {
+    private refreshFormData () {
         this.form = this.parseForm(this.form.json);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }
 
-    private loadFormForEcmNode(nodeId: string): void {
+    private loadFormForEcmNode (nodeId: string): void {
         this.nodeService.getNodeMetadata(nodeId).subscribe((data) => {
             this.data = data.metadata;
             this.loadFormFromActiviti(data.nodeType);
         }, this.handleError);
     }
 
-    private loadFormFromFormId(formId: number) {
+    private loadFormFromFormId (formId: number) {
         this.formId = formId;
         this.loadForm();
     }

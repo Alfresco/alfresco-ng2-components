@@ -32,33 +32,33 @@ describe('TreeViewComponent', () => {
 
     const fakeNodeList: TreeBaseNode[] = [
         {
-            nodeId: 'fake-node-id',
-            name: 'fake-node-name',
-            level: 0,
-            expandable: true,
-            node: { entry: { name: 'fake-node-name', id: 'fake-node-id' } } as any
+            "nodeId": 'fake-node-id',
+            "name": 'fake-node-name',
+            "level": 0,
+            "expandable": true,
+            "node": { "entry": { "name": 'fake-node-name', "id": 'fake-node-id' } } as any
         }
     ];
 
     const fakeChildrenList: TreeBaseNode[] = [
-        { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node: {} as any },
-        { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node: {} as any }
+        { "nodeId": 'fake-child-id', "name": 'fake-child-name', "level": 0, "expandable": true, "node": {} as any },
+        { "nodeId": 'fake-second-id', "name": 'fake-second-name', "level": 0, "expandable": true, "node": {} as any }
     ];
 
     const fakeNextChildrenList: TreeBaseNode[] = [
         {
-            nodeId: 'fake-next-child-id',
-            name: 'fake-next-child-name',
-            level: 0,
-            expandable: true,
-            node: {} as any
+            "nodeId": 'fake-next-child-id',
+            "name": 'fake-next-child-name',
+            "level": 0,
+            "expandable": true,
+            "node": {} as any
         },
         {
-            nodeId: 'fake-next-second-id',
-            name: 'fake-next-second-name',
-            level: 0,
-            expandable: true,
-            node: {} as any
+            "nodeId": 'fake-next-second-id',
+            "name": 'fake-next-second-name',
+            "level": 0,
+            "expandable": true,
+            "node": {} as any
         }
     ];
 
@@ -74,7 +74,7 @@ describe('TreeViewComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, TreeViewComponent]
+            "imports": [ContentTestingModule, TreeViewComponent]
         });
     });
 
@@ -87,7 +87,7 @@ describe('TreeViewComponent', () => {
             spyOn(treeService, 'getTreeNodes').and.callFake((nodeId) => returnRootOrChildrenNode(nodeId));
             component.nodeId = '9999999';
             const changeNodeId = new SimpleChange(null, '9999999', true);
-            component.ngOnChanges({ nodeId: changeNodeId });
+            component.ngOnChanges({ "nodeId": changeNodeId });
             fixture.detectChanges();
         });
 
@@ -117,7 +117,7 @@ describe('TreeViewComponent', () => {
         it('should show only the correct subfolders when the nodeId is changed', async () => {
             component.nodeId = 'fake-second-id';
             const changeNodeId = new SimpleChange('9999999', 'fake-second-id', true);
-            component.ngOnChanges({ nodeId: changeNodeId });
+            component.ngOnChanges({ "nodeId": changeNodeId });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -250,7 +250,7 @@ describe('TreeViewComponent', () => {
                 done();
             });
             const changeNodeId = new SimpleChange(null, 'Poopoovic', true);
-            fixture.componentInstance.ngOnChanges({ nodeId: changeNodeId });
+            fixture.componentInstance.ngOnChanges({ "nodeId": changeNodeId });
             fixture.detectChanges();
         });
     });

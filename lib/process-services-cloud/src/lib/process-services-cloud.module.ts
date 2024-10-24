@@ -38,7 +38,7 @@ import { ApolloModule } from 'apollo-angular';
 import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module';
 
 @NgModule({
-    imports: [
+    "imports": [
         CoreModule,
         AppListCloudModule,
         ProcessCloudModule,
@@ -51,10 +51,10 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
         ApolloModule,
         RichTextEditorModule
     ],
-    providers: [
+    "providers": [
         provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud')
     ],
-    exports: [
+    "exports": [
         AppListCloudModule,
         ProcessCloudModule,
         TaskCloudModule,
@@ -67,27 +67,27 @@ import { RichTextEditorModule } from './rich-text-editor/rich-text-editor.module
     ]
 })
 export class ProcessServicesCloudModule {
-    static forRoot(
+    static forRoot (
         filterPreferenceServiceInstance?: PreferenceCloudServiceInterface,
         listPreferenceServiceInstance?: PreferenceCloudServiceInterface
     ): ModuleWithProviders<ProcessServicesCloudModule> {
         return {
-            ngModule: ProcessServicesCloudModule,
-            providers: [
+            "ngModule": ProcessServicesCloudModule,
+            "providers": [
                 provideTranslations('adf-process-services-cloud', 'assets/adf-process-services-cloud'),
-                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: TASK_FILTERS_SERVICE_TOKEN, useExisting: filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
-                { provide: TASK_LIST_PREFERENCES_SERVICE_TOKEN, useExisting: listPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { "provide": PROCESS_FILTERS_SERVICE_TOKEN, "useExisting": filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { "provide": TASK_FILTERS_SERVICE_TOKEN, "useExisting": filterPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { "provide": PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, "useExisting": listPreferenceServiceInstance ?? LocalPreferenceCloudService },
+                { "provide": TASK_LIST_PREFERENCES_SERVICE_TOKEN, "useExisting": listPreferenceServiceInstance ?? LocalPreferenceCloudService },
                 FormRenderingService,
-                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+                { "provide": FormRenderingService, "useClass": CloudFormRenderingService }
             ]
         };
     }
 
-    static forChild(): ModuleWithProviders<ProcessServicesCloudModule> {
+    static forChild (): ModuleWithProviders<ProcessServicesCloudModule> {
         return {
-            ngModule: ProcessServicesCloudModule
+            "ngModule": ProcessServicesCloudModule
         };
     }
 }

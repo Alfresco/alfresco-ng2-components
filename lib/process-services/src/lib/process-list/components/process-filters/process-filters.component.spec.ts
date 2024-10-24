@@ -28,22 +28,22 @@ import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresent
 
 const fakeProcessFilters: UserProcessInstanceFilterRepresentation[] = [
     {
-        id: 10,
-        name: 'FakeCompleted',
-        icon: 'glyphicon-th',
-        filter: { state: 'open', assignment: 'fake-involved' }
+        "id": 10,
+        "name": 'FakeCompleted',
+        "icon": 'glyphicon-th',
+        "filter": { "state": 'open', "assignment": 'fake-involved' }
     },
     {
-        id: 20,
-        name: 'FakeAll',
-        icon: 'glyphicon-random',
-        filter: { state: 'open', assignment: 'fake-assignee' }
+        "id": 20,
+        "name": 'FakeAll',
+        "icon": 'glyphicon-random',
+        "filter": { "state": 'open', "assignment": 'fake-assignee' }
     },
     {
-        id: 30,
-        name: 'Running',
-        icon: 'glyphicon-ok-sign',
-        filter: { state: 'open', assignment: 'fake-running' }
+        "id": 30,
+        "name": 'Running',
+        "icon": 'glyphicon-ok-sign',
+        "filter": { "state": 'open', "assignment": 'fake-running' }
     }
 ];
 
@@ -58,7 +58,7 @@ describe('ProcessFiltersComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            "imports": [ProcessTestingModule]
         });
 
         processFilterService = TestBed.inject(ProcessFilterService);
@@ -66,7 +66,7 @@ describe('ProcessFiltersComponent', () => {
 
         appsProcessService = TestBed.inject(AppsProcessService);
         getDeployedApplicationsByNameSpy = spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(
-            from(Promise.resolve({ id: 1 }))
+            from(Promise.resolve({ "id": 1 }))
         );
 
         router = TestBed.inject(Router);
@@ -88,7 +88,7 @@ describe('ProcessFiltersComponent', () => {
 
         spyOn(filterList, 'getFiltersByAppId').and.callThrough();
 
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -105,14 +105,14 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit the selected filter based on the filterParam input', async () => {
-        filterList.filterParam = { id: 10 } as any;
+        filterList.filterParam = { "id": 10 } as any;
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
         let lastValue: UserProcessInstanceFilterRepresentation;
         filterList.filterSelected.subscribe((filter) => (lastValue = filter));
 
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -133,14 +133,14 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should reset selection when filterParam is a filter that does not exist', async () => {
-        const nonExistingFilterParam = { name: 'non-existing-filter' };
+        const nonExistingFilterParam = { "name": 'non-existing-filter' };
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
         filterList.currentFilter = nonExistingFilterParam;
         filterList.filterParam = nonExistingFilterParam as any;
 
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -149,7 +149,7 @@ describe('ProcessFiltersComponent', () => {
 
     it('should return the filter task list, filtered By Name', () => {
         const change = new SimpleChange(null, 'test', true);
-        filterList.ngOnChanges({ appName: change });
+        filterList.ngOnChanges({ "appName": change });
 
         fixture.detectChanges();
         expect(getDeployedApplicationsByNameSpy.calls.count()).toEqual(1);
@@ -164,7 +164,7 @@ describe('ProcessFiltersComponent', () => {
         let lastValue: any;
         filterList.error.subscribe((err) => (lastValue = err));
 
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
 
         expect(lastValue).toBeDefined();
     });
@@ -178,7 +178,7 @@ describe('ProcessFiltersComponent', () => {
         let lastValue: any;
         filterList.error.subscribe((err) => (lastValue = err));
 
-        filterList.ngOnChanges({ appName: change });
+        filterList.ngOnChanges({ "appName": change });
 
         fixture.detectChanges();
         expect(lastValue).toBeDefined();
@@ -186,9 +186,9 @@ describe('ProcessFiltersComponent', () => {
 
     it('should emit an event when a filter is selected', async () => {
         const currentFilter: UserProcessInstanceFilterRepresentation = {
-            id: 10,
-            name: 'FakeCompleted',
-            filter: { state: 'open', assignment: 'fake-involved' }
+            "id": 10,
+            "name": 'FakeCompleted',
+            "filter": { "state": 'open', "assignment": 'fake-involved' }
         };
 
         let lastValue: UserProcessInstanceFilterRepresentation;
@@ -205,7 +205,7 @@ describe('ProcessFiltersComponent', () => {
         const appId = '1';
 
         const change = new SimpleChange(null, appId, true);
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
@@ -215,7 +215,7 @@ describe('ProcessFiltersComponent', () => {
         const appId = null;
 
         const change = new SimpleChange(null, appId, true);
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
     });
@@ -225,15 +225,15 @@ describe('ProcessFiltersComponent', () => {
         const appName = 'fake-app-name';
 
         const change = new SimpleChange(null, appName, true);
-        filterList.ngOnChanges({ appName: change });
+        filterList.ngOnChanges({ "appName": change });
 
         expect(filterList.getFiltersByAppName).toHaveBeenCalledWith(appName);
     });
 
     it('should return the current filter after one is selected', () => {
         const filter: UserProcessInstanceFilterRepresentation = {
-            name: 'FakeAll',
-            filter: { state: 'open', assignment: 'fake-assignee' }
+            "name": 'FakeAll',
+            "filter": { "state": 'open', "assignment": 'fake-assignee' }
         };
         expect(filterList.currentFilter).toBeUndefined();
         filterList.selectFilter(filter);
@@ -241,12 +241,12 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should select the filter passed as input by id', async () => {
-        filterList.filterParam = { id: 20 } as any;
+        filterList.filterParam = { "id": 20 } as any;
 
         const appId = 1;
         const change = new SimpleChange(null, appId, true);
 
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
 
         await fixture.whenStable();
         expect(filterList.filters).toBeDefined();
@@ -256,12 +256,12 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should select the filter passed as input by name', async () => {
-        filterList.filterParam = { name: 'FakeAll' } as any;
+        filterList.filterParam = { "name": 'FakeAll' } as any;
 
         const appId = 1;
         const change = new SimpleChange(null, appId, true);
 
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
 
         await fixture.whenStable();
         expect(filterList.filters).toBeDefined();
@@ -273,7 +273,7 @@ describe('ProcessFiltersComponent', () => {
     it('should attach specific icon for each filter if hasIcon is true', async () => {
         filterList.showIcon = true;
         const change = new SimpleChange(undefined, 1, true);
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
         fixture.detectChanges();
         await fixture.whenStable();
         expect(filterList.filters.length).toBe(3);
@@ -287,7 +287,7 @@ describe('ProcessFiltersComponent', () => {
     it('should not attach icons for each filter if hasIcon is false', async () => {
         filterList.showIcon = false;
         const change = new SimpleChange(undefined, 1, true);
-        filterList.ngOnChanges({ appId: change });
+        filterList.ngOnChanges({ "appId": change });
         fixture.detectChanges();
         await fixture.whenStable();
         const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));

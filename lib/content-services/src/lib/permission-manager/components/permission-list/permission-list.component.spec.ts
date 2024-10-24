@@ -53,7 +53,7 @@ describe('PermissionListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(PermissionListComponent);
         component = fixture.componentInstance;
@@ -206,7 +206,7 @@ describe('PermissionListComponent', () => {
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
 
-            const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+            const select = await loader.getHarness(MatSelectHarness.with({ "ancestor": `#adf-select-role-permission` }));
             await select.open();
 
             const options = await select.getOptions();
@@ -236,7 +236,7 @@ describe('PermissionListComponent', () => {
         });
 
         it('should update the role when another value is chosen', async () => {
-            spyOn(nodeService, 'updateNode').and.returnValue(of(new Node({ id: 'fake-uwpdated-node' })));
+            spyOn(nodeService, 'updateNode').and.returnValue(of(new Node({ "id": 'fake-uwpdated-node' })));
             searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
             component.ngOnInit();
 
@@ -246,19 +246,19 @@ describe('PermissionListComponent', () => {
             expect(element.querySelector('adf-user-name-column').textContent).toContain('GROUP_EVERYONE');
             expect(element.querySelector('#adf-select-role-permission').textContent).toContain('Contributor');
 
-            const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+            const select = await loader.getHarness(MatSelectHarness.with({ "ancestor": `#adf-select-role-permission` }));
             await select.open();
 
             const options = await select.getOptions();
             expect(options.length).toBe(5);
             await options[3].click();
             expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', {
-                permissions: { locallySet: [{ accessStatus: 'ALLOWED', name: 'Editor', authorityId: 'GROUP_EVERYONE' }] }
+                "permissions": { "locallySet": [{ "accessStatus": 'ALLOWED', "name": 'Editor', "authorityId": 'GROUP_EVERYONE' }] }
             });
         });
 
         it('should delete the person', async () => {
-            spyOn(nodeService, 'updateNode').and.returnValue(of(new Node({ id: 'fake-uwpdated-node' })));
+            spyOn(nodeService, 'updateNode').and.returnValue(of(new Node({ "id": 'fake-uwpdated-node' })));
             searchQuerySpy.and.returnValue(of(fakeEmptyResponse));
             component.ngOnInit();
 
@@ -272,7 +272,7 @@ describe('PermissionListComponent', () => {
             deleteButton.click();
             fixture.detectChanges();
 
-            expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', { permissions: { locallySet: [] } });
+            expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', { "permissions": { "locallySet": [] } });
         });
     });
 });

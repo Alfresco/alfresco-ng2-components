@@ -38,24 +38,24 @@ describe('TagsCreatorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, TagsCreatorComponent],
-            providers: [
+            "imports": [NoopAnimationsModule, NoopTranslateModule, TagsCreatorComponent],
+            "providers": [
                 {
-                    provide: TagService,
-                    useValue: {
-                        findTagByName: () => of(null),
-                        searchTags: () =>
+                    "provide": TagService,
+                    "useValue": {
+                        "findTagByName": () => of(null),
+                        "searchTags": () =>
                             of({
-                                list: {
-                                    entries: []
+                                "list": {
+                                    "entries": []
                                 }
                             })
                     }
                 },
                 {
-                    provide: NotificationService,
-                    useValue: {
-                        showError: () => ({})
+                    "provide": NotificationService,
+                    "useValue": {
+                        "showError": () => ({})
                     }
                 }
             ]
@@ -74,7 +74,7 @@ describe('TagsCreatorComponent', () => {
      * Get name input element
      * @returns native element
      */
-    function getNameInput(): HTMLInputElement {
+    function getNameInput (): HTMLInputElement {
         return fixture.debugElement.query(By.css(`.adf-tag-name-field input`))?.nativeElement;
     }
 
@@ -82,7 +82,7 @@ describe('TagsCreatorComponent', () => {
      * Get the create tag label
      * @returns native element
      */
-    function getCreateTagLabel(): HTMLSpanElement {
+    function getCreateTagLabel (): HTMLSpanElement {
         return fixture.debugElement.query(By.css('.adf-create-tag-label'))?.nativeElement;
     }
 
@@ -90,7 +90,7 @@ describe('TagsCreatorComponent', () => {
      * Get remove tag buttons
      * @returns list of native elements
      */
-    function getRemoveTagButtons(): HTMLButtonElement[] {
+    function getRemoveTagButtons (): HTMLButtonElement[] {
         const elements = fixture.debugElement.queryAll(By.css(`[data-automation-id="remove-tag-button"]`));
         return elements.map((el) => el.nativeElement);
     }
@@ -99,8 +99,8 @@ describe('TagsCreatorComponent', () => {
      * Get newly added tags
      * @returns list of tags
      */
-    async function getAddedTags(): Promise<string[]> {
-        const matChipHarness = await loader.getAllHarnesses(MatChipHarness.with({ selector: '.adf-tags-chip' }));
+    async function getAddedTags (): Promise<string[]> {
+        const matChipHarness = await loader.getAllHarnesses(MatChipHarness.with({ "selector": '.adf-tags-chip' }));
         const tagElements = [];
         for (const matChip of matChipHarness) {
             tagElements.push(await matChip.getText());
@@ -114,11 +114,11 @@ describe('TagsCreatorComponent', () => {
      * @param addUsingEnter use Enter when adding
      * @param typingTimeout typing timeout in milliseconds (default 300)
      */
-    function addTagToAddedList(tagName: string, addUsingEnter?: boolean, typingTimeout = 300): void {
+    function addTagToAddedList (tagName: string, addUsingEnter?: boolean, typingTimeout = 300): void {
         typeTag(tagName, typingTimeout);
 
         if (addUsingEnter) {
-            getNameInput().dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+            getNameInput().dispatchEvent(new KeyboardEvent('keyup', { "key": 'Enter' }));
         } else {
             getCreateTagLabel().click();
         }
@@ -132,7 +132,7 @@ describe('TagsCreatorComponent', () => {
      * @param tagName tag name
      * @param timeout typing timeout in milliseconds (default 300)
      */
-    function typeTag(tagName: string, timeout = 300): void {
+    function typeTag (tagName: string, timeout = 300): void {
         component.tagNameControlVisible = true;
         fixture.detectChanges();
 
@@ -148,7 +148,7 @@ describe('TagsCreatorComponent', () => {
      * Get the existing tags label
      * @returns label
      */
-    function getExistingTagsLabel(): string {
+    function getExistingTagsLabel (): string {
         return fixture.debugElement.query(By.css('.adf-existing-tags-label')).nativeElement.textContent.trim();
     }
 
@@ -208,9 +208,9 @@ describe('TagsCreatorComponent', () => {
 
             spyOn(tagService, 'findTagByName').and.returnValue(
                 of({
-                    entry: {
+                    "entry": {
                         tag,
-                        id: 'tag-1'
+                        "id": 'tag-1'
                     }
                 })
             );
@@ -308,7 +308,7 @@ describe('TagsCreatorComponent', () => {
              * Get first error
              * @returns error text
              */
-            function getFirstError(): string {
+            function getFirstError (): string {
                 const error = fixture.debugElement.query(By.directive(MatError));
                 return error?.nativeElement.textContent.trim();
             }
@@ -379,9 +379,9 @@ describe('TagsCreatorComponent', () => {
 
                 spyOn(tagService, 'findTagByName').and.returnValue(
                     of({
-                        entry: {
+                        "entry": {
                             tag,
-                            id: 'tag-1'
+                            "id": 'tag-1'
                         }
                     })
                 );
@@ -396,9 +396,9 @@ describe('TagsCreatorComponent', () => {
 
                 spyOn(tagService, 'findTagByName').and.returnValue(
                     of({
-                        entry: {
+                        "entry": {
                             tag,
-                            id: 'tag-1'
+                            "id": 'tag-1'
                         }
                     })
                 );
@@ -417,9 +417,9 @@ describe('TagsCreatorComponent', () => {
 
                 spyOn(tagService, 'findTagByName').and.returnValue(
                     of({
-                        entry: {
-                            tag: tag2,
-                            id: 'tag-1'
+                        "entry": {
+                            "tag": tag2,
+                            "id": 'tag-1'
                         }
                     })
                 );
@@ -449,7 +449,7 @@ describe('TagsCreatorComponent', () => {
          * Get the existing tags panel
          * @returns debug element
          */
-        function getPanel(): DebugElement {
+        function getPanel (): DebugElement {
             return fixture.debugElement.query(By.css(`.adf-existing-tags-panel`));
         }
 
@@ -515,9 +515,9 @@ describe('TagsCreatorComponent', () => {
                 const tag = 'Tag';
                 spyOn(tagService, 'findTagByName').and.returnValue(
                     of({
-                        entry: {
+                        "entry": {
                             tag,
-                            id: 'tag-1'
+                            "id": 'tag-1'
                         }
                     })
                 );
@@ -538,7 +538,7 @@ describe('TagsCreatorComponent', () => {
              * Get the existing tags
              * @returns list of tags
              */
-            function getExistingTags(): string[] {
+            function getExistingTags (): string[] {
                 const tagElements = fixture.debugElement.queryAll(By.css(`.adf-existing-tags-panel .adf-tag`));
                 return tagElements.map((el) => el.nativeElement.textContent.trim());
             }
@@ -569,7 +569,7 @@ describe('TagsCreatorComponent', () => {
                 const name = 'Tag';
                 typeTag(name);
 
-                expect(tagService.searchTags).toHaveBeenCalledWith(name, { orderBy: 'tag', direction: 'asc' }, false, 0, 15);
+                expect(tagService.searchTags).toHaveBeenCalledWith(name, { "orderBy": 'tag', "direction": 'asc' }, false, 0, 15);
             }));
 
             it('should display loaded existing tags', fakeAsync(() => {
@@ -578,9 +578,9 @@ describe('TagsCreatorComponent', () => {
 
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
-                        list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
-                            pagination: {}
+                        "list": {
+                            "entries": [{ "entry": { "tag": tag1 } as any }, { "entry": { "tag": tag2 } as any }],
+                            "pagination": {}
                         }
                     })
                 );
@@ -600,9 +600,9 @@ describe('TagsCreatorComponent', () => {
 
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
-                        list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
-                            pagination: {}
+                        "list": {
+                            "entries": [{ "entry": { "tag": tag1 } as any }, { "entry": { "tag": tag2 } as any }],
+                            "pagination": {}
                         }
                     })
                 );
@@ -626,9 +626,9 @@ describe('TagsCreatorComponent', () => {
                 const tag = 'Tag';
                 spyOn(tagService, 'findTagByName').and.returnValue(
                     of({
-                        entry: {
+                        "entry": {
                             tag,
-                            id: 'tag-1'
+                            "id": 'tag-1'
                         }
                     })
                 );
@@ -644,9 +644,9 @@ describe('TagsCreatorComponent', () => {
                 component.tags = [tag];
                 spyOn(tagService, 'findTagByName').and.returnValue(
                     of({
-                        entry: {
+                        "entry": {
                             tag,
-                            id: 'tag-1'
+                            "id": 'tag-1'
                         }
                     })
                 );
@@ -673,17 +673,17 @@ describe('TagsCreatorComponent', () => {
 
                 spyOn(tagService, 'findTagByName').and.returnValue(
                     of({
-                        entry: {
+                        "entry": {
                             tag,
-                            id: 'tag-1'
+                            "id": 'tag-1'
                         }
                     })
                 );
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
-                        list: {
-                            entries: [{ entry: { tag: tag1 } as any }, { entry: { tag: tag2 } as any }],
-                            pagination: {}
+                        "list": {
+                            "entries": [{ "entry": { "tag": tag1 } as any }, { "entry": { "tag": tag2 } as any }],
+                            "pagination": {}
                         }
                     })
                 );
@@ -704,14 +704,14 @@ describe('TagsCreatorComponent', () => {
             }));
 
             it('should select existing tag when selectionChange event emits', fakeAsync(async () => {
-                const selectedTag = { entry: { tag: 'tag1' } as any };
+                const selectedTag = { "entry": { "tag": 'tag1' } as any };
                 const leftTag = 'tag2';
                 component.mode = TagsCreatorMode.CREATE_AND_ASSIGN;
                 spyOn(tagService, 'searchTags').and.returnValue(
                     of({
-                        list: {
-                            entries: [selectedTag, { entry: { tag: leftTag } as any }],
-                            pagination: {}
+                        "list": {
+                            "entries": [selectedTag, { "entry": { "tag": leftTag } as any }],
+                            "pagination": {}
                         }
                     })
                 );
@@ -731,7 +731,7 @@ describe('TagsCreatorComponent', () => {
              * Get the material progress spinner
              * @returns debug element
              */
-            async function getSpinner(): Promise<MatProgressSpinnerHarness> {
+            async function getSpinner (): Promise<MatProgressSpinnerHarness> {
                 const progressSpinner = await loader.getHarnessOrNull(MatProgressSpinnerHarness);
 
                 return progressSpinner;

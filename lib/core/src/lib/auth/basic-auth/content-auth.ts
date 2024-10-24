@@ -35,7 +35,7 @@ export interface TicketEntry {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContentAuth {
     onLogin = new ReplaySubject<any>(1);
@@ -44,38 +44,38 @@ export class ContentAuth {
 
     ticket: string;
     config = {
-        ticketEcm: null
+        "ticketEcm": null
     };
 
     authentications: Authentication = {
-        basicAuth: {
-            ticket: ''
+        "basicAuth": {
+            "ticket": ''
         },
-        type: 'basic'
+        "type": 'basic'
     };
 
-    get basePath(): string {
+    get basePath (): string {
         const contextRootEcm = this.appConfigService.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco';
         return this.appConfigService.get<string>(AppConfigValues.ECMHOST) + '/' + contextRootEcm + '/api/-default-/public/authentication/versions/1';
     }
 
-    constructor(private appConfigService: AppConfigService, private adfHttpClient: AdfHttpClient, private storageService: StorageService) {
+    constructor (private appConfigService: AppConfigService, private adfHttpClient: AdfHttpClient, private storageService: StorageService) {
         this.appConfigService.onLoad.subscribe(() => {
             this.setConfig();
         });
     }
 
-    private setConfig() {
+    private setConfig () {
         if (this.storageService.getItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL)) {
             this.setTicket(this.storageService.getItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL));
         }
     }
 
-    saveUsername(username: string) {
+    saveUsername (username: string) {
         this.storageService.setItem('ACS_USERNAME', username);
     }
 
-    getUsername() {
+    getUsername () {
         return this.storageService.getItem('ACS_USERNAME');
     }
 
@@ -85,7 +85,7 @@ export class ContentAuth {
      * @param password password to login
      * @returns A promise that returns {new authentication ticket} if resolved and {error} if rejected.
      */
-    login(username: string, password: string): Promise<any> {
+    login (username: string, password: string): Promise<any> {
         this.authentications.basicAuth.username = username;
         this.authentications.basicAuth.password = password;
 
@@ -124,7 +124,7 @@ export class ContentAuth {
      * logout Alfresco API
      * @returns A promise that returns { authentication ticket} if resolved and {error} if rejected.
      */
-    logout(): Promise<any> {
+    logout (): Promise<any> {
         this.saveUsername('');
         return new Promise((resolve, reject) => {
             this.deleteTicket().then(
@@ -151,7 +151,7 @@ export class ContentAuth {
      * Set the current Ticket
      * @param ticket a string representing the ticket
      */
-    setTicket(ticket: string) {
+    setTicket (ticket: string) {
         this.authentications.basicAuth.username = 'ROLE_TICKET';
         this.authentications.basicAuth.password = ticket;
         this.config.ticketEcm = ticket;
@@ -162,7 +162,7 @@ export class ContentAuth {
     /**
      * @returns the current Ticket
      */
-    getToken(): string {
+    getToken (): string {
         if (!this.ticket) {
             this.onError.next('error');
         }
@@ -170,7 +170,7 @@ export class ContentAuth {
         return this.ticket;
     }
 
-    invalidateSession() {
+    invalidateSession () {
         this.storageService.removeItem(AppConfigValues.CONTENT_TICKET_STORAGE_LABEL);
         this.authentications.basicAuth.username = null;
         this.authentications.basicAuth.password = null;
@@ -181,33 +181,33 @@ export class ContentAuth {
     /**
      * @returns If the client is logged in return true
      */
-    isLoggedIn(): boolean {
+    isLoggedIn (): boolean {
         return !!this.ticket;
     }
 
     /**
      * @returns return the Authentication
      */
-    getAuthentication() {
+    getAuthentication () {
         return this.authentications;
     }
 
-    createTicket(ticketBodyCreate: TicketBody): Promise<TicketEntry> {
+    createTicket (ticketBodyCreate: TicketBody): Promise<TicketEntry> {
         if (ticketBodyCreate === null || ticketBodyCreate === undefined) {
             this.onError.next(`Missing param ticketBodyCreate`);
 
             throw new Error(`Missing param ticketBodyCreate`);
         }
 
-        return this.adfHttpClient.post(this.basePath + '/tickets', { bodyParam: ticketBodyCreate });
+        return this.adfHttpClient.post(this.basePath + '/tickets', { "bodyParam": ticketBodyCreate });
     }
 
-    async requireAlfTicket(): Promise<void> {
+    async requireAlfTicket (): Promise<void> {
         const ticket = await this.adfHttpClient.get(this.basePath + '/tickets/-me-');
         this.setTicket(ticket.entry.id);
     }
 
-    deleteTicket(): Promise<any> {
+    deleteTicket (): Promise<any> {
         return this.adfHttpClient.delete(this.basePath + '/tickets/-me-');
     }
 }

@@ -32,7 +32,7 @@ export const CONTENT_DIALOG_DIRECTIVES = [
 
 /** @deprecated use `..CONTENT_DIALOG_DIRECTIVES` or standalone component imports instead */
 @NgModule({
-    imports: [...CONTENT_DIALOG_DIRECTIVES],
-    exports: [...CONTENT_DIALOG_DIRECTIVES]
+    "imports": [...CONTENT_DIALOG_DIRECTIVES],
+    "exports": [...CONTENT_DIALOG_DIRECTIVES]
 })
 export class DialogModule {}

@@ -21,10 +21,10 @@ import { RichTextEditorComponent } from './rich-text-editor.component';
 
 
 @NgModule({
-    declarations: [RichTextEditorComponent],
-    imports: [
+    "declarations": [RichTextEditorComponent],
+    "imports": [
         CommonModule
     ],
-    exports: [RichTextEditorComponent]
+    "exports": [RichTextEditorComponent]
 })
 export class RichTextEditorModule { }

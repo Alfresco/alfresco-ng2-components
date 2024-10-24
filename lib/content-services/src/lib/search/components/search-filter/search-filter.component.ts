@@ -30,9 +30,9 @@ import { SearchFacetFieldComponent } from '../search-facet-field';
 import { SearchFacetTabbedContentComponent } from '../search-filter-chips';
 
 @Component({
-    selector: 'adf-search-filter',
-    standalone: true,
-    imports: [
+    "selector": 'adf-search-filter',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatExpansionModule,
         MatButtonModule,
@@ -42,10 +42,10 @@ import { SearchFacetTabbedContentComponent } from '../search-filter-chips';
         SearchFacetFieldComponent,
         SearchFacetTabbedContentComponent
     ],
-    templateUrl: './search-filter.component.html',
-    styleUrls: ['./search-filter.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-filter' }
+    "templateUrl": './search-filter.component.html',
+    "styleUrls": ['./search-filter.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-filter' }
 })
 export class SearchFilterComponent {
     /** Toggles whether to show or not the context facet filters. */
@@ -54,11 +54,11 @@ export class SearchFilterComponent {
 
     facetQueriesLabel: string = 'Facet Queries';
     facetExpanded = {
-        default: false
+        "default": false
     };
     displayResetButton: boolean;
 
-    constructor(public queryBuilder: SearchQueryBuilderService, public facetFiltersService: SearchFacetFiltersService) {
+    constructor (public queryBuilder: SearchQueryBuilderService, public facetFiltersService: SearchFacetFiltersService) {
         if (queryBuilder.config?.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetExpanded['query'] = queryBuilder.config.facetQueries.expanded;
@@ -72,11 +72,11 @@ export class SearchFilterComponent {
         this.displayResetButton = this.queryBuilder.config && !!this.queryBuilder.config.resetButton;
     }
 
-    shouldExpand(field: FacetField): boolean {
+    shouldExpand (field: FacetField): boolean {
         return this.facetExpanded[field.type] || this.facetExpanded['default'];
     }
 
-    getBucketCountDisplay(bucket: FacetFieldBucket): string {
+    getBucketCountDisplay (bucket: FacetFieldBucket): string {
         return bucket.count === null ? '' : `(${bucket.count})`;
     }
 }

@@ -26,26 +26,26 @@ import { take } from 'rxjs/operators';
 describe('DebugFeaturesService', () => {
     let service: DebugFeaturesService;
     const mockStorage = {
-        getItem: () =>
+        "getItem": () =>
             JSON.stringify({
-                feature1: {
-                    current: true
+                "feature1": {
+                    "current": true
                 },
-                feature2: {
-                    current: false,
-                    fictive: true
+                "feature2": {
+                    "current": false,
+                    "fictive": true
                 }
             }),
-        setItem: () => {}
+        "setItem": () => {}
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
+            "providers": [
                 DebugFeaturesService,
-                { provide: StorageService, useValue: mockStorage },
-                { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
-                { provide: OverridableFeaturesServiceToken, useClass: DummyFeaturesService }
+                { "provide": StorageService, "useValue": mockStorage },
+                { "provide": WritableFeaturesServiceToken, "useClass": StorageFeaturesService },
+                { "provide": OverridableFeaturesServiceToken, "useClass": DummyFeaturesService }
             ]
         });
         service = TestBed.inject(DebugFeaturesService);
@@ -101,7 +101,7 @@ describe('DebugFeaturesService', () => {
 
     it('should always reset specified flags', () => {
         const flagsToReset = {
-            feature1: true
+            "feature1": true
         };
         const writableFeaturesServiceToken = TestBed.inject(WritableFeaturesServiceToken);
         const spy = spyOn(writableFeaturesServiceToken, 'resetFlags');

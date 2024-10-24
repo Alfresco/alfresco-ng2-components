@@ -150,18 +150,18 @@ export class IconModel {
         ['align-left', 'format_align_left']
     ];
 
-    constructor() {
+    constructor () {
         this.initIconsMDL();
     }
 
-    mapGlyphiconToMaterialDesignIcons(icon: string) {
+    mapGlyphiconToMaterialDesignIcons (icon: string) {
         return this.iconsMDL.get(icon) ? this.iconsMDL.get(icon) : DEFAULT_TASKS_APP_MATERIAL_ICON;
     }
 
     /**
      * Map all the bootstrap glyphicon icons with Material design material icon
      */
-    initIconsMDL() {
+    initIconsMDL () {
         this.iconsMDL = new Map<string, string>();
 
         this.supportedIconTypes.forEach(iconType => {

@@ -22,18 +22,18 @@ import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class GroupService {
     private _groupsApi: GroupsApi;
-    get groupsApi(): GroupsApi {
+    get groupsApi (): GroupsApi {
         this._groupsApi = this._groupsApi ?? new GroupsApi(this.alfrescoApiService.getInstance());
         return this._groupsApi;
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor (private alfrescoApiService: AlfrescoApiService) {}
 
-    async listAllGroupMembershipsForPerson(personId: string, opts?: any, accumulator = []): Promise<GroupEntry[]> {
+    async listAllGroupMembershipsForPerson (personId: string, opts?: any, accumulator = []): Promise<GroupEntry[]> {
         const groupsPaginated = await this.groupsApi.listGroupMembershipsForPerson(personId, opts);
         accumulator = [...accumulator, ...groupsPaginated.list.entries];
         if (groupsPaginated.list.pagination.hasMoreItems) {
@@ -41,8 +41,8 @@ export class GroupService {
             return this.listAllGroupMembershipsForPerson(
                 personId,
                 {
-                    maxItems: opts.maxItems,
-                    skipCount: skip
+                    "maxItems": opts.maxItems,
+                    "skipCount": skip
                 },
                 accumulator
             );
@@ -57,7 +57,7 @@ export class GroupService {
      * @param opts additional query parameters
      * @returns Observable<GroupEntry> group for specified id.
      */
-    getGroup(id: string, opts?: ContentIncludeQuery): Observable<GroupEntry> {
+    getGroup (id: string, opts?: ContentIncludeQuery): Observable<GroupEntry> {
         return from(this.groupsApi.getGroup(id, opts)).pipe(
             map((group) => {
                 group.entry.description ||= '';
@@ -72,13 +72,13 @@ export class GroupService {
      * @param opts additional query parameters
      * @returns Observable<GroupEntry> updated group.
      */
-    updateGroup(group: Group, opts?: ContentIncludeQuery): Observable<GroupEntry> {
+    updateGroup (group: Group, opts?: ContentIncludeQuery): Observable<GroupEntry> {
         return from(
             this.groupsApi.updateGroup(
                 group.id,
                 {
-                    displayName: group.displayName,
-                    description: group.description
+                    "displayName": group.displayName,
+                    "description": group.description
                 },
                 opts
             )

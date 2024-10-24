@@ -25,10 +25,10 @@ import { DummyFeaturesService } from '../services/dummy-features.service';
  * Provides the dummy feature flags.
  * @returns Environment Providers for Feature Flags.
  */
-export function provideDummyFeatureFlags() {
+export function provideDummyFeatureFlags () {
     return [
-        { provide: FeaturesServiceToken, useClass: DummyFeaturesService },
-        { provide: FlagsOverrideToken, useValue: false },
+        { "provide": FeaturesServiceToken, "useClass": DummyFeaturesService },
+        { "provide": FlagsOverrideToken, "useValue": false },
         IsFeatureOn,
         IsFeatureOff,
         IsFlagsOverrideOn

@@ -20,17 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileDraggableDirective, INPUT_FOCUS_CSS_CLASS } from '../directives/file-draggable.directive';
 
 @Component({
-    selector: 'adf-test-component',
-    standalone: true,
-    imports: [FileDraggableDirective],
-    template: `
+    "selector": 'adf-test-component',
+    "standalone": true,
+    "imports": [FileDraggableDirective],
+    "template": `
         <div id="test-container" [adf-file-draggable]="true">
             <div id="test-content"></div>
         </div>
     `
 })
 class TestComponent {
-    @ViewChild(FileDraggableDirective, { static: true })
+    @ViewChild(FileDraggableDirective, { "static": true })
     directive: FileDraggableDirective;
 }
 
@@ -44,7 +44,7 @@ describe('FileDraggableDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TestComponent]
+            "imports": [TestComponent]
         });
 
         fixture = TestBed.createComponent(TestComponent);
@@ -62,9 +62,9 @@ describe('FileDraggableDirective', () => {
 
     const createEvent = (eventName: string): DragEvent =>
         new DragEvent(eventName, {
-            bubbles: true,
-            cancelable: true,
-            dataTransfer: new DataTransfer()
+            "bubbles": true,
+            "cancelable": true,
+            "dataTransfer": new DataTransfer()
         });
 
     const raiseEvent = (eventName: string): DragEvent => {

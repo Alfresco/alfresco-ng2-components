@@ -21,21 +21,21 @@ import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupFilterInterface } from '../services/identity-group-filter.interface';
 import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
 
-export const mockVegetableAubergine: IdentityGroupModel = { id: 'aubergine', name: 'Vegetable Aubergine'};
-export const mockMeatChicken: IdentityGroupModel = { id: 'chicken', name: 'Meat Chicken'};
+export const mockVegetableAubergine: IdentityGroupModel = { "id": 'aubergine', "name": 'Vegetable Aubergine'};
+export const mockMeatChicken: IdentityGroupModel = { "id": 'chicken', "name": 'Meat Chicken'};
 
 export const mockFoodGroups = [ mockVegetableAubergine, mockMeatChicken ];
 
 export const mockSearchGroupEmptyFilters: IdentityGroupFilterInterface = {
-    roles: [],
-    withinApplication: ''
+    "roles": [],
+    "withinApplication": ''
 };
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class IdentityGroupServiceMock implements IdentityGroupServiceInterface {
-    search(name: string, _filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
+    search (name: string, _filters?: IdentityGroupFilterInterface): Observable<IdentityGroupModel[]> {
         if (name.trim() === '') {
             return EMPTY;
         }

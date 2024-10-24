@@ -30,9 +30,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Component({
-    selector: 'adf-node-lock',
-    standalone: true,
-    imports: [
+    "selector": 'adf-node-lock',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatDialogModule,
@@ -43,8 +43,8 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
         MatInputModule,
         MatButtonModule
     ],
-    templateUrl: './node-lock.dialog.html',
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './node-lock.dialog.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class NodeLockDialogComponent implements OnInit {
     form: UntypedFormGroup;
@@ -52,12 +52,12 @@ export class NodeLockDialogComponent implements OnInit {
     nodeName: string;
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApi.getInstance());
         return this._nodesApi;
     }
 
-    constructor(
+    constructor (
         private formBuilder: UntypedFormBuilder,
         public dialog: MatDialogRef<NodeLockDialogComponent>,
         private alfrescoApi: AlfrescoApiService,
@@ -66,7 +66,7 @@ export class NodeLockDialogComponent implements OnInit {
         public data: any
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         const { node } = this.data;
         this.nodeName = node.name;
 
@@ -74,14 +74,14 @@ export class NodeLockDialogComponent implements OnInit {
         const time = isTimeLock ? new Date(node.properties['cm:expiryDate']) : new Date();
 
         this.form = this.formBuilder.group({
-            isLocked: !!node.properties['cm:lockType'] || node.isLocked,
-            allowOwner: node.properties['cm:lockType'] === 'WRITE_LOCK',
+            "isLocked": !!node.properties['cm:lockType'] || node.isLocked,
+            "allowOwner": node.properties['cm:lockType'] === 'WRITE_LOCK',
             isTimeLock,
             time
         });
     }
 
-    private get lockTimeInSeconds(): number {
+    private get lockTimeInSeconds (): number {
         if (this.form.value.isTimeLock) {
             return differenceInSeconds(new Date(this.form.value.time), Date.now());
         }
@@ -89,17 +89,17 @@ export class NodeLockDialogComponent implements OnInit {
         return 0;
     }
 
-    private get nodeBodyLock(): NodeBodyLock {
+    private get nodeBodyLock (): NodeBodyLock {
         return {
-            timeToExpire: this.lockTimeInSeconds,
-            type: this.form.value.allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
-            lifetime: 'PERSISTENT'
+            "timeToExpire": this.lockTimeInSeconds,
+            "type": this.form.value.allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
+            "lifetime": 'PERSISTENT'
         };
     }
 
-    private toggleLock(): Promise<NodeEntry> {
+    private toggleLock (): Promise<NodeEntry> {
         const {
-            data: { node }
+            "data": { node }
         } = this;
 
         if (this.form.value.isLocked) {
@@ -109,7 +109,7 @@ export class NodeLockDialogComponent implements OnInit {
         return this.nodesApi.unlockNode(node.id);
     }
 
-    submit(): void {
+    submit (): void {
         this.toggleLock()
             .then((node: NodeEntry) => {
                 this.data.node.isLocked = this.form.value.isLocked;

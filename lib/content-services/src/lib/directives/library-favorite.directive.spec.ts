@@ -22,13 +22,13 @@ import { LibraryEntity } from '../interfaces/library-entity.interface';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
-    standalone: true,
-    imports: [LibraryFavoriteDirective],
-    selector: 'app-test-component',
-    template: `<button #favoriteLibrary="favoriteLibrary" [adf-favorite-library]="selection">Favorite</button>`
+    "standalone": true,
+    "imports": [LibraryFavoriteDirective],
+    "selector": 'app-test-component',
+    "template": `<button #favoriteLibrary="favoriteLibrary" [adf-favorite-library]="selection">Favorite</button>`
 })
 class TestComponent {
-    @ViewChild('favoriteLibrary', { static: true })
+    @ViewChild('favoriteLibrary', { "static": true })
     directive: LibraryFavoriteDirective;
 
     selection: LibraryEntity = null;
@@ -41,11 +41,11 @@ describe('LibraryFavoriteDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, TestComponent, LibraryFavoriteDirective]
+            "imports": [HttpClientTestingModule, TestComponent, LibraryFavoriteDirective]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
-        selection = { entry: { guid: 'guid', id: 'id', title: 'Site', visibility: 'PUBLIC' }, isLibrary: true, isFavorite: false };
+        selection = { "entry": { "guid": 'guid', "id": 'id', "title": 'Site', "visibility": 'PUBLIC' }, "isLibrary": true, "isFavorite": false };
         component.selection = selection;
     });
 

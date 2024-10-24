@@ -31,11 +31,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { StartFormComponent } from '../../../form';
 
 @Component({
-    selector: 'adf-process-instance-tasks',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, MatChipsModule, MatListModule, MatIconModule, MatDialogModule, StartFormComponent],
-    templateUrl: './process-instance-tasks.component.html',
-    styleUrls: ['./process-instance-tasks.component.css']
+    "selector": 'adf-process-instance-tasks',
+    "standalone": true,
+    "imports": [CommonModule, MatButtonModule, TranslateModule, MatChipsModule, MatListModule, MatIconModule, MatDialogModule, StartFormComponent],
+    "templateUrl": './process-instance-tasks.component.html',
+    "styleUrls": ['./process-instance-tasks.component.css']
 })
 export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestroy {
     /** The ID of the process instance to display tasks for. */
@@ -74,35 +74,35 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     private completedTaskObserver: Observer<TaskRepresentation>;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private processService: ProcessService, private dialog: MatDialog) {
+    constructor (private processService: ProcessService, private dialog: MatDialog) {
         this.task$ = new Observable<TaskRepresentation>((observer) => (this.taskObserver = observer)).pipe(share());
         this.completedTask$ = new Observable<TaskRepresentation>((observer) => (this.completedTaskObserver = observer)).pipe(share());
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.task$.pipe(takeUntil(this.onDestroy$)).subscribe((task) => this.activeTasks.push(task));
 
         this.completedTask$.pipe(takeUntil(this.onDestroy$)).subscribe((task) => this.completedTasks.push(task));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const processInstanceDetails = changes['processInstanceDetails'];
         if (processInstanceDetails?.currentValue) {
             this.load(processInstanceDetails.currentValue.id);
         }
     }
 
-    load(processInstanceId: string) {
+    load (processInstanceId: string) {
         this.loadActive(processInstanceId);
         this.loadCompleted(processInstanceId);
     }
 
-    loadActive(processInstanceId: string) {
+    loadActive (processInstanceId: string) {
         this.activeTasks = [];
         if (processInstanceId) {
             this.processService.getProcessTasks(processInstanceId, null).subscribe(
@@ -120,7 +120,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         }
     }
 
-    loadCompleted(processInstanceId: string) {
+    loadCompleted (processInstanceId: string) {
         this.completedTasks = [];
         if (processInstanceId) {
             this.processService.getProcessTasks(processInstanceId, 'completed').subscribe(
@@ -138,18 +138,18 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         }
     }
 
-    hasStartFormDefined(): boolean {
+    hasStartFormDefined (): boolean {
         return this.processInstanceDetails?.startFormDefined === true;
     }
 
-    getUserFullName(user: any): string {
+    getUserFullName (user: any): string {
         if (user) {
             return (user.firstName && user.firstName !== 'null' ? user.firstName + ' ' : '') + user.lastName;
         }
         return 'Nobody';
     }
 
-    getFormatDate(value: any, format: string): any {
+    getFormatDate (value: any, format: string): any {
         const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
@@ -158,29 +158,29 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
         }
     }
 
-    clickTask(task: TaskRepresentation) {
+    clickTask (task: TaskRepresentation) {
         const args = new TaskDetailsEvent(task);
         this.taskClick.emit(args);
     }
 
-    clickStartTask() {
+    clickStartTask () {
         this.processId = this.processInstanceDetails.id;
         this.showStartDialog();
     }
 
-    showStartDialog() {
-        this.dialog.open(this.startDialog, { height: '500px', width: '700px' });
+    showStartDialog () {
+        this.dialog.open(this.startDialog, { "height": '500px', "width": '700px' });
     }
 
-    closeStartDialog() {
+    closeStartDialog () {
         this.dialog.closeAll();
     }
 
-    onRefreshClicked() {
+    onRefreshClicked () {
         this.load(this.processInstanceDetails.id);
     }
 
-    onFormContentClick() {
+    onFormContentClick () {
         this.closeStartDialog();
     }
 }

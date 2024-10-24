@@ -23,36 +23,36 @@ import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: AppDetailsCloudComponent,
-    title: 'Process Services Cloud/App List Cloud/App Details Cloud',
-    decorators: [
+    "component": AppDetailsCloudComponent,
+    "title": 'Process Services Cloud/App List Cloud/App Details Cloud',
+    "decorators": [
         moduleMetadata({
-            imports: [AppListCloudModule]
+            "imports": [AppListCloudModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            "providers": [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
-    argTypes: {
-        applicationInstance: {
-            control: 'object',
-            table: {
-                type: { summary: 'ApplicationInstanceModel' }
+    "argTypes": {
+        "applicationInstance": {
+            "control": 'object',
+            "table": {
+                "type": { "summary": 'ApplicationInstanceModel' }
             }
         },
-        selectedApp: {
-            action: 'selectedApp',
-            description: 'Emitted when an app entry is clicked.',
-            table: { category: 'Actions' }
+        "selectedApp": {
+            "action": 'selectedApp',
+            "description": 'Emitted when an app entry is clicked.',
+            "table": { "category": 'Actions' }
         }
     },
-    args: {
-        applicationInstance: fakeApplicationInstance[0]
+    "args": {
+        "applicationInstance": fakeApplicationInstance[0]
     }
 } as Meta<AppDetailsCloudComponent>;
 
 const template: StoryFn<AppDetailsCloudComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const AppDetailsCloud = template.bind({});

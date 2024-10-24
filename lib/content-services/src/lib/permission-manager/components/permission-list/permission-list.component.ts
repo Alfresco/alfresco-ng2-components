@@ -31,9 +31,9 @@ import { PermissionContainerComponent } from '../permission-container/permission
 import { PopOverDirective } from '../pop-over.directive';
 
 @Component({
-    selector: 'adf-permission-list',
-    standalone: true,
-    imports: [
+    "selector": 'adf-permission-list',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatCardModule,
         MatProgressSpinnerModule,
@@ -44,9 +44,9 @@ import { PopOverDirective } from '../pop-over.directive';
         PermissionContainerComponent,
         PopOverDirective
     ],
-    templateUrl: './permission-list.component.html',
-    styleUrls: ['./permission-list.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './permission-list.component.html',
+    "styleUrls": ['./permission-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class PermissionListComponent implements OnInit {
     /** ID of the node whose permissions you want to show. */
@@ -63,38 +63,38 @@ export class PermissionListComponent implements OnInit {
 
     selectedPermissions: PermissionDisplayModel[] = [];
 
-    constructor(public readonly permissionList: PermissionListService) {
+    constructor (public readonly permissionList: PermissionListService) {
         this.error = this.permissionList.errored;
         this.update = this.permissionList.updated;
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.permissionList.fetchPermission(this.nodeId);
     }
 
-    openAddPermissionDialog() {
+    openAddPermissionDialog () {
         this.permissionList.updateNodePermissionByDialog();
     }
 
-    onSelect(selections: ObjectDataRow[]) {
+    onSelect (selections: ObjectDataRow[]) {
         this.selectedPermissions = selections.map((selection) => selection['obj']).filter((permission) => !permission.readonly);
     }
 
-    deleteSelection() {
+    deleteSelection () {
         this.permissionList.deletePermissions(this.selectedPermissions);
         this.selectedPermissions = [];
     }
 
-    updatePermission({ role, permission }) {
+    updatePermission ({ role, permission }) {
         this.permissionList.updateRole(role, permission);
     }
 
-    deletePermission(permission: PermissionDisplayModel) {
+    deletePermission (permission: PermissionDisplayModel) {
         this.selectedPermissions = [];
         this.permissionList.deletePermission(permission);
     }
 
-    updateAllPermission(role: string) {
+    updateAllPermission (role: string) {
         this.permissionList.bulkRoleUpdate(role);
         this.selectedPermissions = [];
     }

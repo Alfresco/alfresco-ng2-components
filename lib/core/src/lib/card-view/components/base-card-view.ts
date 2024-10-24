@@ -34,7 +34,7 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
 
     protected destroy$ = new Subject<boolean>();
 
-    constructor() {
+    constructor () {
         this.cardViewUpdateService.updateItem$.pipe(takeUntil(this.destroy$)).subscribe((itemModel) => {
             if (this.property.key === itemModel.key) {
                 this.property.value = itemModel.value;
@@ -42,19 +42,19 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
         });
     }
 
-    get isEditable(): boolean {
+    get isEditable (): boolean {
         return this.editable && this.property.editable;
     }
 
-    get isReadonlyProperty(): boolean {
+    get isReadonlyProperty (): boolean {
         return this.editable && !this.property.editable;
     }
 
-    get hasIcon(): boolean {
+    get hasIcon (): boolean {
         return !!this.property.icon;
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.destroy$.next(true);
         this.destroy$.complete();
     }

@@ -57,12 +57,12 @@ interface LoginFormValues {
 }
 
 @Component({
-    selector: 'adf-login',
-    standalone: true,
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    imports: [
+    "selector": 'adf-login',
+    "standalone": true,
+    "templateUrl": './login.component.html',
+    "styleUrls": ['./login.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [
         CommonModule,
         MatCardModule,
         ReactiveFormsModule,
@@ -74,7 +74,7 @@ interface LoginFormValues {
         MatProgressSpinnerModule,
         MatCheckboxModule
     ],
-    host: { class: 'adf-login' }
+    "host": { "class": 'adf-login' }
 })
 export class LoginComponent implements OnInit, OnDestroy {
     isPasswordShow: boolean = false;
@@ -148,7 +148,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _message: { [id: string]: { [id: string]: ValidationMessage } };
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private _fb: UntypedFormBuilder,
         private authService: AuthenticationService,
         private basicAlfrescoAuthService: BasicAlfrescoAuthService,
@@ -160,7 +160,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.initFormError();
         this.initFormFieldsDefault();
         this.initFormFieldsMessages();
@@ -194,16 +194,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.form.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((data) => this.onValueChanged(data));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    submit() {
+    submit () {
         this.onSubmit(this.form.value);
     }
 
-    redirectToSSOLogin() {
+    redirectToSSOLogin () {
         this.oidcAuthenticationService.ssoLogin();
     }
 
@@ -211,11 +211,11 @@ export class LoginComponent implements OnInit, OnDestroy {
      * Method called on submit form
      * @param values login form values
      */
-    onSubmit(values: LoginFormValues): void {
+    onSubmit (values: LoginFormValues): void {
         this.disableError();
 
         const args = new LoginSubmitEvent({
-            controls: { username: this.form.controls.username }
+            "controls": { "username": this.form.controls.username }
         });
         this.executeSubmit.emit(args);
 
@@ -226,7 +226,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    implicitLogin() {
+    implicitLogin () {
         if (this.authService.isLoggedIn()) {
             this.router.navigate([this.successRoute]);
         }
@@ -237,7 +237,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * The method check the error in the form and push the error in the formError object
      * @param data form data
      */
-    onValueChanged(data: any) {
+    onValueChanged (data: any) {
         this.disableError();
         for (const field in this.formError) {
             if (field) {
@@ -259,7 +259,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    performLogin(values: { username: string; password: string }) {
+    performLogin (values: { username: string; password: string }) {
         this.authService.login(values.username, values.password, this.rememberMe).subscribe(
             async (token: any) => {
                 const redirectUrl = this.basicAlfrescoAuthService.getRedirect();
@@ -289,7 +289,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * Check and display the right error message in the UI
      * @param err error object
      */
-    private displayErrorMessage(err: any): void {
+    private displayErrorMessage (err: any): void {
         if (err.error?.crossDomain && err.error.message.indexOf('Access-Control-Allow-Origin') !== -1) {
             this.errorMsg = err.error.message;
         } else if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') !== -1) {
@@ -306,7 +306,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * @param field field
      * @param msg error message
      */
-    public addCustomFormError(field: string, msg: string) {
+    public addCustomFormError (field: string, msg: string) {
         this.formError[field] += msg;
     }
 
@@ -317,10 +317,10 @@ export class LoginComponent implements OnInit, OnDestroy {
      * @param msg message
      * @param params parameters
      */
-    addCustomValidationError(field: string, ruleId: string, msg: string, params?: any) {
+    addCustomValidationError (field: string, ruleId: string, msg: string, params?: any) {
         if (field !== '__proto__' && field !== 'constructor' && field !== 'prototype') {
             this._message[field][ruleId] = {
-                value: msg,
+                "value": msg,
                 params
             };
         }
@@ -330,7 +330,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * Display and hide the password value.
      * @param event input event
      */
-    toggleShowPassword(event: Event) {
+    toggleShowPassword (event: Event) {
         event.stopPropagation();
         this.isPasswordShow = !this.isPasswordShow;
     }
@@ -340,7 +340,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      * @param field form field to check
      * @returns `true` if form field should display an error, otherwise `false`
      */
-    isErrorStyle(field: AbstractControl): boolean {
+    isErrorStyle (field: AbstractControl): boolean {
         return !field.valid && field.dirty && !field.pristine;
     }
 
@@ -348,55 +348,55 @@ export class LoginComponent implements OnInit, OnDestroy {
      * Trim username
      * @param event event
      */
-    trimUsername(event: any) {
+    trimUsername (event: any) {
         event.target.value = event.target.value.trim();
     }
 
     /**
      * Default formError values
      */
-    private initFormError() {
+    private initFormError () {
         this.formError = {
-            username: '',
-            password: ''
+            "username": '',
+            "password": ''
         };
     }
 
     /**
      * Init form fields messages
      */
-    private initFormFieldsMessages() {
+    private initFormFieldsMessages () {
         this._message = {
-            username: {
-                required: {
-                    value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
+            "username": {
+                "required": {
+                    "value": 'LOGIN.MESSAGES.USERNAME-REQUIRED'
                 },
-                minlength: {
-                    value: 'LOGIN.MESSAGES.USERNAME-MIN',
-                    params: {
-                        minLength: this.minLength
+                "minlength": {
+                    "value": 'LOGIN.MESSAGES.USERNAME-MIN',
+                    "params": {
+                        "minLength": this.minLength
                     }
                 }
             },
-            password: {
-                required: {
-                    value: 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
+            "password": {
+                "required": {
+                    "value": 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
                 }
             }
         };
     }
 
-    private initFormFieldsDefault() {
+    private initFormFieldsDefault () {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
-            password: ['', Validators.required]
+            "username": ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
+            "password": ['', Validators.required]
         });
     }
 
     /**
      * Disable the error flag
      */
-    private disableError() {
+    private disableError () {
         this.isError = false;
         this.initFormError();
     }

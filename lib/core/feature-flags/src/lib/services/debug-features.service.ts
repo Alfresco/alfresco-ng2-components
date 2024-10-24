@@ -36,11 +36,11 @@ export class DebugFeaturesService implements IDebugFeaturesService {
     private isInDebugMode: BehaviorSubject<boolean>;
     private isInDebugMode$: Observable<boolean>;
 
-    get storageKey(): string {
+    get storageKey (): string {
         return `${this.config?.storageKey || 'feature-flags'}-override`;
     }
 
-    constructor(
+    constructor (
         @Inject(OverridableFeaturesServiceToken) private overriddenFeaturesService: IFeaturesService,
         @Inject(WritableFeaturesServiceToken) private writableFeaturesService: IFeaturesService & IWritableFeaturesService,
         private storageService: StorageService,
@@ -54,13 +54,13 @@ export class DebugFeaturesService implements IDebugFeaturesService {
         });
     }
 
-    isOn$(key: string): Observable<boolean> {
+    isOn$ (key: string): Observable<boolean> {
         return this.isInDebugMode$.pipe(
             switchMap((isInDebugMode) => (isInDebugMode ? this.writableFeaturesService : this.overriddenFeaturesService).isOn$(key))
         );
     }
 
-    isOff$(key: string): Observable<boolean> {
+    isOff$ (key: string): Observable<boolean> {
         return this.isInDebugMode$.pipe(
             switchMap((isInDebugMode) => (isInDebugMode ? this.writableFeaturesService : this.overriddenFeaturesService).isOff$(key))
         );
@@ -70,7 +70,7 @@ export class DebugFeaturesService implements IDebugFeaturesService {
      * Gets the flags as an observable.
      * @returns the observable that emits the flag changeset.
      */
-    getFlags$(): Observable<FlagChangeset> {
+    getFlags$ (): Observable<FlagChangeset> {
         return this.isInDebugMode$.pipe(
             switchMap((isInDebugMode) => (isInDebugMode ? this.writableFeaturesService : this.overriddenFeaturesService).getFlags$())
         );
@@ -80,15 +80,15 @@ export class DebugFeaturesService implements IDebugFeaturesService {
      * Resets the specified flags.
      * @param flags The flags to reset.
      */
-    resetFlags(flags: FlagSet): void {
+    resetFlags (flags: FlagSet): void {
         this.writableFeaturesService.resetFlags(flags);
     }
 
-    enable(on: boolean): void {
+    enable (on: boolean): void {
         this.isInDebugMode.next(on);
     }
 
-    isEnabled$(): Observable<boolean> {
+    isEnabled$ (): Observable<boolean> {
         return this.isInDebugMode$;
     }
 }

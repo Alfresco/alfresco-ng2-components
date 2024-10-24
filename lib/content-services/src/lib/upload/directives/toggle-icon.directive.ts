@@ -18,21 +18,21 @@
 import { Directive, HostListener } from '@angular/core';
 
 @Directive({
-    selector: '[adf-toggle-icon]',
-    standalone: true,
-    exportAs: 'toggleIcon'
+    "selector": '[adf-toggle-icon]',
+    "standalone": true,
+    "exportAs": 'toggleIcon'
 })
 export class ToggleIconDirective {
     private isFocus: boolean = false;
     private toggle: boolean = false;
 
-    @HostListener('mouseenter') onMouseEnter() {
+    @HostListener('mouseenter') onMouseEnter () {
         if (!this.isFocus) {
             this.toggle = true;
         }
     }
 
-    @HostListener('mouseleave') onMouseLeave() {
+    @HostListener('mouseleave') onMouseLeave () {
         if (!this.isFocus) {
             this.toggle = false;
         }
@@ -43,21 +43,21 @@ export class ToggleIconDirective {
         }
     }
 
-    @HostListener('focus') onFocus() {
+    @HostListener('focus') onFocus () {
         this.isFocus = true;
         this.toggle = true;
     }
 
-    @HostListener('blur') onBlur() {
+    @HostListener('blur') onBlur () {
         this.isFocus = false;
         this.toggle = false;
     }
 
-    get isToggled(): boolean {
+    get isToggled (): boolean {
         return this.toggle;
     }
 
-    get isFocused(): boolean {
+    get isFocused (): boolean {
         return this.isFocus;
     }
 }

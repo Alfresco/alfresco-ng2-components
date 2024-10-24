@@ -16,9 +16,9 @@
  */
 
 export const DialogSize = {
-    Large: 'adf-large',
-    Medium: 'adf-medium',
-    Alert: 'adf-alert'
+    "Large": 'adf-large',
+    "Medium": 'adf-medium',
+    "Alert": 'adf-alert'
 } as const;
 
 export type DialogSizes = (typeof DialogSize)[keyof typeof DialogSize];

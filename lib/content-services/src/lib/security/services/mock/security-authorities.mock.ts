@@ -18,22 +18,22 @@
 import { AuthorityClearanceGroupPaging } from '@alfresco/js-api';
 
 export const fakeAuthorityClearanceApiResponse: AuthorityClearanceGroupPaging = {
-    list: {
-        pagination: {
-            count: 1,
-            hasMoreItems: false,
-            totalItems: 1,
-            skipCount: 0,
-            maxItems: 10
+    "list": {
+        "pagination": {
+            "count": 1,
+            "hasMoreItems": false,
+            "totalItems": 1,
+            "skipCount": 0,
+            "maxItems": 10
         },
-        entries: [
+        "entries": [
             {
-                entry: {
-                    id: 'test-id',
-                    displayLabel: 'test-displayLabel',
-                    systemGroup: false,
-                    type: 'test-type',
-                    marks: []
+                "entry": {
+                    "id": 'test-id',
+                    "displayLabel": 'test-displayLabel',
+                    "systemGroup": false,
+                    "type": 'test-type',
+                    "marks": []
                 }
             }
         ]

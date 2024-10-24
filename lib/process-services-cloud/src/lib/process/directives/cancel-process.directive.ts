@@ -24,7 +24,7 @@ import { IdentityUserService } from '../../people/services/identity-user.service
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-cloud-cancel-process]'
+    "selector": '[adf-cloud-cancel-process]'
 })
 export class CancelProcessDirective implements OnInit, OnDestroy {
 
@@ -42,12 +42,12 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private elementRef: ElementRef,
         private processCloudService: ProcessCloudService,
         private identityUserService: IdentityUserService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.processCloudService.dataChangesDetected
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDetails) => {
@@ -58,20 +58,20 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
     }
 
     @HostListener('click')
-    onClick() {
+    onClick () {
         this.cancelProcess();
     }
 
-    private setElementVisibility() {
+    private setElementVisibility () {
         this.elementRef.nativeElement.disabled = !this.canCancelProcess;
     }
 
-    checkCanCancelProcess(): boolean {
+    checkCanCancelProcess (): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return this.processInstanceDetails.initiator === currentUser && this.processInstanceDetails.status === 'RUNNING';
     }
 
-    cancelProcess() {
+    cancelProcess () {
         if (this.canCancelProcess) {
             this.processCloudService.cancelProcess(this.processInstanceDetails.appName, this.processInstanceDetails.id)
                 .subscribe(
@@ -83,7 +83,7 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

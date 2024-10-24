@@ -21,12 +21,12 @@ import { AuthenticationService } from '@alfresco/adf-core';
 import { isAfter } from 'date-fns';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class LockService {
-    constructor(private authService: AuthenticationService) {}
+    constructor (private authService: AuthenticationService) {}
 
-    isLocked(node: Node): boolean {
+    isLocked (node: Node): boolean {
         let isLocked = false;
         if (this.hasLockConfigured(node)) {
             if (this.isReadOnlyLock(node)) {
@@ -41,26 +41,26 @@ export class LockService {
         return isLocked;
     }
 
-    private hasLockConfigured(node: Node): boolean {
+    private hasLockConfigured (node: Node): boolean {
         return node.isFile && node.isLocked && node.properties['cm:lockType'];
     }
 
-    private isReadOnlyLock(node: Node): boolean {
+    private isReadOnlyLock (node: Node): boolean {
         return node.properties['cm:lockType'] === 'READ_ONLY_LOCK' && node.properties['cm:lockLifetime'] === 'PERSISTENT';
     }
 
-    private isLockOwnerAllowed(node: Node): boolean {
+    private isLockOwnerAllowed (node: Node): boolean {
         return node.properties['cm:lockType'] === 'WRITE_LOCK' && node.properties['cm:lockLifetime'] === 'PERSISTENT';
     }
 
-    private getLockExpiryTime(node: Node): Date | undefined {
+    private getLockExpiryTime (node: Node): Date | undefined {
         if (node.properties['cm:expiryDate']) {
             return new Date(node.properties['cm:expiryDate']);
         }
         return undefined;
     }
 
-    private isLockExpired(node: Node): boolean {
+    private isLockExpired (node: Node): boolean {
         const expiryLockTime = this.getLockExpiryTime(node);
         if (expiryLockTime) {
             return isAfter(new Date(), expiryLockTime);

@@ -26,8 +26,8 @@ describe('SearchService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [SearchService]
+            "imports": [HttpClientTestingModule],
+            "providers": [SearchService]
         });
         service = TestBed.inject(SearchService);
     });
@@ -44,9 +44,9 @@ describe('SearchService', () => {
     it('should call search API with additional options', (done) => {
         const searchTerm = 'searchTerm63688';
         const options = {
-            include: ['path'],
-            rootNodeId: '-root-',
-            nodeType: 'cm:content'
+            "include": ['path'],
+            "rootNodeId": '-root-',
+            "nodeType": 'cm:content'
         };
         spyOn(service.queriesApi, 'findNodes').and.returnValue(Promise.resolve(new NodePaging(fakeSearch)));
         service.getNodeQueryResults(searchTerm, options).subscribe(() => {

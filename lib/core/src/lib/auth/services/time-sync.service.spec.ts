@@ -29,10 +29,10 @@ describe('TimeSyncService', () => {
         appConfigSpy = jasmine.createSpyObj('AppConfigService', ['get']);
 
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
+            "imports": [HttpClientTestingModule],
+            "providers": [
                 TimeSyncService,
-                { provide: AppConfigService, useValue: appConfigSpy }
+                { "provide": AppConfigService, "useValue": appConfigSpy }
             ]
         });
 
@@ -127,10 +127,10 @@ describe('TimeSyncService', () => {
             const expectedServerTimeUrl = 'http://fake-server-time-url';
 
             service.checkTimeSync(60).subscribe({
-                next: () => {
+                "next": () => {
                     fail('Expected to throw an error');
                 },
-                error: error => {
+                "error": error => {
                     expect(error.message).toBe('Error: Failed to get server time');
                 }
             });

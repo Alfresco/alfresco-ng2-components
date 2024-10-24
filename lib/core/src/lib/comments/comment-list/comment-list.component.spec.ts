@@ -31,11 +31,11 @@ describe('CommentListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule],
-            providers: [
+            "imports": [NoopTranslateModule],
+            "providers": [
                 {
-                    provide: ADF_COMMENTS_SERVICE,
-                    useClass: CommentListServiceMock
+                    "provide": ADF_COMMENTS_SERVICE,
+                    "useClass": CommentListServiceMock
                 }
             ]
         });

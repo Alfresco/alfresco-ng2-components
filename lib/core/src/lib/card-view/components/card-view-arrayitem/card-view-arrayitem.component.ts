@@ -27,29 +27,29 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-card-view-arrayitem',
-    standalone: true,
-    imports: [CommonModule, MatChipsModule, TranslateModule, MatIconModule, MatMenuModule, MatCardModule, MatButtonModule],
-    templateUrl: './card-view-arrayitem.component.html',
-    styleUrls: ['./card-view-arrayitem.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-card-view-arrayitem',
+    "standalone": true,
+    "imports": [CommonModule, MatChipsModule, TranslateModule, MatIconModule, MatMenuModule, MatCardModule, MatButtonModule],
+    "templateUrl": './card-view-arrayitem.component.html',
+    "styleUrls": ['./card-view-arrayitem.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {
-    clicked(): void {
+    clicked (): void {
         if (this.isClickable) {
             this.cardViewUpdateService.clicked(this.property);
         }
     }
 
-    get showClickableIcon(): boolean {
+    get showClickableIcon (): boolean {
         return this.hasIcon && this.isClickable;
     }
 
-    get displayCount(): number {
+    get displayCount (): number {
         return this.property.noOfItemsToDisplay ? this.property.noOfItemsToDisplay : 0;
     }
 
-    get isClickable(): boolean {
+    get isClickable (): boolean {
         return !!this.property.clickable;
     }
 }

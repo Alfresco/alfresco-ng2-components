@@ -27,7 +27,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VersionCompatibilityDirective } from '@alfresco/adf-content-services';
 
 @Component({
-    template: `
+    "template": `
         <div *adf-acs-version="'8'" class="hidden-content-1">My hidden content 1</div>
         <div *adf-acs-version="'7.1'" class="hidden-content-2">My hidden content 2</div>
         <div *adf-acs-version="'7.0.2'" class="hidden-content-3">My hidden content 3</div>
@@ -43,17 +43,17 @@ describe('VersionCompatibilityDirective', () => {
     let versionCompatibilityService: VersionCompatibilityService;
 
     const acsResponseMock = new VersionInfo({
-        display: '7.0.1',
-        major: '7',
-        minor: '0',
-        patch: '1'
+        "display": '7.0.1',
+        "major": '7',
+        "minor": '0',
+        "patch": '1'
     });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [VersionCompatibilityDirective, HttpClientTestingModule],
-            declarations: [TestComponent],
-            providers: [{ provide: RedirectAuthService, useValue: { onLogin: EMPTY, onTokenReceived: of() } }]
+            "imports": [VersionCompatibilityDirective, HttpClientTestingModule],
+            "declarations": [TestComponent],
+            "providers": [{ "provide": RedirectAuthService, "useValue": { "onLogin": EMPTY, "onTokenReceived": of() } }]
         });
         fixture = TestBed.createComponent(TestComponent);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);

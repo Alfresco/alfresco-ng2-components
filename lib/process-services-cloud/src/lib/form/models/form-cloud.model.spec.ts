@@ -21,17 +21,17 @@ import { FormCloudRepresentation } from './form-cloud-representation.model';
 describe('FormCloud', () => {
 
     it('should store original json', () => {
-        const formRepresentation = {fields: []};
+        const formRepresentation = {"fields": []};
         const form = new FormModel(formRepresentation);
         expect(form.json).toEqual(formRepresentation);
     });
 
     it('should setup properties with json', () => {
         const formRepresentation: FormCloudRepresentation = {
-            id: '<id>',
-            name: '<name>',
-            taskId: '<task-id>',
-            taskName: '<task-name>'
+            "id": '<id>',
+            "name": '<name>',
+            "taskId": '<task-id>',
+            "taskName": '<task-name>'
         };
         const form = new FormModel(formRepresentation);
 
@@ -42,9 +42,9 @@ describe('FormCloud', () => {
 
     it('should take form name when task name is missing', () => {
         const formRepresentation = {
-            id: '<id>',
-            name: '<name>',
-            formDefinition: {}
+            "id": '<id>',
+            "name": '<name>',
+            "formDefinition": {}
         };
         const form = new FormModel(formRepresentation);
         expect(form.taskName).toBe(formRepresentation.name);
@@ -97,9 +97,9 @@ describe('FormCloud', () => {
 
     it('should parse tabs', () => {
         const formRepresentation = {
-            tabs: [
-                { id: 'tab1' },
-                { id: 'tab2' }
+            "tabs": [
+                { "id": 'tab1' },
+                { "id": 'tab2' }
             ]
         };
 
@@ -111,14 +111,14 @@ describe('FormCloud', () => {
 
     it('should parse fields', () => {
         const formRepresentation = {
-            fields: [
+            "fields": [
                 {
-                    id: 'field1',
-                    type: FormFieldTypes.CONTAINER
+                    "id": 'field1',
+                    "type": FormFieldTypes.CONTAINER
                 },
                 {
-                    id: 'field2',
-                    type: FormFieldTypes.CONTAINER
+                    "id": 'field2',
+                    "type": FormFieldTypes.CONTAINER
                 }
             ]
         };
@@ -131,7 +131,7 @@ describe('FormCloud', () => {
 
     it('should convert missing fields to empty collection', () => {
         const formRepresentation = {
-            fields: null
+            "fields": null
         };
 
         const form = new FormModel(formRepresentation);
@@ -141,15 +141,15 @@ describe('FormCloud', () => {
 
     it('should put fields into corresponding tabs', () => {
         const formRepresentation = {
-            tabs: [
-                { id: 'tab1' },
-                { id: 'tab2' }
+            "tabs": [
+                { "id": 'tab1' },
+                { "id": 'tab2' }
             ],
-            fields: [
-                { id: 'field1', tab: 'tab1', type: FormFieldTypes.CONTAINER },
-                { id: 'field2', tab: 'tab2', type: FormFieldTypes.CONTAINER },
-                { id: 'field3', tab: 'tab1', type: FormFieldTypes.DYNAMIC_TABLE },
-                { id: 'field4', tab: 'missing-tab', type: FormFieldTypes.DYNAMIC_TABLE }
+            "fields": [
+                { "id": 'field1', "tab": 'tab1', "type": FormFieldTypes.CONTAINER },
+                { "id": 'field2', "tab": 'tab2', "type": FormFieldTypes.CONTAINER },
+                { "id": 'field3', "tab": 'tab1', "type": FormFieldTypes.DYNAMIC_TABLE },
+                { "id": 'field4', "tab": 'missing-tab', "type": FormFieldTypes.DYNAMIC_TABLE }
             ]
         };
 
@@ -169,8 +169,8 @@ describe('FormCloud', () => {
 
     it('should create standard form outcomes', () => {
         const formRepresentation = {
-            fields: [
-                { id: 'container1' }
+            "fields": [
+                { "id": 'container1' }
             ]
         };
 
@@ -189,7 +189,7 @@ describe('FormCloud', () => {
 
     it('should create outcomes only when fields available', () => {
         const formRepresentation = {
-            fields: null
+            "fields": null
         };
         const form = new FormModel(formRepresentation);
         expect(form.outcomes.length).toBe(0);
@@ -197,11 +197,11 @@ describe('FormCloud', () => {
 
     it('should use custom form outcomes', () => {
         const formRepresentation = {
-            fields: [
-                { id: 'container1' }
+            "fields": [
+                { "id": 'container1' }
             ],
-            outcomes: [
-                { id: 'custom-1', name: 'custom 1' }
+            "outcomes": [
+                { "id": 'custom-1', "name": 'custom 1' }
             ]
         };
 

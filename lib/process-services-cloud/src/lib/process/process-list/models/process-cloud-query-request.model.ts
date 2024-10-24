@@ -45,7 +45,7 @@ export class ProcessQueryCloudRequestModel {
    sorting?: ProcessListCloudSortingModel[];
    variableKeys?: string[];
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
        if (obj) {
            this.appName = obj.appName;
            this.appVersion = obj.appVersion;

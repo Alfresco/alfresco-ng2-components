@@ -22,59 +22,59 @@ import { CardViewMapItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: CardViewMapItemComponent,
-    title: 'Core/Card View/Card View Map Item',
-    decorators: [
+    "component": CardViewMapItemComponent,
+    "title": 'Core/Card View/Card View Map Item',
+    "decorators": [
         moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
+            "imports": [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    argTypes: {
-        displayEmpty: {
-            control: 'boolean',
-            description: 'Defines if it should display CardView item when data is empty',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+    "argTypes": {
+        "displayEmpty": {
+            "control": 'boolean',
+            "description": 'Defines if it should display CardView item when data is empty',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        property: {
-            description: 'Card View Item Model with data',
-            table: {
-                type: { summary: 'CardViewMapItemModel' }
+        "property": {
+            "description": 'Card View Item Model with data',
+            "table": {
+                "type": { "summary": 'CardViewMapItemModel' }
             }
         }
     },
-    args: {
-        displayEmpty: true
+    "args": {
+        "displayEmpty": true
     }
 } as Meta<CardViewMapItemComponent>;
 
 const template: StoryFn<CardViewMapItemComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const CardViewMapItem = template.bind({});
 CardViewMapItem.args = {
-    property: new CardViewMapItemModel({
-        label: 'My map',
-        value: new Map([['999', 'My Value']]),
-        key: 'map',
-        default: 'default map value'
+    "property": new CardViewMapItemModel({
+        "label": 'My map',
+        "value": new Map([['999', 'My Value']]),
+        "key": 'map',
+        "default": 'default map value'
     })
 };
-CardViewMapItem.parameters = { layout: 'centered' };
+CardViewMapItem.parameters = { "layout": 'centered' };
 
 export const EmptyCardViewMapItem = template.bind({});
 EmptyCardViewMapItem.args = {
-    property: new CardViewMapItemModel({
-        label: 'My map',
-        value: [],
-        key: 'map',
-        default: 'default map value'
+    "property": new CardViewMapItemModel({
+        "label": 'My map',
+        "value": [],
+        "key": 'map',
+        "default": 'default map value'
     })
 };
-EmptyCardViewMapItem.parameters = { layout: 'centered' };
+EmptyCardViewMapItem.parameters = { "layout": 'centered' };

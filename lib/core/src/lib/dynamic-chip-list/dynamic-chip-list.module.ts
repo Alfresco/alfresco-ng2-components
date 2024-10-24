@@ -20,7 +20,7 @@ import { DynamicChipListComponent } from './dynamic-chip-list.component';
 
 /** @deprecated use `DynamicChipListComponent` or import standalone components directly  */
 @NgModule({
-    imports: [DynamicChipListComponent],
-    exports: [DynamicChipListComponent]
+    "imports": [DynamicChipListComponent],
+    "exports": [DynamicChipListComponent]
 })
 export class DynamicChipListModule {}

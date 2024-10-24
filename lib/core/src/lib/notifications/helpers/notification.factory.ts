@@ -18,30 +18,30 @@
 import { NotificationInitiator, NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 
 export const rootInitiator: NotificationInitiator = {
-    key: '*',
-    displayName: 'SYSTEM'
+    "key": '*',
+    "displayName": 'SYSTEM'
 };
 
 export const info = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
-    type: NOTIFICATION_TYPE.INFO,
-    icon: 'info',
-    datetime: new Date(),
+    "type": NOTIFICATION_TYPE.INFO,
+    "icon": 'info',
+    "datetime": new Date(),
     initiator,
-    messages: [].concat(messages)
+    "messages": [].concat(messages)
 });
 
 export const warning = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
-    type: NOTIFICATION_TYPE.WARN,
-    icon: 'warning',
-    datetime: new Date(),
+    "type": NOTIFICATION_TYPE.WARN,
+    "icon": 'warning',
+    "datetime": new Date(),
     initiator,
-    messages: [].concat(messages)
+    "messages": [].concat(messages)
 });
 
 export const error = (messages: string | string[], initiator: NotificationInitiator = rootInitiator): NotificationModel => ({
-    type: NOTIFICATION_TYPE.ERROR,
-    icon: 'error',
-    datetime: new Date(),
+    "type": NOTIFICATION_TYPE.ERROR,
+    "icon": 'error',
+    "datetime": new Date(),
     initiator,
-    messages: [].concat(messages)
+    "messages": [].concat(messages)
 });

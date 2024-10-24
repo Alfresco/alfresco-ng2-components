@@ -32,18 +32,18 @@ describe('SortByCategoryMapperService', () => {
 
     it('should map items by categories', () => {
         const items: TestSortableByCategoryItem[] = [
-            { id: 'id1', name: 'firstCategory_222', category: 'category1' },
-            { id: 'id2', name: 'secondCategory_AA', category: 'category2' },
-            { id: 'id3', name: 'firstCategory_111', category: 'category1' },
-            { id: 'id4', name: 'secondCategory_BB', category: 'category2' },
-            { id: 'id5', name: 'Default_a', category: DEFAULT_CATEGORIES[1] },
-            { id: 'id6', name: 'Default_b', category: DEFAULT_CATEGORIES[0] }
+            { "id": 'id1', "name": 'firstCategory_222', "category": 'category1' },
+            { "id": 'id2', "name": 'secondCategory_AA', "category": 'category2' },
+            { "id": 'id3', "name": 'firstCategory_111', "category": 'category1' },
+            { "id": 'id4', "name": 'secondCategory_BB', "category": 'category2' },
+            { "id": 'id5', "name": 'Default_a', "category": DEFAULT_CATEGORIES[1] },
+            { "id": 'id6', "name": 'Default_b', "category": DEFAULT_CATEGORIES[0] }
         ];
 
         const expectedItemsByCategory = [
-            { category: 'category1', items: [items[2], items[0]] },
-            { category: 'category2', items: [items[1], items[3]] },
-            { category: '', items: [items[4], items[5]] }
+            { "category": 'category1', "items": [items[2], items[0]] },
+            { "category": 'category2', "items": [items[1], items[3]] },
+            { "category": '', "items": [items[4], items[5]] }
         ];
 
         const result = mapper.mapItems(items, DEFAULT_CATEGORIES);
@@ -54,19 +54,19 @@ describe('SortByCategoryMapperService', () => {
     it('should set all items under default category', () => {
         const defaultValues: TestSortableByCategoryItem[] = [
             {
-                name: 'name-a',
-                id: 'id',
-                category: DEFAULT_CATEGORIES[1]
+                "name": 'name-a',
+                "id": 'id',
+                "category": DEFAULT_CATEGORIES[1]
             },
             {
-                name: 'name-b',
-                id: 'id2',
-                category: DEFAULT_CATEGORIES[2]
+                "name": 'name-b',
+                "id": 'id2',
+                "category": DEFAULT_CATEGORIES[2]
             },
             {
-                name: 'name-c',
-                id: 'id3',
-                category: DEFAULT_CATEGORIES[0]
+                "name": 'name-c',
+                "id": 'id3',
+                "category": DEFAULT_CATEGORIES[0]
             }
         ];
 
@@ -84,7 +84,7 @@ describe('SortByCategoryMapperService', () => {
     });
 
     it('should work if the default categories are empty', () => {
-        const result = mapper.mapItems([{ id: 'id', name: 'name', category: '' }], []);
+        const result = mapper.mapItems([{ "id": 'id', "name": 'name', "category": '' }], []);
 
         expect(result.length).toBe(1);
         expect(result[0].category).toBe('');
@@ -92,19 +92,19 @@ describe('SortByCategoryMapperService', () => {
 
     it('should set items in ascending order in appropriate category', () => {
         const contents = [
-            { id: 'id1', name: 'item-b', category: 'cat1' },
-            { id: 'id2', name: 'item2', category: 'cat2' },
-            { id: 'id3', name: 'item-a', category: 'cat1' }
+            { "id": 'id1', "name": 'item-b', "category": 'cat1' },
+            { "id": 'id2', "name": 'item2', "category": 'cat2' },
+            { "id": 'id3', "name": 'item-a', "category": 'cat1' }
         ];
 
         const result = mapper.mapItems(contents, DEFAULT_CATEGORIES);
 
         expect(result.length).toBe(2);
         expect(result[0].category).toBe('cat1');
-        expect(result[0].items[0]).toEqual({ id: 'id3', name: 'item-a', category: 'cat1' });
-        expect(result[0].items[1]).toEqual({ id: 'id1', name: 'item-b', category: 'cat1' });
+        expect(result[0].items[0]).toEqual({ "id": 'id3', "name": 'item-a', "category": 'cat1' });
+        expect(result[0].items[1]).toEqual({ "id": 'id1', "name": 'item-b', "category": 'cat1' });
 
         expect(result[1].category).toBe('cat2');
-        expect(result[1].items[0]).toEqual({ id: 'id2', name: 'item2', category: 'cat2' });
+        expect(result[1].items[0]).toEqual({ "id": 'id2', "name": 'item2', "category": 'cat2' });
     });
 });

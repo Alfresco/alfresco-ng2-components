@@ -28,19 +28,19 @@ describe('IdentityUserInfoComponent', () => {
     let element: HTMLElement;
 
     const identityUserMock = {
-        firstName: 'fake-identity-first-name',
-        lastName: 'fake-identity-last-name',
-        email: 'fakeIdentity@email.com'
+        "firstName": 'fake-identity-first-name',
+        "lastName": 'fake-identity-last-name',
+        "email": 'fakeIdentity@email.com'
     } as unknown as IdentityUserModel;
     const identityUserWithOutFirstNameMock = {
-        firstName: null,
-        lastName: 'fake-identity-last-name',
-        email: 'fakeIdentity@email.com'
+        "firstName": null,
+        "lastName": 'fake-identity-last-name',
+        "email": 'fakeIdentity@email.com'
     } as unknown as IdentityUserModel;
     const identityUserWithOutLastNameMock = {
-        firstName: 'fake-identity-first-name',
-        lastName: null,
-        email: 'fakeIdentity@email.com'
+        "firstName": 'fake-identity-first-name',
+        "lastName": null,
+        "email": 'fakeIdentity@email.com'
     } as unknown as IdentityUserModel;
 
     const whenFixtureReady = async () => {
@@ -51,7 +51,7 @@ describe('IdentityUserInfoComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatMenuModule, IdentityUserInfoComponent]
+            "imports": [CoreTestingModule, MatMenuModule, IdentityUserInfoComponent]
         });
         fixture = TestBed.createComponent(IdentityUserInfoComponent);
         component = fixture.componentInstance;

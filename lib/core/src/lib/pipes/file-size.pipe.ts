@@ -19,14 +19,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TranslationService } from '../translation/translation.service';
 
 @Pipe({
-    name: 'adfFileSize',
-    pure: false,
-    standalone: true
+    "name": 'adfFileSize',
+    "pure": false,
+    "standalone": true
 })
 export class FileSizePipe implements PipeTransform {
-    constructor(private translation: TranslationService) {}
+    constructor (private translation: TranslationService) {}
 
-    transform(paramByte: any, decimals: number = 2): string {
+    transform (paramByte: any, decimals: number = 2): string {
         if (paramByte == null) {
             return '';
         }

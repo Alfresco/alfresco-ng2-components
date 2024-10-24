@@ -28,17 +28,17 @@ import { PropertyGroupTranslatorService } from './property-groups-translator.ser
 import { VersionCompatibilityService } from '../../version-compatibility/version-compatibility.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContentTypePropertiesService {
-    constructor(
+    constructor (
         private contentTypeService: ContentTypeService,
         private dialog: MatDialog,
         private versionCompatibilityService: VersionCompatibilityService,
         private propertyGroupTranslatorService: PropertyGroupTranslatorService
     ) {}
 
-    getContentTypeCardItem(node: Node): Observable<CardViewItem[]> {
+    getContentTypeCardItem (node: Node): Observable<CardViewItem[]> {
         if (this.versionCompatibilityService.isVersionSupported('7')) {
             return this.contentTypeService.getContentTypeByPrefix(node.nodeType).pipe(
                 map((contentType) => {
@@ -54,60 +54,60 @@ export class ContentTypePropertiesService {
         }
     }
 
-    buildCardItemsFromPropertyList(properties: Property[], currentProperties: any): CardViewItem[] {
+    buildCardItemsFromPropertyList (properties: Property[], currentProperties: any): CardViewItem[] {
         return properties.map((property) => {
             const propertyValue = currentProperties ? currentProperties[property.id] : null;
             return this.buildCardItemFromProperty(property, propertyValue);
         });
     }
 
-    private buildCardItemFromProperty(property: Property, propertyValue: any): CardViewItem {
+    private buildCardItemFromProperty (property: Property, propertyValue: any): CardViewItem {
         return this.propertyGroupTranslatorService.translateProperty(property, propertyValue, true);
     }
 
-    private getContentTypeSpecificProperties(contentType: TypeEntry): Property[] {
+    private getContentTypeSpecificProperties (contentType: TypeEntry): Property[] {
         return contentType.entry.properties.filter((property) => property.id.startsWith(contentType.entry.model.namespacePrefix));
     }
 
-    private buildContentTypeTextCardModel(currentValue: string): CardViewTextItemModel {
+    private buildContentTypeTextCardModel (currentValue: string): CardViewTextItemModel {
         const contentTypeCard = new CardViewTextItemModel({
-            label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
-            value: currentValue,
-            key: 'nodeType',
-            editable: false
+            "label": 'CORE.METADATA.BASIC.CONTENT_TYPE',
+            "value": currentValue,
+            "key": 'nodeType',
+            "editable": false
         });
 
         return contentTypeCard;
     }
 
-    private buildContentTypeSelectCardModel(
+    private buildContentTypeSelectCardModel (
         currentValue: string,
         options$: Observable<CardViewSelectItemOption<string>[]>
     ): CardViewSelectItemModel<string> {
         const contentTypeCard = new CardViewSelectItemModel({
-            label: 'CORE.METADATA.BASIC.CONTENT_TYPE',
-            value: currentValue,
-            key: 'nodeType',
-            editable: true,
+            "label": 'CORE.METADATA.BASIC.CONTENT_TYPE',
+            "value": currentValue,
+            "key": 'nodeType',
+            "editable": true,
             options$,
-            displayNoneOption: false
+            "displayNoneOption": false
         });
 
         return contentTypeCard;
     }
 
-    private getContentTypesAsSelectOption(currentType: TypeEntry): Observable<CardViewSelectItemOption<string>[]> {
+    private getContentTypesAsSelectOption (currentType: TypeEntry): Observable<CardViewSelectItemOption<string>[]> {
         const childrenTypes$ = this.contentTypeService.getContentTypeChildren(currentType.entry.id);
         return zip(childrenTypes$, of(currentType)).pipe(
             distinctUntilChanged(),
             map(([contentTypesEntries, currentContentType]) => {
                 const updatedTypes = this.appendCurrentType(currentContentType, contentTypesEntries);
-                return updatedTypes.map((contentType) => ({ key: contentType.entry.id, label: contentType.entry.title ?? contentType.entry.id }));
+                return updatedTypes.map((contentType) => ({ "key": contentType.entry.id, "label": contentType.entry.title ?? contentType.entry.id }));
             })
         );
     }
 
-    private appendCurrentType(currentType: TypeEntry, contentTypesEntries: TypeEntry[]): TypeEntry[] {
+    private appendCurrentType (currentType: TypeEntry, contentTypesEntries: TypeEntry[]): TypeEntry[] {
         const resultTypes = [...contentTypesEntries];
         const currentTypePresent = contentTypesEntries.find((type) => type.entry.id === currentType.entry.id);
         if (!currentTypePresent) {
@@ -116,16 +116,16 @@ export class ContentTypePropertiesService {
         return resultTypes;
     }
 
-    openContentTypeDialogConfirm(nodeType): Observable<boolean> {
+    openContentTypeDialogConfirm (nodeType): Observable<boolean> {
         const select = new Subject<boolean>();
         select.subscribe({
-            complete: this.close.bind(this)
+            "complete": this.close.bind(this)
         });
 
         const data: ContentTypeDialogComponentData = {
-            title: 'CORE.METADATA.CONTENT_TYPE.DIALOG.TITLE',
-            description: 'CORE.METADATA.CONTENT_TYPE.DIALOG.DESCRIPTION',
-            confirmMessage: 'CORE.METADATA.CONTENT_TYPE.DIALOG.CONFIRM',
+            "title": 'CORE.METADATA.CONTENT_TYPE.DIALOG.TITLE',
+            "description": 'CORE.METADATA.CONTENT_TYPE.DIALOG.DESCRIPTION',
+            "confirmMessage": 'CORE.METADATA.CONTENT_TYPE.DIALOG.CONFIRM',
             select,
             nodeType
         };
@@ -134,16 +134,16 @@ export class ContentTypePropertiesService {
         return select;
     }
 
-    close() {
+    close () {
         this.dialog.closeAll();
     }
 
-    private openDialog(data: ContentTypeDialogComponentData, panelClass: string, width: string) {
+    private openDialog (data: ContentTypeDialogComponentData, panelClass: string, width: string) {
         this.dialog.open(ContentTypeDialogComponent, {
             data,
             panelClass,
             width,
-            disableClose: true
+            "disableClose": true
         });
     }
 }

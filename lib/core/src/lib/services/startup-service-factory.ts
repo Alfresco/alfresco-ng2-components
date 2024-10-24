@@ -24,7 +24,7 @@ import { StorageService } from '../common/services/storage.service';
  * @param storageService storage service
  * @returns a factory to load application config
  */
-export function loadAppConfig(appConfigService: AppConfigService, storageService: StorageService) {
+export function loadAppConfig (appConfigService: AppConfigService, storageService: StorageService) {
     return () =>
         appConfigService.load().then(() => {
             storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');

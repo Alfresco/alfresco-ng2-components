@@ -52,7 +52,7 @@ export const CORE_PIPES = [
  * Consider importing CORE_PIPES or individual pipes directly.
  */
 @NgModule({
-    imports: [...CORE_PIPES],
-    exports: [...CORE_PIPES]
+    "imports": [...CORE_PIPES],
+    "exports": [...CORE_PIPES]
 })
 export class PipeModule {}

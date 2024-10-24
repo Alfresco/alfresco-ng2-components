@@ -31,17 +31,17 @@ import { MatBadgeHarness } from '@angular/material/badge/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 
 const mockCategory: SearchCategory = {
-    id: 'queryName',
-    name: 'Name',
-    columnKey: 'name',
-    enabled: true,
-    expanded: true,
-    component: {
-        selector: 'text',
-        settings: {
-            pattern: `cm:name:'(.*?)'`,
-            field: 'cm:name',
-            placeholder: 'Enter the name'
+    "id": 'queryName',
+    "name": 'Name',
+    "columnKey": 'name',
+    "enabled": true,
+    "expanded": true,
+    "component": {
+        "selector": 'text',
+        "settings": {
+            "pattern": `cm:name:'(.*?)'`,
+            "field": 'cm:name',
+            "placeholder": 'Enter the name'
         }
     }
 };
@@ -53,18 +53,18 @@ describe('SearchFilterContainerComponent', () => {
     let queryBuilder: SearchHeaderQueryBuilderService;
 
     const searchMock: any = {
-        dataLoaded: new Subject()
+        "dataLoaded": new Subject()
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [{ provide: SearchService, useValue: searchMock }]
+            "imports": [ContentTestingModule],
+            "providers": [{ "provide": SearchService, "useValue": searchMock }]
         });
         fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;
         queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
-        component.col = { key: '123', type: 'text' };
+        component.col = { "key": '123', "type": 'text' };
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -90,7 +90,7 @@ describe('SearchFilterContainerComponent', () => {
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
 
-        const applyButton = await menu.getHarness(MatButtonHarness.with({ selector: '#apply-filter-button' }));
+        const applyButton = await menu.getHarness(MatButtonHarness.with({ "selector": '#apply-filter-button' }));
         await applyButton.click();
 
         expect(queryBuilder.getActiveFilters().length).toBe(1);
@@ -115,7 +115,7 @@ describe('SearchFilterContainerComponent', () => {
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
 
-        const clearButton = await menu.getHarness(MatButtonHarness.with({ selector: '#clear-filter-button' }));
+        const clearButton = await menu.getHarness(MatButtonHarness.with({ "selector": '#clear-filter-button' }));
         await clearButton.click();
 
         expect(queryBuilder.getActiveFilters().length).toBe(0);
@@ -134,7 +134,7 @@ describe('SearchFilterContainerComponent', () => {
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
-        widgetContainer.triggerEventHandler('keypress', { key: 'Enter' });
+        widgetContainer.triggerEventHandler('keypress', { "key": 'Enter' });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -151,14 +151,14 @@ describe('SearchFilterContainerComponent', () => {
 
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
-        widgetContainer.triggerEventHandler('keypress', { key: 'Enter' });
+        widgetContainer.triggerEventHandler('keypress', { "key": 'Enter' });
         fixture.detectChanges();
         await fixture.whenStable();
         expect(await badge.isHidden()).toBe(false);
 
         await menu.open();
 
-        const clearButton = await menu.getHarness(MatButtonHarness.with({ selector: '#clear-filter-button' }));
+        const clearButton = await menu.getHarness(MatButtonHarness.with({ "selector": '#clear-filter-button' }));
         await clearButton.click();
 
         expect(await badge.isHidden()).toBe(true);

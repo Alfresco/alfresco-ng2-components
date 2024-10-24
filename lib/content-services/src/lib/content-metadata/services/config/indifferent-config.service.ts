@@ -18,30 +18,30 @@
 import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
 
 export class IndifferentConfigService implements ContentMetadataConfig {
-    isGroupAllowed(): boolean {
+    isGroupAllowed (): boolean {
         return true;
     }
 
-    reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+    reorganiseByConfig (propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         return Object.keys(propertyGroups).map((groupName) => {
             const propertyGroup = propertyGroups[groupName];
             const properties = propertyGroup.properties;
 
             return Object.assign({}, propertyGroup, {
-                properties: Object.keys(properties).map((propertyName) => properties[propertyName])
+                "properties": Object.keys(properties).map((propertyName) => properties[propertyName])
             });
         });
     }
 
-    filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+    filterExcludedPreset (propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         return propertyGroups;
     }
 
-    appendAllPreset(): OrganisedPropertyGroup[] {
+    appendAllPreset (): OrganisedPropertyGroup[] {
         return [];
     }
 
-    isIncludeAllEnabled(): boolean {
+    isIncludeAllEnabled (): boolean {
         return true;
     }
 }

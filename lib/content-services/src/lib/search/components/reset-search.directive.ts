@@ -19,14 +19,14 @@ import { Directive, HostListener } from '@angular/core';
 import { SearchFacetFiltersService } from '../services/search-facet-filters.service';
 
 @Directive({
-    selector: '[adf-reset-search]',
-    standalone: true
+    "selector": '[adf-reset-search]',
+    "standalone": true
 })
 export class ResetSearchDirective {
     @HostListener('click')
-    onClick() {
+    onClick () {
         this.filterService.reset();
     }
 
-    constructor(private filterService: SearchFacetFiltersService) {}
+    constructor (private filterService: SearchFacetFiltersService) {}
 }

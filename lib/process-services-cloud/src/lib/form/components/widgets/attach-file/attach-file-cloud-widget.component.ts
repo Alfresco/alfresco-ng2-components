@@ -49,10 +49,10 @@ export const APP_NAME = '-appname-';
 export const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
 
 @Component({
-    selector: 'adf-cloud-attach-file-cloud-widget',
-    templateUrl: './attach-file-cloud-widget.component.html',
-    styleUrls: ['./attach-file-cloud-widget.component.scss'],
-    host: {
+    "selector": 'adf-cloud-attach-file-cloud-widget',
+    "templateUrl": './attach-file-cloud-widget.component.html',
+    "styleUrls": ['./attach-file-cloud-widget.component.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -63,7 +63,7 @@ export const VALID_ALIAS = [ALIAS_ROOT_FOLDER, ALIAS_USER_FOLDER, '-shared-'];
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit, OnDestroy {
     typeId = 'AttachFileCloudWidgetComponent';
@@ -75,13 +75,13 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     private previewState = false;
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
     displayedColumns = ['icon', 'fileName', 'action'];
 
-    constructor(
+    constructor (
         formService: FormService,
         thumbnails: ThumbnailService,
         processCloudContentService: ProcessCloudContentService,
@@ -95,7 +95,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         super(formService, thumbnails, processCloudContentService, notificationService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         super.ngOnInit();
         if (this.hasFile && this.field.value.length > 0) {
             const files = this.field.value || this.field.form.values[this.field.id];
@@ -106,15 +106,15 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.setPreviewState();
     }
 
-    isPathStaticType(): boolean {
+    isPathStaticType (): boolean {
         return this.field.params?.fileSource?.destinationFolderPath?.type === DestinationFolderPathType.STATIC_TYPE;
     }
 
-    isUploadButtonVisible(): boolean {
+    isUploadButtonVisible (): boolean {
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
 
-    onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
+    onRemoveAttachFile (file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
         if (file['id'] === this.selectedNode?.id) {
             this.selectedNode = null;
@@ -122,11 +122,11 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.contentModelFormFileHandler(this.field.value.length > 0 ? this.field.value[0] : null);
     }
 
-    fetchAppNameFromAppConfig(): string {
+    fetchAppNameFromAppConfig (): string {
         return this.appConfigService.get('alfresco-deployed-apps')[0]?.name;
     }
 
-    replaceAppNameAliasWithValue(path: string): string {
+    replaceAppNameAliasWithValue (path: string): string {
         if (path?.match(APP_NAME)) {
             const appName = this.fetchAppNameFromAppConfig();
             return path.replace(APP_NAME, appName);
@@ -134,7 +134,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return path;
     }
 
-    async openSelectDialog() {
+    async openSelectDialog () {
         if (this.previewState) {
             this.notificationService.showWarning('FORM.PREVIEW.ATTACH_FILE_WIDGET.ON_ATTACH_FILE_CLICK');
         } else {
@@ -157,7 +157,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         }
     }
 
-    private async getDestinationFolderNodeId(): Promise<string> {
+    private async getDestinationFolderNodeId (): Promise<string> {
         let rootNodeId: string;
 
         switch (this.field?.params?.fileSource?.destinationFolderPath?.type) {
@@ -171,14 +171,14 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 rootNodeId = await this.getNodeIdFromFolderVariableValue(this.field.params.fileSource.destinationFolderPath);
                 break;
             default:
-                rootNodeId = await this.getNodeIdFromPath({ type: '', value: ALIAS_USER_FOLDER });
+                rootNodeId = await this.getNodeIdFromPath({ "type": '', "value": ALIAS_USER_FOLDER });
                 break;
         }
 
         return rootNodeId;
     }
 
-    async getNodeIdFromPath(destinationFolderPath: DestinationFolderPath): Promise<string> {
+    async getNodeIdFromPath (destinationFolderPath: DestinationFolderPath): Promise<string> {
         let nodeId: string;
         const destinationPath = this.getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath.value);
         destinationPath.path = this.replaceAppNameAliasWithValue(destinationPath.path);
@@ -191,7 +191,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return nodeId;
     }
 
-    async getNodeIdFromFolderVariableValue(destinationFolderPath: DestinationFolderPath): Promise<string> {
+    async getNodeIdFromFolderVariableValue (destinationFolderPath: DestinationFolderPath): Promise<string> {
         let nodeId: string;
         try {
             nodeId = await this.contentNodeSelectorService.getNodeIdFromFolderVariableValue(destinationFolderPath.value, ALIAS_USER_FOLDER);
@@ -202,7 +202,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return nodeId;
     }
 
-    getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {
+    getAliasAndRelativePathFromDestinationFolderPath (destinationFolderPath: string): DestinationFolderPathModel {
         let alias: string;
         let path: string;
         if (destinationFolderPath) {
@@ -215,19 +215,19 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             }
         }
 
-        return this.isValidAlias(alias) ? { alias, path } : { alias: ALIAS_USER_FOLDER, path: undefined };
+        return this.isValidAlias(alias) ? { alias, path } : { "alias": ALIAS_USER_FOLDER, "path": undefined };
     }
 
-    removeExistingSelection(selections: Node[]) {
+    removeExistingSelection (selections: Node[]) {
         const existingNode: Node[] = [...(this.field.value || [])];
         return selections.filter((opt) => !existingNode.some((node) => node.id === opt.id));
     }
 
-    downloadContent(file: Node): void {
+    downloadContent (file: Node): void {
         this.processCloudContentService.downloadFile(file.id);
     }
 
-    onUploadNewFileVersion(config: NewVersionUploaderDialogData): void {
+    onUploadNewFileVersion (config: NewVersionUploaderDialogData): void {
         this.newVersionUploaderService.openUploadNewVersionDialog(config).subscribe(
             (newVersionUploaderData) => {
                 if (newVersionUploaderData.action === NewVersionUploaderDataAction.upload) {
@@ -238,16 +238,16 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         );
     }
 
-    onAttachFileClicked(nodeSelector: any) {
+    onAttachFileClicked (nodeSelector: any) {
         nodeSelector.nodeId = nodeSelector.id;
         this.fileClicked(new ContentLinkModel(nodeSelector));
     }
 
-    getWidgetIcon(): string {
+    getWidgetIcon (): string {
         return this.isAlfrescoAndLocal() ? 'file_upload' : 'attach_file';
     }
 
-    onRowClicked(file?: Node) {
+    onRowClicked (file?: Node) {
         if (this.selectedNode?.id === file?.id) {
             this.selectedNode = null;
         } else {
@@ -256,7 +256,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.contentModelFormFileHandler(this.selectedNode);
     }
 
-    contentModelFormFileHandler(file?: any) {
+    contentModelFormFileHandler (file?: any) {
         if (file?.id && this.isRetrieveMetadataOptionEnabled()) {
             const values: FormValues = {};
             this.nodesApi.getNode(file.id).then((acsNode) => {
@@ -274,23 +274,23 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.fileClicked(new UploadWidgetContentLinkModel(file, this.field.id));
     }
 
-    isRetrieveMetadataOptionEnabled(): boolean {
+    isRetrieveMetadataOptionEnabled (): boolean {
         return this.field?.params?.menuOptions && this.field.params.menuOptions[RETRIEVE_METADATA_OPTION];
     }
 
-    isValidAlias(alias: string): boolean {
+    isValidAlias (alias: string): boolean {
         return alias && VALID_ALIAS.includes(alias);
     }
 
-    isSelected(): boolean {
+    isSelected (): boolean {
         return this.hasFile;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.contentNodeSelectorPanelService.customModels = [];
     }
 
-    private setPreviewState(): void {
+    private setPreviewState (): void {
         this.previewState = this.formService.getPreviewState();
     }
 }

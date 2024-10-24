@@ -28,13 +28,13 @@ describe('DropdownBreadcrumb', () => {
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
-    let documentListService: DocumentListService = jasmine.createSpyObj({ loadFolderByNodeId: of(''), isCustomSourceService: false });
+    let documentListService: DocumentListService = jasmine.createSpyObj({ "loadFolderByNodeId": of(''), "isCustomSourceService": false });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [{ provide: DocumentListService, useValue: documentListService }]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA],
+            "providers": [{ "provide": DocumentListService, "useValue": documentListService }]
         });
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;
@@ -85,9 +85,9 @@ describe('DropdownBreadcrumb', () => {
     it('should display only the path in the selectBox', (done) => {
         const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [
-            { id: '1', name: 'Stark Industries' },
-            { id: '2', name: 'User Homes' },
-            { id: '3', name: 'J.A.R.V.I.S' }
+            { "id": '1', "name": 'Stark Industries' },
+            { "id": '2', "name": 'User Homes' },
+            { "id": '3', "name": 'J.A.R.V.I.S' }
         ];
 
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
@@ -106,7 +106,7 @@ describe('DropdownBreadcrumb', () => {
     it('should update document list when clicking on an option', async () => {
         component.target = documentList;
         const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
-        fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
+        fakeNodeWithCreatePermissionInstance.path.elements = [{ "id": '1', "name": 'Stark Industries' }];
         triggerComponentChange(fakeNodeWithCreatePermissionInstance);
 
         openSelect();

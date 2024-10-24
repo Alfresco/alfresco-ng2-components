@@ -23,7 +23,7 @@ import { FormCloudModule } from '../../form/form-cloud.module';
 import { StartProcessCloudComponent } from './components/start-process-cloud.component';
 import { CoreModule } from '@alfresco/adf-core';
 @NgModule({
-    imports: [
+    "imports": [
         FormsModule,
         CommonModule,
         FormCloudModule,
@@ -31,10 +31,10 @@ import { CoreModule } from '@alfresco/adf-core';
         ReactiveFormsModule,
         CoreModule
     ],
-    declarations: [
+    "declarations": [
         StartProcessCloudComponent
     ],
-    exports: [
+    "exports": [
         StartProcessCloudComponent
     ]
 })

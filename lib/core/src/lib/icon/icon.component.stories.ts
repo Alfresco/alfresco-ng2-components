@@ -21,56 +21,56 @@ import { IconComponent } from './icon.component';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: IconComponent,
-    title: 'Core/Icon/Icon',
-    decorators: [
+    "component": IconComponent,
+    "title": 'Core/Icon/Icon',
+    "decorators": [
         moduleMetadata({
-            imports: [IconComponent]
+            "imports": [IconComponent]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Provides a universal way of rendering registered and named icons.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Provides a universal way of rendering registered and named icons.`
             }
         }
     },
-    argTypes: {
-        color: {
-            control: 'radio',
-            options: ['primary', 'accent', 'warn', undefined],
-            description: 'icon color',
-            defaultValue: undefined,
-            table: {
-                type: { summary: 'ThemePalette' },
-                defaultValue: { summary: 'undefined' }
+    "argTypes": {
+        "color": {
+            "control": 'radio',
+            "options": ['primary', 'accent', 'warn', undefined],
+            "description": 'icon color',
+            "defaultValue": undefined,
+            "table": {
+                "type": { "summary": 'ThemePalette' },
+                "defaultValue": { "summary": 'undefined' }
             }
         },
-        value: {
-            description: 'icon name',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'settings' }
+        "value": {
+            "description": 'icon name',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'settings' }
             }
         }
     }
 } as Meta<IconComponent>;
 
 const template: StoryFn<IconComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const DefaultIcon = template.bind({});
 DefaultIcon.args = {
-    value: ''
+    "value": ''
 };
-DefaultIcon.parameters = { layout: 'centered' };
+DefaultIcon.parameters = { "layout": 'centered' };
 
 export const CustomIcon = template.bind({});
 CustomIcon.args = {
-    value: 'cloud_download'
+    "value": 'cloud_download'
 };
-CustomIcon.parameters = { layout: 'centered' };
+CustomIcon.parameters = { "layout": 'centered' };
