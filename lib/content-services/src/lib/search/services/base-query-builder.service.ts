@@ -596,6 +596,7 @@ export abstract class BaseQueryBuilderService {
      * @param searchUrl search url to navigate to
      */
     async navigateToSearch(query: string, searchUrl: string) {
+        this.update();
         this.userQuery = query;
         await this.execute();
         await this.router.navigate([searchUrl], {
