@@ -29,9 +29,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'adf-checklist',
-    standalone: true,
-    imports: [
+    "selector": 'adf-checklist',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatChipsModule,
@@ -42,8 +42,8 @@ import { FormsModule } from '@angular/forms';
         MatInputModule,
         FormsModule
     ],
-    templateUrl: './checklist.component.html',
-    styleUrls: ['./checklist.component.scss']
+    "templateUrl": './checklist.component.html',
+    "styleUrls": ['./checklist.component.scss']
 })
 export class ChecklistComponent implements OnChanges {
     /**
@@ -75,16 +75,16 @@ export class ChecklistComponent implements OnChanges {
     @Output()
     error = new EventEmitter<any>();
 
-    @ViewChild('dialog', { static: true })
+    @ViewChild('dialog', { "static": true })
     addNewDialog: any;
 
     taskName: string;
 
     checklist: TaskRepresentation[] = [];
 
-    constructor(private taskListService: TaskListService, private dialog: MatDialog) {}
+    constructor (private taskListService: TaskListService, private dialog: MatDialog) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const taskId = changes['taskId'];
         if (taskId?.currentValue) {
             this.getTaskChecklist();
@@ -92,7 +92,7 @@ export class ChecklistComponent implements OnChanges {
         }
     }
 
-    getTaskChecklist() {
+    getTaskChecklist () {
         this.checklist = [];
         if (this.taskId) {
             this.taskListService.getTaskChecklist(this.taskId).subscribe(
@@ -110,15 +110,15 @@ export class ChecklistComponent implements OnChanges {
         }
     }
 
-    showDialog() {
-        this.dialog.open(this.addNewDialog, { width: '350px' });
+    showDialog () {
+        this.dialog.open(this.addNewDialog, { "width": '350px' });
     }
 
-    public add() {
+    public add () {
         const newTask = new TaskRepresentation({
-            name: this.taskName,
-            parentTaskId: this.taskId,
-            assignee: { id: this.assignee }
+            "name": this.taskName,
+            "parentTaskId": this.taskId,
+            "assignee": { "id": this.assignee }
         });
         this.taskListService.addTask(newTask).subscribe(
             (taskDetailsModel) => {
@@ -133,7 +133,7 @@ export class ChecklistComponent implements OnChanges {
         this.cancel();
     }
 
-    public delete(taskId: string) {
+    public delete (taskId: string) {
         this.taskListService.deleteTask(taskId).subscribe(
             () => {
                 this.checklist = this.checklist.filter((check) => check.id !== taskId);
@@ -145,7 +145,7 @@ export class ChecklistComponent implements OnChanges {
         );
     }
 
-    public cancel() {
+    public cancel () {
         this.dialog.closeAll();
         this.taskName = '';
     }

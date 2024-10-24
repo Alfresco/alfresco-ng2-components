@@ -24,10 +24,10 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-user-icon-column',
-    standalone: true,
-    imports: [CommonModule, MatIconModule, InitialUsernamePipe],
-    template: `
+    "selector": 'adf-user-icon-column',
+    "standalone": true,
+    "imports": [CommonModule, MatIconModule, InitialUsernamePipe],
+    "template": `
         <div class="adf-cell-value" [attr.id]="group ? 'group-icon' : 'person-icon'" *ngIf="!isSelected">
             <ng-container *ngIf="displayText$ | async as user">
                 <mat-icon *ngIf="group" class="adf-group-icon">people_alt_outline</mat-icon>
@@ -38,9 +38,9 @@ import { MatIconModule } from '@angular/material/icon';
             <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected"></mat-icon>
         </div>
     `,
-    styleUrls: ['./user-icon-column.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-user-icon-column adf-datatable-content-cell' }
+    "styleUrls": ['./user-icon-column.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-user-icon-column adf-datatable-content-cell' }
 })
 export class UserIconColumnComponent implements OnInit {
     @Input()
@@ -55,18 +55,18 @@ export class UserIconColumnComponent implements OnInit {
     displayText$ = new BehaviorSubject<User | Group>(null);
     group = false;
 
-    get isSelected(): boolean {
+    get isSelected (): boolean {
         return this.context?.row?.isSelected || this.selected;
     }
 
-    constructor(private nodePermissionService: NodePermissionService) {}
+    constructor (private nodePermissionService: NodePermissionService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.context) {
             const { person, group, authorityId } = this.context.row.obj?.entry ?? this.context.row.obj;
             this.group = this.isGroup(group, authorityId);
             const user = person ? new User(person) : undefined;
-            this.displayText$.next(user || group || { displayName: authorityId });
+            this.displayText$.next(user || group || { "displayName": authorityId });
         }
 
         if (this.node) {
@@ -77,7 +77,7 @@ export class UserIconColumnComponent implements OnInit {
         }
     }
 
-    private isGroup(group, authorityId): boolean {
+    private isGroup (group, authorityId): boolean {
         return !!group || authorityId?.startsWith('GROUP_') || authorityId?.startsWith('ROLE_');
     }
 }

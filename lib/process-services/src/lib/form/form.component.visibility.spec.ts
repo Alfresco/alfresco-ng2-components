@@ -47,8 +47,8 @@ describe('FormComponent UI and visibility', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ProcessTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;
@@ -67,7 +67,7 @@ describe('FormComponent UI and visibility', () => {
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
-            component.ngOnChanges({ taskId: change });
+            component.ngOnChanges({ "taskId": change });
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).toBeDefined();
             expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).not.toBeNull();
@@ -79,7 +79,7 @@ describe('FormComponent UI and visibility', () => {
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionRequiredField));
 
             const change = new SimpleChange(null, 1, true);
-            component.ngOnChanges({ taskId: change });
+            component.ngOnChanges({ "taskId": change });
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).toBeNull();
             expect(fixture.debugElement.query(By.css('#adf-invalid-form-icon'))).toBeDefined();
@@ -91,7 +91,7 @@ describe('FormComponent UI and visibility', () => {
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
-            component.ngOnChanges({ taskId: change });
+            component.ngOnChanges({ "taskId": change });
             component.showValidationIcon = false;
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('#adf-valid-form-icon'))).toBeNull();
@@ -105,7 +105,7 @@ describe('FormComponent UI and visibility', () => {
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionTwoTextFields));
 
             const change = new SimpleChange(null, 1, true);
-            component.ngOnChanges({ taskId: change });
+            component.ngOnChanges({ "taskId": change });
             fixture.detectChanges();
 
             const firstNameEl = fixture.debugElement.query(By.css('#firstname'));
@@ -122,7 +122,7 @@ describe('FormComponent UI and visibility', () => {
             spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefinitionDropdownField));
 
             const change = new SimpleChange(null, 1, true);
-            component.ngOnChanges({ taskId: change });
+            component.ngOnChanges({ "taskId": change });
 
             const dropdown = await loader.getHarness(MatSelectHarness);
             await dropdown.open();
@@ -148,7 +148,7 @@ describe('FormComponent UI and visibility', () => {
                 spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilityFieldDependsOnNextOne));
 
                 const change = new SimpleChange(null, 1, true);
-                component.ngOnChanges({ taskId: change });
+                component.ngOnChanges({ "taskId": change });
                 fixture.detectChanges();
 
                 const firstEl = fixture.debugElement.query(By.css('#field-country-container'));
@@ -165,7 +165,7 @@ describe('FormComponent UI and visibility', () => {
                 spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilitiFieldDependsOnPreviousOne));
 
                 const change = new SimpleChange(null, 1, true);
-                component.ngOnChanges({ taskId: change });
+                component.ngOnChanges({ "taskId": change });
                 fixture.detectChanges();
 
                 const firstEl = fixture.debugElement.query(By.css('#name'));
@@ -182,7 +182,7 @@ describe('FormComponent UI and visibility', () => {
                 spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formDefVisibilityFieldDependsOnNextOne));
 
                 const change = new SimpleChange(null, 1, true);
-                component.ngOnChanges({ taskId: change });
+                component.ngOnChanges({ "taskId": change });
                 fixture.detectChanges();
 
                 let firstEl = fixture.debugElement.query(By.css('#field-country-container'));
@@ -207,7 +207,7 @@ describe('FormComponent UI and visibility', () => {
                 spyOn(taskFormService, 'getTaskForm').and.returnValue(of(formReadonlyTwoTextFields));
 
                 const change = new SimpleChange(null, 1, true);
-                component.ngOnChanges({ taskId: change });
+                component.ngOnChanges({ "taskId": change });
 
                 fixture.detectChanges();
                 await fixture.whenStable();

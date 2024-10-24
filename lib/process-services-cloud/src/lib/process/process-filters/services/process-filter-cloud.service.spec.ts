@@ -43,16 +43,16 @@ describe('ProcessFilterCloudService', () => {
     let notificationCloudService: NotificationCloudService;
 
     const identityUserMock = {
-        username: 'mock-username',
-        firstName: 'fake-identity-first-name',
-        lastName: 'fake-identity-last-name',
-        email: 'fakeIdentity@email.com'
+        "username": 'mock-username',
+        "firstName": 'fake-identity-first-name',
+        "lastName": 'fake-identity-last-name',
+        "email": 'fakeIdentity@email.com'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            providers: [{ provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }]
+            "imports": [ProcessServiceCloudTestingModule],
+            "providers": [{ "provide": PROCESS_FILTERS_SERVICE_TOKEN, "useClass": LocalPreferenceCloudService }]
         });
         service = TestBed.inject(ProcessFilterCloudService);
 

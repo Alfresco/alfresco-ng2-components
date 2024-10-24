@@ -27,37 +27,37 @@ import { BaseCloudService } from './base-cloud.service';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class NotificationCloudService extends BaseCloudService {
     appsListening = [];
 
-    constructor(public apollo: Apollo, private http: HttpLink, private authService: AuthenticationService, protected adfHttpClient: AdfHttpClient) {
+    constructor (public apollo: Apollo, private http: HttpLink, private authService: AuthenticationService, protected adfHttpClient: AdfHttpClient) {
         super(adfHttpClient);
     }
 
-    private get webSocketHost() {
+    private get webSocketHost () {
         return this.contextRoot.split('://')[1];
     }
 
-    private get protocol() {
+    private get protocol () {
         return this.contextRoot.split('://')[0] === 'https' ? 'wss' : 'ws';
     }
 
-    initNotificationsForApp(appName: string) {
+    initNotificationsForApp (appName: string) {
         if (!this.appsListening.includes(appName)) {
             this.appsListening.push(appName);
             const httpLink = this.http.create({
-                uri: `${this.getBasePath(appName)}/notifications/graphql`
+                "uri": `${this.getBasePath(appName)}/notifications/graphql`
             });
 
             const webSocketLink = new WebSocketLink({
-                uri: `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`,
-                options: {
-                    reconnect: true,
-                    lazy: true,
-                    connectionParams: {
-                        kaInterval: 2000,
+                "uri": `${this.protocol}://${this.webSocketHost}/${appName}/notifications/ws/graphql`,
+                "options": {
+                    "reconnect": true,
+                    "lazy": true,
+                    "connectionParams": {
+                        "kaInterval": 2000,
                         // eslint-disable-next-line @typescript-eslint/naming-convention
                         'X-Authorization': 'Bearer ' + this.authService.getToken()
                     }
@@ -80,7 +80,7 @@ export class NotificationCloudService extends BaseCloudService {
                             case 'UNAUTHENTICATED': {
                                 const oldHeaders = operation.getContext().headers;
                                 operation.setContext({
-                                    headers: {
+                                    "headers": {
                                         ...oldHeaders,
                                         // eslint-disable-next-line @typescript-eslint/naming-convention
                                         'X-Authorization': 'Bearer ' + this.authService.getToken()
@@ -97,19 +97,19 @@ export class NotificationCloudService extends BaseCloudService {
             });
 
             this.apollo.createNamed(appName, {
-                link: ApolloLink.from([errorLink, link]),
-                cache: new InMemoryCache({ merge: true } as InMemoryCacheConfig),
-                defaultOptions: {
-                    watchQuery: {
-                        errorPolicy: 'all'
+                "link": ApolloLink.from([errorLink, link]),
+                "cache": new InMemoryCache({ "merge": true } as InMemoryCacheConfig),
+                "defaultOptions": {
+                    "watchQuery": {
+                        "errorPolicy": 'all'
                     }
                 }
             });
         }
     }
 
-    makeGQLQuery(appName: string, gqlQuery: string) {
+    makeGQLQuery (appName: string, gqlQuery: string) {
         this.initNotificationsForApp(appName);
-        return this.apollo.use(appName).subscribe({ query: gql(gqlQuery) });
+        return this.apollo.use(appName).subscribe({ "query": gql(gqlQuery) });
     }
 }

@@ -25,9 +25,9 @@ describe('CardViewBaseItemModel', () => {
 
     beforeEach(() => {
         properties = {
-            label: 'Tribe',
-            value: 'Oseram',
-            key: 'tribe'
+            "label": 'Tribe',
+            "value": 'Oseram',
+            "key": 'tribe'
         };
     });
 
@@ -39,7 +39,7 @@ describe('CardViewBaseItemModel', () => {
         });
 
         it('data should be stored if one data is set', () => {
-            properties.data = { name: 'ryuk', lifeform: 'shinigami' };
+            properties.data = { "name": 'ryuk', "lifeform": 'shinigami' };
             const itemModel = new CarViewCustomItemModel(properties);
 
             expect(itemModel.data).toBe(properties.data);
@@ -48,13 +48,13 @@ describe('CardViewBaseItemModel', () => {
         it('should persist the params properties as own properties', () => {
             const allProperties = {
                 ...properties,
-                default: 'default-value',
-                editable: true,
-                clickable: true,
-                icon: 'dummy-icon',
-                hint: 'Some hint text',
-                validators: [{} as unknown as CardViewItemValidator],
-                multivalued: true
+                "default": 'default-value',
+                "editable": true,
+                "clickable": true,
+                "icon": 'dummy-icon',
+                "hint": 'Some hint text',
+                "validators": [{} as unknown as CardViewItemValidator],
+                "multivalued": true
             };
 
             const itemModel = new CarViewCustomItemModel(allProperties);
@@ -82,8 +82,8 @@ describe('CardViewBaseItemModel', () => {
         });
 
         it('should call the registered validators to validate', () => {
-            const validator1: CardViewItemValidator = { isValid: () => true, message: 'validator 1' };
-            const validator2: CardViewItemValidator = { isValid: () => true, message: 'validator 2' };
+            const validator1: CardViewItemValidator = { "isValid": () => true, "message": 'validator 1' };
+            const validator2: CardViewItemValidator = { "isValid": () => true, "message": 'validator 2' };
             spyOn(validator1, 'isValid');
             spyOn(validator2, 'isValid');
             properties.validators = [validator1, validator2];
@@ -96,8 +96,8 @@ describe('CardViewBaseItemModel', () => {
         });
 
         it('should return the registered validators common decision (case true)', () => {
-            const validator1: CardViewItemValidator = { isValid: () => true, message: 'validator 1' };
-            const validator2: CardViewItemValidator = { isValid: () => true, message: 'validator 2' };
+            const validator1: CardViewItemValidator = { "isValid": () => true, "message": 'validator 1' };
+            const validator2: CardViewItemValidator = { "isValid": () => true, "message": 'validator 2' };
             properties.validators = [validator1, validator2];
             const itemModel = new CarViewCustomItemModel(properties);
 
@@ -108,27 +108,29 @@ describe('CardViewBaseItemModel', () => {
         });
 
         it('should return the registered validators common decision (case false)', () => {
-            const validator1: CardViewItemValidator = { isValid: () => false, message: 'validator 1' };
-            const validator2: CardViewItemValidator = { isValid: () => true, message: 'validator 2' };
-            const validator3: CardViewItemValidator = { isValid: () => false, message: 'validator 3' };
+            const validator1: CardViewItemValidator = { "isValid": () => false, "message": 'validator 1' };
+            const validator2: CardViewItemValidator = { "isValid": () => true, "message": 'validator 2' };
+            const validator3: CardViewItemValidator = { "isValid": () => false, "message": 'validator 3' };
             properties.validators = [validator1, validator2, validator3];
             const itemModel = new CarViewCustomItemModel(properties);
 
             const isValid = itemModel.isValid('test-against-this');
 
             expect(isValid).toBe(false);
-            expect(itemModel.getValidationErrors('test-against-this')).toEqual([validator1, validator3 ]);
+            expect(itemModel.getValidationErrors('test-against-this')).toEqual([validator1, validator3]);
         });
 
         it('should validate field with special character and return false when there is REGEX constraint and requiresMatch is false', () => {
             const constrainedProperties: CardViewItemProperties = {
                 ...properties,
-                value: 'test.',
-                constraints: [{
-                    id: 'constraint-id',
-                    type: 'REGEX',
-                    parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: false }
-                }]
+                "value": 'test.',
+                "constraints": [
+                    {
+                        "id": 'constraint-id',
+                        "type": 'REGEX',
+                        "parameters": { "expression": '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', "requiresMatch": false }
+                    }
+                ]
             };
 
             const itemModel = new CarViewCustomItemModel(constrainedProperties);
@@ -138,11 +140,13 @@ describe('CardViewBaseItemModel', () => {
         it('should validate field without special character and return true when there is REGEX constraint and requiresMatch is false', () => {
             const constrainedProperties: CardViewItemProperties = {
                 ...properties,
-                constraints: [{
-                    id: 'constraint-id',
-                    type: 'REGEX',
-                    parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: false }
-                }]
+                "constraints": [
+                    {
+                        "id": 'constraint-id',
+                        "type": 'REGEX',
+                        "parameters": { "expression": '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', "requiresMatch": false }
+                    }
+                ]
             };
 
             const itemModel = new CarViewCustomItemModel(constrainedProperties);
@@ -152,11 +156,13 @@ describe('CardViewBaseItemModel', () => {
         it('should validate field without special character and return false when there is REGEX constraint and requiresMatch is true', () => {
             const constrainedProperties: CardViewItemProperties = {
                 ...properties,
-                constraints: [{
-                    id: 'constraint-id',
-                    type: 'REGEX',
-                    parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: true }
-                }]
+                "constraints": [
+                    {
+                        "id": 'constraint-id',
+                        "type": 'REGEX',
+                        "parameters": { "expression": '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', "requiresMatch": true }
+                    }
+                ]
             };
 
             const itemModel = new CarViewCustomItemModel(constrainedProperties);
@@ -166,12 +172,14 @@ describe('CardViewBaseItemModel', () => {
         it('should validate field without special character and return true when there is REGEX constraint and requiresMatch is true', () => {
             const constrainedProperties: CardViewItemProperties = {
                 ...properties,
-                value: 'test.',
-                constraints: [{
-                    id: 'constraint-id',
-                    type: 'REGEX',
-                    parameters: { expression: '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', requiresMatch: true }
-                }]
+                "value": 'test.',
+                "constraints": [
+                    {
+                        "id": 'constraint-id',
+                        "type": 'REGEX',
+                        "parameters": { "expression": '(.*[\\"\\*\\\\\\>\\<\\?\\/\\:\\|]+.*)|(.*[\\.]?.*[\\.]+$)|(.*[ ]+$)', "requiresMatch": true }
+                    }
+                ]
             };
 
             const itemModel = new CarViewCustomItemModel(constrainedProperties);

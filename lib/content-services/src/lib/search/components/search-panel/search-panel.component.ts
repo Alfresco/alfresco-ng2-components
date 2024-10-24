@@ -22,22 +22,22 @@ import { CommonModule } from '@angular/common';
 import { SearchFilterComponent } from '../search-filter';
 
 @Component({
-    selector: 'adf-search-panel',
-    standalone: true,
-    imports: [CommonModule, SearchFilterComponent],
-    templateUrl: './search-panel.component.html',
-    styleUrls: ['./search-panel.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-panel' }
+    "selector": 'adf-search-panel',
+    "standalone": true,
+    "imports": [CommonModule, SearchFilterComponent],
+    "templateUrl": './search-panel.component.html',
+    "styleUrls": ['./search-panel.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-panel' }
 })
 export class SearchPanelComponent implements OnInit {
-    constructor(private contentNodeSelectorPanelService: ContentNodeSelectorPanelService, private queryBuilderService: SearchQueryBuilderService) {}
+    constructor (private contentNodeSelectorPanelService: ContentNodeSelectorPanelService, private queryBuilderService: SearchQueryBuilderService) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.queryBuilderService.categories = this.contentNodeSelectorPanelService.convertCustomModelPropertiesToSearchCategories();
     }
 
-    hasCustomModels(): boolean {
+    hasCustomModels (): boolean {
         return this.contentNodeSelectorPanelService?.customModels?.length > 0;
     }
 }

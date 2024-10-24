@@ -22,47 +22,47 @@ import { CardViewBoolItemModel, CARD_VIEW_DIRECTIVES } from '../../public-api';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: CardViewBoolItemComponent,
-    title: 'Core/Card View/Card View Bool Item',
-    decorators: [
+    "component": CardViewBoolItemComponent,
+    "title": 'Core/Card View/Card View Bool Item',
+    "decorators": [
         moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
+            "imports": [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    argTypes: {
-        editable: {
-            control: 'boolean',
-            description: 'Defines if CardView item is editable',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
+    "argTypes": {
+        "editable": {
+            "control": 'boolean',
+            "description": 'Defines if CardView item is editable',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'false' }
             }
         },
-        property: {
-            description: 'Card View Item Model with data',
-            table: {
-                type: { summary: 'CardViewBoolItemModel' }
+        "property": {
+            "description": 'Card View Item Model with data',
+            "table": {
+                "type": { "summary": 'CardViewBoolItemModel' }
             }
         }
     },
-    args: {
-        editable: true
+    "args": {
+        "editable": true
     }
 } as Meta<CardViewBoolItemComponent>;
 
 export const CardViewBoolItem: StoryFn<CardViewBoolItemComponent> = (args) => ({
-    props: args
+    "props": args
 });
 CardViewBoolItem.args = {
-    property: new CardViewBoolItemModel({
-        label: 'Agree to all terms and conditions',
-        value: true,
-        key: 'boolean',
-        default: false,
-        editable: true
+    "property": new CardViewBoolItemModel({
+        "label": 'Agree to all terms and conditions',
+        "value": true,
+        "key": 'boolean',
+        "default": false,
+        "editable": true
     })
 };
-CardViewBoolItem.parameters = { layout: 'centered' };
+CardViewBoolItem.parameters = { "layout": 'centered' };

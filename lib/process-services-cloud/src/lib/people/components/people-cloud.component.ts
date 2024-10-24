@@ -42,17 +42,17 @@ import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.t
 import { MatFormFieldAppearance, SubscriptSizing } from '@angular/material/form-field';
 
 @Component({
-    selector: 'adf-cloud-people',
-    templateUrl: './people-cloud.component.html',
-    styleUrls: ['./people-cloud.component.scss'],
-    animations: [
+    "selector": 'adf-cloud-people',
+    "templateUrl": './people-cloud.component.html',
+    "styleUrls": ['./people-cloud.component.scss'],
+    "animations": [
         trigger('transitionMessages', [
-            state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),
-            transition('void => enter', [style({ opacity: 0, transform: 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
+            state('enter', style({ "opacity": 1, "transform": 'translateY(0%)' })),
+            transition('void => enter', [style({ "opacity": 0, "transform": 'translateY(-100%)' }), animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')])
         ])
     ],
-    providers: [FullNamePipe],
-    encapsulation: ViewEncapsulation.None
+    "providers": [FullNamePipe],
+    "encapsulation": ViewEncapsulation.None
 })
 export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
     /** Name of the application. If specified, this shows the users who have access to the app. */
@@ -112,11 +112,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
 
     /** FormControl to list of users */
     @Input()
-    userChipsCtrl: UntypedFormControl = new UntypedFormControl({ value: '', disabled: false });
+    userChipsCtrl: UntypedFormControl = new UntypedFormControl({ "value": '', "disabled": false });
 
     /** FormControl to search the user */
     @Input()
-    searchUserCtrl = new UntypedFormControl({ value: '', disabled: false });
+    searchUserCtrl = new UntypedFormControl({ "value": '', "disabled": false });
 
     /**
      * Label translation key
@@ -193,16 +193,16 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
 
     typingUniqueValueNotEmpty$: Observable<string>;
 
-    constructor(
+    constructor (
         @Inject(IDENTITY_USER_SERVICE_TOKEN)
         private identityUserService: IdentityUserServiceInterface
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.initSearch();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges (changes: SimpleChanges): void {
         if (this.hasPreselectedUsersChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
             if (this.hasPreSelectUsers()) {
                 this.loadPreSelectUsers();
@@ -223,7 +223,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit (): void {
         if (this.hideInputOnSingleSelection) {
             if (this.selectedUsers.length === 1 && this.isSingleMode() && this.userInput) {
                 this.userInput.nativeElement.style.display = 'none';
@@ -231,13 +231,13 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
     }
 
-    private initSearch(): void {
+    private initSearch (): void {
         this.initializeStream();
         this.typingUniqueValueNotEmpty$
             .pipe(
                 filter((name: string) => name.length >= 1),
                 switchMap((name: string) =>
-                    this.identityUserService.search(name, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
+                    this.identityUserService.search(name, { "roles": this.roles, "withinApplication": this.appName, "groups": this.groupsRestriction })
                 ),
                 mergeMap((users: IdentityUserModel[]) => {
                     this.resetSearchUsers();
@@ -253,7 +253,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
             });
     }
 
-    private initializeStream() {
+    private initializeStream () {
         const typingValueFromControl$ = this.searchUserCtrl.valueChanges;
 
         const typingValueTypeSting$ = typingValueFromControl$.pipe(
@@ -286,11 +286,11 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         );
     }
 
-    private isValidationEnabled(): boolean {
+    private isValidationEnabled (): boolean {
         return this.validate === true;
     }
 
-    private isUserAlreadySelected(searchUser: IdentityUserModel): boolean {
+    private isUserAlreadySelected (searchUser: IdentityUserModel): boolean {
         if (this.selectedUsers && this.selectedUsers.length > 0) {
             const result = this.selectedUsers.find((selectedUser) => this.equalsUsers(selectedUser, searchUser));
 
@@ -299,14 +299,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         return false;
     }
 
-    private isExcludedUser(searchUser: IdentityUserModel): boolean {
+    private isExcludedUser (searchUser: IdentityUserModel): boolean {
         if (this.excludedUsers?.length > 0) {
             return !!this.excludedUsers.find((excludedUser) => this.equalsUsers(excludedUser, searchUser));
         }
         return false;
     }
 
-    private async loadPreSelectUsers(): Promise<void> {
+    private async loadPreSelectUsers (): Promise<void> {
         this.selectedUsers = [];
 
         if (this.isSingleMode()) {
@@ -322,7 +322,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
     }
 
-    private getPreselectedUsers(): IdentityUserModel[] {
+    private getPreselectedUsers (): IdentityUserModel[] {
         if (this.isSingleMode()) {
             return [this.preSelectUsers[0]];
         } else {
@@ -330,14 +330,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
     }
 
-    private async validatePreselectUsers(): Promise<any> {
+    private async validatePreselectUsers (): Promise<any> {
         this.invalidUsers = [];
 
         for (const user of this.getPreselectedUsers()) {
             try {
                 const validationResult = (
                     await this.identityUserService
-                        .search(user.username, { roles: this.roles, withinApplication: this.appName, groups: this.groupsRestriction })
+                        .search(user.username, { "roles": this.roles, "withinApplication": this.appName, "groups": this.groupsRestriction })
                         .toPromise()
                 )[0];
 
@@ -352,7 +352,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         this.checkPreselectValidationErrors();
     }
 
-    equalsUsers(preselectedUser: IdentityUserModel, identityUser: IdentityUserModel): boolean {
+    equalsUsers (preselectedUser: IdentityUserModel, identityUser: IdentityUserModel): boolean {
         if (preselectedUser && identityUser) {
             const uniquePropertyIdentifiers = ['id', 'username', 'email'];
             for (const property of Object.keys(preselectedUser)) {
@@ -364,14 +364,14 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         return false;
     }
 
-    removeDuplicatedUsers(users: IdentityUserModel[]): IdentityUserModel[] {
+    removeDuplicatedUsers (users: IdentityUserModel[]): IdentityUserModel[] {
         return users.filter(
             (user, index, self) =>
                 index === self.findIndex((auxUser) => user.id === auxUser.id && user.username === auxUser.username && user.email === auxUser.email)
         );
     }
 
-    onSelect(user: IdentityUserModel): void {
+    onSelect (user: IdentityUserModel): void {
         if (user) {
             this.selectUser.emit(user);
 
@@ -396,7 +396,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
     }
 
-    onRemove(userToRemove: IdentityUserModel): void {
+    onRemove (userToRemove: IdentityUserModel): void {
         this.removeUser.emit(userToRemove);
         this.removeUserFromSelected(userToRemove);
         this.changedUsers.emit(this.selectedUsers);
@@ -417,7 +417,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
     }
 
-    private checkPreselectValidationErrors(): void {
+    private checkPreselectValidationErrors (): void {
         this.invalidUsers = this.removeDuplicatedUsers(this.invalidUsers);
 
         if (this.invalidUsers.length > 0) {
@@ -425,12 +425,12 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
 
         this.warning.emit({
-            message: 'INVALID_PRESELECTED_USERS',
-            users: this.invalidUsers
+            "message": 'INVALID_PRESELECTED_USERS',
+            "users": this.invalidUsers
         });
     }
 
-    private removeUserFromSelected({ id, username, email }: IdentityUserModel): void {
+    private removeUserFromSelected ({ id, username, email }: IdentityUserModel): void {
         const indexToRemove = this.selectedUsers.findIndex((user) => user.id === id && user.username === username && user.email === email);
 
         if (indexToRemove !== -1) {
@@ -438,7 +438,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
     }
 
-    private removeUserFromValidation({ id, username, email }: IdentityUserModel): void {
+    private removeUserFromValidation ({ id, username, email }: IdentityUserModel): void {
         const indexToRemove = this.invalidUsers.findIndex((user) => user.id === id && user.username === username && user.email === email);
 
         if (indexToRemove !== -1) {
@@ -446,7 +446,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         }
     }
 
-    private generateInvalidUsersMessage(): void {
+    private generateInvalidUsersMessage (): void {
         this.validateUsersMessage = '';
 
         this.invalidUsers.forEach((invalidUser, index) => {
@@ -458,113 +458,113 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
         });
     }
 
-    hasPreselectError(): boolean {
+    hasPreselectError (): boolean {
         return this.invalidUsers && this.invalidUsers.length > 0;
     }
 
-    getDisplayName(user): string {
+    getDisplayName (user): string {
         return FullNamePipe.prototype.transform(user);
     }
 
-    private isMultipleMode(): boolean {
+    private isMultipleMode (): boolean {
         return this.mode === 'multiple';
     }
 
-    private isSingleMode(): boolean {
+    private isSingleMode (): boolean {
         return this.mode === 'single';
     }
 
-    private isSingleSelectionReadonly(): boolean {
+    private isSingleSelectionReadonly (): boolean {
         return this.isSingleMode() && this.selectedUsers.length === 1 && this.selectedUsers[0].readonly === true;
     }
 
-    private hasPreSelectUsers(): boolean {
+    private hasPreSelectUsers (): boolean {
         return this.preSelectUsers && this.preSelectUsers.length > 0;
     }
 
-    private hasModeChanged(changes: SimpleChanges): boolean {
+    private hasModeChanged (changes: SimpleChanges): boolean {
         return changes?.mode && changes.mode.currentValue !== changes.mode.previousValue;
     }
 
-    private isValidationChanged(changes: SimpleChanges): boolean {
+    private isValidationChanged (changes: SimpleChanges): boolean {
         return changes?.validate && changes.validate.currentValue !== changes.validate.previousValue;
     }
 
-    private hasPreselectedUsersChanged(changes: SimpleChanges): boolean {
+    private hasPreselectedUsersChanged (changes: SimpleChanges): boolean {
         return changes?.preSelectUsers && changes.preSelectUsers.currentValue !== changes.preSelectUsers.previousValue;
     }
 
-    private hasPreselectedUsersCleared(changes: SimpleChanges): boolean {
+    private hasPreselectedUsersCleared (changes: SimpleChanges): boolean {
         return changes?.preSelectUsers?.currentValue?.length === 0;
     }
 
-    private resetSearchUsers(): void {
+    private resetSearchUsers (): void {
         this.searchUsers = [];
         this.searchUsers$.next(this.searchUsers);
     }
 
-    private setTypingError(): void {
+    private setTypingError (): void {
         this.searchUserCtrl.setErrors({
-            searchTypingError: true,
+            "searchTypingError": true,
             ...this.searchUserCtrl.errors
         });
     }
 
-    private userChipsControlValue(value: string) {
+    private userChipsControlValue (value: string) {
         this.userChipsCtrl.setValue(value);
         this.userChipsCtrl.markAsDirty();
         this.userChipsCtrl.markAsTouched();
     }
 
-    getSelectedUsers(): IdentityUserModel[] {
+    getSelectedUsers (): IdentityUserModel[] {
         return this.selectedUsers;
     }
 
-    isReadonly(): boolean {
+    isReadonly (): boolean {
         return this.readOnly || this.isSingleSelectionReadonly();
     }
 
-    isValidationLoading(): boolean {
+    isValidationLoading (): boolean {
         return this.isValidationEnabled() && this.validationLoading;
     }
 
-    markAsTouched(): void {
+    markAsTouched (): void {
         this.touched = true;
     }
 
-    isTouched(): boolean {
+    isTouched (): boolean {
         return this.touched;
     }
 
-    isSelected(): boolean {
+    isSelected (): boolean {
         return this.selectedUsers && !!this.selectedUsers.length;
     }
 
-    isDirty(): boolean {
+    isDirty (): boolean {
         return this.isTouched() && !this.isSelected();
     }
 
-    setFocus(isFocused: boolean) {
+    setFocus (isFocused: boolean) {
         this.isFocused = isFocused;
     }
 
-    hasError(): boolean {
+    hasError (): boolean {
         return !!this.searchUserCtrl.errors;
     }
 
-    getValidationPattern(): string {
+    getValidationPattern (): string {
         return this.searchUserCtrl.errors.pattern.requiredPattern;
     }
 
-    getValidationMaxLength(): string {
+    getValidationMaxLength (): string {
         return this.searchUserCtrl.errors.maxlength.requiredLength;
     }
 
-    getValidationMinLength(): string {
+    getValidationMinLength (): string {
         return this.searchUserCtrl.errors.minlength.requiredLength;
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

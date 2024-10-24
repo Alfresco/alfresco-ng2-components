@@ -28,47 +28,47 @@ describe('NodeLockDialogComponent', () => {
     let expiryDate: Date;
 
     const nodeMock: Node = {
-        isLocked: true,
-        properties: {
+        "isLocked": true,
+        "properties": {
             ['cm:testProperty']: 'TEST_PROPERTY',
             ['cm:lockType']: 'TEST_LOCK',
             ['cm:expiryDate']: addMinutes(new Date(), 90)
         },
-        id: 'node-id',
-        name: 'node-name',
-        nodeType: 'cm:content',
-        allowableOperations: ['update'],
-        isFile: true,
-        isFolder: false,
-        modifiedAt: null,
-        modifiedByUser: null,
-        createdAt: null,
-        createdByUser: null
+        "id": 'node-id',
+        "name": 'node-name',
+        "nodeType": 'cm:content',
+        "allowableOperations": ['update'],
+        "isFile": true,
+        "isFolder": false,
+        "modifiedAt": null,
+        "modifiedByUser": null,
+        "createdAt": null,
+        "createdByUser": null
     };
 
     const setComponentData = (isLocked: boolean, properties?: any) => {
         component.data = {
-            node: {
+            "node": {
                 ...nodeMock,
                 isLocked,
-                properties: properties ?? {
+                "properties": properties ?? {
                     ['cm:lockType']: 'WRITE_LOCK',
                     ['cm:expiryDate']: expiryDate
                 }
             },
-            onError: () => {}
+            "onError": () => {}
         };
         fixture.detectChanges();
     };
 
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        "close": jasmine.createSpy('close')
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, NodeLockDialogComponent],
-            providers: [{ provide: MatDialogRef, useValue: dialogRef }]
+            "imports": [ContentTestingModule, NodeLockDialogComponent],
+            "providers": [{ "provide": MatDialogRef, "useValue": dialogRef }]
         });
         fixture = TestBed.createComponent(NodeLockDialogComponent);
         component = fixture.componentInstance;
@@ -112,7 +112,7 @@ describe('NodeLockDialogComponent', () => {
 
         it('should call dialog to close with form data when submit is successfully', fakeAsync(() => {
             setComponentData(true);
-            const node: any = { entry: {} };
+            const node: any = { "entry": {} };
             spyOn(component.nodesApi, 'lockNode').and.returnValue(Promise.resolve(node));
 
             component.submit();
@@ -125,7 +125,7 @@ describe('NodeLockDialogComponent', () => {
         it('should call dialog and set isLocked and node properties', fakeAsync(() => {
             setComponentData(true);
             const nodeEntryMock: NodeEntry = {
-                entry: nodeMock
+                "entry": nodeMock
             };
             spyOn(component.nodesApi, 'lockNode').and.returnValue(Promise.resolve(nodeEntryMock));
             component.submit();

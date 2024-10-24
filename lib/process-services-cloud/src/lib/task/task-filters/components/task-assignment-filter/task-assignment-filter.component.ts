@@ -25,9 +25,9 @@ import { DropdownOption } from '../edit-task-filters/base-edit-task-filter-cloud
 import { FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'adf-cloud-task-assignment-filter',
-    templateUrl: './task-assignment-filter.component.html',
-    styleUrls: ['./task-assignment-filter.component.scss']
+    "selector": 'adf-cloud-task-assignment-filter',
+    "templateUrl": './task-assignment-filter.component.html',
+    "styleUrls": ['./task-assignment-filter.component.scss']
 })
 export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
 
@@ -49,15 +49,15 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
     groupForm = new FormControl('');
     assignmentTypeOptions: DropdownOption[];
 
-    constructor(private identityUserService: IdentityUserService) {}
+    constructor (private identityUserService: IdentityUserService) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges (changes: SimpleChanges): void {
         if (changes?.status?.currentValue !== changes?.status?.previousValue) {
             this.changeAssignmentTypeByStatus(changes?.status?.currentValue);
         }
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.assignmentTypeOptions = this.getAssignmentTypeOptions();
 
         if (this.isFilterPropertyDefined()) {
@@ -67,15 +67,15 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    isCandidateGroupsType(): boolean {
+    isCandidateGroupsType (): boolean {
         return this.assignmentType === AssignmentType.CANDIDATE_GROUPS;
     }
 
-    isAssignedToType(): boolean {
+    isAssignedToType (): boolean {
         return this.assignmentType === AssignmentType.ASSIGNED_TO;
     }
 
-    onAssignmentTypeChange(assignmentChange: MatSelectChange) {
+    onAssignmentTypeChange (assignmentChange: MatSelectChange) {
         this.candidateGroups = [];
         this.assignedUsers = [];
 
@@ -89,15 +89,15 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
         this.assignmentTypeChange.emit(this.assignmentType);
     }
 
-    onChangedGroups(groups: IdentityGroupModel[]) {
+    onChangedGroups (groups: IdentityGroupModel[]) {
         this.assignedGroupsChange.emit(groups);
     }
 
-    onChangedAssignedUsers(users: IdentityUserModel[]) {
+    onChangedAssignedUsers (users: IdentityUserModel[]) {
         this.assignedUsersChange.emit(users);
     }
 
-    private changeAssignmentTypeByStatus(status: TaskStatusFilter) {
+    private changeAssignmentTypeByStatus (status: TaskStatusFilter) {
         switch (status) {
             case TaskStatusFilter.CREATED:
                 this.assignmentType = AssignmentType.UNASSIGNED;
@@ -110,17 +110,17 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    private getAssignmentTypeOptions(): DropdownOption[] {
+    private getAssignmentTypeOptions (): DropdownOption[] {
         return [
-            { value: AssignmentType.NONE, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.NONE}` },
-            { value: AssignmentType.UNASSIGNED, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.UNASSIGNED}` },
-            { value: AssignmentType.ASSIGNED_TO, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.ASSIGNED_TO}` },
-            { value: AssignmentType.CURRENT_USER, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.CURRENT_USER}` },
-            { value: AssignmentType.CANDIDATE_GROUPS, label: `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.CANDIDATE_GROUPS}` }
+            { "value": AssignmentType.NONE, "label": `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.NONE}` },
+            { "value": AssignmentType.UNASSIGNED, "label": `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.UNASSIGNED}` },
+            { "value": AssignmentType.ASSIGNED_TO, "label": `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.ASSIGNED_TO}` },
+            { "value": AssignmentType.CURRENT_USER, "label": `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.CURRENT_USER}` },
+            { "value": AssignmentType.CANDIDATE_GROUPS, "label": `ADF_CLOUD_TASK_ASSIGNMENT_FILTER.${AssignmentType.CANDIDATE_GROUPS}` }
         ];
     }
 
-    private setDefaultAssignmentType() {
+    private setDefaultAssignmentType () {
         if (this.candidateGroups?.length) {
             this.assignmentType = AssignmentType.CANDIDATE_GROUPS;
         } else if (this.assignedUsers?.length) {
@@ -130,17 +130,17 @@ export class TaskAssignmentFilterCloudComponent implements OnInit, OnChanges {
         }
     }
 
-    private setInitialCandidateGroups() {
+    private setInitialCandidateGroups () {
         const candidateGroupsAttr = this.taskFilterProperty.attributes['candidateGroups'];
         this.candidateGroups = this.taskFilterProperty.value[candidateGroupsAttr];
     }
 
-    private setInitialAssignedUsers() {
+    private setInitialAssignedUsers () {
         const assignedUsersAttr = this.taskFilterProperty.attributes['assignedUsers'];
         this.assignedUsers = this.taskFilterProperty.value[assignedUsersAttr];
     }
 
-    private isFilterPropertyDefined(): boolean {
+    private isFilterPropertyDefined (): boolean {
         return !!this.taskFilterProperty.attributes && !!this.taskFilterProperty.value;
     }
 }

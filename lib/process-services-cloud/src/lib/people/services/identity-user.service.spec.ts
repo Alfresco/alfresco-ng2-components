@@ -38,7 +38,7 @@ describe('IdentityUserService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(IdentityUserService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
@@ -54,7 +54,7 @@ describe('IdentityUserService', () => {
                 expect(res).toBeDefined();
                 expect(searchSpy).toHaveBeenCalled();
                 expect(service.queryParams).toEqual({
-                    search: 'fake'
+                    "search": 'fake'
                 });
                 done();
             });
@@ -87,8 +87,8 @@ describe('IdentityUserService', () => {
                 expect(res).toBeDefined();
                 expect(searchSpy).toHaveBeenCalled();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    role: 'fake-role-1,fake-role-2'
+                    "search": 'fake',
+                    "role": 'fake-role-1,fake-role-2'
                 });
                 done();
             });
@@ -118,8 +118,8 @@ describe('IdentityUserService', () => {
                 expect(res).toBeDefined();
                 expect(searchSpy).toHaveBeenCalled();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    group: 'fake-group-1,fake-group-2'
+                    "search": 'fake',
+                    "group": 'fake-group-1,fake-group-2'
                 });
                 done();
             });
@@ -133,9 +133,9 @@ describe('IdentityUserService', () => {
                 expect(res).toBeDefined();
                 expect(searchSpy).toHaveBeenCalled();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    role: 'fake-role-1,fake-role-2',
-                    group: 'fake-group-1,fake-group-2'
+                    "search": 'fake',
+                    "role": 'fake-role-1,fake-role-2',
+                    "group": 'fake-group-1,fake-group-2'
                 });
                 done();
             });
@@ -149,10 +149,10 @@ describe('IdentityUserService', () => {
                 expect(res).toBeDefined();
                 expect(searchSpy).toHaveBeenCalled();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    role: 'fake-role-1,fake-role-2',
-                    application: 'fake-app-name',
-                    group: 'fake-group-1,fake-group-2'
+                    "search": 'fake',
+                    "role": 'fake-role-1,fake-role-2',
+                    "application": 'fake-app-name',
+                    "group": 'fake-group-1,fake-group-2'
                 });
                 done();
             });
@@ -180,8 +180,8 @@ describe('IdentityUserService', () => {
             service.search('fake', mockSearchUserByApp).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    application: 'fake-app-name'
+                    "search": 'fake',
+                    "application": 'fake-app-name'
                 });
                 done();
             });
@@ -193,9 +193,9 @@ describe('IdentityUserService', () => {
             service.search('fake', mockSearchUserByRolesAndApp).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    application: 'fake-app-name',
-                    role: 'fake-role-1,fake-role-2'
+                    "search": 'fake',
+                    "application": 'fake-app-name',
+                    "role": 'fake-role-1,fake-role-2'
                 });
                 done();
             });
@@ -209,9 +209,9 @@ describe('IdentityUserService', () => {
                 expect(res).toBeDefined();
                 expect(searchSpy).toHaveBeenCalled();
                 expect(service.queryParams).toEqual({
-                    search: 'fake',
-                    application: 'fake-app-name',
-                    group: 'fake-group-1,fake-group-2'
+                    "search": 'fake',
+                    "application": 'fake-app-name',
+                    "group": 'fake-group-1,fake-group-2'
                 });
                 done();
             });

@@ -29,11 +29,11 @@ import { WidgetComponent } from '../widget.component';
 import { InputMaskDirective } from './text-mask.component';
 
 @Component({
-    selector: 'text-widget',
-    standalone: true,
-    templateUrl: './text.widget.html',
-    styleUrls: ['./text.widget.scss'],
-    host: {
+    "selector": 'text-widget',
+    "standalone": true,
+    "templateUrl": './text.widget.html',
+    "styleUrls": ['./text.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -44,19 +44,19 @@ import { InputMaskDirective } from './text-mask.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, InputMaskDirective],
-    encapsulation: ViewEncapsulation.None
+    "imports": [NgIf, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ErrorWidgetComponent, InputMaskDirective],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
     mask: string;
     placeholder: string;
     isMaskReversed: boolean;
 
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field.params) {
             this.mask = this.field.params['inputMask'];
             this.placeholder =

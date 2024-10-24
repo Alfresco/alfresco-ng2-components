@@ -39,12 +39,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-start-form',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, FormRendererComponent, MatIconModule],
-    templateUrl: './start-form.component.html',
-    styleUrls: ['./start-form.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-start-form',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatButtonModule, MatCardModule, FormRendererComponent, MatIconModule],
+    "templateUrl": './start-form.component.html',
+    "styleUrls": ['./start-form.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
     public processService = inject(ProcessService);
@@ -80,12 +80,12 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @ViewChild('outcomesContainer')
     outcomesContainer: ElementRef = null;
 
-    constructor() {
+    constructor () {
         super();
         this.showTitle = false;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const processDefinitionId = changes['processDefinitionId'];
         if (processDefinitionId?.currentValue) {
             this.processDefinitionId = processDefinitionId.currentValue;
@@ -108,7 +108,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         }
     }
 
-    loadStartForm(processId: string) {
+    loadStartForm (processId: string) {
         this.processService.getProcess(processId).subscribe((instance) => {
             this.processService.getStartFormInstance(processId).subscribe(
                 (form) => {
@@ -123,7 +123,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         });
     }
 
-    getStartFormDefinition(processId: string) {
+    getStartFormDefinition (processId: string) {
         this.processService.getStartFormDefinition(processId).subscribe(
             (form) => {
                 this.formName = form.processDefinitionName;
@@ -133,7 +133,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         );
     }
 
-    parseRefreshVisibilityValidateForm(form) {
+    parseRefreshVisibilityValidateForm (form) {
         this.form = this.parseForm(form);
         this.visibilityService.refreshVisibility(this.form);
         this.form.validateForm();
@@ -141,8 +141,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         this.onFormLoaded(this.form);
     }
 
-    /** @override */
-    isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
+    isOutcomeButtonVisible (outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
         if (outcome?.isSystem && (outcome.name === FormOutcomeModel.SAVE_ACTION || outcome.name === FormOutcomeModel.COMPLETE_ACTION)) {
             return false;
         } else if (outcome?.name === FormOutcomeModel.START_PROCESS_ACTION) {
@@ -151,13 +150,11 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         return super.isOutcomeButtonVisible(outcome, isFormReadOnly);
     }
 
-    /** @override */
-    saveTaskForm() {
+    saveTaskForm () {
         // do nothing
     }
 
-    /** @override */
-    onRefreshClicked() {
+    onRefreshClicked () {
         if (this.processDefinitionId) {
             this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(this.processDefinitionId);
@@ -167,7 +164,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         }
     }
 
-    completeTaskForm(outcome?: string) {
+    completeTaskForm (outcome?: string) {
         this.outcomeClick.emit(outcome);
     }
 }

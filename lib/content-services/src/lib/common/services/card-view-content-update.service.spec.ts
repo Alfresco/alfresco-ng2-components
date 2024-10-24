@@ -27,7 +27,7 @@ describe('CardViewContentUpdateService', () => {
     });
 
     it('should send updated node when aspect changed', fakeAsync(() => {
-        const fakeNode = { id: 'Bigfoot' } as Node;
+        const fakeNode = { "id": 'Bigfoot' } as Node;
         cardViewContentUpdateService.updatedAspect$.subscribe((node) => {
             expect(node.id).toBe('Bigfoot');
         });

@@ -30,7 +30,6 @@ export class GsSitesApi extends BaseApi {
      *
      * The creator will be added as a member with Site Manager role.
      * When you create the RM site, the **filePlan** structure is also created including special containers, such as containers for transfers, holds and, unfiled records.
-     *
      * @param siteBodyCreate The site details
      * @param opts Optional parameters
      * @param opts.skipAddToFavorites Flag to indicate whether the RM site should not be added to the user's site favorites. (default to false)
@@ -48,7 +47,6 @@ export class GsSitesApi extends BaseApi {
 
     /**
      * Delete the Records Management (RM) site
-     *
      * @returns Promise<{}>
      */
     deleteRMSite(): Promise<void> {
@@ -59,7 +57,6 @@ export class GsSitesApi extends BaseApi {
 
     /**
      * Get the Records Management (RM) site
-     *
      * @param opts Optional parameters
      * @returns Promise<RMSiteEntry>
      */
@@ -79,7 +76,6 @@ export class GsSitesApi extends BaseApi {
      *
      * Update the details for the RM site. Site Manager or other (site) admin can update title or description.
      * **Note**: the id, site visibility, or compliance of the RM site cannot be updated once the site has been created.
-     *
      * @param siteBodyUpdate The RM site information to update.
      * @param opts Optional parameters
      * @returns Promise<RMSiteEntry>

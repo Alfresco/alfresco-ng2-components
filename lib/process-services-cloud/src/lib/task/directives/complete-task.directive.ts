@@ -20,7 +20,7 @@ import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-cloud-complete-task]'
+    "selector": '[adf-cloud-complete-task]'
 })
 export class CompleteTaskDirective implements OnInit {
 
@@ -42,17 +42,17 @@ export class CompleteTaskDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(
+    constructor (
         private readonly el: ElementRef,
         private readonly renderer: Renderer2,
         private readonly taskListService: TaskCloudService
     ) { }
 
-    ngOnInit() {
+    ngOnInit () {
         this.validateInputs();
     }
 
-    validateInputs() {
+    validateInputs () {
 
         if (!this.isTaskValid()) {
             this.invalidParams.push('taskId');
@@ -65,16 +65,16 @@ export class CompleteTaskDirective implements OnInit {
         }
     }
 
-    isTaskValid(): boolean {
+    isTaskValid (): boolean {
         return this.taskId && this.taskId.length > 0;
     }
 
-    isAppValid(): boolean {
+    isAppValid (): boolean {
         return !!this.appName || this.appName === '';
     }
 
     @HostListener('click')
-    async onClick() {
+    async onClick () {
         try {
             this.renderer.setAttribute(this.el.nativeElement, 'disabled', 'true');
             const result = await this.taskListService.completeTask(this.appName, this.taskId).toPromise();

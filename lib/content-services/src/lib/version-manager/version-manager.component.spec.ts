@@ -31,16 +31,16 @@ describe('VersionManagerComponent', () => {
 
     const expectedComment = 'test-version-comment';
     const node: Node = new Node({
-        id: '1234',
-        name: 'TEST-NODE',
-        isFile: true
+        "id": '1234',
+        "name": 'TEST-NODE',
+        "isFile": true
     });
-    const versionEntry = new VersionEntry({ entry: new Version({ id: '1.0', name: node.name, versionComment: expectedComment }) });
+    const versionEntry = new VersionEntry({ "entry": new Version({ "id": '1.0', "name": node.name, "versionComment": expectedComment }) });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(VersionManagerComponent);
         component = fixture.componentInstance;
@@ -48,13 +48,13 @@ describe('VersionManagerComponent', () => {
 
         nodesApiService = TestBed.inject(NodesApiService);
         spyOnListVersionHistory = spyOn(component.versionListComponent.versionsApi, 'listVersionHistory').and.callFake(() =>
-            Promise.resolve(new VersionPaging({ list: { entries: [versionEntry] } }))
+            Promise.resolve(new VersionPaging({ "list": { "entries": [versionEntry] } }))
         );
     });
 
     it('should load the versions for a given node', () => {
         fixture.detectChanges();
-        expect(spyOnListVersionHistory).toHaveBeenCalledWith(node.id, { skipCount: 0, maxItems: 100 });
+        expect(spyOnListVersionHistory).toHaveBeenCalledWith(node.id, { "skipCount": 0, "maxItems": 100 });
     });
 
     it('should toggle new version if given a new file as input', () => {
@@ -83,7 +83,7 @@ describe('VersionManagerComponent', () => {
     it('should emit success event upon successful upload of a new version', () => {
         fixture.detectChanges();
 
-        const emittedData = { value: { entry: node } };
+        const emittedData = { "value": { "entry": node } };
         let lastValue: Node;
         component.uploadSuccess.subscribe((event) => (lastValue = event));
         component.onUploadSuccess(emittedData);
@@ -96,7 +96,7 @@ describe('VersionManagerComponent', () => {
         let lastValue: Node;
         nodesApiService.nodeUpdated.subscribe((res) => (lastValue = res));
 
-        const emittedData = { value: { entry: node } };
+        const emittedData = { "value": { "entry": node } };
         component.onUploadSuccess(emittedData);
         expect(lastValue).toEqual(node);
     });

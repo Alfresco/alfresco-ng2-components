@@ -28,10 +28,10 @@ import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields
 import { FormCloudComponent } from '../../../form/components/form-cloud.component';
 
 @Component({
-    selector: 'adf-cloud-task-form',
-    templateUrl: './task-form-cloud.component.html',
-    styleUrls: ['./task-form-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-task-form',
+    "templateUrl": './task-form-cloud.component.html',
+    "styleUrls": ['./task-form-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     /** App id to fetch corresponding form and values. */
@@ -129,7 +129,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     displayModeOff = new EventEmitter<FormCloudDisplayModeConfiguration>();
 
-    @ViewChild('adfCloudForm', { static: false })
+    @ViewChild('adfCloudForm', { "static": false })
     adfCloudForm: FormCloudComponent;
 
     taskDetails: TaskDetailsCloudModel;
@@ -140,13 +140,13 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
     loading: boolean = false;
     onDestroy$ = new Subject<boolean>();
 
-    constructor(private taskCloudService: TaskCloudService, private formRenderingService: FormRenderingService) {
+    constructor (private taskCloudService: TaskCloudService, private formRenderingService: FormRenderingService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.initFieldValidators();
 
         if (this.appName === '' && this.taskId) {
@@ -154,7 +154,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const appName = changes['appName'];
         if (appName && appName.currentValue !== appName.previousValue && this.taskId) {
             this.loadTask();
@@ -168,11 +168,11 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private initFieldValidators() {
+    private initFieldValidators () {
         this.fieldValidators = this.fieldValidators ? [...FORM_FIELD_VALIDATORS, ...this.fieldValidators] : [...FORM_FIELD_VALIDATORS];
     }
 
-    private loadTask() {
+    private loadTask () {
         this.loading = true;
         this.taskCloudService
             .getTaskById(this.appName, this.taskId)
@@ -188,91 +188,91 @@ export class TaskFormCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.taskCloudService.getCandidateGroups(this.appName, this.taskId).subscribe((groups) => (this.candidateGroups = groups || []));
     }
 
-    hasForm(): boolean {
+    hasForm (): boolean {
         return this.taskDetails && !!this.taskDetails.formKey;
     }
 
-    canCompleteTask(): boolean {
+    canCompleteTask (): boolean {
         return this.showCompleteButton && !this.readOnly && this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
-    canClaimTask(): boolean {
+    canClaimTask (): boolean {
         return !this.readOnly && this.taskCloudService.canClaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
-    hasCandidateUsers(): boolean {
+    hasCandidateUsers (): boolean {
         return this.candidateUsers.length !== 0;
     }
 
-    hasCandidateGroups(): boolean {
+    hasCandidateGroups (): boolean {
         return this.candidateGroups.length !== 0;
     }
 
-    hasCandidateUsersOrGroups(): boolean {
+    hasCandidateUsersOrGroups (): boolean {
         return this.hasCandidateUsers() || this.hasCandidateGroups();
     }
 
-    canUnclaimTask(): boolean {
+    canUnclaimTask (): boolean {
         return !this.readOnly && this.taskCloudService.canUnclaimTask(this.taskDetails) && this.hasCandidateUsersOrGroups();
     }
 
-    isReadOnly(): boolean {
+    isReadOnly (): boolean {
         return this.readOnly || !this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
-    onCompleteTask() {
+    onCompleteTask () {
         this.loadTask();
         this.taskCompleted.emit(this.taskId);
     }
 
-    onClaimTask() {
+    onClaimTask () {
         this.loadTask();
         this.taskClaimed.emit(this.taskId);
     }
 
-    onUnclaimTask() {
+    onUnclaimTask () {
         this.loadTask();
         this.taskUnclaimed.emit(this.taskId);
     }
 
-    onCancelClick() {
+    onCancelClick () {
         this.cancelClick.emit(this.taskId);
     }
 
-    onFormSaved(form: FormModel) {
+    onFormSaved (form: FormModel) {
         this.formSaved.emit(form);
     }
 
-    onFormCompleted(form: FormModel) {
+    onFormCompleted (form: FormModel) {
         this.formCompleted.emit(form);
         this.taskCompleted.emit(this.taskId);
     }
 
-    onError(data: any) {
+    onError (data: any) {
         this.error.emit(data);
     }
 
-    onFormContentClicked(content: ContentLinkModel) {
+    onFormContentClicked (content: ContentLinkModel) {
         this.formContentClicked.emit(content);
     }
 
-    onFormExecuteOutcome(outcome: FormOutcomeEvent) {
+    onFormExecuteOutcome (outcome: FormOutcomeEvent) {
         this.executeOutcome.emit(outcome);
     }
 
-    switchToDisplayMode(newDisplayMode?: string) {
+    switchToDisplayMode (newDisplayMode?: string) {
         this.adfCloudForm.switchToDisplayMode(newDisplayMode);
     }
 
-    onDisplayModeOn(displayModeConfiguration: FormCloudDisplayModeConfiguration) {
+    onDisplayModeOn (displayModeConfiguration: FormCloudDisplayModeConfiguration) {
         this.displayModeOn.emit(displayModeConfiguration);
     }
 
-    onDisplayModeOff(displayModeConfiguration: FormCloudDisplayModeConfiguration) {
+    onDisplayModeOff (displayModeConfiguration: FormCloudDisplayModeConfiguration) {
         this.displayModeOff.emit(displayModeConfiguration);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

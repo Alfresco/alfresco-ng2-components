@@ -26,15 +26,15 @@ import { PeopleSearchFieldComponent } from '../people-search-field/people-search
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-people-search',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, PeopleSearchFieldComponent, MatButtonModule],
-    templateUrl: './people-search.component.html',
-    styleUrls: ['./people-search.component.scss'],
-    host: {
-        class: 'adf-people-search'
+    "selector": 'adf-people-search',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, PeopleSearchFieldComponent, MatButtonModule],
+    "templateUrl": './people-search.component.html',
+    "styleUrls": ['./people-search.component.scss'],
+    "host": {
+        "class": 'adf-people-search'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class PeopleSearchComponent implements OnInit {
     @Input()
@@ -63,32 +63,32 @@ export class PeopleSearchComponent implements OnInit {
     selectedUser: LightUserRepresentation = {} as any;
     performSearch: PerformSearchCallback;
 
-    ngOnInit() {
+    ngOnInit () {
         this.filteredResults$ = this.results.pipe(map((users) => users.filter((user) => user.id !== this.selectedUser.id)));
         this.performSearch = this.performSearchCallback.bind(this);
     }
 
-    onRowClick(user: LightUserRepresentation) {
+    onRowClick (user: LightUserRepresentation) {
         this.selectedUser = user;
     }
 
-    closeSearchList() {
+    closeSearchList () {
         this.closeSearch.emit();
     }
 
-    involveUserAndClose() {
+    involveUserAndClose () {
         this.involveUser();
         this.closeSearchList();
     }
 
-    involveUser() {
+    involveUser () {
         if (this.selectedUser === undefined) {
             return;
         }
         this.success.emit(this.selectedUser);
     }
 
-    private performSearchCallback(event: any): Observable<LightUserRepresentation[]> {
+    private performSearchCallback (event: any): Observable<LightUserRepresentation[]> {
         this.searchPeople.emit(event);
         return this.filteredResults$;
     }

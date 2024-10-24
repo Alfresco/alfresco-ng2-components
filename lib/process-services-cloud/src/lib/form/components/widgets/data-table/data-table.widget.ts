@@ -27,12 +27,12 @@ import { WidgetDataTableAdapter } from './data-table-adapter.widget';
 import { DataTablePathParserHelper } from './helpers/data-table-path-parser.helper';
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, TranslateModule, FormBaseModule, DataTableComponent],
-    selector: 'data-table',
-    templateUrl: './data-table.widget.html',
-    styleUrls: ['./data-table.widget.scss'],
-    host: {
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, FormBaseModule, DataTableComponent],
+    "selector": 'data-table',
+    "templateUrl": './data-table.widget.html',
+    "styleUrls": ['./data-table.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -43,7 +43,7 @@ import { DataTablePathParserHelper } from './helpers/data-table-path-parser.help
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class DataTableWidgetComponent extends WidgetComponent implements OnInit {
     dataSource: WidgetDataTableAdapter;
@@ -56,24 +56,24 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
     private defaultResponseProperty = 'data';
     private pathParserHelper = new DataTablePathParserHelper();
 
-    constructor(public formService: FormService, private formCloudService: FormCloudService) {
+    constructor (public formService: FormService, private formCloudService: FormCloudService) {
         super(formService);
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.setPreviewState();
         this.getTableData();
         this.initDataTable();
     }
 
-    private getTableData(): void {
+    private getTableData (): void {
         this.variableName = this.field?.variableConfig?.variableName;
         this.columnsSchema = this.field?.schemaDefinition;
 
         this.getRowsData();
     }
 
-    private initDataTable(): void {
+    private initDataTable (): void {
         if (this.rowsData?.length) {
             this.dataSource = new WidgetDataTableAdapter(this.rowsData, this.columnsSchema);
 
@@ -87,7 +87,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         }
     }
 
-    private getRowsData(): void {
+    private getRowsData (): void {
         const optionsPath = this.field?.variableConfig?.optionsPath ?? this.defaultResponseProperty;
         const fieldValue = this.field?.value;
         const rowsData = fieldValue || this.getDataFromVariable();
@@ -98,7 +98,7 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         }
     }
 
-    private getDataFromVariable(): any {
+    private getDataFromVariable (): any {
         const processVariables = this.field?.form?.processVariables;
         const formVariables = this.field?.form?.variables;
 
@@ -108,16 +108,16 @@ export class DataTableWidgetComponent extends WidgetComponent implements OnInit 
         return processVariableDropdownOptions ?? formVariableDropdownOptions;
     }
 
-    private getVariableValueByName(variables: TaskVariableCloud[], variableName: string): any {
+    private getVariableValueByName (variables: TaskVariableCloud[], variableName: string): any {
         return variables?.find((variable: TaskVariableCloud) => variable?.name === `variables.${variableName}` || variable?.name === variableName)
             ?.value;
     }
 
-    private setPreviewState(): void {
+    private setPreviewState (): void {
         this.previewState = this.formCloudService.getPreviewState();
     }
 
-    private handleError(error: any) {
+    private handleError (error: any) {
         if (!this.previewState) {
             this.dataTableLoadFailed = true;
             this.widgetError.emit(error);

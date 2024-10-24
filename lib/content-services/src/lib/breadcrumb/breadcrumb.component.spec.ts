@@ -28,19 +28,18 @@ describe('Breadcrumb', () => {
     let component: BreadcrumbComponent;
     let fixture: ComponentFixture<BreadcrumbComponent>;
     let documentListService: DocumentListService = jasmine.createSpyObj({
-        loadFolderByNodeId: of(''),
-        isCustomSourceService: false
+        "loadFolderByNodeId": of(''),
+        "isCustomSourceService": false
     });
     let documentListComponent: DocumentListComponent;
 
-    const getBreadcrumbActionText = (): string =>
-        fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
+    const getBreadcrumbActionText = (): string => fixture.debugElement.nativeElement.querySelector('.adf-breadcrumb-item-current').textContent.trim();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [{ provide: DocumentListService, useValue: documentListService }]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA],
+            "providers": [{ "provide": DocumentListService, "useValue": documentListService }]
         });
         fixture = TestBed.createComponent(BreadcrumbComponent);
         component = fixture.componentInstance;
@@ -68,7 +67,7 @@ describe('Breadcrumb', () => {
     });
 
     it('should emit navigation event', (done) => {
-        const node = { id: '-id-', name: 'name' };
+        const node = { "id": '-id-', "name": 'name' };
         component.navigate.subscribe((val) => {
             expect(val).toBe(node);
             done();
@@ -82,24 +81,24 @@ describe('Breadcrumb', () => {
 
         beforeEach(() => {
             folderNode = {
-                id: 'folder2',
-                name: 'folder 2',
-                nodeType: 'cm:folder',
-                isFolder: true,
-                isFile: false,
-                modifiedAt: null,
-                modifiedByUser: null,
-                createdAt: null,
-                createdByUser: null,
-                path: {
-                    elements: [
+                "id": 'folder2',
+                "name": 'folder 2',
+                "nodeType": 'cm:folder',
+                "isFolder": true,
+                "isFile": false,
+                "modifiedAt": null,
+                "modifiedByUser": null,
+                "createdAt": null,
+                "createdByUser": null,
+                "path": {
+                    "elements": [
                         {
-                            id: '-root-',
-                            name: 'root'
+                            "id": '-root-',
+                            "name": 'root'
                         },
                         {
-                            id: 'folder1',
-                            name: 'folder 1'
+                            "id": 'folder1',
+                            "name": 'folder 1'
                         }
                     ]
                 }
@@ -107,7 +106,7 @@ describe('Breadcrumb', () => {
         });
 
         it('should update document list on click', () => {
-            const node = { id: '-id-', name: 'name' };
+            const node = { "id": '-id-', "name": 'name' };
             component.target = documentListComponent;
 
             component.onRoutePathClick(node, null);
@@ -182,10 +181,10 @@ describe('Breadcrumb', () => {
 
     it('should append the node to the route', () => {
         const node: any = {
-            id: 'test-id',
-            name: 'test-name',
-            path: {
-                elements: [{ id: 'element-id', name: 'element-name' }]
+            "id": 'test-id',
+            "name": 'test-name',
+            "path": {
+                "elements": [{ "id": 'element-id', "name": 'element-name' }]
             }
         };
         const route = component.parseRoute(node);
@@ -197,13 +196,13 @@ describe('Breadcrumb', () => {
 
     it('should trim the route if custom root id provided', () => {
         const node: any = {
-            id: 'test-id',
-            name: 'test-name',
-            path: {
-                elements: [
-                    { id: 'element-1-id', name: 'element-1-name' },
-                    { id: 'element-2-id', name: 'element-2-name' },
-                    { id: 'element-3-id', name: 'element-3-name' }
+            "id": 'test-id',
+            "name": 'test-name',
+            "path": {
+                "elements": [
+                    { "id": 'element-1-id', "name": 'element-1-name' },
+                    { "id": 'element-2-id', "name": 'element-2-name' },
+                    { "id": 'element-3-id', "name": 'element-3-name' }
                 ]
             }
         };
@@ -221,13 +220,13 @@ describe('Breadcrumb', () => {
 
     it('should rename root node if custom name provided', () => {
         const node: any = {
-            id: 'test-id',
-            name: 'test-name',
-            path: {
-                elements: [
-                    { id: 'element-1-id', name: 'element-1-name' },
-                    { id: 'element-2-id', name: 'element-2-name' },
-                    { id: 'element-3-id', name: 'element-3-name' }
+            "id": 'test-id',
+            "name": 'test-name',
+            "path": {
+                "elements": [
+                    { "id": 'element-1-id', "name": 'element-1-name' },
+                    { "id": 'element-2-id', "name": 'element-2-name' },
+                    { "id": 'element-3-id', "name": 'element-3-name' }
                 ]
             }
         };
@@ -241,13 +240,13 @@ describe('Breadcrumb', () => {
 
     it('should replace root id if nothing to trim in the path', () => {
         const node: any = {
-            id: 'test-id',
-            name: 'test-name',
-            path: {
-                elements: [
-                    { id: 'element-1-id', name: 'element-1-name' },
-                    { id: 'element-2-id', name: 'element-2-name' },
-                    { id: 'element-3-id', name: 'element-3-name' }
+            "id": 'test-id',
+            "name": 'test-name',
+            "path": {
+                "elements": [
+                    { "id": 'element-1-id', "name": 'element-1-name' },
+                    { "id": 'element-2-id', "name": 'element-2-name' },
+                    { "id": 'element-3-id', "name": 'element-3-name' }
                 ]
             }
         };
@@ -261,13 +260,13 @@ describe('Breadcrumb', () => {
 
     it('should replace both id and name of the root element', () => {
         const node: any = {
-            id: 'test-id',
-            name: 'test-name',
-            path: {
-                elements: [
-                    { id: 'element-1-id', name: 'element-1-name' },
-                    { id: 'element-2-id', name: 'element-2-name' },
-                    { id: 'element-3-id', name: 'element-3-name' }
+            "id": 'test-id',
+            "name": 'test-name',
+            "path": {
+                "elements": [
+                    { "id": 'element-1-id', "name": 'element-1-name' },
+                    { "id": 'element-2-id', "name": 'element-2-name' },
+                    { "id": 'element-3-id', "name": 'element-3-name' }
                 ]
             }
         };
@@ -282,13 +281,13 @@ describe('Breadcrumb', () => {
 
     it('should apply the transformation function when there is one', () => {
         const node: any = {
-            id: null,
-            name: null,
-            path: {
-                elements: [
-                    { id: 'element-1-id', name: 'element-1-name' },
-                    { id: 'element-2-id', name: 'element-2-name' },
-                    { id: 'element-3-id', name: 'element-3-name' }
+            "id": null,
+            "name": null,
+            "path": {
+                "elements": [
+                    { "id": 'element-1-id', "name": 'element-1-name' },
+                    { "id": 'element-2-id', "name": 'element-2-name' },
+                    { "id": 'element-3-id', "name": 'element-3-name' }
                 ]
             }
         };
@@ -312,7 +311,7 @@ describe('Breadcrumb', () => {
         };
 
         component.folderNode = {
-            path: { elements: [{ id: 'element-1-id', name: 'element-1-name' }] }
+            "path": { "elements": [{ "id": 'element-1-id', "name": 'element-1-name' }] }
         } as Node;
 
         component.ngOnChanges();

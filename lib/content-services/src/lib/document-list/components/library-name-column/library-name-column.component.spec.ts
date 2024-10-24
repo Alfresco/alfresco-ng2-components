@@ -27,13 +27,13 @@ describe('LibraryNameColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, LibraryNameColumnComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            "imports": [ContentTestingModule, LibraryNameColumnComponent],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
         });
         node = {
-            id: 'nodeId',
-            path: {
-                elements: []
+            "id": 'nodeId',
+            "path": {
+                "elements": []
             }
         };
         fixture = TestBed.createComponent(LibraryNameColumnComponent);
@@ -66,7 +66,7 @@ describe('LibraryNameColumnComponent', () => {
         it('sets title with id when duplicate nodes title exists in list', () => {
             node.title = 'title';
 
-            const rows = [{ node: { entry: { id: 'some-id', title: 'title' } } }] as any[];
+            const rows = [{ "node": { "entry": { "id": 'some-id', "title": 'title' } } }] as any[];
 
             const title = component.makeLibraryTitle(node, rows);
             expect(title).toContain('nodeId');
@@ -77,7 +77,7 @@ describe('LibraryNameColumnComponent', () => {
 
             const rows = [
                 {
-                    node: { entry: { id: 'some-id', title: 'title-some-id' } }
+                    "node": { "entry": { "id": 'some-id', "title": 'title-some-id' } }
                 }
             ] as any[];
 

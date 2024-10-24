@@ -36,7 +36,6 @@ export class RuleService {
 
     /**
      * Adds one or more new rule evaluators to the existing set.
-     *
      * @param values The new evaluators to add
      */
     setEvaluators(values: { [key: string]: RuleEvaluator }) {
@@ -47,7 +46,6 @@ export class RuleService {
 
     /**
      * Retrieves a rule using its ID value.
-     *
      * @param id The ID value to look for
      * @returns The rule or null if not found
      */
@@ -57,7 +55,6 @@ export class RuleService {
 
     /**
      * Retrieves a RuleEvaluator function using its key name.
-     *
      * @param key Key name to look for
      * @returns RuleEvaluator or null if not found
      */
@@ -71,7 +68,6 @@ export class RuleService {
 
     /**
      * Evaluates a rule.
-     *
      * @param ruleId ID of the rule to evaluate
      * @param context Custom rule execution context.
      * @returns True if the rule passed, false otherwise

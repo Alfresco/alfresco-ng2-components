@@ -18,13 +18,12 @@
 /* eslint-disable @angular-eslint/component-selector */
 
 export class ContainerColumnModel {
-
     size: number = 12;
     fields: any[] = [];
     colspan: number = 1;
     rowspan: number = 1;
 
-    hasFields(): boolean {
+    hasFields (): boolean {
         return this.fields && this.fields.length > 0;
     }
 }

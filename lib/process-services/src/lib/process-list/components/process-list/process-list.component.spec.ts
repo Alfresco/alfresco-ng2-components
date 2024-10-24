@@ -60,7 +60,7 @@ describe('ProcessInstanceListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            "imports": [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(ProcessInstanceListComponent);
         component = fixture.componentInstance;
@@ -70,7 +70,7 @@ describe('ProcessInstanceListComponent', () => {
 
         getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(of(fakeProcessInstance));
         appConfig.config['adf-process-list'] = {
-            presets: fakeProcessColumnSchema
+            "presets": fakeProcessColumnSchema
         };
     });
 
@@ -87,7 +87,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should use the schemaColumn passed in input', () => {
-        component.data = new ObjectDataTableAdapter([], [{ type: 'text', key: 'fake-id', title: 'Name' }]);
+        component.data = new ObjectDataTableAdapter([], [{ "type": 'text', "key": 'fake-id', "title": 'Name' }]);
 
         component.ngAfterContentInit();
         expect(component.data.getColumns()).toBeDefined();
@@ -127,7 +127,7 @@ describe('ProcessInstanceListComponent', () => {
     }));
 
     it('should return the process instances list in original order when datalist passed non-existent columns', (done) => {
-        component.data = new ObjectDataTableAdapter([], [{ type: 'text', key: 'fake-id', title: 'Name' }]);
+        component.data = new ObjectDataTableAdapter([], [{ "type": 'text', "key": 'fake-id', "title": 'Name' }]);
         component.appId = 1;
         component.state = 'open';
         component.success.subscribe((res) => {
@@ -161,8 +161,8 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should return selected true for the selected process', () => {
         component.rows = [
-            { id: '999', name: 'Fake-name' },
-            { id: '888', name: 'Fake-name-888' }
+            { "id": '999', "name": 'Fake-name' },
+            { "id": '888', "name": 'Fake-name-888' }
         ];
         component.selectFirst();
         const dataRow = component.rows[0];
@@ -172,8 +172,8 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should not select first row when selectFirstRow is false', () => {
         component.rows = [
-            { id: '999', name: 'Fake-name' },
-            { id: '888', name: 'Fake-name-888' }
+            { "id": '999', "name": 'Fake-name' },
+            { "id": '888', "name": 'Fake-name-888' }
         ];
         component.selectFirstRow = false;
         component.selectFirst();
@@ -204,7 +204,7 @@ describe('ProcessInstanceListComponent', () => {
     }));
 
     it('should reload processes when reload() is called', (done) => {
-        component.data = new ObjectDataTableAdapter([], [{ type: 'text', key: 'fake-id', title: 'Name' }]);
+        component.data = new ObjectDataTableAdapter([], [{ "type": 'text', "key": 'fake-id', "title": 'Name' }]);
         component.state = 'open';
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
@@ -219,7 +219,7 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should emit row click event', (done) => {
         const row = new ObjectDataRow({
-            id: '999'
+            "id": '999'
         });
         const rowEvent = new DataRowEvent(row, null);
 
@@ -235,9 +235,9 @@ describe('ProcessInstanceListComponent', () => {
     it('should emit row click event on Enter', (done) => {
         let prevented = false;
         const keyEvent = new CustomEvent('Keyboard event', {
-            detail: {
-                keyboardEvent: { key: 'Enter' },
-                row: new ObjectDataRow({ id: '999' })
+            "detail": {
+                "keyboardEvent": { "key": 'Enter' },
+                "row": new ObjectDataRow({ "id": '999' })
             }
         });
 
@@ -256,9 +256,9 @@ describe('ProcessInstanceListComponent', () => {
     it('should NOT emit row click event on every other key', async () => {
         let triggered = false;
         const keyEvent = new CustomEvent('Keyboard event', {
-            detail: {
-                keyboardEvent: { key: 'Space' },
-                row: new ObjectDataRow({ id: 999 })
+            "detail": {
+                "keyboardEvent": { "key": 'Space' },
+                "row": new ObjectDataRow({ "id": 999 })
             }
         });
 
@@ -272,8 +272,8 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should emit rowsSelected event when a row is selected', (done) => {
-        const row = new ObjectDataRow({ obj: fakeProcessInstance.data[0] });
-        const customEvent = new CustomEvent('row-select', { detail: { selection: [row] } });
+        const row = new ObjectDataRow({ "obj": fakeProcessInstance.data[0] });
+        const customEvent = new CustomEvent('row-select', { "detail": { "selection": [row] } });
 
         component.rowsSelected.subscribe((selection) => {
             expect(selection).toEqual([row]);
@@ -284,7 +284,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should emit rowsSelected event when a row is unselected', (done) => {
-        const customEvent = new CustomEvent('row-unselect', { detail: { selection: [] } });
+        const customEvent = new CustomEvent('row-unselect', { "detail": { "selection": [] } });
 
         component.rowsSelected.subscribe((selection) => {
             expect(selection).toEqual([]);
@@ -296,12 +296,12 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should show custom resolved value in the column', async () => {
         appConfig.config['adf-process-list'] = {
-            presets: {
-                fakeProcessCustomSchema: [
+            "presets": {
+                "fakeProcessCustomSchema": [
                     {
-                        key: 'variables',
-                        type: 'text',
-                        title: 'Variables'
+                        "key": 'variables',
+                        "type": 'text',
+                        "title": 'Variables'
                     }
                 ]
             }
@@ -320,7 +320,7 @@ describe('ProcessInstanceListComponent', () => {
 
     describe('component changes', () => {
         beforeEach(() => {
-            component.data = new ObjectDataTableAdapter([], [{ type: 'text', key: 'fake-id', title: 'Name' }]);
+            component.data = new ObjectDataTableAdapter([], [{ "type": 'text', "key": 'fake-id', "title": 'Name' }]);
         });
 
         it('should NOT reload the process list when no parameters changed', () => {
@@ -342,7 +342,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ appId: change });
+            component.ngOnChanges({ "appId": change });
         });
 
         it('should reload the list when the state parameter changes', (done) => {
@@ -358,7 +358,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ state: change });
+            component.ngOnChanges({ "state": change });
         });
 
         it('should reload the list when the sort parameter changes', (done) => {
@@ -374,7 +374,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ sort: change });
+            component.ngOnChanges({ "sort": change });
         });
 
         it('should reload the process list when the processDefinitionId parameter changes', (done) => {
@@ -390,7 +390,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ processDefinitionId: change });
+            component.ngOnChanges({ "processDefinitionId": change });
         });
 
         it('should reload the process list when the processDefinitionId parameter changes to null', (done) => {
@@ -406,7 +406,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ processDefinitionId: change });
+            component.ngOnChanges({ "processDefinitionId": change });
         });
 
         it('should reload the process list when the processInstanceId parameter changes', (done) => {
@@ -422,7 +422,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ processInstanceId: change });
+            component.ngOnChanges({ "processInstanceId": change });
         });
 
         it('should reload the process list when the processInstanceId parameter changes to null', (done) => {
@@ -438,7 +438,7 @@ describe('ProcessInstanceListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ processInstanceId: change });
+            component.ngOnChanges({ "processInstanceId": change });
         });
 
         it('should update the columns when presetColumn schema changes', () => {
@@ -449,7 +449,7 @@ describe('ProcessInstanceListComponent', () => {
 
             component.presetColumn = 'fakeRunningProcessSchema';
             const presetColumnChange = new SimpleChange(null, 'fakeRunningProcessSchema', false);
-            component.ngOnChanges({ presetColumn: presetColumnChange });
+            component.ngOnChanges({ "presetColumn": presetColumnChange });
 
             const newColumnSchema = component.mergeJsonAndHtmlSchema();
             const expectedColumn1 = new ObjectDataColumn(fakeProcessColumnSchema.fakeRunningProcessSchema[0]);
@@ -465,9 +465,9 @@ describe('ProcessInstanceListComponent', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [ProcessInstanceListComponent, DataColumnListComponent, DataColumnComponent, FullNamePipe],
-    template: ` <adf-process-instance-list #processListComponentInstance>
+    "standalone": true,
+    "imports": [ProcessInstanceListComponent, DataColumnListComponent, DataColumnComponent, FullNamePipe],
+    "template": ` <adf-process-instance-list #processListComponentInstance>
         <data-columns>
             <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="3"></data-column>
             <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.END_DATE" class="adf-hidden"></data-column>
@@ -490,7 +490,7 @@ describe('CustomProcessListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomProcessListComponent]
+            "imports": [ProcessTestingModule, CustomProcessListComponent]
         });
         fixture = TestBed.createComponent(CustomProcessListComponent);
         fixture.detectChanges();
@@ -508,9 +508,9 @@ describe('CustomProcessListComponent', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [CustomEmptyContentTemplateDirective, ProcessInstanceListComponent],
-    template: `
+    "standalone": true,
+    "imports": [CustomEmptyContentTemplateDirective, ProcessInstanceListComponent],
+    "template": `
         <adf-process-instance-list [appId]="1">
             <adf-custom-empty-content-template>
                 <p id="custom-id">No Process Instance</p>
@@ -526,7 +526,7 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, EmptyTemplateComponent]
+            "imports": [ProcessTestingModule, EmptyTemplateComponent]
         });
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         processService = TestBed.inject(ProcessService);
@@ -551,9 +551,9 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [ProcessInstanceListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
-    template: ` <adf-process-instance-list
+    "standalone": true,
+    "imports": [ProcessInstanceListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
+    "template": ` <adf-process-instance-list
         [appId]="appId"
         [showContextMenu]="true"
         (showRowContextMenu)="onShowRowContextMenu($event)"
@@ -578,36 +578,36 @@ class ProcessListContextMenuComponent implements OnInit {
 
     private performAction$ = new Subject<any>();
 
-    ngOnInit() {
+    ngOnInit () {
         this.performContextActions();
     }
 
-    onShowRowContextMenu(event: DataCellEvent) {
+    onShowRowContextMenu (event: DataCellEvent) {
         event.value.actions = [
             {
-                data: event.value.row['obj'],
-                model: {
-                    key: 'processDetails',
-                    icon: 'open',
-                    title: 'View Process Details',
-                    visible: true
+                "data": event.value.row['obj'],
+                "model": {
+                    "key": 'processDetails',
+                    "icon": 'open',
+                    "title": 'View Process Details',
+                    "visible": true
                 },
-                subject: this.performAction$
+                "subject": this.performAction$
             },
             {
-                data: event.value.row['obj'],
-                model: {
-                    key: 'cancel',
-                    icon: 'open',
-                    title: 'Cancel Process',
-                    visible: true
+                "data": event.value.row['obj'],
+                "model": {
+                    "key": 'cancel',
+                    "icon": 'open',
+                    "title": 'Cancel Process',
+                    "visible": true
                 },
-                subject: this.performAction$
+                "subject": this.performAction$
             }
         ];
     }
 
-    performContextActions() {
+    performContextActions () {
         this.performAction$.subscribe((action: any) => {
             this.contextAction.emit(action.data);
         });
@@ -623,7 +623,7 @@ describe('ProcessListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, ProcessListContextMenuComponent]
+            "imports": [ProcessTestingModule, ProcessListContextMenuComponent]
         });
         fixture = TestBed.createComponent(ProcessListContextMenuComponent);
         customComponent = fixture.componentInstance;
@@ -642,7 +642,7 @@ describe('ProcessListContextMenuComponent', () => {
     it('Should be able to show context menu on process list', async () => {
         const contextMenu = element.querySelector(`[data-automation-id="text_${fakeProcessInstance.data[0].name}"]`);
         const contextActionSpy = spyOn(customComponent.contextAction, 'emit').and.callThrough();
-        contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
+        contextMenu.dispatchEvent(new MouseEvent('contextmenu', { "bubbles": true }));
 
         const contextActions = await loader.getAllHarnesses(MatMenuItemHarness);
         expect(contextActions.length).toBe(2);

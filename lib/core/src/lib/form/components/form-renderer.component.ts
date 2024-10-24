@@ -32,18 +32,18 @@ import { FieldStylePipe } from '../pipes/field-style.pipe';
 import { HeaderWidgetComponent } from './widgets/header/header.widget';
 
 @Component({
-    selector: 'adf-form-renderer',
-    standalone: true,
-    templateUrl: './form-renderer.component.html',
-    styleUrls: ['./form-renderer.component.scss'],
-    providers: [
+    "selector": 'adf-form-renderer',
+    "standalone": true,
+    "templateUrl": './form-renderer.component.html',
+    "styleUrls": ['./form-renderer.component.scss'],
+    "providers": [
         {
-            provide: FormRulesManager,
-            useFactory: formRulesManagerFactory,
-            deps: [Injector]
+            "provide": FormRulesManager,
+            "useFactory": formRulesManagerFactory,
+            "deps": [Injector]
         }
     ],
-    imports: [
+    "imports": [
         NgIf,
         MatTabsModule,
         NgForOf,
@@ -61,7 +61,7 @@ import { HeaderWidgetComponent } from './widgets/header/header.widget';
         NgClass,
         HeaderWidgetComponent
     ],
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class FormRendererComponent<T> implements OnInit, OnDestroy {
     /** Toggle debug options. */
@@ -78,7 +78,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     fields: FormFieldModel[];
 
-    constructor(
+    constructor (
         public formService: FormService,
         private formRulesManager: FormRulesManager<T>,
         @Optional()
@@ -86,26 +86,26 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         private middlewareServices?: FormFieldModelRenderMiddleware[]
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.runMiddlewareServices();
         if (!this.readOnly) {
             this.formRulesManager.initialize(this.formDefinition);
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.formRulesManager.destroy();
     }
 
-    hasTabs(): boolean {
+    hasTabs (): boolean {
         return this.formDefinition.tabs && this.formDefinition.tabs.length > 0;
     }
 
-    visibleTabs(): TabModel[] {
+    visibleTabs (): TabModel[] {
         return this.formDefinition.tabs.filter((tab) => tab.isVisible);
     }
 
-    getNumberOfColumns(content: ContainerModel): number {
+    getNumberOfColumns (content: ContainerModel): number {
         return (content.json?.numberOfColumns || 1) > (content.columns?.length || 1)
             ? content.json?.numberOfColumns || 1
             : content.columns?.length || 1;
@@ -113,11 +113,10 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     /**
      * Serializes column fields
-     *
      * @param content container model
      * @returns a list of form field models
      */
-    getContainerFields(content: ContainerModel): FormFieldModel[] {
+    getContainerFields (content: ContainerModel): FormFieldModel[] {
         const serialisedFormFields: FormFieldModel[] = [];
         const maxColumnFieldsSize = this.getMaxColumnFieldSize(content);
         for (let rowIndex = 0; rowIndex < maxColumnFieldsSize; rowIndex++) {
@@ -138,7 +137,7 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
         return serialisedFormFields;
     }
 
-    private getMaxColumnFieldSize(content: ContainerModel): number {
+    private getMaxColumnFieldSize (content: ContainerModel): number {
         let maxFieldSize = 0;
         if (content?.columns?.length > 0) {
             maxFieldSize = content?.columns?.reduce((prevColumn, currentColumn) =>
@@ -150,16 +149,15 @@ export class FormRendererComponent<T> implements OnInit, OnDestroy {
 
     /**
      * Calculate the column width based on the numberOfColumns and current field's colspan property
-     *
      * @param container container model
      * @returns the column width for the given model
      */
-    getColumnWith(container: ContainerModel): string {
+    getColumnWith (container: ContainerModel): string {
         const colspan = container ? container.field.colspan : 1;
         return (100 / container.field.numberOfColumns) * colspan + '';
     }
 
-    private runMiddlewareServices(): void {
+    private runMiddlewareServices (): void {
         if (this.middlewareServices && this.middlewareServices.length > 0) {
             const formFields = this.formDefinition.getFormFields();
 

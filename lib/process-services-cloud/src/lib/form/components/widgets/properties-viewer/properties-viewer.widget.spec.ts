@@ -31,25 +31,25 @@ describe('PropertiesViewerWidgetComponent', () => {
     let nodesApiService: NodesApiService;
 
     const fakePngAnswer: any = {
-        id: '1933',
-        link: false,
-        isExternal: false,
-        relatedContent: false,
-        contentAvailable: true,
-        name: 'a_png_file.png',
-        simpleType: 'image',
-        mimeType: 'image/png',
-        previewStatus: 'queued',
-        thumbnailStatus: 'queued',
-        created: '2022-10-14T17:17:37.099Z',
-        createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin@example.com' }
+        "id": '1933',
+        "link": false,
+        "isExternal": false,
+        "relatedContent": false,
+        "contentAvailable": true,
+        "name": 'a_png_file.png',
+        "simpleType": 'image',
+        "mimeType": 'image/png',
+        "previewStatus": 'queued',
+        "thumbnailStatus": 'queued',
+        "created": '2022-10-14T17:17:37.099Z',
+        "createdBy": { "id": 1001, "firstName": 'Admin', "lastName": 'admin', "email": 'admin@example.com' }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [PropertiesViewerWrapperComponent],
-            providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [PropertiesViewerWrapperComponent],
+            "providers": [NodesApiService, { "provide": BasicPropertiesService, "useValue": { "getProperties": () => [] } }]
         });
         fixture = TestBed.createComponent(PropertiesViewerWidgetComponent);
         nodesApiService = TestBed.inject(NodesApiService);
@@ -96,7 +96,7 @@ describe('PropertiesViewerWidgetComponent', () => {
     });
 
     it('should set NodeId crrectly when field value is array of file instead of string', async () => {
-        const fakeField = new FormFieldModel(new FormModel(), { id: 'fakeField', value: [fakePngAnswer] });
+        const fakeField = new FormFieldModel(new FormModel(), { "id": 'fakeField', "value": [fakePngAnswer] });
         widget.field = fakeField;
 
         fixture.detectChanges();

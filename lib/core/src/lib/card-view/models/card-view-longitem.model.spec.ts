@@ -23,9 +23,9 @@ describe('CardViewLongItemModel', () => {
 
     beforeEach(() => {
         properties = {
-            label: 'Long Number',
-            value: '21',
-            key: 'long'
+            "label": 'Long Number',
+            "value": '21',
+            "key": 'long'
         };
     });
 
@@ -58,15 +58,15 @@ describe('CardViewLongItemModel', () => {
 
     it('should validate based on defined constraints', () => {
         const constrainedProperties = {
-            label: 'Some Number',
-            value: '21',
-            key: 'number',
-            dataType: 'd:float',
-            constraints: [
+            "label": 'Some Number',
+            "value": '21',
+            "key": 'number',
+            "dataType": 'd:float',
+            "constraints": [
                 {
-                    id: 'constraint-id',
-                    type: 'MINMAX',
-                    parameters: { minValue: 10, maxValue: 15 }
+                    "id": 'constraint-id',
+                    "type": 'MINMAX',
+                    "parameters": { "minValue": 10, "maxValue": 15 }
                 }
             ]
         };

@@ -33,7 +33,7 @@ describe('PeopleWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         fixture = TestBed.createComponent(PeopleWidgetComponent);
         peopleProcessService = TestBed.inject(PeopleProcessService);
@@ -54,27 +54,27 @@ describe('PeopleWidgetComponent', () => {
 
     it('should return full name for a given model', () => {
         const model = {
-            firstName: 'John',
-            lastName: 'Doe'
+            "firstName": 'John',
+            "lastName": 'Doe'
         };
         expect(widget.getDisplayName(model)).toBe('John Doe');
     });
 
     it('should skip first name for display name', () => {
-        const model = { firstName: null, lastName: 'Doe' };
+        const model = { "firstName": null, "lastName": 'Doe' };
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
     it('should skip last name for display name', () => {
-        const model = { firstName: 'John', lastName: null };
+        const model = { "firstName": 'John', "lastName": null };
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
     it('should init value from the field', async () => {
         widget.field.value = {
-            id: 'people-id',
-            firstName: 'John',
-            lastName: 'Doe'
+            "id": 'people-id',
+            "firstName": 'John',
+            "lastName": 'Doe'
         };
 
         spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of(null));
@@ -88,9 +88,9 @@ describe('PeopleWidgetComponent', () => {
 
     it('should show the readonly value when the form is readonly', async () => {
         widget.field.value = {
-            id: 'people-id',
-            firstName: 'John',
-            lastName: 'Doe'
+            "id": 'people-id',
+            "firstName": 'John',
+            "lastName": 'Doe'
         };
         widget.field.readOnly = true;
         widget.field.form.readOnly = true;
@@ -118,7 +118,7 @@ describe('PeopleWidgetComponent', () => {
         widget.ngOnInit();
         expect(widget.groupId).toBeUndefined();
 
-        widget.field.params = { restrictWithGroup: { id: '<id>' } };
+        widget.field.params = { "restrictWithGroup": { "id": '<id>' } };
         widget.ngOnInit();
         expect(widget.groupId).toBe('<id>');
     });
@@ -132,10 +132,10 @@ describe('PeopleWidgetComponent', () => {
         );
 
         widget.field.value = {
-            id: 'people-id',
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'john@test.com'
+            "id": 'people-id',
+            "firstName": 'John',
+            "lastName": 'Doe',
+            "email": 'john@test.com'
         };
         widget.ngOnInit();
 
@@ -149,9 +149,9 @@ describe('PeopleWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.PEOPLE,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.PEOPLE,
+                "required": true
             });
         });
 
@@ -180,8 +180,8 @@ describe('PeopleWidgetComponent', () => {
 
     describe('when template is ready', () => {
         const fakeUserResult: LightUserRepresentation[] = [
-            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
-            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }
+            { "id": 1001, "firstName": 'Test01', "lastName": 'Test01', "email": 'test' },
+            { "id": 1002, "firstName": 'Test02', "lastName": 'Test02', "email": 'test2' }
         ];
 
         beforeEach(() => {
@@ -191,11 +191,11 @@ describe('PeopleWidgetComponent', () => {
                     observer.complete();
                 })
             );
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'people-id',
-                name: 'people-name',
-                type: FormFieldTypes.PEOPLE,
-                readOnly: false
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'people-id',
+                "name": 'people-name',
+                "type": FormFieldTypes.PEOPLE,
+                "readOnly": false
             });
             fixture.detectChanges();
             element = fixture.nativeElement;

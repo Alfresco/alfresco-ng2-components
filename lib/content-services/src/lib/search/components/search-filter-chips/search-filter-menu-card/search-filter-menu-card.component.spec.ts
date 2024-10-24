@@ -25,7 +25,7 @@ describe('SearchFilterMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchFilterMenuCardComponent);
         component = fixture.componentInstance;

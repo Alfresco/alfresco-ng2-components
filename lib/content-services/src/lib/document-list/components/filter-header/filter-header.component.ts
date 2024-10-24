@@ -26,10 +26,10 @@ import { CommonModule } from '@angular/common';
 import { SearchFilterContainerComponent } from '../../../search/components/search-filter-container/search-filter-container.component';
 
 @Component({
-    selector: 'adf-filter-header',
-    standalone: true,
-    imports: [CommonModule, HeaderFilterTemplateDirective, SearchFilterContainerComponent],
-    templateUrl: './filter-header.component.html'
+    "selector": 'adf-filter-header',
+    "standalone": true,
+    "imports": [CommonModule, HeaderFilterTemplateDirective, SearchFilterContainerComponent],
+    "templateUrl": './filter-header.component.html'
 })
 export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     /** (optional) Initial filter value to sort . */
@@ -47,11 +47,11 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     isFilterServiceActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any, private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
+    constructor (@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any, private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.searchFilterQueryBuilder.executed.pipe(takeUntil(this.onDestroy$)).subscribe((newNodePaging) => {
             this.documentList.node = newNodePaging;
             this.documentList.reload();
@@ -61,14 +61,14 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
         this.initDataSorting();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['currentFolderId']?.currentValue) {
             this.resetFilterHeader();
             this.configureSearchParent(changes['currentFolderId'].currentValue);
         }
     }
 
-    onFilterSelectionChange() {
+    onFilterSelectionChange () {
         this.filterSelection.emit(this.searchFilterQueryBuilder.getActiveFilters());
         if (this.searchFilterQueryBuilder.isNoFilterActive()) {
             this.documentList.node = null;
@@ -76,23 +76,23 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    resetFilterHeader() {
+    resetFilterHeader () {
         this.searchFilterQueryBuilder.resetActiveFilters();
     }
 
-    initDataPagination() {
+    initDataPagination () {
         this.documentList.pagination.pipe(takeUntil(this.onDestroy$)).subscribe((newPagination: PaginationModel) => {
             this.searchFilterQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
         });
     }
 
-    initDataSorting() {
+    initDataSorting () {
         this.documentList.sortingSubject.pipe(takeUntil(this.onDestroy$)).subscribe((sorting: DataSorting[]) => {
             this.searchFilterQueryBuilder.setSorting(sorting);
         });
     }
 
-    private configureSearchParent(currentFolderId: string) {
+    private configureSearchParent (currentFolderId: string) {
         if (this.searchFilterQueryBuilder.isCustomSourceNode(currentFolderId)) {
             this.searchFilterQueryBuilder.getNodeIdForCustomSource(currentFolderId).subscribe((node) => {
                 this.initSearchHeader(node.id);
@@ -102,7 +102,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private initSearchHeader(currentFolderId: string) {
+    private initSearchHeader (currentFolderId: string) {
         this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);
         if (this.value) {
             Object.keys(this.value).forEach((columnKey) => {
@@ -111,7 +111,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

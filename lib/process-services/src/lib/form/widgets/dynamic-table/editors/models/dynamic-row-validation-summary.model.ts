@@ -20,7 +20,7 @@ import { ErrorMessageModel } from '@alfresco/adf-core';
 export class DynamicRowValidationSummary extends ErrorMessageModel {
     isValid: boolean;
 
-    constructor(json?: any) {
+    constructor (json?: any) {
         super(json);
 
         this.isValid = json?.isValid;

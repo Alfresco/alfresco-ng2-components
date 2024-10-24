@@ -30,16 +30,16 @@ interface MockAppConfigOAuth2 {
 
 class MockAppConfigService {
     config: MockAppConfigOAuth2 = {
-        oauth2: {
-            logoutParameters: ['client_id', 'returnTo', 'response_type']
+        "oauth2": {
+            "logoutParameters": ['client_id', 'returnTo', 'response_type']
         }
     };
 
-    setConfig(newConfig: { logoutParameters: Array<string> }) {
+    setConfig (newConfig: { logoutParameters: Array<string> }) {
         this.config.oauth2 = newConfig;
     }
 
-    get(key: string, defaultValue?: { logoutParameters: Array<string> }) {
+    get (key: string, defaultValue?: { logoutParameters: Array<string> }) {
         if (key === 'oauth2') {
             return this.config.oauth2;
         }
@@ -59,13 +59,13 @@ describe('OidcAuthenticationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [
+            "providers": [
                 OidcAuthenticationService,
-                { provide: AppConfigService, useClass: MockAppConfigService },
-                { provide: OAuthService, useClass: MockOAuthService },
-                { provide: OAuthStorage, useValue: {} },
-                { provide: AUTH_MODULE_CONFIG, useValue: {} },
-                { provide: AuthService, useValue: {} }
+                { "provide": AppConfigService, "useClass": MockAppConfigService },
+                { "provide": OAuthService, "useClass": MockOAuthService },
+                { "provide": OAuthStorage, "useValue": {} },
+                { "provide": AUTH_MODULE_CONFIG, "useValue": {} },
+                { "provide": AuthService, "useValue": {} }
             ]
         });
         service = TestBed.inject(OidcAuthenticationService);
@@ -86,29 +86,29 @@ describe('OidcAuthenticationService', () => {
         it('should handle logout with default parameters', () => {
             service.logout();
             expect(oauthService.logOut).toHaveBeenCalledWith({
-                client_id: 'testClientId',
-                returnTo: 'testRedirectUri',
-                response_type: 'code'
+                "client_id": 'testClientId',
+                "returnTo": 'testRedirectUri',
+                "response_type": 'code'
             });
         });
 
         it('should handle logout with additional parameter redirect_uri', () => {
             mockAppConfigService.setConfig({
-                logoutParameters: ['client_id', 'returnTo', 'redirect_uri', 'response_type']
+                "logoutParameters": ['client_id', 'returnTo', 'redirect_uri', 'response_type']
             });
 
             service.logout();
 
             expect(oauthService.logOut).toHaveBeenCalledWith({
-                client_id: 'testClientId',
-                returnTo: 'testRedirectUri',
-                redirect_uri: 'testRedirectUri',
-                response_type: 'code'
+                "client_id": 'testClientId',
+                "returnTo": 'testRedirectUri',
+                "redirect_uri": 'testRedirectUri',
+                "response_type": 'code'
             });
         });
 
         it('should handle logout with an empty configuration object', () => {
-            mockAppConfigService.setConfig({ logoutParameters: [] });
+            mockAppConfigService.setConfig({ "logoutParameters": [] });
 
             service.logout();
 
@@ -117,12 +117,12 @@ describe('OidcAuthenticationService', () => {
 
         it('should ignore undefined parameters', () => {
             mockAppConfigService.setConfig({
-                logoutParameters: ['client_id', 'unknown_param']
+                "logoutParameters": ['client_id', 'unknown_param']
             });
             service.logout();
 
             expect(oauthService.logOut).toHaveBeenCalledWith({
-                client_id: 'testClientId'
+                "client_id": 'testClientId'
             });
         });
     });
@@ -134,13 +134,13 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
 
     const configureTestingModule = (providers: any) => {
         TestBed.configureTestingModule({
-            providers: [
+            "providers": [
                 OidcAuthenticationService,
-                { provide: AppConfigService, useClass: MockAppConfigService },
-                { provide: OAuthService, useClass: MockOAuthService },
-                { provide: OAuthStorage, useValue: {} },
-                { provide: AUTH_MODULE_CONFIG, useValue: {} },
-                { provide: AuthService, useValue: {} },
+                { "provide": AppConfigService, "useClass": MockAppConfigService },
+                { "provide": OAuthService, "useClass": MockOAuthService },
+                { "provide": OAuthStorage, "useValue": {} },
+                { "provide": AUTH_MODULE_CONFIG, "useValue": {} },
+                { "provide": AuthService, "useValue": {} },
                 providers
             ]
         });
@@ -149,10 +149,10 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
 
     it('should emit true when user is not authenticated and discovery document is loaded', async () => {
         const mockAuthServiceValue = {
-            authenticated$: of(false),
-            isDiscoveryDocumentLoaded$: of(true)
+            "authenticated$": of(false),
+            "isDiscoveryDocumentLoaded$": of(true)
         };
-        configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
+        configureTestingModule({ "provide": AuthService, "useValue": mockAuthServiceValue });
 
         const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
         expect(shouldPerformSsoLogin).toBeTrue();
@@ -160,10 +160,10 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
 
     it('should emit false when user is authenticated', async () => {
         const mockAuthServiceValue = {
-            authenticated$: of(true),
-            isDiscoveryDocumentLoaded$: of(false)
+            "authenticated$": of(true),
+            "isDiscoveryDocumentLoaded$": of(false)
         };
-        configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
+        configureTestingModule({ "provide": AuthService, "useValue": mockAuthServiceValue });
 
         const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
         expect(shouldPerformSsoLogin).toBeFalse();
@@ -171,10 +171,10 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
 
     it('should emit false when discovery document is not loaded', async () => {
         const mockAuthServiceValue = {
-            authenticated$: of(false),
-            isDiscoveryDocumentLoaded$: of(false)
+            "authenticated$": of(false),
+            "isDiscoveryDocumentLoaded$": of(false)
         };
-        configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
+        configureTestingModule({ "provide": AuthService, "useValue": mockAuthServiceValue });
 
         const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
         expect(shouldPerformSsoLogin).toBeFalse();
@@ -182,10 +182,10 @@ describe('OidcAuthenticationService shouldPerformSsoLogin', () => {
 
     it('should emit false when both user is authenticated and discovery document is loaded', async () => {
         const mockAuthServiceValue = {
-            authenticated$: of(true),
-            isDiscoveryDocumentLoaded$: of(true)
+            "authenticated$": of(true),
+            "isDiscoveryDocumentLoaded$": of(true)
         };
-        configureTestingModule({ provide: AuthService, useValue: mockAuthServiceValue });
+        configureTestingModule({ "provide": AuthService, "useValue": mockAuthServiceValue });
 
         const shouldPerformSsoLogin = await service.shouldPerformSsoLogin$.toPromise();
         expect(shouldPerformSsoLogin).toBeFalse();

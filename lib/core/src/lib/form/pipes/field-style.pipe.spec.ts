@@ -20,19 +20,19 @@ import { FormFieldModel } from '../components/widgets/core/form-field.model';
 import { ThemeModel } from '../components/widgets/core/theme.model';
 
 const mockTheme: ThemeModel = {
-    widgets: {
+    "widgets": {
         'readonly-text': {
             'my-custom-display-text': {
-                name: 'My Custom Display Text',
-                styles: {
+                "name": 'My Custom Display Text',
+                "styles": {
                     '--adf-readonly-text-font-size': '12px',
                     '--adf-readonly-text-font-weight': 'normal',
                     '--adf-readonly-text-color': '#000000'
                 }
             },
             'my-custom-display-text2': {
-                name: 'My Custom Display Text 2',
-                styles: {
+                "name": 'My Custom Display Text 2',
+                "styles": {
                     '--adf-readonly-text-font-size': '15px',
                     '--adf-readonly-text-font-weight': 'normal',
                     '--adf-readonly-text-color': 'green'
@@ -41,8 +41,8 @@ const mockTheme: ThemeModel = {
         },
         'radio-buttons': {
             'my-custom-radio-buttons': {
-                name: 'My Custom Radio Buttons',
-                styles: {
+                "name": 'My Custom Radio Buttons',
+                "styles": {
                     '--adf-radio-buttons-font-size': '12px',
                     '--adf-radio-buttons-font-weight': 'normal',
                     '--adf-radio-buttons-color': '#000000'
@@ -61,11 +61,11 @@ describe('FieldStylePipe', () => {
 
     it('should return styles as a string', () => {
         const field: Partial<FormFieldModel> = {
-            type: 'readonly-text',
-            form: {
-                theme: mockTheme
+            "type": 'readonly-text',
+            "form": {
+                "theme": mockTheme
             },
-            style: 'my-custom-display-text'
+            "style": 'my-custom-display-text'
         };
 
         const result = pipe.transform(field as FormFieldModel);
@@ -74,9 +74,9 @@ describe('FieldStylePipe', () => {
 
     it('should return empty string when style name is not provided', () => {
         const field: Partial<FormFieldModel> = {
-            type: 'readonly-text',
-            form: {
-                theme: mockTheme
+            "type": 'readonly-text',
+            "form": {
+                "theme": mockTheme
             }
         };
 
@@ -86,11 +86,11 @@ describe('FieldStylePipe', () => {
 
     it('should return empty string when style name is not defined', () => {
         const field: Partial<FormFieldModel> = {
-            type: 'readonly-text',
-            form: {
-                theme: mockTheme
+            "type": 'readonly-text',
+            "form": {
+                "theme": mockTheme
             },
-            style: 'not-defined-style'
+            "style": 'not-defined-style'
         };
 
         const result = pipe.transform(field as FormFieldModel);
@@ -99,9 +99,9 @@ describe('FieldStylePipe', () => {
 
     it('should return empty string when theme is not defined', () => {
         const field: Partial<FormFieldModel> = {
-            type: 'readonly-text',
-            form: {},
-            style: 'my-custom-display-text'
+            "type": 'readonly-text',
+            "form": {},
+            "style": 'my-custom-display-text'
         };
 
         const result = pipe.transform(field as FormFieldModel);

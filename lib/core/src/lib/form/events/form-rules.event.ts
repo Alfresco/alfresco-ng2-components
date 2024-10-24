@@ -19,14 +19,12 @@ import { FormFieldEvent } from './form-field.event';
 import { FormEvent } from './form.event';
 
 export class FormRulesEvent extends FormFieldEvent {
-
     readonly type: string;
     readonly event: Event;
 
-    constructor(type: string, formEvent: FormEvent, event?: Event) {
+    constructor (type: string, formEvent: FormEvent, event?: Event) {
         super(formEvent.form, formEvent['field']);
         this.type = type;
         this.event = event;
     }
-
 }

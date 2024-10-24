@@ -25,24 +25,21 @@ export interface EditJsonDialogSettings {
 }
 
 @Component({
-    templateUrl: './edit-json.dialog.html',
-    styleUrls: ['./edit-json.dialog.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-edit-json-dialog' }
+    "templateUrl": './edit-json.dialog.html',
+    "styleUrls": ['./edit-json.dialog.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-edit-json-dialog' }
 })
 export class EditJsonDialogComponent implements OnInit {
-
     editable: boolean = false;
     title: string = 'JSON';
 
     @Input()
     value: string = '';
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA) private settings: EditJsonDialogSettings
-    ) {}
+    constructor (@Inject(MAT_DIALOG_DATA) private settings: EditJsonDialogSettings) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.settings) {
             this.editable = this.settings.editable;
             this.value = this.settings.value || '';

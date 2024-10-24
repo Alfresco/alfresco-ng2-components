@@ -39,8 +39,8 @@ describe('ContentAction', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         contentService = TestBed.inject(ContentService);
         nodeActionsService = new NodeActionsService(null, null, null);
@@ -89,7 +89,7 @@ describe('ContentAction', () => {
 
         action.visible = false;
         action.ngOnChanges({
-            visible: new SimpleChange(true, false, false)
+            "visible": new SimpleChange(true, false, false)
         });
 
         expect(action.documentActionModel.visible).toBeFalsy();

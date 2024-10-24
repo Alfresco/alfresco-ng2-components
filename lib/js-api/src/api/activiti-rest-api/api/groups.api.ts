@@ -33,7 +33,6 @@ export interface GetGroupsOpts {
 export class ActivitiGroupsApi extends BaseApi {
     /**
      * Query groups
-     *
      * @param opts Optional parameters
      * @return Promise<ResultListDataRepresentationLightGroupRepresentation>
      */
@@ -46,7 +45,6 @@ export class ActivitiGroupsApi extends BaseApi {
 
     /**
      * List members of a group
-     *
      * @param groupId groupId
      * @return Promise<ResultListDataRepresentationLightUserRepresentation>
      */

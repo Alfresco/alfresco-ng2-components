@@ -22,9 +22,9 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PopOverDirective } from './pop-over.directive';
 
 @Component({
-    standalone: true,
-    imports: [PopOverDirective],
-    template: `
+    "standalone": true,
+    "imports": [PopOverDirective],
+    "template": `
         <div
             [adf-pop-over]="popOver"
             [autofocusedElementSelector]="'#test'"
@@ -45,7 +45,7 @@ describe('PopOverDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [OverlayModule, PopOverTestComponent]
+            "imports": [OverlayModule, PopOverTestComponent]
         });
         fixture = TestBed.createComponent(PopOverTestComponent);
     });
@@ -62,7 +62,7 @@ describe('PopOverDirective', () => {
         fixture.detectChanges();
         popOverTrigger.dispatchEvent(
             new KeyboardEvent('keyup', {
-                key: 'Enter'
+                "key": 'Enter'
             })
         );
         expect(fixture.debugElement.query(By.css('#test')).nativeElement).toBe(document.activeElement);
@@ -74,7 +74,7 @@ describe('PopOverDirective', () => {
         popOverTrigger.click();
         document.dispatchEvent(
             new KeyboardEvent('keyup', {
-                key: 'Escape'
+                "key": 'Escape'
             })
         );
         expect(popOverTrigger).toBe(document.activeElement);
@@ -85,7 +85,7 @@ describe('PopOverDirective', () => {
         fixture.detectChanges();
         document.dispatchEvent(
             new KeyboardEvent('keyup', {
-                key: 'Escape'
+                "key": 'Escape'
             })
         );
         expect(popOverTrigger).not.toEqual(document.activeElement);
@@ -96,7 +96,7 @@ describe('PopOverDirective', () => {
         fixture.detectChanges();
         popOverTrigger.dispatchEvent(
             new KeyboardEvent('keyup', {
-                key: 'Enter'
+                "key": 'Enter'
             })
         );
         fixture.detectChanges();
@@ -111,7 +111,7 @@ describe('PopOverDirective', () => {
         fixture.detectChanges();
         popOverTrigger.dispatchEvent(
             new KeyboardEvent('keyup', {
-                key: 'Enter'
+                "key": 'Enter'
             })
         );
         fixture.detectChanges();

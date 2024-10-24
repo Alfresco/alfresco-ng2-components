@@ -24,13 +24,13 @@ import { ContentNodeDialogService } from '../content-node-selector/content-node-
 import { ContentTestingModule } from '../testing/content.testing.module';
 
 const fakeNode = {
-    id: 'fake',
-    isFile: true,
-    isLocked: false
+    "id": 'fake',
+    "isFile": true,
+    "isLocked": false
 } as Node;
 
 @Component({
-    template: '<div [adf-node-lock]="node"></div>'
+    "template": '<div [adf-node-lock]="node"></div>'
 })
 class TestComponent {
     node = null;
@@ -44,8 +44,8 @@ describe('NodeLock Directive', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestComponent]
+            "imports": [ContentTestingModule],
+            "declarations": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -65,7 +65,7 @@ describe('NodeLock Directive', () => {
     });
 
     it('should disable the button if node is a folder', fakeAsync(() => {
-        component.node = { isFile: false, isFolder: true };
+        component.node = { "isFile": false, "isFolder": true };
 
         fixture.detectChanges();
 
@@ -73,7 +73,7 @@ describe('NodeLock Directive', () => {
     }));
 
     it('should enable the button if node is a file', fakeAsync(() => {
-        component.node = { isFile: true, isFolder: false };
+        component.node = { "isFile": true, "isFolder": false };
 
         fixture.detectChanges();
 

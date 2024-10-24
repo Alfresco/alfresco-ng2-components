@@ -23,7 +23,7 @@ export const PAGINATION_DIRECTIVES = [InfinitePaginationComponent, PaginationCom
 
 /** @deprecated use `...PAGINATION_DIRECTIVES` or import standalone components */
 @NgModule({
-    imports: [...PAGINATION_DIRECTIVES],
-    exports: [...PAGINATION_DIRECTIVES]
+    "imports": [...PAGINATION_DIRECTIVES],
+    "exports": [...PAGINATION_DIRECTIVES]
 })
 export class PaginationModule {}

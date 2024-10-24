@@ -40,7 +40,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 
 /** @deprecated this module is deprecated and will be removed in future versions */
 @NgModule({
-    imports: [
+    "imports": [
         MatButtonModule,
         MatAutocompleteModule,
         MatChipsModule,
@@ -64,7 +64,7 @@ import { MatBadgeModule } from '@angular/material/badge';
         MatTreeModule,
         MatBadgeModule
     ],
-    exports: [
+    "exports": [
         MatButtonModule,
         MatAutocompleteModule,
         MatChipsModule,

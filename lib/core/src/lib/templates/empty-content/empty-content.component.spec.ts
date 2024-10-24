@@ -24,10 +24,10 @@ import { NoopTranslateModule } from '../../testing/noop-translate.module';
 import { EmptyContentComponent } from './empty-content.component';
 
 @Component({
-    selector: 'adf-test-component',
-    standalone: true,
-    imports: [EmptyContentComponent],
-    template: `
+    "selector": 'adf-test-component',
+    "standalone": true,
+    "imports": [EmptyContentComponent],
+    "template": `
         <adf-empty-content icon="delete" [title]="'CUSTOM_TITLE'" [subtitle]="'CUSTOM_SUBTITLE'">
             <div class="adf-empty-content__text">SUBTITLE-1</div>
             <div class="adf-empty-content__text">SUBTITLE-2</div>
@@ -43,7 +43,7 @@ describe('EmptyContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, TestComponent]
+            "imports": [NoopTranslateModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         translateService = TestBed.inject(TranslateService);

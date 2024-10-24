@@ -26,8 +26,8 @@ describe('LoginHeaderDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: OidcAuthenticationService, useValue: {} }]
+            "imports": [CoreTestingModule],
+            "providers": [{ "provide": OidcAuthenticationService, "useValue": {} }]
         });
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;

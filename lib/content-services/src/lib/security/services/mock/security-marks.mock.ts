@@ -18,20 +18,20 @@
 import { SecurityMarkPaging, SecurityMarkBody } from '@alfresco/js-api';
 
 export const fakeMarksApiResponse: SecurityMarkPaging = {
-    list: {
-        pagination: {
-            count: 1,
-            hasMoreItems: false,
-            totalItems: 1,
-            skipCount: 0,
-            maxItems: 10
+    "list": {
+        "pagination": {
+            "count": 1,
+            "hasMoreItems": false,
+            "totalItems": 1,
+            "skipCount": 0,
+            "maxItems": 10
         },
-        entries: [
+        "entries": [
             {
-                entry: {
-                    groupId: 'eddf6269-ceba-42c6-b979-9ac445d29a94',
-                    name: 'securityMark1',
-                    id: 'ffBOeOJJ'
+                "entry": {
+                    "groupId": 'eddf6269-ceba-42c6-b979-9ac445d29a94',
+                    "name": 'securityMark1',
+                    "id": 'ffBOeOJJ'
                 }
             }
         ]
@@ -40,6 +40,6 @@ export const fakeMarksApiResponse: SecurityMarkPaging = {
 
 export const createNewSecurityMarkMock: SecurityMarkBody[] = [
     {
-        name: 'securityMark1'
+        "name": 'securityMark1'
     }
 ];

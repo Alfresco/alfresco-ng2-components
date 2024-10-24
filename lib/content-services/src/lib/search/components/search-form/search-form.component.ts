@@ -25,12 +25,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-search-form',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, MatMenuModule, MatIconModule],
-    templateUrl: './search-form.component.html',
-    styleUrls: ['./search-form.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-form',
+    "standalone": true,
+    "imports": [CommonModule, MatButtonModule, TranslateModule, MatMenuModule, MatIconModule],
+    "templateUrl": './search-form.component.html',
+    "styleUrls": ['./search-form.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFormComponent {
     private queryBuilder = inject(SearchQueryBuilderService);
@@ -41,12 +41,12 @@ export class SearchFormComponent {
     @Output()
     formChange: EventEmitter<SearchForm> = new EventEmitter<SearchForm>();
 
-    onSelectionChange(form: SearchForm) {
+    onSelectionChange (form: SearchForm) {
         this.queryBuilder.updateSelectedConfiguration(form.index);
         this.formChange.emit(form);
     }
 
-    getSelected(forms: SearchForm[]): string {
+    getSelected (forms: SearchForm[]): string {
         return forms.find((form) => form.selected)?.name;
     }
 }

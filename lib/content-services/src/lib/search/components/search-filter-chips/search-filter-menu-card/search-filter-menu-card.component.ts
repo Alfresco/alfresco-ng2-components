@@ -23,18 +23,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
-    selector: 'adf-search-filter-menu-card',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, MatIconModule, MatDividerModule],
-    templateUrl: './search-filter-menu-card.component.html',
-    styleUrls: ['./search-filter-menu-card.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-filter-menu-card',
+    "standalone": true,
+    "imports": [CommonModule, MatButtonModule, TranslateModule, MatIconModule, MatDividerModule],
+    "templateUrl": './search-filter-menu-card.component.html',
+    "styleUrls": ['./search-filter-menu-card.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFilterMenuCardComponent {
     @Output()
     close = new EventEmitter();
 
-    onClose() {
+    onClose () {
         this.close.emit();
     }
 }

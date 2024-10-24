@@ -30,9 +30,9 @@ import { MatInputModule } from '@angular/material/input';
 import { PeopleListComponent } from '../people-list/people-list.component';
 
 @Component({
-    selector: 'adf-people-search-field',
-    standalone: true,
-    imports: [
+    "selector": 'adf-people-search-field',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatFormFieldModule,
         MatInputModule,
@@ -41,10 +41,10 @@ import { PeopleListComponent } from '../people-list/people-list.component';
         DataColumnListComponent,
         DataColumnComponent
     ],
-    templateUrl: './people-search-field.component.html',
-    styleUrls: ['./people-search-field.component.scss'],
-    host: { class: 'adf-people-search-field' },
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './people-search-field.component.html',
+    "styleUrls": ['./people-search-field.component.scss'],
+    "host": { "class": 'adf-people-search-field' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class PeopleSearchFieldComponent {
     @Input()
@@ -61,7 +61,7 @@ export class PeopleSearchFieldComponent {
 
     defaultPlaceholder = 'ADF_TASK_LIST.PEOPLE.SEARCH_USER';
 
-    constructor(public peopleProcessService: PeopleProcessService, private translationService: TranslationService) {
+    constructor (public peopleProcessService: PeopleProcessService, private translationService: TranslationService) {
         this.users$ = this.searchUser.valueChanges.pipe(
             debounceTime(200),
             switchMap((searchWord: string) => {
@@ -76,23 +76,23 @@ export class PeopleSearchFieldComponent {
         this.defaultPlaceholder = this.translationService.instant(this.defaultPlaceholder);
     }
 
-    reset() {
+    reset () {
         this.searchUser.reset();
     }
 
-    get searchPlaceholder(): string {
+    get searchPlaceholder (): string {
         return this.placeholder || this.defaultPlaceholder;
     }
 
-    onRowClick(model: LightUserRepresentation) {
+    onRowClick (model: LightUserRepresentation) {
         this.rowClick.emit(model);
     }
 
-    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+    getDisplayUser (firstName: string, lastName: string, delimiter: string = '-'): string {
         return getDisplayUser(firstName, lastName, delimiter);
     }
 
-    getInitialUserName(firstName: string, lastName: string): string {
+    getInitialUserName (firstName: string, lastName: string): string {
         firstName = firstName !== null && firstName !== '' ? firstName[0] : '';
         lastName = lastName !== null && lastName !== '' ? lastName[0] : '';
         return this.getDisplayUser(firstName, lastName, '');

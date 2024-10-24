@@ -23,7 +23,7 @@ export const ASPECT_LIST_DIRECTIVES = [AspectListComponent, AspectListDialogComp
 
 /** @deprecated use `...ASPECT_LIST_DIRECTIVES` or import the individual components */
 @NgModule({
-    imports: [...ASPECT_LIST_DIRECTIVES],
-    exports: [...ASPECT_LIST_DIRECTIVES]
+    "imports": [...ASPECT_LIST_DIRECTIVES],
+    "exports": [...ASPECT_LIST_DIRECTIVES]
 })
 export class AspectListModule {}

@@ -23,42 +23,42 @@ import { DynamicTableWidgetComponent } from './dynamic-table.widget';
 import { DynamicTableModel } from './editors/models/dynamic-table.widget.model';
 
 const fakeFormField = {
-    id: 'fake-dynamic-table',
-    name: 'fake-label',
-    value: [{ 1: 1, 2: 2, 3: 4 }],
-    required: false,
-    readOnly: false,
-    overrideId: false,
-    colspan: 1,
-    placeholder: null,
-    minLength: 0,
-    maxLength: 0,
-    params: {
-        existingColspan: 1,
-        maxColspan: 1
+    "id": 'fake-dynamic-table',
+    "name": 'fake-label',
+    "value": [{ "1": 1, "2": 2, "3": 4 }],
+    "required": false,
+    "readOnly": false,
+    "overrideId": false,
+    "colspan": 1,
+    "placeholder": null,
+    "minLength": 0,
+    "maxLength": 0,
+    "params": {
+        "existingColspan": 1,
+        "maxColspan": 1
     },
-    sizeX: 2,
-    sizeY: 2,
-    row: -1,
-    col: -1,
-    columnDefinitions: [
+    "sizeX": 2,
+    "sizeY": 2,
+    "row": -1,
+    "col": -1,
+    "columnDefinitions": [
         {
-            id: 1,
-            name: 1,
-            type: 'String',
-            visible: true
+            "id": 1,
+            "name": 1,
+            "type": 'String',
+            "visible": true
         },
         {
-            id: 2,
-            name: 2,
-            type: 'String',
-            visible: true
+            "id": 2,
+            "name": 2,
+            "type": 'String',
+            "visible": true
         },
         {
-            id: 3,
-            name: 3,
-            type: 'String',
-            visible: true
+            "id": 3,
+            "name": 3,
+            "type": 'String',
+            "visible": true
         }
     ]
 };
@@ -72,7 +72,7 @@ describe('DynamicTableWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         const field = new FormFieldModel(new FormModel());
         formService = TestBed.inject(FormService);
@@ -95,7 +95,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should select row on click', () => {
-        const row = { selected: false } as DynamicTableRow;
+        const row = { "selected": false } as DynamicTableRow;
         widget.onRowClicked(row);
 
         expect(row.selected).toBeTruthy();
@@ -103,7 +103,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should require table to select clicked row', () => {
-        const row = { selected: false } as DynamicTableRow;
+        const row = { "selected": false } as DynamicTableRow;
         widget.content = null;
         widget.onRowClicked(row);
 
@@ -111,7 +111,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should reset selected row', () => {
-        const row = { selected: false } as DynamicTableRow;
+        const row = { "selected": false } as DynamicTableRow;
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         expect(widget.content.selectedRow).toBe(row);
@@ -123,7 +123,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should check selection', () => {
-        const row = { selected: false } as DynamicTableRow;
+        const row = { "selected": false } as DynamicTableRow;
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         expect(widget.hasSelection()).toBeTruthy();
@@ -201,7 +201,7 @@ describe('DynamicTableWidgetComponent', () => {
         expect(widget.editMode).toBeFalsy();
         expect(widget.editRow).toBeFalsy();
 
-        const row = { value: true } as DynamicTableRow;
+        const row = { "value": true } as DynamicTableRow;
         widget.content.selectedRow = row;
 
         expect(widget.editSelection()).toBeTruthy();
@@ -211,7 +211,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should copy row', () => {
-        const row = { value: { opt: { key: '1', value: 1 } } } as DynamicTableRow;
+        const row = { "value": { "opt": { "key": '1', "value": 1 } } } as DynamicTableRow;
         const copy = widget.copyRow(row);
         expect(copy.value).toEqual(row.value);
     });
@@ -223,14 +223,14 @@ describe('DynamicTableWidgetComponent', () => {
 
     it('should retrieve cell value', () => {
         const value = '<value>';
-        const row = { value: { key: value } } as DynamicTableRow;
-        const column = { id: 'key' } as DynamicTableColumn;
+        const row = { "value": { "key": value } } as DynamicTableRow;
+        const column = { "id": 'key' } as DynamicTableColumn;
 
         expect(widget.getCellValue(row, column)).toBe(value);
     });
 
     it('should save changes and add new row', () => {
-        const row = { isNew: true, value: { key: 'value' } } as DynamicTableRow;
+        const row = { "isNew": true, "value": { "key": 'value' } } as DynamicTableRow;
         widget.editMode = true;
         widget.editRow = row;
 
@@ -243,7 +243,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should save changes and update row', () => {
-        const row = { isNew: false, value: { key: 'value' } } as DynamicTableRow;
+        const row = { "isNew": false, "value": { "key": 'value' } } as DynamicTableRow;
         widget.editMode = true;
         widget.editRow = row;
         widget.content.selectedRow = row;
@@ -280,9 +280,9 @@ describe('DynamicTableWidgetComponent', () => {
     it('should take validation state from underlying field', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
-            type: FormFieldTypes.DYNAMIC_TABLE,
-            required: true,
-            value: null
+            "type": FormFieldTypes.DYNAMIC_TABLE,
+            "required": true,
+            "value": null
         });
         widget.content = new DynamicTableModel(field, formService);
 
@@ -298,22 +298,22 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should prepend default currency for amount columns', () => {
-        const row = { value: { key: '100' } } as DynamicTableRow;
-        const column = { id: 'key', type: 'Amount' } as DynamicTableColumn;
+        const row = { "value": { "key": '100' } } as DynamicTableRow;
+        const column = { "id": 'key', "type": 'Amount' } as DynamicTableColumn;
         const actual = widget.getCellValue(row, column);
         expect(actual).toBe('$ 100');
     });
 
     it('should prepend custom currency for amount columns', () => {
-        const row = { value: { key: '100' } } as DynamicTableRow;
-        const column = { id: 'key', type: 'Amount', amountCurrency: 'GBP' } as DynamicTableColumn;
+        const row = { "value": { "key": '100' } } as DynamicTableRow;
+        const column = { "id": 'key', "type": 'Amount', "amountCurrency": 'GBP' } as DynamicTableColumn;
         const actual = widget.getCellValue(row, column);
         expect(actual).toBe('GBP 100');
     });
 
     describe('when template is ready', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), fakeFormField);
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), fakeFormField);
             widget.field.type = FormFieldTypes.DYNAMIC_TABLE;
 
             fixture.detectChanges();

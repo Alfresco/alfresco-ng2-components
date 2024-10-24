@@ -50,20 +50,20 @@ export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
 
     protected onDestroy$ = new Subject<boolean>();
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    wasFilterUpdated(filterKey: string): boolean {
+    wasFilterUpdated (filterKey: string): boolean {
         return this.updatedCountersSet.has(filterKey);
     }
 
-    addToUpdatedCounters(filterKey: string) {
+    addToUpdatedCounters (filterKey: string) {
         this.updatedCountersSet.add(filterKey);
     }
 
-    resetFilterCounter(filterKey: string) {
+    resetFilterCounter (filterKey: string) {
         this.updatedCountersSet.delete(filterKey);
     }
 }

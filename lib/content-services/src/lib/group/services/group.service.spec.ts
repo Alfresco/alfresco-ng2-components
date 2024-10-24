@@ -28,19 +28,19 @@ describe('GroupService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(GroupService);
         group = {
-            entry: {
-                id: 'some id',
-                displayName: 'some name',
-                description: 'some description'
+            "entry": {
+                "id": 'some id',
+                "displayName": 'some name',
+                "description": 'some description'
             }
         };
         returnedGroup = JSON.parse(JSON.stringify(group));
         opts = {
-            include: ['description']
+            "include": ['description']
         };
     });
 
@@ -51,7 +51,7 @@ describe('GroupService', () => {
             service.getGroup(group.entry.id, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toBe(returnedGroup);
                 expect(service.groupsApi.getGroup).toHaveBeenCalledWith(group.entry.id, {
-                    include: ['description']
+                    "include": ['description']
                 });
                 done();
             });
@@ -63,14 +63,14 @@ describe('GroupService', () => {
 
             service.getGroup(group.entry.id, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toEqual({
-                    entry: {
-                        id: returnedGroup.entry.id,
-                        displayName: returnedGroup.entry.displayName,
-                        description: ''
+                    "entry": {
+                        "id": returnedGroup.entry.id,
+                        "displayName": returnedGroup.entry.displayName,
+                        "description": ''
                     }
                 });
                 expect(service.groupsApi.getGroup).toHaveBeenCalledWith(group.entry.id, {
-                    include: ['description']
+                    "include": ['description']
                 });
                 done();
             });
@@ -86,11 +86,11 @@ describe('GroupService', () => {
                 expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(
                     group.entry.id,
                     {
-                        displayName: group.entry.displayName,
-                        description: group.entry.description
+                        "displayName": group.entry.displayName,
+                        "description": group.entry.description
                     },
                     {
-                        include: ['description']
+                        "include": ['description']
                     }
                 );
                 done();
@@ -103,20 +103,20 @@ describe('GroupService', () => {
 
             service.updateGroup(group.entry, opts).subscribe((groupEntry) => {
                 expect(groupEntry).toEqual({
-                    entry: {
-                        id: returnedGroup.entry.id,
-                        displayName: returnedGroup.entry.displayName,
-                        description: ''
+                    "entry": {
+                        "id": returnedGroup.entry.id,
+                        "displayName": returnedGroup.entry.displayName,
+                        "description": ''
                     }
                 });
                 expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(
                     group.entry.id,
                     {
-                        displayName: group.entry.displayName,
-                        description: group.entry.description
+                        "displayName": group.entry.displayName,
+                        "description": group.entry.description
                     },
                     {
-                        include: ['description']
+                        "include": ['description']
                     }
                 );
                 done();
@@ -132,11 +132,11 @@ describe('GroupService', () => {
                 expect(service.groupsApi.updateGroup).toHaveBeenCalledWith(
                     group.entry.id,
                     {
-                        displayName: group.entry.displayName,
-                        description: group.entry.description
+                        "displayName": group.entry.displayName,
+                        "description": group.entry.description
                     },
                     {
-                        include: ['description']
+                        "include": ['description']
                     }
                 );
                 done();

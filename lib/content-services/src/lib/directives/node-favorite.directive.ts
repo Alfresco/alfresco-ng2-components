@@ -24,15 +24,15 @@ import { catchError, map } from 'rxjs/operators';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 
 @Directive({
-    standalone: true,
-    selector: '[adf-node-favorite]',
-    exportAs: 'adfFavorite'
+    "standalone": true,
+    "selector": '[adf-node-favorite]',
+    "exportAs": 'adfFavorite'
 })
 export class NodeFavoriteDirective implements OnChanges {
     favorites: any[] = [];
 
     private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
+    get favoritesApi (): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
         return this._favoritesApi;
     }
@@ -48,13 +48,13 @@ export class NodeFavoriteDirective implements OnChanges {
     @Output() error = new EventEmitter<any>();
 
     @HostListener('click')
-    onClick() {
+    onClick () {
         this.toggleFavorite();
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor (private alfrescoApiService: AlfrescoApiService) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (!changes.selection.currentValue.length) {
             this.favorites = [];
 
@@ -64,7 +64,7 @@ export class NodeFavoriteDirective implements OnChanges {
         this.markFavoritesNodes(changes.selection.currentValue);
     }
 
-    toggleFavorite() {
+    toggleFavorite () {
         if (!this.favorites.length) {
             return;
         }
@@ -102,7 +102,7 @@ export class NodeFavoriteDirective implements OnChanges {
         }
     }
 
-    markFavoritesNodes(selection: NodeEntry[]) {
+    markFavoritesNodes (selection: NodeEntry[]) {
         if (selection.length <= this.favorites.length) {
             this.favorites = this.reduce(this.favorites, selection);
         }
@@ -115,7 +115,7 @@ export class NodeFavoriteDirective implements OnChanges {
         });
     }
 
-    hasFavorites(): boolean {
+    hasFavorites (): boolean {
         if (this.favorites && !this.favorites.length) {
             return false;
         }
@@ -123,11 +123,11 @@ export class NodeFavoriteDirective implements OnChanges {
         return this.favorites.every((selected) => selected.entry.isFavorite);
     }
 
-    private getProcessBatch(selection: NodeEntry[]): Observable<any>[] {
+    private getProcessBatch (selection: NodeEntry[]): Observable<any>[] {
         return selection.map((selected) => this.getFavorite(selected));
     }
 
-    private getFavorite(selected: NodeEntry | SharedLinkEntry): Observable<any> {
+    private getFavorite (selected: NodeEntry | SharedLinkEntry): Observable<any> {
         const node: Node | SharedLink = selected.entry;
 
         // ACS 6.x with 'isFavorite' include
@@ -143,43 +143,43 @@ export class NodeFavoriteDirective implements OnChanges {
 
         return from(promise).pipe(
             map(() => ({
-                entry: {
+                "entry": {
                     id,
                     isFolder,
                     isFile,
                     name,
-                    isFavorite: true
+                    "isFavorite": true
                 }
             })),
             catchError(() =>
                 of({
-                    entry: {
+                    "entry": {
                         id,
                         isFolder,
                         isFile,
                         name,
-                        isFavorite: false
+                        "isFavorite": false
                     }
                 })
             )
         );
     }
 
-    private createFavoriteBody(node: NodeEntry): FavoriteBodyCreate {
+    private createFavoriteBody (node: NodeEntry): FavoriteBodyCreate {
         const type = this.getNodeType(node);
         // shared files have nodeId
         const id = node.entry['nodeId'] || node.entry.id;
 
         return {
-            target: {
+            "target": {
                 [type]: {
-                    guid: id
+                    "guid": id
                 }
             }
         };
     }
 
-    private getNodeType(node: NodeEntry): string {
+    private getNodeType (node: NodeEntry): string {
         // shared could only be files
         if (!node.entry.isFile && !node.entry.isFolder) {
             return 'file';
@@ -188,13 +188,13 @@ export class NodeFavoriteDirective implements OnChanges {
         return node.entry.isFile ? 'file' : 'folder';
     }
 
-    private diff(list: NodeEntry[], patch: any[]): NodeEntry[] {
+    private diff (list: NodeEntry[], patch: any[]): NodeEntry[] {
         const ids = patch.map((item) => item.entry.id);
 
         return list.filter((item) => (ids.includes(item.entry.id) ? null : item));
     }
 
-    private reduce(patch: any[], comparator: NodeEntry[]): any[] {
+    private reduce (patch: any[], comparator: NodeEntry[]): any[] {
         const ids = comparator.map((item) => item.entry.id);
 
         return patch.filter((item) => (ids.includes(item.entry.id) ? item : null));

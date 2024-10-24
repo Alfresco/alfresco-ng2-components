@@ -29,12 +29,12 @@ import { SearchFacetChipComponent } from './search-facet-chip/search-facet-chip.
 import { SearchWidgetChipComponent } from './search-widget-chip/search-widget-chip.component';
 
 @Component({
-    selector: 'adf-search-filter-chips',
-    standalone: true,
-    imports: [CommonModule, MatChipsModule, TranslateModule, SearchFacetChipTabbedComponent, SearchFacetChipComponent, SearchWidgetChipComponent],
-    templateUrl: './search-filter-chips.component.html',
-    styleUrls: ['./search-filter-chips.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-filter-chips',
+    "standalone": true,
+    "imports": [CommonModule, MatChipsModule, TranslateModule, SearchFacetChipTabbedComponent, SearchFacetChipComponent, SearchWidgetChipComponent],
+    "templateUrl": './search-filter-chips.component.html',
+    "styleUrls": ['./search-filter-chips.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFilterChipsComponent implements OnInit, OnDestroy {
     private queryBuilder = inject(SearchQueryBuilderService);
@@ -48,26 +48,26 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
 
     facetChipTabbedId = '';
 
-    get categories(): SearchCategory[] {
+    get categories (): SearchCategory[] {
         return this.queryBuilder.categories || [];
     }
 
-    get tabbedFacet(): TabbedFacetField | null {
+    get tabbedFacet (): TabbedFacetField | null {
         return this.facetFiltersService.tabbedFacet;
     }
 
-    get responseFacets(): FacetField[] {
+    get responseFacets (): FacetField[] {
         return this.facetFiltersService.responseFacets || [];
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.queryBuilder.executed
             .asObservable()
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => (this.facetChipTabbedId = 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet?.fields.join('-')));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

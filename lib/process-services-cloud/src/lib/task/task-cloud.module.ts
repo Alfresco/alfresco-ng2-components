@@ -24,7 +24,7 @@ import { TaskDirectiveModule } from './directives/task-directive.module';
 import { TaskFormModule } from './task-form/task-form.module';
 
 @NgModule({
-    imports: [
+    "imports": [
         TaskListCloudModule,
         TaskFiltersCloudModule,
         StartTaskCloudModule,
@@ -32,7 +32,7 @@ import { TaskFormModule } from './task-form/task-form.module';
         TaskDirectiveModule,
         TaskFormModule
     ],
-    exports: [
+    "exports": [
         TaskListCloudModule,
         TaskFiltersCloudModule,
         StartTaskCloudModule,

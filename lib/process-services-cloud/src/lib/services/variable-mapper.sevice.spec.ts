@@ -39,29 +39,29 @@ describe('VariableMapperService', () => {
         service = new VariableMapperService();
 
         variable = getProcessInstanceVariableMock({
-            processDefinitionKey: 'processKey',
-            name: 'variableName'
+            "processDefinitionKey": 'processKey',
+            "name": 'variableName'
         });
 
         column = getDataColumnMock<ProcessListDataColumnCustomData>({
-            title: 'Column Name',
-            key: '',
-            customData: {
-                variableDefinitionsPayload: ['processKey/variableName'],
-                assignedVariableDefinitionIds: [variable.variableDefinitionId],
-                columnType: 'text'
+            "title": 'Column Name',
+            "key": '',
+            "customData": {
+                "variableDefinitionsPayload": ['processKey/variableName'],
+                "assignedVariableDefinitionIds": [variable.variableDefinitionId],
+                "columnType": 'text'
             }
         });
 
         objectWithVariables = {
-            variables: [variable]
+            "variables": [variable]
         };
     });
 
     it('should map variables by column id', () => {
         const expectedObjectWithVariableMap = {
             ...objectWithVariables,
-            variablesMap: {
+            "variablesMap": {
                 [column.id]: variable
             }
         };

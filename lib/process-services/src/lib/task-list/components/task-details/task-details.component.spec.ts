@@ -33,17 +33,17 @@ import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { LightUserRepresentation, TaskRepresentation } from '@alfresco/js-api';
 
 const fakeUser: LightUserRepresentation = {
-    id: 0,
-    firstName: 'fake-name',
-    lastName: 'fake-last',
-    email: 'fake@mail.com'
+    "id": 0,
+    "firstName": 'fake-name',
+    "lastName": 'fake-last',
+    "email": 'fake@mail.com'
 };
 
 const fakeTaskAssignResponse: any = {
-    id: 'fake-id',
-    firstName: 'fake-name',
-    lastName: 'fake-last',
-    email: 'fake@mail.com'
+    "id": 'fake-id',
+    "firstName": 'fake-name',
+    "lastName": 'fake-last',
+    "email": 'fake@mail.com'
 };
 
 describe('TaskDetailsComponent', () => {
@@ -59,10 +59,10 @@ describe('TaskDetailsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskDetailsComponent]
+            "imports": [ProcessTestingModule, TaskDetailsComponent]
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);
-        spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of({ email: 'fake-email' } as any));
+        spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of({ "email": 'fake-email' } as any));
 
         const taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'getTaskChecklist').and.returnValue(of(noDataMock));
@@ -83,9 +83,9 @@ describe('TaskDetailsComponent', () => {
 
         spyOn(taskCommentsService, 'get').and.returnValue(
             of([
-                new CommentModel({ message: 'Test1', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
-                new CommentModel({ message: 'Test2', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) }),
-                new CommentModel({ message: 'Test3', created: new Date(), createdBy: new User({ firstName: 'Admin', lastName: 'User' }) })
+                new CommentModel({ "message": 'Test1', "created": new Date(), "createdBy": new User({ "firstName": 'Admin', "lastName": 'User' }) }),
+                new CommentModel({ "message": 'Test2', "created": new Date(), "createdBy": new User({ "firstName": 'Admin', "lastName": 'User' }) }),
+                new CommentModel({ "message": 'Test3', "created": new Date(), "createdBy": new User({ "firstName": 'Admin', "lastName": 'User' }) })
             ])
         );
 
@@ -185,12 +185,12 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should fetch new task details when taskId changed', () => {
-            component.ngOnChanges({ taskId: change });
+            component.ngOnChanges({ "taskId": change });
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
 
         it('should set a placeholder message when taskId changed to null', () => {
-            component.ngOnChanges({ taskId: nullChange });
+            component.ngOnChanges({ "taskId": nullChange });
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
         });
@@ -297,7 +297,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be readonly if the task is complete and no user are involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ "taskId": new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskRepresentation(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -309,7 +309,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be readonly if the task is complete and user are NOT involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ "taskId": new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskRepresentation(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -321,7 +321,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ "taskId": new SimpleChange('123', '456', true) });
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskRepresentation(taskDetailsMock);
             component.taskDetails.endDate = null;
@@ -333,7 +333,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments NOT be readonly if the task is complete and user are involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ "taskId": new SimpleChange('123', '456', true) });
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskRepresentation(taskDetailsMock);
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
@@ -345,7 +345,7 @@ describe('TaskDetailsComponent', () => {
         it('should comments be present if showComments is true', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ "taskId": new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskRepresentation(taskDetailsMock);
 
@@ -355,7 +355,7 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments NOT be present if showComments is false', () => {
             component.showComments = false;
-            component.ngOnChanges({ taskId: new SimpleChange('123', '456', true) });
+            component.ngOnChanges({ "taskId": new SimpleChange('123', '456', true) });
             component.taskPeople = [];
             component.taskDetails = new TaskRepresentation(taskDetailsMock);
 
@@ -374,18 +374,18 @@ describe('TaskDetailsComponent', () => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(
                 of([
                     {
-                        id: 1,
-                        firstName: 'fake-test-1',
-                        lastName: 'fake-last-1',
-                        email: 'fake-test-1@test.com',
-                        avatarId: '1'
+                        "id": 1,
+                        "firstName": 'fake-test-1',
+                        "lastName": 'fake-last-1',
+                        "email": 'fake-test-1@test.com',
+                        "avatarId": '1'
                     },
                     {
-                        id: 2,
-                        firstName: 'fake-test-2',
-                        lastName: 'fake-last-2',
-                        email: 'fake-test-2@test.com',
-                        avatarId: '2'
+                        "id": 2,
+                        "firstName": 'fake-test-2',
+                        "lastName": 'fake-last-2',
+                        "email": 'fake-test-2@test.com',
+                        "avatarId": '2'
                     }
                 ])
             );

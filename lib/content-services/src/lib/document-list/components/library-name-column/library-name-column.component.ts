@@ -26,10 +26,10 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-library-name-column',
-    standalone: true,
-    imports: [CommonModule, TranslateModule],
-    template: `
+    "selector": 'adf-library-name-column',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule],
+    "template": `
         <span
             role="link"
             [attr.aria-label]="
@@ -48,10 +48,10 @@ import { TranslateModule } from '@ngx-translate/core';
             {{ displayText$ | async }}
         </span>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: {
-        class: 'adf-datatable-content-cell adf-datatable-link adf-library-name-column'
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None,
+    "host": {
+        "class": 'adf-datatable-content-cell adf-datatable-link adf-library-name-column'
     }
 })
 export class LibraryNameColumnComponent implements OnInit, OnDestroy {
@@ -64,9 +64,9 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
+    constructor (private element: ElementRef, private nodesApiService: NodesApiService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.updateValue();
 
         this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
@@ -82,7 +82,7 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected updateValue() {
+    protected updateValue () {
         this.node = this.context.row.node;
         const rows: Array<ShareDataRow> = this.context.data.rows || [];
         if (this.node?.entry) {
@@ -91,24 +91,24 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
         }
     }
 
-    onClick() {
+    onClick () {
         this.element.nativeElement.dispatchEvent(
             new CustomEvent('name-click', {
-                bubbles: true,
-                detail: {
-                    node: this.node
+                "bubbles": true,
+                "detail": {
+                    "node": this.node
                 }
             })
         );
     }
 
-    makeLibraryTooltip(library: any): string {
+    makeLibraryTooltip (library: any): string {
         const { description, title } = library;
 
         return description || title || '';
     }
 
-    makeLibraryTitle(library: Site, rows: Array<ShareDataRow>): string {
+    makeLibraryTitle (library: Site, rows: Array<ShareDataRow>): string {
         const entries = rows.map((row: ShareDataRow) => row.node.entry);
         const { title, id } = library;
 
@@ -121,7 +121,7 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
         return isDuplicate ? `${title} (${id})` : `${title}`;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

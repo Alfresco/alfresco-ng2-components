@@ -30,12 +30,12 @@ describe('ProcessNameCloudPipe', () => {
     const nameWithProcessDefinitionIdentifier = `${defaultName} - ${processDefinitionIdentifier}`;
     const nameWithDatetimeIdentifier = `${defaultName} - ${datetimeIdentifier}`;
     const nameWithAllIdentifiers = `${defaultName} ${processDefinitionIdentifier} - ${datetimeIdentifier}`;
-    const fakeProcessInstanceDetails: ProcessInstanceCloud = { processDefinitionName: 'my-process-definition' };
+    const fakeProcessInstanceDetails: ProcessInstanceCloud = { "processDefinitionName": 'my-process-definition' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [LocalizedDatePipe]
+            "imports": [CoreTestingModule],
+            "providers": [LocalizedDatePipe]
         });
         const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNameCloudPipe(localizedDatePipe);

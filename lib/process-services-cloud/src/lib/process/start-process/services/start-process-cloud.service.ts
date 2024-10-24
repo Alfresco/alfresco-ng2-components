@@ -29,17 +29,16 @@ export interface QueryParams {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class StartProcessCloudService extends BaseCloudService {
     /**
      * Gets the process definitions associated with an app.
-     *
      * @param appName Name of the target app
      * @param queryParams optional query parameters
      * @returns Array of process definitions
      */
-    getProcessDefinitions(appName: string, queryParams?: QueryParams): Observable<ProcessDefinitionCloud[]> {
+    getProcessDefinitions (appName: string, queryParams?: QueryParams): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
@@ -53,19 +52,18 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Starts a process based on a process definition, name, form values or variables.
-     *
      * @param appName name of the Application
      * @param payload Details of the process (definition key, name, variables, etc)
      * @returns Details of the process instance just started
      */
-    startProcess(appName: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
+    startProcess (appName: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances`;
         payload.payloadType = 'StartProcessPayload';
 
         return this.post(url, payload).pipe(map((result: any) => result.entry));
     }
 
-    startProcessWithForm(appName: string, formId: string, version: number, payload: any): Observable<ProcessInstanceCloud> {
+    startProcessWithForm (appName: string, formId: string, version: number, payload: any): Observable<ProcessInstanceCloud> {
         const url = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
         payload.payloadType = 'StartProcessPayload';
 
@@ -74,13 +72,12 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Update an existing process instance
-     *
      * @param appName name of the Application
      * @param processInstanceId process instance to update
      * @param payload Details of the process (definition key, name, variables, etc)
      * @returns Details of the process instance just started
      */
-    updateProcess(appName: string, processInstanceId: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
+    updateProcess (appName: string, processInstanceId: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
         payload.payloadType = 'UpdateProcessPayload';
 
@@ -89,12 +86,11 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Delete an existing process instance
-     *
      * @param appName Application name
      * @param processInstanceId the identifier of the process instance to update
      * @returns Observable<void>
      */
-    deleteProcess(appName: string, processInstanceId: string): Observable<void> {
+    deleteProcess (appName: string, processInstanceId: string): Observable<void> {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
 
         return this.delete(url);
@@ -102,18 +98,17 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Gets the static values mapped to the start form of a process definition.
-     *
      * @param appName Name of the app
      * @param processDefinitionId ID of the target process definition
      * @returns Static mappings for the start event
      */
-    getStartEventFormStaticValuesMapping(appName: string, processDefinitionId: string): Observable<TaskVariableCloud[]> {
+    getStartEventFormStaticValuesMapping (appName: string, processDefinitionId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = `${this.getBasePath(appName)}/rb/v1/process-definitions/${processDefinitionId}/static-values`;
         return this.get(apiUrl).pipe(
             map((res: { [key: string]: any }) => {
                 const result = [];
                 if (res) {
-                    Object.keys(res).forEach((mapping) => result.push(new TaskVariableCloud({ name: mapping, value: res[mapping] })));
+                    Object.keys(res).forEach((mapping) => result.push(new TaskVariableCloud({ "name": mapping, "value": res[mapping] })));
                 }
                 return result;
             })
@@ -122,19 +117,18 @@ export class StartProcessCloudService extends BaseCloudService {
 
     /**
      * Gets the constants mapped to the start form of a process definition.
-     *
      * @param appName Name of the app
      * @param processDefinitionId ID of the target process definition
      * @returns Constants values for the start event
      */
-    getStartEventConstants(appName: string, processDefinitionId: string): Observable<TaskVariableCloud[]> {
+    getStartEventConstants (appName: string, processDefinitionId: string): Observable<TaskVariableCloud[]> {
         const apiUrl = `${this.getBasePath(appName)}/rb/v1/process-definitions/${processDefinitionId}/constant-values`;
         return this.get(apiUrl).pipe(
             map((res: { [key: string]: any }) => {
                 const result = [];
                 if (res) {
                     Object.keys(res).forEach((constant) =>
-                        result.push(new TaskVariableCloud({ name: constant, value: res[constant], type: 'string' }))
+                        result.push(new TaskVariableCloud({ "name": constant, "value": res[constant], "type": 'string' }))
                     );
                 }
                 return result;

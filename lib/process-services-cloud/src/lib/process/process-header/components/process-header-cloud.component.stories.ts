@@ -24,60 +24,60 @@ import { ProcessCloudService } from '../../services/process-cloud.service';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: ProcessHeaderCloudComponent,
-    title: 'Process Services Cloud/Process Cloud/Process Header Cloud/Process Header Cloud',
-    decorators: [
+    "component": ProcessHeaderCloudComponent,
+    "title": 'Process Services Cloud/Process Cloud/Process Header Cloud/Process Header Cloud',
+    "decorators": [
         moduleMetadata({
-            imports: [ProcessHeaderCloudModule]
+            "imports": [ProcessHeaderCloudModule]
         }),
         applicationConfig({
-            providers: [{ provide: ProcessCloudService, useClass: ProcessCloudServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
+            "providers": [{ "provide": ProcessCloudService, "useClass": ProcessCloudServiceMock }, importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
-    argTypes: {
-        appName: {
-            control: 'text',
-            description: '(Required) The name of the application.',
-            defaultValue: '',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: '' }
+    "argTypes": {
+        "appName": {
+            "control": 'text',
+            "description": '(Required) The name of the application.',
+            "defaultValue": '',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": '' }
             }
         },
-        processInstanceId: {
-            control: 'text',
-            description: '(Required) The id of the process instance.',
-            table: {
-                type: { summary: 'string' }
+        "processInstanceId": {
+            "control": 'text',
+            "description": '(Required) The id of the process instance.',
+            "table": {
+                "type": { "summary": 'string' }
             }
         }
     }
 } as Meta<ProcessHeaderCloudComponent>;
 
 const template: StoryFn<ProcessHeaderCloudComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const DefaultProcessHeaderCloud = template.bind({});
 DefaultProcessHeaderCloud.args = {
-    appName: 'app',
-    processInstanceId: 'mock-process-id'
+    "appName": 'app',
+    "processInstanceId": 'mock-process-id'
 };
 
 export const NoParentAndBusinessAndName = template.bind({});
 NoParentAndBusinessAndName.args = {
-    appName: 'app-placeholders',
-    processInstanceId: 'mock-process-id'
+    "appName": 'app-placeholders',
+    "processInstanceId": 'mock-process-id'
 };
 
 export const InvalidOrMissingAppName = template.bind({});
 InvalidOrMissingAppName.args = {
-    appName: undefined,
-    processInstanceId: 'mock-process-id'
+    "appName": undefined,
+    "processInstanceId": 'mock-process-id'
 };
 
 export const InvalidOrMissingProcessInstanceID = template.bind({});
 InvalidOrMissingProcessInstanceID.args = {
-    appName: 'app',
-    processInstanceId: undefined
+    "appName": 'app',
+    "processInstanceId": undefined
 };

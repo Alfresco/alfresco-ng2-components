@@ -24,7 +24,7 @@ export const TOOLBAR_DIRECTIVES = [ToolbarComponent, ToolbarTitleComponent, Tool
 
 /** @deprecated use `...TOOLBAR_DIRECTIVES` or import standalone components */
 @NgModule({
-    imports: [...TOOLBAR_DIRECTIVES],
-    exports: [...TOOLBAR_DIRECTIVES]
+    "imports": [...TOOLBAR_DIRECTIVES],
+    "exports": [...TOOLBAR_DIRECTIVES]
 })
 export class ToolbarModule {}

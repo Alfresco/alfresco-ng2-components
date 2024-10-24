@@ -30,7 +30,7 @@ class FakePaginationInput implements PaginationModel {
     skipCount = 0;
     maxItems = 25;
 
-    constructor(pagesCount: number, currentPage: number, lastPageItems: number) {
+    constructor (pagesCount: number, currentPage: number, lastPageItems: number) {
         this.totalItems = (pagesCount - 1) * this.maxItems + lastPageItems;
         this.skipCount = (currentPage - 1) * this.maxItems;
     }
@@ -42,7 +42,7 @@ describe('PaginationComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, NoopTranslateModule, PaginationComponent]
+            "imports": [NoopAnimationsModule, NoopTranslateModule, PaginationComponent]
         });
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
@@ -248,7 +248,7 @@ describe('PaginationComponent', () => {
             const pagination: PaginationModel = {};
 
             const customComponent = {
-                pagination: new BehaviorSubject<PaginationModel>({})
+                "pagination": new BehaviorSubject<PaginationModel>({})
             } as PaginatedComponent;
 
             component.target = customComponent;
@@ -263,7 +263,7 @@ describe('PaginationComponent', () => {
             const pagination2: PaginationModel = {};
 
             const customComponent = {
-                pagination: new BehaviorSubject<PaginationModel>({})
+                "pagination": new BehaviorSubject<PaginationModel>({})
             } as PaginatedComponent;
 
             component.target = customComponent;
@@ -278,10 +278,10 @@ describe('PaginationComponent', () => {
 
         it('should send pagination event to paginated component', () => {
             const customComponent = {
-                pagination: new BehaviorSubject<PaginationModel>({}),
-                updatePagination: () => {},
-                supportedPageSizes: [],
-                rows: []
+                "pagination": new BehaviorSubject<PaginationModel>({}),
+                "updatePagination": () => {},
+                "supportedPageSizes": [],
+                "rows": []
             } as PaginatedComponent;
             spyOn(customComponent, 'updatePagination').and.stub();
 
@@ -298,26 +298,26 @@ describe('PaginationComponent', () => {
 
         it('should go to previous page if current page has 0 items', () => {
             const customComponent = {
-                updatePagination: () => {},
-                pagination: new BehaviorSubject<PaginationModel>({}),
-                rows: []
+                "updatePagination": () => {},
+                "pagination": new BehaviorSubject<PaginationModel>({}),
+                "rows": []
             } as PaginatedComponent;
 
             component.target = customComponent;
             component.ngOnInit();
 
             customComponent.pagination.next({
-                count: 2,
-                skipCount: 5,
-                maxItems: 5
+                "count": 2,
+                "skipCount": 5,
+                "maxItems": 5
             });
 
             expect(component.current).toBe(2);
 
             customComponent.pagination.next({
-                count: 0,
-                totalItems: 5,
-                maxItems: 5
+                "count": 0,
+                "totalItems": 5,
+                "maxItems": 5
             });
 
             expect(component.current).toBe(1);
@@ -326,7 +326,7 @@ describe('PaginationComponent', () => {
         it('should not show pagination when external component count is zero', () => {
             const pagination: PaginationModel = {};
             const customComponent = {
-                pagination: new BehaviorSubject<PaginationModel>({ count: 0, maxItems: 5, totalItems: 5 })
+                "pagination": new BehaviorSubject<PaginationModel>({ "count": 0, "maxItems": 5, "totalItems": 5 })
             } as PaginatedComponent;
             component.target = customComponent;
             component.ngOnInit();

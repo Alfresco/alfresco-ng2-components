@@ -29,10 +29,10 @@ import { ViewerExtensionDirective } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
-    selector: 'adf-double-viewer',
-    standalone: true,
-    imports: [ViewerExtensionDirective, ViewerRenderComponent],
-    template: `
+    "selector": 'adf-double-viewer',
+    "standalone": true,
+    "imports": [ViewerExtensionDirective, ViewerRenderComponent],
+    "template": `
         <adf-viewer-render [urlFile]="urlFileViewer1" [viewerTemplateExtensions]="viewerTemplateExtensions" #viewer1></adf-viewer-render>
         <adf-viewer-render [urlFile]="urlFileViewer2" #viewer2></adf-viewer-render>
         <ng-template #viewerExtension>
@@ -56,7 +56,7 @@ class DoubleViewerComponent {
     @ViewChild('viewer2')
     viewer2: ViewerRenderComponent;
 
-    @ViewChild('viewerExtension', { static: true })
+    @ViewChild('viewerExtension', { "static": true })
     viewerTemplateExtensions: TemplateRef<any>;
 
     urlFileViewer1: string;
@@ -72,8 +72,8 @@ describe('ViewerComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, MatDialogModule, ViewerRenderComponent, DoubleViewerComponent],
-            providers: [RenderingQueueServices, { provide: Location, useClass: SpyLocation }, MatDialog]
+            "imports": [NoopTranslateModule, NoopAnimationsModule, MatDialogModule, ViewerRenderComponent, DoubleViewerComponent],
+            "providers": [RenderingQueueServices, { "provide": Location, "useClass": SpyLocation }, MatDialog]
         });
         fixture = TestBed.createComponent(ViewerRenderComponent);
         element = fixture.nativeElement;
@@ -122,9 +122,9 @@ describe('ViewerComponent', () => {
     describe('Extension Type Test', () => {
         it('should display pdf external viewer via wildcard notation', async () => {
             const extension: ViewerExtensionRef = {
-                component: 'custom.component',
-                id: 'custom.component.id',
-                fileExtension: '*'
+                "component": 'custom.component',
+                "id": 'custom.component.id',
+                "fileExtension": '*'
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
@@ -147,14 +147,14 @@ describe('ViewerComponent', () => {
         it('should display pdf with the first external viewer provided', async () => {
             const extensions: ViewerExtensionRef[] = [
                 {
-                    component: 'custom.component.1',
-                    id: 'custom.component.id',
-                    fileExtension: '*'
+                    "component": 'custom.component.1',
+                    "id": 'custom.component.id',
+                    "fileExtension": '*'
                 },
                 {
-                    component: 'custom.component.2',
-                    id: 'custom.component.id',
-                    fileExtension: '*'
+                    "component": 'custom.component.2',
+                    "id": 'custom.component.id',
+                    "fileExtension": '*'
                 }
             ];
             spyOn(extensionService, 'getViewerExtensions').and.returnValue(extensions);
@@ -175,9 +175,9 @@ describe('ViewerComponent', () => {
 
         it('should display url with the external viewer provided', async () => {
             const extension: ViewerExtensionRef = {
-                component: 'custom.component',
-                id: 'custom.component.id',
-                fileExtension: '*'
+                "component": 'custom.component',
+                "id": 'custom.component.id',
+                "fileExtension": '*'
             };
             spyOn(extensionService, 'getViewerExtensions').and.returnValue([extension]);
 
@@ -468,7 +468,7 @@ describe('ViewerComponent', () => {
         describe('display name property override by blobFile', () => {
             it('should fileName override the name if is present and blobFile is set', () => {
                 component.fileName = 'blob file display name';
-                component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
+                component.blobFile = new Blob(['This is my blob content'], { "type": 'text/plain' });
                 fixture.detectChanges();
                 component.ngOnChanges();
 

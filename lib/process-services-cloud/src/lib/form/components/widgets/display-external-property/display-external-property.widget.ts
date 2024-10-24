@@ -25,12 +25,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, TranslateModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule],
-    selector: 'adf-cloud-display-external-property',
-    templateUrl: './display-external-property.widget.html',
-    styleUrls: ['./display-external-property.widget.scss'],
-    host: {
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, FormBaseModule],
+    "selector": 'adf-cloud-display-external-property',
+    "templateUrl": './display-external-property.widget.html',
+    "styleUrls": ['./display-external-property.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -41,49 +41,49 @@ import { MatInputModule } from '@angular/material/input';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush
 })
 export class DisplayExternalPropertyWidgetComponent extends WidgetComponent implements OnInit {
     propertyLoadFailed = false;
     previewState = false;
     propertyControl: FormControl;
 
-    constructor(public readonly formService: FormService, private readonly formCloudService: FormCloudService) {
+    constructor (public readonly formService: FormService, private readonly formCloudService: FormCloudService) {
         super(formService);
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.initFormControl();
         this.initPreviewState();
         this.handleFailedPropertyLoad();
     }
 
-    private initFormControl(): void {
+    private initFormControl (): void {
         this.propertyControl = new FormControl(
             {
-                value: this.field?.value,
-                disabled: this.field?.readOnly || this.readOnly
+                "value": this.field?.value,
+                "disabled": this.field?.readOnly || this.readOnly
             },
             this.isRequired() ? [Validators.required] : []
         );
     }
 
-    private isPropertyLoadFailed(): boolean {
+    private isPropertyLoadFailed (): boolean {
         return this.field.externalProperty && !this.field.value;
     }
 
-    private handleFailedPropertyLoad(): void {
+    private handleFailedPropertyLoad (): void {
         if (this.isPropertyLoadFailed()) {
             this.handleError('External property not found');
         }
     }
 
-    private initPreviewState(): void {
+    private initPreviewState (): void {
         this.previewState = this.formCloudService.getPreviewState();
     }
 
-    private handleError(error: any): void {
+    private handleError (error: any): void {
         if (!this.previewState) {
             this.propertyLoadFailed = true;
             this.widgetError.emit(error);

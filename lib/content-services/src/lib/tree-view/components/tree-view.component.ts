@@ -28,11 +28,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-tree-view-list',
-    standalone: true,
-    imports: [CommonModule, MatTreeModule, MatButtonModule, MatIconModule, TranslateModule],
-    templateUrl: './tree-view.component.html',
-    styleUrls: ['./tree-view.component.scss']
+    "selector": 'adf-tree-view-list',
+    "standalone": true,
+    "imports": [CommonModule, MatTreeModule, MatButtonModule, MatIconModule, TranslateModule],
+    "templateUrl": './tree-view.component.html',
+    "styleUrls": ['./tree-view.component.scss']
 })
 export class TreeViewComponent implements OnChanges {
     /** Identifier of the node to display. */
@@ -50,12 +50,12 @@ export class TreeViewComponent implements OnChanges {
     treeControl: FlatTreeControl<TreeBaseNode>;
     dataSource: TreeViewDataSource;
 
-    constructor(private treeViewService: TreeViewService) {
+    constructor (private treeViewService: TreeViewService) {
         this.treeControl = new FlatTreeControl<TreeBaseNode>(this.getLevel, this.isExpandable);
         this.dataSource = new TreeViewDataSource(this.treeControl, this.treeViewService);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['nodeId']?.currentValue && changes['nodeId'].currentValue !== changes['nodeId'].previousValue) {
             this.loadTreeNode();
         } else {
@@ -63,7 +63,7 @@ export class TreeViewComponent implements OnChanges {
         }
     }
 
-    onNodeClicked(node: NodeEntry) {
+    onNodeClicked (node: NodeEntry) {
         this.nodeClicked.emit(node);
     }
 
@@ -73,7 +73,7 @@ export class TreeViewComponent implements OnChanges {
 
     hasChild = (_: number, nodeData: TreeBaseNode) => nodeData.expandable;
 
-    private loadTreeNode() {
+    private loadTreeNode () {
         this.treeViewService.getTreeNodes(this.nodeId).subscribe(
             (treeNode: TreeBaseNode[]) => {
                 this.dataSource.data = treeNode;

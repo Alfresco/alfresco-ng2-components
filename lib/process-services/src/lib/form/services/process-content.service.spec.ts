@@ -24,31 +24,31 @@ import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-conten
 declare let jasmine: any;
 
 const fileContentPdfResponseBody = {
-    id: 999,
-    name: 'fake-name.pdf',
-    created: '2017-01-23T12:12:53.219+0000',
-    createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', email: 'fake-admin' },
-    relatedContent: false,
-    contentAvailable: true,
-    link: false,
-    mimeType: 'application/pdf',
-    simpleType: 'pdf',
-    previewStatus: 'created',
-    thumbnailStatus: 'created'
+    "id": 999,
+    "name": 'fake-name.pdf',
+    "created": '2017-01-23T12:12:53.219+0000',
+    "createdBy": { "id": 2, "firstName": 'fake-admin', "lastName": 'fake-last', "email": 'fake-admin' },
+    "relatedContent": false,
+    "contentAvailable": true,
+    "link": false,
+    "mimeType": 'application/pdf',
+    "simpleType": 'pdf',
+    "previewStatus": 'created',
+    "thumbnailStatus": 'created'
 };
 
 const fileContentJpgResponseBody = {
-    id: 888,
-    name: 'fake-name.jpg',
-    created: '2017-01-23T12:12:53.219+0000',
-    createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', email: 'fake-admin' },
-    relatedContent: false,
-    contentAvailable: true,
-    link: false,
-    mimeType: 'image/jpeg',
-    simpleType: 'image',
-    previewStatus: 'unsupported',
-    thumbnailStatus: 'unsupported'
+    "id": 888,
+    "name": 'fake-name.jpg',
+    "created": '2017-01-23T12:12:53.219+0000',
+    "createdBy": { "id": 2, "firstName": 'fake-admin', "lastName": 'fake-last', "email": 'fake-admin' },
+    "relatedContent": false,
+    "contentAvailable": true,
+    "link": false,
+    "mimeType": 'image/jpeg',
+    "simpleType": 'image',
+    "previewStatus": 'unsupported',
+    "thumbnailStatus": 'unsupported'
 };
 
 const createFakeBlob = () => {
@@ -59,7 +59,7 @@ const createFakeBlob = () => {
     for (let i = 0; i < data.length; i += 2) {
         bytes[i / 2] = parseInt(data.substring(i, i + 2), /* base = */ 16);
     }
-    return new Blob([bytes], { type: 'image/png' });
+    return new Blob([bytes], { "type": 'image/png' });
 };
 
 describe('ProcessContentService', () => {
@@ -67,8 +67,8 @@ describe('ProcessContentService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            "imports": [CoreTestingModule],
+            "providers": [{ "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(ProcessContentService);
     });
@@ -95,38 +95,38 @@ describe('ProcessContentService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({
-                size: 2,
-                total: 2,
-                start: 0,
-                data: [
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({
+                "size": 2,
+                "total": 2,
+                "start": 0,
+                "data": [
                     {
-                        id: 8,
-                        name: 'fake.zip',
-                        created: 1494595697381,
-                        createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
-                        relatedContent: true,
-                        contentAvailable: true,
-                        link: false,
-                        mimeType: 'application/zip',
-                        simpleType: 'content',
-                        previewStatus: 'unsupported',
-                        thumbnailStatus: 'unsupported'
+                        "id": 8,
+                        "name": 'fake.zip',
+                        "created": 1494595697381,
+                        "createdBy": { "id": 2, "firstName": 'user', "lastName": 'user', "email": 'user@user.com' },
+                        "relatedContent": true,
+                        "contentAvailable": true,
+                        "link": false,
+                        "mimeType": 'application/zip',
+                        "simpleType": 'content',
+                        "previewStatus": 'unsupported',
+                        "thumbnailStatus": 'unsupported'
                     },
                     {
-                        id: 9,
-                        name: 'fake.jpg',
-                        created: 1494595655381,
-                        createdBy: { id: 2, firstName: 'user', lastName: 'user', email: 'user@user.com' },
-                        relatedContent: true,
-                        contentAvailable: true,
-                        link: false,
-                        mimeType: 'image/jpeg',
-                        simpleType: 'image',
-                        previewStatus: 'unsupported',
-                        thumbnailStatus: 'unsupported'
+                        "id": 9,
+                        "name": 'fake.jpg',
+                        "created": 1494595655381,
+                        "createdBy": { "id": 2, "firstName": 'user', "lastName": 'user', "email": 'user@user.com' },
+                        "relatedContent": true,
+                        "contentAvailable": true,
+                        "link": false,
+                        "mimeType": 'image/jpeg',
+                        "simpleType": 'image',
+                        "previewStatus": 'unsupported',
+                        "thumbnailStatus": 'unsupported'
                     }
                 ]
             })
@@ -145,9 +145,9 @@ describe('ProcessContentService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fileContentJpgResponseBody)
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify(fileContentJpgResponseBody)
         });
     });
 
@@ -163,9 +163,9 @@ describe('ProcessContentService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fileContentPdfResponseBody)
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify(fileContentPdfResponseBody)
         });
     });
 

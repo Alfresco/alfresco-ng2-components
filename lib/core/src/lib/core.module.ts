@@ -58,7 +58,7 @@ import { UnsavedChangesDialogComponent } from './dialogs';
 import { MaterialModule } from './material.module';
 
 @NgModule({
-    imports: [
+    "imports": [
         TranslateModule,
         ...ABOUT_DIRECTIVES,
         ...VIEWER_DIRECTIVES,
@@ -89,13 +89,13 @@ import { MaterialModule } from './material.module';
         DynamicChipListComponent,
         HttpClientModule,
         HttpClientXsrfModule.withOptions({
-            cookieName: 'CSRF-TOKEN',
-            headerName: 'X-CSRF-TOKEN'
+            "cookieName": 'CSRF-TOKEN',
+            "headerName": 'X-CSRF-TOKEN'
         }),
         MaterialModule
     ],
-    providers: [...CORE_PIPES],
-    exports: [
+    "providers": [...CORE_PIPES],
+    "exports": [
         ...ABOUT_DIRECTIVES,
         ...VIEWER_DIRECTIVES,
         ...LAYOUT_DIRECTIVES,
@@ -128,27 +128,27 @@ import { MaterialModule } from './material.module';
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders<CoreModule> {
+    static forRoot (): ModuleWithProviders<CoreModule> {
         return {
-            ngModule: CoreModule,
-            providers: [
+            "ngModule": CoreModule,
+            "providers": [
                 TranslateStore,
                 TranslateService,
-                { provide: TranslateLoader, useClass: TranslateLoaderService },
+                { "provide": TranslateLoader, "useClass": TranslateLoaderService },
                 MomentDateAdapter,
                 StoragePrefixFactory,
                 {
-                    provide: APP_INITIALIZER,
-                    useFactory: loadAppConfig,
-                    deps: [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
-                    multi: true
+                    "provide": APP_INITIALIZER,
+                    "useFactory": loadAppConfig,
+                    "deps": [AppConfigService, StorageService, AdfHttpClient, StoragePrefixFactory],
+                    "multi": true
                 },
-                { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-                { provide: Authentication, useClass: AuthenticationService },
+                { "provide": HTTP_INTERCEPTORS, "useClass": AuthenticationInterceptor, "multi": true },
+                { "provide": Authentication, "useClass": AuthenticationService },
                 {
-                    provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-                    useValue: {
-                        duration: 10000
+                    "provide": MAT_SNACK_BAR_DEFAULT_OPTIONS,
+                    "useValue": {
+                        "duration": 10000
                     }
                 }
             ]
@@ -159,13 +159,13 @@ export class CoreModule {
      * @deprecated this api is deprecated, import `CoreModule` instead
      * @returns ModuleWithProviders<CoreModule>
      */
-    static forChild(): ModuleWithProviders<CoreModule> {
+    static forChild (): ModuleWithProviders<CoreModule> {
         return {
-            ngModule: CoreModule
+            "ngModule": CoreModule
         };
     }
 
-    constructor(translation: TranslationService) {
+    constructor (translation: TranslationService) {
         translation.addTranslationFolder('adf-core', 'assets/adf-core');
     }
 }

@@ -23,12 +23,12 @@ import { Subject } from 'rxjs';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 
 @Directive({
-    selector: '[adf-pop-over]',
-    standalone: true,
-    exportAs: 'adfPopOver'
+    "selector": '[adf-pop-over]',
+    "standalone": true,
+    "exportAs": 'adfPopOver'
 })
 export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
-    get open(): boolean {
+    get open (): boolean {
         return this._open;
     }
 
@@ -43,46 +43,46 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
 
     private focusTrap: ConfigurableFocusTrap;
 
-    constructor(
+    constructor (
         private element: ElementRef,
         private overlay: Overlay,
         private vcr: ViewContainerRef,
         private focusTrapFactory: ConfigurableFocusTrapFactory
     ) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.createOverlay();
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit (): void {
         this.element.nativeElement.addEventListener('click', () => this.toggleOverlay());
         this.element.nativeElement.addEventListener('keydown', this.preventDefaultForEnter);
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.element.nativeElement.removeEventListener('keydown', this.preventDefaultForEnter);
         this.detachOverlay();
         this.destroy$.next(undefined);
         this.destroy$.complete();
     }
 
-    private createOverlay(): void {
+    private createOverlay (): void {
         const scrollStrategy = this.overlay.scrollStrategies.reposition();
         const positionStrategy = this.overlay
             .position()
             .flexibleConnectedTo(this.target)
             .withPositions([
-                new ConnectionPositionPair({ originX: 'start', originY: 'bottom' }, { overlayX: 'start', overlayY: 'top' }),
-                new ConnectionPositionPair({ originX: 'start', originY: 'top' }, { overlayX: 'start', overlayY: 'bottom' })
+                new ConnectionPositionPair({ "originX": 'start', "originY": 'bottom' }, { "overlayX": 'start', "overlayY": 'top' }),
+                new ConnectionPositionPair({ "originX": 'start', "originY": 'top' }, { "overlayX": 'start', "overlayY": 'bottom' })
             ])
             .withPush(false);
 
         this.overlayRef = this.overlay.create({
             positionStrategy,
             scrollStrategy,
-            hasBackdrop: true,
-            backdropClass: 'cdk-overlay-transparent-backdrop',
-            panelClass: this.panelClass
+            "hasBackdrop": true,
+            "backdropClass": 'cdk-overlay-transparent-backdrop',
+            "panelClass": this.panelClass
         });
 
         this.overlayRef
@@ -94,7 +94,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     }
 
     @HostListener('keyup.enter')
-    private toggleOverlay(): void {
+    private toggleOverlay (): void {
         if (!this.overlayRef.hasAttached()) {
             this.attachOverlay();
         } else {
@@ -102,7 +102,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
         }
     }
 
-    private attachOverlay(): void {
+    private attachOverlay (): void {
         if (!this.overlayRef.hasAttached()) {
             const periodSelectorPortal = new TemplatePortal(this.popOver, this.vcr);
 
@@ -119,7 +119,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     }
 
     @HostListener('document:keyup.esc')
-    private detachOverlay(): void {
+    private detachOverlay (): void {
         if (this.overlayRef.hasAttached()) {
             this.overlayRef.detach();
             this._open = false;
@@ -131,7 +131,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
         }
     }
 
-    private preventDefaultForEnter(event: KeyboardEvent): void {
+    private preventDefaultForEnter (event: KeyboardEvent): void {
         if (event.key === 'Enter') {
             event.preventDefault();
         }

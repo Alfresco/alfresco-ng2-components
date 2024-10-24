@@ -28,8 +28,6 @@ export abstract class AuthService {
    * An observable that emits a value when a logout event occurs.
    * Implement this observable to handle any necessary cleanup or state updates
    * when a user logs out of the application.
-   *
-   * @type {Observable<void>}
    */
   abstract onLogout$: Observable<void>;
 
@@ -38,8 +36,6 @@ export abstract class AuthService {
   /**
    * An abstract observable that emits a boolean value indicating whether the discovery document
    * has been successfully loaded.
-   *
-   * @type {Observable<boolean>}
    */
   abstract isDiscoveryDocumentLoaded$: Observable<boolean>;
 
@@ -61,7 +57,6 @@ export abstract class AuthService {
 
   /**
    * Disconnect from IdP.
-   *
    * @returns Promise may be returned depending on implementation
    */
   abstract logout(): Promise<void> | void;
@@ -70,7 +65,6 @@ export abstract class AuthService {
    * Complete the login flow.
    *
    * In browsers, checks URL for auth and stored state. Call this once the application returns from IdP.
-   *
    * @returns Promise, resolve with stored state, reject if unable to reach IdP
    */
   abstract loginCallback(loginOptions?: LoginOptions): Promise<string | undefined>;

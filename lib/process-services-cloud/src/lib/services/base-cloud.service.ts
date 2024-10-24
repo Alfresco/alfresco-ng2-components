@@ -28,67 +28,67 @@ export class BaseCloudService {
     protected appConfigService = inject(AppConfigService);
 
     protected defaultParams: RequestOptions = {
-        path: '',
-        httpMethod: '',
-        contentTypes: ['application/json'],
-        accepts: ['application/json']
+        "path": '',
+        "httpMethod": '',
+        "contentTypes": ['application/json'],
+        "accepts": ['application/json']
     };
 
-    constructor(protected adfHttpClient: AdfHttpClient) {}
+    constructor (protected adfHttpClient: AdfHttpClient) {}
 
-    getBasePath(appName: string): string {
+    getBasePath (appName: string): string {
         return appName ? `${this.contextRoot}/${appName}` : this.contextRoot;
     }
 
-    protected post<T, R>(url: string, data?: T, queryParams?: any): Observable<R> {
+    protected post<T, R> (url: string, data?: T, queryParams?: any): Observable<R> {
         return from(
             this.callApi<R>(url, {
                 ...this.defaultParams,
-                path: url,
-                httpMethod: 'POST',
-                bodyParam: data,
+                "path": url,
+                "httpMethod": 'POST',
+                "bodyParam": data,
                 queryParams
             })
         );
     }
 
-    protected put<T, R>(url: string, data?: T): Observable<R> {
+    protected put<T, R> (url: string, data?: T): Observable<R> {
         return from(
             this.callApi<R>(url, {
                 ...this.defaultParams,
-                path: url,
-                httpMethod: 'PUT',
-                bodyParam: data
+                "path": url,
+                "httpMethod": 'PUT',
+                "bodyParam": data
             })
         );
     }
 
-    protected delete(url: string): Observable<void> {
+    protected delete (url: string): Observable<void> {
         return from(
             this.callApi<void>(url, {
                 ...this.defaultParams,
-                path: url,
-                httpMethod: 'DELETE'
+                "path": url,
+                "httpMethod": 'DELETE'
             })
         );
     }
 
-    protected get<T>(url: string, queryParams?: any): Observable<T> {
+    protected get<T> (url: string, queryParams?: any): Observable<T> {
         return from(
             this.callApi<T>(url, {
                 ...this.defaultParams,
-                path: url,
-                httpMethod: 'GET',
+                "path": url,
+                "httpMethod": 'GET',
                 queryParams
             })
         );
     }
 
-    protected callApi<T>(url: string, params: RequestOptions): Promise<T> {
+    protected callApi<T> (url: string, params: RequestOptions): Promise<T> {
         return this.adfHttpClient.request(url, params);
     }
 
-    protected get contextRoot() {
+    protected get contextRoot () {
         return this.appConfigService.get('bpmHost', '');
     }
 }

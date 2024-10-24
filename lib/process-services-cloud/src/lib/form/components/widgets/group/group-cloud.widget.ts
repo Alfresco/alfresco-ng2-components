@@ -26,9 +26,9 @@ import { IdentityGroupModel } from '../../../../group/models/identity-group.mode
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
-    selector: 'group-cloud-widget',
-    templateUrl: './group-cloud.widget.html',
-    host: {
+    "selector": 'group-cloud-widget',
+    "templateUrl": './group-cloud.widget.html',
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -39,7 +39,7 @@ import { IdentityGroupModel } from '../../../../group/models/identity-group.mode
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
@@ -53,11 +53,11 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     search: UntypedFormControl;
     validate = false;
 
-    constructor(formService: FormService) {
+    constructor (formService: FormService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field) {
             this.roles = this.field.roles;
             this.mode = this.field.optionType as ComponentSelectionMode;
@@ -66,7 +66,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             this.validate = this.field.readOnly ? false : true;
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        this.search =  new UntypedFormControl({value: '', disabled: this.field.readOnly}, []),
+        this.search =  new UntypedFormControl({"value": '', "disabled": this.field.readOnly}, []),
 
         this.search.statusChanges
             .pipe(
@@ -89,17 +89,17 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
             });
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    onChangedGroup(groups: IdentityGroupModel[]): void {
+    onChangedGroup (groups: IdentityGroupModel[]): void {
         this.field.value = groups?.length ? [...groups] : null;
         this.onFieldChanged(this.field);
     }
 
-    isMultipleMode(): boolean {
+    isMultipleMode (): boolean {
         return this.mode === 'multiple';
     }
 }

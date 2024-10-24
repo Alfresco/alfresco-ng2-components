@@ -24,25 +24,25 @@ import { ProcessListDatatableAdapter } from './process-list-datatable-adapter';
 describe('ProcessListDatatableAdapter', () => {
     it('should get proepr type for column', () => {
         const viewModel: ProcessInstanceCloudListViewModel = {
-            id: '1',
-            variablesMap: {
-                columnId1: getProcessInstanceVariableMock({ type: 'number' })
+            "id": '1',
+            "variablesMap": {
+                "columnId1": getProcessInstanceVariableMock({ "type": 'number' })
             }
         };
 
         const row: DataRow = {
-            getValue: () => {},
-            hasValue: () => true,
-            isSelected: false,
-            obj: viewModel
+            "getValue": () => {},
+            "hasValue": () => true,
+            "isSelected": false,
+            "obj": viewModel
         };
 
         const column: DataColumn<ProcessListDataColumnCustomData> = getDataColumnMock({
-            id: 'columnId1',
-            customData: {
-                assignedVariableDefinitionIds: ['1'],
-                variableDefinitionsPayload: ['processKey/variableName'],
-                columnType: PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
+            "id": 'columnId1',
+            "customData": {
+                "assignedVariableDefinitionIds": ['1'],
+                "variableDefinitionsPayload": ['processKey/variableName'],
+                "columnType": PROCESS_LIST_CUSTOM_VARIABLE_COLUMN
             }
         });
 

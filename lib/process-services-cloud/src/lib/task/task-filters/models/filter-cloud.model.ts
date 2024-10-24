@@ -75,7 +75,7 @@ export class TaskFilterCloudModel {
     private _createdTo: string;
     private dateRangeFilterService = new DateRangeFilterService();
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         if (obj) {
             this.id = obj.id || Math.random().toString(36).substr(2, 9);
             this.name = obj.name || null;
@@ -125,81 +125,81 @@ export class TaskFilterCloudModel {
         }
     }
 
-    set dueDateFrom(dueDateFrom: string) {
+    set dueDateFrom (dueDateFrom: string) {
         this._dueDateFrom = dueDateFrom;
     }
 
-    get dueDateFrom() {
+    get dueDateFrom () {
         if (this.isDateRangeType(this.dueDateType)) {
             return this._dueDateFrom;
         }
         return this.getStartDate(this.dueDateType);
     }
 
-    set dueDateTo(dueDateTo: string) {
+    set dueDateTo (dueDateTo: string) {
         this._dueDateTo = dueDateTo;
     }
 
-    get dueDateTo() {
+    get dueDateTo () {
         if (this.isDateRangeType(this.dueDateType)) {
             return this._dueDateTo;
         }
         return this.getEndDate(this.dueDateType);
     }
 
-    set completedFrom(completedFrom: string) {
+    set completedFrom (completedFrom: string) {
         this._completedFrom = completedFrom;
     }
 
-    get completedFrom(): string {
+    get completedFrom (): string {
         if (this.isDateRangeType(this.completedDateType)) {
             return this._completedFrom;
         }
         return this.getStartDate(this.completedDateType);
     }
 
-    set completedTo(completedTo: string) {
+    set completedTo (completedTo: string) {
         this._completedTo = completedTo;
     }
 
-    get completedTo(): string {
+    get completedTo (): string {
         if (this.isDateRangeType(this.completedDateType)) {
             return this._completedTo;
         }
         return this.getEndDate(this.completedDateType);
     }
 
-    set createdFrom(createdFrom: string) {
+    set createdFrom (createdFrom: string) {
         this._createdFrom = createdFrom;
     }
 
-    get createdFrom() {
+    get createdFrom () {
         if (this.isDateRangeType(this.createdDateType)) {
             return this._createdFrom;
         }
         return this.getStartDate(this.createdDateType);
     }
 
-    set createdTo(createdTo: string) {
+    set createdTo (createdTo: string) {
         this._createdTo = createdTo;
     }
 
-    get createdTo() {
+    get createdTo () {
         if (this.isDateRangeType(this.createdDateType)) {
             return this._createdTo;
         }
         return this.getEndDate(this.createdDateType);
     }
 
-    private getStartDate(key: DateCloudFilterType) {
+    private getStartDate (key: DateCloudFilterType) {
         return this.dateRangeFilterService.getDateRange(key).startDate;
     }
 
-    private getEndDate(key: DateCloudFilterType) {
+    private getEndDate (key: DateCloudFilterType) {
         return this.dateRangeFilterService.getDateRange(key).endDate;
     }
 
-    private isDateRangeType(type: DateCloudFilterType) {
+    private isDateRangeType (type: DateCloudFilterType) {
         return !!this.dateRangeFilterService.isDateRangeType(type);
     }
 }

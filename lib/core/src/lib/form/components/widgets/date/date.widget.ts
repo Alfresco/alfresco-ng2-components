@@ -35,14 +35,14 @@ import { ErrorMessageModel } from '../core/error-message.model';
 import { parseISO } from 'date-fns';
 
 @Component({
-    selector: 'date-widget',
-    standalone: true,
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter }
+    "selector": 'date-widget',
+    "standalone": true,
+    "providers": [
+        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
+        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter }
     ],
-    templateUrl: './date.widget.html',
-    host: {
+    "templateUrl": './date.widget.html',
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -53,8 +53,8 @@ import { parseISO } from 'date-fns';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [MatFormFieldModule, TranslateModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent, NgIf],
-    encapsulation: ViewEncapsulation.None
+    "imports": [MatFormFieldModule, TranslateModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent, NgIf],
+    "encapsulation": ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     minDate: Date;
@@ -68,7 +68,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
     public readonly formService = inject(FormService);
     private readonly dateAdapter = inject(DateAdapter);
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.patchFormControl();
         this.initDateAdapter();
         this.initDateRange();
@@ -77,28 +77,28 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         this.updateField();
     }
 
-    updateField(): void {
+    updateField (): void {
         this.validateField();
         this.onFieldChanged(this.field);
     }
-    private patchFormControl(): void {
-        this.dateInputControl.setValue(this.field.value, { emitEvent: false });
+    private patchFormControl (): void {
+        this.dateInputControl.setValue(this.field.value, { "emitEvent": false });
         this.dateInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
         if (this.field?.readOnly || this.readOnly) {
-            this.dateInputControl.disable({ emitEvent: false });
+            this.dateInputControl.disable({ "emitEvent": false });
         }
 
-        this.dateInputControl.updateValueAndValidity({ emitEvent: false });
+        this.dateInputControl.updateValueAndValidity({ "emitEvent": false });
     }
 
-    private subscribeToDateChanges(): void {
+    private subscribeToDateChanges (): void {
         this.dateInputControl.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((newDate: Date) => {
             this.field.value = newDate;
             this.updateField();
         });
     }
 
-    private validateField(): void {
+    private validateField (): void {
         if (this.dateInputControl.invalid) {
             this.handleErrors(this.dateInputControl.errors);
             this.field.markAsInvalid();
@@ -108,7 +108,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         }
     }
 
-    private handleErrors(errors: ValidationErrors): void {
+    private handleErrors (errors: ValidationErrors): void {
         const errorAttributes = new Map<string, string>();
         switch (true) {
             case !!errors.matDatepickerParse:
@@ -134,22 +134,22 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         }
     }
 
-    private updateValidationSummary(message: string, attributes?: Map<string, string>): void {
+    private updateValidationSummary (message: string, attributes?: Map<string, string>): void {
         this.field.validationSummary = new ErrorMessageModel({ message, attributes });
     }
 
-    private resetErrors(): void {
+    private resetErrors (): void {
         this.updateValidationSummary('');
     }
 
-    private initDateAdapter(): void {
+    private initDateAdapter (): void {
         if (this.field?.dateDisplayFormat) {
             const adapter = this.dateAdapter as AdfDateFnsAdapter;
             adapter.displayFormat = this.field.dateDisplayFormat;
         }
     }
 
-    private initDateRange(): void {
+    private initDateRange (): void {
         if (this.field?.minValue) {
             this.minDate = parseISO(this.field.minValue);
         }
@@ -159,13 +159,13 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, OnDe
         }
     }
 
-    private initStartAt(): void {
+    private initStartAt (): void {
         if (this.field?.value) {
             this.startAt = this.dateAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
         }
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

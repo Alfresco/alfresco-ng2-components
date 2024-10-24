@@ -32,15 +32,15 @@ describe('AppListCloudComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
 
     const mock: any = {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve(fakeApplicationInstance)
+        "oauth2Auth": {
+            "callCustomApi": () => Promise.resolve(fakeApplicationInstance)
         },
-        isEcmLoggedIn: () => false,
-        reply: jasmine.createSpy('reply')
+        "isEcmLoggedIn": () => false,
+        "reply": jasmine.createSpy('reply')
     };
 
     @Component({
-        template: `
+        "template": `
             <adf-cloud-app-list>
                 <adf-custom-empty-content-template>
                     <mat-icon>apps</mat-icon>
@@ -53,8 +53,8 @@ describe('AppListCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [CustomEmptyAppListCloudTemplateComponent]
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [CustomEmptyAppListCloudTemplateComponent]
         });
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;

@@ -21,7 +21,7 @@ import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adf-cloud-claim-task]'
+    "selector": '[adf-cloud-claim-task]'
 })
 export class ClaimTaskCloudDirective implements OnInit {
 
@@ -43,17 +43,17 @@ export class ClaimTaskCloudDirective implements OnInit {
 
     invalidParams: string[] = [];
 
-    constructor(
+    constructor (
         private readonly el: ElementRef,
         private readonly renderer: Renderer2,
         private taskListService: TaskCloudService,
         private identityUserService: IdentityUserService) { }
 
-    ngOnInit() {
+    ngOnInit () {
         this.validateInputs();
     }
 
-    validateInputs() {
+    validateInputs () {
 
         if (!this.isTaskValid()) {
             this.invalidParams.push('taskId');
@@ -66,16 +66,16 @@ export class ClaimTaskCloudDirective implements OnInit {
         }
     }
 
-    isTaskValid(): boolean {
+    isTaskValid (): boolean {
         return this.taskId && this.taskId.length > 0;
     }
 
-    isAppValid(): boolean {
+    isAppValid (): boolean {
         return !!this.appName || this.appName === '';
     }
 
     @HostListener('click')
-    async onClick() {
+    async onClick () {
         try {
             await this.claimTask();
         } catch (error) {
@@ -84,7 +84,7 @@ export class ClaimTaskCloudDirective implements OnInit {
 
     }
 
-    private async claimTask() {
+    private async claimTask () {
         const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
         try {
             this.renderer.setAttribute(this.el.nativeElement, 'disabled', 'true');

@@ -23,7 +23,7 @@ export const CONTEXT_MENU_DIRECTIVES = [ContextMenuListComponent, ContextMenuDir
 
 /** @deprecated use `...CONTEXT_MENU_DIRECTIVES` or import standalone directives */
 @NgModule({
-    imports: [...CONTEXT_MENU_DIRECTIVES],
-    exports: [...CONTEXT_MENU_DIRECTIVES]
+    "imports": [...CONTEXT_MENU_DIRECTIVES],
+    "exports": [...CONTEXT_MENU_DIRECTIVES]
 })
 export class ContextMenuModule {}

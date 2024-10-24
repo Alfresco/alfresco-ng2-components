@@ -30,12 +30,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-    selector: 'typeahead-widget',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatFormFieldModule, FormsModule, MatAutocompleteModule, ErrorWidgetComponent, MatInputModule],
-    templateUrl: './typeahead.widget.html',
-    styleUrls: ['./typeahead.widget.scss'],
-    host: {
+    "selector": 'typeahead-widget',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatFormFieldModule, FormsModule, MatAutocompleteModule, ErrorWidgetComponent, MatInputModule],
+    "templateUrl": './typeahead.widget.html',
+    "styleUrls": ['./typeahead.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -46,7 +46,7 @@ import { MatInputModule } from '@angular/material/input';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {
     minTermLength: number = 1;
@@ -54,7 +54,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     oldValue: string;
     options: FormFieldOption[] = [];
 
-    constructor(
+    constructor (
         public formService: FormService,
         private taskFormService: TaskFormService,
         private processDefinitionService: ProcessDefinitionService
@@ -62,7 +62,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field.form.taskId && this.field.restUrl) {
             this.getValuesByTaskId();
         } else if (this.field.form.processDefinitionId && this.field.restUrl) {
@@ -73,7 +73,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         }
     }
 
-    getValuesByTaskId() {
+    getValuesByTaskId () {
         this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe((formFieldOption) => {
             const options = formFieldOption || [];
             this.field.options = options;
@@ -90,7 +90,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         });
     }
 
-    getValuesByProcessDefinitionId() {
+    getValuesByProcessDefinitionId () {
         this.processDefinitionService
             .getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id)
             .subscribe((formFieldOption) => {
@@ -109,7 +109,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
             });
     }
 
-    getOptions(): FormFieldOption[] {
+    getOptions (): FormFieldOption[] {
         const val = this.value.trim().toLocaleLowerCase();
         return this.field.options.filter((item) => {
             const name = item.name.toLocaleLowerCase();
@@ -117,12 +117,12 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         });
     }
 
-    isValidOptionName(optionName: string): boolean {
+    isValidOptionName (optionName: string): boolean {
         const option = this.field.options.find((item) => item.name && item.name.toLocaleLowerCase() === optionName.toLocaleLowerCase());
         return !!option;
     }
 
-    onKeyUp(event: KeyboardEvent) {
+    onKeyUp (event: KeyboardEvent) {
         if (this.value && this.value.trim().length >= this.minTermLength && this.oldValue !== this.value) {
             if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
                 if (this.value.length >= this.minTermLength) {
@@ -140,7 +140,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         }
     }
 
-    onItemSelect(item: FormFieldOption) {
+    onItemSelect (item: FormFieldOption) {
         if (item) {
             this.field.value = item.id;
             this.value = item.name;
@@ -148,15 +148,15 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         }
     }
 
-    validate() {
+    validate () {
         this.field.value = this.value;
     }
 
-    isValueDefined() {
+    isValueDefined () {
         return this.value !== null && this.value !== undefined;
     }
 
-    isReadOnlyType(): boolean {
+    isReadOnlyType (): boolean {
         return this.field.type === 'readonly';
     }
 }

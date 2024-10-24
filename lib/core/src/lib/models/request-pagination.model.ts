@@ -16,14 +16,13 @@
  */
 
 export class RequestPaginationModel {
-
     skipCount?: number;
 
     maxItems?: number;
 
     merge?: boolean = false;
 
-    constructor(input?: any) {
+    constructor (input?: any) {
         if (input) {
             Object.assign(this, input);
         }

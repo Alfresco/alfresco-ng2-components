@@ -30,8 +30,8 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
-    selector: 'adf-cloud-overlay-test',
-    template: `<div>adf-cloud-overlay-test</div>`
+    "selector": 'adf-cloud-overlay-test',
+    "template": `<div>adf-cloud-overlay-test</div>`
 })
 class SpinnerTestComponent {}
 
@@ -41,24 +41,24 @@ describe('FormCloudSpinnerService', () => {
     let spinnerService: FormCloudSpinnerService;
     let formService: FormService;
 
-    const showSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { showSpinner: true, message: 'LOAD_SPINNER_MESSAGE' });
-    const hideSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { showSpinner: false });
+    const showSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { "showSpinner": true, "message": 'LOAD_SPINNER_MESSAGE' });
+    const hideSpinnerEvent = new FormSpinnerEvent('toggle-spinner', { "showSpinner": false });
 
     const onDestroy$ = new Subject<boolean>();
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [FormSpinnerComponent, SpinnerTestComponent],
-            providers: [
+            "declarations": [FormSpinnerComponent, SpinnerTestComponent],
+            "providers": [
                 FormCloudSpinnerService,
                 {
-                    provide: FormService,
-                    useValue: {
-                        toggleFormSpinner: new Subject()
+                    "provide": FormService,
+                    "useValue": {
+                        "toggleFormSpinner": new Subject()
                     }
                 }
             ],
-            imports: [OverlayModule, PortalModule, MatProgressSpinnerModule, TranslateModule.forRoot()]
+            "imports": [OverlayModule, PortalModule, MatProgressSpinnerModule, TranslateModule.forRoot()]
         });
 
         fixture = TestBed.createComponent(SpinnerTestComponent);

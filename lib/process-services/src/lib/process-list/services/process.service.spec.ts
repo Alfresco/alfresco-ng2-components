@@ -23,31 +23,31 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { ProcessInstanceQueryRepresentation, ProcessDefinitionRepresentation, RestVariable, TaskRepresentation } from '@alfresco/js-api';
 
 const fakeTasksList = {
-    data: [
+    "data": [
         new TaskRepresentation({
-            id: '1',
-            name: 'Task 1',
-            processInstanceId: '1000',
-            created: new Date('2016-11-10T03:37:30.010+0000')
+            "id": '1',
+            "name": 'Task 1',
+            "processInstanceId": '1000',
+            "created": new Date('2016-11-10T03:37:30.010+0000')
         }),
         new TaskRepresentation({
-            id: '2',
-            name: 'Task 2',
-            processInstanceId: '1000',
-            created: new Date('2016-11-10T03:37:30.010+0000')
+            "id": '2',
+            "name": 'Task 2',
+            "processInstanceId": '1000',
+            "created": new Date('2016-11-10T03:37:30.010+0000')
         })
     ]
 };
 
 const fakeProcessDef: ProcessDefinitionRepresentation = {
-    id: '32323',
-    key: 'blah',
-    name: 'Process 1'
+    "id": '32323',
+    "key": 'blah',
+    "name": 'Process 1'
 };
 
 const mockError = {
-    message: null,
-    messageKey: 'GENERAL.ERROR.FORBIDDEN'
+    "message": null,
+    "messageKey": 'GENERAL.ERROR.FORBIDDEN'
 };
 
 describe('ProcessService', () => {
@@ -55,22 +55,22 @@ describe('ProcessService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot(), ProcessTestingModule]
+            "imports": [CoreModule.forRoot(), ProcessTestingModule]
         });
         service = TestBed.inject(ProcessService);
     });
 
     describe('process instances', () => {
         const filter: ProcessInstanceQueryRepresentation = {
-            processDefinitionId: '1',
-            appDefinitionId: 1,
-            page: 1,
-            sort: 'created-asc',
-            state: 'completed'
+            "processDefinitionId": '1',
+            "appDefinitionId": 1,
+            "page": 1,
+            "sort": 'created-asc',
+            "state": 'completed'
         };
 
         beforeEach(() => {
-            spyOn(service.processInstancesApi, 'getProcessInstances').and.returnValue(Promise.resolve({ data: [exampleProcess] }));
+            spyOn(service.processInstancesApi, 'getProcessInstances').and.returnValue(Promise.resolve({ "data": [exampleProcess] }));
         });
 
         it('should return the correct number of instances', (done) => {
@@ -120,21 +120,21 @@ describe('ProcessService', () => {
         it('should call the API to create the process instance', () => {
             service.startProcess(processDefId, processName);
             expect(startNewProcessInstance).toHaveBeenCalledWith({
-                name: processName,
-                processDefinitionId: processDefId
+                "name": processName,
+                "processDefinitionId": processDefId
             });
         });
 
         it('should call the API to create the process instance with form parameters', () => {
             const formParams = {
-                type: 'ford',
-                color: 'red'
+                "type": 'ford',
+                "color": 'red'
             };
             service.startProcess(processDefId, processName, null, formParams);
             expect(startNewProcessInstance).toHaveBeenCalledWith({
-                name: processName,
-                processDefinitionId: processDefId,
-                values: formParams
+                "name": processName,
+                "processDefinitionId": processDefId,
+                "values": formParams
             });
         });
 
@@ -218,7 +218,7 @@ describe('ProcessService', () => {
 
         beforeEach(() => {
             getProcessDefinitions = spyOn(service.processDefinitionsApi, 'getProcessDefinitions').and.returnValue(
-                Promise.resolve({ data: [fakeProcessDef, fakeProcessDef] })
+                Promise.resolve({ "data": [fakeProcessDef, fakeProcessDef] })
             );
         });
 
@@ -242,8 +242,8 @@ describe('ProcessService', () => {
             const appId = 1;
             service.getProcessDefinitions(appId);
             expect(getProcessDefinitions).toHaveBeenCalledWith({
-                latest: true,
-                appDefinitionId: appId
+                "latest": true,
+                "appDefinitionId": appId
             });
         });
 
@@ -304,15 +304,15 @@ describe('ProcessService', () => {
         it('should call service with processInstanceId parameter', () => {
             service.getProcessTasks(processId);
             expect(listTasks).toHaveBeenCalledWith({
-                processInstanceId: processId
+                "processInstanceId": processId
             });
         });
 
         it('should call service with processInstanceId and state parameters', () => {
             service.getProcessTasks(processId, 'completed');
             expect(listTasks).toHaveBeenCalledWith({
-                processInstanceId: processId,
-                state: 'completed'
+                "processInstanceId": processId,
+                "state": 'completed'
             });
         });
 
@@ -348,12 +348,12 @@ describe('ProcessService', () => {
             getVariablesSpy = spyOn(service.processInstanceVariablesApi, 'getProcessInstanceVariables').and.returnValue(
                 Promise.resolve([
                     {
-                        name: 'var1',
-                        value: 'Test1'
+                        "name": 'var1',
+                        "value": 'Test1'
                     },
                     {
-                        name: 'var3',
-                        value: 'Test3'
+                        "name": 'var3',
+                        "value": 'Test3'
                     }
                 ])
             );
@@ -400,12 +400,12 @@ describe('ProcessService', () => {
         describe('create or update variables', () => {
             const updatedVariables: RestVariable[] = [
                 {
-                    name: 'var1',
-                    value: 'Test1'
+                    "name": 'var1',
+                    "value": 'Test1'
                 },
                 {
-                    name: 'var3',
-                    value: 'Test3'
+                    "name": 'var3',
+                    "value": 'Test3'
                 }
             ];
 

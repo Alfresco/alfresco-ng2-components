@@ -26,10 +26,10 @@ declare let jasmine: any;
 
 describe('TaskAuditDirective', () => {
     @Component({
-        selector: 'adf-basic-button',
-        standalone: true,
-        imports: [TaskAuditDirective],
-        template: ` <button
+        "selector": 'adf-basic-button',
+        "standalone": true,
+        "imports": [TaskAuditDirective],
+        "template": ` <button
             id="auditButton"
             adf-task-audit
             [task-id]="currentTaskId"
@@ -46,7 +46,7 @@ describe('TaskAuditDirective', () => {
         fileName: string;
         format: string;
 
-        onAuditClick() {}
+        onAuditClick () {}
     }
 
     let fixture: ComponentFixture<BasicButtonComponent>;
@@ -69,12 +69,12 @@ describe('TaskAuditDirective', () => {
                 'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
                 'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G'
         );
-        return new Blob([pdfData], { type: 'application/pdf' });
+        return new Blob([pdfData], { "type": 'application/pdf' });
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, BasicButtonComponent]
+            "imports": [ProcessTestingModule, BasicButtonComponent]
         });
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
@@ -100,7 +100,7 @@ describe('TaskAuditDirective', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(component.onAuditClick).toHaveBeenCalledWith({ format: 'pdf', value: blob, fileName: 'FakeAuditName' });
+            expect(component.onAuditClick).toHaveBeenCalledWith({ "format": 'pdf', "value": blob, "fileName": 'FakeAuditName' });
         });
 
         button.click();
@@ -112,12 +112,12 @@ describe('TaskAuditDirective', () => {
         component.download = true;
 
         const auditJson = {
-            taskId: '77',
-            taskName: 'Fake Task Name',
-            assignee: 'FirstName LastName',
-            formData: [],
-            selectedOutcome: null,
-            comments: []
+            "taskId": '77',
+            "taskName": 'Fake Task Name',
+            "assignee": 'FirstName LastName',
+            "formData": [],
+            "selectedOutcome": null,
+            "comments": []
         };
         spyOn(service, 'fetchTaskAuditJsonById').and.returnValue(of(auditJson));
         spyOn(component, 'onAuditClick').and.callThrough();
@@ -128,7 +128,7 @@ describe('TaskAuditDirective', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(component.onAuditClick).toHaveBeenCalledWith({ format: 'json', value: auditJson, fileName: 'FakeAuditName' });
+            expect(component.onAuditClick).toHaveBeenCalledWith({ "format": 'json', "value": auditJson, "fileName": 'FakeAuditName' });
         });
 
         button.click();
@@ -147,7 +147,7 @@ describe('TaskAuditDirective', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(component.onAuditClick).toHaveBeenCalledWith({ format: 'pdf', value: blob, fileName: 'FakeAuditName' });
+            expect(component.onAuditClick).toHaveBeenCalledWith({ "format": 'pdf', "value": blob, "fileName": 'FakeAuditName' });
         });
 
         button.click();

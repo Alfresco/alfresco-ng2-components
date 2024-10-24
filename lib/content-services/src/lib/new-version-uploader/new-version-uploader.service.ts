@@ -26,29 +26,28 @@ import { Observable } from 'rxjs';
 import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class NewVersionUploaderService {
     private _versionsApi: VersionsApi;
-    get versionsApi(): VersionsApi {
+    get versionsApi (): VersionsApi {
         this._versionsApi = this._versionsApi ?? new VersionsApi(this.apiService.getInstance());
         return this._versionsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private dialog: MatDialog, private overlayContainer: OverlayContainer) {}
+    constructor (private apiService: AlfrescoApiService, private dialog: MatDialog, private overlayContainer: OverlayContainer) {}
 
     /**
      * Open a dialog NewVersionUploaderDialogComponent to display:
      * - a side by side comparison between the current target node (type, name, icon) and the new file that should update it's version
      * - the new version's minor/major changes and the optional comment of a node and the ability to upload a new file version
      * - if data.showVersionsOnly is set to true, displays the version history of a node, with the ability to restore, delete and view version of the current node
-     *
      * @param data data to pass to MatDialog
      * @param config allow to override default MatDialogConfig
      * @param selectorAutoFocusedOnClose element's selector which should be autofocused after closing modal
      * @returns an Observable represents the triggered dialog action or an error in case of an error condition
      */
-    openUploadNewVersionDialog(
+    openUploadNewVersionDialog (
         data: NewVersionUploaderDialogData,
         config?: MatDialogConfig,
         selectorAutoFocusedOnClose?: string
@@ -62,19 +61,19 @@ export class NewVersionUploaderService {
                 const dialogRef = this.dialog.open<NewVersionUploaderDialogComponent, NewVersionUploaderDialogData>(
                     NewVersionUploaderDialogComponent,
                     {
-                        data: {
+                        "data": {
                             file,
                             node,
-                            currentVersion: versionPaging.list.entries[0].entry,
+                            "currentVersion": versionPaging.list.entries[0].entry,
                             showComments,
                             allowDownload,
                             showVersionsOnly,
-                            allowViewVersions: data.allowViewVersions ?? true,
-                            allowVersionDelete: data.allowVersionDelete ?? true,
-                            showActions: data.showActions ?? true
+                            "allowViewVersions": data.allowViewVersions ?? true,
+                            "allowVersionDelete": data.allowVersionDelete ?? true,
+                            "showActions": data.showActions ?? true
                         },
-                        panelClass: this.composePanelClass(showVersionsOnly),
-                        width: '630px',
+                        "panelClass": this.composePanelClass(showVersionsOnly),
+                        "width": '630px',
                         ...(config && Object.keys(config).length > 0 && config)
                     }
                 );
@@ -93,12 +92,12 @@ export class NewVersionUploaderService {
         });
     }
 
-    private composePanelClass(showVersionsOnly: boolean): string | string[] {
+    private composePanelClass (showVersionsOnly: boolean): string | string[] {
         const dialogCssClass = 'adf-new-version-uploader-dialog';
         return [dialogCssClass, `${dialogCssClass}-${showVersionsOnly ? 'list' : 'upload'}`];
     }
 
-    private static focusOnClose(selectorAutoFocusedOnClose: string): void {
+    private static focusOnClose (selectorAutoFocusedOnClose: string): void {
         if (selectorAutoFocusedOnClose) {
             document.querySelector<HTMLElement>(selectorAutoFocusedOnClose)?.focus();
         }

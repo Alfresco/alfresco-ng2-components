@@ -22,13 +22,13 @@ import { BaseQueryBuilderService } from './base-query-builder.service';
 import { ADF_SEARCH_CONFIGURATION } from '../search-configuration.token';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class SearchQueryBuilderService extends BaseQueryBuilderService {
-    public isFilterServiceActive(): boolean {
+    public isFilterServiceActive (): boolean {
         return false;
     }
 
-    constructor(
+    constructor (
         appConfig: AppConfigService,
         alfrescoApiService: AlfrescoApiService,
         @Optional() @Inject(ADF_SEARCH_CONFIGURATION) private configuration?: SearchConfiguration
@@ -36,7 +36,7 @@ export class SearchQueryBuilderService extends BaseQueryBuilderService {
         super(appConfig, alfrescoApiService);
     }
 
-    public loadConfiguration(): SearchConfiguration {
+    public loadConfiguration (): SearchConfiguration {
         return this.configuration || this.appConfig.get<SearchConfiguration>('search');
     }
 }

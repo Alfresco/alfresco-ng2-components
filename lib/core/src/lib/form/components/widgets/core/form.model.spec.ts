@@ -33,17 +33,15 @@ describe('FormModel', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreTestingModule
-            ]
+            "imports": [CoreTestingModule]
         });
         formService = new FormService();
     });
 
     it('should store original json', () => {
         const json = {
-            id: '<id>',
-            name: '<name>'
+            "id": '<id>',
+            "name": '<name>'
         };
         const form = new FormModel(json);
         expect(form.json).toBe(json);
@@ -51,10 +49,10 @@ describe('FormModel', () => {
 
     it('should setup properties with json', () => {
         const json = {
-            id: '<id>',
-            name: '<name>',
-            taskId: '<task-id>',
-            taskName: '<task-name>'
+            "id": '<id>',
+            "name": '<name>',
+            "taskId": '<task-id>',
+            "taskName": '<task-name>'
         };
         const form = new FormModel(json);
 
@@ -65,8 +63,8 @@ describe('FormModel', () => {
 
     it('should take form name when task name is missing', () => {
         const json = {
-            id: '<id>',
-            name: '<name>'
+            "id": '<id>',
+            "name": '<name>'
         };
         const form = new FormModel(json);
         expect(form.taskName).toBe(json.name);
@@ -84,7 +82,7 @@ describe('FormModel', () => {
 
     it('should set form values when variable value is 0', () => {
         const variables = {
-            pfx_property_one: 0
+            "pfx_property_one": 0
         };
         const form = new FormModel(fakeMetadataForm, variables, true);
         expect(form.getFormFields()[0].fields[1][0].value).toEqual(0);
@@ -132,10 +130,7 @@ describe('FormModel', () => {
 
     it('should parse tabs', () => {
         const json = {
-            tabs: [
-                { id: 'tab1' },
-                { id: 'tab2' }
-            ]
+            "tabs": [{ "id": 'tab1' }, { "id": 'tab2' }]
         };
 
         const form = new FormModel(json);
@@ -146,14 +141,14 @@ describe('FormModel', () => {
 
     it('should parse fields', () => {
         const json = {
-            fields: [
+            "fields": [
                 {
-                    id: 'field1',
-                    type: FormFieldTypes.CONTAINER
+                    "id": 'field1',
+                    "type": FormFieldTypes.CONTAINER
                 },
                 {
-                    id: 'field2',
-                    type: FormFieldTypes.CONTAINER
+                    "id": 'field2',
+                    "type": FormFieldTypes.CONTAINER
                 }
             ]
         };
@@ -166,16 +161,16 @@ describe('FormModel', () => {
 
     it('should parse fields from the definition', () => {
         const json = {
-            fields: null,
-            formDefinition: {
-                fields: [
+            "fields": null,
+            "formDefinition": {
+                "fields": [
                     {
-                        id: 'field1',
-                        type: FormFieldTypes.CONTAINER
+                        "id": 'field1',
+                        "type": FormFieldTypes.CONTAINER
                     },
                     {
-                        id: 'field2',
-                        type: FormFieldTypes.CONTAINER
+                        "id": 'field2',
+                        "type": FormFieldTypes.CONTAINER
                     }
                 ]
             }
@@ -189,7 +184,7 @@ describe('FormModel', () => {
 
     it('should convert missing fields to empty collection', () => {
         const json = {
-            fields: null
+            "fields": null
         };
 
         const form = new FormModel(json);
@@ -199,15 +194,12 @@ describe('FormModel', () => {
 
     it('should put fields into corresponding tabs', () => {
         const json = {
-            tabs: [
-                { id: 'tab1' },
-                { id: 'tab2' }
-            ],
-            fields: [
-                { id: 'field1', tab: 'tab1', type: FormFieldTypes.CONTAINER },
-                { id: 'field2', tab: 'tab2', type: FormFieldTypes.CONTAINER },
-                { id: 'field3', tab: 'tab1', type: FormFieldTypes.DYNAMIC_TABLE },
-                { id: 'field4', tab: 'missing-tab', type: FormFieldTypes.DYNAMIC_TABLE }
+            "tabs": [{ "id": 'tab1' }, { "id": 'tab2' }],
+            "fields": [
+                { "id": 'field1', "tab": 'tab1', "type": FormFieldTypes.CONTAINER },
+                { "id": 'field2', "tab": 'tab2', "type": FormFieldTypes.CONTAINER },
+                { "id": 'field3', "tab": 'tab1', "type": FormFieldTypes.DYNAMIC_TABLE },
+                { "id": 'field4', "tab": 'missing-tab', "type": FormFieldTypes.DYNAMIC_TABLE }
             ]
         };
 
@@ -227,9 +219,7 @@ describe('FormModel', () => {
 
     it('should create standard form outcomes', () => {
         const json = {
-            fields: [
-                { id: 'container1' }
-            ]
+            "fields": [{ "id": 'container1' }]
         };
 
         const form = new FormModel(json);
@@ -247,7 +237,7 @@ describe('FormModel', () => {
 
     it('should create outcomes only when fields available', () => {
         const json = {
-            fields: null
+            "fields": null
         };
         const form = new FormModel(json);
         expect(form.outcomes.length).toBe(0);
@@ -255,12 +245,8 @@ describe('FormModel', () => {
 
     it('should use custom form outcomes', () => {
         const json = {
-            fields: [
-                { id: 'container1' }
-            ],
-            outcomes: [
-                { id: 'custom-1', name: 'custom 1' }
-            ]
+            "fields": [{ "id": 'container1' }],
+            "outcomes": [{ "id": 'custom-1', "name": 'custom 1' }]
         };
 
         const form = new FormModel(json);
@@ -276,9 +262,7 @@ describe('FormModel', () => {
     it('should raise validation event when validating form', () => {
         const form = new FormModel({}, null, false, formService);
 
-        formService.validateForm.subscribe((validateFormEvent) =>
-            expect(validateFormEvent).toBeTruthy()
-        );
+        formService.validateForm.subscribe((validateFormEvent) => expect(validateFormEvent).toBeTruthy());
         form.validateForm();
     });
 
@@ -286,9 +270,7 @@ describe('FormModel', () => {
         const form = new FormModel({}, null, false, formService);
         const field = jasmine.createSpyObj('FormFieldModel', ['validate']);
 
-        formService.validateFormField.subscribe((validateFormFieldEvent) =>
-            expect(validateFormFieldEvent).toBeTruthy()
-        );
+        formService.validateFormField.subscribe((validateFormFieldEvent) => expect(validateFormFieldEvent).toBeTruthy());
         form.validateField(field);
     });
 
@@ -356,7 +338,7 @@ describe('FormModel', () => {
         });
 
         const field: any = {
-            validate: () => true
+            "validate": () => true
         };
         form.validateField(field);
 
@@ -393,14 +375,14 @@ describe('FormModel', () => {
     it('should use custom field validator', () => {
         const form = new FormModel({}, null, false, formService);
         const testField = new FormFieldModel(form, {
-            id: 'test-field-1'
+            "id": 'test-field-1'
         });
 
         form.fieldsCache = [testField];
 
         const validator = {
-            isSupported: (): boolean => true,
-            validate: (): boolean => true
+            "isSupported": (): boolean => true,
+            "validate": (): boolean => true
         } as FormFieldValidator;
 
         spyOn(validator, 'validate').and.callThrough();
@@ -414,8 +396,8 @@ describe('FormModel', () => {
     it('should re-validate the field when required attribute changes', () => {
         const form = new FormModel({}, null, false, formService);
         const testField = new FormFieldModel(form, {
-            id: 'test-field-1',
-            required: false
+            "id": 'test-field-1',
+            "required": false
         });
 
         spyOn(form, 'getFormFields').and.returnValue([testField]);
@@ -446,63 +428,63 @@ describe('FormModel', () => {
         beforeEach(() => {
             const variables = [
                 {
-                    id: 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
-                    name: 'name1',
-                    type: 'string',
-                    value: 'hello'
+                    "id": 'bfca9766-7bc1-45cc-8ecf-cdad551e36e2',
+                    "name": 'name1',
+                    "type": 'string',
+                    "value": 'hello'
                 },
                 {
-                    id: '3ed9f28a-dbae-463f-b991-47ef06658bb6',
-                    name: 'name2',
-                    type: 'date',
-                    value: '29.09.2019'
+                    "id": '3ed9f28a-dbae-463f-b991-47ef06658bb6',
+                    "name": 'name2',
+                    "type": 'date',
+                    "value": '29.09.2019'
                 },
                 {
-                    id: 'booleanVar',
-                    name: 'bool',
-                    type: 'boolean',
-                    value: 'true'
+                    "id": 'booleanVar',
+                    "name": 'bool',
+                    "type": 'boolean',
+                    "value": 'true'
                 }
             ];
 
             const processVariables = [
                 {
-                    serviceName: 'denys-variable-mapping-rb',
-                    serviceFullName: 'denys-variable-mapping-rb',
-                    serviceVersion: '',
-                    appName: 'denys-variable-mapping',
-                    appVersion: '',
-                    serviceType: null,
-                    id: 3,
-                    type: 'string',
-                    name: 'variables.name1',
-                    createTime: 1566989626284,
-                    lastUpdatedTime: 1566989626284,
-                    executionId: null,
-                    value: 'hello',
-                    markedAsDeleted: false,
-                    processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-                    taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-                    taskVariable: true
+                    "serviceName": 'denys-variable-mapping-rb',
+                    "serviceFullName": 'denys-variable-mapping-rb',
+                    "serviceVersion": '',
+                    "appName": 'denys-variable-mapping',
+                    "appVersion": '',
+                    "serviceType": null,
+                    "id": 3,
+                    "type": 'string',
+                    "name": 'variables.name1',
+                    "createTime": 1566989626284,
+                    "lastUpdatedTime": 1566989626284,
+                    "executionId": null,
+                    "value": 'hello',
+                    "markedAsDeleted": false,
+                    "processInstanceId": '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+                    "taskId": '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+                    "taskVariable": true
                 },
                 {
-                    serviceName: 'denys-variable-mapping-rb',
-                    serviceFullName: 'denys-variable-mapping-rb',
-                    serviceVersion: '',
-                    appName: 'denys-variable-mapping',
-                    appVersion: '',
-                    serviceType: null,
-                    id: 1,
-                    type: 'boolean',
-                    name: 'booleanVar',
-                    createTime: 1566989626283,
-                    lastUpdatedTime: 1566989626283,
-                    executionId: null,
-                    value: 'true',
-                    markedAsDeleted: false,
-                    processInstanceId: '1be4785f-c982-11e9-bdd8-96d6903e4e44',
-                    taskId: '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
-                    taskVariable: true
+                    "serviceName": 'denys-variable-mapping-rb',
+                    "serviceFullName": 'denys-variable-mapping-rb',
+                    "serviceVersion": '',
+                    "appName": 'denys-variable-mapping',
+                    "appVersion": '',
+                    "serviceType": null,
+                    "id": 1,
+                    "type": 'boolean',
+                    "name": 'booleanVar',
+                    "createTime": 1566989626283,
+                    "lastUpdatedTime": 1566989626283,
+                    "executionId": null,
+                    "value": 'true',
+                    "markedAsDeleted": false,
+                    "processInstanceId": '1be4785f-c982-11e9-bdd8-96d6903e4e44',
+                    "taskId": '1beab9f6-c982-11e9-bdd8-96d6903e4e44',
+                    "taskVariable": true
                 }
             ];
 
@@ -585,33 +567,32 @@ describe('FormModel', () => {
 
         it('should add values to form that are not already present', () => {
             const values = {
-                pfx_property_one: 'testValue',
-                pfx_property_two: true,
-                pfx_property_three: 'opt_1',
-                pfx_property_four: 'option_2',
-                pfx_property_five: 'orange',
-                pfx_property_six: 'other-value',
-                pfx_property_none: 'no_form_field'
+                "pfx_property_one": 'testValue',
+                "pfx_property_two": true,
+                "pfx_property_three": 'opt_1',
+                "pfx_property_four": 'option_2',
+                "pfx_property_five": 'orange',
+                "pfx_property_six": 'other-value',
+                "pfx_property_none": 'no_form_field'
             };
 
             form.addValuesNotPresent(values);
 
             expect(form.values['pfx_property_one']).toBe('testValue');
             expect(form.values['pfx_property_two']).toBe(true);
-            expect(form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1' });
-            expect(form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2' });
+            expect(form.values['pfx_property_three']).toEqual({ "id": 'opt_1', "name": 'Option 1' });
+            expect(form.values['pfx_property_four']).toEqual({ "id": 'option_2', "name": 'Option: 2' });
             expect(form.values['pfx_property_five']).toEqual('green');
             expect(form.values['pfx_property_six']).toEqual('text-value');
             expect(form.values['pfx_property_seven']).toBeNull();
             expect(form.values['pfx_property_eight']).toBeNull();
-
         });
     });
 
     it('should NOT override value by provided form values for constant value field type', () => {
         const mockFormValues = {
-            DisplayExternalProperty0ei65x: 'email',
-            DisplayExternalProperty02kj65: 'test'
+            "DisplayExternalProperty0ei65x": 'email',
+            "DisplayExternalProperty02kj65": 'test'
         };
 
         const formModel = new FormModel(mockDisplayExternalPropertyForm, mockFormValues);

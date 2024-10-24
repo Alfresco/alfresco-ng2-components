@@ -23,99 +23,99 @@ import { cardViewDataSource, cardViewUndefinedValues } from '../../mock/card-vie
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: CardViewComponent,
-    title: 'Core/Card View/Card View',
-    decorators: [
+    "component": CardViewComponent,
+    "title": 'Core/Card View/Card View',
+    "decorators": [
         moduleMetadata({
-            imports: [CoreStoryModule, ...CARD_VIEW_DIRECTIVES]
+            "imports": [CoreStoryModule, ...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    argTypes: {
-        editable: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+    "argTypes": {
+        "editable": {
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        displayEmpty: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "displayEmpty": {
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        displayNoneOption: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "displayNoneOption": {
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        displayClearAction: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "displayClearAction": {
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        copyToClipboardAction: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "copyToClipboardAction": {
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        useChipsForMultiValueProperty: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "useChipsForMultiValueProperty": {
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        multiValueSeparator: {
-            control: 'text',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: ', ' }
+        "multiValueSeparator": {
+            "control": 'text',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": ', ' }
             }
         },
-        displayLabelForChips: {
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
+        "displayLabelForChips": {
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'false' }
             }
         }
     },
-    args: {
-        editable: true,
-        displayEmpty: true,
-        displayNoneOption: true,
-        displayClearAction: true,
-        copyToClipboardAction: true,
-        useChipsForMultiValueProperty: true,
-        multiValueSeparator: ', ',
-        displayLabelForChips: false
+    "args": {
+        "editable": true,
+        "displayEmpty": true,
+        "displayNoneOption": true,
+        "displayClearAction": true,
+        "copyToClipboardAction": true,
+        "useChipsForMultiValueProperty": true,
+        "multiValueSeparator": ', ',
+        "displayLabelForChips": false
     }
 } as Meta<CardViewComponent>;
 
 const template: StoryFn<CardViewComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const DefaultCardView = template.bind({});
 DefaultCardView.args = {
-    properties: cardViewDataSource
+    "properties": cardViewDataSource
 };
-DefaultCardView.parameters = { layout: 'centered' };
+DefaultCardView.parameters = { "layout": 'centered' };
 
 export const EmptyCardView = template.bind({});
 EmptyCardView.args = {
-    properties: cardViewUndefinedValues,
-    editable: false
+    "properties": cardViewUndefinedValues,
+    "editable": false
 };
-EmptyCardView.parameters = { layout: 'centered' };
+EmptyCardView.parameters = { "layout": 'centered' };

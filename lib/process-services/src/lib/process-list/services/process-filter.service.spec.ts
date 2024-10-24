@@ -25,24 +25,24 @@ import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-conten
 declare let jasmine: any;
 
 const fakeProcessFiltersResponse: any = {
-    size: 1,
-    total: 1,
-    start: 0,
-    data: [
+    "size": 1,
+    "total": 1,
+    "start": 0,
+    "data": [
         {
-            name: 'Running',
-            appId: '22',
-            id: 333,
-            recent: true,
-            icon: 'glyphicon-random',
-            filter: { sort: 'created-desc', name: '', state: 'running' }
+            "name": 'Running',
+            "appId": '22',
+            "id": 333,
+            "recent": true,
+            "icon": 'glyphicon-random',
+            "filter": { "sort": 'created-desc', "name": '', "state": 'running' }
         }
     ]
 };
 
 const mockError = {
-    message: null,
-    messageKey: 'GENERAL.ERROR.FORBIDDEN'
+    "message": null,
+    "messageKey": 'GENERAL.ERROR.FORBIDDEN'
 };
 
 describe('Process filter', () => {
@@ -50,8 +50,8 @@ describe('Process filter', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            "imports": [CoreTestingModule],
+            "providers": [{ "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(ProcessFilterService);
     });
@@ -78,7 +78,7 @@ describe('Process filter', () => {
 
             it('should call the API with the correct appId when specified', () => {
                 service.getProcessFilters(226);
-                expect(getFilters).toHaveBeenCalledWith({ appId: 226 });
+                expect(getFilters).toHaveBeenCalledWith({ "appId": 226 });
             });
 
             it('should return the task filter by id', (done) => {
@@ -117,38 +117,38 @@ describe('Process filter', () => {
                 });
 
                 jasmine.Ajax.requests.at(0).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 111,
-                        name: 'Running',
-                        icon: 'fake-icon',
-                        recent: false
+                    "status": 200,
+                    "contentType": 'application/json',
+                    "responseText": JSON.stringify({
+                        "appId": 1001,
+                        "id": 111,
+                        "name": 'Running',
+                        "icon": 'fake-icon',
+                        "recent": false
                     })
                 });
 
                 jasmine.Ajax.requests.at(1).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 222,
-                        name: 'Completed',
-                        icon: 'fake-icon',
-                        recent: false
+                    "status": 200,
+                    "contentType": 'application/json',
+                    "responseText": JSON.stringify({
+                        "appId": 1001,
+                        "id": 222,
+                        "name": 'Completed',
+                        "icon": 'fake-icon',
+                        "recent": false
                     })
                 });
 
                 jasmine.Ajax.requests.at(2).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 333,
-                        name: 'All',
-                        icon: 'fake-icon',
-                        recent: false
+                    "status": 200,
+                    "contentType": 'application/json',
+                    "responseText": JSON.stringify({
+                        "appId": 1001,
+                        "id": 333,
+                        "name": 'All',
+                        "icon": 'fake-icon',
+                        "recent": false
                     })
                 });
             });
@@ -172,38 +172,38 @@ describe('Process filter', () => {
                 });
 
                 jasmine.Ajax.requests.at(0).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 111,
-                        name: 'Running',
-                        icon: 'fake-icon',
-                        recent: false
+                    "status": 200,
+                    "contentType": 'application/json',
+                    "responseText": JSON.stringify({
+                        "appId": 1001,
+                        "id": 111,
+                        "name": 'Running',
+                        "icon": 'fake-icon',
+                        "recent": false
                     })
                 });
 
                 jasmine.Ajax.requests.at(1).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 222,
-                        name: 'Completed',
-                        icon: 'fake-icon',
-                        recent: false
+                    "status": 200,
+                    "contentType": 'application/json',
+                    "responseText": JSON.stringify({
+                        "appId": 1001,
+                        "id": 222,
+                        "name": 'Completed',
+                        "icon": 'fake-icon',
+                        "recent": false
                     })
                 });
 
                 jasmine.Ajax.requests.at(2).respondWith({
-                    status: 200,
-                    contentType: 'application/json',
-                    responseText: JSON.stringify({
-                        appId: 1001,
-                        id: 333,
-                        name: 'All',
-                        icon: 'fake-icon',
-                        recent: false
+                    "status": 200,
+                    "contentType": 'application/json',
+                    "responseText": JSON.stringify({
+                        "appId": 1001,
+                        "id": 333,
+                        "name": 'All',
+                        "icon": 'fake-icon',
+                        "recent": false
                     })
                 });
             });
@@ -273,20 +273,20 @@ describe('Process filter', () => {
             beforeEach(() => {
                 dummyProcessFilters = [
                     {
-                        appId: 0,
-                        filter: filterRepresentationData,
-                        icon: 'fa-random',
-                        id: 8,
-                        index: 0,
-                        name: 'Running',
-                        recent: false
+                        "appId": 0,
+                        "filter": filterRepresentationData,
+                        "icon": 'fa-random',
+                        "id": 8,
+                        "index": 0,
+                        "name": 'Running',
+                        "recent": false
                     }
                 ];
 
                 filterRepresentationData = {
-                    name: '',
-                    sort: 'created-desc',
-                    state: 'running'
+                    "name": '',
+                    "sort": 'created-desc',
+                    "state": 'running'
                 };
             });
 
@@ -308,40 +308,40 @@ describe('Process filter', () => {
                 const appId = 123;
 
                 const runningFilter = {
-                    appId: 123,
-                    name: 'Running',
-                    filter: { sort: 'created-desc', name: '', state: 'running' },
-                    icon: 'fa-random',
-                    id: 18,
-                    index: 10,
-                    recent: false
+                    "appId": 123,
+                    "name": 'Running',
+                    "filter": { "sort": 'created-desc', "name": '', "state": 'running' },
+                    "icon": 'fa-random',
+                    "id": 18,
+                    "index": 10,
+                    "recent": false
                 };
                 const completedFilter = {
-                    appId: 123,
-                    name: 'Completed',
-                    filter: { sort: 'created-desc', name: '', state: 'completed' },
-                    icon: 'fa-random',
-                    id: 19,
-                    index: 11,
-                    recent: false
+                    "appId": 123,
+                    "name": 'Completed',
+                    "filter": { "sort": 'created-desc', "name": '', "state": 'completed' },
+                    "icon": 'fa-random',
+                    "id": 19,
+                    "index": 11,
+                    "recent": false
                 };
                 const allFilter = {
-                    appId: 123,
-                    name: 'All',
-                    filter: { sort: 'created-desc', name: '', state: 'all' },
-                    icon: 'fa-random',
-                    id: 20,
-                    index: 12,
-                    recent: false
+                    "appId": 123,
+                    "name": 'All',
+                    "filter": { "sort": 'created-desc', "name": '', "state": 'all' },
+                    "icon": 'fa-random',
+                    "id": 20,
+                    "index": 12,
+                    "recent": false
                 };
                 const duplicateRunningFilter = {
-                    appId: 123,
-                    name: 'Running',
-                    filter: { sort: 'created-desc', name: '', state: 'running' },
-                    icon: 'fa-random',
-                    id: 21,
-                    index: 13,
-                    recent: false
+                    "appId": 123,
+                    "name": 'Running',
+                    "filter": { "sort": 'created-desc', "name": '', "state": 'running' },
+                    "icon": 'fa-random',
+                    "id": 21,
+                    "index": 13,
+                    "recent": false
                 };
 
                 const runningObservable = of(runningFilter);
@@ -362,9 +362,9 @@ describe('Process filter', () => {
 
                 service.createDefaultFilters(appId).subscribe((result) => {
                     expect(result).toEqual([
-                        { ...runningFilter, filter: runningFilter.filter, appId },
-                        { ...completedFilter, filter: completedFilter.filter, appId },
-                        { ...allFilter, filter: allFilter.filter, appId }
+                        { ...runningFilter, "filter": runningFilter.filter, appId },
+                        { ...completedFilter, "filter": completedFilter.filter, appId },
+                        { ...allFilter, "filter": allFilter.filter, appId }
                     ]);
                     done();
                 });

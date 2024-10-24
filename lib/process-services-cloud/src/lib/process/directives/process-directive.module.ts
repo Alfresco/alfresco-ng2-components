@@ -19,10 +19,10 @@ import { NgModule } from '@angular/core';
 import { CancelProcessDirective } from './cancel-process.directive';
 
 @NgModule({
-    declarations: [
+    "declarations": [
         CancelProcessDirective
     ],
-    exports: [
+    "exports": [
         CancelProcessDirective
     ]
 })

@@ -22,24 +22,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 
 @Component({
-    selector: 'adf-about-status-list',
-    templateUrl: './about-status-list.component.html',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatTableModule]
+    "selector": 'adf-about-status-list',
+    "templateUrl": './about-status-list.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatTableModule]
 })
 export class AboutStatusListComponent {
     columns = [
         {
-            columnDef: 'property',
-            header: 'ABOUT.STATUS.PROPERTY',
-            cell: (row: StatusData) => `${row.property}`
+            "columnDef": 'property',
+            "header": 'ABOUT.STATUS.PROPERTY',
+            "cell": (row: StatusData) => `${row.property}`
         },
         {
-            columnDef: 'value',
-            header: 'ABOUT.STATUS.VALUE',
-            cell: (row: StatusData) => `${row.value}`
+            "columnDef": 'value',
+            "header": 'ABOUT.STATUS.VALUE',
+            "cell": (row: StatusData) => `${row.value}`
         }
     ];
 

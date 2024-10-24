@@ -28,7 +28,7 @@ describe('Form Definition Selector Cloud Service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(FormDefinitionSelectorCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);

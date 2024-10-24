@@ -27,32 +27,32 @@ import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map, switchMap } from 'rxjs/operators';
 import { ContentTypePropertiesService } from './content-type-property.service';
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ContentMetadataService {
-
     error = new Subject<{ statusCode: number; message: string }>();
 
-    constructor(private basicPropertiesService: BasicPropertiesService,
-                private contentMetadataConfigFactory: ContentMetadataConfigFactory,
-                private propertyGroupTranslatorService: PropertyGroupTranslatorService,
-                private propertyDescriptorsService: PropertyDescriptorsService,
-                private contentTypePropertyService: ContentTypePropertiesService) {
-    }
+    constructor (
+        private basicPropertiesService: BasicPropertiesService,
+        private contentMetadataConfigFactory: ContentMetadataConfigFactory,
+        private propertyGroupTranslatorService: PropertyGroupTranslatorService,
+        private propertyDescriptorsService: PropertyDescriptorsService,
+        private contentTypePropertyService: ContentTypePropertiesService
+    ) {}
 
-    getBasicProperties(node: Node): Observable<CardViewItem[]> {
+    getBasicProperties (node: Node): Observable<CardViewItem[]> {
         return of(this.basicPropertiesService.getProperties(node));
     }
 
-    getContentTypeProperty(node: Node): Observable<CardViewItem[]> {
+    getContentTypeProperty (node: Node): Observable<CardViewItem[]> {
         return this.contentTypePropertyService.getContentTypeCardItem(node);
     }
 
-    openConfirmDialog(changedProperties): Observable<any> {
+    openConfirmDialog (changedProperties): Observable<any> {
         return this.contentTypePropertyService.openContentTypeDialogConfirm(changedProperties.nodeType);
     }
 
-    getGroupedProperties(node: Node, preset: string | PresetConfig = 'default'): Observable<CardViewGroup[]> {
+    getGroupedProperties (node: Node, preset: string | PresetConfig = 'default'): Observable<CardViewGroup[]> {
         let groupedProperties = of([]);
 
         if (node.aspectNames) {
@@ -63,9 +63,7 @@ export class ContentMetadataService {
                 contentMetadataConfig = this.contentMetadataConfigFactory.createConfig(preset);
             }
 
-            const groupNames = node.aspectNames
-                .concat(node.nodeType)
-                .filter((groupName) => contentMetadataConfig.isGroupAllowed(groupName));
+            const groupNames = node.aspectNames.concat(node.nodeType).filter((groupName) => contentMetadataConfig.isGroupAllowed(groupName));
 
             if (groupNames.length > 0) {
                 groupedProperties = this.propertyDescriptorsService.load(groupNames).pipe(
@@ -74,7 +72,8 @@ export class ContentMetadataService {
                             () => contentMetadataConfig.isIncludeAllEnabled(),
                             of(contentMetadataConfig.appendAllPreset(groups).concat(contentMetadataConfig.reorganiseByConfig(groups))),
                             of(contentMetadataConfig.reorganiseByConfig(groups))
-                        )),
+                        )
+                    ),
                     map((groups) => contentMetadataConfig.filterExcludedPreset(groups)),
                     map((groups) => this.filterEmptyPreset(groups)),
                     map((groups) => this.setTitleToNameIfNotSet(groups)),
@@ -86,14 +85,14 @@ export class ContentMetadataService {
         return groupedProperties;
     }
 
-    setTitleToNameIfNotSet(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+    setTitleToNameIfNotSet (propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         propertyGroups.map((propertyGroup) => {
             propertyGroup.title = propertyGroup.title || propertyGroup.name;
         });
         return propertyGroups;
     }
 
-    filterEmptyPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[]  {
+    filterEmptyPreset (propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         return propertyGroups.filter((props) => props.properties.length);
     }
 }

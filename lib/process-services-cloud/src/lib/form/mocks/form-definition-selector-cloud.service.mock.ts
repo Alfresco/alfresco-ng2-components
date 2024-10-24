@@ -22,15 +22,15 @@ import { FormDefinitionSelectorCloudServiceInterface } from '../services/form-de
 import { mockFormRepresentations } from './form-representation.mock';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class FormDefinitionSelectorCloudServiceMock implements FormDefinitionSelectorCloudServiceInterface {
 
-    getForms(_appName: string): Observable<FormRepresentation[]> {
+    getForms (_appName: string): Observable<FormRepresentation[]> {
         return of(mockFormRepresentations.map(response => response.formRepresentation));
     }
 
-    getStandAloneTaskForms(_appName: string): Observable<FormRepresentation[]> {
+    getStandAloneTaskForms (_appName: string): Observable<FormRepresentation[]> {
         return of(mockFormRepresentations.map(response => response.formRepresentation).filter((form: any) => form.standalone ? form : undefined));
     }
 }

@@ -25,7 +25,7 @@ describe('Form service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         service = TestBed.inject(FormService);
     });

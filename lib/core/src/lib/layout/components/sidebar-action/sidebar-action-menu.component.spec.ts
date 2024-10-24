@@ -30,7 +30,7 @@ describe('SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, SidebarActionMenuComponent]
+            "imports": [CoreTestingModule, SidebarActionMenuComponent]
         });
         fixture = TestBed.createComponent(SidebarActionMenuComponent);
         element = fixture.nativeElement;
@@ -52,9 +52,10 @@ describe('SidebarActionMenuComponent', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, SidebarActionMenuComponent, MatIconModule, MatMenuModule],
-    template: `
+    "standalone": true,
+    "imports": [CommonModule, SidebarActionMenuComponent, MatIconModule, MatMenuModule],
+    // eslint-disable-next-line @alfresco/eslint-angular/no-angular-material-selectors
+    "template": `
         <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
             <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
             <div adf-sidebar-menu-expand-icon>
@@ -85,7 +86,7 @@ describe('Custom SidebarActionMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, SidebarActionMenuComponent, CustomSidebarActionMenuComponent]
+            "imports": [CoreTestingModule, SidebarActionMenuComponent, CustomSidebarActionMenuComponent]
         });
         fixture = TestBed.createComponent(CustomSidebarActionMenuComponent);
         fixture.detectChanges();

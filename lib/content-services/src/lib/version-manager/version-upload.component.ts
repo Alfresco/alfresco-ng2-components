@@ -32,9 +32,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { UploadVersionButtonComponent } from '../upload';
 
 @Component({
-    selector: 'adf-version-upload',
-    standalone: true,
-    imports: [
+    "selector": 'adf-version-upload',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatRadioModule,
         FormsModule,
@@ -44,10 +44,10 @@ import { UploadVersionButtonComponent } from '../upload';
         MatButtonModule,
         UploadVersionButtonComponent
     ],
-    templateUrl: './version-upload.component.html',
-    styleUrls: ['./version-upload.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-version-upload' }
+    "templateUrl": './version-upload.component.html',
+    "styleUrls": ['./version-upload.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-version-upload' }
 })
 export class VersionUploadComponent implements OnInit, OnDestroy {
     semanticVersion: string = 'minor';
@@ -76,7 +76,7 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
 
     /** Current version for a target node */
     @Input()
-    set currentVersion(version: Version) {
+    set currentVersion (version: Version) {
         if (version) {
             this.minorVersion = this.getNextMinorVersion(version.id);
             this.majorVersion = this.getNextMajorVersion(version.id);
@@ -107,62 +107,62 @@ export class VersionUploadComponent implements OnInit, OnDestroy {
     @Output()
     uploadStarted = new EventEmitter<FileUploadEvent>();
 
-    constructor(private contentService: ContentService, private uploadService: UploadService) {}
+    constructor (private contentService: ContentService, private uploadService: UploadService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.uploadService.fileUploadStarting.pipe(takeUntil(this.onDestroy$)).subscribe((event: FileUploadEvent) => {
             this.disabled = true;
             this.uploadStarted.emit(event);
         });
     }
 
-    canUpload(): boolean {
+    canUpload (): boolean {
         return this.contentService.hasAllowableOperations(this.node, 'update') && !this.disabled;
     }
 
-    isMajorVersion(): boolean {
+    isMajorVersion (): boolean {
         return this.semanticVersion !== 'minor';
     }
 
-    cancelUpload() {
+    cancelUpload () {
         this.disabled = false;
         this.cancel.emit();
     }
 
-    onVersionChange() {
+    onVersionChange () {
         this.versionChanged.emit(this.isMajorVersion());
     }
 
-    onCommentChange() {
+    onCommentChange () {
         this.commentChanged.emit(this.comment);
     }
 
-    onSuccess(event: any) {
+    onSuccess (event: any) {
         this.disabled = false;
         this.success.emit(event);
     }
 
-    onError(event: FileUploadErrorEvent) {
+    onError (event: FileUploadErrorEvent) {
         this.disabled = false;
         this.error.emit(event);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(undefined);
         this.onDestroy$.complete();
     }
 
-    getNextMinorVersion(version: string): string {
+    getNextMinorVersion (version: string): string {
         const { major, minor } = this.getParsedVersion(version);
         return `${major}.${minor + 1}`;
     }
 
-    getNextMajorVersion(version: string): string {
+    getNextMajorVersion (version: string): string {
         const { major } = this.getParsedVersion(version);
         return `${major + 1}.0`;
     }
 
-    private getParsedVersion(version: string) {
+    private getParsedVersion (version: string) {
         const minor = version.indexOf('.') !== -1 ? Number(version.substr(version.indexOf('.') + 1)) : 0;
         const major = parseInt(version, 10);
         return { minor, major };

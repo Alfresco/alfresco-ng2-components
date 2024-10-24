@@ -22,26 +22,26 @@ import { EventEmitter } from '@angular/core';
 export class UploadFilesEvent {
     private isDefaultPrevented: boolean = false;
 
-    get defaultPrevented() {
+    get defaultPrevented () {
         return this.isDefaultPrevented;
     }
 
-    preventDefault() {
+    preventDefault () {
         this.isDefaultPrevented = true;
     }
 
-    constructor(
+    constructor (
         public files: Array<FileModel>,
         private uploadService: UploadService,
         private successEmitter: EventEmitter<any>,
         private errorEmitter: EventEmitter<any>
     ) {}
 
-    pauseUpload() {
+    pauseUpload () {
         this.preventDefault();
     }
 
-    resumeUpload() {
+    resumeUpload () {
         if (this.files && this.files.length > 0) {
             this.uploadService.addToQueue(...this.files);
             this.uploadService.uploadFilesInTheQueue(this.successEmitter, this.errorEmitter);

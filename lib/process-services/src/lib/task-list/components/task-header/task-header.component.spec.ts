@@ -41,22 +41,22 @@ describe('TaskHeaderComponent', () => {
     let appConfigService: AppConfigService;
 
     const fakeBpmAssignedUser: any = {
-        id: 1001,
-        apps: [],
-        capabilities: 'fake-capability',
-        company: 'fake-company',
-        created: 'fake-create-date',
-        email: 'wilbur@app.activiti.com',
-        externalId: 'fake-external-id',
-        firstName: 'Wilbur',
-        lastName: 'Adams',
-        fullname: 'Wilbur Adams',
-        groups: []
+        "id": 1001,
+        "apps": [],
+        "capabilities": 'fake-capability',
+        "company": 'fake-company',
+        "created": 'fake-create-date',
+        "email": 'wilbur@app.activiti.com',
+        "externalId": 'fake-external-id',
+        "firstName": 'Wilbur',
+        "lastName": 'Adams',
+        "fullname": 'Wilbur Adams',
+        "groups": []
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskHeaderComponent]
+            "imports": [ProcessTestingModule, TaskHeaderComponent]
         });
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;

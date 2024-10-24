@@ -48,7 +48,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         fixture = TestBed.createComponent(DropdownCloudWidgetComponent);
         widget = fixture.componentInstance;
@@ -63,12 +63,12 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('Simple Dropdown', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
-                id: 'dropdown-id',
-                name: 'date-name',
-                type: 'dropdown',
-                restUrl: 'https://fake-rest-url',
-                options: [{ id: 'empty', name: 'Choose one...' }]
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": false }), {
+                "id": 'dropdown-id',
+                "name": 'date-name',
+                "type": 'dropdown',
+                "restUrl": 'https://fake-rest-url',
+                "options": [{ "id": 'empty', "name": 'Choose one...' }]
             });
             widget.field.isVisible = true;
             fixture.detectChanges();
@@ -99,7 +99,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should select the empty value when no default is chosen', async () => {
             widget.field.value = 'empty';
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             expect(widget.field.value).toEqual('empty');
@@ -113,7 +113,7 @@ describe('DropdownCloudWidgetComponent', () => {
 
             widget.ngOnInit();
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             const allOptions = await dropdown.getOptions();
@@ -203,26 +203,26 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field.restUrl = 'https://fake-rest-url';
             widget.field.optionType = 'rest';
             widget.field.value = {
-                id: 'opt1',
-                name: 'default1_value'
+                "id": 'opt1',
+                "name": 'default1_value'
             };
 
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
                 of([
                     {
-                        id: 'opt1',
-                        name: 'default1_value'
+                        "id": 'opt1',
+                        "name": 'default1_value'
                     },
                     {
-                        id: 2,
-                        name: 'default2_value'
+                        "id": 2,
+                        "name": 'default2_value'
                     }
                 ] as any)
             );
 
             widget.ngOnInit();
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             expect(await (await dropdown.getOptions())[0].getText()).toEqual('default1_value');
@@ -236,31 +236,31 @@ describe('DropdownCloudWidgetComponent', () => {
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
                 of([
                     {
-                        id: 'opt1',
-                        name: 'default1_value'
+                        "id": 'opt1',
+                        "name": 'default1_value'
                     },
                     {
-                        id: 2,
-                        name: 'default2_value'
+                        "id": 2,
+                        "name": 'default2_value'
                     }
                 ] as any)
             );
 
             widget.ngOnInit();
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             expect(await (await dropdown.getOptions())[0].getText()).toEqual('default1_value');
-            expect(widget.field.form.values['dropdown-id']).toEqual({ id: 'opt1', name: 'default1_value' });
+            expect(widget.field.form.values['dropdown-id']).toEqual({ "id": 'opt1', "name": 'default1_value' });
         });
 
         it('should not display required error for a non required dropdown when selecting the none option', async () => {
-            widget.field.options = [{ id: 'empty', name: 'Choose empty' }, ...fakeOptionList];
+            widget.field.options = [{ "id": 'empty', "name": 'Choose empty' }, ...fakeOptionList];
 
             widget.ngOnInit();
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
-            await dropdown.clickOptions({ selector: '[id="empty"]' });
+            await dropdown.clickOptions({ "selector": '[id="empty"]' });
 
             widget.touched = true;
             fixture.detectChanges();
@@ -271,33 +271,33 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should not display required error when selecting a valid option for a required dropdown', async () => {
             widget.field.required = true;
-            widget.field.options = [{ id: 'empty', name: 'Choose empty' }, ...fakeOptionList];
+            widget.field.options = [{ "id": 'empty', "name": 'Choose empty' }, ...fakeOptionList];
 
             widget.ngOnInit();
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             widget.touched = true;
-            await dropdown.clickOptions({ selector: '[id="opt_1"]' });
+            await dropdown.clickOptions({ "selector": '[id="opt_1"]' });
 
             const requiredErrorElement = fixture.debugElement.query(By.css('.adf-dropdown-required-message .adf-error-text'));
             expect(requiredErrorElement).toBeFalsy();
         });
 
         it('should not have a value when switching from an available option to the None option', async () => {
-            widget.field.options = [{ id: 'empty', name: 'This is a mock none option' }, ...fakeOptionList];
+            widget.field.options = [{ "id": 'empty', "name": 'This is a mock none option' }, ...fakeOptionList];
 
             widget.ngOnInit();
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
-            await dropdown.clickOptions({ selector: '[id="opt_1"]' });
+            await dropdown.clickOptions({ "selector": '[id="opt_1"]' });
 
             expect(await dropdown.getValueText()).toEqual('option_1');
             expect(widget.field.value).toEqual('opt_1');
 
             await dropdown.open();
-            await dropdown.clickOptions({ selector: '[id="empty"]' });
+            await dropdown.clickOptions({ "selector": '[id="empty"]' });
 
             expect(widget.field.value).toEqual(undefined);
 
@@ -307,9 +307,9 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DROPDOWN,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DROPDOWN,
+                "required": true
             });
         });
 
@@ -360,18 +360,18 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('filter', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
-                id: 'dropdown-id',
-                name: 'option list',
-                type: 'dropdown',
-                options: filterOptionList
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": false }), {
+                "id": 'dropdown-id',
+                "name": 'option list',
+                "type": 'dropdown',
+                "options": filterOptionList
             });
             widget.ngOnInit();
             fixture.detectChanges();
         });
 
         it('should show filter if more than 5 options found', async () => {
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             const filter = fixture.debugElement.query(By.css('.adf-select-filter-input input'));
@@ -379,7 +379,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should be able to filter the options by search', async () => {
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             let options = await dropdown.getOptions();
@@ -396,7 +396,7 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         it('should be able to select the options if filter present', async () => {
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             const options = await dropdown.getOptions();
@@ -410,138 +410,138 @@ describe('DropdownCloudWidgetComponent', () => {
 
     describe('multiple selection', () => {
         it('should show preselected option', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                id: 'dropdown-id',
-                name: 'date-name',
-                type: 'dropdown',
-                options: fakeOptionList,
-                selectionType: 'multiple',
-                value: [
-                    { id: 'opt_1', name: 'option_1' },
-                    { id: 'opt_2', name: 'option_2' }
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                "id": 'dropdown-id',
+                "name": 'date-name',
+                "type": 'dropdown',
+                "options": fakeOptionList,
+                "selectionType": 'multiple',
+                "value": [
+                    { "id": 'opt_1', "name": 'option_1' },
+                    { "id": 'opt_2', "name": 'option_2' }
                 ]
             });
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
 
             expect(await dropdown.getValueText()).toEqual('option_1, option_2');
         });
 
         it('should support multiple options', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                id: 'dropdown-id',
-                name: 'date-name',
-                type: 'dropdown',
-                selectionType: 'multiple',
-                options: fakeOptionList
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                "id": 'dropdown-id',
+                "name": 'date-name',
+                "type": 'dropdown',
+                "selectionType": 'multiple',
+                "options": fakeOptionList
             });
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
-            await dropdown.clickOptions({ selector: '[id="opt_1"]' });
-            await dropdown.clickOptions({ selector: '[id="opt_2"]' });
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
+            await dropdown.clickOptions({ "selector": '[id="opt_1"]' });
+            await dropdown.clickOptions({ "selector": '[id="opt_2"]' });
 
             expect(widget.field.value).toEqual([
-                { id: 'opt_1', name: 'option_1' },
-                { id: 'opt_2', name: 'option_2' }
+                { "id": 'opt_1', "name": 'option_1' },
+                { "id": 'opt_2', "name": 'option_2' }
             ]);
         });
 
         it('should show preselected option for rest options', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                id: 'dropdown-id',
-                name: 'date-name',
-                type: 'dropdown',
-                restUrl: 'https://fake-rest-url',
-                optionType: 'rest',
-                selectionType: 'multiple',
-                value: [
-                    { id: 'opt_3', name: 'option_3' },
-                    { id: 'opt_4', name: 'option_4' }
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                "id": 'dropdown-id',
+                "name": 'date-name',
+                "type": 'dropdown',
+                "restUrl": 'https://fake-rest-url',
+                "optionType": 'rest',
+                "selectionType": 'multiple',
+                "value": [
+                    { "id": 'opt_3', "name": 'option_3' },
+                    { "id": 'opt_4', "name": 'option_4' }
                 ]
             });
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
                 of([
                     {
-                        id: 'opt_1',
-                        name: 'option_1'
+                        "id": 'opt_1',
+                        "name": 'option_1'
                     },
                     {
-                        id: 'opt_2',
-                        name: 'option_2'
+                        "id": 'opt_2',
+                        "name": 'option_2'
                     },
                     {
-                        id: 'opt_3',
-                        name: 'option_3'
+                        "id": 'opt_3',
+                        "name": 'option_3'
                     },
                     {
-                        id: 'opt_4',
-                        name: 'option_4'
+                        "id": 'opt_4',
+                        "name": 'option_4'
                     }
                 ] as any)
             );
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
 
             expect(await dropdown.getValueText()).toEqual('option_3, option_4');
         });
 
         it('should support multiple options for rest options', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                id: 'dropdown-id',
-                name: 'date-name',
-                type: 'dropdown',
-                restUrl: 'https://fake-rest-url',
-                optionType: 'rest',
-                selectionType: 'multiple'
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                "id": 'dropdown-id',
+                "name": 'date-name',
+                "type": 'dropdown',
+                "restUrl": 'https://fake-rest-url',
+                "optionType": 'rest',
+                "selectionType": 'multiple'
             });
 
             spyOn(formCloudService, 'getRestWidgetData').and.returnValue(
                 of([
                     {
-                        id: 'opt_1',
-                        name: 'option_1'
+                        "id": 'opt_1',
+                        "name": 'option_1'
                     },
                     {
-                        id: 'opt_2',
-                        name: 'option_2'
+                        "id": 'opt_2',
+                        "name": 'option_2'
                     },
                     {
-                        id: 'opt_3',
-                        name: 'option_3'
+                        "id": 'opt_3',
+                        "name": 'option_3'
                     },
                     {
-                        id: 'opt_4',
-                        name: 'option_4'
+                        "id": 'opt_4',
+                        "name": 'option_4'
                     }
                 ] as any)
             );
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
-            await dropdown.clickOptions({ selector: '[id="opt_2"]' });
-            await dropdown.clickOptions({ selector: '[id="opt_4"]' });
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
+            await dropdown.clickOptions({ "selector": '[id="opt_2"]' });
+            await dropdown.clickOptions({ "selector": '[id="opt_4"]' });
 
             expect(widget.field.value).toEqual([
-                { id: 'opt_2', name: 'option_2' },
-                { id: 'opt_4', name: 'option_4' }
+                { "id": 'opt_2', "name": 'option_2' },
+                { "id": 'opt_4', "name": 'option_4' }
             ]);
         });
 
         it('should fail (display error) for multiple type dropdown with zero selection', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                type: FormFieldTypes.DROPDOWN,
-                value: [{ id: 'id_cat', name: 'Cat' }],
-                required: true,
-                selectionType: 'multiple',
-                hasEmptyValue: false,
-                options: [
-                    { id: 'id_cat', name: 'Cat' },
-                    { id: 'id_dog', name: 'Dog' }
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                "type": FormFieldTypes.DROPDOWN,
+                "value": [{ "id": 'id_cat', "name": 'Cat' }],
+                "required": true,
+                "selectionType": 'multiple',
+                "hasEmptyValue": false,
+                "options": [
+                    { "id": 'id_cat', "name": 'Cat' },
+                    { "id": 'id_dog', "name": 'Dog' }
                 ]
             });
 
             const validateBeforeUnselect = widget.dropdownControl.valid;
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
-            await dropdown.clickOptions({ selector: '[id="id_cat"]' });
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
+            await dropdown.clickOptions({ "selector": '[id="id_cat"]' });
 
             const validateAfterUnselect = widget.dropdownControl.valid;
 
@@ -551,11 +551,11 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should fail (display error) for dropdown with null value', () => {
             widget.field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DROPDOWN,
-                value: null,
-                required: true,
-                options: [{ id: 'one', name: 'one' }],
-                selectionType: 'multiple'
+                "type": FormFieldTypes.DROPDOWN,
+                "value": null,
+                "required": true,
+                "options": [{ "id": 'one', "name": 'one' }],
+                "selectionType": 'multiple'
             });
 
             widget.ngOnInit();
@@ -565,11 +565,11 @@ describe('DropdownCloudWidgetComponent', () => {
 
         it('should fail (display error) for dropdown with empty object', () => {
             widget.field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DROPDOWN,
-                value: {},
-                required: true,
-                options: [{ id: 'one', name: 'one' }],
-                selectionType: 'multiple'
+                "type": FormFieldTypes.DROPDOWN,
+                "value": {},
+                "required": true,
+                "options": [{ "id": 'one', "name": 'one' }],
+                "selectionType": 'multiple'
             });
 
             widget.ngOnInit();
@@ -581,20 +581,20 @@ describe('DropdownCloudWidgetComponent', () => {
     describe('Linked Dropdown', () => {
         describe('Rest URL options', () => {
             const parentDropdown = new FormFieldModel(new FormModel(), {
-                id: 'parentDropdown',
-                type: 'dropdown',
-                validate: () => true
+                "id": 'parentDropdown',
+                "type": 'dropdown',
+                "validate": () => true
             });
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                    id: 'child-dropdown-id',
-                    name: 'child-dropdown',
-                    type: 'dropdown',
-                    optionType: 'rest',
-                    restUrl: 'myFakeDomain.com/cities?country=${parentDropdown}',
-                    rule: {
-                        ruleOn: 'parentDropdown',
-                        entries: null
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                    "id": 'child-dropdown-id',
+                    "name": 'child-dropdown',
+                    "type": 'dropdown',
+                    "optionType": 'rest',
+                    "restUrl": 'myFakeDomain.com/cities?country=${parentDropdown}',
+                    "rule": {
+                        "ruleOn": 'parentDropdown',
+                        "entries": null
                     }
                 });
                 widget.field.form.id = 'fake-form-id';
@@ -613,17 +613,17 @@ describe('DropdownCloudWidgetComponent', () => {
 
             it('should fetch the options from a rest url for a linked dropdown', async () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
-                const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
+                const mockParentDropdown = { "id": 'parentDropdown', "value": 'mock-value', "validate": () => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
                 parentDropdown.value = 'UK';
                 widget.selectionChangedForField(parentDropdown);
 
                 fixture.detectChanges();
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
                 await dropdown.open();
                 const allOptions = await dropdown.getOptions();
 
-                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { parentDropdown: 'mock-value' });
+                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { "parentDropdown": 'mock-value' });
                 expect(await (await allOptions[0].host()).getAttribute('id')).toEqual('LO');
                 expect(await allOptions[0].getText()).toEqual('LONDON');
                 expect(await (await allOptions[1].host()).getAttribute('id')).toEqual('MA');
@@ -633,7 +633,7 @@ describe('DropdownCloudWidgetComponent', () => {
             it('should reset previous child options if the rest url failed for a linked dropdown', async () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
                 const errorIcon: string = 'error_outline';
-                const mockParentDropdown = { id: 'parentDropdown', value: 'mock-value', validate: () => true };
+                const mockParentDropdown = { "id": 'parentDropdown', "value": 'mock-value', "validate": () => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
 
                 const selectParentOption = (parentOptionName: string) => {
@@ -643,7 +643,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 };
 
                 selectParentOption('UK');
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
                 await dropdown.open();
                 const failedErrorMsgElement1 = fixture.debugElement.query(By.css('.adf-dropdown-failed-message'));
 
@@ -689,17 +689,17 @@ describe('DropdownCloudWidgetComponent', () => {
         });
 
         describe('Manual options', () => {
-            const parentDropdown = new FormFieldModel(new FormModel(), { id: 'parentDropdown', type: 'dropdown' });
+            const parentDropdown = new FormFieldModel(new FormModel(), { "id": 'parentDropdown', "type": 'dropdown' });
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                    id: 'child-dropdown-id',
-                    name: 'child-dropdown',
-                    type: 'dropdown',
-                    optionType: 'manual',
-                    rule: {
-                        ruleOn: 'parentDropdown',
-                        entries: mockConditionalEntries
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                    "id": 'child-dropdown-id',
+                    "name": 'child-dropdown',
+                    "type": 'dropdown',
+                    "optionType": 'manual',
+                    "rule": {
+                        "ruleOn": 'parentDropdown',
+                        "entries": mockConditionalEntries
                     }
                 });
                 fixture.detectChanges();
@@ -710,7 +710,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.selectionChangedForField(parentDropdown);
                 fixture.detectChanges();
 
-                const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+                const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
                 await dropdown.open();
                 const allOptions = await dropdown.getOptions();
 
@@ -780,59 +780,59 @@ describe('DropdownCloudWidgetComponent', () => {
 
         describe('Load selection for linked dropdown (i.e. saved, completed forms)', () => {
             it('should load the selection of a manual type linked dropdown', () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                    id: 'child-dropdown-id',
-                    name: 'child-dropdown',
-                    type: 'dropdown',
-                    optionType: 'manual',
-                    rule: {
-                        ruleOn: 'parentDropdown',
-                        entries: mockConditionalEntries
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                    "id": 'child-dropdown-id',
+                    "name": 'child-dropdown',
+                    "type": 'dropdown',
+                    "optionType": 'manual',
+                    "rule": {
+                        "ruleOn": 'parentDropdown',
+                        "entries": mockConditionalEntries
                     }
                 });
                 const updateFormSpy = spyOn(widget.field, 'updateForm').and.callThrough();
-                const mockParentDropdown = { id: 'parentDropdown', value: 'IT', validate: (): boolean => true };
+                const mockParentDropdown = { "id": 'parentDropdown', "value": 'IT', "validate": (): boolean => true };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
                 widget.field.value = 'MI';
                 fixture.detectChanges();
 
                 expect(updateFormSpy).toHaveBeenCalled();
                 expect(widget.field.options).toEqual(mockConditionalEntries[1].options);
-                expect(widget.field.form.values).toEqual({ 'child-dropdown-id': { id: 'MI', name: 'MILAN' } });
+                expect(widget.field.form.values).toEqual({ 'child-dropdown-id': { "id": 'MI', "name": 'MILAN' } });
             });
 
             it('should load the selection of a rest type linked dropdown', () => {
                 const jsonDataSpy = spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(mockRestDropdownOptions));
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false' }), {
-                    id: 'child-dropdown-id',
-                    name: 'child-dropdown',
-                    type: 'dropdown',
-                    restUrl: 'mock-url.com/country=${country}',
-                    optionType: 'rest',
-                    rule: {
-                        ruleOn: 'country',
-                        entries: null
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false' }), {
+                    "id": 'child-dropdown-id',
+                    "name": 'child-dropdown',
+                    "type": 'dropdown',
+                    "restUrl": 'mock-url.com/country=${country}',
+                    "optionType": 'rest',
+                    "rule": {
+                        "ruleOn": 'country',
+                        "entries": null
                     }
                 });
                 widget.field.form.id = 'fake-form-id';
                 const updateFormSpy = spyOn(widget.field, 'updateForm');
-                const mockParentDropdown = { id: 'country', value: 'UK' };
+                const mockParentDropdown = { "id": 'country', "value": 'UK' };
                 spyOn(widget.field.form, 'getFormFields').and.returnValue([mockParentDropdown]);
                 fixture.detectChanges();
 
                 expect(updateFormSpy).toHaveBeenCalled();
-                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { country: 'UK' });
+                expect(jsonDataSpy).toHaveBeenCalledWith('fake-form-id', 'child-dropdown-id', { "country": 'UK' });
                 expect(widget.field.options).toEqual(mockRestDropdownOptions);
             });
         });
 
         describe('when form model has left labels', () => {
             it('should have left labels classes on leftLabels true', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, leftLabels: true }), {
-                    id: 'dropdown-id',
-                    name: 'option list',
-                    type: FormFieldTypes.DROPDOWN,
-                    options: filterOptionList
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": false, "leftLabels": true }), {
+                    "id": 'dropdown-id',
+                    "name": 'option list',
+                    "type": FormFieldTypes.DROPDOWN,
+                    "options": filterOptionList
                 });
 
                 fixture.detectChanges();
@@ -846,11 +846,11 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should not have left labels classes on leftLabels false', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false, leftLabels: false }), {
-                    id: 'dropdown-id',
-                    name: 'option list',
-                    type: FormFieldTypes.DROPDOWN,
-                    options: filterOptionList
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": false, "leftLabels": false }), {
+                    "id": 'dropdown-id',
+                    "name": 'option list',
+                    "type": FormFieldTypes.DROPDOWN,
+                    "options": filterOptionList
                 });
 
                 fixture.detectChanges();
@@ -864,11 +864,11 @@ describe('DropdownCloudWidgetComponent', () => {
             });
 
             it('should not have left labels classes on leftLabels not present', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: false }), {
-                    id: 'dropdown-id',
-                    name: 'option list',
-                    type: FormFieldTypes.DROPDOWN,
-                    options: filterOptionList
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": false }), {
+                    "id": 'dropdown-id',
+                    "name": 'option list',
+                    "type": FormFieldTypes.DROPDOWN,
+                    "options": filterOptionList
                 });
 
                 fixture.detectChanges();
@@ -894,12 +894,12 @@ describe('DropdownCloudWidgetComponent', () => {
             processVariables?: TaskVariableCloud[],
             variables?: TaskVariableCloud[]
         ) =>
-            new FormFieldModel(new FormModel({ taskId: 'fake-task-id', readOnly: 'false', processVariables, variables }), {
-                id: 'variable-dropdown-id',
-                name: 'variable-options-dropdown',
-                type: 'dropdown',
-                optionType: 'variable',
-                variableConfig: {
+            new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "readOnly": 'false', processVariables, variables }), {
+                "id": 'variable-dropdown-id',
+                "name": 'variable-options-dropdown',
+                "type": 'dropdown',
+                "optionType": 'variable',
+                "variableConfig": {
                     variableName,
                     optionsPath,
                     optionsId,
@@ -923,7 +923,7 @@ describe('DropdownCloudWidgetComponent', () => {
                 mockProcessVariablesWithJson
             );
             fixture.detectChanges();
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
             const allOptions = await dropdown.getOptions();
 
@@ -939,7 +939,7 @@ describe('DropdownCloudWidgetComponent', () => {
         it('should display options persisted from form variable if there are NO process variables', async () => {
             widget.field = getVariableDropdownWidget('json-form-variable', 'countries', 'id', 'name', [], mockFormVariableWithJson);
             fixture.detectChanges();
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
             const allOptions = await dropdown.getOptions();
 
@@ -955,7 +955,7 @@ describe('DropdownCloudWidgetComponent', () => {
         it('should display default options if config options are NOT provided', async () => {
             widget.field = getVariableDropdownWidget('variables.json-default-variable', null, null, null, mockVariablesWithDefaultJson);
             fixture.detectChanges();
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
             const allOptions = await dropdown.getOptions();
 
@@ -1063,11 +1063,11 @@ describe('DropdownCloudWidgetComponent', () => {
             widget.field = field;
             fixture.detectChanges();
 
-            field.form.variables[0]['value']['countries'] = [{ id: 'NEW', name: 'New Country' }];
+            field.form.variables[0]['value']['countries'] = [{ "id": 'NEW', "name": 'New Country' }];
 
             formService.onFormVariableChanged.next({ field });
 
-            const dropdown = await loader.getHarness(MatSelectHarness.with({ selector: '.adf-select' }));
+            const dropdown = await loader.getHarness(MatSelectHarness.with({ "selector": '.adf-select' }));
             await dropdown.open();
 
             expect(widget.field.options.length).toEqual(1);

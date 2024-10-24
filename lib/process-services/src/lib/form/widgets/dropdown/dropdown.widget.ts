@@ -30,12 +30,12 @@ import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'dropdown-widget',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, ErrorWidgetComponent],
-    templateUrl: './dropdown.widget.html',
-    styleUrls: ['./dropdown.widget.scss'],
-    host: {
+    "selector": 'dropdown-widget',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, ErrorWidgetComponent],
+    "templateUrl": './dropdown.widget.html',
+    "styleUrls": ['./dropdown.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -46,7 +46,7 @@ import { TranslateModule } from '@ngx-translate/core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class DropdownWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
     public formsService = inject(FormService);
@@ -57,27 +57,27 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
 
     private readonly onDestroy$ = new Subject<void>();
 
-    get isReadOnlyType(): boolean {
+    get isReadOnlyType (): boolean {
         return this.field.type === 'readonly';
     }
 
-    get isReadOnlyField(): boolean {
+    get isReadOnlyField (): boolean {
         return this.field.readOnly;
     }
 
-    private get isRestType(): boolean {
+    private get isRestType (): boolean {
         return this.field?.optionType === 'rest';
     }
 
-    private get hasRestUrl(): boolean {
+    private get hasRestUrl (): boolean {
         return !!this.field?.restUrl;
     }
 
-    private get isValidRestConfig(): boolean {
+    private get isValidRestConfig (): boolean {
         return this.isRestType && this.hasRestUrl;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.isValidRestConfig && !this.isReadOnlyForm()) {
             if (this.field.form.taskId) {
                 this.getValuesByTaskId();
@@ -89,12 +89,12 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         this.initFormControl();
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
 
-    getValuesByTaskId() {
+    getValuesByTaskId () {
         this.taskFormService.getRestFieldValues(this.field.form.taskId, this.field.id).subscribe((formFieldOption) => {
             const options = [];
             if (this.field.emptyOption) {
@@ -105,7 +105,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         });
     }
 
-    getValuesByProcessDefinitionId() {
+    getValuesByProcessDefinitionId () {
         this.processDefinitionService
             .getRestFieldValuesByProcessId(this.field.form.processDefinitionId, this.field.id)
             .subscribe((formFieldOption) => {
@@ -118,17 +118,17 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
             });
     }
 
-    private isReadOnlyForm(): boolean {
+    private isReadOnlyForm (): boolean {
         return !!this.field?.form?.readOnly;
     }
 
-    private initFormControl() {
+    private initFormControl () {
         if (this.field?.required) {
             this.dropdownControl.addValidators([this.customRequiredValidator(this.field)]);
         }
 
         if (this.field?.readOnly || this.readOnly) {
-            this.dropdownControl.disable({ emitEvent: false });
+            this.dropdownControl.disable({ "emitEvent": false });
         }
 
         this.dropdownControl.valueChanges
@@ -142,11 +142,11 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
                 this.onFieldChanged(this.field);
             });
 
-        this.dropdownControl.setValue(this.getOptionValue(this.field?.value), { emitEvent: false });
+        this.dropdownControl.setValue(this.getOptionValue(this.field?.value), { "emitEvent": false });
         this.handleErrors();
     }
 
-    private handleErrors() {
+    private handleErrors () {
         if (!this.field) {
             return;
         }
@@ -157,11 +157,11 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         }
 
         if (this.dropdownControl.invalid && this.dropdownControl.errors.required) {
-            this.field.validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
+            this.field.validationSummary = new ErrorMessageModel({ "message": 'FORM.FIELD.REQUIRED' });
         }
     }
 
-    private setOptionValue(option: string | FormFieldOption, field: FormFieldModel) {
+    private setOptionValue (option: string | FormFieldOption, field: FormFieldModel) {
         if (typeof option === 'string') {
             field.value = option;
             return;
@@ -174,7 +174,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         field.value = option.name;
     }
 
-    private getOptionValue(value?: string | FormFieldOption) {
+    private getOptionValue (value?: string | FormFieldOption) {
         if (this.field?.readOnly || this.readOnly) {
             return value;
         }
@@ -186,7 +186,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         return value as FormFieldOption | undefined;
     }
 
-    private customRequiredValidator(field: FormFieldModel): ValidatorFn {
+    private customRequiredValidator (field: FormFieldModel): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             const isEmptyInputValue = (value: any) => value == null || ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
             const isEqualToEmptyValue = (value: any) =>
@@ -195,7 +195,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
                     value === field.emptyOption.name ||
                     (value.id === field.emptyOption.id && value.name === field.emptyOption.name));
 
-            return isEmptyInputValue(control.value) || isEqualToEmptyValue(control.value) ? { required: true } : null;
+            return isEmptyInputValue(control.value) || isEqualToEmptyValue(control.value) ? { "required": true } : null;
         };
     }
 }

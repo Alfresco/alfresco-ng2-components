@@ -28,39 +28,39 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-card-view-key-value-pairs-item',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatTableModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule],
-    templateUrl: './card-view-keyvaluepairsitem.component.html',
-    styleUrls: ['./card-view-keyvaluepairsitem.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-card-view-key-value-pairs-item' }
+    "selector": 'adf-card-view-key-value-pairs-item',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatTableModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule],
+    "templateUrl": './card-view-keyvaluepairsitem.component.html',
+    "styleUrls": ['./card-view-keyvaluepairsitem.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-card-view-key-value-pairs-item' }
 })
 export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {
     values: CardViewKeyValuePairsItemType[];
     matTableValues: MatTableDataSource<CardViewKeyValuePairsItemType>;
 
-    ngOnChanges() {
+    ngOnChanges () {
         this.values = this.property.value || [];
         this.matTableValues = new MatTableDataSource(this.values);
     }
 
-    add(): void {
-        this.values.push({ name: '', value: '' });
+    add (): void {
+        this.values.push({ "name": '', "value": '' });
     }
 
-    remove(index: number): void {
+    remove (index: number): void {
         this.values.splice(index, 1);
         this.save(true);
     }
 
-    onBlur(value: any): void {
+    onBlur (value: any): void {
         if (value?.length) {
             this.save();
         }
     }
 
-    save(remove?: boolean): void {
+    save (remove?: boolean): void {
         const validValues = this.values.filter((i) => i.name.length && i.value.length);
 
         if (remove || validValues.length) {

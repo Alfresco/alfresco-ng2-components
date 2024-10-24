@@ -22,33 +22,33 @@ import { TranslationService } from '../translation/translation.service';
 import { LangChangeEvent } from '../mock';
 import { Observable, of } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class NoopTranslationService implements TranslationService {
     defaultLang: string = 'en';
     userLang: string;
     customLoader: any;
 
     translate: any = {
-        onLangChange: new EventEmitter<LangChangeEvent>()
+        "onLangChange": new EventEmitter<LangChangeEvent>()
     };
 
-    addTranslationFolder() {}
-    onTranslationChanged() {}
-    use(): any {}
-    loadTranslation() {}
+    addTranslationFolder () {}
+    onTranslationChanged () {}
+    use (): any {}
+    loadTranslation () {}
 
-    get(key: string | Array<string>): Observable<string | any> {
+    get (key: string | Array<string>): Observable<string | any> {
         return of(key);
     }
 
-    instant(key: string | Array<string>): string | any {
+    instant (key: string | Array<string>): string | any {
         return key;
     }
 }
 
 @NgModule({
-    imports: [HttpClientTestingModule, TranslateModule.forRoot()],
-    providers: [{ provide: TranslationService, useClass: NoopTranslationService }],
-    exports: [TranslateModule]
+    "imports": [HttpClientTestingModule, TranslateModule.forRoot()],
+    "providers": [{ "provide": TranslationService, "useClass": NoopTranslationService }],
+    "exports": [TranslateModule]
 })
 export class NoopTranslateModule {}

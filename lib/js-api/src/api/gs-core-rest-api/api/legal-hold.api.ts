@@ -24,13 +24,11 @@ import { HoldBulkStatusEntry } from '../model/holdBulkStatusEntry';
 
 /**
  * Legal Holds service.
- *
  * @module LegalHoldApi
  */
 export class LegalHoldApi extends BaseApi {
     /**
      * List of legal holds
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param options Optional parameters
      * @returns Promise<HoldPaging>
@@ -57,7 +55,6 @@ export class LegalHoldApi extends BaseApi {
 
     /**
      * Assign node to legal hold
-     *
      * @param holdId The identifier of a hold
      * @param nodeId The id of the node to be assigned to existing hold
      * @returns Promise<HoldEntry>
@@ -76,7 +73,6 @@ export class LegalHoldApi extends BaseApi {
 
     /**
      * Assign nodes to legal hold
-     *
      * @param holdId The identifier of a hold
      * @param nodeIds The list with id of nodes to assign to existing hold
      * @returns Promise<HoldPaging>
@@ -95,7 +91,6 @@ export class LegalHoldApi extends BaseApi {
 
     /**
      * Deletes the relationship between a child with id nodeId and a parent hold with id holdId
-     *
      * @param holdId The identifier of a hold
      * @param nodeId The Id of the node which is unassigned
      * @returns Empty response
@@ -112,7 +107,6 @@ export class LegalHoldApi extends BaseApi {
 
     /**
      * Create new hold
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param hold Hold to create
      * @returns Promise<HoldEntry>
@@ -135,7 +129,6 @@ export class LegalHoldApi extends BaseApi {
 
     /**
      * Create list of new holds
-     *
      * @param filePlanId The identifier of a file plan. You can also use the -filePlan- alias.
      * @param holds Array of holds
      * @returns Promise<HoldPaging>
@@ -158,7 +151,6 @@ export class LegalHoldApi extends BaseApi {
 
     /**
      * Start the asynchronous bulk process for a hold with id holdId based on search query results.
-     *
      * @param holdId The identifier of a hold
      * @param query Search query
      * @returns Promise<BulkAssignHoldResponseEntry>
@@ -179,7 +171,6 @@ export class LegalHoldApi extends BaseApi {
 
     /**
      * Get status of bulk operation with **bulkStatusId** for **holdId**.
-     *
      * @param bulkStatusId The identifier of a bulk status
      * @param holdId The identifier of a hold
      * @returns Promise<HoldsBulkStatusEntry>

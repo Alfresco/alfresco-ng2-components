@@ -21,22 +21,22 @@ import { CommonModule } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    standalone: true,
-    imports: [CommonModule],
-    selector: 'adf-boolean-cell',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+    "standalone": true,
+    "imports": [CommonModule],
+    "selector": 'adf-boolean-cell',
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "template": `
         <span [title]="tooltip">
             {{ boolValue }}
         </span>
     `,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell' }
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-datatable-content-cell' }
 })
 export class BooleanCellComponent extends DataTableCellComponent implements OnInit {
     boolValue = '';
 
-    ngOnInit() {
+    ngOnInit () {
         super.ngOnInit();
 
         this.value$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
@@ -44,7 +44,7 @@ export class BooleanCellComponent extends DataTableCellComponent implements OnIn
         });
     }
 
-    private transformBoolean(value: any): string {
+    private transformBoolean (value: any): string {
         if (value === true || value === 'true') {
             return 'true';
         }

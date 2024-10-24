@@ -29,53 +29,53 @@ import { ContentTypeService } from './content-type.service';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 const elementCustom: TypeEntry = {
-    entry: {
-        id: 'ck:pippobaudo',
-        title: 'PIPPO-BAUDO',
-        model: { id: 'what', namespacePrefix: 'ck' },
-        description: 'Doloro reaepgfihawpefih peahfa powfj p[qwofhjaq[ fq[owfj[qowjf[qowfgh[qowh f[qowhfj [qwohf',
-        parentId: 'cm:content',
-        properties: [
+    "entry": {
+        "id": 'ck:pippobaudo',
+        "title": 'PIPPO-BAUDO',
+        "model": { "id": 'what', "namespacePrefix": 'ck' },
+        "description": 'Doloro reaepgfihawpefih peahfa powfj p[qwofhjaq[ fq[owfj[qowjf[qowfgh[qowh f[qowhfj [qwohf',
+        "parentId": 'cm:content',
+        "properties": [
             {
-                id: 'lm:PropA',
-                dataType: 'lm:notshowed',
-                defaultValue: 'I NEVER show uP',
-                description: 'A inherited property',
-                isMandatory: false,
-                isMandatoryEnforced: false,
-                isMultiValued: false,
-                title: 'PropertyHidden'
+                "id": 'lm:PropA',
+                "dataType": 'lm:notshowed',
+                "defaultValue": 'I NEVER show uP',
+                "description": 'A inherited property',
+                "isMandatory": false,
+                "isMandatoryEnforced": false,
+                "isMultiValued": false,
+                "title": 'PropertyHidden'
             },
             {
-                id: 'ck:PropA',
-                dataType: 'ck:propA',
-                defaultValue: 'HERE I AM',
-                description: 'A property',
-                isMandatory: false,
-                isMandatoryEnforced: false,
-                isMultiValued: false,
-                title: 'PropertyA'
+                "id": 'ck:PropA',
+                "dataType": 'ck:propA',
+                "defaultValue": 'HERE I AM',
+                "description": 'A property',
+                "isMandatory": false,
+                "isMandatoryEnforced": false,
+                "isMultiValued": false,
+                "title": 'PropertyA'
             },
             {
-                id: 'ck:PropB',
-                dataType: 'ck:propB',
-                defaultValue: 'HERE I AM',
-                description: 'A property',
+                "id": 'ck:PropB',
+                "dataType": 'ck:propB',
+                "defaultValue": 'HERE I AM',
+                "description": 'A property',
 
-                isMandatory: false,
-                isMandatoryEnforced: false,
-                isMultiValued: false,
-                title: 'PropertyB'
+                "isMandatory": false,
+                "isMandatoryEnforced": false,
+                "isMultiValued": false,
+                "title": 'PropertyB'
             },
             {
-                id: 'ck:PropC',
-                dataType: 'ck:propC',
-                defaultValue: 'HERE I AM',
-                description: 'A property',
-                isMandatory: false,
-                isMandatoryEnforced: false,
-                isMultiValued: false,
-                title: 'PropertyC'
+                "id": 'ck:PropC',
+                "dataType": 'ck:propC',
+                "defaultValue": 'HERE I AM',
+                "description": 'A property',
+                "isMandatory": false,
+                "isMandatoryEnforced": false,
+                "isMultiValued": false,
+                "title": 'PropertyC'
             }
         ]
     }
@@ -89,23 +89,23 @@ describe('Content Type Dialog Component', () => {
 
     beforeEach(async () => {
         data = {
-            title: 'Title',
-            description: 'Description that can be longer or shorter',
-            nodeType: 'fk:fakeNode',
-            confirmMessage: 'Do you want to jump? Y/N',
-            select: new Subject<boolean>()
+            "title": 'Title',
+            "description": 'Description that can be longer or shorter',
+            "nodeType": 'fk:fakeNode',
+            "confirmMessage": 'Do you want to jump? Y/N',
+            "select": new Subject<boolean>()
         };
 
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule],
-            providers: [
-                { provide: MAT_DIALOG_DATA, useValue: data },
+            "imports": [ContentTestingModule, MatDialogModule],
+            "providers": [
+                { "provide": MAT_DIALOG_DATA, "useValue": data },
                 {
-                    provide: MatDialogRef,
-                    useValue: {
-                        keydownEvents: () => of(null),
-                        backdropClick: () => of(null),
-                        close: jasmine.createSpy('close')
+                    "provide": MatDialogRef,
+                    "useValue": {
+                        "keydownEvents": () => of(null),
+                        "backdropClick": () => of(null),
+                        "close": jasmine.createSpy('close')
                     }
                 }
             ]
@@ -153,7 +153,7 @@ describe('Content Type Dialog Component', () => {
     it('should show the property with the aspect prefix not the inherited ones', async () => {
         await (await loader.getHarness(MatExpansionPanelHarness)).toggle();
 
-        const table = await loader.getHarness(MatTableHarness.with({ selector: '.adf-content-type-table' }));
+        const table = await loader.getHarness(MatTableHarness.with({ "selector": '.adf-content-type-table' }));
 
         expect((await table.getRows()).length).toBe(3);
     });

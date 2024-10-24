@@ -28,7 +28,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            "imports": [ProcessTestingModule]
         });
         fixture = TestBed.createComponent(ProcessInstanceHeaderComponent);
         component = fixture.componentInstance;
@@ -106,7 +106,7 @@ describe('ProcessInstanceHeaderComponent', () => {
     });
 
     it('should display started by', async () => {
-        component.processInstance.startedBy = { firstName: 'Admin', lastName: 'User' };
+        component.processInstance.startedBy = { "firstName": 'Admin', "lastName": 'User' };
         component.ngOnChanges();
         fixture.detectChanges();
         await fixture.whenStable();
@@ -162,8 +162,8 @@ describe('ProcessInstanceHeaderComponent', () => {
     describe('Config Filtering', () => {
         it('should show only the properties from the configuration file', () => {
             appConfigService.config['adf-process-instance-header'] = {
-                presets: {
-                    properties: ['status', 'ended']
+                "presets": {
+                    "properties": ['status', 'ended']
                 }
             };
             component.ngOnChanges();

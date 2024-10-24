@@ -25,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NodeDownloadDirective } from '../../../directives/node-download.directive';
 
 const mockDialog = {
-    close: jasmine.createSpy('close')
+    "close": jasmine.createSpy('close')
 };
 describe('FileAutoDownloadComponent', () => {
     let matDialogRef: MatDialogRef<FileAutoDownloadComponent>;
@@ -35,10 +35,10 @@ describe('FileAutoDownloadComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatDialogModule, MatButtonModule, NodeDownloadDirective, FileAutoDownloadComponent],
-            providers: [
-                { provide: MatDialogRef, useValue: mockDialog },
-                { provide: MAT_DIALOG_DATA, useValue: null }
+            "imports": [NoopTranslateModule, MatDialogModule, MatButtonModule, NodeDownloadDirective, FileAutoDownloadComponent],
+            "providers": [
+                { "provide": MatDialogRef, "useValue": mockDialog },
+                { "provide": MAT_DIALOG_DATA, "useValue": null }
             ]
         });
 

@@ -22,44 +22,44 @@ import { RichTextEditorComponent } from './rich-text-editor.component';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: RichTextEditorComponent,
-    title: 'Process Services Cloud/Rich Text Editor',
-    decorators: [
+    "component": RichTextEditorComponent,
+    "title": 'Process Services Cloud/Rich Text Editor',
+    "decorators": [
         moduleMetadata({
-            imports: [RichTextEditorModule]
+            "imports": [RichTextEditorModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            "providers": [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
-    argTypes: {
-        data: {
-            control: 'object',
-            description: 'Output data.',
-            table: {
-                type: { summary: 'OutputData' }
+    "argTypes": {
+        "data": {
+            "control": 'object',
+            "description": 'Output data.',
+            "table": {
+                "type": { "summary": 'OutputData' }
             }
         },
-        placeholder: {
-            control: 'text',
-            description: 'Placeholder text.',
-            table: {
-                type: { summary: 'string' }
+        "placeholder": {
+            "control": 'text',
+            "description": 'Placeholder text.',
+            "table": {
+                "type": { "summary": 'string' }
             }
         },
-        autoFocus: {
-            control: 'boolean',
-            description: 'Focus on the editor when it is loaded.',
-            table: {
-                type: { summary: 'boolean' }
+        "autoFocus": {
+            "control": 'boolean',
+            "description": 'Focus on the editor when it is loaded.',
+            "table": {
+                "type": { "summary": 'boolean' }
             }
         }
     }
 } as Meta<RichTextEditorComponent>;
 
 const template: StoryFn<RichTextEditorComponent> = (args) => ({
-    props: args,
-    template: `
+    "props": args,
+    "template": `
     <adf-cloud-rich-text-editor [data]=data [placeholder]=placeholder [autofocus]=autofocus #editor>
     </adf-cloud-rich-text-editor>
     <hr/>
@@ -70,31 +70,31 @@ const template: StoryFn<RichTextEditorComponent> = (args) => ({
 
 export const DefaultRichTextEditor = template.bind({});
 DefaultRichTextEditor.args = {
-    data: {
-        time: 1550476186479,
-        blocks: [
+    "data": {
+        "time": 1550476186479,
+        "blocks": [
             {
-                type: 'paragraph',
-                data: {
-                    text: 'The example of text that was written in <b>one of popular</b> text editors.'
+                "type": 'paragraph',
+                "data": {
+                    "text": 'The example of text that was written in <b>one of popular</b> text editors.'
                 }
             },
             {
-                type: 'header',
-                data: {
-                    text: 'With the header of course',
-                    level: 2
+                "type": 'header',
+                "data": {
+                    "text": 'With the header of course',
+                    "level": 2
                 }
             },
             {
-                type: 'paragraph',
-                data: {
-                    text: 'So what do we have?'
+                "type": 'paragraph',
+                "data": {
+                    "text": 'So what do we have?'
                 }
             }
         ],
-        version: '2.29.0'
+        "version": '2.29.0'
     },
-    placeholder: 'Type something here...',
-    autoFocus: true
+    "placeholder": 'Type something here...',
+    "autoFocus": true
 };

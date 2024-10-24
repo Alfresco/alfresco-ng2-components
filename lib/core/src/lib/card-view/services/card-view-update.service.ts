@@ -25,38 +25,35 @@ import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 export const transformKeyToObject = (key: string, value): any => {
     const objectLevels: string[] = key.split('.').reverse();
 
-    return objectLevels.reduce<any>((previousValue, currentValue) => ({ [currentValue]: previousValue}), value);
+    return objectLevels.reduce<any>((previousValue, currentValue) => ({ [currentValue]: previousValue }), value);
 };
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class CardViewUpdateService implements BaseCardViewUpdate {
-
     itemUpdated$ = new Subject<UpdateNotification>();
     itemClicked$ = new Subject<ClickNotification>();
     updateItem$ = new Subject<CardViewBaseItemModel>();
 
-    update(property: CardViewBaseItemModel, newValue: any) {
+    update (property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdated$.next({
-            target: property,
-            changed: transformKeyToObject(property.key, newValue)
+            "target": property,
+            "changed": transformKeyToObject(property.key, newValue)
         });
     }
 
-    clicked(property: CardViewBaseItemModel) {
+    clicked (property: CardViewBaseItemModel) {
         this.itemClicked$.next({
-            target: property
+            "target": property
         });
     }
 
     /**
      * Updates the cardview items property
-     *
      * @param notification notification value
      */
-    updateElement(notification: CardViewBaseItemModel) {
+    updateElement (notification: CardViewBaseItemModel) {
         this.updateItem$.next(notification);
     }
-
 }

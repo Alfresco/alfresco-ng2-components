@@ -23,7 +23,7 @@ import { FeaturesDirective } from './features.directive';
 import { By } from '@angular/platform-browser';
 
 @Component({
-    template: `
+    "template": `
         <div>
             <div id="underFeatureFlag" *adfForFeatures="features"></div>
         </div>
@@ -33,7 +33,7 @@ class TestWithEnabledFlagComponent {
     features = 'feature1';
 }
 @Component({
-    template: `
+    "template": `
         <div>
             <div id="underFeatureFlag" *adfForFeatures="features"></div>
         </div>
@@ -49,16 +49,16 @@ describe('FeaturesDirective', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [CommonModule, FeaturesDirective],
-            providers: [
+            "imports": [CommonModule, FeaturesDirective],
+            "providers": [
                 provideMockFeatureFlags({
-                    feature1: true,
-                    feature2: false,
-                    feature3: true
+                    "feature1": true,
+                    "feature2": false,
+                    "feature3": true
                 }),
                 FeaturesDirective
             ],
-            declarations: [TestWithEnabledFlagComponent, TestWithDisabledFlagComponent]
+            "declarations": [TestWithEnabledFlagComponent, TestWithDisabledFlagComponent]
         });
         enabledFixture = TestBed.createComponent(TestWithEnabledFlagComponent);
         enabledFixture.detectChanges();

@@ -22,9 +22,9 @@ import { By } from '@angular/platform-browser';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
-    standalone: true,
-    imports: [NodeCounterDirective],
-    template: `<div [adf-node-counter]="count"></div>`
+    "standalone": true,
+    "imports": [NodeCounterDirective],
+    "template": `<div [adf-node-counter]="count"></div>`
 })
 class TestComponent {
     count: number = 0;
@@ -35,7 +35,7 @@ describe('NodeCounterDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NodeCounterDirective, NodeCounterComponent, TestComponent]
+            "imports": [NoopTranslateModule, NodeCounterDirective, NodeCounterComponent, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         fixture.detectChanges();

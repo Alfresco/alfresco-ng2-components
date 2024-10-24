@@ -26,7 +26,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { delay } from 'rxjs/operators';
 
 const fakeNode: Node = {
-    id: 'fake'
+    "id": 'fake'
 } as Node;
 
 describe('NodeActionsService', () => {
@@ -34,13 +34,13 @@ describe('NodeActionsService', () => {
     let documentListService: DocumentListService;
     let contentDialogService: ContentNodeDialogService;
     const dialogRef = {
-        open: jasmine.createSpy('open')
+        "open": jasmine.createSpy('open')
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [{ provide: MatDialogRef, useValue: dialogRef }]
+            "imports": [ContentTestingModule],
+            "providers": [{ "provide": MatDialogRef, "useValue": dialogRef }]
         });
         service = TestBed.inject(NodeActionsService);
         documentListService = TestBed.inject(DocumentListService);

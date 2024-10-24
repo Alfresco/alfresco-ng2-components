@@ -40,7 +40,7 @@ export const CONTENT_UPLOAD_DIRECTIVES = [
 
 /** @deprecated use `...CONTENT_UPLOAD_DIRECTIVES` instead or import standalone components directly */
 @NgModule({
-    imports: [...CONTENT_UPLOAD_DIRECTIVES],
-    exports: [...CONTENT_UPLOAD_DIRECTIVES]
+    "imports": [...CONTENT_UPLOAD_DIRECTIVES],
+    "exports": [...CONTENT_UPLOAD_DIRECTIVES]
 })
 export class UploadModule {}

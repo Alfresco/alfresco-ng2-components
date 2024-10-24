@@ -18,24 +18,24 @@
 import { SEARCH_LANGUAGE, SearchRequest } from '@alfresco/js-api';
 
 export const mockSearchRequest = {
-    query: {
-        query: '(search-term*)',
-        language: SEARCH_LANGUAGE.AFTS
+    "query": {
+        "query": '(search-term*)',
+        "language": SEARCH_LANGUAGE.AFTS
     },
-    include: ['path', 'allowableOperations'],
-    paging: {
-        maxItems: 25,
-        skipCount: 0
+    "include": ['path', 'allowableOperations'],
+    "paging": {
+        "maxItems": 25,
+        "skipCount": 0
     },
-    fields: undefined,
-    filterQueries: [],
-    facetQueries: null,
-    facetIntervals: null,
-    facetFields: null,
-    sort: [],
-    scope: {
-        locations: 'nodes'
+    "fields": undefined,
+    "filterQueries": [],
+    "facetQueries": null,
+    "facetIntervals": null,
+    "facetFields": null,
+    "sort": [],
+    "scope": {
+        "locations": 'nodes'
     },
-    highlight: null,
-    facetFormat: 'V2'
+    "highlight": null,
+    "facetFormat": 'V2'
 } as SearchRequest;

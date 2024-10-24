@@ -34,17 +34,17 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'adf-datetime-editor',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, FormsModule],
-    templateUrl: './datetime.editor.html',
-    providers: [
-        { provide: MAT_DATE_FORMATS, useValue: ADF_DATE_FORMATS },
-        { provide: MAT_DATETIME_FORMATS, useValue: ADF_DATETIME_FORMATS },
-        { provide: DateAdapter, useClass: AdfDateFnsAdapter },
-        { provide: DatetimeAdapter, useClass: AdfDateTimeFnsAdapter }
+    "selector": 'adf-datetime-editor',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, MatInputModule, MatDatetimepickerModule, FormsModule],
+    "templateUrl": './datetime.editor.html',
+    "providers": [
+        { "provide": MAT_DATE_FORMATS, "useValue": ADF_DATE_FORMATS },
+        { "provide": MAT_DATETIME_FORMATS, "useValue": ADF_DATETIME_FORMATS },
+        { "provide": DateAdapter, "useClass": AdfDateFnsAdapter },
+        { "provide": DatetimeAdapter, "useClass": AdfDateTimeFnsAdapter }
     ],
-    styleUrls: ['./datetime.editor.scss']
+    "styleUrls": ['./datetime.editor.scss']
 })
 export class DateTimeEditorComponent implements OnInit {
     DATE_TIME_FORMAT: string = 'DD/MM/YYYY HH:mm';
@@ -64,16 +64,16 @@ export class DateTimeEditorComponent implements OnInit {
     minDate: Date;
     maxDate: Date;
 
-    constructor(private dateAdapter: DateAdapter<Date>) {}
+    constructor (private dateAdapter: DateAdapter<Date>) {}
 
-    ngOnInit() {
+    ngOnInit () {
         const momentDateAdapter = this.dateAdapter as AdfDateFnsAdapter;
         momentDateAdapter.displayFormat = this.DATE_TIME_FORMAT;
 
         this.value = this.table.getCellValue(this.row, this.column) as Date;
     }
 
-    onDateChanged(newDateValue: MatDatetimepickerInputEvent<Date> | string) {
+    onDateChanged (newDateValue: MatDatetimepickerInputEvent<Date> | string) {
         if (typeof newDateValue === 'string') {
             const newValue = DateFnsUtils.parseDate(newDateValue, this.DATE_TIME_FORMAT);
             this.value = newValue;

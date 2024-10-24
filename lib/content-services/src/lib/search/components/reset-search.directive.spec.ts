@@ -22,7 +22,7 @@ import { SearchFacetFiltersService } from '../services/search-facet-filters.serv
 import { SearchQueryBuilderService } from '../services/search-query-builder.service';
 
 @Component({
-    template: `<button adf-reset-search>Reset</button>`
+    "template": `<button adf-reset-search>Reset</button>`
 })
 class TestComponent {}
 
@@ -33,8 +33,8 @@ describe('Directive: ResetSearchDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            declarations: [TestComponent]
+            "imports": [ContentTestingModule],
+            "declarations": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         searchFacetFiltersService = TestBed.inject(SearchFacetFiltersService);
@@ -43,7 +43,7 @@ describe('Directive: ResetSearchDirective', () => {
 
     it('should reset the search on click', () => {
         spyOn(queryBuilder, 'resetToDefaults');
-        searchFacetFiltersService.responseFacets = [{ type: 'field', label: 'f1' }] as any;
+        searchFacetFiltersService.responseFacets = [{ "type": 'field', "label": 'f1' }] as any;
         fixture.nativeElement.querySelector('button').click();
         expect(searchFacetFiltersService.responseFacets).toEqual([]);
         expect(queryBuilder.resetToDefaults).toHaveBeenCalled();

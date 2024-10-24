@@ -26,7 +26,7 @@ import { Component, DebugElement, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'adf-dummy-component'
+    "selector": 'adf-dummy-component'
 })
 class DummyComponent {
     data = inject(DIALOG_COMPONENT_DATA);
@@ -43,22 +43,22 @@ describe('DialogComponent', () => {
     const mockDataOnConfirm$ = new Subject();
 
     const data: DialogData = {
-        title: 'Title',
-        description: 'Description that can be longer or shorter'
+        "title": 'Title',
+        "description": 'Description that can be longer or shorter'
     };
 
     const dialogRef = {
-        close: jasmine.createSpy('close'),
-        addPanelClass: jasmine.createSpy('addPanelClass')
+        "close": jasmine.createSpy('close'),
+        "addPanelClass": jasmine.createSpy('addPanelClass')
     };
 
     const setupBeforeEach = (dialogOptions: DialogData = data) => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            declarations: [DummyComponent],
-            providers: [
-                { provide: MAT_DIALOG_DATA, useValue: dialogOptions },
-                { provide: MatDialogRef, useValue: dialogRef }
+            "imports": [CoreTestingModule],
+            "declarations": [DummyComponent],
+            "providers": [
+                { "provide": MAT_DIALOG_DATA, "useValue": dialogOptions },
+                { "provide": MatDialogRef, "useValue": dialogRef }
             ]
         }).compileComponents();
 
@@ -99,7 +99,7 @@ describe('DialogComponent', () => {
     describe('confirm action', () => {
         const mockButtonTitle = 'mockTitle';
         beforeEach(() => {
-            setupBeforeEach({ ...data, confirmButtonTitle: mockButtonTitle, dataOnConfirm$: mockDataOnConfirm$ });
+            setupBeforeEach({ ...data, "confirmButtonTitle": mockButtonTitle, "dataOnConfirm$": mockDataOnConfirm$ });
             fixture.detectChanges();
         });
 
@@ -167,8 +167,8 @@ describe('DialogComponent', () => {
         beforeEach(() => {
             setupBeforeEach({
                 ...data,
-                isCloseButtonHidden: true,
-                isCancelButtonHidden: true
+                "isCloseButtonHidden": true,
+                "isCancelButtonHidden": true
             });
         });
 
@@ -183,7 +183,7 @@ describe('DialogComponent', () => {
 
     describe('when dialog has large size', () => {
         beforeEach(() => {
-            setupBeforeEach({ ...data, dialogSize: DialogSize.Large });
+            setupBeforeEach({ ...data, "dialogSize": DialogSize.Large });
         });
 
         it('should have correct dialogSize value', () => {
@@ -205,7 +205,7 @@ describe('DialogComponent', () => {
 
     describe('when dialog has medium size', () => {
         beforeEach(() => {
-            setupBeforeEach({ ...data, dialogSize: DialogSize.Medium });
+            setupBeforeEach({ ...data, "dialogSize": DialogSize.Medium });
         });
 
         it('should have correct dialogSize value', () => {
@@ -228,7 +228,7 @@ describe('DialogComponent', () => {
     describe('when dialog has alert size', () => {
         describe('when dialog has not an ican', () => {
             beforeEach(() => {
-                setupBeforeEach({ ...data, dialogSize: DialogSize.Alert });
+                setupBeforeEach({ ...data, "dialogSize": DialogSize.Alert });
             });
 
             it('should have correct dialogSize value', () => {
@@ -258,8 +258,8 @@ describe('DialogComponent', () => {
             beforeEach(() => {
                 setupBeforeEach({
                     ...data,
-                    dialogSize: DialogSize.Alert,
-                    headerIcon: 'access_time'
+                    "dialogSize": DialogSize.Alert,
+                    "headerIcon": 'access_time'
                 });
             });
 
@@ -283,8 +283,8 @@ describe('DialogComponent', () => {
         beforeEach(() => {
             setupBeforeEach({
                 ...data,
-                contentComponent: DummyComponent,
-                componentData: mockData
+                "contentComponent": DummyComponent,
+                "componentData": mockData
             });
         });
 

@@ -35,7 +35,7 @@ describe('SearchWidgetChipComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatMenuModule, ContentTestingModule]
+            "imports": [MatMenuModule, ContentTestingModule]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         fixture = TestBed.createComponent(SearchWidgetChipComponent);

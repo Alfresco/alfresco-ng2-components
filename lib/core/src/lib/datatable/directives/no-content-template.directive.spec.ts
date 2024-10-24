@@ -26,7 +26,7 @@ describe('NoContentTemplateDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [DataTableComponent]
+            "imports": [DataTableComponent]
         });
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;

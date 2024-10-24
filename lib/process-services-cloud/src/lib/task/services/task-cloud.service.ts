@@ -36,26 +36,25 @@ import { IdentityUserService } from '../../people/services/identity-user.service
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TaskCloudService extends BaseCloudService implements TaskCloudServiceInterface {
     dataChangesDetected$ = new Subject();
 
-    constructor(private translateService: TranslationService, private identityUserService: IdentityUserService, adfHttpClient: AdfHttpClient) {
+    constructor (private translateService: TranslationService, private identityUserService: IdentityUserService, adfHttpClient: AdfHttpClient) {
         super(adfHttpClient);
     }
 
     /**
      * Complete a task.
-     *
      * @param appName Name of the app
      * @param taskId ID of the task to complete
      * @returns Details of the task that was completed
      */
-    completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    completeTask (appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             const url = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/complete`;
-            const payload = { payloadType: 'CompleteTaskPayload' };
+            const payload = { "payloadType": 'CompleteTaskPayload' };
 
             return this.post<any, TaskDetailsCloudModel>(url, payload);
         } else {
@@ -65,25 +64,23 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Validate if a task can be completed.
-     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
-    canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
+    canCompleteTask (taskDetails: TaskDetailsCloudModel): boolean {
         return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
      * Validate if a task is editable.
-     *
      * @param taskDetails task details object
      * @returns Boolean value if the task is editable
      */
-    isTaskEditable(taskDetails: TaskDetailsCloudModel): boolean {
+    isTaskEditable (taskDetails: TaskDetailsCloudModel): boolean {
         return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
-    isAssigneePropertyClickable(
+    isAssigneePropertyClickable (
         taskDetails: TaskDetailsCloudModel,
         candidateUsers: CardViewArrayItem[],
         candidateGroups: CardViewArrayItem[]
@@ -98,21 +95,19 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Validate if a task can be claimed.
-     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
-    canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+    canClaimTask (taskDetails: TaskDetailsCloudModel): boolean {
         return taskDetails?.status === TASK_CREATED_STATE && taskDetails?.permissions.includes(TASK_CLAIM_PERMISSION) && !taskDetails?.standalone;
     }
 
     /**
      * Validate if a task can be unclaimed.
-     *
      * @param taskDetails task details object
      * @returns Boolean value if the task can be completed
      */
-    canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+    canUnclaimTask (taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return (
             taskDetails?.status === TASK_ASSIGNED_STATE &&
@@ -124,13 +119,12 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Claims a task for an assignee.
-     *
      * @param appName Name of the app
      * @param taskId ID of the task to claim
      * @param assignee User to assign the task to
      * @returns Details of the claimed task
      */
-    claimTask(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
+    claimTask (appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/claim?assignee=${assignee}`;
 
@@ -147,12 +141,11 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Un-claims a task.
-     *
      * @param appName Name of the app
      * @param taskId ID of the task to unclaim
      * @returns Details of the task that was unclaimed
      */
-    unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    unclaimTask (appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/release`;
 
@@ -169,12 +162,11 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Gets details of a task.
-     *
      * @param appName Name of the app
      * @param taskId ID of the task whose details you want
      * @returns Task details
      */
-    getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    getTaskById (appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}`;
 
@@ -186,12 +178,11 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Creates a new standalone task.
-     *
      * @param startTaskRequest request model
      * @param appName application name
      * @returns Details of the newly created task
      */
-    createNewTask(startTaskRequest: StartTaskCloudRequestModel, appName: string): Observable<TaskDetailsCloudModel> {
+    createNewTask (startTaskRequest: StartTaskCloudRequestModel, appName: string): Observable<TaskDetailsCloudModel> {
         const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks`;
         const payload = JSON.stringify(new StartTaskCloudRequestModel(startTaskRequest));
 
@@ -200,13 +191,12 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Updates the details (name, description, due date) for a task.
-     *
      * @param appName Name of the app
      * @param taskId ID of the task to update
      * @param payload Data to update the task
      * @returns Updated task details
      */
-    updateTask(appName: string, taskId: string, payload: any): Observable<TaskDetailsCloudModel> {
+    updateTask (appName: string, taskId: string, payload: any): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             payload.payloadType = 'UpdateTaskPayload';
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}`;
@@ -219,12 +209,11 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Gets candidate users of the task.
-     *
      * @param appName Name of the app
      * @param taskId ID of the task
      * @returns Candidate users
      */
-    getCandidateUsers(appName: string, taskId: string): Observable<string[]> {
+    getCandidateUsers (appName: string, taskId: string): Observable<string[]> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-users`;
             return this.get<string[]>(queryUrl);
@@ -235,12 +224,11 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Gets candidate groups of the task.
-     *
      * @param appName Name of the app
      * @param taskId ID of the task
      * @returns Candidate groups
      */
-    getCandidateGroups(appName: string, taskId: string): Observable<string[]> {
+    getCandidateGroups (appName: string, taskId: string): Observable<string[]> {
         if ((appName || appName === '') && taskId) {
             const queryUrl = `${this.getBasePath(appName)}/query/v1/tasks/${taskId}/candidate-groups`;
             return this.get<string[]>(queryUrl);
@@ -251,11 +239,10 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Gets the process definitions associated with an app.
-     *
      * @param appName Name of the target app
      * @returns Array of process definitions
      */
-    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
+    getProcessDefinitions (appName: string): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
@@ -267,15 +254,14 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
 
     /**
      * Updates the task assignee.
-     *
      * @param appName Name of the app
      * @param taskId ID of the task to update assignee
      * @param assignee assignee to update current user task assignee
      * @returns Updated task details with new assignee
      */
-    assign(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
+    assign (appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
-            const payLoad = { assignee, taskId, payloadType: 'AssignTaskPayload' };
+            const payLoad = { assignee, taskId, "payloadType": 'AssignTaskPayload' };
             const url = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/assign`;
 
             return this.post(url, payLoad).pipe(map((res: any) => res.entry));
@@ -284,16 +270,16 @@ export class TaskCloudService extends BaseCloudService implements TaskCloudServi
         }
     }
 
-    getPriorityLabel(priority: number): string {
+    getPriorityLabel (priority: number): string {
         const priorityItem = this.priorities.find((item) => item.value === priority.toString()) || this.priorities[0];
         return this.translateService.instant(priorityItem.label);
     }
 
-    get priorities(): TaskPriorityOption[] {
+    get priorities (): TaskPriorityOption[] {
         return this.appConfigService.get('adf-cloud-priority-values') || DEFAULT_TASK_PRIORITIES;
     }
 
-    private isAssignedToMe(assignee: string): boolean {
+    private isAssignedToMe (assignee: string): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
         return assignee === currentUser;
     }

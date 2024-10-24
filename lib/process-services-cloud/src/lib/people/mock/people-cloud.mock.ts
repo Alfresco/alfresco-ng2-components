@@ -21,29 +21,29 @@ import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserFilterInterface } from '../services/identity-user-filter.interface';
 import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
 
-export const mockYorkshirePudding: IdentityUserModel = { id: 'yorkshire', username: 'Yorkshire Pudding', firstName: 'Yorkshire', lastName: 'Pudding', email: 'pudding@food.com' };
-export const mockShepherdsPie: IdentityUserModel = { id: 'shepherds', username: 'Shepherds Pie', firstName: 'Shepherds', lastName: 'Pie', email: 'shepherds@food.com'};
-export const mockKielbasaSausage: IdentityUserModel = { id: 'kielbasa', username: 'Kielbasa Sausage', firstName: 'Kielbasa', lastName: 'Sausage', email: 'sausage@food.com' };
+export const mockYorkshirePudding: IdentityUserModel = { "id": 'yorkshire', "username": 'Yorkshire Pudding', "firstName": 'Yorkshire', "lastName": 'Pudding', "email": 'pudding@food.com' };
+export const mockShepherdsPie: IdentityUserModel = { "id": 'shepherds', "username": 'Shepherds Pie', "firstName": 'Shepherds', "lastName": 'Pie', "email": 'shepherds@food.com'};
+export const mockKielbasaSausage: IdentityUserModel = { "id": 'kielbasa', "username": 'Kielbasa Sausage', "firstName": 'Kielbasa', "lastName": 'Sausage', "email": 'sausage@food.com' };
 
 export const mockFoodUsers: IdentityUserModel[] = [mockYorkshirePudding, mockShepherdsPie, mockKielbasaSausage];
 
 export const mockPreselectedFoodUsers = [
-    { ...mockYorkshirePudding, readonly: false },
-    { ...mockKielbasaSausage, readonly: false }
+    { ...mockYorkshirePudding, "readonly": false },
+    { ...mockKielbasaSausage, "readonly": false }
 ];
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class IdentityUserServiceMock implements IdentityUserServiceInterface {
 
     queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
-    getCurrentUserInfo(): IdentityUserModel {
+    getCurrentUserInfo (): IdentityUserModel {
         return mockKielbasaSausage;
     }
 
-    search(name: string, _filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
+    search (name: string, _filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
         if (name.trim() === '') {
             return EMPTY;
         }

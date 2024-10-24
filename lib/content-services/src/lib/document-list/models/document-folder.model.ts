@@ -21,7 +21,7 @@ export class DocumentLoaderNode {
     currentNode: NodeEntry;
     children: NodePaging;
 
-    constructor(currentNode: NodeEntry, children: NodePaging) {
+    constructor (currentNode: NodeEntry, children: NodePaging) {
         this.currentNode = currentNode;
         this.children = children;
     }

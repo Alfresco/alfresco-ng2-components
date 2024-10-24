@@ -23,42 +23,42 @@ import { of } from 'rxjs';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: CardViewArrayItemComponent,
-    title: 'Core/Card View/Card View Array Item',
-    decorators: [
+    "component": CardViewArrayItemComponent,
+    "title": 'Core/Card View/Card View Array Item',
+    "decorators": [
         moduleMetadata({
-            imports: [...CARD_VIEW_DIRECTIVES]
+            "imports": [...CARD_VIEW_DIRECTIVES]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    argTypes: {
-        property: {
-            description: 'Card View Item Model with data',
-            table: {
-                type: { summary: 'CardViewArrayItemModel' }
+    "argTypes": {
+        "property": {
+            "description": 'Card View Item Model with data',
+            "table": {
+                "type": { "summary": 'CardViewArrayItemModel' }
             }
         }
     }
 } as Meta<CardViewArrayItemComponent>;
 
 export const CardViewArrayItem: StoryFn<CardViewArrayItemComponent> = (args) => ({
-    props: args
+    "props": args
 });
 CardViewArrayItem.args = {
-    property: new CardViewArrayItemModel({
-        label: 'CardView Array of items',
-        value: of([
-            { icon: 'directions_bike', value: 'Zlatan' },
-            { icon: 'directions_bike', value: 'Lionel Messi' },
-            { value: 'Mohamed', directions_bike: 'save' },
-            { value: 'Ronaldo' }
+    "property": new CardViewArrayItemModel({
+        "label": 'CardView Array of items',
+        "value": of([
+            { "icon": 'directions_bike', "value": 'Zlatan' },
+            { "icon": 'directions_bike', "value": 'Lionel Messi' },
+            { "value": 'Mohamed', "directions_bike": 'save' },
+            { "value": 'Ronaldo' }
         ]),
-        key: 'array',
-        icon: 'edit',
-        default: 'Empty',
-        noOfItemsToDisplay: 2
+        "key": 'array',
+        "icon": 'edit',
+        "default": 'Empty',
+        "noOfItemsToDisplay": 2
     })
 };
-CardViewArrayItem.parameters = { layout: 'centered' };
+CardViewArrayItem.parameters = { "layout": 'centered' };

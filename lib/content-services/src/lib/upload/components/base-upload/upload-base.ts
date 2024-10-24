@@ -87,48 +87,40 @@ export abstract class UploadBase implements OnInit, OnDestroy {
 
     protected onDestroy$ = new Subject<boolean>();
 
-    ngOnInit() {
-        this.uploadService.fileUploadError
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(error => this.error.emit(error));
+    ngOnInit () {
+        this.uploadService.fileUploadError.pipe(takeUntil(this.onDestroy$)).subscribe((error) => this.error.emit(error));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
     /**
      * Upload a list of file in the specified path
-     *
      * @param files files to upload
      */
-    uploadFiles(files: File[]): void {
-        const filteredFiles: FileModel[] = files
-            .map<FileModel>((file: File) => this.createFileModel(file, this.rootFolderId, ((file as any).webkitRelativePath || '').replace(/\/[^/]*$/, '')));
+    uploadFiles (files: File[]): void {
+        const filteredFiles: FileModel[] = files.map<FileModel>((file: File) =>
+            this.createFileModel(file, this.rootFolderId, ((file as any).webkitRelativePath || '').replace(/\/[^/]*$/, ''))
+        );
 
         this.uploadQueue(filteredFiles);
     }
 
-    uploadFilesInfo(files: FileInfo[]): void {
-        const filteredFiles: FileModel[] = files
-            .map<FileModel>((fileInfo: FileInfo) => this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder));
+    uploadFilesInfo (files: FileInfo[]): void {
+        const filteredFiles: FileModel[] = files.map<FileModel>((fileInfo: FileInfo) =>
+            this.createFileModel(fileInfo.file, this.rootFolderId, fileInfo.relativeFolder)
+        );
 
         this.uploadQueue(filteredFiles);
     }
 
-    private uploadQueue(files: FileModel[]) {
-        const filteredFiles = files
-            .filter(this.isFileAcceptable.bind(this))
-            .filter(this.isFileSizeAcceptable.bind(this));
+    private uploadQueue (files: FileModel[]) {
+        const filteredFiles = files.filter(this.isFileAcceptable.bind(this)).filter(this.isFileSizeAcceptable.bind(this));
 
         this.ngZone.run(() => {
-            const event = new UploadFilesEvent(
-                [...filteredFiles],
-                this.uploadService,
-                this.success,
-                this.error
-            );
+            const event = new UploadFilesEvent([...filteredFiles], this.uploadService, this.success, this.error);
             this.beginUpload.emit(event);
 
             if (!event.defaultPrevented) {
@@ -142,43 +134,43 @@ export abstract class UploadBase implements OnInit, OnDestroy {
 
     /**
      * Checks if the given file is allowed by the extension filters
-     *
      * @param file FileModel
      * @returns `true` if file is acceptable, otherwise `false`
      */
-    protected isFileAcceptable(file: FileModel): boolean {
+    protected isFileAcceptable (file: FileModel): boolean {
         if (this.acceptedFilesType === '*') {
             return true;
         }
 
-        const allowedExtensions = this.acceptedFilesType
-            .split(',')
-            .map((ext) => ext.trim().replace(/^\./, ''));
+        const allowedExtensions = this.acceptedFilesType.split(',').map((ext) => ext.trim().replace(/^\./, ''));
 
         return allowedExtensions.indexOf(file.extension) !== -1;
     }
 
     /**
      * Creates FileModel from File
-     *
      * @param file file instance
      * @param parentId parent id
      * @param path upload path
      * @param id model id
      * @returns file model
      */
-    protected createFileModel(file: File, parentId: string, path: string, id?: string): FileModel {
-        return new FileModel(file, {
-            comment: this.comment,
-            majorVersion: this.majorVersion,
-            newVersion: this.versioning,
-            parentId,
-            path,
-            nodeType: this.nodeType
-        }, id);
+    protected createFileModel (file: File, parentId: string, path: string, id?: string): FileModel {
+        return new FileModel(
+            file,
+            {
+                "comment": this.comment,
+                "majorVersion": this.majorVersion,
+                "newVersion": this.versioning,
+                parentId,
+                path,
+                "nodeType": this.nodeType
+            },
+            id
+        );
     }
 
-    protected isFileSizeAllowed(file: FileModel) {
+    protected isFileSizeAllowed (file: FileModel) {
         let isFileSizeAllowed = true;
         if (this.isMaxFileSizeDefined()) {
             isFileSizeAllowed = this.isFileSizeCorrect(file);
@@ -187,35 +179,30 @@ export abstract class UploadBase implements OnInit, OnDestroy {
         return isFileSizeAllowed;
     }
 
-    protected isMaxFileSizeDefined() {
+    protected isMaxFileSizeDefined () {
         return this.maxFilesSize !== undefined && this.maxFilesSize !== null;
     }
 
-    protected isFileSizeCorrect(file: FileModel) {
+    protected isFileSizeCorrect (file: FileModel) {
         return this.maxFilesSize >= 0 && file.size <= this.maxFilesSize;
     }
 
     /**
      * Checks if the given file is an acceptable size
-     *
      * @param file FileModel
      * @returns `true` if file size is acceptable, otherwise `false`
      */
-    private isFileSizeAcceptable(file: FileModel): boolean {
+    private isFileSizeAcceptable (file: FileModel): boolean {
         let acceptableSize = true;
 
         if (!this.isFileSizeAllowed(file)) {
             acceptableSize = false;
 
-            const message = this.translationService.instant(
-                'FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE',
-                { fileName: file.name }
-            );
+            const message = this.translationService.instant('FILE_UPLOAD.MESSAGES.EXCEED_MAX_FILE_SIZE', { "fileName": file.name });
 
             this.error.emit(message);
         }
 
         return acceptableSize;
     }
-
 }

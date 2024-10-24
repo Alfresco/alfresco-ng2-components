@@ -25,15 +25,15 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-library-status-column',
-    standalone: true,
-    imports: [CommonModule, TranslateModule],
-    template: `
+    "selector": 'adf-library-status-column',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule],
+    "template": `
         <span class="adf-datatable-cell-value" title="{{ displayText$ | async | translate }}">
             {{ displayText$ | async | translate }}
         </span>
     `,
-    host: { class: 'adf-library-status-column adf-datatable-content-cell' }
+    "host": { "class": 'adf-library-status-column adf-datatable-content-cell' }
 })
 export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
     @Input()
@@ -43,9 +43,9 @@ export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private nodesApiService: NodesApiService) {}
+    constructor (private nodesApiService: NodesApiService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.updateValue();
 
         this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
@@ -61,7 +61,7 @@ export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected updateValue() {
+    protected updateValue () {
         const node: SiteEntry = this.context.row.node;
         if (node?.entry) {
             const visibility: string = node.entry.visibility;
@@ -83,7 +83,7 @@ export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

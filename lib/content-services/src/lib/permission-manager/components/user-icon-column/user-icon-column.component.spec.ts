@@ -25,19 +25,19 @@ describe('UserIconColumnComponent', () => {
     let component: UserIconColumnComponent;
     let element: HTMLElement;
     const person = {
-        firstName: 'fake',
-        lastName: 'user',
-        email: 'fake@test.com'
+        "firstName": 'fake',
+        "lastName": 'user',
+        "email": 'fake@test.com'
     };
 
     const group = {
-        id: 'fake-id',
-        displayName: 'fake authority'
+        "id": 'fake-id',
+        "displayName": 'fake authority'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(UserIconColumnComponent);
         component = fixture.componentInstance;
@@ -50,8 +50,8 @@ describe('UserIconColumnComponent', () => {
 
         it('should render person value from context', () => {
             component.context = {
-                row: {
-                    obj: {
+                "row": {
+                    "obj": {
                         person
                     }
                 }
@@ -63,9 +63,9 @@ describe('UserIconColumnComponent', () => {
 
         it('should render person value from node', () => {
             component.node = {
-                entry: {
-                    nodeType: 'cm:person',
-                    properties: {
+                "entry": {
+                    "nodeType": 'cm:person',
+                    "properties": {
                         'cm:firstName': 'Fake',
                         'cm:lastName': 'User',
                         'cm:email': 'fake-user@test.com',
@@ -84,8 +84,8 @@ describe('UserIconColumnComponent', () => {
 
         it('should render group value from context', () => {
             component.context = {
-                row: {
-                    obj: {
+                "row": {
+                    "obj": {
                         group
                     }
                 }
@@ -98,9 +98,9 @@ describe('UserIconColumnComponent', () => {
 
         it('should render person value from node', () => {
             component.node = {
-                entry: {
-                    nodeType: 'cm:authorityContainer',
-                    properties: {
+                "entry": {
+                    "nodeType": 'cm:authorityContainer',
+                    "properties": {
                         'cm:authorityName': 'Fake authorityN'
                     }
                 }

@@ -24,60 +24,54 @@ import { ActivitiCommentsApi } from '@alfresco/js-api';
 import { PeopleProcessService } from '../../services/people-process.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class CommentProcessService implements CommentsService {
     private _commentsApi: ActivitiCommentsApi;
-    get commentsApi(): ActivitiCommentsApi {
+    get commentsApi (): ActivitiCommentsApi {
         this._commentsApi = this._commentsApi ?? new ActivitiCommentsApi(this.apiService.getInstance());
         return this._commentsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private peopleProcessService: PeopleProcessService) {}
+    constructor (private apiService: AlfrescoApiService, private peopleProcessService: PeopleProcessService) {}
 
     /**
      * Gets all comments that have been added to a process instance.
-     *
      * @param id ID of the target process instance
      * @returns Details for each comment
      */
-    get(id: string): Observable<CommentModel[]> {
+    get (id: string): Observable<CommentModel[]> {
         return from(this.commentsApi.getProcessInstanceComments(id)).pipe(
-            map((response) => {
-                return response.data.map((comment) => {
-                    return new CommentModel({
-                        id: comment.id,
-                        message: comment.message,
-                        created: comment.created,
-                        createdBy: new User(comment.createdBy)
-                    });
-                });
-            })
+            map((response) => response.data.map((comment) => new CommentModel({
+                        "id": comment.id,
+                        "message": comment.message,
+                        "created": comment.created,
+                        "createdBy": new User(comment.createdBy)
+                    })))
         );
     }
 
     /**
      * Adds a comment to a process instance.
-     *
      * @param id ID of the target process instance
      * @param message Text for the comment
      * @returns Details of the comment added
      */
-    add(id: string, message: string): Observable<CommentModel> {
+    add (id: string, message: string): Observable<CommentModel> {
         return from(this.commentsApi.addProcessInstanceComment({ message }, id)).pipe(
             map(
                 (response) =>
                     new CommentModel({
-                        id: response.id,
-                        message: response.message,
-                        created: response.created,
-                        createdBy: new User(response.createdBy)
+                        "id": response.id,
+                        "message": response.message,
+                        "created": response.created,
+                        "createdBy": new User(response.createdBy)
                     })
             )
         );
     }
 
-    getUserImage(userId: string): string {
+    getUserImage (userId: string): string {
         return this.peopleProcessService.getUserImage(userId);
     }
 }

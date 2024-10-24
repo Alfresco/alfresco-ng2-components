@@ -20,7 +20,7 @@ import { NewVersionUploaderDialogComponent } from './new-version-uploader.dialog
 
 /** @deprecated use `NewVersionUploaderDialogComponent` standalone component instead */
 @NgModule({
-    imports: [NewVersionUploaderDialogComponent],
-    exports: [NewVersionUploaderDialogComponent]
+    "imports": [NewVersionUploaderDialogComponent],
+    "exports": [NewVersionUploaderDialogComponent]
 })
 export class NewVersionUploaderModule {}

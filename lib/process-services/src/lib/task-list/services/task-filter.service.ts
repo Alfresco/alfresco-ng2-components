@@ -22,24 +22,23 @@ import { UserFiltersApi, UserTaskFilterRepresentation } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TaskFilterService {
     protected apiService = inject(AlfrescoApiService);
 
     private _userFiltersApi: UserFiltersApi;
-    get userFiltersApi(): UserFiltersApi {
+    get userFiltersApi (): UserFiltersApi {
         this._userFiltersApi = this._userFiltersApi ?? new UserFiltersApi(this.apiService.getInstance());
         return this._userFiltersApi;
     }
 
     /**
      * Creates and returns the default filters for a process app.
-     *
      * @param appId ID of the target app
      * @returns Array of default filters just created
      */
-    public createDefaultFilters(appId: number): Observable<UserTaskFilterRepresentation[]> {
+    public createDefaultFilters (appId: number): Observable<UserTaskFilterRepresentation[]> {
         const myTasksFilter = this.getMyTasksFilterInstance(appId, 0);
         const myTaskObservable = this.addFilter(myTasksFilter);
 
@@ -61,7 +60,7 @@ export class TaskFilterService {
                             filters.push(
                                 new UserTaskFilterRepresentation({
                                     ...filter,
-                                    filter: involvedTasksFilter.filter,
+                                    "filter": involvedTasksFilter.filter,
                                     appId
                                 })
                             );
@@ -69,7 +68,7 @@ export class TaskFilterService {
                             filters.push(
                                 new UserTaskFilterRepresentation({
                                     ...filter,
-                                    filter: myTasksFilter.filter,
+                                    "filter": myTasksFilter.filter,
                                     appId
                                 })
                             );
@@ -77,7 +76,7 @@ export class TaskFilterService {
                             filters.push(
                                 new UserTaskFilterRepresentation({
                                     ...filter,
-                                    filter: queuedTasksFilter.filter,
+                                    "filter": queuedTasksFilter.filter,
                                     appId
                                 })
                             );
@@ -85,7 +84,7 @@ export class TaskFilterService {
                             filters.push(
                                 new UserTaskFilterRepresentation({
                                     ...filter,
-                                    filter: completedTasksFilter.filter,
+                                    "filter": completedTasksFilter.filter,
                                     appId
                                 })
                             );
@@ -100,11 +99,10 @@ export class TaskFilterService {
 
     /**
      * Gets all task filters for a process app.
-     *
      * @param appId Optional ID for a specific app
      * @returns Array of task filter details
      */
-    getTaskListFilters(appId?: number): Observable<UserTaskFilterRepresentation[]> {
+    getTaskListFilters (appId?: number): Observable<UserTaskFilterRepresentation[]> {
         return from(this.callApiTaskFilters(appId)).pipe(
             map((response) => {
                 const filters: UserTaskFilterRepresentation[] = [];
@@ -121,54 +119,49 @@ export class TaskFilterService {
 
     /**
      * Checks if a filter with the given name already exists in the list of filters.
-     *
      * @param filters - An array of objects representing the existing filters.
      * @param filterName - The name of the filter to check for existence.
      * @returns - True if a filter with the specified name already exists, false otherwise.
      */
-    isFilterAlreadyExisting(filters: UserTaskFilterRepresentation[], filterName: string): boolean {
+    isFilterAlreadyExisting (filters: UserTaskFilterRepresentation[], filterName: string): boolean {
         return filters.some((existingFilter) => existingFilter.name === filterName);
     }
 
     /**
      * Gets a task filter by ID.
-     *
      * @param filterId ID of the filter
      * @param appId ID of the app for the filter
      * @returns Details of task filter
      */
-    getTaskFilterById(filterId: number, appId?: number): Observable<UserTaskFilterRepresentation> {
+    getTaskFilterById (filterId: number, appId?: number): Observable<UserTaskFilterRepresentation> {
         return from(this.callApiTaskFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.id === filterId)));
     }
 
     /**
      * Gets a task filter by name.
-     *
      * @param taskName Name of the filter
      * @param appId ID of the app for the filter
      * @returns Details of task filter
      */
-    getTaskFilterByName(taskName: string, appId?: number): Observable<UserTaskFilterRepresentation> {
+    getTaskFilterByName (taskName: string, appId?: number): Observable<UserTaskFilterRepresentation> {
         return from(this.callApiTaskFilters(appId)).pipe(map((response) => response.data.find((filter) => filter.name === taskName)));
     }
 
     /**
      * Adds a new task filter
-     *
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
-    addFilter(filter: UserTaskFilterRepresentation): Observable<UserTaskFilterRepresentation> {
+    addFilter (filter: UserTaskFilterRepresentation): Observable<UserTaskFilterRepresentation> {
         return from(this.userFiltersApi.createUserTaskFilter(filter));
     }
 
     /**
      * Calls `getUserTaskFilters` from the Alfresco JS API.
-     *
      * @param appId ID of the target app
      * @returns List of task filters
      */
-    callApiTaskFilters(appId?: number): Promise<any> {
+    callApiTaskFilters (appId?: number): Promise<any> {
         if (appId) {
             return this.userFiltersApi.getUserTaskFilters({ appId });
         } else {
@@ -178,22 +171,21 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "My Tasks" task instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getMyTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+    getMyTasksFilterInstance (appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'My Tasks',
+            "name": 'My Tasks',
             appId,
-            recent: false,
-            icon: 'glyphicon-inbox',
-            filter: {
-                sort: 'created-desc',
-                name: '',
-                state: 'open',
-                assignment: 'assignee'
+            "recent": false,
+            "icon": 'glyphicon-inbox',
+            "filter": {
+                "sort": 'created-desc',
+                "name": '',
+                "state": 'open',
+                "assignment": 'assignee'
             },
             index
         });
@@ -201,54 +193,51 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "Involved" task instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getInvolvedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+    getInvolvedTasksFilterInstance (appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'Involved Tasks',
+            "name": 'Involved Tasks',
             appId,
-            recent: false,
-            icon: 'glyphicon-align-left',
-            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'involved' },
+            "recent": false,
+            "icon": 'glyphicon-align-left',
+            "filter": { "sort": 'created-desc', "name": '', "state": 'open', "assignment": 'involved' },
             index
         });
     }
 
     /**
      * Creates and returns a filter for "Queued Tasks" task instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getQueuedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+    getQueuedTasksFilterInstance (appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'Queued Tasks',
+            "name": 'Queued Tasks',
             appId,
-            recent: false,
-            icon: 'glyphicon-record',
-            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'candidate' },
+            "recent": false,
+            "icon": 'glyphicon-record',
+            "filter": { "sort": 'created-desc', "name": '', "state": 'open', "assignment": 'candidate' },
             index
         });
     }
 
     /**
      * Creates and returns a filter for "Completed" task instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getCompletedTasksFilterInstance(appId: number, index?: number): UserTaskFilterRepresentation {
+    getCompletedTasksFilterInstance (appId: number, index?: number): UserTaskFilterRepresentation {
         return new UserTaskFilterRepresentation({
-            name: 'Completed Tasks',
+            "name": 'Completed Tasks',
             appId,
-            recent: true,
-            icon: 'glyphicon-ok-sign',
-            filter: { sort: 'created-desc', name: '', state: 'completed', assignment: 'involved' },
+            "recent": true,
+            "icon": 'glyphicon-ok-sign',
+            "filter": { "sort": 'created-desc', "name": '', "state": 'completed', "assignment": 'involved' },
             index
         });
     }

@@ -23,10 +23,10 @@ import edjsHTML from 'editorjs-html';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-    selector: 'display-rich-text',
-    templateUrl: './display-rich-text.widget.html',
-    styleUrls: ['./display-rich-text.widget.scss'],
-    host: {
+    "selector": 'display-rich-text',
+    "templateUrl": './display-rich-text.widget.html',
+    "styleUrls": ['./display-rich-text.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -37,13 +37,13 @@ import { DomSanitizer } from '@angular/platform-browser';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class DisplayRichTextWidgetComponent extends WidgetComponent implements OnInit {
     parsedHTML: any;
 
     private static readonly CUSTOM_PARSER = {
-        header: ({ data, tunes }): string => {
+        "header": ({ data, tunes }): string => {
             const paragraphAlign = data.alignment || data.align || tunes?.anyTuneName?.alignment;
             if (typeof paragraphAlign !== 'undefined' && ['left', 'right', 'center'].includes(paragraphAlign)) {
                 return `<h${data.level} class="ce-tune-alignment--${paragraphAlign}">${data.text}</h${data.level}>`;
@@ -51,7 +51,7 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
                 return `<h${data.level}>${data.text}</h${data.level}>`;
             }
         },
-        paragraph: ({ data, tunes }): string => {
+        "paragraph": ({ data, tunes }): string => {
             const paragraphAlign = data.alignment || data.align || tunes?.anyTuneName?.alignment;
 
             if (typeof paragraphAlign !== 'undefined' && ['left', 'right', 'center', 'justify'].includes(paragraphAlign)) {
@@ -62,11 +62,11 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
         }
     };
 
-    constructor(public formService: FormService, private readonly sanitizer: DomSanitizer) {
+    constructor (public formService: FormService, private readonly sanitizer: DomSanitizer) {
         super(formService);
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.parsedHTML = edjsHTML(DisplayRichTextWidgetComponent.CUSTOM_PARSER).parseStrict(this.field.value);
 
         if (!(this.parsedHTML instanceof Error)) {
@@ -76,7 +76,7 @@ export class DisplayRichTextWidgetComponent extends WidgetComponent implements O
         }
     }
 
-    private sanitizeHtmlContent(): void {
+    private sanitizeHtmlContent (): void {
         this.parsedHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.parsedHTML.join(''));
     }
 }

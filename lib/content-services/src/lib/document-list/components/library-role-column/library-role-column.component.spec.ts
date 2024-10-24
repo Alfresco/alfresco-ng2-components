@@ -26,8 +26,8 @@ describe('LibraryRoleColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, LibraryRoleColumnComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+            "imports": [ContentTestingModule, LibraryRoleColumnComponent],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(LibraryRoleColumnComponent);
         component = fixture.componentInstance;
@@ -35,7 +35,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     it('should render Manager', () => {
         component.context = {
-            row: { node: { entry: { role: 'SiteManager' } } }
+            "row": { "node": { "entry": { "role": 'SiteManager' } } }
         };
 
         let value = '';
@@ -47,7 +47,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     it('should render Collaborator', () => {
         component.context = {
-            row: { node: { entry: { role: 'SiteCollaborator' } } }
+            "row": { "node": { "entry": { "role": 'SiteCollaborator' } } }
         };
 
         let value = '';
@@ -59,7 +59,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     it('should render Contributor', () => {
         component.context = {
-            row: { node: { entry: { role: 'SiteContributor' } } }
+            "row": { "node": { "entry": { "role": 'SiteContributor' } } }
         };
 
         let value = '';
@@ -71,7 +71,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     it('should render Consumer', () => {
         component.context = {
-            row: { node: { entry: { role: 'SiteConsumer' } } }
+            "row": { "node": { "entry": { "role": 'SiteConsumer' } } }
         };
 
         let value = '';
@@ -83,7 +83,7 @@ describe('LibraryRoleColumnComponent', () => {
 
     it('should not render text for unknown', () => {
         component.context = {
-            row: { node: { entry: { role: 'ROLE' } } }
+            "row": { "node": { "entry": { "role": 'ROLE' } } }
         };
 
         let value = '';

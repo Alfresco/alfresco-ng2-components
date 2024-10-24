@@ -24,39 +24,39 @@ import { FormDefinitionSelectorCloudServiceMock } from '../mocks/form-definition
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: FormDefinitionSelectorCloudComponent,
-    title: 'Process Services Cloud/Form Cloud/Form Definition Selector Cloud',
-    decorators: [
+    "component": FormDefinitionSelectorCloudComponent,
+    "title": 'Process Services Cloud/Form Cloud/Form Definition Selector Cloud',
+    "decorators": [
         moduleMetadata({
-            imports: [FormCloudModule],
-            providers: [{ provide: FormDefinitionSelectorCloudService, useClass: FormDefinitionSelectorCloudServiceMock }]
+            "imports": [FormCloudModule],
+            "providers": [{ "provide": FormDefinitionSelectorCloudService, "useClass": FormDefinitionSelectorCloudServiceMock }]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            "providers": [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
-    argTypes: {
-        appName: {
-            control: 'text',
-            description: 'Name of the application. If specified, this shows the users who have access to the app.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: '' }
+    "argTypes": {
+        "appName": {
+            "control": 'text',
+            "description": 'Name of the application. If specified, this shows the users who have access to the app.',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": '' }
             }
         },
-        selectForm: {
-            action: 'selectForm',
-            description: 'Emitted when a form is selected.',
-            table: { category: 'Actions' }
+        "selectForm": {
+            "action": 'selectForm',
+            "description": 'Emitted when a form is selected.',
+            "table": { "category": 'Actions' }
         }
     },
-    args: {
-        appName: ''
+    "args": {
+        "appName": ''
     }
 } as Meta<FormDefinitionSelectorCloudComponent>;
 
 const template: StoryFn<FormDefinitionSelectorCloudComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const FormDefinitionSelectorCloud = template.bind({});

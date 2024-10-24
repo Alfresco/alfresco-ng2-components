@@ -35,10 +35,10 @@ import { TasksListDatatableAdapter } from '../datatable/task-list-datatable-adap
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
 @Component({
-    selector: 'adf-cloud-task-list',
-    templateUrl: './base-task-list-cloud.component.html',
-    styleUrls: ['./base-task-list-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-task-list',
+    "templateUrl": './base-task-list-cloud.component.html',
+    "styleUrls": ['./base-task-list-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> implements OnDestroy {
     /**
@@ -197,7 +197,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
-    constructor(
+    constructor (
         @Inject(TASK_SEARCH_API_METHOD_TOKEN) @Optional() private searchMethod: 'GET' | 'POST',
         @Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
         appConfigService: AppConfigService,
@@ -209,12 +209,12 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroyTaskList$.next(true);
         this.onDestroyTaskList$.complete();
     }
 
-    reload() {
+    reload () {
         this.isReloadingSubject$.next(true);
 
         this.isColumnSchemaCreated$
@@ -234,10 +234,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                 takeUntil(this.onDestroyTaskList$)
             )
             .subscribe({
-                next: (tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
+                "next": (tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
                     const tasksWithVariables = tasks.list.entries.map((task) => ({
                         ...task,
-                        variables: task.processVariables
+                        "variables": task.processVariables
                     }));
 
                     this.rows = this.viewModelCreator.mapVariablesByColumnTitle(tasksWithVariables, this.columns);
@@ -248,80 +248,80 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                     this.isReloadingSubject$.next(false);
                     this.pagination.next(tasks.list.pagination);
                 },
-                error: (error) => {
+                "error": (error) => {
                     this.error.emit(error);
                     this.isReloadingSubject$.next(false);
                 }
             });
     }
 
-    private createTaskListRequestNode(): TaskListRequestModel {
+    private createTaskListRequestNode (): TaskListRequestModel {
         const requestNode: TaskListRequestModel = {
-            appName: this.appName,
-            pagination: {
-                maxItems: this.size,
-                skipCount: this.skipCount
+            "appName": this.appName,
+            "pagination": {
+                "maxItems": this.size,
+                "skipCount": this.skipCount
             },
-            sorting: this.sorting,
-            onlyStandalone: this.standalone,
-            name: this.names,
-            processDefinitionName: this.processDefinitionNames,
-            priority: this.priorities,
-            status: this.statuses,
-            completedBy: this.completedByUsers,
-            assignee: this.assignees,
-            createdFrom: this.createdFrom,
-            createdTo: this.createdTo,
-            lastModifiedFrom: this.lastModifiedFrom,
-            lastModifiedTo: this.lastModifiedTo,
-            dueDateFrom: this.dueDateFrom,
-            dueDateTo: this.dueDateTo,
-            completedFrom: this.completedFrom,
-            completedTo: this.completedTo,
-            variableKeys: this.getRequestNodeVariables()
+            "sorting": this.sorting,
+            "onlyStandalone": this.standalone,
+            "name": this.names,
+            "processDefinitionName": this.processDefinitionNames,
+            "priority": this.priorities,
+            "status": this.statuses,
+            "completedBy": this.completedByUsers,
+            "assignee": this.assignees,
+            "createdFrom": this.createdFrom,
+            "createdTo": this.createdTo,
+            "lastModifiedFrom": this.lastModifiedFrom,
+            "lastModifiedTo": this.lastModifiedTo,
+            "dueDateFrom": this.dueDateFrom,
+            "dueDateTo": this.dueDateTo,
+            "completedFrom": this.completedFrom,
+            "completedTo": this.completedTo,
+            "variableKeys": this.getRequestNodeVariables()
         };
 
         return new TaskListRequestModel(requestNode);
     }
 
-    private createRequestNode(): TaskQueryCloudRequestModel {
+    private createRequestNode (): TaskQueryCloudRequestModel {
         const requestNode = {
-            appName: this.appName,
-            assignee: this.assignee,
-            id: this.id,
-            name: this.name,
-            environmentId: this.environmentId,
-            parentTaskId: this.parentTaskId,
-            processDefinitionName: this.processDefinitionName,
-            processDefinitionId: this.processDefinitionId,
-            processInstanceId: this.processInstanceId,
-            owner: this.owner,
-            priority: this.priority,
-            lastModifiedFrom: this.lastModifiedFrom,
-            lastModifiedTo: this.lastModifiedTo,
-            dueDateFrom: this.dueDateFrom,
-            dueDateTo: this.dueDateTo,
-            status: this.status,
-            dueDate: this.dueDate,
-            createdDate: this.createdDate,
-            createdFrom: this.createdFrom,
-            createdTo: this.createdTo,
-            maxItems: this.size,
-            skipCount: this.skipCount,
-            sorting: this.sorting,
-            standalone: this.standalone,
-            completedBy: this.completedBy,
-            completedFrom: this.completedFrom,
-            completedTo: this.completedTo,
-            completedDate: this.completedDate,
-            candidateGroupId: this.candidateGroupId,
-            variableKeys: this.getRequestNodeVariables()
+            "appName": this.appName,
+            "assignee": this.assignee,
+            "id": this.id,
+            "name": this.name,
+            "environmentId": this.environmentId,
+            "parentTaskId": this.parentTaskId,
+            "processDefinitionName": this.processDefinitionName,
+            "processDefinitionId": this.processDefinitionId,
+            "processInstanceId": this.processInstanceId,
+            "owner": this.owner,
+            "priority": this.priority,
+            "lastModifiedFrom": this.lastModifiedFrom,
+            "lastModifiedTo": this.lastModifiedTo,
+            "dueDateFrom": this.dueDateFrom,
+            "dueDateTo": this.dueDateTo,
+            "status": this.status,
+            "dueDate": this.dueDate,
+            "createdDate": this.createdDate,
+            "createdFrom": this.createdFrom,
+            "createdTo": this.createdTo,
+            "maxItems": this.size,
+            "skipCount": this.skipCount,
+            "sorting": this.sorting,
+            "standalone": this.standalone,
+            "completedBy": this.completedBy,
+            "completedFrom": this.completedFrom,
+            "completedTo": this.completedTo,
+            "completedDate": this.completedDate,
+            "candidateGroupId": this.candidateGroupId,
+            "variableKeys": this.getRequestNodeVariables()
         };
 
         return new TaskQueryCloudRequestModel(requestNode);
     }
 
-    private getRequestNodeVariables(): string[] | undefined {
+    private getRequestNodeVariables (): string[] | undefined {
         const displayedVariableColumns: string[] = (this.columns ?? [])
             .filter((column) => column.customData?.columnType === 'process-variable-column' && column.isHidden !== true)
             .map((column) => {

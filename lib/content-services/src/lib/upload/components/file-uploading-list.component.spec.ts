@@ -33,12 +33,12 @@ describe('FileUploadingListComponent', () => {
     let file: any;
 
     beforeEach(() => {
-        file = { data: { entry: { id: 'x' } } };
+        file = { "data": { "entry": { "id": 'x' } } };
     });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         nodesApiService = TestBed.inject(NodesApiService);
 
@@ -79,16 +79,16 @@ describe('FileUploadingListComponent', () => {
         beforeEach(() => {
             component.files = [
                 {
-                    data: {
-                        entry: { id: '1' }
+                    "data": {
+                        "entry": { "id": '1' }
                     },
-                    status: FileUploadStatus.Cancelled
+                    "status": FileUploadStatus.Cancelled
                 } as FileModel,
                 {
-                    data: {
-                        entry: { id: '2' }
+                    "data": {
+                        "entry": { "id": '2' }
                     },
-                    status: FileUploadStatus.Error
+                    "status": FileUploadStatus.Error
                 } as FileModel
             ];
         });
@@ -119,40 +119,40 @@ describe('FileUploadingListComponent', () => {
 
     describe('isUploadCompleted()', () => {
         it('should return false when at least one file is in progress', () => {
-            component.files = [{ status: FileUploadStatus.Progress } as FileModel, { status: FileUploadStatus.Complete } as FileModel];
+            component.files = [{ "status": FileUploadStatus.Progress } as FileModel, { "status": FileUploadStatus.Complete } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(false);
         });
 
         it('should return false when at least one file is in pending', () => {
-            component.files = [{ status: FileUploadStatus.Pending } as FileModel, { status: FileUploadStatus.Complete } as FileModel];
+            component.files = [{ "status": FileUploadStatus.Pending } as FileModel, { "status": FileUploadStatus.Complete } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(false);
         });
 
         it('should return false when at least one file is in starting state', () => {
-            component.files = [{ status: FileUploadStatus.Starting } as FileModel, { status: FileUploadStatus.Complete } as FileModel];
+            component.files = [{ "status": FileUploadStatus.Starting } as FileModel, { "status": FileUploadStatus.Complete } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(false);
         });
 
         it('should return false when files are cancelled', () => {
-            component.files = [{ status: FileUploadStatus.Cancelled } as FileModel, { status: FileUploadStatus.Cancelled } as FileModel];
+            component.files = [{ "status": FileUploadStatus.Cancelled } as FileModel, { "status": FileUploadStatus.Cancelled } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(false);
         });
 
         it('should return true when there are deleted files', () => {
-            component.files = [{ status: FileUploadStatus.Complete } as FileModel, { status: FileUploadStatus.Deleted } as FileModel];
+            component.files = [{ "status": FileUploadStatus.Complete } as FileModel, { "status": FileUploadStatus.Deleted } as FileModel];
 
             expect(component.isUploadCompleted()).toBe(true);
         });
 
         it('should return true when none of the files is in progress', () => {
             component.files = [
-                { status: FileUploadStatus.Error } as FileModel,
-                { status: FileUploadStatus.Cancelled } as FileModel,
-                { status: FileUploadStatus.Complete } as FileModel
+                { "status": FileUploadStatus.Error } as FileModel,
+                { "status": FileUploadStatus.Cancelled } as FileModel,
+                { "status": FileUploadStatus.Complete } as FileModel
             ];
 
             expect(component.isUploadCompleted()).toBe(true);
@@ -162,9 +162,9 @@ describe('FileUploadingListComponent', () => {
     describe('isUploadCancelled()', () => {
         it('should return false when not all files are cancelled', () => {
             component.files = [
-                { status: FileUploadStatus.Complete } as FileModel,
-                { status: FileUploadStatus.Cancelled } as FileModel,
-                { status: FileUploadStatus.Error } as FileModel
+                { "status": FileUploadStatus.Complete } as FileModel,
+                { "status": FileUploadStatus.Cancelled } as FileModel,
+                { "status": FileUploadStatus.Error } as FileModel
             ];
 
             expect(component.isUploadCancelled()).toBe(false);
@@ -172,9 +172,9 @@ describe('FileUploadingListComponent', () => {
 
         it('should return false when there are no cancelled files', () => {
             component.files = [
-                { status: FileUploadStatus.Complete } as FileModel,
-                { status: FileUploadStatus.Error } as FileModel,
-                { status: FileUploadStatus.Error } as FileModel
+                { "status": FileUploadStatus.Complete } as FileModel,
+                { "status": FileUploadStatus.Error } as FileModel,
+                { "status": FileUploadStatus.Error } as FileModel
             ];
 
             expect(component.isUploadCancelled()).toBe(false);
@@ -182,9 +182,9 @@ describe('FileUploadingListComponent', () => {
 
         it('should return false when there is at least one file in progress', () => {
             component.files = [
-                { status: FileUploadStatus.Progress } as FileModel,
-                { status: FileUploadStatus.Error } as FileModel,
-                { status: FileUploadStatus.Error } as FileModel
+                { "status": FileUploadStatus.Progress } as FileModel,
+                { "status": FileUploadStatus.Error } as FileModel,
+                { "status": FileUploadStatus.Error } as FileModel
             ];
 
             expect(component.isUploadCancelled()).toBe(false);
@@ -192,25 +192,25 @@ describe('FileUploadingListComponent', () => {
 
         it('should return false when there is at least one file in pending', () => {
             component.files = [
-                { status: FileUploadStatus.Pending } as FileModel,
-                { status: FileUploadStatus.Error } as FileModel,
-                { status: FileUploadStatus.Error } as FileModel
+                { "status": FileUploadStatus.Pending } as FileModel,
+                { "status": FileUploadStatus.Error } as FileModel,
+                { "status": FileUploadStatus.Error } as FileModel
             ];
 
             expect(component.isUploadCancelled()).toBe(false);
         });
 
         it('should return true when all files are aborted', () => {
-            component.files = [{ status: FileUploadStatus.Aborted } as FileModel];
+            component.files = [{ "status": FileUploadStatus.Aborted } as FileModel];
 
             expect(component.isUploadCancelled()).toBe(true);
         });
 
         it('should return true when all files are cancelled', () => {
             component.files = [
-                { status: FileUploadStatus.Cancelled } as FileModel,
-                { status: FileUploadStatus.Cancelled } as FileModel,
-                { status: FileUploadStatus.Aborted } as FileModel
+                { "status": FileUploadStatus.Cancelled } as FileModel,
+                { "status": FileUploadStatus.Cancelled } as FileModel,
+                { "status": FileUploadStatus.Aborted } as FileModel
             ];
 
             expect(component.isUploadCancelled()).toBe(true);

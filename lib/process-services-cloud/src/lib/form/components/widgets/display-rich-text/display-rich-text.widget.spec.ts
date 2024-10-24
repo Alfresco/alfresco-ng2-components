@@ -27,61 +27,61 @@ describe('DisplayRichTextWidgetComponent', () => {
     let debugEl: DebugElement;
 
     const cssSelector = {
-        parsedHTML: '.adf-display-rich-text-widget-parsed-html'
+        "parsedHTML": '.adf-display-rich-text-widget-parsed-html'
     };
 
     const fakeFormField: any = {
-        id: 'fake-form-field',
-        name: 'fake-label',
-        value: {
-            time: 1658154611110,
-            blocks: [
+        "id": 'fake-form-field',
+        "name": 'fake-label',
+        "value": {
+            "time": 1658154611110,
+            "blocks": [
                 {
-                    id: '1',
-                    type: 'header',
-                    data: {
-                        text: 'Editor.js',
-                        level: 1
+                    "id": '1',
+                    "type": 'header',
+                    "data": {
+                        "text": 'Editor.js',
+                        "level": 1
                     }
                 },
                 {
-                    id: '2',
-                    type: 'paragraph',
-                    data: {
-                        text: 'Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark>'
+                    "id": '2',
+                    "type": 'paragraph',
+                    "data": {
+                        "text": 'Display some <font color="#ff1300">formatted</font> <mark class="cdx-marker">text</mark>'
                     },
-                    tunes: {
-                        anyTuneName: {
-                            alignment: 'left'
+                    "tunes": {
+                        "anyTuneName": {
+                            "alignment": 'left'
                         }
                     }
                 }
             ],
-            version: 1
+            "version": 1
         }
     };
 
     const mockUnsafeFormField: any = {
-        id: 'fake-unsafe-form-field',
-        name: 'fake-label',
-        value: {
-            time: 1658154611110,
-            blocks: [
+        "id": 'fake-unsafe-form-field',
+        "name": 'fake-label',
+        "value": {
+            "time": 1658154611110,
+            "blocks": [
                 {
-                    id: '1',
-                    type: 'paragraph',
-                    data: {
-                        text: '<img src="x" onerror="alert(\'XSS\')">'
+                    "id": '1',
+                    "type": 'paragraph',
+                    "data": {
+                        "text": '<img src="x" onerror="alert(\'XSS\')">'
                     }
                 }
             ],
-            version: 1
+            "version": 1
         }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         fixture = TestBed.createComponent(DisplayRichTextWidgetComponent);
         widget = fixture.componentInstance;

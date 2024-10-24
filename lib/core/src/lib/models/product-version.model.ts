@@ -22,7 +22,7 @@ export class BpmProductVersionModel {
     minorVersion: string;
     type: string;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         if (obj) {
             this.edition = obj.edition || null;
             this.majorVersion = obj.majorVersion || null;

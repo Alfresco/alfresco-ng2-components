@@ -25,7 +25,7 @@ export class PermissionDisplayModel implements PermissionElement {
     icon: string;
     readonly?: boolean;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         if (obj) {
             this.authorityId = obj.authorityId;
             this.name = obj.name;

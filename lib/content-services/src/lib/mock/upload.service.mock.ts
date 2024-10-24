@@ -16,42 +16,42 @@
  */
 
 export const mockUploadSuccessPromise = {
-    on(event, callback) {
+    on (event, callback) {
         if (event === 'success') {
             callback();
         }
         return this;
     },
-    catch(callback) {
+    catch (callback) {
         callback();
         return this;
     },
-    then(callback) {
+    then (callback) {
         callback();
         return this;
     },
-    next(callback) {
+    next (callback) {
         callback();
         return this;
     }
 };
 
 export const mockUploadErrorPromise = {
-    on(event, callback) {
+    on (event, callback) {
         if (event === 'error') {
             callback();
         }
         return this;
     },
-    catch(callback) {
+    catch (callback) {
         callback();
         return this;
     },
-    then(callback) {
+    then (callback) {
         callback();
         return this;
     },
-    next(callback) {
+    next (callback) {
         callback();
         return this;
     }

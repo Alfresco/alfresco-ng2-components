@@ -30,8 +30,8 @@ describe('ErrorContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: ActivatedRoute, useValue: { params: of() } }]
+            "imports": [CoreTestingModule],
+            "providers": [{ "provide": ActivatedRoute, "useValue": { "params": of() } }]
         });
         fixture = TestBed.createComponent(ErrorContentComponent);
         element = fixture.nativeElement;
@@ -101,7 +101,7 @@ describe('ErrorContentComponent', () => {
     describe(' with a specific error', () => {
         it('should navigate to an error given by the route params', async () => {
             const route = TestBed.inject(ActivatedRoute);
-            route.params = of({ id: '404' });
+            route.params = of({ "id": '404' });
             spyOn(translateService, 'instant').and.returnValue(of('404'));
             fixture.detectChanges();
             await fixture.whenStable();

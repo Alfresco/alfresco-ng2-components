@@ -28,7 +28,6 @@ export interface ApiServiceConfig {
     };
 }
 export class ApiService {
-
     apiService: AlfrescoApi;
 
     constructor(private config: ApiServiceConfig, private logger: LoggerLike) {
@@ -47,13 +46,14 @@ export class ApiService {
     /**
      * Login using one of the account profiles from the `browser.params.testConfig`.
      * Example: loginWithProfile('admin')
-     *
      * @param profileName profile name
      */
     async loginWithProfile(profileName: string): Promise<void> {
         const profile = this.config.users[profileName];
         if (profile) {
-            this.logger.log(`try to login with ${profile.username} on HOST: ${this.apiService.config.hostEcm} AUTHTYPE: ${this.apiService.config.authType} PROVIDER: ${this.apiService.config.provider}`);
+            this.logger.log(
+                `try to login with ${profile.username} on HOST: ${this.apiService.config.hostEcm} AUTHTYPE: ${this.apiService.config.authType} PROVIDER: ${this.apiService.config.provider}`
+            );
             try {
                 await this.apiService.login(profile.username, profile.password);
                 this.logger.log(`Successfuly logged in as ${profile.username}`);
@@ -80,8 +80,8 @@ export class ApiService {
                 Authorization: 'bearer ' + this.apiService.oauth2Auth.token
             };
 
-            this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-                contentTypes, accepts, Object)
+            this.apiService.processClient
+                .callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody, contentTypes, accepts, Object)
                 .then((data) => resolve(data))
                 .catch((err) => reject(err));
         });
@@ -101,8 +101,8 @@ export class ApiService {
                 Authorization: 'bearer ' + this.apiService.oauth2Auth.token
             };
 
-            return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-                contentTypes, accepts, Object)
+            return this.apiService.processClient
+                .callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody, contentTypes, accepts, Object)
                 .then((data) => resolve(data))
                 .catch((err) => reject(err));
         });

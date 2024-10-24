@@ -19,8 +19,8 @@ import { Directive, Input, Component, OnInit, OnChanges, ViewContainerRef } from
 import { TranslateModule } from '@ngx-translate/core';
 
 @Directive({
-    standalone: true,
-    selector: '[adf-node-counter]'
+    "standalone": true,
+    "selector": '[adf-node-counter]'
 })
 export class NodeCounterDirective implements OnInit, OnChanges {
     /** Number to display in the counter badge */
@@ -29,14 +29,14 @@ export class NodeCounterDirective implements OnInit, OnChanges {
 
     componentRef: NodeCounterComponent;
 
-    constructor(private viewContainerRef: ViewContainerRef) {}
+    constructor (private viewContainerRef: ViewContainerRef) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.componentRef = this.viewContainerRef.createComponent(NodeCounterComponent).instance;
         this.componentRef.counter = this.counter;
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         if (this.componentRef) {
             this.componentRef.counter = this.counter;
         }
@@ -44,10 +44,10 @@ export class NodeCounterDirective implements OnInit, OnChanges {
 }
 
 @Component({
-    standalone: true,
-    imports: [TranslateModule],
-    selector: 'adf-node-counter',
-    template: ` <div>{{ 'NODE_COUNTER.SELECTED_COUNT' | translate : { count: counter } }}</div> `
+    "standalone": true,
+    "imports": [TranslateModule],
+    "selector": 'adf-node-counter',
+    "template": ` <div>{{ 'NODE_COUNTER.SELECTED_COUNT' | translate : { count: counter } }}</div> `
 })
 export class NodeCounterComponent {
     counter: number;

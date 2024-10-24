@@ -28,12 +28,12 @@ import { MatLineModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'attach-folder-widget',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatIconModule, MatLineModule, MatButtonModule, ErrorWidgetComponent],
-    templateUrl: './attach-folder-widget.component.html',
-    styleUrls: ['./attach-folder-widget.component.scss'],
-    host: {
+    "selector": 'attach-folder-widget',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatIconModule, MatLineModule, MatButtonModule, ErrorWidgetComponent],
+    "templateUrl": './attach-folder-widget.component.html',
+    "styleUrls": ['./attach-folder-widget.component.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -44,18 +44,18 @@ import { MatButtonModule } from '@angular/material/button';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class AttachFolderWidgetComponent extends WidgetComponent implements OnInit {
     typeId = 'AttachFolderWidgetComponent';
     hasFolder: boolean = false;
     selectedFolderName: string = '';
 
-    constructor(private contentDialog: ContentNodeDialogService, public formService: FormService, private nodeService: NodesApiService) {
+    constructor (private contentDialog: ContentNodeDialogService, public formService: FormService, private nodeService: NodesApiService) {
         super();
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field?.value) {
             this.hasFolder = true;
             this.nodeService.getNode(this.field.value).subscribe((node: Node) => {
@@ -64,11 +64,11 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    isDefinedSourceFolder(): boolean {
+    isDefinedSourceFolder (): boolean {
         return !!this.field.params?.folderSource?.selectedFolder;
     }
 
-    openSelectDialogFromFileSource() {
+    openSelectDialogFromFileSource () {
         const params = this.field.params;
         if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFolderBrowseDialogByFolderId(params.folderSource.selectedFolder.pathId).subscribe((selections: Node[]) => {
@@ -85,7 +85,7 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
         }
     }
 
-    removeFolder() {
+    removeFolder () {
         this.field.value = null;
         this.selectedFolderName = '';
         this.hasFolder = false;

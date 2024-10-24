@@ -24,11 +24,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-create-process-attachment',
-    standalone: true,
-    imports: [CommonModule, UploadDirective, MatButtonModule, MatIconModule],
-    styleUrls: ['./create-process-attachment.component.css'],
-    templateUrl: './create-process-attachment.component.html'
+    "selector": 'adf-create-process-attachment',
+    "standalone": true,
+    "imports": [CommonModule, UploadDirective, MatButtonModule, MatIconModule],
+    "styleUrls": ['./create-process-attachment.component.css'],
+    "templateUrl": './create-process-attachment.component.html'
 })
 export class CreateProcessAttachmentComponent implements OnChanges {
     private processContentService = inject(ProcessContentService);
@@ -51,19 +51,19 @@ export class CreateProcessAttachmentComponent implements OnChanges {
     @Output()
     success = new EventEmitter<RelatedContentRepresentation>();
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['processInstanceId']?.currentValue) {
             this.processInstanceId = changes['processInstanceId'].currentValue;
         }
     }
 
-    onFileUpload(event: any) {
+    onFileUpload (event: any) {
         const filesList: File[] = event.detail.files.map((obj) => obj.file);
 
         for (const fileInfoObj of filesList) {
             const file: File = fileInfoObj;
             const opts = {
-                isRelatedContent: true
+                "isRelatedContent": true
             };
             this.processContentService.createProcessRelatedContent(this.processInstanceId, file, opts).subscribe(
                 (res) => {

@@ -20,7 +20,7 @@ import { CommentListComponent } from './comment-list.component';
 
 /** @deprecated import `CommentListComponent` standalone component directly */
 @NgModule({
-    imports: [CommentListComponent],
-    exports: [CommentListComponent]
+    "imports": [CommentListComponent],
+    "exports": [CommentListComponent]
 })
 export class CommentListModule {}

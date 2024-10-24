@@ -34,11 +34,11 @@ export class DynamicTableModel extends FormWidgetModel {
     private _selectedRow: DynamicTableRow;
     private readonly _validators: CellValidator[] = [];
 
-    get selectedRow(): DynamicTableRow {
+    get selectedRow (): DynamicTableRow {
         return this._selectedRow;
     }
 
-    set selectedRow(value: DynamicTableRow) {
+    set selectedRow (value: DynamicTableRow) {
         if (this._selectedRow && this._selectedRow === value) {
             this._selectedRow.selected = false;
             this._selectedRow = null;
@@ -54,7 +54,7 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
-    constructor(field: FormFieldModel, private formService: FormService) {
+    constructor (field: FormFieldModel, private formService: FormService) {
         super(field.form, field.json);
         this.field = field;
 
@@ -66,17 +66,17 @@ export class DynamicTableModel extends FormWidgetModel {
             }
 
             if (field.json.value) {
-                this.rows = field.json.value.map((obj) => ({ selected: false, value: obj } as DynamicTableRow));
+                this.rows = field.json.value.map((obj) => ({ "selected": false, "value": obj } as DynamicTableRow));
             }
         }
 
         this._validators = [new RequiredCellValidator(), new DateCellValidator(), new NumberCellValidator()];
     }
 
-    private getColumns(field: FormFieldModel): DynamicTableColumn[] {
+    private getColumns (field: FormFieldModel): DynamicTableColumn[] {
         if (field?.json) {
             let definitions = field.json.columnDefinitions;
-            if (!definitions && field.json.params && field.json.params.field) {
+            if (!definitions && field.json.params?.field) {
                 definitions = field.json.params.field.columnDefinitions;
             }
 
@@ -87,14 +87,14 @@ export class DynamicTableModel extends FormWidgetModel {
         return null;
     }
 
-    flushValue() {
+    flushValue () {
         if (this.field) {
             this.field.value = this.rows.map((r) => r.value);
             this.field.updateForm();
         }
     }
 
-    moveRow(row: DynamicTableRow, offset: number) {
+    moveRow (row: DynamicTableRow, offset: number) {
         const oldIndex = this.rows.indexOf(row);
         if (oldIndex > -1) {
             let newIndex = oldIndex + offset;
@@ -114,7 +114,7 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
-    deleteRow(row: DynamicTableRow) {
+    deleteRow (row: DynamicTableRow) {
         if (row) {
             if (this.selectedRow === row) {
                 this.selectedRow = null;
@@ -127,17 +127,17 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
-    addRow(row: DynamicTableRow) {
+    addRow (row: DynamicTableRow) {
         if (row) {
             this.rows.push(row);
             // this.selectedRow = row;
         }
     }
 
-    validateRow(row: DynamicTableRow): DynamicRowValidationSummary {
+    validateRow (row: DynamicTableRow): DynamicRowValidationSummary {
         const summary = new DynamicRowValidationSummary({
-            isValid: true,
-            message: null
+            "isValid": true,
+            "message": null
         });
 
         const event = new ValidateDynamicTableRowEvent(this.form, this.field, row, summary);
@@ -160,7 +160,7 @@ export class DynamicTableModel extends FormWidgetModel {
         return summary;
     }
 
-    getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
+    getCellValue (row: DynamicTableRow, column: DynamicTableColumn): any {
         const rowValue = row.value[column.id];
 
         if (column.type === 'Dropdown') {
@@ -182,7 +182,7 @@ export class DynamicTableModel extends FormWidgetModel {
         return rowValue || '';
     }
 
-    getDisplayText(column: DynamicTableColumn): string {
+    getDisplayText (column: DynamicTableColumn): string {
         let columnName = column.name;
         if (column.type === 'Amount') {
             const currency = column.amountCurrency || '$';

@@ -24,19 +24,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-select-apps-dialog',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatDialogModule, MatSelectModule, MatButtonModule],
-    templateUrl: './select-apps-dialog.component.html',
-    styleUrls: ['./select-apps-dialog.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-select-apps-dialog',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatDialogModule, MatSelectModule, MatButtonModule],
+    "templateUrl": './select-apps-dialog.component.html',
+    "styleUrls": ['./select-apps-dialog.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SelectAppsDialogComponent {
     processApps: any;
 
     selectedProcess: any;
 
-    constructor(
+    constructor (
         private appsProcessService: AppsProcessService,
         public dialogRef: MatDialogRef<SelectAppsDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -46,7 +46,7 @@ export class SelectAppsDialogComponent {
         });
     }
 
-    onStart(): void {
+    onStart (): void {
         this.dialogRef.close(this.selectedProcess);
     }
 }

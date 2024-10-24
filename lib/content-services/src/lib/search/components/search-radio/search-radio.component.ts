@@ -36,13 +36,13 @@ export interface SearchRadioOption {
 }
 
 @Component({
-    selector: 'adf-search-radio',
-    standalone: true,
-    imports: [CommonModule, MatRadioModule, FormsModule, TranslateModule, MatButtonModule, MatIconModule],
-    templateUrl: './search-radio.component.html',
-    styleUrls: ['./search-radio.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-search-radio' }
+    "selector": 'adf-search-radio',
+    "standalone": true,
+    "imports": [CommonModule, MatRadioModule, FormsModule, TranslateModule, MatButtonModule, MatIconModule],
+    "templateUrl": './search-radio.component.html',
+    "styleUrls": ['./search-radio.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-search-radio' }
 })
 export class SearchRadioComponent implements SearchWidget, OnInit {
     /** The value of the selected radio button. */
@@ -59,11 +59,11 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     enableChangeUpdate: boolean;
     displayValue$ = new ReplaySubject<string>(1);
 
-    constructor() {
+    constructor () {
         this.options = new SearchFilterList<SearchRadioOption>();
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.settings) {
             this.pageSize = this.settings.pageSize || 5;
 
@@ -97,7 +97,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
             });
     }
 
-    private getSelectedValue(): string {
+    private getSelectedValue (): string {
         const options: any[] = this.settings['options'] || [];
         if (options && options.length > 0) {
             this.isActive = true;
@@ -111,7 +111,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         return null;
     }
 
-    submitValues(updateContext = true) {
+    submitValues (updateContext = true) {
         this.setValue(this.value);
         this.updateDisplayValue();
         if (updateContext) {
@@ -119,12 +119,12 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         }
     }
 
-    hasValidValue() {
+    hasValidValue () {
         const currentValue = this.getSelectedValue();
         return !!currentValue;
     }
 
-    setValue(newValue: string) {
+    setValue (newValue: string) {
         this.value = newValue;
         this.context.queryFragments[this.id] = newValue;
         this.context.filterRawParams[this.id] = newValue;
@@ -134,11 +134,11 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         }
     }
 
-    getCurrentValue() {
+    getCurrentValue () {
         return this.getSelectedValue();
     }
 
-    updateDisplayValue(): void {
+    updateDisplayValue (): void {
         const selectOptions = this.options.items.find(({ value }) => value === this.value);
         if (selectOptions) {
             this.displayValue$.next(selectOptions.name);
@@ -147,11 +147,11 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         }
     }
 
-    changeHandler(event: MatRadioChange) {
+    changeHandler (event: MatRadioChange) {
         this.setValue(event.value);
     }
 
-    clear() {
+    clear () {
         this.isActive = false;
         const initialValue = this.getSelectedValue();
         if (initialValue !== null) {
@@ -159,7 +159,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         }
     }
 
-    reset(updateContext = true) {
+    reset (updateContext = true) {
         const initialValue = this.getSelectedValue();
         if (initialValue !== null) {
             this.setValue(initialValue);

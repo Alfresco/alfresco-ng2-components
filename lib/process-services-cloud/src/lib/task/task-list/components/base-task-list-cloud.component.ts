@@ -135,7 +135,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     formattedSorting: any[];
     dataAdapter: ObjectDataTableAdapter | undefined;
 
-    private defaultSorting = { key: 'startDate', direction: 'desc' };
+    private defaultSorting = { "key": 'startDate', "direction": 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
     private onDestroy$ = new Subject<boolean>();
@@ -143,7 +143,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     protected abstract isLoading$: Observable<boolean>;
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
 
-    constructor(
+    constructor (
         appConfigService: AppConfigService,
         private taskCloudService: TaskCloudService,
         private userPreferences: UserPreferencesService,
@@ -154,22 +154,22 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
         this.size = userPreferences.paginationSize;
 
         this.pagination = new BehaviorSubject<PaginationModel>({
-            maxItems: this.size,
-            skipCount: 0,
-            totalItems: 0
+            "maxItems": this.size,
+            "skipCount": 0,
+            "totalItems": 0
         });
 
         this.boundReplacePriorityValues = this.replacePriorityValues.bind(this);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.userPreferences
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((pageSize) => (this.size = pageSize));
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['sorting']) {
             this.formatSorting(changes['sorting'].currentValue);
         }
@@ -179,12 +179,12 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
         this.reload();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    private retrieveTasksPreferences(): void {
+    private retrieveTasksPreferences (): void {
         this.isLoadingPreferences$.next(true);
         this.cloudPreferenceService
             .getPreferences(this.appName)
@@ -199,9 +199,9 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
                     const columnsWidths = preferencesList.find((preference) => preference.entry.key === TasksListCloudPreferences.columnsWidths);
 
                     return {
-                        columnsOrder: columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
-                        columnsVisibility: columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined,
-                        columnsWidths: columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
+                        "columnsOrder": columnsOrder ? JSON.parse(columnsOrder.entry.value) : undefined,
+                        "columnsVisibility": columnsVisibility ? JSON.parse(columnsVisibility.entry.value) : undefined,
+                        "columnsWidths": columnsWidths ? JSON.parse(columnsWidths.entry.value) : undefined
                     };
                 })
             )
@@ -230,61 +230,60 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
             );
     }
 
-    ngAfterContentInit(): void {
+    ngAfterContentInit (): void {
         this.retrieveTasksPreferences();
     }
 
-    isListEmpty(): boolean {
+    isListEmpty (): boolean {
         return !this.rows || this.rows.length === 0;
     }
 
     /**
      * Resets the pagination values
      */
-    resetPagination() {
+    resetPagination () {
         this.skipCount = 0;
         this.size = this.userPreferences.paginationSize;
         this.pagination.next({
-            skipCount: 0,
-            maxItems: this.size
+            "skipCount": 0,
+            "maxItems": this.size
         });
     }
 
     /**
      * Resets the pagination values and
      * Reloads the task list
-     *
      * @param pagination Pagination values to be set
      */
-    updatePagination(pagination: PaginationModel) {
+    updatePagination (pagination: PaginationModel) {
         this.size = pagination.maxItems;
         this.skipCount = pagination.skipCount;
         this.pagination.next(pagination);
         this.reload();
     }
 
-    onSortingChanged(event: CustomEvent) {
+    onSortingChanged (event: CustomEvent) {
         this.setSorting(event.detail);
         this.formatSorting(this.sorting);
         this.reload();
     }
 
-    onRowClick(item: DataRowEvent) {
+    onRowClick (item: DataRowEvent) {
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
 
-    onRowSelect(event: CustomEvent) {
+    onRowSelect (event: CustomEvent) {
         this.selectedInstances = [...event.detail.selection];
         this.rowsSelected.emit(this.selectedInstances);
     }
 
-    onRowUnselect(event: CustomEvent) {
+    onRowUnselect (event: CustomEvent) {
         this.selectedInstances = [...event.detail.selection];
         this.rowsSelected.emit(this.selectedInstances);
     }
 
-    onRowKeyUp(event: CustomEvent) {
+    onRowKeyUp (event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
             this.currentInstanceId = event.detail.row.getValue('id');
@@ -292,19 +291,19 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
         }
     }
 
-    onShowRowActionsMenu(event: DataCellEvent) {
+    onShowRowActionsMenu (event: DataCellEvent) {
         this.showRowActionsMenu.emit(event);
     }
 
-    onShowRowContextMenu(event: DataCellEvent) {
+    onShowRowContextMenu (event: DataCellEvent) {
         this.showRowContextMenu.emit(event);
     }
 
-    onExecuteRowAction(row: DataRowActionEvent) {
+    onExecuteRowAction (row: DataRowActionEvent) {
         this.executeRowAction.emit(row);
     }
 
-    onColumnOrderChanged(columnsWithNewOrder: DataColumn[]): void {
+    onColumnOrderChanged (columnsWithNewOrder: DataColumn[]): void {
         this.columnsOrder = columnsWithNewOrder.map((column) => column.id);
         this.createColumns();
 
@@ -313,7 +312,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
         }
     }
 
-    onColumnsVisibilityChange(columns: DataColumn[]): void {
+    onColumnsVisibilityChange (columns: DataColumn[]): void {
         this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
             if (column.isHidden !== undefined) {
                 visibleColumnsMap[column.id] = !column.isHidden;
@@ -330,7 +329,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
         }
     }
 
-    onColumnsWidthChanged(columns: DataColumn[]): void {
+    onColumnsWidthChanged (columns: DataColumn[]): void {
         const newColumnsWidths = columns.reduce((widthsColumnsMap, column) => {
             if (column.width) {
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
@@ -347,25 +346,25 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
         }
     }
 
-    setSorting(sortDetail) {
+    setSorting (sortDetail) {
         const sorting = sortDetail
             ? {
-                  orderBy: sortDetail.sortingKey || sortDetail.key,
-                  direction: sortDetail.direction.toUpperCase()
+                  "orderBy": sortDetail.sortingKey || sortDetail.key,
+                  "direction": sortDetail.direction.toUpperCase()
               }
             : { ...this.defaultSorting };
         this.sorting = [new TaskListCloudSortingModel(sorting)];
     }
 
-    formatSorting(sorting: TaskListCloudSortingModel[]) {
+    formatSorting (sorting: TaskListCloudSortingModel[]) {
         this.formattedSorting = this.isValidSorting(sorting) ? [sorting[0].orderBy, sorting[0].direction.toLocaleLowerCase()] : null;
     }
 
-    isValidSorting(sorting: TaskListCloudSortingModel[]) {
+    isValidSorting (sorting: TaskListCloudSortingModel[]) {
         return sorting?.length && sorting[0].orderBy && sorting[0].direction;
     }
 
-    replacePriorityValues(row: DataRow, column: DataColumn) {
+    replacePriorityValues (row: DataRow, column: DataColumn) {
         return column.key.split('.').reduce((source, key) => {
             if (key === 'priority' && source && typeof source[key] === 'number') {
                 return (source[key] = this.taskCloudService.getPriorityLabel(source[key]));

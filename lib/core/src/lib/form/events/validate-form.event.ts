@@ -19,11 +19,10 @@ import { FormEvent } from './form.event';
 import { FormFieldModel } from '../components/widgets/core/form-field.model';
 
 export class ValidateFormEvent extends FormEvent {
-
     isValid = true;
     errorsField: FormFieldModel[] = [];
 
-    constructor(form: any) {
+    constructor (form: any) {
         super(form);
     }
 }

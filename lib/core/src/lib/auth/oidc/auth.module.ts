@@ -29,59 +29,58 @@ import { TokenInterceptor } from './token.interceptor';
 import { StorageService } from '../../common/services/storage.service';
 
 export const JWT_STORAGE_SERVICE = new InjectionToken<OAuthStorage>('JWT_STORAGE_SERVICE', {
-    providedIn: 'root',
-    factory: () => inject(StorageService)
+    "providedIn": 'root',
+    "factory": () => inject(StorageService)
 });
 
 /**
  * Create a Login Factory function
- *
  * @param redirectService auth redirect service
  * @returns a factory function
  */
-export function loginFactory(redirectService: RedirectAuthService): () => Promise<boolean> {
+export function loginFactory (redirectService: RedirectAuthService): () => Promise<boolean> {
     return () => redirectService.init();
 }
 
 /**
  *  @returns current instance of OAuthStorage
  */
-export function oauthStorageFactory(): OAuthStorage {
+export function oauthStorageFactory (): OAuthStorage {
     return inject(JWT_STORAGE_SERVICE);
 }
 
 @NgModule({
-    declarations: [AuthenticationConfirmationComponent],
-    imports: [AuthRoutingModule, OAuthModule.forRoot()],
-    providers: [
-        { provide: OAuthStorage, useFactory: oauthStorageFactory },
-        { provide: AuthenticationService },
+    "declarations": [AuthenticationConfirmationComponent],
+    "imports": [AuthRoutingModule, OAuthModule.forRoot()],
+    "providers": [
+        { "provide": OAuthStorage, "useFactory": oauthStorageFactory },
+        { "provide": AuthenticationService },
         {
-            provide: AUTH_CONFIG,
-            useFactory: authConfigFactory,
-            deps: [AuthConfigService]
+            "provide": AUTH_CONFIG,
+            "useFactory": authConfigFactory,
+            "deps": [AuthConfigService]
         },
         RedirectAuthService,
-        { provide: AuthService, useExisting: RedirectAuthService },
+        { "provide": AuthService, "useExisting": RedirectAuthService },
         {
-            provide: APP_INITIALIZER,
-            useFactory: loginFactory,
-            deps: [RedirectAuthService],
-            multi: true
+            "provide": APP_INITIALIZER,
+            "useFactory": loginFactory,
+            "deps": [RedirectAuthService],
+            "multi": true
         },
         {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TokenInterceptor,
-            multi: true
+            "provide": HTTP_INTERCEPTORS,
+            "useClass": TokenInterceptor,
+            "multi": true
         }
     ]
 })
 export class AuthModule {
-    static forRoot(config: AuthModuleConfig = { useHash: false }): ModuleWithProviders<AuthModule> {
+    static forRoot (config: AuthModuleConfig = { "useHash": false }): ModuleWithProviders<AuthModule> {
         config.preventClearHashAfterLogin = config.preventClearHashAfterLogin ?? true;
         return {
-            ngModule: AuthModule,
-            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: config }]
+            "ngModule": AuthModule,
+            "providers": [{ "provide": AUTH_MODULE_CONFIG, "useValue": config }]
         };
     }
 }

@@ -24,11 +24,11 @@ import { FileModel, FileUploadStatus } from '../../common/models/file.model';
 describe('FileUploadingListRowComponent', () => {
     let fixture: ComponentFixture<FileUploadingListRowComponent>;
     let component: FileUploadingListRowComponent;
-    const file = new FileModel({ name: 'fake-name' } as File);
+    const file = new FileModel({ "name": 'fake-name' } as File);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(FileUploadingListRowComponent);
         component = fixture.componentInstance;
@@ -51,9 +51,9 @@ describe('FileUploadingListRowComponent', () => {
     });
 
     it('should render node version when upload a version file', () => {
-        component.file = new FileModel({ name: 'fake-name' } as File);
-        component.file.options = { newVersion: true };
-        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file = new FileModel({ "name": 'fake-name' } as File);
+        component.file.options = { "newVersion": true };
+        component.file.data = { "entry": { "properties": { 'cm:versionLabel': '1' } } };
 
         fixture.detectChanges();
 
@@ -61,8 +61,8 @@ describe('FileUploadingListRowComponent', () => {
     });
 
     it('should show cancel button when upload is in progress', async () => {
-        component.file = new FileModel({ name: 'fake-name' } as File);
-        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file = new FileModel({ "name": 'fake-name' } as File);
+        component.file.data = { "entry": { "properties": { 'cm:versionLabel': '1' } } };
         component.file.status = FileUploadStatus.Progress;
 
         fixture.detectChanges();
@@ -73,8 +73,8 @@ describe('FileUploadingListRowComponent', () => {
     });
 
     it('should show cancel button when upload is starting', async () => {
-        component.file = new FileModel({ name: 'fake-name' } as File);
-        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file = new FileModel({ "name": 'fake-name' } as File);
+        component.file.data = { "entry": { "properties": { 'cm:versionLabel': '1' } } };
         component.file.status = FileUploadStatus.Starting;
 
         fixture.detectChanges();
@@ -85,8 +85,8 @@ describe('FileUploadingListRowComponent', () => {
     });
 
     it('should hide cancel button when upload is complete', async () => {
-        component.file = new FileModel({ name: 'fake-name' } as File);
-        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file = new FileModel({ "name": 'fake-name' } as File);
+        component.file.data = { "entry": { "properties": { 'cm:versionLabel': '1' } } };
         component.file.status = FileUploadStatus.Complete;
 
         fixture.detectChanges();
@@ -97,8 +97,8 @@ describe('FileUploadingListRowComponent', () => {
     });
 
     it('should provide tooltip for the cancel button', async () => {
-        component.file = new FileModel({ name: 'fake-name' } as File);
-        component.file.data = { entry: { properties: { 'cm:versionLabel': '1' } } };
+        component.file = new FileModel({ "name": 'fake-name' } as File);
+        component.file.data = { "entry": { "properties": { 'cm:versionLabel': '1' } } };
         component.file.status = FileUploadStatus.Progress;
 
         fixture.detectChanges();

@@ -42,15 +42,15 @@ xdescribe('AuthenticationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, AuthModule.forRoot({ useHash: true }), HttpClientModule],
-            providers: [
+            "imports": [NoopTranslateModule, AuthModule.forRoot({ "useHash": true }), HttpClientModule],
+            "providers": [
                 {
-                    provide: CookieService,
-                    useClass: CookieServiceMock
+                    "provide": CookieService,
+                    "useClass": CookieServiceMock
                 },
                 {
-                    provide: AppConfigService,
-                    useClass: AppConfigServiceMock
+                    "provide": AppConfigService,
+                    "useClass": AppConfigServiceMock
                 }
             ]
         });
@@ -67,7 +67,7 @@ xdescribe('AuthenticationService', () => {
         jasmine.Ajax.install();
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.pagination = {
-            supportedPageSizes: []
+            "supportedPageSizes": []
         };
     });
 
@@ -79,7 +79,7 @@ xdescribe('AuthenticationService', () => {
     describe('kerberos', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
-            appConfigService.config.auth = { withCredentials: true };
+            appConfigService.config.auth = { "withCredentials": true };
         });
 
         it('should emit login event for kerberos', (done) => {
@@ -110,10 +110,10 @@ xdescribe('AuthenticationService', () => {
     });
 
     describe('when the setting is ECM', () => {
-        const fakeECMLoginResponse = { type: 'ECM', ticket: 'fake-post-ticket' };
+        const fakeECMLoginResponse = { "type": 'ECM', "ticket": 'fake-post-ticket' };
 
         beforeEach(() => {
-            appConfigService.config.auth = { withCredentials: false };
+            appConfigService.config.auth = { "withCredentials": false };
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
         });
@@ -146,9 +146,9 @@ xdescribe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
+                "status": 201,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify({ "entry": { "id": 'fake-post-ticket', "userId": 'admin' } })
             });
         });
 
@@ -159,9 +159,9 @@ xdescribe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
+                "status": 201,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify({ "entry": { "id": 'fake-post-ticket', "userId": 'admin' } })
             });
         }));
 
@@ -176,14 +176,14 @@ xdescribe('AuthenticationService', () => {
                 });
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 204
+                    "status": 204
                 });
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
+                "status": 201,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify({ "entry": { "id": 'fake-post-ticket', "userId": 'admin' } })
             });
         }));
 
@@ -193,13 +193,13 @@ xdescribe('AuthenticationService', () => {
         });
 
         it('[ECM] should set/get redirectUrl when provider is ECM', () => {
-            basicAlfrescoAuthService.setRedirect({ provider: 'ECM', url: 'some-url' });
+            basicAlfrescoAuthService.setRedirect({ "provider": 'ECM', "url": 'some-url' });
 
             expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
         });
 
         it('[ECM] should set/get redirectUrl when provider is BPM', () => {
-            basicAlfrescoAuthService.setRedirect({ provider: 'BPM', url: 'some-url' });
+            basicAlfrescoAuthService.setRedirect({ "provider": 'BPM', "url": 'some-url' });
 
             expect(basicAlfrescoAuthService.getRedirect()).toBeNull();
         });
@@ -261,8 +261,8 @@ xdescribe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json'
+                "status": 200,
+                "contentType": 'application/json'
             });
         });
 
@@ -278,12 +278,12 @@ xdescribe('AuthenticationService', () => {
                 });
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200
+                    "status": 200
                 });
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
+                "status": 200
             });
         });
 
@@ -298,18 +298,18 @@ xdescribe('AuthenticationService', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
+                "status": 403
             });
         });
 
         it('[BPM] should set/get redirectUrl when provider is BPM', () => {
-            basicAlfrescoAuthService.setRedirect({ provider: 'BPM', url: 'some-url' });
+            basicAlfrescoAuthService.setRedirect({ "provider": 'BPM', "url": 'some-url' });
 
             expect(basicAlfrescoAuthService.getRedirect()).toEqual('some-url');
         });
 
         it('[BPM] should set/get redirectUrl when provider is ECM', () => {
-            basicAlfrescoAuthService.setRedirect({ provider: 'ECM', url: 'some-url' });
+            basicAlfrescoAuthService.setRedirect({ "provider": 'ECM', "url": 'some-url' });
 
             expect(basicAlfrescoAuthService.getRedirect()).toBeNull();
         });
@@ -348,9 +348,9 @@ xdescribe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
+                "status": 201,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify({ "entry": { "id": 'fake-post-ticket', "userId": 'admin' } })
             });
         });
 
@@ -364,9 +364,9 @@ xdescribe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
+                "status": 201,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify({ "entry": { "id": 'fake-post-ticket', "userId": 'admin' } })
             });
         });
 
@@ -381,15 +381,15 @@ xdescribe('AuthenticationService', () => {
             );
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403,
-                contentType: 'application/json',
-                responseText: JSON.stringify({
-                    error: {
-                        errorKey: 'Login failed',
-                        statusCode: 403,
-                        briefSummary: '05150009 Login failed',
-                        stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-                        descriptionURL: 'https://api-explorer.alfresco.com'
+                "status": 403,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify({
+                    "error": {
+                        "errorKey": 'Login failed',
+                        "statusCode": 403,
+                        "briefSummary": '05150009 Login failed',
+                        "stackTrace": 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                        "descriptionURL": 'https://api-explorer.alfresco.com'
                     }
                 })
             });
@@ -415,13 +415,13 @@ xdescribe('AuthenticationService', () => {
             });
 
             jasmine.Ajax.requests.at(0).respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
+                "status": 201,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify({ "entry": { "id": 'fake-post-ticket', "userId": 'admin' } })
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                status: 200
+                "status": 200
             });
         });
 
@@ -440,11 +440,11 @@ xdescribe('AuthenticationService', () => {
             );
 
             jasmine.Ajax.requests.at(0).respondWith({
-                status: 403
+                "status": 403
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                status: 200
+                "status": 200
             });
         });
 
@@ -462,13 +462,13 @@ xdescribe('AuthenticationService', () => {
             );
 
             jasmine.Ajax.requests.at(0).respondWith({
-                status: 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ entry: { id: 'fake-post-ticket', userId: 'admin' } })
+                "status": 201,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify({ "entry": { "id": 'fake-post-ticket', "userId": 'admin' } })
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                status: 403
+                "status": 403
             });
         });
 
@@ -487,11 +487,11 @@ xdescribe('AuthenticationService', () => {
             );
 
             jasmine.Ajax.requests.at(0).respondWith({
-                status: 403
+                "status": 403
             });
 
             jasmine.Ajax.requests.at(1).respondWith({
-                status: 403
+                "status": 403
             });
         });
 
@@ -542,7 +542,7 @@ xdescribe('AuthenticationService', () => {
             const onTokenReceivedSpy = jasmine.createSpy();
             authenticationService.onTokenReceived.subscribe(onTokenReceivedSpy);
 
-            onTokenReceived$.next({ type: 'token_received' });
+            onTokenReceived$.next({ "type": 'token_received' });
 
             expect(onTokenReceivedSpy).toHaveBeenCalled();
         });

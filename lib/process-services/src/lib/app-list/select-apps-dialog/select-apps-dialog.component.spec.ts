@@ -26,19 +26,19 @@ import { SelectAppsDialogComponent } from './select-apps-dialog.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 @Component({
-    selector: 'adf-dialog-test',
-    standalone: true,
-    template: ''
+    "selector": 'adf-dialog-test',
+    "standalone": true,
+    "template": ''
 })
 export class DialogSelectAppTestComponent {
     processId: any;
     dialogRef: any;
 
-    constructor(private dialog: MatDialog) {}
+    constructor (private dialog: MatDialog) {}
 
-    startProcessAction() {
+    startProcessAction () {
         this.dialogRef = this.dialog.open(SelectAppsDialogComponent, {
-            width: '630px'
+            "width": '630px'
         });
 
         this.dialogRef.afterClosed().subscribe((selectedProcess) => {
@@ -51,31 +51,31 @@ describe('Select app dialog', () => {
     let fixture: ComponentFixture<DialogSelectAppTestComponent>;
     let component: DialogSelectAppTestComponent;
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        "close": jasmine.createSpy('close')
     };
     let overlayContainerElement: HTMLElement;
     let service: AppsProcessService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, DialogSelectAppTestComponent],
-            providers: [
+            "imports": [ProcessTestingModule, DialogSelectAppTestComponent],
+            "providers": [
                 {
-                    provide: OverlayContainer,
-                    useFactory: () => {
+                    "provide": OverlayContainer,
+                    "useFactory": () => {
                         overlayContainerElement = document.createElement('div');
                         return {
-                            getContainerElement: () => overlayContainerElement
+                            "getContainerElement": () => overlayContainerElement
                         };
                     }
                 },
                 {
-                    provide: MatDialogRef,
-                    useValue: dialogRef
+                    "provide": MatDialogRef,
+                    "useValue": dialogRef
                 },
                 {
-                    provide: MAT_DIALOG_DATA,
-                    useValue: {}
+                    "provide": MAT_DIALOG_DATA,
+                    "useValue": {}
                 }
             ]
         });

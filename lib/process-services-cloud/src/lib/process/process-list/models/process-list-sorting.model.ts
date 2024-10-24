@@ -18,7 +18,7 @@
 export class ProcessListCloudSortingModel {
     orderBy: string;
     direction: string;
-     constructor(obj: any) {
+     constructor (obj: any) {
         if (obj) {
             this.orderBy = obj.orderBy;
             this.direction = obj.direction;

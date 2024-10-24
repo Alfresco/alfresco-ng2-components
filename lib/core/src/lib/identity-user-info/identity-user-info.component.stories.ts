@@ -21,103 +21,103 @@ import { IdentityUserInfoComponent } from './identity-user-info.component';
 import { importProvidersFrom } from '@angular/core';
 
 const fakeIdentityUser = {
-    familyName: 'Identity',
-    givenName: 'John',
-    email: 'john.identity@gmail.com',
-    username: 'johnyIdentity99'
+    "familyName": 'Identity',
+    "givenName": 'John',
+    "email": 'john.identity@gmail.com',
+    "username": 'johnyIdentity99'
 };
 
 export default {
-    component: IdentityUserInfoComponent,
-    title: 'Core/Identity User Info/Identity User Info',
-    decorators: [
+    "component": IdentityUserInfoComponent,
+    "title": 'Core/Identity User Info/Identity User Info',
+    "decorators": [
         moduleMetadata({
-            imports: [IdentityUserInfoComponent]
+            "imports": [IdentityUserInfoComponent]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    argTypes: {
-        isLoggedIn: {
-            description: 'Determines if user is logged in',
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+    "argTypes": {
+        "isLoggedIn": {
+            "description": 'Determines if user is logged in',
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        identityUser: {
-            description: 'Identity User Info',
-            control: 'object',
-            table: {
-                type: { summary: 'IdentityUserModel' }
+        "identityUser": {
+            "description": 'Identity User Info',
+            "control": 'object',
+            "table": {
+                "type": { "summary": 'IdentityUserModel' }
             }
         },
-        menuPositionX: {
-            description: 'Material Angular menu horizontal position in regard to User Info',
-            control: 'radio',
-            options: ['before', 'after'],
-            table: {
-                type: { summary: 'MenuPositionX' },
-                defaultValue: { summary: 'after' }
+        "menuPositionX": {
+            "description": 'Material Angular menu horizontal position in regard to User Info',
+            "control": 'radio',
+            "options": ['before', 'after'],
+            "table": {
+                "type": { "summary": 'MenuPositionX' },
+                "defaultValue": { "summary": 'after' }
             }
         },
-        menuPositionY: {
-            description: 'Material Angular menu vertical position in regard to User Info',
-            control: 'radio',
-            options: ['above', 'below'],
-            table: {
-                type: { summary: 'MenuPositionY' },
-                defaultValue: { summary: 'below' }
+        "menuPositionY": {
+            "description": 'Material Angular menu vertical position in regard to User Info',
+            "control": 'radio',
+            "options": ['above', 'below'],
+            "table": {
+                "type": { "summary": 'MenuPositionY' },
+                "defaultValue": { "summary": 'below' }
             }
         },
-        showName: {
-            description: 'Determines if name should be shown next to user avatar',
-            control: 'boolean',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'true' }
+        "showName": {
+            "description": 'Determines if name should be shown next to user avatar',
+            "control": 'boolean',
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'true' }
             }
         },
-        namePosition: {
-            description: 'User name position in regard to avatar',
-            control: 'radio',
-            options: ['left', 'right'],
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'right' }
+        "namePosition": {
+            "description": 'User name position in regard to avatar',
+            "control": 'radio',
+            "options": ['left', 'right'],
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'right' }
             }
         },
-        bpmBackgroundImage: {
-            description: 'Menu background banner image for APS users',
-            control: {
-                disable: true
+        "bpmBackgroundImage": {
+            "description": 'Menu background banner image for APS users',
+            "control": {
+                "disable": true
             },
-            table: {
-                type: {
-                    summary: 'string'
+            "table": {
+                "type": {
+                    "summary": 'string'
                 },
-                defaultValue: {
-                    summary: './assets/images/bpm-background.png'
+                "defaultValue": {
+                    "summary": './assets/images/bpm-background.png'
                 }
             }
         }
     },
-    args: {
-        identityUser: fakeIdentityUser,
-        isLoggedIn: true,
-        menuPositionX: 'after',
-        menuPositionY: 'below',
-        showName: true,
-        namePosition: 'right',
-        bpmBackgroundImage: './assets/images/bpm-background.png'
+    "args": {
+        "identityUser": fakeIdentityUser,
+        "isLoggedIn": true,
+        "menuPositionX": 'after',
+        "menuPositionY": 'below',
+        "showName": true,
+        "namePosition": 'right',
+        "bpmBackgroundImage": './assets/images/bpm-background.png'
     }
 } as Meta<IdentityUserInfoComponent>;
 
 const template: StoryFn<IdentityUserInfoComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const LoginWithSSO = template.bind({});
-LoginWithSSO.parameters = { layout: 'centered' };
+LoginWithSSO.parameters = { "layout": 'centered' };

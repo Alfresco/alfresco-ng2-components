@@ -26,12 +26,12 @@ import { mockAppVersions } from '../process-filters/mock/process-filters-cloud.m
 import { ProcessCloudInterface } from '../services/process-cloud.interface';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ProcessCloudServiceMock implements ProcessCloudInterface {
     dataChangesDetected = new Subject<ProcessInstanceCloud>();
 
-    getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
+    getProcessInstanceById (appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if (appName === 'app-placeholders' && processInstanceId) {
             return of(processInstancePlaceholdersCloudMock);
         }
@@ -43,7 +43,7 @@ export class ProcessCloudServiceMock implements ProcessCloudInterface {
         }
     }
 
-    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
+    getProcessDefinitions (appName: string): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
             return of(fakeProcessDefinitions);
         } else {
@@ -51,7 +51,7 @@ export class ProcessCloudServiceMock implements ProcessCloudInterface {
         }
     }
 
-    getApplicationVersions(appName: string): Observable<ApplicationVersionModel[]> {
+    getApplicationVersions (appName: string): Observable<ApplicationVersionModel[]> {
         if (appName) {
             return of(mockAppVersions);
         } else {
@@ -59,7 +59,7 @@ export class ProcessCloudServiceMock implements ProcessCloudInterface {
         }
     }
 
-    cancelProcess(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
+    cancelProcess (appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if (appName && processInstanceId) {
             return of();
         } else {

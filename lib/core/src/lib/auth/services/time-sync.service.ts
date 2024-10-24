@@ -29,20 +29,20 @@ export interface TimeSync {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TimeSyncService {
 
     private readonly _http: HttpClient;
 
-    constructor(
+    constructor (
         private _injector: Injector,
         private _appConfigService: AppConfigService
     ) {
         this._http = this._injector.get(HttpClient);
     }
 
-    checkTimeSync(maxAllowedClockSkewInSec: number): Observable<TimeSync> {
+    checkTimeSync (maxAllowedClockSkewInSec: number): Observable<TimeSync> {
         const startTime = Date.now();
 
         return this.getServerTime().pipe(
@@ -65,10 +65,10 @@ export class TimeSyncService {
                 const maxAllowedClockSkewInMs = maxAllowedClockSkewInSec * 1000;
 
                 return {
-                    outOfSync: timeOffsetInMs > maxAllowedClockSkewInMs,
-                    timeOffsetInSec: timeOffsetInMs / 1000,
-                    localDateTimeISO: new Date(localCurrentTimeInMs).toISOString(),
-                    serverDateTimeISO: new Date(adjustedServerTimeInMs).toISOString()
+                    "outOfSync": timeOffsetInMs > maxAllowedClockSkewInMs,
+                    "timeOffsetInSec": timeOffsetInMs / 1000,
+                    "localDateTimeISO": new Date(localCurrentTimeInMs).toISOString(),
+                    "serverDateTimeISO": new Date(adjustedServerTimeInMs).toISOString()
                 };
             }),
             catchError(error => throwError(() => new Error(error)))
@@ -77,24 +77,23 @@ export class TimeSyncService {
 
     /**
      * Checks if the local time is out of sync with the server time.
-     *
      * @param maxAllowedClockSkewInSec - The maximum allowed clock skew in seconds.
      * @returns An Observable that emits a boolean indicating whether the local time is out of sync.
      */
-    isLocalTimeOutOfSync(maxAllowedClockSkewInSec: number): Observable<boolean> {
+    isLocalTimeOutOfSync (maxAllowedClockSkewInSec: number): Observable<boolean> {
         return this.checkTimeSync(maxAllowedClockSkewInSec).pipe(
             map(sync => sync.outOfSync)
         );
     }
 
-    private getServerTime(): Observable<number> {
+    private getServerTime (): Observable<number> {
         return from(this._http.get<number>(this.getServerTimeUrl())).pipe(
             timeout(5000),
             catchError(() => throwError(() => new Error('Failed to get server time')))
         );
     }
 
-    private getServerTimeUrl(): string {
+    private getServerTimeUrl (): string {
         const serverTimeUrl = this._appConfigService.get('serverTimeUrl', '');
         if (!serverTimeUrl) {
             throw new Error('serverTimeUrl is not configured.');

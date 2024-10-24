@@ -20,17 +20,17 @@ import { NotificationService } from '../services/notification.service';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-add-notification-storybook',
-    standalone: true,
-    imports: [MatButtonModule],
-    template: ` <button mat-raised-button (click)="showInfo()">Add Notification</button>`
+    "selector": 'adf-add-notification-storybook',
+    "standalone": true,
+    "imports": [MatButtonModule],
+    "template": ` <button mat-raised-button (click)="showInfo()">Add Notification</button>`
 })
 export class AddNotificationStorybookComponent {
     infoCounter: number = 1;
 
-    constructor(private notificationService: NotificationService) {}
+    constructor (private notificationService: NotificationService) {}
 
-    showInfo() {
+    showInfo () {
         this.notificationService.showInfo(`Example notification ${this.infoCounter}`);
         this.infoCounter++;
     }

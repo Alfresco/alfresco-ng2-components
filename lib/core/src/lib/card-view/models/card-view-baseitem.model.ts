@@ -32,7 +32,7 @@ export abstract class CardViewBaseItemModel<T = any> {
     type?: string;
     multivalued?: boolean;
 
-    constructor(props: CardViewItemProperties) {
+    constructor (props: CardViewItemProperties) {
         this.label = props.label || '';
         this.value = props.value?.displayName || props.value;
         this.key = props.key;
@@ -55,7 +55,7 @@ export abstract class CardViewBaseItemModel<T = any> {
         }
     }
 
-    isEmpty(): boolean {
+    isEmpty (): boolean {
         return (
             this.value === undefined ||
             this.value === null ||
@@ -64,7 +64,7 @@ export abstract class CardViewBaseItemModel<T = any> {
         );
     }
 
-    isValid(newValue: T): boolean {
+    isValid (newValue: T): boolean {
         if (!this.validators.length) {
             return true;
         }
@@ -72,7 +72,7 @@ export abstract class CardViewBaseItemModel<T = any> {
         return this.validators.map((validator) => validator.isValid(newValue)).reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
     }
 
-    getValidationErrors(value: T): CardViewItemValidator[] {
+    getValidationErrors (value: T): CardViewItemValidator[] {
         if (!this.validators.length) {
             return [];
         }

@@ -23,11 +23,11 @@ import { Component, ContentChild, Input, Output, TemplateRef, EventEmitter } fro
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'adf-file-uploading-list',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './file-uploading-list.component.html',
-    styleUrls: ['./file-uploading-list.component.scss']
+    "selector": 'adf-file-uploading-list',
+    "standalone": true,
+    "imports": [CommonModule],
+    "templateUrl": './file-uploading-list.component.html',
+    "styleUrls": ['./file-uploading-list.component.scss']
 })
 export class FileUploadingListComponent {
     @ContentChild(TemplateRef)
@@ -40,14 +40,13 @@ export class FileUploadingListComponent {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(private uploadService: UploadService, private translateService: TranslationService) {}
+    constructor (private uploadService: UploadService, private translateService: TranslationService) {}
 
     /**
      * Cancel file upload
-     *
      * @param file File model to cancel upload for.
      */
-    cancelFile(file: FileModel): void {
+    cancelFile (file: FileModel): void {
         if (file.status === FileUploadStatus.Pending) {
             file.status = FileUploadStatus.Cancelled;
         } else {
@@ -57,10 +56,9 @@ export class FileUploadingListComponent {
 
     /**
      * Remove uploaded file
-     *
      * @param file File model to remove upload for.
      */
-    removeFile(file: FileModel): void {
+    removeFile (file: FileModel): void {
         if (file.status === FileUploadStatus.Error) {
             this.notifyError(file);
         }
@@ -76,7 +74,7 @@ export class FileUploadingListComponent {
     /**
      * Calls the appropriate methods for each file, depending on state
      */
-    cancelAllFiles(): void {
+    cancelAllFiles (): void {
         const filesToCancel = this.files.filter((file) => this.isUploadingFile(file));
 
         if (filesToCancel.length > 0) {
@@ -86,10 +84,9 @@ export class FileUploadingListComponent {
 
     /**
      * Checks if all the files are uploaded false if there is at least one file in Progress | Starting | Pending
-     *
      * @returns `true` if upload is complete, otherwise `false`
      */
-    isUploadCompleted(): boolean {
+    isUploadCompleted (): boolean {
         return (
             !this.isUploadCancelled() &&
             Boolean(this.files.length) &&
@@ -101,10 +98,9 @@ export class FileUploadingListComponent {
 
     /**
      * Check if all the files are Cancelled | Aborted | Error. false if there is at least one file in uploading states
-     *
      * @returns `true` if upload is cancelled, otherwise `false`
      */
-    isUploadCancelled(): boolean {
+    isUploadCancelled (): boolean {
         return (
             !!this.files.length &&
             this.files.every(
@@ -113,7 +109,7 @@ export class FileUploadingListComponent {
         );
     }
 
-    private cancelNodeVersionInstances(file: FileModel) {
+    private cancelNodeVersionInstances (file: FileModel) {
         this.files
             .filter((item) => item.options.newVersion && item.data.entry.id === file.data.entry.id)
             .map((item) => {
@@ -121,19 +117,19 @@ export class FileUploadingListComponent {
             });
     }
 
-    private notifyError(...files: FileModel[]) {
+    private notifyError (...files: FileModel[]) {
         let messageError: string = null;
 
         if (files.length === 1) {
-            messageError = this.translateService.instant('FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR', { fileName: files[0].name });
+            messageError = this.translateService.instant('FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR', { "fileName": files[0].name });
         } else {
-            messageError = this.translateService.instant('FILE_UPLOAD.MESSAGES.REMOVE_FILES_ERROR', { total: files.length });
+            messageError = this.translateService.instant('FILE_UPLOAD.MESSAGES.REMOVE_FILES_ERROR', { "total": files.length });
         }
 
         this.error.emit(messageError);
     }
 
-    private isUploadingFile(file: FileModel): boolean {
+    private isUploadingFile (file: FileModel): boolean {
         return file.status === FileUploadStatus.Pending || file.status === FileUploadStatus.Starting || file.status === FileUploadStatus.Progress;
     }
 }

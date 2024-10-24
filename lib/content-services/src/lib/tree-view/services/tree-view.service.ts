@@ -23,12 +23,12 @@ import { NodePaging, NodeEntry } from '@alfresco/js-api';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TreeViewService {
     private nodeApi = inject(NodesApiService);
 
-    getTreeNodes(nodeId: string): Observable<TreeBaseNode[]> {
+    getTreeNodes (nodeId: string): Observable<TreeBaseNode[]> {
         return this.nodeApi.getNodeChildren(nodeId).pipe(
             map((nodePage: NodePaging) => nodePage.list.entries.filter((node) => (node.entry.isFolder ? node : null))),
             map((nodes: NodeEntry[]) => nodes.map((node) => new TreeBaseNode(node)))

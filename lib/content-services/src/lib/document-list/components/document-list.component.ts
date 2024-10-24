@@ -90,9 +90,9 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
 @Component({
-    selector: 'adf-document-list',
-    standalone: true,
-    imports: [
+    "selector": 'adf-document-list',
+    "standalone": true,
+    "imports": [
         CommonModule,
         DataTableComponent,
         FilterHeaderComponent,
@@ -106,27 +106,27 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
         MainMenuDataTableTemplateDirective,
         ColumnsSelectorComponent
     ],
-    templateUrl: './document-list.component.html',
-    styleUrls: ['./document-list.component.scss'],
-    providers: [
+    "templateUrl": './document-list.component.html',
+    "styleUrls": ['./document-list.component.scss'],
+    "providers": [
         {
-            provide: ADF_DOCUMENT_PARENT_COMPONENT,
-            useExisting: DocumentListComponent
+            "provide": ADF_DOCUMENT_PARENT_COMPONENT,
+            "useExisting": DocumentListComponent
         },
         DataTableService
     ],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-document-list' }
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-document-list' }
 })
 export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent {
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
     DEFAULT_PAGINATION: Pagination = new Pagination({
-        hasMoreItems: false,
-        skipCount: 0,
-        maxItems: 25,
-        totalItems: 0
+        "hasMoreItems": false,
+        "skipCount": 0,
+        "maxItems": 25,
+        "totalItems": 0
     });
 
     DEFAULT_SORTING: DataSorting[] = [new DataSorting('name', 'asc'), new DataSorting('isFolder', 'desc')];
@@ -278,7 +278,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
      * more information.
      */
     @Input()
-    set rowFilter(rowFilter: RowFilter) {
+    set rowFilter (rowFilter: RowFilter) {
         this._rowFilter = rowFilter;
         if (this.data) {
             this.data.setFilter(this._rowFilter);
@@ -288,7 +288,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    get rowFilter(): RowFilter {
+    get rowFilter (): RowFilter {
         return this._rowFilter;
     }
 
@@ -338,19 +338,19 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     /** Sets columns visibility for DataTableSchema */
     @Input()
-    set setColumnsVisibility(columnsVisibility: { [columnId: string]: boolean } | undefined) {
+    set setColumnsVisibility (columnsVisibility: { [columnId: string]: boolean } | undefined) {
         this.columnsVisibility = columnsVisibility;
     }
 
     /** Sets columns width for DataTableSchema */
     @Input()
-    set setColumnsWidths(columnsWidths: { [columnId: string]: number } | undefined) {
+    set setColumnsWidths (columnsWidths: { [columnId: string]: number } | undefined) {
         this.columnsWidths = columnsWidths;
     }
 
     /** Sets columns order for DataTableSchema */
     @Input()
-    set setColumnsOrder(columnsOrder: string[] | undefined) {
+    set setColumnsOrder (columnsOrder: string[] | undefined) {
         this.columnsOrder = columnsOrder;
     }
 
@@ -422,7 +422,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     @Output()
     selectedItemsCountChanged = new EventEmitter<number | undefined>();
 
-    @ViewChild('dataTable', { static: true })
+    @ViewChild('dataTable', { "static": true })
     dataTable: DataTableComponent;
 
     actions: ContentActionModel[] = [];
@@ -447,12 +447,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     private onDestroy$ = new Subject<boolean>();
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
         return this._nodesApi;
     }
 
-    constructor(
+    constructor (
         private documentListService: DocumentListService,
         private elementRef: ElementRef,
         private appConfig: AppConfigService,
@@ -467,7 +467,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     ) {
         super(appConfig, 'default', presetsDefaultModel);
         this.nodeService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
-            this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
+            this.dataTableService.rowUpdate.next({ "id": node.id, "obj": { "entry": node } });
         });
 
         this.userPreferencesService
@@ -478,21 +478,21 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             });
     }
 
-    getContextActions(node: NodeEntry) {
+    getContextActions (node: NodeEntry) {
         if (node?.entry) {
             const actions = this.getNodeActions(node);
             if (actions && actions.length > 0) {
                 return actions.map((currentAction: ContentActionModel) => ({
-                    model: currentAction,
+                    "model": currentAction,
                     node,
-                    subject: this.contextActionHandler
+                    "subject": this.contextActionHandler
                 }));
             }
         }
         return null;
     }
 
-    private getDefaultSorting(): DataSorting {
+    private getDefaultSorting (): DataSorting {
         let defaultSorting: DataSorting;
         if (Array.isArray(this.sorting)) {
             const [key, direction] = this.sorting;
@@ -504,15 +504,15 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return defaultSorting;
     }
 
-    isMobile(): boolean {
+    isMobile (): boolean {
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
-    isEmpty() {
+    isEmpty () {
         return !this.data || this.data.getRows().length === 0;
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.rowMenuCache = {};
         this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(
@@ -554,7 +554,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         });
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         if (this.columnList) {
             this.columnList.columns.changes.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
                 this.createColumns();
@@ -565,7 +565,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.data.setColumns(this.columns);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (!changes['preselectNodes']) {
             this.resetSelection();
         }
@@ -610,12 +610,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    reload(hideLoadingSpinner = false) {
+    reload (hideLoadingSpinner = false) {
         this.resetSelection();
         this.reloadWithoutResettingSelection(hideLoadingSpinner);
     }
 
-    reloadWithoutResettingSelection(hideLoadingSpinner = false) {
+    reloadWithoutResettingSelection (hideLoadingSpinner = false) {
         if (this.node) {
             if (this.data) {
                 this.data.loadPage(this.node, this._pagination.merge, null);
@@ -629,13 +629,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    contextActionCallback(action) {
+    contextActionCallback (action) {
         if (action) {
             this.executeContentAction(action.node, action.model);
         }
     }
 
-    getNodeActions(node: NodeEntry | any): ContentActionModel[] {
+    getNodeActions (node: NodeEntry | any): ContentActionModel[] {
         if (node?.entry) {
             let target = null;
 
@@ -674,12 +674,12 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return [];
     }
 
-    private refreshAction(action: ContentActionModel, node: NodeEntry) {
+    private refreshAction (action: ContentActionModel, node: NodeEntry) {
         action.disabled = this.isActionDisabled(action, node);
         action.visible = this.isActionVisible(action, node);
     }
 
-    private isActionVisible(action: ContentActionModel, node: NodeEntry): boolean {
+    private isActionVisible (action: ContentActionModel, node: NodeEntry): boolean {
         if (typeof action.visible === 'function') {
             return action.visible(node);
         }
@@ -687,7 +687,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return action.visible;
     }
 
-    private isActionDisabled(action: ContentActionModel, node: NodeEntry): boolean {
+    private isActionDisabled (action: ContentActionModel, node: NodeEntry): boolean {
         if (typeof action.disabled === 'function') {
             return action.disabled(node);
         }
@@ -703,24 +703,24 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
     }
 
     @HostListener('contextmenu', ['$event'])
-    onShowContextMenu(e?: Event) {
+    onShowContextMenu (e?: Event) {
         if (e && this.contextMenuActions) {
             e.preventDefault();
         }
     }
 
-    navigateTo(node: Node | string): boolean {
+    navigateTo (node: Node | string): boolean {
         if (typeof node === 'string') {
             this.resetNewFolderPagination();
             this.currentFolderId = node;
-            this.folderChange.emit(new NodeEntryEvent({ id: node } as Node));
+            this.folderChange.emit(new NodeEntryEvent({ "id": node } as Node));
             this.reload();
             return true;
         } else {
             if (this.canNavigateFolder(node)) {
                 this.resetNewFolderPagination();
                 this.currentFolderId = this.getNodeFolderDestinationId(node);
-                this.folderChange.emit(new NodeEntryEvent({ id: this.currentFolderId } as Node));
+                this.folderChange.emit(new NodeEntryEvent({ "id": this.currentFolderId } as Node));
                 this.reload();
                 return true;
             }
@@ -728,25 +728,24 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return false;
     }
 
-    private getNodeFolderDestinationId(node: Node) {
+    private getNodeFolderDestinationId (node: Node) {
         return this.isLinkFolder(node) ? node.properties['cm:destination'] : node.id;
     }
 
-    private isLinkFolder(node: Node) {
-        return node.nodeType === 'app:folderlink' && node.properties && node.properties['cm:destination'];
+    private isLinkFolder (node: Node) {
+        return node.nodeType === 'app:folderlink' && node.properties?.['cm:destination'];
     }
 
-    private updateCustomSourceData(nodeId: string): void {
+    private updateCustomSourceData (nodeId: string): void {
         this.currentFolderId = nodeId;
     }
 
     /**
      * Invoked when executing content action for a document or folder.
-     *
      * @param node Node to be the context of the execution.
      * @param action Action to be executed against the context.
      */
-    executeContentAction(node: NodeEntry, action: ContentActionModel) {
+    executeContentAction (node: NodeEntry, action: ContentActionModel) {
         if (node?.entry && action) {
             const handlerSub = typeof action.handler === 'function' ? action.handler(node, this, action.permission) : of(true);
 
@@ -756,7 +755,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    private setLoadingState(value: boolean) {
+    private setLoadingState (value: boolean) {
         if (this.data?.getRows().length > 0) {
             if (value) {
                 clearTimeout(this.loadingTimeout);
@@ -773,7 +772,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    loadFolder(hideLoadingSpinner = false) {
+    loadFolder (hideLoadingSpinner = false) {
         if (!hideLoadingSpinner) {
             this.setLoadingState(true);
         }
@@ -796,13 +795,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         );
     }
 
-    resetSelection() {
+    resetSelection () {
         this.dataTable.resetSelection();
         this.selection = [];
         this.noPermission = false;
     }
 
-    onPageLoaded(nodePaging: NodePaging) {
+    onPageLoaded (nodePaging: NodePaging) {
         if (nodePaging) {
             if (this.data) {
                 this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles);
@@ -814,7 +813,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    onSortingChanged(event: CustomEvent) {
+    onSortingChanged (event: CustomEvent) {
         this.orderBy = this.buildOrderByArray(event.detail.sortingKey, event.detail.direction);
         this.sorting = [event.detail.sortingKey, event.detail.direction];
         this.sortingSubject.next([this.additionalSorting, event.detail]);
@@ -824,25 +823,25 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    private buildOrderByArray(currentKey: string, currentDirection: string): string[] {
+    private buildOrderByArray (currentKey: string, currentDirection: string): string[] {
         return [`${this.additionalSorting.key} ${this.additionalSorting.direction}`, `${currentKey} ${currentDirection}`];
     }
 
-    onPreviewFile(node: NodeEntry) {
+    onPreviewFile (node: NodeEntry) {
         if (node) {
             const sizeInMB = node.entry?.content?.sizeInBytes / BYTES_TO_MB_CONVERSION_VALUE;
             const fileAutoDownloadFlag: boolean = this.appConfig.get('viewer.enableFileAutoDownload', true);
             const sizeThreshold: number = this.appConfig.get('viewer.fileAutoDownloadSizeThresholdInMB', 15);
 
             if (fileAutoDownloadFlag && sizeInMB && sizeInMB > sizeThreshold) {
-                this.dialog.open(FileAutoDownloadComponent, { disableClose: true, data: node });
+                this.dialog.open(FileAutoDownloadComponent, { "disableClose": true, "data": node });
             } else {
                 this.preview.emit(new NodeEntityEvent(node));
             }
         }
     }
 
-    onColumnsVisibilityChange(columns: DataColumn[]) {
+    onColumnsVisibilityChange (columns: DataColumn[]) {
         this.columnsVisibility = columns.reduce((visibleColumnsMap, column) => {
             if (column.isHidden !== undefined) {
                 visibleColumnsMap[column.id] = !column.isHidden;
@@ -856,13 +855,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.columnsVisibilityChanged.emit(this.columnsVisibility);
     }
 
-    onColumnOrderChange(columnsWithNewOrder: DataColumn[]) {
+    onColumnOrderChange (columnsWithNewOrder: DataColumn[]) {
         this.columnsOrder = columnsWithNewOrder.map((column) => column.id);
         this.createColumns();
         this.columnsOrderChanged.emit(this.columnsOrder);
     }
 
-    onColumnsWidthChange(columns: DataColumn[]) {
+    onColumnsWidthChange (columns: DataColumn[]) {
         const newColumnsWidths = columns.reduce((widthsColumnsMap, column) => {
             if (column.width) {
                 widthsColumnsMap[column.id] = Math.ceil(column.width);
@@ -875,17 +874,17 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.columnsWidthChanged.emit(this.columnsWidths);
     }
 
-    onSelectedItemsCountChanged(count: number) {
+    onSelectedItemsCountChanged (count: number) {
         this.selectedItemsCountChanged.emit(count);
     }
 
-    onNodeClick(nodeEntry: NodeEntry) {
+    onNodeClick (nodeEntry: NodeEntry) {
         const domEvent = new CustomEvent('node-click', {
-            detail: {
-                sender: this,
-                node: nodeEntry
+            "detail": {
+                "sender": this,
+                "node": nodeEntry
             },
-            bubbles: true
+            "bubbles": true
         });
 
         this.elementRef.nativeElement.dispatchEvent(domEvent);
@@ -900,13 +899,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    onNodeDblClick(nodeEntry: NodeEntry) {
+    onNodeDblClick (nodeEntry: NodeEntry) {
         const domEvent = new CustomEvent('node-dblclick', {
-            detail: {
-                sender: this,
-                node: nodeEntry
+            "detail": {
+                "sender": this,
+                "node": nodeEntry
             },
-            bubbles: true
+            "bubbles": true
         });
         this.elementRef.nativeElement.dispatchEvent(domEvent);
 
@@ -920,7 +919,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    executeActionClick(nodeEntry: NodeEntry) {
+    executeActionClick (nodeEntry: NodeEntry) {
         if (nodeEntry?.entry) {
             if (nodeEntry.entry.isFile) {
                 this.onPreviewFile(nodeEntry);
@@ -932,7 +931,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
             if (nodeEntry.entry['guid']) {
                 const options = {
-                    include: this.includeFields
+                    "include": this.includeFields
                 };
 
                 this.nodesApi.getNode(nodeEntry.entry['guid'], options).then((node: NodeEntry) => {
@@ -942,33 +941,33 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    onNodeSelect(event: { row: ShareDataRow; selection: Array<ShareDataRow> }) {
+    onNodeSelect (event: { row: ShareDataRow; selection: Array<ShareDataRow> }) {
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
-            detail: {
-                node: event.row ? event.row.node : null,
-                selection: this.selection
+            "detail": {
+                "node": event.row ? event.row.node : null,
+                "selection": this.selection
             },
-            bubbles: true
+            "bubbles": true
         });
         this.nodeSelected.emit(this.selection);
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
-    onNodeUnselect(event: { row: ShareDataRow; selection: Array<ShareDataRow> }) {
+    onNodeUnselect (event: { row: ShareDataRow; selection: Array<ShareDataRow> }) {
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-unselect', {
-            detail: {
-                node: event.row ? event.row.node : null,
-                selection: this.selection
+            "detail": {
+                "node": event.row ? event.row.node : null,
+                "selection": this.selection
             },
-            bubbles: true
+            "bubbles": true
         });
         this.nodeSelected.emit(this.selection);
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
-    onShowRowContextMenu(event: DataCellEvent) {
+    onShowRowContextMenu (event: DataCellEvent) {
         if (this.contextMenuActions) {
             const args = event.value;
             const node = args.row.node;
@@ -978,7 +977,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    onShowRowActionsMenu(event: DataCellEvent) {
+    onShowRowActionsMenu (event: DataCellEvent) {
         if (this.contentActions) {
             const args = event.value;
             const node = args.row.node;
@@ -988,7 +987,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    onExecuteRowAction(event: DataRowActionEvent) {
+    onExecuteRowAction (event: DataRowActionEvent) {
         if (this.contentActions) {
             const args = event.value;
             const node = args.row.node;
@@ -997,13 +996,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    private enforceSingleClickNavigationForMobile(): void {
+    private enforceSingleClickNavigationForMobile (): void {
         if (this.isMobile()) {
             this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         }
     }
 
-    canNavigateFolder(node: Node): boolean {
+    canNavigateFolder (node: Node): boolean {
         let canNavigateFolder: boolean = false;
 
         if (node?.isFolder) {
@@ -1013,37 +1012,37 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         return canNavigateFolder;
     }
 
-    private onDataReady(nodePaging: NodePaging) {
+    private onDataReady (nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
         this.pagination.next(nodePaging.list.pagination);
     }
 
-    updatePagination(requestPaginationModel: RequestPaginationModel) {
+    updatePagination (requestPaginationModel: RequestPaginationModel) {
         this._pagination.maxItems = requestPaginationModel.maxItems;
         this._pagination.skipCount = requestPaginationModel.skipCount;
         this.reload(requestPaginationModel.merge);
     }
 
-    private syncPagination() {
+    private syncPagination () {
         this.node.list.pagination.maxItems = this._pagination.maxItems;
         this.node.list.pagination.skipCount = this._pagination.skipCount;
     }
 
-    onFilterSelectionChange(activeFilters: FilterSearch[]) {
+    onFilterSelectionChange (activeFilters: FilterSearch[]) {
         this.filterSelection.emit(activeFilters);
     }
 
-    resetNewFolderPagination() {
+    resetNewFolderPagination () {
         this._pagination.skipCount = 0;
         this._pagination.maxItems = this.maxItems;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    private handleError(err: any) {
+    private handleError (err: any) {
         if (err.message) {
             try {
                 if (JSON.parse(err.message).error.statusCode === 403) {
@@ -1057,15 +1056,15 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this.error.emit(err);
     }
 
-    getPreselectedNodesBasedOnSelectionMode(): NodeEntry[] {
+    getPreselectedNodesBasedOnSelectionMode (): NodeEntry[] {
         return this.hasPreselectedNodes() ? (this.isSingleSelectionMode() ? [this.preselectNodes[0]] : this.preselectNodes) : [];
     }
 
-    getPreselectedRowsBasedOnSelectionMode(): DataRow[] {
+    getPreselectedRowsBasedOnSelectionMode (): DataRow[] {
         return this.hasPreselectedRows() ? (this.isSingleSelectionMode() ? [this.preselectedRows[0]] : this.preselectedRows) : [];
     }
 
-    getSelectionBasedOnSelectionMode(): DataRow[] {
+    getSelectionBasedOnSelectionMode (): DataRow[] {
         return this.hasPreselectedRows()
             ? this.isSingleSelectionMode()
                 ? [this.preselectedRows[0]]
@@ -1073,7 +1072,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             : this.data.getSelectedRows();
     }
 
-    onPreselectNodes() {
+    onPreselectNodes () {
         if (this.hasPreselectedNodes()) {
             this.preselectRowsOfPreselectedNodes();
             const preselectedRows = this.getPreselectedRowsBasedOnSelectionMode();
@@ -1082,11 +1081,11 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             for (const node of preselectedRows) {
                 this.dataTable.selectRow(node, true);
             }
-            this.onNodeSelect({ row: undefined, selection });
+            this.onNodeSelect({ "row": undefined, selection });
         }
     }
 
-    private preserveExistingSelection() {
+    private preserveExistingSelection () {
         if (this.isMultipleSelectionMode()) {
             for (const selection of this.selection) {
                 const rowOfSelection = this.data.getRowByNodeId(selection.entry.id);
@@ -1097,7 +1096,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         }
     }
 
-    preselectRowsOfPreselectedNodes() {
+    preselectRowsOfPreselectedNodes () {
         this.preselectedRows = [];
         const preselectedNodes = this.getPreselectedNodesBasedOnSelectionMode();
 
@@ -1110,29 +1109,29 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         });
     }
 
-    unselectRowFromNodeId(nodeId: string) {
+    unselectRowFromNodeId (nodeId: string) {
         const rowToUnselect = this.data.getRowByNodeId(nodeId);
         if (rowToUnselect?.isSelected) {
             rowToUnselect.isSelected = false;
             this.dataTable.selectRow(rowToUnselect, false);
             const selection = this.getSelectionBasedOnSelectionMode() as ShareDataRow[];
-            this.onNodeUnselect({ row: undefined, selection });
+            this.onNodeUnselect({ "row": undefined, selection });
         }
     }
 
-    private isSingleSelectionMode(): boolean {
+    private isSingleSelectionMode (): boolean {
         return this.selectionMode === 'single';
     }
 
-    private isMultipleSelectionMode(): boolean {
+    private isMultipleSelectionMode (): boolean {
         return this.selectionMode === 'multiple';
     }
 
-    private hasPreselectedNodes(): boolean {
+    private hasPreselectedNodes (): boolean {
         return this.preselectNodes?.length > 0;
     }
 
-    private hasPreselectedRows(): boolean {
+    private hasPreselectedRows (): boolean {
         return this.preselectedRows?.length > 0;
     }
 }

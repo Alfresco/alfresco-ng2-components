@@ -23,16 +23,15 @@ import { TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { TaskCloudNodePaging } from '../../../models/task-cloud.model';
 import { TaskListCloudSortingModel } from '../../../models/task-list-sorting.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class ProcessTaskListCloudService extends BaseCloudService {
     /**
      * Finds a task using an object with optional query properties.
-     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns Task information
      */
-    getTaskByRequest(requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any> {
+    getTaskByRequest (requestNode: TaskQueryCloudRequestModel, queryUrl?: string): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
             queryUrl = queryUrl || `${this.getBasePath(requestNode.appName)}/query/v1/process-instances/${requestNode.processInstanceId}/tasks`;
             const queryParams = this.buildQueryParams(requestNode);
@@ -55,7 +54,7 @@ export class ProcessTaskListCloudService extends BaseCloudService {
         }
     }
 
-    protected buildQueryParams(requestNode: TaskQueryCloudRequestModel): any {
+    protected buildQueryParams (requestNode: TaskQueryCloudRequestModel): any {
         const queryParam: any = {};
         for (const property in requestNode) {
             if (
@@ -69,15 +68,15 @@ export class ProcessTaskListCloudService extends BaseCloudService {
         return queryParam;
     }
 
-    protected isExcludedField(property: string): boolean {
+    protected isExcludedField (property: string): boolean {
         return property === 'appName' || property === 'sorting';
     }
 
-    protected isPropertyValueValid(requestNode: TaskQueryCloudRequestModel, property: string): boolean {
+    protected isPropertyValueValid (requestNode: TaskQueryCloudRequestModel, property: string): boolean {
         return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
     }
 
-    protected buildSortingParam(models: TaskListCloudSortingModel[]): string {
+    protected buildSortingParam (models: TaskListCloudSortingModel[]): string {
         let finalSorting: string = '';
         if (models) {
             for (const sort of models) {

@@ -32,7 +32,6 @@ import { AppIdQuery } from './types';
 export class UserFiltersApi extends BaseApi {
     /**
      * Create a process instance filter
-     *
      * @param userProcessInstanceFilterRepresentation userProcessInstanceFilterRepresentation
      * @returns Promise<UserProcessInstanceFilterRepresentation>
      */
@@ -49,7 +48,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Create a task filter
-     *
      * @param userTaskFilterRepresentation userTaskFilterRepresentation
      * @returns Promise<UserTaskFilterRepresentation>
      */
@@ -65,7 +63,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Delete a process instance filter
-     *
      * @param userFilterId userFilterId
      * @returns Promise<{}>
      */
@@ -84,7 +81,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Delete a task filter
-     *
      * @param userFilterId userFilterId
      * @returns Promise<{}>
      */
@@ -103,7 +99,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Get a process instance filter
-     *
      * @param userFilterId userFilterId
      * @returns Promise<UserProcessInstanceFilterRepresentation>
      */
@@ -124,7 +119,6 @@ export class UserFiltersApi extends BaseApi {
      * List process instance filters
      *
      * Returns filters for the current user, optionally filtered by *appId*.
-     *
      * @param opts Optional parameters
      * @returns Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation>
      */
@@ -137,7 +131,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Get a task filter
-     *
      * @param userFilterId userFilterId
      * @returns Promise<UserTaskFilterRepresentation>
      */
@@ -159,7 +152,6 @@ export class UserFiltersApi extends BaseApi {
      * List task filters
      *
      * Returns filters for the current user, optionally filtered by *appId*.
-     *
      * @param opts Optional parameters
      * @returns Promise<ResultListDataRepresentationUserTaskFilterRepresentation>
      */
@@ -173,7 +165,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Re-order the list of user process instance filters
-     *
      * @param filterOrderRepresentation filterOrderRepresentation
      * @returns Promise<{}>
      */
@@ -188,7 +179,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Re-order the list of user task filters
-     *
      * @param filterOrderRepresentation filterOrderRepresentation
      * @returns Promise<{}>
      */
@@ -203,7 +193,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Update a process instance filter
-     *
      * @param userFilterId userFilterId
      * @param userProcessInstanceFilterRepresentation userProcessInstanceFilterRepresentation
      * @returns Promise<UserProcessInstanceFilterRepresentation>
@@ -228,7 +217,6 @@ export class UserFiltersApi extends BaseApi {
 
     /**
      * Update a task filter
-     *
      * @param userFilterId userFilterId
      * @param userTaskFilterRepresentation userTaskFilterRepresentation
      * @returns Promise<UserTaskFilterRepresentation>

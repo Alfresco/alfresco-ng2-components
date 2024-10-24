@@ -84,7 +84,7 @@ export const DATATABLE_DIRECTIVES = [
 
 /** @deprecated use `...DATATABLE_DIRECTIVES` instead, or import standalone components directly */
 @NgModule({
-    imports: [...DATATABLE_DIRECTIVES],
-    exports: [...DATATABLE_DIRECTIVES]
+    "imports": [...DATATABLE_DIRECTIVES],
+    "exports": [...DATATABLE_DIRECTIVES]
 })
 export class DataTableModule {}

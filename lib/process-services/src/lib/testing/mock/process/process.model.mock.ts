@@ -19,52 +19,52 @@
 import { ProcessInstanceRepresentation } from '@alfresco/js-api';
 
 export const exampleProcess: ProcessInstanceRepresentation = {
-    id: '123',
-    name: 'Process 123',
-    started: new Date('2016-11-10T03:37:30.010+0000'),
-    startedBy: {
-        id: 1001,
-        firstName: 'Bob',
-        lastName: 'Jones',
-        email: 'bob@app.activiti.com'
+    "id": '123',
+    "name": 'Process 123',
+    "started": new Date('2016-11-10T03:37:30.010+0000'),
+    "startedBy": {
+        "id": 1001,
+        "firstName": 'Bob',
+        "lastName": 'Jones',
+        "email": 'bob@app.activiti.com'
     }
 };
 
 export const processEnded: ProcessInstanceRepresentation = {
-    id: '123',
-    name: 'Process 123',
-    started: new Date('2016-11-10T03:37:30.010+0000'),
-    startedBy: {
-        id: 1001,
-        firstName: 'Bob',
-        lastName: 'Jones',
-        email: 'bob@app.activiti.com'
+    "id": '123',
+    "name": 'Process 123',
+    "started": new Date('2016-11-10T03:37:30.010+0000'),
+    "startedBy": {
+        "id": 1001,
+        "firstName": 'Bob',
+        "lastName": 'Jones',
+        "email": 'bob@app.activiti.com'
     },
-    ended: new Date('2016-11-11T03:37:30.010+0000')
+    "ended": new Date('2016-11-11T03:37:30.010+0000')
 };
 
 export const mockRunningProcess: ProcessInstanceRepresentation = {
-    id: '123',
-    name: 'Process 123',
-    started: new Date('2016-11-10T03:37:30.010+0000'),
-    startedBy: {
-        id: 1001,
-        firstName: 'Bob',
-        lastName: 'Jones',
-        email: 'bob@app.activiti.com'
+    "id": '123',
+    "name": 'Process 123',
+    "started": new Date('2016-11-10T03:37:30.010+0000'),
+    "startedBy": {
+        "id": 1001,
+        "firstName": 'Bob',
+        "lastName": 'Jones',
+        "email": 'bob@app.activiti.com'
     },
-    ended: null
+    "ended": null
 };
 
 export const exampleProcessNoName: ProcessInstanceRepresentation = {
-    id: '123',
-    name: null,
-    started: new Date('2016-11-10T03:37:30.010+0000'),
-    startedBy: {
-        id: 1001,
-        firstName: 'Bob',
-        lastName: 'Jones',
-        email: 'bob@app.activiti.com'
+    "id": '123',
+    "name": null,
+    "started": new Date('2016-11-10T03:37:30.010+0000'),
+    "startedBy": {
+        "id": 1001,
+        "firstName": 'Bob',
+        "lastName": 'Jones',
+        "email": 'bob@app.activiti.com'
     },
-    processDefinitionName: 'My Process'
+    "processDefinitionName": 'My Process'
 };

@@ -28,18 +28,18 @@ describe('SnackbarContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [SnackbarContentComponent],
-            imports: [NoopTranslateModule, CoreTestingModule],
-            providers: [
+            "declarations": [SnackbarContentComponent],
+            "imports": [NoopTranslateModule, CoreTestingModule],
+            "providers": [
                 {
-                    provide: MatSnackBarRef,
-                    useValue: {
-                        dismissWithAction() {}
+                    "provide": MatSnackBarRef,
+                    "useValue": {
+                        dismissWithAction () {}
                     }
                 },
                 {
-                    provide: MAT_SNACK_BAR_DATA,
-                    useValue: {}
+                    "provide": MAT_SNACK_BAR_DATA,
+                    "useValue": {}
                 }
             ]
         });
@@ -50,7 +50,7 @@ describe('SnackbarContentComponent', () => {
 
     it('should display message if message in data is set', () => {
         component.data = {
-            message: 'Some message'
+            "message": 'Some message'
         };
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content').innerText).toBe(component.data.message);
@@ -63,9 +63,9 @@ describe('SnackbarContentComponent', () => {
 
     it('should call snackBarRef.dismissWithAction() when button is clicked', () => {
         component.data = {
-            message: '',
-            showAction: true,
-            actionLabel: 'Some action'
+            "message": '',
+            "showAction": true,
+            "actionLabel": 'Some action'
         };
         spyOn(component.snackBarRef, 'dismissWithAction');
         fixture.detectChanges();
@@ -75,9 +75,9 @@ describe('SnackbarContentComponent', () => {
 
     it('should display actionLabel if actionLabel in data is set', () => {
         component.data = {
-            message: '',
-            showAction: true,
-            actionLabel: 'Some action action'
+            "message": '',
+            "showAction": true,
+            "actionLabel": 'Some action action'
         };
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-button').innerText).toBe(component.data.actionLabel);
@@ -85,8 +85,8 @@ describe('SnackbarContentComponent', () => {
 
     it('should not display actionLabel if actionLabel in data is not set', () => {
         component.data = {
-            message: '',
-            showAction: true
+            "message": '',
+            "showAction": true
         };
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('.adf-snackbar-message-content-action-button')).toBeNull();
@@ -94,9 +94,9 @@ describe('SnackbarContentComponent', () => {
 
     it('should render icon if actionIcon in data is set', () => {
         component.data = {
-            message: '',
-            showAction: true,
-            actionIcon: 'close'
+            "message": '',
+            "showAction": true,
+            "actionIcon": 'close'
         };
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.directive(MatIcon))).toBeDefined();
@@ -104,8 +104,8 @@ describe('SnackbarContentComponent', () => {
 
     it('should not render icon if actionIcon in data is not set', () => {
         component.data = {
-            message: '',
-            showAction: true
+            "message": '',
+            "showAction": true
         };
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.directive(MatIcon))).toBeNull();

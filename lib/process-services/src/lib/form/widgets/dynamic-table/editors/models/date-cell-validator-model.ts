@@ -28,11 +28,11 @@ export class DateCellValidator implements CellValidator {
 
     private supportedTypes: string[] = [DateCellValidator.DATE_TYPE];
 
-    isSupported(column: DynamicTableColumn): boolean {
+    isSupported (column: DynamicTableColumn): boolean {
         return !!(column?.editable && this.supportedTypes.indexOf(column?.type) > -1);
     }
 
-    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
+    validate (row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
         if (this.isSupported(column)) {
             const value = row?.value[column.id];
 

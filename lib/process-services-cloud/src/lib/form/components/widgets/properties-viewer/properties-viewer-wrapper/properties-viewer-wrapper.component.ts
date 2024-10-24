@@ -22,9 +22,9 @@ import { Node } from '@alfresco/js-api';
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
-    selector: 'adf-properties-viewer-wrapper',
-    templateUrl: './properties-viewer-wrapper.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-properties-viewer-wrapper',
+    "templateUrl": './properties-viewer-wrapper.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     node: Node;
@@ -75,21 +75,21 @@ export class PropertiesViewerWrapperComponent implements OnInit, OnChanges {
     @Output()
     nodeContentLoaded = new EventEmitter<Node>();
 
-    constructor(private nodesApiService: NodesApiService) {}
+    constructor (private nodesApiService: NodesApiService) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.['nodeId'] && changes['nodeId'].currentValue && !changes['nodeId'].isFirstChange()) {
+    ngOnChanges (changes: SimpleChanges): void {
+        if (changes?.['nodeId']?.currentValue && !changes['nodeId'].isFirstChange()) {
             this.getNode(changes['nodeId'].currentValue);
         }
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         if (this.nodeId) {
             this.getNode(this.nodeId);
         }
     }
 
-    private getNode(nodeId: string) {
+    private getNode (nodeId: string) {
         this.loading = true;
         this.nodesApiService.getNode(nodeId).subscribe((retrievedNode) => {
             this.node = retrievedNode;

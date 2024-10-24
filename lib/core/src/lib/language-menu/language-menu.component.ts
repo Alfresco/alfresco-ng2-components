@@ -23,10 +23,10 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
-    selector: 'adf-language-menu',
-    standalone: true,
-    imports: [CommonModule, MatMenuModule],
-    template: `
+    "selector": 'adf-language-menu',
+    "standalone": true,
+    "imports": [CommonModule, MatMenuModule],
+    "template": `
         <button mat-menu-item *ngFor="let language of languages$ | async" [attr.lang]="language.key" (click)="changeLanguage(language)">
             {{ language.label }}
         </button>
@@ -39,11 +39,11 @@ export class LanguageMenuComponent {
 
     languages$: Observable<LanguageItem[]>;
 
-    constructor(private languageService: LanguageService) {
+    constructor (private languageService: LanguageService) {
         this.languages$ = languageService.languages$;
     }
 
-    changeLanguage(language: LanguageItem) {
+    changeLanguage (language: LanguageItem) {
         this.changedLanguage.emit(language);
         this.languageService.changeLanguage(language);
     }

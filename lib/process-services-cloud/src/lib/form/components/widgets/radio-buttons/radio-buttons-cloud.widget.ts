@@ -25,10 +25,10 @@ import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'radio-buttons-cloud-widget',
-    templateUrl: './radio-buttons-cloud.widget.html',
-    styleUrls: ['./radio-buttons-cloud.widget.scss'],
-    host: {
+    "selector": 'radio-buttons-cloud-widget',
+    "templateUrl": './radio-buttons-cloud.widget.html',
+    "styleUrls": ['./radio-buttons-cloud.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -39,7 +39,7 @@ import { TranslateService } from '@ngx-translate/core';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements OnInit {
     typeId = 'RadioButtonsCloudWidgetComponent';
@@ -47,17 +47,17 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
 
     protected onDestroy$ = new Subject<boolean>();
 
-    constructor(public formService: FormService, private formCloudService: FormCloudService, private translateService: TranslateService) {
+    constructor (public formService: FormService, private formCloudService: FormCloudService, private translateService: TranslateService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.isValidRestConfig() && !this.isReadOnlyForm()) {
             this.getValuesFromRestApi();
         }
     }
 
-    getValuesFromRestApi() {
+    getValuesFromRestApi () {
         this.formCloudService
             .getRestWidgetData(this.field.form.id, this.field.id)
             .pipe(takeUntil(this.onDestroy$))
@@ -73,50 +73,50 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
             );
     }
 
-    onOptionClick(optionSelected: any) {
+    onOptionClick (optionSelected: any) {
         this.field.value = optionSelected;
         this.onFieldChanged(this.field);
     }
 
-    handleError(error: any) {
+    handleError (error: any) {
         this.restApiError = new ErrorMessageModel({
-            message: this.translateService.instant('FORM.FIELD.REST_API_FAILED', { hostname: this.getRestUrlHostName() })
+            "message": this.translateService.instant('FORM.FIELD.REST_API_FAILED', { "hostname": this.getRestUrlHostName() })
         });
         this.widgetError.emit(error);
     }
 
-    isChecked(option: FormFieldOption): boolean {
+    isChecked (option: FormFieldOption): boolean {
         if (this.field.value && typeof this.field.value === 'object') {
             return this.field.value['id'] === option.id || this.field.value['name'] === option.name;
         }
         return this.field.value === option.id;
     }
 
-    resetRestApiOptions() {
+    resetRestApiOptions () {
         this.field.options = [];
     }
 
-    getRestUrlHostName(): string {
+    getRestUrlHostName (): string {
         return new URL(this.field?.restUrl).hostname ?? this.field?.restUrl;
     }
 
-    hasError(): ErrorMessageModel {
+    hasError (): ErrorMessageModel {
         return this.restApiError || this.field.validationSummary;
     }
 
-    private isRestType(): boolean {
+    private isRestType (): boolean {
         return this.field?.optionType === 'rest';
     }
 
-    private isReadOnlyForm(): boolean {
+    private isReadOnlyForm (): boolean {
         return !!this.field?.form?.readOnly;
     }
 
-    private hasRestUrl(): boolean {
+    private hasRestUrl (): boolean {
         return !!this.field?.restUrl;
     }
 
-    private isValidRestConfig(): boolean {
+    private isValidRestConfig (): boolean {
         return this.isRestType() && this.hasRestUrl();
     }
 }

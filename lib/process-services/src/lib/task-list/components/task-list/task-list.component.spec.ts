@@ -60,9 +60,9 @@ describe('TaskListComponent', () => {
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify(fakeGlobalTask)
         });
     };
 
@@ -85,10 +85,10 @@ describe('TaskListComponent', () => {
         if (selectionMode) {
             component.selectionMode = selectionMode;
         }
-        component.ngOnChanges({ sort: state });
+        component.ngOnChanges({ "sort": state });
 
-        const selectTask1 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-0"]' }));
-        const selectTask2 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-1"]' }));
+        const selectTask1 = await loader.getHarness(MatCheckboxHarness.with({ "ancestor": '[data-automation-id="datatable-row-0"]' }));
+        const selectTask2 = await loader.getHarness(MatCheckboxHarness.with({ "ancestor": '[data-automation-id="datatable-row-1"]' }));
         await selectTask1.toggle();
         await selectTask1.toggle();
         await selectTask2.toggle();
@@ -108,11 +108,11 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, TaskListComponent],
-            providers: [
+            "imports": [NoopTranslateModule, NoopAnimationsModule, TaskListComponent],
+            "providers": [
                 TaskListService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+                { "provide": AppConfigService, "useClass": AppConfigServiceMock }
             ]
         });
         appConfig = TestBed.inject(AppConfigService);
@@ -125,7 +125,7 @@ describe('TaskListComponent', () => {
 
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
-                presets: {
+                "presets": {
                     fakeCustomSchema
                 }
             }
@@ -297,8 +297,8 @@ describe('TaskListComponent', () => {
 
     it('should return selected id for the selected task', () => {
         component.rows = [
-            { id: '999', name: 'Fake-name' },
-            { id: '888', name: 'Fake-name-888' }
+            { "id": '999', "name": 'Fake-name' },
+            { "id": '888', "name": 'Fake-name-888' }
         ];
         component.selectTask('888');
         expect(component.rows).toBeDefined();
@@ -321,15 +321,15 @@ describe('TaskListComponent', () => {
         component.reload();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify(fakeGlobalTask)
         });
     });
 
     it('should emit row click event', (done) => {
         const row = new ObjectDataRow({
-            id: '999'
+            "id": '999'
         });
         const rowEvent = new DataRowEvent(row, null);
 
@@ -352,17 +352,17 @@ describe('TaskListComponent', () => {
             spyOn(component, 'reload').and.stub();
             component.currentInstanceId = '999';
 
-            component.rows = [{ id: '999', name: 'Fake-name' }];
+            component.rows = [{ "id": '999', "name": 'Fake-name' }];
             const landingTaskId = '999';
             const change = new SimpleChange(null, landingTaskId, true);
-            component.ngOnChanges({ landingTaskId: change });
+            component.ngOnChanges({ "landingTaskId": change });
             expect(component.reload).not.toHaveBeenCalled();
             expect(component.rows.length).toEqual(1);
         });
 
         it('should reload the tasks if the loadingTaskId is different from the current task', (done) => {
             component.currentInstanceId = '999';
-            component.rows = [{ id: '999', name: 'Fake-name' }];
+            component.rows = [{ "id": '999', "name": 'Fake-name' }];
             const landingTaskId = '888';
             const change = new SimpleChange(null, landingTaskId, true);
 
@@ -373,12 +373,12 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ landingTaskId: change });
+            component.ngOnChanges({ "landingTaskId": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeGlobalTask)
             });
         });
 
@@ -401,12 +401,12 @@ describe('TaskListComponent', () => {
                 expect(component.rows[1]['name']).toEqual('No name');
                 done();
             });
-            component.ngOnChanges({ appId: change });
+            component.ngOnChanges({ "appId": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeGlobalTask)
             });
         });
 
@@ -423,12 +423,12 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ processDefinitionKey: change });
+            component.ngOnChanges({ "processDefinitionKey": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeGlobalTask)
             });
         });
 
@@ -445,12 +445,12 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ state: change });
+            component.ngOnChanges({ "state": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeGlobalTask)
             });
         });
 
@@ -467,12 +467,12 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ sort: change });
+            component.ngOnChanges({ "sort": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeGlobalTask)
             });
         });
 
@@ -489,12 +489,12 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ name: change });
+            component.ngOnChanges({ "name": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeGlobalTask)
             });
         });
 
@@ -511,12 +511,12 @@ describe('TaskListComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({ assignment: change });
+            component.ngOnChanges({ "assignment": change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
+                "status": 200,
+                "contentType": 'application/json',
+                "responseText": JSON.stringify(fakeGlobalTask)
             });
         });
     });
@@ -524,7 +524,7 @@ describe('TaskListComponent', () => {
     it('should update the columns when presetColumn schema changes', () => {
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
-                presets: fakeColumnSchema
+                "presets": fakeColumnSchema
             }
         });
 
@@ -535,7 +535,7 @@ describe('TaskListComponent', () => {
 
         component.presetColumn = 'fakeMyTasksSchema';
         const presetColumnChange = new SimpleChange(null, 'fakeMyTasksSchema', false);
-        component.ngOnChanges({ presetColumn: presetColumnChange });
+        component.ngOnChanges({ "presetColumn": presetColumnChange });
 
         const newColumnSchema = component.mergeJsonAndHtmlSchema();
         const expectedColumn1 = new ObjectDataColumn(fakeColumnSchema.fakeMyTasksSchema[0]);
@@ -561,7 +561,7 @@ describe('TaskListComponent', () => {
 
         let rows = Array.from(fixture.debugElement.nativeElement.querySelectorAll('.adf-datatable-body adf-datatable-row'));
         expect(rows.length).toEqual(2);
-        component.updatePagination({ skipCount: 0, maxItems: 5 });
+        component.updatePagination({ "skipCount": 0, "maxItems": 5 });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -576,9 +576,9 @@ describe('TaskListComponent', () => {
         const state = new SimpleChange(null, 'open', true);
         component.multiselect = true;
 
-        component.ngOnChanges({ sort: state });
+        component.ngOnChanges({ "sort": state });
 
-        const selectAllCheckbox = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '.adf-datatable-cell-header' }));
+        const selectAllCheckbox = await loader.getHarness(MatCheckboxHarness.with({ "ancestor": '.adf-datatable-cell-header' }));
         await selectAllCheckbox.toggle();
 
         expect(component.selectedInstances.length).toBe(2);
@@ -611,10 +611,10 @@ describe('TaskListComponent', () => {
         component.multiselect = true;
         component.selectionMode = 'single';
 
-        component.ngOnChanges({ sort: state });
+        component.ngOnChanges({ "sort": state });
 
-        const selectTask1 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-0"]' }));
-        const selectTask2 = await loader.getHarness(MatCheckboxHarness.with({ ancestor: '[data-automation-id="datatable-row-1"]' }));
+        const selectTask1 = await loader.getHarness(MatCheckboxHarness.with({ "ancestor": '[data-automation-id="datatable-row-0"]' }));
+        const selectTask2 = await loader.getHarness(MatCheckboxHarness.with({ "ancestor": '[data-automation-id="datatable-row-1"]' }));
         await selectTask1.toggle();
         await selectTask2.toggle();
 
@@ -625,7 +625,7 @@ describe('TaskListComponent', () => {
         spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
         const state = new SimpleChange(null, 'open', true);
 
-        component.ngOnChanges({ sort: state });
+        component.ngOnChanges({ "sort": state });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -647,9 +647,9 @@ describe('TaskListComponent', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [DataColumnComponent, DataColumnListComponent, TaskListComponent, FullNamePipe],
-    template: ` <adf-tasklist #taskList>
+    "standalone": true,
+    "imports": [DataColumnComponent, DataColumnListComponent, TaskListComponent, FullNamePipe],
+    "template": ` <adf-tasklist #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column" [order]="3"></data-column>
             <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
@@ -672,7 +672,7 @@ describe('CustomTaskListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomTaskListComponent, CustomTaskListComponent]
+            "imports": [ProcessTestingModule, CustomTaskListComponent, CustomTaskListComponent]
         });
         fixture = TestBed.createComponent(CustomTaskListComponent);
         fixture.detectChanges();
@@ -694,9 +694,9 @@ describe('CustomTaskListComponent', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [CustomEmptyContentTemplateDirective, TaskListComponent],
-    template: `
+    "standalone": true,
+    "imports": [CustomEmptyContentTemplateDirective, TaskListComponent],
+    "template": `
         <adf-tasklist [appId]="1">
             <adf-custom-empty-content-template>
                 <p id="custom-id">CUSTOM EMPTY</p>
@@ -713,7 +713,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, EmptyTemplateComponent]
+            "imports": [ProcessTestingModule, EmptyTemplateComponent]
         });
         translateService = TestBed.inject(TranslateService);
         taskListService = TestBed.inject(TaskListService);
@@ -738,9 +738,9 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
 });
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
-    template: ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
+    "standalone": true,
+    "imports": [CommonModule, TaskListComponent, DataColumnComponent, DataColumnListComponent, FullNamePipe],
+    "template": ` <adf-tasklist [showContextMenu]="true" (showRowContextMenu)="onShowRowContextMenu($event)" #taskList>
         <data-columns>
             <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
             <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
@@ -757,36 +757,36 @@ class TaskListContextMenuComponent implements OnInit {
     contextAction = new EventEmitter<any>();
     private performAction$ = new Subject<any>();
 
-    ngOnInit() {
+    ngOnInit () {
         this.performContextActions();
     }
 
-    onShowRowContextMenu(event: DataCellEvent) {
+    onShowRowContextMenu (event: DataCellEvent) {
         event.value.actions = [
             {
-                data: event.value.row['obj'],
-                model: {
-                    key: 'taskDetails',
-                    icon: 'open',
-                    title: 'View Task Details',
-                    visible: true
+                "data": event.value.row['obj'],
+                "model": {
+                    "key": 'taskDetails',
+                    "icon": 'open',
+                    "title": 'View Task Details',
+                    "visible": true
                 },
-                subject: this.performAction$
+                "subject": this.performAction$
             },
             {
-                data: event.value.row['obj'],
-                model: {
-                    key: 'cancel',
-                    icon: 'open',
-                    title: 'Cancel Process',
-                    visible: true
+                "data": event.value.row['obj'],
+                "model": {
+                    "key": 'cancel',
+                    "icon": 'open',
+                    "title": 'Cancel Process',
+                    "visible": true
                 },
-                subject: this.performAction$
+                "subject": this.performAction$
             }
         ];
     }
 
-    performContextActions() {
+    performContextActions () {
         this.performAction$.subscribe((action: any) => {
             this.contextAction.emit(action.data);
         });
@@ -802,7 +802,7 @@ describe('TaskListContextMenuComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskListContextMenuComponent]
+            "imports": [ProcessTestingModule, TaskListContextMenuComponent]
         });
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
@@ -820,7 +820,7 @@ describe('TaskListContextMenuComponent', () => {
     it('Should be able to show context menu on task list', async () => {
         const contextMenu = element.querySelector(`[data-automation-id="text_${fakeGlobalTask.data[0].name}"]`);
         const contextActionSpy = spyOn(customComponent.contextAction, 'emit').and.callThrough();
-        contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
+        contextMenu.dispatchEvent(new MouseEvent('contextmenu', { "bubbles": true }));
         const contextActions = await loader.getAllHarnesses(MatMenuItemHarness);
 
         expect(contextActions.length).toBe(2);

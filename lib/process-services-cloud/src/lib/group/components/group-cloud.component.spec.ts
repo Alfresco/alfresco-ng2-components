@@ -40,10 +40,9 @@ describe('GroupCloudComponent', () => {
 
     /**
      * search group by value
-     *
      * @param value element input value
      */
-    async function searchGroup(value: string) {
+    async function searchGroup (value: string) {
         const input = await loader.getHarness(MatInputHarness);
         await input.focus();
         await input.setValue(value);
@@ -51,10 +50,9 @@ describe('GroupCloudComponent', () => {
 
     /**
      * search group and invoke the blur event
-     *
      * @param value value
      */
-    async function searchGroupsAndBlur(value: string) {
+    async function searchGroupsAndBlur (value: string) {
         const input = await loader.getHarness(MatInputHarness);
         await input.focus();
         await input.setValue(value);
@@ -63,16 +61,15 @@ describe('GroupCloudComponent', () => {
 
     /**
      * get the group list UI
-     *
      * @returns a list of debug elements
      */
-    function getGroupListUI(): DebugElement[] {
+    function getGroupListUI (): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('[data-automation-id="adf-cloud-group-row"]'));
     }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, GroupCloudModule]
+            "imports": [CoreTestingModule, GroupCloudModule]
         });
         fixture = TestBed.createComponent(GroupCloudComponent);
         component = fixture.componentInstance;
@@ -87,7 +84,7 @@ describe('GroupCloudComponent', () => {
 
         fixture.detectChanges();
 
-        const inputElement = await loader.getHarness(MatInputHarness.with({ selector: '[data-automation-id="adf-cloud-group-search-input"]' }));
+        const inputElement = await loader.getHarness(MatInputHarness.with({ "selector": '[data-automation-id="adf-cloud-group-search-input"]' }));
 
         expect(await inputElement.getPlaceholder()).toEqual('TITLE_KEY');
     });
@@ -95,7 +92,7 @@ describe('GroupCloudComponent', () => {
     it('should not populate placeholder when title is not present', async () => {
         fixture.detectChanges();
 
-        const inputElement = await loader.getHarness(MatInputHarness.with({ selector: '[data-automation-id="adf-cloud-group-search-input"]' }));
+        const inputElement = await loader.getHarness(MatInputHarness.with({ "selector": '[data-automation-id="adf-cloud-group-search-input"]' }));
 
         expect(await inputElement.getPlaceholder()).toEqual('');
     });
@@ -114,9 +111,9 @@ describe('GroupCloudComponent', () => {
         });
 
         it('should not be able to search for a group that its name matches one of the preselected groups name', async () => {
-            component.preSelectGroups = [{ name: mockVegetableAubergine.name }];
-            const changes = new SimpleChange(null, [{ name: mockVegetableAubergine.name }], false);
-            component.ngOnChanges({ preSelectGroups: changes });
+            component.preSelectGroups = [{ "name": mockVegetableAubergine.name }];
+            const changes = new SimpleChange(null, [{ "name": mockVegetableAubergine.name }], false);
+            component.ngOnChanges({ "preSelectGroups": changes });
             fixture.detectChanges();
 
             await searchGroup('Aubergine');
@@ -216,7 +213,7 @@ describe('GroupCloudComponent', () => {
         beforeEach(() => {
             component.mode = 'single';
             component.preSelectGroups = mockFoodGroups;
-            component.ngOnChanges({ preSelectGroups: changes });
+            component.ngOnChanges({ "preSelectGroups": changes });
             fixture.detectChanges();
         });
 
@@ -234,14 +231,14 @@ describe('GroupCloudComponent', () => {
         beforeEach(() => {
             component.mode = 'multiple';
             component.preSelectGroups = mockFoodGroups;
-            component.ngOnChanges({ preSelectGroups: change });
+            component.ngOnChanges({ "preSelectGroups": change });
             fixture.detectChanges();
         });
 
         it('should render all preselected groups', async () => {
             component.mode = 'multiple';
             fixture.detectChanges();
-            component.ngOnChanges({ preSelectGroups: change });
+            component.ngOnChanges({ "preSelectGroups": change });
             fixture.detectChanges();
 
             const chips = await loader.getAllHarnesses(MatChipHarness);
@@ -262,8 +259,8 @@ describe('GroupCloudComponent', () => {
             expect(changedGroupsEmitterSpy).toHaveBeenCalledWith([mockMeatChicken]);
             expect(
                 component.selectedGroups.indexOf({
-                    id: mockMeatChicken.id,
-                    name: mockMeatChicken.name
+                    "id": mockMeatChicken.id,
+                    "name": mockMeatChicken.name
                 })
             ).toEqual(-1);
         });
@@ -272,9 +269,9 @@ describe('GroupCloudComponent', () => {
     describe('Multiple Mode with read-only', () => {
         it('Should not show remove icon for pre-selected groups if readonly property set to true', async () => {
             component.mode = 'multiple';
-            component.preSelectGroups = [{ id: mockVegetableAubergine.id, name: mockVegetableAubergine.name, readonly: true }, mockMeatChicken];
-            const changes = new SimpleChange(null, [{ name: mockVegetableAubergine.name }], false);
-            component.ngOnChanges({ preSelectGroups: changes });
+            component.preSelectGroups = [{ "id": mockVegetableAubergine.id, "name": mockVegetableAubergine.name, "readonly": true }, mockMeatChicken];
+            const changes = new SimpleChange(null, [{ "name": mockVegetableAubergine.name }], false);
+            component.ngOnChanges({ "preSelectGroups": changes });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -294,7 +291,7 @@ describe('GroupCloudComponent', () => {
             component.preSelectGroups = mockFoodGroups;
 
             const change = new SimpleChange(null, component.preSelectGroups, false);
-            component.ngOnChanges({ preSelectGroups: change });
+            component.ngOnChanges({ "preSelectGroups": change });
 
             const removeGroupSpy = spyOn(component.removeGroup, 'emit');
             fixture.detectChanges();
@@ -328,7 +325,7 @@ describe('GroupCloudComponent', () => {
         it('should check validation only for the first group and emit warning when group is invalid - single mode', async () => {
             component.mode = 'single';
 
-            component.ngOnChanges({ preSelectGroups: new SimpleChange(null, [mockVegetableAubergine, mockMeatChicken], false) });
+            component.ngOnChanges({ "preSelectGroups": new SimpleChange(null, [mockVegetableAubergine, mockMeatChicken], false) });
             fixture.detectChanges();
             await fixture.whenStable();
             expect(component.invalidGroups.length).toEqual(1);
@@ -337,7 +334,7 @@ describe('GroupCloudComponent', () => {
         it('should check validation for all the groups and emit warning - multiple mode', async () => {
             component.mode = 'multiple';
 
-            component.ngOnChanges({ preSelectGroups: new SimpleChange(null, [mockVegetableAubergine, mockMeatChicken], false) });
+            component.ngOnChanges({ "preSelectGroups": new SimpleChange(null, [mockVegetableAubergine, mockMeatChicken], false) });
             fixture.detectChanges();
             await fixture.whenStable();
             expect(component.invalidGroups.length).toEqual(2);
@@ -351,7 +348,7 @@ describe('GroupCloudComponent', () => {
             component.mode = 'single';
             component.readOnly = true;
             component.preSelectGroups = mockFoodGroups;
-            component.ngOnChanges({ preSelectGroups: change });
+            component.ngOnChanges({ "preSelectGroups": change });
 
             fixture.detectChanges();
 
@@ -364,7 +361,7 @@ describe('GroupCloudComponent', () => {
             component.mode = 'multiple';
             component.readOnly = true;
             component.preSelectGroups = mockFoodGroups;
-            component.ngOnChanges({ preSelectGroups: change });
+            component.ngOnChanges({ "preSelectGroups": change });
 
             fixture.detectChanges();
 

@@ -35,7 +35,7 @@ export abstract class BaseAuthenticationService implements AuthenticationService
     onLogin = new ReplaySubject<any>(1);
     onLogout = new ReplaySubject<any>(1);
 
-    protected constructor(protected appConfig: AppConfigService, protected cookie: CookieService) {
+    protected constructor (protected appConfig: AppConfigService, protected cookie: CookieService) {
         ee(this);
     }
 
@@ -59,12 +59,11 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     /**
      * Adds the auth token to an HTTP header using the 'bearer' scheme.
-     *
      * @param requestUrl the request url
      * @param headersArg Header that will receive the token
      * @returns The new header with the token added
      */
-    addTokenToHeader(requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
+    addTokenToHeader (requestUrl: string, headersArg?: HttpHeaders): Observable<HttpHeaders> {
         return new Observable((observer: Observer<any>) => {
             let headers = headersArg;
             if (!headers) {
@@ -81,17 +80,16 @@ export abstract class BaseAuthenticationService implements AuthenticationService
         });
     }
 
-    isECMProvider(): boolean {
+    isECMProvider (): boolean {
         const provider = this.appConfig.get('providers') as string;
         return provider && provider.toUpperCase() === 'ECM';
     }
 
     /**
      * Does the provider support BPM?
-     *
      * @returns True if supported, false otherwise
      */
-    isBPMProvider(): boolean {
+    isBPMProvider (): boolean {
         const provider = this.appConfig.get('providers');
         if (provider && (typeof provider === 'string' || provider instanceof String)) {
             return provider.toUpperCase() === 'BPM';
@@ -102,31 +100,29 @@ export abstract class BaseAuthenticationService implements AuthenticationService
 
     /**
      * Does the provider support both ECM and BPM?
-     *
      * @returns True if both are supported, false otherwise
      */
-    isALLProvider(): boolean {
+    isALLProvider (): boolean {
         const provider = this.appConfig.get('providers') as string;
         return provider && provider.toUpperCase() === 'ALL';
     }
 
-    isOauthConfiguration(): boolean {
+    isOauthConfiguration (): boolean {
         const authType = this.appConfig.get('authType') as string;
         return authType === 'OAUTH';
     }
 
     /**
      * Prints an error message in the console browser
-     *
      * @param error Error message
      * @returns Object representing the error message
      */
-    handleError(error: any): Observable<any> {
+    handleError (error: any): Observable<any> {
         this.onError.next(error || 'Server error');
         return throwError(error || 'Server error');
     }
 
-    isOauth(): boolean {
+    isOauth (): boolean {
         return this.appConfig.get(AppConfigValues.AUTHTYPE) === 'OAUTH';
     }
 }

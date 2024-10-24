@@ -39,11 +39,11 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 
 describe('IdentityUserService', () => {
     const mockRoles = [
-        { id: 'id-1', name: 'MOCK-ADMIN-ROLE' },
-        { id: 'id-2', name: 'MOCK-USER-ROLE' },
-        { id: 'id-3', name: 'MOCK_MODELER-ROLE' },
-        { id: 'id-4', name: 'MOCK-ROLE-1' },
-        { id: 'id-5', name: 'MOCK-ROLE-2' }
+        { "id": 'id-1', "name": 'MOCK-ADMIN-ROLE' },
+        { "id": 'id-2', "name": 'MOCK-USER-ROLE' },
+        { "id": 'id-3', "name": 'MOCK_MODELER-ROLE' },
+        { "id": 'id-4', "name": 'MOCK-ROLE-1' },
+        { "id": 'id-5', "name": 'MOCK-ROLE-2' }
     ];
 
     let storageService: StorageService;
@@ -53,8 +53,8 @@ describe('IdentityUserService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule],
-            providers: [AdfHttpClient, { provide: OAuthStorage, useClass: StorageService }]
+            "imports": [NoopTranslateModule],
+            "providers": [AdfHttpClient, { "provide": OAuthStorage, "useClass": StorageService }]
         });
         storageService = TestBed.inject(StorageService);
         service = TestBed.inject(IdentityUserService);
@@ -98,9 +98,9 @@ describe('IdentityUserService', () => {
 
     it('Should not fetch users if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getUsers').and.returnValue(throwError(errorResponse));
@@ -130,9 +130,9 @@ describe('IdentityUserService', () => {
 
     it('Should not fetch roles if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getUserRoles').and.returnValue(throwError(errorResponse));
@@ -168,9 +168,9 @@ describe('IdentityUserService', () => {
 
     it('Should not fetch users by roles if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getUsers').and.returnValue(throwError(errorResponse));
@@ -258,7 +258,7 @@ describe('IdentityUserService', () => {
 
     it('should be able to query users based on query params (first & max params)', (done) => {
         requestSpy.and.returnValue(Promise.resolve(mockIdentityUsers));
-        service.queryUsers({ first: 0, max: 5 }).subscribe((res) => {
+        service.queryUsers({ "first": 0, "max": 5 }).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.entries.length).toBe(5);
@@ -274,14 +274,14 @@ describe('IdentityUserService', () => {
 
     it('Should not be able to query users if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'queryUsers').and.returnValue(throwError(errorResponse));
 
-        service.queryUsers({ first: 0, max: 5 }).subscribe(
+        service.queryUsers({ "first": 0, "max": 5 }).subscribe(
             () => {
                 fail('expected an error, not users');
             },
@@ -304,9 +304,9 @@ describe('IdentityUserService', () => {
 
     it('Should not able to create user if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'createUser').and.returnValue(throwError(errorResponse));
@@ -334,9 +334,9 @@ describe('IdentityUserService', () => {
 
     it('Should not able to update user if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'updateUser').and.returnValue(throwError(errorResponse));
@@ -364,9 +364,9 @@ describe('IdentityUserService', () => {
 
     it('Should not able to delete user if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'deleteUser').and.returnValue(throwError(errorResponse));
@@ -400,9 +400,9 @@ describe('IdentityUserService', () => {
 
     it('Should not be able to fetch involved groups if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getInvolvedGroups').and.returnValue(throwError(errorResponse));
@@ -430,9 +430,9 @@ describe('IdentityUserService', () => {
 
     it('Should not able to join group if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'joinGroup').and.returnValue(throwError(errorResponse));
@@ -460,9 +460,9 @@ describe('IdentityUserService', () => {
 
     it('Should not able to leave group if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'leaveGroup').and.returnValue(throwError(errorResponse));
@@ -498,9 +498,9 @@ describe('IdentityUserService', () => {
 
     it('Should not be able to fetch available roles based on user id if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getAvailableRoles').and.returnValue(throwError(errorResponse));
@@ -536,9 +536,9 @@ describe('IdentityUserService', () => {
 
     it('Should not be able to fetch assigned roles based on user id if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getAssignedRoles').and.returnValue(throwError(errorResponse));
@@ -574,9 +574,9 @@ describe('IdentityUserService', () => {
 
     it('Should not be able to fetch effective roles based on user id if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'getEffectiveRoles').and.returnValue(throwError(errorResponse));
@@ -604,9 +604,9 @@ describe('IdentityUserService', () => {
 
     it('Should not able to assign roles to the user if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'assignRoles').and.returnValue(throwError(errorResponse));
@@ -634,9 +634,9 @@ describe('IdentityUserService', () => {
 
     it('Should not able to remove roles if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'removeRoles').and.returnValue(throwError(errorResponse));

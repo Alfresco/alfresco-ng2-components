@@ -28,18 +28,17 @@ import { SearchPropertiesComponent } from '../components/search-properties/searc
 import { SearchDateRangeTabbedComponent } from '../components/search-date-range-tabbed/search-date-range-tabbed.component';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class SearchFilterService {
-
     /**
      * Contains string-to-type mappings for registered widgets.
      */
     widgets: { [id: string]: Type<any> } = {
-        text: SearchTextComponent,
-        radio: SearchRadioComponent,
-        slider: SearchSliderComponent,
-        properties: SearchPropertiesComponent,
+        "text": SearchTextComponent,
+        "radio": SearchRadioComponent,
+        "slider": SearchSliderComponent,
+        "properties": SearchPropertiesComponent,
         'number-range': SearchNumberRangeComponent,
         'check-list': SearchCheckListComponent,
         'datetime-range': SearchDatetimeRangeComponent,
@@ -47,5 +46,4 @@ export class SearchFilterService {
         'autocomplete-chips': SearchFilterAutocompleteChipsComponent,
         'date-range': SearchDateRangeTabbedComponent
     };
-
 }

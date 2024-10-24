@@ -23,7 +23,7 @@ describe('DummyFeaturesService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [DummyFeaturesService]
+            "providers": [DummyFeaturesService]
         });
         service = TestBed.inject(DummyFeaturesService);
     });

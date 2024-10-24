@@ -25,7 +25,7 @@ export class AlfrescoApiServiceMock {
     alfrescoApiInitialized = new ReplaySubject<boolean>(1);
     alfrescoApi = new AlfrescoApiMock();
 
-    load() {}
+    load () {}
     getInstance = () => this.alfrescoApi;
 }
 
@@ -61,24 +61,24 @@ class DownloadsApiMock extends DownloadsApi {
 
 export class DownloadZipMockService {
     private _downloadsApi: DownloadsApi;
-    get downloadsApi(): DownloadsApi {
+    get downloadsApi (): DownloadsApi {
         this._downloadsApi = this._downloadsApi ?? new DownloadsApiMock();
         return this._downloadsApi;
     }
 
-    createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
+    createDownload (payload: DownloadBodyCreate): Observable<DownloadEntry> {
         return from(this.downloadsApi.createDownload(payload)).pipe(catchError((err) => of(err)));
     }
 
-    getDownload(downloadId: string): Observable<DownloadEntry> {
+    getDownload (downloadId: string): Observable<DownloadEntry> {
         return from(this.downloadsApi.getDownload(downloadId));
     }
 
-    cancelDownload(downloadId: string) {
+    cancelDownload (downloadId: string) {
         this.downloadsApi.cancelDownload(downloadId);
     }
 
-    download(url: string, fileName: string) {
+    download (url: string, fileName: string) {
         if (url && fileName) {
             const link = document.createElement('a');
 

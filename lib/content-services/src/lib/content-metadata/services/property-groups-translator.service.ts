@@ -50,7 +50,7 @@ const D_BOOLEAN = 'd:boolean';
 export const RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG, D_FLOAT, D_DOUBLE, D_BOOLEAN];
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class PropertyGroupTranslatorService {
     private userPreferenceService = inject(UserPreferencesService);
@@ -59,11 +59,11 @@ export class PropertyGroupTranslatorService {
 
     valueSeparator: string;
 
-    constructor() {
+    constructor () {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
-    public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues, definition: Definition): CardViewGroup[] {
+    public translateToCardViewGroups (propertyGroups: OrganisedPropertyGroup[], propertyValues, definition: Definition): CardViewGroup[] {
         return propertyGroups.map((propertyGroup) => {
             const translatedPropertyGroup: any = Object.assign({}, propertyGroup);
             translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues, definition);
@@ -72,28 +72,28 @@ export class PropertyGroupTranslatorService {
         });
     }
 
-    public translateProperty(property: PropertyBase, startValue?: any, allowEditing: boolean = false): CardViewItem {
+    public translateProperty (property: PropertyBase, startValue?: any, allowEditing: boolean = false): CardViewItem {
         this.checkECMTypeValidity(property.dataType);
 
         const prefix = 'properties.';
 
         const propertyDefinition: CardViewItemProperties = {
-            label: property.title || property.id,
-            value: startValue ? startValue : property.defaultValue,
-            key: `${prefix}${property.id}`,
-            default: property.defaultValue,
-            editable: property.isProtected ? false : allowEditing,
-            constraints: property?.constraints
+            "label": property.title || property.id,
+            "value": startValue ? startValue : property.defaultValue,
+            "key": `${prefix}${property.id}`,
+            "default": property.defaultValue,
+            "editable": property.isProtected ? false : allowEditing,
+            "constraints": property?.constraints
         };
 
         return this.transform(propertyDefinition, property.dataType, property.isMultiValued);
     }
 
-    private translateArray(properties: Property[], propertyValues: any, definition: Definition): CardViewItem[] {
+    private translateArray (properties: Property[], propertyValues: any, definition: Definition): CardViewItem[] {
         return properties.map((property) => this.translate(property, propertyValues, this.getPropertyConstraints(property.name, definition)));
     }
 
-    private translate(property: Property, propertyValues: any, constraints: Constraint[]): CardViewItem {
+    private translate (property: Property, propertyValues: any, constraints: Constraint[]): CardViewItem {
         let propertyValue: any;
         if (propertyValues && !this.isEmpty(propertyValues[property.name])) {
             propertyValue = propertyValues[property.name];
@@ -104,23 +104,23 @@ export class PropertyGroupTranslatorService {
         const prefix = 'properties.';
 
         const propertyDefinition: CardViewItemProperties = {
-            label: property.title || property.name,
-            value: propertyValue,
-            key: `${prefix}${property.name}`,
-            default: property.defaultValue,
-            editable: property.protected ? false : property.editable !== undefined ? property.editable : true,
+            "label": property.title || property.name,
+            "value": propertyValue,
+            "key": `${prefix}${property.name}`,
+            "default": property.defaultValue,
+            "editable": property.protected ? false : property.editable !== undefined ? property.editable : true,
             constraints
         };
 
         return this.transform(propertyDefinition, property.dataType, property.multiValued);
     }
 
-    private transform(propertyDefinition: CardViewItemProperties, dataType: string, isMultiValued: boolean): CardViewItem {
+    private transform (propertyDefinition: CardViewItemProperties, dataType: string, isMultiValued: boolean): CardViewItem {
         let cardViewItemProperty: CardViewItem;
 
         if (this.isListOfValues(propertyDefinition.constraints)) {
-            const options = propertyDefinition.constraints[0].parameters.allowedValues.map((value) => ({ key: value, label: value }));
-            const properties = Object.assign(propertyDefinition, { options$: of(options) });
+            const options = propertyDefinition.constraints[0].parameters.allowedValues.map((value) => ({ "key": value, "label": value }));
+            const properties = Object.assign(propertyDefinition, { "options$": of(options) });
 
             cardViewItemProperty = new CardViewSelectItemModel(properties);
         } else {
@@ -128,7 +128,7 @@ export class PropertyGroupTranslatorService {
                 case D_MLTEXT:
                     cardViewItemProperty = new CardViewTextItemModel(
                         Object.assign(propertyDefinition, {
-                            multiline: true
+                            "multiline": true
                         })
                     );
                     break;
@@ -136,8 +136,8 @@ export class PropertyGroupTranslatorService {
                 case D_INT:
                     cardViewItemProperty = new CardViewIntItemModel(
                         Object.assign(propertyDefinition, {
-                            multivalued: isMultiValued,
-                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
+                            "multivalued": isMultiValued,
+                            "pipes": [{ "pipe": new MultiValuePipe(), "params": [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -145,8 +145,8 @@ export class PropertyGroupTranslatorService {
                 case D_LONG:
                     cardViewItemProperty = new CardViewLongItemModel(
                         Object.assign(propertyDefinition, {
-                            multivalued: isMultiValued,
-                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
+                            "multivalued": isMultiValued,
+                            "pipes": [{ "pipe": new MultiValuePipe(), "params": [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -155,10 +155,10 @@ export class PropertyGroupTranslatorService {
                 case D_DOUBLE:
                     cardViewItemProperty = new CardViewFloatItemModel(
                         Object.assign(propertyDefinition, {
-                            multivalued: isMultiValued,
-                            pipes: [
-                                { pipe: new DecimalNumberPipe(this.userPreferenceService, this.appConfig) },
-                                { pipe: new MultiValuePipe(), params: [this.valueSeparator] }
+                            "multivalued": isMultiValued,
+                            "pipes": [
+                                { "pipe": new DecimalNumberPipe(this.userPreferenceService, this.appConfig) },
+                                { "pipe": new MultiValuePipe(), "params": [this.valueSeparator] }
                             ]
                         })
                     );
@@ -167,8 +167,8 @@ export class PropertyGroupTranslatorService {
                 case D_DATE:
                     cardViewItemProperty = new CardViewDateItemModel(
                         Object.assign(propertyDefinition, {
-                            multivalued: isMultiValued,
-                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
+                            "multivalued": isMultiValued,
+                            "pipes": [{ "pipe": new MultiValuePipe(), "params": [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -176,8 +176,8 @@ export class PropertyGroupTranslatorService {
                 case D_DATETIME:
                     cardViewItemProperty = new CardViewDatetimeItemModel(
                         Object.assign(propertyDefinition, {
-                            multivalued: isMultiValued,
-                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
+                            "multivalued": isMultiValued,
+                            "pipes": [{ "pipe": new MultiValuePipe(), "params": [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -190,9 +190,9 @@ export class PropertyGroupTranslatorService {
                 default:
                     cardViewItemProperty = new CardViewTextItemModel(
                         Object.assign(propertyDefinition, {
-                            multivalued: isMultiValued,
-                            multiline: isMultiValued,
-                            pipes: [{ pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
+                            "multivalued": isMultiValued,
+                            "multiline": isMultiValued,
+                            "pipes": [{ "pipe": new MultiValuePipe(), "params": [this.valueSeparator] }]
                         })
                     );
             }
@@ -201,21 +201,21 @@ export class PropertyGroupTranslatorService {
         return cardViewItemProperty;
     }
 
-    private isListOfValues(constraint: Constraint[]): boolean {
+    private isListOfValues (constraint: Constraint[]): boolean {
         return constraint?.[0]?.type === 'LIST';
     }
 
-    private getPropertyConstraints(propertyName: string, definition: Definition): Constraint[] {
+    private getPropertyConstraints (propertyName: string, definition: Definition): Constraint[] {
         return definition?.properties.find((item) => item.id === propertyName)?.constraints ?? [];
     }
 
-    private checkECMTypeValidity(ecmPropertyType: string) {
+    private checkECMTypeValidity (ecmPropertyType: string) {
         if (RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
             this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
         }
     }
 
-    private isEmpty(value: any): boolean {
+    private isEmpty (value: any): boolean {
         return value === undefined || value === null || value === '';
     }
 }

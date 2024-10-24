@@ -40,7 +40,7 @@ describe('CardViewTextItemComponent', () => {
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
 
-    const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
+    const expectedErrorMessages = [{ "message": 'Something went wrong' } as CardViewItemValidator];
 
     const getTextField = (key: string): HTMLInputElement =>
         fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`)).nativeElement;
@@ -75,9 +75,9 @@ describe('CardViewTextItemComponent', () => {
     const checkCtrlZActions = (ctrlKeyValue: boolean, codeValue: string, metaKeyValue: boolean, mockTestValue: string, flag: boolean) => {
         component.textInput.setValue(mockTestValue);
         const event = new KeyboardEvent('keydown', {
-            ctrlKey: ctrlKeyValue,
-            code: codeValue,
-            metaKey: metaKeyValue
+            "ctrlKey": ctrlKeyValue,
+            "code": codeValue,
+            "metaKey": metaKeyValue
         } as KeyboardEventInit);
         component.undoText(event);
         if (flag) {
@@ -98,7 +98,7 @@ describe('CardViewTextItemComponent', () => {
         component.property = new CardViewTextItemModel(cardViewTextItemObject);
         component.editable = cardViewTextItemObject.editable;
         component.useChipsForMultiValueProperty = flag;
-        component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+        component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -112,7 +112,7 @@ describe('CardViewTextItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, CardViewTextItemComponent]
+            "imports": [NoopTranslateModule, NoopAnimationsModule, CardViewTextItemComponent]
         });
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
@@ -126,13 +126,13 @@ describe('CardViewTextItemComponent', () => {
     describe('Rendering', () => {
         beforeEach(() => {
             component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: 'Lorem ipsum',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                editable: false
+                "label": 'Text label',
+                "value": 'Lorem ipsum',
+                "key": 'textkey',
+                "default": 'FAKE-DEFAULT-KEY',
+                "editable": false
             });
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
             fixture.detectChanges();
         });
 
@@ -150,11 +150,11 @@ describe('CardViewTextItemComponent', () => {
 
         it('should render the displayName as value when available', async () => {
             component.property = new CardViewTextItemModel({
-                label: 'Name label',
-                value: { id: 123, displayName: 'User Name' },
-                key: 'namekey'
+                "label": 'Name label',
+                "value": { "id": 123, "displayName": 'User Name' },
+                "key": 'namekey'
             });
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
             fixture.detectChanges();
             await fixture.whenStable();
             const value = getTextFieldValue(component.property.key);
@@ -163,14 +163,14 @@ describe('CardViewTextItemComponent', () => {
 
         it('should render the default as value if the value is empty, editable is false and displayEmpty is true', async () => {
             component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                editable: false
+                "label": 'Text label',
+                "value": '',
+                "key": 'textkey',
+                "default": 'FAKE-DEFAULT-KEY',
+                "editable": false
             });
             component.displayEmpty = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
             fixture.detectChanges();
             await fixture.whenStable();
             const value = getTextFieldValue(component.property.key);
@@ -179,14 +179,14 @@ describe('CardViewTextItemComponent', () => {
 
         it('should render the default as value if the value is empty and editable true', async () => {
             component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                editable: true
+                "label": 'Text label',
+                "value": '',
+                "key": 'textkey',
+                "default": 'FAKE-DEFAULT-KEY',
+                "editable": true
             });
             component.editable = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
             fixture.detectChanges();
             await fixture.whenStable();
             const value = getTextFieldValue(component.property.key);
@@ -214,60 +214,60 @@ describe('CardViewTextItemComponent', () => {
 
         it('should render chips for multivalue properties when chips are enabled', async () => {
             const cardViewTextItemObject = {
-                label: 'Text label 1',
-                value: ['item1', 'item2', 'item3'],
-                key: 'textkey',
-                default: ['FAKE-DEFAULT-KEY'],
-                editable: true,
-                multivalued: true
+                "label": 'Text label 1',
+                "value": ['item1', 'item2', 'item3'],
+                "key": 'textkey',
+                "default": ['FAKE-DEFAULT-KEY'],
+                "editable": true,
+                "multivalued": true
             };
             await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, 'item1', 'item2', 'item3');
         });
 
         it('should render chips for multivalue integers when chips are enabled', async () => {
             const cardViewTextItemObject = {
-                label: 'Text label 2',
-                value: [1, 2, 3],
-                key: 'textkey',
-                editable: true,
-                multivalued: true
+                "label": 'Text label 2',
+                "value": [1, 2, 3],
+                "key": 'textkey',
+                "editable": true,
+                "multivalued": true
             };
             await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1', '2', '3');
         });
 
         it('should render chips for multivalue decimal numbers when chips are enabled', async () => {
             const cardViewTextItemObject = {
-                label: 'Text label 3',
-                value: [1.1, 2.2, 3.3],
-                key: 'textkey',
-                editable: true,
-                multivalued: true
+                "label": 'Text label 3',
+                "value": [1.1, 2.2, 3.3],
+                "key": 'textkey',
+                "editable": true,
+                "multivalued": true
             };
             await renderChipsForMultiValuedProperties(cardViewTextItemObject, true, 3, '1.1', '2.2', '3.3');
         });
 
         it('should only render new chip when provided value is valid for specified validators set', async () => {
             const cardViewTextItemFloatObject = {
-                label: 'Test label',
-                value: [10, 20.2, 35.8],
-                key: 'textkey',
-                editable: true,
-                multivalued: true,
-                type: 'float'
+                "label": 'Test label',
+                "value": [10, 20.2, 35.8],
+                "key": 'textkey',
+                "editable": true,
+                "multivalued": true,
+                "type": 'float'
             };
             component.editable = true;
             await renderChipsForMultiValuedProperties(cardViewTextItemFloatObject, true, 3, '10', '20.2', '35.8');
             const floatValidator: CardViewItemValidator = new CardViewItemFloatValidator();
             component.property.validators = [floatValidator];
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-editchipinput-textkey"]')).nativeElement;
-            component.addValueToList({ value: 'abcd', chipInput: inputElement } as MatChipInputEvent);
+            component.addValueToList({ "value": 'abcd', "chipInput": inputElement } as MatChipInputEvent);
             fixture.detectChanges();
 
             expect(getTextFieldError('textkey')).toBe('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
             let valueChips = await loader.getAllHarnesses(MatChipHarness);
             expect(valueChips.length).toBe(3);
 
-            component.addValueToList({ value: '22.1', chipInput: inputElement } as MatChipInputEvent);
+            component.addValueToList({ "value": '22.1', "chipInput": inputElement } as MatChipInputEvent);
             fixture.detectChanges();
 
             verifyNoErrors('textkey');
@@ -277,16 +277,16 @@ describe('CardViewTextItemComponent', () => {
 
         it('should render string for multivalue properties when chips are disabled', async () => {
             component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: ['item1', 'item2', 'item3'],
-                key: 'textkey',
-                default: ['FAKE-DEFAULT-KEY'],
-                editable: true,
-                multivalued: true
+                "label": 'Text label',
+                "value": ['item1', 'item2', 'item3'],
+                "key": 'textkey',
+                "default": ['FAKE-DEFAULT-KEY'],
+                "editable": true,
+                "multivalued": true
             });
 
             component.useChipsForMultiValueProperty = false;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -297,18 +297,18 @@ describe('CardViewTextItemComponent', () => {
 
         it('should display the label for multi-valued chips if displayLabelForChips is true', async () => {
             const cardViewTextItemObject = {
-                label: 'Text label',
-                value: ['item1', 'item2', 'item3'],
-                key: 'textkey',
-                default: ['FAKE-DEFAULT-KEY'],
-                editable: true,
-                multivalued: true
+                "label": 'Text label',
+                "value": ['item1', 'item2', 'item3'],
+                "key": 'textkey',
+                "default": ['FAKE-DEFAULT-KEY'],
+                "editable": true,
+                "multivalued": true
             };
 
             component.editable = true;
             component.property = new CardViewTextItemModel(cardViewTextItemObject);
             component.displayLabelForChips = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -320,18 +320,18 @@ describe('CardViewTextItemComponent', () => {
 
         it('should NOT display the label for multi-valued chips if displayLabelForChips is false', async () => {
             const cardViewTextItemObject = {
-                label: 'Text label',
-                value: ['item1', 'item2', 'item3'],
-                key: 'textkey',
-                default: ['FAKE-DEFAULT-KEY'],
-                editable: true,
-                multivalued: true
+                "label": 'Text label',
+                "value": ['item1', 'item2', 'item3'],
+                "key": 'textkey',
+                "default": ['FAKE-DEFAULT-KEY'],
+                "editable": true,
+                "multivalued": true
             };
 
             component.editable = true;
             component.property = new CardViewTextItemModel(cardViewTextItemObject);
             component.displayLabelForChips = false;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -358,13 +358,13 @@ describe('CardViewTextItemComponent', () => {
     describe('clickable', () => {
         beforeEach(() => {
             component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                editable: false
+                "label": 'Text label',
+                "value": '',
+                "key": 'textkey',
+                "default": 'FAKE-DEFAULT-KEY',
+                "editable": false
             });
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
             fixture.detectChanges();
         });
 
@@ -416,7 +416,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.clickable = true;
             component.property.icon = 'FAKE_ICON';
             component.editable = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -501,9 +501,9 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
-                changed: {
-                    textkey: expectedText
+                "target": { ...component.property },
+                "changed": {
+                    "textkey": expectedText
                 }
             });
             expect(getTextFieldValue(component.property.key)).toEqual(expectedText);
@@ -538,7 +538,7 @@ describe('CardViewTextItemComponent', () => {
 
             loader = TestbedHarnessEnvironment.loader(fixture);
             const inputHarness = await loader.getHarness(
-                MatInputHarness.with({ selector: `[data-automation-id="card-textitem-value-${component.property.key}"]` })
+                MatInputHarness.with({ "selector": `[data-automation-id="card-textitem-value-${component.property.key}"]` })
             );
 
             expect(component.isEditable).toBe(false);
@@ -549,14 +549,14 @@ describe('CardViewTextItemComponent', () => {
     describe('Update', () => {
         beforeEach(() => {
             component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: 'Lorem ipsum',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                editable: true
+                "label": 'Text label',
+                "value": 'Lorem ipsum',
+                "key": 'textkey',
+                "default": 'FAKE-DEFAULT-KEY',
+                "editable": true
             });
             component.editable = true;
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
             fixture.detectChanges();
         });
 
@@ -663,9 +663,9 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
-                changed: {
-                    textkey: expectedText
+                "target": { ...component.property },
+                "changed": {
+                    "textkey": expectedText
                 }
             });
         });
@@ -679,8 +679,8 @@ describe('CardViewTextItemComponent', () => {
             expect(value).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
 
-            cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText } as any);
-            component.ngOnChanges({ property: new SimpleChange(value, expectedText, false) });
+            cardViewUpdateService.updateElement({ "key": component.property.key, "value": expectedText } as any);
+            component.ngOnChanges({ "property": new SimpleChange(value, expectedText, false) });
             fixture.detectChanges();
 
             value = getTextFieldValue(component.property.key);
@@ -711,9 +711,9 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
-                changed: {
-                    textkey: expectedText
+                "target": { ...component.property },
+                "changed": {
+                    "textkey": expectedText
                 }
             });
 
@@ -741,15 +741,15 @@ describe('CardViewTextItemComponent', () => {
         beforeEach(() => {
             cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             component.property = new CardViewIntItemModel({
-                label: 'Text label',
-                value: 10,
-                key: 'textkey',
-                default: 1,
-                editable: true
+                "label": 'Text label',
+                "value": 10,
+                "key": 'textkey',
+                "default": 1,
+                "editable": true
             });
             component.editable = true;
             component.property.validators?.push(new CardViewItemIntValidator());
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
             fixture.detectChanges();
         });
 
@@ -827,9 +827,9 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
-                changed: {
-                    textkey: expectedNumber.toString()
+                "target": { ...component.property },
+                "changed": {
+                    "textkey": expectedNumber.toString()
                 }
             });
 
@@ -846,15 +846,15 @@ describe('CardViewTextItemComponent', () => {
         beforeEach(() => {
             cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             component.property = new CardViewFloatItemModel({
-                label: 'Text label',
-                value: floatValue,
-                key: 'textkey',
-                default: 1,
-                editable: true
+                "label": 'Text label',
+                "value": floatValue,
+                "key": 'textkey',
+                "default": 1,
+                "editable": true
             });
             component.editable = true;
             component.property.validators?.push(new CardViewItemFloatValidator());
-            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
+            component.ngOnChanges({ "property": new SimpleChange(null, null, true) });
             fixture.detectChanges();
         });
 
@@ -887,9 +887,9 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             expect(itemUpdatedSpy).toHaveBeenCalledWith({
-                target: { ...component.property },
-                changed: {
-                    textkey: expectedNumber.toString()
+                "target": { ...component.property },
+                "changed": {
+                    "textkey": expectedNumber.toString()
                 }
             });
 

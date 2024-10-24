@@ -18,50 +18,50 @@
 import { SecurityGroupBody, SecurityGroupPaging } from '@alfresco/js-api';
 
 export const fakeGroupsApiResponse: SecurityGroupPaging = {
-    list: {
-        pagination: {
-            count: 4,
-            hasMoreItems: false,
-            maxItems: 5,
-            skipCount: 0,
-            totalItems: 4
+    "list": {
+        "pagination": {
+            "count": 4,
+            "hasMoreItems": false,
+            "maxItems": 5,
+            "skipCount": 0,
+            "totalItems": 4
         },
 
-        entries: [
+        "entries": [
             {
-                entry: {
-                    groupName: 'Classification',
-                    groupType: 'HIERARCHICAL',
-                    id: 'classification',
-                    inUse: true,
-                    systemGroup: true
+                "entry": {
+                    "groupName": 'Classification',
+                    "groupType": 'HIERARCHICAL',
+                    "id": 'classification',
+                    "inUse": true,
+                    "systemGroup": true
                 }
             },
             {
-                entry: {
-                    groupName: 'SG1',
-                    groupType: 'USER_REQUIRES_ALL',
-                    id: 'd2b11d9f-2707-439f-a7c6-e7872f395553',
-                    inUse: true,
-                    systemGroup: true
+                "entry": {
+                    "groupName": 'SG1',
+                    "groupType": 'USER_REQUIRES_ALL',
+                    "id": 'd2b11d9f-2707-439f-a7c6-e7872f395553',
+                    "inUse": true,
+                    "systemGroup": true
                 }
             },
             {
-                entry: {
-                    groupName: 'SG2',
-                    groupType: 'USER_REQUIRES_ALL',
-                    id: '1b77a32d-6b8b-4a37-b195-7f2ff2fe4ed3',
-                    inUse: true,
-                    systemGroup: true
+                "entry": {
+                    "groupName": 'SG2',
+                    "groupType": 'USER_REQUIRES_ALL',
+                    "id": '1b77a32d-6b8b-4a37-b195-7f2ff2fe4ed3',
+                    "inUse": true,
+                    "systemGroup": true
                 }
             },
             {
-                entry: {
-                    groupName: 'SG3',
-                    groupType: 'USER_REQUIRES_ALL',
-                    id: '709791f8-22dc-428a-82dd-daf3e1aa8a60',
-                    inUse: true,
-                    systemGroup: true
+                "entry": {
+                    "groupName": 'SG3',
+                    "groupType": 'USER_REQUIRES_ALL',
+                    "id": '709791f8-22dc-428a-82dd-daf3e1aa8a60',
+                    "inUse": true,
+                    "systemGroup": true
                 }
             }
         ]
@@ -69,6 +69,6 @@ export const fakeGroupsApiResponse: SecurityGroupPaging = {
 };
 
 export const createNewSecurityGroupMock: SecurityGroupBody = {
-    groupName: 'TestGroup',
-    groupType: 'HIERARCHICAL'
+    "groupName": 'TestGroup',
+    "groupType": 'HIERARCHICAL'
 };

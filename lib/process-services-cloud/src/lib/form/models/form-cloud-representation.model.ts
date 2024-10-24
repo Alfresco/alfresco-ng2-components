@@ -34,7 +34,7 @@ export class FormCloudRepresentation {
     processInstanceId?: string;
     selectedOutcome?: string;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         this.id = obj.id || null;
         this.name = obj.name || null;
         this.description = obj.description || null;

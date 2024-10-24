@@ -22,25 +22,25 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 
 @Component({
-    selector: 'adf-about-license-list',
-    templateUrl: './about-license-list.component.html',
-    styleUrls: ['./about-license-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatTableModule]
+    "selector": 'adf-about-license-list',
+    "templateUrl": './about-license-list.component.html',
+    "styleUrls": ['./about-license-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatTableModule]
 })
 export class AboutLicenseListComponent {
     columns = [
         {
-            columnDef: 'property',
-            header: 'ABOUT.LICENSE.PROPERTY',
-            cell: (row: LicenseData) => `${row.property}`
+            "columnDef": 'property',
+            "header": 'ABOUT.LICENSE.PROPERTY',
+            "cell": (row: LicenseData) => `${row.property}`
         },
         {
-            columnDef: 'value',
-            header: 'ABOUT.LICENSE.VALUE',
-            cell: (row: LicenseData) => `${row.value}`
+            "columnDef": 'value',
+            "header": 'ABOUT.LICENSE.VALUE',
+            "cell": (row: LicenseData) => `${row.value}`
         }
     ];
 

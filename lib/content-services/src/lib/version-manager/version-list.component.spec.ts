@@ -37,8 +37,8 @@ describe('VersionListComponent', () => {
     const versionId = '1.0';
 
     const versionTest = [
-        new VersionEntry({ entry: new Version({ name: 'test-file-name', id: '1.0', versionComment: 'test-version-comment' }) }),
-        new VersionEntry({ entry: new Version({ name: 'test-file-name-two', id: '1.0', versionComment: 'test-version-comment' }) })
+        new VersionEntry({ "entry": new Version({ "name": 'test-file-name', "id": '1.0', "versionComment": 'test-version-comment' }) }),
+        new VersionEntry({ "entry": new Version({ "name": 'test-file-name-two', "id": '1.0', "versionComment": 'test-version-comment' }) })
     ];
 
     afterEach(() => {
@@ -48,28 +48,28 @@ describe('VersionListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(VersionListComponent);
         dialog = TestBed.inject(MatDialog);
         contentVersionService = TestBed.inject(ContentVersionService);
 
         component = fixture.componentInstance;
-        component.node = { id: nodeId, allowableOperations: ['update'] } as Node;
+        component.node = { "id": nodeId, "allowableOperations": ['update'] } as Node;
         component.isLoading = false;
 
         spyOn(component, 'downloadContent').and.stub();
-        spyOn(component.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node({ id: 'nodeInfoId' }) })));
+        spyOn(component.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ "entry": new Node({ "id": 'nodeInfoId' }) })));
         spyOn(VersionListDataSource.prototype, 'getNextBatch').and.callFake(() => of(versionTest));
-        spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ list: { entries: versionTest } }));
+        spyOn(component.versionsApi, 'listVersionHistory').and.callFake(() => Promise.resolve({ "list": { "entries": versionTest } }));
     });
 
     it('should raise confirmation dialog on delete', () => {
         fixture.detectChanges();
 
         spyOn(dialog, 'open').and.returnValue({
-            afterClosed: () => of(false)
+            "afterClosed": () => of(false)
         } as any);
 
         component.deleteVersion('1');
@@ -79,7 +79,7 @@ describe('VersionListComponent', () => {
 
     it('should delete the version if user confirms', async () => {
         spyOn(dialog, 'open').and.returnValue({
-            afterClosed: () => of(true)
+            "afterClosed": () => of(true)
         } as any);
         spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
 
@@ -92,7 +92,7 @@ describe('VersionListComponent', () => {
 
     it('should not delete version if user rejects', () => {
         spyOn(dialog, 'open').and.returnValue({
-            afterClosed: () => of(false)
+            "afterClosed": () => of(false)
         } as any);
 
         spyOn(component.versionsApi, 'deleteVersion').and.returnValue(Promise.resolve());
@@ -213,7 +213,7 @@ describe('VersionListComponent', () => {
             const spyOnRevertVersion = spyOn(component.versionsApi, 'revertVersion').and.callFake(() => Promise.resolve(versionTest[0]));
             component.restore(versionId);
 
-            expect(spyOnRevertVersion).toHaveBeenCalledWith(nodeId, versionId, { majorVersion: true, comment: '' });
+            expect(spyOnRevertVersion).toHaveBeenCalledWith(nodeId, versionId, { "majorVersion": true, "comment": '' });
         });
 
         it('should get node info after restoring the node', fakeAsync(() => {
@@ -239,7 +239,7 @@ describe('VersionListComponent', () => {
             fixture.detectChanges();
             tick();
 
-            expect(component.restored.emit).toHaveBeenCalledWith(new Node({ id: 'nodeInfoId' }));
+            expect(component.restored.emit).toHaveBeenCalledWith(new Node({ "id": 'nodeInfoId' }));
         }));
 
         it('should reload the version list after a version restore', fakeAsync(() => {
@@ -285,7 +285,7 @@ describe('VersionListComponent', () => {
 
         describe('showActions', () => {
             beforeEach(() => {
-                component.node = new Node({ id: nodeId });
+                component.node = new Node({ "id": nodeId });
                 component.ngOnChanges();
             });
 
@@ -312,7 +312,7 @@ describe('VersionListComponent', () => {
 
         describe('disabled', () => {
             beforeEach(() => {
-                component.node = { id: nodeId } as Node;
+                component.node = { "id": nodeId } as Node;
                 component.ngOnChanges();
             });
 
@@ -344,7 +344,7 @@ describe('VersionListComponent', () => {
 
         describe('enabled', () => {
             beforeEach(() => {
-                component.node = { id: nodeId, allowableOperations: ['update', 'delete'] } as Node;
+                component.node = { "id": nodeId, "allowableOperations": ['update', 'delete'] } as Node;
                 component.ngOnChanges();
             });
 
@@ -369,7 +369,7 @@ describe('VersionListComponent', () => {
 
         describe('Delete action', () => {
             beforeEach(() => {
-                component.node = { id: nodeId, allowableOperations: ['update', 'delete'] } as Node;
+                component.node = { "id": nodeId, "allowableOperations": ['update', 'delete'] } as Node;
             });
 
             it('should show delete action by default', (done) => {

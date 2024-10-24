@@ -45,12 +45,12 @@ import { Chip } from './chip';
  * This component shows dynamic list of chips which render depending on free space.
  */
 @Component({
-    selector: 'adf-dynamic-chip-list',
-    standalone: true,
-    templateUrl: './dynamic-chip-list.component.html',
-    styleUrls: ['./dynamic-chip-list.component.scss'],
-    imports: [MatChipsModule, TranslateModule, NgForOf, MatIconModule, NgIf, MatButtonModule],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-dynamic-chip-list',
+    "standalone": true,
+    "templateUrl": './dynamic-chip-list.component.html',
+    "styleUrls": ['./dynamic-chip-list.component.scss'],
+    "imports": [MatChipsModule, TranslateModule, NgForOf, MatIconModule, NgIf, MatButtonModule],
+    "encapsulation": ViewEncapsulation.None
 })
 export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     /* eslint no-underscore-dangle: ["error", { "allow": ["_elementRef"] }]*/
@@ -107,9 +107,9 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         this.changeDetectorRef.detectChanges();
     });
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {}
+    constructor (private changeDetectorRef: ChangeDetectorRef) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges (changes: SimpleChanges): void {
         if (changes.pagination) {
             this.limitChipsDisplayed = this.pagination?.hasMoreItems;
             this.paginationData = this.pagination;
@@ -127,24 +127,24 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         }
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         if (this.paginationData) {
             this.limitChipsDisplayed = this.paginationData.hasMoreItems;
         }
         this.initialLimitChipsDisplayed = this.limitChipsDisplayed;
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit (): void {
         this.resizeObserver.observe(this.containerView.nativeElement);
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy (): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
         this.resizeObserver.unobserve(this.containerView.nativeElement);
     }
 
-    displayNextChips(event: Event): void {
+    displayNextChips (event: Event): void {
         event.preventDefault();
         event.stopPropagation();
         if (this.paginationData) {
@@ -159,7 +159,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         this.displayNext.emit();
     }
 
-    private calculateChipsToDisplay(): void {
+    private calculateChipsToDisplay (): void {
         if (this.requestedDisplayingAllChips || !this.chips.length) {
             return;
         }
@@ -198,12 +198,12 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         this.calculationsDone = true;
     }
 
-    private getChipMargin(chip: MatChip): number {
+    private getChipMargin (chip: MatChip): number {
         const chipStyles = window.getComputedStyle(chip._elementRef.nativeElement);
         return parseInt(chipStyles.marginLeft, 10) + parseInt(chipStyles.marginRight, 10);
     }
 
-    private arrangeElements(
+    private arrangeElements (
         containerWidth: number,
         chipsWidth: number,
         viewMoreBtnWidth: number,

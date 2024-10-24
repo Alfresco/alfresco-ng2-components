@@ -25,25 +25,24 @@ import {
 import { getProperty } from './property-group-reader';
 
 export class LayoutOrientedConfigService implements ContentMetadataConfig {
+    constructor (private config: any) {}
 
-    constructor(private config: any) { }
-
-    public isGroupAllowed(groupName: string): boolean {
+    public isGroupAllowed (groupName: string): boolean {
         if (this.isIncludeAllEnabled()) {
             return true;
         }
         return this.getMatchingGroups(groupName).length > 0;
     }
 
-    public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+    public reorganiseByConfig (propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         const layoutBlocks = this.config.filter((itemsGroup) => itemsGroup.items);
 
         const organisedPropertyGroup = layoutBlocks.map((layoutBlock) => {
             const flattenedItems = this.flattenItems(layoutBlock.items);
             const properties = flattenedItems.reduce((props, explodedItem) => {
-                const isProperty = typeof explodedItem.property  === 'object';
+                const isProperty = typeof explodedItem.property === 'object';
                 const propertyName = isProperty ? explodedItem.property.name : explodedItem.property;
-                let  property = getProperty(propertyGroups, explodedItem.groupName, propertyName) || [];
+                let property = getProperty(propertyGroups, explodedItem.groupName, propertyName) || [];
                 if (isProperty) {
                     property = this.setPropertyTitle(property, explodedItem.property);
                 }
@@ -52,7 +51,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
             }, []);
 
             return {
-                title: layoutBlock.title,
+                "title": layoutBlock.title,
                 properties
             };
         });
@@ -60,19 +59,18 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return organisedPropertyGroup;
     }
 
-    public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
-        return Object.keys(propertyGroups)
-            .map((groupName) => {
-                const propertyGroup = propertyGroups[groupName];
-                const properties = propertyGroup.properties;
+    public appendAllPreset (propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+        return Object.keys(propertyGroups).map((groupName) => {
+            const propertyGroup = propertyGroups[groupName];
+            const properties = propertyGroup.properties;
 
-                return Object.assign({}, propertyGroup, {
-                    properties: Object.keys(properties).map((propertyName) => properties[propertyName])
-                });
+            return Object.assign({}, propertyGroup, {
+                "properties": Object.keys(properties).map((propertyName) => properties[propertyName])
             });
+        });
     }
 
-    public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+    public filterExcludedPreset (propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         let excludedConfig = this.config
             .map((config) => config.exclude)
             .filter((exclude) => exclude !== undefined)
@@ -87,17 +85,15 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return propertyGroups.filter((props) => !excludedConfig.includes(props.name));
     }
 
-    public isIncludeAllEnabled() {
-        const includeAllProperty = this.config
-            .map((config) => config.includeAll)
-            .find((includeAll) => includeAll !== undefined);
+    public isIncludeAllEnabled () {
+        const includeAllProperty = this.config.map((config) => config.includeAll).find((includeAll) => includeAll !== undefined);
 
         return includeAllProperty !== undefined ? includeAllProperty : false;
     }
 
-    private setEditableProperty(propertyGroup: Property | Property[], itemConfig): Property | Property[] {
+    private setEditableProperty (propertyGroup: Property | Property[], itemConfig): Property | Property[] {
         if (Array.isArray(propertyGroup)) {
-            propertyGroup.map((property) => property.editable = itemConfig.editable !== undefined ? itemConfig.editable : true);
+            propertyGroup.map((property) => (property.editable = itemConfig.editable !== undefined ? itemConfig.editable : true));
         } else {
             propertyGroup.editable = itemConfig.editable !== undefined ? itemConfig.editable : true;
         }
@@ -105,27 +101,27 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return propertyGroup;
     }
 
-    private setPropertyTitle(item: Property | Property[], property: Property): Property | Property[] {
+    private setPropertyTitle (item: Property | Property[], property: Property): Property | Property[] {
         if (!Array.isArray(item)) {
-            return { ...item, ...(item.name === property.name && !!property.title) && { title: property.title } };
+            return { ...item, ...(item.name === property.name && !!property.title && { "title": property.title }) };
         }
         return item;
     }
 
-    private flattenItems(items) {
+    private flattenItems (items) {
         return items.reduce((accumulator, item) => {
             const properties = Array.isArray(item.properties) ? item.properties : [item.properties];
             const flattenedProperties = properties.map((property) => ({
-                groupName: item.aspect || item.type,
+                "groupName": item.aspect || item.type,
                 property,
-                editable: item.editable
+                "editable": item.editable
             }));
 
             return accumulator.concat(flattenedProperties);
         }, []);
     }
 
-    private getMatchingGroups(groupName: string): LayoutOrientedConfigItem[] {
+    private getMatchingGroups (groupName: string): LayoutOrientedConfigItem[] {
         return this.config
             .map((layoutBlock) => layoutBlock.items)
             .reduce((accumulator, items) => accumulator.concat(items), [])

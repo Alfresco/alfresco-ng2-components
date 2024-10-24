@@ -19,14 +19,14 @@ import { BaseEvent } from '@alfresco/adf-core';
 import { NodeEntry, Node } from '@alfresco/js-api';
 
 export class NodeEntityEvent extends BaseEvent<NodeEntry> {
-    constructor(nodeEntry: NodeEntry) {
+    constructor (nodeEntry: NodeEntry) {
         super();
         this.value = nodeEntry;
     }
 }
 
 export class NodeEntryEvent extends BaseEvent<Node> {
-    constructor(node: Node) {
+    constructor (node: Node) {
         super();
         this.value = node;
     }

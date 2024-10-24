@@ -47,7 +47,7 @@ describe('ContentMetadataCardComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, MatDialogModule, MatSnackBarModule, ContentMetadataCardComponent]
+            "imports": [ContentTestingModule, MatDialogModule, MatSnackBarModule, ContentMetadataCardComponent]
         });
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         contentMetadataService = TestBed.inject(ContentMetadataService);
@@ -56,13 +56,13 @@ describe('ContentMetadataCardComponent', () => {
         propertyDescriptorsService = TestBed.inject(PropertyDescriptorsService);
         component = fixture.componentInstance;
         node = {
-            aspectNames: [],
-            nodeType: '',
-            content: {},
-            properties: {},
-            createdByUser: {},
-            modifiedByUser: {},
-            id: 'some-id'
+            "aspectNames": [],
+            "nodeType": '',
+            "content": {},
+            "properties": {},
+            "createdByUser": {},
+            "modifiedByUser": {},
+            "id": 'some-id'
         } as Node;
 
         component.node = node;

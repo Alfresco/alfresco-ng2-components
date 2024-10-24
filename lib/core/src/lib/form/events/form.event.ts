@@ -16,20 +16,19 @@
  */
 
 export class FormEvent {
-
     private isDefaultPrevented: boolean = false;
 
     readonly form: any;
 
-    constructor(form: any) {
+    constructor (form: any) {
         this.form = form;
     }
 
-    get defaultPrevented() {
+    get defaultPrevented () {
         return this.isDefaultPrevented;
     }
 
-    preventDefault() {
+    preventDefault () {
         this.isDefaultPrevented = true;
     }
 }

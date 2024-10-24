@@ -30,17 +30,17 @@ export class FormCloudServiceMock implements FormCloudServiceInterface {
 
     uploadApi: UploadApi;
 
-    getTaskForm(appName: string, taskId: string, version?: number): Observable<any> {
+    getTaskForm (appName: string, taskId: string, version?: number): Observable<any> {
         return this.getTask(appName, taskId).pipe(
             switchMap((task) => this.getForm(appName, task.formKey, version).pipe(
                 map((form: FormContent) => {
                     const flattenForm = {
                         ...form.formRepresentation,
                         ...form.formRepresentation.formDefinition,
-                        taskId: task.id,
-                        taskName: task.name,
-                        processDefinitionId: task.processDefinitionId,
-                        processInstanceId: task.processInstanceId
+                        "taskId": task.id,
+                        "taskName": task.name,
+                        "processDefinitionId": task.processDefinitionId,
+                        "processInstanceId": task.processInstanceId
                     };
                     delete flattenForm.formDefinition;
                     return flattenForm;
@@ -49,19 +49,19 @@ export class FormCloudServiceMock implements FormCloudServiceInterface {
         );
     }
 
-    getTask(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    getTask (_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
     }
 
-    getForm(_appName: string, _formKey: string, _version?: number): Observable<FormContent> {
+    getForm (_appName: string, _formKey: string, _version?: number): Observable<FormContent> {
         return of(fakeCloudForm);
     }
 
-    getTaskVariables(_appName: string, _taskId: string): Observable<TaskVariableCloud[]> {
-        return of([new TaskVariableCloud({ name: 'name1', value: 5, type: 'text', id: '52' })]);
+    getTaskVariables (_appName: string, _taskId: string): Observable<TaskVariableCloud[]> {
+        return of([new TaskVariableCloud({ "name": 'name1', "value": 5, "type": 'text', "id": '52' })]);
     }
 
-    saveTaskForm(
+    saveTaskForm (
         _appName: string,
         taskId: string,
         _processInstanceId: string,
@@ -71,7 +71,7 @@ export class FormCloudServiceMock implements FormCloudServiceInterface {
         return of(taskDetailsContainer[taskId]);
     }
 
-    completeTaskForm(
+    completeTaskForm (
         _appName: string,
         taskId: string,
         _processInstanceId: string,
@@ -83,19 +83,19 @@ export class FormCloudServiceMock implements FormCloudServiceInterface {
         return of(taskDetailsContainer[taskId]);
     }
 
-    createTemporaryRawRelatedContent(_file: any, _nodeId: string, _contentHost: string): Observable<any> {
+    createTemporaryRawRelatedContent (_file: any, _nodeId: string, _contentHost: string): Observable<any> {
         throw new Error('Method not implemented.');
     }
 
-    getDropDownJsonData(_url: string): Observable<any> {
+    getDropDownJsonData (_url: string): Observable<any> {
         throw new Error('Method not implemented.');
     }
 
-    parseForm(_json: any, _data?: TaskVariableCloud[], _readOnly: boolean = false): FormModel {
+    parseForm (_json: any, _data?: TaskVariableCloud[], _readOnly: boolean = false): FormModel {
         throw new Error('Method not implemented.');
     }
 
-    getRestWidgetData(_formName: string, _widgetId: string, _body: Map<string, string>): Observable<FormFieldOption[]> {
+    getRestWidgetData (_formName: string, _widgetId: string, _body: Map<string, string>): Observable<FormFieldOption[]> {
         throw new Error('Method not implemented.');
     }
 }

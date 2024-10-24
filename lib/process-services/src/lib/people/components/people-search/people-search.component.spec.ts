@@ -22,17 +22,17 @@ import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { LightUserRepresentation } from '@alfresco/js-api';
 
 const fakeUser: LightUserRepresentation = {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'JohnDoe@fake.com'
+    "id": 1,
+    "firstName": 'John',
+    "lastName": 'Doe',
+    "email": 'JohnDoe@fake.com'
 };
 
 const fakeSecondUser: LightUserRepresentation = {
-    id: 2,
-    firstName: 'Jane',
-    lastName: 'Jackson',
-    email: 'JaneJackson@fake.com'
+    "id": 2,
+    "firstName": 'Jane',
+    "lastName": 'Jackson',
+    "email": 'JaneJackson@fake.com'
 };
 
 describe('PeopleSearchComponent', () => {
@@ -44,7 +44,7 @@ describe('PeopleSearchComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, PeopleSearchComponent]
+            "imports": [ProcessTestingModule, PeopleSearchComponent]
         });
         fixture = TestBed.createComponent(PeopleSearchComponent);
         peopleSearchComponent = fixture.componentInstance;
@@ -56,7 +56,7 @@ describe('PeopleSearchComponent', () => {
     /**
      * trigger search
      */
-    function triggerSearch() {
+    function triggerSearch () {
         searchInput = element.querySelector('#userSearchText');
         searchInput.value = 'fake-search';
         searchInput.dispatchEvent(new Event('input'));

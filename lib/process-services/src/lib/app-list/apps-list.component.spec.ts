@@ -38,9 +38,9 @@ describe('AppsListComponent', () => {
     let getAppsSpy: jasmine.Spy;
 
     @Component({
-        standalone: true,
-        imports: [CustomEmptyContentTemplateDirective, AppsListComponent],
-        template: `
+        "standalone": true,
+        "imports": [CustomEmptyContentTemplateDirective, AppsListComponent],
+        "template": `
             <adf-apps>
                 <adf-custom-empty-content-template>
                     <p id="custom-id">No Apps</p>
@@ -52,7 +52,7 @@ describe('AppsListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CustomEmptyAppListTemplateComponent]
+            "imports": [ProcessTestingModule, CustomEmptyAppListTemplateComponent]
         });
         fixture = TestBed.createComponent(AppsListComponent);
         component = fixture.componentInstance;
@@ -92,25 +92,25 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by defaultAppId', () => {
-        component.filtersAppId = [{ defaultAppId: 'fake-app-1' }];
+        component.filtersAppId = [{ "defaultAppId": 'fake-app-1' }];
         fixture.detectChanges();
         expect(component.appList.length).toEqual(1);
     });
 
     it('should filter apps by defaultAppId', async () => {
-        const filtered = component.filterApps(deployedApps, [{ defaultAppId: 'fake-app-1' }]);
+        const filtered = component.filterApps(deployedApps, [{ "defaultAppId": 'fake-app-1' }]);
         expect(filtered.length).toEqual(1);
         expect(filtered[0].defaultAppId).toEqual('fake-app-1');
     });
 
     it('should filter apps by deploymentId', async () => {
-        const filtered = component.filterApps(deployedApps, [{ deploymentId: '4' }]);
+        const filtered = component.filterApps(deployedApps, [{ "deploymentId": '4' }]);
         expect(filtered.length).toEqual(1);
         expect(filtered[0].deploymentId).toEqual('4');
     });
 
     it('should show the apps filtered by deploymentId', async () => {
-        component.filtersAppId = [{ deploymentId: '4' }];
+        component.filtersAppId = [{ "deploymentId": '4' }];
 
         fixture.detectChanges();
         await fixture.whenStable();
@@ -120,28 +120,28 @@ describe('AppsListComponent', () => {
     });
 
     it('should show the apps filtered by name', () => {
-        component.filtersAppId = [{ name: 'App5' }];
+        component.filtersAppId = [{ "name": 'App5' }];
         fixture.detectChanges();
         expect(component.appList.length).toEqual(1);
         expect(component.appList[0].name).toEqual('App5');
     });
 
     it('should show the apps filtered by id', () => {
-        component.filtersAppId = [{ id: 6 }];
+        component.filtersAppId = [{ "id": 6 }];
         fixture.detectChanges();
         expect(component.appList.length).toEqual(1);
         expect(component.appList[0].id).toEqual(6);
     });
 
     it('should show the apps filtered by modelId', () => {
-        component.filtersAppId = [{ modelId: 66 }];
+        component.filtersAppId = [{ "modelId": 66 }];
         fixture.detectChanges();
         expect(component.appList.length).toEqual(2);
         expect(component.appList[0].modelId).toEqual(66);
     });
 
     it('should show the apps filtered by tenantId', () => {
-        component.filtersAppId = [{ tenantId: 9 }];
+        component.filtersAppId = [{ "tenantId": 9 }];
         fixture.detectChanges();
         expect(component.appList.length).toEqual(2);
         expect(component.appList[0].tenantId).toEqual(9);
@@ -157,8 +157,8 @@ describe('AppsListComponent', () => {
     describe('internationalization', () => {
         it('should provide a translation for the default application name, when app name is not provided', () => {
             const appDataMock: AppDefinitionRepresentation = {
-                defaultAppId: 'tasks',
-                name: null
+                "defaultAppId": 'tasks',
+                "name": null
             };
 
             expect(component.getAppName(appDataMock)).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
@@ -166,8 +166,8 @@ describe('AppsListComponent', () => {
 
         it('should provide the application name, when it exists', () => {
             const appDataMock: AppDefinitionRepresentation = {
-                defaultAppId: 'uiu',
-                name: 'the-name'
+                "defaultAppId": 'uiu',
+                "name": 'the-name'
             };
 
             expect(component.getAppName(appDataMock)).toBe(appDataMock.name);
@@ -280,24 +280,24 @@ describe('AppsListComponent', () => {
     describe('getAppName', () => {
         it('should return the default app name when app is the default app', () => {
             const appDataMock: AppDefinitionRepresentation = {
-                defaultAppId: 'tasks',
-                name: null
+                "defaultAppId": 'tasks',
+                "name": null
             };
             expect(component.getAppName(appDataMock)).toBe('ADF_TASK_LIST.APPS.TASK_APP_NAME');
         });
 
         it('should return the app name when it is provided', () => {
             const appDataMock: AppDefinitionRepresentation = {
-                defaultAppId: 'uiu',
-                name: 'the-name'
+                "defaultAppId": 'uiu',
+                "name": 'the-name'
             };
             expect(component.getAppName(appDataMock)).toBe('the-name');
         });
 
         it('should return the defaultAppId when name is not provided and app is not the default app', () => {
             const appDataMock: AppDefinitionRepresentation = {
-                defaultAppId: 'uiu',
-                name: null
+                "defaultAppId": 'uiu',
+                "name": null
             };
             expect(component.getAppName(appDataMock)).toBe('uiu');
         });

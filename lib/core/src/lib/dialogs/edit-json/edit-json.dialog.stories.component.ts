@@ -17,14 +17,11 @@
 
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    EditJsonDialogComponent,
-    EditJsonDialogSettings
-} from './edit-json.dialog';
+import { EditJsonDialogComponent, EditJsonDialogSettings } from './edit-json.dialog';
 
 @Component({
-    selector: 'adf-edit-json-dialog-storybook',
-    template: `<button mat-raised-button (click)="openDialog()">
+    "selector": 'adf-edit-json-dialog-storybook',
+    "template": `<button mat-raised-button (click)="openDialog()">
         Open dialog
     </button>`
 })
@@ -40,46 +37,42 @@ export class EditJsonDialogStorybookComponent implements OnInit, OnChanges {
 
     private _settings: EditJsonDialogSettings;
 
-    set settings(newSettings: EditJsonDialogSettings) {
+    set settings (newSettings: EditJsonDialogSettings) {
         this._settings = {
-            title: newSettings.title,
-            editable: newSettings.editable,
-            value: JSON.stringify(newSettings.value, null, '  ')
+            "title": newSettings.title,
+            "editable": newSettings.editable,
+            "value": JSON.stringify(newSettings.value, null, '  ')
         };
     }
 
-    constructor(private dialog: MatDialog) {}
+    constructor (private dialog: MatDialog) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.settings = {
-            title: this.title,
-            editable: this.editable,
-            value: this.value
+            "title": this.title,
+            "editable": this.editable,
+            "value": this.value
         };
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         this.settings = {
-            title: this.title,
-            editable: this.editable,
-            value: this.value
+            "title": this.title,
+            "editable": this.editable,
+            "value": this.value
         };
     }
 
-    openDialog() {
+    openDialog () {
         this.dialog
             .open(EditJsonDialogComponent, {
-                data: this._settings,
-                minWidth: `50%`
+                "data": this._settings,
+                "minWidth": `50%`
             })
             .afterClosed()
             .subscribe((value: string) => {
                 if (value) {
-                    this._settings.value = JSON.stringify(
-                        JSON.parse(value),
-                        null,
-                        '  '
-                    );
+                    this._settings.value = JSON.stringify(JSON.parse(value), null, '  ');
                 }
             });
     }

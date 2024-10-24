@@ -24,7 +24,7 @@ export const CONTENT_METADATA_DIRECTIVES = [ContentMetadataComponent, ContentMet
 
 /** @deprecated use `...CONTENT_METADATA_DIRECTIVES` instead */
 @NgModule({
-    imports: [...CONTENT_METADATA_DIRECTIVES],
-    exports: [...CONTENT_METADATA_DIRECTIVES]
+    "imports": [...CONTENT_METADATA_DIRECTIVES],
+    "exports": [...CONTENT_METADATA_DIRECTIVES]
 })
 export class ContentMetadataModule {}

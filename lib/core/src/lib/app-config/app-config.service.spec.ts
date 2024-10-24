@@ -22,9 +22,9 @@ import { ExtensionConfig, ExtensionService } from '@alfresco/adf-extensions';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 class TestExtensionService extends ExtensionService {
-    onSetup(config: ExtensionConfig) {
+    onSetup (config: ExtensionConfig) {
         this.onSetup$.next(config);
     }
 }
@@ -35,22 +35,22 @@ describe('AppConfigService', () => {
     let httpClient: HttpClient;
 
     const mockResponse = {
-        ecmHost: 'http://localhost:4000/ecm',
-        bpmHost: 'http://localhost:4000/ecm',
-        application: {
-            name: 'Custom Name'
+        "ecmHost": 'http://localhost:4000/ecm',
+        "bpmHost": 'http://localhost:4000/ecm',
+        "application": {
+            "name": 'Custom Name'
         },
-        files: {
-            excluded: ['excluded']
+        "files": {
+            "excluded": ['excluded']
         },
-        logLevel: 'silent',
-        alfrescoRepositoryName: 'alfresco-1'
+        "logLevel": 'silent',
+        "alfrescoRepositoryName": 'alfresco-1'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule],
-            providers: [{ provide: ExtensionService, useClass: TestExtensionService }]
+            "imports": [HttpClientModule],
+            "providers": [{ "provide": ExtensionService, "useClass": TestExtensionService }]
         });
     });
 
@@ -64,15 +64,15 @@ describe('AppConfigService', () => {
 
     it('should merge the configs from extensions', () => {
         appConfigService.config = {
-            application: {
-                name: 'application name'
+            "application": {
+                "name": 'application name'
             }
         };
 
         (extensionService as TestExtensionService).onSetup({
-            appConfig: {
-                application: {
-                    name: 'custom name'
+            "appConfig": {
+                "application": {
+                    "name": 'custom name'
                 }
             }
         } as any);
@@ -82,15 +82,15 @@ describe('AppConfigService', () => {
 
     it('should merge the configs upon new data loaded', async () => {
         appConfigService.config = {
-            application: {
-                name: 'application name'
+            "application": {
+                "name": 'application name'
             }
         };
 
         (extensionService as TestExtensionService).onSetup({
-            appConfig: {
-                application: {
-                    name: 'custom name'
+            "appConfig": {
+                "application": {
+                    "name": 'custom name'
                 }
             }
         } as any);
@@ -192,9 +192,9 @@ describe('AppConfigService', () => {
 
     it('should replace all the configuration placeholders if the provided key is an object', () => {
         appConfigService.config.objectKey = {
-            firstUrl: '{protocol}//{hostname}{:port}',
-            secondUrl: '{protocol}//{hostname}{:port}',
-            thirdUrl: '{protocol}//{hostname}{:port}'
+            "firstUrl": '{protocol}//{hostname}{:port}',
+            "secondUrl": '{protocol}//{hostname}{:port}',
+            "thirdUrl": '{protocol}//{hostname}{:port}'
         };
         spyOn(appConfigService, 'getLocationHostname').and.returnValue('localhost');
         spyOn(appConfigService, 'getLocationPort').and.returnValue(':8080');

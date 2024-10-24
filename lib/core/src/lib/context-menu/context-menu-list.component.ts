@@ -28,16 +28,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 
 @Component({
-    selector: 'adf-context-menu',
-    standalone: true,
-    templateUrl: './context-menu-list.component.html',
-    host: {
-        role: 'menu',
-        class: 'adf-context-menu'
+    "selector": 'adf-context-menu',
+    "standalone": true,
+    "templateUrl": './context-menu-list.component.html',
+    "host": {
+        "role": 'menu',
+        "class": 'adf-context-menu'
     },
-    encapsulation: ViewEncapsulation.None,
-    imports: [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslateModule],
-    animations: [trigger('panelAnimation', contextMenuAnimation)]
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [MatIconModule, MatMenuModule, NgForOf, NgIf, TranslateModule],
+    "animations": [trigger('panelAnimation', contextMenuAnimation)]
 })
 export class ContextMenuListComponent implements AfterViewInit {
     private keyManager: FocusKeyManager<MatMenuItem>;
@@ -45,14 +45,14 @@ export class ContextMenuListComponent implements AfterViewInit {
     links: any[];
 
     @HostListener('document:keydown.Escape', ['$event'])
-    handleKeydownEscape(event: KeyboardEvent) {
+    handleKeydownEscape (event: KeyboardEvent) {
         if (event) {
             this.contextMenuOverlayRef.close();
         }
     }
 
     @HostListener('document:keydown', ['$event'])
-    handleKeydownEvent(event: KeyboardEvent) {
+    handleKeydownEvent (event: KeyboardEvent) {
         if (event) {
             const keyCode = event.keyCode;
             if (keyCode === UP_ARROW || keyCode === DOWN_ARROW) {
@@ -61,14 +61,14 @@ export class ContextMenuListComponent implements AfterViewInit {
         }
     }
 
-    constructor(
+    constructor (
         @Inject(ContextMenuOverlayRef) private contextMenuOverlayRef: ContextMenuOverlayRef,
         @Optional() @Inject(CONTEXT_MENU_DATA) private data: any
     ) {
         this.links = this.data;
     }
 
-    onMenuItemClick(event: Event, menuItem: any) {
+    onMenuItemClick (event: Event, menuItem: any) {
         if (menuItem?.model?.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
@@ -79,7 +79,7 @@ export class ContextMenuListComponent implements AfterViewInit {
         this.contextMenuOverlayRef.close();
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit () {
         this.keyManager = new FocusKeyManager<MatMenuItem>(this.items);
         this.keyManager.setFirstItemActive();
     }

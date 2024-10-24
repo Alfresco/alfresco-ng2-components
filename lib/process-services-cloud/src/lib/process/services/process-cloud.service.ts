@@ -25,19 +25,18 @@ import { ApplicationVersionModel, ApplicationVersionResponseModel } from '../../
 import { ProcessCloudInterface } from './process-cloud.interface';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ProcessCloudService extends BaseCloudService implements ProcessCloudInterface {
     dataChangesDetected = new Subject<ProcessInstanceCloud>();
 
     /**
      * Gets details of a process instance.
-     *
      * @param appName Name of the app
      * @param processInstanceId ID of the process instance whose details you want
      * @returns Process instance details
      */
-    getProcessInstanceById(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
+    getProcessInstanceById (appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if (appName && processInstanceId) {
             const url = `${this.getBasePath(appName)}/query/v1/process-instances/${processInstanceId}`;
 
@@ -54,11 +53,10 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
     /**
      * Gets the process definitions associated with an app.
-     *
      * @param appName Name of the target app
      * @returns Array of process definitions
      */
-    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
+    getProcessDefinitions (appName: string): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
             const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
 
@@ -70,11 +68,10 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
     /**
      * Gets the application versions associated with an app.
-     *
      * @param appName Name of the target app
      * @returns Array of Application Version Models
      */
-    getApplicationVersions(appName: string): Observable<ApplicationVersionModel[]> {
+    getApplicationVersions (appName: string): Observable<ApplicationVersionModel[]> {
         if (appName) {
             const url = `${this.getBasePath(appName)}/query/v1/applications`;
 
@@ -86,12 +83,11 @@ export class ProcessCloudService extends BaseCloudService implements ProcessClou
 
     /**
      * Cancels a process.
-     *
      * @param appName Name of the app
      * @param processInstanceId Id of the process to cancel
      * @returns Operation Information
      */
-    cancelProcess(appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
+    cancelProcess (appName: string, processInstanceId: string): Observable<ProcessInstanceCloud> {
         if (appName && processInstanceId) {
             const queryUrl = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
             return this.delete(queryUrl).pipe(

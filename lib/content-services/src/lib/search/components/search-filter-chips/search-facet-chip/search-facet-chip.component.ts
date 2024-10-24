@@ -28,9 +28,9 @@ import { SearchFilterMenuCardComponent } from '../search-filter-menu-card/search
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-search-facet-chip',
-    standalone: true,
-    imports: [
+    "selector": 'adf-search-facet-chip',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatChipsModule,
         MatMenuModule,
@@ -40,52 +40,52 @@ import { MatButtonModule } from '@angular/material/button';
         MatButtonModule,
         SearchFacetFieldComponent
     ],
-    templateUrl: './search-facet-chip.component.html',
-    styleUrls: ['./search-facet-chip.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './search-facet-chip.component.html',
+    "styleUrls": ['./search-facet-chip.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFacetChipComponent {
     @Input()
     field: FacetField;
 
-    @ViewChild('menuContainer', { static: false })
+    @ViewChild('menuContainer', { "static": false })
     menuContainer: ElementRef;
 
-    @ViewChild('menuTrigger', { static: false })
+    @ViewChild('menuTrigger', { "static": false })
     menuTrigger: MatMenuTrigger;
 
-    @ViewChild(SearchFacetFieldComponent, { static: false })
+    @ViewChild(SearchFacetFieldComponent, { "static": false })
     facetFieldComponent: SearchFacetFieldComponent;
 
     focusTrap: ConfigurableFocusTrap;
     chipIcon = 'keyboard_arrow_down';
 
-    constructor(private focusTrapFactory: ConfigurableFocusTrapFactory) {}
+    constructor (private focusTrapFactory: ConfigurableFocusTrapFactory) {}
 
-    onMenuOpen() {
+    onMenuOpen () {
         if (this.menuContainer && !this.focusTrap) {
             this.focusTrap = this.focusTrapFactory.create(this.menuContainer.nativeElement);
         }
         this.chipIcon = 'keyboard_arrow_up';
     }
 
-    onClosed() {
+    onClosed () {
         this.focusTrap.destroy();
         this.focusTrap = null;
         this.chipIcon = 'keyboard_arrow_down';
     }
 
-    onRemove() {
+    onRemove () {
         this.facetFieldComponent.reset();
         this.menuTrigger.closeMenu();
     }
 
-    onApply() {
+    onApply () {
         this.facetFieldComponent.submitValues();
         this.menuTrigger.closeMenu();
     }
 
-    onEnterKeydown(): void {
+    onEnterKeydown (): void {
         if (this.isPopulated()) {
             if (!this.menuTrigger.menuOpen) {
                 this.menuTrigger.openMenu();
@@ -95,13 +95,13 @@ export class SearchFacetChipComponent {
         }
     }
 
-    onEscKeydown() {
+    onEscKeydown () {
         if (this.menuTrigger.menuOpen) {
             this.menuTrigger.closeMenu();
         }
     }
 
-    isPopulated(): boolean {
+    isPopulated (): boolean {
         return this.field.buckets?.items.length > 0;
     }
 }

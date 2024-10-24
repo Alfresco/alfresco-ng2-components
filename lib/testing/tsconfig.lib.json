@@ -9,5 +9,6 @@
       "@alfresco/js-api": ["../../../dist/libs/js-api"],
       "@alfresco/js-api/*": ["../../../dist/libs/js-api/*"]
     }
-  }
+  },
+  "include": ["src/**/*.ts", "index.ts"]
 }

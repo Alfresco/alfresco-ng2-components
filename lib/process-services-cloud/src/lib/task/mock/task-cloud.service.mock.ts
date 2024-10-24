@@ -26,19 +26,19 @@ import { StartTaskCloudRequestModel } from '../start-task/models/start-task-clou
 import { TaskCloudServiceInterface } from '../services/task-cloud.service.interface';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TaskCloudServiceMock implements TaskCloudServiceInterface {
     currentUserMock = 'AssignedTaskUser';
     dataChangesDetected$ = new Subject();
 
-    constructor(private appConfigService: AppConfigService) {}
+    constructor (private appConfigService: AppConfigService) {}
 
-    getTaskById(_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    getTaskById (_appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
     }
 
-    getCandidateUsers(_appName: string, taskId: string): Observable<string[]> {
+    getCandidateUsers (_appName: string, taskId: string): Observable<string[]> {
         if (taskId === 'mock-no-candidate-users') {
             return of([]);
         }
@@ -46,7 +46,7 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         return of(['user1', 'user2']);
     }
 
-    getCandidateGroups(_appName: string, taskId: string): Observable<string[]> {
+    getCandidateGroups (_appName: string, taskId: string): Observable<string[]> {
         if (taskId === 'mock-no-candidate-groups') {
             return of([]);
         }
@@ -54,20 +54,20 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         return of(['group1', 'group2']);
     }
 
-    getPriorityLabel(priority: number): string {
+    getPriorityLabel (priority: number): string {
         const priorityItem = this.priorities.find((item) => item.value === priority.toString()) || this.priorities[0];
         return priorityItem.label;
     }
 
-    get priorities(): TaskPriorityOption[] {
+    get priorities (): TaskPriorityOption[] {
         return this.appConfigService.get('adf-cloud-priority-values') || DEFAULT_TASK_PRIORITIES;
     }
 
-    isTaskEditable(taskDetails: TaskDetailsCloudModel) {
+    isTaskEditable (taskDetails: TaskDetailsCloudModel) {
         return taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
-    isAssigneePropertyClickable(
+    isAssigneePropertyClickable (
         taskDetails: TaskDetailsCloudModel,
         candidateUsers: CardViewArrayItem[],
         candidateGroups: CardViewArrayItem[]
@@ -80,19 +80,19 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         return isClickable;
     }
 
-    updateTask(_appName: string, taskId: string, _payload: any): Observable<TaskDetailsCloudModel> {
+    updateTask (_appName: string, taskId: string, _payload: any): Observable<TaskDetailsCloudModel> {
         return of(taskDetailsContainer[taskId]);
     }
 
-    canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
+    canCompleteTask (taskDetails: TaskDetailsCloudModel): boolean {
         return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
-    canClaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+    canClaimTask (taskDetails: TaskDetailsCloudModel): boolean {
         return taskDetails && taskDetails.status === TASK_CREATED_STATE;
     }
 
-    private isAssignedToMe(assignee: string): boolean {
+    private isAssignedToMe (assignee: string): boolean {
         if (assignee === this.currentUserMock) {
             return true;
         }
@@ -100,7 +100,7 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         return false;
     }
 
-    completeTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    completeTask (appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             window.alert('Complete task mock');
 
@@ -110,12 +110,12 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         }
     }
 
-    canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
+    canUnclaimTask (taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.currentUserMock;
         return taskDetails && taskDetails.status === TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
     }
 
-    claimTask(appName: string, taskId: string, _assignee: string): Observable<TaskDetailsCloudModel> {
+    claimTask (appName: string, taskId: string, _assignee: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             window.alert('Claim task mock');
 
@@ -125,7 +125,7 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         }
     }
 
-    unclaimTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
+    unclaimTask (appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if ((appName || appName === '') && taskId) {
             window.alert('Unclaim task mock');
 
@@ -135,13 +135,13 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         }
     }
 
-    createNewTask(_startTaskRequest: StartTaskCloudRequestModel, _appName: string): Observable<TaskDetailsCloudModel> {
+    createNewTask (_startTaskRequest: StartTaskCloudRequestModel, _appName: string): Observable<TaskDetailsCloudModel> {
         window.alert('Create new task mock');
 
         return from([]);
     }
 
-    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
+    getProcessDefinitions (appName: string): Observable<ProcessDefinitionCloud[]> {
         if (appName || appName === '') {
             window.alert('Get process definitions mock');
 
@@ -151,7 +151,7 @@ export class TaskCloudServiceMock implements TaskCloudServiceInterface {
         }
     }
 
-    assign(appName: string, taskId: string, _assignee: string): Observable<TaskDetailsCloudModel> {
+    assign (appName: string, taskId: string, _assignee: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
             window.alert('Assign mock');
 

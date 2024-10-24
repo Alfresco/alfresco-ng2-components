@@ -26,10 +26,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
 
 @Component({
-    selector: 'adf-name-column',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, NodeNameTooltipPipe],
-    template: `
+    "selector": 'adf-name-column',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, NodeNameTooltipPipe],
+    "template": `
         <span
             role="link"
             [attr.aria-label]="
@@ -48,9 +48,9 @@ import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
             {{ displayText$ | async }}
         </span>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-datatable-content-cell adf-datatable-link adf-name-column' }
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-datatable-content-cell adf-datatable-link adf-name-column' }
 })
 export class NameColumnComponent implements OnInit, OnDestroy {
     @Input()
@@ -64,9 +64,9 @@ export class NameColumnComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
+    constructor (private element: ElementRef, private nodesApiService: NodesApiService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.updateValue();
 
         this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
@@ -82,7 +82,7 @@ export class NameColumnComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected updateValue() {
+    protected updateValue () {
         this.node = this.context.row.node;
 
         if (this.node?.entry) {
@@ -91,18 +91,18 @@ export class NameColumnComponent implements OnInit, OnDestroy {
         }
     }
 
-    onClick() {
+    onClick () {
         this.element.nativeElement.dispatchEvent(
             new CustomEvent('name-click', {
-                bubbles: true,
-                detail: {
-                    node: this.node
+                "bubbles": true,
+                "detail": {
+                    "node": this.node
                 }
             })
         );
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

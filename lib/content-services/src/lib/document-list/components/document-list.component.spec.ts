@@ -65,7 +65,7 @@ import { CustomResourcesService, DocumentListService } from '../public-api';
 import { CommonModule } from '@angular/common';
 
 const mockDialog = {
-    open: jasmine.createSpy('open')
+    "open": jasmine.createSpy('open')
 };
 
 describe('DocumentList', () => {
@@ -87,12 +87,12 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, DocumentListComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [{ provide: MatDialog, useValue: mockDialog }]
+            "imports": [ContentTestingModule, DocumentListComponent],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA],
+            "providers": [{ "provide": MatDialog, "useValue": mockDialog }]
         });
         eventMock = {
-            preventDefault: () => {}
+            "preventDefault": () => {}
         };
 
         fixture = TestBed.createComponent(DocumentListComponent);
@@ -107,16 +107,16 @@ describe('DocumentList', () => {
         appConfigService = TestBed.inject(AppConfigService);
         authenticationService = TestBed.inject(AuthenticationService);
 
-        spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
-        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: new Node() })));
-        spyOn(documentList.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ entry: new Node() })));
+        spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ "list": {} }));
+        spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ "entry": new Node() })));
+        spyOn(documentList.nodesApi, 'getNode').and.returnValue(Promise.resolve(new NodeEntry({ "entry": new Node() })));
 
         documentList.ngOnInit();
         documentList.currentFolderId = 'no-node';
 
         spyGetSites = spyOn(customResourcesService.sitesApi, 'listSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
         spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(
-            Promise.resolve(new FavoritePaging({ list: new FavoritePagingList({ entries: [] }) }))
+            Promise.resolve(new FavoritePaging({ "list": new FavoritePagingList({ "entries": [] }) }))
         );
 
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -226,30 +226,30 @@ describe('DocumentList', () => {
     });
 
     it('should not reset the selection when preselectNodes input changes', () => {
-        documentList.selection = [{ entry: mockNode3 }];
+        documentList.selection = [{ "entry": mockNode3 }];
         const changes: SimpleChanges = {
-            preselectNodes: {
-                previousValue: undefined,
-                currentValue: mockPreselectedNodes,
-                firstChange: true,
-                isFirstChange(): boolean {
+            "preselectNodes": {
+                "previousValue": undefined,
+                "currentValue": mockPreselectedNodes,
+                "firstChange": true,
+                isFirstChange (): boolean {
                     return this.firstChange;
                 }
             }
         };
         documentList.ngOnChanges(changes);
 
-        expect(documentList.selection).toEqual([{ entry: mockNode3 }]);
+        expect(documentList.selection).toEqual([{ "entry": mockNode3 }]);
     });
 
     it('should reset the selection for every change other than preselectNodes', () => {
-        documentList.selection = [{ entry: mockNode3 }];
+        documentList.selection = [{ "entry": mockNode3 }];
         const changes: SimpleChanges = {
-            mockChange: {
-                previousValue: undefined,
-                currentValue: ['mockChangeValue'],
-                firstChange: true,
-                isFirstChange(): boolean {
+            "mockChange": {
+                "previousValue": undefined,
+                "currentValue": ['mockChangeValue'],
+                "firstChange": true,
+                isFirstChange (): boolean {
                     return this.firstChange;
                 }
             }
@@ -261,7 +261,7 @@ describe('DocumentList', () => {
 
     it('should show the header when there are no records in the table but filter is active', () => {
         documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, []);
-        documentList.filterValue = { $thumbnail: 'TYPE:"cm:folder"' };
+        documentList.filterValue = { "$thumbnail": 'TYPE:"cm:folder"' };
 
         fixture.detectChanges();
 
@@ -269,10 +269,10 @@ describe('DocumentList', () => {
     });
 
     it('should reloadWithoutResettingSelection not reset the selection', () => {
-        documentList.selection = [{ entry: mockNode3 }];
+        documentList.selection = [{ "entry": mockNode3 }];
         documentList.reloadWithoutResettingSelection();
 
-        expect(documentList.selection).toEqual([{ entry: mockNode3 }]);
+        expect(documentList.selection).toEqual([{ "entry": mockNode3 }]);
     });
 
     it('should update schema if columns change', fakeAsync(() => {
@@ -301,12 +301,12 @@ describe('DocumentList', () => {
         fixture.detectChanges();
 
         const column = {
-            title: 'title',
-            key: 'source',
-            cssClass: 'css',
-            srTitle: '',
-            type: 'text',
-            format: ''
+            "title": 'title',
+            "key": 'source',
+            "cssClass": 'css',
+            "srTitle": '',
+            "type": 'text',
+            "format": ''
         } as DataColumn;
 
         const columns = documentList.data.getColumns();
@@ -420,7 +420,7 @@ describe('DocumentList', () => {
 
     it('should empty template be present when no element are present', () => {
         spyOn(documentList, 'loadFolder').and.callThrough();
-        spyFolderNode.and.returnValue(of({ entry: { id: 'fake-node' } }));
+        spyFolderNode.and.returnValue(of({ "entry": { "id": 'fake-node' } }));
         spyFolder.and.returnValue(of(fakeNodeAnswerWithNOEntries));
 
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
@@ -465,15 +465,15 @@ describe('DocumentList', () => {
     it('should disable the action if there is no permission for the file and disableWithNoPermission true', () => {
         documentList.currentFolderId = 'fake-node-id';
         const documentMenu = new ContentActionModel({
-            disableWithNoPermission: true,
-            permission: 'delete',
-            target: 'document',
-            title: 'FileAction'
+            "disableWithNoPermission": true,
+            "permission": 'delete',
+            "target": 'document',
+            "title": 'FileAction'
         });
 
         documentList.actions = [documentMenu];
 
-        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
+        const nodeFile = { "entry": { "isFile": true, "name": 'xyz', "allowableOperations": ['create', 'update'] } };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -484,18 +484,18 @@ describe('DocumentList', () => {
     it('should not display hidden content actions', () => {
         documentList.actions = [
             new ContentActionModel({
-                target: 'document',
-                title: 'Action1',
-                visible: false
+                "target": 'document',
+                "title": 'Action1',
+                "visible": false
             }),
             new ContentActionModel({
-                target: 'document',
-                title: 'Action2',
-                visible: true
+                "target": 'document',
+                "title": 'Action2',
+                "visible": true
             })
         ];
 
-        const nodeFile = { entry: { isFile: true, name: 'xyz' } };
+        const nodeFile = { "entry": { "isFile": true, "name": 'xyz' } };
         const actions = documentList.getNodeActions(nodeFile);
 
         expect(actions.length).toBe(1);
@@ -505,18 +505,18 @@ describe('DocumentList', () => {
     it('should evaluate conditional visibility for content actions', () => {
         documentList.actions = [
             new ContentActionModel({
-                target: 'document',
-                title: 'Action1',
-                visible: (): boolean => true
+                "target": 'document',
+                "title": 'Action1',
+                "visible": (): boolean => true
             }),
             new ContentActionModel({
-                target: 'document',
-                title: 'Action2',
-                visible: (): boolean => false
+                "target": 'document',
+                "title": 'Action2',
+                "visible": (): boolean => false
             })
         ];
 
-        const nodeFile = { entry: { isFile: true, name: 'xyz' } };
+        const nodeFile = { "entry": { "isFile": true, "name": 'xyz' } };
         const actions = documentList.getNodeActions(nodeFile);
 
         expect(actions.length).toBe(1);
@@ -526,24 +526,24 @@ describe('DocumentList', () => {
     it('should evaluate conditional disabled state for content action', () => {
         documentList.actions = [
             new ContentActionModel({
-                target: 'document',
-                title: 'Action1',
-                disabled: (node): boolean => node.entry.name === 'custom'
+                "target": 'document',
+                "title": 'Action1',
+                "disabled": (node): boolean => node.entry.name === 'custom'
             }),
             new ContentActionModel({
-                target: 'document',
-                title: 'Action2',
-                disabled: (): boolean => false
+                "target": 'document',
+                "title": 'Action2',
+                "disabled": (): boolean => false
             })
         ];
 
-        let actions = documentList.getNodeActions({ entry: { id: 1, isFile: true, name: 'xyz' } });
+        let actions = documentList.getNodeActions({ "entry": { "id": 1, "isFile": true, "name": 'xyz' } });
 
         expect(actions.length).toBe(2);
         expect(actions[0].disabled).toBe(false);
         expect(actions[1].disabled).toBe(false);
 
-        actions = documentList.getNodeActions({ entry: { id: 2, isFile: true, name: 'custom' } });
+        actions = documentList.getNodeActions({ "entry": { "id": 2, "isFile": true, "name": 'custom' } });
 
         expect(actions.length).toBe(2);
         expect(actions[0].disabled).toBe(true);
@@ -552,15 +552,15 @@ describe('DocumentList', () => {
 
     it('should not disable the action if there is copy permission', () => {
         const documentMenu = new ContentActionModel({
-            disableWithNoPermission: true,
-            permission: 'copy',
-            target: 'document',
-            title: 'FileAction'
+            "disableWithNoPermission": true,
+            "permission": 'copy',
+            "target": 'document',
+            "title": 'FileAction'
         });
 
         documentList.actions = [documentMenu];
 
-        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
+        const nodeFile = { "entry": { "isFile": true, "name": 'xyz', "allowableOperations": ['create', 'update'] } };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -570,15 +570,15 @@ describe('DocumentList', () => {
 
     it('should disable the action if there is no permission for the folder and disableWithNoPermission true', () => {
         const documentMenu = new ContentActionModel({
-            disableWithNoPermission: true,
-            permission: 'delete',
-            target: 'folder',
-            title: 'FolderAction'
+            "disableWithNoPermission": true,
+            "permission": 'delete',
+            "target": 'folder',
+            "title": 'FolderAction'
         });
 
         documentList.actions = [documentMenu];
 
-        const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
+        const nodeFile = { "entry": { "isFolder": true, "name": 'xyz', "allowableOperations": ['create', 'update'] } };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -588,15 +588,15 @@ describe('DocumentList', () => {
 
     it('should not disable the action if there is the right permission for the file', () => {
         const documentMenu = new ContentActionModel({
-            disableWithNoPermission: true,
-            permission: 'delete',
-            target: 'document',
-            title: 'FileAction'
+            "disableWithNoPermission": true,
+            "permission": 'delete',
+            "target": 'document',
+            "title": 'FileAction'
         });
 
         documentList.actions = [documentMenu];
 
-        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
+        const nodeFile = { "entry": { "isFile": true, "name": 'xyz', "allowableOperations": ['create', 'update', 'delete'] } };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -606,20 +606,20 @@ describe('DocumentList', () => {
 
     it('should disable the action if a readonly lock is applied to the file', () => {
         const documentMenu = new ContentActionModel({
-            permission: 'delete',
-            target: 'document',
-            title: 'FileAction'
+            "permission": 'delete',
+            "target": 'document',
+            "title": 'FileAction'
         });
 
         documentList.actions = [documentMenu];
 
         const nodeFile = {
-            entry: {
-                isFile: true,
-                name: 'xyz',
-                isLocked: true,
-                allowableOperations: ['create', 'update', 'delete'],
-                properties: { 'cm:lockType': 'READ_ONLY_LOCK', 'cm:lockLifetime': 'PERSISTENT' }
+            "entry": {
+                "isFile": true,
+                "name": 'xyz',
+                "isLocked": true,
+                "allowableOperations": ['create', 'update', 'delete'],
+                "properties": { 'cm:lockType': 'READ_ONLY_LOCK', 'cm:lockLifetime': 'PERSISTENT' }
             }
         };
 
@@ -631,9 +631,9 @@ describe('DocumentList', () => {
 
     it('should not disable the action for the lock owner if write lock is applied', () => {
         const documentMenu = new ContentActionModel({
-            permission: 'delete',
-            target: 'document',
-            title: 'FileAction'
+            "permission": 'delete',
+            "target": 'document',
+            "title": 'FileAction'
         });
 
         spyOn(authenticationService, 'getEcmUsername').and.returnValue('lockOwner');
@@ -641,15 +641,15 @@ describe('DocumentList', () => {
         documentList.actions = [documentMenu];
 
         const nodeFile = {
-            entry: {
-                isFile: true,
-                name: 'xyz',
-                isLocked: true,
-                allowableOperations: ['create', 'update', 'delete'],
-                properties: {
+            "entry": {
+                "isFile": true,
+                "name": 'xyz',
+                "isLocked": true,
+                "allowableOperations": ['create', 'update', 'delete'],
+                "properties": {
                     'cm:lockType': 'WRITE_LOCK',
                     'cm:lockLifetime': 'PERSISTENT',
-                    'cm:lockOwner': { id: 'lockOwner', displayName: 'lockOwner' }
+                    'cm:lockOwner': { "id": 'lockOwner', "displayName": 'lockOwner' }
                 }
             }
         };
@@ -662,9 +662,9 @@ describe('DocumentList', () => {
 
     it('should disable the action if write lock is applied and user is not the lock owner', () => {
         const documentMenu = new ContentActionModel({
-            permission: 'delete',
-            target: 'document',
-            title: 'FileAction'
+            "permission": 'delete',
+            "target": 'document',
+            "title": 'FileAction'
         });
 
         spyOn(authenticationService, 'getEcmUsername').and.returnValue('jerryTheKillerCow');
@@ -672,15 +672,15 @@ describe('DocumentList', () => {
         documentList.actions = [documentMenu];
 
         const nodeFile = {
-            entry: {
-                isFile: true,
-                name: 'xyz',
-                isLocked: true,
-                allowableOperations: ['create', 'update', 'delete'],
-                properties: {
+            "entry": {
+                "isFile": true,
+                "name": 'xyz',
+                "isLocked": true,
+                "allowableOperations": ['create', 'update', 'delete'],
+                "properties": {
                     'cm:lockType': 'WRITE_LOCK',
                     'cm:lockLifetime': 'PERSISTENT',
-                    'cm:lockOwner': { id: 'lockOwner', displayName: 'lockOwner' }
+                    'cm:lockOwner': { "id": 'lockOwner', "displayName": 'lockOwner' }
                 }
             }
         };
@@ -693,19 +693,19 @@ describe('DocumentList', () => {
 
     it('should not disable the action if there is the right permission for the folder', () => {
         const documentMenu = new ContentActionModel({
-            disableWithNoPermission: true,
-            permission: 'delete',
-            target: 'folder',
-            title: 'FolderAction'
+            "disableWithNoPermission": true,
+            "permission": 'delete',
+            "target": 'folder',
+            "title": 'FolderAction'
         });
 
         documentList.actions = [documentMenu];
 
         const nodeFile = {
-            entry: {
-                isFolder: true,
-                name: 'xyz',
-                allowableOperations: ['create', 'update', 'delete']
+            "entry": {
+                "isFolder": true,
+                "name": 'xyz',
+                "allowableOperations": ['create', 'update', 'delete']
             }
         };
 
@@ -717,15 +717,15 @@ describe('DocumentList', () => {
 
     it('should not disable the action if there are no permissions for the file and disable with no permission is false', () => {
         const documentMenu = new ContentActionModel({
-            permission: 'delete',
-            target: 'document',
-            title: 'FileAction',
-            disableWithNoPermission: false
+            "permission": 'delete',
+            "target": 'document',
+            "title": 'FileAction',
+            "disableWithNoPermission": false
         });
 
         documentList.actions = [documentMenu];
 
-        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
+        const nodeFile = { "entry": { "isFile": true, "name": 'xyz', "allowableOperations": null } };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -735,15 +735,15 @@ describe('DocumentList', () => {
 
     it('should not disable the action if there are no permissions for the folder and disable with no permission is false', () => {
         const documentMenu = new ContentActionModel({
-            permission: 'delete',
-            target: 'folder',
-            title: 'FolderAction',
-            disableWithNoPermission: false
+            "permission": 'delete',
+            "target": 'folder',
+            "title": 'FolderAction',
+            "disableWithNoPermission": false
         });
 
         documentList.actions = [documentMenu];
 
-        const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
+        const nodeFile = { "entry": { "isFolder": true, "name": 'xyz', "allowableOperations": null } };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -753,15 +753,15 @@ describe('DocumentList', () => {
 
     it('should disable the action if there are no permissions for the file and disable with no permission is true', () => {
         const documentMenu = new ContentActionModel({
-            permission: 'delete',
-            target: 'document',
-            title: 'FileAction',
-            disableWithNoPermission: true
+            "permission": 'delete',
+            "target": 'document',
+            "title": 'FileAction',
+            "disableWithNoPermission": true
         });
 
         documentList.actions = [documentMenu];
 
-        const nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
+        const nodeFile = { "entry": { "isFile": true, "name": 'xyz', "allowableOperations": null } };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -772,15 +772,15 @@ describe('DocumentList', () => {
 
     it('should disable the action if there are no permissions for the folder and disable with no permission is true', () => {
         const documentMenu = new ContentActionModel({
-            permission: 'delete',
-            target: 'folder',
-            title: 'FolderAction',
-            disableWithNoPermission: true
+            "permission": 'delete',
+            "target": 'folder',
+            "title": 'FolderAction',
+            "disableWithNoPermission": true
         });
 
         documentList.actions = [documentMenu];
 
-        const nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
+        const nodeFile = { "entry": { "isFolder": true, "name": 'xyz', "allowableOperations": null } };
 
         const actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -854,8 +854,8 @@ describe('DocumentList', () => {
 
     it('should execute context action on callback', () => {
         const action = {
-            node: {},
-            model: {}
+            "node": {},
+            "model": {}
         };
 
         spyOn(documentList, 'executeContentAction').and.stub();
@@ -916,8 +916,8 @@ describe('DocumentList', () => {
 
     it('should emit new columns order on columnOrderChanged', () => {
         const newColumnsOrder = [
-            { key: 'key', type: 'text', id: 'tag' },
-            { key: 'key1', type: 'text', id: 'name' }
+            { "key": 'key', "type": 'text', "id": 'tag' },
+            { "key": 'key1', "type": 'text', "id": 'name' }
         ];
         spyOn(documentList.columnsOrderChanged, 'emit');
         spyOn(documentList, 'onColumnOrderChange').and.callThrough();
@@ -929,26 +929,26 @@ describe('DocumentList', () => {
 
     it('should emit new columns width on columnsWidthChanged', () => {
         const newColumnWidth = [
-            { key: 'key', type: 'text', id: 'tag', width: 65 },
-            { key: 'key1', type: 'text', id: 'name', width: 77 }
+            { "key": 'key', "type": 'text', "id": 'tag', "width": 65 },
+            { "key": 'key1', "type": 'text', "id": 'name', "width": 77 }
         ];
         spyOn(documentList.columnsWidthChanged, 'emit');
         spyOn(documentList, 'onColumnsWidthChange').and.callThrough();
         documentList.dataTable.columnsWidthChanged.emit(newColumnWidth as DataColumn[]);
 
         expect(documentList.onColumnsWidthChange).toHaveBeenCalledWith(newColumnWidth);
-        expect(documentList.columnsWidthChanged.emit).toHaveBeenCalledWith({ tag: 65, name: 77 });
+        expect(documentList.columnsWidthChanged.emit).toHaveBeenCalledWith({ "tag": 65, "name": 77 });
     });
 
     it('should emit new columns visibility', () => {
         const newColumnsVisibility = [
-            { key: 'key', type: 'text', id: 'tag', isHidden: true },
-            { key: 'key1', type: 'text', id: 'name' }
+            { "key": 'key', "type": 'text', "id": 'tag', "isHidden": true },
+            { "key": 'key1', "type": 'text', "id": 'name' }
         ];
         spyOn(documentList.columnsVisibilityChanged, 'emit');
         documentList.onColumnsVisibilityChange(newColumnsVisibility as DataColumn[]);
 
-        expect(documentList.columnsVisibilityChanged.emit).toHaveBeenCalledWith({ tag: false });
+        expect(documentList.columnsVisibilityChanged.emit).toHaveBeenCalledWith({ "tag": false });
     });
 
     it('should perform folder navigation on single click', () => {
@@ -1167,7 +1167,7 @@ describe('DocumentList', () => {
         spyFolder.calls.reset();
         documentList.currentFolderId = null;
 
-        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, {} as RowFilter, true) });
+        documentList.ngOnChanges({ "rowFilter": new SimpleChange(null, {} as RowFilter, true) });
 
         expect(spyFolder).not.toHaveBeenCalled();
     });
@@ -1177,7 +1177,7 @@ describe('DocumentList', () => {
         const resolver = {} as ImageResolver;
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
-        documentList.ngOnChanges({ imageResolver: new SimpleChange(null, resolver, true) });
+        documentList.ngOnChanges({ "imageResolver": new SimpleChange(null, resolver, true) });
 
         expect(documentList.data.setImageResolver).toHaveBeenCalledWith(resolver);
     });
@@ -1223,7 +1223,7 @@ describe('DocumentList', () => {
 
         fixture.detectChanges();
 
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, '1d26e465-dea3-42f3-b415-faa8364b9692', true) });
+        documentList.ngOnChanges({ "currentFolderId": new SimpleChange(undefined, '1d26e465-dea3-42f3-b415-faa8364b9692', true) });
 
         await fixture.whenStable();
 
@@ -1231,7 +1231,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit error when getFolderNode fails', (done) => {
-        const error = { message: '{ "error": { "statusCode": 501 } }' };
+        const error = { "message": '{ "error": { "statusCode": 501 } }' };
         spyFolder.and.returnValue(throwError(error));
 
         const disposableError = documentList.error.subscribe((val) => {
@@ -1250,11 +1250,11 @@ describe('DocumentList', () => {
             expect(folderNode.value.id).toBe('fake-node');
             done();
         });
-        documentList.onNodeDblClick(new NodeEntry({ entry: new Node({ id: 'fake-node', isFolder: true }) }));
+        documentList.onNodeDblClick(new NodeEntry({ "entry": new Node({ "id": 'fake-node', "isFolder": true }) }));
     });
 
     it('should set no permission when getFolderNode fails with 403', (done) => {
-        const error = { message: '{ "error": { "statusCode": 403 } }' };
+        const error = { "message": '{ "error": { "statusCode": 403 } }' };
         spyFolder.and.returnValue(throwError(error));
 
         const disposableError = documentList.error.subscribe((val) => {
@@ -1286,20 +1286,20 @@ describe('DocumentList', () => {
         documentList.noPermission = true;
         fixture.detectChanges();
 
-        documentList.ngOnChanges({ node: new SimpleChange(null, { list: { entities: {} } }, true) });
+        documentList.ngOnChanges({ "node": new SimpleChange(null, { "list": { "entities": {} } }, true) });
 
         expect(documentList.data.loadPage).toHaveBeenCalled();
         expect(documentList.noPermission).toBeFalsy();
     });
 
     it('should noPermission be true if navigate to a folder with no  permission', () => {
-        const error = { message: '{ "error": { "statusCode": 403 } }' };
+        const error = { "message": '{ "error": { "statusCode": 403 } }' };
 
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new Node();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        spyFolderNode.and.returnValue(of({ entry: fakeNodeWithNoPermission }));
+        spyFolderNode.and.returnValue(of({ "entry": fakeNodeWithNoPermission }));
         spyFolder.and.returnValue(throwError(error));
 
         documentList.loadFolder();
@@ -1311,7 +1311,7 @@ describe('DocumentList', () => {
 
     it('should allow to perform navigation for virtual sources', () => {
         spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
-            of(new DocumentLoaderNode(null, { list: { pagination: {} } }))
+            of(new DocumentLoaderNode(null, { "list": { "pagination": {} } }))
         );
 
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
@@ -1462,8 +1462,8 @@ describe('DocumentList', () => {
         documentList.maxItems = 0;
 
         documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 10
+            "maxItems": 10,
+            "skipCount": 10
         });
 
         expect(documentList.reload).toHaveBeenCalled();
@@ -1473,9 +1473,9 @@ describe('DocumentList', () => {
         spyFolderNode = spyOn(documentListService, 'loadFolderByNodeId').and.callFake(() =>
             of(
                 new DocumentLoaderNode(null, {
-                    list: {
-                        pagination: {},
-                        entries: mockPreselectedNodes
+                    "list": {
+                        "pagination": {},
+                        "entries": mockPreselectedNodes
                     }
                 })
             )
@@ -1487,9 +1487,9 @@ describe('DocumentList', () => {
         ];
         documentList.data.setRows(fakeDatatableRows);
         documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 0,
-            merge: true
+            "maxItems": 10,
+            "skipCount": 0,
+            "merge": true
         });
         fixture.detectChanges();
 
@@ -1500,7 +1500,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'reload').and.stub();
 
         const firstChange = true;
-        documentList.ngOnChanges({ skipCount: new SimpleChange(undefined, 10, firstChange) });
+        documentList.ngOnChanges({ "skipCount": new SimpleChange(undefined, 10, firstChange) });
 
         expect(documentList.reload).not.toHaveBeenCalled();
     });
@@ -1515,16 +1515,16 @@ describe('DocumentList', () => {
         documentList.includeFields = ['test-include'];
         documentList.currentFolderId = 'fake-id';
 
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
+        documentList.ngOnChanges({ "currentFolderId": new SimpleChange(undefined, 'fake-id', true) });
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(
             null,
             {
-                where: undefined,
-                maxItems: 25,
-                skipCount: 0,
-                orderBy: ['isFolder desc', 'name asc'],
-                rootFolderId: 'fake-id'
+                "where": undefined,
+                "maxItems": 25,
+                "skipCount": 0,
+                "orderBy": ['isFolder desc', 'name asc'],
+                "rootFolderId": 'fake-id'
             },
             ['test-include']
         );
@@ -1535,16 +1535,16 @@ describe('DocumentList', () => {
         documentList.where = '(isFolder=true)';
         documentList.currentFolderId = 'fake-id';
 
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
+        documentList.ngOnChanges({ "currentFolderId": new SimpleChange(undefined, 'fake-id', true) });
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(
             null,
             {
-                where: '(isFolder=true)',
-                maxItems: 25,
-                skipCount: 0,
-                orderBy: ['isFolder desc', 'name asc'],
-                rootFolderId: 'fake-id'
+                "where": '(isFolder=true)',
+                "maxItems": 25,
+                "skipCount": 0,
+                "orderBy": ['isFolder desc', 'name asc'],
+                "rootFolderId": 'fake-id'
             },
             ['test-include']
         );
@@ -1556,38 +1556,38 @@ describe('DocumentList', () => {
         documentList.where = null;
         documentList.currentFolderId = 'fake-id';
 
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
+        documentList.ngOnChanges({ "currentFolderId": new SimpleChange(undefined, 'fake-id', true) });
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(
             null,
             {
-                maxItems: 25,
-                skipCount: 0,
-                where: null,
-                orderBy: ['isFolder desc', 'size desc'],
-                rootFolderId: 'fake-id'
+                "maxItems": 25,
+                "skipCount": 0,
+                "where": null,
+                "orderBy": ['isFolder desc', 'size desc'],
+                "rootFolderId": 'fake-id'
             },
             ['test-include']
         );
     });
 
     it('should reset the pagination when enter in a new folder', () => {
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
+        documentList.ngOnChanges({ "currentFolderId": new SimpleChange(undefined, 'fake-id', true) });
         const folder = new FolderNode();
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.updatePagination({
-            maxItems: 10,
-            skipCount: 10
+            "maxItems": 10,
+            "skipCount": 10
         });
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(
             null,
             Object({
-                maxItems: 10,
-                skipCount: 10,
-                orderBy: ['isFolder desc', 'name asc'],
-                rootFolderId: 'no-node',
-                where: undefined
+                "maxItems": 10,
+                "skipCount": 10,
+                "orderBy": ['isFolder desc', 'name asc'],
+                "rootFolderId": 'no-node',
+                "where": undefined
             }),
             undefined
         );
@@ -1597,11 +1597,11 @@ describe('DocumentList', () => {
         expect(documentListService.getFolder).toHaveBeenCalledWith(
             null,
             Object({
-                maxItems: 25,
-                skipCount: 0,
-                orderBy: ['isFolder desc', 'name asc'],
-                rootFolderId: 'folder-id',
-                where: undefined
+                "maxItems": 25,
+                "skipCount": 0,
+                "orderBy": ['isFolder desc', 'name asc'],
+                "rootFolderId": 'folder-id',
+                "where": undefined
             }),
             undefined
         );
@@ -1613,18 +1613,18 @@ describe('DocumentList', () => {
 
         appConfigService.config = {
             ...appConfigService.config,
-            viewer: {
-                enableFileAutoDownload: true,
-                fileAutoDownloadSizeThresholdInMB: 10
+            "viewer": {
+                "enableFileAutoDownload": true,
+                "fileAutoDownloadSizeThresholdInMB": 10
             }
         };
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         const node = {
-            entry: {
+            "entry": {
                 ...mockNode1,
-                content: {
+                "content": {
                     ...mockNode1.content,
-                    sizeInBytes: 104857600
+                    "sizeInBytes": 104857600
                 }
             }
         };
@@ -1633,7 +1633,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(dialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { disableClose: true, data: node });
+        expect(dialog.open).toHaveBeenCalledWith(FileAutoDownloadComponent, { "disableClose": true, "data": node });
     });
 
     describe('Preselect nodes', () => {
@@ -1773,7 +1773,7 @@ describe('DocumentList', () => {
         it('should preserve the existing selection when selection mode is multiple', () => {
             fixture.detectChanges();
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.selection = [{ entry: mockNode1 }, { entry: mockNode2 }];
+            documentList.selection = [{ "entry": mockNode1 }, { "entry": mockNode2 }];
             documentList.selectionMode = 'multiple';
             documentList.reloadWithoutResettingSelection();
             const selectedRows = documentList.data.getSelectedRows();
@@ -1788,7 +1788,7 @@ describe('DocumentList', () => {
         it('should not preserve the existing selection when selection mode is single', () => {
             fixture.detectChanges();
             documentList.node = mockNodePagingWithPreselectedNodes;
-            documentList.selection = [{ entry: mockNode1 }, { entry: mockNode2 }];
+            documentList.selection = [{ "entry": mockNode1 }, { "entry": mockNode2 }];
             documentList.selectionMode = 'single';
             documentList.reloadWithoutResettingSelection();
             const selectedRows = documentList.data.getSelectedRows();
@@ -1817,7 +1817,7 @@ describe('DocumentList', () => {
             expect(selection).toEqual([]);
             expect(getRowByNodeIdSpy).toHaveBeenCalledWith(mockPreselectedNodes[0].entry.id);
             expect(datatableSelectRowSpy).toHaveBeenCalledWith(fakeDatatableRows[0], false);
-            expect(onNodeUnselectSpy).toHaveBeenCalledWith({ row: undefined, selection });
+            expect(onNodeUnselectSpy).toHaveBeenCalledWith({ "row": undefined, selection });
         });
 
         it('should preselect the rows of the preselected nodes', () => {
@@ -1830,7 +1830,7 @@ describe('DocumentList', () => {
             documentList.data.setRows(fakeDatatableRows);
 
             documentList.selectionMode = 'multiple';
-            documentList.preselectNodes = [...mockPreselectedNodes, { entry: mockNode3 }];
+            documentList.preselectNodes = [...mockPreselectedNodes, { "entry": mockNode3 }];
 
             documentList.preselectRowsOfPreselectedNodes();
             const selectedRows = documentList.data.getSelectedRows();
@@ -1852,12 +1852,12 @@ describe('DocumentList', () => {
             const fakeDatatableRows = [
                 new ShareDataRow(mockPreselectedNodes[0], contentService, null),
                 new ShareDataRow(mockPreselectedNodes[1], contentService, null),
-                new ShareDataRow({ entry: mockNode3 }, contentService, null)
+                new ShareDataRow({ "entry": mockNode3 }, contentService, null)
             ];
             fakeDatatableRows[2].isSelected = true;
             documentList.data.setRows(fakeDatatableRows);
 
-            documentList.selection = [{ entry: mockNode3 }];
+            documentList.selection = [{ "entry": mockNode3 }];
             documentList.selectionMode = 'multiple';
             documentList.preselectNodes = mockPreselectedNodes;
             documentList.onPreselectNodes();
@@ -1867,15 +1867,15 @@ describe('DocumentList', () => {
             expect(selection[0].id).toEqual(mockNode1.id);
             expect(selection[1].id).toEqual(mockNode2.id);
             expect(selection[2].id).toEqual(mockNode3.id);
-            expect(onNodeSelectSpy).toHaveBeenCalledWith({ row: undefined, selection });
+            expect(onNodeSelectSpy).toHaveBeenCalledWith({ "row": undefined, selection });
         });
     });
 });
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, DocumentListComponent, CustomLoadingContentTemplateDirective],
-    template: `
+    "standalone": true,
+    "imports": [CommonModule, DocumentListComponent, CustomLoadingContentTemplateDirective],
+    "template": `
         <adf-document-list #customDocumentList>
             <adf-custom-loading-content-template>
                 <span id="custom-loading-template">This is a custom loading template</span>
@@ -1901,7 +1901,7 @@ describe('DocumentListComponent rendering', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, CustomTemplateComponent]
+            "imports": [ContentTestingModule, CustomTemplateComponent]
         });
         fixture = TestBed.createComponent(CustomTemplateComponent);
         component = fixture.componentInstance;
@@ -1939,13 +1939,13 @@ describe('DocumentListComponent rendering', () => {
     it('should display rows and columns correctly', () => {
         const data = new ObjectDataTableAdapter(
             [
-                { id: 1, name: 'Name 1' },
-                { id: 2, name: 'Name 2' },
-                { id: 3, name: 'Name 3' }
+                { "id": 1, "name": 'Name 1' },
+                { "id": 2, "name": 'Name 2' },
+                { "id": 3, "name": 'Name 3' }
             ],
             [
-                { type: 'text', key: 'id', title: 'Id' },
-                { type: 'text', key: 'name', title: 'Name' }
+                { "type": 'text', "key": 'id', "title": 'Id' },
+                { "type": 'text', "key": 'name', "title": 'Name' }
             ]
         );
 

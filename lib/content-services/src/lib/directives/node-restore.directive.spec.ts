@@ -23,9 +23,9 @@ import { NoopTranslateModule, TranslationService } from '@alfresco/adf-core';
 import { TrashcanApi } from '@alfresco/js-api';
 
 @Component({
-    standalone: true,
-    imports: [NodeRestoreDirective],
-    template: ` <div [adf-restore]="selection" (restore)="doneSpy()"></div>`
+    "standalone": true,
+    "imports": [NodeRestoreDirective],
+    "template": ` <div [adf-restore]="selection" (restore)="doneSpy()"></div>`
 })
 class TestComponent {
     selection: any[] = [];
@@ -44,7 +44,7 @@ describe('NodeRestoreDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, TestComponent]
+            "imports": [NoopTranslateModule, TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
@@ -56,7 +56,7 @@ describe('NodeRestoreDirective', () => {
         restoreNodeSpy = spyOn(trashcanApi, 'restoreDeletedNode').and.returnValue(Promise.resolve({} as any));
         spyOn(trashcanApi, 'listDeletedNodes').and.returnValue(
             Promise.resolve({
-                list: { entries: [] }
+                "list": { "entries": [] }
             })
         );
 
@@ -74,7 +74,7 @@ describe('NodeRestoreDirective', () => {
     });
 
     it('should not restore nodes when selection has nodes without path', (done) => {
-        component.selection = [{ entry: { id: '1' } }];
+        component.selection = [{ "entry": { "id": '1' } }];
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -86,7 +86,7 @@ describe('NodeRestoreDirective', () => {
     });
 
     it('should call restore when selection has nodes with path', (done) => {
-        component.selection = [{ entry: { id: '1', path: ['somewhere-over-the-rainbow'] } }];
+        component.selection = [{ "entry": { "id": '1', "path": ['somewhere-over-the-rainbow'] } }];
 
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
@@ -98,7 +98,7 @@ describe('NodeRestoreDirective', () => {
 
     describe('reset', () => {
         it('should reset selection', (done) => {
-            component.selection = [{ entry: { id: '1', path: ['somewhere-over-the-rainbow'] } }];
+            component.selection = [{ "entry": { "id": '1', "path": ['somewhere-over-the-rainbow'] } }];
 
             directiveInstance.restore.subscribe(() => {
                 expect(directiveInstance.selection.length).toBe(0);
@@ -121,7 +121,7 @@ describe('NodeRestoreDirective', () => {
                 done();
             });
 
-            component.selection = [{ entry: { id: '1', path: ['somewhere-over-the-rainbow'] } }];
+            component.selection = [{ "entry": { "id": '1', "path": ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
@@ -130,7 +130,7 @@ describe('NodeRestoreDirective', () => {
 
     describe('notification', () => {
         it('should notify on multiple fails', (done) => {
-            const error = { message: '{ "error": {} }' };
+            const error = { "message": '{ "error": {} }' };
 
             directiveInstance.restore.subscribe((event: any) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.PARTIAL_PLURAL');
@@ -146,9 +146,9 @@ describe('NodeRestoreDirective', () => {
             });
 
             component.selection = [
-                { entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } },
-                { entry: { id: '2', name: 'name2', path: ['somewhere-over-the-rainbow'] } },
-                { entry: { id: '3', name: 'name3', path: ['somewhere-over-the-rainbow'] } }
+                { "entry": { "id": '1', "name": 'name1', "path": ['somewhere-over-the-rainbow'] } },
+                { "entry": { "id": '2', "name": 'name2', "path": ['somewhere-over-the-rainbow'] } },
+                { "entry": { "id": '3', "name": 'name3', "path": ['somewhere-over-the-rainbow'] } }
             ];
 
             fixture.detectChanges();
@@ -156,7 +156,7 @@ describe('NodeRestoreDirective', () => {
         });
 
         it('should notify fail when restored node exist, error 409', (done) => {
-            const error = { message: '{ "error": { "statusCode": 409 } }' };
+            const error = { "message": '{ "error": { "statusCode": 409 } }' };
 
             directiveInstance.restore.subscribe((event) => {
                 expect(event.message).toEqual('CORE.RESTORE_NODE.NODE_EXISTS');
@@ -166,14 +166,14 @@ describe('NodeRestoreDirective', () => {
 
             restoreNodeSpy.and.returnValue(Promise.reject(error));
 
-            component.selection = [{ entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }];
+            component.selection = [{ "entry": { "id": '1', "name": 'name1', "path": ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
         });
 
         it('should notify fail when restored node returns different statusCode', (done) => {
-            const error = { message: '{ "error": { "statusCode": 404 } }' };
+            const error = { "message": '{ "error": { "statusCode": 404 } }' };
 
             restoreNodeSpy.and.returnValue(Promise.reject(error));
 
@@ -183,14 +183,14 @@ describe('NodeRestoreDirective', () => {
                 done();
             });
 
-            component.selection = [{ entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }];
+            component.selection = [{ "entry": { "id": '1', "name": 'name1', "path": ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
         });
 
         it('should notify fail when restored node location is missing', (done) => {
-            const error = { message: '{ "error": { } }' };
+            const error = { "message": '{ "error": { } }' };
 
             restoreNodeSpy.and.returnValue(Promise.reject(error));
 
@@ -199,7 +199,7 @@ describe('NodeRestoreDirective', () => {
                 done();
             });
 
-            component.selection = [{ entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }];
+            component.selection = [{ "entry": { "id": '1', "name": 'name1', "path": ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);
@@ -215,8 +215,8 @@ describe('NodeRestoreDirective', () => {
             restoreNodeSpy.and.callFake(() => Promise.resolve());
 
             component.selection = [
-                { entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } },
-                { entry: { id: '2', name: 'name2', path: ['somewhere-over-the-rainbow'] } }
+                { "entry": { "id": '1', "name": 'name1', "path": ['somewhere-over-the-rainbow'] } },
+                { "entry": { "id": '2', "name": 'name2', "path": ['somewhere-over-the-rainbow'] } }
             ];
 
             fixture.detectChanges();
@@ -230,7 +230,7 @@ describe('NodeRestoreDirective', () => {
                 done();
             });
 
-            component.selection = [{ entry: { id: '1', name: 'name1', path: ['somewhere-over-the-rainbow'] } }];
+            component.selection = [{ "entry": { "id": '1', "name": 'name1', "path": ['somewhere-over-the-rainbow'] } }];
 
             fixture.detectChanges();
             element.triggerEventHandler('click', null);

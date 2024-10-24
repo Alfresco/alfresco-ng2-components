@@ -26,13 +26,13 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
 @Directive({
-    standalone: true,
+    "standalone": true,
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[adfNodeDownload]'
+    "selector": '[adfNodeDownload]'
 })
 export class NodeDownloadDirective {
     private _contentApi: ContentApi;
-    get contentApi(): ContentApi {
+    get contentApi (): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
@@ -46,19 +46,18 @@ export class NodeDownloadDirective {
     version: VersionEntry;
 
     @HostListener('click')
-    onClick() {
+    onClick () {
         this.downloadNodes(this.nodes);
     }
 
-    constructor(private apiService: AlfrescoApiService, private downloadService: DownloadService, private dialog: MatDialog) {}
+    constructor (private apiService: AlfrescoApiService, private downloadService: DownloadService, private dialog: MatDialog) {}
 
     /**
      * Downloads multiple selected nodes.
      * Packs result into a .ZIP archive if there is more than one node selected.
-     *
      * @param selection Multiple selected nodes to download
      */
-    downloadNodes(selection: NodeEntry | Array<NodeEntry>) {
+    downloadNodes (selection: NodeEntry | Array<NodeEntry>) {
         if (!this.isSelectionValid(selection)) {
             return;
         }
@@ -76,10 +75,9 @@ export class NodeDownloadDirective {
     /**
      * Downloads a single node.
      * Packs result into a .ZIP archive is the node is a Folder.
-     *
      * @param node Node to download
      */
-    downloadNode(node: NodeEntry) {
+    downloadNode (node: NodeEntry) {
         if (node?.entry) {
             const entry = node.entry;
 
@@ -98,11 +96,11 @@ export class NodeDownloadDirective {
         }
     }
 
-    private isSelectionValid(selection: NodeEntry | Array<NodeEntry>) {
+    private isSelectionValid (selection: NodeEntry | Array<NodeEntry>) {
         return selection || (selection instanceof Array && selection.length > 0);
     }
 
-    private downloadFile(node: NodeEntry) {
+    private downloadFile (node: NodeEntry) {
         if (node?.entry) {
             // nodeId for Shared node
             const id = (node.entry as any).nodeId || node.entry.id;
@@ -121,15 +119,15 @@ export class NodeDownloadDirective {
         }
     }
 
-    private downloadZip(selection: Array<NodeEntry>) {
+    private downloadZip (selection: Array<NodeEntry>) {
         if (selection && selection.length > 0) {
             // nodeId for Shared node
             const nodeIds = selection.map((node: any) => node.entry.nodeId || node.entry.id);
 
             this.dialog.open(DownloadZipDialogComponent, {
-                width: '600px',
-                disableClose: true,
-                data: {
+                "width": '600px',
+                "disableClose": true,
+                "data": {
                     nodeIds
                 }
             });

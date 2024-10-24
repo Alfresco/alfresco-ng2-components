@@ -19,12 +19,12 @@ import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core'
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'adf-avatar',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './avatar.component.html',
-    styleUrls: ['./avatar.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-avatar',
+    "standalone": true,
+    "imports": [CommonModule],
+    "templateUrl": './avatar.component.html',
+    "styleUrls": ['./avatar.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class AvatarComponent {
     @Input()

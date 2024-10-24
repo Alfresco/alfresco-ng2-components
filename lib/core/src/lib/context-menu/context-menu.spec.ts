@@ -24,8 +24,8 @@ import { MatIconHarness } from '@angular/material/icon/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
-    selector: 'adf-test-component',
-    template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div> `
+    "selector": 'adf-test-component',
+    "template": ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div> `
 })
 class TestComponent {
     actions;
@@ -35,76 +35,76 @@ describe('ContextMenuDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     const actions = [
         {
-            model: {
-                visible: false,
-                title: 'Action 1'
+            "model": {
+                "visible": false,
+                "title": 'Action 1'
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         },
         {
-            model: {
-                visible: true,
-                disabled: true,
-                title: 'Action 2',
-                icon: null
+            "model": {
+                "visible": true,
+                "disabled": true,
+                "title": 'Action 2',
+                "icon": null
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         },
         {
-            model: {
-                visible: true,
-                disabled: false,
-                title: 'Action 3',
-                icon: 'action-icon-3'
+            "model": {
+                "visible": true,
+                "disabled": false,
+                "title": 'Action 3',
+                "icon": 'action-icon-3'
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         },
         {
-            model: {
-                visible: true,
-                disabled: false,
-                title: 'Action 4',
-                icon: 'action-icon-4'
+            "model": {
+                "visible": true,
+                "disabled": false,
+                "title": 'Action 4',
+                "icon": 'action-icon-4'
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         },
         {
-            model: {
-                visible: true,
-                disabled: false,
-                title: 'action-5',
-                icon: 'action-icon-5',
-                tooltip: 'Action 5 tooltip'
+            "model": {
+                "visible": true,
+                "disabled": false,
+                "title": 'action-5',
+                "icon": 'action-icon-5',
+                "tooltip": 'Action 5 tooltip'
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         },
         {
-            model: {
-                visible: true,
-                disabled: false,
-                title: 'action-6',
-                icon: 'action-icon-6'
+            "model": {
+                "visible": true,
+                "disabled": false,
+                "title": 'action-6',
+                "icon": 'action-icon-6'
             },
-            subject: {
-                next: jasmine.createSpy('next')
+            "subject": {
+                "next": jasmine.createSpy('next')
             }
         }
     ];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, CONTEXT_MENU_DIRECTIVES],
-            declarations: [TestComponent]
+            "imports": [CoreTestingModule, CONTEXT_MENU_DIRECTIVES],
+            "declarations": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         fixture.componentInstance.actions = actions;
@@ -132,9 +132,9 @@ describe('ContextMenuDirective', () => {
 
         it('should reset DOM element reference on Escape event', () => {
             const event = new KeyboardEvent('keydown', {
-                bubbles: true,
-                cancelable: true,
-                key: 'Escape'
+                "bubbles": true,
+                "cancelable": true,
+                "key": 'Escape'
             });
 
             document.querySelector('.cdk-overlay-backdrop')?.dispatchEvent(event);
@@ -165,7 +165,7 @@ describe('ContextMenuDirective', () => {
         });
 
         it('should set first not disabled item as active', async () => {
-            const icon = await loader.getHarness(MatIconHarness.with({ ancestor: 'adf-context-menu' }));
+            const icon = await loader.getHarness(MatIconHarness.with({ "ancestor": 'adf-context-menu' }));
 
             expect(await icon.getName()).toEqual('action-icon-3');
         });
@@ -189,8 +189,8 @@ describe('ContextMenuDirective', () => {
                 (
                     await loader.getAllHarnesses(
                         MatIconHarness.with({
-                            ancestor: 'adf-context-menu',
-                            name: 'Action 1'
+                            "ancestor": 'adf-context-menu',
+                            "name": 'Action 1'
                         })
                     )
                 ).length

@@ -22,12 +22,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 
 @Component({
-    selector: 'adf-about-package-list',
-    templateUrl: './package-list.component.html',
-    styleUrls: ['./package-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatTableModule]
+    "selector": 'adf-about-package-list',
+    "templateUrl": './package-list.component.html',
+    "styleUrls": ['./package-list.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatTableModule]
 })
 export class PackageListComponent implements OnInit {
     @Input()
@@ -35,14 +35,14 @@ export class PackageListComponent implements OnInit {
 
     columns = [
         {
-            columnDef: 'title',
-            header: 'ABOUT.PACKAGES.NAME',
-            cell: (row: PackageInfo) => `${row.name}`
+            "columnDef": 'title',
+            "header": 'ABOUT.PACKAGES.NAME',
+            "cell": (row: PackageInfo) => `${row.name}`
         },
         {
-            columnDef: 'version',
-            header: 'ABOUT.PACKAGES.VERSION',
-            cell: (row: PackageInfo) => `${row.version}`
+            "columnDef": 'version',
+            "header": 'ABOUT.PACKAGES.VERSION',
+            "cell": (row: PackageInfo) => `${row.version}`
         }
     ];
 
@@ -51,7 +51,7 @@ export class PackageListComponent implements OnInit {
     @Input()
     data: Array<PackageInfo> = [];
 
-    ngOnInit() {
+    ngOnInit () {
         const regexp = new RegExp('^(@alfresco)');
 
         if (this.dependencies) {
@@ -60,8 +60,8 @@ export class PackageListComponent implements OnInit {
 
             libs.forEach((val) => {
                 this.data.push({
-                    name: val,
-                    version: this.dependencies[val]
+                    "name": val,
+                    "version": this.dependencies[val]
                 });
             });
         }

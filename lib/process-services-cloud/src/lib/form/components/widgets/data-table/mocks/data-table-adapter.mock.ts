@@ -17,35 +17,35 @@
 
 export const mockPersonsData = [
     {
-        person: {
-            personData: {
+        "person": {
+            "personData": {
                 'address.[data]test': {
-                    street: '1234 Main St',
-                    city: 'Springfield'
+                    "street": '1234 Main St',
+                    "city": 'Springfield'
                 }
             },
-            name: 'John Doe',
-            phoneNumbers: [
+            "name": 'John Doe',
+            "phoneNumbers": [
                 {
-                    type: 'home',
-                    phoneNumber: '123-456-7890'
+                    "type": 'home',
+                    "phoneNumber": '123-456-7890'
                 },
                 {
-                    type: 'work',
-                    phoneNumber: '098-765-4321'
+                    "type": 'work',
+                    "phoneNumber": '098-765-4321'
                 }
             ],
-            cars: [
+            "cars": [
                 {
-                    make: 'Toyota',
-                    model: 'Corolla',
-                    year: 2019,
-                    previousOwners: [
+                    "make": 'Toyota',
+                    "model": 'Corolla',
+                    "year": 2019,
+                    "previousOwners": [
                         {
-                            name: 'Jane Smith'
+                            "name": 'Jane Smith'
                         },
                         {
-                            name: 'Jim Down'
+                            "name": 'Jim Down'
                         }
                     ]
                 }
@@ -53,35 +53,35 @@ export const mockPersonsData = [
         }
     },
     {
-        person: {
-            personData: {
+        "person": {
+            "personData": {
                 'address.[data]test': {
-                    street: '731 Second St',
-                    city: 'Westlake'
+                    "street": '731 Second St',
+                    "city": 'Westlake'
                 }
             },
-            name: 'Sam Smith',
-            phoneNumbers: [
+            "name": 'Sam Smith',
+            "phoneNumbers": [
                 {
-                    type: 'home',
-                    phoneNumber: '123-456-7891'
+                    "type": 'home',
+                    "phoneNumber": '123-456-7891'
                 },
                 {
-                    type: 'work',
-                    phoneNumber: '321-654-1987'
+                    "type": 'work',
+                    "phoneNumber": '321-654-1987'
                 }
             ],
-            cars: [
+            "cars": [
                 {
-                    make: 'Honda',
-                    model: 'Civic',
-                    year: 2018,
-                    previousOwners: [
+                    "make": 'Honda',
+                    "model": 'Civic',
+                    "year": 2018,
+                    "previousOwners": [
                         {
-                            name: 'Bob Johnson'
+                            "name": 'Bob Johnson'
                         },
                         {
-                            name: 'Tom Brown'
+                            "name": 'Tom Brown'
                         }
                     ]
                 }

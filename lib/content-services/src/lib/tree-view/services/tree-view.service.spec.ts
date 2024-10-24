@@ -28,19 +28,19 @@ describe('TreeViewService', () => {
     let nodeService: NodesApiService;
 
     const fakeNodeList = new NodePaging({
-        list: {
-            entries: [
+        "list": {
+            "entries": [
                 {
-                    entry: new Node({
-                        id: 'fake-node-id',
-                        name: 'fake-node-name',
-                        isFolder: true,
-                        isFile: false,
-                        nodeType: 'cm:folder',
-                        createdByUser: null,
-                        modifiedByUser: null,
-                        createdAt: new Date(),
-                        modifiedAt: new Date()
+                    "entry": new Node({
+                        "id": 'fake-node-id',
+                        "name": 'fake-node-name',
+                        "isFolder": true,
+                        "isFile": false,
+                        "nodeType": 'cm:folder',
+                        "createdByUser": null,
+                        "modifiedByUser": null,
+                        "createdAt": new Date(),
+                        "modifiedAt": new Date()
                     })
                 }
             ]
@@ -48,12 +48,12 @@ describe('TreeViewService', () => {
     });
 
     const fakeMixedNodeList = new NodePaging({
-        list: { entries: [fakeNodeList.list.entries[0], { entry: new Node({ id: 'fake-file-id', name: 'fake-file-name', isFolder: false }) }] }
+        "list": { "entries": [fakeNodeList.list.entries[0], { "entry": new Node({ "id": 'fake-file-id', "name": 'fake-file-name', "isFolder": false }) }] }
     });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(TreeViewService);
         nodeService = TestBed.inject(NodesApiService);

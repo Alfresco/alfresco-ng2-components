@@ -43,31 +43,23 @@ export class AppExtensionService {
             return;
         }
 
-        const references = (config.$references || [])
-            .filter((entry) => typeof entry === 'object')
-            .map((entry) => entry as ExtensionRef);
+        const references = (config.$references || []).filter((entry) => typeof entry === 'object').map((entry) => entry as ExtensionRef);
         this._references.next(references);
     }
 
     /**
      * Provides a collection of document list columns for the particular preset.
      * The result is filtered by the **disabled** state.
-     *
      * @param key Preset key.
      * @returns list of document list presets
      */
     getDocumentListPreset(key: string): DocumentListPresetRef[] {
-        return this.extensionService
-          .getElements<DocumentListPresetRef>(
-            `features.documentList.${key}`
-          )
-          .filter((entry) => !entry.disabled);
+        return this.extensionService.getElements<DocumentListPresetRef>(`features.documentList.${key}`).filter((entry) => !entry.disabled);
     }
 
     /**
      * Provides a list of the Viewer content extensions,
      * filtered by **disabled** state and **rules**.
-     *
      * @returns list of viewer extension references
      */
     getViewerExtensions(): ViewerExtensionRef[] {
@@ -78,13 +70,13 @@ export class AppExtensionService {
 
     protected isViewerExtensionDisabled(extension: ViewerExtensionRef): boolean {
         if (extension) {
-          if (extension.disabled) {
-            return true;
-          }
+            if (extension.disabled) {
+                return true;
+            }
 
-          if (extension.rules?.disabled) {
-            return this.extensionService.evaluateRule(extension.rules.disabled);
-          }
+            if (extension.rules?.disabled) {
+                return this.extensionService.evaluateRule(extension.rules.disabled);
+            }
         }
 
         return false;

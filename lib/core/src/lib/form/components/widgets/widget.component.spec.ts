@@ -29,7 +29,7 @@ describe('WidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         fixture = TestBed.createComponent(WidgetComponent);
 
@@ -65,7 +65,7 @@ describe('WidgetComponent', () => {
 
     it('should send an event after view init', () => {
         const fakeForm = new FormModel();
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
+        const fakeField = new FormFieldModel(fakeForm, { "id": 'fakeField', "value": 'fakeValue' });
         widget.field = fakeField;
 
         let lastValue: FormFieldModel;
@@ -80,7 +80,7 @@ describe('WidgetComponent', () => {
 
     it('should send an event when a field is changed', () => {
         const fakeForm = new FormModel();
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
+        const fakeField = new FormFieldModel(fakeForm, { "id": 'fakeField', "value": 'fakeValue' });
 
         let lastValue: FormFieldModel;
         widget.fieldChanged.subscribe((field) => (lastValue = field));
@@ -93,7 +93,7 @@ describe('WidgetComponent', () => {
 
     it('should send a rule event when a field is changed', () => {
         const fakeForm = new FormModel();
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
+        const fakeField = new FormFieldModel(fakeForm, { "id": 'fakeField', "value": 'fakeValue' });
 
         let lastValue: FormRulesEvent;
         widget.formService.formRulesEvent.subscribe((event) => (lastValue = event));
@@ -108,10 +108,10 @@ describe('WidgetComponent', () => {
         widget.field = new FormFieldModel(null);
         expect(widget.isRequired()).toBeFalsy();
 
-        widget.field = new FormFieldModel(null, { required: false });
+        widget.field = new FormFieldModel(null, { "required": false });
         expect(widget.isRequired()).toBeFalsy();
 
-        widget.field = new FormFieldModel(null, { required: true });
+        widget.field = new FormFieldModel(null, { "required": true });
         expect(widget.isRequired()).toBeTruthy();
     });
 });

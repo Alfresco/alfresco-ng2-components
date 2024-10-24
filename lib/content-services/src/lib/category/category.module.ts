@@ -20,7 +20,7 @@ import { CategoriesManagementComponent } from './categories-management/categorie
 
 /** @deprecated use `CategoriesManagementComponent` standalone component instead */
 @NgModule({
-    imports: [CategoriesManagementComponent],
-    exports: [CategoriesManagementComponent]
+    "imports": [CategoriesManagementComponent],
+    "exports": [CategoriesManagementComponent]
 })
 export class CategoriesModule {}

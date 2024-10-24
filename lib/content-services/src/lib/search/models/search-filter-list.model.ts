@@ -18,7 +18,6 @@
 const DEFAULT_PAGE_SIZE = 5;
 
 export class SearchFilterList<T> implements Iterable<T> {
-
     private filteredItems: T[] = [];
     private _filterText: string = '';
 
@@ -26,27 +25,27 @@ export class SearchFilterList<T> implements Iterable<T> {
     pageSize: number = DEFAULT_PAGE_SIZE;
     currentPageSize: number = DEFAULT_PAGE_SIZE;
 
-    get filterText(): string {
+    get filterText (): string {
         return this._filterText;
     }
 
-    set filterText(value: string) {
+    set filterText (value: string) {
         this._filterText = value;
         this.applyFilter();
     }
 
     private _filter: (item: T) => boolean = () => true;
 
-    get filter(): (item: T) => boolean {
+    get filter (): (item: T) => boolean {
         return this._filter;
     }
 
-    set filter(value: (item: T) => boolean ) {
+    set filter (value: (item: T) => boolean) {
         this._filter = value;
         this.applyFilter();
     }
 
-    private applyFilter() {
+    private applyFilter () {
         if (this.filter) {
             this.filteredItems = this.items.filter(this.filter);
         } else {
@@ -57,50 +56,45 @@ export class SearchFilterList<T> implements Iterable<T> {
 
     /**
      * Returns visible portion of the items.
-     *
      * @returns list of items
      */
-    get visibleItems(): T[] {
+    get visibleItems (): T[] {
         return this.filteredItems.slice(0, this.currentPageSize);
     }
 
     /**
      * Get items length
-     *
      * @returns entire collection length including items not displayed on the page
      */
-    get length(): number {
+    get length (): number {
         return this.items.length;
     }
 
     /**
      * Detect whether more items can be displayed.
-     *
      * @returns `true` if can show more items, otherwise `false`
      */
-    get canShowMoreItems(): boolean {
+    get canShowMoreItems (): boolean {
         return this.filteredItems.length > this.currentPageSize;
     }
 
     /**
      * Detect whether less items can be displayed.
-     *
      * @returns `true` if can show less items, otherwise `false`
      */
-    get canShowLessItems(): boolean {
+    get canShowLessItems (): boolean {
         return this.currentPageSize > this.pageSize;
     }
 
     /**
      * Detect whether content fits single page.
-     *
      * @returns `true` if content fits single page, otherwise `false`.
      */
-    get fitsPage(): boolean {
+    get fitsPage (): boolean {
         return this.pageSize >= this.filteredItems.length;
     }
 
-    constructor(items: T[] = [], pageSize?: number) {
+    constructor (items: T[] = [], pageSize?: number) {
         this.items = items;
         this.filteredItems = items;
         this.pageSize = pageSize || DEFAULT_PAGE_SIZE;
@@ -108,28 +102,28 @@ export class SearchFilterList<T> implements Iterable<T> {
     }
 
     /** Display more items. */
-    showMoreItems() {
+    showMoreItems () {
         if (this.canShowMoreItems) {
             this.currentPageSize += this.pageSize;
         }
     }
 
     /** Display less items. */
-    showLessItems() {
+    showLessItems () {
         if (this.canShowLessItems) {
             this.currentPageSize -= this.pageSize;
         }
     }
 
     /** Reset entire collection and page settings. */
-    clear() {
+    clear () {
         this.currentPageSize = this.pageSize;
         this.items = [];
         this.filteredItems = [];
         this.filterText = '';
     }
 
-    addItem(item: T) {
+    addItem (item: T) {
         if (!item) {
             return;
         }
@@ -137,7 +131,7 @@ export class SearchFilterList<T> implements Iterable<T> {
         this.applyFilter();
     }
 
-    deleteItem(item: T) {
+    deleteItem (item: T) {
         const removeIndex = this.items.indexOf(item);
         if (removeIndex > -1) {
             this.items.splice(removeIndex, 1);
@@ -145,21 +139,21 @@ export class SearchFilterList<T> implements Iterable<T> {
         }
     }
 
-    [Symbol.iterator](): Iterator<T> {
+    [Symbol.iterator] (): Iterator<T> {
         let pointer = 0;
         const items = this.visibleItems;
 
         return {
-            next: (): IteratorResult<T> => {
+            "next": (): IteratorResult<T> => {
                 if (pointer < items.length) {
                     return {
-                        done: false,
-                        value: items[pointer++]
+                        "done": false,
+                        "value": items[pointer++]
                     };
                 } else {
                     return {
-                        done: true,
-                        value: null
+                        "done": true,
+                        "value": null
                     };
                 }
             }

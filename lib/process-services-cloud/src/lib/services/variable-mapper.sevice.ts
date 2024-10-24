@@ -21,9 +21,9 @@ import { ProcessListDataColumnCustomData } from '../models/data-column-custom-da
 import { ProcessInstanceVariable, WithVariablesMap } from '../models/process-instance-variable.model';
 import { DataColumnType } from '@alfresco/adf-extensions';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class VariableMapperService {
-    mapVariablesByColumnTitle<T extends { variables?: ProcessInstanceVariable[] }>(
+    mapVariablesByColumnTitle<T extends { variables?: ProcessInstanceVariable[] }> (
         instancesList: T[] = [],
         columnsSchema: DataColumn<ProcessListDataColumnCustomData>[] = []
     ): Array<WithVariablesMap<T>> {
@@ -42,7 +42,7 @@ export class VariableMapperService {
                     if (column) {
                         variableAccumulator[column] = {
                             ...variable,
-                            type: this.mapProcessVariableTypes(variable.type)
+                            "type": this.mapProcessVariableTypes(variable.type)
                         };
                     }
 
@@ -60,7 +60,7 @@ export class VariableMapperService {
         return rowsViewModel;
     }
 
-    private mapColumnKeysByVariable(columnsSchema: DataColumn<ProcessListDataColumnCustomData>[]): { [key: string]: string } {
+    private mapColumnKeysByVariable (columnsSchema: DataColumn<ProcessListDataColumnCustomData>[]): { [key: string]: string } {
         const columnsByVariables = columnsSchema
             .filter((column) => !!column.customData)
             .reduce<{ [key: string]: string }>((columnsByVariable, column) => {
@@ -75,7 +75,7 @@ export class VariableMapperService {
         return columnsByVariables;
     }
 
-    private mapProcessVariableTypes(variableType: string): DataColumnType {
+    private mapProcessVariableTypes (variableType: string): DataColumnType {
         switch (variableType) {
             case 'boolean':
                 return 'boolean';

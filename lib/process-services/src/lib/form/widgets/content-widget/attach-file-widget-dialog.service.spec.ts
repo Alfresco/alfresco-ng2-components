@@ -30,18 +30,18 @@ describe('AttachFileWidgetDialogService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            "imports": [ProcessTestingModule]
         });
         service = TestBed.inject(AttachFileWidgetDialogService);
         materialDialog = TestBed.inject(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
-            afterOpen: () => of({}),
-            afterClosed: () => of({}),
-            componentInstance: {
-                error: new Subject<any>()
+            "afterOpen": () => of({}),
+            "afterClosed": () => of({}),
+            "componentInstance": {
+                "error": new Subject<any>()
             }
         } as any);
-        mockRepository = { id: 1, name: 'fake-title', repositoryUrl: 'https://fakeurl.com/alfresco' };
+        mockRepository = { "id": 1, "name": 'fake-title', "repositoryUrl": 'https://fakeurl.com/alfresco' };
     });
 
     it('should be able to open the dialog when node has permission', () => {
@@ -63,7 +63,7 @@ describe('AttachFileWidgetDialogService', () => {
         expect(spyOnOpenLoginDialog).toHaveBeenCalledTimes(1);
         const actualIsSelectionValid = (spyOnOpenLoginDialog.calls.mostRecent().args[0] as any).isSelectionValid;
 
-        expect(actualIsSelectionValid({ isFile: true, isFolder: false })).toBe(true);
-        expect(actualIsSelectionValid({ isFile: false, isFolder: true })).toBe(false);
+        expect(actualIsSelectionValid({ "isFile": true, "isFolder": false })).toBe(true);
+        expect(actualIsSelectionValid({ "isFile": false, "isFolder": true })).toBe(false);
     });
 });

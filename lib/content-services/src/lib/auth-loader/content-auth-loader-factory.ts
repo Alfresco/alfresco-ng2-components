@@ -19,10 +19,9 @@ import { ContentAuthLoaderService } from './content-auth-loader.service';
 
 /**
  * Create a content auth factory
- *
  * @param authLoaderService service dependency
  * @returns factory function
  */
-export function contentAuthLoaderFactory(authLoaderService: ContentAuthLoaderService): () => void {
+export function contentAuthLoaderFactory (authLoaderService: ContentAuthLoaderService): () => void {
     return () => authLoaderService.init();
 }

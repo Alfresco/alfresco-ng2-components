@@ -31,13 +31,13 @@ describe('DateTimeEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         fixture = TestBed.createComponent(DateTimeEditorComponent);
         component = fixture.componentInstance;
 
-        row = { value: { date: '1879-03-14T00:00:00.000Z' } } as DynamicTableRow;
-        column = { id: 'datetime', type: 'Datetime' } as DynamicTableColumn;
+        row = { "value": { "date": '1879-03-14T00:00:00.000Z' } } as DynamicTableRow;
+        column = { "id": 'datetime', "type": 'Datetime' } as DynamicTableColumn;
         const field = new FormFieldModel(new FormModel());
         table = new DynamicTableModel(field, null);
         table.rows.push(row);
@@ -50,7 +50,7 @@ describe('DateTimeEditorComponent', () => {
     it('should update row value on change', () => {
         component.ngOnInit();
         const newDate = new Date('2018-6-22 04:20 AM');
-        component.onDateChanged({ value: newDate } as any);
+        component.onDateChanged({ "value": newDate } as any);
 
         expect(row.value[column.id]).toBe('22/06/2018 04:20');
     });

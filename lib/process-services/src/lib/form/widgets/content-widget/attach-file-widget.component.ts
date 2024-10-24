@@ -36,9 +36,9 @@ import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'attach-widget',
-    standalone: true,
-    imports: [
+    "selector": 'attach-widget',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatIconModule,
@@ -48,9 +48,9 @@ import { ActivatedRoute, Router } from '@angular/router';
         ErrorWidgetComponent,
         AlfrescoIconComponent
     ],
-    templateUrl: './attach-file-widget.component.html',
-    styleUrls: ['./attach-file-widget.component.scss'],
-    host: {
+    "templateUrl": './attach-file-widget.component.html',
+    "styleUrls": ['./attach-file-widget.component.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -61,7 +61,7 @@ import { ActivatedRoute, Router } from '@angular/router';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit, OnDestroy {
     typeId = 'AttachFileWidgetComponent';
@@ -69,7 +69,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private tempFilesList = [];
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         public formService: FormService,
         public thumbnails: ThumbnailService,
         public processContentService: ProcessContentService,
@@ -85,7 +85,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         super(formService, thumbnails, processContentService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         super.ngOnInit();
 
         if (Array.isArray(this.field.value) && this.isFileSourceConfigured()) {
@@ -103,48 +103,48 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    isFileSourceConfigured(): boolean {
+    isFileSourceConfigured (): boolean {
         return !!this.field.params?.fileSource;
     }
 
-    isMultipleSourceUpload(): boolean {
+    isMultipleSourceUpload (): boolean {
         return !this.field.readOnly && this.isFileSourceConfigured() && !this.isOnlyLocalSourceSelected();
     }
 
-    isAllFileSourceSelected(): boolean {
+    isAllFileSourceSelected (): boolean {
         return this.field.params?.fileSource?.serviceId === 'all-file-sources' && !this.field.params.link;
     }
 
-    isOnlyLocalSourceSelected(): boolean {
+    isOnlyLocalSourceSelected (): boolean {
         return this.field.params?.fileSource?.serviceId === 'local-file';
     }
 
-    isSimpleUploadButton(): boolean {
+    isSimpleUploadButton (): boolean {
         return (this.isUploadButtonVisible() && !this.isFileSourceConfigured()) || this.isOnlyLocalSourceSelected();
     }
 
-    isUploadButtonVisible(): boolean {
+    isUploadButtonVisible (): boolean {
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
 
-    isDefinedSourceFolder(): boolean {
+    isDefinedSourceFolder (): boolean {
         return !!this.field.params?.fileSource?.selectedFolder;
     }
 
-    isTemporaryFile(file: { name?: string }): boolean {
+    isTemporaryFile (file: { name?: string }): boolean {
         return this.tempFilesList.findIndex((elem) => elem.name === file.name) >= 0;
     }
 
-    getNodeFromTempFile(file: { name?: string }): NodeChildAssociation {
+    getNodeFromTempFile (file: { name?: string }): NodeChildAssociation {
         return this.tempFilesList.find((elem) => elem.name === file.name);
     }
 
-    openSelectDialogFromFileSource() {
+    openSelectDialogFromFileSource () {
         const params = this.field.params;
         const repository = this.repositoryList.find((repo) => repo.name === params?.fileSource?.name);
         if (repository && this.isExternalHost(repository)) {
@@ -162,12 +162,12 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    onAttachFileChanged(event: any) {
+    onAttachFileChanged (event: any) {
         this.tempFilesList.push(...Array.from(event.target.files));
         this.onFileChanged(event);
     }
 
-    onRemoveAttachFile(file: File | RelatedContentRepresentation) {
+    onRemoveAttachFile (file: File | RelatedContentRepresentation) {
         if (this.isTemporaryFile(file)) {
             this.tempFilesList.splice(this.tempFilesList.indexOf((file as RelatedContentRepresentation).contentBlob), 1);
             this.updateNodesParams();
@@ -175,7 +175,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         this.removeFile(file);
     }
 
-    onAttachFileClicked(file: any) {
+    onAttachFileClicked (file: any) {
         if (file.isExternal || !file.contentAvailable) {
             return;
         }
@@ -186,7 +186,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    downloadContent(file: any | RelatedContentRepresentation): void {
+    downloadContent (file: any | RelatedContentRepresentation): void {
         if (this.isTemporaryFile(file)) {
             const fileBlob = (file as RelatedContentRepresentation).contentBlob;
             if (fileBlob) {
@@ -217,7 +217,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    openSelectDialog(repository: AlfrescoEndpointRepresentation) {
+    openSelectDialog (repository: AlfrescoEndpointRepresentation) {
         if (this.isExternalHost(repository) && !isDevMode()) {
             this.uploadFileFromExternalCS(repository);
         } else {
@@ -231,21 +231,21 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    isSelected(): boolean {
+    isSelected (): boolean {
         return this.hasFile;
     }
 
-    private isExternalHost(repository: AlfrescoEndpointRepresentation): boolean {
+    private isExternalHost (repository: AlfrescoEndpointRepresentation): boolean {
         const currentECMHost = this.getDomainHost(this.appConfigService.get(AppConfigValues.ECMHOST));
         const chosenRepositoryHost = this.getDomainHost(repository.repositoryUrl);
         return chosenRepositoryHost !== currentECMHost;
     }
 
-    private findSource(sourceIdentifier: string): AlfrescoEndpointRepresentation {
+    private findSource (sourceIdentifier: string): AlfrescoEndpointRepresentation {
         return this.repositoryList.find((repository) => sourceIdentifier === `alfresco-${repository.id}-${repository.name}`);
     }
 
-    private uploadFileFromExternalCS(repository: AlfrescoEndpointRepresentation, currentFolderId?: string) {
+    private uploadFileFromExternalCS (repository: AlfrescoEndpointRepresentation, currentFolderId?: string) {
         const accountIdentifier = `alfresco-${repository.id}-${repository.name}Alfresco`;
         this.attachDialogService.openLogin(repository, currentFolderId, accountIdentifier).subscribe((selections) => {
             selections.forEach((node) => (node['isExternal'] = true));
@@ -254,7 +254,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         });
     }
 
-    private uploadFileFromCS(fileNodeList: Node[], accountId: string, siteId?: string) {
+    private uploadFileFromCS (fileNodeList: Node[], accountId: string, siteId?: string) {
         const filesSaved = [];
 
         fileNodeList.forEach((node) => {
@@ -284,18 +284,18 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     }
 
 
-    private updateNodesParams(): void {
+    private updateNodesParams (): void {
         this.router.navigate(
             [],
             {
-                relativeTo: this.activatedRoute,
-                queryParams: { nodes: this.tempFilesList.map(file => file.id).join(',') },
-                queryParamsHandling: 'merge'
+                "relativeTo": this.activatedRoute,
+                "queryParams": { "nodes": this.tempFilesList.map(file => file.id).join(',') },
+                "queryParamsHandling": 'merge'
             }
         );
     }
 
-    private getDomainHost(urlToCheck: string): string {
+    private getDomainHost (urlToCheck: string): string {
         const result = urlToCheck.match('^(?:https?://)?(?:[^@/\n]+@)?(?:www\\.)?([^:/?\n]+)');
         return result[1];
     }

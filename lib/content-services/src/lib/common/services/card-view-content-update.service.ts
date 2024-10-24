@@ -22,33 +22,33 @@ import { Subject } from 'rxjs';
 import { BaseCardViewContentUpdate } from '../../interfaces/base-card-view-content-update.interface';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class CardViewContentUpdateService implements BaseCardViewContentUpdate {
     itemUpdated$ = new Subject<UpdateNotification>();
     updatedAspect$ = new Subject<Node>();
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {
+    constructor (private cardViewUpdateService: CardViewUpdateService) {
         this.linkVariables();
     }
 
-    update(property: CardViewBaseItemModel, newValue: any) {
+    update (property: CardViewBaseItemModel, newValue: any) {
         this.cardViewUpdateService.update(property, newValue);
     }
 
-    updateElement(notification: CardViewBaseItemModel) {
+    updateElement (notification: CardViewBaseItemModel) {
         this.cardViewUpdateService.updateElement(notification);
     }
 
-    updateNodeAspect(node: Node) {
+    updateNodeAspect (node: Node) {
         this.updatedAspect$.next(node);
     }
 
-    private linkVariables() {
+    private linkVariables () {
         this.linkItemUpdated();
     }
 
-    private linkItemUpdated() {
+    private linkItemUpdated () {
         this.cardViewUpdateService.itemUpdated$.subscribe((res) => {
             this.itemUpdated$.next(res);
         });

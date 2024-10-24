@@ -44,7 +44,7 @@ describe('DropdownEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, DropdownEditorComponent]
+            "imports": [ProcessTestingModule, DropdownEditorComponent]
         });
         formService = TestBed.inject(FormService);
         taskFormService = TestBed.inject(TaskFormService);
@@ -53,18 +53,18 @@ describe('DropdownEditorComponent', () => {
         fixture = TestBed.createComponent(DropdownEditorComponent);
         component = fixture.componentInstance;
 
-        row = { value: { dropdown: 'one' } } as DynamicTableRow;
+        row = { "value": { "dropdown": 'one' } } as DynamicTableRow;
         column = {
-            id: 'dropdown',
-            options: [
-                { id: '1', name: 'one' },
-                { id: '2', name: 'two' }
+            "id": 'dropdown',
+            "options": [
+                { "id": '1', "name": 'one' },
+                { "id": '2', "name": 'two' }
             ],
-            editable: true
+            "editable": true
         } as DynamicTableColumn;
 
-        form = new FormModel({ taskId: '<task-id>' });
-        table = new DynamicTableModel(new FormFieldModel(form, { id: '<field-id>', isVisible: true }), formService);
+        form = new FormModel({ "taskId": '<task-id>' });
+        table = new DynamicTableModel(new FormFieldModel(form, { "id": '<field-id>', "isVisible": true }), formService);
         table.rows.push(row);
         table.columns.push(column);
 
@@ -77,10 +77,10 @@ describe('DropdownEditorComponent', () => {
     describe('dropdown is populated manually', () => {
         beforeEach(() => {
             column = {
-                id: 'dropdown',
-                options: [
-                    { id: '1', name: 'one' },
-                    { id: '2', name: 'two' }
+                "id": 'dropdown',
+                "options": [
+                    { "id": '1', "name": 'one' },
+                    { "id": '2', "name": 'two' }
                 ]
             } as DynamicTableColumn;
 
@@ -112,8 +112,8 @@ describe('DropdownEditorComponent', () => {
             row.value[column.id] = 'twelve';
 
             const restResults: DynamicTableColumnOption[] = [
-                { id: '11', name: 'eleven' },
-                { id: '12', name: 'twelve' }
+                { "id": '11', "name": 'eleven' },
+                { "id": '12', "name": 'twelve' }
             ];
 
             spyOn(taskFormService, 'getRestFieldValuesColumn').and.returnValue(
@@ -152,7 +152,7 @@ describe('DropdownEditorComponent', () => {
         });
 
         it('should update row on value change', () => {
-            const event = { value: 'two' };
+            const event = { "value": 'two' };
             component.onValueChanged(row, column, event);
             expect(row.value[column.id]).toBe(column.options[1]);
         });
@@ -162,15 +162,15 @@ describe('DropdownEditorComponent', () => {
         let getRestFieldValuesColumnSpy: jasmine.Spy;
 
         beforeEach(async () => {
-            form = new FormModel({ taskId: '<task-id>' });
-            table = new DynamicTableModel(new FormFieldModel(form, { id: '<field-id>' }), formService);
+            form = new FormModel({ "taskId": '<task-id>' });
+            table = new DynamicTableModel(new FormFieldModel(form, { "id": '<field-id>' }), formService);
             component.table = table;
             component.table.field = new FormFieldModel(form, {
-                id: 'dropdown-id',
-                name: 'date-name',
-                type: 'dropdown',
-                readOnly: 'false',
-                restUrl: 'fake-rest-url'
+                "id": 'dropdown-id',
+                "name": 'date-name',
+                "type": 'dropdown',
+                "readOnly": 'false',
+                "restUrl": 'fake-rest-url'
             });
             component.column.optionType = 'rest';
             component.table.field.isVisible = true;
@@ -178,7 +178,7 @@ describe('DropdownEditorComponent', () => {
         });
 
         it('should show visible dropdown widget', async () => {
-            const select = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown' }));
+            const select = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown' }));
             await select.open();
             const options = await select.getOptions();
 
@@ -192,15 +192,15 @@ describe('DropdownEditorComponent', () => {
         let getRestFieldValuesColumnByProcessId: jasmine.Spy;
 
         beforeEach(() => {
-            form = new FormModel({ processDefinitionId: '<proc-id>' });
-            table = new DynamicTableModel(new FormFieldModel(form, { id: '<field-id>' }), formService);
+            form = new FormModel({ "processDefinitionId": '<proc-id>' });
+            table = new DynamicTableModel(new FormFieldModel(form, { "id": '<field-id>' }), formService);
             component.table = table;
             component.table.field = new FormFieldModel(form, {
-                id: 'dropdown-id',
-                name: 'date-name',
-                type: 'dropdown',
-                readOnly: 'false',
-                restUrl: 'fake-rest-url'
+                "id": 'dropdown-id',
+                "name": 'date-name',
+                "type": 'dropdown',
+                "readOnly": 'false',
+                "restUrl": 'fake-rest-url'
             });
             component.column.optionType = 'rest';
             component.table.field.isVisible = true;
@@ -210,7 +210,7 @@ describe('DropdownEditorComponent', () => {
         });
 
         it('should show visible dropdown widget', async () => {
-            const select = await loader.getHarness(MatSelectHarness.with({ selector: '#dropdown' }));
+            const select = await loader.getHarness(MatSelectHarness.with({ "selector": '#dropdown' }));
             await select.open();
 
             const options = await select.getOptions();

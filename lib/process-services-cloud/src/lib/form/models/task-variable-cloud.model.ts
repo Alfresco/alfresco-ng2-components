@@ -20,14 +20,14 @@ export class TaskVariableCloud {
     value: any;
     type?: string;
     id?: string;
-    constructor(obj) {
+    constructor (obj) {
         this.id = obj.name || null;
         this.name = obj.name || null;
         this.value = this.hasValue(obj) ? obj.value : null;
         this.type = obj.type || null;
     }
 
-    hasValue(obj: TaskVariableCloud): boolean {
-        return typeof obj.value !== undefined && obj.value !== null;
+    hasValue (obj: TaskVariableCloud): boolean {
+        return obj.value !== undefined && obj.value !== null;
     }
 }

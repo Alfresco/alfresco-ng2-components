@@ -20,26 +20,24 @@ import { CardViewTextItemModel } from './card-view-textitem.model';
 import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
 class TestPipe implements PipeTransform {
-    transform(value: string, pipeParam: string): string {
+    transform (value: string, pipeParam: string): string {
         const paramPostFix = pipeParam ? `-${pipeParam}` : '';
         return `testpiped-${value}${paramPostFix}`;
     }
 }
 
 describe('CardViewTextItemModel', () => {
-
     let properties: CardViewTextItemProperties;
 
     beforeEach(() => {
         properties = {
-            label: 'Tribe',
-            value: 'Banuk',
-            key: 'tribe'
+            "label": 'Tribe',
+            "value": 'Banuk',
+            "key": 'tribe'
         };
     });
 
     describe('displayValue', () => {
-
         it('should return the value if it is present', () => {
             const itemModel = new CardViewTextItemModel(properties);
 
@@ -56,18 +54,14 @@ describe('CardViewTextItemModel', () => {
         });
 
         it('should apply a pipe on the value if it is present', () => {
-            properties.pipes = [
-                { pipe: new TestPipe() }
-            ];
+            properties.pipes = [{ "pipe": new TestPipe() }];
             const itemModel = new CardViewTextItemModel(properties);
 
             expect(itemModel.displayValue).toBe('testpiped-Banuk');
         });
 
         it('should apply a pipe on the value with parameters if those are present', () => {
-            properties.pipes = [
-                { pipe: new TestPipe(), params: ['withParams'] }
-            ];
+            properties.pipes = [{ "pipe": new TestPipe(), "params": ['withParams'] }];
             const itemModel = new CardViewTextItemModel(properties);
 
             expect(itemModel.displayValue).toBe('testpiped-Banuk-withParams');
@@ -76,9 +70,9 @@ describe('CardViewTextItemModel', () => {
         it('should apply more pipes on the value with parameters if those are present', () => {
             const pipe: PipeTransform = new TestPipe();
             properties.pipes = [
-                { pipe, params: ['1'] },
-                { pipe, params: ['2'] },
-                { pipe, params: ['3'] }
+                { pipe, "params": ['1'] },
+                { pipe, "params": ['2'] },
+                { pipe, "params": ['3'] }
             ];
             const itemModel = new CardViewTextItemModel(properties);
 
@@ -88,14 +82,16 @@ describe('CardViewTextItemModel', () => {
 
     it('should validate based on defined constraints and require a match to be valid', () => {
         const constrainedProperties: CardViewTextItemProperties = {
-            label: 'Tribe',
-            value: 'test',
-            key: 'tribe',
-            constraints: [{
-                id: 'constraint-id',
-                type: 'REGEX',
-                parameters: { expression: '^(?=.*test).*', requiresMatch: true }
-            }]
+            "label": 'Tribe',
+            "value": 'test',
+            "key": 'tribe',
+            "constraints": [
+                {
+                    "id": 'constraint-id',
+                    "type": 'REGEX',
+                    "parameters": { "expression": '^(?=.*test).*', "requiresMatch": true }
+                }
+            ]
         };
 
         const itemModel = new CardViewTextItemModel(constrainedProperties);
@@ -107,14 +103,16 @@ describe('CardViewTextItemModel', () => {
 
     it('should validate based on defined constraints and not require a match to be valid', () => {
         const constrainedProperties: CardViewTextItemProperties = {
-            label: 'Tribe',
-            value: 'test',
-            key: 'tribe',
-            constraints: [{
-                id: 'constraint-id',
-                type: 'REGEX',
-                parameters: { expression: '^(?=.*test).*', requiresMatch: false }
-            }]
+            "label": 'Tribe',
+            "value": 'test',
+            "key": 'tribe',
+            "constraints": [
+                {
+                    "id": 'constraint-id',
+                    "type": 'REGEX',
+                    "parameters": { "expression": '^(?=.*test).*', "requiresMatch": false }
+                }
+            ]
         };
 
         const itemModel = new CardViewTextItemModel(constrainedProperties);

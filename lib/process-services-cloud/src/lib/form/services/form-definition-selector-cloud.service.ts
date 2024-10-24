@@ -23,16 +23,15 @@ import { FormRepresentation } from '../../services/form-fields.interfaces';
 import { FormDefinitionSelectorCloudServiceInterface } from './form-definition-selector-cloud.service.interface';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class FormDefinitionSelectorCloudService extends BaseCloudService implements FormDefinitionSelectorCloudServiceInterface {
     /**
      * Get all forms of an app.
-     *
      * @param appName Name of the application
      * @returns Details of the forms
      */
-    getForms(appName: string): Observable<FormRepresentation[]> {
+    getForms (appName: string): Observable<FormRepresentation[]> {
         const url = `${this.getBasePath(appName)}/form/v1/forms`;
 
         return this.get(url).pipe(
@@ -42,11 +41,10 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService impleme
 
     /**
      * Get all forms of an app.
-     *
      * @param appName Name of the application
      * @returns Details of the forms
      */
-    getStandAloneTaskForms(appName: string): Observable<FormRepresentation[]> {
+    getStandAloneTaskForms (appName: string): Observable<FormRepresentation[]> {
         return from(this.getForms(appName)).pipe(
             map((data: any) => data.filter((formData: any) => formData.standalone || formData.standalone === undefined))
         );

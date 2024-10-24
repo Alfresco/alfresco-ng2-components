@@ -23,17 +23,17 @@ import { PeopleProcessService } from '@alfresco/adf-process-services';
 import { of, throwError } from 'rxjs';
 
 const fakeUser: LightUserRepresentation = {
-    id: 0,
-    firstName: 'fake-name',
-    lastName: 'fake-last',
-    email: 'fake@mail.com'
+    "id": 0,
+    "firstName": 'fake-name',
+    "lastName": 'fake-last',
+    "email": 'fake@mail.com'
 };
 
 const fakeSecondUser: LightUserRepresentation = {
-    id: 1,
-    firstName: 'fake-involve-name',
-    lastName: 'fake-involve-last',
-    email: 'fake-involve@mail.com'
+    "id": 1,
+    "firstName": 'fake-involve-name',
+    "lastName": 'fake-involve-last',
+    "email": 'fake-involve@mail.com'
 };
 
 describe('PeopleComponent', () => {
@@ -45,7 +45,7 @@ describe('PeopleComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, PeopleComponent]
+            "imports": [ProcessTestingModule, PeopleComponent]
         });
         fixture = TestBed.createComponent(PeopleComponent);
         peopleProcessService = fixture.debugElement.injector.get(PeopleProcessService);
@@ -150,16 +150,16 @@ describe('PeopleComponent', () => {
             spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(
                 of([
                     {
-                        id: 1,
-                        firstName: 'fake-test-1',
-                        lastName: 'fake-last-1',
-                        email: 'fake-test-1@test.com'
+                        "id": 1,
+                        "firstName": 'fake-test-1',
+                        "lastName": 'fake-last-1',
+                        "email": 'fake-test-1@test.com'
                     },
                     {
-                        id: 2,
-                        firstName: 'fake-test-2',
-                        lastName: 'fake-last-2',
-                        email: 'fake-test-2@test.com'
+                        "id": 2,
+                        "firstName": 'fake-test-2',
+                        "lastName": 'fake-last-2',
+                        "email": 'fake-test-2@test.com'
                     }
                 ])
             );

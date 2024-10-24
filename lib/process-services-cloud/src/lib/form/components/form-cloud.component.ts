@@ -56,9 +56,9 @@ import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.
 import { DisplayModeService } from '../services/display-mode.service';
 
 @Component({
-    selector: 'adf-cloud-form',
-    templateUrl: './form-cloud.component.html',
-    styleUrls: ['./form-cloud.component.scss']
+    "selector": 'adf-cloud-form',
+    "templateUrl": './form-cloud.component.html',
+    "styleUrls": ['./form-cloud.component.scss']
 })
 export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnInit, OnDestroy {
     /** App name to fetch corresponding form and values. */
@@ -146,7 +146,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected displayModeService = inject(DisplayModeService);
     protected changeDetector = inject(ChangeDetectorRef);
 
-    constructor() {
+    constructor () {
         super();
 
         this.spinnerService.initSpinnerHandling(this.onDestroy$);
@@ -176,11 +176,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     @HostListener('keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent): void {
+    onKeyDown (event: KeyboardEvent): void {
         event.stopPropagation();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const appName = changes['appName'];
 
         if (appName?.currentValue) {
@@ -218,7 +218,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         DisplayModeService.displayMode$
             .pipe(
                 filter((change) => change.id === this.id),
@@ -250,11 +250,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     /**
      * Invoked when user clicks form refresh button.
      */
-    onRefreshClicked() {
+    onRefreshClicked () {
         this.loadForm();
     }
 
-    loadForm() {
+    loadForm () {
         if (this.appName && this.taskId) {
             this.getFormByTaskId(this.appName, this.taskId, this.appVersion);
         } else if (this.appName && this.formId) {
@@ -262,7 +262,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    findProcessVariablesByTaskId(appName: string, taskId: string): Observable<TaskVariableCloud[]> {
+    findProcessVariablesByTaskId (appName: string, taskId: string): Observable<TaskVariableCloud[]> {
         return this.formCloudService.getTask(appName, taskId).pipe(
             switchMap((task) => {
                 if (this.isAProcessTask(task)) {
@@ -274,11 +274,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         );
     }
 
-    isAProcessTask(taskRepresentation: TaskDetailsCloudModel): boolean {
+    isAProcessTask (taskRepresentation: TaskDetailsCloudModel): boolean {
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
 
-    getFormByTaskId(appName: string, taskId: string, version?: number): Promise<FormModel> {
+    getFormByTaskId (appName: string, taskId: string, version?: number): Promise<FormModel> {
         return new Promise<FormModel>((resolve) => {
             forkJoin(this.formCloudService.getTaskForm(appName, taskId, version), this.formCloudService.getTaskVariables(appName, taskId))
                 .pipe(takeUntil(this.onDestroy$))
@@ -305,7 +305,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         });
     }
 
-    getFormById(appName: string, formId: string, appVersion?: number) {
+    getFormById (appName: string, formId: string, appVersion?: number) {
         this.formCloudService
             .getForm(appName, formId, appVersion)
             .pipe(
@@ -333,7 +333,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             );
     }
 
-    saveTaskForm() {
+    saveTaskForm () {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .saveTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values)
@@ -348,13 +348,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    completeTaskForm(outcome?: string) {
+    completeTaskForm (outcome?: string) {
         if (this.form?.confirmMessage?.show === true) {
             const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                data: {
-                    message: this.form.confirmMessage.message
+                "data": {
+                    "message": this.form.confirmMessage.message
                 },
-                minWidth: '450px'
+                "minWidth": '450px'
             });
 
             dialogRef.afterClosed().subscribe((result) => {
@@ -368,7 +368,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.displayModeService.onCompleteTask(this.id, this.displayMode, this.displayModeConfigurations);
     }
 
-    private completeForm(outcome?: string) {
+    private completeForm (outcome?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
@@ -382,7 +382,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    parseForm(formCloudRepresentationJSON?: any): FormModel | null {
+    parseForm (formCloudRepresentationJSON?: any): FormModel | null {
         if (formCloudRepresentationJSON) {
             const formValues: FormValues = {};
             (this.data || []).forEach((variable) => {
@@ -404,21 +404,20 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /**
      * Get custom set of outcomes for a Form Definition.
-     *
      * @param form Form definition model.
      * @returns list of form outcomes
      */
-    getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
-        return [new FormOutcomeModel(form, { id: '$save', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })];
+    getFormDefinitionOutcomes (form: FormModel): FormOutcomeModel[] {
+        return [new FormOutcomeModel(form, { "id": '$save', "name": FormOutcomeModel.SAVE_ACTION, "isSystem": true })];
     }
 
-    checkVisibility(field: FormFieldModel) {
+    checkVisibility (field: FormFieldModel) {
         if (field?.form) {
             this.visibilityService.refreshVisibility(field.form);
         }
     }
 
-    private refreshFormData() {
+    private refreshFormData () {
         this.form = this.parseForm(this.formCloudRepresentationJSON);
         if (this.form) {
             this.onFormLoaded(this.form);
@@ -426,7 +425,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
     }
 
-    protected onFormLoaded(form: FormModel) {
+    protected onFormLoaded (form: FormModel) {
         if (form) {
             this.displayModeConfigurations = this.displayModeService.getDisplayModeConfigurations(this.displayModeConfigurations);
             this.displayMode = this.displayModeService.switchToDisplayMode(
@@ -445,27 +444,27 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formLoaded.emit(form);
     }
 
-    protected onFormDataRefreshed(form: FormModel) {
+    protected onFormDataRefreshed (form: FormModel) {
         this.formDataRefreshed.emit(form);
     }
 
-    protected onTaskSaved(form: FormModel) {
+    protected onTaskSaved (form: FormModel) {
         this.formSaved.emit(form);
     }
 
-    protected onTaskSavedError(error: any) {
+    protected onTaskSavedError (error: any) {
         this.handleError(error);
     }
 
-    protected onTaskCompleted(form: FormModel) {
+    protected onTaskCompleted (form: FormModel) {
         this.formCompleted.emit(form);
     }
 
-    protected onTaskCompletedError(error: any) {
+    protected onTaskCompletedError (error: any) {
         this.handleError(error);
     }
 
-    protected onExecuteOutcome(outcome: FormOutcomeModel): boolean {
+    protected onExecuteOutcome (outcome: FormOutcomeModel): boolean {
         const args = new FormOutcomeEvent(outcome);
 
         if (args.defaultPrevented) {
@@ -476,18 +475,18 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         return !args.defaultPrevented;
     }
 
-    protected storeFormAsMetadata() {}
+    protected storeFormAsMetadata () {}
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    switchToDisplayMode(newDisplayMode?: string) {
+    switchToDisplayMode (newDisplayMode?: string) {
         this.displayModeService.switchToDisplayMode(this.id, FormCloudDisplayMode[newDisplayMode], this.displayMode, this.displayModeConfigurations);
     }
 
-    findDisplayConfiguration(displayMode?: string): FormCloudDisplayModeConfiguration {
+    findDisplayConfiguration (displayMode?: string): FormCloudDisplayModeConfiguration {
         return this.displayModeService.findConfiguration(FormCloudDisplayMode[displayMode], this.displayModeConfigurations);
     }
 }

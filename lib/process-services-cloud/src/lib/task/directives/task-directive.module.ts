@@ -21,12 +21,12 @@ import { ClaimTaskCloudDirective } from './claim-task-cloud.directive';
 import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
 
 @NgModule({
-    declarations: [
+    "declarations": [
         CompleteTaskDirective,
         ClaimTaskCloudDirective,
         UnClaimTaskCloudDirective
     ],
-    exports: [
+    "exports": [
         CompleteTaskDirective,
         ClaimTaskCloudDirective,
         UnClaimTaskCloudDirective

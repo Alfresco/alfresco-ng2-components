@@ -26,7 +26,6 @@ import { ScopeQuery } from './types';
 export class TaskVariablesApi extends BaseApi {
     /**
      * Create variables
-     *
      * @param taskId taskId
      * @param restVariables restVariables
      * @return Promise<RestVariable>
@@ -48,7 +47,6 @@ export class TaskVariablesApi extends BaseApi {
 
     /**
      * Create or update variables
-     *
      * @param taskId taskId
      * @return Promise<{}>
      */
@@ -67,7 +65,6 @@ export class TaskVariablesApi extends BaseApi {
 
     /**
      * Delete a variable
-     *
      * @param taskId taskId
      * @param variableName variableName
      * @param opts Optional parameters
@@ -90,7 +87,6 @@ export class TaskVariablesApi extends BaseApi {
     }
     /**
      * Get a variable
-     *
      * @param taskId taskId
      * @param variableName variableName
      * @param opts Optional parameters
@@ -114,7 +110,6 @@ export class TaskVariablesApi extends BaseApi {
 
     /**
      * List variables
-     *
      * @param taskId taskId
      * @param opts Optional parameters
      * @return Promise<RestVariable>
@@ -135,7 +130,6 @@ export class TaskVariablesApi extends BaseApi {
 
     /**
      * Update a variable
-     *
      * @param taskId taskId
      * @param variableName variableName
      * @param restVariable restVariable

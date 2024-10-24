@@ -20,21 +20,21 @@ import { AppConfigService, Status } from '../../app-config/app-config.service';
 
 @Injectable()
 export class AppConfigServiceMock extends AppConfigService {
-    constructor() {
+    constructor () {
         super();
 
         this.config = {
-            application: {
-                name: 'Alfresco ADF Application',
-                storagePrefix: 'ADF_APP'
+            "application": {
+                "name": 'Alfresco ADF Application',
+                "storagePrefix": 'ADF_APP'
             },
-            ecmHost: 'http://{hostname}{:port}/ecm',
-            bpmHost: 'http://{hostname}{:port}/bpm',
-            logLevel: 'silent'
+            "ecmHost": 'http://{hostname}{:port}/ecm',
+            "bpmHost": 'http://{hostname}{:port}/bpm',
+            "logLevel": 'silent'
         };
     }
 
-    load(callback?: (...args: any[]) => any): Promise<any> {
+    load (callback?: (...args: any[]) => any): Promise<any> {
         return new Promise((resolve) => {
             this.status = Status.LOADED;
             callback?.();

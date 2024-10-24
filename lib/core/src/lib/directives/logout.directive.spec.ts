@@ -27,10 +27,10 @@ import { NoopAuthModule } from '@alfresco/adf-core';
 describe('LogoutDirective', () => {
     describe('No input', () => {
         @Component({
-            selector: 'adf-test-component',
-            standalone: true,
-            imports: [LogoutDirective],
-            template: '<button adf-logout></button>'
+            "selector": 'adf-test-component',
+            "standalone": true,
+            "imports": [LogoutDirective],
+            "template": '<button adf-logout></button>'
         })
         class TestComponent {
             @ContentChildren(LogoutDirective)
@@ -44,7 +44,7 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAuthModule, TestComponent]
+                "imports": [NoopAuthModule, TestComponent]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
@@ -104,10 +104,10 @@ describe('LogoutDirective', () => {
 
     describe('redirectUri', () => {
         @Component({
-            selector: 'adf-test-component',
-            standalone: true,
-            imports: [LogoutDirective],
-            template: '<button adf-logout redirectUri="/myCustomUri"></button>'
+            "selector": 'adf-test-component',
+            "standalone": true,
+            "imports": [LogoutDirective],
+            "template": '<button adf-logout redirectUri="/myCustomUri"></button>'
         })
         class TestComponent {
             @ContentChildren(LogoutDirective)
@@ -120,7 +120,7 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAuthModule, TestComponent]
+                "imports": [NoopAuthModule, TestComponent]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);
@@ -142,10 +142,10 @@ describe('LogoutDirective', () => {
 
     describe('enableRedirect', () => {
         @Component({
-            selector: 'adf-test-component',
-            standalone: true,
-            imports: [LogoutDirective],
-            template: '<button adf-logout [enableRedirect]="false"></button>'
+            "selector": 'adf-test-component',
+            "standalone": true,
+            "imports": [LogoutDirective],
+            "template": '<button adf-logout [enableRedirect]="false"></button>'
         })
         class TestComponent {
             @ContentChildren(LogoutDirective)
@@ -158,7 +158,7 @@ describe('LogoutDirective', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [NoopAuthModule, TestComponent]
+                "imports": [NoopAuthModule, TestComponent]
             });
             router = TestBed.inject(Router);
             authService = TestBed.inject(AuthenticationService);

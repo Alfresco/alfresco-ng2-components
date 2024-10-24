@@ -24,7 +24,7 @@ import { NodeMetadata } from '../models/node-metadata.model';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class NodesApiService {
     /**
@@ -33,33 +33,32 @@ export class NodesApiService {
     nodeUpdated = new Subject<Node>();
 
     private _trashcanApi: TrashcanApi;
-    get trashcanApi(): TrashcanApi {
+    get trashcanApi (): TrashcanApi {
         this._trashcanApi = this._trashcanApi ?? new TrashcanApi(this.apiService.getInstance());
         return this._trashcanApi;
     }
 
     private _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
         return this._nodesApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
+    constructor (private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
-    private getEntryFromEntity(entity: NodeEntry): Node {
+    private getEntryFromEntity (entity: NodeEntry): Node {
         return entity.entry;
     }
 
     /**
      * Gets the stored information about a node.
-     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns Node information
      */
-    getNode(nodeId: string, options: any = {}): Observable<Node> {
+    getNode (nodeId: string, options: any = {}): Observable<Node> {
         const defaults = {
-            include: ['path', 'properties', 'allowableOperations', 'permissions']
+            "include": ['path', 'properties', 'allowableOperations', 'permissions']
         };
         const queryOptions = Object.assign(defaults, options);
 
@@ -71,16 +70,15 @@ export class NodesApiService {
 
     /**
      * Gets the items contained in a folder node.
-     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns List of child items from the folder
      */
-    getNodeChildren(nodeId: string, options: any = {}): Observable<NodePaging> {
+    getNodeChildren (nodeId: string, options: any = {}): Observable<NodePaging> {
         const defaults = {
-            maxItems: this.preferences.paginationSize,
-            skipCount: 0,
-            include: ['path', 'properties', 'allowableOperations', 'permissions']
+            "maxItems": this.preferences.paginationSize,
+            "skipCount": 0,
+            "include": ['path', 'properties', 'allowableOperations', 'permissions']
         };
         const queryOptions = Object.assign(defaults, options);
 
@@ -89,13 +87,12 @@ export class NodesApiService {
 
     /**
      * Creates a new document node inside a folder.
-     *
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new node
      * @param options Optional parameters supported by JS-API
      * @returns Details of the new node
      */
-    createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
+    createNode (parentNodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
         return from(this.nodesApi.createNode(parentNodeId, nodeBody, options)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
@@ -104,28 +101,26 @@ export class NodesApiService {
 
     /**
      * Creates a new folder node inside a parent folder.
-     *
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new folder
      * @param options Optional parameters supported by JS-API
      * @returns Details of the new folder
      */
-    createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
-        const body = Object.assign({ nodeType: 'cm:folder' }, nodeBody);
+    createFolder (parentNodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
+        const body = Object.assign({ "nodeType": 'cm:folder' }, nodeBody);
         return this.createNode(parentNodeId, body, options);
     }
 
     /**
      * Updates the information about a node.
-     *
      * @param nodeId ID of the target node
      * @param nodeBody New data for the node
      * @param options Optional parameters supported by JS-API
      * @returns Updated node information
      */
-    updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
+    updateNode (nodeId: string, nodeBody: any, options: any = {}): Observable<Node> {
         const defaults = {
-            include: ['path', 'properties', 'allowableOperations', 'permissions', 'definition']
+            "include": ['path', 'properties', 'allowableOperations', 'permissions', 'definition']
         };
         const queryOptions = Object.assign(defaults, options);
 
@@ -137,22 +132,20 @@ export class NodesApiService {
 
     /**
      * Moves a node to the trashcan.
-     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @returns Empty result that notifies when the deletion is complete
      */
-    deleteNode(nodeId: string, options: any = {}): Observable<any> {
+    deleteNode (nodeId: string, options: any = {}): Observable<any> {
         return from(this.nodesApi.deleteNode(nodeId, options)).pipe(catchError((err) => throwError(err)));
     }
 
     /**
      * Restores a node previously moved to the trashcan.
-     *
      * @param nodeId ID of the node to restore
      * @returns Details of the restored node
      */
-    restoreNode(nodeId: string): Observable<Node> {
+    restoreNode (nodeId: string): Observable<Node> {
         return from(this.trashcanApi.restoreDeletedNode(nodeId)).pipe(
             map(this.getEntryFromEntity),
             catchError((err) => throwError(err))
@@ -161,36 +154,34 @@ export class NodesApiService {
 
     /**
      * Get the metadata and the nodeType for a nodeId cleaned by the prefix.
-     *
      * @param nodeId ID of the target node
      * @returns Node metadata
      */
-    getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
+    getNodeMetadata (nodeId: string): Observable<NodeMetadata> {
         return from(this.nodesApi.getNode(nodeId)).pipe(map(this.cleanMetadataFromSemicolon));
     }
 
     /**
      * Gets the list of holds assigned to the node.
-     *
      * @param nodeId ID of the target node
      * @param options Optional parameters supported by JS-API
      * @param options.includeSource Also include **source** (in addition to **entries**) with folder information on **nodeId**
      * @returns List of assigned holds Observable<Hold[]>
      */
-    getNodeAssignedHolds(
+    getNodeAssignedHolds (
         nodeId: string,
         options?: {
             includeSource?: boolean;
         } & NodesIncludeQuery &
             ContentPagingQuery
     ): Observable<NodeAssignedHold[]> {
-        const queryOptions = Object.assign({ where: `(assocType='rma:frozenContent')` }, options);
+        const queryOptions = Object.assign({ "where": `(assocType='rma:frozenContent')` }, options);
 
         return from(this.nodesApi.listParents(nodeId, queryOptions)).pipe(
             map(({ list }) =>
                 list.entries?.map(({ entry }) => ({
-                    id: entry.id,
-                    name: entry.name
+                    "id": entry.id,
+                    "name": entry.name
                 }))
             )
         );
@@ -198,36 +189,33 @@ export class NodesApiService {
 
     /**
      * Gets content for the given node.
-     *
      * @param nodeId ID of the target node
      * @returns Content data
      */
-    getNodeContent(nodeId: string): Observable<any> {
+    getNodeContent (nodeId: string): Observable<any> {
         return from(this.nodesApi.getNodeContent(nodeId)).pipe(catchError((err) => throwError(err)));
     }
 
     /**
      * Create a new Node inside `-root-` folder
-     *
      * @param name Node name
      * @param nodeType Node type
      * @param properties Node body properties
      * @param path Path to the node
      * @returns The created node
      */
-    createNodeInsideRoot(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
+    createNodeInsideRoot (name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
         const body = {
             name,
             nodeType,
             properties,
-            relativePath: path
+            "relativePath": path
         };
         return from(this.nodesApi.createNode('-root-', body, {}));
     }
 
     /**
      * Create a new Node from form metadata.
-     *
      * @param nodeType Node type
      * @param nameSpace Namespace for properties
      * @param data Property data to store in the node under namespace
@@ -235,7 +223,7 @@ export class NodesApiService {
      * @param name Node name
      * @returns The created node
      */
-    createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
+    createNodeMetadata (nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
         const properties = {};
         for (const key in data) {
             if (data[key]) {
@@ -246,11 +234,11 @@ export class NodesApiService {
         return this.createNodeInsideRoot(name || this.randomNodeName(), nodeType, properties, path);
     }
 
-    private randomNodeName(): string {
+    private randomNodeName (): string {
         return `node_${Date.now()}`;
     }
 
-    private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
+    private cleanMetadataFromSemicolon (nodeEntry: NodeEntry): NodeMetadata {
         const metadata = {};
 
         if (nodeEntry?.entry.properties) {

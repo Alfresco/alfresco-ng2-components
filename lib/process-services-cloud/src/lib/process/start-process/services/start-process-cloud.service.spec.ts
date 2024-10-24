@@ -29,14 +29,14 @@ describe('StartProcessCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule]
+            "imports": [HttpClientModule]
         });
         service = TestBed.inject(StartProcessCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);
     });
 
     it('should be able to create a new process', async () => {
-        spyOn(service, 'startProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
+        spyOn(service, 'startProcess').and.returnValue(of({ "id": 'fake-id', "name": 'fake-name' }));
         const result = await service.startProcess('appName1', fakeProcessPayload).toPromise();
 
         expect(result).toBeDefined();
@@ -45,7 +45,7 @@ describe('StartProcessCloudService', () => {
     });
 
     it('should be able to create a new process with form', async () => {
-        spyOn(service, 'startProcessWithForm').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
+        spyOn(service, 'startProcessWithForm').and.returnValue(of({ "id": 'fake-id', "name": 'fake-name' }));
         const result = await service.startProcessWithForm('appName1', 'mockFormId', 1, fakeProcessPayload).toPromise();
 
         expect(result).toBeDefined();
@@ -55,9 +55,9 @@ describe('StartProcessCloudService', () => {
 
     it('Should not be able to create a process if error occurred', async () => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
 
         spyOn(service, 'startProcess').and.returnValue(throwError(errorResponse));
@@ -76,7 +76,7 @@ describe('StartProcessCloudService', () => {
     });
 
     it('should be able to get all the process definitions', async () => {
-        spyOn(service, 'getProcessDefinitions').and.returnValue(of([new ProcessDefinitionCloud({ id: 'fake-id', name: 'fake-name' })]));
+        spyOn(service, 'getProcessDefinitions').and.returnValue(of([new ProcessDefinitionCloud({ "id": 'fake-id', "name": 'fake-name' })]));
         const result = await service.getProcessDefinitions('appName1').toPromise();
 
         expect(result).toBeDefined();
@@ -86,9 +86,9 @@ describe('StartProcessCloudService', () => {
 
     it('should not be able to get all the process definitions if error occurred', async () => {
         const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404,
-            statusText: 'Not Found'
+            "error": 'Mock Error',
+            "status": 404,
+            "statusText": 'Not Found'
         });
         spyOn(service, 'getProcessDefinitions').and.returnValue(throwError(errorResponse));
         const result = await service
@@ -109,7 +109,7 @@ describe('StartProcessCloudService', () => {
         const appName = 'test-app';
         const processDefinitionId = 'processDefinitionId';
         const requestSpy = spyOn(adfHttpClient, 'request');
-        requestSpy.and.returnValue(Promise.resolve({ static1: 'value', static2: 0, static3: true }));
+        requestSpy.and.returnValue(Promise.resolve({ "static1": 'value', "static2": 0, "static3": true }));
 
         const result = await service.getStartEventFormStaticValuesMapping(appName, processDefinitionId).toPromise();
         expect(result.length).toEqual(3);
@@ -130,7 +130,7 @@ describe('StartProcessCloudService', () => {
         const appName = 'test-app';
         const processDefinitionId = 'processDefinitionId';
         const requestSpy = spyOn(adfHttpClient, 'request');
-        requestSpy.and.returnValue(Promise.resolve({ constant1: 'value', constant2: '0', constant3: 'true' }));
+        requestSpy.and.returnValue(Promise.resolve({ "constant1": 'value', "constant2": '0', "constant3": 'true' }));
 
         const result = await service.getStartEventConstants(appName, processDefinitionId).toPromise();
 

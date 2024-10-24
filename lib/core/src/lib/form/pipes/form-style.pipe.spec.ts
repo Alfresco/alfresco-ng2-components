@@ -27,7 +27,7 @@ describe('FormStylePipe', () => {
 
     it('should transform form theme into styles', () => {
         const formTheme: ThemeModel = {
-            form: {
+            "form": {
                 '--adf-form-label-font-size': '16px',
                 '--adf-form-label-color': 'black',
                 '--adf-form-label-font-weight': 'bold'

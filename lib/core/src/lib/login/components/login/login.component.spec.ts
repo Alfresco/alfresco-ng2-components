@@ -60,15 +60,15 @@ describe('LoginComponent', () => {
 
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [
+            "imports": [CoreTestingModule],
+            "providers": [
                 {
-                    provide: OidcAuthenticationService,
-                    useValue: {
-                        ssoLogin: () => {},
-                        isPublicUrl: () => false,
-                        hasValidIdToken: () => false,
-                        isLoggedIn: () => false
+                    "provide": OidcAuthenticationService,
+                    "useValue": {
+                        "ssoLogin": () => {},
+                        "isPublicUrl": () => false,
+                        "hasValidIdToken": () => false,
+                        "isLoggedIn": () => false
                     }
                 }
             ]
@@ -115,7 +115,7 @@ describe('LoginComponent', () => {
     });
 
     it('should redirect to route on successful login', () => {
-        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
         spyOn(router, 'navigate');
@@ -163,10 +163,10 @@ describe('LoginComponent', () => {
         appConfigService.config = {};
         appConfigService.config.providers = 'ECM';
 
-        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
         const redirect = '/home';
         component.successRoute = redirect;
-        basicAlfrescoAuthService.setRedirect({ provider: 'ECM', url: 'some-route' });
+        basicAlfrescoAuthService.setRedirect({ "provider": 'ECM', "url": 'some-route' });
 
         spyOn(router, 'navigateByUrl');
 
@@ -176,7 +176,7 @@ describe('LoginComponent', () => {
 
     it('should update user preferences upon login', async () => {
         spyOn(userPreferences, 'setStoragePrefix').and.callThrough();
-        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
 
         component.success.subscribe(() => {
             expect(userPreferences.setStoragePrefix).toHaveBeenCalledWith('fake-username');
@@ -213,7 +213,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be changed to the "welcome key" after a successful login attempt', () => {
-            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
             loginWithCredentials('fake-username', 'fake-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
@@ -294,7 +294,7 @@ describe('LoginComponent', () => {
         });
 
         it('should be taken into consideration during login attempt', fakeAsync(() => {
-            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
             component.rememberMe = false;
 
             loginWithCredentials('fake-username', 'fake-password');
@@ -365,8 +365,8 @@ describe('LoginComponent', () => {
     describe('Error', () => {
         it('should render validation min-length error when the username is just 1 character with a custom validation Validators.minLength(3)', () => {
             component.fieldsValidation = {
-                username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-                password: ['', Validators.required]
+                "username": ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                "password": ['', Validators.required]
             };
             component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
             component.ngOnInit();
@@ -401,8 +401,8 @@ describe('LoginComponent', () => {
 
         it('should render validation min-length error when the username is lower than 3 characters with a custom validation Validators.minLength(3)', () => {
             component.fieldsValidation = {
-                username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-                password: ['', Validators.required]
+                "username": ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+                "password": ['', Validators.required]
             };
             component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
             component.ngOnInit();
@@ -517,9 +517,9 @@ describe('LoginComponent', () => {
         it('should return CORS error when server CORS error occurs', (done) => {
             spyOn(basicAlfrescoAuthService, 'login').and.returnValue(
                 throwError({
-                    error: {
-                        crossDomain: true,
-                        message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
+                    "error": {
+                        "crossDomain": true,
+                        "message": 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
                     }
                 })
             );
@@ -538,7 +538,7 @@ describe('LoginComponent', () => {
         });
 
         it('should return CSRF error when server CSRF error occurs', fakeAsync(() => {
-            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
+            spyOn(basicAlfrescoAuthService, 'login').and.returnValue(throwError({ "message": 'ERROR: Invalid CSRF-token', "status": 403 }));
 
             component.error.subscribe(() => {
                 fixture.detectChanges();
@@ -554,8 +554,8 @@ describe('LoginComponent', () => {
         it('should return ECM read-only error when error occurs', fakeAsync(() => {
             spyOn(basicAlfrescoAuthService, 'login').and.returnValue(
                 throwError({
-                    message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
-                    status: 403
+                    "message": 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
+                    "status": 403
                 })
             );
 
@@ -598,7 +598,7 @@ describe('LoginComponent', () => {
     });
 
     it('should return success event after the login have succeeded', (done) => {
-        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
 
         expect(component.isError).toBe(false);
 
@@ -614,13 +614,13 @@ describe('LoginComponent', () => {
     });
 
     it('should emit success event after the login has succeeded and discard password', fakeAsync(() => {
-        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
 
         component.success.subscribe((event) => {
             fixture.detectChanges();
 
             expect(component.isError).toBe(false);
-            expect(event).toEqual(new LoginSuccessEvent({ type: 'type', ticket: 'ticket' }, 'fake-username', null));
+            expect(event).toEqual(new LoginSuccessEvent({ "type": 'type', "ticket": 'ticket' }, 'fake-username', null));
         });
 
         loginWithCredentials('fake-username', 'fake-password');
@@ -678,7 +678,7 @@ describe('LoginComponent', () => {
     describe('SSO ', () => {
         describe('implicitFlow ', () => {
             beforeEach(() => {
-                appConfigService.config.oauth2 = { implicitFlow: true, silentLogin: false };
+                appConfigService.config.oauth2 = { "implicitFlow": true, "silentLogin": false };
                 appConfigService.load();
             });
 
@@ -695,7 +695,7 @@ describe('LoginComponent', () => {
 
             it('should not render the implicitFlow button in case silentLogin is enabled', fakeAsync(() => {
                 spyOn(authService, 'isOauth').and.returnValue(true);
-                appConfigService.config.oauth2 = { implicitFlow: true, silentLogin: true };
+                appConfigService.config.oauth2 = { "implicitFlow": true, "silentLogin": true };
 
                 spyOn(component, 'redirectToSSOLogin').and.stub();
 

@@ -37,21 +37,21 @@ export class MemberModel {
     };
     readonly: boolean = false;
 
-    constructor(input?) {
+    constructor (input?) {
         if (input) {
             Object.assign(this, input);
         }
     }
 
-    static parseFromSearchResult({ entry }: NodeEntry): MemberModel {
+    static parseFromSearchResult ({ entry }: NodeEntry): MemberModel {
         const result = new MemberModel();
 
         if (entry.nodeType === 'cm:person') {
             const person = new EcmUserModel({
-                firstName: entry.properties['cm:firstName'],
-                lastName: entry.properties['cm:lastName'],
-                email: entry.properties['cm:email'],
-                id: entry.properties['cm:userName']
+                "firstName": entry.properties['cm:firstName'],
+                "lastName": entry.properties['cm:lastName'],
+                "email": entry.properties['cm:email'],
+                "id": entry.properties['cm:userName']
             });
 
             result.id = person.id;
@@ -63,8 +63,8 @@ export class MemberModel {
 
         if (entry.nodeType === 'cm:authorityContainer') {
             const group: Group = {
-                id: entry.properties['cm:authorityName'],
-                displayName: entry.properties['cm:authorityDisplayName'] || entry.properties['cm:authorityName']
+                "id": entry.properties['cm:authorityName'],
+                "displayName": entry.properties['cm:authorityDisplayName'] || entry.properties['cm:authorityName']
             };
 
             result.id = group.id;
@@ -76,11 +76,11 @@ export class MemberModel {
         return null;
     }
 
-    toPermissionElement(): PermissionElement {
+    toPermissionElement (): PermissionElement {
         return {
-            authorityId: this.id,
-            name: this.role,
-            accessStatus: this.accessStatus
+            "authorityId": this.id,
+            "name": this.role,
+            "accessStatus": this.accessStatus
         };
     }
 }

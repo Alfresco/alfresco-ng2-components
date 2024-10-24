@@ -41,18 +41,18 @@ export interface PeopleContentQueryRequestModel {
 }
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class PeopleContentService {
     private currentUser: EcmUserModel;
 
     private _peopleApi: PeopleApi;
-    get peopleApi(): PeopleApi {
+    get peopleApi (): PeopleApi {
         this._peopleApi = this._peopleApi ?? new PeopleApi(this.apiService.getInstance());
         return this._peopleApi;
     }
 
-    constructor(private apiService: AlfrescoApiService, authenticationService: AuthenticationService, private contentService: ContentService) {
+    constructor (private apiService: AlfrescoApiService, authenticationService: AuthenticationService, private contentService: ContentService) {
         authenticationService.onLogout.subscribe(() => {
             this.resetLocalCurrentUser();
         });
@@ -60,24 +60,22 @@ export class PeopleContentService {
 
     /**
      * Gets information about a user identified by their username.
-     *
      * @param personId ID of the target user
      * @returns User information
      */
-    getPerson(personId: string): Observable<EcmUserModel> {
+    getPerson (personId: string): Observable<EcmUserModel> {
         return from(this.peopleApi.getPerson(personId)).pipe(map((personEntry) => new EcmUserModel(personEntry.entry)));
     }
 
-    getCurrentPerson(): Observable<EcmUserModel> {
+    getCurrentPerson (): Observable<EcmUserModel> {
         return this.getCurrentUserInfo();
     }
 
     /**
      * Gets information about the current user alias -me-
-     *
      * @returns User information
      */
-    getCurrentUserInfo(): Observable<EcmUserModel> {
+    getCurrentUserInfo (): Observable<EcmUserModel> {
         if (this.currentUser) {
             return of(this.currentUser);
         }
@@ -86,28 +84,26 @@ export class PeopleContentService {
 
     /**
      * Used to know if the current user has the admin capability
-     *
      * @returns true or false
      */
-    isCurrentUserAdmin(): boolean {
+    isCurrentUserAdmin (): boolean {
         return this.currentUser?.isAdmin() ?? false;
     }
 
     /**
      * Reset the local current user object
      */
-    resetLocalCurrentUser() {
+    resetLocalCurrentUser () {
         this.currentUser = undefined;
     }
 
     /**
      * Gets a list of people.
-     *
      * @param requestQuery maxItems and skipCount parameters supported by JS-API
      * @returns Response containing pagination and list of entries
      */
-    listPeople(requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
-        const requestQueryParams = { skipCount: requestQuery?.skipCount, maxItems: requestQuery?.maxItems };
+    listPeople (requestQuery?: PeopleContentQueryRequestModel): Observable<PeopleContentQueryResponse> {
+        const requestQueryParams = { "skipCount": requestQuery?.skipCount, "maxItems": requestQuery?.maxItems };
         const orderBy = this.buildOrderArray(requestQuery?.sorting);
         if (orderBy.length) {
             requestQueryParams['orderBy'] = orderBy;
@@ -116,46 +112,43 @@ export class PeopleContentService {
         const promise = this.peopleApi.listPeople(requestQueryParams);
         return from(promise).pipe(
             map((response) => ({
-                pagination: response.list.pagination,
-                entries: response.list.entries.map((person) => person.entry as EcmUserModel)
+                "pagination": response.list.pagination,
+                "entries": response.list.entries.map((person) => person.entry as EcmUserModel)
             }))
         );
     }
 
     /**
      * Creates new person.
-     *
      * @param newPerson Object containing the new person details.
      * @param opts Optional parameters
      * @returns Created new person
      */
-    createPerson(newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
+    createPerson (newPerson: PersonBodyCreate, opts?: any): Observable<EcmUserModel> {
         return from(this.peopleApi.createPerson(newPerson, opts)).pipe(map((res) => res?.entry as EcmUserModel));
     }
 
     /**
      * Updates the person details
-     *
      * @param personId The identifier of a person
      * @param details The person details
      * @param opts Optional parameters
      * @returns Updated person model
      */
-    updatePerson(personId: string, details: PersonBodyUpdate, opts?: any): Observable<EcmUserModel> {
+    updatePerson (personId: string, details: PersonBodyUpdate, opts?: any): Observable<EcmUserModel> {
         return from(this.peopleApi.updatePerson(personId, details, opts)).pipe(map((res) => res?.entry as EcmUserModel));
     }
 
     /**
      * Returns a profile image as a URL.
-     *
      * @param avatarId Target avatar
      * @returns Image URL
      */
-    getUserProfileImage(avatarId: string): string {
+    getUserProfileImage (avatarId: string): string {
         return this.contentService.getContentUrl(avatarId);
     }
 
-    private buildOrderArray(sorting: PeopleContentSortingModel): string[] {
+    private buildOrderArray (sorting: PeopleContentSortingModel): string[] {
         return sorting?.orderBy && sorting?.direction ? [`${sorting.orderBy} ${sorting.direction.toUpperCase()}`] : [];
     }
 }

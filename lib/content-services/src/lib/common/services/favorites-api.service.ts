@@ -23,17 +23,16 @@ import { UserPreferencesService } from '@alfresco/adf-core';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class FavoritesApiService {
-
     private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
+    get favoritesApi (): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.apiService.getInstance());
         return this._favoritesApi;
     }
 
-    static remapEntry({ entry }: any): any {
+    static remapEntry ({ entry }: any): any {
         entry.properties = {
             'cm:title': entry.title,
             'cm:description': entry.description
@@ -42,52 +41,42 @@ export class FavoritesApiService {
         return { entry };
     }
 
-    constructor(
-        private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService
-    ) {
-    }
+    constructor (private apiService: AlfrescoApiService, private preferences: UserPreferencesService) {}
 
-    remapFavoritesData(data: FavoritePaging = {}): NodePaging {
-        const pagination = (data?.list?.pagination || {});
-        const entries: any[] = this
-            .remapFavoriteEntries(data?.list?.entries || []);
+    remapFavoritesData (data: FavoritePaging = {}): NodePaging {
+        const pagination = data?.list?.pagination || {};
+        const entries: any[] = this.remapFavoriteEntries(data?.list?.entries || []);
 
         return {
-            list: { entries, pagination }
+            "list": { entries, pagination }
         };
     }
 
-    remapFavoriteEntries(entries: any[]) {
+    remapFavoriteEntries (entries: any[]) {
         return entries
-            .map(({ entry: { target } }: any) => ({
-                entry: target.file || target.folder
+            .map(({ "entry": { target } }: any) => ({
+                "entry": target.file || target.folder
             }))
-            .filter(({ entry }) => (!!entry))
+            .filter(({ entry }) => !!entry)
             .map(FavoritesApiService.remapEntry);
     }
 
     /**
      * Gets the favorites for a user.
-     *
      * @param personId ID of the user
      * @param options Options supported by JS-API
      * @returns List of favorites
      */
-    getFavorites(personId: string, options?: any): Observable<NodePaging> {
+    getFavorites (personId: string, options?: any): Observable<NodePaging> {
         const defaultOptions = {
-            maxItems: this.preferences.paginationSize,
-            skipCount: 0,
-            where: '(EXISTS(target/file) OR EXISTS(target/folder))',
-            include: ['properties', 'allowableOperations']
+            "maxItems": this.preferences.paginationSize,
+            "skipCount": 0,
+            "where": '(EXISTS(target/file) OR EXISTS(target/folder))',
+            "include": ['properties', 'allowableOperations']
         };
         const queryOptions = Object.assign(defaultOptions, options);
-        const promise = this.favoritesApi
-            .listFavorites(personId, queryOptions)
-            .then(this.remapFavoritesData);
+        const promise = this.favoritesApi.listFavorites(personId, queryOptions).then(this.remapFavoritesData);
 
-        return from(promise).pipe(
-            catchError((err) => of(err))
-        );
+        return from(promise).pipe(catchError((err) => of(err)));
     }
 }

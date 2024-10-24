@@ -19,15 +19,15 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApi } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-content-services';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class ExternalAlfrescoApiService extends AlfrescoApiService {
-    init(ecmHost: string, contextRoot: string) {
+    init (ecmHost: string, contextRoot: string) {
         const domainPrefix = this.createPrefixFromHost(ecmHost);
 
         const config = {
-            provider: 'ECM',
-            hostEcm: ecmHost,
-            authType: 'BASIC',
+            "provider": 'ECM',
+            "hostEcm": ecmHost,
+            "authType": 'BASIC',
             contextRoot,
             domainPrefix
         };
@@ -35,7 +35,7 @@ export class ExternalAlfrescoApiService extends AlfrescoApiService {
         this.alfrescoApiInitialized.next(true);
     }
 
-    private setup(config) {
+    private setup (config) {
         if (this.alfrescoApi) {
             this.alfrescoApi.setConfig(config);
         } else {
@@ -43,7 +43,7 @@ export class ExternalAlfrescoApiService extends AlfrescoApiService {
         }
     }
 
-    private createPrefixFromHost(url: string): string {
+    private createPrefixFromHost (url: string): string {
         const match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
         let result = null;
         if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {

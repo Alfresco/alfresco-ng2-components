@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { FormFieldModel } from './form-field.model';
 import { FormWidgetModel } from './form-widget.model';
@@ -23,7 +23,6 @@ import { ContainerColumnModel } from './container-column.model';
 import { FormFieldTypes } from './form-field-types';
 
 export class ContainerModel extends FormWidgetModel {
-
     field: FormFieldModel;
 
     readonly columns: ContainerColumnModel[] = [];
@@ -31,11 +30,11 @@ export class ContainerModel extends FormWidgetModel {
     readonly rowspan: number = 1;
     readonly colspan: number = 1;
 
-    get isVisible(): boolean {
+    get isVisible (): boolean {
         return this.field.isVisible;
     }
 
-    constructor(field: FormFieldModel) {
+    constructor (field: FormFieldModel) {
         super(field.form, field.json);
 
         if (field) {
@@ -47,11 +46,11 @@ export class ContainerModel extends FormWidgetModel {
         }
     }
 
-    isGroup(): boolean {
+    isGroup (): boolean {
         return this.type === FormFieldTypes.GROUP;
     }
 
-    isCollapsible(): boolean {
+    isCollapsible (): boolean {
         let allowCollapse = false;
 
         if (this.isGroup() && this.field.params['allowCollapse']) {
@@ -61,7 +60,7 @@ export class ContainerModel extends FormWidgetModel {
         return allowCollapse;
     }
 
-    isCollapsedByDefault(): boolean {
+    isCollapsedByDefault (): boolean {
         let collapseByDefault = false;
 
         if (this.isCollapsible() && this.field.params['collapseByDefault']) {

@@ -29,10 +29,10 @@ import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';
 import { TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 
 @Component({
-    selector: 'adf-cloud-task-filters',
-    templateUrl: './base-task-filters-cloud.component.html',
-    styleUrls: ['./base-task-filters-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-task-filters',
+    "templateUrl": './base-task-filters-cloud.component.html',
+    "styleUrls": ['./base-task-filters-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent implements OnInit, OnChanges {
     /** Emitted when a filter is being selected based on the filterParam input. */
@@ -61,16 +61,16 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     private readonly taskListCloudService = inject(TaskListCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
-    private readonly searchMethod = inject<'GET' | 'POST'>(TASK_SEARCH_API_METHOD_TOKEN, { optional: true });
+    private readonly searchMethod = inject<'GET' | 'POST'>(TASK_SEARCH_API_METHOD_TOKEN, { "optional": true });
 
-    ngOnInit() {
+    ngOnInit () {
         this.enableNotifications = this.appConfigService.get('notifications', true);
         this.getFilters(this.appName);
         this.initFilterCounterNotifications();
         this.getFilterKeysAfterExternalRefreshing();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const appName = changes['appName'];
         const filter = changes['filterParam'];
         if (appName && appName.currentValue !== appName.previousValue) {
@@ -82,10 +82,9 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Loads the filter list filtered by appName
-     *
      * @param appName application name
      */
-    getFilters(appName: string): void {
+    getFilters (appName: string): void {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
 
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
@@ -106,23 +105,22 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     /**
      * Initialize counter collection for filters
      */
-    initFilterCounters(): void {
+    initFilterCounters (): void {
         this.filters.forEach((filter) => (this.counters[filter.key] = 0));
     }
 
     /**
      * Iterate over filters and update counters
      */
-    updateFilterCounters(): void {
+    updateFilterCounters (): void {
         this.filters.forEach((filter: TaskFilterCloudModel) => this.updateFilterCounter(filter));
     }
 
     /**
      *  Get current value for filter and check if value has changed
-     *
      * @param filter filter
      */
-    updateFilterCounter(filter: TaskFilterCloudModel): void {
+    updateFilterCounter (filter: TaskFilterCloudModel): void {
         if (!filter?.showCounter) {
             return;
         }
@@ -140,13 +138,13 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             });
     }
 
-    private fetchTaskFilterCounter(filter: TaskFilterCloudModel): Observable<number> {
+    private fetchTaskFilterCounter (filter: TaskFilterCloudModel): Observable<number> {
         return this.searchMethod === 'POST'
             ? this.taskListCloudService.getTaskListCounter(new TaskFilterCloudAdapter(filter))
             : this.taskFilterCloudService.getTaskFilterCounter(filter);
     }
 
-    initFilterCounterNotifications() {
+    initFilterCounterNotifications () {
         if (this.appName && this.enableNotifications) {
             this.taskFilterCloudService
                 .getTaskNotificationSubscription(this.appName)
@@ -162,7 +160,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         }
     }
 
-    checkFilterCounter(filterNotification: TaskDetailsCloudModel) {
+    checkFilterCounter (filterNotification: TaskDetailsCloudModel) {
         this.filters.map((filter) => {
             if (this.isFilterPresent(filter, filterNotification)) {
                 this.addToUpdatedCounters(filter.key);
@@ -170,14 +168,14 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
         });
     }
 
-    isFilterPresent(filter: TaskFilterCloudModel, filterNotification: TaskDetailsCloudModel): boolean {
+    isFilterPresent (filter: TaskFilterCloudModel, filterNotification: TaskDetailsCloudModel): boolean {
         return (
             filter.status === filterNotification.status &&
             (filter.assignee === filterNotification.assignee || filterNotification.assignee === undefined)
         );
     }
 
-    public selectFilter(paramFilter: FilterParamsModel) {
+    public selectFilter (paramFilter: FilterParamsModel) {
         if (!paramFilter) {
             return;
         }
@@ -195,7 +193,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
             ); // fallback to preserve the previous behavior
     }
 
-    public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
+    public selectFilterAndEmit (newParamFilter: FilterParamsModel) {
         if (newParamFilter) {
             this.selectFilter(newParamFilter);
 
@@ -210,10 +208,9 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Selects and emits the clicked filter.
-     *
      * @param filter filter model
      */
-    onFilterClick(filter: FilterParamsModel) {
+    onFilterClick (filter: FilterParamsModel) {
         if (filter) {
             this.selectFilter(filter);
             this.updateFilterCounter(this.currentFilter);
@@ -227,7 +224,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
     /**
      * Select as default task filter the first in the list
      */
-    public selectDefaultTaskFilter() {
+    public selectDefaultTaskFilter () {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         }
@@ -235,22 +232,21 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Check if the filter list is empty
-     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
-    isFilterListEmpty(): boolean {
+    isFilterListEmpty (): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
     /**
      * Reset the filters properties
      */
-    private resetFilter() {
+    private resetFilter () {
         this.filters = [];
         this.currentFilter = undefined;
     }
 
-    checkIfFilterValuesHasBeenUpdated(filterKey: string, filterValue: number) {
+    checkIfFilterValuesHasBeenUpdated (filterKey: string, filterValue: number) {
         if (!this.currentFiltersValues[filterKey]) {
             this.currentFiltersValues[filterKey] = filterValue;
             return;
@@ -266,7 +262,7 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
      * Get filer key when filter was refreshed by external action
      *
      */
-    getFilterKeysAfterExternalRefreshing(): void {
+    getFilterKeysAfterExternalRefreshing (): void {
         this.taskFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
             this.updatedCountersSet.delete(filterKey);
         });

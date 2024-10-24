@@ -28,8 +28,8 @@ describe('ContentColumnList', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         documentList = TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent;
         actionList = new ContentActionListComponent(documentList);

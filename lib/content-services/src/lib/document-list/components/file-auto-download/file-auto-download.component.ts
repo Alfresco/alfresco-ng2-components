@@ -24,11 +24,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { NodeDownloadDirective } from '../../../directives/node-download.directive';
 
 @Component({
-    selector: 'adf-file-auto-download',
-    standalone: true,
-    imports: [CommonModule, MatDialogModule, TranslateModule, MatButtonModule, NodeDownloadDirective],
-    templateUrl: './file-auto-download.component.html'
+    "selector": 'adf-file-auto-download',
+    "standalone": true,
+    "imports": [CommonModule, MatDialogModule, TranslateModule, MatButtonModule, NodeDownloadDirective],
+    "templateUrl": './file-auto-download.component.html'
 })
 export class FileAutoDownloadComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) public node: NodeEntry) {}
+    constructor (@Inject(MAT_DIALOG_DATA) public node: NodeEntry) {}
 }

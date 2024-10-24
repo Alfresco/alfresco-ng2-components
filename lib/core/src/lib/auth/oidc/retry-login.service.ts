@@ -19,19 +19,18 @@ import { inject, Injectable } from '@angular/core';
 import { LoginOptions, OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class RetryLoginService {
     private oauthService = inject(OAuthService);
 
     /**
      * Attempts to log in a specified number of times if the initial login attempt fails.
-     *
      * @param loginOptions - The options to be used for the login attempt.
      * @param maxLoginAttempts - The maximum number of login attempts. Defaults to 3.
      * @returns A promise that resolves to `true` if the login is successful, or rejects with an error if all attempts fail.
      */
-    tryToLoginTimes(loginOptions: LoginOptions, maxLoginAttempts = 3): Promise<boolean> {
+    tryToLoginTimes (loginOptions: LoginOptions, maxLoginAttempts = 3): Promise<boolean> {
         let retryCount = 0;
         const maxRetries = maxLoginAttempts - 1;
 
@@ -52,7 +51,7 @@ export class RetryLoginService {
         return attemptLogin();
     }
 
-    private getErrorMessage(error: any, maxLoginAttempts: number) {
+    private getErrorMessage (error: any, maxLoginAttempts: number) {
         const isOAuthErrorEvent = error instanceof OAuthErrorEvent;
         let oAuthErrorMessage: string;
         if (isOAuthErrorEvent) {

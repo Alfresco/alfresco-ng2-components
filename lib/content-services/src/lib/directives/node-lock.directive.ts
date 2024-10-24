@@ -24,8 +24,8 @@ import { AllowableOperationsEnum } from '../common/models/allowable-operations.e
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 
 @Directive({
-    standalone: true,
-    selector: '[adf-node-lock]'
+    "standalone": true,
+    "selector": '[adf-node-lock]'
 })
 export class NodeLockDirective implements AfterViewInit {
     /** Node to lock/unlock. */
@@ -33,19 +33,19 @@ export class NodeLockDirective implements AfterViewInit {
     node: Node;
 
     @HostListener('click', ['$event'])
-    onClick(event) {
+    onClick (event) {
         event.stopPropagation();
         this.contentNodeDialogService.openLockNodeDialog(this.node);
     }
 
-    constructor(
+    constructor (
         public element: ElementRef,
         private renderer: Renderer2,
         private contentService: ContentService,
         private contentNodeDialogService: ContentNodeDialogService
     ) {}
 
-    ngAfterViewInit() {
+    ngAfterViewInit () {
         const hasAllowableOperations = this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.LOCK);
         this.renderer.setProperty(this.element.nativeElement, 'disabled', !hasAllowableOperations);
     }

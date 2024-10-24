@@ -22,9 +22,9 @@ import { DataColumnType } from '@alfresco/adf-extensions';
 import { CurrencyConfig, DateConfig, DecimalConfig } from '../data/data-column.model';
 
 @Component({
-    selector: 'data-column',
-    standalone: true,
-    template: ''
+    "selector": 'data-column',
+    "standalone": true,
+    "template": ''
 })
 export class DataColumnComponent implements OnInit {
     /** Id of the Column */
@@ -126,7 +126,7 @@ export class DataColumnComponent implements OnInit {
     /** Data column header template */
     header?: TemplateRef<any>;
 
-    ngOnInit() {
+    ngOnInit () {
         if (!this.srTitle && this.key === '$thumbnail') {
             this.srTitle = 'Thumbnail';
         }

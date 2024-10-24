@@ -23,39 +23,33 @@ import { LoginDialogComponent } from './login-dialog.component';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
 
 @Component({
-    selector: 'adf-login-dialog-storybook',
-    standalone: true,
-    imports: [
-        MatButtonModule
-    ],
-    template: `
+    "selector": 'adf-login-dialog-storybook',
+    "standalone": true,
+    "imports": [MatButtonModule],
+    "template": `
         <button mat-raised-button (click)="openLoginDialog()">
             Open dialog
         </button>`
 })
 export class LoginDialogStorybookComponent {
-
     @Output() executeSubmit = new EventEmitter<string>();
     @Output() error = new EventEmitter<string>();
     @Output() closed = new EventEmitter<string>();
 
-    constructor(private dialog: MatDialog) { }
+    constructor (private dialog: MatDialog) {}
 
-    openLoginDialog() {
+    openLoginDialog () {
         const data: LoginDialogComponentData = {
-            title: 'Perform a Login',
-            actionName: 'LOGIN',
-            logged: new Subject<any>()
+            "title": 'Perform a Login',
+            "actionName": 'LOGIN',
+            "logged": new Subject<any>()
         };
 
-        this.dialog.open(
-            LoginDialogComponent,
-            {
-                data,
-                panelClass: 'adf-login-dialog',
-                width: '630px'
-            }
-        );
+        this.dialog.open(LoginDialogComponent, {
+            data,
+            "panelClass": 'adf-login-dialog',
+            "width": '630px'
+        });
 
         data.logged.subscribe(
             () => {

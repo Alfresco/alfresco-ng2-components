@@ -38,9 +38,9 @@ export const APP_LIST_LAYOUT_LIST: string = 'LIST';
 export const APP_LIST_LAYOUT_GRID: string = 'GRID';
 
 @Component({
-    selector: 'adf-apps',
-    standalone: true,
-    imports: [
+    "selector": 'adf-apps',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatListModule,
         MatIconModule,
@@ -50,10 +50,10 @@ export const APP_LIST_LAYOUT_GRID: string = 'GRID';
         EmptyContentComponent,
         MatLineModule
     ],
-    templateUrl: './apps-list.component.html',
-    styleUrls: ['./apps-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-apps' }
+    "templateUrl": './apps-list.component.html',
+    "styleUrls": ['./apps-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-apps' }
 })
 export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -90,9 +90,9 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     private iconsMDL: IconModel;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private appsProcessService: AppsProcessService) {}
+    constructor (private appsProcessService: AppsProcessService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (!this.isValidType()) {
             this.setDefaultLayoutType();
         }
@@ -101,96 +101,91 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
         this.load();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         if (this.emptyCustomContent) {
             this.hasEmptyCustomContentTemplate = true;
         }
     }
 
-    private isDefaultApp(app: AppDefinitionRepresentation): boolean {
+    private isDefaultApp (app: AppDefinitionRepresentation): boolean {
         return app.defaultAppId === this.defaultAppId;
     }
 
-    getAppName(app: AppDefinitionRepresentation): string {
+    getAppName (app: AppDefinitionRepresentation): string {
         return this.isDefaultApp(app) ? DEFAULT_TASKS_APP_NAME : app.name || app.defaultAppId;
     }
 
     /**
      * Pass the selected app as next
-     *
      * @param app application model
      */
-    selectApp(app: AppDefinitionRepresentation) {
+    selectApp (app: AppDefinitionRepresentation) {
         this.currentApp = app;
         this.appClick.emit(app);
     }
 
     /**
      * Return true if the appId is the current app
-     *
      * @param appId application id
      * @returns `true` if application is selected, otherwise `false`
      */
-    isSelected(appId: number): boolean {
+    isSelected (appId: number): boolean {
         return this.currentApp !== undefined && appId === this.currentApp.id;
     }
 
     /**
      * Check if the value of the layoutType property is an allowed value
-     *
      * @returns `true` if layout type is valid, otherwise `false`
      */
-    isValidType(): boolean {
+    isValidType (): boolean {
         return this.layoutType && (this.layoutType === APP_LIST_LAYOUT_LIST || this.layoutType === APP_LIST_LAYOUT_GRID);
     }
 
     /**
      * Assign the default value to LayoutType
      */
-    setDefaultLayoutType(): void {
+    setDefaultLayoutType (): void {
         this.layoutType = APP_LIST_LAYOUT_GRID;
     }
 
     /**
      * Check if the layout type is LIST
-     *
      * @returns `true` if current layout is in the list mode, otherwise `false`
      */
-    isList(): boolean {
+    isList (): boolean {
         return this.layoutType === APP_LIST_LAYOUT_LIST;
     }
 
     /**
      * Check if the layout type is GRID
-     *
      * @returns `true` if current layout is in the grid mode, otherwise `false`
      */
-    isGrid(): boolean {
+    isGrid (): boolean {
         return this.layoutType === APP_LIST_LAYOUT_GRID;
     }
 
-    isEmpty(): boolean {
+    isEmpty (): boolean {
         return this.appList.length === 0;
     }
 
-    isLoading(): boolean {
+    isLoading (): boolean {
         return this.loading;
     }
 
-    getTheme(app: AppDefinitionRepresentation): string {
+    getTheme (app: AppDefinitionRepresentation): string {
         return app.theme ? app.theme : '';
     }
 
-    getBackgroundIcon(app: AppDefinitionRepresentation): string {
+    getBackgroundIcon (app: AppDefinitionRepresentation): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(app.icon);
     }
 
-    private load() {
+    private load () {
         this.loading = true;
         this.appsProcessService
             .getDeployedApplications()
@@ -217,7 +212,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
             );
     }
 
-    filterApps(apps: AppDefinitionRepresentation[], filter: Partial<AppDefinitionRepresentation>[]): AppDefinitionRepresentation[] {
+    filterApps (apps: AppDefinitionRepresentation[], filter: Partial<AppDefinitionRepresentation>[]): AppDefinitionRepresentation[] {
         return filter && filter.length > 0
             ? apps.filter((app) =>
                   filter.some(

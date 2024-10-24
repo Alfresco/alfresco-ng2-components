@@ -49,7 +49,7 @@ describe('Task Cloud Service', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         identityUserService = TestBed.inject(IdentityUserService);
@@ -105,8 +105,8 @@ describe('Task Cloud Service', () => {
     it('should verify if the task assignee property is clickable', () => {
         const isAssigneePropertyClickable = service.isAssigneePropertyClickable(
             assignedTaskDetailsCloudMock,
-            [{ icon: '', value: 'user' }],
-            [{ icon: '', value: 'group' }]
+            [{ "icon": '', "value": 'user' }],
+            [{ "icon": '', "value": 'group' }]
         );
         expect(isAssigneePropertyClickable).toEqual(true);
     });
@@ -250,7 +250,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if appName is not defined when updating a task', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
-        const updatePayload = { description: 'New description' };
+        const updatePayload = { "description": 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
             () => {},
@@ -264,7 +264,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if taskId is not defined when updating a task', (done) => {
         const appName = 'task-app';
         const taskId = null;
-        const updatePayload = { description: 'New description' };
+        const updatePayload = { "description": 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
             () => {},
@@ -278,7 +278,7 @@ describe('Task Cloud Service', () => {
     it('should return the task details when updating a task', (done) => {
         const appName = 'taskp-app';
         const taskId = '68d54a8f';
-        const updatePayload = { description: 'New description' };
+        const updatePayload = { "description": 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe((res: any) => {
             expect(res).toBeDefined();
@@ -292,7 +292,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if appName is not defined when querying by id with update playload', (done) => {
         const appName = null;
         const taskId = '68d54a8f';
-        const updatePayload = { description: 'New description' };
+        const updatePayload = { "description": 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
             () => {},
@@ -306,7 +306,7 @@ describe('Task Cloud Service', () => {
     it('should throw error if taskId is not defined updating a task', (done) => {
         const appName = 'task-app';
         const taskId = null;
-        const updatePayload = { description: 'New description' };
+        const updatePayload = { "description": 'New description' };
         requestSpy.and.callFake(returnFakeTaskDetailsResults);
         service.updateTask(appName, taskId, updatePayload).subscribe(
             () => {},

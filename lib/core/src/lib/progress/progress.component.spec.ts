@@ -31,7 +31,7 @@ describe('ProgressComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [MatProgressBarModule, MatProgressSpinnerModule, NoopAnimationsModule, ProgressComponent]
+            "imports": [MatProgressBarModule, MatProgressSpinnerModule, NoopAnimationsModule, ProgressComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(ProgressComponent);

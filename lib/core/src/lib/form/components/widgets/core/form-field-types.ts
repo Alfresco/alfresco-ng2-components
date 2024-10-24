@@ -58,23 +58,23 @@ export class FormFieldTypes {
 
     static CONSTANT_VALUE_TYPES: string[] = [FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY];
 
-    static isReadOnlyType(type: string) {
+    static isReadOnlyType (type: string) {
         return FormFieldTypes.READONLY_TYPES.includes(type);
     }
 
-    static isValidatableType(type: string) {
+    static isValidatableType (type: string) {
         return FormFieldTypes.VALIDATABLE_TYPES.includes(type);
     }
 
-    static isReactiveType(type: string): boolean {
+    static isReactiveType (type: string): boolean {
         return FormFieldTypes.REACTIVE_TYPES.includes(type);
     }
 
-    static isConstantValueType(type: string) {
+    static isConstantValueType (type: string) {
         return FormFieldTypes.CONSTANT_VALUE_TYPES.includes(type);
     }
 
-    static isContainerType(type: string) {
+    static isContainerType (type: string) {
         return type === FormFieldTypes.CONTAINER || type === FormFieldTypes.GROUP;
     }
 }

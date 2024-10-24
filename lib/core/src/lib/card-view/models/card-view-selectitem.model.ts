@@ -29,7 +29,7 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
 
     valueFetch$: Observable<string> = null;
 
-    constructor(cardViewSelectItemProperties: CardViewSelectItemProperties<T>) {
+    constructor (cardViewSelectItemProperties: CardViewSelectItemProperties<T>) {
         super(cardViewSelectItemProperties);
 
         this.displayNoneOption = cardViewSelectItemProperties.displayNoneOption !== undefined ? cardViewSelectItemProperties.displayNoneOption : true;
@@ -44,11 +44,11 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
         );
     }
 
-    get displayValue() {
+    get displayValue () {
         return this.valueFetch$;
     }
 
-    setValue(value: any) {
+    setValue (value: any) {
         this.value = value;
     }
 }

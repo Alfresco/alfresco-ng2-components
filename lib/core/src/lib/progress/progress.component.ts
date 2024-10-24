@@ -26,11 +26,11 @@ export type ProgressMode = ProgressBarMode | ProgressSpinnerMode;
 export type ProgressColor = ThemePalette;
 
 @Component({
-    selector: 'adf-progress',
-    standalone: true,
-    imports: [CommonModule, MatProgressBarModule, MatProgressSpinnerModule],
-    templateUrl: './progress.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-progress',
+    "standalone": true,
+    "imports": [CommonModule, MatProgressBarModule, MatProgressSpinnerModule],
+    "templateUrl": './progress.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class ProgressComponent {
     private _mode: ProgressMode = 'indeterminate';
@@ -45,15 +45,14 @@ export class ProgressComponent {
     /**
      * The value of the progress bar or spinner.
      * Changes the mode to `determinate` if a value is provided.
-     *
      * @returns The progress value
      */
-    get value(): number | undefined {
+    get value (): number | undefined {
         return this._value;
     }
 
     @Input()
-    set value(value: number | undefined) {
+    set value (value: number | undefined) {
         if (value !== undefined) {
             this._mode = 'determinate';
         }
@@ -65,15 +64,14 @@ export class ProgressComponent {
      *
      * For progress spinner, the mode can be either `indeterminate` or `determinate`.
      * For progress bar, the mode can be either `determinate`, `indeterminate`, `buffer`, or `query`.
-     *
      * @returns The progress mode
      */
-    get mode(): ProgressMode {
+    get mode (): ProgressMode {
         return this._mode;
     }
 
     @Input()
-    set mode(value: ProgressMode) {
+    set mode (value: ProgressMode) {
         if (this.variant === 'spinner') {
             if (value === 'indeterminate' || value === 'determinate') {
                 this._mode = value;

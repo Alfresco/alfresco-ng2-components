@@ -41,8 +41,8 @@ describe('FormFieldValidator', () => {
 
         it('should require [required] setting', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                value: '<value>'
+                "type": FormFieldTypes.TEXT,
+                "value": '<value>'
             });
 
             field.required = false;
@@ -55,15 +55,15 @@ describe('FormFieldValidator', () => {
         });
 
         it('should skip unsupported type', () => {
-            const field = new FormFieldModel(new FormModel(), { type: 'wrong-type' });
+            const field = new FormFieldModel(new FormModel(), { "type": 'wrong-type' });
             expect(validator.validate(field)).toBe(true);
         });
 
         it('should fail (display error) for radio buttons', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.RADIO_BUTTONS,
-                required: true,
-                options: [{ id: 'two', name: 'two' }]
+                "type": FormFieldTypes.RADIO_BUTTONS,
+                "required": true,
+                "options": [{ "id": 'two', "name": 'two' }]
             });
             field.value = 'one';
 
@@ -72,10 +72,10 @@ describe('FormFieldValidator', () => {
 
         it('should succeed for radio buttons', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.RADIO_BUTTONS,
-                required: true,
-                value: 'two',
-                options: [{ id: 'two', name: 'two' }]
+                "type": FormFieldTypes.RADIO_BUTTONS,
+                "required": true,
+                "value": 'two',
+                "options": [{ "id": 'two', "name": 'two' }]
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -83,9 +83,9 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) for upload', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.UPLOAD,
-                value: null,
-                required: true
+                "type": FormFieldTypes.UPLOAD,
+                "value": null,
+                "required": true
             });
 
             field.value = null;
@@ -97,9 +97,9 @@ describe('FormFieldValidator', () => {
 
         it('should succeed for upload', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.UPLOAD,
-                value: [{}],
-                required: true
+                "type": FormFieldTypes.UPLOAD,
+                "value": [{}],
+                "required": true
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -107,9 +107,9 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) for text', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                value: null,
-                required: true
+                "type": FormFieldTypes.TEXT,
+                "value": null,
+                "required": true
             });
 
             field.value = null;
@@ -121,9 +121,9 @@ describe('FormFieldValidator', () => {
 
         it('should succeed for date', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DATE,
-                value: '2016-12-31',
-                required: true
+                "type": FormFieldTypes.DATE,
+                "value": '2016-12-31',
+                "required": true
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -131,9 +131,9 @@ describe('FormFieldValidator', () => {
 
         it('should succeed for text', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                value: '<value>',
-                required: true
+                "type": FormFieldTypes.TEXT,
+                "value": '<value>',
+                "required": true
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -141,10 +141,10 @@ describe('FormFieldValidator', () => {
 
         it('should succeed for check box', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.BOOLEAN,
-                required: true,
-                value: true,
-                options: [{ id: 'two', name: 'two' }]
+                "type": FormFieldTypes.BOOLEAN,
+                "required": true,
+                "value": true,
+                "options": [{ "id": 'two', "name": 'two' }]
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -152,10 +152,10 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) for check box', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.BOOLEAN,
-                required: true,
-                value: false,
-                options: [{ id: 'two', name: 'two' }]
+                "type": FormFieldTypes.BOOLEAN,
+                "required": true,
+                "value": false,
+                "options": [{ "id": 'two', "name": 'two' }]
             });
             field.value = false;
 
@@ -189,8 +189,8 @@ describe('FormFieldValidator', () => {
 
         it('should allow empty number value', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: null
+                "type": FormFieldTypes.NUMBER,
+                "value": null
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -198,8 +198,8 @@ describe('FormFieldValidator', () => {
 
         it('should allow number value', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: 44
+                "type": FormFieldTypes.NUMBER,
+                "value": 44
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -207,8 +207,8 @@ describe('FormFieldValidator', () => {
 
         it('should allow zero number value', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: 0
+                "type": FormFieldTypes.NUMBER,
+                "value": 0
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -216,8 +216,8 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) for wrong number value', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: '<value>'
+                "type": FormFieldTypes.NUMBER,
+                "value": '<value>'
             });
 
             field.validationSummary = new ErrorMessageModel();
@@ -235,7 +235,7 @@ describe('FormFieldValidator', () => {
 
         it('should require minLength defined', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT
+                "type": FormFieldTypes.TEXT
             });
 
             expect(validator.isSupported(field)).toBe(false);
@@ -246,9 +246,9 @@ describe('FormFieldValidator', () => {
 
         it('should allow empty values', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                minLength: 10,
-                value: null
+                "type": FormFieldTypes.TEXT,
+                "minLength": 10,
+                "value": null
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -256,9 +256,9 @@ describe('FormFieldValidator', () => {
 
         it('should succeed text validation', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                minLength: 3,
-                value: '1234'
+                "type": FormFieldTypes.TEXT,
+                "minLength": 3,
+                "value": '1234'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -266,9 +266,9 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) text validation', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                minLength: 3,
-                value: '12'
+                "type": FormFieldTypes.TEXT,
+                "minLength": 3,
+                "value": '12'
             });
 
             field.validationSummary = new ErrorMessageModel();
@@ -286,7 +286,7 @@ describe('FormFieldValidator', () => {
 
         it('should require maxLength defined', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT
+                "type": FormFieldTypes.TEXT
             });
 
             expect(validator.isSupported(field)).toBe(false);
@@ -297,9 +297,9 @@ describe('FormFieldValidator', () => {
 
         it('should allow empty values', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                maxLength: 10,
-                value: null
+                "type": FormFieldTypes.TEXT,
+                "maxLength": 10,
+                "value": null
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -307,9 +307,9 @@ describe('FormFieldValidator', () => {
 
         it('should succeed text validation', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                maxLength: 3,
-                value: '123'
+                "type": FormFieldTypes.TEXT,
+                "maxLength": 3,
+                "value": '123'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -317,9 +317,9 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) text validation', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                maxLength: 3,
-                value: '1234'
+                "type": FormFieldTypes.TEXT,
+                "maxLength": 3,
+                "value": '1234'
             });
 
             field.validationSummary = new ErrorMessageModel();
@@ -337,7 +337,7 @@ describe('FormFieldValidator', () => {
 
         it('should require minValue defined', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER
+                "type": FormFieldTypes.NUMBER
             });
             expect(validator.isSupported(field)).toBe(false);
 
@@ -347,8 +347,8 @@ describe('FormFieldValidator', () => {
 
         it('should support numeric widgets only', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                minValue: '1'
+                "type": FormFieldTypes.NUMBER,
+                "minValue": '1'
             });
 
             expect(validator.isSupported(field)).toBe(true);
@@ -359,9 +359,9 @@ describe('FormFieldValidator', () => {
 
         it('should allow empty values', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: null,
-                minValue: '1'
+                "type": FormFieldTypes.NUMBER,
+                "value": null,
+                "minValue": '1'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -369,7 +369,7 @@ describe('FormFieldValidator', () => {
 
         it('should succeed for unsupported types', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT
+                "type": FormFieldTypes.TEXT
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -377,9 +377,9 @@ describe('FormFieldValidator', () => {
 
         it('should succeed validating value', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: '10',
-                minValue: '10'
+                "type": FormFieldTypes.NUMBER,
+                "value": '10',
+                "minValue": '10'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -387,9 +387,9 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) validating value', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: '9',
-                minValue: '10'
+                "type": FormFieldTypes.NUMBER,
+                "value": '9',
+                "minValue": '10'
             });
 
             field.validationSummary = new ErrorMessageModel();
@@ -407,7 +407,7 @@ describe('FormFieldValidator', () => {
 
         it('should require maxValue defined', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER
+                "type": FormFieldTypes.NUMBER
             });
             expect(validator.isSupported(field)).toBe(false);
 
@@ -417,8 +417,8 @@ describe('FormFieldValidator', () => {
 
         it('should support numeric widgets only', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                maxValue: '1'
+                "type": FormFieldTypes.NUMBER,
+                "maxValue": '1'
             });
 
             expect(validator.isSupported(field)).toBe(true);
@@ -429,9 +429,9 @@ describe('FormFieldValidator', () => {
 
         it('should allow empty values', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: null,
-                maxValue: '1'
+                "type": FormFieldTypes.NUMBER,
+                "value": null,
+                "maxValue": '1'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -439,7 +439,7 @@ describe('FormFieldValidator', () => {
 
         it('should succeed for unsupported types', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT
+                "type": FormFieldTypes.TEXT
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -447,9 +447,9 @@ describe('FormFieldValidator', () => {
 
         it('should succeed validating value', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: '10',
-                maxValue: '10'
+                "type": FormFieldTypes.NUMBER,
+                "value": '10',
+                "maxValue": '10'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -457,9 +457,9 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) validating value', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.NUMBER,
-                value: '11',
-                maxValue: '10'
+                "type": FormFieldTypes.NUMBER,
+                "value": '11',
+                "maxValue": '10'
             });
 
             field.validationSummary = new ErrorMessageModel();
@@ -477,7 +477,7 @@ describe('FormFieldValidator', () => {
 
         it('should require regex pattern to be defined', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT
+                "type": FormFieldTypes.TEXT
             });
             expect(validator.isSupported(field)).toBe(false);
 
@@ -487,9 +487,9 @@ describe('FormFieldValidator', () => {
 
         it('should allow empty values', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                value: null,
-                regexPattern: 'pattern'
+                "type": FormFieldTypes.TEXT,
+                "value": null,
+                "regexPattern": 'pattern'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -497,9 +497,9 @@ describe('FormFieldValidator', () => {
 
         it('should allow empty string values', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                value: '',
-                regexPattern: 'pattern'
+                "type": FormFieldTypes.TEXT,
+                "value": '',
+                "regexPattern": 'pattern'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -507,9 +507,9 @@ describe('FormFieldValidator', () => {
 
         it('should succeed validating regex', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                value: 'pattern',
-                regexPattern: 'pattern'
+                "type": FormFieldTypes.TEXT,
+                "value": 'pattern',
+                "regexPattern": 'pattern'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -517,9 +517,9 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) validating regex', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT,
-                value: 'some value',
-                regexPattern: 'pattern'
+                "type": FormFieldTypes.TEXT,
+                "value": 'some value',
+                "regexPattern": 'pattern'
             });
 
             expect(validator.validate(field)).toBe(false);
@@ -535,12 +535,12 @@ describe('FormFieldValidator', () => {
 
         it('should support only typeahead field', () => {
             let field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TEXT
+                "type": FormFieldTypes.TEXT
             });
             expect(validator.isSupported(field)).toBe(false);
 
             field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TYPEAHEAD
+                "type": FormFieldTypes.TYPEAHEAD
             });
 
             expect(validator.isSupported(field)).toBe(true);
@@ -548,9 +548,9 @@ describe('FormFieldValidator', () => {
 
         it('should allow empty values', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TYPEAHEAD,
-                value: null,
-                regexPattern: 'pattern'
+                "type": FormFieldTypes.TYPEAHEAD,
+                "value": null,
+                "regexPattern": 'pattern'
             });
 
             expect(validator.validate(field)).toBe(true);
@@ -558,11 +558,11 @@ describe('FormFieldValidator', () => {
 
         it('should succeed for a valid input value in options', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TYPEAHEAD,
-                value: '1',
-                options: [
-                    { id: '1', name: 'Leanne Graham' },
-                    { id: '2', name: 'Ervin Howell' }
+                "type": FormFieldTypes.TYPEAHEAD,
+                "value": '1',
+                "options": [
+                    { "id": '1', "name": 'Leanne Graham' },
+                    { "id": '2', "name": 'Ervin Howell' }
                 ]
             });
 
@@ -571,11 +571,11 @@ describe('FormFieldValidator', () => {
 
         it('should fail (display error) for an invalid input value in options', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.TYPEAHEAD,
-                value: 'Lean',
-                options: [
-                    { id: '1', name: 'Leanne Graham' },
-                    { id: '2', name: 'Ervin Howell' }
+                "type": FormFieldTypes.TYPEAHEAD,
+                "value": 'Lean',
+                "options": [
+                    { "id": '1', "name": 'Leanne Graham' },
+                    { "id": '2', "name": 'Ervin Howell' }
                 ]
             });
 
@@ -592,9 +592,9 @@ describe('FormFieldValidator', () => {
 
         it('should validate decimal with correct precision', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DECIMAL,
-                value: 1.22,
-                precision: 2
+                "type": FormFieldTypes.DECIMAL,
+                "value": 1.22,
+                "precision": 2
             });
 
             expect(decimalValidator.validate(field)).toBe(true);
@@ -602,9 +602,9 @@ describe('FormFieldValidator', () => {
 
         it('should return true when value is of lower precision', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DECIMAL,
-                value: 1.2,
-                precision: 2
+                "type": FormFieldTypes.DECIMAL,
+                "value": 1.2,
+                "precision": 2
             });
 
             expect(decimalValidator.validate(field)).toBe(true);
@@ -612,9 +612,9 @@ describe('FormFieldValidator', () => {
 
         it('should return false when value is of higher precision', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DECIMAL,
-                value: 1.22,
-                precision: 1
+                "type": FormFieldTypes.DECIMAL,
+                "value": 1.22,
+                "precision": 1
             });
 
             expect(decimalValidator.validate(field)).toBe(false);
@@ -622,9 +622,9 @@ describe('FormFieldValidator', () => {
 
         it('should validate decimal of wrong precision when value is of type string', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DECIMAL,
-                value: '1.22',
-                precision: 1
+                "type": FormFieldTypes.DECIMAL,
+                "value": '1.22',
+                "precision": 1
             });
 
             expect(decimalValidator.validate(field)).toBe(false);
@@ -632,9 +632,9 @@ describe('FormFieldValidator', () => {
 
         it('should return false, when value is a negative number and of correct precission', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DECIMAL,
-                value: -1.22,
-                precision: 1
+                "type": FormFieldTypes.DECIMAL,
+                "value": -1.22,
+                "precision": 1
             });
 
             expect(decimalValidator.validate(field)).toBe(false);
@@ -642,9 +642,9 @@ describe('FormFieldValidator', () => {
 
         it('should return true, when value is a positive number and of correct precission', () => {
             const field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.DECIMAL,
-                value: -1.22,
-                precision: 3
+                "type": FormFieldTypes.DECIMAL,
+                "value": -1.22,
+                "precision": 3
             });
 
             expect(decimalValidator.validate(field)).toBe(true);

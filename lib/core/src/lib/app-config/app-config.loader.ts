@@ -22,20 +22,18 @@ import { StoragePrefixFactory } from './app-config-storage-prefix.factory';
 
 /**
  * Create a factory to load app configuration
- *
  * @param appConfigService app config service
  * @param storageService storage service
  * @param adfHttpClient http client
  * @param storagePrefixFactory prefix factory
  * @returns factory function
  */
-export function loadAppConfig(
+export function loadAppConfig (
     appConfigService: AppConfigService,
     storageService: StorageService,
     adfHttpClient: AdfHttpClient,
     storagePrefixFactory: StoragePrefixFactory
-    ) {
-
+) {
     const init = () => {
         adfHttpClient.disableCsrf = appConfigService.get<boolean>(AppConfigValues.DISABLECSRF, true);
         storageService.prefix = appConfigService.get<string>(AppConfigValues.STORAGE_PREFIX, '');
@@ -45,4 +43,4 @@ export function loadAppConfig(
         });
     };
     return () => appConfigService.load(init);
-};
+}

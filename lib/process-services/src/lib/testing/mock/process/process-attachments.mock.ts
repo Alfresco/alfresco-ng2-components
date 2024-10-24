@@ -16,66 +16,66 @@
  */
 
 export const mockProcessAttachments: any = {
-    size: 2,
-    total: 2,
-    start: 0,
-    data: [
+    "size": 2,
+    "total": 2,
+    "start": 0,
+    "data": [
         {
-            id: 4001,
-            name: 'Invoice01.pdf',
-            created: '2017-05-12T12:50:05.522+0000',
-            createdBy: {
-                id: 1,
-                firstName: 'Apps',
-                lastName: 'Administrator',
-                email: 'admin@app.activiti.com',
-                company: 'Alfresco.com',
-                pictureId: 3003
+            "id": 4001,
+            "name": 'Invoice01.pdf',
+            "created": '2017-05-12T12:50:05.522+0000',
+            "createdBy": {
+                "id": 1,
+                "firstName": 'Apps',
+                "lastName": 'Administrator',
+                "email": 'admin@app.activiti.com',
+                "company": 'Alfresco.com',
+                "pictureId": 3003
             },
-            relatedContent: true,
-            contentAvailable: true,
-            link: false,
-            mimeType: 'application/pdf',
-            simpleType: 'pdf',
-            previewStatus: 'created',
-            thumbnailStatus: 'created'
+            "relatedContent": true,
+            "contentAvailable": true,
+            "link": false,
+            "mimeType": 'application/pdf',
+            "simpleType": 'pdf',
+            "previewStatus": 'created',
+            "thumbnailStatus": 'created'
         },
         {
-            id: 4002,
-            name: 'Invoice02.pdf',
-            created: '2017-05-12T12:50:05.522+0000',
-            createdBy: {
-                id: 1,
-                firstName: 'Apps',
-                lastName: 'Administrator',
-                email: 'admin@app.activiti.com',
-                company: 'Alfresco.com',
-                pictureId: 3003
+            "id": 4002,
+            "name": 'Invoice02.pdf',
+            "created": '2017-05-12T12:50:05.522+0000',
+            "createdBy": {
+                "id": 1,
+                "firstName": 'Apps',
+                "lastName": 'Administrator',
+                "email": 'admin@app.activiti.com',
+                "company": 'Alfresco.com',
+                "pictureId": 3003
             },
-            relatedContent: true,
-            contentAvailable: true,
-            link: false,
-            mimeType: 'application/pdf',
-            simpleType: 'pdf',
-            previewStatus: 'created',
-            thumbnailStatus: 'created'
+            "relatedContent": true,
+            "contentAvailable": true,
+            "link": false,
+            "mimeType": 'application/pdf',
+            "simpleType": 'pdf',
+            "previewStatus": 'created',
+            "thumbnailStatus": 'created'
         }
     ]
 };
 
 export const mockEmittedProcessAttachments = [
     {
-        id: 4001,
-        name: 'Invoice01.pdf',
-        created: '2017-05-12T12:50:05.522+0000',
-        createdBy: 'Apps Administrator',
-        icon: './assets/images/ft_ic_pdf.svg'
+        "id": 4001,
+        "name": 'Invoice01.pdf',
+        "created": '2017-05-12T12:50:05.522+0000',
+        "createdBy": 'Apps Administrator',
+        "icon": './assets/images/ft_ic_pdf.svg'
     },
     {
-        id: 4002,
-        name: 'Invoice02.pdf',
-        created: '2017-05-12T12:50:05.522+0000',
-        createdBy: 'Apps Administrator',
-        icon: './assets/images/ft_ic_pdf.svg'
+        "id": 4002,
+        "name": 'Invoice02.pdf',
+        "created": '2017-05-12T12:50:05.522+0000',
+        "createdBy": 'Apps Administrator',
+        "icon": './assets/images/ft_ic_pdf.svg'
     }
 ];

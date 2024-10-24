@@ -27,7 +27,7 @@ import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class DocumentActionsService {
     permissionEvent = new Subject<PermissionModel>();
@@ -36,7 +36,7 @@ export class DocumentActionsService {
 
     private handlers: { [id: string]: ContentActionHandler } = {};
 
-    constructor(
+    constructor (
         private nodeActionsService: NodeActionsService,
         private contentNodeDialogService: ContentNodeDialogService,
         private translation: TranslationService,
@@ -48,11 +48,10 @@ export class DocumentActionsService {
 
     /**
      * Gets the handler for an action.
-     *
      * @param key Identifier of the action
      * @returns The handler for the action
      */
-    getHandler(key: string): ContentActionHandler {
+    getHandler (key: string): ContentActionHandler {
         if (key) {
             const lKey = key.toLowerCase();
             return this.handlers[lKey] || null;
@@ -62,12 +61,11 @@ export class DocumentActionsService {
 
     /**
      * Sets a new handler for an action.
-     *
      * @param key Identifier of the action
      * @param handler Handler for the action
      * @returns False if the key was an empty/null string, true otherwise
      */
-    setHandler(key: string, handler: ContentActionHandler): boolean {
+    setHandler (key: string, handler: ContentActionHandler): boolean {
         if (key) {
             const lKey = key.toLowerCase();
             this.handlers[lKey] = handler;
@@ -78,15 +76,14 @@ export class DocumentActionsService {
 
     /**
      * Checks if actions can be executed for an item.
-     *
      * @param nodeEntry Item to receive an action
      * @returns True if the action can be executed on this item, false otherwise
      */
-    canExecuteAction(nodeEntry: NodeEntry): boolean {
+    canExecuteAction (nodeEntry: NodeEntry): boolean {
         return this.documentListService && nodeEntry && nodeEntry.entry.isFile === true;
     }
 
-    private setupActionHandlers() {
+    private setupActionHandlers () {
         this.handlers['copy'] = this.copyNode.bind(this);
         this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
@@ -94,43 +91,43 @@ export class DocumentActionsService {
         this.handlers['lock'] = this.lockNode.bind(this);
     }
 
-    private lockNode(node: NodeEntry) {
+    private lockNode (node: NodeEntry) {
         return this.contentNodeDialogService.openLockNodeDialog(node.entry);
     }
 
-    private downloadNode(obj: NodeEntry) {
+    private downloadNode (obj: NodeEntry) {
         this.nodeActionsService.downloadNode(obj);
     }
 
-    private copyNode(node: NodeEntry, _target?: any, permission?: string) {
+    private copyNode (node: NodeEntry, _target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.copyContent(node.entry, permission);
         this.prepareHandlers(actionObservable);
         return actionObservable;
     }
 
-    private moveNode(node: NodeEntry, _target?: any, permission?: string) {
+    private moveNode (node: NodeEntry, _target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.moveContent(node.entry, permission);
         this.prepareHandlers(actionObservable);
         return actionObservable;
     }
 
-    private prepareHandlers(actionObservable: Subject<string>): void {
+    private prepareHandlers (actionObservable: Subject<string>): void {
         actionObservable.subscribe((fileOperationMessage) => {
             this.success.next(fileOperationMessage);
         }, this.error.next.bind(this.error));
     }
 
-    private deleteNode(node: NodeEntry, _target?: any, permission?: string): Observable<any> {
+    private deleteNode (node: NodeEntry, _target?: any, permission?: string): Observable<any> {
         if (this.canExecuteAction(node)) {
             if (this.contentService.hasAllowableOperations(node.entry, permission)) {
                 const handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(
                     () => {
-                        const message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });
+                        const message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { "name": node.entry.name });
                         this.success.next(message);
                     },
                     () => {
-                        const message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { name: node.entry.name });
+                        const message = this.translation.instant('CORE.DELETE_NODE.ERROR_SINGULAR', { "name": node.entry.name });
                         this.error.next(message);
                     }
                 );
@@ -138,8 +135,8 @@ export class DocumentActionsService {
             } else {
                 this.permissionEvent.next(
                     new PermissionModel({
-                        type: 'content',
-                        action: 'delete',
+                        "type": 'content',
+                        "action": 'delete',
                         permission
                     })
                 );

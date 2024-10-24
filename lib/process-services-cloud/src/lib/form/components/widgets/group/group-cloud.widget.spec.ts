@@ -32,9 +32,9 @@ describe('GroupCloudWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [GroupCloudWidgetComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [GroupCloudWidgetComponent],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(GroupCloudWidgetComponent);
         widget = fixture.componentInstance;
@@ -48,9 +48,9 @@ describe('GroupCloudWidgetComponent', () => {
 
     it('should have enabled validation if field is NOT readOnly', () => {
         const readOnly = false;
-        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
-            type: FormFieldTypes.GROUP,
-            value: []
+        widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }, null, readOnly), {
+            "type": FormFieldTypes.GROUP,
+            "value": []
         });
         fixture.detectChanges();
 
@@ -59,9 +59,9 @@ describe('GroupCloudWidgetComponent', () => {
 
     describe('when tooltip is set', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.GROUP,
-                tooltip: 'my custom tooltip'
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.GROUP,
+                "tooltip": 'my custom tooltip'
             });
             fixture.detectChanges();
         });
@@ -79,9 +79,9 @@ describe('GroupCloudWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.GROUP,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.GROUP,
+                "required": true
             });
         });
 
@@ -111,7 +111,7 @@ describe('GroupCloudWidgetComponent', () => {
         });
 
         it('should be invalid after deselecting all groups', async () => {
-            widget.onChangedGroup([{ id: 'test-id', name: 'test-name' }]);
+            widget.onChangedGroup([{ "id": 'test-id', "name": 'test-name' }]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -134,14 +134,14 @@ describe('GroupCloudWidgetComponent', () => {
         it('should single chip be disabled', async () => {
             const mockSpaghetti: IdentityGroupModel[] = [
                 {
-                    id: 'bolognese',
-                    name: 'Bolognese'
+                    "id": 'bolognese',
+                    "name": 'Bolognese'
                 }
             ];
 
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
-                type: FormFieldTypes.GROUP,
-                value: mockSpaghetti
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }, null, readOnly), {
+                "type": FormFieldTypes.GROUP,
+                "value": mockSpaghetti
             });
 
             const groupChip = await loader.getHarness(MatChipHarness);
@@ -150,13 +150,13 @@ describe('GroupCloudWidgetComponent', () => {
 
         it('should multi chips be disabled', async () => {
             const mockSpaghetti: IdentityGroupModel[] = [
-                { id: 'bolognese', name: 'Bolognese' },
-                { id: 'carbonara', name: 'Carbonara' }
+                { "id": 'bolognese', "name": 'Bolognese' },
+                { "id": 'carbonara', "name": 'Carbonara' }
             ];
 
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
-                type: FormFieldTypes.GROUP,
-                value: mockSpaghetti
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }, null, readOnly), {
+                "type": FormFieldTypes.GROUP,
+                "value": mockSpaghetti
             });
 
             const groupChips = await loader.getAllHarnesses(MatChipHarness);
@@ -165,9 +165,9 @@ describe('GroupCloudWidgetComponent', () => {
         });
 
         it('should have disabled validation', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }, null, readOnly), {
-                type: FormFieldTypes.GROUP,
-                value: []
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }, null, readOnly), {
+                "type": FormFieldTypes.GROUP,
+                "value": []
             });
             fixture.detectChanges();
 
@@ -177,13 +177,13 @@ describe('GroupCloudWidgetComponent', () => {
 
     describe('when form model has left labels', () => {
         it('should have left labels classes on leftLabels true', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                id: 'group-id',
-                name: 'group-name',
-                value: '',
-                type: FormFieldTypes.GROUP,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": true }), {
+                "id": 'group-id',
+                "name": 'group-name',
+                "value": '',
+                "type": FormFieldTypes.GROUP,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -197,13 +197,13 @@ describe('GroupCloudWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels false', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                id: 'group-id',
-                name: 'group-name',
-                value: '',
-                type: FormFieldTypes.GROUP,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": false }), {
+                "id": 'group-id',
+                "name": 'group-name',
+                "value": '',
+                "type": FormFieldTypes.GROUP,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -217,13 +217,13 @@ describe('GroupCloudWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels not present', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'group-id',
-                name: 'group-name',
-                value: '',
-                type: FormFieldTypes.GROUP,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'group-id',
+                "name": 'group-name',
+                "value": '',
+                "type": FormFieldTypes.GROUP,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();

@@ -17,17 +17,15 @@
 
 /** Base cancellable event implementation */
 export class BaseEvent<T> {
-
     private isDefaultPrevented: boolean = false;
 
     value: T;
 
-    get defaultPrevented() {
+    get defaultPrevented () {
         return this.isDefaultPrevented;
     }
 
-    preventDefault() {
+    preventDefault () {
         this.isDefaultPrevented = true;
     }
-
 }

@@ -39,18 +39,18 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-search',
-    standalone: true,
-    imports: [CommonModule, TranslateModule],
-    templateUrl: './search.component.html',
-    styleUrls: ['./search.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    preserveWhitespaces: false,
-    exportAs: 'searchAutocomplete',
-    host: { class: 'adf-search' }
+    "selector": 'adf-search',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule],
+    "templateUrl": './search.component.html',
+    "styleUrls": ['./search.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "preserveWhitespaces": false,
+    "exportAs": 'searchAutocomplete',
+    "host": { "class": 'adf-search' }
 })
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges, OnDestroy {
-    @ViewChild('panel', { static: true })
+    @ViewChild('panel', { "static": true })
     panel: ElementRef;
 
     @ContentChild(TemplateRef)
@@ -78,7 +78,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     /** CSS class for display. */
     // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('class')
-    set classList(classList: string) {
+    set classList (classList: string) {
         if (classList?.length) {
             classList.split(' ').forEach((className) => (this._classList[className.trim()] = true));
             this._elementRef.nativeElement.className = '';
@@ -96,11 +96,11 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     showPanel: boolean = false;
     results: NodePaging;
 
-    get isOpen(): boolean {
+    get isOpen (): boolean {
         return this._isOpen && this.showPanel;
     }
 
-    set isOpen(value: boolean) {
+    set isOpen (value: boolean) {
         this._isOpen = value;
     }
 
@@ -109,7 +109,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     _classList: { [key: string]: boolean } = {};
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private searchService: SearchService, private _elementRef: ElementRef) {
+    constructor (private searchService: SearchService, private _elementRef: ElementRef) {
         this.keyPressedStream.pipe(debounceTime(200), takeUntil(this.onDestroy$)).subscribe((searchedWord) => {
             this.loadSearchResults(searchedWord);
         });
@@ -120,37 +120,37 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
         );
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.setVisibility();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes.searchTerm?.currentValue) {
             this.loadSearchResults(changes.searchTerm.currentValue);
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    resetResults() {
+    resetResults () {
         this.cleanResults();
         this.setVisibility();
     }
 
-    reload() {
+    reload () {
         this.loadSearchResults(this.searchTerm);
     }
 
-    private cleanResults() {
+    private cleanResults () {
         if (this.results) {
             this.results = {};
         }
     }
 
-    private loadSearchResults(searchTerm?: string) {
+    private loadSearchResults (searchTerm?: string) {
         this.resetResults();
         if (searchTerm) {
             this.searchService.search(searchTerm, this.maxResults, this.skipResults).subscribe(
@@ -162,7 +162,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
         }
     }
 
-    onSearchDataLoaded(resultSetPaging: ResultSetPaging) {
+    onSearchDataLoaded (resultSetPaging: ResultSetPaging) {
         if (resultSetPaging) {
             this.results = resultSetPaging as NodePaging;
             this.resultLoaded.emit(this.results);
@@ -171,14 +171,14 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
         }
     }
 
-    onSearchDataError(error: { status: number }) {
+    onSearchDataError (error: { status: number }) {
         if (error?.status !== 400) {
             this.results = null;
             this.error.emit(error);
         }
     }
 
-    hidePanel() {
+    hidePanel () {
         if (this.isOpen) {
             this._classList['adf-search-show'] = false;
             this._classList['adf-search-hide'] = true;
@@ -186,7 +186,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
         }
     }
 
-    setVisibility() {
+    setVisibility () {
         this.showPanel = !!this.results && !!this.results.list;
         this._classList['adf-search-show'] = this.showPanel;
         this._classList['adf-search-hide'] = !this.showPanel;

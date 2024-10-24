@@ -19,19 +19,18 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 
 describe('FormOutcomeModel', () => {
-
     it('should setup with json config', () => {
         const json = {
-            id: '<id>',
-            name: '<name>',
-            visibilityCondition: {
-                leftType: 'field',
-                leftValue: 'TextOne',
-                operator: '==',
-                rightValue: 'showTab',
-                rightType: 'value',
-                nextConditionOperator: '',
-                nextCondition: null
+            "id": '<id>',
+            "name": '<name>',
+            "visibilityCondition": {
+                "leftType": 'field',
+                "leftValue": 'TextOne',
+                "operator": '==',
+                "rightValue": 'showTab',
+                "rightType": 'value',
+                "nextConditionOperator": '',
+                "nextCondition": null
             }
         };
         const model = new FormOutcomeModel(null, json);

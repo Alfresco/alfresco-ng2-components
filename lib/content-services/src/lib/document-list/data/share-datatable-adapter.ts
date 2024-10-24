@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    DataColumn,
-    DataRow,
-    DataSorting,
-    DataTableAdapter,
-    ThumbnailService
-} from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, DataTableAdapter, ThumbnailService } from '@alfresco/adf-core';
 import { NodePaging, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { ShareDataRow } from './share-data-row.model';
@@ -45,7 +39,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     selectedRow: DataRow;
     allowDropFiles: boolean;
 
-    set sortingMode(value: string) {
+    set sortingMode (value: string) {
         let newValue = (value || 'client').toLowerCase();
         if (newValue !== 'client' && newValue !== 'server') {
             newValue = 'client';
@@ -53,16 +47,18 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this._sortingMode = newValue;
     }
 
-    get sortingMode(): string {
+    get sortingMode (): string {
         return this._sortingMode;
     }
 
-    constructor(private thumbnailService: ThumbnailService,
-                private contentService: ContentService,
-                schema: DataColumn[] = [],
-                sorting?: DataSorting,
-                sortingMode: string = 'client',
-                allowDropFiles: boolean = false) {
+    constructor (
+        private thumbnailService: ThumbnailService,
+        private contentService: ContentService,
+        schema: DataColumn[] = [],
+        sorting?: DataSorting,
+        sortingMode: string = 'client',
+        allowDropFiles: boolean = false
+    ) {
         this.rows = [];
         this.columns = schema || [];
         this.sorting = sorting;
@@ -70,29 +66,29 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.allowDropFiles = allowDropFiles;
     }
 
-    getColumnType(_row: DataRow, col: DataColumn): string {
+    getColumnType (_row: DataRow, col: DataColumn): string {
         return col.type;
     }
 
-    getRows(): Array<DataRow> {
+    getRows (): Array<DataRow> {
         return this.rows;
     }
 
     // TODO: disable this api
-    setRows(rows: Array<DataRow>) {
+    setRows (rows: Array<DataRow>) {
         this.rows = rows || [];
         this.sort();
     }
 
-    getColumns(): Array<DataColumn> {
+    getColumns (): Array<DataColumn> {
         return this.columns;
     }
 
-    setColumns(columns: Array<DataColumn>) {
+    setColumns (columns: Array<DataColumn>) {
         this.columns = columns || [];
     }
 
-    getValue(row: DataRow, col: DataColumn): any {
+    getValue (row: DataRow, col: DataColumn): any {
         if (!row) {
             throw new Error(ERR_ROW_NOT_FOUND);
         }
@@ -106,7 +102,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (col.key === '$thumbnail') {
-
             if (this.imageResolver) {
                 const resolved = this.imageResolver(row, col);
                 if (resolved) {
@@ -137,7 +132,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (col.type === 'image') {
-
             if (this.imageResolver) {
                 const resolved = this.imageResolver(row, col);
                 if (resolved) {
@@ -149,16 +143,14 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         return dataRow.cacheValue(col.key, value);
     }
 
-
     /**
      * Gets a thumbnail URL for the given document node.
-     *
      * @param node Node or Node ID to get URL for.
      * @param attachment Toggles whether to retrieve content as an attachment for download
      * @param ticket Custom ticket to use for authentication
      * @returns URL string
      */
-    private getDocumentThumbnailUrl(node: NodeEntry, attachment?: boolean, ticket?: string): string {
+    private getDocumentThumbnailUrl (node: NodeEntry, attachment?: boolean, ticket?: string): string {
         let resultUrl: string;
 
         if (node) {
@@ -176,17 +168,17 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         return resultUrl || this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
     }
 
-    getSorting(): DataSorting {
+    getSorting (): DataSorting {
         return this.sorting;
     }
 
-    setSorting(sorting: DataSorting): void {
+    setSorting (sorting: DataSorting): void {
         this.sorting = sorting;
 
         this.sortRows(this.rows, this.sorting);
     }
 
-    sort(key?: string, direction?: string): void {
+    sort (key?: string, direction?: string): void {
         const sorting = this.sorting || new DataSorting();
         if (key) {
             sorting.key = key;
@@ -195,15 +187,15 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.setSorting(sorting);
     }
 
-    setFilter(filter: RowFilter) {
+    setFilter (filter: RowFilter) {
         this.filter = filter;
     }
 
-    setImageResolver(resolver: any) {
+    setImageResolver (resolver: any) {
         this.imageResolver = resolver;
     }
 
-    private getFolderIcon(node: any) {
+    private getFolderIcon (node: any) {
         if (this.isSmartFolder(node)) {
             return this.thumbnailService.getMimeTypeIcon('smartFolder');
         } else if (this.isRuleFolder(node)) {
@@ -215,28 +207,26 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    isSmartFolder(node: any) {
+    isSmartFolder (node: any) {
         const nodeAspects = this.getNodeAspectNames(node);
-        return nodeAspects.indexOf('smf:customConfigSmartFolder') > -1 ||
-            (nodeAspects.indexOf('smf:systemConfigSmartFolder') > -1);
+        return nodeAspects.indexOf('smf:customConfigSmartFolder') > -1 || nodeAspects.indexOf('smf:systemConfigSmartFolder') > -1;
     }
 
-    isRuleFolder(node: any) {
+    isRuleFolder (node: any) {
         const nodeAspects = this.getNodeAspectNames(node);
-        return nodeAspects.indexOf('rule:rules') > -1 ||
-            (nodeAspects.indexOf('rule:rules') > -1);
+        return nodeAspects.indexOf('rule:rules') > -1 || nodeAspects.indexOf('rule:rules') > -1;
     }
 
-    isALinkFolder(node: any) {
+    isALinkFolder (node: any) {
         const nodeType = node.entry ? node.entry.nodeType : node.nodeType;
         return nodeType === 'app:folderlink';
     }
 
-    private getNodeAspectNames(node: any): any[] {
-        return node.entry?.aspectNames ? node.entry.aspectNames : (node.aspectNames ? node.aspectNames : []);
+    private getNodeAspectNames (node: any): any[] {
+        return node.entry?.aspectNames ? node.entry.aspectNames : node.aspectNames ? node.aspectNames : [];
     }
 
-    private sortRows(rows: DataRow[], sorting: DataSorting) {
+    private sortRows (rows: DataRow[], sorting: DataSorting) {
         if (this.sortingMode === 'server') {
             return;
         }
@@ -244,7 +234,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         const options: Intl.CollatorOptions = {};
 
         if (sorting?.key && rows?.length) {
-
             if (sorting.key.includes('sizeInBytes') || sorting.key === 'name') {
                 options.numeric = true;
             }
@@ -256,26 +245,24 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
                 let left = a.getValue(sorting.key);
                 if (left) {
-                    left = (left instanceof Date) ? left.valueOf().toString() : left.toString();
+                    left = left instanceof Date ? left.valueOf().toString() : left.toString();
                 } else {
                     left = '';
                 }
 
                 let right = b.getValue(sorting.key);
                 if (right) {
-                    right = (right instanceof Date) ? right.valueOf().toString() : right.toString();
+                    right = right instanceof Date ? right.valueOf().toString() : right.toString();
                 } else {
                     right = '';
                 }
 
-                return sorting.direction === 'asc'
-                    ? left.localeCompare(right, undefined, options)
-                    : right.localeCompare(left, undefined, options);
+                return sorting.direction === 'asc' ? left.localeCompare(right, undefined, options) : right.localeCompare(left, undefined, options);
             });
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean) {
+    public loadPage (nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -283,7 +270,9 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (nodePaging?.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries?.length) {
-                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService, this.allowDropFiles));
+                shareDataRows = nodeEntries.map(
+                    (item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService, this.allowDropFiles)
+                );
 
                 if (this.filter) {
                     shareDataRows = shareDataRows.filter(this.filter);
@@ -321,11 +310,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    getSelectedRows(): DataRow[] {
+    getSelectedRows (): DataRow[] {
         return this.rows.filter((row: DataRow) => row.isSelected);
     }
 
-    getRowByNodeId(nodeId: string): DataRow {
-       return this.rows.find((row: DataRow) => row.node.entry.id === nodeId);
+    getRowByNodeId (nodeId: string): DataRow {
+        return this.rows.find((row: DataRow) => row.node.entry.id === nodeId);
     }
 }

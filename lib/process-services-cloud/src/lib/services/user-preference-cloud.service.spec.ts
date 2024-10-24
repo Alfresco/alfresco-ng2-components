@@ -27,14 +27,14 @@ describe('PreferenceService', () => {
     let requestSpy: jasmine.Spy;
 
     const errorResponse = {
-        error: 'Mock Error',
-        state: 404,
-        stateText: 'Not Found'
+        "error": 'Mock Error',
+        "state": 404,
+        "stateText": 'Not Found'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         service = TestBed.inject(UserPreferenceCloudService);
         adfHttpClient = TestBed.inject(AdfHttpClient);

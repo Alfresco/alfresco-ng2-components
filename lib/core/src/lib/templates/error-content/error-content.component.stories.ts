@@ -23,56 +23,56 @@ import { of } from 'rxjs';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: ErrorContentComponent,
-    title: 'Core/Template/Error Content',
-    decorators: [
+    "component": ErrorContentComponent,
+    "title": 'Core/Template/Error Content',
+    "decorators": [
         moduleMetadata({
-            imports: [ErrorContentComponent],
-            providers: [{ provide: ActivatedRoute, useValue: { params: of({}) } }]
+            "imports": [ErrorContentComponent],
+            "providers": [{ "provide": ActivatedRoute, "useValue": { "params": of({}) } }]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Displays information about a specific error.`
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Displays information about a specific error.`
             }
         }
     },
-    argTypes: {
-        errorCode: {
-            control: 'text',
-            description: 'Error code associated with this error.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'UNKNOWN' }
+    "argTypes": {
+        "errorCode": {
+            "control": 'text',
+            "description": 'Error code associated with this error.',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'UNKNOWN' }
             }
         },
-        errorContentActions: {
-            name: 'with adf-error-content-actions selector',
-            control: 'boolean',
-            description: 'Showcase content projection with <span style="color:red">adf-error-content-actions</span> selector',
-            table: {
-                category: 'Content Projection',
-                type: {
-                    summary: 'code',
-                    detail: '<div adf-error-content-actions>\n  <button>MyAction</button>\n</div>'
+        "errorContentActions": {
+            "name": 'with adf-error-content-actions selector',
+            "control": 'boolean',
+            "description": 'Showcase content projection with <span style="color:red">adf-error-content-actions</span> selector',
+            "table": {
+                "category": 'Content Projection',
+                "type": {
+                    "summary": 'code',
+                    "detail": '<div adf-error-content-actions>\n  <button>MyAction</button>\n</div>'
                 },
-                defaultValue: { summary: 'false' }
+                "defaultValue": { "summary": 'false' }
             }
         }
     },
-    args: {
-        errorCode: 'UNKNOWN',
-        errorContentActions: false
+    "args": {
+        "errorCode": 'UNKNOWN',
+        "errorContentActions": false
     }
 } as Meta<ErrorContentComponent>;
 
 const template: StoryFn<ErrorContentComponent> = (args: ErrorContentComponent & { errorContentActions: boolean }) => ({
-    props: args,
-    template: `
+    "props": args,
+    "template": `
     <adf-error-content errorCode="${args.errorCode}">
         <div adf-error-content-actions *ngIf="${args.errorContentActions}">
         <button mat-raised-button type="button">MyAction</button>
@@ -81,4 +81,4 @@ const template: StoryFn<ErrorContentComponent> = (args: ErrorContentComponent & 
 });
 
 export const ErrorContent = template.bind({});
-ErrorContent.parameters = { layout: 'centered' };
+ErrorContent.parameters = { "layout": 'centered' };

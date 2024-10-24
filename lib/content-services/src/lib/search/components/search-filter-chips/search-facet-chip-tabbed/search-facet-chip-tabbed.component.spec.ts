@@ -34,21 +34,21 @@ describe('SearchFacetChipTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [NO_ERRORS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(SearchFacetChipTabbedComponent);
         component = fixture.componentInstance;
 
-        const facet1: FacetField = { type: 'field', label: 'field', field: 'field', buckets: new SearchFilterList() };
-        const facet2: FacetField = { type: 'field', label: 'field2', field: 'field2', buckets: new SearchFilterList() };
+        const facet1: FacetField = { "type": 'field', "label": 'field', "field": 'field', "buckets": new SearchFilterList() };
+        const facet2: FacetField = { "type": 'field', "label": 'field2', "field": 'field2', "buckets": new SearchFilterList() };
 
         component.tabbedFacet = {
-            fields: ['field', 'field2'],
-            label: 'LABEL',
-            facets: {
-                field: facet1,
-                field2: facet2
+            "fields": ['field', 'field2'],
+            "label": 'LABEL',
+            "facets": {
+                "field": facet1,
+                "field2": facet2
             }
         };
         fixture.detectChanges();
@@ -57,20 +57,18 @@ describe('SearchFacetChipTabbedComponent', () => {
 
     /**
      * Get the filter display value
-     *
      * @returns filter value
      */
-    function getDisplayValue(): string {
+    function getDisplayValue (): string {
         return fixture.debugElement.query(By.css('.adf-search-filter-ellipsis.adf-filter-value')).nativeElement.innerText.trim();
     }
 
     /**
      * Emit the event for the tabbed content
-     *
      * @param eventName event name to trigger
      * @param event event to trigger
      */
-    function emitChildEvent(eventName: string, event: any) {
+    function emitChildEvent (eventName: string, event: any) {
         const debugElem = fixture.debugElement.query(By.css('adf-search-facet-tabbed-content'));
         debugElem.triggerEventHandler(eventName, event);
         fixture.detectChanges();

@@ -25,9 +25,9 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
-    selector: '[adf-share]',
-    standalone: true,
-    exportAs: 'adfShare'
+    "selector": '[adf-share]',
+    "standalone": true,
+    "exportAs": 'adfShare'
 })
 export class NodeSharedDirective implements OnChanges, OnDestroy {
     isFile: boolean = false;
@@ -45,19 +45,19 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
     private onDestroy$ = new Subject<boolean>();
 
     _nodesApi: NodesApi;
-    get nodesApi(): NodesApi {
+    get nodesApi (): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.alfrescoApiService.getInstance());
         return this._nodesApi;
     }
 
-    constructor(private dialog: MatDialog, private zone: NgZone, private alfrescoApiService: AlfrescoApiService) {}
+    constructor (private dialog: MatDialog, private zone: NgZone, private alfrescoApiService: AlfrescoApiService) {}
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    shareNode(nodeEntry: NodeEntry) {
+    shareNode (nodeEntry: NodeEntry) {
         if (nodeEntry?.entry?.isFile) {
             // shared and favorite
             const nodeId = nodeEntry.entry['nodeId'] || nodeEntry.entry['guid'];
@@ -72,26 +72,26 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
         }
     }
 
-    private getNodeInfo(nodeId: string): Observable<NodeEntry> {
+    private getNodeInfo (nodeId: string): Observable<NodeEntry> {
         const options = {
-            include: ['allowableOperations']
+            "include": ['allowableOperations']
         };
 
         return from(this.nodesApi.getNode(nodeId, options));
     }
 
-    private openShareLinkDialog(node: NodeEntry) {
+    private openShareLinkDialog (node: NodeEntry) {
         this.dialog.open(ShareDialogComponent, {
-            width: '600px',
-            panelClass: 'adf-share-link-dialog',
-            data: {
+            "width": '600px',
+            "panelClass": 'adf-share-link-dialog',
+            "data": {
                 node,
-                baseShareUrl: this.baseShareUrl
+                "baseShareUrl": this.baseShareUrl
             }
         });
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         this.zone.onStable.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             if (this.node?.entry) {
                 this.isFile = this.node.entry.isFile;
@@ -101,7 +101,7 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
     }
 
     @HostListener('click')
-    onClick() {
+    onClick () {
         if (this.node) {
             this.shareNode(this.node);
         }

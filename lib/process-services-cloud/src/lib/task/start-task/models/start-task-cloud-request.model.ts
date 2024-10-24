@@ -27,7 +27,7 @@ export class StartTaskCloudRequestModel {
     payloadType: string;
     formKey: string;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         if (obj) {
             this.name = obj.name || null;
             this.description = obj.description || null;

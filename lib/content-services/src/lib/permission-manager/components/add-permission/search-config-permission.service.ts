@@ -26,30 +26,30 @@ export interface QueryProvider {
 
 @Injectable()
 export class SearchPermissionConfigurationService implements SearchConfigurationInterface {
-    constructor(
+    constructor (
         @Optional()
         @Inject(SEARCH_QUERY_TOKEN)
         private queryProvider: QueryProvider
     ) {}
 
-    public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
+    public generateQueryBody (searchTerm: string, maxResults: number, skipCount: number): SearchRequest {
         return {
-            query: {
-                query: this.getQuery(searchTerm)
+            "query": {
+                "query": this.getQuery(searchTerm)
             },
-            include: ['properties', 'aspectNames'],
-            paging: {
-                maxItems: maxResults,
+            "include": ['properties', 'aspectNames'],
+            "paging": {
+                "maxItems": maxResults,
                 skipCount
             },
-            filterQueries: [
+            "filterQueries": [
                 /* eslint-disable-next-line */
                 { query: "TYPE:'cm:authority'" }
             ]
         };
     }
 
-    private getQuery(searchTerm: string) {
+    private getQuery (searchTerm: string) {
         let query: string;
         if (this.queryProvider?.query) {
             query = this.queryProvider.query.replace(new RegExp(/\${([^}]+)}/g), searchTerm);

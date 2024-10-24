@@ -29,7 +29,7 @@ import { ProcessCommonModule } from '../../common/process-common.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
 
 @NgModule({
-    imports: [
+    "imports": [
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -40,7 +40,7 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         ProcessCommonModule,
         PeopleCloudModule
     ],
-    declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
-    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]
+    "declarations": [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
+    "exports": [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent]
 })
 export class ProcessFiltersCloudModule { }

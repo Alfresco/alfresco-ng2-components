@@ -25,12 +25,12 @@ export type ButtonVariant = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | '
 export type ButtonColor = ThemePalette;
 
 @Component({
-    selector: 'adf-button',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule, MatIconModule],
-    templateUrl: './button.component.html',
-    styleUrls: ['./button.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-button',
+    "standalone": true,
+    "imports": [CommonModule, MatButtonModule, MatIconModule],
+    "templateUrl": './button.component.html',
+    "styleUrls": ['./button.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ButtonComponent {
     @Input() uid?: string;

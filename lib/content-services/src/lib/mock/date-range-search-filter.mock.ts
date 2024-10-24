@@ -18,32 +18,32 @@
 import { SearchCategory } from '../search/models/search-category.interface';
 
 export const mockSearchFilterWithoutDisplayedLabelsByField: SearchCategory = {
-    id : 'test',
-    name: 'test',
-    expanded: false,
-    enabled: true,
-    component: {
-        selector: 'date-range',
-        settings: {
-            pattern: `test:'(.*?)'`,
-            field: 'test',
-            placeholder: 'test placeholder'
+    "id": 'test',
+    "name": 'test',
+    "expanded": false,
+    "enabled": true,
+    "component": {
+        "selector": 'date-range',
+        "settings": {
+            "pattern": `test:'(.*?)'`,
+            "field": 'test',
+            "placeholder": 'test placeholder'
         }
     }
 };
 
 export const mockSearchFilterWithWrongDisplayedLabelsByField: SearchCategory = {
-    id : 'test',
-    name: 'test',
-    expanded: false,
-    enabled: true,
-    component: {
-        selector: 'date-range',
-        settings: {
-            pattern: `test:'(.*?)'`,
-            field: 'test',
-            placeholder: 'test placeholder',
-            displayedLabelsByField: {
+    "id": 'test',
+    "name": 'test',
+    "expanded": false,
+    "enabled": true,
+    "component": {
+        "selector": 'date-range',
+        "settings": {
+            "pattern": `test:'(.*?)'`,
+            "field": 'test',
+            "placeholder": 'test placeholder',
+            "displayedLabelsByField": {
                 'wrong-test': 'test-tab-label'
             }
         }
@@ -51,18 +51,18 @@ export const mockSearchFilterWithWrongDisplayedLabelsByField: SearchCategory = {
 };
 
 export const mockSearchFilterWithDisplayedLabelsByField: SearchCategory = {
-    id : 'test',
-    name: 'test',
-    expanded: false,
-    enabled: true,
-    component: {
-        selector: 'date-range',
-        settings: {
-            pattern: `test:'(.*?)'`,
-            field: 'test',
-            placeholder: 'test placeholder',
-            displayedLabelsByField: {
-                test: 'test-tab-label'
+    "id": 'test',
+    "name": 'test',
+    "expanded": false,
+    "enabled": true,
+    "component": {
+        "selector": 'date-range',
+        "settings": {
+            "pattern": `test:'(.*?)'`,
+            "field": 'test',
+            "placeholder": 'test placeholder',
+            "displayedLabelsByField": {
+                "test": 'test-tab-label'
             }
         }
     }

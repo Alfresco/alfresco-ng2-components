@@ -23,7 +23,7 @@ export const BREADCRUMB_DIRECTIVES = [BreadcrumbComponent, DropdownBreadcrumbCom
 
 /** @deprecated use `...BREADCRUMB_DIRECTIVES` instead */
 @NgModule({
-    imports: [...BREADCRUMB_DIRECTIVES],
-    exports: [...BREADCRUMB_DIRECTIVES]
+    "imports": [...BREADCRUMB_DIRECTIVES],
+    "exports": [...BREADCRUMB_DIRECTIVES]
 })
 export class BreadcrumbModule {}

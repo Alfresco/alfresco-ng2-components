@@ -25,7 +25,7 @@ export class CardViewFloatItemModel extends CardViewTextItemModel implements Car
     type = 'float';
     inputType = 'number';
 
-    constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
+    constructor (cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);
 
         this.validators.push(new CardViewItemFloatValidator());
@@ -35,7 +35,7 @@ export class CardViewFloatItemModel extends CardViewTextItemModel implements Car
         }
     }
 
-    get displayValue(): string {
+    get displayValue (): string {
         return this.applyPipes(this.value);
     }
 }

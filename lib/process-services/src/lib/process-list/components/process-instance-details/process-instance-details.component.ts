@@ -28,9 +28,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ProcessCommentsComponent } from '../../../process-comments';
 
 @Component({
-    selector: 'adf-process-instance-details',
-    standalone: true,
-    imports: [
+    "selector": 'adf-process-instance-details',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatCardModule,
@@ -39,8 +39,8 @@ import { ProcessCommentsComponent } from '../../../process-comments';
         ProcessInstanceTasksComponent,
         ProcessInstanceHeaderComponent
     ],
-    templateUrl: './process-instance-details.component.html',
-    styleUrls: ['./process-instance-details.component.css']
+    "templateUrl": './process-instance-details.component.html',
+    "styleUrls": ['./process-instance-details.component.css']
 })
 export class ProcessInstanceDetailsComponent implements OnChanges {
     /** (required) The numeric ID of the process instance to display. */
@@ -79,9 +79,9 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
 
     processInstanceDetails: ProcessInstanceRepresentation;
 
-    constructor(private processService: ProcessService) {}
+    constructor (private processService: ProcessService) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const processInstanceId = changes['processInstanceId'];
         if (processInstanceId && !processInstanceId.currentValue) {
             this.reset();
@@ -96,11 +96,11 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     /**
      * Reset the task detail
      */
-    reset() {
+    reset () {
         this.processInstanceDetails = null;
     }
 
-    load(processId: string) {
+    load (processId: string) {
         if (processId) {
             this.processService.getProcess(processId).subscribe((res) => {
                 this.processInstanceDetails = res;
@@ -108,11 +108,11 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         }
     }
 
-    isRunning(): boolean {
+    isRunning (): boolean {
         return this.processInstanceDetails && !this.processInstanceDetails.ended;
     }
 
-    cancelProcess() {
+    cancelProcess () {
         this.processService.cancelProcess(this.processInstanceId).subscribe(
             (data) => {
                 this.processCancelled.emit(data);
@@ -124,11 +124,11 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     }
 
     // bubbles (taskClick) event
-    onTaskClicked(event: TaskDetailsEvent) {
+    onTaskClicked (event: TaskDetailsEvent) {
         this.taskClick.emit(event);
     }
 
-    getProcessNameOrDescription(dateFormat: string): string {
+    getProcessNameOrDescription (dateFormat: string): string {
         let name = '';
         if (this.processInstanceDetails) {
             name =
@@ -138,7 +138,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         return name;
     }
 
-    getFormatDate(value: any, format: string): any {
+    getFormatDate (value: any, format: string): any {
         const datePipe = new DatePipe('en-US');
         try {
             return datePipe.transform(value, format);
@@ -147,7 +147,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         }
     }
 
-    onShowProcessDiagram() {
-        this.showProcessDiagram.emit({ value: this.processInstanceId });
+    onShowProcessDiagram () {
+        this.showProcessDiagram.emit({ "value": this.processInstanceId });
     }
 }

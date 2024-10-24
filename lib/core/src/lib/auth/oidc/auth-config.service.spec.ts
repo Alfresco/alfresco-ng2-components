@@ -28,75 +28,75 @@ describe('AuthConfigService', () => {
     let appConfigService: AppConfigService;
 
     const mockAuthConfigImplicitFlow: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-        redirectUri: '/',
-        redirectUriLogout: '#/logout',
-        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/assets/silent-refresh.html',
+        "redirectUri": '/',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSubfolderRedirectUri: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/subfolder/assets/silent-refresh.html',
-        redirectUri: '/subfolder',
-        redirectUriLogout: '#/logout',
-        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/subfolder/assets/silent-refresh.html',
+        "redirectUri": '/subfolder',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSubfolder2RedirectUri: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
-        redirectUri: '/subfolder2',
-        redirectUriLogout: '#/logout',
-        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/subfolder2/assets/silent-refresh.html',
+        "redirectUri": '/subfolder2',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigSlashRedirectUri: OauthConfigModel = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-        redirectUri: '/',
-        redirectUriLogout: '#/logout',
-        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/assets/silent-refresh.html',
+        "redirectUri": '/',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     const mockAuthConfigCodeFlow = {
-        host: 'http://localhost:3000/auth/realms/alfresco',
-        clientId: 'fakeClientId',
-        scope: 'openid profile email',
-        secret: '',
-        implicitFlow: false,
-        codeFlow: true,
-        silentLogin: true,
-        redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-        redirectUri: '/',
-        redirectUriLogout: '#/logout',
-        publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
+        "host": 'http://localhost:3000/auth/realms/alfresco',
+        "clientId": 'fakeClientId',
+        "scope": 'openid profile email',
+        "secret": '',
+        "implicitFlow": false,
+        "codeFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": 'http://localhost:3000/assets/silent-refresh.html',
+        "redirectUri": '/',
+        "redirectUriLogout": '#/logout',
+        "publicUrls": ['**/preview/s/*', '**/settings', '**/logout']
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [{ provide: AUTH_MODULE_CONFIG, useValue: { useHash: true } }]
+            "imports": [HttpClientTestingModule],
+            "providers": [{ "provide": AUTH_MODULE_CONFIG, "useValue": { "useHash": true } }]
         });
         service = TestBed.inject(AuthConfigService);
         spyOn<any>(service, 'getLocationOrigin').and.returnValue('http://localhost:3000');
@@ -109,14 +109,14 @@ describe('AuthConfigService', () => {
         it('should load configuration if implicit flow is true ', async () => {
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigImplicitFlow);
             const expectedConfig = {
-                oidc: true,
-                issuer: 'http://localhost:3000/auth/realms/alfresco',
-                redirectUri: 'http://localhost:3000/#/view/authentication-confirmation/?',
-                silentRefreshRedirectUri: 'http://localhost:3000/assets/silent-refresh.html',
-                postLogoutRedirectUri: 'http://localhost:3000/#/logout',
-                clientId: 'fakeClientId',
-                scope: 'openid profile email',
-                dummyClientSecret: ''
+                "oidc": true,
+                "issuer": 'http://localhost:3000/auth/realms/alfresco',
+                "redirectUri": 'http://localhost:3000/#/view/authentication-confirmation/?',
+                "silentRefreshRedirectUri": 'http://localhost:3000/assets/silent-refresh.html',
+                "postLogoutRedirectUri": 'http://localhost:3000/#/logout',
+                "clientId": 'fakeClientId',
+                "scope": 'openid profile email',
+                "dummyClientSecret": ''
             };
 
             expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
@@ -125,15 +125,15 @@ describe('AuthConfigService', () => {
         it('should load configuration if code flow is true ', async () => {
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(mockAuthConfigCodeFlow);
             const expectedConfig = {
-                oidc: true,
-                issuer: 'http://localhost:3000/auth/realms/alfresco',
-                redirectUri: 'http://localhost:3000/#/view/authentication-confirmation/?',
-                silentRefreshRedirectUri: 'http://localhost:3000/assets/silent-refresh.html',
-                postLogoutRedirectUri: 'http://localhost:3000/#/logout',
-                clientId: 'fakeClientId',
-                scope: 'openid profile email',
-                responseType: 'code',
-                dummyClientSecret: ''
+                "oidc": true,
+                "issuer": 'http://localhost:3000/auth/realms/alfresco',
+                "redirectUri": 'http://localhost:3000/#/view/authentication-confirmation/?',
+                "silentRefreshRedirectUri": 'http://localhost:3000/assets/silent-refresh.html',
+                "postLogoutRedirectUri": 'http://localhost:3000/#/logout',
+                "clientId": 'fakeClientId',
+                "scope": 'openid profile email',
+                "responseType": 'code',
+                "dummyClientSecret": ''
             };
 
             expect(await service.loadConfig()).toEqual(jasmine.objectContaining(expectedConfig));
@@ -177,16 +177,16 @@ describe('AuthConfigService', () => {
     describe('postLogoutRedirectUri', () => {
         const getConfig = (config: Partial<OauthConfigModel>): OauthConfigModel => {
             const defaultConfig = {
-                host: 'http://localhost:3000/auth/realms/alfresco',
-                clientId: 'fakeClientId',
-                scope: 'openid profile email',
-                secret: '',
-                implicitFlow: true,
-                silentLogin: true,
-                redirectSilentIframeUri: 'http://localhost:3000/assets/silent-refresh.html',
-                redirectUri: '/',
-                redirectUriLogout: '/',
-                publicUrls: ['**/preview/s/*', '**/settings', '**/logout']
+                "host": 'http://localhost:3000/auth/realms/alfresco',
+                "clientId": 'fakeClientId',
+                "scope": 'openid profile email',
+                "secret": '',
+                "implicitFlow": true,
+                "silentLogin": true,
+                "redirectSilentIframeUri": 'http://localhost:3000/assets/silent-refresh.html',
+                "redirectUri": '/',
+                "redirectUriLogout": '/',
+                "publicUrls": ['**/preview/s/*', '**/settings', '**/logout']
             };
 
             return {
@@ -196,7 +196,7 @@ describe('AuthConfigService', () => {
         };
         it('should return proper postLogoutRedirectUri when the redirectUriLogout is "/"', () => {
             const testConfig = getConfig({
-                redirectUriLogout: '/'
+                "redirectUriLogout": '/'
             });
 
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(testConfig);
@@ -205,7 +205,7 @@ describe('AuthConfigService', () => {
 
         it('should return proper postLogoutRedirectUri when the redirectUriLogout is empty', () => {
             const testConfig = getConfig({
-                redirectUriLogout: undefined
+                "redirectUriLogout": undefined
             });
 
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(testConfig);
@@ -214,7 +214,7 @@ describe('AuthConfigService', () => {
 
         it('should return proper postLogoutRedirectUri when the redirectUriLogout starts with slash', () => {
             const testConfig = getConfig({
-                redirectUriLogout: '/asd'
+                "redirectUriLogout": '/asd'
             });
 
             spyOnProperty(appConfigService, 'oauth2').and.returnValue(testConfig);
@@ -225,7 +225,7 @@ describe('AuthConfigService', () => {
     describe('clockSkewInSec', () => {
         it('should return clockSkewInSec equal to 0', () => {
             const expectedClockSkewInSec = 0;
-            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ clockSkewInSec: 0 } as any);
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ "clockSkewInSec": 0 } as any);
             expect(service.loadAppConfig().clockSkewInSec).toBe(expectedClockSkewInSec);
         });
         it('should not return clockSkewInSec if is not defined', () => {
@@ -234,29 +234,29 @@ describe('AuthConfigService', () => {
         });
 
         it('should not return clockSkewInSec if is undefined', () => {
-            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ clockSkewInSec: undefined } as any);
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ "clockSkewInSec": undefined } as any);
             expect(service.loadAppConfig().clockSkewInSec).toBeUndefined();
         });
 
         it('should return empty object if clockSkewInSec is null', () => {
-            const mockOauth2Value = { clockSkewInSec: null } as any;
+            const mockOauth2Value = { "clockSkewInSec": null } as any;
             expect(service.getClockSkewInSec(mockOauth2Value)).toEqual({});
         });
 
         it('should return empty object if clockSkewInSec is a string', () => {
-            const mockOauth2Value = { clockSkewInSec: 'null' } as any;
+            const mockOauth2Value = { "clockSkewInSec": 'null' } as any;
             expect(service.getClockSkewInSec(mockOauth2Value)).toEqual({});
         });
     });
 
     describe('sessionChecksEnabled', () => {
         it('should return sessionChecksEnabled equal to true', () => {
-            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ sessionChecksEnabled: true } as any);
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ "sessionChecksEnabled": true } as any);
             expect(service.loadAppConfig().sessionChecksEnabled).toBeTrue();
         });
 
         it('should return sessionChecksEnabled equal to false', () => {
-            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ sessionChecksEnabled: false } as any);
+            spyOnProperty(appConfigService, 'oauth2').and.returnValue({ "sessionChecksEnabled": false } as any);
             expect(service.loadAppConfig().sessionChecksEnabled).toBeFalse();
         });
 
@@ -265,19 +265,19 @@ describe('AuthConfigService', () => {
         });
 
         it('should not return sessionChecksEnabled if is a string', () => {
-            expect(service.getSessionCheckEnabled({ sessionChecksEnabled: 'fake' } as any)).toEqual({});
+            expect(service.getSessionCheckEnabled({ "sessionChecksEnabled": 'fake' } as any)).toEqual({});
         });
 
         it('should not return sessionChecksEnabled if is undefined', () => {
-            expect(service.getSessionCheckEnabled({ sessionChecksEnabled: undefined } as any)).toEqual({});
+            expect(service.getSessionCheckEnabled({ "sessionChecksEnabled": undefined } as any)).toEqual({});
         });
 
         it('should not return sessionChecksEnabled if is null', () => {
-            expect(service.getSessionCheckEnabled({ sessionChecksEnabled: null } as any)).toEqual({});
+            expect(service.getSessionCheckEnabled({ "sessionChecksEnabled": null } as any)).toEqual({});
         });
 
         it('should not return sessionChecksEnabled if is a number', () => {
-            expect(service.getSessionCheckEnabled({ sessionChecksEnabled: 666 } as any)).toEqual({});
+            expect(service.getSessionCheckEnabled({ "sessionChecksEnabled": 666 } as any)).toEqual({});
         });
     });
 });

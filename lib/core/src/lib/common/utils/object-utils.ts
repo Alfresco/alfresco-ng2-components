@@ -19,13 +19,11 @@ export class ObjectUtils {
     /**
      * Gets a value from an object by composed key
      * ObjectUtils.getValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
-     *
      * @param target target object
      * @param key object property key
      * @returns object property value
      */
-    static getValue(target: any, key: string): any {
-
+    static getValue (target: any, key: string): any {
         if (!target || !key) {
             return undefined;
         }
@@ -49,7 +47,7 @@ export class ObjectUtils {
         return target;
     }
 
-    static merge(...objects): any {
+    static merge (...objects): any {
         const result = {};
 
         objects.forEach((source) => {
@@ -67,59 +65,51 @@ export class ObjectUtils {
         return result;
     }
 
-    static isObject(target: any): boolean {
+    static isObject (target: any): boolean {
         return target === Object(target);
     }
 
-    static isEmpty(target: any): boolean {
+    static isEmpty (target: any): boolean {
         return target && Object.keys(target).length === 0 && Object.getPrototypeOf(target) === Object.prototype;
     }
 
-    static hasKeys(target: any): boolean {
+    static hasKeys (target: any): boolean {
         return target && Object.keys(target).length > 0;
     }
 
-    static isBooleanObject(target: any): boolean {
-        return Object.values(target).every(value => typeof value === 'boolean');
+    static isBooleanObject (target: any): boolean {
+        return Object.values(target).every((value) => typeof value === 'boolean');
     }
 
-    static booleanPrettify(target: any, enhancer?: (param: string) => string): string {
-
-        if (
-            !target ||
-            ObjectUtils.isEmpty(target) ||
-            !ObjectUtils.isBooleanObject(target)
-            ) {
+    static booleanPrettify (target: any, enhancer?: (param: string) => string): string {
+        if (!target || ObjectUtils.isEmpty(target) || !ObjectUtils.isBooleanObject(target)) {
             return '';
         }
 
-        if (
-            !ObjectUtils.isObject(target) ||
-            !ObjectUtils.hasKeys(target)
-            ) {
+        if (!ObjectUtils.isObject(target) || !ObjectUtils.hasKeys(target)) {
             return target.toString();
         }
 
         const greenBorderWhiteCheckSymbol = '&#9989';
         const redCrossSymbol = '&#10060';
 
-        target = Object.keys(target).map((key) => {
-            if (target[key]) {
-                if (enhancer) {
-                    return `${greenBorderWhiteCheckSymbol} ${enhancer(key)}`;
-                } else {
-                    return `${greenBorderWhiteCheckSymbol} ${key}`;
+        target = Object.keys(target)
+            .map((key) => {
+                if (target[key]) {
+                    if (enhancer) {
+                        return `${greenBorderWhiteCheckSymbol} ${enhancer(key)}`;
+                    } else {
+                        return `${greenBorderWhiteCheckSymbol} ${key}`;
+                    }
                 }
 
-            }
-
-            if (enhancer) {
-                return `${redCrossSymbol} ${enhancer(key)}`;
-            } else {
-                return `${redCrossSymbol} ${key}`;
-            }
-
-        }).join('\n');
+                if (enhancer) {
+                    return `${redCrossSymbol} ${enhancer(key)}`;
+                } else {
+                    return `${redCrossSymbol} ${key}`;
+                }
+            })
+            .join('\n');
 
         return target;
     }

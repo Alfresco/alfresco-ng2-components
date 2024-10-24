@@ -18,25 +18,25 @@
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 
 export const processInstanceDetailsCloudMock: ProcessInstanceCloud = {
-    appName: 'app-form-mau',
-    businessKey: 'MyBusinessKey',
-    id: '00fcc4ab-4290-11e9-b133-0a586460016a',
-    initiator: 'devopsuser',
-    lastModified: new Date(1552152187081),
-    name: 'new name',
-    parentId: '00fcc4ab-4290-11e9-b133-0a586460016b',
-    startDate: new Date(1552152187080),
-    status: 'RUNNING'
+    "appName": 'app-form-mau',
+    "businessKey": 'MyBusinessKey',
+    "id": '00fcc4ab-4290-11e9-b133-0a586460016a',
+    "initiator": 'devopsuser',
+    "lastModified": new Date(1552152187081),
+    "name": 'new name',
+    "parentId": '00fcc4ab-4290-11e9-b133-0a586460016b',
+    "startDate": new Date(1552152187080),
+    "status": 'RUNNING'
 };
 
 export const processInstancePlaceholdersCloudMock: ProcessInstanceCloud = {
-    appName: 'app-placeholders',
-    businessKey: '',
-    id: '00fcc4ab-4290-11e9-b133-0a586460016a',
-    initiator: 'devopsuser',
-    lastModified: new Date(2022, 1, 1, 1, 30, 40),
-    name: '',
-    parentId: '',
-    startDate: new Date(1552152187080),
-    status: 'RUNNING'
+    "appName": 'app-placeholders',
+    "businessKey": '',
+    "id": '00fcc4ab-4290-11e9-b133-0a586460016a',
+    "initiator": 'devopsuser',
+    "lastModified": new Date(2022, 1, 1, 1, 30, 40),
+    "name": '',
+    "parentId": '',
+    "startDate": new Date(1552152187080),
+    "status": 'RUNNING'
 };

@@ -27,15 +27,15 @@ describe('NameColumnComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, NameColumnComponent]
+            "imports": [ContentTestingModule, NameColumnComponent]
         });
 
         fixture = TestBed.createComponent(NameColumnComponent);
 
         context = {
-            row: {
-                node: { entry: {} },
-                getValue: (key) => key
+            "row": {
+                "node": { "entry": {} },
+                "getValue": (key) => key
             }
         };
 

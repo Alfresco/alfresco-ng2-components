@@ -22,7 +22,7 @@ export class ProcessWithFormPayloadCloud {
     values: any;
     outcome?: string;
 
-    constructor(obj: ProcessWithFormPayloadCloud) {
+    constructor (obj: ProcessWithFormPayloadCloud) {
         this.processName = obj.processName;
         this.processDefinitionKey = obj.processDefinitionKey;
         this.variables = obj.variables;

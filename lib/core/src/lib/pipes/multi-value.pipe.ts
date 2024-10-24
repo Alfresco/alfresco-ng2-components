@@ -18,13 +18,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'multiValue',
-    standalone: true
+    "name": 'multiValue',
+    "standalone": true
 })
 export class MultiValuePipe implements PipeTransform {
     static DEFAULT_SEPARATOR = ', ';
 
-    transform(values: any | any[], valueSeparator: string = MultiValuePipe.DEFAULT_SEPARATOR): string {
+    transform (values: any | any[], valueSeparator: string = MultiValuePipe.DEFAULT_SEPARATOR): string {
         if (values && values instanceof Array) {
             return values.join(valueSeparator);
         }

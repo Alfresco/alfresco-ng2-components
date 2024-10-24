@@ -23,7 +23,7 @@ import { DownloadPromptActions } from '../../models/download-prompt.actions';
 import { DownloadPromptDialogComponent } from './download-prompt-dialog.component';
 
 const mockDialog = {
-    close: jasmine.createSpy('close')
+    "close": jasmine.createSpy('close')
 };
 
 describe('DownloadPromptDialogComponent', () => {
@@ -34,8 +34,8 @@ describe('DownloadPromptDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, DownloadPromptDialogComponent],
-            providers: [{ provide: MatDialogRef, useValue: mockDialog }]
+            "imports": [CoreTestingModule, DownloadPromptDialogComponent],
+            "providers": [{ "provide": MatDialogRef, "useValue": mockDialog }]
         });
         matDialogRef = TestBed.inject(MatDialogRef);
 

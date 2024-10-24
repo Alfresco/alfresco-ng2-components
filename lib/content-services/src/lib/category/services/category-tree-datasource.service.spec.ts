@@ -30,7 +30,7 @@ describe('CategoryTreeDatasourceService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [CategoryTreeDatasourceService, { provide: CategoryService, useClass: CategoryServiceMock }]
+            "providers": [CategoryTreeDatasourceService, { "provide": CategoryService, "useClass": CategoryServiceMock }]
         });
 
         categoryTreeDatasourceService = TestBed.inject(CategoryTreeDatasourceService);
@@ -48,13 +48,13 @@ describe('CategoryTreeDatasourceService', () => {
 
     it('should get child level categories and add loadMore node when there are more children to load', fakeAsync(() => {
         const parentNode: CategoryNode = {
-            id: 'testId',
-            nodeName: 'testNode',
-            parentId: '-root-',
-            hasChildren: true,
-            level: 0,
-            isLoading: false,
-            nodeType: TreeNodeType.RegularNode
+            "id": 'testId',
+            "nodeName": 'testNode',
+            "parentId": '-root-',
+            "hasChildren": true,
+            "level": 0,
+            "isLoading": false,
+            "nodeType": TreeNodeType.RegularNode
         };
         spyOn(categoryTreeDatasourceService, 'getParentNode').and.returnValue(parentNode);
         categoryTreeDatasourceService.getSubNodes(parentNode.id, 0, 100).subscribe((treeResponse: TreeResponse<CategoryNode>) => {
@@ -81,17 +81,17 @@ describe('CategoryTreeDatasourceService', () => {
     it('should call getCategory for every instance if value of name parameter is defined', (done) => {
         spyOn(categoryService, 'getCategory').and.returnValues(
             of({
-                entry: {
-                    name: 'name',
-                    id: 'some id 1',
-                    hasChildren: true
+                "entry": {
+                    "name": 'name',
+                    "id": 'some id 1',
+                    "hasChildren": true
                 }
             }),
             of({
-                entry: {
-                    name: 'Language/some other name',
-                    id: 'some id 2',
-                    hasChildren: false
+                "entry": {
+                    "name": 'Language/some other name',
+                    "id": 'some id 2',
+                    "hasChildren": false
                 }
             })
         );
@@ -105,17 +105,17 @@ describe('CategoryTreeDatasourceService', () => {
     it('should return observable which emits correct categories', (done) => {
         spyOn(categoryService, 'getCategory').and.returnValues(
             of({
-                entry: {
-                    name: 'some name',
-                    id: 'some id 1',
-                    hasChildren: true
+                "entry": {
+                    "name": 'some name',
+                    "id": 'some id 1',
+                    "hasChildren": true
                 }
             }),
             of({
-                entry: {
-                    name: 'Language/some other name',
-                    id: 'some id 2',
-                    hasChildren: false
+                "entry": {
+                    "name": 'Language/some other name',
+                    "id": 'some id 2',
+                    "hasChildren": false
                 }
             })
         );
@@ -124,24 +124,24 @@ describe('CategoryTreeDatasourceService', () => {
             pagination.count = 2;
             expect(response).toEqual({
                 pagination,
-                entries: [
+                "entries": [
                     {
-                        id: 'some id 1',
-                        nodeName: 'some name',
-                        parentId: 'parent id 1',
-                        level: 0,
-                        nodeType: TreeNodeType.RegularNode,
-                        hasChildren: true,
-                        isLoading: false
+                        "id": 'some id 1',
+                        "nodeName": 'some name',
+                        "parentId": 'parent id 1',
+                        "level": 0,
+                        "nodeType": TreeNodeType.RegularNode,
+                        "hasChildren": true,
+                        "isLoading": false
                     },
                     {
-                        id: 'some id 2',
-                        nodeName: 'Language/some other name',
-                        parentId: 'parent id 2',
-                        level: 0,
-                        nodeType: TreeNodeType.RegularNode,
-                        hasChildren: false,
-                        isLoading: false
+                        "id": 'some id 2',
+                        "nodeName": 'Language/some other name',
+                        "parentId": 'parent id 2',
+                        "level": 0,
+                        "nodeType": TreeNodeType.RegularNode,
+                        "hasChildren": false,
+                        "isLoading": false
                     }
                 ]
             });

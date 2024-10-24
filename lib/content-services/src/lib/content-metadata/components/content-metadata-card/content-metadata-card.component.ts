@@ -30,13 +30,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-content-metadata-card',
-    standalone: true,
-    imports: [CommonModule, MatCardModule, ContentMetadataComponent, MatButtonModule, MatIconModule, TranslateModule],
-    templateUrl: './content-metadata-card.component.html',
-    styleUrls: ['./content-metadata-card.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-content-metadata-card' }
+    "selector": 'adf-content-metadata-card',
+    "standalone": true,
+    "imports": [CommonModule, MatCardModule, ContentMetadataComponent, MatButtonModule, MatIconModule, TranslateModule],
+    "templateUrl": './content-metadata-card.component.html',
+    "styleUrls": ['./content-metadata-card.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-content-metadata-card' }
 })
 export class ContentMetadataCardComponent implements OnChanges {
     /** (required) The node entity to fetch metadata about */
@@ -98,12 +98,12 @@ export class ContentMetadataCardComponent implements OnChanges {
      * This flag displays/hides the metadata properties.
      */
     @Input()
-    set displayDefaultProperties(value: boolean) {
+    set displayDefaultProperties (value: boolean) {
         this._displayDefaultProperties = value;
         this.onDisplayDefaultPropertiesChange();
     }
 
-    get displayDefaultProperties(): boolean {
+    get displayDefaultProperties (): boolean {
         return this._displayDefaultProperties;
     }
 
@@ -111,7 +111,7 @@ export class ContentMetadataCardComponent implements OnChanges {
 
     editAspectSupported = false;
 
-    constructor(
+    constructor (
         private contentService: ContentService,
         private nodeAspectService: NodeAspectService,
         private versionCompatibilityService: VersionCompatibilityService
@@ -119,25 +119,25 @@ export class ContentMetadataCardComponent implements OnChanges {
         this.editAspectSupported = this.versionCompatibilityService.isVersionSupported('7');
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges (changes: SimpleChanges): void {
         if (changes.displayAspect?.currentValue) {
             this.expanded = true;
         }
     }
 
-    onDisplayDefaultPropertiesChange(): void {
+    onDisplayDefaultPropertiesChange (): void {
         this.expanded = !this._displayDefaultProperties;
     }
 
-    hasAllowableOperations() {
+    hasAllowableOperations () {
         return this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
     }
 
-    openAspectDialog() {
+    openAspectDialog () {
         this.nodeAspectService.updateNodeAspects(this.node.id);
     }
 
-    isEditAspectSupported(): boolean {
+    isEditAspectSupported (): boolean {
         return !this.readOnly && this.hasAllowableOperations() && this.editAspectSupported;
     }
 }

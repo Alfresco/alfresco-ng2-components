@@ -19,16 +19,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ThemeModel } from '../components/widgets/core/theme.model';
 
 @Pipe({
-    name: 'adfFormStyle',
-    standalone: true
+    "name": 'adfFormStyle',
+    "standalone": true
 })
 export class FormStylePipe implements PipeTransform {
-    transform(formTheme?: ThemeModel): string {
+    transform (formTheme?: ThemeModel): string {
         const theme = formTheme?.form;
         return theme ? this.flattenStyles(theme) : '';
     }
 
-    private flattenStyles(styles: { [key: string]: string }): string {
+    private flattenStyles (styles: { [key: string]: string }): string {
         return Object.entries(styles)
             .map(([key, value]) => `${key}: ${value}`)
             .join(';');

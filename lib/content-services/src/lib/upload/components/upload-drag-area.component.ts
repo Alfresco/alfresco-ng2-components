@@ -26,14 +26,14 @@ import { Node } from '@alfresco/js-api';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 
 @Component({
-    selector: 'adf-upload-drag-area',
-    standalone: true,
-    imports: [FileDraggableDirective],
-    templateUrl: './upload-drag-area.component.html',
-    styleUrls: ['./upload-drag-area.component.scss'],
-    host: { class: 'adf-upload-drag-area' },
-    viewProviders: [{ provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent) }],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-upload-drag-area',
+    "standalone": true,
+    "imports": [FileDraggableDirective],
+    "templateUrl": './upload-drag-area.component.html',
+    "styleUrls": ['./upload-drag-area.component.scss'],
+    "host": { "class": 'adf-upload-drag-area' },
+    "viewProviders": [{ "provide": EXTENDIBLE_COMPONENT, "useExisting": forwardRef(() => UploadDragAreaComponent) }],
+    "encapsulation": ViewEncapsulation.None
 })
 export class UploadDragAreaComponent extends UploadBase implements NodeAllowableOperationSubject {
     private notificationService = inject(NotificationService);
@@ -41,10 +41,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Method called when files are dropped in the drag area.
-     *
      * @param files - files dropped in the drag area.
      */
-    onFilesDropped(files: File[]): void {
+    onFilesDropped (files: File[]): void {
         if (!this.disabled && files.length) {
             this.uploadFiles(files);
         }
@@ -52,10 +51,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Called when a folder are dropped in the drag area
-     *
      * @param folder - name of the dropped folder
      */
-    onFolderEntityDropped(folder: any): void {
+    onFolderEntityDropped (folder: any): void {
         if (!this.disabled && folder.isDirectory) {
             FileUtils.flatten(folder).then((filesInfo) => {
                 this.uploadFilesInfo(filesInfo);
@@ -65,10 +63,9 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Show undo notification bar.
-     *
      * @param latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
      */
-    showUndoNotificationBar(latestFilesAdded: FileModel[]) {
+    showUndoNotificationBar (latestFilesAdded: FileModel[]) {
         const messageTranslate = this.translationService.instant('FILE_UPLOAD.MESSAGES.PROGRESS');
         const actionTranslate = this.translationService.instant('FILE_UPLOAD.ACTION.UNDO');
 
@@ -82,19 +79,17 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
 
     /**
      * Check if content is droppable
-     *
      * @returns `true` or `false` considering the component options and node permissions
      */
-    isDroppable(): boolean {
+    isDroppable (): boolean {
         return !this.disabled;
     }
 
     /**
      * Handles 'upload-files' events raised by child components.
-     *
      * @param event DOM event
      */
-    onUploadFiles(event: CustomEvent) {
+    onUploadFiles (event: CustomEvent) {
         event.stopPropagation();
         event.preventDefault();
 
@@ -119,7 +114,7 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
         }
     }
 
-    private isTargetNodeFolder(node: Node): boolean {
+    private isTargetNodeFolder (node: Node): boolean {
         return !!node?.isFolder;
     }
 }

@@ -25,24 +25,24 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 
 @Component({
-    template: ` <mat-select adf-infinite-select-scroll (scrollEnd)="load()">
+    "template": ` <mat-select adf-infinite-select-scroll (scrollEnd)="load()">
         <mat-option *ngFor="let option of options; let idx = index">
             {{ option.text }}
         </mat-option>
     </mat-select>`
 })
 class TestComponent {
-    options = new Array(50).fill({ text: 'dummy' });
+    options = new Array(50).fill({ "text": 'dummy' });
 
-    @ViewChild(MatSelect, { static: true })
+    @ViewChild(MatSelect, { "static": true })
     matSelect: MatSelect;
 
-    open() {
+    open () {
         this.matSelect.open();
     }
 
-    load() {
-        this.options.push(...new Array(10).fill({ text: 'dummy' }));
+    load () {
+        this.options.push(...new Array(10).fill({ "text": 'dummy' }));
     }
 }
 
@@ -53,8 +53,8 @@ describe('InfiniteSelectScrollDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [MatSelectModule, NoopAnimationsModule, InfiniteSelectScrollDirective],
-            declarations: [TestComponent]
+            "imports": [MatSelectModule, NoopAnimationsModule, InfiniteSelectScrollDirective],
+            "declarations": [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;

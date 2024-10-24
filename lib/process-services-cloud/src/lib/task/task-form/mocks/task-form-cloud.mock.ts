@@ -18,11 +18,11 @@
 import { FormFieldModel, FormFieldValidator } from '@alfresco/adf-core';
 
 export class MockFormFieldValidator implements FormFieldValidator {
-    isSupported(_field: FormFieldModel): boolean {
+    isSupported (_field: FormFieldModel): boolean {
         return true;
     }
 
-    validate(_field: FormFieldModel): boolean {
+    validate (_field: FormFieldModel): boolean {
         return true;
     }
 }

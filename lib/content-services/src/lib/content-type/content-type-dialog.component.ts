@@ -27,12 +27,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-content-type-dialog',
-    standalone: true,
-    imports: [CommonModule, MatDialogModule, TranslateModule, MatExpansionModule, MatTableModule, MatButtonModule],
-    templateUrl: './content-type-dialog.component.html',
-    styleUrls: ['./content-type-dialog.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-content-type-dialog',
+    "standalone": true,
+    "imports": [CommonModule, MatDialogModule, TranslateModule, MatExpansionModule, MatTableModule, MatButtonModule],
+    "templateUrl": './content-type-dialog.component.html',
+    "styleUrls": ['./content-type-dialog.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ContentTypeDialogComponent implements OnInit {
     title: string;
@@ -45,7 +45,7 @@ export class ContentTypeDialogComponent implements OnInit {
 
     propertyColumns: string[] = ['name', 'title', 'dataType'];
 
-    constructor(
+    constructor (
         private dialog: MatDialogRef<ContentTypeDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: ContentTypeDialogComponentData,
         private contentTypeService: ContentTypeService
@@ -63,21 +63,21 @@ export class ContentTypeDialogComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.dialog.backdropClick().subscribe(() => {
             this.close();
         });
     }
 
-    close() {
+    close () {
         this.data.select.complete();
     }
 
-    onCancel() {
+    onCancel () {
         this.close();
     }
 
-    onApply() {
+    onApply () {
         this.data.select.next(true);
         this.close();
     }

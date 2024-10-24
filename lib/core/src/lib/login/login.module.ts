@@ -33,7 +33,7 @@ export const LOGIN_DIRECTIVES = [
 
 /** @deprecated use `...LOGIN_DIRECTIVES` or import the standalone directives directly */
 @NgModule({
-    imports: [...LOGIN_DIRECTIVES],
-    exports: [...LOGIN_DIRECTIVES]
+    "imports": [...LOGIN_DIRECTIVES],
+    "exports": [...LOGIN_DIRECTIVES]
 })
 export class LoginModule {}

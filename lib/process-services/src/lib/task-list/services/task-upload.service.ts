@@ -20,18 +20,18 @@ import { Injectable } from '@angular/core';
 import { ActivitiContentApi, RelatedContentRepresentation } from '@alfresco/js-api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TaskUploadService extends UploadService {
     private _contentApi: ActivitiContentApi;
-    get contentApi(): ActivitiContentApi {
+    get contentApi (): ActivitiContentApi {
         this._contentApi = this._contentApi ?? new ActivitiContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
 
-    getUploadPromise(file: any): Promise<RelatedContentRepresentation> {
+    getUploadPromise (file: any): Promise<RelatedContentRepresentation> {
         const opts = {
-            isRelatedContent: true
+            "isRelatedContent": true
         };
         const taskId = file.options.parentId;
         return this.contentApi.createRelatedContentOnTask(taskId, file.file, opts);

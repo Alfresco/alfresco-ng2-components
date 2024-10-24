@@ -58,7 +58,7 @@ export const VIEWER_DIRECTIVES = [
 
 /** @deprecated use `...VIEWER_DIRECTIVES` or import standalone directives */
 @NgModule({
-    imports: [...VIEWER_DIRECTIVES],
-    exports: [...VIEWER_DIRECTIVES]
+    "imports": [...VIEWER_DIRECTIVES],
+    "exports": [...VIEWER_DIRECTIVES]
 })
 export class ViewerModule {}

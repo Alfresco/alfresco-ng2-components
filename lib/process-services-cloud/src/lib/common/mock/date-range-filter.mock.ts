@@ -18,17 +18,17 @@
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 
 export const mockFilterProperty = {
-    key: 'createdDate',
-    label: 'mock-filter',
-    value: {
-        createdDateType: DateCloudFilterType.RANGE,
-        _startFrom: new Date().toISOString(),
-        _startTo: new Date().toISOString()
+    "key": 'createdDate',
+    "label": 'mock-filter',
+    "value": {
+        "createdDateType": DateCloudFilterType.RANGE,
+        "_startFrom": new Date().toISOString(),
+        "_startTo": new Date().toISOString()
     },
-    type: 'dateRange',
-    attributes: {
-        dateType: 'createdDateType',
-        from: '_startFrom',
-        to: '_startTo'
+    "type": 'dateRange',
+    "attributes": {
+        "dateType": 'createdDateType',
+        "from": '_startFrom',
+        "to": '_startTo'
     }
 };

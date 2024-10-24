@@ -25,26 +25,26 @@ import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-ta
 import { set } from 'date-fns';
 
 @Component({
-    selector: 'adf-cloud-edit-task-filter',
-    templateUrl: './base-edit-task-filter-cloud.component.html',
-    styleUrls: ['./base-edit-task-filter-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-edit-task-filter',
+    "templateUrl": './base-edit-task-filter-cloud.component.html',
+    "styleUrls": ['./base-edit-task-filter-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudComponent<TaskFilterCloudModel> {
     private taskFilterCloudService = inject(TaskFilterCloudService);
 
-    constructor() {
+    constructor () {
         super();
     }
 
-    assignNewFilter(model: TaskFilterCloudModel) {
+    assignNewFilter (model: TaskFilterCloudModel) {
         this.setLastModifiedToFilter(model);
         this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, model));
         this.formHasBeenChanged = !this.deepCompare(this.changedTaskFilter, this.taskFilter);
         this.filterChange.emit(this.changedTaskFilter);
     }
 
-    protected getTaskFilterById(appName: string, id: string) {
+    protected getTaskFilterById (appName: string, id: string) {
         return this.taskFilterCloudService
             .getTaskFilterById(appName, id)
             .pipe(
@@ -52,7 +52,7 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
             );
     }
 
-    createAndFilterProperties() {
+    createAndFilterProperties () {
         const result = super.createAndFilterProperties();
 
         if (this.hasLastModifiedProperty()) {
@@ -65,192 +65,192 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
         return result;
     }
 
-    getDefaultFilterProperties(): string[] {
+    getDefaultFilterProperties (): string[] {
         return ['status', 'assignee', 'sort', 'order'];
     }
 
-    getDefaultSortProperties(): string[] {
+    getDefaultSortProperties (): string[] {
         return ['id', 'name', 'createdDate', 'priority'];
     }
 
-    private setLastModifiedToFilter(formValues: TaskFilterCloudModel) {
+    private setLastModifiedToFilter (formValues: TaskFilterCloudModel) {
         if (formValues.lastModifiedTo && Date.parse(formValues.lastModifiedTo.toString())) {
             const lastModifiedToFilterValue = set(
                 new Date(formValues.lastModifiedTo),
                 {
-                    hours: 23,
-                    minutes: 59,
-                    seconds: 59
+                    "hours": 23,
+                    "minutes": 59,
+                    "seconds": 59
                 }
             );
             formValues.lastModifiedTo = lastModifiedToFilterValue.toISOString();
         }
     }
 
-    protected updateFilter(filterToUpdate: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
+    protected updateFilter (filterToUpdate: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         return this.taskFilterCloudService.updateFilter(filterToUpdate);
     }
 
-    protected deleteFilter(filterToDelete: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
+    protected deleteFilter (filterToDelete: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         return this.taskFilterCloudService.deleteFilter(filterToDelete);
     }
 
-    protected addFilter(filterToAdd: TaskFilterCloudModel): Observable<any> {
+    protected addFilter (filterToAdd: TaskFilterCloudModel): Observable<any> {
         return this.taskFilterCloudService
             .addFilter(filterToAdd)
             .pipe(takeUntil(this.onDestroy$));
     }
 
-    isDisabledForDefaultFilters(action: TaskFilterAction): boolean {
+    isDisabledForDefaultFilters (action: TaskFilterAction): boolean {
         return (
             this.taskFilterCloudService.isDefaultFilter(this.taskFilter.name) &&
             EditTaskFilterCloudComponent.ACTIONS_DISABLED_BY_DEFAULT.includes(action.actionType)
         );
     }
 
-    restoreDefaultTaskFilters(): Observable<TaskFilterCloudModel[]> {
+    restoreDefaultTaskFilters (): Observable<TaskFilterCloudModel[]> {
         return this.taskFilterCloudService.getTaskListFilters(this.appName);
     }
 
-    private createLastModifiedProperty(): TaskFilterProperties[] {
+    private createLastModifiedProperty (): TaskFilterProperties[] {
         return [
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_FROM',
-                type: 'date',
-                key: 'lastModifiedFrom',
-                value: ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_FROM',
+                "type": 'date',
+                "key": 'lastModifiedFrom',
+                "value": ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_TO',
-                type: 'date',
-                key: 'lastModifiedTo',
-                value: ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_TO',
+                "type": 'date',
+                "key": 'lastModifiedTo',
+                "value": ''
             }
         ];
     }
 
-    private getStatusOptions(): DropdownOption[] {
+    private getStatusOptions (): DropdownOption[] {
         return [
-            { value: TaskStatusFilter.ALL, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL' },
-            { value: TaskStatusFilter.CREATED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CREATED' },
-            { value: TaskStatusFilter.ASSIGNED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.ASSIGNED' },
-            { value: TaskStatusFilter.SUSPENDED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.SUSPENDED' },
-            { value: TaskStatusFilter.CANCELLED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.CANCELLED' },
-            { value: TaskStatusFilter.COMPLETED, label: 'ADF_CLOUD_TASK_FILTERS.STATUS.COMPLETED' }
+            { "value": TaskStatusFilter.ALL, "label": 'ADF_CLOUD_TASK_FILTERS.STATUS.ALL' },
+            { "value": TaskStatusFilter.CREATED, "label": 'ADF_CLOUD_TASK_FILTERS.STATUS.CREATED' },
+            { "value": TaskStatusFilter.ASSIGNED, "label": 'ADF_CLOUD_TASK_FILTERS.STATUS.ASSIGNED' },
+            { "value": TaskStatusFilter.SUSPENDED, "label": 'ADF_CLOUD_TASK_FILTERS.STATUS.SUSPENDED' },
+            { "value": TaskStatusFilter.CANCELLED, "label": 'ADF_CLOUD_TASK_FILTERS.STATUS.CANCELLED' },
+            { "value": TaskStatusFilter.COMPLETED, "label": 'ADF_CLOUD_TASK_FILTERS.STATUS.COMPLETED' }
         ];
     }
 
-    createTaskFilterProperties(): TaskFilterProperties[] {
+    createTaskFilterProperties (): TaskFilterProperties[] {
         const statusOptions = this.getStatusOptions();
         const sortProperties = this.createSortProperties;
         return [
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
-                type: 'select',
-                key: 'appName',
-                value: this.taskFilter.appName || '',
-                options: this.applicationNames
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
+                "type": 'select',
+                "key": 'appName',
+                "value": this.taskFilter.appName || '',
+                "options": this.applicationNames
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_ID',
-                type: 'text',
-                key: 'taskId',
-                value: ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_ID',
+                "type": 'text',
+                "key": 'taskId',
+                "value": ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
-                type: 'select',
-                key: 'status',
-                value: this.taskFilter.status || statusOptions[0].value,
-                options: statusOptions
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
+                "type": 'select',
+                "key": 'status',
+                "value": this.taskFilter.status || statusOptions[0].value,
+                "options": statusOptions
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
-                type: 'text',
-                key: 'assignee',
-                value: this.taskFilter.assignee || ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
+                "type": 'text',
+                "key": 'assignee',
+                "value": this.taskFilter.assignee || ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_NAME',
-                type: 'select',
-                key: 'processDefinitionName',
-                value: this.taskFilter.processDefinitionName || '',
-                options: this.processDefinitionNames
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_NAME',
+                "type": 'select',
+                "key": 'processDefinitionName',
+                "value": this.taskFilter.processDefinitionName || '',
+                "options": this.processDefinitionNames
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
-                type: 'text',
-                key: 'processInstanceId',
-                value: this.processInstanceId || this.taskFilter.processInstanceId || ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
+                "type": 'text',
+                "key": 'processInstanceId',
+                "value": this.processInstanceId || this.taskFilter.processInstanceId || ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID',
-                type: 'text',
-                key: 'processDefinitionId',
-                value: this.taskFilter.processDefinitionId || ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID',
+                "type": 'text',
+                "key": 'processDefinitionId',
+                "value": this.taskFilter.processDefinitionId || ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_NAME',
-                type: 'text',
-                key: 'taskName',
-                value: this.taskFilter.taskName || ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_NAME',
+                "type": 'text',
+                "key": 'taskName',
+                "value": this.taskFilter.taskName || ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PARENT_TASK_ID',
-                type: 'text',
-                key: 'parentTaskId',
-                value: this.taskFilter.parentTaskId || ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PARENT_TASK_ID',
+                "type": 'text',
+                "key": 'parentTaskId',
+                "value": this.taskFilter.parentTaskId || ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PRIORITY',
-                type: 'select',
-                key: 'priority',
-                value: this.taskFilter.priority || '',
-                options: this.taskCloudService.priorities
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PRIORITY',
+                "type": 'select',
+                "key": 'priority',
+                "value": this.taskFilter.priority || '',
+                "options": this.taskCloudService.priorities
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.OWNER',
-                type: 'text',
-                key: 'owner',
-                value: this.taskFilter.owner || ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.OWNER',
+                "type": 'text',
+                "key": 'owner',
+                "value": this.taskFilter.owner || ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
-                type: 'date',
-                key: 'createdDate',
-                value: ''
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
+                "type": 'date',
+                "key": 'createdDate',
+                "value": ''
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SORT',
-                type: 'select',
-                key: 'sort',
-                value: this.taskFilter.sort || sortProperties[0].value,
-                options: sortProperties
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SORT',
+                "type": 'select',
+                "key": 'sort',
+                "value": this.taskFilter.sort || sortProperties[0].value,
+                "options": sortProperties
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
-                type: 'select',
-                key: 'order',
-                value: this.taskFilter.order || this.sortDirections[0].value,
-                options: [...this.sortDirections]
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
+                "type": 'select',
+                "key": 'order',
+                "value": this.taskFilter.order || this.sortDirections[0].value,
+                "options": [...this.sortDirections]
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
-                type: 'checkbox',
-                key: 'standalone',
-                value: this.taskFilter.standalone || false
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
+                "type": 'checkbox',
+                "key": 'standalone',
+                "value": this.taskFilter.standalone || false
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
-                type: 'date-range',
-                key: 'dueDateRange',
-                attributes: { dateType: 'dueDateType', from: '_dueDateFrom', to: '_dueDateTo'},
-                value: {
-                    dueDateType: this.taskFilter.dueDateType || null,
-                    _dueDateFrom: this.taskFilter.dueDateFrom || null,
-                    _dueDateTo: this.taskFilter.dueDateTo || null
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
+                "type": 'date-range',
+                "key": 'dueDateRange',
+                "attributes": { "dateType": 'dueDateType', "from": '_dueDateFrom', "to": '_dueDateTo'},
+                "value": {
+                    "dueDateType": this.taskFilter.dueDateType || null,
+                    "_dueDateFrom": this.taskFilter.dueDateFrom || null,
+                    "_dueDateTo": this.taskFilter.dueDateTo || null
                 },
-                dateFilterOptions: [
+                "dateFilterOptions": [
                     DateCloudFilterType.NO_DATE,
                     DateCloudFilterType.TODAY,
                     DateCloudFilterType.TOMORROW,
@@ -259,44 +259,44 @@ export class EditTaskFilterCloudComponent extends BaseEditTaskFilterCloudCompone
                 ]
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_DATE',
-                type: 'date-range',
-                key: 'completedDateRange',
-                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo'},
-                value: {
-                    completedDateType: this.taskFilter.completedDateType || null,
-                    _completedFrom: this.taskFilter.completedFrom || null,
-                    _completedTo: this.taskFilter.completedTo || null
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_DATE',
+                "type": 'date-range',
+                "key": 'completedDateRange',
+                "attributes": { "dateType": 'completedDateType', "from": '_completedFrom', "to": '_completedTo'},
+                "value": {
+                    "completedDateType": this.taskFilter.completedDateType || null,
+                    "_completedFrom": this.taskFilter.completedFrom || null,
+                    "_completedTo": this.taskFilter.completedTo || null
                 }
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
-                type: 'date-range',
-                key: 'createdDateRange',
-                attributes: { dateType: 'createdDateType', from: '_createdFrom', to: '_createdTo'},
-                value: {
-                    createdDateType: this.taskFilter.createdDateType || null,
-                    _createdFrom: this.taskFilter.createdFrom || null,
-                    _createdTo: this.taskFilter.createdTo || null
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE',
+                "type": 'date-range',
+                "key": 'createdDateRange',
+                "attributes": { "dateType": 'createdDateType', "from": '_createdFrom', "to": '_createdTo'},
+                "value": {
+                    "createdDateType": this.taskFilter.createdDateType || null,
+                    "_createdFrom": this.taskFilter.createdFrom || null,
+                    "_createdTo": this.taskFilter.createdTo || null
                 }
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_BY',
-                type: 'people',
-                key: 'completedBy',
-                value: this.taskFilter.completedBy ? [this.taskFilter.completedBy] : null,
-                selectionMode: 'single'
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_BY',
+                "type": 'people',
+                "key": 'completedBy',
+                "value": this.taskFilter.completedBy ? [this.taskFilter.completedBy] : null,
+                "selectionMode": 'single'
             },
             {
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
-                type: 'assignment',
-                key: 'assignment',
-                attributes: { assignedUsers: 'assignedUsers', candidateGroups: 'candidateGroups'},
-                value: {
-                    assignedUsers: this.taskFilter.assignedUsers || [],
-                    candidateGroups: this.taskFilter.candidateGroups || []
+                "label": 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
+                "type": 'assignment',
+                "key": 'assignment',
+                "attributes": { "assignedUsers": 'assignedUsers', "candidateGroups": 'candidateGroups'},
+                "value": {
+                    "assignedUsers": this.taskFilter.assignedUsers || [],
+                    "candidateGroups": this.taskFilter.candidateGroups || []
                 },
-                selectionMode: 'multiple'
+                "selectionMode": 'multiple'
             }
         ];
     }

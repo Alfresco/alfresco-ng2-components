@@ -21,9 +21,9 @@ import { CardItemTypeService } from '../../services/card-item-types.service';
 import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
 @Component({
-    selector: 'adf-card-view-item-dispatcher',
-    standalone: true,
-    template: '<ng-template #content></ng-template>'
+    "selector": 'adf-card-view-item-dispatcher',
+    "standalone": true,
+    "template": '<ng-template #content></ng-template>'
 })
 export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
@@ -59,10 +59,10 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     public ngOnInit;
     public ngDoCheck;
 
-    @ViewChild('content', { read: ViewContainerRef, static: true })
+    @ViewChild('content', { "read": ViewContainerRef, "static": true })
     content!: ViewContainerRef;
 
-    constructor(private cardItemTypeService: CardItemTypeService) {
+    constructor (private cardItemTypeService: CardItemTypeService) {
         const dynamicLifeCycleMethods = [
             'ngOnInit',
             'ngDoCheck',
@@ -78,7 +78,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (!this.loaded) {
             this.loadComponent();
             this.loaded = true;
@@ -91,7 +91,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.proxy('ngOnChanges', changes);
     }
 
-    private loadComponent() {
+    private loadComponent () {
         const factoryClass = this.cardItemTypeService.resolveComponentType(this.property);
 
         this.componentReference = this.content.createComponent(factoryClass);
@@ -107,7 +107,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.displayLabelForChips = this.displayLabelForChips;
     }
 
-    private proxy(methodName, ...args) {
+    private proxy (methodName, ...args) {
         if (this.componentReference.instance[methodName]) {
             // eslint-disable-next-line prefer-spread
             this.componentReference.instance[methodName].apply(this.componentReference.instance, args);

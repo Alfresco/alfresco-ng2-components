@@ -39,19 +39,19 @@ describe('StartTaskCloudComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
 
     const mock: any = {
-        oauth2Auth: {
-            callCustomApi: () => Promise.resolve(taskDetailsMock)
+        "oauth2Auth": {
+            "callCustomApi": () => Promise.resolve(taskDetailsMock)
         },
-        isEcmLoggedIn: () => false,
-        reply: jasmine.createSpy('reply')
+        "isEcmLoggedIn": () => false,
+        "reply": jasmine.createSpy('reply')
     };
 
-    const mockUser: IdentityUserModel = { username: 'currentUser', firstName: 'Test', lastName: 'User', email: 'currentUser@test.com' };
+    const mockUser: IdentityUserModel = { "username": 'currentUser', "firstName": 'Test', "lastName": 'User', "email": 'currentUser@test.com' };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ProcessServiceCloudTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(StartTaskCloudComponent);
         component = fixture.componentInstance;
@@ -137,7 +137,7 @@ describe('StartTaskCloudComponent', () => {
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: [] });
+                const taskRequest = new StartTaskCloudRequestModel({ "name": 'fakeName', "assignee": 'currentUser', "candidateGroups": [] });
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
                 done();
             });
@@ -151,7 +151,7 @@ describe('StartTaskCloudComponent', () => {
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new StartTaskCloudRequestModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: [] });
+                const taskRequest = new StartTaskCloudRequestModel({ "name": 'fakeName', "assignee": 'currentUser', "candidateGroups": [] });
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest, 'fakeAppName');
                 done();
             });

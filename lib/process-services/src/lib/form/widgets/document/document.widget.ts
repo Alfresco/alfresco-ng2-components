@@ -21,11 +21,11 @@ import { CommonModule } from '@angular/common';
 import { ContentWidgetComponent } from './content.widget';
 
 @Component({
-    selector: 'adf-form-document-widget',
-    standalone: true,
-    imports: [CommonModule, ContentWidgetComponent],
-    templateUrl: './document.widget.html',
-    host: {
+    "selector": 'adf-form-document-widget',
+    "standalone": true,
+    "imports": [CommonModule, ContentWidgetComponent],
+    "templateUrl": './document.widget.html',
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,17 +36,17 @@ import { ContentWidgetComponent } from './content.widget';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class DocumentWidgetComponent extends WidgetComponent implements OnInit {
     fileId: string = null;
     hasFile: boolean = false;
 
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field) {
             const file = this.field.value;
 

@@ -34,12 +34,12 @@ import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplet
 import { map, takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-search-properties',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, TranslateModule, MatFormFieldModule, MatSelectModule, SearchChipAutocompleteInputComponent],
-    templateUrl: './search-properties.component.html',
-    styleUrls: ['./search-properties.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-properties',
+    "standalone": true,
+    "imports": [CommonModule, ReactiveFormsModule, TranslateModule, MatFormFieldModule, MatSelectModule, SearchChipAutocompleteInputComponent],
+    "templateUrl": './search-properties.component.html',
+    "styleUrls": ['./search-properties.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDestroy, SearchWidget {
     id: string;
@@ -51,9 +51,9 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
     preselectedOptions: AutocompleteOption[] = [];
 
     private _form = this.formBuilder.nonNullable.group<FileSizeCondition>({
-        fileSizeOperator: FileSizeOperator.AT_LEAST,
-        fileSize: undefined,
-        fileSizeUnit: FileSizeUnit.KB
+        "fileSizeOperator": FileSizeOperator.AT_LEAST,
+        "fileSize": undefined,
+        "fileSizeUnit": FileSizeUnit.KB
     });
     private _fileSizeOperators = Object.keys(FileSizeOperator).map<string>((key) => FileSizeOperator[key]);
     private _fileSizeUnits = [FileSizeUnit.KB, FileSizeUnit.MB, FileSizeUnit.GB];
@@ -64,42 +64,42 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
     private sizeField: string;
     private nameField: string;
 
-    @ViewChild('fileSizeOperatorSelect', { read: ElementRef })
+    @ViewChild('fileSizeOperatorSelect', { "read": ElementRef })
     fileSizeOperatorSelectElement: ElementRef;
 
-    get form(): SearchPropertiesComponent['_form'] {
+    get form (): SearchPropertiesComponent['_form'] {
         return this._form;
     }
 
-    get fileSizeOperators(): string[] {
+    get fileSizeOperators (): string[] {
         return this._fileSizeOperators;
     }
 
-    get fileSizeUnits(): FileSizeUnit[] {
+    get fileSizeUnits (): FileSizeUnit[] {
         return this._fileSizeUnits;
     }
 
-    get fileSizeOperatorsMaxWidth(): number {
+    get fileSizeOperatorsMaxWidth (): number {
         return this._fileSizeOperatorsMaxWidth;
     }
 
-    get reset$(): Subject<void> {
+    get reset$ (): Subject<void> {
         return this._reset$;
     }
 
-    get selectedExtensions(): AutocompleteOption[] {
+    get selectedExtensions (): AutocompleteOption[] {
         return this.parseToAutocompleteOptions(this._selectedExtensions);
     }
 
-    set selectedExtensions(extensions: AutocompleteOption[]) {
+    set selectedExtensions (extensions: AutocompleteOption[]) {
         this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
+    constructor (private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.settings) {
             if (!this.settings.fileExtensions) {
                 this.settings.fileExtensions = [];
@@ -133,7 +133,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
             });
     }
 
-    ngAfterViewChecked() {
+    ngAfterViewChecked () {
         if (this.fileSizeOperatorSelectElement?.nativeElement.clientWidth && !this._fileSizeOperatorsMaxWidth) {
             setTimeout(() => {
                 const extraFreeSpace = 20;
@@ -149,12 +149,12 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    narrowDownAllowedCharacters(event: Event) {
+    narrowDownAllowedCharacters (event: Event) {
         const value = (event.target as HTMLInputElement).value;
         if (!(event.target as HTMLInputElement).value) {
             return;
@@ -164,21 +164,21 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         }
     }
 
-    clearNumberFieldWhenInvalid(event: FocusEvent) {
+    clearNumberFieldWhenInvalid (event: FocusEvent) {
         if (!(event.target as HTMLInputElement).validity.valid) {
             this.form.controls.fileSize.setValue(undefined);
         }
     }
 
-    preventIncorrectNumberCharacters(event: KeyboardEvent): boolean {
+    preventIncorrectNumberCharacters (event: KeyboardEvent): boolean {
         return event.key !== '-' && event.key !== 'e' && event.key !== '+';
     }
 
-    compareFileExtensions(extension1: AutocompleteOption, extension2: AutocompleteOption): boolean {
+    compareFileExtensions (extension1: AutocompleteOption, extension2: AutocompleteOption): boolean {
         return extension1.value.toUpperCase() === extension2.value.toUpperCase();
     }
 
-    getExtensionWithoutDot(extension: string): string {
+    getExtensionWithoutDot (extension: string): string {
         const extensionSplitByDot = extension.split('.');
         return extensionSplitByDot[extensionSplitByDot.length - 1];
     }
@@ -194,7 +194,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         });
     };
 
-    reset(updateContext = true) {
+    reset (updateContext = true) {
         this.form.reset();
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
@@ -207,11 +207,11 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         this.displayValue$.next('');
     }
 
-    submitValues(updateContext = true) {
+    submitValues (updateContext = true) {
         if (this.context?.filterRawParams) {
             this.context.filterRawParams[this.id] = {
-                fileExtensions: this._selectedExtensions,
-                fileSizeCondition: this.form.value
+                "fileExtensions": this._selectedExtensions,
+                "fileSizeCondition": this.form.value
             };
         }
         if (this.settings && this.context) {
@@ -219,24 +219,24 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         }
     }
 
-    hasValidValue(): boolean {
+    hasValidValue (): boolean {
         return true;
     }
 
-    getCurrentValue(): SearchProperties {
+    getCurrentValue (): SearchProperties {
         return {
-            fileSizeCondition: this.form.getRawValue(),
-            fileExtensions: this._selectedExtensions
+            "fileSizeCondition": this.form.getRawValue(),
+            "fileExtensions": this._selectedExtensions
         };
     }
 
-    setValue(searchProperties: SearchProperties) {
+    setValue (searchProperties: SearchProperties) {
         this.form.patchValue(searchProperties.fileSizeCondition);
         this.selectedExtensions = this.parseToAutocompleteOptions(searchProperties.fileExtensions ?? []);
         this.submitValues();
     }
 
-    private updateSettingsAndContext(updateContext = true): void {
+    private updateSettingsAndContext (updateContext = true): void {
         let query = '';
         let displayedValue = '';
         if (this.form.value.fileSize !== undefined && this.form.value.fileSize !== null) {
@@ -270,25 +270,25 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
         }
     }
 
-    private parseToAutocompleteOptions(array: string[]): AutocompleteOption[] {
+    private parseToAutocompleteOptions (array: string[]): AutocompleteOption[] {
         return array.map((value) => ({ value }));
     }
 
-    private parseFromAutocompleteOptions(array: AutocompleteOption[]): string[] {
+    private parseFromAutocompleteOptions (array: AutocompleteOption[]): string[] {
         return array.flatMap((option) => option.value);
     }
 
-    private getOperatorNameWidth(operator: string, font: string): number {
+    private getOperatorNameWidth (operator: string, font: string): number {
         const context = this.canvas.getContext('2d');
         context.font = font;
         return context.measureText(this.translateService.instant(operator)).width;
     }
 
-    private getCssStyle(element: HTMLElement, property: string): string {
+    private getCssStyle (element: HTMLElement, property: string): string {
         return window.getComputedStyle(element, null).getPropertyValue(property);
     }
 
-    private getCanvasFont(el: HTMLElement): string {
+    private getCanvasFont (el: HTMLElement): string {
         return `${this.getCssStyle(el, 'font-weight')} ${this.getCssStyle(el, 'font-size')} ${this.getCssStyle(el, 'font-family')}`;
     }
 }

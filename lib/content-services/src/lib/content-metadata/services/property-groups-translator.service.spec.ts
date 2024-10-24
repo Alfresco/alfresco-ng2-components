@@ -44,23 +44,23 @@ describe('PropertyGroupTranslatorService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         logService = TestBed.inject(LogService);
         service = TestBed.inject(PropertyGroupTranslatorService);
 
         property = {
-            name: 'FAS:PLAGUE',
-            title: 'The Faro Plague',
-            dataType: '',
-            defaultValue: '',
-            mandatory: false,
-            multiValued: false
+            "name": 'FAS:PLAGUE',
+            "title": 'The Faro Plague',
+            "dataType": '',
+            "defaultValue": '',
+            "mandatory": false,
+            "multiValued": false
         };
 
         propertyGroup = {
-            title: 'Faro Automated Solutions',
-            properties: [property]
+            "title": 'Faro Automated Solutions',
+            "properties": [property]
         };
 
         propertyGroups = [];
@@ -74,21 +74,21 @@ describe('PropertyGroupTranslatorService', () => {
         it('should translate EVERY properties in ONE group properly', () => {
             propertyGroup.properties = [
                 {
-                    name: 'FAS:PLAGUE',
-                    title: 'title',
-                    dataType: 'd:text',
-                    defaultValue: 'defaultValue',
-                    mandatory: false,
-                    multiValued: false,
-                    editable: true
+                    "name": 'FAS:PLAGUE',
+                    "title": 'title',
+                    "dataType": 'd:text',
+                    "defaultValue": 'defaultValue',
+                    "mandatory": false,
+                    "multiValued": false,
+                    "editable": true
                 },
                 {
-                    name: 'FAS:ALOY',
-                    title: 'title',
-                    dataType: 'd:text',
-                    defaultValue: 'defaultValue',
-                    mandatory: false,
-                    multiValued: false
+                    "name": 'FAS:ALOY',
+                    "title": 'title',
+                    "dataType": 'd:text',
+                    "defaultValue": 'defaultValue',
+                    "mandatory": false,
+                    "multiValued": false
                 }
             ];
             propertyGroups.push(propertyGroup);
@@ -105,28 +105,28 @@ describe('PropertyGroupTranslatorService', () => {
         it('should translate EVERY property in EVERY group properly', () => {
             propertyGroups.push(
                 Object.assign({}, propertyGroup, {
-                    properties: [
+                    "properties": [
                         {
-                            name: 'FAS:PLAGUE',
-                            title: 'title',
-                            dataType: 'd:text',
-                            defaultValue: 'defaultvalue',
-                            mandatory: false,
-                            multiValued: false,
-                            editable: false
+                            "name": 'FAS:PLAGUE',
+                            "title": 'title',
+                            "dataType": 'd:text',
+                            "defaultValue": 'defaultvalue',
+                            "mandatory": false,
+                            "multiValued": false,
+                            "editable": false
                         }
                     ]
                 }),
                 Object.assign({}, propertyGroup, {
-                    properties: [
+                    "properties": [
                         {
-                            name: 'FAS:ALOY',
-                            title: 'title',
-                            dataType: 'd:text',
-                            defaultValue: 'defaultvalue',
-                            mandatory: false,
-                            multiValued: false,
-                            editable: false
+                            "name": 'FAS:ALOY',
+                            "title": 'title',
+                            "dataType": 'd:text',
+                            "defaultValue": 'defaultvalue',
+                            "mandatory": false,
+                            "multiValued": false,
+                            "editable": false
                         }
                     ]
                 })
@@ -164,8 +164,8 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'daemonic:scorcher';
             property.defaultValue = 'Daemonic beast';
             propertyGroups.push({
-                title: 'Faro Automated Solutions',
-                properties: [property]
+                "title": 'Faro Automated Solutions',
+                "properties": [property]
             });
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
@@ -182,8 +182,8 @@ describe('PropertyGroupTranslatorService', () => {
             property.defaultValue = 'Fake value';
             property.protected = true;
             propertyGroups.push({
-                title: 'Fake Title',
-                properties: [property]
+                "title": 'Fake Title',
+                "properties": [property]
             });
 
             propertyValues = { 'FAKE:NAME': 'API Fake response' };
@@ -345,14 +345,14 @@ describe('PropertyGroupTranslatorService', () => {
 
         it('should translate property for type LIST constraint', () => {
             const definition: Definition = {
-                properties: [
+                "properties": [
                     {
-                        id: 'FAS:PLAGUE',
-                        constraints: [
+                        "id": 'FAS:PLAGUE',
+                        "constraints": [
                             {
-                                type: 'LIST',
-                                parameters: {
-                                    allowedValues: ['one', 'two', 'three']
+                                "type": 'LIST',
+                                "parameters": {
+                                    "allowedValues": ['one', 'two', 'three']
                                 }
                             }
                         ]
@@ -370,15 +370,15 @@ describe('PropertyGroupTranslatorService', () => {
 
         it('should translate content type properties into card items', () => {
             const propertyBase = {
-                id: 'fk:brendonstare',
-                title: 'Brendon',
-                description: 'is watching the dark emperor',
-                dataType: 'd:text',
-                isMultiValued: true,
-                isMandatory: true,
-                defaultValue: 'default',
-                isMandatoryEnforced: true,
-                isProtected: false
+                "id": 'fk:brendonstare',
+                "title": 'Brendon',
+                "description": 'is watching the dark emperor',
+                "dataType": 'd:text',
+                "isMultiValued": true,
+                "isMandatory": true,
+                "defaultValue": 'default',
+                "isMandatoryEnforced": true,
+                "isProtected": false
             } as PropertyBase;
 
             const cardViewProperty = service.translateProperty(propertyBase, 'Scary Brandon and the DuckTales', true);
@@ -390,15 +390,15 @@ describe('PropertyGroupTranslatorService', () => {
 
         it('should translate content type properties into card items with default value when no value is passed', () => {
             const propertyBase = {
-                id: 'fk:brendonstare',
-                title: 'Brendon',
-                description: 'is watching the dark emperor',
-                dataType: 'd:text',
-                isMultiValued: true,
-                isMandatory: true,
-                defaultValue: 'default',
-                isMandatoryEnforced: true,
-                isProtected: false
+                "id": 'fk:brendonstare',
+                "title": 'Brendon',
+                "description": 'is watching the dark emperor',
+                "dataType": 'd:text',
+                "isMultiValued": true,
+                "isMandatory": true,
+                "defaultValue": 'default',
+                "isMandatoryEnforced": true,
+                "isProtected": false
             } as PropertyBase;
 
             const cardViewProperty = service.translateProperty(propertyBase, null, true);
@@ -410,15 +410,15 @@ describe('PropertyGroupTranslatorService', () => {
 
         it('should not edit the protected fields', () => {
             const propertyBase = {
-                id: 'fk:emperor',
-                title: 'Emperor',
-                description: 'is watching the dark emperor',
-                dataType: 'd:text',
-                isMultiValued: true,
-                isMandatory: true,
-                defaultValue: 'default',
-                isMandatoryEnforced: true,
-                isProtected: true
+                "id": 'fk:emperor',
+                "title": 'Emperor',
+                "description": 'is watching the dark emperor',
+                "dataType": 'd:text',
+                "isMultiValued": true,
+                "isMandatory": true,
+                "defaultValue": 'default',
+                "isMandatoryEnforced": true,
+                "isProtected": true
             } as PropertyBase;
 
             const cardViewProperty = service.translateProperty(propertyBase, null, true);

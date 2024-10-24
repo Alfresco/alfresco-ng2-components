@@ -33,7 +33,7 @@ describe('NumberWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatInputModule, MatIconModule]
+            "imports": [CoreTestingModule, MatInputModule, MatIconModule]
         });
         fixture = TestBed.createComponent(NumberWidgetComponent);
         widget = fixture.componentInstance;
@@ -43,9 +43,9 @@ describe('NumberWidgetComponent', () => {
 
     describe('when tooltip is set', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.NUMBER,
-                tooltip: 'my custom tooltip'
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.NUMBER,
+                "tooltip": 'my custom tooltip'
             });
             fixture.detectChanges();
         });
@@ -61,9 +61,9 @@ describe('NumberWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.NUMBER,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.NUMBER,
+                "required": true
             });
             fixture.detectChanges();
         });
@@ -87,13 +87,13 @@ describe('NumberWidgetComponent', () => {
 
     describe('when form model has left labels', () => {
         it('should have left labels classes on leftLabels true', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                id: 'number-id',
-                name: 'number-name',
-                value: '',
-                type: FormFieldTypes.NUMBER,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": true }), {
+                "id": 'number-id',
+                "name": 'number-name',
+                "value": '',
+                "type": FormFieldTypes.NUMBER,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -107,13 +107,13 @@ describe('NumberWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels false', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                id: 'number-id',
-                name: 'number-name',
-                value: '',
-                type: FormFieldTypes.NUMBER,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": false }), {
+                "id": 'number-id',
+                "name": 'number-name',
+                "value": '',
+                "type": FormFieldTypes.NUMBER,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -127,13 +127,13 @@ describe('NumberWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels not present', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'number-id',
-                name: 'number-name',
-                value: '',
-                type: FormFieldTypes.NUMBER,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'number-id',
+                "name": 'number-name',
+                "value": '',
+                "type": FormFieldTypes.NUMBER,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();

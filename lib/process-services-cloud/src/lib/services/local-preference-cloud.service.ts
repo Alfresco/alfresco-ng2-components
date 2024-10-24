@@ -20,26 +20,25 @@ import { PreferenceCloudServiceInterface } from './preference-cloud.interface';
 import { StorageService } from '@alfresco/adf-core';
 import { Observable, of } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class LocalPreferenceCloudService implements PreferenceCloudServiceInterface {
 
-  constructor(private storage: StorageService) { }
+  constructor (private storage: StorageService) { }
 
     /**
      * Gets local preferences
-     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @returns List of local preferences
      */
-    getPreferences(_: string, key: string): Observable<any> {
+    getPreferences (_: string, key: string): Observable<any> {
         if (key || key === '') {
             return of(this.prepareLocalPreferenceResponse(key));
         }
         return of(
             {
-                list: {
-                    entries: []
+                "list": {
+                    "entries": []
                 }
             }
         );
@@ -47,24 +46,22 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Gets local preference.
-     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @returns Observable of local preference
      */
-    getPreferenceByKey(_: string, key: string): Observable<any> {
+    getPreferenceByKey (_: string, key: string): Observable<any> {
         return of(JSON.parse(this.storage.getItem(key)) || []);
     }
 
     /**
      * Creates local preference.
-     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @param newPreference Details of new local preference
      * @returns Observable of created local preferences
      */
-    createPreference(_: string, key: string, newPreference: any): Observable<any> {
+    createPreference (_: string, key: string, newPreference: any): Observable<any> {
         const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
         storedFilters.push(...newPreference);
         this.storage.setItem(key, JSON.stringify(storedFilters));
@@ -73,13 +70,12 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Updates local preference.
-     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @param updatedPreference Details of updated preference
      * @returns Observable of updated local preferences
      */
-    updatePreference(_: string, key: string, updatedPreference: any): Observable<any> {
+    updatePreference (_: string, key: string, updatedPreference: any): Observable<any> {
         if (key) {
             this.storage.setItem(key, JSON.stringify(updatedPreference));
         }
@@ -88,26 +84,25 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Deletes local preference by given preference key.
-     *
      * @param key Key of the target preference
      * @param preferences Details of updated preferences
      * @returns Observable of preferences without deleted preference
      */
-    deletePreference(key: string, preferences: any): Observable<any> {
+    deletePreference (key: string, preferences: any): Observable<any> {
         if (key) {
             this.storage.setItem(key, JSON.stringify(preferences));
         }
         return of(preferences);
     }
 
-    prepareLocalPreferenceResponse(key: string): any {
+    prepareLocalPreferenceResponse (key: string): any {
         return {
-            list: {
-                entries: [
+            "list": {
+                "entries": [
                     {
-                        entry: {
+                        "entry": {
                             key,
-                            value: this.storage.getItem(key) || '[]'
+                            "value": this.storage.getItem(key) || '[]'
                         }
                     }
                 ]

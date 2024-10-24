@@ -24,11 +24,11 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { BpmProductVersionModel, AuthenticationService } from '@alfresco/adf-core';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class DiscoveryApiService {
     private _discoveryApi: DiscoveryApi;
-    get discoveryApi(): DiscoveryApi {
+    get discoveryApi (): DiscoveryApi {
         this._discoveryApi = this._discoveryApi ?? new DiscoveryApi(this.alfrescoApiService.getInstance());
         return this._discoveryApi;
     }
@@ -38,7 +38,7 @@ export class DiscoveryApiService {
      */
     ecmProductInfo$ = new Subject<RepositoryInfo>();
 
-    constructor(private authenticationService: AuthenticationService, private alfrescoApiService: AlfrescoApiService) {
+    constructor (private authenticationService: AuthenticationService, private alfrescoApiService: AlfrescoApiService) {
         this.authenticationService.onLogin.subscribe(() => {
             this.alfrescoApiService.alfrescoApiInitialized
                 .pipe(
@@ -52,10 +52,9 @@ export class DiscoveryApiService {
 
     /**
      * Gets product information for Content Services.
-     *
      * @returns ProductVersionModel containing product details
      */
-    getEcmProductInfo(): Observable<RepositoryInfo> {
+    getEcmProductInfo (): Observable<RepositoryInfo> {
         return from(this.discoveryApi.getRepositoryInformation()).pipe(
             map((res) => res.entry.repository),
             catchError((err) => throwError(err))
@@ -64,10 +63,9 @@ export class DiscoveryApiService {
 
     /**
      * Gets product information for Process Services.
-     *
      * @returns ProductVersionModel containing product details
      */
-    getBpmProductInfo(): Observable<BpmProductVersionModel> {
+    getBpmProductInfo (): Observable<BpmProductVersionModel> {
         const aboutApi = new AboutApi(this.alfrescoApiService.getInstance());
 
         return from(aboutApi.getAppVersion()).pipe(
@@ -76,7 +74,7 @@ export class DiscoveryApiService {
         );
     }
 
-    getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
+    getBPMSystemProperties (): Observable<SystemPropertiesRepresentation> {
         const systemPropertiesApi = new SystemPropertiesApi(this.alfrescoApiService.getInstance());
 
         return from(systemPropertiesApi.getProperties()).pipe(

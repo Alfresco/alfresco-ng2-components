@@ -36,32 +36,30 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchChipAutocompleteInputComponent]
+            "imports": [ContentTestingModule, SearchChipAutocompleteInputComponent]
         });
 
         fixture = TestBed.createComponent(SearchChipAutocompleteInputComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
         component = fixture.componentInstance;
         component.onReset$ = onResetSubject.asObservable();
-        component.autocompleteOptions = [{ value: 'option1' }, { value: 'option2' }];
+        component.autocompleteOptions = [{ "value": 'option1' }, { "value": 'option2' }];
         fixture.detectChanges();
     });
 
     /**
      * Get the input element
-     *
      * @returns native element
      */
-    function getInput(): HTMLInputElement {
+    function getInput (): HTMLInputElement {
         return fixture.debugElement.query(By.css('input')).nativeElement;
     }
 
     /**
      * Enter the new input value
-     *
      * @param value value to input
      */
-    function enterNewInputValue(value: string) {
+    function enterNewInputValue (value: string) {
         const inputElement = getInput();
         inputElement.dispatchEvent(new Event('focusin'));
         inputElement.value = value;
@@ -71,61 +69,56 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     /**
      * Add new option
-     *
      * @param value value to input
      */
-    function addNewOption(value: string) {
+    function addNewOption (value: string) {
         const inputElement = getInput();
         inputElement.value = value;
         fixture.detectChanges();
-        inputElement.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 13 }));
+        inputElement.dispatchEvent(new KeyboardEvent('keydown', { "keyCode": 13 }));
         fixture.detectChanges();
     }
 
     /**
      * Get material chip list
-     *
      * @returns list of chips
      */
-    async function getChipList(): Promise<MatChipHarness[]> {
+    async function getChipList (): Promise<MatChipHarness[]> {
         const harness = await loader.getHarness(MatChipGridHarness);
         return harness.getRows();
     }
 
     /**
      * Get chip value by specific index
-     *
      * @param index index of the chip
      * @returns chip value
      */
-    async function getChipValue(index: number): Promise<string> {
+    async function getChipValue (index: number): Promise<string> {
         const chipList = await getChipList();
         return chipList[index].getText();
     }
 
     /**
      * Get material option elements
-     *
      * @returns list of debug elements
      */
-    async function getOptionElements(): Promise<MatOptionHarness[]> {
+    async function getOptionElements (): Promise<MatOptionHarness[]> {
         const autocomplete = await loader.getHarness(MatAutocompleteHarness);
         return autocomplete.getOptions();
     }
 
     /**
      * Get added options for auto-complete
-     *
      * @returns list of debug elements
      */
-    function getAddedOptionElements(): DebugElement[] {
+    function getAddedOptionElements (): DebugElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-autocomplete-added-option'));
     }
 
     it('should assign preselected values to selected options on init', () => {
-        component.preselectedOptions = [{ value: 'option1' }];
+        component.preselectedOptions = [{ "value": 'option1' }];
         component.ngOnInit();
-        expect(component.selectedOptions).toEqual([{ value: 'option1' }]);
+        expect(component.selectedOptions).toEqual([{ "value": 'option1' }]);
     });
 
     it('should add new option only if value is predefined when allowOnlyPredefinedValues = true', async () => {
@@ -165,8 +158,8 @@ describe('SearchChipAutocompleteInputComponent', () => {
         const optionToClick = matOptions[0];
         await optionToClick.click();
 
-        expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{ value: 'option1' }]);
-        expect(component.selectedOptions).toEqual([{ value: 'option1' }]);
+        expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{ "value": 'option1' }]);
+        expect(component.selectedOptions).toEqual([{ "value": 'option1' }]);
         expect((await getChipList()).length).toBe(1);
     });
 
@@ -184,7 +177,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     it('should apply class to already selected options based on custom compareOption function', async () => {
         component.allowOnlyPredefinedValues = false;
-        component.autocompleteOptions = [{ value: '.test1' }, { value: 'test3' }, { value: '.test2.' }, { value: 'test1' }];
+        component.autocompleteOptions = [{ "value": '.test1' }, { "value": 'test3' }, { "value": '.test2.' }, { "value": 'test1' }];
         component.compareOption = (option1, option2) => option1.value.split('.')[1] === option2.value;
 
         addNewOption('test1');
@@ -197,7 +190,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
     });
 
     it('should limit autocomplete list to 15 values max', async () => {
-        component.autocompleteOptions = Array.from({ length: 16 }, (_, i) => ({ value: `a${i}` }));
+        component.autocompleteOptions = Array.from({ "length": 16 }, (_, i) => ({ "value": `a${i}` }));
         enterNewInputValue('a');
 
         await fixture.whenStable();
@@ -220,7 +213,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
     });
 
     it('should show autocomplete list based on custom filtering', async () => {
-        component.autocompleteOptions = [{ value: '.test1' }, { value: 'test1' }, { value: 'test1.' }, { value: '.test2' }, { value: '.test12' }];
+        component.autocompleteOptions = [{ "value": '.test1' }, { "value": 'test1' }, { "value": 'test1.' }, { "value": '.test2' }, { "value": '.test12' }];
         component.filter = (options, value) => options.filter((option) => option.value.split('.')[1] === value);
         enterNewInputValue('test1');
         await fixture.whenStable();
@@ -239,7 +232,7 @@ describe('SearchChipAutocompleteInputComponent', () => {
     it('should emit new value when selected options changed', async () => {
         const optionsChangedSpy = spyOn(component.optionsChanged, 'emit');
         addNewOption('option1');
-        expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{ value: 'option1' }]);
+        expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{ "value": 'option1' }]);
         expect((await getChipList()).length).toBe(1);
         expect(await getChipValue(0)).toBe('option1');
     });
@@ -280,12 +273,12 @@ describe('SearchChipAutocompleteInputComponent', () => {
         fixture.debugElement.query(By.directive(MatChipRemove)).nativeElement.click();
         fixture.detectChanges();
 
-        expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{ value: 'option2' }]);
+        expect(optionsChangedSpy).toHaveBeenCalledOnceWith([{ "value": 'option2' }]);
         expect((await getChipList()).length).toEqual(1);
     });
 
     it('should show full category path when fullPath provided', async () => {
-        component.filteredOptions = [{ id: 'test-id', value: 'test-value', fullPath: 'test-full-path' }];
+        component.filteredOptions = [{ "id": 'test-id', "value": 'test-value', "fullPath": 'test-full-path' }];
 
         enterNewInputValue('test-value');
 
@@ -302,41 +295,41 @@ describe('SearchChipAutocompleteInputComponent', () => {
 
     describe('isOptionSelected', () => {
         beforeEach(() => {
-            component.autocompleteOptions = [{ value: 'option1' }, { value: 'option2' }];
+            component.autocompleteOptions = [{ "value": 'option1' }, { "value": 'option2' }];
             fixture.detectChanges();
         });
 
         it('should return true if option is already selected', () => {
-            const option = { value: 'option1' };
+            const option = { "value": 'option1' };
             component.selectedOptions = [option];
             expect(component.isOptionSelected(option)).toBeTrue();
         });
 
         it('should return false if option is not selected', () => {
-            component.selectedOptions = [{ value: 'option1' }];
-            expect(component.isOptionSelected({ value: 'option2' })).toBeFalse();
+            component.selectedOptions = [{ "value": 'option1' }];
+            expect(component.isOptionSelected({ "value": 'option2' })).toBeFalse();
         });
 
         it('should return true if custom compare function finds a match', () => {
             component.compareOption = (option1, option2) => option1.value.charAt(0) === option2.value.charAt(0);
-            component.selectedOptions = [{ value: 'apple' }];
-            expect(component.isOptionSelected({ value: 'apricot' })).toBeTrue();
+            component.selectedOptions = [{ "value": 'apple' }];
+            expect(component.isOptionSelected({ "value": 'apricot' })).toBeTrue();
         });
 
         it('should return false if custom compare function does not find a match', () => {
             component.compareOption = (option1, option2) => option1.value.charAt(0) === option2.value.charAt(0);
-            component.selectedOptions = [{ value: 'banana' }];
-            expect(component.isOptionSelected({ value: 'cherry' })).toBeFalse();
+            component.selectedOptions = [{ "value": 'banana' }];
+            expect(component.isOptionSelected({ "value": 'cherry' })).toBeFalse();
         });
 
         it('should return false if there are no selected options', () => {
             component.selectedOptions = [];
-            expect(component.isOptionSelected({ value: 'option1' })).toBeFalse();
+            expect(component.isOptionSelected({ "value": 'option1' })).toBeFalse();
         });
 
         it('should handle undefined compareOption gracefully', () => {
             component.compareOption = undefined;
-            const option = { value: 'option1' };
+            const option = { "value": 'option1' };
             component.selectedOptions = [option];
             expect(component.isOptionSelected(option)).toBeTrue();
         });

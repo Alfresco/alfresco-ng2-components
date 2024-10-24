@@ -31,11 +31,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'adf-dropdown-editor',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule],
-    templateUrl: './dropdown.editor.html',
-    styleUrls: ['./dropdown.editor.scss']
+    "selector": 'adf-dropdown-editor',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule],
+    "templateUrl": './dropdown.editor.html',
+    "styleUrls": ['./dropdown.editor.scss']
 })
 export class DropdownEditorComponent implements OnInit {
     value: any = null;
@@ -50,13 +50,13 @@ export class DropdownEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    constructor(
+    constructor (
         public formService: FormService,
         private taskFormService: TaskFormService,
         private processDefinitionService: ProcessDefinitionService
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         const field = this.table.field;
         if (field) {
             if (this.column.optionType === 'rest') {
@@ -72,7 +72,7 @@ export class DropdownEditorComponent implements OnInit {
         }
     }
 
-    getValuesByTaskId(field: FormFieldModel) {
+    getValuesByTaskId (field: FormFieldModel) {
         this.taskFormService.getRestFieldValuesColumn(field.form.taskId, field.id, this.column.id).subscribe((dynamicTableColumnOption) => {
             this.column.options = dynamicTableColumnOption || [];
             this.options = this.column.options;
@@ -80,7 +80,7 @@ export class DropdownEditorComponent implements OnInit {
         });
     }
 
-    getValuesByProcessDefinitionId(field: FormFieldModel) {
+    getValuesByProcessDefinitionId (field: FormFieldModel) {
         this.processDefinitionService
             .getRestFieldValuesColumnByProcessId(field.form.processDefinitionId, field.id, this.column.id)
             .subscribe((dynamicTableColumnOption) => {
@@ -90,7 +90,7 @@ export class DropdownEditorComponent implements OnInit {
             });
     }
 
-    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
+    onValueChanged (row: DynamicTableRow, column: DynamicTableColumn, event: any) {
         let value: any = event.value;
         value = column.options.find((opt) => opt.name === value);
         row.value[column.id] = value;

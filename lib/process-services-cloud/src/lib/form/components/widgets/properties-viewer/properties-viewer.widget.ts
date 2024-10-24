@@ -22,10 +22,10 @@ import { Node } from '@alfresco/js-api';
 /* eslint-disable @angular-eslint/component-selector */
 
 @Component({
-    selector: 'adf-properties-viewer-widget',
-    templateUrl: './properties-viewer.widget.html',
-    styleUrls: ['./properties-viewer.widget.scss'],
-    host: {
+    "selector": 'adf-properties-viewer-widget',
+    "templateUrl": './properties-viewer.widget.html',
+    "styleUrls": ['./properties-viewer.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -36,18 +36,18 @@ import { Node } from '@alfresco/js-api';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class PropertiesViewerWidgetComponent extends BaseViewerWidgetComponent {
 
     @Output()
     nodeContentLoaded: EventEmitter<Node> = new EventEmitter();
 
-    constructor(formService: FormService) {
+    constructor (formService: FormService) {
         super(formService);
     }
 
-    onNodeContentLoaded(node: Node) {
+    onNodeContentLoaded (node: Node) {
         this.nodeContentLoaded.emit(node);
     }
 }

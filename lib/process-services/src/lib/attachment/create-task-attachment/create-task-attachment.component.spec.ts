@@ -30,7 +30,7 @@ describe('AttachmentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, AttachmentComponent]
+            "imports": [ProcessTestingModule, AttachmentComponent]
         });
         fixture = TestBed.createComponent(AttachmentComponent);
         component = fixture.componentInstance;
@@ -38,23 +38,23 @@ describe('AttachmentComponent', () => {
 
         createTaskRelatedContentSpy = spyOn(service, 'createTaskRelatedContent').and.returnValue(
             of({
-                status: true
+                "status": true
             } as any)
         );
     });
 
     it('should not call createTaskRelatedContent service when taskId changed', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ taskId: change });
+        component.ngOnChanges({ "taskId": change });
         expect(createTaskRelatedContentSpy).not.toHaveBeenCalled();
     });
 
     it('should not call createTaskRelatedContent service when there is no file uploaded', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ taskId: change });
+        component.ngOnChanges({ "taskId": change });
         const customEvent: any = {
-            detail: {
-                files: []
+            "detail": {
+                "files": []
             }
         };
         component.onFileUpload(customEvent);
@@ -63,11 +63,11 @@ describe('AttachmentComponent', () => {
 
     it('should call createTaskRelatedContent service when there is a file uploaded', () => {
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ taskId: change });
+        component.ngOnChanges({ "taskId": change });
         const file = new File([new Blob()], 'Test');
         const customEvent = {
-            detail: {
-                files: [file]
+            "detail": {
+                "files": [file]
             }
         };
         component.onFileUpload(customEvent);

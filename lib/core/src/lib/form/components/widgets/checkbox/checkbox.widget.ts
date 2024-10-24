@@ -27,17 +27,17 @@ import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 
 @Component({
-    selector: 'checkbox-widget',
-    standalone: true,
-    templateUrl: './checkbox.widget.html',
-    styles: [
+    "selector": 'checkbox-widget',
+    "standalone": true,
+    "templateUrl": './checkbox.widget.html',
+    "styles": [
         `
             .adf-checkbox {
                 word-break: break-word;
             }
         `
     ],
-    host: {
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -48,13 +48,13 @@ import { WidgetComponent } from '../widget.component';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    imports: [NgClass, MatCheckboxModule, FormsModule, TranslateModule, ErrorWidgetComponent, NgIf],
-    encapsulation: ViewEncapsulation.None
+    "imports": [NgClass, MatCheckboxModule, FormsModule, TranslateModule, ErrorWidgetComponent, NgIf],
+    "encapsulation": ViewEncapsulation.None
 })
 export class CheckboxWidgetComponent extends WidgetComponent {
     checkboxValue: boolean;
 
-    constructor(public formService: FormService) {
+    constructor (public formService: FormService) {
         super(formService);
     }
 }

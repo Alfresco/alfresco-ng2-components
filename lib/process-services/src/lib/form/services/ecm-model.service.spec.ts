@@ -28,8 +28,8 @@ describe('EcmModelService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            "imports": [CoreTestingModule],
+            "providers": [{ "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock }]
         });
         service = TestBed.inject(EcmModelService);
         jasmine.Ajax.install();
@@ -46,9 +46,9 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({})
         });
     });
 
@@ -61,9 +61,9 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({})
         });
     });
 
@@ -79,9 +79,9 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({})
         });
     });
 
@@ -98,18 +98,18 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({})
         });
     });
 
     it('Should add property to a type', (done) => {
         const typeName = 'typeTest';
         const formFields = {
-            values: {
-                test: 'test',
-                test2: 'test2'
+            "values": {
+                "test": 'test',
+                "test2": 'test2'
             }
         };
 
@@ -119,31 +119,31 @@ describe('EcmModelService', () => {
             ).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([
                 {
-                    name: 'test',
-                    title: 'test',
-                    description: 'test',
-                    dataType: 'd:text',
-                    multiValued: false,
-                    mandatory: false,
-                    mandatoryEnforced: false
+                    "name": 'test',
+                    "title": 'test',
+                    "description": 'test',
+                    "dataType": 'd:text',
+                    "multiValued": false,
+                    "mandatory": false,
+                    "mandatoryEnforced": false
                 },
                 {
-                    name: 'test2',
-                    title: 'test2',
-                    description: 'test2',
-                    dataType: 'd:text',
-                    multiValued: false,
-                    mandatory: false,
-                    mandatoryEnforced: false
+                    "name": 'test2',
+                    "title": 'test2',
+                    "description": 'test2',
+                    "dataType": 'd:text',
+                    "multiValued": false,
+                    "mandatory": false,
+                    "mandatoryEnforced": false
                 }
             ]);
             done();
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({})
         });
     });
 
@@ -151,9 +151,9 @@ describe('EcmModelService', () => {
         const typeName = 'typeTest:testName@#$*!';
         const cleanName = 'testName';
         const formFields = {
-            values: {
-                test: 'test',
-                test2: 'test2'
+            "values": {
+                "test": 'test',
+                "test2": 'test2'
             }
         };
 
@@ -163,31 +163,31 @@ describe('EcmModelService', () => {
             ).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([
                 {
-                    name: 'test',
-                    title: 'test',
-                    description: 'test',
-                    dataType: 'd:text',
-                    multiValued: false,
-                    mandatory: false,
-                    mandatoryEnforced: false
+                    "name": 'test',
+                    "title": 'test',
+                    "description": 'test',
+                    "dataType": 'd:text',
+                    "multiValued": false,
+                    "mandatory": false,
+                    "mandatoryEnforced": false
                 },
                 {
-                    name: 'test2',
-                    title: 'test2',
-                    description: 'test2',
-                    dataType: 'd:text',
-                    multiValued: false,
-                    mandatory: false,
-                    mandatoryEnforced: false
+                    "name": 'test2',
+                    "title": 'test2',
+                    "description": 'test2',
+                    "dataType": 'd:text',
+                    "multiValued": false,
+                    "mandatory": false,
+                    "mandatoryEnforced": false
                 }
             ]);
             done();
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({})
         });
     });
 
@@ -199,9 +199,9 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({})
         });
     });
 
@@ -215,9 +215,9 @@ describe('EcmModelService', () => {
         });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify({})
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify({})
         });
     });
 
@@ -249,7 +249,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'searchEcmType').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next({ test: 'I-EXIST' });
+                    observer.next({ "test": 'I-EXIST' });
                     observer.complete();
                 })
         );
@@ -321,7 +321,7 @@ describe('EcmModelService', () => {
         spyOn(service, 'searchActivitiEcmModel').and.callFake(
             () =>
                 new Observable((observer) => {
-                    observer.next({ test: 'I-EXIST' });
+                    observer.next({ "test": 'I-EXIST' });
                     observer.complete();
                 })
         );

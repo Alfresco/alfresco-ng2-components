@@ -26,23 +26,23 @@ describe('RichTextEditorComponent', () => {
     let debugElement: DebugElement;
 
     const cssSelectors = {
-        editorContent: '.codex-editor',
-        editorJsElement: '.editorjs'
+        "editorContent": '.codex-editor',
+        "editorJsElement": '.editorjs'
     };
 
     const mockEditorData = {
-        time: 1658154611110,
-        blocks: [
+        "time": 1658154611110,
+        "blocks": [
             {
-                id: '1',
-                type: 'header',
-                data: {
-                    text: 'Editor.js',
-                    level: 2
+                "id": '1',
+                "type": 'header',
+                "data": {
+                    "text": 'Editor.js',
+                    "level": 2
                 }
             }
         ],
-        version: 1
+        "version": 1
     };
 
     const whenEditorIsReady = async () => {
@@ -53,7 +53,7 @@ describe('RichTextEditorComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [RichTextEditorComponent]
+            "declarations": [RichTextEditorComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(RichTextEditorComponent);

@@ -24,11 +24,11 @@ import { UploadDirective } from '@alfresco/adf-core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-create-task-attachment',
-    standalone: true,
-    imports: [CommonModule, MatButtonModule, UploadDirective, MatIconModule],
-    styleUrls: ['./create-task-attachment.component.scss'],
-    templateUrl: './create-task-attachment.component.html'
+    "selector": 'adf-create-task-attachment',
+    "standalone": true,
+    "imports": [CommonModule, MatButtonModule, UploadDirective, MatIconModule],
+    "styleUrls": ['./create-task-attachment.component.scss'],
+    "templateUrl": './create-task-attachment.component.html'
 })
 export class AttachmentComponent implements OnChanges {
     private processContentService = inject(ProcessContentService);
@@ -51,19 +51,19 @@ export class AttachmentComponent implements OnChanges {
     @Output()
     success = new EventEmitter<RelatedContentRepresentation>();
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (changes['taskId']?.currentValue) {
             this.taskId = changes['taskId'].currentValue;
         }
     }
 
-    onFileUpload(event: any) {
+    onFileUpload (event: any) {
         const filesList: File[] = event.detail.files.map((obj) => obj.file);
 
         for (const fileInfoObj of filesList) {
             const file: File = fileInfoObj;
             const opts = {
-                isRelatedContent: true
+                "isRelatedContent": true
             };
             this.processContentService.createTaskRelatedContent(this.taskId, file, opts).subscribe(
                 (res) => {

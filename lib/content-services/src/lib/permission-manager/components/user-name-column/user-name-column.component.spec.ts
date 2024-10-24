@@ -25,19 +25,19 @@ describe('UserNameColumnComponent', () => {
     let component: UserNameColumnComponent;
     let element: HTMLElement;
     const person = {
-        firstName: 'fake',
-        lastName: 'user',
-        email: 'fake@test.com'
+        "firstName": 'fake',
+        "lastName": 'user',
+        "email": 'fake@test.com'
     };
 
     const group = {
-        id: 'fake-id',
-        displayName: 'fake authority'
+        "id": 'fake-id',
+        "displayName": 'fake authority'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(UserNameColumnComponent);
         component = fixture.componentInstance;
@@ -48,8 +48,8 @@ describe('UserNameColumnComponent', () => {
     describe('person name', () => {
         it('should render person value from context', () => {
             component.context = {
-                row: {
-                    obj: {
+                "row": {
+                    "obj": {
                         person
                     }
                 }
@@ -62,9 +62,9 @@ describe('UserNameColumnComponent', () => {
 
         it('should render person value from node', (done) => {
             component.node = {
-                entry: {
-                    nodeType: 'cm:person',
-                    properties: {
+                "entry": {
+                    "nodeType": 'cm:person',
+                    "properties": {
                         'cm:firstName': 'Fake',
                         'cm:lastName': 'User',
                         'cm:email': 'fake-user@test.com',
@@ -88,8 +88,8 @@ describe('UserNameColumnComponent', () => {
     describe('group name', () => {
         it('should render group value from context', () => {
             component.context = {
-                row: {
-                    obj: {
+                "row": {
+                    "obj": {
                         group
                     }
                 }
@@ -101,10 +101,10 @@ describe('UserNameColumnComponent', () => {
 
         it('should display group id when display name is not provided', () => {
             component.context = {
-                row: {
-                    obj: {
-                        entry: {
-                            group: { id: 'fake_group_id' }
+                "row": {
+                    "obj": {
+                        "entry": {
+                            "group": { "id": 'fake_group_id' }
                         }
                     }
                 }
@@ -116,9 +116,9 @@ describe('UserNameColumnComponent', () => {
 
         it('should render group for authorityId', () => {
             component.context = {
-                row: {
-                    obj: {
-                        authorityId: 'fake-id'
+                "row": {
+                    "obj": {
+                        "authorityId": 'fake-id'
                     }
                 }
             };
@@ -129,9 +129,9 @@ describe('UserNameColumnComponent', () => {
 
         it('should render person value from node', () => {
             component.node = {
-                entry: {
-                    nodeType: 'cm:authorityContainer',
-                    properties: {
+                "entry": {
+                    "nodeType": 'cm:authorityContainer',
+                    "properties": {
                         'cm:authorityName': 'Fake authority'
                     }
                 }

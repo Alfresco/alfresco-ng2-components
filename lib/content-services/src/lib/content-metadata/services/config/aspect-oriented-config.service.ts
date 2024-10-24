@@ -19,10 +19,9 @@ import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer, 
 import { getGroup, getProperty } from './property-group-reader';
 
 export class AspectOrientedConfigService implements ContentMetadataConfig {
+    constructor (private config: any) {}
 
-    constructor(private config: any) { }
-
-    public isGroupAllowed(groupName: string): boolean {
+    public isGroupAllowed (groupName: string): boolean {
         if (this.isIncludeAllEnabled()) {
             return true;
         }
@@ -30,7 +29,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
         return groupNames.indexOf(groupName) !== -1;
     }
 
-    public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+    public reorganiseByConfig (propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
         const aspects = this.config;
         const aspectNames = Object.keys(aspects);
 
@@ -42,34 +41,33 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
             .filter((organisedPropertyGroup) => organisedPropertyGroup.properties.length > 0);
     }
 
-    public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
-        const groups = Object.keys(propertyGroups)
-            .map((groupName) => {
-                const propertyGroup = propertyGroups[groupName];
-                const properties = propertyGroup.properties;
+    public appendAllPreset (propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+        const groups = Object.keys(propertyGroups).map((groupName) => {
+            const propertyGroup = propertyGroups[groupName];
+            const properties = propertyGroup.properties;
 
-                if (this.isAspectReadOnly(groupName)) {
-                    Object.keys(properties).map((propertyName) => this.setReadOnlyProperty(properties[propertyName]));
-                }
+            if (this.isAspectReadOnly(groupName)) {
+                Object.keys(properties).map((propertyName) => this.setReadOnlyProperty(properties[propertyName]));
+            }
 
-                return Object.assign({}, propertyGroup, {
-                    properties: Object.keys(properties).map((propertyName) => {
-                        if (this.isPropertyReadOnly(propertyName)) {
-                            this.setReadOnlyProperty(properties[propertyName]);
-                        }
-                        return properties[propertyName];
-                    })
-                });
+            return Object.assign({}, propertyGroup, {
+                "properties": Object.keys(properties).map((propertyName) => {
+                    if (this.isPropertyReadOnly(propertyName)) {
+                        this.setReadOnlyProperty(properties[propertyName]);
+                    }
+                    return properties[propertyName];
+                })
             });
+        });
 
         return groups;
     }
 
-    private setReadOnlyProperty(property: Property) {
+    private setReadOnlyProperty (property: Property) {
         property.editable = false;
     }
 
-    private isPropertyReadOnly(propertyName: string): boolean {
+    private isPropertyReadOnly (propertyName: string): boolean {
         const readOnlyAspects = this.config.readOnlyProperties;
 
         if (Array.isArray(readOnlyAspects)) {
@@ -79,7 +77,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
         }
     }
 
-    private isAspectReadOnly(propertyGroupName: string): boolean {
+    private isAspectReadOnly (propertyGroupName: string): boolean {
         const readOnlyAspects = this.config.readOnlyAspects;
 
         if (Array.isArray(readOnlyAspects)) {
@@ -87,21 +85,20 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
         } else {
             return readOnlyAspects === propertyGroupName;
         }
-
     }
 
-    public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+    public filterExcludedPreset (propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
         if (this.config.exclude) {
             return propertyGroups.filter((preset) => !this.config.exclude.includes(preset.name));
         }
         return propertyGroups;
     }
 
-    public isIncludeAllEnabled() {
+    public isIncludeAllEnabled () {
         return this.config.includeAll;
     }
 
-    private getOrganisedPropertyGroup(propertyGroups, aspectName) {
+    private getOrganisedPropertyGroup (propertyGroups, aspectName) {
         const group = getGroup(propertyGroups, aspectName);
         let newGroup = [];
 
@@ -117,7 +114,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
                     .filter((props) => props !== undefined);
             }
 
-            newGroup = [{ title: group.title, properties }];
+            newGroup = [{ "title": group.title, properties }];
         }
 
         return newGroup;

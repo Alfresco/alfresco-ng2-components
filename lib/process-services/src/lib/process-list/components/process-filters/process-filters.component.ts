@@ -29,12 +29,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-process-instance-filters',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatButtonModule, IconComponent],
-    templateUrl: './process-filters.component.html',
-    styleUrls: ['./process-filters.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-process-instance-filters',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatButtonModule, IconComponent],
+    "templateUrl": './process-filters.component.html',
+    "styleUrls": ['./process-filters.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
     /**
@@ -82,14 +82,14 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     private iconsMDL: IconModel;
 
-    constructor(
+    constructor (
         private processFilterService: ProcessFilterService,
         private appsProcessService: AppsProcessService,
         private router: Router,
         private location: Location
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.iconsMDL = new IconModel();
         this.router.events
             .pipe(
@@ -104,7 +104,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
         this.isProcessRoute = currentRoute.includes('processes');
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         const appId = changes['appId'];
         const appName = changes['appName'];
         const filterParam = changes['filterParam'];
@@ -118,16 +118,15 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isActiveRoute(filterActive: ProcessInstanceFilterRepresentation): boolean {
+    isActiveRoute (filterActive: ProcessInstanceFilterRepresentation): boolean {
         return (this.isProcessActive || this.isProcessRoute) && this.currentFilter === filterActive;
     }
 
     /**
      * Return the filter list filtered by appId
-     *
      * @param appId - optional
      */
-    getFiltersByAppId(appId?: number) {
+    getFiltersByAppId (appId?: number) {
         this.processFilterService.getProcessFilters(appId).subscribe(
             (res) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
@@ -157,10 +156,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Return the filter list filtered by appName
-     *
      * @param appName application name
      */
-    getFiltersByAppName(appName: string): void {
+    getFiltersByAppName (appName: string): void {
         this.appsProcessService.getDeployedApplicationsByName(appName).subscribe(
             (application) => {
                 this.getFiltersByAppId(application.id);
@@ -174,10 +172,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Pass the selected filter as next
-     *
      * @param filterModel filter model
      */
-    selectFilter(filterModel: ProcessInstanceFilterRepresentation) {
+    selectFilter (filterModel: ProcessInstanceFilterRepresentation) {
         this.currentFilter = filterModel;
         this.active = true;
         this.filterClicked.emit(filterModel);
@@ -185,10 +182,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Select the first filter of a list if present
-     *
      * @param filterParam filter parameter
      */
-    selectProcessFilter(filterParam: UserProcessInstanceFilterRepresentation): void {
+    selectProcessFilter (filterParam: UserProcessInstanceFilterRepresentation): void {
         if (filterParam) {
             const newFilter = this.filters.find(
                 (processFilter, index) =>
@@ -206,50 +202,46 @@ export class ProcessFiltersComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Select the Running filter
-     *
      * @deprecated in 3.9.0, Use the filterParam Input() with a running filter instance instead
      */
-    selectRunningFilter() {
+    selectRunningFilter () {
         this.selectProcessFilter(this.processFilterService.getRunningFilterInstance(null));
     }
 
     /**
      * Get the current task
-     *
      * @returns process instance filter
      */
-    getCurrentFilter(): ProcessInstanceFilterRepresentation {
+    getCurrentFilter (): ProcessInstanceFilterRepresentation {
         return this.currentFilter;
     }
 
     /**
      * Check if the filter list is empty
-     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
-    isFilterListEmpty(): boolean {
+    isFilterListEmpty (): boolean {
         return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
     /**
      * Get the material icons equivalent of the glyphicon icon
-     *
      * @param icon glyphicon name
      * @returns material icons equivalent of the icon
      */
-    getFilterIcon(icon: string): string {
+    getFilterIcon (icon: string): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 
     /**
      * Reset the filters properties
      */
-    private resetFilter() {
+    private resetFilter () {
         this.filters = [];
         this.currentFilter = undefined;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

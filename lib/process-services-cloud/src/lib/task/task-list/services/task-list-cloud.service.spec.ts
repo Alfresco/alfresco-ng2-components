@@ -33,7 +33,7 @@ describe('TaskListCloudService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         adfHttpClient = TestBed.inject(AdfHttpClient);
         service = TestBed.inject(TaskListCloudService);
@@ -43,10 +43,10 @@ describe('TaskListCloudService', () => {
     describe('getTaskByRequest', () => {
         it('should append to the call all the parameters', async () => {
             const taskRequest = {
-                appName: 'fakeName',
-                skipCount: 0,
-                maxItems: 20,
-                service: 'fake-service'
+                "appName": 'fakeName',
+                "skipCount": 0,
+                "maxItems": 20,
+                "service": 'fake-service'
             } as TaskQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
 
@@ -61,10 +61,10 @@ describe('TaskListCloudService', () => {
 
         it('should concat the app name to the request url', async () => {
             const taskRequest = {
-                appName: 'fakeName',
-                skipCount: 0,
-                maxItems: 20,
-                service: 'fake-service'
+                "appName": 'fakeName',
+                "skipCount": 0,
+                "maxItems": 20,
+                "service": 'fake-service'
             } as TaskQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallUrl);
 
@@ -77,13 +77,13 @@ describe('TaskListCloudService', () => {
 
         it('should concat the sorting to append as parameters', async () => {
             const taskRequest = {
-                appName: 'fakeName',
-                skipCount: 0,
-                maxItems: 20,
-                service: 'fake-service',
-                sorting: [
-                    { orderBy: 'NAME', direction: 'DESC' },
-                    { orderBy: 'TITLE', direction: 'ASC' }
+                "appName": 'fakeName',
+                "skipCount": 0,
+                "maxItems": 20,
+                "service": 'fake-service',
+                "sorting": [
+                    { "orderBy": 'NAME', "direction": 'DESC' },
+                    { "orderBy": 'TITLE', "direction": 'ASC' }
                 ]
             } as TaskQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
@@ -96,7 +96,7 @@ describe('TaskListCloudService', () => {
         });
 
         it('should return an error when app name is not specified', async () => {
-            const taskRequest = { appName: null } as TaskQueryCloudRequestModel;
+            const taskRequest = { "appName": null } as TaskQueryCloudRequestModel;
             requestSpy.and.callFake(returnCallUrl);
 
             const res = await firstValueFrom(service.getTaskByRequest(taskRequest).pipe(catchError((error) => of(error))));
@@ -108,8 +108,8 @@ describe('TaskListCloudService', () => {
     describe('fetchTaskList', () => {
         it('should append to the call all the parameters', async () => {
             const taskRequest = {
-                appName: 'fakeName',
-                pagination: { skipCount: 0, maxItems: 20 }
+                "appName": 'fakeName',
+                "pagination": { "skipCount": 0, "maxItems": 20 }
             } as TaskListRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
 
@@ -123,8 +123,8 @@ describe('TaskListCloudService', () => {
 
         it('should concat the app name to the request url', async () => {
             const taskRequest = {
-                appName: 'fakeName',
-                pagination: { skipCount: 0, maxItems: 20 }
+                "appName": 'fakeName',
+                "pagination": { "skipCount": 0, "maxItems": 20 }
             } as TaskListRequestModel;
             requestSpy.and.callFake(returnCallUrl);
 
@@ -137,11 +137,11 @@ describe('TaskListCloudService', () => {
 
         it('should concat the sorting to append as parameters', async () => {
             const taskRequest = {
-                appName: 'fakeName',
-                pagination: { skipCount: 0, maxItems: 20 },
-                sorting: [
-                    { orderBy: 'NAME', direction: 'DESC' },
-                    { orderBy: 'TITLE', direction: 'ASC' }
+                "appName": 'fakeName',
+                "pagination": { "skipCount": 0, "maxItems": 20 },
+                "sorting": [
+                    { "orderBy": 'NAME', "direction": 'DESC' },
+                    { "orderBy": 'TITLE', "direction": 'ASC' }
                 ]
             } as TaskListRequestModel;
             requestSpy.and.callFake(returnCallQueryParameters);
@@ -154,7 +154,7 @@ describe('TaskListCloudService', () => {
         });
 
         it('should return an error when app name is not specified', async () => {
-            const taskRequest = { appName: null } as TaskListRequestModel;
+            const taskRequest = { "appName": null } as TaskListRequestModel;
             requestSpy.and.callFake(returnCallUrl);
 
             const res = await firstValueFrom(service.fetchTaskList(taskRequest).pipe(catchError((error) => of(error.message))));

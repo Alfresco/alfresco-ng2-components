@@ -28,9 +28,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
 
 @Component({
-    selector: 'adf-file-uploading-list-row',
-    standalone: true,
-    imports: [
+    "selector": 'adf-file-uploading-list-row',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatIconModule,
         MatListModule,
@@ -42,9 +42,9 @@ import { FileUploadErrorPipe } from '../pipes/file-upload-error.pipe';
         MatButtonModule,
         FileUploadErrorPipe
     ],
-    templateUrl: './file-uploading-list-row.component.html',
-    styleUrls: ['./file-uploading-list-row.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './file-uploading-list-row.component.html',
+    "styleUrls": ['./file-uploading-list-row.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class FileUploadingListRowComponent {
     @Input()
@@ -53,11 +53,11 @@ export class FileUploadingListRowComponent {
     @Output()
     cancel = new EventEmitter<FileModel>();
 
-    onCancel(file: FileModel): void {
+    onCancel (file: FileModel): void {
         this.cancel.emit(file);
     }
 
-    showCancelledStatus(): boolean {
+    showCancelledStatus (): boolean {
         return (
             this.file.status === FileUploadStatus.Cancelled ||
             this.file.status === FileUploadStatus.Aborted ||
@@ -65,35 +65,35 @@ export class FileUploadingListRowComponent {
         );
     }
 
-    get versionNumber(): string {
+    get versionNumber (): string {
         return this.file.data.entry.properties['cm:versionLabel'];
     }
 
-    get mimeType(): string {
+    get mimeType (): string {
         return this.file?.file?.type || 'default';
     }
 
-    isUploadVersion(): boolean {
+    isUploadVersion (): boolean {
         return !!this.file.data && this.file.options?.newVersion && this.file.data.entry.properties?.['cm:versionLabel'];
     }
 
-    canCancelUpload(): boolean {
+    canCancelUpload (): boolean {
         return this.file?.status === FileUploadStatus.Pending;
     }
 
-    isUploadError(): boolean {
+    isUploadError (): boolean {
         return this.file?.status === FileUploadStatus.Error;
     }
 
-    isUploading(): boolean {
+    isUploading (): boolean {
         return this.file && (this.file.status === FileUploadStatus.Progress || this.file.status === FileUploadStatus.Starting);
     }
 
-    isUploadComplete(): boolean {
+    isUploadComplete (): boolean {
         return this.file?.status === FileUploadStatus.Complete && !this.isUploadVersion();
     }
 
-    isUploadVersionComplete(): boolean {
+    isUploadVersionComplete (): boolean {
         return this.file?.status === FileUploadStatus.Complete && this.isUploadVersion();
     }
 }

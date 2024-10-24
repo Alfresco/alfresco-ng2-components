@@ -31,13 +31,13 @@ import { TxtViewerComponent } from '../txt-viewer/txt-viewer.component';
 import { UnknownFormatComponent } from '../unknown-format/unknown-format.component';
 
 @Component({
-    selector: 'adf-viewer-render',
-    standalone: true,
-    templateUrl: './viewer-render.component.html',
-    styleUrls: ['./viewer-render.component.scss'],
-    host: { class: 'adf-viewer-render' },
-    encapsulation: ViewEncapsulation.None,
-    imports: [
+    "selector": 'adf-viewer-render',
+    "standalone": true,
+    "templateUrl": './viewer-render.component.html',
+    "styleUrls": ['./viewer-render.component.scss'],
+    "host": { "class": 'adf-viewer-render' },
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [
         TranslateModule,
         MatProgressSpinnerModule,
         NgSwitch,
@@ -53,7 +53,7 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
         NgForOf,
         NgSwitchDefault
     ],
-    providers: [ViewUtilService]
+    "providers": [ViewUtilService]
 })
 export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
     /**
@@ -102,8 +102,8 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
      */
     @Input()
     allowedEditActions: { [key: string]: boolean } = {
-        rotate: true,
-        crop: true
+        "rotate": true,
+        "crop": true
     };
 
     /** media subtitles for the media player*/
@@ -142,24 +142,22 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * Returns a list of the active Viewer content extensions.
-     *
      * @returns list of extension references
      */
-    get viewerExtensions(): ViewerExtensionRef[] {
+    get viewerExtensions (): ViewerExtensionRef[] {
         return this.extensionService.getViewerExtensions();
     }
 
     /**
      * Provides a list of file extensions supported by external plugins.
-     *
      * @returns list of extensions
      */
-    get externalExtensions(): string[] {
+    get externalExtensions (): string[] {
         return this.viewerExtensions.map((ext) => ext.fileExtension);
     }
 
     private _externalViewer: ViewerExtensionRef;
-    get externalViewer(): ViewerExtensionRef {
+    get externalViewer (): ViewerExtensionRef {
         if (!this._externalViewer) {
             this._externalViewer = this.viewerExtensions.find((ext) => ext.fileExtension === '*');
         }
@@ -171,23 +169,23 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private viewUtilService: ViewUtilService,
         private extensionService: AppExtensionService,
         public dialog: MatDialog,
         public readonly injector: Injector
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.cacheTypeForContent = 'no-cache';
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         this.isLoading = !this.blobFile && !this.urlFile;
 
         if (this.blobFile) {
@@ -197,7 +195,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private setUpBlobData() {
+    private setUpBlobData () {
         this.internalFileName = this.fileName;
         this.viewerType = this.viewUtilService.getViewerTypeByMimeType(this.blobFile.type);
 
@@ -205,7 +203,7 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         this.scrollTop();
     }
 
-    private setUpUrlFile() {
+    private setUpUrlFile () {
         this.internalFileName = this.fileName ? this.fileName : this.viewUtilService.getFilenameFromUrl(this.urlFile);
         this.extension = this.viewUtilService.getFileExtension(this.internalFileName);
         this.viewerType = this.viewUtilService.getViewerType(this.extension, this.mimeType, this.extensionsSupportedByTemplates);
@@ -214,11 +212,11 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         this.scrollTop();
     }
 
-    scrollTop() {
+    scrollTop () {
         window.scrollTo(0, 1);
     }
 
-    checkExtensions(extensionAllowed) {
+    checkExtensions (extensionAllowed) {
         if (typeof extensionAllowed === 'string') {
             return this.extension.toLowerCase() === extensionAllowed.toLowerCase();
         } else if (extensionAllowed.length > 0) {
@@ -226,15 +224,15 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    onSubmitFile(newImageBlob: Blob) {
+    onSubmitFile (newImageBlob: Blob) {
         this.submitFile.next(newImageBlob);
     }
 
-    onUnsupportedFile() {
+    onUnsupportedFile () {
         this.viewerType = 'unknown';
     }
 
-    onClose() {
+    onClose () {
         this.close.next(true);
     }
 }

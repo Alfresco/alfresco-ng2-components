@@ -27,8 +27,8 @@ describe('ViewUtilService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [AppExtensionService]
+            "imports": [HttpClientTestingModule],
+            "providers": [AppExtensionService]
         });
 
         viewUtilService = TestBed.inject(ViewUtilService);
@@ -54,7 +54,7 @@ describe('ViewUtilService', () => {
     });
 
     it('should check if extension is custom one added either by extension service or by a template in viewer renderer', () => {
-        spyOn(appExtensionService, 'getViewerExtensions').and.returnValue([{ fileExtension: 'json', component: 'test', id: 'test' }]);
+        spyOn(appExtensionService, 'getViewerExtensions').and.returnValue([{ "fileExtension": 'json', "component": 'test', "id": 'test' }]);
         expect(viewUtilService.isCustomViewerExtension('pdf')).toBeFalse();
         expect(viewUtilService.isCustomViewerExtension('txt')).toBeFalse();
         expect(viewUtilService.isCustomViewerExtension('json')).toBeTrue();
@@ -64,10 +64,10 @@ describe('ViewUtilService', () => {
     });
 
     it('should return correct viewer type based on extension and mime type', () => {
-        spyOn(appExtensionService, 'getViewerExtensions').and.returnValue([{ fileExtension: '*', component: 'test', id: 'test' }]);
+        spyOn(appExtensionService, 'getViewerExtensions').and.returnValue([{ "fileExtension": '*', "component": 'test', "id": 'test' }]);
         expect(viewUtilService.getViewerType('pdf', 'application/pdf')).toBe('external');
 
-        appExtensionService.getViewerExtensions = jasmine.createSpy().and.returnValue([{ fileExtension: 'json', component: 'test', id: 'test' }]);
+        appExtensionService.getViewerExtensions = jasmine.createSpy().and.returnValue([{ "fileExtension": 'json', "component": 'test', "id": 'test' }]);
         expect(viewUtilService.getViewerType('json', '')).toBe('custom');
         expect(viewUtilService.getViewerType('dmn', '')).toBe('unknown');
         expect(viewUtilService.getViewerType('dmn', '', extensionsSupportedByTemplates)).toBe('custom');

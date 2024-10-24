@@ -24,7 +24,7 @@ describe('AppListCloudModule', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AppListCloudModule, NoopTranslateModule]
+            "imports": [AppListCloudModule, NoopTranslateModule]
         });
         appListCloudModule = TestBed.inject(AppListCloudModule);
     });

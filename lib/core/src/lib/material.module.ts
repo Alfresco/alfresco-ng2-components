@@ -48,7 +48,7 @@ import { CommonModule } from '@angular/common';
 
 /** @deprecated This module is deprecated and will be removed in a future release. */
 @NgModule({
-    imports: [
+    "imports": [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -83,7 +83,7 @@ import { CommonModule } from '@angular/common';
         MatBadgeModule,
         MatFormFieldModule
     ],
-    exports: [
+    "exports": [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

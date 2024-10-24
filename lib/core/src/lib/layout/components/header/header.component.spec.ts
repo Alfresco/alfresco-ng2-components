@@ -32,7 +32,7 @@ describe('HeaderLayoutComponent', () => {
     describe('Input parameters', () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, HeaderLayoutComponent]
+                "imports": [CoreTestingModule, HeaderLayoutComponent]
             });
             fixture = TestBed.createComponent(HeaderLayoutComponent);
             loader = TestbedHarnessEnvironment.loader(fixture);
@@ -250,10 +250,10 @@ describe('HeaderLayoutComponent', () => {
 
     describe('Template transclusion', () => {
         @Component({
-            selector: 'adf-test-layout-header',
-            standalone: true,
-            imports: [HeaderLayoutComponent],
-            template: ` <adf-layout-header title="test" color="primary">
+            "selector": 'adf-test-layout-header',
+            "standalone": true,
+            "imports": [HeaderLayoutComponent],
+            "template": ` <adf-layout-header title="test" color="primary">
                 <p>Test text</p>
                 <p></p>
             </adf-layout-header>`
@@ -262,7 +262,7 @@ describe('HeaderLayoutComponent', () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [CoreTestingModule, HeaderLayoutTesterComponent]
+                "imports": [CoreTestingModule, HeaderLayoutTesterComponent]
             });
         });
 

@@ -31,12 +31,12 @@ describe('SearchFacetFiltersService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            providers: [
+            "imports": [ContentTestingModule],
+            "providers": [
                 {
-                    provide: CategoryService,
-                    useValue: {
-                        getCategory: () => EMPTY
+                    "provide": CategoryService,
+                    "useValue": {
+                        "getCategory": () => EMPTY
                     }
                 }
             ]
@@ -49,7 +49,7 @@ describe('SearchFacetFiltersService', () => {
 
     it('should subscribe to query builder executed event', () => {
         spyOn(searchFacetFiltersService, 'onDataLoaded').and.stub();
-        const data = { list: {} };
+        const data = { "list": {} };
         queryBuilder.executed.next(data);
 
         expect(searchFacetFiltersService.onDataLoaded).toHaveBeenCalledWith(data);
@@ -59,28 +59,28 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
-            categories: [],
-            facetQueries: {
-                label: 'label1',
-                queries: [
-                    { label: 'q1', query: 'query1' },
-                    { label: 'q2', query: 'query2' }
+            "categories": [],
+            "facetQueries": {
+                "label": 'label1',
+                "queries": [
+                    { "label": 'q1', "query": 'query1' },
+                    { "label": 'q2', "query": 'query2' }
                 ]
             }
         };
 
         const queries = [
-            { label: 'q1', filterQuery: 'query1', metrics: [{ value: { count: 1 } }] },
-            { label: 'q2', filterQuery: 'query2', metrics: [{ value: { count: 1 } }] }
+            { "label": 'q1', "filterQuery": 'query1', "metrics": [{ "value": { "count": 1 } }] },
+            { "label": 'q2', "filterQuery": 'query2', "metrics": [{ "value": { "count": 1 } }] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: [
+            "list": {
+                "context": {
+                    "facets": [
                         {
-                            type: 'query',
-                            label: 'label1',
-                            buckets: queries
+                            "type": 'query',
+                            "label": 'label1',
+                            "buckets": queries
                         }
                     ]
                 }
@@ -97,30 +97,30 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
-            categories: [],
-            facetQueries: {
-                label: 'label1',
-                queries: [
-                    { label: 'q1', query: 'query1' },
-                    { label: 'q2', query: 'query2' },
-                    { label: 'q3', query: 'query3' }
+            "categories": [],
+            "facetQueries": {
+                "label": 'label1',
+                "queries": [
+                    { "label": 'q1', "query": 'query1' },
+                    { "label": 'q2', "query": 'query2' },
+                    { "label": 'q3', "query": 'query3' }
                 ]
             }
         };
 
         const queries = [
-            { label: 'q2', filterQuery: 'query2', metrics: [{ value: { count: 1 } }] },
-            { label: 'q1', filterQuery: 'query1', metrics: [{ value: { count: 1 } }] },
-            { label: 'q3', filterQuery: 'query3', metrics: [{ value: { count: 1 } }] }
+            { "label": 'q2', "filterQuery": 'query2', "metrics": [{ "value": { "count": 1 } }] },
+            { "label": 'q1', "filterQuery": 'query1', "metrics": [{ "value": { "count": 1 } }] },
+            { "label": 'q3', "filterQuery": 'query3', "metrics": [{ "value": { "count": 1 } }] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: [
+            "list": {
+                "context": {
+                    "facets": [
                         {
-                            type: 'query',
-                            label: 'label1',
-                            buckets: queries
+                            "type": 'query',
+                            "label": 'label1',
+                            "buckets": queries
                         }
                     ]
                 }
@@ -140,16 +140,16 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
-            categories: [],
-            facetQueries: {
-                queries: []
+            "categories": [],
+            "facetQueries": {
+                "queries": []
             }
         };
 
         const data = {
-            list: {
-                context: {
-                    facets: null
+            "list": {
+                "context": {
+                    "facets": null
                 }
             }
         };
@@ -163,26 +163,26 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
-            categories: [],
-            facetFields: {
-                fields: [
-                    { label: 'f1', field: 'f1', mincount: 0 },
-                    { label: 'f2', field: 'f2', mincount: 0 }
+            "categories": [],
+            "facetFields": {
+                "fields": [
+                    { "label": 'f1', "field": 'f1', "mincount": 0 },
+                    { "label": 'f2', "field": 'f2', "mincount": 0 }
                 ]
             },
-            facetQueries: {
-                queries: []
+            "facetQueries": {
+                "queries": []
             }
         };
 
         const fields: any = [
-            { type: 'field', label: 'f1', buckets: [{ label: 'a1' }, { label: 'a2' }] },
-            { type: 'field', label: 'f2', buckets: [{ label: 'b1' }, { label: 'b2' }] }
+            { "type": 'field', "label": 'f1', "buckets": [{ "label": 'a1' }, { "label": 'a2' }] },
+            { "type": 'field', "label": 'f2', "buckets": [{ "label": 'b1' }, { "label": 'b2' }] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: fields
+            "list": {
+                "context": {
+                    "facets": fields
                 }
             }
         };
@@ -196,30 +196,30 @@ describe('SearchFacetFiltersService', () => {
 
     it('should filter response facet fields based on search filter config method', () => {
         queryBuilder.config = {
-            categories: [],
-            facetFields: { fields: [{ label: 'f1', field: 'f1' }] },
-            facetQueries: {
-                queries: []
+            "categories": [],
+            "facetFields": { "fields": [{ "label": 'f1', "field": 'f1' }] },
+            "facetQueries": {
+                "queries": []
             },
-            filterWithContains: false
+            "filterWithContains": false
         };
 
         const initialFields: any = [
             {
-                type: 'field',
-                label: 'f1',
-                buckets: [
-                    { label: 'firstLabel', display: 'firstLabel', metrics: [{ value: { count: 5 } }] },
-                    { label: 'secondLabel', display: 'secondLabel', metrics: [{ value: { count: 5 } }] },
-                    { label: 'thirdLabel', display: 'thirdLabel', metrics: [{ value: { count: 5 } }] }
+                "type": 'field',
+                "label": 'f1',
+                "buckets": [
+                    { "label": 'firstLabel', "display": 'firstLabel', "metrics": [{ "value": { "count": 5 } }] },
+                    { "label": 'secondLabel', "display": 'secondLabel', "metrics": [{ "value": { "count": 5 } }] },
+                    { "label": 'thirdLabel', "display": 'thirdLabel', "metrics": [{ "value": { "count": 5 } }] }
                 ]
             }
         ];
 
         const data = {
-            list: {
-                context: {
-                    facets: initialFields
+            "list": {
+                "context": {
+                    "facets": initialFields
                 }
             }
         };
@@ -247,33 +247,33 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
-            categories: [],
-            facetFields: {
-                fields: [
-                    { label: 'f1', field: 'f1' },
-                    { label: 'f2', field: 'f2' }
+            "categories": [],
+            "facetFields": {
+                "fields": [
+                    { "label": 'f1', "field": 'f1' },
+                    { "label": 'f2', "field": 'f2' }
                 ]
             },
-            facetQueries: {
-                queries: []
+            "facetQueries": {
+                "queries": []
             }
         };
 
         const serverResponseFields: any = [
             {
-                type: 'field',
-                label: 'f1',
-                buckets: [
-                    { label: 'b1', metrics: [{ value: { count: 10 } }] },
-                    { label: 'b2', metrics: [{ value: { count: 1 } }] }
+                "type": 'field',
+                "label": 'f1',
+                "buckets": [
+                    { "label": 'b1', "metrics": [{ "value": { "count": 10 } }] },
+                    { "label": 'b2', "metrics": [{ "value": { "count": 1 } }] }
                 ]
             },
-            { type: 'field', label: 'f2', buckets: [] }
+            { "type": 'field', "label": 'f2', "buckets": [] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: serverResponseFields
+            "list": {
+                "context": {
+                    "facets": serverResponseFields
                 }
             }
         };
@@ -286,30 +286,30 @@ describe('SearchFacetFiltersService', () => {
 
     it('should fetch facet fields from response payload and update the existing bucket values', () => {
         queryBuilder.config = {
-            categories: [],
-            facetFields: {
-                fields: [
-                    { label: 'f1', field: 'f1' },
-                    { label: 'f2', field: 'f2' }
+            "categories": [],
+            "facetFields": {
+                "fields": [
+                    { "label": 'f1', "field": 'f1' },
+                    { "label": 'f2', "field": 'f2' }
                 ]
             },
-            facetQueries: {
-                queries: []
+            "facetQueries": {
+                "queries": []
             }
         };
 
         const initialFields: any = [
             {
-                type: 'field',
-                label: 'f1',
-                buckets: {
-                    items: [
-                        { label: 'b1', count: 10, filterQuery: 'filter' },
-                        { label: 'b2', count: 1 }
+                "type": 'field',
+                "label": 'f1',
+                "buckets": {
+                    "items": [
+                        { "label": 'b1', "count": 10, "filterQuery": 'filter' },
+                        { "label": 'b2', "count": 1 }
                     ]
                 }
             },
-            { type: 'field', label: 'f2', buckets: [] }
+            { "type": 'field', "label": 'f2', "buckets": [] }
         ];
         searchFacetFiltersService.responseFacets = initialFields;
         expect(searchFacetFiltersService.responseFacets[0].buckets.items[0].count).toEqual(10);
@@ -317,19 +317,19 @@ describe('SearchFacetFiltersService', () => {
 
         const serverResponseFields: any = [
             {
-                type: 'field',
-                label: 'f1',
-                buckets: [
-                    { label: 'b1', metrics: [{ value: { count: 6 } }], filterQuery: 'filter' },
-                    { label: 'b2', metrics: [{ value: { count: 0 } }] }
+                "type": 'field',
+                "label": 'f1',
+                "buckets": [
+                    { "label": 'b1', "metrics": [{ "value": { "count": 6 } }], "filterQuery": 'filter' },
+                    { "label": 'b2', "metrics": [{ "value": { "count": 0 } }] }
                 ]
             },
-            { type: 'field', label: 'f2', buckets: [] }
+            { "type": 'field', "label": 'f2', "buckets": [] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: serverResponseFields
+            "list": {
+                "context": {
+                    "facets": serverResponseFields
                 }
             }
         };
@@ -343,30 +343,30 @@ describe('SearchFacetFiltersService', () => {
         searchFacetFiltersService.responseFacets = null;
 
         queryBuilder.config = {
-            categories: [],
-            facetFields: { fields: [{ label: 'f1', field: 'f1' }] },
-            facetQueries: { queries: [] }
+            "categories": [],
+            "facetFields": { "fields": [{ "label": 'f1', "field": 'f1' }] },
+            "facetQueries": { "queries": [] }
         };
 
         const firstCallFields: any = [
             {
-                type: 'field',
-                label: 'f1',
-                buckets: [{ label: 'b1', metrics: [{ value: { count: 10 } }] }]
+                "type": 'field',
+                "label": 'f1',
+                "buckets": [{ "label": 'b1', "metrics": [{ "value": { "count": 10 } }] }]
             }
         ];
-        const firstCallData = { list: { context: { facets: firstCallFields } } };
+        const firstCallData = { "list": { "context": { "facets": firstCallFields } } };
         searchFacetFiltersService.onDataLoaded(firstCallData);
         expect(searchFacetFiltersService.responseFacets[0].buckets.items[0].count).toEqual(10);
 
         const secondCallFields: any = [
             {
-                type: 'field',
-                label: 'f1',
-                buckets: [{ label: 'b1', metrics: [{ value: { count: 6 } }] }]
+                "type": 'field',
+                "label": 'f1',
+                "buckets": [{ "label": 'b1', "metrics": [{ "value": { "count": 6 } }] }]
             }
         ];
-        const secondCallData = { list: { context: { facets: secondCallFields } } };
+        const secondCallData = { "list": { "context": { "facets": secondCallFields } } };
         searchFacetFiltersService.onDataLoaded(secondCallData);
         expect(searchFacetFiltersService.responseFacets[0].buckets.items[0].count).toEqual(6);
     });
@@ -374,23 +374,23 @@ describe('SearchFacetFiltersService', () => {
     it('should fetch facet intervals from response payload', () => {
         searchFacetFiltersService.responseFacets = null;
         queryBuilder.config = {
-            categories: [],
-            facetIntervals: {
-                intervals: [
+            "categories": [],
+            "facetIntervals": {
+                "intervals": [
                     {
-                        label: 'test_intervals1',
-                        field: 'f1',
-                        sets: [
-                            { label: 'interval1', start: 's1', end: 'e1' },
-                            { label: 'interval2', start: 's2', end: 'e2' }
+                        "label": 'test_intervals1',
+                        "field": 'f1',
+                        "sets": [
+                            { "label": 'interval1', "start": 's1', "end": 'e1' },
+                            { "label": 'interval2', "start": 's2', "end": 'e2' }
                         ]
                     },
                     {
-                        label: 'test_intervals2',
-                        field: 'f2',
-                        sets: [
-                            { label: 'interval3', start: 's3', end: 'e3' },
-                            { label: 'interval4', start: 's4', end: 'e4' }
+                        "label": 'test_intervals2',
+                        "field": 'f2',
+                        "sets": [
+                            { "label": 'interval3', "start": 's3', "end": 'e3' },
+                            { "label": 'interval4', "start": 's4', "end": 'e4' }
                         ]
                     }
                 ]
@@ -398,19 +398,19 @@ describe('SearchFacetFiltersService', () => {
         };
 
         const response1 = [
-            { label: 'interval1', filterQuery: 'query1', metrics: [{ value: { count: 1 } }] },
-            { label: 'interval2', filterQuery: 'query2', metrics: [{ value: { count: 2 } }] }
+            { "label": 'interval1', "filterQuery": 'query1', "metrics": [{ "value": { "count": 1 } }] },
+            { "label": 'interval2', "filterQuery": 'query2', "metrics": [{ "value": { "count": 2 } }] }
         ];
         const response2 = [
-            { label: 'interval3', filterQuery: 'query3', metrics: [{ value: { count: 3 } }] },
-            { label: 'interval4', filterQuery: 'query4', metrics: [{ value: { count: 4 } }] }
+            { "label": 'interval3', "filterQuery": 'query3', "metrics": [{ "value": { "count": 3 } }] },
+            { "label": 'interval4', "filterQuery": 'query4', "metrics": [{ "value": { "count": 4 } }] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: [
-                        { type: 'interval', label: 'test_intervals1', buckets: response1 },
-                        { type: 'interval', label: 'test_intervals2', buckets: response2 }
+            "list": {
+                "context": {
+                    "facets": [
+                        { "type": 'interval', "label": 'test_intervals1', "buckets": response1 },
+                        { "type": 'interval', "label": 'test_intervals2', "buckets": response2 }
                     ]
                 }
             }
@@ -426,25 +426,25 @@ describe('SearchFacetFiltersService', () => {
     it('should filter out the fetched facet intervals that have bucket values less than their set mincount', () => {
         searchFacetFiltersService.responseFacets = null;
         queryBuilder.config = {
-            categories: [],
-            facetIntervals: {
-                intervals: [
+            "categories": [],
+            "facetIntervals": {
+                "intervals": [
                     {
-                        label: 'test_intervals1',
-                        field: 'f1',
-                        mincount: 2,
-                        sets: [
-                            { label: 'interval1', start: 's1', end: 'e1' },
-                            { label: 'interval2', start: 's2', end: 'e2' }
+                        "label": 'test_intervals1',
+                        "field": 'f1',
+                        "mincount": 2,
+                        "sets": [
+                            { "label": 'interval1', "start": 's1', "end": 'e1' },
+                            { "label": 'interval2', "start": 's2', "end": 'e2' }
                         ]
                     },
                     {
-                        label: 'test_intervals2',
-                        field: 'f2',
-                        mincount: 5,
-                        sets: [
-                            { label: 'interval3', start: 's3', end: 'e3' },
-                            { label: 'interval4', start: 's4', end: 'e4' }
+                        "label": 'test_intervals2',
+                        "field": 'f2',
+                        "mincount": 5,
+                        "sets": [
+                            { "label": 'interval3', "start": 's3', "end": 'e3' },
+                            { "label": 'interval4', "start": 's4', "end": 'e4' }
                         ]
                     }
                 ]
@@ -452,19 +452,19 @@ describe('SearchFacetFiltersService', () => {
         };
 
         const response1 = [
-            { label: 'interval1', filterQuery: 'query1', metrics: [{ value: { count: 1 } }] },
-            { label: 'interval2', filterQuery: 'query2', metrics: [{ value: { count: 2 } }] }
+            { "label": 'interval1', "filterQuery": 'query1', "metrics": [{ "value": { "count": 1 } }] },
+            { "label": 'interval2', "filterQuery": 'query2', "metrics": [{ "value": { "count": 2 } }] }
         ];
         const response2 = [
-            { label: 'interval3', filterQuery: 'query3', metrics: [{ value: { count: 3 } }] },
-            { label: 'interval4', filterQuery: 'query4', metrics: [{ value: { count: 4 } }] }
+            { "label": 'interval3', "filterQuery": 'query3', "metrics": [{ "value": { "count": 3 } }] },
+            { "label": 'interval4', "filterQuery": 'query4', "metrics": [{ "value": { "count": 4 } }] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: [
-                        { type: 'interval', label: 'test_intervals1', buckets: response1 },
-                        { type: 'interval', label: 'test_intervals2', buckets: response2 }
+            "list": {
+                "context": {
+                    "facets": [
+                        { "type": 'interval', "label": 'test_intervals1', "buckets": response1 },
+                        { "type": 'interval', "label": 'test_intervals2', "buckets": response2 }
                     ]
                 }
             }
@@ -479,37 +479,37 @@ describe('SearchFacetFiltersService', () => {
     it('should sort the facets based on the order set in the settings', () => {
         searchFacetFiltersService.responseFacets = null;
         queryBuilder.config = {
-            categories: [],
-            facetQueries: {
-                label: 'Query 1',
-                queries: [
-                    { label: 'q1', query: 'query1' },
-                    { label: 'q2', query: 'query2' }
+            "categories": [],
+            "facetQueries": {
+                "label": 'Query 1',
+                "queries": [
+                    { "label": 'q1', "query": 'query1' },
+                    { "label": 'q2', "query": 'query2' }
                 ],
-                settings: {
-                    facetOrder: 300
+                "settings": {
+                    "facetOrder": 300
                 }
             },
-            facetFields: {
-                fields: [
-                    { field: 'field1', label: 'Field 1', settings: { facetOrder: 200 } },
-                    { field: 'field2', label: 'Field 2', settings: { facetOrder: 400 } },
-                    { field: 'field3', label: 'Field 3', settings: { facetOrder: 500 } },
-                    { field: 'field4', label: 'Field 4', settings: { facetOrder: 100 } }
+            "facetFields": {
+                "fields": [
+                    { "field": 'field1', "label": 'Field 1', "settings": { "facetOrder": 200 } },
+                    { "field": 'field2', "label": 'Field 2', "settings": { "facetOrder": 400 } },
+                    { "field": 'field3', "label": 'Field 3', "settings": { "facetOrder": 500 } },
+                    { "field": 'field4', "label": 'Field 4', "settings": { "facetOrder": 100 } }
                 ]
             }
         };
-        const queryBucketsMock = [{ label: 'q1', filterQuery: 'query1', metrics: [{ value: { count: 1 } }] }];
-        const fieldBucketsMock = [{ label: 'b1', metrics: [{ value: { count: 10 } }] }];
+        const queryBucketsMock = [{ "label": 'q1', "filterQuery": 'query1', "metrics": [{ "value": { "count": 1 } }] }];
+        const fieldBucketsMock = [{ "label": 'b1', "metrics": [{ "value": { "count": 10 } }] }];
         const data = {
-            list: {
-                context: {
-                    facets: [
-                        { type: 'query', label: 'Query 1', buckets: queryBucketsMock },
-                        { type: 'field', label: 'Field 1', buckets: fieldBucketsMock },
-                        { type: 'field', label: 'Field 2', buckets: fieldBucketsMock },
-                        { type: 'field', label: 'Field 3', buckets: fieldBucketsMock },
-                        { type: 'field', label: 'Field 4', buckets: fieldBucketsMock }
+            "list": {
+                "context": {
+                    "facets": [
+                        { "type": 'query', "label": 'Query 1', "buckets": queryBucketsMock },
+                        { "type": 'field', "label": 'Field 1', "buckets": fieldBucketsMock },
+                        { "type": 'field', "label": 'Field 2', "buckets": fieldBucketsMock },
+                        { "type": 'field', "label": 'Field 3', "buckets": fieldBucketsMock },
+                        { "type": 'field', "label": 'Field 4', "buckets": fieldBucketsMock }
                     ]
                 }
             }
@@ -520,47 +520,47 @@ describe('SearchFacetFiltersService', () => {
     });
 
     it('should load category names for cm:categories facet', () => {
-        const entry = { id: 'test-id-test', name: 'name', path: '/categories/General/Test Category/Subcategory' };
+        const entry = { "id": 'test-id-test', "name": 'name', "path": '/categories/General/Test Category/Subcategory' };
         searchFacetFiltersService.responseFacets = null;
         spyOn(categoryService, 'getCategory').and.returnValue(of({ entry }));
 
         queryBuilder.config = {
-            categories: [],
-            facetFields: {
-                fields: [
-                    { label: 'f1', field: 'f1', mincount: 0 },
-                    { label: 'categories', field: 'cm:categories', mincount: 0 }
+            "categories": [],
+            "facetFields": {
+                "fields": [
+                    { "label": 'f1', "field": 'f1', "mincount": 0 },
+                    { "label": 'categories', "field": 'cm:categories', "mincount": 0 }
                 ]
             },
-            facetQueries: {
-                queries: []
+            "facetQueries": {
+                "queries": []
             }
         };
 
         const fields: any = [
-            { type: 'field', label: 'f1', buckets: [{ label: 'a1' }, { label: 'a2' }] },
+            { "type": 'field', "label": 'f1', "buckets": [{ "label": 'a1' }, { "label": 'a2' }] },
             {
-                type: 'field',
-                label: 'categories',
-                buckets: [
+                "type": 'field',
+                "label": 'categories',
+                "buckets": [
                     {
-                        label: `workspace://SpacesStore/${entry.id}`,
-                        filterQuery: `cm:categories:"workspace://SpacesStore/${entry.id}"`
+                        "label": `workspace://SpacesStore/${entry.id}`,
+                        "filterQuery": `cm:categories:"workspace://SpacesStore/${entry.id}"`
                     }
                 ]
             }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: fields
+            "list": {
+                "context": {
+                    "facets": fields
                 }
             }
         };
 
         searchFacetFiltersService.onDataLoaded(data);
 
-        expect(categoryService.getCategory).toHaveBeenCalledWith(entry.id, { include: ['path'] });
+        expect(categoryService.getCategory).toHaveBeenCalledWith(entry.id, { "include": ['path'] });
         expect(searchFacetFiltersService.responseFacets[1].buckets.items[0].display).toBe(`Test Category/Subcategory/${entry.name}`);
         expect(searchFacetFiltersService.responseFacets[1].buckets.length).toEqual(1);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
@@ -569,40 +569,40 @@ describe('SearchFacetFiltersService', () => {
     it('should extract creator and modifier facets and create tabbed facet for them', () => {
         searchFacetFiltersService.responseFacets = null;
         queryBuilder.config = {
-            categories: [],
-            facetFields: {
-                fields: [
-                    { label: 'creator', field: 'creator' },
-                    { label: 'modifier', field: 'modifier' }
+            "categories": [],
+            "facetFields": {
+                "fields": [
+                    { "label": 'creator', "field": 'creator' },
+                    { "label": 'modifier', "field": 'modifier' }
                 ]
             },
-            facetQueries: {
-                queries: []
+            "facetQueries": {
+                "queries": []
             }
         };
 
         const serverResponseFields: any = [
             {
-                type: 'field',
-                label: 'creator',
-                buckets: [
-                    { label: 'b1', metrics: [{ value: { count: 10 } }] },
-                    { label: 'b2', metrics: [{ value: { count: 1 } }] }
+                "type": 'field',
+                "label": 'creator',
+                "buckets": [
+                    { "label": 'b1', "metrics": [{ "value": { "count": 10 } }] },
+                    { "label": 'b2', "metrics": [{ "value": { "count": 1 } }] }
                 ]
             },
             {
-                type: 'field',
-                label: 'modifier',
-                buckets: [
-                    { label: 'c1', metrics: [{ value: { count: 10 } }] },
-                    { label: 'c2', metrics: [{ value: { count: 1 } }] }
+                "type": 'field',
+                "label": 'modifier',
+                "buckets": [
+                    { "label": 'c1', "metrics": [{ "value": { "count": 10 } }] },
+                    { "label": 'c2', "metrics": [{ "value": { "count": 1 } }] }
                 ]
             }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: serverResponseFields
+            "list": {
+                "context": {
+                    "facets": serverResponseFields
                 }
             }
         };
@@ -623,18 +623,18 @@ describe('SearchFacetFiltersService', () => {
         beforeEach(() => {
             searchFacetFiltersService.responseFacets = null;
             data = {
-                list: {
-                    context: {
-                        facets: [
+                "list": {
+                    "context": {
+                        "facets": [
                             {
-                                type: 'field',
-                                label: 'Field',
-                                buckets: [
-                                    { label: 'foo', metrics: [{ value: { count: 8 } }] },
-                                    { label: 'bar', metrics: [{ value: { count: 30 } }] },
-                                    { label: 'xyzzy', metrics: [{ value: { count: 14 } }] },
-                                    { label: 'qux', metrics: [{ value: { count: 28 } }] },
-                                    { label: 'baz', metrics: [{ value: { count: 1 } }] }
+                                "type": 'field',
+                                "label": 'Field',
+                                "buckets": [
+                                    { "label": 'foo', "metrics": [{ "value": { "count": 8 } }] },
+                                    { "label": 'bar', "metrics": [{ "value": { "count": 30 } }] },
+                                    { "label": 'xyzzy', "metrics": [{ "value": { "count": 14 } }] },
+                                    { "label": 'qux', "metrics": [{ "value": { "count": 28 } }] },
+                                    { "label": 'baz', "metrics": [{ "value": { "count": 1 } }] }
                                 ]
                             }
                         ]
@@ -645,14 +645,14 @@ describe('SearchFacetFiltersService', () => {
 
         it('should sort the buckets by label', () => {
             queryBuilder.config = {
-                categories: [],
-                facetQueries: { queries: [] },
-                facetFields: {
-                    fields: [
+                "categories": [],
+                "facetQueries": { "queries": [] },
+                "facetFields": {
+                    "fields": [
                         {
-                            field: 'field',
-                            label: 'Field',
-                            settings: { bucketSortBy: FacetBucketSortBy.LABEL, bucketSortDirection: FacetBucketSortDirection.DESCENDING }
+                            "field": 'field',
+                            "label": 'Field',
+                            "settings": { "bucketSortBy": FacetBucketSortBy.LABEL, "bucketSortDirection": FacetBucketSortDirection.DESCENDING }
                         }
                     ]
                 }
@@ -664,14 +664,14 @@ describe('SearchFacetFiltersService', () => {
 
         it('should sort the buckets by count', () => {
             queryBuilder.config = {
-                categories: [],
-                facetQueries: { queries: [] },
-                facetFields: {
-                    fields: [
+                "categories": [],
+                "facetQueries": { "queries": [] },
+                "facetFields": {
+                    "fields": [
                         {
-                            field: 'field',
-                            label: 'Field',
-                            settings: { bucketSortBy: FacetBucketSortBy.COUNT, bucketSortDirection: FacetBucketSortDirection.ASCENDING }
+                            "field": 'field',
+                            "label": 'Field',
+                            "settings": { "bucketSortBy": FacetBucketSortBy.COUNT, "bucketSortDirection": FacetBucketSortDirection.ASCENDING }
                         }
                     ]
                 }

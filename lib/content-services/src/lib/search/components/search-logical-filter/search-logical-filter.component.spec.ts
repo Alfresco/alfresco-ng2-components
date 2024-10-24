@@ -27,49 +27,46 @@ describe('SearchLogicalFilterComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchLogicalFilterComponent]
+            "imports": [ContentTestingModule, SearchLogicalFilterComponent]
         });
 
         fixture = TestBed.createComponent(SearchLogicalFilterComponent);
         component = fixture.componentInstance;
         component.id = 'logic';
         component.context = {
-            queryFragments: {
-                logic: ''
+            "queryFragments": {
+                "logic": ''
             },
-            filterRawParams: {},
-            populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            "filterRawParams": {},
+            "populateFilters": new ReplaySubject(1),
+            "update": jasmine.createSpy('update')
         } as any;
-        component.settings = { field: 'field1,field2', allowUpdateOnChange: true, hideDefaultAction: false };
+        component.settings = { "field": 'field1,field2', "allowUpdateOnChange": true, "hideDefaultAction": false };
         fixture.detectChanges();
     });
 
     /**
      * Get search input elements
-     *
      * @returns list of native elements
      */
-    function getInputs(): HTMLInputElement[] {
+    function getInputs (): HTMLInputElement[] {
         return fixture.debugElement.queryAll(By.css('.adf-search-input input')).map((input) => input.nativeElement);
     }
 
     /**
      * Get input label elements
-     *
      * @returns list of labels
      */
-    function getInputsLabels(): string[] {
+    function getInputsLabels (): string[] {
         return fixture.debugElement.queryAll(By.css(`[data-automation-id="adf-search-input-label"]`)).map((label) => label.nativeElement.innerText);
     }
 
     /**
      * Enters a new phrase
-     *
      * @param value new value
      * @param index value index
      */
-    function enterNewPhrase(value: string, index: number) {
+    function enterNewPhrase (value: string, index: number) {
         const inputs = getInputs();
         inputs[index].value = value;
         inputs[index].dispatchEvent(new Event('input'));
@@ -124,21 +121,21 @@ describe('SearchLogicalFilterComponent', () => {
 
     it('should set correct value and update display value', () => {
         spyOn(component.displayValue$, 'next');
-        const searchCondition: LogicalSearchCondition = { matchAll: 'test1', matchAny: 'test2', exclude: 'test3', matchExact: 'test4' };
+        const searchCondition: LogicalSearchCondition = { "matchAll": 'test1', "matchAny": 'test2', "exclude": 'test3', "matchExact": 'test4' };
         component.setValue(searchCondition);
         expect(component.getCurrentValue()).toEqual(searchCondition);
         expect(component.displayValue$.next).toHaveBeenCalled();
     });
 
     it('should reset value and display value when reset is called', () => {
-        const searchCondition: LogicalSearchCondition = { matchAll: 'test1', matchAny: 'test2', exclude: 'test3', matchExact: 'test4' };
+        const searchCondition: LogicalSearchCondition = { "matchAll": 'test1', "matchAny": 'test2', "exclude": 'test3', "matchExact": 'test4' };
         component.setValue(searchCondition);
         fixture.detectChanges();
         spyOn(component.displayValue$, 'next');
         component.reset();
         expect(component.context.queryFragments[component.id]).toBe('');
         expect(component.context.update).toHaveBeenCalled();
-        expect(component.getCurrentValue()).toEqual({ matchAll: '', matchAny: '', exclude: '', matchExact: '' });
+        expect(component.getCurrentValue()).toEqual({ "matchAll": '', "matchAny": '', "exclude": '', "matchExact": '' });
         expect(component.displayValue$.next).toHaveBeenCalledWith('');
         expect(component.context.filterRawParams[component.id]).toEqual(component.getCurrentValue());
     });
@@ -197,12 +194,12 @@ describe('SearchLogicalFilterComponent', () => {
         spyOn(component.context.filterLoaded, 'next').and.stub();
         spyOn(component.displayValue$, 'next').and.stub();
         fixture.detectChanges();
-        component.context.populateFilters.next({ logic: { matchAll: 'test', matchAny: 'test2', matchExact: '', exclude: '' } });
+        component.context.populateFilters.next({ "logic": { "matchAll": 'test', "matchAny": 'test2', "matchExact": '', "exclude": '' } });
         fixture.detectChanges();
 
         expect(component.displayValue$.next).toHaveBeenCalledWith(' SEARCH.LOGICAL_SEARCH.MATCH_ALL: test SEARCH.LOGICAL_SEARCH.MATCH_ANY: test2');
-        expect(component.context.filterRawParams[component.id]).toEqual({ matchAll: 'test', matchAny: 'test2', matchExact: '', exclude: '' });
-        expect(component.searchCondition).toEqual({ matchAll: 'test', matchAny: 'test2', matchExact: '', exclude: '' });
+        expect(component.context.filterRawParams[component.id]).toEqual({ "matchAll": 'test', "matchAny": 'test2', "matchExact": '', "exclude": '' });
+        expect(component.searchCondition).toEqual({ "matchAll": 'test', "matchAny": 'test2', "matchExact": '', "exclude": '' });
         expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

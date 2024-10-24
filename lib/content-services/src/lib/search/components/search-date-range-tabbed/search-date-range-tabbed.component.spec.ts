@@ -28,14 +28,14 @@ import { endOfDay, endOfToday, formatISO, parse, startOfDay, startOfMonth, start
 import { ReplaySubject } from 'rxjs';
 
 @Component({
-    selector: 'adf-search-filter-tabbed',
-    template: ``
+    "selector": 'adf-search-filter-tabbed',
+    "template": ``
 })
 export class MockSearchFilterTabbedComponent {}
 
 @Component({
-    selector: 'adf-search-date-range',
-    template: ``
+    "selector": 'adf-search-date-range',
+    "template": ``
 })
 export class MockSearchDateRangeComponent {
     @Input()
@@ -62,10 +62,10 @@ describe('SearchDateRangeTabbedComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchDateRangeTabbedComponent],
-            providers: [
-                { provide: SearchFilterTabbedComponent, useClass: MockSearchFilterTabbedComponent },
-                { provide: SearchDateRangeComponent, useClass: MockSearchDateRangeComponent }
+            "imports": [ContentTestingModule, SearchFilterTabbedComponent, SearchDateRangeComponent, SearchDateRangeTabbedComponent],
+            "providers": [
+                { "provide": SearchFilterTabbedComponent, "useClass": MockSearchFilterTabbedComponent },
+                { "provide": SearchDateRangeComponent, "useClass": MockSearchDateRangeComponent }
             ]
         });
         fixture = TestBed.createComponent(SearchDateRangeTabbedComponent);
@@ -73,48 +73,48 @@ describe('SearchDateRangeTabbedComponent', () => {
         component = fixture.componentInstance;
         component.id = 'dateRange';
         component.context = {
-            queryFragments: {
-                dateRange: ''
+            "queryFragments": {
+                "dateRange": ''
             },
-            filterRawParams: {},
-            populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            "filterRawParams": {},
+            "populateFilters": new ReplaySubject(1),
+            "update": jasmine.createSpy('update')
         } as any;
         component.settings = {
-            hideDefaultAction: false,
-            dateFormat: 'dd-MMM-yy',
-            maxDate: 'today',
-            field: 'createdDate,modifiedDate',
-            displayedLabelsByField: {
-                createdDate: 'Created Date',
-                modifiedDate: 'Modified Date'
+            "hideDefaultAction": false,
+            "dateFormat": 'dd-MMM-yy',
+            "maxDate": 'today',
+            "field": 'createdDate,modifiedDate',
+            "displayedLabelsByField": {
+                "createdDate": 'Created Date',
+                "modifiedDate": 'Modified Date'
             }
         };
         component.tabsValidity = {
-            createdDate: true,
-            modifiedDate: true
+            "createdDate": true,
+            "modifiedDate": true
         };
 
         betweenMockData = {
-            dateRangeType: DateRangeType.BETWEEN,
-            inLastValueType: InLastDateType.DAYS,
-            inLastValue: undefined,
-            betweenStartDate: parse('05-Jun-23', 'dd-MMM-yy', new Date()),
-            betweenEndDate: parse('07-Jun-23', 'dd-MMM-yy', new Date())
+            "dateRangeType": DateRangeType.BETWEEN,
+            "inLastValueType": InLastDateType.DAYS,
+            "inLastValue": undefined,
+            "betweenStartDate": parse('05-Jun-23', 'dd-MMM-yy', new Date()),
+            "betweenEndDate": parse('07-Jun-23', 'dd-MMM-yy', new Date())
         };
         inLastMockData = {
-            dateRangeType: DateRangeType.IN_LAST,
-            inLastValueType: InLastDateType.WEEKS,
-            inLastValue: '5',
-            betweenStartDate: undefined,
-            betweenEndDate: undefined
+            "dateRangeType": DateRangeType.IN_LAST,
+            "inLastValueType": InLastDateType.WEEKS,
+            "inLastValue": '5',
+            "betweenStartDate": undefined,
+            "betweenEndDate": undefined
         };
         anyMockDate = {
-            dateRangeType: DateRangeType.ANY,
-            inLastValueType: InLastDateType.DAYS,
-            inLastValue: null,
-            betweenStartDate: null,
-            betweenEndDate: null
+            "dateRangeType": DateRangeType.ANY,
+            "inLastValueType": InLastDateType.DAYS,
+            "inLastValue": null,
+            "betweenStartDate": null,
+            "betweenEndDate": null
         };
 
         fixture.detectChanges();
@@ -170,11 +170,11 @@ describe('SearchDateRangeTabbedComponent', () => {
         expect(component.context.filterRawParams[component.id].modifiedDate).toEqual(inLastMockData);
 
         inLastMockData = {
-            dateRangeType: DateRangeType.IN_LAST,
-            inLastValueType: InLastDateType.DAYS,
-            inLastValue: '9',
-            betweenStartDate: null,
-            betweenEndDate: null
+            "dateRangeType": DateRangeType.IN_LAST,
+            "inLastValueType": InLastDateType.DAYS,
+            "inLastValue": '9',
+            "betweenStartDate": null,
+            "betweenEndDate": null
         };
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
@@ -186,11 +186,11 @@ describe('SearchDateRangeTabbedComponent', () => {
         expect(component.context.filterRawParams[component.id].modifiedDate).toEqual(inLastMockData);
 
         inLastMockData = {
-            dateRangeType: DateRangeType.IN_LAST,
-            inLastValueType: InLastDateType.MONTHS,
-            inLastValue: '7',
-            betweenStartDate: null,
-            betweenEndDate: null
+            "dateRangeType": DateRangeType.IN_LAST,
+            "inLastValueType": InLastDateType.MONTHS,
+            "inLastValue": '7',
+            "betweenStartDate": null,
+            "betweenEndDate": null
         };
         component.onDateRangedValueChanged(inLastMockData, 'modifiedDate');
         fixture.detectChanges();
@@ -240,13 +240,13 @@ describe('SearchDateRangeTabbedComponent', () => {
         spyOn(component.context.filterLoaded, 'next').and.stub();
         spyOn(component.displayValue$, 'next').and.stub();
         const createdDateMock = {
-            dateRangeType: DateRangeType.BETWEEN,
-            inLastValueType: InLastDateType.DAYS,
-            inLastValue: undefined,
-            betweenStartDate: '2023-06-05',
-            betweenEndDate: '2023-06-07'
+            "dateRangeType": DateRangeType.BETWEEN,
+            "inLastValueType": InLastDateType.DAYS,
+            "inLastValue": undefined,
+            "betweenStartDate": '2023-06-05',
+            "betweenEndDate": '2023-06-07'
         };
-        component.context.populateFilters.next({ dateRange: { createdDate: createdDateMock, modifiedDate: inLastMockData } });
+        component.context.populateFilters.next({ "dateRange": { "createdDate": createdDateMock, "modifiedDate": inLastMockData } });
         fixture.detectChanges();
 
         expect(component.displayValue$.next).toHaveBeenCalledWith(
@@ -262,9 +262,9 @@ describe('SearchDateRangeTabbedComponent', () => {
     describe('SearchDateRangeTabbedComponent getTabLabel', () => {
         beforeEach(() => {
             component.settings = {
-                displayedLabelsByField: {
-                    createdDate: 'Created Date',
-                    modifiedDate: 'Modified Date'
+                "displayedLabelsByField": {
+                    "createdDate": 'Created Date',
+                    "modifiedDate": 'Modified Date'
                 }
             } as any;
         });

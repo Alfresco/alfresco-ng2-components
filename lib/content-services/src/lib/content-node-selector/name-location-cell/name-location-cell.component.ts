@@ -19,16 +19,16 @@ import { Input, ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } 
 import { DataRow } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-name-location-cell',
-    standalone: true,
-    template: `
+    "selector": 'adf-name-location-cell',
+    "standalone": true,
+    "template": `
         <div class="adf-name-location-cell-name adf-datatable-cell-value" [title]="name">{{ name }}</div>
         <div class="adf-name-location-cell-location adf-datatable-cell-value" [title]="path">{{ path }}</div>
     `,
-    styleUrls: ['./name-location-cell.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { class: 'adf-name-location-cell adf-datatable-content-cell' }
+    "styleUrls": ['./name-location-cell.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "host": { "class": 'adf-name-location-cell adf-datatable-content-cell' }
 })
 export class NameLocationCellComponent implements OnInit {
     name: string = '';
@@ -37,7 +37,7 @@ export class NameLocationCellComponent implements OnInit {
     @Input()
     row: DataRow;
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.row) {
             this.name = this.row.getValue('name');
 

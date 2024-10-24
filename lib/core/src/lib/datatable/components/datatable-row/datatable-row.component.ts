@@ -20,14 +20,14 @@ import { FocusableOption } from '@angular/cdk/a11y';
 import { DataRow } from '../../data/data-row.model';
 
 @Component({
-    selector: 'adf-datatable-row',
-    standalone: true,
-    template: `<ng-content></ng-content>`,
-    encapsulation: ViewEncapsulation.None,
-    host: {
-        class: 'adf-datatable-row',
-        tabindex: '0',
-        role: 'row'
+    "selector": 'adf-datatable-row',
+    "standalone": true,
+    "template": `<ng-content></ng-content>`,
+    "encapsulation": ViewEncapsulation.None,
+    "host": {
+        "class": 'adf-datatable-row',
+        "tabindex": '0',
+        "role": 'row'
     }
 })
 export class DataTableRowComponent implements FocusableOption {
@@ -39,7 +39,7 @@ export class DataTableRowComponent implements FocusableOption {
     select: EventEmitter<any> = new EventEmitter<any>();
 
     @HostBinding('class.adf-is-selected')
-    get isSelected(): boolean {
+    get isSelected (): boolean {
         if (!this.row) {
             return false;
         }
@@ -47,7 +47,7 @@ export class DataTableRowComponent implements FocusableOption {
     }
 
     @HostBinding('attr.aria-selected')
-    get isAriaSelected(): boolean {
+    get isAriaSelected (): boolean {
         if (!this.row) {
             return false;
         }
@@ -55,7 +55,7 @@ export class DataTableRowComponent implements FocusableOption {
     }
 
     @HostBinding('attr.aria-label')
-    get ariaLabel(): string | null {
+    get ariaLabel (): string | null {
         if (!this.row) {
             return null;
         }
@@ -67,21 +67,21 @@ export class DataTableRowComponent implements FocusableOption {
     }
 
     @HostBinding('attr.tabindex')
-    get tabindex(): number | null {
+    get tabindex (): number | null {
         return this.disabled ? null : 0;
     }
 
     @HostListener('keydown.space', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
+    onKeyDown (event: KeyboardEvent) {
         if ((event.target as Element).tagName === this.element.nativeElement.tagName) {
             event.preventDefault();
             this.select.emit(event);
         }
     }
 
-    constructor(private element: ElementRef) {}
+    constructor (private element: ElementRef) {}
 
-    focus() {
+    focus () {
         this.element.nativeElement.focus();
     }
 }

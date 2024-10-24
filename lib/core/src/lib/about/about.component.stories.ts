@@ -27,74 +27,74 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class AppExtensionServiceMock {
     references$: Observable<ExtensionRef[]>;
     private _references = new BehaviorSubject<ExtensionRef[]>([]);
 
-    constructor() {
+    constructor () {
         this.references$ = this._references.asObservable();
     }
 
-    getViewerExtensions(): ViewerExtensionRef[] {
+    getViewerExtensions (): ViewerExtensionRef[] {
         return [];
     }
 }
 
 export default {
-    component: AboutComponent,
-    title: 'Core/About/About',
-    decorators: [
+    "component": AboutComponent,
+    "title": 'Core/About/About',
+    "decorators": [
         moduleMetadata({
-            imports: [...ABOUT_DIRECTIVES],
-            providers: [
-                { provide: AuthenticationService, useClass: AuthenticationMock },
-                { provide: AppExtensionService, useClass: AppExtensionServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+            "imports": [...ABOUT_DIRECTIVES],
+            "providers": [
+                { "provide": AuthenticationService, "useClass": AuthenticationMock },
+                { "provide": AppExtensionService, "useClass": AppExtensionServiceMock },
+                { "provide": AppConfigService, "useClass": AppConfigServiceMock }
             ]
         })
     ],
-    argTypes: {
-        dev: {
-            control: 'boolean',
-            description: 'If active show more information about the app and the platform useful in debug.',
-            defaultValue: false,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
+    "argTypes": {
+        "dev": {
+            "control": 'boolean',
+            "description": 'If active show more information about the app and the platform useful in debug.',
+            "defaultValue": false,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'false' }
             }
         },
-        pkg: {
-            control: 'object',
-            description: 'pkg json.',
-            table: {
-                type: { summary: 'object' }
+        "pkg": {
+            "control": 'object',
+            "description": 'pkg json.',
+            "table": {
+                "type": { "summary": 'object' }
             }
         },
-        regexp: {
-            control: 'text',
-            description: 'Regular expression for filtering dependencies packages.',
-            defaultValue: '^(@alfresco)',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: '^(@alfresco)' }
+        "regexp": {
+            "control": 'text',
+            "description": 'Regular expression for filtering dependencies packages.',
+            "defaultValue": '^(@alfresco)',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": '^(@alfresco)' }
             }
         }
     }
 } as Meta<AboutComponent>;
 
 const template: StoryFn<AboutComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const About = template.bind({});
 About.args = {
-    pkg: {
-        name: 'My Storybook App',
-        commit: 'my-commit-value',
-        version: '1.0.0',
-        dependencies: {
+    "pkg": {
+        "name": 'My Storybook App',
+        "commit": 'my-commit-value',
+        "version": '1.0.0',
+        "dependencies": {
             '@alfresco/adf-content-services': '4.7.0',
             '@alfresco/adf-core': '4.7.0',
             '@alfresco/adf-extensions': '4.7.0',

@@ -26,14 +26,14 @@ describe('PredictionService', () => {
     const mockPredictionPaging = (): PredictionPaging => {
         const prediction = new Prediction();
         prediction.id = 'test id';
-        const predictionEntry = new PredictionEntry({ entry: prediction });
-        const predictionPagingList = new PredictionPagingList({ entries: [predictionEntry] });
-        return new PredictionPaging({ list: predictionPagingList });
+        const predictionEntry = new PredictionEntry({ "entry": prediction });
+        const predictionPagingList = new PredictionPagingList({ "entries": [predictionEntry] });
+        return new PredictionPaging({ "list": predictionPagingList });
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(PredictionService);
     });

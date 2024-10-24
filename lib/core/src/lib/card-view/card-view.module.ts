@@ -42,7 +42,7 @@ export const CARD_VIEW_DIRECTIVES = [
 
 /** @deprecated use `...CARD_VIEW_DIRECTIVES` or import standalone components directly */
 @NgModule({
-    imports: [...CARD_VIEW_DIRECTIVES],
-    exports: [...CARD_VIEW_DIRECTIVES]
+    "imports": [...CARD_VIEW_DIRECTIVES],
+    "exports": [...CARD_VIEW_DIRECTIVES]
 })
 export class CardViewModule {}

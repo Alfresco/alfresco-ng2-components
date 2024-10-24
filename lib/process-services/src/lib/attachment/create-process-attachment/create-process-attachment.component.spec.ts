@@ -29,27 +29,27 @@ describe('CreateProcessAttachmentComponent', () => {
     let element: HTMLElement;
 
     const file = new File([new Blob()], 'Test');
-    const fileObj = { entry: null, file, relativeFolder: '/' };
-    const customEvent = { detail: { files: [fileObj] } };
+    const fileObj = { "entry": null, file, "relativeFolder": '/' };
+    const customEvent = { "detail": { "files": [fileObj] } };
 
     const fakeUploadResponse = {
-        id: 9999,
-        name: 'BANANA.jpeg',
-        created: '2017-06-12T12:52:11.109Z',
-        createdBy: { id: 2, firstName: 'fake-user', lastName: 'fake-user', email: 'fake-user' },
-        relatedContent: false,
-        contentAvailable: true,
-        link: false,
-        mimeType: 'image/jpeg',
-        simpleType: 'image',
-        previewStatus: 'queued',
-        thumbnailStatus: 'queued'
+        "id": 9999,
+        "name": 'BANANA.jpeg',
+        "created": '2017-06-12T12:52:11.109Z',
+        "createdBy": { "id": 2, "firstName": 'fake-user', "lastName": 'fake-user', "email": 'fake-user' },
+        "relatedContent": false,
+        "contentAvailable": true,
+        "link": false,
+        "mimeType": 'image/jpeg',
+        "simpleType": 'image',
+        "previewStatus": 'queued',
+        "thumbnailStatus": 'queued'
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, CreateProcessAttachmentComponent],
-            providers: [{ provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }]
+            "imports": [ProcessTestingModule, CreateProcessAttachmentComponent],
+            "providers": [{ "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock }]
         });
         fixture = TestBed.createComponent(CreateProcessAttachmentComponent);
         component = fixture.componentInstance;
@@ -71,7 +71,7 @@ describe('CreateProcessAttachmentComponent', () => {
         component.processInstanceId = null;
 
         const change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ processInstanceId: change });
+        component.ngOnChanges({ "processInstanceId": change });
 
         expect(component.processInstanceId).toBe('123');
     });
@@ -87,9 +87,9 @@ describe('CreateProcessAttachmentComponent', () => {
         component.onFileUpload(customEvent);
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeUploadResponse)
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify(fakeUploadResponse)
         });
     });
 
@@ -110,9 +110,9 @@ describe('CreateProcessAttachmentComponent', () => {
         fixture.detectChanges();
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeUploadResponse)
+            "status": 200,
+            "contentType": 'application/json',
+            "responseText": JSON.stringify(fakeUploadResponse)
         });
     });
 });

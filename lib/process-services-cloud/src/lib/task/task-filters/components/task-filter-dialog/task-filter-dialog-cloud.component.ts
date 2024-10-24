@@ -20,10 +20,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'adf-cloud-task-filter-dialog',
-  templateUrl: './task-filter-dialog-cloud.component.html',
-  styleUrls: ['./task-filter-dialog-cloud.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  "selector": 'adf-cloud-task-filter-dialog',
+  "templateUrl": './task-filter-dialog-cloud.component.html',
+  "styleUrls": ['./task-filter-dialog-cloud.component.scss'],
+  "encapsulation": ViewEncapsulation.None
 })
 export class TaskFilterDialogCloudComponent implements OnInit {
 
@@ -33,35 +33,35 @@ export class TaskFilterDialogCloudComponent implements OnInit {
 
     filterForm: UntypedFormGroup;
 
-    constructor(
+    constructor (
         private fb: UntypedFormBuilder,
         public dialogRef: MatDialogRef<TaskFilterDialogCloudComponent>,
         @Inject(MAT_DIALOG_DATA) public data) {
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.filterForm = this.fb.group({
-            name: [this.data.name, Validators.required]
+            "name": [this.data.name, Validators.required]
         });
     }
 
-    onSaveClick() {
+    onSaveClick () {
         this.dialogRef.close({
-            action: TaskFilterDialogCloudComponent.ACTION_SAVE,
-            icon: this.defaultIcon,
-            name: this.nameController.value
+            "action": TaskFilterDialogCloudComponent.ACTION_SAVE,
+            "icon": this.defaultIcon,
+            "name": this.nameController.value
         });
     }
 
-    onCancelClick() {
+    onCancelClick () {
         this.dialogRef.close();
     }
 
-    get nameController(): AbstractControl {
+    get nameController (): AbstractControl {
         return this.filterForm.get('name');
     }
 
-    isValid(): boolean {
+    isValid (): boolean {
         return this.filterForm.valid;
     }
 }

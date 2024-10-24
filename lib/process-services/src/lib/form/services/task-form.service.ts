@@ -24,43 +24,41 @@ import { catchError, map } from 'rxjs/operators';
 import { DynamicTableColumnOption } from '../widgets/dynamic-table/editors/models/dynamic-table-column-option.model';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TaskFormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     private _taskFormsApi: TaskFormsApi;
-    get taskFormsApi(): TaskFormsApi {
+    get taskFormsApi (): TaskFormsApi {
         this._taskFormsApi = this._taskFormsApi ?? new TaskFormsApi(this.apiService.getInstance());
         return this._taskFormsApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Saves a task form.
-     *
      * @param taskId Task Id
      * @param formValues Form Values
      * @returns Null response when the operation is complete
      */
-    saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        const saveFormRepresentation = { values: formValues } as SaveFormRepresentation;
+    saveTaskForm (taskId: string, formValues: FormValues): Observable<any> {
+        const saveFormRepresentation = { "values": formValues } as SaveFormRepresentation;
 
         return from(this.taskFormsApi.saveTaskForm(taskId, saveFormRepresentation)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
      * Completes a Task Form.
-     *
      * @param taskId Task Id
      * @param formValues Form Values
      * @param outcome Form Outcome
      * @returns Null response when the operation is complete
      */
-    completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        const completeFormRepresentation = { values: formValues } as CompleteFormRepresentation;
+    completeTaskForm (taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
+        const completeFormRepresentation = { "values": formValues } as CompleteFormRepresentation;
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -70,11 +68,10 @@ export class TaskFormService {
 
     /**
      * Gets a form related to a task.
-     *
      * @param taskId ID of the target task
      * @returns Form definition
      */
-    getTaskForm(taskId: string): Observable<any> {
+    getTaskForm (taskId: string): Observable<any> {
         return from(this.taskFormsApi.getTaskForm(taskId)).pipe(
             map(this.toJson),
             catchError((err) => this.handleError(err))
@@ -83,28 +80,26 @@ export class TaskFormService {
 
     /**
      * Gets values of fields populated by a REST backend.
-     *
      * @param taskId Task identifier
      * @param field Field identifier
      * @returns Field values
      */
-    getRestFieldValues(taskId: string, field: string): Observable<FormFieldOption[]> {
+    getRestFieldValues (taskId: string, field: string): Observable<FormFieldOption[]> {
         return from(this.taskFormsApi.getRestFieldValues(taskId, field)).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
      * Gets column values of fields populated by a REST backend.
-     *
      * @param taskId Task identifier
      * @param field Field identifier
      * @param column Column identifier
      * @returns Field values
      */
-    getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<DynamicTableColumnOption[]> {
+    getRestFieldValuesColumn (taskId: string, field: string, column?: string): Observable<DynamicTableColumnOption[]> {
         return from(this.taskFormsApi.getRestFieldColumnValues(taskId, field, column)).pipe(catchError((err) => this.handleError(err)));
     }
 
-    getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
+    getTaskProcessVariable (taskId: string): Observable<TaskProcessVariableModel[]> {
         return from(this.taskFormsApi.getTaskFormVariables(taskId)).pipe(
             map((res) => this.toJson(res)),
             catchError((err) => this.handleError(err))
@@ -113,11 +108,10 @@ export class TaskFormService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
-    toJson(res: any) {
+    toJson (res: any) {
         if (res) {
             return res || {};
         }
@@ -126,11 +120,10 @@ export class TaskFormService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */
-    private handleError(error: any): Observable<any> {
+    private handleError (error: any): Observable<any> {
         let errMsg = TaskFormService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : TaskFormService.GENERIC_ERROR_MESSAGE;

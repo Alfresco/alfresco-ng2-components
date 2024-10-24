@@ -26,7 +26,7 @@ describe('TaskStandaloneComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, TaskStandaloneComponent]
+            "imports": [ProcessTestingModule, TaskStandaloneComponent]
         });
         fixture = TestBed.createComponent(TaskStandaloneComponent);
         component = fixture.componentInstance;

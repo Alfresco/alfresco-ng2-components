@@ -21,9 +21,9 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LibraryEntity } from '../interfaces/library-entity.interface';
 
 @Directive({
-    standalone: true,
-    selector: '[adf-favorite-library]',
-    exportAs: 'favoriteLibrary'
+    "standalone": true,
+    "selector": '[adf-favorite-library]',
+    "exportAs": 'favoriteLibrary'
 })
 export class LibraryFavoriteDirective implements OnChanges {
     @Input('adf-favorite-library')
@@ -36,21 +36,21 @@ export class LibraryFavoriteDirective implements OnChanges {
     private targetLibrary = null;
 
     private _favoritesApi: FavoritesApi;
-    get favoritesApi(): FavoritesApi {
+    get favoritesApi (): FavoritesApi {
         this._favoritesApi = this._favoritesApi ?? new FavoritesApi(this.alfrescoApiService.getInstance());
         return this._favoritesApi;
     }
 
     @HostListener('click')
-    onClick() {
+    onClick () {
         const guid = this.targetLibrary.entry.guid;
 
         if (this.targetLibrary.isFavorite) {
             this.removeFavorite(guid);
         } else {
             this.addFavorite({
-                target: {
-                    site: {
+                "target": {
+                    "site": {
                         guid
                     }
                 }
@@ -58,9 +58,9 @@ export class LibraryFavoriteDirective implements OnChanges {
         }
     }
 
-    constructor(private alfrescoApiService: AlfrescoApiService) {}
+    constructor (private alfrescoApiService: AlfrescoApiService) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (!changes.library.currentValue) {
             this.targetLibrary = null;
             return;
@@ -70,11 +70,11 @@ export class LibraryFavoriteDirective implements OnChanges {
         this.markFavoriteLibrary(changes.library.currentValue);
     }
 
-    isFavorite(): boolean {
+    isFavorite (): boolean {
         return this.targetLibrary?.isFavorite;
     }
 
-    private async markFavoriteLibrary(library: LibraryEntity) {
+    private async markFavoriteLibrary (library: LibraryEntity) {
         if (this.targetLibrary.isFavorite === undefined) {
             try {
                 await this.favoritesApi.getFavoriteSite('-me-', library.entry.id);
@@ -87,7 +87,7 @@ export class LibraryFavoriteDirective implements OnChanges {
         }
     }
 
-    private addFavorite(favoriteBody: FavoriteBodyCreate) {
+    private addFavorite (favoriteBody: FavoriteBodyCreate) {
         this.favoritesApi
             .createFavorite('-me-', favoriteBody)
             .then((libraryEntry) => {
@@ -97,7 +97,7 @@ export class LibraryFavoriteDirective implements OnChanges {
             .catch((error) => this.error.emit(error));
     }
 
-    private removeFavorite(favoriteId: string) {
+    private removeFavorite (favoriteId: string) {
         this.favoritesApi
             .deleteFavorite('-me-', favoriteId)
             .then((libraryBody) => {

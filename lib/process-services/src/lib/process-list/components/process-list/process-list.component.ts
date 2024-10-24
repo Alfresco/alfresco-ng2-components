@@ -52,27 +52,27 @@ import { TranslateModule } from '@ngx-translate/core';
 const PRESET_KEY = 'adf-process-list.presets';
 
 export const processPresetsDefaultModel = {
-    default: [
+    "default": [
         {
-            key: 'name',
-            type: 'text',
-            title: 'ADF_PROCESS_LIST.PROPERTIES.NAME',
-            sortable: true
+            "key": 'name',
+            "type": 'text',
+            "title": 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+            "sortable": true
         },
         {
-            key: 'created',
-            type: 'text',
-            title: 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
-            cssClass: 'hidden',
-            sortable: true
+            "key": 'created',
+            "type": 'text',
+            "title": 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
+            "cssClass": 'hidden',
+            "sortable": true
         }
     ]
 };
 
 @Component({
-    selector: 'adf-process-instance-list',
-    standalone: true,
-    imports: [
+    "selector": 'adf-process-instance-list',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatProgressSpinnerModule,
         EmptyContentComponent,
@@ -81,8 +81,8 @@ export const processPresetsDefaultModel = {
         LoadingContentTemplateDirective,
         NoContentTemplateDirective
     ],
-    styleUrls: ['./process-list.component.css'],
-    templateUrl: './process-list.component.html'
+    "styleUrls": ['./process-list.component.css'],
+    "templateUrl": './process-list.component.html'
 })
 export class ProcessInstanceListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -193,18 +193,18 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     sorting: any[] = ['created', 'desc'];
     pagination: BehaviorSubject<PaginationModel>;
 
-    constructor(private processService: ProcessService, private userPreferences: UserPreferencesService, appConfig: AppConfigService) {
+    constructor (private processService: ProcessService, private userPreferences: UserPreferencesService, appConfig: AppConfigService) {
         super(appConfig, PRESET_KEY, processPresetsDefaultModel);
         this.size = this.userPreferences.paginationSize;
 
         this.pagination = new BehaviorSubject<PaginationModel>({
-            maxItems: this.size,
-            skipCount: 0,
-            totalItems: 0
+            "maxItems": this.size,
+            "skipCount": 0,
+            "totalItems": 0
         });
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit () {
         this.createDatatableSchema();
 
         if (this.data?.getColumns().length === 0) {
@@ -216,7 +216,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges (changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
             if (this.isSortChanged(changes)) {
                 this.sorting = this.sort ? this.sort.split('-') : this.sorting;
@@ -230,7 +230,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         }
     }
 
-    reload() {
+    reload () {
         this.requestNode = this.createRequestNode();
         this.load(this.requestNode);
     }
@@ -238,7 +238,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     /**
      * Select the first instance of a list if present
      */
-    selectFirst() {
+    selectFirst () {
         if (this.selectFirstRow) {
             if (!this.isListEmpty()) {
                 const dataRow = this.rows[0];
@@ -252,44 +252,40 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /**
      * Get the id of the current instance
-     *
      * @returns instance id
      */
-    getCurrentId(): string {
+    getCurrentId (): string {
         return this.currentInstanceId;
     }
 
     /**
      * Check if the list is empty
-     *
      * @returns `true` if list is empty, otherwise `false`
      */
-    isListEmpty(): boolean {
+    isListEmpty (): boolean {
         return !this.rows || this.rows.length === 0;
     }
 
     /**
      * Emit the event rowClick passing the current task id when the row is clicked
-     *
      * @param event input event
      */
-    onRowClick(event: DataRowEvent) {
+    onRowClick (event: DataRowEvent) {
         const item = event;
 
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
 
-    onRowCheckboxToggle(event: CustomEvent) {
+    onRowCheckboxToggle (event: CustomEvent) {
         this.rowsSelected.emit([...event.detail.selection]);
     }
 
     /**
      * Emit the event rowClick passing the current task id when pressed the Enter key on the selected row
-     *
      * @param event keyboard event
      */
-    onRowKeyUp(event: CustomEvent<any>) {
+    onRowKeyUp (event: CustomEvent<any>) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
 
@@ -298,11 +294,11 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         }
     }
 
-    onShowRowContextMenu(event: DataCellEvent) {
+    onShowRowContextMenu (event: DataCellEvent) {
         this.showRowContextMenu.emit(event);
     }
 
-    updatePagination(params: PaginationModel) {
+    updatePagination (params: PaginationModel) {
         const needsReload = params.maxItems || params.skipCount;
 
         this.size = params.maxItems;
@@ -313,29 +309,29 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         }
     }
 
-    currentPage(skipCount: number, maxItems: number): number {
+    currentPage (skipCount: number, maxItems: number): number {
         return skipCount && maxItems ? Math.floor(skipCount / maxItems) : 0;
     }
 
-    private createRequestNode(): ProcessInstanceQueryRepresentation {
+    private createRequestNode (): ProcessInstanceQueryRepresentation {
         return {
-            appDefinitionId: this.appId,
-            processDefinitionId: this.processDefinitionId,
-            processInstanceId: this.processInstanceId,
-            state: this.state,
-            sort: this.sort,
-            page: this.page,
-            size: this.size,
-            start: 0
+            "appDefinitionId": this.appId,
+            "processDefinitionId": this.processDefinitionId,
+            "processInstanceId": this.processInstanceId,
+            "state": this.state,
+            "sort": this.sort,
+            "page": this.page,
+            "size": this.size,
+            "start": 0
         };
     }
 
-    private isSortChanged(changes: SimpleChanges): boolean {
+    private isSortChanged (changes: SimpleChanges): boolean {
         const actualSort = changes['sort'];
         return actualSort?.currentValue && actualSort.currentValue !== actualSort.previousValue;
     }
 
-    private isPropertyChanged(changes: SimpleChanges): boolean {
+    private isPropertyChanged (changes: SimpleChanges): boolean {
         let changed: boolean = false;
 
         const appId = changes['appId'];
@@ -364,7 +360,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         return changed;
     }
 
-    private load(requestNode: ProcessInstanceQueryRepresentation) {
+    private load (requestNode: ProcessInstanceQueryRepresentation) {
         this.isLoading = true;
         this.processService
             .getProcesses(requestNode)
@@ -375,10 +371,10 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
                     this.selectFirst();
                     this.success.emit(response);
                     this.pagination.next({
-                        count: (response.data || []).length,
-                        maxItems: this.size,
-                        skipCount: this.page * this.size,
-                        totalItems: response.total
+                        "count": (response.data || []).length,
+                        "maxItems": this.size,
+                        "skipCount": this.page * this.size,
+                        "totalItems": response.total
                     });
                 },
                 (error) => {

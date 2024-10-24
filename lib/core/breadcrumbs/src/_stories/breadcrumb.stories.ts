@@ -32,54 +32,47 @@ type StoryWithoutFunction<T> = NonFunctionProperties<StoryFn<T>>;
 
 /**
  * Copy storybook story
- *
  * @param story story
  * @param annotations annotations
  * @returns a copy of the story
  */
-function storybookCopyStory<T>(story: StoryFn<T>, annotations?: StoryWithoutFunction<T>): StoryFn<T> {
+function storybookCopyStory<T> (story: StoryFn<T>, annotations?: StoryWithoutFunction<T>): StoryFn<T> {
     const cloned = story.bind({});
     return Object.assign(cloned, annotations);
 }
 
 const meta: Meta = {
-    title: 'Core/Breadcrumb',
-    component: DemoBreadcrumbComponent,
-    decorators: [
+    "title": 'Core/Breadcrumb',
+    "component": DemoBreadcrumbComponent,
+    "decorators": [
         moduleMetadata({
-            imports: [
-                BreadcrumbComponent,
-                BreadcrumbItemComponent,
-                MatButtonModule,
-                MatMenuModule,
-                MatIconModule
-            ]
+            "imports": [BreadcrumbComponent, BreadcrumbItemComponent, MatButtonModule, MatMenuModule, MatIconModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    args: {
-        compact: false,
-        showBreadcrumbItemWithMenu: false
+    "args": {
+        "compact": false,
+        "showBreadcrumbItemWithMenu": false
     },
-    argTypes: {
-        compact: { control: 'boolean' },
-        showBreadcrumbItemWithMenu: { control: 'boolean' }
+    "argTypes": {
+        "compact": { "control": 'boolean' },
+        "showBreadcrumbItemWithMenu": { "control": 'boolean' }
     }
 };
 export default meta;
 
 export const Breadcrumb: StoryFn = (args) => ({
-    props: args
+    "props": args
 });
 
 export const Compact = storybookCopyStory(Breadcrumb);
 Compact.args = {
-    compact: true
+    "compact": true
 };
 
 export const WithMenu = storybookCopyStory(Breadcrumb);
 WithMenu.args = {
-    showBreadcrumbItemWithMenu: true
+    "showBreadcrumbItemWithMenu": true
 };

@@ -29,23 +29,23 @@ describe('TokenInterceptor', () => {
 
     beforeEach(() => {
         const oauthServiceMock = {
-            tokenEndpoint: 'lv-426/token',
-            getIdToken: jasmine.createSpy('getIdToken').and.returnValue(null)
+            "tokenEndpoint": 'lv-426/token',
+            "getIdToken": jasmine.createSpy('getIdToken').and.returnValue(null)
         };
 
         const oauthStorageMock = {
-            setItem: jasmine.createSpy('setItem')
+            "setItem": jasmine.createSpy('setItem')
         };
 
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                { provide: OAuthService, useValue: oauthServiceMock },
-                { provide: OAuthStorage, useValue: oauthStorageMock },
+            "imports": [HttpClientTestingModule],
+            "providers": [
+                { "provide": OAuthService, "useValue": oauthServiceMock },
+                { "provide": OAuthStorage, "useValue": oauthStorageMock },
                 {
-                    provide: HTTP_INTERCEPTORS,
-                    useClass: TokenInterceptor,
-                    multi: true
+                    "provide": HTTP_INTERCEPTORS,
+                    "useClass": TokenInterceptor,
+                    "multi": true
                 }
             ]
         });
@@ -61,7 +61,7 @@ describe('TokenInterceptor', () => {
     });
 
     it('should store id_token in OAuthStorage if not already set', () => {
-        const mockResponse = { id_token: 'mock-id-token' };
+        const mockResponse = { "id_token": 'mock-id-token' };
 
         httpClient.post('lv-426/token', {}).subscribe((response) => {
             expect(response).toBeTruthy();
@@ -86,7 +86,7 @@ describe('TokenInterceptor', () => {
         const req = httpMock.expectOne('lv-426/token');
         expect(req.request.method).toBe('POST');
 
-        req.flush({ id_token: 'new-id-token' });
+        req.flush({ "id_token": 'new-id-token' });
 
         expect(oauthService.getIdToken).toHaveBeenCalled();
         expect(oauthStorage.setItem).not.toHaveBeenCalled();
@@ -100,7 +100,7 @@ describe('TokenInterceptor', () => {
         const req = httpMock.expectOne('lv-426/other');
         expect(req.request.method).toBe('GET');
 
-        req.flush({ data: 'test' });
+        req.flush({ "data": 'test' });
 
         expect(oauthService.getIdToken).not.toHaveBeenCalled();
         expect(oauthStorage.setItem).not.toHaveBeenCalled();

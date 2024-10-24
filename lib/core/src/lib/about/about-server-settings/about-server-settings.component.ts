@@ -22,20 +22,20 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-    selector: 'adf-about-server-settings',
-    templateUrl: './about-server-settings.component.html',
-    styleUrls: ['./about-server-settings.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [CommonModule, TranslateModule, MatCardModule]
+    "selector": 'adf-about-server-settings',
+    "templateUrl": './about-server-settings.component.html',
+    "styleUrls": ['./about-server-settings.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, MatCardModule]
 })
 export class AboutServerSettingsComponent implements OnInit {
     ecmHost = '';
     bpmHost = '';
 
-    constructor(private appConfig: AppConfigService) {}
+    constructor (private appConfig: AppConfigService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.ecmHost = this.appConfig.get(AppConfigValues.ECMHOST);
         this.bpmHost = this.appConfig.get(AppConfigValues.BPMHOST);
     }

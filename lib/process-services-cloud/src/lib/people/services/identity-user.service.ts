@@ -25,34 +25,32 @@ import { IdentityUserFilterInterface } from './identity-user-filter.interface';
 const IDENTITY_MICRO_SERVICE_INGRESS = 'identity-adapter-service';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class IdentityUserService implements IdentityUserServiceInterface {
     queryParams: { search: string; application?: string; roles?: string[]; groups?: string[] };
 
-    constructor(private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
+    constructor (private jwtHelperService: JwtHelperService, private oAuth2Service: OAuth2Service, private appConfigService: AppConfigService) {}
 
     /**
      * Gets the name and other basic details of the current user.
-     *
      * @returns The user's details
      */
-    public getCurrentUserInfo(): IdentityUserModel {
+    public getCurrentUserInfo (): IdentityUserModel {
         const familyName = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.FAMILY_NAME);
         const givenName = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.GIVEN_NAME);
         const email = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_EMAIL);
         const username = this.jwtHelperService.getValueFromLocalToken<string>(JwtHelperService.USER_PREFERRED_USERNAME);
-        return { firstName: givenName, lastName: familyName, email, username };
+        return { "firstName": givenName, "lastName": familyName, email, username };
     }
 
     /**
      * Search users based on name input and filters.
-     *
      * @param name Search query string
      * @param [filters] Search query filters
      * @returns List of users
      */
-    public search(name: string, filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
+    public search (name: string, filters?: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
         if (name.trim() === '') {
             return EMPTY;
         } else if (filters?.groups?.length > 0) {
@@ -66,43 +64,43 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         }
     }
 
-    private searchUsersByName(name: string): Observable<IdentityUserModel[]> {
+    private searchUsersByName (name: string): Observable<IdentityUserModel[]> {
         this.buildQueryParam(name);
 
         return this.invokeIdentityUserApi();
     }
 
-    private searchUsersWithGlobalRoles(name: string, roles: string[]): Observable<IdentityUserModel[]> {
+    private searchUsersWithGlobalRoles (name: string, roles: string[]): Observable<IdentityUserModel[]> {
         this.buildQueryParam(name, { roles });
 
         return this.invokeIdentityUserApi();
     }
 
-    private searchUsersWithinApp(name: string, withinApplication: string, roles?: string[]): Observable<IdentityUserModel[]> {
+    private searchUsersWithinApp (name: string, withinApplication: string, roles?: string[]): Observable<IdentityUserModel[]> {
         this.buildQueryParam(name, { roles, withinApplication });
 
         return this.invokeIdentityUserApi();
     }
 
-    private searchUsersWithGroups(name: string, filters: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
+    private searchUsersWithGroups (name: string, filters: IdentityUserFilterInterface): Observable<IdentityUserModel[]> {
         this.buildQueryParam(name, filters);
 
         return this.invokeIdentityUserApi();
     }
 
-    private invokeIdentityUserApi(): Observable<any> {
+    private invokeIdentityUserApi (): Observable<any> {
         const url = `${this.identityHost}/${IDENTITY_MICRO_SERVICE_INGRESS}/v1/users`;
-        return this.oAuth2Service.get({ url, queryParams: this.queryParams });
+        return this.oAuth2Service.get({ url, "queryParams": this.queryParams });
     }
 
-    private buildQueryParam(name: string, filters?: IdentityUserFilterInterface) {
-        this.queryParams = { search: name };
+    private buildQueryParam (name: string, filters?: IdentityUserFilterInterface) {
+        this.queryParams = { "search": name };
         this.addOptionalValueToQueryParam('application', filters?.withinApplication);
         this.addOptionalCommaValueToQueryParam('role', filters?.roles);
         this.addOptionalCommaValueToQueryParam('group', filters?.groups);
     }
 
-    private addOptionalCommaValueToQueryParam(key: string, values: string[]) {
+    private addOptionalCommaValueToQueryParam (key: string, values: string[]) {
         if (values?.length > 0) {
             const valuesNotEmpty = this.filterOutEmptyValue(values);
             if (valuesNotEmpty?.length > 0) {
@@ -111,17 +109,17 @@ export class IdentityUserService implements IdentityUserServiceInterface {
         }
     }
 
-    private addOptionalValueToQueryParam(key: string, value: string) {
+    private addOptionalValueToQueryParam (key: string, value: string) {
         if (value?.trim()) {
             this.queryParams[key] = value;
         }
     }
 
-    private filterOutEmptyValue(values: string[]): string[] {
+    private filterOutEmptyValue (values: string[]): string[] {
         return values.filter((value) => value.trim());
     }
 
-    private get identityHost(): string {
+    private get identityHost (): string {
         return `${this.appConfigService.get('bpmHost')}`;
     }
 }

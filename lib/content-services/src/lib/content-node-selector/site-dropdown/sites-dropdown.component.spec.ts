@@ -34,18 +34,18 @@ import { MatSelectHarness } from '@angular/material/select/testing';
 import { SiteEntry } from '@alfresco/js-api';
 
 const customSiteList = {
-    list: {
-        entries: [
+    "list": {
+        "entries": [
             {
-                entry: {
-                    guid: '-my-',
-                    title: 'PERSONAL_FILES'
+                "entry": {
+                    "guid": '-my-',
+                    "title": 'PERSONAL_FILES'
                 }
             },
             {
-                entry: {
-                    guid: '-mysites-',
-                    title: 'FILE_LIBRARIES'
+                "entry": {
+                    "guid": '-mysites-',
+                    "title": 'FILE_LIBRARIES'
                 }
             }
         ]
@@ -62,7 +62,7 @@ describe('DropdownSitesComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
     });
 

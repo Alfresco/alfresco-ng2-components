@@ -34,8 +34,8 @@ describe('DecimalComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatInputModule, DecimalWidgetComponent],
-            providers: [FormService]
+            "imports": [CoreTestingModule, MatInputModule, DecimalWidgetComponent],
+            "providers": [FormService]
         }).compileComponents();
 
         fixture = TestBed.createComponent(DecimalWidgetComponent);
@@ -46,9 +46,9 @@ describe('DecimalComponent', () => {
 
     describe('when tooltip is set', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DECIMAL,
-                tooltip: 'my custom tooltip'
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DECIMAL,
+                "tooltip": 'my custom tooltip'
             });
             fixture.detectChanges();
         });
@@ -64,9 +64,9 @@ describe('DecimalComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DECIMAL,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DECIMAL,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -95,13 +95,13 @@ describe('DecimalComponent', () => {
 
     describe('when form model has left labels', () => {
         it('should have left labels classes on leftLabels true', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                id: 'decimal-id',
-                name: 'decimal-name',
-                value: '',
-                type: FormFieldTypes.DECIMAL,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": true }), {
+                "id": 'decimal-id',
+                "name": 'decimal-name',
+                "value": '',
+                "type": FormFieldTypes.DECIMAL,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -115,13 +115,13 @@ describe('DecimalComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels false', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                id: 'decimal-id',
-                name: 'decimal-name',
-                value: '',
-                type: FormFieldTypes.DECIMAL,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": false }), {
+                "id": 'decimal-id',
+                "name": 'decimal-name',
+                "value": '',
+                "type": FormFieldTypes.DECIMAL,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -135,13 +135,13 @@ describe('DecimalComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels not present', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'decimal-id',
-                name: 'decimal-name',
-                value: '',
-                type: FormFieldTypes.DECIMAL,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'decimal-id',
+                "name": 'decimal-name',
+                "value": '',
+                "type": FormFieldTypes.DECIMAL,
+                "readOnly": false,
+                "required": true
             });
 
             fixture.detectChanges();

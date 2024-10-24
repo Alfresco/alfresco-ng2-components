@@ -23,7 +23,7 @@ export const NOTIFICATION_HISTORY_DIRECTIVES = [NotificationHistoryComponent, Ad
 
 /** @deprecated use `...NOTIFICATION_HISTORY_DIRECTIVES` or import the individual directives */
 @NgModule({
-    imports: [...NOTIFICATION_HISTORY_DIRECTIVES],
-    exports: [...NOTIFICATION_HISTORY_DIRECTIVES]
+    "imports": [...NOTIFICATION_HISTORY_DIRECTIVES],
+    "exports": [...NOTIFICATION_HISTORY_DIRECTIVES]
 })
 export class NotificationHistoryModule {}

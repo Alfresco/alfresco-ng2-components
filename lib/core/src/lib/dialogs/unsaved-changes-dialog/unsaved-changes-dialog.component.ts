@@ -36,34 +36,33 @@ import { AppConfigValues } from '../../app-config';
  * If data.descriptionText is provided, it will be displayed as dialog content.
  */
 @Component({
-    standalone: true,
-    selector: 'adf-unsaved-changes-dialog',
-    encapsulation: ViewEncapsulation.None,
-    templateUrl: './unsaved-changes-dialog.component.html',
-    styleUrls: ['./unsaved-changes-dialog.component.scss'],
-    host: { class: 'adf-unsaved-changes-dialog' },
-    imports: [MatDialogModule, TranslateModule, MatButtonModule, MatIconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule]
+    "standalone": true,
+    "selector": 'adf-unsaved-changes-dialog',
+    "encapsulation": ViewEncapsulation.None,
+    "templateUrl": './unsaved-changes-dialog.component.html',
+    "styleUrls": ['./unsaved-changes-dialog.component.scss'],
+    "host": { "class": 'adf-unsaved-changes-dialog' },
+    "imports": [MatDialogModule, TranslateModule, MatButtonModule, MatIconModule, CommonModule, MatCheckboxModule, ReactiveFormsModule]
 })
 export class UnsavedChangesDialogComponent implements OnInit {
     dialogData: UnsavedChangesDialogData;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData, private userPreferencesService: UserPreferencesService) {}
+    constructor (@Inject(MAT_DIALOG_DATA) public data: UnsavedChangesDialogData, private userPreferencesService: UserPreferencesService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.dialogData = {
-            headerText: this.data?.headerText ?? 'CORE.DIALOG.UNSAVED_CHANGES.TITLE',
-            descriptionText: this.data?.descriptionText ?? 'CORE.DIALOG.UNSAVED_CHANGES.DESCRIPTION',
-            confirmButtonText: this.data?.confirmButtonText ?? 'CORE.DIALOG.UNSAVED_CHANGES.DISCARD_CHANGES_BUTTON',
-            checkboxText: this.data?.checkboxText ?? ''
+            "headerText": this.data?.headerText ?? 'CORE.DIALOG.UNSAVED_CHANGES.TITLE',
+            "descriptionText": this.data?.descriptionText ?? 'CORE.DIALOG.UNSAVED_CHANGES.DESCRIPTION',
+            "confirmButtonText": this.data?.confirmButtonText ?? 'CORE.DIALOG.UNSAVED_CHANGES.DISCARD_CHANGES_BUTTON',
+            "checkboxText": this.data?.checkboxText ?? ''
         };
     }
 
     /**
      * Sets 'unsaved_changes__modal_visible' checked state (true or false string) as new item in local storage.
-     *
      * @param savePreferences - MatCheckboxChange object with information about checkbox state.
      */
-    onToggleCheckboxPreferences(savePreferences: MatCheckboxChange) {
+    onToggleCheckboxPreferences (savePreferences: MatCheckboxChange) {
         this.userPreferencesService.set(AppConfigValues.UNSAVED_CHANGES_MODAL_HIDDEN, savePreferences.checked.toString());
     }
 }

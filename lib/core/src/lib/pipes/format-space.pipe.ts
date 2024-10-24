@@ -18,11 +18,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'formatSpace',
-    standalone: true
+    "name": 'formatSpace',
+    "standalone": true
 })
 export class FormatSpacePipe implements PipeTransform {
-    transform(inputValue: string, replaceChar: string = '_', lowerCase: boolean = true): string {
+    transform (inputValue: string, replaceChar: string = '_', lowerCase: boolean = true): string {
         let transformedString = '';
         if (inputValue) {
             transformedString = lowerCase

@@ -28,7 +28,7 @@ describe('RowEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
@@ -59,7 +59,7 @@ describe('RowEditorComponent', () => {
     });
 
     it('should emit [save] event', (done) => {
-        spyOn(component.table, 'validateRow').and.returnValue(new DynamicRowValidationSummary({ isValid: true, message: null }));
+        spyOn(component.table, 'validateRow').and.returnValue(new DynamicRowValidationSummary({ "isValid": true, "message": null }));
         component.save.subscribe((event) => {
             expect(event.table).toBe(component.table);
             expect(event.row).toBe(component.row);
@@ -70,7 +70,7 @@ describe('RowEditorComponent', () => {
     });
 
     it('should not emit [save] event for invalid row', () => {
-        spyOn(component.table, 'validateRow').and.returnValue(new DynamicRowValidationSummary({ isValid: false, message: 'error' }));
+        spyOn(component.table, 'validateRow').and.returnValue(new DynamicRowValidationSummary({ "isValid": false, "message": 'error' }));
         let raised = false;
         component.save.subscribe(() => (raised = true));
         component.onSaveChanges();

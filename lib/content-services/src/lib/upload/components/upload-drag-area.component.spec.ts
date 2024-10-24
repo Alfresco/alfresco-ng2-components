@@ -24,76 +24,76 @@ import { FileModel } from '../../common/models/file.model';
 import { FileUploadErrorEvent } from '../../common/events/file.event';
 
 const getFakeShareDataRow = (allowableOperations = ['delete', 'update', 'create']) => ({
-    obj: {
-        entry: {
-            createdAt: '2017-06-04T04:32:15.597Z',
-            path: {
-                name: '/Company Home/User Homes/Test',
-                isComplete: true,
-                elements: [
+    "obj": {
+        "entry": {
+            "createdAt": '2017-06-04T04:32:15.597Z',
+            "path": {
+                "name": '/Company Home/User Homes/Test',
+                "isComplete": true,
+                "elements": [
                     {
-                        id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-                        name: 'Company Home'
+                        "id": '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                        "name": 'Company Home'
                     },
                     {
-                        id: '55052317-7e59-4058-8e07-769f41e615e1',
-                        name: 'User Homes'
+                        "id": '55052317-7e59-4058-8e07-769f41e615e1',
+                        "name": 'User Homes'
                     },
                     {
-                        id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
-                        name: 'Test'
+                        "id": '70e1cc6a-6918-468a-b84a-1048093b06fd',
+                        "name": 'Test'
                     }
                 ]
             },
-            isFolder: true,
-            name: 'pippo',
-            id: '7462d28e-bd43-4b91-9e7b-0d71598680ac',
-            nodeType: 'cm:folder',
+            "isFolder": true,
+            "name": 'pippo',
+            "id": '7462d28e-bd43-4b91-9e7b-0d71598680ac',
+            "nodeType": 'cm:folder',
             allowableOperations
         }
     }
 });
 
 const getFakeFileShareRow = (allowableOperations = ['delete', 'update', 'create']) => ({
-    obj: {
-        entry: {
-            createdAt: '2017-06-04T04:32:15.597Z',
-            path: {
-                name: '/Company Home/User Homes/Test',
-                isComplete: true,
-                elements: [
+    "obj": {
+        "entry": {
+            "createdAt": '2017-06-04T04:32:15.597Z',
+            "path": {
+                "name": '/Company Home/User Homes/Test',
+                "isComplete": true,
+                "elements": [
                     {
-                        id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-                        name: 'Company Home'
+                        "id": '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                        "name": 'Company Home'
                     },
                     {
-                        id: '55052317-7e59-4058-8e07-769f41e615e1',
-                        name: 'User Homes'
+                        "id": '55052317-7e59-4058-8e07-769f41e615e1',
+                        "name": 'User Homes'
                     },
                     {
-                        id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
-                        name: 'Test'
+                        "id": '70e1cc6a-6918-468a-b84a-1048093b06fd',
+                        "name": 'Test'
                     }
                 ]
             },
-            isFolder: false,
-            isFile: true,
-            name: 'pippo',
-            id: '7462d28e-bd43-4b91-9e7b-0d71598680ac',
-            nodeType: 'cm:folder',
+            "isFolder": false,
+            "isFile": true,
+            "name": 'pippo',
+            "id": '7462d28e-bd43-4b91-9e7b-0d71598680ac',
+            "nodeType": 'cm:folder',
             allowableOperations
         }
     }
 });
 
 const fakeItem = {
-    fullPath: '/folder-fake/file-fake.png',
-    isDirectory: false,
-    isFile: true,
-    relativeFolder: '/',
-    name: 'file-fake.png',
-    file: (callbackFile) => {
-        const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+    "fullPath": '/folder-fake/file-fake.png',
+    "isDirectory": false,
+    "isFile": true,
+    "relativeFolder": '/',
+    "name": 'file-fake.png',
+    "file": (callbackFile) => {
+        const fileFake = new File(['fakefake'], 'file-fake.png', { "type": 'image/png' });
         callbackFile(fileFake);
     }
 };
@@ -105,7 +105,7 @@ describe('UploadDragAreaComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(UploadDragAreaComponent);
         uploadService = TestBed.inject(UploadService);
@@ -126,7 +126,7 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
 
-            const file: any = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
+            const file: any = { "name": 'fake-name-1', "size": 10, "webkitRelativePath": 'fake-folder1/fake-name-1.json' };
             const filesList = [file];
 
             component.onFilesDropped(filesList);
@@ -141,7 +141,7 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
 
-            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
+            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { "type": 'image/png' })]);
 
             expect(uploadService.addToQueue).not.toHaveBeenCalled();
             expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
@@ -154,9 +154,9 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
 
             const itemEntity = {
-                isDirectory: true,
-                createReader: () => ({
-                    readEntries: (cb) => {
+                "isDirectory": true,
+                "createReader": () => ({
+                    "readEntries": (cb) => {
                         cb([]);
                     }
                 })
@@ -176,7 +176,7 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: { data: getFakeShareDataRow([]), files: [fakeItem] }
+                "detail": { "data": getFakeShareDataRow([]), "files": [fakeItem] }
             });
             component.onUploadFiles(fakeCustomEvent);
 
@@ -197,7 +197,7 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
 
-            const file: any = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
+            const file: any = { "name": 'fake-name-1', "size": 10, "webkitRelativePath": 'fake-folder1/fake-name-1.json' };
             const filesList = [file];
 
             fixture.detectChanges();
@@ -214,7 +214,7 @@ describe('UploadDragAreaComponent', () => {
             component.error = null;
             component.acceptedFilesType = '.jpg,.pdf';
             fixture.detectChanges();
-            const files: File[] = [{ name: 'phobos.jpg' } as File, { name: 'deimos.pdf' } as File, { name: 'ganymede.bmp' } as File];
+            const files: File[] = [{ "name": 'phobos.jpg' } as File, { "name": 'deimos.pdf' } as File, { "name": 'ganymede.bmp' } as File];
             component.onFilesDropped(files);
 
             await fixture.whenStable();
@@ -235,7 +235,7 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
+            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { "type": 'image/png' })]);
             expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null, null);
         });
 
@@ -246,9 +246,9 @@ describe('UploadDragAreaComponent', () => {
             });
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: {
-                    data: getFakeShareDataRow(),
-                    files: [fakeItem]
+                "detail": {
+                    "data": getFakeShareDataRow(),
+                    "files": [fakeItem]
                 }
             });
 
@@ -265,7 +265,7 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
+            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { "type": 'image/png' })]);
             expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalledWith(null, null);
         });
 
@@ -278,15 +278,15 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
+            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { "type": 'image/png' })]);
             expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null, null);
         });
 
         it('should upload a file when user has create permission on target folder', () => {
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: {
-                    data: getFakeShareDataRow(),
-                    files: [fakeItem]
+                "detail": {
+                    "data": getFakeShareDataRow(),
+                    "files": [fakeItem]
                 }
             });
 
@@ -296,21 +296,21 @@ describe('UploadDragAreaComponent', () => {
 
         it('should upload a file to a specific target folder when dropped onto one', () => {
             const fakePngItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                relativeFolder: '/',
-                name: 'file-fake.png',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                "fullPath": '/folder-fake/file-fake.png',
+                "isDirectory": false,
+                "isFile": true,
+                "relativeFolder": '/',
+                "name": 'file-fake.png',
+                "file": (callbackFile) => {
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { "type": 'image/png' });
                     callbackFile(fileFake);
                 }
             };
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: {
-                    data: getFakeShareDataRow(),
-                    files: [fakePngItem]
+                "detail": {
+                    "data": getFakeShareDataRow(),
+                    "files": [fakePngItem]
                 }
             });
 
@@ -326,21 +326,21 @@ describe('UploadDragAreaComponent', () => {
 
         it('should upload a folder to a specific target folder when dropped onto one', () => {
             const fakeSuperItem = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                name: 'file-fake.png',
-                relativeFolder: '/super',
-                file: (callbackFile) => {
-                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                "fullPath": '/folder-fake/file-fake.png',
+                "isDirectory": false,
+                "isFile": true,
+                "name": 'file-fake.png',
+                "relativeFolder": '/super',
+                "file": (callbackFile) => {
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { "type": 'image/png' });
                     callbackFile(fileFake);
                 }
             };
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: {
-                    data: getFakeShareDataRow(),
-                    files: [fakeSuperItem]
+                "detail": {
+                    "data": getFakeShareDataRow(),
+                    "files": [fakeSuperItem]
                 }
             });
 
@@ -358,9 +358,9 @@ describe('UploadDragAreaComponent', () => {
             spyOn(component.updateFileVersion, 'emit');
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: {
-                    data: getFakeFileShareRow(),
-                    files: [fakeItem]
+                "detail": {
+                    "data": getFakeFileShareRow(),
+                    "files": [fakeItem]
                 }
             });
 
@@ -377,9 +377,9 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'getUploadPromise').and.callThrough();
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: {
-                    data: getFakeShareDataRow(),
-                    files: [fakeItem]
+                "detail": {
+                    "data": getFakeShareDataRow(),
+                    "files": [fakeItem]
                 }
             });
 
@@ -403,9 +403,9 @@ describe('UploadDragAreaComponent', () => {
             component.success.subscribe((success) => (lastValue = success));
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: {
-                    data: getFakeShareDataRow(),
-                    files: [fakeItem]
+                "detail": {
+                    "data": getFakeShareDataRow(),
+                    "files": [fakeItem]
                 }
             });
 
@@ -422,9 +422,9 @@ describe('UploadDragAreaComponent', () => {
             component.error.subscribe((error) => (lastValue = error));
 
             const fakeCustomEvent = new CustomEvent('CustomEvent', {
-                detail: {
-                    data: getFakeShareDataRow(),
-                    files: [fakeItem]
+                "detail": {
+                    "data": getFakeShareDataRow(),
+                    "files": [fakeItem]
                 }
             });
 

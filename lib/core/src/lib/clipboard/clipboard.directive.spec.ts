@@ -23,8 +23,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-test-component',
-    template: `
+    "selector": 'adf-test-component',
+    "template": `
         <button clipboard-notification="copy success" [adf-clipboard] [target]="ref">copy</button>
 
         <input #ref />
@@ -38,8 +38,8 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
-            declarations: [TestTargetClipboardComponent]
+            "imports": [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
+            "declarations": [TestTargetClipboardComponent]
         });
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
         clipboardService = TestBed.inject(ClipboardService);
@@ -57,7 +57,7 @@ describe('ClipboardDirective', () => {
     it('should notify copy target value on keydown event', () => {
         spyOn(clipboardService, 'copyToClipboard');
         fixture.nativeElement.querySelector('input').value = 'some value';
-        fixture.nativeElement.querySelector('button').dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter', key: 'Enter' }));
+        fixture.nativeElement.querySelector('button').dispatchEvent(new KeyboardEvent('keydown', { "code": 'Enter', "key": 'Enter' }));
 
         expect(clipboardService.copyToClipboard).toHaveBeenCalled();
     });
@@ -65,8 +65,8 @@ describe('ClipboardDirective', () => {
 
 describe('CopyClipboardDirective', () => {
     @Component({
-        selector: 'adf-copy-conent-test-component',
-        template: `<span adf-clipboard="placeholder">{{ mockText }}</span>`
+        "selector": 'adf-copy-conent-test-component',
+        "template": `<span adf-clipboard="placeholder">{{ mockText }}</span>`
     })
     class TestCopyClipboardComponent {
         mockText = 'text to copy';
@@ -81,8 +81,8 @@ describe('CopyClipboardDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
-            declarations: [TestCopyClipboardComponent]
+            "imports": [NoopTranslateModule, MatSnackBarModule, ClipboardDirective],
+            "declarations": [TestCopyClipboardComponent]
         });
         fixture = TestBed.createComponent(TestCopyClipboardComponent);
         element = fixture.debugElement.nativeElement;
@@ -121,7 +121,7 @@ describe('CopyClipboardDirective', () => {
         const spanHTMLElement = element.querySelector<HTMLInputElement>('span');
         fixture.detectChanges();
         spyOn(navigator.clipboard, 'writeText');
-        spanHTMLElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter', key: 'Enter' }));
+        spanHTMLElement.dispatchEvent(new KeyboardEvent('keydown', { "code": 'Enter', "key": 'Enter' }));
         tick();
         fixture.detectChanges();
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith('text to copy');

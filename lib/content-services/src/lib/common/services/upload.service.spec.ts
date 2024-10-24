@@ -38,34 +38,34 @@ describe('UploadService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [AppConfigModule, HttpClientTestingModule],
-            providers: [
+            "imports": [AppConfigModule, HttpClientTestingModule],
+            "providers": [
                 UploadService,
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+                { "provide": AppConfigService, "useClass": AppConfigServiceMock },
                 {
-                    provide: DiscoveryApiService,
-                    useValue: {
-                        ecmProductInfo$: mockProductInfo
+                    "provide": DiscoveryApiService,
+                    "useValue": {
+                        "ecmProductInfo$": mockProductInfo
                     }
                 }
             ]
         });
         appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = {
-            ecmHost: 'http://localhost:9876/ecm',
-            files: {
-                excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git', '*.SWF'],
+            "ecmHost": 'http://localhost:9876/ecm',
+            "files": {
+                "excluded": ['.DS_Store', 'desktop.ini', '.git', '*.git', '*.SWF'],
                 'match-options': {
                     /* cspell:disable-next-line */
-                    nocase: true
+                    "nocase": true
                 }
             },
-            folders: {
-                excluded: ['ROLLINGPANDA'],
+            "folders": {
+                "excluded": ['ROLLINGPANDA'],
                 'match-options': {
                     /* cspell:disable-next-line */
-                    nocase: true
+                    "nocase": true
                 }
             }
         };
@@ -77,7 +77,7 @@ describe('UploadService', () => {
         uploadFileSpy = spyOn(service.uploadApi, 'uploadFile').and.callThrough();
 
         jasmine.Ajax.install();
-        mockProductInfo.next({ status: { isThumbnailGenerationEnabled: true } } as RepositoryInfo);
+        mockProductInfo.next({ "status": { "isThumbnailGenerationEnabled": true } } as RepositoryInfo);
     });
 
     afterEach(() => {
@@ -89,23 +89,23 @@ describe('UploadService', () => {
     });
 
     it('should add an element in the queue and returns it', () => {
-        const filesFake = new FileModel({ name: 'fake-name', size: 10 } as File);
+        const filesFake = new FileModel({ "name": 'fake-name', "size": 10 } as File);
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
-        const filesFake = [new FileModel({ name: 'fake-name', size: 10 } as File), new FileModel({ name: 'fake-name2', size: 20 } as File)];
+        const filesFake = [new FileModel({ "name": 'fake-name', "size": 10 } as File), new FileModel({ "name": 'fake-name2', "size": 20 } as File)];
         service.addToQueue(...filesFake);
         expect(service.getQueue().length).toEqual(2);
     });
 
     it('should not have the queue uploading if all files are complete, cancelled, aborted, errored or deleted', () => {
-        const file1 = new FileModel({ name: 'fake-file-1', size: 10 } as File);
-        const file2 = new FileModel({ name: 'fake-file-2', size: 20 } as File);
-        const file3 = new FileModel({ name: 'fake-file-3', size: 30 } as File);
-        const file4 = new FileModel({ name: 'fake-file-4', size: 40 } as File);
-        const file5 = new FileModel({ name: 'fake-file-5', size: 50 } as File);
+        const file1 = new FileModel({ "name": 'fake-file-1', "size": 10 } as File);
+        const file2 = new FileModel({ "name": 'fake-file-2', "size": 20 } as File);
+        const file3 = new FileModel({ "name": 'fake-file-3', "size": 30 } as File);
+        const file4 = new FileModel({ "name": 'fake-file-4', "size": 40 } as File);
+        const file5 = new FileModel({ "name": 'fake-file-5', "size": 50 } as File);
 
         file1.status = FileUploadStatus.Complete;
         file2.status = FileUploadStatus.Cancelled;
@@ -119,8 +119,8 @@ describe('UploadService', () => {
     });
 
     it('should have the queue still uploading if some files are still pending, starting or in progress', () => {
-        const file1 = new FileModel({ name: 'fake-file-1', size: 10 } as File);
-        const file2 = new FileModel({ name: 'fake-file-2', size: 20 } as File);
+        const file1 = new FileModel({ "name": 'fake-file-1', "size": 10 } as File);
+        const file2 = new FileModel({ "name": 'fake-file-2', "size": 20 } as File);
 
         service.addToQueue(file1, file2);
 
@@ -159,7 +159,7 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
             done();
         });
-        const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, { parentId: '-root-', path: 'fake-dir' });
+        const fileFake = new FileModel({ "name": 'fake-name', "size": 10 } as File, { "parentId": '-root-', "path": 'fake-dir' });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -170,9 +170,9 @@ describe('UploadService', () => {
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'text/plain',
-            responseText: 'File uploaded'
+            "status": 200,
+            "contentType": 'text/plain',
+            "responseText": 'File uploaded'
         });
     });
 
@@ -184,7 +184,7 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
             done();
         });
-        const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, { parentId: '-root-' });
+        const fileFake = new FileModel({ "name": 'fake-name', "size": 10 } as File, { "parentId": '-root-' });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(null, emitter);
         expect(jasmine.Ajax.requests.mostRecent().url).toBe(
@@ -192,9 +192,9 @@ describe('UploadService', () => {
         );
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 404,
-            contentType: 'text/plain',
-            responseText: 'Error file uploaded'
+            "status": 404,
+            "contentType": 'text/plain',
+            "responseText": 'Error file uploaded'
         });
     });
 
@@ -207,7 +207,7 @@ describe('UploadService', () => {
             done();
         });
 
-        const fileFake = new FileModel({ name: 'fake-name', size: 10000000 } as File);
+        const fileFake = new FileModel({ "name": 'fake-name', "size": 10000000 } as File);
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -229,14 +229,14 @@ describe('UploadService', () => {
             expect(deleteRequest.method).toBe('DELETE');
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'text/plain',
-                responseText: 'File deleted'
+                "status": 200,
+                "contentType": 'text/plain',
+                "responseText": 'File deleted'
             });
             done();
         });
 
-        const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File);
+        const fileFake = new FileModel({ "name": 'fake-name', "size": 10 } as File);
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -250,11 +250,11 @@ describe('UploadService', () => {
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: {
-                entry: {
-                    id: 'myNodeId'
+            "status": 200,
+            "contentType": 'json',
+            "responseText": {
+                "entry": {
+                    "id": 'myNodeId'
                 }
             }
         });
@@ -272,14 +272,14 @@ describe('UploadService', () => {
             expect(deleteRequest.method).toBe('DELETE');
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'text/plain',
-                responseText: 'File deleted'
+                "status": 200,
+                "contentType": 'text/plain',
+                "responseText": 'File deleted'
             });
             done();
         });
 
-        const fileFake = new FileModel({ name: 'fake-name', size: 10 } as File, null, 'fakeId');
+        const fileFake = new FileModel({ "name": 'fake-name', "size": 10 } as File, null, 'fakeId');
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -291,12 +291,12 @@ describe('UploadService', () => {
         expect(request.method).toBe('PUT');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: {
-                entry: {
-                    id: 'myNodeId',
-                    properties: {
+            "status": 200,
+            "contentType": 'json',
+            "responseText": {
+                "entry": {
+                    "id": 'myNodeId',
+                    "properties": {
                         'cm:versionLabel': '1.1'
                     }
                 }
@@ -306,25 +306,25 @@ describe('UploadService', () => {
 
     it('If newVersion is set, name should be a param', () => {
         const emitter = new EventEmitter();
-        const filesFake = new FileModel({ name: 'fake-name', size: 10 } as File, { newVersion: true });
+        const filesFake = new FileModel({ "name": 'fake-name', "size": 10 } as File, { "newVersion": true });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
         expect(uploadFileSpy).toHaveBeenCalledWith(
             {
-                name: 'fake-name',
-                size: 10
+                "name": 'fake-name',
+                "size": 10
             },
             undefined,
             undefined,
-            { newVersion: true, name: 'fake-name', nodeType: undefined },
+            { "newVersion": true, "name": 'fake-name', "nodeType": undefined },
             {
-                renditions: 'doclib',
-                include: ['allowableOperations'],
-                overwrite: true,
-                majorVersion: undefined,
-                comment: undefined,
-                name: 'fake-name'
+                "renditions": 'doclib',
+                "include": ['allowableOperations'],
+                "overwrite": true,
+                "majorVersion": undefined,
+                "comment": undefined,
+                "name": 'fake-name'
             }
         );
     });
@@ -337,7 +337,7 @@ describe('UploadService', () => {
             emitterDisposable.unsubscribe();
             done();
         });
-        const filesFake = new FileModel({ name: 'fake-file-name', size: 10 } as File, { parentId: '123', path: 'fake-dir' });
+        const filesFake = new FileModel({ "name": 'fake-file-name', "size": 10 } as File, { "parentId": '123', "path": 'fake-dir' });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -348,91 +348,91 @@ describe('UploadService', () => {
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'text/plain',
-            responseText: 'File uploaded'
+            "status": 200,
+            "contentType": 'text/plain',
+            "responseText": 'File uploaded'
         });
     });
 
     describe('versioningEnabled', () => {
         it('should upload with "versioningEnabled" parameter taken from file options', () => {
-            const model = new FileModel({ name: 'file-name', size: 10 } as File, { versioningEnabled: true });
+            const model = new FileModel({ "name": 'file-name', "size": 10 } as File, { "versioningEnabled": true });
 
             service.addToQueue(model);
             service.uploadFilesInTheQueue();
 
             expect(uploadFileSpy).toHaveBeenCalledWith(
                 {
-                    name: 'file-name',
-                    size: 10
+                    "name": 'file-name',
+                    "size": 10
                 },
                 undefined,
                 undefined,
-                { newVersion: false, name: 'file-name', nodeType: undefined },
+                { "newVersion": false, "name": 'file-name', "nodeType": undefined },
                 {
-                    include: ['allowableOperations'],
-                    renditions: 'doclib',
-                    versioningEnabled: true,
-                    autoRename: true
+                    "include": ['allowableOperations'],
+                    "renditions": 'doclib',
+                    "versioningEnabled": true,
+                    "autoRename": true
                 }
             );
         });
 
         it('should not use "versioningEnabled" if not explicitly provided', () => {
-            const model = new FileModel({ name: 'file-name', size: 10 } as File, {});
+            const model = new FileModel({ "name": 'file-name', "size": 10 } as File, {});
 
             service.addToQueue(model);
             service.uploadFilesInTheQueue();
 
             expect(uploadFileSpy).toHaveBeenCalledWith(
                 {
-                    name: 'file-name',
-                    size: 10
+                    "name": 'file-name',
+                    "size": 10
                 },
                 undefined,
                 undefined,
-                { newVersion: false, name: 'file-name', nodeType: undefined },
+                { "newVersion": false, "name": 'file-name', "nodeType": undefined },
                 {
-                    include: ['allowableOperations'],
-                    renditions: 'doclib',
-                    autoRename: true
+                    "include": ['allowableOperations'],
+                    "renditions": 'doclib',
+                    "autoRename": true
                 }
             );
         });
     });
 
     it('should append the extra upload options to the request', () => {
-        const filesFake = new FileModel({ name: 'fake-name', size: 10 } as File, {
-            parentId: '123',
-            path: 'fake-dir',
-            secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
-            association: { assocType: 'fake-assoc' },
-            targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+        const filesFake = new FileModel({ "name": 'fake-name', "size": 10 } as File, {
+            "parentId": '123',
+            "path": 'fake-dir',
+            "secondaryChildren": [{ "assocType": 'assoc-1', "childId": 'child-id' }],
+            "association": { "assocType": 'fake-assoc' },
+            "targets": [{ "assocType": 'target-assoc', "targetId": 'fake-target-id' }]
         });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue();
 
         expect(uploadFileSpy).toHaveBeenCalledWith(
             {
-                name: 'fake-name',
-                size: 10
+                "name": 'fake-name',
+                "size": 10
             },
             'fake-dir',
             '123',
             {
-                newVersion: false,
-                name: 'fake-name',
-                nodeType: undefined,
-                parentId: '123',
-                path: 'fake-dir',
-                secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
-                association: { assocType: 'fake-assoc' },
-                targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+                "newVersion": false,
+                "name": 'fake-name',
+                "nodeType": undefined,
+                "parentId": '123',
+                "path": 'fake-dir',
+                "secondaryChildren": [{ "assocType": 'assoc-1', "childId": 'child-id' }],
+                "association": { "assocType": 'fake-assoc' },
+                "targets": [{ "assocType": 'target-assoc', "targetId": 'fake-target-id' }]
             },
             {
-                renditions: 'doclib',
-                include: ['allowableOperations'],
-                autoRename: true
+                "renditions": 'doclib',
+                "include": ['allowableOperations'],
+                "autoRename": true
             }
         );
     });
@@ -447,8 +447,8 @@ describe('UploadService', () => {
             done();
         });
 
-        const fileFake1 = new FileModel({ name: 'fake-name1', size: 10 } as File);
-        const fileFake2 = new FileModel({ name: 'fake-name2', size: 10 } as File);
+        const fileFake1 = new FileModel({ "name": 'fake-name1', "size": 10 } as File);
+        const fileFake2 = new FileModel({ "name": 'fake-name2', "size": 10 } as File);
         const fileList = [fileFake1, fileFake2];
         service.addToQueue(...fileList);
         service.uploadFilesInTheQueue();
@@ -469,31 +469,31 @@ describe('UploadService', () => {
     });
 
     it('should skip files if they are in an excluded folder', () => {
-        const file1: any = { name: 'readmetoo.md', file: { webkitRelativePath: '/rollingPanda/' } };
-        const file2: any = { name: 'readme.md', file: { webkitRelativePath: '/test/' } };
+        const file1: any = { "name": 'readmetoo.md', "file": { "webkitRelativePath": '/rollingPanda/' } };
+        const file2: any = { "name": 'readme.md', "file": { "webkitRelativePath": '/test/' } };
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file2);
     });
 
     it('should match the folder in case insensitive way', () => {
-        const file1: any = { name: 'readmetoo.md', file: { webkitRelativePath: '/rollingPanda/' } };
-        const file2: any = { name: 'readme.md', file: { webkitRelativePath: '/test/' } };
+        const file1: any = { "name": 'readmetoo.md', "file": { "webkitRelativePath": '/rollingPanda/' } };
+        const file2: any = { "name": 'readme.md', "file": { "webkitRelativePath": '/test/' } };
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file2);
     });
 
     it('should skip files if they are in an excluded folder when path is in options', () => {
-        const file1: any = { name: 'readmetoo.md', file: {}, options: { path: '/rollingPanda/' } };
-        const file2: any = { name: 'readme.md', file: { webkitRelativePath: '/test/' } };
+        const file1: any = { "name": 'readmetoo.md', "file": {}, "options": { "path": '/rollingPanda/' } };
+        const file2: any = { "name": 'readme.md', "file": { "webkitRelativePath": '/test/' } };
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file2);
     });
 
     it('should call onUploadDeleted if file was deleted', () => {
-        const file = { status: FileUploadStatus.Deleted } as FileModel;
+        const file = { "status": FileUploadStatus.Deleted } as FileModel;
         spyOn(service.fileUploadDeleted, 'next');
 
         service.cancelUpload(file);
@@ -502,7 +502,7 @@ describe('UploadService', () => {
     });
 
     it('should call fileUploadError if file has error status', () => {
-        const file = { status: FileUploadStatus.Error } as FileModel;
+        const file = { "status": FileUploadStatus.Error } as FileModel;
         spyOn(service.fileUploadError, 'next');
 
         service.cancelUpload(file);
@@ -511,7 +511,7 @@ describe('UploadService', () => {
     });
 
     it('should call fileUploadCancelled if file is in pending', () => {
-        const file = { status: FileUploadStatus.Pending } as FileModel;
+        const file = { "status": FileUploadStatus.Pending } as FileModel;
         spyOn(service.fileUploadCancelled, 'next');
 
         service.cancelUpload(file);
@@ -520,26 +520,26 @@ describe('UploadService', () => {
     });
 
     it('Should not pass rendition if it is disabled', () => {
-        mockProductInfo.next({ status: { isThumbnailGenerationEnabled: false } } as RepositoryInfo);
+        mockProductInfo.next({ "status": { "isThumbnailGenerationEnabled": false } } as RepositoryInfo);
 
-        const filesFake = new FileModel({ name: 'fake-name', size: 10 } as File, { newVersion: true });
+        const filesFake = new FileModel({ "name": 'fake-name', "size": 10 } as File, { "newVersion": true });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue();
 
         expect(uploadFileSpy).toHaveBeenCalledWith(
             {
-                name: 'fake-name',
-                size: 10
+                "name": 'fake-name',
+                "size": 10
             },
             undefined,
             undefined,
-            { newVersion: true, name: 'fake-name', nodeType: undefined },
+            { "newVersion": true, "name": 'fake-name', "nodeType": undefined },
             {
-                include: ['allowableOperations'],
-                overwrite: true,
-                majorVersion: undefined,
-                comment: undefined,
-                name: 'fake-name'
+                "include": ['allowableOperations'],
+                "overwrite": true,
+                "majorVersion": undefined,
+                "comment": undefined,
+                "name": 'fake-name'
             }
         );
     });

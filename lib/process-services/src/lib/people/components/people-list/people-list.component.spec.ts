@@ -23,10 +23,10 @@ import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { LightUserRepresentation } from '@alfresco/js-api';
 
 const fakeUser: LightUserRepresentation = {
-    id: 1,
-    firstName: 'fake-name',
-    lastName: 'fake-last',
-    email: 'fake@mail.com'
+    "id": 1,
+    "firstName": 'fake-name',
+    "lastName": 'fake-last',
+    "email": 'fake@mail.com'
 };
 
 describe('PeopleListComponent', () => {
@@ -35,7 +35,7 @@ describe('PeopleListComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule, PeopleListComponent]
+            "imports": [ProcessTestingModule, PeopleListComponent]
         });
         fixture = TestBed.createComponent(PeopleListComponent);
         peopleListComponent = fixture.componentInstance;
@@ -60,8 +60,8 @@ describe('PeopleListComponent', () => {
     it('should emit row action event', (done) => {
         const row = new ObjectDataRow(fakeUser);
         const removeObj = {
-            name: 'remove',
-            title: 'Remove'
+            "name": 'remove',
+            "title": 'Remove'
         };
         const rowActionEvent = new DataRowActionEvent(row, removeObj);
 

@@ -20,20 +20,19 @@ import { SearchFilterList } from './search-filter-list.model';
 export class Payload {
     name: string;
 
-    constructor(public id: number) {
+    constructor (public id: number) {
         this.name = `Payload_${id}`;
     }
 }
 
 describe('SearchFilterList', () => {
-
-    const generateItems = (count: number): Payload[] => Array(count).fill(null).map((_, id) => new Payload(id));
+    const generateItems = (count: number): Payload[] =>
+        Array(count)
+            .fill(null)
+            .map((_, id) => new Payload(id));
 
     it('should init with external items', () => {
-        const items = [
-            new Payload(1),
-            new Payload(2)
-        ];
+        const items = [new Payload(1), new Payload(2)];
         const list = new SearchFilterList<Payload>(items);
 
         expect(list.length).toBe(2);

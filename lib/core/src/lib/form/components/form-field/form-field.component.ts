@@ -37,14 +37,14 @@ import { FieldStylePipe } from '../../pipes/field-style.pipe';
 declare const adf: any;
 
 @Component({
-    selector: 'adf-form-field',
-    standalone: true,
-    templateUrl: './form-field.component.html',
-    encapsulation: ViewEncapsulation.None,
-    imports: [FieldStylePipe]
+    "selector": 'adf-form-field',
+    "standalone": true,
+    "templateUrl": './form-field.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [FieldStylePipe]
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
-    @ViewChild('container', { read: ViewContainerRef, static: true })
+    @ViewChild('container', { "read": ViewContainerRef, "static": true })
     container: ViewContainerRef;
 
     /**
@@ -64,7 +64,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     private readonly visibilityService = inject(WidgetVisibilityService);
     private readonly compiler = inject(Compiler);
 
-    ngOnInit() {
+    ngOnInit () {
         const w: any = window;
         if (w.adf === undefined) {
             w.adf = {};
@@ -96,20 +96,20 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         if (this.componentRef) {
             this.componentRef.destroy();
             this.componentRef = null;
         }
     }
 
-    focusToggle() {
+    focusToggle () {
         setTimeout(() => {
             this.focus = !this.focus;
         });
     }
 
-    private getField(): FormFieldModel {
+    private getField (): FormFieldModel {
         if (this.field?.params) {
             const wrappedField = this.field.params.field;
             if (wrappedField?.type) {
@@ -119,11 +119,11 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         return this.field;
     }
 
-    private hasController(type: string): boolean {
+    private hasController (type: string): boolean {
         return adf?.components?.[type];
     }
 
-    private getComponentFactorySync(type: string, template: string): ComponentFactory<any> {
+    private getComponentFactorySync (type: string, template: string): ComponentFactory<any> {
         const componentInfo = adf.components[type];
 
         if (componentInfo.factory) {
@@ -131,7 +131,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         }
 
         const metadata = {
-            selector: `runtime-component-${type}`,
+            "selector": `runtime-component-${type}`,
             template
         };
 
@@ -140,11 +140,11 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         return factory;
     }
 
-    private createComponentFactorySync(compiler: Compiler, metadata: Component, componentClass: any): ComponentFactory<any> {
+    private createComponentFactorySync (compiler: Compiler, metadata: Component, componentClass: any): ComponentFactory<any> {
         const cmpClass = componentClass || class RuntimeComponent {};
         const decoratedCmp = Component(metadata)(cmpClass);
         const moduleClass = class RuntimeComponentModule {};
-        const decoratedNgModule = NgModule({ imports: [], declarations: [decoratedCmp] })(moduleClass);
+        const decoratedNgModule = NgModule({ "imports": [], "declarations": [decoratedCmp] })(moduleClass);
         const module = compiler.compileModuleAndAllComponentsSync(decoratedNgModule);
 
         return module.componentFactories.find((x) => x.componentType === decoratedCmp);

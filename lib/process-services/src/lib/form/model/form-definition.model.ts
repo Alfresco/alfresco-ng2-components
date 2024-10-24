@@ -23,68 +23,68 @@ export class FormDefinitionModel extends FormSaveRepresentation {
     formRepresentation: any;
     formImageBase64: string = '';
 
-    constructor(id: string, name: any, lastUpdatedByFullName: string, lastUpdated: string, metadata: any) {
+    constructor (id: string, name: any, lastUpdatedByFullName: string, lastUpdated: string, metadata: any) {
         super();
         this.formRepresentation = {
             id,
             name,
-            description: '',
-            version: 1,
-            lastUpdatedBy: 1,
+            "description": '',
+            "version": 1,
+            "lastUpdatedBy": 1,
             lastUpdatedByFullName,
             lastUpdated,
-            stencilSetId: 0,
-            referenceId: null,
-            formDefinition: {
-                fields: [{
-                    name: 'Label',
-                    type: 'container',
-                    fieldType: 'ContainerRepresentation',
-                    numberOfColumns: 2,
-                    required: false,
-                    readOnly: false,
-                    sizeX: 2,
-                    sizeY: 1,
-                    row: -1,
-                    col: -1,
-                    fields: {1: this.metadataToFields(metadata)}
+            "stencilSetId": 0,
+            "referenceId": null,
+            "formDefinition": {
+                "fields": [{
+                    "name": 'Label',
+                    "type": 'container',
+                    "fieldType": 'ContainerRepresentation',
+                    "numberOfColumns": 2,
+                    "required": false,
+                    "readOnly": false,
+                    "sizeX": 2,
+                    "sizeY": 1,
+                    "row": -1,
+                    "col": -1,
+                    "fields": {"1": this.metadataToFields(metadata)}
                 }],
-                gridsterForm: false,
-                javascriptEvents: [],
-                metadata: {},
-                outcomes: [],
-                className: '',
-                style: '',
-                tabs: [],
-                variables: []
+                "gridsterForm": false,
+                "javascriptEvents": [],
+                "metadata": {},
+                "outcomes": [],
+                "className": '',
+                "style": '',
+                "tabs": [],
+                "variables": []
             }
         };
     }
 
-    private metadataToFields(metadata: any): any[] {
+    private metadataToFields (metadata: any): any[] {
         const fields = [];
         if (metadata) {
             metadata.forEach((property) => {
                 if (property) {
                     const field = {
-                        type: 'text',
-                        id: property.name,
-                        name: property.name,
-                        required: false,
-                        readOnly: false,
-                        sizeX: 1,
-                        sizeY: 1,
-                        row: -1,
-                        col: -1,
-                        colspan: 1,
-                        params: {
-                            existingColspan: 1,
-                            maxColspan: 2
+                        "type": 'text',
+                        "id": property.name,
+                        "name": property.name,
+                        "required": false,
+                        "readOnly": false,
+                        "sizeX": 1,
+                        "sizeY": 1,
+                        "row": -1,
+                        "col": -1,
+                        "colspan": 1,
+                        "params": {
+                            "existingColspan": 1,
+                            "maxColspan": 2
                         },
-                        layout: {
-                            colspan: 1,
-                            row: -1,
-                            column: -1
+                        "layout": {
+                            "colspan": 1,
+                            "row": -1,
+                            "column": -1
                         }
                     };
                     fields.push(field);

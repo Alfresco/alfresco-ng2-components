@@ -29,12 +29,12 @@ import { MatButtonModule } from '@angular/material/button';
 export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component data');
 
 @Component({
-    standalone: true,
-    selector: 'adf-dialog',
-    templateUrl: './dialog.component.html',
-    styleUrls: ['./dialog.component.scss'],
-    imports: [CommonModule, TranslateModule, MatIconModule, MatDialogModule, MatButtonModule],
-    encapsulation: ViewEncapsulation.None
+    "standalone": true,
+    "selector": 'adf-dialog',
+    "templateUrl": './dialog.component.html',
+    "styleUrls": ['./dialog.component.scss'],
+    "imports": [CommonModule, TranslateModule, MatIconModule, MatDialogModule, MatButtonModule],
+    "encapsulation": ViewEncapsulation.None
 })
 export class DialogComponent implements OnDestroy {
     isConfirmButtonDisabled$ = new BehaviorSubject<boolean>(false);
@@ -50,7 +50,7 @@ export class DialogComponent implements OnDestroy {
 
     private onDestroy$ = new Subject<void>();
 
-    constructor(
+    constructor (
         @Inject(MAT_DIALOG_DATA)
         public data: DialogData,
         public dialogRef: MatDialogRef<DialogComponent>
@@ -64,7 +64,7 @@ export class DialogComponent implements OnDestroy {
             this.additionalActionButtons = data.additionalActionButtons;
             this.dialogRef.addPanelClass(`${this.dialogSize}-dialog-panel`);
             this.dataInjector = Injector.create({
-                providers: [{ provide: DIALOG_COMPONENT_DATA, useValue: data.componentData }]
+                "providers": [{ "provide": DIALOG_COMPONENT_DATA, "useValue": data.componentData }]
             });
 
             if (data.isConfirmButtonDisabled$) {
@@ -77,12 +77,12 @@ export class DialogComponent implements OnDestroy {
         }
     }
 
-    onConfirm() {
+    onConfirm () {
         this.isConfirmButtonDisabled$.next(true);
         this.dialogRef.close(this.dataOnConfirm || true);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

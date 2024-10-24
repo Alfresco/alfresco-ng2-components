@@ -31,10 +31,9 @@ describe('SearchInputComponent', () => {
 
     /**
      * Sets the search input value
-     *
      * @param value the value to set
      */
-    async function setInputValue(value: string) {
+    async function setInputValue (value: string) {
         const input = await loader.getHarness(MatInputHarness);
         await input.setValue(value);
         await (await input.host()).dispatchEvent('change');
@@ -45,7 +44,7 @@ describe('SearchInputComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchInputComponent]
+            "imports": [ContentTestingModule, SearchInputComponent]
         });
 
         fixture = TestBed.createComponent(SearchInputComponent);
@@ -79,7 +78,7 @@ describe('SearchInputComponent', () => {
 
     it('should override input fields if search configuration is set', () => {
         appConfig.config = {
-            search: {
+            "search": {
                 'app:fields': ['TEXT', 'description']
             }
         };

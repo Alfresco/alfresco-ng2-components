@@ -88,7 +88,7 @@ export const CONTENT_SEARCH_DIRECTIVES = [
 
 /** @deprecated use `...CONTENT_SEARCH_DIRECTIVES` or import the specific component */
 @NgModule({
-    imports: [...CONTENT_SEARCH_DIRECTIVES],
-    exports: [...CONTENT_SEARCH_DIRECTIVES]
+    "imports": [...CONTENT_SEARCH_DIRECTIVES],
+    "exports": [...CONTENT_SEARCH_DIRECTIVES]
 })
 export class SearchModule {}

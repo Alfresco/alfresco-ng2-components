@@ -22,12 +22,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-pdf-thumb',
-    standalone: true,
-    templateUrl: './pdf-viewer-thumb.component.html',
-    encapsulation: ViewEncapsulation.None,
-    imports: [AsyncPipe, TranslateModule, NgIf],
-    host: { tabindex: '0' }
+    "selector": 'adf-pdf-thumb',
+    "standalone": true,
+    "templateUrl": './pdf-viewer-thumb.component.html',
+    "encapsulation": ViewEncapsulation.None,
+    "imports": [AsyncPipe, TranslateModule, NgIf],
+    "host": { "tabindex": '0' }
 })
 export class PdfThumbComponent implements OnInit, FocusableOption {
     @Input()
@@ -35,26 +35,26 @@ export class PdfThumbComponent implements OnInit, FocusableOption {
 
     image$: Promise<string>;
 
-    constructor(private sanitizer: DomSanitizer, private element: ElementRef) {}
+    constructor (private sanitizer: DomSanitizer, private element: ElementRef) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.image$ = this.page.getPage().then((page) => this.getThumb(page));
     }
 
-    focus() {
+    focus () {
         this.element.nativeElement.focus();
     }
 
-    private getThumb(page): Promise<string> {
-        const viewport = page.getViewport({ scale: 1 });
+    private getThumb (page): Promise<string> {
+        const viewport = page.getViewport({ "scale": 1 });
 
         const canvas = this.getCanvas();
         const scale = Math.min(canvas.height / viewport.height, canvas.width / viewport.width);
 
         return page
             .render({
-                canvasContext: canvas.getContext('2d'),
-                viewport: page.getViewport({ scale })
+                "canvasContext": canvas.getContext('2d'),
+                "viewport": page.getViewport({ scale })
             })
             .promise.then(() => {
                 const imageSource = canvas.toDataURL();
@@ -62,7 +62,7 @@ export class PdfThumbComponent implements OnInit, FocusableOption {
             });
     }
 
-    private getCanvas(): HTMLCanvasElement {
+    private getCanvas (): HTMLCanvasElement {
         const canvas = document.createElement('canvas');
         canvas.width = this.page.getWidth();
         canvas.height = this.page.getHeight();

@@ -34,26 +34,26 @@ import { DOCUMENT } from '@angular/common';
  * @param config Configuration for the Feature Flags
  * @returns Environment Providers for Feature Flags
  */
-export function provideDebugFeatureFlags(config: WritableFeaturesServiceConfig & QaFeaturesHelperConfig) {
+export function provideDebugFeatureFlags (config: WritableFeaturesServiceConfig & QaFeaturesHelperConfig) {
     return [
-        { provide: FlagsOverrideToken, useValue: true },
-        { provide: FeaturesServiceToken, useClass: DebugFeaturesService },
-        { provide: WritableFeaturesServiceConfigToken, useValue: config },
-        { provide: WritableFeaturesServiceToken, useClass: StorageFeaturesService },
-        { provide: QaFeaturesHelper, useClass: QaFeaturesHelper },
+        { "provide": FlagsOverrideToken, "useValue": true },
+        { "provide": FeaturesServiceToken, "useClass": DebugFeaturesService },
+        { "provide": WritableFeaturesServiceConfigToken, "useValue": config },
+        { "provide": WritableFeaturesServiceToken, "useClass": StorageFeaturesService },
+        { "provide": QaFeaturesHelper, "useClass": QaFeaturesHelper },
         {
-            provide: APP_INITIALIZER,
-            useFactory: (featuresService: StorageFeaturesService) => () => featuresService.init(),
-            deps: [WritableFeaturesServiceToken],
-            multi: true
+            "provide": APP_INITIALIZER,
+            "useFactory": (featuresService: StorageFeaturesService) => () => featuresService.init(),
+            "deps": [WritableFeaturesServiceToken],
+            "multi": true
         },
         {
-            provide: APP_INITIALIZER,
-            useFactory: (qaFeaturesHelper: QaFeaturesHelper, document: Document & { [key: string]: QaFeaturesHelper }) => () => {
+            "provide": APP_INITIALIZER,
+            "useFactory": (qaFeaturesHelper: QaFeaturesHelper, document: Document & { [key: string]: QaFeaturesHelper }) => () => {
                 document[config.helperExposeKeyOnDocument ?? 'featureOverrides'] = qaFeaturesHelper;
             },
-            deps: [QaFeaturesHelper, DOCUMENT],
-            multi: true
+            "deps": [QaFeaturesHelper, DOCUMENT],
+            "multi": true
         }
     ];
 }

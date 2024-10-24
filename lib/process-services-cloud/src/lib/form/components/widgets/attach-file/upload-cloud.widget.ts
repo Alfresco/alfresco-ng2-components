@@ -27,10 +27,10 @@ import { FileSourceTypes, DestinationFolderPathType } from '../../../models/form
 import { VersionManagerUploadData } from '@alfresco/adf-content-services';
 
 @Component({
-    selector: 'upload-cloud-widget',
-    templateUrl: './upload-cloud.widget.html',
-    styleUrls: ['./upload-cloud.widget.scss'],
-    host: {
+    "selector": 'upload-cloud-widget',
+    "templateUrl": './upload-cloud.widget.html',
+    "styleUrls": ['./upload-cloud.widget.scss'],
+    "host": {
         '(click)': 'event($event)',
         '(blur)': 'event($event)',
         '(change)': 'event($event)',
@@ -41,7 +41,7 @@ import { VersionManagerUploadData } from '@alfresco/adf-content-services';
         '(invalid)': 'event($event)',
         '(select)': 'event($event)'
     },
-    encapsulation: ViewEncapsulation.None
+    "encapsulation": ViewEncapsulation.None
 })
 export class UploadCloudWidgetComponent extends WidgetComponent implements OnInit {
     hasFile: boolean;
@@ -55,7 +55,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     @ViewChild('uploadFiles')
     fileInput: ElementRef;
 
-    constructor(
+    constructor (
         formService: FormService,
         private thumbnailService: ThumbnailService,
         protected processCloudContentService: ProcessCloudContentService,
@@ -64,7 +64,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         super(formService);
     }
 
-    ngOnInit() {
+    ngOnInit () {
         if (this.field?.value?.length > 0) {
             this.hasFile = true;
             this.fixIncompatibilityFromPreviousAndNewForm([]);
@@ -73,20 +73,20 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         this.setDestinationFolderPathFromMappedVariable();
     }
 
-    removeFile(file: any) {
+    removeFile (file: any) {
         if (this.field) {
             this.removeElementFromList(file);
         }
     }
 
-    replaceOldFileVersionWithNew(versionManagerData: VersionManagerUploadData) {
+    replaceOldFileVersionWithNew (versionManagerData: VersionManagerUploadData) {
         const currentUploadedFileIndex = this.uploadedFiles.findIndex((file) => file.name === versionManagerData.currentVersion.name);
         this.uploadedFiles[currentUploadedFileIndex] = { ...versionManagerData.newVersion.value.entry };
         this.field.value = [...this.uploadedFiles];
         this.field.form.values[this.field.id] = [...this.uploadedFiles];
     }
 
-    onFileChanged(event: any) {
+    onFileChanged (event: any) {
         const files: File[] = [];
         const filesSaved: Node[] = [];
 
@@ -114,12 +114,12 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    private isUploaded(file: File): boolean {
+    private isUploaded (file: File): boolean {
         const current: Node[] = this.field.value || [];
         return current.some((entry) => entry.name === file.name);
     }
 
-    protected fixIncompatibilityFromPreviousAndNewForm(filesSaved: Node[]) {
+    protected fixIncompatibilityFromPreviousAndNewForm (filesSaved: Node[]) {
         const value: Node[] = [...(this.field.value || [])];
         value.push(...(filesSaved || []));
 
@@ -129,31 +129,31 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         this.hasFile = value.length > 0;
     }
 
-    getIcon(mimeType: string): string {
+    getIcon (mimeType: string): string {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    private uploadRawContent(file: File): Observable<Node> {
+    private uploadRawContent (file: File): Observable<Node> {
         return this.processCloudContentService.createTemporaryRawRelatedContent(file, this.field.form.nodeId);
     }
 
-    getMultipleFileParam() {
+    getMultipleFileParam () {
         if (this.field?.params?.multiple) {
             this.multipleOption = this.field.params.multiple ? 'multiple' : '';
         }
     }
 
-    get uploadedFiles(): any[] {
+    get uploadedFiles (): any[] {
         const result = this.field.value || this.field.form.values[this.field.id];
         return result || [];
     }
 
-    private removeElementFromList(file: any) {
+    private removeElementFromList (file: any) {
         const filteredValues = this.uploadedFiles.filter((value) => value.id !== file.id);
         this.resetFormValues(filteredValues);
     }
 
-    private resetFormValues(values: any[]) {
+    private resetFormValues (values: any[]) {
         if (values && values.length > 0) {
             this.field.value = values;
             this.field.form.values[this.field.id] = values;
@@ -165,43 +165,43 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         }
     }
 
-    fileClicked(file: any): void {
+    fileClicked (file: any): void {
         this.formService.formContentClicked.next(file);
     }
 
-    isAlfrescoAndLocal(): boolean {
+    isAlfrescoAndLocal (): boolean {
         return this.field?.params?.fileSource?.serviceId === FileSourceTypes.ALL_FILE_SOURCES_SERVICE_ID;
     }
 
-    isPathVariableType(type: string): boolean {
+    isPathVariableType (type: string): boolean {
         return this.field?.params?.fileSource?.destinationFolderPath?.type === type;
     }
 
-    setDestinationFolderPathFromMappedVariable() {
+    setDestinationFolderPathFromMappedVariable () {
         if (this.isAlfrescoAndLocal()) {
             this.prepareUploadWidgetDestinationFolderPathFromStringVariable();
             this.prepareUploadWidgetDestinationFolderPathFromFolderVariable();
         }
     }
 
-    private prepareUploadWidgetDestinationFolderPathFromStringVariable() {
+    private prepareUploadWidgetDestinationFolderPathFromStringVariable () {
         if (this.isPathVariableType(DestinationFolderPathType.STRING_TYPE)) {
             this.setUploadWidgetDestinationFolderPath(this.getDestinationFolderPathValue());
         }
     }
 
-    private prepareUploadWidgetDestinationFolderPathFromFolderVariable() {
+    private prepareUploadWidgetDestinationFolderPathFromFolderVariable () {
         if (this.isPathVariableType(DestinationFolderPathType.FOLDER_TYPE)) {
             const folder = this.getDestinationFolderPathValue();
             this.setUploadWidgetDestinationFolderPath(folder?.length ? folder[0].id : undefined);
         }
     }
 
-    private setUploadWidgetDestinationFolderPath(path: string) {
+    private setUploadWidgetDestinationFolderPath (path: string) {
         this.field.params.fileSource.destinationFolderPath['value'] = path ? path : undefined;
     }
 
-    private getDestinationFolderPathValue(): any {
+    private getDestinationFolderPathValue (): any {
         return this.field.form.getProcessVariableValue(this.field.params.fileSource?.destinationFolderPath?.name);
     }
 }

@@ -30,11 +30,11 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, SearchFilterAutocompleteChipsComponent],
-            providers: [
+            "imports": [ContentTestingModule, SearchFilterAutocompleteChipsComponent],
+            "providers": [
                 {
-                    provide: TagService,
-                    useValue: { getAllTheTags: () => EMPTY }
+                    "provide": TagService,
+                    "useValue": { "getAllTheTags": () => EMPTY }
                 }
             ]
         });
@@ -44,49 +44,48 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         tagService = TestBed.inject(TagService);
         component.id = 'test-id';
         component.context = {
-            queryFragments: {
-                createdDatetimeRange: ''
+            "queryFragments": {
+                "createdDatetimeRange": ''
             },
-            filterRawParams: {},
-            populateFilters: new ReplaySubject(1),
-            update: jasmine.createSpy('update')
+            "filterRawParams": {},
+            "populateFilters": new ReplaySubject(1),
+            "update": jasmine.createSpy('update')
         } as any;
         component.settings = {
-            field: 'test',
-            allowUpdateOnChange: true,
-            hideDefaultAction: false,
-            allowOnlyPredefinedValues: false,
-            autocompleteOptions: [{ value: 'option1' }, { value: 'option2' }]
+            "field": 'test',
+            "allowUpdateOnChange": true,
+            "hideDefaultAction": false,
+            "allowOnlyPredefinedValues": false,
+            "autocompleteOptions": [{ "value": 'option1' }, { "value": 'option2' }]
         };
         fixture.detectChanges();
     });
 
     /**
      * Add new auto-complete input
-     *
      * @param value value to add
      */
-    function addNewOption(value: string) {
+    function addNewOption (value: string) {
         const inputElement = fixture.debugElement.query(By.css('adf-search-chip-autocomplete-input input')).nativeElement;
         inputElement.value = value;
-        inputElement.dispatchEvent(new KeyboardEvent('keydown', { keyCode: 13 }));
+        inputElement.dispatchEvent(new KeyboardEvent('keydown', { "keyCode": 13 }));
         fixture.detectChanges();
     }
 
     it('should set autocomplete options on init', (done) => {
-        component.settings.autocompleteOptions = [{ value: 'test 1' }, { value: 'test 2' }];
+        component.settings.autocompleteOptions = [{ "value": 'test 1' }, { "value": 'test 2' }];
         component.ngOnInit();
         component.autocompleteOptions$.subscribe((result) => {
-            expect(result).toEqual([{ value: 'test 1' }, { value: 'test 2' }]);
+            expect(result).toEqual([{ "value": 'test 1' }, { "value": 'test 2' }]);
             done();
         });
     });
 
     it('should load tags if field = TAG', (done) => {
         const tagPagingMock = {
-            list: {
-                pagination: {},
-                entries: [{ entry: { tag: 'tag1', id: 'id1' } }, { entry: { tag: 'tag2', id: 'id2' } }]
+            "list": {
+                "pagination": {},
+                "entries": [{ "entry": { "tag": 'tag1', "id": 'id1' } }, { "entry": { "tag": 'tag2', "id": 'id2' } }]
             }
         };
 
@@ -94,7 +93,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         spyOn(tagService, 'getAllTheTags').and.returnValue(of(tagPagingMock));
         component.ngOnInit();
         component.autocompleteOptions$.subscribe((result) => {
-            expect(result).toEqual([{ value: 'tag1' }, { value: 'tag2' }]);
+            expect(result).toEqual([{ "value": 'tag1' }, { "value": 'tag2' }]);
             done();
         });
     });
@@ -110,10 +109,10 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
     });
 
     it('should reset value and display value when reset button is clicked', () => {
-        component.setValue([{ value: 'option1' }, { value: 'option2' }]);
+        component.setValue([{ "value": 'option1' }, { "value": 'option2' }]);
         fixture.detectChanges();
-        expect(component.selectedOptions).toEqual([{ value: 'option1' }, { value: 'option2' }]);
-        expect(component.context.filterRawParams[component.id]).toEqual([{ value: 'option1' }, { value: 'option2' }]);
+        expect(component.selectedOptions).toEqual([{ "value": 'option1' }, { "value": 'option2' }]);
+        expect(component.context.filterRawParams[component.id]).toEqual([{ "value": 'option1' }, { "value": 'option2' }]);
         spyOn(component.displayValue$, 'next');
         const clearBtn: HTMLButtonElement = fixture.debugElement.query(
             By.css('[data-automation-id="adf-search-chip-autocomplete-btn-clear"]')
@@ -128,7 +127,7 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
     });
 
     it('should correctly compose the search query', () => {
-        component.selectedOptions = [{ value: 'option2' }, { value: 'option1' }];
+        component.selectedOptions = [{ "value": 'option2' }, { "value": 'option1' }];
         const applyBtn: HTMLButtonElement = fixture.debugElement.query(
             By.css('[data-automation-id="adf-search-chip-autocomplete-btn-apply"]')
         ).nativeElement;
@@ -137,14 +136,14 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
 
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe('test:"option2" OR test:"option1"');
-        expect(component.context.filterRawParams[component.id]).toEqual([{ value: 'option2' }, { value: 'option1' }]);
+        expect(component.context.filterRawParams[component.id]).toEqual([{ "value": 'option2' }, { "value": 'option1' }]);
 
         component.settings.field = AutocompleteField.CATEGORIES;
-        component.selectedOptions = [{ id: 'test-id', value: 'test' }];
+        component.selectedOptions = [{ "id": 'test-id', "value": 'test' }];
         applyBtn.click();
         fixture.detectChanges();
         expect(component.context.queryFragments[component.id]).toBe('cm:categories:"workspace://SpacesStore/test-id"');
-        expect(component.context.filterRawParams[component.id]).toEqual([{ id: 'test-id', value: 'test' }]);
+        expect(component.context.filterRawParams[component.id]).toEqual([{ "id": 'test-id', "value": 'test' }]);
     });
 
     it('should populate filter state when populate filters event has been observed', () => {
@@ -152,12 +151,12 @@ describe('SearchFilterAutocompleteChipsComponent', () => {
         spyOn(component.context.filterLoaded, 'next').and.stub();
         spyOn(component.displayValue$, 'next').and.stub();
         fixture.detectChanges();
-        component.context.populateFilters.next({ 'test-id': [{ value: 'option2' }, { value: 'option1' }] });
+        component.context.populateFilters.next({ 'test-id': [{ "value": 'option2' }, { "value": 'option1' }] });
         fixture.detectChanges();
 
         expect(component.displayValue$.next).toHaveBeenCalledWith('option2, option1');
-        expect(component.context.filterRawParams[component.id]).toEqual([{ value: 'option2' }, { value: 'option1' }]);
-        expect(component.selectedOptions).toEqual([{ value: 'option2' }, { value: 'option1' }]);
+        expect(component.context.filterRawParams[component.id]).toEqual([{ "value": 'option2' }, { "value": 'option1' }]);
+        expect(component.selectedOptions).toEqual([{ "value": 'option2' }, { "value": 'option1' }]);
         expect(component.context.filterLoaded.next).toHaveBeenCalled();
     });
 });

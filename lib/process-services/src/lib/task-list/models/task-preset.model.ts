@@ -16,26 +16,26 @@
  */
 
 export const taskPresetsDefaultModel = {
-    default: [
+    "default": [
         {
-            key: 'name',
-            type: 'text',
-            title: 'ADF_TASK_LIST.PROPERTIES.NAME',
-            sortable: true
+            "key": 'name',
+            "type": 'text',
+            "title": 'ADF_TASK_LIST.PROPERTIES.NAME',
+            "sortable": true
         },
         {
-            key: 'created',
-            type: 'text',
-            title: 'ADF_TASK_LIST.PROPERTIES.CREATED',
-            cssClass: 'hidden',
-            sortable: true
+            "key": 'created',
+            "type": 'text',
+            "title": 'ADF_TASK_LIST.PROPERTIES.CREATED',
+            "cssClass": 'hidden',
+            "sortable": true
         },
         {
-            key: 'assignee',
-            type: 'text',
-            title: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
-            cssClass: 'hidden',
-            sortable: true
+            "key": 'assignee',
+            "type": 'text',
+            "title": 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
+            "cssClass": 'hidden',
+            "sortable": true
         }
     ]
 };

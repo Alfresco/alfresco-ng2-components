@@ -23,53 +23,53 @@ import { ContentService, NodesApiService, AlfrescoApiService } from '@alfresco/a
 import { AuthenticationApi, Node, UploadApi } from '@alfresco/js-api';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class ProcessCloudContentService {
     private _uploadApi: UploadApi;
-    get uploadApi(): UploadApi {
+    get uploadApi (): UploadApi {
         this._uploadApi = this._uploadApi ?? new UploadApi(this.apiService.getInstance());
         return this._uploadApi;
     }
 
     private _authenticationApi: AuthenticationApi;
-    get authenticationApi(): AuthenticationApi {
+    get authenticationApi (): AuthenticationApi {
         this._authenticationApi = this._authenticationApi ?? new AuthenticationApi(this.apiService.getInstance());
         return this._authenticationApi;
     }
 
-    constructor(
+    constructor (
         private apiService: AlfrescoApiService,
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
         private downloadService: DownloadService
     ) {}
 
-    createTemporaryRawRelatedContent(file: File, nodeId: string): Observable<Node> {
-        return from(this.uploadApi.uploadFile(file, '', nodeId, null, { overwrite: true })).pipe(
+    createTemporaryRawRelatedContent (file: File, nodeId: string): Observable<Node> {
+        return from(this.uploadApi.uploadFile(file, '', nodeId, null, { "overwrite": true })).pipe(
             map((res: any) => ({
                 ...res.entry,
-                nodeId: res.entry.id
+                "nodeId": res.entry.id
             }))
         );
     }
 
-    getRawContentNode(nodeId: string): Observable<Blob> {
+    getRawContentNode (nodeId: string): Observable<Blob> {
         return this.nodesApiService.getNodeContent(nodeId);
     }
 
-    downloadNodeContent(blob: Blob, fileName: string): void {
+    downloadNodeContent (blob: Blob, fileName: string): void {
         this.downloadService.downloadBlob(blob, fileName);
     }
 
-    async downloadFile(nodeId: string) {
+    async downloadFile (nodeId: string) {
         const ticket = await this.getAuthTicket();
         const url = this.contentService.getContentUrl(nodeId, true, ticket);
 
         this.downloadService.downloadUrl(url, nodeId);
     }
 
-    async getAuthTicket(): Promise<string> {
+    async getAuthTicket (): Promise<string> {
         const ticket = await this.authenticationApi.getTicket();
         return ticket?.entry?.id || '';
     }

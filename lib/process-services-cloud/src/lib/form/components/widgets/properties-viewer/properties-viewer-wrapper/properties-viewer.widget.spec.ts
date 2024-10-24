@@ -29,8 +29,8 @@ describe('PropertiesViewerWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            providers: [NodesApiService, { provide: BasicPropertiesService, useValue: { getProperties: () => [] } }]
+            "imports": [ProcessServiceCloudTestingModule],
+            "providers": [NodesApiService, { "provide": BasicPropertiesService, "useValue": { "getProperties": () => [] } }]
         });
         fixture = TestBed.createComponent(PropertiesViewerWrapperComponent);
         component = fixture.componentInstance;
@@ -55,7 +55,7 @@ describe('PropertiesViewerWidgetComponent', () => {
     it('should retrieve the node when the nodeId changes', async () => {
         const nodesApiServiceSpy = spyOn(nodesApiService, 'getNode').and.returnValue(of(fakeNodeWithProperties));
 
-        component.ngOnChanges({ nodeId: { isFirstChange: () => false, currentValue: '1234', previousValue: undefined, firstChange: false } });
+        component.ngOnChanges({ "nodeId": { "isFirstChange": () => false, "currentValue": '1234', "previousValue": undefined, "firstChange": false } });
 
         fixture.detectChanges();
         await fixture.whenStable();

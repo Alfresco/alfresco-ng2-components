@@ -16,80 +16,80 @@
  */
 
 export const mockPreferences = {
-    list: {
-        entries: [
+    "list": {
+        "entries": [
             {
-                entry: {
-                    key: 'mock-preference-key-1',
-                    value: [
-                        { username: 'mock-username-1', firstName: 'mock-firstname-1' },
-                        { username: 'mock-username-2', firstName: 'mock-firstname-2' }
+                "entry": {
+                    "key": 'mock-preference-key-1',
+                    "value": [
+                        { "username": 'mock-username-1', "firstName": 'mock-firstname-1' },
+                        { "username": 'mock-username-2', "firstName": 'mock-firstname-2' }
                     ]
                 }
             },
             {
-                entry: {
-                    key: 'mock-preference-key-2',
-                    value: 'my mock preference value'
+                "entry": {
+                    "key": 'mock-preference-key-2',
+                    "value": 'my mock preference value'
                 }
             },
             {
-                entry: {
-                    key: 'mock-preference-key-3',
-                    value: {
-                        name: 'my-filter',
-                        id: '3',
-                        key: 'my-filter',
-                        icon: 'adjust',
-                        appName: 'mock-appName',
-                        sort: 'startDate',
-                        state: 'MOCK-COMPLETED',
-                        order: 'DESC'
+                "entry": {
+                    "key": 'mock-preference-key-3',
+                    "value": {
+                        "name": 'my-filter',
+                        "id": '3',
+                        "key": 'my-filter',
+                        "icon": 'adjust',
+                        "appName": 'mock-appName',
+                        "sort": 'startDate',
+                        "state": 'MOCK-COMPLETED',
+                        "order": 'DESC'
                     }
                 }
             }
         ],
-        pagination: {
-            skipCount: 0,
-            maxItems: 100,
-            count: 3,
-            hasMoreItems: false,
-            totalItems: 3
+        "pagination": {
+            "skipCount": 0,
+            "maxItems": 100,
+            "count": 3,
+            "hasMoreItems": false,
+            "totalItems": 3
         }
     }
 };
 
 export const fakeEmptyPreferences = {
-    list: {
-        entries: [],
-        pagination: {
-            skipCount: 0,
-            maxItems: 100,
-            count: 0,
-            hasMoreItems: false,
-            totalItems: 0
+    "list": {
+        "entries": [],
+        "pagination": {
+            "skipCount": 0,
+            "maxItems": 100,
+            "count": 0,
+            "hasMoreItems": false,
+            "totalItems": 0
         }
     }
 };
 
 export const createMockPreference = {
-    name: 'create-preference',
-    id: '1',
-    key: 'my-preference',
-    icon: 'adjust',
-    appName: 'mock-appName'
+    "name": 'create-preference',
+    "id": '1',
+    "key": 'my-preference',
+    "icon": 'adjust',
+    "appName": 'mock-appName'
 };
 
 export const updateMockPreference = {
-    name: 'update-preference',
-    id: '1',
-    key: 'update-preference',
-    icon: 'adjust',
-    appName: 'mock-appName'
+    "name": 'update-preference',
+    "id": '1',
+    "key": 'update-preference',
+    "icon": 'adjust',
+    "appName": 'mock-appName'
 };
 
 export const getMockPreference =
     [
-        { username: 'mock-username-1', firstName: 'mock-firstname-1', appName: 'mock-appName' },
-        { username: 'mock-username-2', firstName: 'mock-firstname-2', appName: 'mock-appName' }
+        { "username": 'mock-username-1', "firstName": 'mock-firstname-1', "appName": 'mock-appName' },
+        { "username": 'mock-username-2', "firstName": 'mock-firstname-2', "appName": 'mock-appName' }
     ];

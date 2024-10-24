@@ -24,30 +24,29 @@ import { Environment } from '../../common/interface/environment.interface';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
 import { RequestOptions } from '@alfresco/js-api';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class AppsProcessCloudService {
     deployedApps: ApplicationInstanceModel[];
 
-    constructor(private adfHttpClient: AdfHttpClient, private appConfigService: AppConfigService) {
+    constructor (private adfHttpClient: AdfHttpClient, private appConfigService: AppConfigService) {
         this.loadApps();
     }
 
     /**
      * Gets a list of deployed apps for this user by status.
-     *
      * @param status Required status value
      * @param role to filter the apps
      * @returns The list of deployed apps
      */
-    getDeployedApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {
+    getDeployedApplicationsByStatus (status: string, role?: string): Observable<ApplicationInstanceModel[]> {
         return this.hasDeployedApps() ? of(this.deployedApps) : this.getApplicationsByStatus(status, role);
     }
 
-    hasDeployedApps(): boolean {
+    hasDeployedApps (): boolean {
         return this.deployedApps && this.deployedApps.length > 0;
     }
 
-    loadApps() {
+    loadApps () {
         const apps = this.appConfigService.get<any>('alfresco-deployed-apps', []);
         apps.map((app) => {
             app.theme = app.theme ? app.theme : 'theme-1';
@@ -56,7 +55,7 @@ export class AppsProcessCloudService {
         this.deployedApps = apps;
     }
 
-    getApplicationLabel(application: ApplicationInstanceModel, environmentList?: Environment[]): string {
+    getApplicationLabel (application: ApplicationInstanceModel, environmentList?: Environment[]): string {
         const envName = environmentList?.find((env: Environment) => env.id === application.environmentId)?.name;
 
         if (application.environmentId && environmentList && envName) {
@@ -66,13 +65,13 @@ export class AppsProcessCloudService {
         }
     }
 
-    private getApplicationsByStatus(status: string, role?: string): Observable<ApplicationInstanceModel[]> {
+    private getApplicationsByStatus (status: string, role?: string): Observable<ApplicationInstanceModel[]> {
         if (status === '') {
             return of([]);
         }
         const path = this.getApplicationUrl();
         const pathParams = {};
-        const queryParams = { status, roles: role, sort: 'name' };
+        const queryParams = { status, "roles": role, "sort": 'name' };
         const httpMethod = 'GET';
         const headerParams = {};
         const formParams = {};
@@ -96,7 +95,7 @@ export class AppsProcessCloudService {
         );
     }
 
-    private getApplicationUrl(): string {
+    private getApplicationUrl (): string {
         return `${this.appConfigService.get('bpmHost')}/deployment-service/v1/applications`;
     }
 }

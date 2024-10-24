@@ -49,8 +49,6 @@ export class RedirectAuthService extends AuthService {
    *
    * This observable listens to the events emitted by the OAuth service and filters
    * them to only include instances of OAuthSuccessEvent with the type `logout`.
-   *
-   * @type {Observable<void>}
    */
   onLogout$: Observable<void>;
 
@@ -60,8 +58,6 @@ export class RedirectAuthService extends AuthService {
    * This observable listens to the events emitted by the OAuth service and filters
    * them to only include instances of OAuthErrorEvent. It then maps these events
    * to the correct type.
-   *
-   * @type {Observable<OAuthErrorEvent>}
    */
   oauthErrorEvent$: Observable<OAuthErrorEvent>;
 
@@ -83,16 +79,12 @@ export class RedirectAuthService extends AuthService {
   /**
    * Observable that emits an error when the token has expired due to
    * the local machine clock being out of sync with the server time.
-   *
-   * @type {Observable<Error>}
    */
   tokenHasExpiredDueToClockOutOfSync$: Observable<Error>;
 
   /**
    * Observable that emits an error when the OAuth error event occurs due to
    * the local machine clock being out of sync with the server time.
-   *
-   * @type {Observable<Error>}
    */
   oauthErrorEventOccurDueToClockOutOfSync$: Observable<Error>;
 
@@ -110,10 +102,9 @@ export class RedirectAuthService extends AuthService {
 
   /**
    * Get whether the user has valid Id/Access tokens.
-   *
    * @returns `true` if the user is authenticated, otherwise `false`
    */
-  get authenticated(): boolean {
+  get authenticated (): boolean {
     return this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken();
   }
 
@@ -134,7 +125,7 @@ export class RedirectAuthService extends AuthService {
     'session_state'
   ];
 
-  constructor(
+  constructor (
     private oauthService: OAuthService,
     private _oauthStorage: OAuthStorage,
     @Inject(AUTH_CONFIG) authConfig: AuthConfig
@@ -208,11 +199,11 @@ export class RedirectAuthService extends AuthService {
     ]);
 
     this.combinedOAuthErrorsStream$.subscribe({
-        next: (res) => {
+        "next": (res) => {
             this._oauthLogger.error(res);
             this.logout();
         },
-        error: () => {}
+        "error": () => {}
     });
 
     this.oauthService.events.pipe(take(1)).subscribe(() => {
@@ -241,7 +232,7 @@ export class RedirectAuthService extends AuthService {
 
     }
 
-  init(): Promise<boolean> {
+  init (): Promise<boolean> {
     if (isPromise(this.authConfig)) {
         return this.authConfig.then((config) => this.configureAuth(config));
     }
@@ -249,11 +240,11 @@ export class RedirectAuthService extends AuthService {
     return this.configureAuth(this.authConfig);
   }
 
-  logout() {
+  logout () {
     this.oauthService.logOut();
   }
 
-  ensureDiscoveryDocument(): Promise<boolean> {
+  ensureDiscoveryDocument (): Promise<boolean> {
     this._loadDiscoveryDocumentPromise = this._loadDiscoveryDocumentPromise
       .catch(() => false)
       .then((loaded) => {
@@ -266,7 +257,7 @@ export class RedirectAuthService extends AuthService {
   }
 
 
-  login(currentUrl?: string): void {
+  login (currentUrl?: string): void {
     let stateKey: string | undefined;
 
     if (currentUrl) {
@@ -279,7 +270,7 @@ export class RedirectAuthService extends AuthService {
     this.ensureDiscoveryDocument().then(() => void this.oauthService.initLoginFlow(stateKey));
   }
 
-  baseAuthLogin(username: string, password: string): Observable<TokenResponse> {
+  baseAuthLogin (username: string, password: string): Observable<TokenResponse> {
     this.oauthService.useHttpBasicAuth = true;
 
     return from(this.oauthService.fetchTokenUsingPasswordFlow(username, password)).pipe(
@@ -293,13 +284,13 @@ export class RedirectAuthService extends AuthService {
     );
   }
 
-  async loginCallback(loginOptions?: LoginOptions): Promise<string | undefined> {
+  async loginCallback (loginOptions?: LoginOptions): Promise<string | undefined> {
       return this.ensureDiscoveryDocument()
-          .then(() => this._retryLoginService.tryToLoginTimes({ ...loginOptions, preventClearHashAfterLogin: this.authModuleConfig.preventClearHashAfterLogin }))
+          .then(() => this._retryLoginService.tryToLoginTimes({ ...loginOptions, "preventClearHashAfterLogin": this.authModuleConfig.preventClearHashAfterLogin }))
           .then(() => this._getRedirectUrl());
   }
 
-  private _getRedirectUrl() {
+  private _getRedirectUrl () {
     const DEFAULT_REDIRECT = '/';
     const stateKey = this.oauthService.state;
 
@@ -315,7 +306,7 @@ export class RedirectAuthService extends AuthService {
     return DEFAULT_REDIRECT;
   }
 
-  private configureAuth(config: AuthConfig): Promise<boolean> {
+  private configureAuth (config: AuthConfig): Promise<boolean> {
     this.oauthService.configure(config);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
@@ -341,7 +332,7 @@ export class RedirectAuthService extends AuthService {
    * https://github.com/manfredsteyer/angular-oauth2-oidc/issues/850#issuecomment-889921776 fix silent refresh for the implicit flow
    * https://github.com/manfredsteyer/angular-oauth2-oidc/issues/850#issuecomment-1557286966 fix refresh token for the code flow
    */
-  private allowRefreshTokenAndSilentRefreshOnMultipleTabs() {
+  private allowRefreshTokenAndSilentRefreshOnMultipleTabs () {
     let lastUpdatedAccessToken: string | undefined;
 
     if (this.oauthService.hasValidAccessToken()) {
@@ -377,7 +368,7 @@ export class RedirectAuthService extends AuthService {
         });
   }
 
-  updateIDPConfiguration(config: AuthConfig) {
+  updateIDPConfiguration (config: AuthConfig) {
     this.oauthService.configure(config);
   }
 
@@ -388,10 +379,9 @@ export class RedirectAuthService extends AuthService {
    * This method retrieves the identity claims from the OAuth service and calculates
    * the token's issued and expiration times. It then compares the current time with
    * these values, considering a clock skew and a configurable expiration decrease.
-   *
    * @returns - Returns `true` if the token has expired, otherwise `false`.
    */
-  tokenHasExpired(){
+  tokenHasExpired (){
     const claims = this.oauthService.getIdentityClaims();
     if(!claims){
         this._oauthLogger.warn('No claims found in the token');
@@ -407,7 +397,7 @@ export class RedirectAuthService extends AuthService {
     expiresAtMSec + clockSkewInMSec - this.oauthService.decreaseExpirationBySec <= now;
   }
 
-  private showTokenExpiredDebugInformations(now: number, issuedAtMSec: number, expiresAtMSec: number, clockSkewInMSec: number) {
+  private showTokenExpiredDebugInformations (now: number, issuedAtMSec: number, expiresAtMSec: number, clockSkewInMSec: number) {
     if(this.oauthService.showDebugInformation) {
         this._oauthLogger.warn('now: ', new Date(now));
         this._oauthLogger.warn('issuedAt: ', new Date(issuedAtMSec));

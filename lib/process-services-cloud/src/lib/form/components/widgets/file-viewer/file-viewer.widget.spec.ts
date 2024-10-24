@@ -28,26 +28,26 @@ describe('FileViewerWidgetComponent', () => {
     let fixture: ComponentFixture<FileViewerWidgetComponent>;
 
     const fakePngAnswer: any = {
-        id: '1933',
-        link: false,
-        isExternal: false,
-        relatedContent: false,
-        contentAvailable: true,
-        name: 'a_png_file.png',
-        simpleType: 'image',
-        mimeType: 'image/png',
-        previewStatus: 'queued',
-        thumbnailStatus: 'queued',
-        created: '2022-10-14T17:17:37.099Z',
-        createdBy: { id: 1001, firstName: 'Admin', lastName: 'admin', email: 'admin@example.com' }
+        "id": '1933',
+        "link": false,
+        "isExternal": false,
+        "relatedContent": false,
+        "contentAvailable": true,
+        "name": 'a_png_file.png',
+        "simpleType": 'image',
+        "mimeType": 'image/png',
+        "previewStatus": 'queued',
+        "thumbnailStatus": 'queued',
+        "created": '2022-10-14T17:17:37.099Z',
+        "createdBy": { "id": 1001, "firstName": 'Admin', "lastName": 'admin', "email": 'admin@example.com' }
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot()],
-            declarations: [FileViewerWidgetComponent],
-            providers: [{ provide: FormService, useValue: formServiceStub }],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [TranslateModule.forRoot()],
+            "declarations": [FileViewerWidgetComponent],
+            "providers": [{ "provide": FormService, "useValue": formServiceStub }],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
 
         formServiceStub = TestBed.inject(FormService);
@@ -56,7 +56,7 @@ describe('FileViewerWidgetComponent', () => {
     });
 
     it('should set the file id corretly when the field value is an array', (done) => {
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: [fakePngAnswer] });
+        const fakeField = new FormFieldModel(fakeForm, { "id": 'fakeField', "value": [fakePngAnswer] });
         widget.field = fakeField;
 
         fixture.detectChanges();
@@ -68,7 +68,7 @@ describe('FileViewerWidgetComponent', () => {
     });
 
     it('should set the file id corretly when the field value is a string', (done) => {
-        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
+        const fakeField = new FormFieldModel(fakeForm, { "id": 'fakeField', "value": 'fakeValue' });
         widget.field = fakeField;
 
         fixture.detectChanges();

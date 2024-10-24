@@ -16,52 +16,52 @@
  */
 
 export const mockTaskAttachments: any = {
-    size: 2,
-    total: 2,
-    start: 0,
-    data: [
+    "size": 2,
+    "total": 2,
+    "start": 0,
+    "data": [
         {
-            id: 8,
-            name: 'fake.zip',
-            created: 1494595697381,
-            createdBy: { id: 2, firstName: 'user1', lastName: 'last1', email: 'user1@user.com' },
-            relatedContent: true,
-            contentAvailable: true,
-            link: false,
-            mimeType: 'application/zip',
-            simpleType: 'content',
-            previewStatus: 'unsupported',
-            thumbnailStatus: 'unsupported'
+            "id": 8,
+            "name": 'fake.zip',
+            "created": 1494595697381,
+            "createdBy": { "id": 2, "firstName": 'user1', "lastName": 'last1', "email": 'user1@user.com' },
+            "relatedContent": true,
+            "contentAvailable": true,
+            "link": false,
+            "mimeType": 'application/zip',
+            "simpleType": 'content',
+            "previewStatus": 'unsupported',
+            "thumbnailStatus": 'unsupported'
         },
         {
-            id: 9,
-            name: 'fake.jpg',
-            created: 1494595655381,
-            createdBy: { id: 2, firstName: 'user2', lastName: 'last2', email: 'user2@user.com' },
-            relatedContent: true,
-            contentAvailable: true,
-            link: false,
-            mimeType: 'image/jpeg',
-            simpleType: 'image',
-            previewStatus: 'unsupported',
-            thumbnailStatus: 'unsupported'
+            "id": 9,
+            "name": 'fake.jpg',
+            "created": 1494595655381,
+            "createdBy": { "id": 2, "firstName": 'user2', "lastName": 'last2', "email": 'user2@user.com' },
+            "relatedContent": true,
+            "contentAvailable": true,
+            "link": false,
+            "mimeType": 'image/jpeg',
+            "simpleType": 'image',
+            "previewStatus": 'unsupported',
+            "thumbnailStatus": 'unsupported'
         }
     ]
 };
 
 export const mockEmittedTaskAttachments = [
     {
-        id: 8,
-        name: 'fake.zip',
-        created: 1494595697381,
-        createdBy: 'user1 last1',
-        icon: './assets/images/ft_ic_archive.svg'
+        "id": 8,
+        "name": 'fake.zip',
+        "created": 1494595697381,
+        "createdBy": 'user1 last1',
+        "icon": './assets/images/ft_ic_archive.svg'
     },
     {
-        id: 9,
-        name: 'fake.jpg',
-        created: 1494595655381,
-        createdBy: 'user2 last2',
-        icon: './assets/images/ft_ic_raster_image.svg'
+        "id": 9,
+        "name": 'fake.jpg',
+        "created": 1494595655381,
+        "createdBy": 'user2 last2',
+        "icon": './assets/images/ft_ic_raster_image.svg'
     }
 ];

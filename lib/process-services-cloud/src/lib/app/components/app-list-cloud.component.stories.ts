@@ -22,39 +22,39 @@ import { AppListCloudComponent } from './app-list-cloud.component';
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: AppListCloudComponent,
-    title: 'Process Services Cloud/App List Cloud/App List Cloud',
-    decorators: [
+    "component": AppListCloudComponent,
+    "title": 'Process Services Cloud/App List Cloud/App List Cloud',
+    "decorators": [
         moduleMetadata({
-            imports: [AppListCloudModule]
+            "imports": [AppListCloudModule]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(ProcessServicesCloudStoryModule)]
+            "providers": [importProvidersFrom(ProcessServicesCloudStoryModule)]
         })
     ],
-    argTypes: {
-        layoutType: {
-            control: 'radio',
-            options: ['GRID', 'LIST'],
-            description: 'Defines the layout of the apps.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'GRID' }
+    "argTypes": {
+        "layoutType": {
+            "control": 'radio',
+            "options": ['GRID', 'LIST'],
+            "description": 'Defines the layout of the apps.',
+            "table": {
+                "type": { "summary": 'string' },
+                "defaultValue": { "summary": 'GRID' }
             }
         },
-        appClick: {
-            action: 'appClick',
-            description: 'Emitted when an app entry is clicked.',
-            table: { category: 'Actions' }
+        "appClick": {
+            "action": 'appClick',
+            "description": 'Emitted when an app entry is clicked.',
+            "table": { "category": 'Actions' }
         }
     },
-    args: {
-        layoutType: 'GRID'
+    "args": {
+        "layoutType": 'GRID'
     }
 } as Meta<AppListCloudComponent>;
 
 const template: StoryFn<AppListCloudComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const AppListCloud = template.bind({});

@@ -23,7 +23,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { AuthModule } from '../auth/oidc/auth.module';
 
 @NgModule({
-    imports: [AuthModule.forRoot(), TranslateModule.forRoot(), CoreModule.forRoot()],
-    providers: [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations()]
+    "imports": [AuthModule.forRoot(), TranslateModule.forRoot(), CoreModule.forRoot()],
+    "providers": [provideTranslations('adf-core', 'assets/adf-core'), provideAnimations()]
 })
 export class CoreStoryModule {}

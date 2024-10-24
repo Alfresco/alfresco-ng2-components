@@ -33,7 +33,7 @@ describe('ProcessHeaderCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ProcessHeaderCloudModule]
+            "imports": [ProcessServiceCloudTestingModule, ProcessHeaderCloudModule]
         });
         fixture = TestBed.createComponent(ProcessHeaderCloudComponent);
         component = fixture.componentInstance;
@@ -204,7 +204,7 @@ describe('ProcessHeaderCloudComponent', () => {
         beforeEach(() => {
             appConfigService.config = {
                 'adf-cloud-process-header': {
-                    defaultDateFormat: 'full'
+                    "defaultDateFormat": 'full'
                 }
             };
             component.ngOnInit();

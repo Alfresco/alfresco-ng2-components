@@ -20,113 +20,113 @@ import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 
 export const mockConditionalEntries = [
     {
-        key: 'GR',
-        options: [
+        "key": 'GR',
+        "options": [
             {
-                id: 'empty',
-                name: 'Choose one...'
+                "id": 'empty',
+                "name": 'Choose one...'
             },
             {
-                id: 'ATH',
-                name: 'Athens'
+                "id": 'ATH',
+                "name": 'Athens'
             },
             {
-                id: 'SKG',
-                name: 'Thessaloniki'
+                "id": 'SKG',
+                "name": 'Thessaloniki'
             }
         ]
     },
     {
-        key: 'IT',
-        options: [
+        "key": 'IT',
+        "options": [
             {
-                id: 'empty',
-                name: 'Choose one...'
+                "id": 'empty',
+                "name": 'Choose one...'
             },
             {
-                id: 'MI',
-                name: 'MILAN'
+                "id": 'MI',
+                "name": 'MILAN'
             },
             {
-                id: 'RM',
-                name: 'ROME'
+                "id": 'RM',
+                "name": 'ROME'
             }
         ]
     },
     {
-        key: 'UK',
-        options: [
+        "key": 'UK',
+        "options": [
             {
-                id: 'empty',
-                name: 'Choose one...'
+                "id": 'empty',
+                "name": 'Choose one...'
             },
             {
-                id: 'LDN',
-                name: 'London'
+                "id": 'LDN',
+                "name": 'London'
             },
             {
-                id: 'MAN',
-                name: 'Manchester'
+                "id": 'MAN',
+                "name": 'Manchester'
             },
             {
-                id: 'SHE',
-                name: 'Sheffield'
+                "id": 'SHE',
+                "name": 'Sheffield'
             },
             {
-                id: 'LEE',
-                name: 'Leeds'
+                "id": 'LEE',
+                "name": 'Leeds'
             }
         ]
     }
 ];
 
 export const mockRestDropdownOptions: FormFieldOption[] = [
-    { id: 'LO', name: 'LONDON' },
-    { id: 'MA', name: 'MANCHESTER' }
+    { "id": 'LO', "name": 'LONDON' },
+    { "id": 'MA', "name": 'MANCHESTER' }
 ];
 
 export const mockSecondRestDropdownOptions: FormFieldOption[] = [
-    { id: 'MI', name: 'MILAN' },
-    { id: 'RM', name: 'ROME' }
+    { "id": 'MI', "name": 'MILAN' },
+    { "id": 'RM', "name": 'ROME' }
 ];
 
 export const fakeOptionList: FormFieldOption[] = [
-    { id: 'opt_1', name: 'option_1' },
-    { id: 'opt_2', name: 'option_2' },
-    { id: 'opt_3', name: 'option_3' }
+    { "id": 'opt_1', "name": 'option_1' },
+    { "id": 'opt_2', "name": 'option_2' },
+    { "id": 'opt_3', "name": 'option_3' }
 ];
 
 export const filterOptionList = [
-    { id: 'opt_1', name: 'option_1' },
-    { id: 'opt_2', name: 'option_2' },
-    { id: 'opt_3', name: 'option_3' },
-    { id: 'opt_4', name: 'option_4' },
-    { id: 'opt_5', name: 'option_5' },
-    { id: 'opt_6', name: 'option_6' }
+    { "id": 'opt_1', "name": 'option_1' },
+    { "id": 'opt_2', "name": 'option_2' },
+    { "id": 'opt_3', "name": 'option_3' },
+    { "id": 'opt_4', "name": 'option_4' },
+    { "id": 'opt_5', "name": 'option_5' },
+    { "id": 'opt_6', "name": 'option_6' }
 ];
 
 export const mockPlayersResponse = {
-    response: {
-        people: {
-            players:
+    "response": {
+        "people": {
+            "players":
                 [
                     {
-                        playerId: 'player-1',
-                        playerFullName: 'Lionel Messi',
-                        totalGoals: 999,
-                        shirtNumber: 10
+                        "playerId": 'player-1',
+                        "playerFullName": 'Lionel Messi',
+                        "totalGoals": 999,
+                        "shirtNumber": 10
                     },
                     {
-                        playerId: 'player-2',
-                        playerFullName: 'Cristiano Ronaldo',
-                        totalGoals: 15,
-                        shirtNumber: 7
+                        "playerId": 'player-2',
+                        "playerFullName": 'Cristiano Ronaldo',
+                        "totalGoals": 15,
+                        "shirtNumber": 7
                     },
                     {
-                        playerId: 'player-3',
-                        playerFullName: 'Robert Lewandowski',
-                        totalGoals: 500,
-                        shirtNumber: 9
+                        "playerId": 'player-3',
+                        "playerFullName": 'Robert Lewandowski',
+                        "totalGoals": 500,
+                        "shirtNumber": 9
                     }
                 ]
         }
@@ -134,49 +134,49 @@ export const mockPlayersResponse = {
 };
 
 export const mockDefaultResponse = {
-    data:
+    "data":
     [
         {
-            id: 'default-pet-1',
-            name: 'Dog'
+            "id": 'default-pet-1',
+            "name": 'Dog'
         },
         {
-            id: 'default-pet-2',
-            name: 'Cat'
+            "id": 'default-pet-2',
+            "name": 'Cat'
         },
         {
-            id: 'default-pet-3',
-            name: 'Parrot'
+            "id": 'default-pet-3',
+            "name": 'Parrot'
         }
     ]
 };
 
 export const mockCountriesResponse = {
-    countries: [
+    "countries": [
         {
-            id: 'PL',
-            name: 'Poland'
+            "id": 'PL',
+            "name": 'Poland'
         },
         {
-            id: 'UK',
-            name: 'United Kingdom'
+            "id": 'UK',
+            "name": 'United Kingdom'
         },
         {
-            id: 'GR',
-            name: 'Greece'
+            "id": 'GR',
+            "name": 'Greece'
         }
     ]
 };
 
 export const mockFormVariableWithJson = [
-    new TaskVariableCloud({ name: 'json-form-variable', value: mockCountriesResponse, type: 'json', id: 'fake-id-1' })
+    new TaskVariableCloud({ "name": 'json-form-variable', "value": mockCountriesResponse, "type": 'json', "id": 'fake-id-1' })
 ];
 
 export const mockProcessVariablesWithJson = [
-    new TaskVariableCloud({ name: 'variables.json-variable', value: mockPlayersResponse, type: 'json', id: 'fake-id-1' }),
-    new TaskVariableCloud({ name: 'variables.different-variable', value: 'fake-value', type: 'json', id: 'fake-id-2' })
+    new TaskVariableCloud({ "name": 'variables.json-variable', "value": mockPlayersResponse, "type": 'json', "id": 'fake-id-1' }),
+    new TaskVariableCloud({ "name": 'variables.different-variable', "value": 'fake-value', "type": 'json', "id": 'fake-id-2' })
 ];
 
 export const mockVariablesWithDefaultJson = [
-    new TaskVariableCloud({ name: 'variables.json-default-variable', value: mockDefaultResponse, type: 'json', id: 'fake-id-1' })
+    new TaskVariableCloud({ "name": 'variables.json-default-variable', "value": mockDefaultResponse, "type": 'json', "id": 'fake-id-1' })
 ];

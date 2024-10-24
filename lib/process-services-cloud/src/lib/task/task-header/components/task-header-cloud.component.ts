@@ -36,10 +36,10 @@ import { TaskDetailsCloudModel } from '../../start-task/models/task-details-clou
 import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
-    selector: 'adf-cloud-task-header',
-    templateUrl: './task-header-cloud.component.html',
-    styleUrls: ['./task-header-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-task-header',
+    "templateUrl": './task-header-cloud.component.html',
+    "styleUrls": ['./task-header-cloud.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
@@ -81,7 +81,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
@@ -91,7 +91,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.taskCloudService.dataChangesDetected$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => {
@@ -104,7 +104,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         );
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         this.taskDetails = {};
         if ((this.appName || this.appName === '') && this.taskId) {
             this.loadTaskDetailsById(this.appName, this.taskId);
@@ -113,7 +113,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
-    loadTaskDetailsById(appName: string, taskId: string) {
+    loadTaskDetailsById (appName: string, taskId: string) {
         this.isLoading = true;
         this.taskCloudService.getTaskById(appName, taskId).pipe(
             concatMap((task) =>
@@ -126,8 +126,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             finalize(() => (this.isLoading = false))
         ).subscribe(([taskDetails, candidateUsers, candidateGroups]) => {
                 this.taskDetails = taskDetails;
-                this.candidateGroups = candidateGroups.map((user) => ({ icon: 'group', value: user } as CardViewArrayItem));
-                this.candidateUsers = candidateUsers.map((group) => ({ icon: 'person', value: group } as CardViewArrayItem));
+                this.candidateGroups = candidateGroups.map((user) => ({ "icon": 'group', "value": user } as CardViewArrayItem));
+                this.candidateUsers = candidateUsers.map((group) => ({ "icon": 'person', "value": group } as CardViewArrayItem));
                 this.processInstanceId = taskDetails.processInstanceId;
                 if (this.taskDetails.parentTaskId) {
                     this.loadParentName(`${this.taskDetails.parentTaskId}`);
@@ -140,135 +140,135 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             });
     }
 
-    private initDefaultProperties() {
+    private initDefaultProperties () {
         return [
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE',
-                    value: this.taskDetails.assignee,
-                    key: 'assignee',
-                    clickable: this.isAssigneePropertyClickable(),
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT'),
-                    icon: 'create'
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE',
+                    "value": this.taskDetails.assignee,
+                    "key": 'assignee',
+                    "clickable": this.isAssigneePropertyClickable(),
+                    "default": this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT'),
+                    "icon": 'create'
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS',
-                    value: this.taskDetails.status,
-                    key: 'status'
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS',
+                    "value": this.taskDetails.status,
+                    "key": 'status'
                 }
             ),
             new CardViewSelectItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PRIORITY',
-                    value: this.taskDetails.priority.toString(),
-                    key: 'priority',
-                    editable: true,
-                    displayNoneOption: false,
-                    options$: of(this.taskCloudService.priorities)
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PRIORITY',
+                    "value": this.taskDetails.priority.toString(),
+                    "key": 'priority',
+                    "editable": true,
+                    "displayNoneOption": false,
+                    "options$": of(this.taskCloudService.priorities)
                 }
             ),
             new CardViewDatetimeItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE',
-                    value: this.taskDetails.dueDate,
-                    key: 'dueDate',
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
-                    editable: true,
-                    format: this.dateFormat,
-                    locale: this.dateLocale
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE',
+                    "value": this.taskDetails.dueDate,
+                    "key": 'dueDate',
+                    "default": this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
+                    "editable": true,
+                    "format": this.dateFormat,
+                    "locale": this.dateLocale
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CATEGORY',
-                    value: this.taskDetails.category,
-                    key: 'category',
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CATEGORY_DEFAULT')
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CATEGORY',
+                    "value": this.taskDetails.category,
+                    "key": 'category',
+                    "default": this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CATEGORY_DEFAULT')
                 }
             ),
             new CardViewDateItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CREATED',
-                    value: this.taskDetails.createdDate,
-                    key: 'created',
-                    format: this.dateFormat,
-                    locale: this.dateLocale
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CREATED',
+                    "value": this.taskDetails.createdDate,
+                    "key": 'created',
+                    "format": this.dateFormat,
+                    "locale": this.dateLocale
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME',
-                    value: this.parentTaskName,
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT'),
-                    key: 'parentName',
-                    clickable: true
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME',
+                    "value": this.parentTaskName,
+                    "default": this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT'),
+                    "key": 'parentName',
+                    "clickable": true
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_TASK_ID',
-                    value: this.taskDetails.parentTaskId,
-                    key: 'parentTaskId',
-                    clickable: true
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_TASK_ID',
+                    "value": this.taskDetails.parentTaskId,
+                    "key": 'parentTaskId',
+                    "clickable": true
                 }
             ),
             new CardViewDateItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.END_DATE',
-                    value: this.taskDetails.completedDate,
-                    key: 'endDate',
-                    format: this.dateFormat,
-                    locale: this.dateLocale
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.END_DATE',
+                    "value": this.taskDetails.completedDate,
+                    "key": 'endDate',
+                    "format": this.dateFormat,
+                    "locale": this.dateLocale
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ID',
-                    value: this.taskDetails.id,
-                    key: 'id'
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ID',
+                    "value": this.taskDetails.id,
+                    "key": 'id'
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID',
-                    value: this.processInstanceId,
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID_DEFAULT'),
-                    key: 'processInstanceId',
-                    clickable: true
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID',
+                    "value": this.processInstanceId,
+                    "default": this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PROCESS_INSTANCE_ID_DEFAULT'),
+                    "key": 'processInstanceId',
+                    "clickable": true
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DESCRIPTION',
-                    value: this.taskDetails.description,
-                    key: 'description',
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DESCRIPTION_DEFAULT'),
-                    multiline: true,
-                    editable: true
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DESCRIPTION',
+                    "value": this.taskDetails.description,
+                    "key": 'description',
+                    "default": this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DESCRIPTION_DEFAULT'),
+                    "multiline": true,
+                    "editable": true
                 }
             ),
             new CardViewArrayItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS',
-                    value: of(this.candidateUsers),
-                    key: 'candidateUsers',
-                    icon: 'edit',
-                    clickable: false,
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT'),
-                    noOfItemsToDisplay: 2
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS',
+                    "value": of(this.candidateUsers),
+                    "key": 'candidateUsers',
+                    "icon": 'edit',
+                    "clickable": false,
+                    "default": this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT'),
+                    "noOfItemsToDisplay": 2
                 }
             ),
             new CardViewArrayItemModel(
                 {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS',
-                    value: of(this.candidateGroups),
-                    key: 'candidateGroups',
-                    icon: 'edit',
-                    clickable: false,
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),
-                    noOfItemsToDisplay: 2
+                    "label": 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS',
+                    "value": of(this.candidateGroups),
+                    "key": 'candidateGroups',
+                    "icon": 'edit',
+                    "clickable": false,
+                    "default": this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT'),
+                    "noOfItemsToDisplay": 2
                 }
             )
         ];
@@ -277,7 +277,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     /**
      * Refresh the card data
      */
-    refreshData() {
+    refreshData () {
         if (this.taskDetails) {
             const defaultProperties = this.initDefaultProperties();
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
@@ -287,10 +287,9 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     /**
      * Save a task detail and update it after a successful response
-     *
      * @param updateNotification notification model
      */
-    private updateTaskDetails(updateNotification: UpdateNotification) {
+    private updateTaskDetails (updateNotification: UpdateNotification) {
         this.taskCloudService.updateTask(this.appName, this.taskId, updateNotification.changed)
             .pipe(catchError(() => {
                 this.cardViewUpdateService.updateElement(updateNotification.target);
@@ -303,7 +302,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                 });
     }
 
-    private loadParentName(taskId: string) {
+    private loadParentName (taskId: string) {
         this.taskCloudService.getTaskById(this.appName, taskId)
             .subscribe(
                 (taskDetails) => {
@@ -313,41 +312,40 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
             );
     }
 
-    isCompleted(): boolean {
+    isCompleted (): boolean {
         return this.taskDetails && this.taskDetails.status === 'COMPLETED';
     }
 
-    hasAssignee(): boolean {
+    hasAssignee (): boolean {
         return this.taskDetails.assignee ? true : false;
     }
 
-    isTaskValid(): boolean {
+    isTaskValid (): boolean {
         return (this.appName || this.appName === '') && !!this.taskId;
     }
 
-    isTaskAssigned(): boolean {
+    isTaskAssigned (): boolean {
         return this.taskDetails.assignee !== undefined;
     }
 
-    isTaskEditable(): boolean {
+    isTaskEditable (): boolean {
         return this.taskCloudService.isTaskEditable(this.taskDetails);
     }
 
     /**
      * as per [ACA-3960] it required an empty array argument for now
      * Empty array will be replaced with candidateGroups in feature
-     *
      * @returns `true` if assignee property is clickable, otherwise `false`
      */
-    isAssigneePropertyClickable(): boolean {
+    isAssigneePropertyClickable (): boolean {
         return this.taskCloudService.isAssigneePropertyClickable(this.taskDetails, this.candidateUsers, []);
     }
 
-    private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
+    private isValidSelection (filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }

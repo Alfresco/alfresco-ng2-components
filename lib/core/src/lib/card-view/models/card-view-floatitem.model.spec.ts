@@ -19,14 +19,13 @@ import { CardViewFloatItemModel } from './card-view-floatitem.model';
 import { CardViewTextItemProperties } from '../interfaces/card-view.interfaces';
 
 describe('CardViewFloatItemModel', () => {
-
     let properties: CardViewTextItemProperties;
 
     beforeEach(() => {
         properties = {
-            label: 'Tribe',
-            value: '42.42',
-            key: 'tribe'
+            "label": 'Tribe',
+            "value": '42.42',
+            "key": 'tribe'
         };
     });
 
@@ -43,7 +42,7 @@ describe('CardViewFloatItemModel', () => {
         expect(itemModel.value).toBe(undefined);
     });
 
-    it('isValid should return the validator\'s value', () => {
+    it("isValid should return the validator's value", () => {
         const itemModel = new CardViewFloatItemModel(properties);
 
         expect(itemModel.isValid(42)).toBe(true, 'For 42 it should be true');
@@ -59,15 +58,17 @@ describe('CardViewFloatItemModel', () => {
 
     it('should validate based on defined constraints', () => {
         const constrainedProperties = {
-            label: 'Tribe',
-            value: '42.42',
-            key: 'tribe',
-            dataType: 'd:float',
-            constraints: [{
-                id: 'constraint-id',
-                type: 'MINMAX',
-                parameters: { minValue: 10,  maxValue: 40 }
-            }]
+            "label": 'Tribe',
+            "value": '42.42',
+            "key": 'tribe',
+            "dataType": 'd:float',
+            "constraints": [
+                {
+                    "id": 'constraint-id',
+                    "type": 'MINMAX',
+                    "parameters": { "minValue": 10, "maxValue": 40 }
+                }
+            ]
         };
 
         const itemModel = new CardViewFloatItemModel(constrainedProperties);

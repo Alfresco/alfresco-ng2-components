@@ -25,7 +25,7 @@ export class CardViewLongItemModel extends CardViewTextItemModel implements Card
     type = 'long';
     inputType = 'number';
 
-    constructor(cardViewIntItemProperties: CardViewIntItemProperties) {
+    constructor (cardViewIntItemProperties: CardViewIntItemProperties) {
         super(cardViewIntItemProperties);
 
         this.validators.push(new CardViewItemLongValidator());
@@ -39,7 +39,7 @@ export class CardViewLongItemModel extends CardViewTextItemModel implements Card
         }
     }
 
-    get displayValue(): string {
+    get displayValue (): string {
         return this.applyPipes(this.value);
     }
 }

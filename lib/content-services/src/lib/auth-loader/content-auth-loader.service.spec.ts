@@ -29,21 +29,21 @@ describe('ContentAuthLoaderService', () => {
     beforeEach(() => {
         onLoginSubject = new Subject<void>();
         TestBed.configureTestingModule({
-            providers: [
+            "providers": [
                 ContentAuthLoaderService,
                 {
-                    provide: AuthenticationService,
-                    useValue: {
-                        onLogin: onLoginSubject.asObservable(),
-                        isOauth: () => false,
-                        isALLProvider: () => false,
-                        isECMProvider: () => false
+                    "provide": AuthenticationService,
+                    "useValue": {
+                        "onLogin": onLoginSubject.asObservable(),
+                        "isOauth": () => false,
+                        "isALLProvider": () => false,
+                        "isECMProvider": () => false
                     }
                 },
                 {
-                    provide: BasicAlfrescoAuthService,
-                    useValue: {
-                        requireAlfTicket: jasmine.createSpy()
+                    "provide": BasicAlfrescoAuthService,
+                    "useValue": {
+                        "requireAlfTicket": jasmine.createSpy()
                     }
                 }
             ]
@@ -53,7 +53,6 @@ describe('ContentAuthLoaderService', () => {
         authService = TestBed.inject(AuthenticationService);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
     });
-
 
     it('should require Alf ticket on login if OAuth and provider is ALL or ECM', fakeAsync(() => {
         spyOn(authService, 'isOauth').and.returnValue(true);

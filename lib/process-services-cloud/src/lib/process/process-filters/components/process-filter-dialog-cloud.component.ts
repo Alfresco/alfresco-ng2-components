@@ -20,11 +20,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'adf-cloud-process-filter-dialog-cloud',
-    templateUrl: './process-filter-dialog-cloud.component.html',
-    styleUrls: ['./process-filter-dialog-cloud.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-cloud-process-filter-dialog-cloud',
+    "templateUrl": './process-filter-dialog-cloud.component.html',
+    "styleUrls": ['./process-filter-dialog-cloud.component.scss'],
+    "changeDetection": ChangeDetectionStrategy.OnPush,
+    "encapsulation": ViewEncapsulation.None
 })
 export class ProcessFilterDialogCloudComponent {
     public readonly dialogRef = inject(MatDialogRef<ProcessFilterDialogCloudComponent>);
@@ -34,18 +34,18 @@ export class ProcessFilterDialogCloudComponent {
     defaultIcon = 'inbox';
 
     filterForm = new FormGroup({
-        name: new FormControl(this.data.name, [Validators.required])
+        "name": new FormControl(this.data.name, [Validators.required])
     });
 
-    onSaveClick() {
+    onSaveClick () {
         this.dialogRef.close({
-            action: ProcessFilterDialogCloudComponent.ACTION_SAVE,
-            icon: this.defaultIcon,
-            name: this.filterForm.controls.name.value
+            "action": ProcessFilterDialogCloudComponent.ACTION_SAVE,
+            "icon": this.defaultIcon,
+            "name": this.filterForm.controls.name.value
         });
     }
 
-    onCancelClick() {
+    onCancelClick () {
         this.dialogRef.close();
     }
 }

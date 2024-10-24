@@ -29,14 +29,14 @@ import { ContentNodeDialogService } from '../../content-node-selector/content-no
 import { NodeAction } from '../models/node-action.enum';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class NodeActionsService {
     @Output()
     error = new EventEmitter<any>();
 
-    constructor(
+    constructor (
         private contentDialogService: ContentNodeDialogService,
         public dialogRef: MatDialog,
         public content: ContentService,
@@ -46,64 +46,59 @@ export class NodeActionsService {
         private downloadService?: DownloadService
     ) {}
 
-    downloadNode(node: NodeEntry) {
+    downloadNode (node: NodeEntry) {
         new NodeDownloadDirective(this.apiService, this.downloadService, this.dialog).downloadNode(node);
     }
 
     /**
      * Copy content node
-     *
      * @param contentEntry node to copy
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    copyContent(contentEntry: Node, permission?: string): Subject<string> {
+    copyContent (contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation(NodeAction.COPY, 'content', contentEntry, permission);
     }
 
     /**
      * Copy folder node
-     *
      * @param contentEntry node to copy
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    copyFolder(contentEntry: Node, permission?: string): Subject<string> {
+    copyFolder (contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation(NodeAction.COPY, 'folder', contentEntry, permission);
     }
 
     /**
      * Move content node
-     *
      * @param contentEntry node to move
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    moveContent(contentEntry: Node, permission?: string): Subject<string> {
+    moveContent (contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation(NodeAction.MOVE, 'content', contentEntry, permission);
     }
 
     /**
      * Move folder node
-     *
      * @param contentEntry node to move
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    moveFolder(contentEntry: Node, permission?: string): Subject<string> {
+    moveFolder (contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation(NodeAction.MOVE, 'folder', contentEntry, permission);
     }
 
     /**
      * General method for performing the given operation (copy|move)
-     *
      * @param action the action to perform (copy|move)
      * @param type type of the content (content|folder)
      * @param contentEntry the contentEntry which has to have the action performed on
      * @param permission permission which is needed to apply the action
      * @returns operation result
      */
-    private doFileOperation(
+    private doFileOperation (
         action: NodeAction.COPY | NodeAction.MOVE,
         type: 'content' | 'folder',
         contentEntry: Node,

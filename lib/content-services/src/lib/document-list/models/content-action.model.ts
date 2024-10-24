@@ -29,7 +29,7 @@ export class ContentActionModel {
     disabled: boolean | ((...args) => boolean) = false;
     visible: boolean | ((...args) => boolean) = true;
 
-    constructor(obj?: any) {
+    constructor (obj?: any) {
         if (obj) {
             this.icon = obj.icon;
             this.title = obj.title;
@@ -59,14 +59,14 @@ export enum ContentActionTarget {
 export type ContentActionHandler = (obj: any, target?: any, permission?: string) => any;
 
 export class DocumentActionModel extends ContentActionModel {
-    constructor(json?: any)  {
+    constructor (json?: any) {
         super(json);
         this.target = 'document';
     }
 }
 
-export class FolderActionModel extends  ContentActionModel {
-    constructor(json?: any)  {
+export class FolderActionModel extends ContentActionModel {
+    constructor (json?: any) {
         super(json);
         this.target = 'folder';
     }

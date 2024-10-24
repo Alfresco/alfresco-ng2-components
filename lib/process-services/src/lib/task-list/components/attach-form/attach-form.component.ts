@@ -30,11 +30,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormComponent } from '../../../form';
 
 @Component({
-    selector: 'adf-attach-form',
-    standalone: true,
-    imports: [CommonModule, MatCardModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatButtonModule, FormComponent],
-    templateUrl: './attach-form.component.html',
-    styleUrls: ['./attach-form.component.scss']
+    "selector": 'adf-attach-form',
+    "standalone": true,
+    "imports": [CommonModule, MatCardModule, TranslateModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatButtonModule, FormComponent],
+    "templateUrl": './attach-form.component.html',
+    "styleUrls": ['./attach-form.component.scss']
 })
 export class AttachFormComponent implements OnInit, OnChanges {
     /** Id of the task. */
@@ -65,9 +65,9 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     attachFormControl: UntypedFormControl;
 
-    constructor(private taskService: TaskListService, private modelService: ModelService, private taskFormService: TaskFormService) {}
+    constructor (private taskService: TaskListService, private modelService: ModelService, private taskFormService: TaskFormService) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.attachFormControl = new UntypedFormControl('', Validators.required);
         this.attachFormControl.valueChanges.subscribe((currentValue) => {
             if (this.attachFormControl.valid) {
@@ -76,7 +76,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
         });
     }
 
-    ngOnChanges() {
+    ngOnChanges () {
         this.formId = undefined;
         this.disableSubmit = true;
         this.loadFormsTask();
@@ -85,12 +85,12 @@ export class AttachFormComponent implements OnInit, OnChanges {
         }
     }
 
-    onCancelButtonClick(): void {
+    onCancelButtonClick (): void {
         this.selectedFormId = this.formId;
         this.cancelAttachForm.emit();
     }
 
-    onRemoveButtonClick(): void {
+    onRemoveButtonClick (): void {
         this.taskService.deleteForm(this.taskId).subscribe(
             () => {
                 this.formId = this.selectedFormId = null;
@@ -102,11 +102,11 @@ export class AttachFormComponent implements OnInit, OnChanges {
         );
     }
 
-    onAttachFormButtonClick(): void {
+    onAttachFormButtonClick (): void {
         this.attachForm(this.taskId, this.selectedFormId);
     }
 
-    private loadFormsTask(): void {
+    private loadFormsTask (): void {
         this.taskService.getFormList().subscribe(
             (form: Form[]) => {
                 this.forms = form;
@@ -117,7 +117,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
         );
     }
 
-    private onFormAttached() {
+    private onFormAttached () {
         this.taskFormService.getTaskForm(this.taskId).subscribe(
             (res) => {
                 this.modelService.getFormDefinitionByName(res.name).subscribe((formDef) => {
@@ -130,7 +130,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
         );
     }
 
-    private attachForm(taskId: string, formId: number) {
+    private attachForm (taskId: string, formId: number) {
         if (taskId && formId) {
             this.taskService.attachFormToATask(taskId, formId).subscribe(
                 () => {

@@ -20,7 +20,7 @@ import { ThemePalette } from '@angular/material/core';
 import { FormFieldModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets';
 
 @Directive({
-    standalone: true
+    "standalone": true
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class FormBaseComponent {
@@ -98,15 +98,15 @@ export abstract class FormBaseComponent {
 
     form: FormModel;
 
-    getParsedFormDefinition(): FormBaseComponent {
+    getParsedFormDefinition (): FormBaseComponent {
         return this;
     }
 
-    hasForm(): boolean {
+    hasForm (): boolean {
         return !!this.form;
     }
 
-    isTitleEnabled(): boolean {
+    isTitleEnabled (): boolean {
         let titleEnabled = false;
         if (this.showTitle && this.form) {
             titleEnabled = true;
@@ -114,11 +114,11 @@ export abstract class FormBaseComponent {
         return titleEnabled;
     }
 
-    getColorForOutcome(outcomeName: string): ThemePalette {
+    getColorForOutcome (outcomeName: string): ThemePalette {
         return outcomeName === FormBaseComponent.COMPLETE_OUTCOME_NAME ? FormBaseComponent.COMPLETE_BUTTON_COLOR : null;
     }
 
-    isOutcomeButtonEnabled(outcome?: FormOutcomeModel): boolean {
+    isOutcomeButtonEnabled (outcome?: FormOutcomeModel): boolean {
         if (this.form.readOnly) {
             return false;
         }
@@ -142,7 +142,7 @@ export abstract class FormBaseComponent {
         return false;
     }
 
-    isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
+    isOutcomeButtonVisible (outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
         if (outcome?.name) {
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.showCompleteButton;
@@ -163,11 +163,10 @@ export abstract class FormBaseComponent {
 
     /**
      * Invoked when user clicks outcome button.
-     *
      * @param outcome Form outcome model
      * @returns `true` if outcome button was clicked, otherwise `false`
      */
-    onOutcomeClicked(outcome: FormOutcomeModel): boolean {
+    onOutcomeClicked (outcome: FormOutcomeModel): boolean {
         if (!this.readOnly && outcome && this.form) {
             if (!this.onExecuteOutcome(outcome)) {
                 return false;
@@ -209,7 +208,7 @@ export abstract class FormBaseComponent {
         return false;
     }
 
-    handleError(err: any): any {
+    handleError (err: any): any {
         this.disableSaveButton = false;
         this.disableCompleteButton = false;
         this.error.emit(err);

@@ -30,13 +30,13 @@ import { MatIconModule } from '@angular/material/icon';
  * This component provide a list of all the tag inside the ECM
  */
 @Component({
-    selector: 'adf-tag-list',
-    standalone: true,
-    imports: [CommonModule, MatChipsModule, MatButtonModule, MatIconModule],
-    templateUrl: './tag-list.component.html',
-    styleUrls: ['./tag-list.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-tag-list' }
+    "selector": 'adf-tag-list',
+    "standalone": true,
+    "imports": [CommonModule, MatChipsModule, MatButtonModule, MatIconModule],
+    "templateUrl": './tag-list.component.html',
+    "styleUrls": ['./tag-list.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "host": { "class": 'adf-tag-list' }
 })
 export class TagListComponent implements OnInit, OnDestroy {
     /** Emitted when a tag is selected. */
@@ -61,11 +61,11 @@ export class TagListComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private tagService: TagService) {
+    constructor (private tagService: TagService) {
         this.defaultPagination = {
-            skipCount: 0,
-            maxItems: this.size,
-            hasMoreItems: false
+            "skipCount": 0,
+            "maxItems": this.size,
+            "hasMoreItems": false
         };
 
         this.pagination = this.defaultPagination;
@@ -76,16 +76,16 @@ export class TagListComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.refreshTag(this.defaultPagination);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    refreshTag(opts?: any) {
+    refreshTag (opts?: any) {
         this.tagService.getAllTheTags(opts).subscribe((tags) => {
             this.tagsEntries = this.tagsEntries.concat(tags.list.entries);
             this.pagination = tags.list.pagination;
@@ -94,19 +94,19 @@ export class TagListComponent implements OnInit, OnDestroy {
         });
     }
 
-    loadMoreTags() {
+    loadMoreTags () {
         if (this.pagination.hasMoreItems) {
             this.isLoading = true;
             this.isSizeMinimum = false;
 
             this.refreshTag({
-                skipCount: this.pagination.skipCount + this.pagination.count,
-                maxItems: this.size
+                "skipCount": this.pagination.skipCount + this.pagination.count,
+                "maxItems": this.size
             });
         }
     }
 
-    loadLessTags() {
+    loadLessTags () {
         this.isSizeMinimum = false;
         this.tagsEntries = this.tagsEntries.slice(0, this.tagsEntries.length - this.pagination.count);
         this.pagination.skipCount = this.pagination.skipCount - this.pagination.count;

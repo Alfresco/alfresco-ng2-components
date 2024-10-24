@@ -23,7 +23,7 @@ export const LANGUAGE_MENU_DIRECTIVES = [LanguageMenuComponent, LanguagePickerCo
 
 /** @deprecated use `...LANGUAGE_MENU_DIRECTIVES` or import components directly instead. */
 @NgModule({
-    imports: [...LANGUAGE_MENU_DIRECTIVES],
-    exports: [...LANGUAGE_MENU_DIRECTIVES]
+    "imports": [...LANGUAGE_MENU_DIRECTIVES],
+    "exports": [...LANGUAGE_MENU_DIRECTIVES]
 })
 export class LanguageMenuModule {}

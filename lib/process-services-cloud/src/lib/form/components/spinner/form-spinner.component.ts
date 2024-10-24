@@ -18,8 +18,8 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    templateUrl: './form-spinner.component.html',
-    styleUrls: ['./form-spinner.component.scss']
+    "templateUrl": './form-spinner.component.html',
+    "styleUrls": ['./form-spinner.component.scss']
 })
 export class FormSpinnerComponent {
     @Input() message = '';

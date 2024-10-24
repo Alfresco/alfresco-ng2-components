@@ -31,9 +31,9 @@ import { UserNameColumnComponent } from '../user-name-column/user-name-column.co
 import { UserRoleColumnComponent } from '../user-role-column/user-role-column.component';
 
 @Component({
-    selector: 'adf-add-permission-dialog',
-    standalone: true,
-    imports: [
+    "selector": 'adf-add-permission-dialog',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatDialogModule,
         MatButtonModule,
@@ -48,9 +48,9 @@ import { UserRoleColumnComponent } from '../user-role-column/user-role-column.co
         UserNameColumnComponent,
         UserRoleColumnComponent
     ],
-    templateUrl: './add-permission-dialog.component.html',
-    styleUrls: ['./add-permission-dialog.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './add-permission-dialog.component.html',
+    "styleUrls": ['./add-permission-dialog.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class AddPermissionDialogComponent {
     isSearchActive = true;
@@ -59,21 +59,21 @@ export class AddPermissionDialogComponent {
     private existingMembers: PermissionElement[] = [];
     currentSelection: NodeEntry[] = [];
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData, private dialogRef: MatDialogRef<AddPermissionDialogComponent>) {
+    constructor (@Inject(MAT_DIALOG_DATA) public data: AddPermissionDialogData, private dialogRef: MatDialogRef<AddPermissionDialogComponent>) {
         this.existingMembers = this.data.node.permissions.locallySet || [];
     }
 
-    onSelect(items: NodeEntry[]) {
+    onSelect (items: NodeEntry[]) {
         this.currentSelection = items;
     }
 
-    onAddClicked() {
+    onAddClicked () {
         const selection = this.selectedMembers.filter((member) => !member.readonly).map((member) => member.toPermissionElement());
         this.data.confirm.next(selection);
         this.data.confirm.complete();
     }
 
-    onSearchAddClicked() {
+    onSearchAddClicked () {
         const newMembers = this.currentSelection
             .map((item) => MemberModel.parseFromSearchResult(item))
             .filter(({ id }) => !this.selectedMembers.find((member) => member.id === id));
@@ -90,7 +90,7 @@ export class AddPermissionDialogComponent {
         this.disableSearch();
     }
 
-    canCloseDialog() {
+    canCloseDialog () {
         if (this.selectedMembers.length) {
             this.disableSearch();
         } else {
@@ -98,19 +98,19 @@ export class AddPermissionDialogComponent {
         }
     }
 
-    enableSearch() {
+    enableSearch () {
         this.isSearchActive = true;
     }
 
-    disableSearch() {
+    disableSearch () {
         this.isSearchActive = false;
     }
 
-    onBulkUpdate(role: string) {
+    onBulkUpdate (role: string) {
         this.selectedMembers.filter((member) => !member.readonly).forEach((member) => (member.role = role));
     }
 
-    onMemberDelete({ id }: MemberModel) {
+    onMemberDelete ({ id }: MemberModel) {
         const index = this.selectedMembers.findIndex((member) => member.id === id);
         this.selectedMembers.splice(index, 1);
         if (this.selectedMembers.length === 0) {
@@ -119,12 +119,12 @@ export class AddPermissionDialogComponent {
         }
     }
 
-    onMemberUpdate(role: string, member: MemberModel) {
+    onMemberUpdate (role: string, member: MemberModel) {
         const memberInstance = this.selectedMembers.find(({ id }) => id === member.id);
         memberInstance.role = role;
     }
 
-    isValid(): boolean {
+    isValid (): boolean {
         return this.selectedMembers.filter(({ readonly }) => !readonly).length && this.selectedMembers.every(({ role }) => !!role);
     }
 }

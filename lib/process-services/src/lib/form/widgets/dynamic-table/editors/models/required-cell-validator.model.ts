@@ -25,11 +25,11 @@ import { DynamicTableRow } from './dynamic-table-row.model';
 export class RequiredCellValidator implements CellValidator {
     private supportedTypes: string[] = ['String', 'Number', 'Amount', 'Date', 'Dropdown'];
 
-    isSupported(column: DynamicTableColumn): boolean {
+    isSupported (column: DynamicTableColumn): boolean {
         return column?.required && this.supportedTypes.indexOf(column.type) > -1;
     }
 
-    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
+    validate (row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
         if (this.isSupported(column)) {
             const value = row.value[column.id];
             if (column.required) {

@@ -28,29 +28,24 @@ import { ContentService } from '../../common/services/content.service';
 import { AllowableOperationsEnum } from '../../common/models/allowable-operations.enum';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class NodePermissionDialogService {
-
-    constructor(private dialog: MatDialog,
-                private nodePermissionService: NodePermissionService,
-                private contentService: ContentService) {
-    }
+    constructor (private dialog: MatDialog, private nodePermissionService: NodePermissionService, private contentService: ContentService) {}
 
     /**
      * Opens a dialog to add permissions to a node.
-     *
      * @param node target node
      * @param roles settable roles for the node
      * @param title Dialog title
      * @returns Node with updated permissions
      */
-    openAddPermissionDialog(node: Node, roles: RoleModel[], title?: string): Observable<PermissionElement[]> {
+    openAddPermissionDialog (node: Node, roles: RoleModel[], title?: string): Observable<PermissionElement[]> {
         if (this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
             const confirm = new Subject<PermissionElement[]>();
 
             confirm.subscribe({
-                complete: this.close.bind(this)
+                "complete": this.close.bind(this)
             });
 
             const data: AddPermissionDialogData = {
@@ -63,37 +58,38 @@ export class NodePermissionDialogService {
             this.openDialog(data, 'adf-add-permission-dialog', '800px');
             return confirm;
         } else {
-            const errors = new Error(JSON.stringify({ error: { statusCode: 403 } }));
+            const errors = new Error(JSON.stringify({ "error": { "statusCode": 403 } }));
             errors.message = 'PERMISSION_MANAGER.ERROR.NOT-ALLOWED';
             return throwError(errors);
         }
     }
 
-    private openDialog(data: any, currentPanelClass: string, chosenWidth: string) {
-        this.dialog.open(AddPermissionDialogComponent, { data, panelClass: currentPanelClass, width: chosenWidth, restoreFocus: true });
+    private openDialog (data: any, currentPanelClass: string, chosenWidth: string) {
+        this.dialog.open(AddPermissionDialogComponent, { data, "panelClass": currentPanelClass, "width": chosenWidth, "restoreFocus": true });
     }
 
     /**
      * Closes the currently-open dialog.
      */
-    close() {
+    close () {
         this.dialog.closeAll();
     }
 
     /**
      * Opens a dialog to update permissions for a node.
-     *
      * @param nodeId ID of the target node
      * @param title Dialog title
      * @returns Node with updated permissions
      */
-    updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<Node> {
-        return this.nodePermissionService.getNodeWithRoles(nodeId)
+    updateNodePermissionByDialog (nodeId?: string, title?: string): Observable<Node> {
+        return this.nodePermissionService
+            .getNodeWithRoles(nodeId)
             .pipe(
-                switchMap(({node, roles}) => this.openAddPermissionDialog(node, roles, title)
-                    .pipe(
+                switchMap(({ node, roles }) =>
+                    this.openAddPermissionDialog(node, roles, title).pipe(
                         switchMap((selection) => this.nodePermissionService.updateNodePermissions(nodeId, selection))
-                    ))
+                    )
+                )
             );
     }
 }

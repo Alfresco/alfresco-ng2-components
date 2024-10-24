@@ -21,28 +21,28 @@ import { CommonModule } from '@angular/common';
 import { DataColumnComponent, DataColumnListComponent, DataTableComponent } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-form-list',
-    standalone: true,
-    imports: [CommonModule, DataTableComponent, DataColumnListComponent, DataColumnComponent],
-    templateUrl: './form-list.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-form-list',
+    "standalone": true,
+    "imports": [CommonModule, DataTableComponent, DataColumnListComponent, DataColumnComponent],
+    "templateUrl": './form-list.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class FormListComponent implements OnChanges {
     /** The array that contains the information to show inside the list. */
     @Input()
     forms: any[] = [];
 
-    constructor(protected modelService: ModelService) {}
+    constructor (protected modelService: ModelService) {}
 
-    ngOnChanges() {
+    ngOnChanges () {
         this.getForms();
     }
 
-    isEmpty(): boolean {
+    isEmpty (): boolean {
         return this.forms && this.forms.length === 0;
     }
 
-    getForms() {
+    getForms () {
         this.modelService.getForms().subscribe((forms) => {
             this.forms.push(...forms);
         });

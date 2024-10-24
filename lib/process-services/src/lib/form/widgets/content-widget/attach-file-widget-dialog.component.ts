@@ -35,18 +35,18 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-attach-file-widget-dialog',
-    standalone: true,
-    imports: [CommonModule, MatDialogModule, LoginDialogPanelComponent, MatButtonModule, TranslateModule, ContentNodeSelectorPanelComponent],
-    templateUrl: './attach-file-widget-dialog.component.html',
-    styleUrls: ['./attach-file-widget-dialog.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    providers: [
+    "selector": 'adf-attach-file-widget-dialog',
+    "standalone": true,
+    "imports": [CommonModule, MatDialogModule, LoginDialogPanelComponent, MatButtonModule, TranslateModule, ContentNodeSelectorPanelComponent],
+    "templateUrl": './attach-file-widget-dialog.component.html',
+    "styleUrls": ['./attach-file-widget-dialog.component.scss'],
+    "encapsulation": ViewEncapsulation.None,
+    "providers": [
         AuthenticationService,
         DocumentListService,
         SitesService,
         SearchService,
-        { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService }
+        { "provide": AlfrescoApiService, "useClass": ExternalAlfrescoApiService }
     ]
 })
 export class AttachFileWidgetDialogComponent implements OnInit, OnDestroy {
@@ -60,7 +60,7 @@ export class AttachFileWidgetDialogComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
+    constructor (
         private translation: TranslationService,
         @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
         private externalApiService: AlfrescoApiService,
@@ -73,7 +73,7 @@ export class AttachFileWidgetDialogComponent implements OnInit, OnDestroy {
         this.updateTitle('DROPDOWN.MY_FILES_OPTION');
     }
 
-    ngOnInit() {
+    ngOnInit () {
         this.authenticationService.onLogin.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.registerAndClose());
 
         if (this.isLoggedIn()) {
@@ -81,51 +81,51 @@ export class AttachFileWidgetDialogComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
 
-    isLoggedIn(): boolean {
+    isLoggedIn (): boolean {
         return !!this.externalApiService.getInstance()?.isLoggedIn();
     }
 
-    performLogin() {
+    performLogin () {
         this.loginPanel.submitForm();
     }
 
-    close() {
+    close () {
         this.data.selected.complete();
     }
 
-    onSelect(nodeList: Node[]) {
+    onSelect (nodeList: Node[]) {
         this.chosenNode = nodeList;
     }
 
-    onSiteChange(siteTitle: string) {
+    onSiteChange (siteTitle: string) {
         this.updateTitle(siteTitle);
     }
 
-    onClick() {
+    onClick () {
         this.data.selected.next(this.chosenNode);
         this.data.selected.complete();
     }
 
-    updateTitle(siteTitle: string) {
+    updateTitle (siteTitle: string) {
         if (this.action === 'CHOOSE' && siteTitle) {
             this.title = this.getTitleTranslation(this.action, siteTitle);
         }
     }
 
-    getTitleTranslation(action: string, name?: string): string {
-        return this.translation.instant(`ATTACH-FILE.ACTIONS.${action}_ITEM`, { name: this.translation.instant(name) });
+    getTitleTranslation (action: string, name?: string): string {
+        return this.translation.instant(`ATTACH-FILE.ACTIONS.${action}_ITEM`, { "name": this.translation.instant(name) });
     }
 
-    hasNodeSelected(): boolean {
+    hasNodeSelected (): boolean {
         return this.chosenNode?.length > 0;
     }
 
-    private registerAndClose() {
+    private registerAndClose () {
         if (this.data) {
             this.data.registerExternalHost?.(this.data.accountIdentifier, this.externalApiService);
 

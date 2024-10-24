@@ -27,7 +27,6 @@ import { isValid, Locale, parse } from 'date-fns';
  *
  * Automatically switches locales based on user preferences.
  * Supports custom display format.
- *
  * @example
  *
  * Add the following to the component `providers` section
@@ -53,31 +52,31 @@ export const DEFAULT_DATE_FORMAT = 'dd-MM-yyyy';
  * Material date formats for Date-fns
  */
 export const ADF_DATE_FORMATS: MatDateFormats = {
-    parse: {
-        dateInput: DEFAULT_DATE_FORMAT
+    "parse": {
+        "dateInput": DEFAULT_DATE_FORMAT
     },
-    display: {
-        dateInput: DEFAULT_DATE_FORMAT,
-        monthLabel: 'LLL',
-        monthYearLabel: 'LLL uuuu',
-        dateA11yLabel: 'PP',
-        monthYearA11yLabel: 'LLLL uuuu'
+    "display": {
+        "dateInput": DEFAULT_DATE_FORMAT,
+        "monthLabel": 'LLL',
+        "monthYearLabel": 'LLL uuuu',
+        "dateA11yLabel": 'PP',
+        "monthYearA11yLabel": 'LLLL uuuu'
     }
 };
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ "providedIn": 'root' })
 export class AdfDateFnsAdapter extends DateFnsAdapter {
     private _displayFormat?: string = null;
 
-    get displayFormat(): string | null {
+    get displayFormat (): string | null {
         return this._displayFormat;
     }
 
-    set displayFormat(value: string | null) {
+    set displayFormat (value: string | null) {
         this._displayFormat = value ? DateFnsUtils.convertMomentToDateFnsFormat(value) : null;
     }
 
-    constructor(
+    constructor (
         @Optional() @Inject(MAT_DATE_LOCALE) matDateLocale: Locale,
         @Optional() @Inject(MAT_DATE_FORMATS) private formats: MatDateFormats,
         preferences: UserPreferencesService
@@ -89,7 +88,7 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
         });
     }
 
-    override parse(value: any, parseFormat: string | string[]): Date {
+    override parse (value: any, parseFormat: string | string[]): Date {
         const dateValue = this.isValid(value) ? value : this.parseAndValidateDate(value);
         const format = Array.isArray(parseFormat)
             ? parseFormat.map(DateFnsUtils.convertMomentToDateFnsFormat)
@@ -97,7 +96,7 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
         return super.parse(dateValue, format);
     }
 
-    override format(date: Date, displayFormat: string): string {
+    override format (date: Date, displayFormat: string): string {
         displayFormat = DateFnsUtils.convertMomentToDateFnsFormat(displayFormat);
 
         if (this.displayFormat && displayFormat === this.formats?.display?.dateInput) {
@@ -107,7 +106,7 @@ export class AdfDateFnsAdapter extends DateFnsAdapter {
         return super.format(date, displayFormat);
     }
 
-    private parseAndValidateDate(value: any): Date {
+    private parseAndValidateDate (value: any): Date {
         const parsedDate = parse(value, this.displayFormat || DEFAULT_DATE_FORMAT, new Date());
         return isValid(parsedDate) ? parsedDate : value;
     }

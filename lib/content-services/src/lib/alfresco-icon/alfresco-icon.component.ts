@@ -18,8 +18,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'adf-alfresco-icon',
-    standalone: true,
-    templateUrl: './alfresco-icon-component.svg'
+    "selector": 'adf-alfresco-icon',
+    "standalone": true,
+    "templateUrl": './alfresco-icon-component.svg'
 })
 export class AlfrescoIconComponent {}

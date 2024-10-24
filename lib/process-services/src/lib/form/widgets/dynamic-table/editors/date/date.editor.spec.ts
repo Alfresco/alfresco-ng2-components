@@ -32,13 +32,13 @@ describe('DateEditorComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule]
+            "imports": [CoreTestingModule]
         });
         fixture = TestBed.createComponent(DateEditorComponent);
         component = fixture.componentInstance;
 
-        row = { value: { date: '1879-03-14T00:00:00.000Z' } } as DynamicTableRow;
-        column = { id: 'date', type: 'Date' } as DynamicTableColumn;
+        row = { "value": { "date": '1879-03-14T00:00:00.000Z' } } as DynamicTableRow;
+        column = { "id": 'date', "type": 'Date' } as DynamicTableColumn;
         const field = new FormFieldModel(new FormModel());
         table = new DynamicTableModel(field, null);
         table.rows.push(row);
@@ -50,7 +50,7 @@ describe('DateEditorComponent', () => {
 
     describe('using Date Piker', () => {
         it('should update row value on change', () => {
-            const input = { value: '2016-03-14' } as any;
+            const input = { "value": '2016-03-14' } as any;
 
             component.ngOnInit();
             component.onDateChanged(input);
@@ -61,7 +61,7 @@ describe('DateEditorComponent', () => {
 
         it('should flush value on user input', () => {
             spyOn(table, 'flushValue').and.callThrough();
-            const input = { value: '2016-03-14' } as any;
+            const input = { "value": '2016-03-14' } as any;
 
             component.ngOnInit();
             component.onDateChanged(input);

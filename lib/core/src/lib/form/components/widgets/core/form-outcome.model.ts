@@ -31,7 +31,7 @@ export class FormOutcomeModel extends FormWidgetModel {
     skipValidation: boolean = false;
     visibilityCondition: WidgetVisibilityModel;
 
-    constructor(form: any, json?: any) {
+    constructor (form: any, json?: any) {
         super(form, json);
 
         if (json) {

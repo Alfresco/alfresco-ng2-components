@@ -22,12 +22,12 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'adf-version-comparison',
-    standalone: true,
-    imports: [CommonModule, TranslateModule, FileTypePipe],
-    templateUrl: './version-comparison.component.html',
-    styleUrls: ['./version-comparison.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-version-comparison',
+    "standalone": true,
+    "imports": [CommonModule, TranslateModule, FileTypePipe],
+    "templateUrl": './version-comparison.component.html',
+    "styleUrls": ['./version-comparison.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class VersionComparisonComponent {
     /** Target node. */
@@ -38,5 +38,5 @@ export class VersionComparisonComponent {
     @Input()
     newFileVersion: File;
 
-    constructor(public thumbnailService: ThumbnailService) {}
+    constructor (public thumbnailService: ThumbnailService) {}
 }

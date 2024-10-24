@@ -20,18 +20,18 @@ import { CommentProcessService } from './services/comment-process.service';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 @Component({
-    selector: 'adf-process-instance-comments',
-    standalone: true,
+    "selector": 'adf-process-instance-comments',
+    "standalone": true,
 
-    imports: [CommonModule, CommentsComponent],
-    providers: [
+    "imports": [CommonModule, CommentsComponent],
+    "providers": [
         {
-            provide: ADF_COMMENTS_SERVICE,
-            useClass: CommentProcessService
+            "provide": ADF_COMMENTS_SERVICE,
+            "useClass": CommentProcessService
         }
     ],
-    templateUrl: './process-comments.component.html',
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './process-comments.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class ProcessCommentsComponent {
     /** (**required**) The numeric ID of the process instance to display comments for. */

@@ -30,8 +30,8 @@ describe('LoginDialogPanelComponent', () => {
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule],
-            providers: [{ provide: OidcAuthenticationService, useValue: {} }]
+            "imports": [CoreTestingModule],
+            "providers": [{ "provide": OidcAuthenticationService, "useValue": {} }]
         });
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
         basicAlfrescoAuthService = TestBed.inject(BasicAlfrescoAuthService);
@@ -73,7 +73,7 @@ describe('LoginDialogPanelComponent', () => {
             expect(event.token.ticket).toBe('ticket');
             done();
         });
-        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
+        spyOn(basicAlfrescoAuthService, 'login').and.returnValue(of({ "type": 'type', "ticket": 'ticket' }));
         loginWithCredentials('fake-username', 'fake-password');
     });
 

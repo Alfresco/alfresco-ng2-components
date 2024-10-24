@@ -33,25 +33,25 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     let loader: HarnessLoader;
     const restOption: FormFieldOption[] = [
         {
-            id: 'opt-1',
-            name: 'opt-name-1'
+            "id": 'opt-1',
+            "name": 'opt-name-1'
         },
         {
-            id: 'opt-2',
-            name: 'opt-name-2'
+            "id": 'opt-2',
+            "name": 'opt-name-2'
         }
     ];
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            "imports": [ProcessServiceCloudTestingModule]
         });
         formCloudService = TestBed.inject(FormCloudService);
         fixture = TestBed.createComponent(RadioButtonsCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         loader = TestbedHarnessEnvironment.loader(fixture);
-        widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
+        widget.field = new FormFieldModel(new FormModel(), { "restUrl": '<url>' });
     });
 
     it('should update form on values fetched', () => {
@@ -64,9 +64,9 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         });
 
         widget.field = new FormFieldModel(form, {
-            id: fieldId,
-            optionType: 'rest',
-            restUrl: '<url>'
+            "id": fieldId,
+            "optionType": 'rest',
+            "restUrl": '<url>'
         });
         const field = widget.field;
         spyOn(field, 'updateForm').and.stub();
@@ -102,10 +102,10 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     describe('when widget is readonly', () => {
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({}), {
-                id: 'radio-id',
-                name: 'radio-name',
-                type: FormFieldTypes.RADIO_BUTTONS,
-                readOnly: true
+                "id": 'radio-id',
+                "name": 'radio-name',
+                "type": FormFieldTypes.RADIO_BUTTONS,
+                "readOnly": true
             });
 
             fixture.detectChanges();
@@ -122,12 +122,12 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     describe('fetching options from rest api', () => {
         const getRadioButtonsWidgetConfig = (readOnly: boolean) => ({
-            id: 'rest-radio-id',
-            name: 'Rest Radio Buttons',
-            type: FormFieldTypes.RADIO_BUTTONS,
+            "id": 'rest-radio-id',
+            "name": 'Rest Radio Buttons',
+            "type": FormFieldTypes.RADIO_BUTTONS,
             readOnly,
-            optionType: 'rest',
-            restUrl: '<url>'
+            "optionType": 'rest',
+            "restUrl": '<url>'
         });
 
         beforeEach(() => {
@@ -167,14 +167,14 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     it('should be able to set a Radio Buttons widget as required', async () => {
         widget.field = new FormFieldModel(new FormModel({}), {
-            id: 'radio-id',
-            name: 'radio-name-label',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            readOnly: false,
-            required: true,
-            optionType: 'manual',
-            options: restOption,
-            restUrl: null
+            "id": 'radio-id',
+            "name": 'radio-name-label',
+            "type": FormFieldTypes.RADIO_BUTTONS,
+            "readOnly": false,
+            "required": true,
+            "optionType": 'manual',
+            "options": restOption,
+            "restUrl": null
         });
 
         fixture.detectChanges();
@@ -184,43 +184,43 @@ describe('RadioButtonsCloudWidgetComponent', () => {
         expect(widgetLabel.innerText).toBe('radio-name-label*');
         expect(widget.field.isValid).toBe(false);
 
-        const option = await loader.getHarness(MatRadioButtonHarness.with({ label: 'opt-name-1' }));
+        const option = await loader.getHarness(MatRadioButtonHarness.with({ "label": 'opt-name-1' }));
         await option.check();
 
-        await loader.getHarness(MatRadioButtonHarness.with({ checked: true, label: 'opt-name-1' }));
+        await loader.getHarness(MatRadioButtonHarness.with({ "checked": true, "label": 'opt-name-1' }));
         expect(widget.field.isValid).toBe(true);
     });
 
     it('should set Radio Buttons widget as valid when required and not empty', async () => {
         widget.field = new FormFieldModel(new FormModel({}), {
-            id: 'radio-id',
-            name: 'radio-name-label',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            readOnly: false,
-            required: true,
-            optionType: 'manual',
-            options: restOption,
-            restUrl: null,
-            value: 'opt-name-2'
+            "id": 'radio-id',
+            "name": 'radio-name-label',
+            "type": FormFieldTypes.RADIO_BUTTONS,
+            "readOnly": false,
+            "required": true,
+            "optionType": 'manual',
+            "options": restOption,
+            "restUrl": null,
+            "value": 'opt-name-2'
         });
 
         fixture.detectChanges();
-        await loader.getHarness(MatRadioButtonHarness.with({ checked: true, label: 'opt-name-2' }));
+        await loader.getHarness(MatRadioButtonHarness.with({ "checked": true, "label": 'opt-name-2' }));
         expect(widget.field.isValid).toBe(true);
     });
 
     it('should be able to set a Radio Buttons widget when rest option enabled', () => {
         spyOn(formCloudService, 'getRestWidgetData').and.returnValue(of(restOption));
         widget.field = new FormFieldModel(new FormModel({}), {
-            id: 'radio-id',
-            name: 'radio-name-label',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            readOnly: false,
-            required: false,
-            optionType: 'rest',
-            options: [],
-            restUrl: 'http://mocky.com/mocky-12344',
-            value: { id: 'opt-1' }
+            "id": 'radio-id',
+            "name": 'radio-name-label',
+            "type": FormFieldTypes.RADIO_BUTTONS,
+            "readOnly": false,
+            "required": false,
+            "optionType": 'rest',
+            "options": [],
+            "restUrl": 'http://mocky.com/mocky-12344',
+            "value": { "id": 'opt-1' }
         });
         fixture.detectChanges();
 
@@ -250,14 +250,14 @@ describe('RadioButtonsCloudWidgetComponent', () => {
     it('should change the value of the form when an option is clicked', async () => {
         const form = new FormModel({});
         widget.field = new FormFieldModel(form, {
-            id: 'radio-id',
-            name: 'radio-name-label',
-            type: FormFieldTypes.RADIO_BUTTONS,
-            options: restOption
+            "id": 'radio-id',
+            "name": 'radio-name-label',
+            "type": FormFieldTypes.RADIO_BUTTONS,
+            "options": restOption
         });
         fixture.detectChanges();
         const formValueSpy = spyOn(widget.formService.formRulesEvent, 'next');
-        const radioButton = await loader.getHarness(MatRadioButtonHarness.with({ label: 'opt-name-1' }));
+        const radioButton = await loader.getHarness(MatRadioButtonHarness.with({ "label": 'opt-name-1' }));
         await radioButton.check();
 
         expect(widget.field.value).toEqual('opt-1');
@@ -266,11 +266,11 @@ describe('RadioButtonsCloudWidgetComponent', () => {
 
     describe('when tooltip is set', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.RADIO_BUTTONS,
-                tooltip: 'my custom tooltip',
-                optionType: 'manual',
-                options: restOption
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.RADIO_BUTTONS,
+                "tooltip": 'my custom tooltip',
+                "optionType": 'manual',
+                "options": restOption
             });
             fixture.detectChanges();
         });

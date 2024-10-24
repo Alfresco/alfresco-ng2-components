@@ -28,16 +28,16 @@ import { PermissionDisplayModel } from '../models/permission.model';
 import { RoleModel } from '../models/role.model';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class NodePermissionService {
     private _groupsApi: GroupsApi;
-    get groupsApi(): GroupsApi {
+    get groupsApi (): GroupsApi {
         this._groupsApi = this._groupsApi ?? new GroupsApi(this.apiService.getInstance());
         return this._groupsApi;
     }
 
-    constructor(
+    constructor (
         private apiService: AlfrescoApiService,
         private searchApiService: SearchService,
         private nodeService: NodesApiService,
@@ -46,11 +46,10 @@ export class NodePermissionService {
 
     /**
      * Gets a list of roles for the current node.
-     *
      * @param node The target node
      * @returns Array of strings representing the roles
      */
-    getNodeRoles(node: Node): Observable<string[]> {
+    getNodeRoles (node: Node): Observable<string[]> {
         if (node.path.elements.some((el) => el.nodeType === 'st:site' || el.nodeType === 'st:sites')) {
             const searchRequest = this.buildRetrieveSiteQueryBody(node.path.elements);
             return this.searchApiService.searchByQueryBody(searchRequest).pipe(
@@ -66,11 +65,10 @@ export class NodePermissionService {
 
     /**
      * Get permissions for a given node
-     *
      * @param node Node to check permissions for
      * @returns list of permission models
      */
-    getNodePermissions(node: Node): PermissionDisplayModel[] {
+    getNodePermissions (node: Node): PermissionDisplayModel[] {
         const result: PermissionDisplayModel[] = [];
 
         if (node?.permissions?.locallySet) {
@@ -91,13 +89,12 @@ export class NodePermissionService {
 
     /**
      * Updates the permission role for a node.
-     *
      * @param node Target node
      * @param updatedPermissionRole Permission role to update or add
      * @returns Node with updated permission
      */
-    updatePermissionRole(node: Node, updatedPermissionRole: PermissionElement): Observable<Node> {
-        const permissionBody = { permissions: { locallySet: [] } };
+    updatePermissionRole (node: Node, updatedPermissionRole: PermissionElement): Observable<Node> {
+        const permissionBody = { "permissions": { "locallySet": [] } };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
         permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
         if (index !== -1) {
@@ -110,24 +107,22 @@ export class NodePermissionService {
 
     /**
      * Update permissions for a node.
-     *
      * @param nodeId ID of the target node
      * @param permissionList New permission settings
      * @returns Node with updated permissions
      */
-    updateNodePermissions(nodeId: string, permissionList: PermissionElement[]): Observable<Node> {
+    updateNodePermissions (nodeId: string, permissionList: PermissionElement[]): Observable<Node> {
         return this.nodeService.getNode(nodeId).pipe(switchMap((node) => this.updateLocallySetPermissions(node, permissionList)));
     }
 
     /**
      * Updates the locally set permissions for a node.
-     *
      * @param node ID of the target node
      * @param permissions Permission settings
      * @returns Node with updated permissions
      */
-    updateLocallySetPermissions(node: Node, permissions: PermissionElement[]): Observable<Node> {
-        const permissionBody = { permissions: { locallySet: [] } };
+    updateLocallySetPermissions (node: Node, permissions: PermissionElement[]): Observable<Node> {
+        const permissionBody = { "permissions": { "locallySet": [] } };
         const permissionList = permissions;
         const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
         if (duplicatedPermissions.length > 0) {
@@ -141,7 +136,7 @@ export class NodePermissionService {
         return this.nodeService.updateNode(node.id, permissionBody);
     }
 
-    private getDuplicatedPermissions(nodeLocallySet: PermissionElement[], permissionListAdded: PermissionElement[]): PermissionElement[] {
+    private getDuplicatedPermissions (nodeLocallySet: PermissionElement[], permissionListAdded: PermissionElement[]): PermissionElement[] {
         const duplicatePermissions: PermissionElement[] = [];
         if (nodeLocallySet) {
             permissionListAdded.forEach((permission) => {
@@ -154,7 +149,7 @@ export class NodePermissionService {
         return duplicatePermissions;
     }
 
-    private isEqualPermission(oldPermission: PermissionElement, newPermission: PermissionElement): boolean {
+    private isEqualPermission (oldPermission: PermissionElement, newPermission: PermissionElement): boolean {
         return (
             oldPermission.accessStatus === newPermission.accessStatus &&
             oldPermission.authorityId === newPermission.authorityId &&
@@ -164,13 +159,12 @@ export class NodePermissionService {
 
     /**
      * Removes a permission setting from a node.
-     *
      * @param node ID of the target node
      * @param permissionToRemove Permission setting to remove
      * @returns Node with modified permissions
      */
-    removePermission(node: Node, permissionToRemove: PermissionElement): Observable<Node> {
-        const permissionBody = { permissions: { locallySet: [] } };
+    removePermission (node: Node, permissionToRemove: PermissionElement): Observable<Node> {
+        const permissionBody = { "permissions": { "locallySet": [] } };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(permissionToRemove.authorityId);
 
         if (index !== -1) {
@@ -182,7 +176,7 @@ export class NodePermissionService {
         }
     }
 
-    private getGroupMembersBySiteName(siteName: string): Observable<string[]> {
+    private getGroupMembersBySiteName (siteName: string): Observable<string[]> {
         const groupName = 'GROUP_site_' + siteName;
         return this.getGroupMemberByGroupName(groupName).pipe(
             map((groupMemberPaging) => {
@@ -197,41 +191,40 @@ export class NodePermissionService {
 
     /**
      * Gets all members related to a group name.
-     *
      * @param groupName Name of group to look for members
      * @param opts Extra options supported by JS-API
      * @returns List of members
      */
-    getGroupMemberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
+    getGroupMemberByGroupName (groupName: string, opts?: any): Observable<GroupMemberPaging> {
         return from(this.groupsApi.listGroupMemberships(groupName, opts));
     }
 
-    private formattedRoleName(displayName, siteName): string {
+    private formattedRoleName (displayName, siteName): string {
         return displayName.replace(siteName + '_', '');
     }
 
-    private buildRetrieveSiteQueryBody(nodePath: PathElement[]): SearchRequest {
+    private buildRetrieveSiteQueryBody (nodePath: PathElement[]): SearchRequest {
         const pathNames = nodePath.map((node) => 'name: "' + node.name + '"');
         const builtPathNames = pathNames.join(' OR ');
 
         return {
-            query: {
-                query: builtPathNames
+            "query": {
+                "query": builtPathNames
             },
-            paging: {
-                maxItems: 100,
-                skipCount: 0
+            "paging": {
+                "maxItems": 100,
+                "skipCount": 0
             },
-            include: ['aspectNames', 'properties'],
-            filterQueries: [
+            "include": ['aspectNames', 'properties'],
+            "filterQueries": [
                 {
-                    query: `TYPE:'st:site'`
+                    "query": `TYPE:'st:site'`
                 }
             ]
         };
     }
 
-    getLocalPermissions(node: Node): PermissionDisplayModel[] {
+    getLocalPermissions (node: Node): PermissionDisplayModel[] {
         const result: PermissionDisplayModel[] = [];
 
         if (node?.permissions?.locallySet) {
@@ -243,7 +236,7 @@ export class NodePermissionService {
         return result;
     }
 
-    getInheritedPermission(node: Node): PermissionDisplayModel[] {
+    getInheritedPermission (node: Node): PermissionDisplayModel[] {
         const result: PermissionDisplayModel[] = [];
 
         if (node?.permissions?.inherited) {
@@ -258,13 +251,12 @@ export class NodePermissionService {
 
     /**
      * Removes permissions setting from a node.
-     *
      * @param node target node with permission
      * @param permissions Permissions to remove
      * @returns Node with modified permissions
      */
-    removePermissions(node: Node, permissions: PermissionElement[]): Observable<Node> {
-        const permissionBody = { permissions: { locallySet: [] } };
+    removePermissions (node: Node, permissions: PermissionElement[]): Observable<Node> {
+        const permissionBody = { "permissions": { "locallySet": [] } };
 
         permissions.forEach((permission) => {
             const index = node.permissions.locallySet.findIndex((locallySet) => locallySet.authorityId === permission.authorityId);
@@ -278,38 +270,36 @@ export class NodePermissionService {
 
     /**
      * updates permissions setting from a node.
-     *
      * @param node target node with permission
      * @param permissions Permissions to update
      * @returns Node with modified permissions
      */
-    updatePermissions(node: Node, permissions: PermissionElement[]): Observable<Node> {
-        const permissionBody = { permissions: { locallySet: [] } };
+    updatePermissions (node: Node, permissions: PermissionElement[]): Observable<Node> {
+        const permissionBody = { "permissions": { "locallySet": [] } };
         permissionBody.permissions.locallySet = permissions;
         return this.nodeService.updateNode(node.id, permissionBody);
     }
 
     /**
      * Gets all node detail for nodeId along with settable permissions.
-     *
      * @param nodeId Id of the node
      * @returns node and it's associated roles { node: Node; roles: RoleModel[] }
      */
-    getNodeWithRoles(nodeId: string): Observable<{ node: Node; roles: RoleModel[] }> {
+    getNodeWithRoles (nodeId: string): Observable<{ node: Node; roles: RoleModel[] }> {
         return this.nodeService.getNode(nodeId).pipe(
             switchMap((node) =>
                 forkJoin({
-                    node: of(node),
-                    roles: this.getNodeRoles(node).pipe(
+                    "node": of(node),
+                    "roles": this.getNodeRoles(node).pipe(
                         catchError(() => of(node.permissions?.settable)),
-                        map((_roles) => _roles.map((role) => ({ role, label: role })))
+                        map((_roles) => _roles.map((role) => ({ role, "label": role })))
                     )
                 })
             )
         );
     }
 
-    transformNodeToUserPerson(node: Node): { person: EcmUserModel; group: Group } {
+    transformNodeToUserPerson (node: Node): { person: EcmUserModel; group: Group } {
         let person = null;
         let group: Group = null;
         if (node.nodeType === 'cm:person') {

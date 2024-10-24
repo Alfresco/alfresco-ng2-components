@@ -27,7 +27,8 @@ export class GroupCloudComponentPage {
     groupField = $('group-cloud-widget .adf-readonly');
     formFields = new FormFields();
 
-    getGroupRowLocatorByName = async (name: string): Promise<ElementFinder> => $$(`${materialLocators.Option.root}[data-automation-id="adf-cloud-group-chip-${name}"]`).first();
+    getGroupRowLocatorByName = async (name: string): Promise<ElementFinder> =>
+        $$(`${materialLocators.Option.root}[data-automation-id="adf-cloud-group-chip-${name}"]`).first();
 
     async searchGroups(name: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.groupCloudSearch, name, 100);
@@ -64,15 +65,19 @@ export class GroupCloudComponentPage {
             return true;
         } catch (e) {
             return false;
-        };
+        }
     }
 
     async checkGroupNotSelected(group: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText(`${materialLocators.Chip.grid.row.root}[data-automation-id*="adf-cloud-group-chip-"]`, group)));
+        await BrowserVisibility.waitUntilElementIsNotVisible(
+            element(by.cssContainingText(`${materialLocators.Chip.grid.row.root}[data-automation-id*="adf-cloud-group-chip-"]`, group))
+        );
     }
 
     async removeSelectedGroup(group: string): Promise<void> {
-        const locator = $(`${materialLocators.Chip.grid.row.root}[data-automation-id*="adf-cloud-group-chip-${group}"] ${materialLocators.Icon.root}`);
+        const locator = $(
+            `${materialLocators.Chip.grid.row.root}[data-automation-id*="adf-cloud-group-chip-${group}"] ${materialLocators.Icon.root}`
+        );
         await BrowserActions.click(locator);
     }
 
@@ -85,7 +90,7 @@ export class GroupCloudComponentPage {
         }
     }
 
-    async checkGroupWidgetIsReadOnly(): Promise <boolean> {
+    async checkGroupWidgetIsReadOnly(): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.groupField);
             return true;
@@ -94,7 +99,7 @@ export class GroupCloudComponentPage {
         }
     }
 
-    async checkGroupActiveField(name: string): Promise <boolean> {
+    async checkGroupActiveField(name: string): Promise<boolean> {
         try {
             await BrowserActions.clearSendKeys(this.groupField, name);
             return true;

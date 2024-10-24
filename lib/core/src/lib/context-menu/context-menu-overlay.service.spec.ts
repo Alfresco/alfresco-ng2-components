@@ -25,16 +25,16 @@ describe('ContextMenuOverlayService', () => {
     let overlay: Overlay;
     let injector: Injector;
     const overlayConfig = {
-        panelClass: 'test-panel',
-        source: {
-            clientY: 1,
-            clientX: 1
+        "panelClass": 'test-panel',
+        "source": {
+            "clientY": 1,
+            "clientX": 1
         } as MouseEvent
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [Overlay]
+            "providers": [Overlay]
         });
         overlay = TestBed.inject(Overlay);
         injector = TestBed.inject(Injector);

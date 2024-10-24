@@ -42,7 +42,7 @@ describe('IconCellComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [IconCellComponent]
+            "imports": [IconCellComponent]
         }).compileComponents();
 
         fixture = TestBed.createComponent(IconCellComponent);
@@ -58,10 +58,10 @@ describe('IconCellComponent', () => {
 
         beforeEach(() => {
             rowData = {
-                id: '1',
-                value: 'group'
+                "id": '1',
+                "value": 'group'
             };
-            columnData = { type: 'icon', key: 'value' };
+            columnData = { "type": 'icon', "key": 'value' };
             dataTableAdapter = new ObjectDataTableAdapter([rowData], [new ObjectDataColumn(columnData)]);
             nextSpy = spyOn(component.value$, 'next');
         });

@@ -27,7 +27,7 @@ describe('SearchAiService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(SearchAiService);
     });
@@ -35,15 +35,15 @@ describe('SearchAiService', () => {
     describe('ask', () => {
         it('should load information about question', (done) => {
             const question: QuestionModel = {
-                question: 'some question',
-                questionId: 'some id',
-                restrictionQuery: { nodesIds: ['nodeId1', 'nodeId2'] }
+                "question": 'some question',
+                "questionId": 'some id',
+                "restrictionQuery": { "nodesIds": ['nodeId1', 'nodeId2'] }
             };
             spyOn(service.searchAiApi, 'ask').and.returnValue(Promise.resolve(question));
             const questionRequest: QuestionRequest = {
-                question: 'some question',
-                nodeIds: ['nodeId1', 'nodeId2'],
-                agentId: 'some id'
+                "question": 'some question',
+                "nodeIds": ['nodeId1', 'nodeId2'],
+                "agentId": 'some id'
             };
 
             service.ask(questionRequest).subscribe((questionResponse) => {
@@ -58,13 +58,13 @@ describe('SearchAiService', () => {
         it('should load information about question', (done) => {
             const questionId = 'some id';
             const answer: AiAnswerEntry = {
-                entry: {
-                    answer: 'Some answer 1',
+                "entry": {
+                    "answer": 'Some answer 1',
                     questionId,
-                    references: [
+                    "references": [
                         {
-                            referenceId: 'some reference id 1',
-                            referenceText: 'some reference text 1'
+                            "referenceId": 'some reference id 1',
+                            "referenceText": 'some reference text 1'
                         }
                     ]
                 }
@@ -82,8 +82,8 @@ describe('SearchAiService', () => {
     describe('getConfig', () => {
         it('should load knowledge retrieval configuration', (done) => {
             const config: KnowledgeRetrievalConfigEntry = {
-                entry: {
-                    knowledgeRetrievalUrl: 'https://some-url'
+                "entry": {
+                    "knowledgeRetrievalUrl": 'https://some-url'
                 }
             };
             spyOn(service.searchAiApi, 'getConfig').and.returnValue(Promise.resolve(config));
@@ -99,8 +99,8 @@ describe('SearchAiService', () => {
     describe('updateSearchAiInputState', () => {
         it('should trigger toggleSearchAiInput$', () => {
             const state: SearchAiInputState = {
-                active: true,
-                selectedAgentId: 'some id'
+                "active": true,
+                "selectedAgentId": 'some id'
             };
             service.updateSearchAiInputState(state);
 
@@ -133,10 +133,10 @@ describe('SearchAiService', () => {
         it('should not return error if user did not select any files', () => {
             expect(
                 service.checkSearchAvailability({
-                    count: 0,
-                    nodes: [],
-                    libraries: [],
-                    isEmpty: true
+                    "count": 0,
+                    "nodes": [],
+                    "libraries": [],
+                    "isEmpty": true
                 })
             ).toEqual('');
         });
@@ -144,31 +144,31 @@ describe('SearchAiService', () => {
         it('should return error for too many files selected', () => {
             expect(
                 service.checkSearchAvailability({
-                    count: 101,
-                    nodes: [],
-                    libraries: [],
-                    isEmpty: false
+                    "count": 101,
+                    "nodes": [],
+                    "libraries": [],
+                    "isEmpty": false
                 })
             ).toBe(tooManyFilesSelectedError);
             expect(translateService.instant).toHaveBeenCalledWith('KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED', {
-                maxFiles: 100,
-                key: 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED'
+                "maxFiles": 100,
+                "key": 'KNOWLEDGE_RETRIEVAL.SEARCH.WARNINGS.TOO_MANY_FILES_SELECTED'
             });
         });
 
         it('should return error for folder selected', () => {
             expect(
                 service.checkSearchAvailability({
-                    count: 1,
-                    nodes: [
+                    "count": 1,
+                    "nodes": [
                         {
-                            entry: {
-                                isFolder: true
+                            "entry": {
+                                "isFolder": true
                             } as Node
                         }
                     ],
-                    libraries: [],
-                    isEmpty: false
+                    "libraries": [],
+                    "isEmpty": false
                 })
             ).toBe(folderSelectedError);
         });
@@ -176,21 +176,21 @@ describe('SearchAiService', () => {
         it('should return error for folder and if non text mime type node is selected', () => {
             expect(
                 service.checkSearchAvailability({
-                    count: 1,
-                    nodes: [
+                    "count": 1,
+                    "nodes": [
                         {
-                            entry: {
-                                isFolder: true,
-                                content: {
-                                    mimeType: 'some mime type',
-                                    mimeTypeName: 'some mime type',
-                                    sizeInBytes: 100
+                            "entry": {
+                                "isFolder": true,
+                                "content": {
+                                    "mimeType": 'some mime type',
+                                    "mimeTypeName": 'some mime type',
+                                    "sizeInBytes": 100
                                 }
                             } as Node
                         }
                     ],
-                    libraries: [],
-                    isEmpty: false
+                    "libraries": [],
+                    "isEmpty": false
                 })
             ).toBe(folderSelectedError);
         });
@@ -198,21 +198,21 @@ describe('SearchAiService', () => {
         it('should return more than one error if more validators detected issues', () => {
             expect(
                 service.checkSearchAvailability({
-                    count: 101,
-                    nodes: [
+                    "count": 101,
+                    "nodes": [
                         {
-                            entry: {
-                                isFolder: true,
-                                content: {
-                                    mimeType: 'image/jpeg',
-                                    mimeTypeName: 'image/jpeg',
-                                    sizeInBytes: 100
+                            "entry": {
+                                "isFolder": true,
+                                "content": {
+                                    "mimeType": 'image/jpeg',
+                                    "mimeTypeName": 'image/jpeg',
+                                    "sizeInBytes": 100
                                 }
                             } as Node
                         }
                     ],
-                    libraries: [],
-                    isEmpty: false
+                    "libraries": [],
+                    "isEmpty": false
                 })
             ).toBe(`${tooManyFilesSelectedError} ${folderSelectedError}`);
         });

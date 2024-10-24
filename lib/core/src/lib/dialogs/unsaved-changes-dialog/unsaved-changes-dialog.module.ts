@@ -20,7 +20,7 @@ import { UnsavedChangesDialogComponent } from './unsaved-changes-dialog.componen
 
 /** @deprecated import `UnsavedChangesDialogComponent` instead */
 @NgModule({
-    imports: [UnsavedChangesDialogComponent],
-    exports: [UnsavedChangesDialogComponent]
+    "imports": [UnsavedChangesDialogComponent],
+    "exports": [UnsavedChangesDialogComponent]
 })
 export class UnsavedChangesDialogModule {}

@@ -16,60 +16,60 @@
  */
 
 export const taskPresetsCloudDefaultModel = {
-    default: [
+    "default": [
         {
-            id: 'name',
-            key: 'name',
-            type: 'text',
-            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.NAME',
-            sortable: true
+            "id": 'name',
+            "key": 'name',
+            "type": 'text',
+            "title": 'ADF_CLOUD_TASK_LIST.PROPERTIES.NAME',
+            "sortable": true
         },
         {
-            id: 'created',
-            key: 'created',
-            type: 'text',
-            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED',
-            cssClass: 'hidden',
-            sortable: true
+            "id": 'created',
+            "key": 'created',
+            "type": 'text',
+            "title": 'ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED',
+            "cssClass": 'hidden',
+            "sortable": true
         },
         {
-            id: 'assignee',
-            key: 'assignee',
-            type: 'text',
-            title: 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',
-            cssClass: 'hidden',
-            sortable: true
+            "id": 'assignee',
+            "key": 'assignee',
+            "type": 'text',
+            "title": 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',
+            "cssClass": 'hidden',
+            "sortable": true
         }
     ]
 };
 
 export const serviceTaskPresetsCloudDefaultModel = {
-    default: [
+    "default": [
         {
-            key: 'activityName',
-            type: 'text',
-            title: 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ACTIVITY_NAME',
-            sortable: true
+            "key": 'activityName',
+            "type": 'text',
+            "title": 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ACTIVITY_NAME',
+            "sortable": true
         },
         {
-            key: 'status',
-            type: 'text',
-            title: 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STATUS',
-            sortable: true
+            "key": 'status',
+            "type": 'text',
+            "title": 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STATUS',
+            "sortable": true
         },
         {
-            key: 'startedDate',
-            type: 'text',
-            title: 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STARTED_DATE',
-            cssClass: 'hidden',
-            sortable: true
+            "key": 'startedDate',
+            "type": 'text',
+            "title": 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STARTED_DATE',
+            "cssClass": 'hidden',
+            "sortable": true
         },
         {
-            key: 'completedDate',
-            type: 'text',
-            title: 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.COMPLETED_DATE',
-            cssClass: 'hidden',
-            sortable: true
+            "key": 'completedDate',
+            "type": 'text',
+            "title": 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.COMPLETED_DATE',
+            "cssClass": 'hidden',
+            "sortable": true
         }
     ]
 };

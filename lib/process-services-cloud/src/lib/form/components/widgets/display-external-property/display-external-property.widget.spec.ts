@@ -35,8 +35,8 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule, ReactiveFormsModule, DisplayExternalPropertyWidgetComponent],
-            providers: [FormService]
+            "imports": [ProcessServiceCloudTestingModule, ReactiveFormsModule, DisplayExternalPropertyWidgetComponent],
+            "providers": [FormService]
         }).compileComponents();
 
         fixture = TestBed.createComponent(DisplayExternalPropertyWidgetComponent);
@@ -47,11 +47,11 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
     });
 
     it('should display initial value', async () => {
-        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-            type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
-            readOnly: true,
-            externalProperty: 'fruitName',
-            value: 'banana'
+        widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+            "type": FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+            "readOnly": true,
+            "externalProperty": 'fruitName',
+            "value": 'banana'
         });
 
         fixture.detectChanges();
@@ -62,11 +62,11 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
     });
 
     it('should NOT display external property name in NO preview state', () => {
-        widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-            type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
-            readOnly: true,
-            externalProperty: 'fruitName',
-            value: 'banana'
+        widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+            "type": FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+            "readOnly": true,
+            "externalProperty": 'fruitName',
+            "value": 'banana'
         });
 
         fixture.detectChanges();
@@ -77,10 +77,10 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
     describe('when property load fails', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
-                externalProperty: 'fruitName',
-                value: null
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+                "externalProperty": 'fruitName',
+                "value": null
             });
 
             fixture.detectChanges();
@@ -94,11 +94,11 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
     describe('when property is in preview state', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
-                externalProperty: 'fruitName',
-                params: { externalPropertyLabel: 'Fruit Name' },
-                value: null
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+                "externalProperty": 'fruitName',
+                "params": { "externalPropertyLabel": 'Fruit Name' },
+                "value": null
             });
 
             spyOn(formCloudService, 'getPreviewState').and.returnValue(true);
@@ -118,9 +118,9 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
     describe('when is required', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                "type": FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY,
+                "required": true
             });
 
             fixture.detectChanges();
@@ -136,11 +136,11 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
 
     describe('when form model has left labels', () => {
         it('should have left labels classes on leftLabels true', async () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                id: 'external-property-id',
-                name: 'external-property-name',
-                value: '',
-                type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": true }), {
+                "id": 'external-property-id',
+                "name": 'external-property-name',
+                "value": '',
+                "type": FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
             });
 
             fixture.detectChanges();
@@ -153,11 +153,11 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels false', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                id: 'external-property-id',
-                name: 'external-property-name',
-                value: '',
-                type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": false }), {
+                "id": 'external-property-id',
+                "name": 'external-property-name',
+                "value": '',
+                "type": FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
             });
 
             fixture.detectChanges();
@@ -170,11 +170,11 @@ describe('DisplayExternalPropertyWidgetComponent', () => {
         });
 
         it('should not have left labels classes on leftLabels not present', () => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'external-property-id',
-                name: 'external-property-name',
-                value: '',
-                type: FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'external-property-id',
+                "name": 'external-property-name',
+                "value": '',
+                "type": FormFieldTypes.DISPLAY_EXTERNAL_PROPERTY
             });
 
             fixture.detectChanges();

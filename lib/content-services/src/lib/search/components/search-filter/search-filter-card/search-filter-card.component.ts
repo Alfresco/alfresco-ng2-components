@@ -23,24 +23,24 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'adf-search-filter-card',
-    standalone: true,
-    imports: [CommonModule, SearchWidgetContainerComponent, TranslateModule, MatButtonModule],
-    templateUrl: './search-filter-card.component.html',
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-filter-card',
+    "standalone": true,
+    "imports": [CommonModule, SearchWidgetContainerComponent, TranslateModule, MatButtonModule],
+    "templateUrl": './search-filter-card.component.html',
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchFilterCardComponent {
     @Input()
     category: SearchCategory;
 
-    @ViewChild(SearchWidgetContainerComponent, { static: false })
+    @ViewChild(SearchWidgetContainerComponent, { "static": false })
     widgetContainerComponent: SearchWidgetContainerComponent;
 
-    clear() {
+    clear () {
         this.widgetContainerComponent.resetInnerWidget();
     }
 
-    apply() {
+    apply () {
         this.widgetContainerComponent.applyInnerWidget();
     }
 }

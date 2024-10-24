@@ -30,28 +30,28 @@ export interface CategorySelectorDialogOptions {
 }
 
 @Component({
-    selector: 'adf-category-selector-dialog',
-    standalone: true,
-    imports: [CommonModule, MatDialogModule, TranslateModule, CategoriesManagementComponent, MatButtonModule],
-    templateUrl: './category-selector.dialog.html',
-    styleUrls: ['./category-selector.dialog.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-category-selector-dialog',
+    "standalone": true,
+    "imports": [CommonModule, MatDialogModule, TranslateModule, CategoriesManagementComponent, MatButtonModule],
+    "templateUrl": './category-selector.dialog.html',
+    "styleUrls": ['./category-selector.dialog.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class CategorySelectorDialogComponent implements OnInit {
     categories: Category[] = [];
     categoriesManagementMode = CategoriesManagementMode.ASSIGN;
     multiSelect = true;
 
-    constructor(
+    constructor (
         private dialog: MatDialogRef<CategorySelectorDialogComponent, boolean>,
         @Inject(MAT_DIALOG_DATA) private options: CategorySelectorDialogOptions
     ) {}
 
-    ngOnInit() {
+    ngOnInit () {
         this.multiSelect = this.options.multiSelect ?? true;
     }
 
-    selectCategories() {
+    selectCategories () {
         this.options.select.next(this.categories);
         this.dialog.close(true);
     }

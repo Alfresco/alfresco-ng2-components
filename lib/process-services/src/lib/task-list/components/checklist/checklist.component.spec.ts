@@ -32,14 +32,14 @@ describe('ChecklistComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule]
+            "imports": [ProcessTestingModule]
         });
         service = TestBed.inject(TaskListService);
         spyOn(service, 'getTaskChecklist').and.returnValue(
             of([
                 new TaskRepresentation({
-                    id: 'fake-check-changed-id',
-                    name: 'fake-check-changed-name'
+                    "id": 'fake-check-changed-id',
+                    "name": 'fake-check-changed-name'
                 })
             ])
         );
@@ -66,8 +66,8 @@ describe('ChecklistComponent', () => {
             checklistComponent.taskId = 'fake-task-id';
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-check-id',
-                    name: 'fake-check-name'
+                    "id": 'fake-check-id',
+                    "name": 'fake-check-name'
                 })
             );
             checklistComponent.readOnly = true;
@@ -91,8 +91,8 @@ describe('ChecklistComponent', () => {
             checklistComponent.readOnly = false;
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-check-id',
-                    name: 'fake-check-name'
+                    "id": 'fake-check-id',
+                    "name": 'fake-check-name'
                 })
             );
 
@@ -149,8 +149,8 @@ describe('ChecklistComponent', () => {
         it('should show task checklist', () => {
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-check-id',
-                    name: 'fake-check-name'
+                    "id": 'fake-check-id',
+                    "name": 'fake-check-name'
                 })
             );
             fixture.detectChanges();
@@ -161,15 +161,15 @@ describe('ChecklistComponent', () => {
         it('should not show delete icon when checklist task is completed', () => {
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-check-id',
-                    name: 'fake-check-name'
+                    "id": 'fake-check-id',
+                    "name": 'fake-check-name'
                 })
             );
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-completed-id',
-                    name: 'fake-completed-name',
-                    endDate: new Date('2018-05-23T11:25:14.552+0000')
+                    "id": 'fake-completed-id',
+                    "name": 'fake-completed-name',
+                    "endDate": new Date('2018-05-23T11:25:14.552+0000')
                 })
             );
             fixture.detectChanges();
@@ -183,8 +183,8 @@ describe('ChecklistComponent', () => {
             spyOn(service, 'addTask').and.returnValue(
                 of(
                     new TaskRepresentation({
-                        id: 'fake-check-added-id',
-                        name: 'fake-check-added-name'
+                        "id": 'fake-check-added-id',
+                        "name": 'fake-check-added-name'
                     })
                 )
             );
@@ -206,8 +206,8 @@ describe('ChecklistComponent', () => {
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-check-id',
-                    name: 'fake-check-name'
+                    "id": 'fake-check-id',
+                    "name": 'fake-check-name'
                 })
             );
 
@@ -230,8 +230,8 @@ describe('ChecklistComponent', () => {
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-check-id',
-                    name: 'fake-check-name'
+                    "id": 'fake-check-id',
+                    "name": 'fake-check-name'
                 })
             );
 
@@ -251,14 +251,14 @@ describe('ChecklistComponent', () => {
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-check-id',
-                    name: 'fake-check-name'
+                    "id": 'fake-check-id',
+                    "name": 'fake-check-name'
                 })
             );
             fixture.detectChanges();
             const change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
-                taskId: change
+                "taskId": change
             });
 
             fixture.detectChanges();
@@ -272,8 +272,8 @@ describe('ChecklistComponent', () => {
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(
                 new TaskRepresentation({
-                    id: 'fake-check-id',
-                    name: 'fake-check-name'
+                    "id": 'fake-check-id',
+                    "name": 'fake-check-name'
                 })
             );
 
@@ -283,7 +283,7 @@ describe('ChecklistComponent', () => {
             checklistComponent.taskId = null;
             const change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
-                taskId: change
+                "taskId": change
             });
 
             fixture.detectChanges();
@@ -294,7 +294,7 @@ describe('ChecklistComponent', () => {
         });
 
         it('should emit checklist task created event when the checklist is successfully added', (done) => {
-            spyOn(service, 'addTask').and.returnValue(of(new TaskRepresentation({ id: 'fake-check-added-id', name: 'fake-check-added-name' })));
+            spyOn(service, 'addTask').and.returnValue(of(new TaskRepresentation({ "id": 'fake-check-added-id', "name": 'fake-check-added-name' })));
 
             const disposableCreated = checklistComponent.checklistTaskCreated.subscribe((taskAdded) => {
                 fixture.detectChanges();

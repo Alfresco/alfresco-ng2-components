@@ -30,9 +30,9 @@ import { PeopleListComponent } from '../people-list/people-list.component';
 import { DataColumnComponent, DataColumnListComponent } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-people',
-    standalone: true,
-    imports: [
+    "selector": 'adf-people',
+    "standalone": true,
+    "imports": [
         CommonModule,
         MatCardModule,
         TranslateModule,
@@ -42,9 +42,9 @@ import { DataColumnComponent, DataColumnListComponent } from '@alfresco/adf-core
         DataColumnListComponent,
         DataColumnComponent
     ],
-    templateUrl: './people.component.html',
-    styleUrls: ['./people.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './people.component.html',
+    "styleUrls": ['./people.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class PeopleComponent {
     /** The array of User objects to display. */
@@ -70,68 +70,68 @@ export class PeopleComponent {
 
     private peopleSearchObserver: Observer<LightUserRepresentation[]>;
 
-    constructor(public peopleProcessService: PeopleProcessService) {
+    constructor (public peopleProcessService: PeopleProcessService) {
         this.peopleSearch$ = new Observable<LightUserRepresentation[]>((observer) => (this.peopleSearchObserver = observer)).pipe(share());
     }
 
-    searchUser(searchedWord: string) {
+    searchUser (searchedWord: string) {
         this.peopleProcessService.getWorkflowUsers(this.taskId, searchedWord).subscribe({
-            next: (users) => {
+            "next": (users) => {
                 this.peopleSearchObserver.next(users);
             },
-            error: (error) => this.error.emit(error)
+            "error": (error) => this.error.emit(error)
         });
     }
 
-    involveUser(user: LightUserRepresentation) {
+    involveUser (user: LightUserRepresentation) {
         if (user?.id !== undefined) {
             this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString()).subscribe({
-                next: () => (this.people = [...this.people, user]),
-                error: () => this.error.emit('Impossible to involve user with task')
+                "next": () => (this.people = [...this.people, user]),
+                "error": () => this.error.emit('Impossible to involve user with task')
             });
         }
     }
 
-    removeInvolvedUser(user: LightUserRepresentation) {
+    removeInvolvedUser (user: LightUserRepresentation) {
         this.peopleProcessService.removeInvolvedUser(this.taskId, user.id.toString()).subscribe({
-            next: () => {
+            "next": () => {
                 this.people = this.people.filter((involvedUser) => involvedUser.id !== user.id);
             },
-            error: () => this.error.emit('Impossible to remove involved user from task')
+            "error": () => this.error.emit('Impossible to remove involved user from task')
         });
     }
 
-    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+    getDisplayUser (firstName: string, lastName: string, delimiter: string = '-'): string {
         firstName = firstName !== null ? firstName : '';
         lastName = lastName !== null ? lastName : '';
         return firstName + delimiter + lastName;
     }
 
-    getInitialUserName(firstName: string, lastName: string) {
+    getInitialUserName (firstName: string, lastName: string) {
         firstName = firstName !== null && firstName !== '' ? firstName[0] : '';
         lastName = lastName !== null && lastName !== '' ? lastName[0] : '';
         return this.getDisplayUser(firstName, lastName, '');
     }
 
-    onAddAssignment() {
+    onAddAssignment () {
         this.showAssignment = true;
     }
 
-    onClickAction(event: UserEventModel) {
+    onClickAction (event: UserEventModel) {
         if (event?.value && event.type === 'remove') {
             this.removeInvolvedUser(event.value);
         }
     }
 
-    hasPeople(): boolean {
+    hasPeople (): boolean {
         return this.people && this.people.length > 0;
     }
 
-    isEditMode(): boolean {
+    isEditMode (): boolean {
         return !this.readOnly;
     }
 
-    onCloseSearch() {
+    onCloseSearch () {
         this.showAssignment = false;
     }
 }

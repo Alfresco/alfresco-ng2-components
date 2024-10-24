@@ -46,9 +46,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'adf-tree',
-    standalone: true,
-    imports: [
+    "selector": 'adf-tree',
+    "standalone": true,
+    "imports": [
         CommonModule,
         TranslateModule,
         MatTreeModule,
@@ -60,10 +60,10 @@ import { MatIconModule } from '@angular/material/icon';
         MatMenuModule,
         MatIconModule
     ],
-    templateUrl: './tree.component.html',
-    styleUrls: ['./tree.component.scss'],
-    host: { class: 'adf-tree' },
-    encapsulation: ViewEncapsulation.None
+    "templateUrl": './tree.component.html',
+    "styleUrls": ['./tree.component.scss'],
+    "host": { "class": 'adf-tree' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     /** TemplateRef to provide empty template when no nodes are loaded */
@@ -117,22 +117,22 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
     public loadingRoot$: Observable<boolean>;
     public treeNodesSelection = new SelectionModel<T>(true, [], true, (node1: T, node2: T) => node1.id === node2.id);
 
-    constructor(public treeService: TreeService<T>, private userPreferenceService: UserPreferencesService) {}
+    constructor (public treeService: TreeService<T>, private userPreferenceService: UserPreferencesService) {}
 
-    set contextMenuSource(contextMenuSource: T) {
+    set contextMenuSource (contextMenuSource: T) {
         this._contextMenuSource = contextMenuSource;
     }
 
     /** Array of context menu options which should be displayed for each row. */
     @Input()
-    set contextMenuOptions(contextMenuOptions: any[]) {
+    set contextMenuOptions (contextMenuOptions: any[]) {
         this.contextMenuOptionsChanged$.next();
         if (contextMenuOptions) {
             this._contextMenuOptions = contextMenuOptions.map((option) => {
                 if (!option.subject) {
                     option = {
                         ...option,
-                        subject: new Subject()
+                        "subject": new Subject()
                     };
                 }
                 return option;
@@ -141,8 +141,8 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
                 .pipe(takeUntil(this.contextMenuOptionsChanged$))
                 .subscribe((option) => {
                     this.contextMenuOptionSelected.emit({
-                        row: this._contextMenuSource,
-                        contextMenuOption: option
+                        "row": this._contextMenuSource,
+                        "contextMenuOption": option
                     });
                 });
         } else {
@@ -150,11 +150,11 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         }
     }
 
-    get contextMenuOptions(): any[] {
+    get contextMenuOptions (): any[] {
         return this._contextMenuOptions;
     }
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.loadingRoot$ = this.loadingRootSource.asObservable();
         this.refreshTree(0, this.userPreferenceService.paginationSize);
         this.treeNodesSelection.changed.subscribe((selectionChange: SelectionChange<T>) => {
@@ -162,49 +162,45 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.contextMenuOptionsChanged$.next();
         this.contextMenuOptionsChanged$.complete();
     }
 
     /**
      * Checks if node is LoadMoreNode node
-     *
      * @param _idx (unused)
      * @param node node to be checked
      * @returns `true` if there are more items to load, otherwise `false`
      */
-    public isLoadMoreNode(_idx: number, node: T): boolean {
+    public isLoadMoreNode (_idx: number, node: T): boolean {
         return node.nodeType === TreeNodeType.LoadMoreNode;
     }
 
     /**
      * Checks if tree is empty
-     *
      * @returns boolean
      */
-    public isEmpty(): boolean {
+    public isEmpty (): boolean {
         return this.treeService.isEmpty();
     }
 
     /**
      * Returns action icon based on expanded/collapsed node state.
-     *
      * @param node node to be checked
      * @returns collapse or expand icon
      */
-    public expandCollapseIconValue(node: T): string {
+    public expandCollapseIconValue (node: T): string {
         return this.treeService.treeControl.isExpanded(node) ? this.collapseIcon : this.expandIcon;
     }
 
     /**
      * Refreshes the tree, root nodes are reloaded, tree selection is cleared.
-     *
      * @param skipCount Number of root nodes to skip.
      * @param maxItems Maximum number of nodes returned from Observable.
      * @param searchTerm Specifies if categories should be filtered out by name or not. If not specified then returns categories without filtering.
      */
-    public refreshTree(skipCount?: number, maxItems?: number, searchTerm?: string): void {
+    public refreshTree (skipCount?: number, maxItems?: number, searchTerm?: string): void {
         this.loadingRootSource.next(true);
         this.treeNodesSelection.clear();
         this.treeService.getSubNodes('-root-', skipCount, maxItems, searchTerm).subscribe((response: TreeResponse<T>) => {
@@ -217,10 +213,9 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Collapses or expanding the node based on its current state
-     *
      * @param node node to be collapsed/expanded
      */
-    public expandCollapseNode(node: T): void {
+    public expandCollapseNode (node: T): void {
         if (node.hasChildren && !node.isLoading) {
             if (this.treeService.treeControl.isExpanded(node)) {
                 this.treeService.collapseNode(node);
@@ -242,10 +237,9 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Loads more subnode for a given parent node
-     *
      * @param node parent node
      */
-    public loadMoreSubnodes(node: T): void {
+    public loadMoreSubnodes (node: T): void {
         node.isLoading = true;
         const parentNode: T = this.treeService.getParentNode(node.parentId);
         this.treeService.removeNode(node);
@@ -266,10 +260,9 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * When node is selected it selects all its descendants
-     *
      * @param node selected node
      */
-    public onNodeSelected(node: T): void {
+    public onNodeSelected (node: T): void {
         this.treeNodesSelection.toggle(node);
         const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter(this.isRegularNode);
         if (descendants.length > 0) {
@@ -282,22 +275,20 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
 
     /**
      * Checks if all descendants of a node are selected
-     *
      * @param node selected node
      * @returns boolean
      */
-    public descendantsAllSelected(node: T): boolean {
+    public descendantsAllSelected (node: T): boolean {
         const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter(this.isRegularNode);
         return descendants.length > 0 && descendants.every((descendant: T) => this.treeNodesSelection.isSelected(descendant));
     }
 
     /**
      * Checks if some descendants of a node are selected
-     *
      * @param node selected node
      * @returns boolean
      */
-    public descendantsPartiallySelected(node: T): boolean {
+    public descendantsPartiallySelected (node: T): boolean {
         const descendants: T[] = this.treeService.treeControl.getDescendants(node).filter(this.isRegularNode);
         return (
             descendants.length > 0 &&
@@ -306,7 +297,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         );
     }
 
-    private checkParentsSelection(node: T): void {
+    private checkParentsSelection (node: T): void {
         let parent: T = this.treeService.getParentNode(node.parentId);
         while (parent) {
             this.checkRootNodeSelection(parent);
@@ -314,7 +305,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         }
     }
 
-    private checkRootNodeSelection(node: T): void {
+    private checkRootNodeSelection (node: T): void {
         const nodeSelected: boolean = this.treeNodesSelection.isSelected(node);
         const descAllSelected = this.descendantsAllSelected(node);
         if (nodeSelected && !descAllSelected) {
@@ -324,7 +315,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         }
     }
 
-    private onTreeSelectionChange(selectionChange: SelectionChange<T>): void {
+    private onTreeSelectionChange (selectionChange: SelectionChange<T>): void {
         selectionChange.removed.forEach((unselectedNode: T) => {
             if (this.isRegularNode(unselectedNode)) {
                 this.nodeCheckboxes.find((checkbox: MatCheckbox) => checkbox.id === unselectedNode.id).checked = false;
@@ -337,7 +328,7 @@ export class TreeComponent<T extends TreeNode> implements OnInit, OnDestroy {
         });
     }
 
-    private isRegularNode(node: T): boolean {
+    private isRegularNode (node: T): boolean {
         return node.nodeType !== TreeNodeType.LoadMoreNode;
     }
 }

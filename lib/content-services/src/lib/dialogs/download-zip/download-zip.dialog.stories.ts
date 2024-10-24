@@ -29,57 +29,57 @@ import { CoreStoryModule } from '../../../../../core/src/public-api';
 import { AlfrescoApiService } from '../../services';
 
 export default {
-    component: DownloadZipDialogStorybookComponent,
-    title: 'Core/Dialog/Download ZIP Dialog',
-    decorators: [
+    "component": DownloadZipDialogStorybookComponent,
+    "title": 'Core/Dialog/Download ZIP Dialog',
+    "decorators": [
         moduleMetadata({
-            declarations: [DownloadZipDialogStorybookComponent],
-            imports: [MatButtonModule, MatDialogModule, HttpClientTestingModule],
-            providers: [
+            "declarations": [DownloadZipDialogStorybookComponent],
+            "imports": [MatButtonModule, MatDialogModule, HttpClientTestingModule],
+            "providers": [
                 {
-                    provide: AlfrescoApiService,
-                    useClass: AlfrescoApiServiceMock
+                    "provide": AlfrescoApiService,
+                    "useClass": AlfrescoApiServiceMock
                 },
                 {
-                    provide: DownloadZipService,
-                    useClass: DownloadZipMockService
+                    "provide": DownloadZipService,
+                    "useClass": DownloadZipMockService
                 },
                 {
-                    provide: ContentService,
-                    useClass: ContentApiMock
+                    "provide": ContentService,
+                    "useClass": ContentApiMock
                 },
                 {
-                    provide: NodesApiService,
-                    useClass: NodesApiMock
+                    "provide": NodesApiService,
+                    "useClass": NodesApiMock
                 }
             ]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    argTypes: {
-        showLoading: {
-            control: {
-                type: 'boolean'
+    "argTypes": {
+        "showLoading": {
+            "control": {
+                "type": 'boolean'
             },
-            table: {
-                category: 'Story controls',
-                type: {
-                    summary: 'boolean'
+            "table": {
+                "category": 'Story controls',
+                "type": {
+                    "summary": 'boolean'
                 },
-                defaultValue: {
-                    summary: 'false'
+                "defaultValue": {
+                    "summary": 'false'
                 }
             }
         }
     },
-    args: {
-        showLoading: false
+    "args": {
+        "showLoading": false
     }
 } as Meta<DownloadZipDialogStorybookComponent>;
 
 export const DownloadZIPDialog: StoryFn<DownloadZipDialogStorybookComponent> = (args) => ({
-    props: args
+    "props": args
 });
-DownloadZIPDialog.parameters = { layout: 'centered' };
+DownloadZIPDialog.parameters = { "layout": 'centered' };

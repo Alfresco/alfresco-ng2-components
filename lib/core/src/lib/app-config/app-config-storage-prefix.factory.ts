@@ -27,25 +27,24 @@ export interface StoragePrefixFactoryService {
 export const STORAGE_PREFIX_FACTORY_SERVICE = new InjectionToken<StoragePrefixFactoryService>('STORAGE_PREFIX_FACTORY_SERVICE');
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class StoragePrefixFactory {
-    constructor(
+    constructor (
         private appConfigService: AppConfigService,
         @Optional()
-        @Inject(STORAGE_PREFIX_FACTORY_SERVICE) private storagePrefixFactory?: StoragePrefixFactoryService
+        @Inject(STORAGE_PREFIX_FACTORY_SERVICE)
+        private storagePrefixFactory?: StoragePrefixFactoryService
     ) {}
 
-    getPrefix(): Observable<string | undefined> {
+    getPrefix (): Observable<string | undefined> {
         return this.appConfigService.select(AppConfigValues.STORAGE_PREFIX).pipe(
             switchMap((prefix: string | undefined) => {
                 if (prefix) {
                     return of(prefix);
                 }
 
-                return this.storagePrefixFactory ?
-                    this.storagePrefixFactory.getPrefix() :
-                    of(prefix);
+                return this.storagePrefixFactory ? this.storagePrefixFactory.getPrefix() : of(prefix);
             })
         );
     }

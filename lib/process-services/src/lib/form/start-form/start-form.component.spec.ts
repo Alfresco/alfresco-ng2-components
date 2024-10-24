@@ -57,8 +57,8 @@ describe('StartFormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ProcessTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
@@ -69,7 +69,7 @@ describe('StartFormComponent', () => {
 
         getStartFormSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(
             of({
-                processDefinitionName: 'my:process'
+                "processDefinitionName": 'my:process'
             })
         );
 
@@ -83,34 +83,34 @@ describe('StartFormComponent', () => {
 
     it('should load start form on change if processDefinitionId defined', () => {
         component.processDefinitionId = exampleId1;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+        component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
         expect(processService.getStartFormDefinition).toHaveBeenCalled();
     });
 
     it('should load start form when processDefinitionId changed', () => {
         component.processDefinitionId = exampleId1;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+        component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
         expect(processService.getStartFormDefinition).toHaveBeenCalled();
     });
 
     it('should check visibility when the start form is loaded', () => {
         spyOn(visibilityService, 'refreshVisibility');
         component.processDefinitionId = exampleId1;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+        component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
         expect(processService.getStartFormDefinition).toHaveBeenCalled();
         expect(visibilityService.refreshVisibility).toHaveBeenCalled();
     });
 
     it('should not load start form when changes notified but no change to processDefinitionId', () => {
         component.processDefinitionId = undefined;
-        component.ngOnChanges({ otherProp: new SimpleChange(exampleId1, exampleId2, true) });
+        component.ngOnChanges({ "otherProp": new SimpleChange(exampleId1, exampleId2, true) });
         expect(processService.getStartFormDefinition).not.toHaveBeenCalled();
     });
 
     it('should be able to inject sigle file as value into the form with an upload single widget', () => {
         getStartFormSpy.and.returnValue(of(taskFormSingleUploadMock));
         component.data = preselectedSingleNode;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId1, true) });
+        component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId1, true) });
 
         expect(component.form.getFieldById('fake-single-upload').value).toBeDefined();
         expect(component.form.getFieldById('fake-single-upload').value.length).toBe(1);
@@ -120,7 +120,7 @@ describe('StartFormComponent', () => {
     it('should be able to inject multiple files as value into the form with an upload multiple widget', () => {
         getStartFormSpy.and.returnValue(of(taskFormMultipleUploadMock));
         component.data = preselectedMultipleNodes;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId1, true) });
+        component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId1, true) });
 
         expect(component.form.getFieldById('fake-multiple-upload').value).toBeDefined();
         expect(component.form.getFieldById('fake-multiple-upload').value.length).toBe(2);
@@ -130,19 +130,19 @@ describe('StartFormComponent', () => {
     it('should show outcome buttons by default', () => {
         getStartFormSpy.and.returnValue(
             of({
-                id: '1',
-                processDefinitionName: 'my:process',
-                outcomes: [
+                "id": '1',
+                "processDefinitionName": 'my:process',
+                "outcomes": [
                     {
-                        id: 'approve',
-                        name: 'Approve'
+                        "id": 'approve',
+                        "name": 'Approve'
                     }
                 ]
             })
         );
         component.processDefinitionId = exampleId1;
         component.ngOnInit();
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+        component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
         fixture.detectChanges();
         expect(component.outcomesContainer).toBeTruthy();
     });
@@ -150,19 +150,19 @@ describe('StartFormComponent', () => {
     it('should show outcome buttons if showOutcomeButtons is true', () => {
         getStartFormSpy.and.returnValue(
             of({
-                id: '1',
-                processDefinitionName: 'my:process',
-                outcomes: [
+                "id": '1',
+                "processDefinitionName": 'my:process',
+                "outcomes": [
                     {
-                        id: 'approve',
-                        name: 'Approve'
+                        "id": 'approve',
+                        "name": 'Approve'
                     }
                 ]
             })
         );
         component.processDefinitionId = exampleId1;
         component.showOutcomeButtons = true;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+        component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
         fixture.detectChanges();
         expect(component.outcomesContainer).toBeTruthy();
     });
@@ -171,7 +171,7 @@ describe('StartFormComponent', () => {
         getStartFormSpy.and.returnValue(of(startMockForm));
         component.processDefinitionId = exampleId1;
         component.showOutcomeButtons = true;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+        component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
         fixture.detectChanges();
         expect(component.outcomesContainer).toBeTruthy();
         expect(getStartFormSpy).toHaveBeenCalled();
@@ -182,7 +182,7 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startFormTextDefinitionMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -202,7 +202,7 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startFormRadioButtonWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -221,7 +221,7 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startFormAmountWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -238,7 +238,7 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startFormNumberWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -255,7 +255,7 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startFormDropdownDefinitionMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -279,7 +279,7 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startFormDateWidgetMock));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -298,7 +298,7 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
             const formFields = component.form.getFormFields();
 
             const labelField = formFields.find((field) => field.id === 'billdate');
@@ -313,7 +313,7 @@ describe('StartFormComponent', () => {
             getStartFormSpy.and.returnValue(of(startMockForm));
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -341,7 +341,7 @@ describe('StartFormComponent', () => {
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             const refreshElement = await (await loader.getHarness(MatCardHarness)).getHarness(MatButtonHarness);
             await refreshElement.click();
@@ -359,7 +359,7 @@ describe('StartFormComponent', () => {
             component.processDefinitionId = exampleId1;
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -380,7 +380,7 @@ describe('StartFormComponent', () => {
             component.showOutcomeButtons = true;
             component.showRefreshButton = true;
             component.showTitle = true;
-            component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
+            component.ngOnChanges({ "processDefinitionId": new SimpleChange(exampleId1, exampleId2, true) });
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -407,14 +407,14 @@ describe('StartFormComponent', () => {
         it('should enable custom outcome buttons', () => {
             const formModel = new FormModel();
             component.form = formModel;
-            const outcome = new FormOutcomeModel(formModel, { id: 'action1', name: 'Action 1' });
+            const outcome = new FormOutcomeModel(formModel, { "id": 'action1', "name": 'Action 1' });
             expect(component.isOutcomeButtonVisible(outcome, component.form.readOnly)).toBeTruthy();
         });
 
         it('should allow controlling [complete] button visibility', () => {
             const formModel = new FormModel();
             component.form = formModel;
-            const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+            const outcome = new FormOutcomeModel(formModel, { "id": '$save', "name": FormOutcomeModel.SAVE_ACTION });
 
             component.showSaveButton = true;
             expect(component.isOutcomeButtonVisible(outcome, component.form.readOnly)).toBeTruthy();
@@ -427,7 +427,7 @@ describe('StartFormComponent', () => {
             const formModel = new FormModel();
             formModel.readOnly = true;
             component.form = formModel;
-            const outcome = new FormOutcomeModel(formModel, { id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION });
+            const outcome = new FormOutcomeModel(formModel, { "id": '$complete', "name": FormOutcomeModel.COMPLETE_ACTION });
 
             component.showCompleteButton = true;
             expect(component.isOutcomeButtonVisible(outcome, component.form.readOnly)).toBeTruthy();
@@ -437,23 +437,23 @@ describe('StartFormComponent', () => {
             const formModel = new FormModel();
             formModel.readOnly = true;
             component.form = formModel;
-            const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+            const outcome = new FormOutcomeModel(formModel, { "id": '$save', "name": FormOutcomeModel.SAVE_ACTION });
 
             component.showSaveButton = true;
             expect(component.isOutcomeButtonVisible(outcome, component.form.readOnly)).toBeFalsy();
         });
 
         it('should show [custom-outcome] button with readOnly form and selected custom-outcome', () => {
-            const formModel = new FormModel({ selectedOutcome: 'custom-outcome' });
+            const formModel = new FormModel({ "selectedOutcome": 'custom-outcome' });
             formModel.readOnly = true;
             component.form = formModel;
-            const outcome = new FormOutcomeModel(formModel, { id: '$customoutome', name: 'custom-outcome' });
+            const outcome = new FormOutcomeModel(formModel, { "id": '$customoutome', "name": 'custom-outcome' });
 
             component.showCompleteButton = true;
             component.showSaveButton = true;
             expect(component.isOutcomeButtonVisible(outcome, component.form.readOnly)).toBeTruthy();
 
-            const outcome1 = new FormOutcomeModel(formModel, { id: '$customoutome2', name: 'custom-outcome2' });
+            const outcome1 = new FormOutcomeModel(formModel, { "id": '$customoutome2', "name": 'custom-outcome2' });
             expect(component.isOutcomeButtonVisible(outcome1, component.form.readOnly)).toBeFalsy();
         });
 
@@ -461,7 +461,7 @@ describe('StartFormComponent', () => {
             const formModel = new FormModel();
             formModel.readOnly = false;
             component.form = formModel;
-            const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
+            const outcome = new FormOutcomeModel(formModel, { "id": '$save', "name": FormOutcomeModel.COMPLETE_ACTION });
 
             component.showCompleteButton = true;
             expect(component.isOutcomeButtonVisible(outcome, component.form.readOnly)).toBeTruthy();

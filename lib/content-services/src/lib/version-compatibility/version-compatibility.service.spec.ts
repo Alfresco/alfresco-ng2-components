@@ -27,22 +27,22 @@ describe('VersionCompatibilityService', () => {
     const mockProductInfo = new BehaviorSubject<RepositoryInfo>(null);
 
     const acsResponseMock = {
-        version: {
-            display: '7.0.1',
-            major: '7',
-            minor: '0',
-            patch: '1'
+        "version": {
+            "display": '7.0.1',
+            "major": '7',
+            "minor": '0',
+            "patch": '1'
         }
     };
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
-            imports: [],
-            providers: [
+            "imports": [],
+            "providers": [
                 {
-                    provide: DiscoveryApiService,
-                    useValue: {
-                        ecmProductInfo$: mockProductInfo
+                    "provide": DiscoveryApiService,
+                    "useValue": {
+                        "ecmProductInfo$": mockProductInfo
                     }
                 }
             ]
@@ -59,7 +59,7 @@ describe('VersionCompatibilityService', () => {
     });
 
     it('should validate give version', () => {
-        expect(versionCompatibilityService.getAcsVersion()).toEqual({ display: '7.0.1', major: '7', minor: '0', patch: '1' } as any);
+        expect(versionCompatibilityService.getAcsVersion()).toEqual({ "display": '7.0.1', "major": '7', "minor": '0', "patch": '1' } as any);
         expect(versionCompatibilityService.isVersionSupported('8.0.0')).toBe(false);
         expect(versionCompatibilityService.isVersionSupported('7.0.1')).toBe(true);
         expect(versionCompatibilityService.isVersionSupported('7.0.0')).toBe(true);
@@ -68,7 +68,7 @@ describe('VersionCompatibilityService', () => {
 
     it('should emit versionCompatibilityInitialized after retrieving acs version', (done) => {
         versionCompatibilityService.acsVersionInitialized$.subscribe(() => {
-            expect(versionCompatibilityService.getAcsVersion()).toEqual({ display: '7.0.1', major: '7', minor: '0', patch: '1' } as any);
+            expect(versionCompatibilityService.getAcsVersion()).toEqual({ "display": '7.0.1', "major": '7', "minor": '0', "patch": '1' } as any);
             done();
         });
     });

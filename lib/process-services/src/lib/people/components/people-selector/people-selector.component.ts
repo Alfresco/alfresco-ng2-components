@@ -31,13 +31,13 @@ import { MatIconModule } from '@angular/material/icon';
 const DEFAULT_ASSIGNEE_PLACEHOLDER = 'ADF_TASK_LIST.PEOPLE.ASSIGNEE';
 
 @Component({
-    selector: 'adf-people-selector',
-    standalone: true,
-    imports: [CommonModule, PeopleSearchFieldComponent, MatButtonModule, MatIconModule],
-    templateUrl: './people-selector.component.html',
-    styleUrls: ['./people-selector.component.scss'],
-    host: { class: 'adf-people-selector' },
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-people-selector',
+    "standalone": true,
+    "imports": [CommonModule, PeopleSearchFieldComponent, MatButtonModule, MatIconModule],
+    "templateUrl": './people-selector.component.html',
+    "styleUrls": ['./people-selector.component.scss'],
+    "host": { "class": 'adf-people-selector' },
+    "encapsulation": ViewEncapsulation.None
 })
 export class PeopleSelectorComponent {
     @Input()
@@ -47,38 +47,38 @@ export class PeopleSelectorComponent {
     @Output()
     peopleIdChange: EventEmitter<number>;
 
-    @ViewChild('peopleSearchField', { static: true })
+    @ViewChild('peopleSearchField', { "static": true })
     searchFieldComponent: PeopleSearchFieldComponent;
 
     performSearch: PerformSearchCallback;
     selectedUser: LightUserRepresentation;
     defaultPlaceholder: string;
 
-    constructor(private peopleProcessService: PeopleProcessService, private translationService: TranslationService) {
+    constructor (private peopleProcessService: PeopleProcessService, private translationService: TranslationService) {
         this.peopleIdChange = new EventEmitter();
         this.performSearch = this.searchUser.bind(this);
         this.defaultPlaceholder = this.translationService.instant(DEFAULT_ASSIGNEE_PLACEHOLDER);
     }
 
-    searchUser(searchWord: string): Observable<any | LightUserRepresentation[]> {
+    searchUser (searchWord: string): Observable<any | LightUserRepresentation[]> {
         return this.peopleProcessService.getWorkflowUsers(undefined, searchWord).pipe(catchError(() => of([])));
     }
 
-    userSelected(user: LightUserRepresentation): void {
+    userSelected (user: LightUserRepresentation): void {
         this.updateUserSelection(user);
     }
 
-    userDeselected(): void {
+    userDeselected (): void {
         this.updateUserSelection(undefined);
     }
 
-    private updateUserSelection(user: LightUserRepresentation): void {
+    private updateUserSelection (user: LightUserRepresentation): void {
         this.selectedUser = user;
         this.peopleIdChange.emit(user?.id);
         this.searchFieldComponent.reset();
     }
 
-    get placeholder() {
+    get placeholder () {
         if (!this.selectedUser) {
             return this.defaultPlaceholder;
         }

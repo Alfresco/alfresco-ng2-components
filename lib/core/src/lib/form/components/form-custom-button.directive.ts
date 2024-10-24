@@ -18,7 +18,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-    selector: '[adf-form-custom-button]',
-    standalone: true
+    "selector": '[adf-form-custom-button]',
+    "standalone": true
 })
 export class StartFormCustomButtonDirective {}

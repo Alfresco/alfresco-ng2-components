@@ -22,7 +22,7 @@ export const CLIPBOARD_DIRECTIVES = [ClipboardDirective, ClipboardComponent] as 
 
 /** @deprecated use `...CLIPBOARD_DIRECTIVES` or import standalone directives */
 @NgModule({
-    imports: [...CLIPBOARD_DIRECTIVES],
-    exports: [...CLIPBOARD_DIRECTIVES]
+    "imports": [...CLIPBOARD_DIRECTIVES],
+    "exports": [...CLIPBOARD_DIRECTIVES]
 })
 export class ClipboardModule {}

@@ -25,56 +25,56 @@ import { CommentsServiceStoriesMock } from '../mocks/comments.service.stories.mo
 import { ADF_COMMENTS_SERVICE } from '../interfaces/comments.token';
 
 export default {
-    component: CommentListComponent,
-    title: 'Core/Comments/Comment List',
-    decorators: [
+    "component": CommentListComponent,
+    "title": 'Core/Comments/Comment List',
+    "decorators": [
         moduleMetadata({
-            imports: [CommentListComponent],
-            providers: [
-                { provide: CommentListServiceMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
-                { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
+            "imports": [CommentListComponent],
+            "providers": [
+                { "provide": CommentListServiceMock, "useValue": { "getUserProfileImage": () => '../assets/images/logo.png' } },
+                { "provide": ADF_COMMENTS_SERVICE, "useClass": CommentsServiceStoriesMock }
             ]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: 'Displays a list of comments from users involved in a specified task or node'
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": 'Displays a list of comments from users involved in a specified task or node'
             }
         }
     },
-    argTypes: {
-        comments: {
-            control: 'object',
-            description: 'CommentModel array',
-            table: {
-                type: { summary: 'CommentModel[]' }
+    "argTypes": {
+        "comments": {
+            "control": 'object',
+            "description": 'CommentModel array',
+            "table": {
+                "type": { "summary": 'CommentModel[]' }
             }
         },
-        clickRow: {
-            action: 'clickRow',
-            description: 'Emitted when the user clicks on one of the comment rows',
-            table: {
-                category: 'Actions',
-                type: { summary: 'EventEmitter <CommentModel>' }
+        "clickRow": {
+            "action": 'clickRow',
+            "description": 'Emitted when the user clicks on one of the comment rows',
+            "table": {
+                "category": 'Actions',
+                "type": { "summary": 'EventEmitter <CommentModel>' }
             }
         }
     }
 } as Meta<CommentListComponent>;
 
 const template: StoryFn<CommentListComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const TaskBased = template.bind({});
 TaskBased.args = {
-    comments: commentsTaskData
+    "comments": commentsTaskData
 };
 
 export const NodeBased = template.bind({});
 NodeBased.args = {
-    comments: commentsNodeData
+    "comments": commentsNodeData
 };

@@ -30,56 +30,56 @@ describe('Date Range Filter service', () => {
 
     it('should return today range', () => {
         const expectedDate = {
-            startDate: startOfDay(new Date()).toISOString(),
-            endDate: endOfDay(new Date()).toISOString()
+            "startDate": startOfDay(new Date()).toISOString(),
+            "endDate": endOfDay(new Date()).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.TODAY)).toEqual(expectedDate);
     });
 
     it('should return month range', () => {
         const expectedDate = {
-            startDate: startOfMonth(new Date()).toISOString(),
-            endDate: endOfMonth(new Date()).toISOString()
+            "startDate": startOfMonth(new Date()).toISOString(),
+            "endDate": endOfMonth(new Date()).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.MONTH)).toEqual(expectedDate);
     });
 
     it('should return year range', () => {
         const expectedDate = {
-            startDate: startOfYear(new Date()).toISOString(),
-            endDate: endOfYear(new Date()).toISOString()
+            "startDate": startOfYear(new Date()).toISOString(),
+            "endDate": endOfYear(new Date()).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.YEAR)).toEqual(expectedDate);
     });
 
     it('should return quarter range', () => {
         const expectedDate = {
-            startDate: startOfQuarter(new Date()).toISOString(),
-            endDate: endOfQuarter(new Date()).toISOString()
+            "startDate": startOfQuarter(new Date()).toISOString(),
+            "endDate": endOfQuarter(new Date()).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.QUARTER)).toEqual(expectedDate);
     });
 
     it('should reset date range when no_date type is selected', () => {
         const expectedDate = {
-            startDate: null,
-            endDate: null
+            "startDate": null,
+            "endDate": null
         };
         expect(service.getDateRange(DateCloudFilterType.NO_DATE)).toEqual(expectedDate);
     });
 
     it('should return tomorow range', () => {
         const expectedDate = {
-            startDate: endOfDay(new Date()).toISOString(),
-            endDate: add(endOfDay(new Date()), { days: 1 }).toISOString()
+            "startDate": endOfDay(new Date()).toISOString(),
+            "endDate": add(endOfDay(new Date()), { "days": 1 }).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.TOMORROW)).toEqual(expectedDate);
     });
 
     it('should return next 7 days range', () => {
         const expectedDate = {
-            startDate: startOfDay(new Date()).toISOString(),
-            endDate: add(endOfDay(new Date()), { days: 7 }).toISOString()
+            "startDate": startOfDay(new Date()).toISOString(),
+            "endDate": add(endOfDay(new Date()), { "days": 7 }).toISOString()
         };
         expect(service.getDateRange(DateCloudFilterType.NEXT_7_DAYS)).toEqual(expectedDate);
     });

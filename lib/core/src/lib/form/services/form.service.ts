@@ -33,7 +33,7 @@ import { FormSpinnerEvent } from '../events';
 import { FormFieldModel } from '../components/widgets';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class FormService implements FormValidationService {
     formLoaded = new Subject<FormEvent>();
@@ -59,26 +59,25 @@ export class FormService implements FormValidationService {
 
     formRulesEvent = new Subject<FormRulesEvent>();
 
-    constructor() {}
+    constructor () {}
 
     /**
      * Parses JSON data to create a corresponding Form model.
-     *
      * @param json JSON to create the form
      * @param data Values for the form fields
      * @param readOnly Should the form fields be read-only?
      * @param fixedSpace use fixed space
      * @returns Form model created from input data
      */
-    parseForm(json: any, data?: FormValues, readOnly: boolean = false, fixedSpace?: boolean): FormModel {
+    parseForm (json: any, data?: FormValues, readOnly: boolean = false, fixedSpace?: boolean): FormModel {
         if (json) {
             const form = new FormModel(json, data, readOnly, this, fixedSpace);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {
-                        id: '$save',
-                        name: FormOutcomeModel.SAVE_ACTION,
-                        isSystem: true
+                        "id": '$save',
+                        "name": FormOutcomeModel.SAVE_ACTION,
+                        "isSystem": true
                     })
                 ];
             }
@@ -87,7 +86,7 @@ export class FormService implements FormValidationService {
         return null;
     }
 
-    getPreviewState(): boolean {
+    getPreviewState (): boolean {
         return false;
     }
 }

@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
- /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { FormWidgetModel } from './form-widget.model';
 
 export class TabModel extends FormWidgetModel {
-
     title: string;
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel;
 
     fields: FormWidgetModel[] = [];
 
-    hasContent(): boolean {
+    hasContent (): boolean {
         return this.fields && this.fields.length > 0;
     }
 
-    constructor(form: any, json?: any) {
+    constructor (form: any, json?: any) {
         super(form, json);
 
         if (json) {

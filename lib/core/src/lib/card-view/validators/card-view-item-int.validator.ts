@@ -18,23 +18,22 @@
 import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
 
 export class CardViewItemIntValidator implements CardViewItemValidator {
-
     message = 'CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR';
 
-    isValid(value: any | any[]): boolean {
+    isValid (value: any | any[]): boolean {
         if (Array.isArray(value)) {
             return value.every(this.isIntegerNumber);
         }
 
-        return value === '' || !isNaN(value) && this.isIntegerNumber(value) && this.isNotOnlySpace(value);
+        return value === '' || (!isNaN(value) && this.isIntegerNumber(value) && this.isNotOnlySpace(value));
     }
 
-    isIntegerNumber(value: any): boolean {
+    isIntegerNumber (value: any): boolean {
         const parsedNumber = Number(value);
         return (parsedNumber | 0) === parsedNumber;
     }
 
-    isNotOnlySpace(value: any): boolean {
+    isNotOnlySpace (value: any): boolean {
         return String(value).trim() !== '';
     }
 }

@@ -29,11 +29,11 @@ import {
 import { AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 
 @NgModule({
-    imports: [HttpClientModule, NoopAnimationsModule, TaskListCloudModule, ...CONTEXT_MENU_DIRECTIVES],
-    providers: [
-        { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-        { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock }
+    "imports": [HttpClientModule, NoopAnimationsModule, TaskListCloudModule, ...CONTEXT_MENU_DIRECTIVES],
+    "providers": [
+        { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+        { "provide": AppConfigService, "useClass": AppConfigServiceMock },
+        { "provide": TranslationService, "useClass": TranslationMock }
     ]
 })
 export class TaskListTestingModule {}

@@ -27,7 +27,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopTranslateModule } from '@alfresco/adf-core';
 
 describe('TextWidgetComponent', () => {
-    const form = new FormModel({ taskId: 'fake-task-id' });
+    const form = new FormModel({ "taskId": 'fake-task-id' });
 
     let loader: HarnessLoader;
     let widget: TextWidgetComponent;
@@ -37,7 +37,7 @@ describe('TextWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, TextWidgetComponent]
+            "imports": [NoopTranslateModule, NoopAnimationsModule, TextWidgetComponent]
         });
         fixture = TestBed.createComponent(TextWidgetComponent);
         widget = fixture.componentInstance;
@@ -49,11 +49,11 @@ describe('TextWidgetComponent', () => {
         describe('and no mask is configured on text element', () => {
             it('should raise ngModelChange event', async () => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false
                 });
 
                 fixture.detectChanges();
@@ -67,11 +67,11 @@ describe('TextWidgetComponent', () => {
 
             it('should be able to set label property', () => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false
                 });
 
                 fixture.detectChanges();
@@ -81,29 +81,29 @@ describe('TextWidgetComponent', () => {
 
             it('should be able to set a placeholder for Text widget', async () => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    placeholder: 'Your name here'
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "placeholder": 'Your name here'
                 });
                 fixture.detectChanges();
                 await fixture.whenStable();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Your name here' }));
+                const inputField = await loader.getHarness(MatInputHarness.with({ "placeholder": 'Your name here' }));
                 expect(inputField).toBeTruthy();
             });
 
             it('should be able to set min/max length properties for Text widget', async () => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    minLength: 5,
-                    maxLength: 10
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "minLength": 5,
+                    "maxLength": 10
                 });
                 fixture.detectChanges();
 
@@ -128,12 +128,12 @@ describe('TextWidgetComponent', () => {
 
             it('should be able to set regex pattern property for Text widget', async () => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    regexPattern: '[0-9]'
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "regexPattern": '[0-9]'
                 });
                 fixture.detectChanges();
 
@@ -151,9 +151,9 @@ describe('TextWidgetComponent', () => {
 
         describe('when tooltip is set', () => {
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                    type: FormFieldTypes.TEXT,
-                    tooltip: 'my custom tooltip'
+                widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                    "type": FormFieldTypes.TEXT,
+                    "tooltip": 'my custom tooltip'
                 });
                 fixture.detectChanges();
             });
@@ -170,12 +170,12 @@ describe('TextWidgetComponent', () => {
         describe('when is required', () => {
             beforeEach(() => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    required: true
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "required": true
                 });
             });
 
@@ -202,11 +202,11 @@ describe('TextWidgetComponent', () => {
         describe('and no mask is configured on text element', () => {
             beforeEach(() => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: true
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": true
                 });
 
                 fixture.detectChanges();
@@ -223,13 +223,13 @@ describe('TextWidgetComponent', () => {
 
             beforeEach(() => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    params: { inputMask: '##-##0,00%' },
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    placeholder: 'simple placeholder'
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "params": { "inputMask": '##-##0,00%' },
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "placeholder": 'simple placeholder'
                 });
 
                 fixture.detectChanges();
@@ -241,7 +241,7 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the field placeholder', async () => {
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'simple placeholder' }));
+                const inputField = await loader.getHarness(MatInputHarness.with({ "placeholder": 'simple placeholder' }));
                 expect(inputField).toBeTruthy();
             });
 
@@ -249,7 +249,7 @@ describe('TextWidgetComponent', () => {
                 const input = await loader.getHarness(MatInputHarness);
                 await (await input.host()).click();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'simple placeholder' }));
+                const inputField = await loader.getHarness(MatInputHarness.with({ "placeholder": 'simple placeholder' }));
                 expect(inputField).toBeTruthy();
             });
 
@@ -327,12 +327,12 @@ describe('TextWidgetComponent', () => {
 
             beforeEach(() => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    params: { existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true },
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "params": { "existingColspan": 1, "maxColspan": 2, "inputMask": '#.##0,00%', "inputMaskReversed": true },
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false
                 });
 
                 fixture.detectChanges();
@@ -367,20 +367,20 @@ describe('TextWidgetComponent', () => {
         describe('and a mask placeholder is configured', () => {
             beforeEach(() => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    params: { inputMask: '##-##0,00%', inputMaskPlaceholder: 'Phone : (__) ___-___' },
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    placeholder: 'simple placeholder'
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "params": { "inputMask": '##-##0,00%', "inputMaskPlaceholder": 'Phone : (__) ___-___' },
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "placeholder": 'simple placeholder'
                 });
 
                 fixture.detectChanges();
             });
 
             it('should show the input mask placeholder', async () => {
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Phone : (__) ___-___' }));
+                const inputField = await loader.getHarness(MatInputHarness.with({ "placeholder": 'Phone : (__) ___-___' }));
                 expect(inputField).toBeTruthy();
             });
 
@@ -388,20 +388,20 @@ describe('TextWidgetComponent', () => {
                 const input = await loader.getHarness(MatInputHarness);
                 await (await input.host()).click();
 
-                const inputField = await loader.getHarness(MatInputHarness.with({ placeholder: 'Phone : (__) ___-___' }));
+                const inputField = await loader.getHarness(MatInputHarness.with({ "placeholder": 'Phone : (__) ___-___' }));
                 expect(inputField).toBeTruthy();
             });
         });
 
         describe('when form model has left labels', () => {
             it('should have left labels classes on leftLabels true', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: true }), {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    required: true
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": true }), {
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "required": true
                 });
 
                 fixture.detectChanges();
@@ -415,13 +415,13 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should not have left labels classes on leftLabels false', async () => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id', leftLabels: false }), {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    required: true
+                widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id', "leftLabels": false }), {
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "required": true
                 });
 
                 fixture.detectChanges();
@@ -436,12 +436,12 @@ describe('TextWidgetComponent', () => {
 
             it('should not have left labels classes on leftLabels not present', async () => {
                 widget.field = new FormFieldModel(form, {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: false,
-                    required: true
+                    "id": 'text-id',
+                    "name": 'text-name',
+                    "value": '',
+                    "type": FormFieldTypes.TEXT,
+                    "readOnly": false,
+                    "required": true
                 });
 
                 fixture.detectChanges();

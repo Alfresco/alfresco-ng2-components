@@ -34,8 +34,8 @@ describe('CheckboxWidgetComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [CoreTestingModule, MatCheckboxModule],
-            providers: [{ provide: TranslateLoader, useClass: TranslateLoaderService }]
+            "imports": [CoreTestingModule, MatCheckboxModule],
+            "providers": [{ "provide": TranslateLoader, "useClass": TranslateLoaderService }]
         });
         fixture = TestBed.createComponent(CheckboxWidgetComponent);
 
@@ -49,13 +49,13 @@ describe('CheckboxWidgetComponent', () => {
 
     describe('when template is ready', () => {
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
-                id: 'check-id',
-                name: 'check-name',
-                value: '',
-                type: FormFieldTypes.BOOLEAN,
-                readOnly: false,
-                required: true
+            widget.field = new FormFieldModel(new FormModel({ "taskId": 'fake-task-id' }), {
+                "id": 'check-id',
+                "name": 'check-name',
+                "value": '',
+                "type": FormFieldTypes.BOOLEAN,
+                "readOnly": false,
+                "required": true
             });
         });
 
@@ -97,9 +97,9 @@ describe('CheckboxWidgetComponent', () => {
 
         describe('when tooltip is set', () => {
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: '<id>' }), {
-                    type: FormFieldTypes.BOOLEAN,
-                    tooltip: 'my custom tooltip'
+                widget.field = new FormFieldModel(new FormModel({ "taskId": '<id>' }), {
+                    "type": FormFieldTypes.BOOLEAN,
+                    "tooltip": 'my custom tooltip'
                 });
                 fixture.detectChanges();
             });

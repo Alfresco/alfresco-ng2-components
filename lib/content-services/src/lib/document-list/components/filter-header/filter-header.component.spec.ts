@@ -33,26 +33,26 @@ describe('FilterHeaderComponent', () => {
     let queryBuilder: SearchHeaderQueryBuilderService;
 
     const searchMock: any = {
-        dataLoaded: new Subject()
+        "dataLoaded": new Subject()
     };
 
-    const paginationMock = { maxItems: 10, skipCount: 0 };
+    const paginationMock = { "maxItems": 10, "skipCount": 0 };
 
     const documentListMock = {
-        node: 'my-node',
-        sorting: ['name', 'asc'],
-        pagination: new BehaviorSubject<Pagination>(paginationMock),
-        sortingSubject: new BehaviorSubject<DataSorting[]>([]),
-        reload: () => jasmine.createSpy('reload')
+        "node": 'my-node',
+        "sorting": ['name', 'asc'],
+        "pagination": new BehaviorSubject<Pagination>(paginationMock),
+        "sortingSubject": new BehaviorSubject<DataSorting[]>([]),
+        "reload": () => jasmine.createSpy('reload')
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, FilterHeaderComponent],
-            providers: [
-                { provide: ADF_DOCUMENT_PARENT_COMPONENT, useExisting: DocumentListComponent },
-                { provide: SearchService, useValue: searchMock },
-                { provide: DocumentListComponent, useValue: documentListMock },
+            "imports": [ContentTestingModule, FilterHeaderComponent],
+            "providers": [
+                { "provide": ADF_DOCUMENT_PARENT_COMPONENT, "useExisting": DocumentListComponent },
+                { "provide": SearchService, "useValue": searchMock },
+                { "provide": DocumentListComponent, "useValue": documentListMock },
                 DataTableComponent
             ]
         });
@@ -69,7 +69,7 @@ describe('FilterHeaderComponent', () => {
         const setupCurrentPaginationSpy = spyOn(queryBuilder, 'setupCurrentPagination');
 
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        component.ngOnChanges({ "currentFolderId": currentFolderNodeIdChange });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -80,7 +80,7 @@ describe('FilterHeaderComponent', () => {
         const setSortingSpy = spyOn(queryBuilder, 'setSorting');
 
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        component.ngOnChanges({ "currentFolderId": currentFolderNodeIdChange });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -92,7 +92,7 @@ describe('FilterHeaderComponent', () => {
         spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
 
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        component.ngOnChanges({ "currentFolderId": currentFolderNodeIdChange });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -103,7 +103,7 @@ describe('FilterHeaderComponent', () => {
         const setCurrentRootFolderIdSpy = spyOn(queryBuilder, 'setCurrentRootFolderId');
         spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        component.ngOnChanges({ "currentFolderId": currentFolderNodeIdChange });
         fixture.detectChanges();
         await fixture.whenStable();
         expect(setCurrentRootFolderIdSpy).toHaveBeenCalled();
@@ -117,10 +117,10 @@ describe('FilterHeaderComponent', () => {
         await fixture.whenStable();
         expect(queryBuilder.getActiveFilters().length).toBe(0);
 
-        const initialFilterValue = { name: 'pinocchio' };
+        const initialFilterValue = { "name": 'pinocchio' };
         component.value = initialFilterValue;
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        component.ngOnChanges({ "currentFolderId": currentFolderNodeIdChange });
         fixture.detectChanges();
         await fixture.whenStable();
 
@@ -130,7 +130,7 @@ describe('FilterHeaderComponent', () => {
     });
 
     it('should emit filterSelection when a filter is changed', (done) => {
-        spyOn(queryBuilder, 'getActiveFilters').and.returnValue([{ key: 'name', value: 'pinocchio' }]);
+        spyOn(queryBuilder, 'getActiveFilters').and.returnValue([{ "key": 'name', "value": 'pinocchio' }]);
 
         component.filterSelection.subscribe((selectedFilters) => {
             expect(selectedFilters.length).toBe(1);

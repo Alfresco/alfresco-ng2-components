@@ -35,38 +35,38 @@ describe('AddPermissionDialog', () => {
     let component: AddPermissionDialogComponent;
     let element: HTMLElement;
     const data: AddPermissionDialogData = {
-        title: 'dead or alive you are coming with me',
-        node: {
-            id: 'fake-node-id',
-            aspectNames: [],
-            isFile: true,
-            name: 'fake-node.pdf',
-            permissions: {
-                locallySet: []
+        "title": 'dead or alive you are coming with me',
+        "node": {
+            "id": 'fake-node-id',
+            "aspectNames": [],
+            "isFile": true,
+            "name": 'fake-node.pdf',
+            "permissions": {
+                "locallySet": []
             }
         } as Node,
-        roles: [
+        "roles": [
             {
-                label: 'test',
-                role: 'Test'
+                "label": 'test',
+                "role": 'Test'
             },
             {
-                label: 'consumer',
-                role: 'Consumer'
+                "label": 'consumer',
+                "role": 'Consumer'
             }
         ],
-        confirm: new Subject<PermissionElement[]>()
+        "confirm": new Subject<PermissionElement[]>()
     };
     const dialogRef = {
-        close: jasmine.createSpy('close')
+        "close": jasmine.createSpy('close')
     };
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule, AddPermissionDialogComponent],
-            providers: [
-                { provide: MatDialogRef, useValue: dialogRef },
-                { provide: MAT_DIALOG_DATA, useValue: data }
+            "imports": [ContentTestingModule, AddPermissionDialogComponent],
+            "providers": [
+                { "provide": MatDialogRef, "useValue": dialogRef },
+                { "provide": MAT_DIALOG_DATA, "useValue": data }
             ]
         });
         fixture = TestBed.createComponent(AddPermissionDialogComponent);
@@ -133,7 +133,7 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+        const select = await loader.getHarness(MatSelectHarness.with({ "ancestor": `#adf-select-role-permission` }));
         await select.open();
 
         const options = await select.getOptions();
@@ -173,7 +173,7 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-bulk-select-role-permission` }));
+        const select = await loader.getHarness(MatSelectHarness.with({ "ancestor": `#adf-bulk-select-role-permission` }));
         await select.open();
 
         const options = await select.getOptions();
@@ -210,7 +210,7 @@ describe('AddPermissionDialog', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        const select = await loader.getHarness(MatSelectHarness.with({ ancestor: `#adf-select-role-permission` }));
+        const select = await loader.getHarness(MatSelectHarness.with({ "ancestor": `#adf-select-role-permission` }));
         await select.open();
 
         const options = await select.getOptions();

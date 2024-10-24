@@ -22,10 +22,10 @@ import { ViewerComponent } from '../viewer.component';
 import { ViewerToolbarActionsComponent } from '../viewer-toolbar-actions.component';
 
 @Component({
-    selector: 'adf-viewer-container-toolbar-actions',
-    standalone: true,
-    imports: [ViewerComponent, MatIconModule, MatButtonModule, ViewerToolbarActionsComponent],
-    template: `
+    "selector": 'adf-viewer-container-toolbar-actions',
+    "standalone": true,
+    "imports": [ViewerComponent, MatIconModule, MatButtonModule, ViewerToolbarActionsComponent],
+    "template": `
         <adf-viewer>
             <adf-viewer-toolbar-actions>
                 <button mat-icon-button id="custom-button">

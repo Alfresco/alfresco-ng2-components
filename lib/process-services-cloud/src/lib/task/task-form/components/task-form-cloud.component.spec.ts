@@ -40,18 +40,18 @@ import { FormCloudComponent } from '../../../form/components/form-cloud.componen
 import { MockFormFieldValidator } from '../mocks/task-form-cloud.mock';
 
 const taskDetails: TaskDetailsCloudModel = {
-    appName: 'simple-app',
-    assignee: 'admin.adf',
-    completedDate: null,
-    createdDate: new Date(1555419255340),
-    description: null,
-    formKey: null,
-    id: 'bd6b1741-6046-11e9-80f0-0a586460040d',
-    name: 'Task1',
-    owner: 'admin.adf',
-    standalone: false,
-    status: TASK_ASSIGNED_STATE,
-    permissions: [TASK_VIEW_PERMISSION]
+    "appName": 'simple-app',
+    "assignee": 'admin.adf',
+    "completedDate": null,
+    "createdDate": new Date(1555419255340),
+    "description": null,
+    "formKey": null,
+    "id": 'bd6b1741-6046-11e9-80f0-0a586460040d',
+    "name": 'Task1',
+    "owner": 'admin.adf',
+    "standalone": false,
+    "status": TASK_ASSIGNED_STATE,
+    "permissions": [TASK_VIEW_PERMISSION]
 };
 
 describe('TaskFormCloudComponent', () => {
@@ -68,15 +68,15 @@ describe('TaskFormCloudComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule],
-            declarations: [FormCloudComponent]
+            "imports": [ProcessServiceCloudTestingModule],
+            "declarations": [FormCloudComponent]
         });
         taskDetails.status = TASK_ASSIGNED_STATE;
         taskDetails.permissions = [TASK_VIEW_PERMISSION];
         taskDetails.standalone = false;
 
         identityUserService = TestBed.inject(IdentityUserService);
-        getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'admin.adf' });
+        getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ "username": 'admin.adf' });
         taskCloudService = TestBed.inject(TaskCloudService);
         getTaskSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(taskDetails));
         spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of([]));
@@ -95,7 +95,7 @@ describe('TaskFormCloudComponent', () => {
     describe('Complete button', () => {
         beforeEach(() => {
             component.taskId = 'task1';
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
         });
 
@@ -127,7 +127,7 @@ describe('TaskFormCloudComponent', () => {
             spyOn(component, 'hasCandidateUsers').and.returnValue(true);
             getTaskSpy.and.returnValue(of(taskDetails));
             component.taskId = 'task1';
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
         });
 
@@ -262,23 +262,23 @@ describe('TaskFormCloudComponent', () => {
 
         it('should load data when appName changes', () => {
             component.taskId = 'task1';
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             expect(getTaskSpy).toHaveBeenCalled();
         });
 
         it('should load data when taskId changes', () => {
             component.appName = 'app1';
-            component.ngOnChanges({ taskId: new SimpleChange(null, 'task1', false) });
+            component.ngOnChanges({ "taskId": new SimpleChange(null, 'task1', false) });
             expect(getTaskSpy).toHaveBeenCalled();
         });
 
         it('should not load data when appName changes and taskId is not defined', () => {
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             expect(getTaskSpy).not.toHaveBeenCalled();
         });
 
         it('should not load data when taskId changes and appName is not defined', () => {
-            component.ngOnChanges({ taskId: new SimpleChange(null, 'task1', false) });
+            component.ngOnChanges({ "taskId": new SimpleChange(null, 'task1', false) });
             expect(getTaskSpy).not.toHaveBeenCalled();
         });
 
@@ -323,7 +323,7 @@ describe('TaskFormCloudComponent', () => {
             spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
             spyOn(component.taskCompleted, 'emit').and.stub();
 
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
 
             const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
@@ -342,7 +342,7 @@ describe('TaskFormCloudComponent', () => {
             taskDetails.permissions = [TASK_CLAIM_PERMISSION];
             getTaskSpy.and.returnValue(of(taskDetails));
 
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
             const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
             claimBtn.triggerEventHandler('click', {});
@@ -366,7 +366,7 @@ describe('TaskFormCloudComponent', () => {
             spyOn(taskCloudService, 'completeTask').and.returnValue(of({}));
             const reloadSpy = spyOn(component, 'ngOnChanges').and.callThrough();
 
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
             const completeBtn = debugElement.query(By.css('[adf-cloud-complete-task]'));
 
@@ -383,7 +383,7 @@ describe('TaskFormCloudComponent', () => {
             taskDetails.status = TASK_CREATED_STATE;
             getTaskSpy.and.returnValue(of(taskDetails));
 
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
             const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
 
@@ -401,7 +401,7 @@ describe('TaskFormCloudComponent', () => {
             taskDetails.permissions = [TASK_RELEASE_PERMISSION];
             getTaskSpy.and.returnValue(of(taskDetails));
 
-            component.ngOnChanges({ appName: new SimpleChange(null, 'app1', false) });
+            component.ngOnChanges({ "appName": new SimpleChange(null, 'app1', false) });
             fixture.detectChanges();
             const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
 
@@ -472,7 +472,7 @@ describe('TaskFormCloudComponent', () => {
     });
 
     it('should display default name as title on no form template if the task name empty/undefined', () => {
-        const mockTaskDetailsWithOutName = { id: 'mock-task-id', name: null, formKey: null };
+        const mockTaskDetailsWithOutName = { "id": 'mock-task-id', "name": null, "formKey": null };
         getTaskSpy.and.returnValue(of(mockTaskDetailsWithOutName));
         component.taskId = 'mock-task-id';
 
@@ -494,7 +494,7 @@ describe('TaskFormCloudComponent', () => {
 
     it('should call children cloud task form change display mode when changing the display mode', () => {
         const displayMode = 'displayMode';
-        component.taskDetails = { ...taskDetails, formKey: 'some-form' };
+        component.taskDetails = { ...taskDetails, "formKey": 'some-form' };
 
         fixture.detectChanges();
 

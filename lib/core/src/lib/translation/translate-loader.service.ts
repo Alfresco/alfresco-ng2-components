@@ -24,7 +24,7 @@ import { ObjectUtils } from '../common/utils/object-utils';
 import { map, catchError, retry } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class TranslateLoaderService implements TranslateLoader {
     private prefix: string = 'i18n';
@@ -33,13 +33,13 @@ export class TranslateLoaderService implements TranslateLoader {
     private queue: string[][] = [];
     private defaultLang: string = 'en';
 
-    constructor(private http: HttpClient) {}
+    constructor (private http: HttpClient) {}
 
-    setDefaultLang(value: string) {
+    setDefaultLang (value: string) {
         this.defaultLang = value || 'en';
     }
 
-    registerProvider(name: string, path: string) {
+    registerProvider (name: string, path: string) {
         const registered = this.providers.find((provider) => provider.name === name);
         if (registered) {
             registered.path = path;
@@ -48,11 +48,11 @@ export class TranslateLoaderService implements TranslateLoader {
         }
     }
 
-    providerRegistered(name: string): boolean {
+    providerRegistered (name: string): boolean {
         return !!this.providers.find((x) => x.name === name);
     }
 
-    fetchLanguageFile(lang: string, component: ComponentTranslationModel, fallbackUrl?: string): Observable<void> {
+    fetchLanguageFile (lang: string, component: ComponentTranslationModel, fallbackUrl?: string): Observable<void> {
         const translationUrl = fallbackUrl || `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
 
         return this.http.get(translationUrl).pipe(
@@ -75,7 +75,7 @@ export class TranslateLoaderService implements TranslateLoader {
         );
     }
 
-    getComponentToFetch(lang: string): Array<Observable<any>> {
+    getComponentToFetch (lang: string): Array<Observable<any>> {
         const observableBatch = [];
         if (!this.queue[lang]) {
             this.queue[lang] = [];
@@ -91,17 +91,17 @@ export class TranslateLoaderService implements TranslateLoader {
         return observableBatch;
     }
 
-    init(lang: string) {
+    init (lang: string) {
         if (this.queue[lang] === undefined) {
             this.queue[lang] = [];
         }
     }
 
-    isComponentInQueue(lang: string, name: string) {
+    isComponentInQueue (lang: string, name: string) {
         return !!(this.queue[lang] || []).find((x) => x === name);
     }
 
-    getFullTranslationJSON(lang: string): any {
+    getFullTranslationJSON (lang: string): any {
         let result = {};
 
         this.providers
@@ -124,7 +124,7 @@ export class TranslateLoaderService implements TranslateLoader {
         return result;
     }
 
-    getTranslation(lang: string): Observable<any> {
+    getTranslation (lang: string): Observable<any> {
         let hasFailures = false;
         const batch = [
             ...this.getComponentToFetch(lang).map((observable) =>

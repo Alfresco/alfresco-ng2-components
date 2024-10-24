@@ -29,16 +29,16 @@ export class ShareDataRow implements DataRow {
     cssClass: string = '';
     id: string;
 
-    get node(): NodeEntry {
+    get node (): NodeEntry {
         return this.obj;
     }
 
-    set node(value: NodeEntry) {
+    set node (value: NodeEntry) {
         this.obj = value;
         this.cache = {};
     }
 
-    constructor(
+    constructor (
         private obj: NodeEntry,
         private contentService: ContentService,
         private permissionsStyle: PermissionStyleModel[],
@@ -57,11 +57,11 @@ export class ShareDataRow implements DataRow {
         this.id = this.getId();
     }
 
-    checkNodeTypeAndPermissions(nodeEntry: NodeEntry) {
+    checkNodeTypeAndPermissions (nodeEntry: NodeEntry) {
         return this.isFolderAndHasPermissionToUpload(nodeEntry) || this.isFileAndHasParentFolderPermissionToUpload(nodeEntry);
     }
 
-    getPermissionClass(nodeEntity: NodeEntry): string {
+    getPermissionClass (nodeEntity: NodeEntry): string {
         let permissionsClasses = '';
 
         this.permissionsStyle.forEach((currentPermissionsStyle: PermissionStyleModel) => {
@@ -78,53 +78,53 @@ export class ShareDataRow implements DataRow {
         return permissionsClasses;
     }
 
-    private applyPermissionStyleToFile(node: Node, currentPermissionsStyle: PermissionStyleModel): boolean {
+    private applyPermissionStyleToFile (node: Node, currentPermissionsStyle: PermissionStyleModel): boolean {
         return currentPermissionsStyle.isFile && node.isFile;
     }
 
-    private applyPermissionStyleToFolder(node: Node, currentPermissionsStyle: PermissionStyleModel): boolean {
+    private applyPermissionStyleToFolder (node: Node, currentPermissionsStyle: PermissionStyleModel): boolean {
         return currentPermissionsStyle.isFolder && node.isFolder;
     }
 
-    isFolderAndHasPermissionToUpload(nodeEntry: NodeEntry): boolean {
+    isFolderAndHasPermissionToUpload (nodeEntry: NodeEntry): boolean {
         return this.isFolder(nodeEntry) && this.contentService.hasAllowableOperations(nodeEntry.entry, 'create');
     }
 
-    isFileAndHasParentFolderPermissionToUpload(nodeEntry: NodeEntry): boolean {
+    isFileAndHasParentFolderPermissionToUpload (nodeEntry: NodeEntry): boolean {
         return this.isFile(nodeEntry) && this.contentService.hasAllowableOperations(nodeEntry.entry, 'update');
     }
 
-    isFile(nodeEntry: NodeEntry): boolean {
+    isFile (nodeEntry: NodeEntry): boolean {
         return nodeEntry.entry?.isFile;
     }
 
-    isFolder(nodeEntry: NodeEntry): boolean {
+    isFolder (nodeEntry: NodeEntry): boolean {
         return nodeEntry.entry?.isFolder;
     }
 
-    cacheValue(key: string, value: any): any {
+    cacheValue (key: string, value: any): any {
         this.cache[key] = value;
         return value;
     }
 
-    getValue(key: string): any {
+    getValue (key: string): any {
         if (this.cache[key]) {
             return this.cache[key];
         }
         return ObjectUtils.getValue(this.obj.entry, key);
     }
 
-    imageErrorResolver(): any {
+    imageErrorResolver (): any {
         if (this.obj.entry.content) {
             return this.thumbnailService.getMimeTypeIcon(this.obj.entry.content.mimeType);
         }
     }
 
-    hasValue(key: string): boolean {
+    hasValue (key: string): boolean {
         return this.getValue(key) !== undefined;
     }
 
-    getId(): string {
+    getId (): string {
         return this.obj.entry.id || undefined;
     }
 }

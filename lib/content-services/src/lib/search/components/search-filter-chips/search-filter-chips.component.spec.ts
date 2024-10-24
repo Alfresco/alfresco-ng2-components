@@ -40,7 +40,7 @@ describe('SearchFilterChipsComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         queryBuilder = TestBed.inject(SearchQueryBuilderService);
         appConfigService = TestBed.inject(AppConfigService);
@@ -52,59 +52,59 @@ describe('SearchFilterChipsComponent', () => {
     it('should fetch facet fields from response payload and show the already checked items', async () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
-            categories: [],
-            facetFields: {
-                fields: [
-                    { label: 'f1', field: 'f1' },
-                    { label: 'f2', field: 'f2' }
+            "categories": [],
+            "facetFields": {
+                "fields": [
+                    { "label": 'f1', "field": 'f1' },
+                    { "label": 'f2', "field": 'f2' }
                 ]
             },
-            facetQueries: {
-                queries: []
+            "facetQueries": {
+                "queries": []
             }
         };
 
         searchFacetFiltersService.responseFacets = [
             {
-                type: 'field',
-                label: 'f1',
-                field: 'f1',
-                buckets: new SearchFilterList([
-                    { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
-                    { label: 'b2', count: 1, filterQuery: 'filter2' }
+                "type": 'field',
+                "label": 'f1',
+                "field": 'f1',
+                "buckets": new SearchFilterList([
+                    { "label": 'b1', "count": 10, "filterQuery": 'filter', "checked": true },
+                    { "label": 'b2', "count": 1, "filterQuery": 'filter2' }
                 ])
             },
-            { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() }
+            { "type": 'field', "label": 'f2', "field": 'f2', "buckets": new SearchFilterList() }
         ];
         queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
 
         const serverResponseFields: any = [
             {
-                type: 'field',
-                label: 'f1',
-                field: 'f1',
-                buckets: [
-                    { label: 'b1', metrics: [{ value: { count: 6 } }], filterQuery: 'filter' },
-                    { label: 'b2', metrics: [{ value: { count: 1 } }], filterQuery: 'filter2' }
+                "type": 'field',
+                "label": 'f1',
+                "field": 'f1',
+                "buckets": [
+                    { "label": 'b1', "metrics": [{ "value": { "count": 6 } }], "filterQuery": 'filter' },
+                    { "label": 'b2', "metrics": [{ "value": { "count": 1 } }], "filterQuery": 'filter2' }
                 ]
             },
-            { type: 'field', label: 'f2', field: 'f2', buckets: [] }
+            { "type": 'field', "label": 'f2', "field": 'f2', "buckets": [] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: serverResponseFields
+            "list": {
+                "context": {
+                    "facets": serverResponseFields
                 }
             }
         };
 
         fixture.detectChanges();
 
-        const facetChip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="search-filter-chip-f1"]' }));
+        const facetChip = await loader.getHarness(MatChipHarness.with({ "selector": '[data-automation-id="search-filter-chip-f1"]' }));
         await (await facetChip.host()).click();
 
         const facetField: SearchFacetFieldComponent = fixture.debugElement.query(By.css('adf-search-facet-field')).componentInstance;
-        facetField.selectFacetBucket({ field: 'f1', label: 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[1]);
+        facetField.selectFacetBucket({ "field": 'f1', "label": 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[1]);
 
         searchFacetFiltersService.onDataLoaded(data);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
@@ -114,58 +114,58 @@ describe('SearchFilterChipsComponent', () => {
     it('should fetch facet fields from response payload and show the newly checked items', async () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
-            categories: [],
-            facetFields: {
-                fields: [
-                    { label: 'f1', field: 'f1' },
-                    { label: 'f2', field: 'f2' }
+            "categories": [],
+            "facetFields": {
+                "fields": [
+                    { "label": 'f1', "field": 'f1' },
+                    { "label": 'f2', "field": 'f2' }
                 ]
             },
-            facetQueries: {
-                queries: []
+            "facetQueries": {
+                "queries": []
             }
         };
 
         searchFacetFiltersService.responseFacets = [
             {
-                type: 'field',
-                label: 'f1',
-                field: 'f1',
-                buckets: new SearchFilterList([
-                    { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
-                    { label: 'b2', count: 1, filterQuery: 'filter2' }
+                "type": 'field',
+                "label": 'f1',
+                "field": 'f1',
+                "buckets": new SearchFilterList([
+                    { "label": 'b1', "count": 10, "filterQuery": 'filter', "checked": true },
+                    { "label": 'b2', "count": 1, "filterQuery": 'filter2' }
                 ])
             },
-            { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() }
+            { "type": 'field', "label": 'f2', "field": 'f2', "buckets": new SearchFilterList() }
         ];
         queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
 
         const serverResponseFields: any = [
             {
-                type: 'field',
-                label: 'f1',
-                field: 'f1',
-                buckets: [
-                    { label: 'b1', metrics: [{ value: { count: 6 } }], filterQuery: 'filter' },
-                    { label: 'b2', metrics: [{ value: { count: 1 } }], filterQuery: 'filter2' }
+                "type": 'field',
+                "label": 'f1',
+                "field": 'f1',
+                "buckets": [
+                    { "label": 'b1', "metrics": [{ "value": { "count": 6 } }], "filterQuery": 'filter' },
+                    { "label": 'b2', "metrics": [{ "value": { "count": 1 } }], "filterQuery": 'filter2' }
                 ]
             },
-            { type: 'field', label: 'f2', field: 'f2', buckets: [] }
+            { "type": 'field', "label": 'f2', "field": 'f2', "buckets": [] }
         ];
         const data = {
-            list: {
-                context: {
-                    facets: serverResponseFields
+            "list": {
+                "context": {
+                    "facets": serverResponseFields
                 }
             }
         };
         fixture.detectChanges();
 
-        const facetChip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="search-filter-chip-f1"]' }));
+        const facetChip = await loader.getHarness(MatChipHarness.with({ "selector": '[data-automation-id="search-filter-chip-f1"]' }));
         await (await facetChip.host()).click();
 
         const facetField: SearchFacetFieldComponent = fixture.debugElement.query(By.css('adf-search-facet-field')).componentInstance;
-        facetField.selectFacetBucket({ field: 'f1', label: 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[1]);
+        facetField.selectFacetBucket({ "field": 'f1', "label": 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[1]);
 
         searchFacetFiltersService.onDataLoaded(data);
         expect(searchFacetFiltersService.responseFacets.length).toEqual(2);
@@ -175,43 +175,43 @@ describe('SearchFilterChipsComponent', () => {
     it('should show buckets with 0 values when there are no facet fields on the response payload', async () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
-            categories: [],
-            facetFields: {
-                fields: [
-                    { label: 'f1', field: 'f1' },
-                    { label: 'f2', field: 'f2' }
+            "categories": [],
+            "facetFields": {
+                "fields": [
+                    { "label": 'f1', "field": 'f1' },
+                    { "label": 'f2', "field": 'f2' }
                 ]
             },
-            facetQueries: {
-                queries: []
+            "facetQueries": {
+                "queries": []
             }
         };
 
         searchFacetFiltersService.responseFacets = [
             {
-                type: 'field',
-                label: 'f1',
-                field: 'f1',
-                buckets: new SearchFilterList([
-                    { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
-                    { label: 'b2', count: 1, filterQuery: 'filter2' }
+                "type": 'field',
+                "label": 'f1',
+                "field": 'f1',
+                "buckets": new SearchFilterList([
+                    { "label": 'b1', "count": 10, "filterQuery": 'filter', "checked": true },
+                    { "label": 'b2', "count": 1, "filterQuery": 'filter2' }
                 ])
             },
-            { type: 'field', label: 'f2', field: 'f2', buckets: new SearchFilterList() }
+            { "type": 'field', "label": 'f2', "field": 'f2', "buckets": new SearchFilterList() }
         ];
         queryBuilder.addUserFacetBucket('f1', searchFacetFiltersService.responseFacets[0].buckets.items[0]);
         const data = {
-            list: {
-                context: {}
+            "list": {
+                "context": {}
             }
         };
         fixture.detectChanges();
 
-        const facetChip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="search-filter-chip-f1"]' }));
+        const facetChip = await loader.getHarness(MatChipHarness.with({ "selector": '[data-automation-id="search-filter-chip-f1"]' }));
         await (await facetChip.host()).click();
 
         const facetField: SearchFacetFieldComponent = fixture.debugElement.query(By.css('adf-search-facet-field')).componentInstance;
-        facetField.selectFacetBucket({ field: 'f1', label: 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[1]);
+        facetField.selectFacetBucket({ "field": 'f1', "label": 'f1' }, searchFacetFiltersService.responseFacets[0].buckets.items[1]);
         searchFacetFiltersService.onDataLoaded(data);
 
         expect(searchFacetFiltersService.responseFacets[0].buckets.items[0].count).toEqual(0);
@@ -223,19 +223,19 @@ describe('SearchFilterChipsComponent', () => {
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
         const queryResponse = {
-            field: 'query-response',
-            label: 'query response',
-            buckets: new SearchFilterList([
-                { label: 'q1', query: 'q1', checked: true, metrics: [{ value: { count: 1 } }] },
-                { label: 'q2', query: 'q2', checked: false, metrics: [{ value: { count: 1 } }] },
-                { label: 'q3', query: 'q3', checked: true, metrics: [{ value: { count: 1 } }] }
+            "field": 'query-response',
+            "label": 'query response',
+            "buckets": new SearchFilterList([
+                { "label": 'q1', "query": 'q1', "checked": true, "metrics": [{ "value": { "count": 1 } }] },
+                { "label": 'q2', "query": 'q2', "checked": false, "metrics": [{ "value": { "count": 1 } }] },
+                { "label": 'q3', "query": 'q3', "checked": true, "metrics": [{ "value": { "count": 1 } }] }
             ])
         } as any;
         searchFacetFiltersService.responseFacets = [queryResponse];
 
         fixture.detectChanges();
 
-        const facetChip = await loader.getHarness(MatChipHarness.with({ selector: '[data-automation-id="search-filter-chip-query response"]' }));
+        const facetChip = await loader.getHarness(MatChipHarness.with({ "selector": '[data-automation-id="search-filter-chip-query response"]' }));
         await (await facetChip.host()).click();
 
         const facetField: SearchFacetFieldComponent = fixture.debugElement.query(By.css('adf-search-facet-field')).componentInstance;
@@ -252,7 +252,7 @@ describe('SearchFilterChipsComponent', () => {
 
     describe('widgets', () => {
         it('should not show the disabled widget', async () => {
-            appConfigService.config.search = { categories: disabledCategories };
+            appConfigService.config.search = { "categories": disabledCategories };
             queryBuilder.resetToDefaults();
 
             const chips = await loader.getAllHarnesses(MatChipHarness);
@@ -261,7 +261,7 @@ describe('SearchFilterChipsComponent', () => {
         });
 
         it('should show the widgets only if configured', async () => {
-            appConfigService.config.search = { categories: simpleCategories };
+            appConfigService.config.search = { "categories": simpleCategories };
             queryBuilder.resetToDefaults();
 
             const chips = await loader.getAllHarnesses(MatChipHarness);
@@ -281,11 +281,11 @@ describe('SearchFilterChipsComponent', () => {
 
             fixture.detectChanges();
             const searchChip = fixture.debugElement.query(By.css(`[data-automation-id="search-filter-chip-Name"]`));
-            searchChip.triggerEventHandler('click', { stopPropagation: () => null });
+            searchChip.triggerEventHandler('click', { "stopPropagation": () => null });
             fixture.detectChanges();
 
             const inputElement = fixture.debugElement.query(By.css('[data-automation-id="search-field-Name"] input'));
-            inputElement.triggerEventHandler('change', { target: { value: '*' } });
+            inputElement.triggerEventHandler('change', { "target": { "value": '*' } });
             expect(queryBuilder.update).toHaveBeenCalled();
 
             queryBuilder.executed.next(mockSearchResult);
@@ -305,10 +305,10 @@ describe('SearchFilterChipsComponent', () => {
 
             fixture.detectChanges();
             const searchChip = fixture.debugElement.query(By.css(`[data-automation-id="search-filter-chip-Size facet queries"]`));
-            searchChip.triggerEventHandler('click', { stopPropagation: () => null });
+            searchChip.triggerEventHandler('click', { "stopPropagation": () => null });
             fixture.detectChanges();
 
-            let sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
+            let sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ "selector": '.adf-search-filter-facet-checkbox' }));
             for (const item of stepOne) {
                 const index = stepOne.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
@@ -323,7 +323,7 @@ describe('SearchFilterChipsComponent', () => {
             moreButton.triggerEventHandler('click', {});
             fixture.detectChanges();
 
-            sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
+            sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ "selector": '.adf-search-filter-facet-checkbox' }));
             for (const item of stepTwo) {
                 const index = stepTwo.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
@@ -336,7 +336,7 @@ describe('SearchFilterChipsComponent', () => {
 
             moreButton.triggerEventHandler('click', {});
             fixture.detectChanges();
-            sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
+            sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ "selector": '.adf-search-filter-facet-checkbox' }));
             for (const item of stepThree) {
                 const index = stepThree.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
@@ -350,7 +350,7 @@ describe('SearchFilterChipsComponent', () => {
             lessButton.triggerEventHandler('click', {});
             fixture.detectChanges();
 
-            sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
+            sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ "selector": '.adf-search-filter-facet-checkbox' }));
             for (const item of stepTwo) {
                 const index = stepTwo.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
@@ -364,7 +364,7 @@ describe('SearchFilterChipsComponent', () => {
             lessButton.triggerEventHandler('click', {});
             fixture.detectChanges();
 
-            sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
+            sizes = await loader.getAllHarnesses(MatCheckboxHarness.with({ "selector": '.adf-search-filter-facet-checkbox' }));
             for (const item of stepOne) {
                 const index = stepOne.indexOf(item);
                 expect(await sizes[index].getLabelText()).toEqual(item);
@@ -403,7 +403,7 @@ describe('SearchFilterChipsComponent', () => {
             spyOn(queryBuilder, 'update').and.stub();
 
             const searchChip = fixture.debugElement.query(By.css(`[data-automation-id="search-filter-chip-Size facet queries"]`));
-            searchChip.triggerEventHandler('click', { stopPropagation: () => null });
+            searchChip.triggerEventHandler('click', { "stopPropagation": () => null });
             fixture.detectChanges();
 
             const inputElement = fixture.debugElement.query(By.css(`${field} input`));
@@ -411,7 +411,7 @@ describe('SearchFilterChipsComponent', () => {
             inputElement.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
 
-            let filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
+            let filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ "selector": '.adf-search-filter-facet-checkbox' }));
             expect(filteredMenu.length).toBe(1);
             expect(await filteredMenu[0].getLabelText()).toEqual('Extra Small (10239)');
 
@@ -419,16 +419,16 @@ describe('SearchFilterChipsComponent', () => {
             inputElement.nativeElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
 
-            filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
+            filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ "selector": '.adf-search-filter-facet-checkbox' }));
             for (const item of filteredResult) {
                 const index = filteredResult.indexOf(item);
                 expect(await filteredMenu[index].getLabelText()).toEqual(item);
             }
 
-            const clearButton = await loader.getHarness(MatButtonHarness.with({ selector: '[title="SEARCH.FILTER.BUTTONS.CLEAR"]' }));
+            const clearButton = await loader.getHarness(MatButtonHarness.with({ "selector": '[title="SEARCH.FILTER.BUTTONS.CLEAR"]' }));
             await clearButton.click();
 
-            filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ selector: '.adf-search-filter-facet-checkbox' }));
+            filteredMenu = await loader.getAllHarnesses(MatCheckboxHarness.with({ "selector": '.adf-search-filter-facet-checkbox' }));
             for (const item of stepOne) {
                 const index = stepOne.indexOf(item);
                 expect(await filteredMenu[index].getLabelText()).toEqual(item);

@@ -26,12 +26,12 @@ describe('TrashcanNameColumnComponent', () => {
 
     it('should set displayText for content files', () => {
         const context = {
-            data: { rows: [] },
-            row: {
-                node: {
-                    entry: {
-                        name: 'contentName',
-                        nodeType: 'content'
+            "data": { "rows": [] },
+            "row": {
+                "node": {
+                    "entry": {
+                        "name": 'contentName',
+                        "nodeType": 'content'
                     }
                 }
             }
@@ -45,14 +45,14 @@ describe('TrashcanNameColumnComponent', () => {
 
     it('should set displayText for library', () => {
         const context = {
-            data: {
-                rows: []
+            "data": {
+                "rows": []
             },
-            row: {
-                node: {
-                    entry: {
-                        nodeType: 'st:site',
-                        properties: {
+            "row": {
+                "node": {
+                    "entry": {
+                        "nodeType": 'st:site',
+                        "properties": {
                             'cm:title': 'libraryTitle'
                         }
                     }
@@ -68,15 +68,15 @@ describe('TrashcanNameColumnComponent', () => {
 
     it('should set custom displayText for libraries with same name', () => {
         const context = {
-            data: {
-                rows: [
+            "data": {
+                "rows": [
                     {
-                        node: {
-                            entry: {
-                                id: 'id1',
-                                name: 'name1',
-                                nodeType: 'st:site',
-                                properties: {
+                        "node": {
+                            "entry": {
+                                "id": 'id1',
+                                "name": 'name1',
+                                "nodeType": 'st:site',
+                                "properties": {
                                     'cm:title': 'bogus'
                                 }
                             }
@@ -84,13 +84,13 @@ describe('TrashcanNameColumnComponent', () => {
                     }
                 ]
             },
-            row: {
-                node: {
-                    entry: {
-                        id: 'id2',
-                        name: 'name1',
-                        nodeType: 'st:site',
-                        properties: {
+            "row": {
+                "node": {
+                    "entry": {
+                        "id": 'id2',
+                        "name": 'name1',
+                        "nodeType": 'st:site',
+                        "properties": {
                             'cm:title': 'bogus'
                         }
                     }

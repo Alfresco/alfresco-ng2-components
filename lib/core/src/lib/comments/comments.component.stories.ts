@@ -24,85 +24,85 @@ import { CommentsServiceStoriesMock } from './mocks/comments.service.stories.moc
 import { importProvidersFrom } from '@angular/core';
 
 export default {
-    component: CommentsComponent,
-    title: 'Core/Comments/Comment',
-    decorators: [
+    "component": CommentsComponent,
+    "title": 'Core/Comments/Comment',
+    "decorators": [
         moduleMetadata({
-            imports: [CommentsComponent],
-            providers: [
-                { provide: CommentsServiceStoriesMock, useValue: { getUserProfileImage: () => '../assets/images/logo.png' } },
-                { provide: ADF_COMMENTS_SERVICE, useClass: CommentsServiceStoriesMock }
+            "imports": [CommentsComponent],
+            "providers": [
+                { "provide": CommentsServiceStoriesMock, "useValue": { "getUserProfileImage": () => '../assets/images/logo.png' } },
+                { "provide": ADF_COMMENTS_SERVICE, "useClass": CommentsServiceStoriesMock }
             ]
         }),
         applicationConfig({
-            providers: [importProvidersFrom(CoreStoryModule)]
+            "providers": [importProvidersFrom(CoreStoryModule)]
         })
     ],
-    parameters: {
-        docs: {
-            description: {
-                component: `Displays comments from users involved in a specified environment.
+    "parameters": {
+        "docs": {
+            "description": {
+                "component": `Displays comments from users involved in a specified environment.
                     Allows an involved user to add a comment to a environment.`
             }
         }
     },
-    argTypes: {
-        comments: {
-            control: 'object',
-            description: 'CommentModel array',
-            table: { type: { summary: 'CommentModel[]' } }
+    "argTypes": {
+        "comments": {
+            "control": 'object',
+            "description": 'CommentModel array',
+            "table": { "type": { "summary": 'CommentModel[]' } }
         },
-        readOnly: {
-            control: 'boolean',
-            description: 'Displays input area to add new comment',
-            defaultValue: false,
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: 'false' }
+        "readOnly": {
+            "control": 'boolean',
+            "description": 'Displays input area to add new comment',
+            "defaultValue": false,
+            "table": {
+                "type": { "summary": 'boolean' },
+                "defaultValue": { "summary": 'false' }
             }
         },
-        id: {
-            control: 'text',
-            description: 'Necessary in order to add a new comment',
-            table: {
-                type: { summary: 'string' }
+        "id": {
+            "control": 'text',
+            "description": 'Necessary in order to add a new comment',
+            "table": {
+                "type": { "summary": 'string' }
             }
         },
-        error: {
-            action: 'error',
-            description: 'Emitted when an error occurs while displaying/adding a comment',
-            table: {
-                category: 'Actions',
-                type: { summary: 'EventEmitter <any>' }
+        "error": {
+            "action": 'error',
+            "description": 'Emitted when an error occurs while displaying/adding a comment',
+            "table": {
+                "category": 'Actions',
+                "type": { "summary": 'EventEmitter <any>' }
             }
         }
     }
 } as Meta<CommentsComponent>;
 
 const template: StoryFn<CommentsComponent> = (args) => ({
-    props: args
+    "props": args
 });
 
 export const SingleCommentWithAvatar = template.bind({});
 SingleCommentWithAvatar.args = {
-    comments: [commentsStoriesData[0]],
-    readOnly: true
+    "comments": [commentsStoriesData[0]],
+    "readOnly": true
 };
 
 export const SingleCommentWithoutAvatar = template.bind({});
 SingleCommentWithoutAvatar.args = {
-    comments: [commentsStoriesData[1]],
-    readOnly: true
+    "comments": [commentsStoriesData[1]],
+    "readOnly": true
 };
 
 export const NoComments = template.bind({});
 NoComments.args = {
-    comments: [],
-    readOnly: true
+    "comments": [],
+    "readOnly": true
 };
 
 export const Comments = template.bind({});
 Comments.args = {
-    comments: commentsStoriesData,
-    id: '-fake-'
+    "comments": commentsStoriesData,
+    "id": '-fake-'
 };

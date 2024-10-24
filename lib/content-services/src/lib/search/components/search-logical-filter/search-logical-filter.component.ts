@@ -39,12 +39,12 @@ export type LogicalSearchConditionEnumValuedKeys = { [T in LogicalSearchFields]:
 export interface LogicalSearchCondition extends LogicalSearchConditionEnumValuedKeys {}
 
 @Component({
-    selector: 'adf-search-logical-filter',
-    standalone: true,
-    imports: [CommonModule, MatFormFieldModule, TranslateModule, FormsModule],
-    templateUrl: './search-logical-filter.component.html',
-    styleUrls: ['./search-logical-filter.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    "selector": 'adf-search-logical-filter',
+    "standalone": true,
+    "imports": [CommonModule, MatFormFieldModule, TranslateModule, FormsModule],
+    "templateUrl": './search-logical-filter.component.html',
+    "styleUrls": ['./search-logical-filter.component.scss'],
+    "encapsulation": ViewEncapsulation.None
 })
 export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDestroy {
     id: string;
@@ -58,9 +58,9 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
 
     private readonly destroy$ = new Subject<void>();
 
-    constructor(private translationService: TranslationService) {}
+    constructor (private translationService: TranslationService) {}
 
-    ngOnInit(): void {
+    ngOnInit (): void {
         this.clearSearchInputs();
         this.context.populateFilters
             .asObservable()
@@ -79,12 +79,12 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
             });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy () {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    submitValues(updateContext = true) {
+    submitValues (updateContext = true) {
         if (this.hasValidValue() && this.id && this.context && this.settings && this.settings.field) {
             this.updateDisplayValue();
             const fields = this.settings.field.split(',').map((field) => (field += ':'));
@@ -139,20 +139,20 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
         }
     }
 
-    hasValidValue(): boolean {
+    hasValidValue (): boolean {
         return Object.keys(this.searchCondition).some((key: string) => this.searchCondition[key] !== '');
     }
 
-    getCurrentValue(): LogicalSearchCondition {
+    getCurrentValue (): LogicalSearchCondition {
         return this.searchCondition;
     }
 
-    setValue(value: LogicalSearchCondition) {
+    setValue (value: LogicalSearchCondition) {
         this.searchCondition = value;
         this.updateDisplayValue();
     }
 
-    reset(updateContext = true) {
+    reset (updateContext = true) {
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = '';
             this.clearSearchInputs();
@@ -163,7 +163,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
         }
     }
 
-    private updateDisplayValue(): void {
+    private updateDisplayValue (): void {
         this.context.filterRawParams[this.id] = this.searchCondition;
         if (this.hasValidValue()) {
             const displayValue = Object.keys(this.searchCondition).reduce((acc, key) => {
@@ -177,8 +177,8 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit, OnDes
         }
     }
 
-    private clearSearchInputs(): void {
-        this.searchCondition = { matchAll: '', matchAny: '', matchExact: '', exclude: '' };
+    private clearSearchInputs (): void {
+        this.searchCondition = { "matchAll": '', "matchAny": '', "matchExact": '', "exclude": '' };
         this.updateDisplayValue();
     }
 }

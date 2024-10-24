@@ -20,7 +20,7 @@ import { IdentityUserInfoComponent } from './identity-user-info.component';
 
 /** @deprecated import `IdentityUserInfoComponent` directly */
 @NgModule({
-    imports: [IdentityUserInfoComponent],
-    exports: [IdentityUserInfoComponent]
+    "imports": [IdentityUserInfoComponent],
+    "exports": [IdentityUserInfoComponent]
 })
 export class IdentityUserInfoModule {}

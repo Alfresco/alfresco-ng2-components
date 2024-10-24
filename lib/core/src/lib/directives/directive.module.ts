@@ -34,7 +34,7 @@ export const CORE_DIRECTIVES = [
 
 /** @deprecated use `...CORE_DIRECTIVES` or import standalone directives directly  */
 @NgModule({
-    imports: [...CORE_DIRECTIVES],
-    exports: [...CORE_DIRECTIVES]
+    "imports": [...CORE_DIRECTIVES],
+    "exports": [...CORE_DIRECTIVES]
 })
 export class DirectiveModule {}

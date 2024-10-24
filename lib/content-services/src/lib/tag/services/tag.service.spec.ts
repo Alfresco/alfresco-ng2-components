@@ -41,12 +41,12 @@ describe('TagService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         service = TestBed.inject(TagService);
         userPreferencesService = TestBed.inject(UserPreferencesService);
 
-        tagEntry = new TagEntry({ entry: { id: '1', tag: 'test-tag' } });
+        tagEntry = new TagEntry({ "entry": { "id": '1', "tag": 'test-tag' } });
 
         spyOn(service.tagsApi, 'deleteTagFromNode').and.returnValue(Promise.resolve());
         spyOn(service.tagsApi, 'createTagForNode').and.returnValue(Promise.resolve(tagEntry));
@@ -55,7 +55,7 @@ describe('TagService', () => {
 
     describe('Content tests', () => {
         it('should catch errors on getTagsByNodeId  call', async () => {
-            spyOn(service, 'getTagsByNodeId').and.returnValue(throwError({ error: 'error' }));
+            spyOn(service, 'getTagsByNodeId').and.returnValue(throwError({ "error": 'error' }));
             service.getTagsByNodeId('fake-node-id').subscribe(
                 () => {
                     throwError('This call should fail');
@@ -103,9 +103,9 @@ describe('TagService', () => {
             it('should emit refresh when tags creation is success', async () => {
                 const tags: TagEntry[] = [
                     {
-                        entry: {
-                            id: 'Some id 1',
-                            tag: 'Some tag 1'
+                        "entry": {
+                            "id": 'Some id 1',
+                            "tag": 'Some tag 1'
                         }
                     }
                 ];
@@ -135,7 +135,7 @@ describe('TagService', () => {
                     true
                 );
                 expect(service.tagsApi.listTags).toHaveBeenCalledWith({
-                    include: ['count'],
+                    "include": ['count'],
                     skipCount
                 });
             });
@@ -151,7 +151,7 @@ describe('TagService', () => {
                     false
                 );
                 expect(service.tagsApi.listTags).toHaveBeenCalledWith({
-                    include: undefined,
+                    "include": undefined,
                     skipCount
                 });
             });
@@ -181,15 +181,15 @@ describe('TagService', () => {
 
                 service.searchTags(name);
                 expect(service.tagsApi.listTags).toHaveBeenCalledWith({
-                    tag: `*${name}*`,
-                    skipCount: 0,
+                    "tag": `*${name}*`,
+                    "skipCount": 0,
                     maxItems,
-                    sorting: {
-                        orderBy: 'tag',
-                        direction: 'asc'
+                    "sorting": {
+                        "orderBy": 'tag',
+                        "direction": 'asc'
                     },
-                    matching: true,
-                    include: undefined
+                    "matching": true,
+                    "include": undefined
                 });
             });
 
@@ -200,18 +200,18 @@ describe('TagService', () => {
                 const maxItems = 100;
                 const skipCount = 200;
                 const sorting = {
-                    orderBy: 'id',
-                    direction: 'asc'
+                    "orderBy": 'id',
+                    "direction": 'asc'
                 };
 
                 service.searchTags(name, sorting, true, skipCount, maxItems);
                 expect(service.tagsApi.listTags).toHaveBeenCalledWith({
-                    tag: `*${name}*`,
+                    "tag": `*${name}*`,
                     skipCount,
                     maxItems,
                     sorting,
-                    matching: true,
-                    include: ['count']
+                    "matching": true,
+                    "include": ['count']
                 });
             });
 
@@ -227,16 +227,16 @@ describe('TagService', () => {
 
         describe('updateTag', () => {
             const tag: TagEntry = {
-                entry: {
-                    tag: 'fake-tag',
-                    id: 'fake-node-id'
+                "entry": {
+                    "tag": 'fake-tag',
+                    "id": 'fake-node-id'
                 }
             };
-            const tagBody: TagBody = { tag: 'updated-tag' };
+            const tagBody: TagBody = { "tag": 'updated-tag' };
             const updatedTag: TagEntry = {
-                entry: {
+                "entry": {
                     ...tagBody,
-                    id: 'fake-node-id'
+                    "id": 'fake-node-id'
                 }
             };
 
@@ -269,8 +269,8 @@ describe('TagService', () => {
                 service.findTagByName(tagName);
 
                 expect(service.tagsApi.listTags).toHaveBeenCalledWith({
-                    tag: tagName,
-                    include: undefined
+                    "tag": tagName,
+                    "include": undefined
                 });
             });
 
@@ -307,7 +307,7 @@ describe('TagService', () => {
 
             it('should call assignTagsToNode on TagsApi with correct parameters', () => {
                 spyOn(service.tagsApi, 'assignTagsToNode').and.returnValue(
-                    Promise.resolve(new TagPaging({ list: new TagPagingList({ entries: [singleResult] }) }))
+                    Promise.resolve(new TagPaging({ "list": new TagPagingList({ "entries": [singleResult] }) }))
                 );
 
                 service.assignTagsToNode(nodeId, tags);
@@ -329,11 +329,11 @@ describe('TagService', () => {
 
             it('should return observable which emits single tag', fakeAsync(() => {
                 spyOn(service.tagsApi, 'assignTagsToNode').and.returnValue(
-                    Promise.resolve(new TagPaging({ list: new TagPagingList({ entries: [singleResult] }) }))
+                    Promise.resolve(new TagPaging({ "list": new TagPagingList({ "entries": [singleResult] }) }))
                 );
 
                 service.assignTagsToNode(nodeId, tags).subscribe((tagsResult) => {
-                    expect(tagsResult).toEqual(new TagPaging({ list: new TagPagingList({ entries: [singleResult] }) }));
+                    expect(tagsResult).toEqual(new TagPaging({ "list": new TagPagingList({ "entries": [singleResult] }) }));
                 });
                 tick();
             }));

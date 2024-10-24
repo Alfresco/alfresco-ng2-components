@@ -32,33 +32,32 @@ describe('SavedSearchesService', () => {
     const testNodeId = 'test-node-id';
     const SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id__';
     const SAVED_SEARCHES_CONTENT = JSON.stringify([
-        { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0 },
-        { name: 'Search 2', description: 'Description 2', encodedUrl: 'url2', order: 1 }
+        { "name": 'Search 1', "description": 'Description 1', "encodedUrl": 'url1', "order": 0 },
+        { "name": 'Search 2', "description": 'Description 2', "encodedUrl": 'url2', "order": 1 }
     ]);
 
     /**
      * Creates a stub with Promise returning a Blob
-     *
      * @returns Promise with Blob
      */
-    function createBlob() {
+    function createBlob () {
         return Promise.resolve(new Blob([SAVED_SEARCHES_CONTENT]));
     }
 
     beforeEach(() => {
         testUserName = 'test-user';
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AuthenticationService, useValue: { getUsername: () => {}, onLogin: new Subject() } },
+            "imports": [HttpClientTestingModule],
+            "providers": [
+                { "provide": AlfrescoApiService, "useClass": AlfrescoApiServiceMock },
+                { "provide": AuthenticationService, "useValue": { "getUsername": () => {}, "onLogin": new Subject() } },
                 SavedSearchesService
             ]
         });
         service = TestBed.inject(SavedSearchesService);
         authService = TestBed.inject(AuthenticationService);
-        spyOn(service.nodesApi, 'getNode').and.callFake(() => Promise.resolve({ entry: { id: testNodeId } } as NodeEntry));
-        spyOn(service.searchApi, 'search').and.callFake(() => Promise.resolve({ list: { entries: [] } }));
+        spyOn(service.nodesApi, 'getNode').and.callFake(() => Promise.resolve({ "entry": { "id": testNodeId } } as NodeEntry));
+        spyOn(service.searchApi, 'search').and.callFake(() => Promise.resolve({ "list": { "entries": [] } }));
     });
 
     afterEach(() => {
@@ -83,14 +82,14 @@ describe('SavedSearchesService', () => {
 
     it('should create saved-searches.json file if it does not exist', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
-        spyOn(service.nodesApi, 'createNode').and.callFake(() => Promise.resolve({ entry: { id: 'new-node-id' } }));
+        spyOn(service.nodesApi, 'createNode').and.callFake(() => Promise.resolve({ "entry": { "id": 'new-node-id' } }));
         spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => Promise.resolve(new Blob([''])));
         service.innit();
 
         service.getSavedSearches().subscribe((searches) => {
             expect(service.nodesApi.getNode).toHaveBeenCalledWith('-my-');
             expect(service.searchApi.search).toHaveBeenCalled();
-            expect(service.nodesApi.createNode).toHaveBeenCalledWith(testNodeId, jasmine.objectContaining({ name: 'saved-searches.json' }));
+            expect(service.nodesApi.createNode).toHaveBeenCalledWith(testNodeId, jasmine.objectContaining({ "name": 'saved-searches.json' }));
             expect(searches.length).toBe(0);
             done();
         });
@@ -101,8 +100,8 @@ describe('SavedSearchesService', () => {
         const nodeId = 'saved-searches-node-id';
         spyOn(localStorage, 'getItem').and.callFake(() => nodeId);
         spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
-        const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
-        spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ entry: {} } as NodeEntry));
+        const newSearch = { "name": 'Search 3', "description": 'Description 3', "encodedUrl": 'url3' };
+        spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ "entry": {} } as NodeEntry));
         service.innit();
 
         service.saveSearch(newSearch).subscribe(() => {
@@ -136,8 +135,8 @@ describe('SavedSearchesService', () => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         spyOn(localStorage, 'getItem').and.callFake(() => testNodeId);
         spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
-        const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
-        spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ entry: {} } as NodeEntry));
+        const newSearch = { "name": 'Search 3', "description": 'Description 3', "encodedUrl": 'url3' };
+        spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ "entry": {} } as NodeEntry));
         service.innit();
 
         let emissionCount = 0;

@@ -30,7 +30,7 @@ describe('SearchPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         fixture = TestBed.createComponent(SearchPanelComponent);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
@@ -47,8 +47,8 @@ describe('SearchPanelComponent', () => {
 
     it('should render search filter when some custom models are available', () => {
         const categoriesMock: SearchCategory[] = [
-            { id: 'model1', name: 'model1', enabled: true, expanded: false, component: { selector: 'test', settings: { field: 'test' } } },
-            { id: 'model2', name: 'model2', enabled: true, expanded: false, component: { selector: 'test2', settings: { field: 'test2' } } }
+            { "id": 'model1', "name": 'model1', "enabled": true, "expanded": false, "component": { "selector": 'test', "settings": { "field": 'test' } } },
+            { "id": 'model2', "name": 'model2', "enabled": true, "expanded": false, "component": { "selector": 'test2', "settings": { "field": 'test2' } } }
         ];
         contentNodeSelectorPanelService.customModels = ['model1', 'model2'];
         spyOn(contentNodeSelectorPanelService, 'convertCustomModelPropertiesToSearchCategories').and.returnValue(categoriesMock);

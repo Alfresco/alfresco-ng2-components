@@ -23,12 +23,12 @@ import { getTime } from 'date-fns';
 export const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
 export const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
 
-@Pipe({ name: 'processNameCloud' })
+@Pipe({ "name": 'processNameCloud' })
 export class ProcessNameCloudPipe implements PipeTransform {
-    constructor(private localizedDatePipe: LocalizedDatePipe) {
+    constructor (private localizedDatePipe: LocalizedDatePipe) {
     }
 
-    transform(processNameFormat: string, processInstance?: ProcessInstanceCloud): string {
+    transform (processNameFormat: string, processInstance?: ProcessInstanceCloud): string {
         let processName = processNameFormat;
         if (processName.match(DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = getTime(new Date());

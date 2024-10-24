@@ -28,7 +28,6 @@ import { ContentFieldsQuery, ContentIncludeQuery, ContentPagingQuery } from './t
 
 /**
  * Trashcan service.
- *
  * @module TrashcanApi
  */
 export class TrashcanApi extends BaseApi {
@@ -36,7 +35,6 @@ export class TrashcanApi extends BaseApi {
      * Permanently delete a deleted node
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @returns Promise<{}>
      */
@@ -57,7 +55,6 @@ export class TrashcanApi extends BaseApi {
      * Get rendition information for a deleted node
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
      * @returns Promise<RenditionEntry>
@@ -82,7 +79,6 @@ export class TrashcanApi extends BaseApi {
      * Get rendition content of a deleted node
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param renditionId The name of a thumbnail rendition, for example *doclib*, or *pdf*.
      * @param opts Optional parameters
@@ -142,7 +138,6 @@ export class TrashcanApi extends BaseApi {
      * Get a deleted node
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @returns Promise<DeletedNodeEntry>
@@ -170,7 +165,6 @@ export class TrashcanApi extends BaseApi {
      * Get deleted node content
      *
      * **Note:** this endpoint is available in Alfresco 5.2 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @param opts.attachment **true** enables a web browser to download the file as an attachment.
@@ -232,7 +226,6 @@ export class TrashcanApi extends BaseApi {
      * clause will return just the CREATED renditions:
      *
      * - (status='CREATED')
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @param opts.where A string to restrict the returned objects by using a predicate.
@@ -265,7 +258,6 @@ export class TrashcanApi extends BaseApi {
      * Gets a list of deleted nodes for the current user.
      * If the current user is an administrator deleted nodes for all users will be returned.
      * The list of deleted nodes will be ordered with the most recently deleted node at the top of the list.
-     *
      * @param opts Optional parameters
      * @returns Promise<DeletedNodesPaging>
      */
@@ -298,7 +290,6 @@ export class TrashcanApi extends BaseApi {
      *
      * Also, any previously shared link will not be restored since it is deleted at the time
      * of delete of each node.
-     *
      * @param nodeId The identifier of a node.
      * @param opts Optional parameters
      * @param opts.deletedNodeBodyRestore The targetParentId if the node is restored to a new location.
@@ -336,7 +327,6 @@ export class TrashcanApi extends BaseApi {
      * Generate a direct access content url for a given deleted node
      *
      * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @returns Promise<DirectAccessUrlEntry>
      */
@@ -358,7 +348,6 @@ export class TrashcanApi extends BaseApi {
      * Generate a direct access content url for a given rendition of a deleted node
      *
      * **Note:** this endpoint is available in Alfresco 7.1 and newer versions.
-     *
      * @param nodeId The identifier of a node.
      * @param renditionId The identifier of a version
      * @returns Promise<DirectAccessUrlEntry>

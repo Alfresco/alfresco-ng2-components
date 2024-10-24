@@ -29,16 +29,16 @@ describe('CardViewBoolItemComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [NoopTranslateModule]
+            "imports": [NoopTranslateModule]
         });
         fixture = TestBed.createComponent(CardViewBoolItemComponent);
         component = fixture.componentInstance;
         component.property = new CardViewBoolItemModel({
-            label: 'Boolean label',
-            value: true,
-            key: 'boolKey',
-            default: false,
-            editable: false
+            "label": 'Boolean label',
+            "value": true,
+            "key": 'boolKey',
+            "default": false,
+            "editable": false
         });
     });
 
@@ -175,7 +175,7 @@ describe('CardViewBoolItemComponent', () => {
             spyOn(cardViewUpdateService, 'update');
             const property = { ...component.property };
 
-            component.changed({ checked: true } as MatCheckboxChange);
+            component.changed({ "checked": true } as MatCheckboxChange);
 
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, true);
         });
@@ -183,7 +183,7 @@ describe('CardViewBoolItemComponent', () => {
         it('should update the property value after a changed', async () => {
             component.property.value = true;
 
-            component.changed({ checked: false } as MatCheckboxChange);
+            component.changed({ "checked": false } as MatCheckboxChange);
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -199,7 +199,7 @@ describe('CardViewBoolItemComponent', () => {
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
                 expect(updateNotification.target).toEqual(property);
-                expect(updateNotification.changed).toEqual({ boolKey: true });
+                expect(updateNotification.changed).toEqual({ "boolKey": true });
                 disposableUpdate.unsubscribe();
                 done();
             });

@@ -23,38 +23,36 @@ import { catchError, map } from 'rxjs/operators';
 import { FormDefinitionModel } from '../model/form-definition.model';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class EditorService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     private _editorApi: FormModelsApi;
-    get editorApi(): FormModelsApi {
+    get editorApi (): FormModelsApi {
         this._editorApi = this._editorApi ?? new FormModelsApi(this.apiService.getInstance());
         return this._editorApi;
     }
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor (private apiService: AlfrescoApiService) {}
 
     /**
      * Saves a form.
-     *
      * @param formId ID of the form to save
      * @param formModel Model data for the form
      * @returns Data for the saved form
      */
-    saveForm(formId: number, formModel: FormDefinitionModel): Observable<FormRepresentation> {
+    saveForm (formId: number, formModel: FormDefinitionModel): Observable<FormRepresentation> {
         return from(this.editorApi.saveForm(formId, formModel));
     }
 
     /**
      * Gets a form definition.
-     *
      * @param formId ID of the target form
      * @returns Form definition
      */
-    getFormDefinitionById(formId: number): Observable<any> {
+    getFormDefinitionById (formId: number): Observable<any> {
         return from(this.editorApi.getForm(formId)).pipe(
             map(this.toJson),
             catchError((err) => this.handleError(err))
@@ -63,11 +61,10 @@ export class EditorService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
-    toJson(res: any) {
+    toJson (res: any) {
         if (res) {
             return res || {};
         }
@@ -76,11 +73,10 @@ export class EditorService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */
-    private handleError(error: any): Observable<any> {
+    private handleError (error: any): Observable<any> {
         let errMsg = EditorService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = error.message ? error.message : error.status ? `${error.status} - ${error.statusText}` : EditorService.GENERIC_ERROR_MESSAGE;

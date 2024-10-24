@@ -26,10 +26,10 @@ const PDF_FORMAT: string = 'pdf';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: 'button[adf-task-audit]',
-    standalone: true,
-    host: {
-        role: 'button',
+    "selector": 'button[adf-task-audit]',
+    "standalone": true,
+    "host": {
+        "role": 'button',
         '(click)': 'onClickAudit()'
     }
 })
@@ -60,26 +60,26 @@ export class TaskAuditDirective implements OnChanges {
 
     public audit: any;
 
-    constructor(private downloadService: DownloadService, private taskListService: TaskListService) {}
+    constructor (private downloadService: DownloadService, private taskListService: TaskListService) {}
 
-    ngOnChanges(): void {
+    ngOnChanges (): void {
         if (!this.isValidType()) {
             this.setDefaultFormatType();
         }
     }
 
-    isValidType(): boolean {
+    isValidType (): boolean {
         return this.format && (this.isJsonFormat() || this.isPdfFormat());
     }
 
-    setDefaultFormatType(): void {
+    setDefaultFormatType (): void {
         this.format = PDF_FORMAT;
     }
 
     /**
      * fetch the audit information in the requested format
      */
-    fetchAuditInfo(): void {
+    fetchAuditInfo (): void {
         if (this.isPdfFormat()) {
             this.taskListService.fetchTaskAuditPdfById(this.taskId).subscribe(
                 (blob: Blob) => {
@@ -87,7 +87,7 @@ export class TaskAuditDirective implements OnChanges {
                     if (this.download) {
                         this.downloadService.downloadBlob(this.audit, this.fileName + '.pdf');
                     }
-                    this.clicked.emit({ format: this.format, value: this.audit, fileName: this.fileName });
+                    this.clicked.emit({ "format": this.format, "value": this.audit, "fileName": this.fileName });
                 },
                 (err) => {
                     this.error.emit(err);
@@ -97,7 +97,7 @@ export class TaskAuditDirective implements OnChanges {
             this.taskListService.fetchTaskAuditJsonById(this.taskId).subscribe(
                 (res) => {
                     this.audit = res;
-                    this.clicked.emit({ format: this.format, value: this.audit, fileName: this.fileName });
+                    this.clicked.emit({ "format": this.format, "value": this.audit, "fileName": this.fileName });
                 },
                 (err) => {
                     this.error.emit(err);
@@ -106,15 +106,15 @@ export class TaskAuditDirective implements OnChanges {
         }
     }
 
-    onClickAudit() {
+    onClickAudit () {
         this.fetchAuditInfo();
     }
 
-    isJsonFormat() {
+    isJsonFormat () {
         return this.format === JSON_FORMAT;
     }
 
-    isPdfFormat() {
+    isPdfFormat () {
         return this.format === PDF_FORMAT;
     }
 }

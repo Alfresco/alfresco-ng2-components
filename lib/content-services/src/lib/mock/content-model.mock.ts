@@ -18,61 +18,61 @@
 import { SearchCategory } from '../search/models/search-category.interface';
 
 export const mockContentModelTextProperty = {
-    name: 'name',
-    prefixedName: 'account:name',
-    title: 'name',
-    description: '',
-    dataType: 'd:text',
-    multiValued: false,
-    mandatory: false,
-    defaultValue: '',
-    mandatoryEnforced: false,
-    indexed: false,
-    indexTokenisationMode: '',
-    constraints: []
+    "name": 'name',
+    "prefixedName": 'account:name',
+    "title": 'name',
+    "description": '',
+    "dataType": 'd:text',
+    "multiValued": false,
+    "mandatory": false,
+    "defaultValue": '',
+    "mandatoryEnforced": false,
+    "indexed": false,
+    "indexTokenisationMode": '',
+    "constraints": []
 };
 
 export const mockContentModelDateProperty = {
-    name: 'creation',
-    prefixedName: 'account:creation',
-    title: 'creation',
-    description: '',
-    dataType: 'd:date',
-    multiValued: false,
-    mandatory: false,
-    defaultValue: '',
-    mandatoryEnforced: false,
-    indexed: false,
-    indexTokenisationMode: '',
-    constraints: []
+    "name": 'creation',
+    "prefixedName": 'account:creation',
+    "title": 'creation',
+    "description": '',
+    "dataType": 'd:date',
+    "multiValued": false,
+    "mandatory": false,
+    "defaultValue": '',
+    "mandatoryEnforced": false,
+    "indexed": false,
+    "indexTokenisationMode": '',
+    "constraints": []
 };
 
 export const mockConvertedSearchCategoriesFromModels: SearchCategory[] = [
     {
-        id: 'account:name',
-        name: 'account:name',
-        expanded: false,
-        enabled: true,
-        component: {
-            selector: 'text',
-            settings: {
-                pattern: `account:name:'(.*?)'`,
-                field: `account:name`,
-                placeholder: `Enter the name`
+        "id": 'account:name',
+        "name": 'account:name',
+        "expanded": false,
+        "enabled": true,
+        "component": {
+            "selector": 'text',
+            "settings": {
+                "pattern": `account:name:'(.*?)'`,
+                "field": `account:name`,
+                "placeholder": `Enter the name`
             }
         }
     },
     {
-        id: 'account:creation',
-        name: 'account:creation',
-        expanded: false,
-        enabled: true,
-        component: {
-            selector: 'date-range',
-            settings: {
-                pattern: `account:creation:'(.*?)'`,
-                field: `account:creation`,
-                placeholder: `Enter the creation`
+        "id": 'account:creation',
+        "name": 'account:creation',
+        "expanded": false,
+        "enabled": true,
+        "component": {
+            "selector": 'date-range',
+            "settings": {
+                "pattern": `account:creation:'(.*?)'`,
+                "field": `account:creation`,
+                "placeholder": `Enter the creation`
             }
         }
     }

@@ -37,8 +37,8 @@ describe('SearchFacetTabbedContentComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [NO_ERRORS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [NO_ERRORS_SCHEMA]
         });
         fixture = TestBed.createComponent(SearchFacetTabbedContentComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
@@ -47,15 +47,15 @@ describe('SearchFacetTabbedContentComponent', () => {
         searchFacetService = TestBed.inject(SearchFacetFiltersService);
         queryBuilderUpdateSpy = spyOn(queryBuilder, 'update').and.stub();
 
-        const facet1: FacetField = { type: 'field', label: 'field', field: 'field', buckets: new SearchFilterList() };
-        const facet2: FacetField = { type: 'field', label: 'field2', field: 'field2', buckets: new SearchFilterList() };
+        const facet1: FacetField = { "type": 'field', "label": 'field', "field": 'field', "buckets": new SearchFilterList() };
+        const facet2: FacetField = { "type": 'field', "label": 'field2', "field": 'field2', "buckets": new SearchFilterList() };
 
         component.tabbedFacet = {
-            fields: ['field', 'field2'],
-            label: 'LABEL',
-            facets: {
-                field: facet1,
-                field2: facet2
+            "fields": ['field', 'field2'],
+            "label": 'LABEL',
+            "facets": {
+                "field": facet1,
+                "field2": facet2
             }
         };
 
@@ -64,10 +64,9 @@ describe('SearchFacetTabbedContentComponent', () => {
 
     /**
      * Get the tab label content
-     *
      * @returns list of native elements
      */
-    async function getTabs(): Promise<MatTabHarness[]> {
+    async function getTabs (): Promise<MatTabHarness[]> {
         const tabGroup = await loader.getHarness(MatTabGroupHarness);
 
         return tabGroup.getTabs();
@@ -76,25 +75,24 @@ describe('SearchFacetTabbedContentComponent', () => {
     /**
      * Trigger component property change event
      */
-    function triggerComponentChanges() {
+    function triggerComponentChanges () {
         component.ngOnChanges({
-            tabbedFacet: new SimpleChange(null, component.tabbedFacet, false)
+            "tabbedFacet": new SimpleChange(null, component.tabbedFacet, false)
         });
         fixture.detectChanges();
     }
 
     /**
      * Add new item to the bucket
-     *
      * @param field field name
      * @param displayValue value to display
      */
-    function addBucketItem(field: string, displayValue: string) {
+    function addBucketItem (field: string, displayValue: string) {
         component.tabbedFacet.facets[field].buckets.items.push({
-            count: 1,
-            label: displayValue,
-            display: displayValue,
-            filterQuery: ''
+            "count": 1,
+            "label": displayValue,
+            "display": displayValue,
+            "filterQuery": ''
         });
         triggerComponentChanges();
     }
@@ -126,16 +124,16 @@ describe('SearchFacetTabbedContentComponent', () => {
         addBucketItem('field', 'test');
         addBucketItem('field2', 'test2');
         expect(component.autocompleteOptions['field'].length).toBe(1);
-        expect(component.autocompleteOptions['field'][0]).toEqual({ value: 'test' });
+        expect(component.autocompleteOptions['field'][0]).toEqual({ "value": 'test' });
         expect(component.autocompleteOptions['field2'].length).toBe(1);
-        expect(component.autocompleteOptions['field2'][0]).toEqual({ value: 'test2' });
+        expect(component.autocompleteOptions['field2'][0]).toEqual({ "value": 'test2' });
     });
 
     it('should add buckets when items are selected', () => {
         spyOn(queryBuilder, 'addUserFacetBucket');
         addBucketItem('field', 'test');
         addBucketItem('field2', 'test2');
-        component.onOptionsChange([{ value: 'test' }], 'field');
+        component.onOptionsChange([{ "value": 'test' }], 'field');
         expect(queryBuilder.addUserFacetBucket).toHaveBeenCalledWith('field', component.tabbedFacet.facets['field'].buckets.items[0]);
     });
 
@@ -153,7 +151,7 @@ describe('SearchFacetTabbedContentComponent', () => {
         spyOn(component.displayValue$, 'emit');
         addBucketItem('field', selectedOption1);
         addBucketItem('field', selectedOption2);
-        component.onOptionsChange([{ value: selectedOption1 }, { value: selectedOption2 }], 'field');
+        component.onOptionsChange([{ "value": selectedOption1 }, { "value": selectedOption2 }], 'field');
         fixture.detectChanges();
 
         expect(component.displayValue$.emit).toHaveBeenCalledWith(
@@ -167,8 +165,8 @@ describe('SearchFacetTabbedContentComponent', () => {
         const displayValueEmitterSpy = spyOn(component.displayValue$, 'emit');
         addBucketItem('field', selectedOption1);
         addBucketItem('field2', selectedOption2);
-        component.onOptionsChange([{ value: selectedOption1 }], 'field');
-        component.onOptionsChange([{ value: selectedOption2 }], 'field2');
+        component.onOptionsChange([{ "value": selectedOption1 }], 'field');
+        component.onOptionsChange([{ "value": selectedOption2 }], 'field2');
         fixture.detectChanges();
 
         expect(displayValueEmitterSpy).toHaveBeenCalledTimes(2);
@@ -199,7 +197,7 @@ describe('SearchFacetTabbedContentComponent', () => {
     });
 
     it('should not call queryBuilder.update on options change', () => {
-        component.onOptionsChange([{ value: 'test' }], 'field');
+        component.onOptionsChange([{ "value": 'test' }], 'field');
         expect(queryBuilderUpdateSpy).not.toHaveBeenCalled();
     });
 });

@@ -57,11 +57,11 @@ describe('StartProcessComponent', () => {
 
     beforeEach(() => {
         getTestBed().configureTestingModule({
-            imports: [NoopTranslateModule, NoopAnimationsModule, StartProcessInstanceComponent],
-            providers: [
+            "imports": [NoopTranslateModule, NoopAnimationsModule, StartProcessInstanceComponent],
+            "providers": [
                 LocalizedDatePipe,
-                { provide: FormRenderingService, useClass: ProcessFormRenderingService },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                { "provide": FormRenderingService, "useClass": ProcessFormRenderingService },
+                { "provide": AppConfigService, "useClass": AppConfigServiceMock }
             ]
         });
     });
@@ -70,20 +70,19 @@ describe('StartProcessComponent', () => {
         const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
         selectElement.click();
         const autocompleteDropdown = await loader.getHarness(MatAutocompleteHarness);
-        const options = await autocompleteDropdown.getOptions({ text: name });
+        const options = await autocompleteDropdown.getOptions({ "text": name });
         expect(options.length).toBe(1);
         await options[0].click();
     };
 
     /**
      * Change application id
-     *
      * @param appId application id
      */
-    function changeAppId(appId: number) {
+    function changeAppId (appId: number) {
         const change = new SimpleChange(null, appId, true);
         component.appId = appId;
-        component.ngOnChanges({ appId: change });
+        component.ngOnChanges({ "appId": change });
     }
 
     beforeEach(() => {
@@ -98,8 +97,8 @@ describe('StartProcessComponent', () => {
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
         getStartFormDefinitionSpy = spyOn(processService, 'getStartFormDefinition').and.returnValue(of(taskFormMock));
-        applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({ id: 1234 }));
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of([{ id: '1', name: 'fake-repo-name' } as any]));
+        applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({ "id": 1234 }));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of([{ "id": '1', "name": 'fake-repo-name' } as any]));
     });
 
     afterEach(() => {
@@ -187,7 +186,7 @@ describe('StartProcessComponent', () => {
                 component.processNameInput.setValue('claim');
 
                 const inputLabels = await loader.getAllHarnesses(
-                    MatFormFieldHarness.with({ ancestor: '.adf-start-process', selector: '.adf-process-input-container' })
+                    MatFormFieldHarness.with({ "ancestor": '.adf-start-process', "selector": '.adf-process-input-container' })
                 );
                 expect(inputLabels.length).toBe(2);
             });
@@ -248,7 +247,7 @@ describe('StartProcessComponent', () => {
         describe('CS content connection', () => {
             it('Should get the alfrescoRepositoryName from the config json', async () => {
                 appConfig.config = Object.assign(appConfig.config, {
-                    alfrescoRepositoryName: 'alfresco-123'
+                    "alfrescoRepositoryName": 'alfresco-123'
                 });
 
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
@@ -263,8 +262,8 @@ describe('StartProcessComponent', () => {
             it('if values in input is a node should be linked in the process service', async () => {
                 component.values = {};
                 component.values['file'] = {
-                    isFile: true,
-                    name: 'example-file'
+                    "isFile": true,
+                    "name": 'example-file'
                 };
 
                 component.moveNodeFromCStoPS();
@@ -280,16 +279,16 @@ describe('StartProcessComponent', () => {
                 component.values = {};
                 component.values['file'] = [
                     {
-                        isFile: true,
-                        name: 'example-file-1'
+                        "isFile": true,
+                        "name": 'example-file-1'
                     },
                     {
-                        isFile: true,
-                        name: 'example-fil-2'
+                        "isFile": true,
+                        "name": 'example-fil-2'
                     },
                     {
-                        isFile: true,
-                        name: 'example-file-3'
+                        "isFile": true,
+                        "name": 'example-file-3'
                     }
                 ];
 
@@ -565,7 +564,7 @@ describe('StartProcessComponent', () => {
             fixture.detectChanges();
 
             const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
-            const labelText = await (await loader.getHarness(MatFormFieldHarness.with({ selector: '.adf-start-process-app-list' }))).getLabel();
+            const labelText = await (await loader.getHarness(MatFormFieldHarness.with({ "selector": '.adf-start-process-app-list' }))).getLabel();
 
             expect(appsSelector).not.toBeNull();
             expect(labelText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION');
@@ -597,10 +596,10 @@ describe('StartProcessComponent', () => {
             expect(component.processDefinitions[0].name).toEqual('My Process 1');
             expect(component.processDefinitions[1].name).toEqual('My Process 2');
 
-            getDefinitionsSpy.and.returnValue(of([{ id: 'my:process 3', name: 'My Process 3', hasStartForm: true }]));
+            getDefinitionsSpy.and.returnValue(of([{ "id": 'my:process 3', "name": 'My Process 3', "hasStartForm": true }]));
             fixture.detectChanges();
 
-            const newApplication = { value: deployedApps[1] } as MatSelectChange;
+            const newApplication = { "value": deployedApps[1] } as MatSelectChange;
             component.onAppSelectionChange(newApplication);
             fixture.detectChanges();
 
@@ -793,7 +792,7 @@ describe('StartProcessComponent', () => {
 
             const processDefWithStartForm = testProcessDefWithForm[0];
             getDefinitionsSpy.and.returnValues(of([processDefWithStartForm]));
-            component.onAppSelectionChange({ value: application1 } as MatSelectChange);
+            component.onAppSelectionChange({ "value": application1 } as MatSelectChange);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -807,7 +806,7 @@ describe('StartProcessComponent', () => {
             expect(component.selectedProcessDef.hasStartForm).toEqual(processDefWithStartForm.hasStartForm);
 
             getDefinitionsSpy.and.returnValues(of(testMultipleProcessDefs));
-            component.onAppSelectionChange({ value: application2 } as MatSelectChange);
+            component.onAppSelectionChange({ "value": application2 } as MatSelectChange);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -817,7 +816,7 @@ describe('StartProcessComponent', () => {
 
             const processDefWithNoStartForm = testMultipleProcessDefs[0];
             getDefinitionsSpy.and.returnValues(of([processDefWithNoStartForm]));
-            component.onAppSelectionChange({ value: application3 } as MatSelectChange);
+            component.onAppSelectionChange({ "value": application3 } as MatSelectChange);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -912,9 +911,9 @@ describe('StartProcessComponent', () => {
     });
 
     describe('Error event', () => {
-        const processDefError = { message: 'Failed to load Process definitions' };
-        const applicationsError = { message: 'Failed to load applications' };
-        const startProcessError = { message: 'Failed to start process' };
+        const processDefError = { "message": 'Failed to load Process definitions' };
+        const applicationsError = { "message": 'Failed to load applications' };
+        const startProcessError = { "message": 'Failed to start process' };
 
         beforeEach(() => {
             fixture.detectChanges();

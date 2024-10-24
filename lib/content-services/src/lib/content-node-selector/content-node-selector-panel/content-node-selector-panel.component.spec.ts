@@ -33,18 +33,18 @@ import { ContentNodeSelectorPanelService } from './content-node-selector-panel.s
 import { mockContentModelTextProperty } from '../../mock/content-model.mock';
 
 const fakeResultSetPaging: ResultSetPaging = {
-    list: {
-        pagination: {
-            totalItems: 1
+    "list": {
+        "pagination": {
+            "totalItems": 1
         },
-        entries: [
+        "entries": [
             {
-                entry: {
-                    id: '123',
-                    name: 'MyFolder',
-                    isFile: false,
-                    isFolder: true,
-                    nodeType: 'mock'
+                "entry": {
+                    "id": '123',
+                    "name": 'MyFolder',
+                    "isFile": false,
+                    "isFolder": true,
+                    "nodeType": 'mock'
                 }
             }
         ]
@@ -56,7 +56,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
     let nodeService: NodesApiService;
     let sitesService: SitesService;
-    const fakeNodeEntry = new Node({ id: 'fakeId' });
+    const fakeNodeEntry = new Node({ "id": 'fakeId' });
     const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
     let searchQueryBuilderService: SearchQueryBuilderService;
     let contentNodeSelectorPanelService: ContentNodeSelectorPanelService;
@@ -71,8 +71,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            "imports": [ContentTestingModule],
+            "schemas": [CUSTOM_ELEMENTS_SCHEMA]
         });
     });
 
@@ -95,17 +95,17 @@ describe('ContentNodeSelectorPanelComponent', () => {
             spyOn(nodeService, 'getNode').and.returnValue(
                 of(
                     new Node({
-                        id: 'fake-node',
-                        path: { elements: [{ nodeType: 'st:site', name: 'fake-site' }] }
+                        "id": 'fake-node',
+                        "path": { "elements": [{ "nodeType": 'st:site', "name": 'fake-site' }] }
                     })
                 )
             );
             const fakeSite = new SiteEntry({
-                entry: {
-                    id: 'fake-site',
-                    guid: 'fake-site',
-                    title: 'fake-site',
-                    visibility: 'visible'
+                "entry": {
+                    "id": 'fake-site',
+                    "guid": 'fake-site',
+                    "title": 'fake-site',
+                    "visibility": 'visible'
                 }
             });
             spyOn(sitesService, 'getSite').and.returnValue(of(fakeSite));
@@ -117,7 +117,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
         describe('Site selection', () => {
             beforeEach(() => {
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ "list": new SitePagingList({ "entries": [] }) })));
                 component.currentFolderId = 'fake-starting-folder';
             });
 
@@ -132,7 +132,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should trigger siteChange event when a site is selected in sites-dropdown', async () => {
-                const fakeSiteEntry = new SiteEntry({ entry: new Site({ title: 'fake-new-site', guid: 'fake-new-site' }) });
+                const fakeSiteEntry = new SiteEntry({ "entry": new Site({ "title": 'fake-new-site', "guid": 'fake-new-site' }) });
                 fixture.detectChanges();
                 await fixture.whenStable();
 
@@ -140,7 +140,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.siteChange.subscribe((siteTitle: string) => (lastValue = siteTitle));
 
                 const sitesDropdown = fixture.debugElement.query(By.directive(DropdownSitesComponent));
-                sitesDropdown.componentInstance.selectedSite({ value: fakeSiteEntry });
+                sitesDropdown.componentInstance.selectedSite({ "value": fakeSiteEntry });
                 expect(lastValue).toBe('fake-new-site');
             });
         });
@@ -156,8 +156,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 spyOn(sitesService, 'getSites').and.returnValue(
                     of(
                         new SitePaging({
-                            list: new SitePagingList({
-                                entries: [{ entry: new Site({ guid: 'namek', id: 'namek' }) }, { entry: new Site({ guid: 'blog', id: 'blog' }) }]
+                            "list": new SitePagingList({
+                                "entries": [{ "entry": new Site({ "guid": 'namek', "id": 'namek' }) }, { "entry": new Site({ "guid": 'blog', "id": 'blog' }) }]
                             })
                         })
                     )
@@ -172,7 +172,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should trigger the select event when selection has been made', () => {
-                const expectedNode = { id: 'fakeid' } as Node;
+                const expectedNode = { "id": 'fakeid' } as Node;
                 let lastValue: Node[];
                 component.select.subscribe((nodes) => (lastValue = nodes));
 
@@ -185,8 +185,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.excludeSiteContent = ['blog'];
                 fixture.detectChanges();
 
-                const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
-                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null)).toBe(false, 'did not filter out blog');
+                const testSiteContent = new Node({ "id": 'blog-id', "properties": { 'st:componentId': 'blog' } });
+                expect(component.rowFilter({ "node": { "entry": testSiteContent } } as any, null, null)).toBe(false, 'did not filter out blog');
             });
 
             it('should still be able to filter out the exclude site content after rowFilter changes', () => {
@@ -201,18 +201,18 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 fixture.detectChanges();
 
                 const testSiteContent = new Node({
-                    id: 'blog-id',
-                    properties: { 'st:componentId': 'blog' },
-                    isFile: true
+                    "id": 'blog-id',
+                    "properties": { 'st:componentId': 'blog' },
+                    "isFile": true
                 });
-                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null)).toBe(
+                expect(component.rowFilter({ "node": { "entry": testSiteContent } } as any, null, null)).toBe(
                     false,
                     'did not filter out blog with filterFunction1'
                 );
 
                 component.rowFilter = filterFunction2;
                 fixture.detectChanges();
-                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null)).toBe(
+                expect(component.rowFilter({ "node": { "entry": testSiteContent } } as any, null, null)).toBe(
                     false,
                     'did not filter out blog with filterFunction2'
                 );
@@ -221,8 +221,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should NOT filter out any site content by default', () => {
                 fixture.detectChanges();
 
-                const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
-                expect(component.rowFilter({ node: { entry: testSiteContent } } as any, null, null)).toBe(true);
+                const testSiteContent = new Node({ "id": 'blog-id', "properties": { 'st:componentId': 'blog' } });
+                expect(component.rowFilter({ "node": { "entry": testSiteContent } } as any, null, null)).toBe(true);
             });
 
             it('should render search input by default', () => {
@@ -256,7 +256,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry()));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ "list": new SitePagingList({ "entries": [] }) })));
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -297,8 +297,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
-                const chosenNode = new Node({ path: { elements: [{ name: 'one' }] } });
-                component.onCurrentSelection([{ entry: chosenNode }]);
+                const chosenNode = new Node({ "path": { "elements": [{ "name": 'one' }] } });
+                component.onCurrentSelection([{ "entry": chosenNode }]);
                 fixture.detectChanges();
 
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
@@ -312,8 +312,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 searchQueryBuilderService.update();
                 triggerSearchResults(fakeResultSetPaging);
 
-                const chosenNode = new Node({ path: { elements: [{ name: 'fake-path' }] }, isFile: false, isFolder: true });
-                component.onCurrentSelection([{ entry: chosenNode }]);
+                const chosenNode = new Node({ "path": { "elements": [{ "name": 'fake-path' }] }, "isFile": false, "isFolder": true });
+                component.onCurrentSelection([{ "entry": chosenNode }]);
                 fixture.detectChanges();
 
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
@@ -328,8 +328,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 component.onFolderChange(nodeEntryEvent);
                 fixture.detectChanges();
 
-                const chosenNode = { path: { elements: [] } } as Node;
-                component.onCurrentSelection([{ entry: chosenNode }]);
+                const chosenNode = { "path": { "elements": [] } } as Node;
+                component.onCurrentSelection([{ "entry": chosenNode }]);
                 fixture.detectChanges();
 
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
@@ -348,9 +348,9 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
             it('should make changes to breadcrumb folderNode if breadcrumbTransform is defined', async () => {
                 const transformedFolderNode = {
-                    id: 'trans-node',
-                    name: 'trans-node-name',
-                    path: { elements: [{ id: 'testId', name: 'testName' }] }
+                    "id": 'trans-node',
+                    "name": 'trans-node-name',
+                    "path": { "elements": [{ "id": 'testId', "name": 'testName' }] }
                 };
                 component.breadcrumbTransform = () => transformedFolderNode;
 
@@ -366,10 +366,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
         });
 
         describe('Chosen node', () => {
-            const entry: Node = { id: 'fakeid' } as Node;
-            const nodePage: NodePaging = { list: { pagination: {} } };
+            const entry: Node = { "id": 'fakeid' } as Node;
+            const nodePage: NodePaging = { "list": { "pagination": {} } };
             let hasAllowableOperations;
-            const fakeFolderNode = { id: 'fakeNodeId', isFolder: true } as Node;
+            const fakeFolderNode = { "id": 'fakeNodeId', "isFolder": true } as Node;
 
             const returnHasPermission = (): boolean => hasAllowableOperations;
 
@@ -378,7 +378,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 const rows = [{}, {}] as DataRow[];
                 component.documentList.data = new ShareDataTableAdapter(thumbnailService, contentService, schema);
                 spyOn(component.documentList.data, 'getRows').and.returnValue(rows);
-                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ list: new SitePagingList({ entries: [] }) })));
+                spyOn(sitesService, 'getSites').and.returnValue(of(new SitePaging({ "list": new SitePagingList({ "entries": [] }) })));
             });
 
             it('should the selection become the currently navigated folder when the folder loads (Acts as destination for cases like copy action)', () => {
@@ -391,37 +391,37 @@ describe('ContentNodeSelectorPanelComponent', () => {
             it('should update the pagination after filtering rows on copy and move action', () => {
                 component.documentList.folderNode = fakeFolderNode;
                 const fakeNodePage: NodePaging = {
-                    list: {
-                        pagination: {
-                            hasMoreItems: true,
-                            maxItems: 1,
-                            totalItems: 2
+                    "list": {
+                        "pagination": {
+                            "hasMoreItems": true,
+                            "maxItems": 1,
+                            "totalItems": 2
                         },
-                        entries: [
+                        "entries": [
                             {
-                                entry: {
-                                    id: '123',
-                                    name: 'MyFolder',
-                                    isFile: false,
-                                    isFolder: true,
-                                    nodeType: 'mock',
-                                    modifiedAt: new Date(),
-                                    modifiedByUser: new UserInfo(),
-                                    createdAt: new Date(),
-                                    createdByUser: new UserInfo()
+                                "entry": {
+                                    "id": '123',
+                                    "name": 'MyFolder',
+                                    "isFile": false,
+                                    "isFolder": true,
+                                    "nodeType": 'mock',
+                                    "modifiedAt": new Date(),
+                                    "modifiedByUser": new UserInfo(),
+                                    "createdAt": new Date(),
+                                    "createdByUser": new UserInfo()
                                 }
                             },
                             {
-                                entry: {
-                                    id: '456',
-                                    name: 'MyFolder2',
-                                    isFile: false,
-                                    isFolder: true,
-                                    nodeType: 'mock',
-                                    modifiedAt: new Date(),
-                                    modifiedByUser: new UserInfo(),
-                                    createdAt: new Date(),
-                                    createdByUser: new UserInfo()
+                                "entry": {
+                                    "id": '456',
+                                    "name": 'MyFolder2',
+                                    "isFile": false,
+                                    "isFolder": true,
+                                    "nodeType": 'mock',
+                                    "modifiedAt": new Date(),
+                                    "modifiedByUser": new UserInfo(),
+                                    "createdAt": new Date(),
+                                    "createdByUser": new UserInfo()
                                 }
                             }
                         ]
@@ -488,7 +488,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be empty when the chosenNode is reset', async () => {
                     hasAllowableOperations = true;
-                    component.onCurrentSelection([{ entry: {} as Node }]);
+                    component.onCurrentSelection([{ "entry": {} as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -536,7 +536,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be null when the chosenNode is reset', async () => {
                     fixture.detectChanges();
-                    component.onCurrentSelection([{ entry: {} as Node }]);
+                    component.onCurrentSelection([{ "entry": {} as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -572,7 +572,7 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                 it('should be null when the chosenNode is reset', async () => {
                     fixture.detectChanges();
-                    component.onCurrentSelection([{ entry: {} as Node }]);
+                    component.onCurrentSelection([{ "entry": {} as Node }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -605,10 +605,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                     const fakeFileModels = [
                         new FileModel({
-                            name: 'fake-name',
-                            size: 100
+                            "name": 'fake-name',
+                            "size": 100
                         } as File),
-                        new FileModel({ name: 'fake-name-2', size: 200 } as File)
+                        new FileModel({ "name": 'fake-name-2', "size": 200 } as File)
                     ];
                     const fileUploadCompleteEvent = new FileUploadCompleteEvent(fakeFileModels[0], 1, fakeFileModels[0], 0);
                     uploadService.fileUploadComplete.next(fileUploadCompleteEvent);
@@ -636,10 +636,10 @@ describe('ContentNodeSelectorPanelComponent', () => {
 
                     const documentListUnselectRowSpy = spyOn(component.documentList, 'unselectRowFromNodeId');
                     const documentListReloadSpy = spyOn(component.documentList, 'reloadWithoutResettingSelection');
-                    const fakeFileModel = new FileModel({ name: 'fake-name', size: 10000000 } as File);
-                    const fakeNodes = [{ id: 'fakeNodeId' }, { id: 'fakeNodeId2' }] as Node[];
+                    const fakeFileModel = new FileModel({ "name": 'fake-name', "size": 10000000 } as File);
+                    const fakeNodes = [{ "id": 'fakeNodeId' }, { "id": 'fakeNodeId2' }] as Node[];
 
-                    fakeFileModel.data = { entry: fakeNodes[0] };
+                    fakeFileModel.data = { "entry": fakeNodes[0] };
                     fakeFileModel.status = FileUploadStatus.Deleted;
                     uploadService.cancelUpload(fakeFileModel);
 
@@ -650,8 +650,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 it('should return only the last uploaded node to become preselected when the selection mode is single', () => {
                     fixture.detectChanges();
                     const fakeNodes = [
-                        new NodeEntry({ entry: new Node({ id: 'fakeNode1' }) }),
-                        new NodeEntry({ entry: new Node({ id: 'fakeNode2' }) })
+                        new NodeEntry({ "entry": new Node({ "id": 'fakeNode1' }) }),
+                        new NodeEntry({ "entry": new Node({ "id": 'fakeNode2' }) })
                     ];
                     component.currentUploadBatch = fakeNodes;
                     component.selectionMode = 'single';
@@ -662,8 +662,8 @@ describe('ContentNodeSelectorPanelComponent', () => {
                 it('should return all the uploaded nodes to become preselected when the selection mode is multiple', () => {
                     fixture.detectChanges();
                     const fakeNodes = [
-                        new NodeEntry({ entry: new Node({ id: 'fakeNode1' }) }),
-                        new NodeEntry({ entry: new Node({ id: 'fakeNode2' }) })
+                        new NodeEntry({ "entry": new Node({ "id": 'fakeNode1' }) }),
+                        new NodeEntry({ "entry": new Node({ "id": 'fakeNode2' }) })
                     ];
                     component.currentUploadBatch = fakeNodes;
                     component.selectionMode = 'multiple';
@@ -733,13 +733,13 @@ describe('ContentNodeSelectorPanelComponent', () => {
             });
 
             it('should getSelectedCount return 1 when node is selected', () => {
-                component.onCurrentSelection([{ entry: new Node({ id: 'fake', isFile: true }) }]);
+                component.onCurrentSelection([{ "entry": new Node({ "id": 'fake', "isFile": true }) }]);
 
                 expect(component.getSelectedCount()).toBe(1);
             });
 
             it('should getSelectedCount return 0 when the chosen nodes are reset', () => {
-                component.onCurrentSelection([{ entry: new Node({ id: 'fake', isFile: true }) }]);
+                component.onCurrentSelection([{ "entry": new Node({ "id": 'fake', "isFile": true }) }]);
                 component.resetChosenNode();
 
                 expect(component.getSelectedCount()).toBe(0);

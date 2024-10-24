@@ -115,7 +115,7 @@ export class SuperagentHttpClient implements HttpClient {
             });
         });
 
-        promise.abort = function() {
+        promise.abort = function () {
             request.abort();
             return this;
         };
@@ -236,7 +236,6 @@ export class SuperagentHttpClient implements HttpClient {
 
     /**
      * Applies authentication headers to the request.
-     *
      * @param request The request object created by a <code>superagent()</code> call.
      * @param authentications authentications
      */
@@ -291,7 +290,6 @@ export class SuperagentHttpClient implements HttpClient {
 
     /**
      * Deserializes an HTTP response body into a value of the specified type.
-     *
      * @param response A SuperAgent response object.
      * @param returnType The type to return. Pass a string for simple types
      * or the constructor function for a complex type. Pass an array containing the type name to return an array of that type. To
@@ -332,7 +330,6 @@ export class SuperagentHttpClient implements HttpClient {
      * <li>keep files and arrays</li>
      * <li>format to string with `paramToString` for other cases</li>
      * </ul>
-     *
      * @param params The parameters as object properties.
      * @returns normalized parameters.
      */
@@ -354,7 +351,6 @@ export class SuperagentHttpClient implements HttpClient {
 
     /**
      * Checks whether the given parameter value represents file-like content.
-     *
      * @param param The parameter to check.
      * @returns <code>true</code> if <code>param</code> represents a file.
      */

@@ -18,32 +18,31 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+    "providedIn": 'root'
 })
 export class StorageService {
     private memoryStore: { [key: string]: any } = {};
     private readonly useLocalStorage: boolean = false;
     private _prefix: string = '';
 
-    get prefix() {
+    get prefix () {
         return this._prefix;
     }
 
-    set prefix(prefix: string) {
+    set prefix (prefix: string) {
         this._prefix = prefix ? prefix + '_' : '';
     }
 
-    constructor() {
+    constructor () {
         this.useLocalStorage = this.storageAvailable('localStorage');
     }
 
     /**
      * Gets an item.
-     *
      * @param key Key to identify the item
      * @returns The item (if any) retrieved by the key
      */
-    getItem(key: string): string | null {
+    getItem (key: string): string | null {
         if (this.useLocalStorage) {
             return localStorage.getItem(this.prefix + key);
         } else {
@@ -53,11 +52,10 @@ export class StorageService {
 
     /**
      * Stores an item
-     *
      * @param key Key to identify the item
      * @param data Data to store
      */
-    setItem(key: string, data: string) {
+    setItem (key: string, data: string) {
         if (this.useLocalStorage) {
             localStorage.setItem(this.prefix + key, data);
         } else {
@@ -66,7 +64,7 @@ export class StorageService {
     }
 
     /** Removes all currently stored items. */
-    clear() {
+    clear () {
         if (this.useLocalStorage) {
             localStorage.clear();
         } else {
@@ -76,10 +74,9 @@ export class StorageService {
 
     /**
      * Removes a single item.
-     *
      * @param key Key to identify the item
      */
-    removeItem(key: string) {
+    removeItem (key: string) {
         if (this.useLocalStorage) {
             localStorage.removeItem(`${this.prefix}` + key);
         } else {
@@ -89,11 +86,10 @@ export class StorageService {
 
     /**
      * Is any item currently stored under `key`?
-     *
      * @param key Key identifying item to check
      * @returns True if key retrieves an item, false otherwise
      */
-    hasItem(key: string): boolean {
+    hasItem (key: string): boolean {
         if (this.useLocalStorage) {
             return !!localStorage.getItem(this.prefix + key);
         } else {
@@ -101,7 +97,7 @@ export class StorageService {
         }
     }
 
-    private storageAvailable(type: string): boolean {
+    private storageAvailable (type: string): boolean {
         try {
             const storage = window[type];
             const key = '__storage_test__';

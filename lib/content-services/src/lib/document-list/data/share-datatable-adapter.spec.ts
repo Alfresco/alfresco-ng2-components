@@ -29,7 +29,7 @@ describe('ShareDataTableAdapter', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ContentTestingModule]
+            "imports": [ContentTestingModule]
         });
         const imageUrl: string = 'http://<addresss>';
 
@@ -142,8 +142,8 @@ describe('ShareDataTableAdapter', () => {
         file.entry.createdAt = rawValue;
 
         const col = {
-            key: 'createdAt',
-            type: 'text'
+            "key": 'createdAt',
+            "type": 'text'
         } as DataColumn;
 
         const row = new ShareDataRow(file, contentService, null);
@@ -162,7 +162,7 @@ describe('ShareDataTableAdapter', () => {
         file.entry.content.mimeType = null;
 
         const row = new ShareDataRow(file, contentService, null);
-        const col = { type: 'image', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'image', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
@@ -178,7 +178,7 @@ describe('ShareDataTableAdapter', () => {
         file.entry.content = null;
 
         const row = new ShareDataRow(file, contentService, null);
-        const col = { type: 'image', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'image', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
@@ -193,7 +193,7 @@ describe('ShareDataTableAdapter', () => {
 
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
         const row = new ShareDataRow(file, contentService, null);
-        const col = { type: 'image', key: 'icon' } as DataColumn;
+        const col = { "type": 'image', "key": 'icon' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toBe(imageUrl);
@@ -205,7 +205,7 @@ describe('ShareDataTableAdapter', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new FolderNode(), contentService, null);
-        const col = { type: 'image', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'image', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder`);
@@ -218,7 +218,7 @@ describe('ShareDataTableAdapter', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new SmartFolderNode(), contentService, null);
-        const col = { type: 'text', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'text', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_smart_folder`);
@@ -231,7 +231,7 @@ describe('ShareDataTableAdapter', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new LinkFolderNode(), contentService, null);
-        const col = { type: 'text', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'text', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder_shortcut_link`);
@@ -244,7 +244,7 @@ describe('ShareDataTableAdapter', () => {
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, null);
 
         const row = new ShareDataRow(new RuleFolderNode(), contentService, null);
-        const col = { type: 'text', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'text', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_folder_rule`);
@@ -258,7 +258,7 @@ describe('ShareDataTableAdapter', () => {
 
         const file = new FileNode();
         const row = new ShareDataRow(file, contentService, null);
-        const col = { type: 'image', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'image', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toBe(imageUrl);
@@ -275,7 +275,7 @@ describe('ShareDataTableAdapter', () => {
         file.entry.content = null;
 
         const row = new ShareDataRow(file, contentService, null);
-        const col = { type: 'image', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'image', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
@@ -292,7 +292,7 @@ describe('ShareDataTableAdapter', () => {
         file.entry.content.mimeType = 'image/png';
 
         const row = new ShareDataRow(file, contentService, null);
-        const col = { type: 'image', key: '$thumbnail' } as DataColumn;
+        const col = { "type": 'image', "key": '$thumbnail' } as DataColumn;
 
         const value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_raster_image`);
@@ -304,7 +304,7 @@ describe('ShareDataTableAdapter', () => {
         const file2 = new FileNode('file2');
         const folder = new FolderNode();
 
-        const col = { key: 'name' } as DataColumn;
+        const col = { "key": 'name' } as DataColumn;
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
         adapter.setSorting(new DataSorting('name', 'asc'));
 
@@ -327,7 +327,7 @@ describe('ShareDataTableAdapter', () => {
         const file2 = new FileNode('file2');
         file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
 
-        const col = { key: 'dateProp' } as DataColumn;
+        const col = { "key": 'dateProp' } as DataColumn;
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
 
         adapter.setRows([new ShareDataRow(file2, contentService, null), new ShareDataRow(file1, contentService, null)]);
@@ -354,7 +354,7 @@ describe('ShareDataTableAdapter', () => {
         file3.entry.content.sizeInBytes = 4224120; // 4.03 MB
         file4.entry.content.sizeInBytes = 2852791665; // 2.66 GB
 
-        const col = { key: 'content.sizeInBytes' } as DataColumn;
+        const col = { "key": 'content.sizeInBytes' } as DataColumn;
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
 
         adapter.setRows([
@@ -387,7 +387,7 @@ describe('ShareDataTableAdapter', () => {
         const file5 = new FileNode('a');
         const file6 = new FileNode('b');
 
-        const col = { key: 'name' } as DataColumn;
+        const col = { "key": 'name' } as DataColumn;
         const adapter = new ShareDataTableAdapter(thumbnailService, contentService, [col]);
 
         adapter.setRows([
