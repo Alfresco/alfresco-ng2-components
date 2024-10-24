@@ -1,0 +1,35 @@
+---
+Title: Changelog for alfresco-ng2-components v7.0.0-alpha.4
+---
+
+# Changelog
+
+- [41391a0bb9](https://github.com/Alfresco/alfresco-ng2-components/commit/41391a0bb9) Ng16 migration (#10114)
+- [0a89d9be97](https://github.com/Alfresco/alfresco-ng2-components/commit/0a89d9be97) AAE-26192 New task search API (#10319)
+- [0ee16691fb](https://github.com/Alfresco/alfresco-ng2-components/commit/0ee16691fb) AAE-24008 Fix push to crowdin job (#10317)
+- [8ebb8d1b43](https://github.com/Alfresco/alfresco-ng2-components/commit/8ebb8d1b43) [MNT-24660] version list action cannot be disabled using app conf (#10308)
+- [1d739ed15a](https://github.com/Alfresco/alfresco-ng2-components/commit/1d739ed15a) AAE-24008 Crowdin sync implementation (#10309)
+- [bbea2d80e5](https://github.com/Alfresco/alfresco-ng2-components/commit/bbea2d80e5) AAE-26163 Fix infinite loop when authentication error event occured (#10272)
+- [d1462253d0](https://github.com/Alfresco/alfresco-ng2-components/commit/d1462253d0) ADW Saved Search  (#10306)
+- [5dda03b602](https://github.com/Alfresco/alfresco-ng2-components/commit/5dda03b602) [MNT-24628] Handle difference between config object ticket and browser storage ticket (#10270)
+- [c08e8d6b31](https://github.com/Alfresco/alfresco-ng2-components/commit/c08e8d6b31) AAE-26469 Add external-property-process to simpleapp (#10296)
+- [eb12083869](https://github.com/Alfresco/alfresco-ng2-components/commit/eb12083869) AAE-26189 Replaced observable based counter to avoid flickering (#10290)
+- [a3033f9f17](https://github.com/Alfresco/alfresco-ng2-components/commit/a3033f9f17) [ADF-3936] Lock file checkboxes need refresh to appear checked (#10293)
+- [9e96fed71e](https://github.com/Alfresco/alfresco-ng2-components/commit/9e96fed71e) AAE-26321 Custom JWT storage service optional injection token (#10292)
+- [9a9a9db628](https://github.com/Alfresco/alfresco-ng2-components/commit/9a9a9db628) Revert &#34;AAE-26321 Add an injection token to JwtHelperService for OAuthStorage…&#34; (#10291)
+- [3d495932fe](https://github.com/Alfresco/alfresco-ng2-components/commit/3d495932fe) [MNT-24637] ADW: Options to edit files marked as records available in Favorites Files list (#10289)
+- [a93f0bd069](https://github.com/Alfresco/alfresco-ng2-components/commit/a93f0bd069) AAE-26321 Add an injection token to JwtHelperService for OAuthStorage (#10288)
+- [1d21c3ef80](https://github.com/Alfresco/alfresco-ng2-components/commit/1d21c3ef80) AAE-26155 Added feature for refreshing filter (#10266)
+- [d5a530ba23](https://github.com/Alfresco/alfresco-ng2-components/commit/d5a530ba23) AAE-25339 Fix ADF Datetime adapter display format date (#10274)
+- [9e70aad67d](https://github.com/Alfresco/alfresco-ng2-components/commit/9e70aad67d) AAE-22724 Fix json widget display (#10248)
+- [e0e89cfa3b](https://github.com/Alfresco/alfresco-ng2-components/commit/e0e89cfa3b) AAE-26181 Fix layout container overflowing screen (#10269)
+- [35f24fddb5](https://github.com/Alfresco/alfresco-ng2-components/commit/35f24fddb5) AAE-21573 Add display mode support for porcess start event form (#10273)
+- [0e085bc73a](https://github.com/Alfresco/alfresco-ng2-components/commit/0e085bc73a) AAE-22043 Fix long form flow outside container (#10265)
+- [2aa9f5b4be](https://github.com/Alfresco/alfresco-ng2-components/commit/2aa9f5b4be) [ACS-8779] Keep selections and question after going to the previous page (#10261)
+- [0d79ff534c](https://github.com/Alfresco/alfresco-ng2-components/commit/0d79ff534c) [ACS-8865] Viewer / DOCX files could not load preview for the first 20 seconds - error 409 for renditions (#10267)
+- [81fbaa4166](https://github.com/Alfresco/alfresco-ng2-components/commit/81fbaa4166) [ACS-8661] Metadata tags long text overflow regression (Angular 15) (#10268)
+- [1b5eaa0fa1](https://github.com/Alfresco/alfresco-ng2-components/commit/1b5eaa0fa1) AAE-26142 Allow standalone form display configuration (#10244)
+- [dfbf08e3a8](https://github.com/Alfresco/alfresco-ng2-components/commit/dfbf08e3a8) AAE-24992 Form rules for fields (#10245)
+- [0139273914](https://github.com/Alfresco/alfresco-ng2-components/commit/0139273914) remove filter string pipe, performance improvements (#10231)
+- [dd2bbd0a4b](https://github.com/Alfresco/alfresco-ng2-components/commit/dd2bbd0a4b) Post-release version bump (#10264)
+- [51f74a54f3](https://github.com/Alfresco/alfresco-ng2-components/commit/51f74a54f3) [ACS-8635] ADW: View button not working on create process (#10263)
