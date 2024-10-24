@@ -64,25 +64,25 @@ do
     fi
 
     if [ $PACKAGE != 'adf-testing' ] && [ $PACKAGE != 'js-api' ] && [ $PACKAGE != 'eslint-plugin-eslint-angular' ]; then
-        if [ ! -f package/fesm2015/$PACKAGE'.mjs' ]; then
+        if [ ! -f package/fesm2022/$PACKAGE'.mjs' ]; then
             error_out '31;1' "fesm2015/$PACKAGE.mjs not found!" >&2
             exit 1
         else
-            echo "fesm2015: ok"
+            echo "fesm2022: ok"
         fi
 
-        if [ ! -f package/esm2020/$PACKAGE'.mjs' ]; then
-            error_out '31;1' "esm2020/$PACKAGE.mjs not found!" >&2
+        if [ ! -f package/esm2022/$PACKAGE'.mjs' ]; then
+            error_out '31;1' "esm2022/$PACKAGE.mjs not found!" >&2
             exit 1
         else
             echo "esm2020: ok"
         fi
 
-        if [ ! -f package/fesm2020/$PACKAGE'.mjs' ]; then
-            error_out '31;1' "fesm2020/$PACKAGE.mjs not found!" >&2
+        if [ ! -f package/fesm2022/$PACKAGE'.mjs' ]; then
+            error_out '31;1' "fesm2022/$PACKAGE.mjs not found!" >&2
             exit 1
         else
-            echo "fesm2020: ok"
+            echo "fesm2022: ok"
         fi
 
         if [ ! -f package/README.md ]; then
