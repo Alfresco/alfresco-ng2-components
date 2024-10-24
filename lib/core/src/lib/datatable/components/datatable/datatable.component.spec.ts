@@ -2128,23 +2128,22 @@ describe('Column Resizing', () => {
     });
 
     it('should not have drag and drop directive enabled and not emit event when drag rows is disabled', () => {
-        spyOn(dataTable.dragDropped, "emit");
+        spyOn(dataTable.dragDropped, 'emit');
         dataTable.enableDragRows = false;
         dataTable.showHeader = ShowHeaderMode.Never;
         fixture.detectChanges();
-        const dragAndDrop = fixture.debugElement.query(By.directive(CdkDropList)).injector.get(CdkDropList)
+        const dragAndDrop = fixture.debugElement.query(By.directive(CdkDropList)).injector.get(CdkDropList);
         dataTable.onDragDrop({} as CdkDragDrop<any>);
         expect(dataTable.dragDropped.emit).not.toHaveBeenCalled();
-        expect(dragAndDrop).not.toBeDefined();
+        expect(dragAndDrop.disabled).toBeTrue();
     });
 
     it('should emit event when drag rows is enabled', () => {
-        spyOn(dataTable.dragDropped, "emit")
+        spyOn(dataTable.dragDropped, 'emit');
         dataTable.enableDragRows = true;
         fixture.detectChanges();
         const data = { previousIndex: 1, currentIndex: 0 };
         dataTable.onDragDrop(data as CdkDragDrop<any>);
         expect(dataTable.dragDropped.emit).toHaveBeenCalledWith(data);
     });
-
 });
