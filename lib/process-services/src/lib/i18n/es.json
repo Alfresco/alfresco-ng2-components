@@ -278,7 +278,6 @@
       "NO_START_FORM": "No hay formulario de inicio",
       "NO_PROCESS_DEF_SELECTED": "No se ha seleccionado ninguna definición de proceso",
       "FORM": {
-        "TITLE": "Iniciar proceso",
         "LABEL": {
           "SELECT_APPLICATION": "Seleccionar aplicación",
           "TYPE": "Seleccionar proceso",

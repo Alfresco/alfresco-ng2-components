@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "ANALYTICS",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
+      "FILL-PARAMETER": "Choose from the report options",
+      "NO-DATA-FOUND": "No data found",
+      "ZERO-DATA-FOUND": "There are only zero values",
+      "ICON-SETTING": "Settings",
+      "ICON-SAVE": "Save",
+      "ICON-DELETE": "Delete",
+      "ICON-EXPORT-CSV": "Export"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "DATE-RANGE-INTERVAL": "Group dates by"
+      },
+      "TASK-SLA": {
+        "TASK": "Task",
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLA-DURATION": "SLA required completion time"
+      }
+    },
+    "PROCESS-STATUS": "Process status",
+    "TASK-STATUS": "Task status"
+  },
+  "DIAGRAMS": "Diagrams"
+}

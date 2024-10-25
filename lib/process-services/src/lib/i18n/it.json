@@ -278,7 +278,6 @@
       "NO_START_FORM": "Nessun modulo di inizio",
       "NO_PROCESS_DEF_SELECTED": "Nessuna definizione di processo selezionata",
       "FORM": {
-        "TITLE": "Avvia processo",
         "LABEL": {
           "SELECT_APPLICATION": "Selezionare applicazione",
           "TYPE": "Seleziona processo",
