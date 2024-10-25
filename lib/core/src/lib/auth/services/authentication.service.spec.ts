@@ -21,7 +21,7 @@ import { CookieService } from '../../common/services/cookie.service';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { BasicAlfrescoAuthService } from '../basic-auth/basic-alfresco-auth.service';
 import { AuthModule } from '../oidc/auth.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { CookieServiceMock } from '../../mock';
 import { AppConfigServiceMock } from '../../common';
 import { OidcAuthenticationService } from '../oidc/oidc-authentication.service';
@@ -39,6 +39,7 @@ xdescribe('AuthenticationService', () => {
     let appConfigService: AppConfigService;
     let cookie: CookieService;
     let oidcAuthenticationService: OidcAuthenticationService;
+    let headers: HttpHeaders;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -80,6 +81,7 @@ xdescribe('AuthenticationService', () => {
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
             appConfigService.config.auth = { withCredentials: true };
+            headers = new HttpHeaders();
         });
 
         it('should emit login event for kerberos', (done) => {
@@ -106,6 +108,15 @@ xdescribe('AuthenticationService', () => {
             spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(basicAlfrescoAuthService, 'isKerberosEnabled').and.returnValue(true);
             expect(authService.isKerberosEnabled()).toEqual(true);
+        });
+
+        it('should not add Authorization header if kerberos is enabled', () => {
+            const url = 'some-url';
+            spyOn(basicAlfrescoAuthService, 'isKerberosEnabled').and.returnValue(true);
+            spyOn(basicAlfrescoAuthService, 'getTicketEcmBase64').and.returnValue('some-ticket');
+            headers = basicAlfrescoAuthService.getAuthHeaders(url, headers);
+            expect(headers.get('Authorization')).toBeNull();
+            expect(basicAlfrescoAuthService.getTicketEcmBase64).not.toHaveBeenCalled();
         });
     });
 
