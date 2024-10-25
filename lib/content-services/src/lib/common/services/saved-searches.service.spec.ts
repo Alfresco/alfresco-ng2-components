@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { NodeEntry } from '@alfresco/js-api';
 import { SavedSearchesService } from './saved-searches.service';
