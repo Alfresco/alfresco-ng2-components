@@ -133,6 +133,14 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         width: 100%;
         min-width: 100%;
 
+        &.adf-datatable-body__draggable {
+            cursor: grab;
+        }
+
+        &.adf-datatable-body__dragging {
+            cursor: grabbing;
+        }
+
         .adf-datatable-row {
             @include material-animation-default(0.28s);
 
@@ -146,6 +154,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
             &.adf-is-selected,
             &.adf-is-selected:hover {
                 background-color: var(--adf-theme-background-selected-button-color);
+            }
+
+            &.adf-drag-row {
+                cursor: grab;
             }
 
             &:last-child {
@@ -282,6 +294,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         &:first-child {
             margin-left: 15px;
             box-sizing: content-box;
+        }
+
+        &.adf-drag-column {
+            flex: 0;
         }
 
         .adf-datatable-cell-container {
@@ -585,6 +601,13 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 }
 
 #{$cdk-drag-preview} {
+    min-height: $data-table-row-height;
+    display: flex;
+    align-items: center;
+    background-color: var(--theme-background-color);
+    border-top: 2px solid var(--theme-selected-background-color);
+    opacity: 1;
+
     &.adf-datatable-cell-header {
         border-radius: 6px;
         background-color: var(--theme-background-color);

@@ -28,6 +28,7 @@ describe('SavedSearchesService', () => {
     let service: SavedSearchesService;
     let authService: AuthenticationService;
     let testUserName: string;
+    let getNodeContentSpy: jasmine.Spy;
 
     const testNodeId = 'test-node-id';
     const SAVED_SEARCHES_NODE_ID = 'saved-searches-node-id__';
@@ -59,6 +60,9 @@ describe('SavedSearchesService', () => {
         authService = TestBed.inject(AuthenticationService);
         spyOn(service.nodesApi, 'getNode').and.callFake(() => Promise.resolve({ entry: { id: testNodeId } } as NodeEntry));
         spyOn(service.searchApi, 'search').and.callFake(() => Promise.resolve({ list: { entries: [] } }));
+        spyOn(service.nodesApi, 'createNode').and.callFake(() => Promise.resolve({ entry: { id: 'new-node-id' } }));
+        spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ entry: {} } as NodeEntry));
+        getNodeContentSpy = spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
     });
 
     afterEach(() => {
@@ -68,12 +72,11 @@ describe('SavedSearchesService', () => {
     it('should retrieve saved searches from the saved-searches.json file', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         spyOn(localStorage, 'getItem').and.callFake(() => testNodeId);
-        spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
         service.innit();
 
         service.getSavedSearches().subscribe((searches) => {
             expect(localStorage.getItem).toHaveBeenCalledWith(SAVED_SEARCHES_NODE_ID + testUserName);
-            expect(service.nodesApi.getNodeContent).toHaveBeenCalledWith(testNodeId);
+            expect(getNodeContentSpy).toHaveBeenCalledWith(testNodeId);
             expect(searches.length).toBe(2);
             expect(searches[0].name).toBe('Search 1');
             expect(searches[1].name).toBe('Search 2');
@@ -83,8 +86,7 @@ describe('SavedSearchesService', () => {
 
     it('should create saved-searches.json file if it does not exist', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
-        spyOn(service.nodesApi, 'createNode').and.callFake(() => Promise.resolve({ entry: { id: 'new-node-id' } }));
-        spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => Promise.resolve(new Blob([''])));
+        getNodeContentSpy.and.callFake(() => Promise.resolve(new Blob([''])));
         service.innit();
 
         service.getSavedSearches().subscribe((searches) => {
@@ -100,9 +102,7 @@ describe('SavedSearchesService', () => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         const nodeId = 'saved-searches-node-id';
         spyOn(localStorage, 'getItem').and.callFake(() => nodeId);
-        spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
         const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
-        spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ entry: {} } as NodeEntry));
         service.innit();
 
         service.saveSearch(newSearch).subscribe(() => {
@@ -110,7 +110,7 @@ describe('SavedSearchesService', () => {
             expect(service.savedSearches$).toBeDefined();
             service.savedSearches$.subscribe((searches) => {
                 expect(searches.length).toBe(3);
-                expect(searches[2].name).toBe('Search 3');
+                expect(searches[2].name).toBe('Search 2');
                 expect(searches[2].order).toBe(2);
                 done();
             });
@@ -120,7 +120,6 @@ describe('SavedSearchesService', () => {
     it('should emit initial saved searches on subscription', (done) => {
         const nodeId = 'saved-searches-node-id';
         spyOn(localStorage, 'getItem').and.returnValue(nodeId);
-        spyOn(service.nodesApi, 'getNodeContent').and.returnValue(createBlob());
         service.innit();
 
         service.savedSearches$.pipe().subscribe((searches) => {
@@ -135,9 +134,7 @@ describe('SavedSearchesService', () => {
     it('should emit updated saved searches after saving a new search', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         spyOn(localStorage, 'getItem').and.callFake(() => testNodeId);
-        spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
         const newSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3' };
-        spyOn(service.nodesApi, 'updateNodeContent').and.callFake(() => Promise.resolve({ entry: {} } as NodeEntry));
         service.innit();
 
         let emissionCount = 0;
@@ -149,11 +146,52 @@ describe('SavedSearchesService', () => {
             }
             if (emissionCount === 2) {
                 expect(searches.length).toBe(3);
-                expect(searches[2].name).toBe('Search 3');
+                expect(searches[2].name).toBe('Search 2');
                 done();
             }
         });
 
         service.saveSearch(newSearch).subscribe();
     });
+
+    it('should edit a search', (done) => {
+        const updatedSearch = { name: 'Search 3', description: 'Description 3', encodedUrl: 'url3', order: 0 };
+        prepareDefaultMock();
+
+        service.editSavedSearch(updatedSearch).subscribe(() => {
+            service.savedSearches$.subscribe((searches) => {
+                expect(searches.length).toBe(2);
+                expect(searches[0].name).toBe('Search 3');
+                expect(searches[0].order).toBe(0);
+
+                expect(searches[1].name).toBe('Search 2');
+                expect(searches[1].order).toBe(1);
+                done();
+            });
+        });
+    });
+
+    it('should delete a search', (done) => {
+        const searchToDelete = { name: 'Search 1', description: 'Description 1', encodedUrl: 'url1', order: 0 };
+        prepareDefaultMock();
+
+        service.deleteSavedSearch(searchToDelete).subscribe(() => {
+            service.savedSearches$.subscribe((searches) => {
+                expect(searches.length).toBe(1);
+                expect(searches[0].name).toBe('Search 2');
+                expect(searches[0].order).toBe(0);
+                done();
+            });
+        });
+    });
+
+    /**
+     * Prepares default mocks for service
+     */
+    function prepareDefaultMock(): void {
+        spyOn(authService, 'getUsername').and.callFake(() => testUserName);
+        const nodeId = 'saved-searches-node-id';
+        spyOn(localStorage, 'getItem').and.callFake(() => nodeId);
+        service.innit();
+    }
 });
