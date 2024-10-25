@@ -79,6 +79,8 @@ describe('SidenavLayoutComponent', () => {
 
         fixture = TestBed.createComponent(SidenavLayoutComponent);
         component = fixture.componentInstance;
+        component.sidenavMin = 70;
+        component.sidenavMax = 320;
     });
 
     afterEach(() => {

@@ -22,7 +22,7 @@ import { SavedSearchesService } from './saved-searches.service';
 import { AlfrescoApiServiceMock } from '@alfresco/adf-content-services';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from '@alfresco/adf-core';
-import { Subject, take } from 'rxjs';
+import { Subject } from 'rxjs';
 
 describe('SavedSearchesService', () => {
     let service: SavedSearchesService;
