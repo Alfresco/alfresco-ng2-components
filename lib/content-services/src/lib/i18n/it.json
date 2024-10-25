@@ -1,7 +1,8 @@
 {
   "COMMON": {
     "APPLY": "Applica",
-    "CANCEL": "Annulla"
+    "CANCEL": "Annulla",
+    "NAME": "Name"
   },
   "ADF_VERSION_LIST": {
     "ACTIONS": {
@@ -146,18 +147,18 @@
       "NO_EXISTING_TAGS": "Nessun tag esistente",
       "TITLE": "Crea tag",
       "CREATE_TAG": "Creare: {{tag}}",
-      "NAME": "Nome",
+      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
       "ERRORS": {
         "EXISTING_TAG": "Tag già presente",
         "ALREADY_ADDED_TAG": "Il tag è già stato aggiunto",
         "EMPTY_TAG": "Il nome del tag non può contenere solo spazi",
         "REQUIRED": "Il nome del tag è obbligatorio",
         "FETCH_TAGS": "Errore durante il recupero dei tag",
-        "CREATE_TAGS": "Errore durante la creazione dei tag"
+        "CREATE_TAGS": "Errore durante la creazione dei tag",
+        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
       },
       "TOOLTIPS": {
-        "DELETE_TAG": "Elimina tag",
-        "HIDE_INPUT": "Nascondi input"
+        "DELETE_TAG": "Elimina tag"
       },
       "TAGS_LOADING": "Caricamento dei tag in corso",
       "CREATE_TAGS_SUCCESS": "Tag creati correttamente"
@@ -167,7 +168,6 @@
     "CATEGORIES_TITLE": "Categorie",
     "NO_CATEGORIES_CREATED": "Nessuna categoria creata",
     "NO_CATEGORIES_ASSIGNED": "Nessuna categoria assegnata",
-    "ASSIGN_CATEGORIES": "Assegna categorie",
     "UNASSIGN_CATEGORY": "Annulla assegnazione categoria",
     "DELETE_CATEGORY": "Elimina categoria",
     "EXISTING_CATEGORIES": "Categorie esistenti:",
@@ -176,7 +176,7 @@
     "GENERIC_CREATE": "Creare: {{name}}",
     "NAME": "Nome categoria",
     "LOADING": "Caricamento in corso",
-    "HIDE_INPUT": "Nascondi input",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
     "ERRORS": {
       "NOT_FOUND": "Categorie non trovate",
       "REQUIRED": "Il nome della categoria è obbligatorio",
@@ -185,7 +185,8 @@
       "DUPLICATED_CATEGORY": "La categoria è già stata aggiunta",
       "CREATE_CATEGORIES": "Errore durante la creazione delle categorie",
       "EXISTING_CATEGORIES": "Alcune categorie esistono già"
-    }
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
   },
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
@@ -273,12 +274,15 @@
       "ARIA-LABEL": "Pulsante di ricerca"
     },
     "INPUT": {
+      "LABEL": "Search",
+      "PLACEHOLDER": "Search Query",
       "ARIA-LABEL": "Stringa di ricerca"
     },
     "RESULTS": {
       "SUMMARY": "Trovati {{numResults}} risultati per {{searchTerm}}",
       "NONE": "Nessun risultato trovato per {{searchTerm}}",
       "ERROR": "Si è verificato un problema durante la ricerca. Riprovare.",
+      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
       "COLUMNS": {
         "NAME": "Nome visualizzato",
         "MODIFIED_BY": "Modificato da",
@@ -313,9 +317,7 @@
         "FROM": "Da",
         "TO": "A",
         "FROM-DATE": "Da",
-        "TO-DATE": "A",
-        "SELECT-FROM-DATE": "Seleziona data di inizio",
-        "SELECT-TO-DATE": "Seleziona data di fine"
+        "TO-DATE": "A"
       },
       "VALIDATION": {
         "REQUIRED-VALUE": "Valore obbligatorio",
@@ -330,7 +332,12 @@
         "SEARCH_FILTER": "Cerca elenco filtri",
         "OPTIONS-SELECTION": "Selezione opzioni"
       },
-      "ANY": "Qualsiasi"
+      "ANY": "Qualsiasi",
+      "PEOPLE": "People"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Modified by",
+      "CREATOR_LABEL": "Created by"
     },
     "ICONS": {
       "ft_ic_raster_image": "File di immagine",
@@ -396,15 +403,69 @@
       }
     },
     "LOGICAL_SEARCH": {
-      "SEARCH_CHIP_INPUT": {
-        "ADD_PHRASE": "Aggiungi frase..."
-      },
       "MATCH_ALL": "TUTTE",
       "MATCH_ALL_LABEL": "Trova corrispondenza di TUTTE queste frasi",
+      "MATCH_ALL_HINT": "Results will match all words entered here",
       "MATCH_ANY": "QUALSIASI",
       "MATCH_ANY_LABEL": "Trova corrispondenza di una QUALSIASI di queste frasi",
+      "MATCH_ANY_HINT": "Results will match any words entered here",
+      "MATCH_EXACT": "EXACT",
+      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
+      "MATCH_EXACT_HINT": "Results will match this entire phrase",
       "EXCLUDE": "ESCLUDI",
-      "EXCLUDE_LABEL": "ESCLUDI queste frasi"
+      "EXCLUDE_LABEL": "ESCLUDI queste frasi",
+      "EXCLUDE_HINT": "Results will exclude matches with these words"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Anytime",
+        "IN_LAST": "In the last",
+        "BETWEEN": "Between"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Days",
+        "WEEKS": "Weeks",
+        "MONTHS": "Months"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "In the last {{value}} days",
+        "WEEKS": "In the last {{value}} weeks",
+        "MONTHS": "In the last {{value}} months"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date"
+      },
+      "ERROR": {
+        "IN_LAST": "Value required",
+        "START_DATE": {
+          "REQUIRED": "Start Date required",
+          "INVALID_FORMAT": "Start Date invalid"
+        },
+        "END_DATE": {
+          "REQUIRED": "End Date required",
+          "INVALID_FORMAT": "End Date invalid"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Number input"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "File Size",
+      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "At Least",
+        "AT_MOST": "At Most",
+        "EXACTLY": "Exactly"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "File Type",
+      "FILE_TYPE_PLACEHOLDER": "Add file type"
     }
   },
   "PERMISSION": {
@@ -425,7 +486,9 @@
       "MODIFIED_DATE": "Data di modifica",
       "CONTENT_TYPE": "Tipo di contenuto",
       "TAGS": "Tag",
-      "ADD_TAG_TOOLTIP": "Aggiungi tag"
+      "NO_TAGS_ADDED": "There are currently no tags added",
+      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
+      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
     },
     "CONTENT_TYPE": {
       "DIALOG": {
@@ -471,7 +534,8 @@
       "REMOVE": "Rimuovi"
     },
     "UNSHARE_ERROR": "Errore durante l'annullamento della condivisione di questo file",
-    "UNSHARE_PERMISSION_ERROR": "Non si dispone dell'autorizzazione per rimuovere la condivisione di questo file"
+    "UNSHARE_PERMISSION_ERROR": "Non si dispone dell'autorizzazione per rimuovere la condivisione di questo file",
+    "INVALID_DATE_ERROR": "Invalid date"
   },
   "PERMISSION_MANAGER": {
     "PERMISSION_DISPLAY": {
@@ -593,6 +657,9 @@
     "ARIA-LABEL": {
       "BREADCRUMB": "Breadcrumb",
       "DROPDOWN": "Elenco a discesa"
+    },
+    "HEADER": {
+      "SELECTED": "Selected ({{ count }})"
     }
   },
   "NAME_COLUMN_LINK": {
@@ -633,6 +700,14 @@
       "JOINED": "Partecipazione alla libreria confermata",
       "JOIN_CANCELED": "Richiesta di partecipazione alla libreria annullata",
       "JOIN_REQUESTED": "Richiesta di partecipazione alla libreria inviata"
+    }
+  },
+  "KNOWLEDGE_RETRIEVAL": {
+    "SEARCH": {
+      "WARNINGS": {
+        "TOO_MANY_FILES_SELECTED": "Please select no more than {{ maxFiles }} files.",
+        "FOLDER_SELECTED": "Folders are not compatible with AI Agents."
+      }
     }
   }
 }

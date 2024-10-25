@@ -1,0 +1,713 @@
+{
+  "COMMON": {
+    "APPLY": "Apply",
+    "CANCEL": "Cancel",
+    "NAME": "Name"
+  },
+  "ADF_VERSION_LIST": {
+    "ACTIONS": {
+      "RESTORE": "Restore",
+      "DELETE": "Delete",
+      "DOWNLOAD": "Download",
+      "VIEW": "View",
+      "UPLOAD": {
+        "TITLE": "Upload new version",
+        "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",
+        "MAJOR": "major changes ({{version}})",
+        "MINOR": "minor changes ({{version}})",
+        "COMMENT": "Leave a comment",
+        "ADD": "Add New Version",
+        "CANCEL": "Cancel"
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Delete version",
+      "MESSAGE": "Deleted file versions cannot be restored. Continue?",
+      "YES_LABEL": "Yes",
+      "NO_LABEL": "No"
+    },
+    "MANAGE_VERSION_OPTIONS": "Manage version options"
+  },
+  "ADF-NEW-VERSION-UPLOADER": {
+    "DIALOG_LIST": {
+      "TITLE": "Manage Versions",
+      "CLOSE": "Close"
+    },
+    "DIALOG_UPLOAD": {
+      "TITLE": "Upload New Version",
+      "CANCEL": "Cancel",
+      "UPLOAD": "Upload"
+    }
+  },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Current",
+    "NEW_VERSION": "New",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Item type {{ type }}",
+      "ARROW_ICON": "Arrow right icon"
+    }
+  },
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "This folder is empty"
+    },
+    "NO_PERMISSION": "You don't have permission to view this file or folder.",
+    "LAYOUT": {
+      "CREATED": "Created",
+      "CREATED_BY": "Created by",
+      "THUMBNAIL": "Thumbnail",
+      "NAME": "Name",
+      "LOCATION": "Location",
+      "SIZE": "Size",
+      "DELETED_ON": "Deleted",
+      "DELETED_BY": "Deleted by",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Modified",
+      "MODIFIED_BY": "Modified by",
+      "SHARED_BY": "Shared by",
+      "LOAD_MORE": "Load more"
+    },
+    "MENU_ACTIONS": {
+      "VIEW": "View",
+      "REMOVE": "Remove",
+      "DOWNLOAD": "Download"
+    },
+    "LOADER_LABEL": "Document list loader",
+    "FILE_AUTO_DOWNLOAD_DIALOG": {
+      "HEADER": "Preview loading unresponsive",
+      "LABEL": "Download to view this document, or cancel to continue without preview.",
+      "ACTIONS": {
+        "CANCEL": "Cancel",
+        "DOWNLOAD": "Download"
+      }
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Create...",
+      "ACTION_NEW_FOLDER": "New Folder",
+      "CREATE": "Create",
+      "CANCEL": "Cancel"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Site List",
+    "MY_FILES_OPTION": "My files"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Cancel",
+    "CHOOSE": "Select",
+    "ATTACH": "Attach",
+    "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
+    "COPY": "Copy",
+    "COPY_ITEM": "Copy '{{ name }}' to...",
+    "LOCATION": "Location",
+    "MOVE": "Move",
+    "MOVE_ITEM": "Move '{{ name }}' to...",
+    "NO_RESULTS": "No results found",
+    "SEARCH": "Search",
+    "SEARCH_RESULTS": "Search results",
+    "SELECT_LIBRARY": "Select a Library",
+    "UPLOAD_BUTTON_SEARCH_WARNING_MESSAGE": "You can't upload a file whilst a search is still running",
+    "UPLOAD_BUTTON_PERMISSION_WARNING_MESSAGE": "User doesn't have permission to upload content to the folder",
+    "REPOSITORY": "Repository",
+    "UPLOAD_FROM_DEVICE": "Upload from your device"
+  },
+  "OPERATION": {
+    "SUCCESS": {
+      "CONTENT": {
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
+      },
+      "FOLDER": {
+        "COPY": "Copy successful",
+        "MOVE": "Move successful"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "This name is already in use, try a different name.",
+      "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
+      "PERMISSION": "You don't have access to do this."
+    }
+  },
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "New Tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Tag already exists"
+    },
+    "BUTTON": {
+      "ADD": "Add Tag"
+    },
+    "TAGS_CREATOR": {
+      "EXISTING_TAGS": "Existing tags:",
+      "EXISTING_TAGS_SELECTION": "Select an existing tag:",
+      "NO_TAGS_CREATED": "No Tags Created",
+      "NO_EXISTING_TAGS": "No Existing Tags",
+      "TITLE": "Create Tags",
+      "CREATE_TAG": "Create: {{tag}}",
+      "TAG_SEARCH_PLACEHOLDER": "Search Tags",
+      "ERRORS": {
+        "EXISTING_TAG": "Tag already exists",
+        "ALREADY_ADDED_TAG": "Tag is already added",
+        "EMPTY_TAG": "Tag name can't contain only spaces",
+        "REQUIRED": "Tag name is required",
+        "FETCH_TAGS": "Error while fetching the tags",
+        "CREATE_TAGS": "Error while creating the tags",
+        "SPECIAL_CHARACTERS": "Tag name cannot contain prohibited characters"
+      },
+      "TOOLTIPS": {
+        "DELETE_TAG": "Delete tag"
+      },
+      "TAGS_LOADING": "Tags loading",
+      "CREATE_TAGS_SUCCESS": "Tags created successfully"
+    }
+  },
+  "CATEGORIES_MANAGEMENT": {
+    "CATEGORIES_TITLE": "Categories",
+    "NO_CATEGORIES_CREATED": "No Categories created",
+    "NO_CATEGORIES_ASSIGNED": "No Categories assigned",
+    "UNASSIGN_CATEGORY": "Unassign Category",
+    "DELETE_CATEGORY": "Delete Category",
+    "EXISTING_CATEGORIES": "Existing Categories:",
+    "SELECT_EXISTING_CATEGORY": "Select an existing Category:",
+    "NO_EXISTING_CATEGORIES": "No existing Categories",
+    "GENERIC_CREATE": "Create: {{name}}",
+    "NAME": "Category name",
+    "LOADING": "Loading",
+    "NO_CATEGORIES_ADDED": "There are currently no categories added",
+    "ERRORS": {
+      "NOT_FOUND": "Categories not found",
+      "REQUIRED": "Category name is required",
+      "EMPTY_CATEGORY": "Category name can't contain only spaces",
+      "ALREADY_EXISTS": "Category already exists",
+      "DUPLICATED_CATEGORY": "Category is already added",
+      "CREATE_CATEGORIES": "Error while creating categories",
+      "EXISTING_CATEGORIES": "Some categories already exist"
+    },
+    "CATEGORIES_SEARCH_PLACEHOLDER": "Search Categories"
+  },
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimize",
+      "MAXIMIZE": "Maximize",
+      "CLOSE": "Close",
+      "STOP_ALL": "Stop uploads",
+      "STOP_FILE": "Stop upload",
+      "UPLOAD_SUCCESSFUL": "Upload successful"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Canceled",
+      "FILE_DONE_STATUS": "Uploaded"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Yes",
+        "CONTINUE": "No"
+      },
+      "MESSAGE": {
+        "TITLE": "Stop Upload",
+        "TEXT": "Stop and cancel all in-progress and pending uploads."
+      }
+    },
+    "ARIA-LABEL": {
+      "VERSION": "File version {{ version }}",
+      "DIALOG": "Upload list",
+      "DIALOG_MAXIMIZE": "Maximize upload dialog",
+      "DIALOG_MINIMIZE": "Minimize upload dialog",
+      "DIALOG_CLOSE": "Close upload dialog",
+      "STOP_ALL": "Stop uploads",
+      "UPLOAD_SUCCESSFUL": "Uploaded successfully file {{ file }}",
+      "STOP_FILE": "Stop file {{ file }}",
+      "STOP_FILE_UPLOAD": "Stop file upload {{ file }}",
+      "UPLOAD_FILE_ERROR": "Upload error {{ error }}",
+      "CONFIRMATION": {
+        "CANCEL": "Confirm cancel",
+        "CONTINUE": "Continue upload"
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Upload file",
+      "UPLOAD_FOLDER": "Upload folder",
+      "PERMISSION_CHECK_ERROR": "Error checking permission."
+    },
+    "VERSION": {
+      "MESSAGES": {
+        "NO_ACCEPTED_FILE_TYPES": "Please note that the setting of \"acceptedFilesType\" has no effect for new version uploads. The file type will be the same as the original file's.",
+        "INCOMPATIBLE_VERSION": "Only a file of the same type may be uploaded as a new version."
+      }
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Upload canceled",
+      "UPLOAD_PROGRESS": "Uploaded {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
+      "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
+      "PROGRESS": "Upload in progress...",
+      "FOLDER_ALREADY_EXIST": "The folder {0} already exists",
+      "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
+      "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team.",
+      "EXCEED_MAX_FILE_SIZE": "File {{ fileName }} is larger than the allowed file size"
+    },
+    "ACTION": {
+      "UNDO": "Undo"
+    },
+    "ERRORS": {
+      "GENERIC": "Upload unsuccessful. Contact IT if this problem persists",
+      "500": "Internal server error, try again or contact IT support [500]",
+      "504": "The server timed out, try again or contact IT support [504]",
+      "403": "Insufficient permissions to upload in this location [403]",
+      "404": "Upload location no longer exists [404]",
+      "409": "A file with the same name already exists [409]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Upload error"
+    }
+  },
+  "SEARCH": {
+    "CONTROL": {},
+    "BUTTON": {
+      "TOOLTIP": "Search",
+      "ARIA-LABEL": "Search button"
+    },
+    "INPUT": {
+      "LABEL": "Search",
+      "PLACEHOLDER": "Search Query",
+      "ARIA-LABEL": "Search input"
+    },
+    "RESULTS": {
+      "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
+      "NONE": "No results found for {{searchTerm}}",
+      "ERROR": "We hit a problem during the search - try again.",
+      "WILL_CONTAIN": "Results will contain '{{searchTerm}}'",
+      "COLUMNS": {
+        "NAME": "Display name",
+        "MODIFIED_BY": "Modified by",
+        "MODIFIED_AT": "Modified at"
+      }
+    },
+    "FILTER": {
+      "ACTIONS": {
+        "SEARCH": "Search",
+        "CLEAR": "Clear",
+        "APPLY": "Apply",
+        "CLEAR-ALL": "Clear all",
+        "SHOW-MORE": "Show more",
+        "SHOW-LESS": "Show less",
+        "ADD_OPTION": "Add Option..."
+      },
+      "BUTTONS": {
+        "CLOSE": "Close",
+        "CLEAR": "Clear",
+        "REMOVE": "Remove",
+        "APPLY": "Apply",
+        "CLEAR-ALL": {
+          "LABEL": "Clear all",
+          "TOOLTIP": "This will remove all selections"
+        },
+        "RESET-ALL": {
+          "LABEL": "Reset all",
+          "TOOLTIP": "This will reset all selections and all filters"
+        }
+      },
+      "RANGE": {
+        "FROM": "From",
+        "TO": "To",
+        "FROM-DATE": "From",
+        "TO-DATE": "To"
+      },
+      "VALIDATION": {
+        "REQUIRED-VALUE": "Required value",
+        "NO-DAYS": "No days selected.",
+        "INVALID-FORMAT": "Invalid Format",
+        "INVALID-DATE": "Invalid date. The date must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATE": "The date is beyond the maximum date.",
+        "INVALID-DATETIME": "Invalid datetime. The datetime must be in the format '{{ requiredFormat }}'",
+        "BEYOND-MAX-DATETIME": "The datetime is beyond the maximum datetime."
+      },
+      "ARIA-LABEL": {
+        "SEARCH_FILTER": "Search Filter List",
+        "OPTIONS-SELECTION": "Options Selection"
+      },
+      "ANY": "Any",
+      "PEOPLE": "People"
+    },
+    "FACET_FIELDS": {
+      "MODIFIER_LABEL": "Modified by",
+      "CREATOR_LABEL": "Created by"
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "Image file",
+      "ft_ic_pdf": "PDF document",
+      "ft_ic_ms_excel": "Microsoft Excel file",
+      "ft_ic_ms_word": "Microsoft Word document",
+      "ft_ic_ms_powerpoint": "Microsoft PowerPoint file",
+      "ft_ic_video": "Video file",
+      "ft_ic_document": "Document file",
+      "ft_ic_website": "Web resource",
+      "ft_ic_archive": "Archive file",
+      "ft_ic_presentation": "Presentation file",
+      "ft_ic_spreadsheet": "Spreadsheet file"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Display name",
+        "CREATED_BY": "Created by",
+        "CREATED_ON": "Created"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy"
+        },
+        "DOCUMENT": {
+          "DOWNLOAD": "Download",
+          "DELETE": "Delete",
+          "MOVE": "Move",
+          "COPY": "Copy",
+          "PROCESS_ACTION": "Start Process"
+        }
+      }
+    },
+    "UNKNOWN_CONFIGURATION": "Unknown Configuration",
+    "SEARCH_HEADER": {
+      "TITLE": "Filter",
+      "TYPE": "Type",
+      "FILTER_BY": "Filter by {{ category }}",
+      "CLEAR": "Clear",
+      "APPLY": "Apply",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Name",
+          "PLACEHOLDER": "Enter the name"
+        },
+        "TYPE": {
+          "TITLE": "Check type",
+          "FOLDER": "Folder",
+          "DOCUMENT": "Document"
+        },
+        "SIZE": {
+          "TITLE": "Content Size (range)",
+          "SMALL": "Small",
+          "MEDIUM": "Medium",
+          "LARGE": "Large",
+          "HUGE": "Huge"
+        },
+        "DATE": {
+          "TITLE": "Created Date (range)"
+        }
+      }
+    },
+    "LOGICAL_SEARCH": {
+      "MATCH_ALL": "ALL",
+      "MATCH_ALL_LABEL": "Match ALL of these words",
+      "MATCH_ALL_HINT": "Results will match all words entered here",
+      "MATCH_ANY": "ANY",
+      "MATCH_ANY_LABEL": "Match ANY of these words",
+      "MATCH_ANY_HINT": "Results will match any words entered here",
+      "MATCH_EXACT": "EXACT",
+      "MATCH_EXACT_LABEL": "Match this EXACT PHRASE",
+      "MATCH_EXACT_HINT": "Results will match this entire phrase",
+      "EXCLUDE": "EXCLUDE",
+      "EXCLUDE_LABEL": "EXCLUDE these words",
+      "EXCLUDE_HINT": "Results will exclude matches with these words"
+    },
+    "DATE_RANGE_ADVANCED": {
+      "OPTIONS": {
+        "ANYTIME": "Anytime",
+        "IN_LAST": "In the last",
+        "BETWEEN": "Between"
+      },
+      "IN_LAST_LABELS": {
+        "DAYS": "Days",
+        "WEEKS": "Weeks",
+        "MONTHS": "Months"
+      },
+      "IN_LAST_DISPLAY_LABELS": {
+        "DAYS": "In the last {{value}} days",
+        "WEEKS": "In the last {{value}} weeks",
+        "MONTHS": "In the last {{value}} months"
+      },
+      "BETWEEN_PLACEHOLDERS": {
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date"
+      },
+      "ERROR": {
+        "IN_LAST": "Value required",
+        "START_DATE": {
+          "REQUIRED": "Start Date required",
+          "INVALID_FORMAT": "Start Date invalid"
+        },
+        "END_DATE": {
+          "REQUIRED": "End Date required",
+          "INVALID_FORMAT": "End Date invalid"
+        }
+      },
+      "ARIA_LABEL": {
+        "NUMBER_INPUT": "Number input"
+      }
+    },
+    "SEARCH_PROPERTIES": {
+      "FILE_SIZE": "File Size",
+      "FILE_SIZE_PLACEHOLDER": "Enter file size",
+      "FILE_SIZE_OPERATOR": {
+        "AT_LEAST": "At Least",
+        "AT_MOST": "At Most",
+        "EXACTLY": "Exactly"
+      },
+      "FILE_SIZE_UNIT_ABBREVIATION": {
+        "KB": "KB",
+        "MB": "MB",
+        "GB": "GB"
+      },
+      "FILE_TYPE": "File Type",
+      "FILE_TYPE_PLACEHOLDER": "Add file type"
+    }
+  },
+  "PERMISSION": {
+    "LACKOF": "You don't have the {{permission}} permission to {{action}} the {{type}}"
+  },
+  "METADATA": {
+    "BASIC": {
+      "HEADER": "Properties",
+      "NAME": "Name",
+      "TITLE": "Title",
+      "DESCRIPTION": "Description",
+      "AUTHOR": "Author",
+      "MIMETYPE": "Mimetype",
+      "SIZE": "Size",
+      "CREATOR": "Creator",
+      "CREATED_DATE": "Created Date",
+      "MODIFIER": "Modifier",
+      "MODIFIED_DATE": "Modified Date",
+      "CONTENT_TYPE": "Content Type",
+      "TAGS": "Tags",
+      "NO_TAGS_ADDED": "There are currently no tags added",
+      "NO_ITEMS_MESSAGE": "There are currently no {{ groupTitle }} added",
+      "SAVE_OR_DISCARD_CHANGES": "Save or discard changes to continue"
+    },
+    "CONTENT_TYPE": {
+      "DIALOG": {
+        "TITLE": "Change content type",
+        "DESCRIPTION": "Making this change to the content type will permanently add some properties and stored metadata to the document.",
+        "CONFIRM": "Are you sure you want to change the content type?",
+        "CANCEL": "CANCEL",
+        "APPLY": "SAVE CHANGES",
+        "VIEW_DETAILS": "View details",
+        "PROPERTY": {
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "DATA_TYPE": "Data type"
+        }
+      }
+    },
+    "ERRORS": {
+      "GENERIC": "Error updating property",
+      "409": "Duplicate child name not allowed [409]",
+      "422": "Invalid property value"
+    }
+  },
+  "SHARE": {
+    "PUBLIC-LINK": "Public link",
+    "DIALOG-TITLE": "Share",
+    "DESCRIPTION": "Click the link below to copy it to the clipboard.",
+    "TITLE": "Link to share",
+    "SHARE-LINK": "Share Link",
+    "SHARABLE-LINK-CREATED": "Sharable Link is Created",
+    "PUBLIC-CONTENT": "This content is publicly available to anyone with this link",
+    "LINK-WITH-EXPIRY-SETTINGS": "New link has been generated with expiry settings",
+    "EXPIRES": "Expires on",
+    "LINK-EXPIRY-DATE": "Link Expiry Date",
+    "EXPIRATION-LABEL": "Expiration Date",
+    "EXPIRATION-PLACEHOLDER": "MM/DD/YYYY",
+    "CLIPBOARD-MESSAGE": "Link copied to the clipboard",
+    "CLOSE": "Close",
+    "COPY_BUTTON_LABEL": "Copy link",
+    "CONFIRMATION": {
+      "DIALOG-TITLE": "Remove this shared link",
+      "MESSAGE": "This link will be deleted and a new link will be created next time this file is shared",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    },
+    "UNSHARE_ERROR": "Error unsharing this file",
+    "UNSHARE_PERMISSION_ERROR": "You don't have permission to unshare this file",
+    "INVALID_DATE_ERROR": "Invalid date"
+  },
+  "PERMISSION_MANAGER": {
+    "PERMISSION_DISPLAY": {
+      "INHERITED": "Inherited",
+      "AUTHORITY_ID": "Authority ID",
+      "ROLE": "Role",
+      "LOCALLY_SET": "Locally set",
+      "NO_PERMISSIONS": "No permissions"
+    },
+    "ADD-PERMISSION": {
+      "SEARCH": "Search for users or groups to add",
+      "TITLE": "Add permission",
+      "TYPE-MESSAGE": "Type something to start searching groups or people",
+      "NO-RESULT": "No result found for this search",
+      "SELECT-ACTION": "SELECT",
+      "ADD-ACTION": "ADD",
+      "CLOSE-ACTION": "CANCEL",
+      "BASE-DIALOG-TITLE": "Search a group or people to add...",
+      "EVERYONE": "EVERYONE",
+      "USER-GROUP-LIST": "User or Group List"
+    },
+    "COLUMN": {
+      "NAME": "Users and Groups ({{ count }})",
+      "LOCATION": "Location",
+      "BULK-ROLE": "Set all role to"
+    },
+    "LABELS": {
+      "HIDE": "Hide",
+      "SHOW": "Show",
+      "ON": "On",
+      "OFF": "Off",
+      "DIRECT-PERMISSIONS": "Directly Applied Permission",
+      "INHERITED-PERMISSIONS": "Inherited Permission",
+      "INHERITED-SUBTITLE": "{{count}} users or groups are inheriting permission from a parent folder",
+      "SELECT-ROLE": "Select role",
+      "INHERITED_PERMISSION_TOGGLE": "Toggle Inherited Permission"
+    },
+    "MESSAGE": {
+      "EMPTY-PERMISSION": "No users/groups",
+      "EMPTY-SUBTITLE": "Add user/group to manage permission.",
+      "NO-MEMBERS": "Add groups or people to manage roles",
+      "PERMISSION-BULK-UPDATE-SUCCESS": "Updated {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-UPDATE-SUCCESS": "User/Group updated",
+      "PERMISSION-UPDATE-FAIL": "Failed to update user/group",
+      "PERMISSION-BULK-DELETE-SUCCESS": "Deleted {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-DELETE-SUCCESS": "User/Group deleted",
+      "PERMISSION-DELETE-FAIL": "Failed to delete user/group",
+      "PERMISSION-ADD-SUCCESS": "Added {{user}} user(s) {{group}} group(s)",
+      "PERMISSION-ADD-FAIL": "Failed to add user/group",
+      "INHERIT-ENABLE-SUCCESS": "Enabled inherited permission",
+      "INHERIT-DISABLE-SUCCESS": "Disabled inherited permission",
+      "TOGGLE-PERMISSION-FAILED": "Failed to toggle inherit Permission"
+    },
+    "ACTION": {
+      "DELETE": "Delete",
+      "ADD-PERMISSION": "Add User or Group"
+    },
+    "ERROR": {
+      "NOT-FOUND": "This item no longer exists or you don't have permission to view it.",
+      "DUPLICATE-PERMISSION": "One or more of the permissions you have set is already present : {{list}}",
+      "NOT-ALLOWED": "You are not allowed to change permissions"
+    }
+  },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "No nodeId provided!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Toggle {{ name }}"
+    }
+  },
+  "ADF-TREE": {
+    "LOAD-MORE-BUTTON": "Load more {{ name }}"
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Create Library",
+      "CREATE": "Create",
+      "UPDATE": "Update",
+      "EDIT": "Edit",
+      "CANCEL": "Cancel",
+      "FORM": {
+        "DESCRIPTION": "Description",
+        "SITE_ID": "Library ID",
+        "NAME": "Name",
+        "VISIBILITY": "Visibility"
+      }
+    },
+    "ROLE": {
+      "MANAGER": "Manager",
+      "COLLABORATOR": "Collaborator",
+      "CONTRIBUTOR": "Contributor",
+      "CONSUMER": "Consumer",
+      "NONE": "Not a member"
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Private",
+      "PUBLIC": "Public",
+      "MODERATED": "Moderated"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Library name already in use"
+    },
+    "ERRORS": {
+      "GENERIC": "We hit a problem",
+      "EXISTENT_SITE": "This Library ID isn't available. Try a different Library ID.",
+      "CONFLICT": "This Library ID is already used. Check the trashcan.",
+      "ID_TOO_LONG": "Use 72 characters or less for the URL name",
+      "DESCRIPTION_TOO_LONG": "Use 512 characters or less for description",
+      "TITLE_TOO_LONG": "Use 256 characters or less for title",
+      "TITLE_TOO_SHORT": "Title must be at least 2 characters long",
+      "ILLEGAL_CHARACTERS": "Use numbers and letters only",
+      "ONLY_SPACES": "Library name can't contain only spaces",
+      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Library properties updated"
+    }
+  },
+  "BREADCRUMB": {
+    "ARIA-LABEL": {
+      "BREADCRUMB": "Breadcrumb",
+      "DROPDOWN": "Dropdown"
+    },
+    "HEADER": {
+      "SELECTED": "Selected ({{ count }})"
+    }
+  },
+  "NAME_COLUMN_LINK": {
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Open {{ name }}"
+    }
+  },
+  "ADF-ASPECT-LIST": {
+    "PROPERTY_NAME": "Property Name",
+    "DESCRIPTION": "Description",
+    "DATA_TYPE": "Data Type",
+    "DIALOG": {
+      "TITLE": "Customize Properties",
+      "DESCRIPTION": "Manage the properties associated with selected file(s). Choose from property aspects listed below, to expose and apply additional metadata and functionality",
+      "RESET": "Reset",
+      "CLEAR": "Clear",
+      "CANCEL": "Cancel",
+      "APPLY": "Apply",
+      "OVER-TABLE-MESSAGE": "Select property aspects",
+      "SELECTED": "Selected"
+    }
+  },
+  "NODE_COUNTER": {
+    "SELECTED_COUNT": "{{ count }} selected"
+  },
+  "TAG_NODE_LIST": {
+    "VIEW_MORE": "View {{ count }} more"
+  },
+  "swsdp": "Sample: Web Site Design Project",
+  "ADF_LIBRARY_MEMBERSHIP_MESSAGES": {
+    "ERRORS": {
+      "INVALID_RECEIVER_EMAIL": "Recipient(s) email address not valid, contact IT.",
+      "INVALID_SENDER_EMAIL": "Your email address must be valid before requesting to join.",
+      "JOIN_CANCEL_FAILED": "Cannot cancel your join request",
+      "JOIN_REQUEST_FAILED": "Cannot join the library"
+    },
+    "INFO": {
+      "JOINED": "Library joined",
+      "JOIN_CANCELED": "Canceled the request to join the library",
+      "JOIN_REQUESTED": "Request sent to join this library"
+    }
+  },
+  "KNOWLEDGE_RETRIEVAL": {
+    "SEARCH": {
+      "WARNINGS": {
+        "TOO_MANY_FILES_SELECTED": "Please select no more than {{ maxFiles }} files.",
+        "FOLDER_SELECTED": "Folders are not compatible with AI Agents."
+      }
+    }
+  }
+}

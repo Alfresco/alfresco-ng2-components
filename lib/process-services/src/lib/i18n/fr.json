@@ -278,7 +278,6 @@
       "NO_START_FORM": "Aucun formulaire de début",
       "NO_PROCESS_DEF_SELECTED": "Aucune définition de processus sélectionnée",
       "FORM": {
-        "TITLE": "Démarrer le processus",
         "LABEL": {
           "SELECT_APPLICATION": "Sélectionner l'application",
           "TYPE": "Sélectionner un processus",
