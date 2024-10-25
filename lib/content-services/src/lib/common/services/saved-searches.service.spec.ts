@@ -52,7 +52,8 @@ describe('SavedSearchesService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                { provide: AuthenticationService, useValue: { getUsername: () => {}, onLogin: new Subject() } }
+                { provide: AuthenticationService, useValue: { getUsername: () => {}, onLogin: new Subject() } },
+                SavedSearchesService
             ]
         });
         service = TestBed.inject(SavedSearchesService);
@@ -64,10 +65,9 @@ describe('SavedSearchesService', () => {
         getNodeContentSpy = spyOn(service.nodesApi, 'getNodeContent').and.callFake(() => createBlob());
     });
 
-    afterEach(fakeAsync(() => {
-        flush();
+    afterEach(() => {
         localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
-    }));
+    });
 
     it('should retrieve saved searches from the saved-searches.json file', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
