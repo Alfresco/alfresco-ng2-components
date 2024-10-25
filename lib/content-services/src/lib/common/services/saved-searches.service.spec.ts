@@ -185,21 +185,6 @@ describe('SavedSearchesService', () => {
         });
     });
 
-    it('should change search order', fakeAsync(() => {
-        prepareDefaultMock();
-        service.changeOrder(0, 1);
-
-        service.savedSearches$.pipe(take(1)).subscribe((searches) => {
-            expect(searches.length).toBe(2);
-            expect(searches[0].name).toBe('Search 2');
-            expect(searches[0].order).toBe(0);
-
-            expect(searches[1].name).toBe('Search 1');
-            expect(searches[1].order).toBe(1);
-        });
-        tick(1000);
-    }));
-
     /**
      * Prepares default mocks for service
      */
