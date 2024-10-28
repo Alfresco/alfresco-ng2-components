@@ -305,7 +305,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.checkMandatoryFilterProperties();
 
         if (this.filterProperties.includes('appName')) {
-            this.getRunningApplications();
+            this.getDeployedApplications();
         }
 
         if (this.filterProperties.includes('processDefinitionName')) {
@@ -434,8 +434,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
-    getRunningApplications() {
-        this.appsProcessCloudService.getDeployedApplicationsByStatus('RUNNING', this.role).subscribe((applications) => {
+    getDeployedApplications() {
+        this.appsProcessCloudService.getDeployedApplicationsByStatus('DEPLOYED', this.role).subscribe((applications) => {
             if (applications && applications.length > 0) {
                 this.applicationNames.length = 0;
                 applications.map((application) => {

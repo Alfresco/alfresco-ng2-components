@@ -78,7 +78,7 @@ describe('AppListCloudComponent', () => {
                 expect(response).toBeDefined();
                 expect(response.length).toEqual(3);
                 expect(response[0].name).toEqual('application-new-1');
-                expect(response[0].status).toEqual('Running');
+                expect(response[0].status).toEqual('Deployed');
                 expect(response[0].icon).toEqual('favorite_border');
                 expect(response[0].theme).toEqual('theme-2');
                 expect(response[1].name).toEqual('application-new-2');

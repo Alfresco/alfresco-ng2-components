@@ -43,7 +43,7 @@ export interface DropdownOption {
 const ACTION_SAVE = 'save';
 const ACTION_SAVE_AS = 'saveAs';
 const ACTION_DELETE = 'delete';
-const APP_RUNNING_STATUS = 'RUNNING';
+const APP_DEPLOYED_STATUS = 'DEPLOYED';
 const APPLICATION_NAME = 'appName';
 const PROCESS_DEFINITION_NAME = 'processDefinitionName';
 const LAST_MODIFIED_PROPERTY = 'lastModified';
@@ -239,19 +239,17 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
         }
     }
 
-    getRunningApplications() {
-        this.appsProcessCloudService
-            .getDeployedApplicationsByStatus(APP_RUNNING_STATUS, this.role)
-            .subscribe((applications) => {
-                if (applications && applications.length > 0) {
-                    applications.map((application) => {
-                        this.applicationNames.push({
-                            label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList),
-                            value: application.name
-                        });
+    getDeployedApplications() {
+        this.appsProcessCloudService.getDeployedApplicationsByStatus(APP_DEPLOYED_STATUS, this.role).subscribe((applications) => {
+            if (applications && applications.length > 0) {
+                applications.map((application) => {
+                    this.applicationNames.push({
+                        label: this.appsProcessCloudService.getApplicationLabel(application, this.environmentList),
+                        value: application.name
                     });
-                }
-            });
+                });
+            }
+        });
     }
 
     getProcessDefinitions() {
@@ -407,7 +405,7 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
         if (this.checkForProperty(APPLICATION_NAME)) {
             this.applicationNames = [];
-            this.getRunningApplications();
+            this.getDeployedApplications();
         }
         if (this.checkForProperty(PROCESS_DEFINITION_NAME)) {
             this.processDefinitionNames = [];
