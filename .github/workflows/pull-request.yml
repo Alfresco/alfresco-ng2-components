@@ -234,8 +234,8 @@ jobs:
           fetch-depth: 0 # Fetch all history for all tags and branches
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/download-node-modules-and-artifacts
-      - run: npx nx affected:build $NX_CALCULATION_FLAGS --prod
-      - run: npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci --parallel=1
+      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected:build $NX_CALCULATION_FLAGS --prod
+      - run: NX_REJECT_UNKNOWN_LOCAL_CACHE=0 npx nx affected --target=build-storybook $NX_CALCULATION_FLAGS --configuration=ci --parallel=1
       - uses: ./.github/actions/upload-node-modules-and-artifacts
 
   PR-forbidden-labels:
