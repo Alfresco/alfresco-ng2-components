@@ -23,7 +23,7 @@ export const fakeApplicationInstance: ApplicationInstanceModel[] = [
         name: 'application-new-1',
         displayName: 'application-new-1',
         createdAt: '2018-09-21T12:31:39.000Z',
-        status: 'Running',
+        status: 'Deployed',
         theme: 'theme-2',
         icon: 'favorite_border'
     },
@@ -49,7 +49,7 @@ export const fakeApplicationInstanceWithEnvironment: ApplicationInstanceModel[] 
         displayName: 'application-new-1',
         environmentId: fakeEnvironmentList[0].id,
         createdAt: '2018-09-21T12:31:39.000Z',
-        status: 'Running',
+        status: 'Deployed',
         theme: 'theme-2',
         icon: 'favorite_border'
     },

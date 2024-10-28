@@ -16,16 +16,7 @@
  */
 
 import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
-import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewEncapsulation
-} from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
@@ -33,7 +24,7 @@ import { catchError } from 'rxjs/operators';
 
 export const LAYOUT_LIST: string = 'LIST';
 export const LAYOUT_GRID: string = 'GRID';
-export const RUNNING_STATUS: string = 'RUNNING';
+export const DEPLOYED_STATUS: string = 'DEPLOYED';
 
 @Component({
     selector: 'adf-cloud-app-list',
@@ -60,20 +51,19 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
     loadingError$ = new Subject<boolean>();
     hasEmptyCustomContentTemplate: boolean = false;
 
-    constructor(private appsProcessCloudService: AppsProcessCloudService) { }
+    constructor(private appsProcessCloudService: AppsProcessCloudService) {}
 
     ngOnInit() {
         if (!this.isValidType()) {
             this.setDefaultLayoutType();
         }
 
-        this.apps$ = this.appsProcessCloudService.getDeployedApplicationsByStatus(RUNNING_STATUS)
-            .pipe(
-                catchError(() => {
-                    this.loadingError$.next(true);
-                    return of();
-                })
-            );
+        this.apps$ = this.appsProcessCloudService.getDeployedApplicationsByStatus(DEPLOYED_STATUS).pipe(
+            catchError(() => {
+                this.loadingError$.next(true);
+                return of();
+            })
+        );
     }
 
     ngAfterContentInit() {

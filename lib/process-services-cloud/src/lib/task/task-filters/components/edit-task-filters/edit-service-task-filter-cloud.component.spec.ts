@@ -48,7 +48,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
     let fixture: ComponentFixture<EditServiceTaskFilterCloudComponent>;
     let dialog: MatDialog;
     let getTaskFilterSpy: jasmine.Spy;
-    let getRunningApplicationsSpy: jasmine.Spy;
+    let getDeployedApplicationsSpy: jasmine.Spy;
     let taskService: TaskCloudService;
     const afterClosedSubject = new Subject<any>();
 
@@ -68,7 +68,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
         };
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeServiceFilter));
-        getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
+        getDeployedApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
@@ -424,7 +424,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             expect(activityNameController.value).toBe('fake-activity');
         });
 
-        it('should able to fetch running applications when appName property defined in the input', async () => {
+        it('should able to fetch deployed applications when appName property defined in the input', async () => {
             component.filterProperties = ['appName', 'processInstanceId', 'priority'];
             fixture.detectChanges();
             const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
@@ -434,7 +434,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(getRunningApplicationsSpy).toHaveBeenCalled();
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(appController).toBeDefined();
             expect(appController.value).toBe('mock-app-name');
         });
@@ -680,7 +680,7 @@ describe('EditServiceTaskFilterCloudComponent', () => {
         component.appName = fakeApplicationInstance[0].name;
         component.environmentList = fakeEnvironmentList;
 
-        getRunningApplicationsSpy.and.returnValue(of(fakeApplicationInstanceWithEnvironment));
+        getDeployedApplicationsSpy.and.returnValue(of(fakeApplicationInstanceWithEnvironment));
         spyOn(component, 'createTaskFilterProperties').and.returnValue(mockApplicationTaskFilterProperties);
 
         const filteredProperties = component.createAndFilterProperties();

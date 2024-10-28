@@ -68,7 +68,7 @@ describe('EditTaskFilterCloudComponent', () => {
     let dialog: MatDialog;
     let alfrescoApiService: AlfrescoApiService;
     let getTaskFilterSpy: jasmine.Spy;
-    let getRunningApplicationsSpy: jasmine.Spy;
+    let getDeployedApplicationsSpy: jasmine.Spy;
     let taskService: TaskCloudService;
     const afterClosedSubject = new Subject<any>();
 
@@ -91,7 +91,7 @@ describe('EditTaskFilterCloudComponent', () => {
         spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mockAlfrescoApi);
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeFilter));
-        getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
+        getDeployedApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
         loader = TestbedHarnessEnvironment.loader(fixture);
     });
@@ -506,7 +506,7 @@ describe('EditTaskFilterCloudComponent', () => {
             expect(orderController.value).toBe('ASC');
         });
 
-        it('should able to fetch running applications when appName property defined in the input', async () => {
+        it('should able to fetch deployed applications when appName property defined in the input', async () => {
             component.filterProperties = ['appName', 'processInstanceId', 'priority'];
             fixture.detectChanges();
             component.ngOnChanges({ id: mockTaskFilterIdChange });
@@ -515,7 +515,7 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(getRunningApplicationsSpy).toHaveBeenCalled();
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(appController).toBeDefined();
             expect(appController.value).toBe('mock-app-name');
         });
