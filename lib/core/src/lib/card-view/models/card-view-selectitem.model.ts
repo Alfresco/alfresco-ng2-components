@@ -26,6 +26,7 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
     type = 'select';
     options$: Observable<CardViewSelectItemOption<T>[]>;
     displayNoneOption: boolean;
+    autocompleteBased = false;
 
     valueFetch$: Observable<string> = null;
 
@@ -35,6 +36,7 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
         this.displayNoneOption = cardViewSelectItemProperties.displayNoneOption !== undefined ? cardViewSelectItemProperties.displayNoneOption : true;
 
         this.options$ = cardViewSelectItemProperties.options$;
+        this.autocompleteBased = cardViewSelectItemProperties.autocompleteBased || false;
 
         this.valueFetch$ = this.options$.pipe(
             switchMap((options) => {
