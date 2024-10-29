@@ -260,6 +260,21 @@ describe('CardViewSelectItemComponent', () => {
     });
 
     describe('Autocomplete based', () => {
+        beforeEach(() => {
+            component.property = new CardViewSelectItemModel({
+                label: 'Test Label',
+                value: 'initial value',
+                key: 'test-key',
+                default: 'Placeholder',
+                editable: true,
+                autocompleteBased: true,
+                options$: of([
+                    { key: '1', label: 'Option 1' },
+                    { key: '2', label: 'Option 2' }
+                ])
+            });
+        });
+
         it('should set templateType to autocompleteBased', () => {
             component.property.autocompleteBased = true;
             fixture.detectChanges();
@@ -267,38 +282,14 @@ describe('CardViewSelectItemComponent', () => {
         });
 
         it('should set initial value to autocompleteControl', () => {
-            component.property = new CardViewSelectItemModel({
-                label: 'Test Label',
-                value: 'initial value',
-                key: 'test-key',
-                default: 'Placeholder',
-                editable: true,
-                autocompleteBased: true,
-                options$: of([
-                    { key: '1', label: 'Option 1' },
-                    { key: '2', label: 'Option 2' }
-                ])
-            });
             component.ngOnChanges({});
             fixture.detectChanges();
 
             expect(component.autocompleteControl.value).toBe('initial value');
         });
 
-        it('should call autocompleteStream on autocompleteControl value change', async () => {
+        it('should emit autocompleteInputValue$ with new value on autocompleteControl change', async () => {
             const autocompleteValueSpy = spyOn(cardViewUpdateService.autocompleteInputValue$, 'next');
-            component.property = new CardViewSelectItemModel({
-                label: 'Test Label',
-                value: 'initial value',
-                key: 'test-key',
-                default: 'Placeholder',
-                editable: true,
-                autocompleteBased: true,
-                options$: of([
-                    { key: '1', label: 'Option 1' },
-                    { key: '2', label: 'Option 2' }
-                ])
-            });
             component.editedValue = '';
             component.editable = true;
             component.ngOnChanges({ property: { firstChange: true } } as any);
@@ -313,18 +304,6 @@ describe('CardViewSelectItemComponent', () => {
 
         it('should update value correctly on option selected', () => {
             cardViewUpdateService.update = jasmine.createSpy('update');
-            component.property = new CardViewSelectItemModel({
-                label: 'Test Label',
-                value: 'o',
-                key: 'test-key',
-                default: 'Placeholder',
-                editable: true,
-                autocompleteBased: true,
-                options$: of([
-                    { key: '1', label: 'Option 1' },
-                    { key: '2', label: 'Option 2' }
-                ])
-            });
             const event: MatAutocompleteSelectedEvent = {
                 option: {
                     value: '1'
@@ -339,6 +318,20 @@ describe('CardViewSelectItemComponent', () => {
 
             expect(component.autocompleteControl.value).toBe('Option 1');
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(jasmine.objectContaining(component.property), '1');
+        });
+
+        it('should disable the autocomplete control', () => {
+            component.editable = false;
+            component.ngOnChanges({ editable: { currentValue: false, previousValue: true, firstChange: false, isFirstChange: () => false } });
+            fixture.detectChanges();
+            expect(component.autocompleteControl.disabled).toBeTrue();
+        });
+
+        it('should enable the autocomplete control', () => {
+            component.editable = true;
+            component.ngOnChanges({ editable: { currentValue: true, previousValue: false, firstChange: false, isFirstChange: () => false } });
+            fixture.detectChanges();
+            expect(component.autocompleteControl.enabled).toBeTrue();
         });
     });
 });

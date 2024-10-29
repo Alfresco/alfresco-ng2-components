@@ -32,6 +32,7 @@ import { TaskHeaderComponent } from './task-header.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskRepresentation } from '@alfresco/js-api';
+import { SimpleChanges } from '@angular/core';
 
 describe('TaskHeaderComponent', () => {
     let service: TaskListService;
@@ -96,6 +97,51 @@ describe('TaskHeaderComponent', () => {
         expect(component.initData).toHaveBeenCalledTimes(1);
         resetChanges$.next();
         expect(component.initData).toHaveBeenCalledTimes(2);
+    });
+
+    it('should call initData when assignee changes', () => {
+        spyOn(component, 'initData');
+        const changes: SimpleChanges = {
+            taskDetails: {
+                currentValue: { id: '1', assignee: { id: '2' } } as any,
+                previousValue: { id: '1', assignee: { id: '1' } } as any,
+                firstChange: false,
+                isFirstChange: () => false
+            }
+        };
+
+        component.ngOnChanges(changes);
+        expect(component.initData).toHaveBeenCalled();
+    });
+
+    it('should call initData when task id changes', () => {
+        spyOn(component, 'initData');
+        const changes: SimpleChanges = {
+            taskDetails: {
+                currentValue: { id: '2', assignee: { id: '1' } } as any,
+                previousValue: { id: '1', assignee: { id: '1' } } as any,
+                firstChange: false,
+                isFirstChange: () => false
+            }
+        };
+
+        component.ngOnChanges(changes);
+        expect(component.initData).toHaveBeenCalled();
+    });
+
+    it('should call refreshData when taskDetails change', () => {
+        spyOn(component, 'refreshData');
+        const changes: SimpleChanges = {
+            taskDetails: {
+                currentValue: { id: '1', assignee: { id: '1' }, description: 'one' } as any,
+                previousValue: { id: '1', assignee: { id: '1' }, description: 'two' } as any,
+                firstChange: false,
+                isFirstChange: () => false
+            }
+        };
+
+        component.ngOnChanges(changes);
+        expect(component.refreshData).toHaveBeenCalled();
     });
 
     it('should render empty component if no task details provided', async () => {

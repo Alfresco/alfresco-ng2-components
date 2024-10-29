@@ -89,15 +89,15 @@ export class TaskHeaderComponent implements OnChanges, OnInit, OnDestroy {
     dateLocale: string;
 
     private currentUserId: number;
-    private onDestroy$ = new Subject<void>();
-    private usersSubject$ = new BehaviorSubject<CardViewSelectItemOption<number>[]>([]);
+    private readonly onDestroy$ = new Subject<void>();
+    private readonly usersSubject$ = new BehaviorSubject<CardViewSelectItemOption<number>[]>([]);
     users$ = this.usersSubject$.asObservable();
 
     constructor(
         private peopleProcessService: PeopleProcessService,
         private translationService: TranslationService,
-        private appConfig: AppConfigService,
-        private cardViewUpdateService: CardViewUpdateService
+        private readonly appConfig: AppConfigService,
+        private readonly cardViewUpdateService: CardViewUpdateService
     ) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');

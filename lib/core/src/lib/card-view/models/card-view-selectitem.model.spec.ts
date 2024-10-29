@@ -70,7 +70,6 @@ describe('CardViewSelectItemModel', () => {
         it('should set autocompleteBased to true when it passed through the properties', fakeAsync(() => {
             properties.autocompleteBased = true;
             const itemModel = new CardViewSelectItemModel(properties);
-
             expect(itemModel.autocompleteBased).toBe(true);
         }));
     });

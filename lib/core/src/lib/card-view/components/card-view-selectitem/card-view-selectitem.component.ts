@@ -65,7 +65,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     filter$ = new BehaviorSubject<string>('');
     showInputFilter: boolean = false;
     list$: Observable<CardViewSelectItemOption<string | number>[]> = null;
-    templateType: string = '';
+    templateType = '';
     autocompleteControl = new UntypedFormControl();
     editedValue: string | number;
 
@@ -94,7 +94,10 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     ngOnInit() {
-        this.setTemplateType();
+        if (this.property.autocompleteBased) {
+            this.templateType = 'autocompleteBased';
+        }
+
         this.getOptions()
             .pipe(takeUntil(this.destroy$))
             .subscribe((options) => {
@@ -111,12 +114,6 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     private getOptions(): Observable<CardViewSelectItemOption<string | number>[]> {
         return this.options$ || this.property.options$;
-    }
-
-    private setTemplateType() {
-        if (this.property.autocompleteBased) {
-            this.templateType = 'autocompleteBased';
-        }
     }
 
     getList(): Observable<CardViewSelectItemOption<string | number>[]> {
