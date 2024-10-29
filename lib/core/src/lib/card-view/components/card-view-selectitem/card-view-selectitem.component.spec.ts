@@ -28,6 +28,7 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { CardViewUpdateService, NoopTranslateModule } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 
 describe('CardViewSelectItemComponent', () => {
     let loader: HarnessLoader;
@@ -332,6 +333,20 @@ describe('CardViewSelectItemComponent', () => {
             component.ngOnChanges({ editable: { currentValue: true, previousValue: false, firstChange: false, isFirstChange: () => false } });
             fixture.detectChanges();
             expect(component.autocompleteControl.enabled).toBeTrue();
+        });
+
+        it('should populate options for autocomplete', async () => {
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            const autocomplete = await loader.getHarness(MatAutocompleteHarness);
+            await autocomplete.enterText('Op');
+            fixture.detectChanges();
+
+            const options = await autocomplete.getOptions();
+            expect(options.length).toBe(2);
+            expect(await options[0].getText()).toContain('Option 1');
+            expect(await options[1].getText()).toContain('Option 2');
         });
     });
 });
