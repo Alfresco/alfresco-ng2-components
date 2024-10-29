@@ -76,6 +76,18 @@ describe('TaskHeaderComponent', () => {
     const getUnclaimButton = () =>
         fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'))?.nativeElement as HTMLButtonElement;
 
+    const triggerNgOnChanges = (currentValue: any, previousValue: any) => {
+        const changes: SimpleChanges = {
+            taskDetails: {
+                currentValue,
+                previousValue,
+                firstChange: false,
+                isFirstChange: () => false
+            }
+        };
+        component.ngOnChanges(changes);
+    };
+
     it('should set users$ when autocompleteInputValue$ emits new value', fakeAsync(() => {
         const autocompleteInputValue$ = cardViewUpdateService.autocompleteInputValue$;
         component.ngOnInit();
@@ -101,46 +113,26 @@ describe('TaskHeaderComponent', () => {
 
     it('should call initData when assignee changes', () => {
         spyOn(component, 'initData');
-        const changes: SimpleChanges = {
-            taskDetails: {
-                currentValue: { id: '1', assignee: { id: '2' } } as any,
-                previousValue: { id: '1', assignee: { id: '1' } } as any,
-                firstChange: false,
-                isFirstChange: () => false
-            }
-        };
-
-        component.ngOnChanges(changes);
+        triggerNgOnChanges({ id: '1', assignee: { id: '2' } }, { id: '1', assignee: { id: '1' } });
         expect(component.initData).toHaveBeenCalled();
     });
 
     it('should call initData when task id changes', () => {
         spyOn(component, 'initData');
-        const changes: SimpleChanges = {
-            taskDetails: {
-                currentValue: { id: '2', assignee: { id: '1' } } as any,
-                previousValue: { id: '1', assignee: { id: '1' } } as any,
-                firstChange: false,
-                isFirstChange: () => false
-            }
-        };
-
-        component.ngOnChanges(changes);
+        triggerNgOnChanges({ id: '2', assignee: { id: '1' } }, { id: '1', assignee: { id: '1' } });
         expect(component.initData).toHaveBeenCalled();
     });
 
     it('should call refreshData when taskDetails change', () => {
         spyOn(component, 'refreshData');
-        const changes: SimpleChanges = {
-            taskDetails: {
-                currentValue: { id: '1', assignee: { id: '1' }, description: 'one' } as any,
-                previousValue: { id: '1', assignee: { id: '1' }, description: 'two' } as any,
-                firstChange: false,
-                isFirstChange: () => false
+        triggerNgOnChanges(
+            { id: '1', assignee: { id: '1' }, description: 'one' },
+            {
+                id: '1',
+                assignee: { id: '1' },
+                description: 'two'
             }
-        };
-
-        component.ngOnChanges(changes);
+        );
         expect(component.refreshData).toHaveBeenCalled();
     });
 
