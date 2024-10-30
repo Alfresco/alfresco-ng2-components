@@ -165,6 +165,7 @@
                 (cdkDragDropped)="onDragDrop($event)"
                 (cdkDragStarted)="onDragStart()"
                 (cdkDragEnded)="onDragEnd()"
+                [cdkDragBoundary]="'.adf-datatable-body'"
                 [row]="row"
                 (select)="onEnterKeyPressed(row, $event)"
                 (keyup)="onRowKeyUp(row, $event)"
