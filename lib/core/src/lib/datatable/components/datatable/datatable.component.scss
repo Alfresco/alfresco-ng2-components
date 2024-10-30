@@ -52,7 +52,8 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
     }
 }
 
-.adf-datatable-list {
+.adf-datatable-list,
+#{$cdk-drag-preview} {
     display: flex;
     flex-direction: column;
     background-color: var(--adf-theme-background-card-color);
@@ -603,7 +604,9 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
 #{$cdk-drag-preview} {
     min-height: $data-table-row-height;
     display: flex;
+    flex-direction: row;
     align-items: center;
+    box-sizing: unset;
     background-color: var(--theme-background-color);
     border-top: 2px solid var(--theme-selected-background-color);
     opacity: 1;
