@@ -658,7 +658,7 @@ function findFailingApps(deployedApps: any[]): any[] {
 
     Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
         const failingApp = deployedApps.filter(
-            (currentApp: any) => ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name && 'Running' !== currentApp.entry.status
+            (currentApp: any) => ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name && 'Deployed' !== currentApp.entry.status
         );
 
         if (failingApp?.length > 0) {
