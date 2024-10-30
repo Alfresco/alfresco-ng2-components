@@ -8,7 +8,8 @@
                     'adf-property-value-editable': isEditable,
                     'adf-property-readonly-value': isReadonlyProperty
                 }"
-            >{{ property.label | translate }}</div>
+            >{{ property.label | translate }}
+            </div>
             <div class="adf-property-field">
                 <div
                     *ngIf="!isEditable"
@@ -40,20 +41,16 @@
         <div *ngSwitchCase="'autocompleteBased'">
             <mat-form-field
                 class="adf-property-field adf-card-selectitem-autocomplete"
-                [ngClass]="{
-                'adf-property-read-only': !isEditable
-            }"
-                [floatLabel]="'always'"
-            >
+                [ngClass]="{ 'adf-property-read-only': !isEditable }"
+                [floatLabel]="'always'">
                 <mat-label
                     *ngIf="showProperty || isEditable"
                     [attr.data-automation-id]="'card-autocomplete-based-selectitem-label-' + property.key"
                     class="adf-property-label"
                     [ngClass]="{
-                    'adf-property-value-editable': isEditable,
-                    'adf-property-readonly-value': isReadonlyProperty
-                }"
-                >
+                        'adf-property-value-editable': isEditable,
+                        'adf-property-readonly-value': isReadonlyProperty
+                    }">
                     {{ property.label | translate }}
                 </mat-label>
                 <input
@@ -61,9 +58,9 @@
                     [matAutocomplete]="auto"
                     class="adf-property-value"
                     [ngClass]="{
-                    'adf-property-value-editable': isEditable,
-                    'adf-property-readonly-value': isReadonlyProperty
-                }"
+                        'adf-property-value-editable': isEditable,
+                        'adf-property-readonly-value': isReadonlyProperty
+                    }"
                     title="{{ property.label | translate }}"
                     [placeholder]="property.default"
                     [attr.aria-label]="property.label | translate"
@@ -73,7 +70,8 @@
                 />
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
                                   (optionSelected)="onOptionSelected($event)">
-                    <mat-option *ngFor="let option of property.options$ | async" [value]="option.key" [attr.data-automation-id]="'card-autocomplete-based-selectitem-option-' + property.key">
+                    <mat-option *ngFor="let option of property.options$ | async" [value]="option.key"
+                                [attr.data-automation-id]="'card-autocomplete-based-selectitem-option-' + property.key">
                         {{ option.label }}
                     </mat-option>
                 </mat-autocomplete>

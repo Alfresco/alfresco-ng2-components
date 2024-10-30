@@ -104,10 +104,13 @@ export class TaskHeaderComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.peopleProcessService.getCurrentUserInfo().subscribe((res) => {
-            this.currentUserId = res ? +res.id : null;
-            this.initData();
-        });
+        this.peopleProcessService
+            .getCurrentUserInfo()
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((res) => {
+                this.currentUserId = res ? +res.id : null;
+                this.initData();
+            });
 
         this.cardViewUpdateService.autocompleteInputValue$
             .pipe(
