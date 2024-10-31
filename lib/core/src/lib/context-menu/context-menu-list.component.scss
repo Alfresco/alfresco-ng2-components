@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+
+@keyframes delayed-elevation {
+    0% {
+        box-shadow: none;
+    }
+
+    100% {
+        @include mat.elevation(8);
+    }
+}
+
+adf-context-menu {
+    animation: delayed-elevation 0.5s ease-in-out 0.1s forwards;
+}
