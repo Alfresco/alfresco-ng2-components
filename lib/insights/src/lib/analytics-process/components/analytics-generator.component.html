@@ -127,7 +127,7 @@
             <div *ngSwitchCase="'HeatMap'">
                 <div *ngIf="isCurrent(idx)">
                     <h4>{{ report.title }}</h4>
-                    <analytics-report-heat-map [report]="report"></analytics-report-heat-map>
+                    <analytics-report-heat-map [report]="report" />
                 </div>
             </div>
             <div *ngSwitchDefault>

@@ -48,11 +48,10 @@
                            [(ngModel)]="dueDate"
                            [ngModelOptions]="{standalone: true}"
                            id="date_id">
-                    <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="taskDatePicker" />
                     <mat-datepicker #taskDatePicker
                                     [touchUi]="true"
-                                    (dateChanged)="onDateChanged($event)">
-                    </mat-datepicker>
+                                    (dateChanged)="onDateChanged($event)" />
                     <div class="adf-cloud-date-error-container">
                         <div *ngIf="dateError">
                             <div class="adf-error-text">{{'ADF_CLOUD_START_TASK.ERROR.DATE' | translate}}</div>
@@ -66,7 +65,7 @@
                                   [searchUserCtrl]="assigneeFormControl"
                                   (selectUser)="onAssigneeSelect($event)"
                                   [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'"
-                                  (removeUser)="onAssigneeRemove()"></adf-cloud-people>
+                                  (removeUser)="onAssigneeRemove()" />
             </div>
 
             <div class="adf-cloud-start-task-form-row">
@@ -77,12 +76,10 @@
                                  [appName]="appName"
                                  [searchGroupsControl]="candidateUserFormControl"
                                  (selectGroup)="onCandidateGroupSelect($event)"
-                                 (removeGroup)="onCandidateGroupRemove($event)">
-                </adf-cloud-group>
+                                 (removeGroup)="onCandidateGroupRemove($event)" />
                 <adf-cloud-form-definition-selector *ngIf="appName"
                                                     [appName]="appName"
-                                                    (selectForm)="onFormSelect($event)">
-                </adf-cloud-form-definition-selector>
+                                                    (selectForm)="onFormSelect($event)" />
             </div>
         </mat-card-content>
 

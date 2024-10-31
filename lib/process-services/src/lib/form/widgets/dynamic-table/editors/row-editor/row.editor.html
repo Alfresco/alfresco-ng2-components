@@ -6,47 +6,41 @@
                 <adf-dropdown-editor
                     [table]="table"
                     [row]="row"
-                    [column]="column">
-                </adf-dropdown-editor>
+                    [column]="column" />
             </div>
             <div *ngSwitchCase="'Date'">
                 <adf-date-editor
                     [table]="table"
                     [row]="row"
-                    [column]="column">
-                </adf-date-editor>
+                    [column]="column" />
             </div>
             <div *ngSwitchCase="'Datetime'">
                 <adf-datetime-editor
                     [table]="table"
                     [row]="row"
-                    [column]="column">
-                </adf-datetime-editor>
+                    [column]="column" />
             </div>
             <div *ngSwitchCase="'Boolean'">
                 <adf-boolean-editor
                     [table]="table"
                     [row]="row"
-                    [column]="column">
-                </adf-boolean-editor>
+                    [column]="column" />
             </div>
             <div *ngSwitchCase="'Amount'">
                 <adf-amount-editor
                     [table]="table"
                     [row]="row"
-                    [column]="column">
-                </adf-amount-editor>
+                    [column]="column" />
             </div>
             <div *ngSwitchDefault>
                 <adf-text-editor
                     [table]="table"
                     [row]="row"
-                    [column]="column">
-                </adf-text-editor>
+                    [column]="column" />
             </div>
         </div>
     </div>
-    <error-widget [error]="validationSummary"></error-widget>
+    <error-widget [error]="validationSummary" />
     <div>
         <button mat-button (click)="onCancelChanges()">Cancel</button>
         <button mat-button (click)="onSaveChanges()">Save</button>

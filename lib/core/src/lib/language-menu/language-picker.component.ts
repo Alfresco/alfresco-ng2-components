@@ -33,7 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
             {{ 'ADF.LANGUAGE' | translate }}
         </button>
         <mat-menu #langMenu="matMenu">
-            <adf-language-menu (changedLanguage)="changedLanguage.emit($event)"></adf-language-menu>
+            <adf-language-menu (changedLanguage)="changedLanguage.emit($event)" />
         </mat-menu>
     `
 })

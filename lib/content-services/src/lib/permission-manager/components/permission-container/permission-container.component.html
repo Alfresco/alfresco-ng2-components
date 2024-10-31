@@ -7,7 +7,7 @@
     <data-columns>
         <data-column class="adf-datatable-cell--image adf-authority-icon-column" key="$thumbunail" [sortable]="false">
             <ng-template let-context>
-                <adf-user-icon-column [context]="context"></adf-user-icon-column>
+                <adf-user-icon-column [context]="context" />
             </ng-template>
         </data-column>
 
@@ -15,7 +15,7 @@
                      [title]="'PERMISSION_MANAGER.COLUMN.NAME' | translate:{count:permissions.length}"
                      key="authorityId">
             <ng-template let-context>
-                <adf-user-name-column [context]="context"></adf-user-name-column>
+                <adf-user-name-column [context]="context" />
             </ng-template>
         </data-column>d
 
@@ -24,7 +24,7 @@
                      key="location"
                      *ngIf="node && showLocation">
             <ng-template>
-                <adf-node-path-column [node]="node"></adf-node-path-column>
+                <adf-node-path-column [node]="node" />
             </ng-template>
         </data-column>
 
@@ -39,8 +39,7 @@
                                       [value]="entry.data.getValue(entry.row, entry.col)"
                                       [roles]="roles"
                                       id="adf-select-role-permission"
-                                      (roleChanged)="updateRole($event, entry.row.obj)">
-                </adf-user-role-column>
+                                      (roleChanged)="updateRole($event, entry.row.obj)" />
             </ng-template>
 
             <adf-data-column-header *ngIf="!isReadOnly">
@@ -50,8 +49,7 @@
                                           [roles]="roles"
                                           [value]="bulkSelectionRole"
                                           id="adf-bulk-select-role-permission"
-                                          (roleChanged)="bulkRoleUpdate($event)">
-                    </adf-user-role-column>
+                                          (roleChanged)="bulkRoleUpdate($event)" />
                 </ng-template>
             </adf-data-column-header>
         </data-column>
@@ -76,8 +74,7 @@
                 id="adf-no-permissions-template"
                 icon="supervisor_account"
                 [title]="'PERMISSION_MANAGER.MESSAGE.EMPTY-PERMISSION' | translate"
-                [subtitle]="'PERMISSION_MANAGER.MESSAGE.EMPTY-SUBTITLE' | translate">
-            </adf-empty-content>
+                [subtitle]="'PERMISSION_MANAGER.MESSAGE.EMPTY-SUBTITLE' | translate" />
         </ng-template>
     </adf-no-content-template>
 

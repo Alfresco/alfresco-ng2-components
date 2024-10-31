@@ -75,8 +75,7 @@
         <div mat-dialog-content class="adf-start-process-dialog-content">
             <adf-start-form [processId]="processId"
                                  [showRefreshButton]="false" [readOnlyForm]="true"
-                                 (formContentClicked)='onFormContentClick()'>
-            </adf-start-form>
+                                 (formContentClicked)='onFormContentClick()' />
         </div>
         <div mat-dialog-actions class="adf-start-process-dialog-actions">
             <button mat-button type="button" (click)="closeStartDialog()">{{ 'ADF_PROCESS_LIST.DETAILS.TASKS.TASK_CLOSE' | translate }}</button>

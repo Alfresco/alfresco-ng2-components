@@ -1,5 +1,5 @@
 <div class="adf-new-version-container">
-    <adf-version-comparison *ngIf="showVersionComparison" [node]="node" [newFileVersion]="newFileVersion"></adf-version-comparison>
+    <adf-version-comparison *ngIf="showVersionComparison" [node]="node" [newFileVersion]="newFileVersion" />
     <div class="adf-new-version-uploader-container" id="adf-new-version-uploader-container" [@uploadToggle]="uploadState">
         <table class="adf-version-upload" *ngIf="uploadState !== 'close' && !versionList.isLoading">
             <tr>
@@ -11,8 +11,7 @@
                         [currentVersion]="versionList?.latestVersion?.entry"
                         (success)="onUploadSuccess($event)"
                         (cancel)="onUploadCancel()"
-                        (error)="onUploadError($event)">
-                    </adf-version-upload>
+                        (error)="onUploadError($event)" />
                 </td>
             </tr>
         </table>
@@ -38,8 +37,7 @@
                     [allowVersionDelete]="allowVersionDelete"
                     (deleted)="refresh($event)"
                     (restored)="refresh($event)"
-                    (viewVersion)="onViewVersion($event)">
-                </adf-version-list>
+                    (viewVersion)="onViewVersion($event)" />
             </div>
         </div>
     </div>

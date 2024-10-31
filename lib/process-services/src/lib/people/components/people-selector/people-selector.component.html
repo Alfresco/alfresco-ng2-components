@@ -3,8 +3,7 @@
     class="adf-people-selector-field"
     [performSearch]="performSearch"
     [placeholder]="placeholder"
-    (rowClick)="userSelected($event)">
-</adf-people-search-field>
+    (rowClick)="userSelected($event)" />
 <button
     *ngIf="selectedUser"
     mat-icon-button

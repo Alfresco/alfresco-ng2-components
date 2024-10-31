@@ -9,8 +9,7 @@
         {{'ADF-ASPECT-LIST.DIALOG.SELECTED' | translate}}</p>
 </div>
 <mat-dialog-content class="adf-aspect-dialog-content">
-    <adf-aspect-list #aspectList (valueChanged)="onValueChanged($event)" (updateCounter)="onUpdateCounter($event)" [nodeId]="currentNodeId" [excludedAspects]="data.excludedAspects">
-    </adf-aspect-list>
+    <adf-aspect-list #aspectList (valueChanged)="onValueChanged($event)" (updateCounter)="onUpdateCounter($event)" [nodeId]="currentNodeId" [excludedAspects]="data.excludedAspects" />
 </mat-dialog-content>
 
 <mat-dialog-actions class="adf-aspect-list-dialog">

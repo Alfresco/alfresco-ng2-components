@@ -7,12 +7,10 @@
         (success)="showReport($event)"
         (saveReportSuccess)="onSaveReportSuccess($event)"
         (deleteReportSuccess)="onDeleteReportSuccess($event)"
-        (edit)="onEditReport($event)">
-    </adf-analytics-report-parameters>
+        (edit)="onEditReport($event)" />
 
     <adf-analytics-generator
         [reportId]="reportId"
         [reportParamQuery]="reportParamQuery"
-        #analyticsGenerator>
-    </adf-analytics-generator>
+        #analyticsGenerator />
 </div>

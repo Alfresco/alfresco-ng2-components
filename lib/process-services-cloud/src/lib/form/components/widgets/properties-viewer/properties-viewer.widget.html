@@ -13,8 +13,7 @@
             [displayAspect]="properties?.displayAspect !== undefined ? properties?.displayAspect : null"
             [copyToClipboardAction]="properties?.copyToClipboardAction !== undefined ? properties?.copyToClipboardAction : true"
             [useChipsForMultiValueProperty]="properties?.useChipsForMultiValueProperty !== undefined ? properties?.useChipsForMultiValueProperty : true"
-            (nodeContentLoaded)="onNodeContentLoaded($event)">
-        </adf-properties-viewer-wrapper>
+            (nodeContentLoaded)="onNodeContentLoaded($event)" />
     </ng-template>
-    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget [error]="field.validationSummary" />
 </div>

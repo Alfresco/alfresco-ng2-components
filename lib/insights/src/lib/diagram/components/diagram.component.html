@@ -2,66 +2,66 @@
     <div *ngFor="let element of diagram.elements">
         <div [ngSwitch]="element.type">
             <div *ngSwitchCase="'StartEvent'">
-                <diagram-start-event [data]="element"></diagram-start-event>
+                <diagram-start-event [data]="element" />
             </div>
             <div *ngSwitchCase="'ExclusiveGateway'">
-                <diagram-exclusive-gateway [data]="element"></diagram-exclusive-gateway>
+                <diagram-exclusive-gateway [data]="element" />
             </div>
             <div *ngSwitchCase="'InclusiveGateway'">
-                <diagram-inclusive-gateway [data]="element"></diagram-inclusive-gateway>
+                <diagram-inclusive-gateway [data]="element" />
             </div>
             <div *ngSwitchCase="'EventGateway'">
-                <diagram-event-gateway [data]="element"></diagram-event-gateway>
+                <diagram-event-gateway [data]="element" />
             </div>
             <div *ngSwitchCase="'ParallelGateway'">
-                <diagram-parallel-gateway [data]="element"></diagram-parallel-gateway>
+                <diagram-parallel-gateway [data]="element" />
             </div>
             <div *ngSwitchCase="'EndEvent'">
-                <diagram-end-event [data]="element"></diagram-end-event>
+                <diagram-end-event [data]="element" />
             </div>
             <div *ngSwitchCase="'UserTask'">
-                <diagram-user-task [data]="element"></diagram-user-task>
+                <diagram-user-task [data]="element" />
             </div>
             <div *ngSwitchCase="'ManualTask'">
-                <diagram-manual-task [data]="element"></diagram-manual-task>
+                <diagram-manual-task [data]="element" />
             </div>
             <div *ngSwitchCase="'ServiceTask'">
-                <diagram-container-service-task [data]="element"></diagram-container-service-task>
+                <diagram-container-service-task [data]="element" />
             </div>
             <div *ngSwitchCase="'ReceiveTask'">
-                <diagram-receive-task [data]="element"></diagram-receive-task>
+                <diagram-receive-task [data]="element" />
             </div>
             <div *ngSwitchCase="'ScriptTask'">
-                <diagram-script-task [data]="element"></diagram-script-task>
+                <diagram-script-task [data]="element" />
             </div>
             <div *ngSwitchCase="'BusinessRuleTask'">
-                <diagram-business-rule-task [data]="element"></diagram-business-rule-task>
+                <diagram-business-rule-task [data]="element" />
             </div>
             <div *ngSwitchCase="'BoundaryEvent'">
-                <diagram-boundary-event [data]="element"></diagram-boundary-event>
+                <diagram-boundary-event [data]="element" />
             </div>
             <div *ngSwitchCase="'ThrowEvent'">
-                <diagram-throw-event [data]="element"></diagram-throw-event>
+                <diagram-throw-event [data]="element" />
             </div>
             <div *ngSwitchCase="'IntermediateCatchEvent'">
-                <diagram-intermediate-catching-event [data]="element"></diagram-intermediate-catching-event>
+                <diagram-intermediate-catching-event [data]="element" />
             </div>
             <div *ngSwitchCase="'SubProcess'">
-                <diagram-subprocess [data]="element"></diagram-subprocess>
+                <diagram-subprocess [data]="element" />
             </div>
             <div *ngSwitchCase="'EventSubProcess'">
-                <diagram-event-subprocess [data]="element"></diagram-event-subprocess>
+                <diagram-event-subprocess [data]="element" />
             </div>
         </div>
     </div>
     <div *ngFor="let flow of diagram.flows">
         <div [ngSwitch]="flow.type">
             <div *ngSwitchCase="'sequenceFlow'">
-                <adf-diagram-sequence-flow [flow]="flow"></adf-diagram-sequence-flow>
+                <adf-diagram-sequence-flow [flow]="flow" />
             </div>
         </div>
     </div>
     <div *ngIf="diagram.pools">
-        <diagram-pools [pools]="diagram.pools"></diagram-pools>
+        <diagram-pools [pools]="diagram.pools" />
     </div>
 </div>

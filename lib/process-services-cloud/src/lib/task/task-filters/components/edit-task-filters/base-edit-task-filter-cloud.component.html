@@ -14,7 +14,7 @@
                                     [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType"
                                     [disabled]="isDisabledAction(filterAction)"
                                     (click)="executeFilterActions(filterAction)">
-                                <adf-icon [value]="filterAction.icon"></adf-icon>
+                                <adf-icon [value]="filterAction.icon" />
                             </button>
                         </ng-container>
                     </div>
@@ -22,7 +22,7 @@
             </ng-container>
             <ng-template #loadingTemplate>
                 <div class="adf-cloud-edit-task-filter-loading-margin">
-                    <mat-progress-spinner mode="indeterminate" [diameter]="30"></mat-progress-spinner>
+                    <mat-progress-spinner mode="indeterminate" [diameter]="30" />
                 </div>
             </ng-template>
         </mat-expansion-panel-header>
@@ -66,11 +66,9 @@
                                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
                             <mat-datepicker-toggle matSuffix
                                                    [for]="dateController"
-                                                   [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key">
-                            </mat-datepicker-toggle>
+                                                   [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key" />
                             <mat-datepicker #dateController
-                                            [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key">
-                            </mat-datepicker>
+                                            [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key" />
                             <div class="adf-edit-task-filter-date-error-container">
                                 <div *ngIf="hasError(taskFilterProperty)">
                                     <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
@@ -91,8 +89,7 @@
                             [processFilterProperty]="taskFilterProperty"
                             [options]="taskFilterProperty.dateFilterOptions"
                             (dateTypeChange)="onDateTypeChange($event, taskFilterProperty)"
-                            (dateChanged)="onDateRangeFilterChanged($event, taskFilterProperty)">
-                        </adf-cloud-date-range-filter>
+                            (dateChanged)="onDateRangeFilterChanged($event, taskFilterProperty)" />
                         <adf-cloud-people
                             class="{{ 'adf-edit-task-filter-' + taskFilterProperty.key }}"
                             *ngIf="taskFilterProperty.type === 'people'"
@@ -101,8 +98,7 @@
                             [validate]="true"
                             [appName]="appName"
                             [mode]="taskFilterProperty.selectionMode"
-                            (changedUsers)="onChangedUser($event, taskFilterProperty)">
-                        </adf-cloud-people>
+                            (changedUsers)="onChangedUser($event, taskFilterProperty)" />
 
                         <adf-cloud-task-assignment-filter
                             *ngIf="taskFilterProperty.type === 'assignment'"
@@ -111,8 +107,7 @@
                             [appName]="appName"
                             (assignedUsersChange)="onAssignedUsersChange($event)"
                             (assignedGroupsChange)="onAssignedGroupsChange($event)"
-                            (assignmentTypeChange)="onAssignmentTypeChange($event)">
-                        </adf-cloud-task-assignment-filter>
+                            (assignmentTypeChange)="onAssignmentTypeChange($event)" />
 
                     </ng-container>
                 </div>

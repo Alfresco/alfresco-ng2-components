@@ -6,8 +6,7 @@
     <mat-card-content>
         <adf-process-instance-header
             #processInstanceHeader
-            [processInstance]="processInstanceDetails">
-        </adf-process-instance-header>
+            [processInstance]="processInstanceDetails" />
 
         <button
             class="adf-in-medias-res-button"
@@ -23,8 +22,7 @@
                 <adf-process-instance-tasks
                     #processInstanceTasks
                     [processInstanceDetails]="processInstanceDetails"
-                    (taskClick)="onTaskClicked($event)">
-                </adf-process-instance-tasks>
+                    (taskClick)="onTaskClicked($event)" />
             </mat-card-content>
         </mat-card>
 
@@ -36,8 +34,7 @@
             <mat-card-content>
                 <adf-process-instance-comments
                     [readOnly]="false"
-                    [processInstanceId]="processInstanceDetails.id">
-                </adf-process-instance-comments>
+                    [processInstanceId]="processInstanceDetails.id" />
             </mat-card-content>
         </mat-card>
 

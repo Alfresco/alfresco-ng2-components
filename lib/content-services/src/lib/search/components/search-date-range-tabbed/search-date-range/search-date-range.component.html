@@ -35,8 +35,8 @@
           <input matEndDate placeholder="{{ 'SEARCH.DATE_RANGE_ADVANCED.BETWEEN_PLACEHOLDERS.END_DATE' | translate }}"
                  data-automation-id="date-range-between-end-input" [formControl]="betweenEndDateFormControl" (change)="dateChanged($event, betweenEndDateFormControl)">
         </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker" data-automation-id="date-range-between-datepicker-toggle"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-datepicker-toggle matSuffix [for]="picker" data-automation-id="date-range-between-datepicker-toggle" />
+        <mat-date-range-picker #picker />
 
         <mat-error *ngIf="betweenStartDateFormControl.errors?.invalidDate">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE.INVALID_FORMAT' | translate }}</mat-error>
         <mat-error *ngIf="betweenStartDateFormControl.errors?.required">{{ 'SEARCH.DATE_RANGE_ADVANCED.ERROR.START_DATE.REQUIRED' | translate }}</mat-error>

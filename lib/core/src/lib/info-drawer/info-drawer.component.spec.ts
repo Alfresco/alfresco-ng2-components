@@ -86,9 +86,9 @@ describe('InfoDrawerComponent', () => {
     imports: [InfoDrawerTabComponent, InfoDrawerComponent],
     template: `
         <adf-info-drawer [selectedIndex]="tabIndex" [icon]="icon" title="Fake Title Custom">
-            <adf-info-drawer-tab label="Tab1"></adf-info-drawer-tab>
-            <adf-info-drawer-tab label="Tab2"></adf-info-drawer-tab>
-            <adf-info-drawer-tab label="Tab3" icon="tab-icon"></adf-info-drawer-tab>
+            <adf-info-drawer-tab label="Tab1" />
+            <adf-info-drawer-tab label="Tab2" />
+            <adf-info-drawer-tab label="Tab3" icon="tab-icon" />
         </adf-info-drawer>
     `
 })
@@ -166,7 +166,7 @@ describe('Custom InfoDrawer', () => {
 @Component({
     standalone: true,
     imports: [InfoDrawerComponent],
-    template: ` <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title"> </adf-info-drawer> `
+    template: ` <adf-info-drawer [showHeader]="showHeader" [icon]="icon" title="Fake Visibility Info Drawer Title" /> `
 })
 class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
     showHeader: boolean;

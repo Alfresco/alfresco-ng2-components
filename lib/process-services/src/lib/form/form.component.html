@@ -30,8 +30,7 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content class="adf-form-card-content">
-            <adf-form-renderer [formDefinition]="form">
-            </adf-form-renderer>
+            <adf-form-renderer [formDefinition]="form" />
         </mat-card-content>
         <mat-card-actions *ngIf="form.hasOutcomes()" class="adf-form-mat-card-actions" align="end">
             <ng-content select="adf-form-custom-outcomes"></ng-content>

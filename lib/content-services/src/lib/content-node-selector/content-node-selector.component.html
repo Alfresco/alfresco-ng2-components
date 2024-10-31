@@ -4,7 +4,7 @@
                    mat-align-tabs="start"
                    (selectedIndexChange)="onTabSelectionChange($event)">
         <mat-tab label="{{ 'NODE_SELECTOR.REPOSITORY' | translate }}">
-            <ng-container *ngTemplateOutlet='contentNodePanel'></ng-container>
+            <ng-container *ngTemplateOutlet='contentNodePanel' />
         </mat-tab>
         <mat-tab [disabled]="isNotAllowedToUpload()">
             <div class="adf-content-node-selector-local-upload-container">
@@ -17,8 +17,8 @@
                               [rootId]="data?.currentFolderId"
                               [readOnly]="true"
                               data-automation-id="content-node-selector-upload-breadcrumb"
-                            ></adf-dropdown-breadcrumb>
-                            <ng-container *ngIf="isCounterVisible()" [adf-node-counter]="getSelectedCount()"></ng-container>
+                            />
+                            <ng-container *ngIf="isCounterVisible()" [adf-node-counter]="getSelectedCount()" />
                         </adf-toolbar-title>
                     </adf-toolbar>
                     <ng-template mat-tab-label>
@@ -32,7 +32,7 @@
                 <div class="adf-content-node-selector-local-upload-content">
                     <adf-upload-drag-area [rootFolderId]="currentDirectoryId">
                         <div [class.adf-upload-dialog-container]="uploadStarted">
-                            <adf-file-uploading-dialog [alwaysVisible]="true"></adf-file-uploading-dialog>
+                            <adf-file-uploading-dialog [alwaysVisible]="true" />
                         </div>
                         <adf-empty-list data-automation-id="adf-empty-list" *ngIf="!uploadStarted">
                             <div class="adf-empty-list_template adf-empty-folder">
@@ -71,8 +71,7 @@
       (select)="onSelect($event)"
       (showingSearch)="onShowingSearch($event)"
       (siteChange)="onSiteChange($event)"
-      (navigationChange)="onNavigationChange($event)">
-    </adf-content-node-selector-panel>
+      (navigationChange)="onNavigationChange($event)" />
 </ng-template>
 
 
@@ -84,8 +83,7 @@
                 [multipleFiles]="isMultipleSelection()"
                 [rootFolderId]="currentDirectoryId"
                 [disabled]="isNotAllowedToUpload()"
-                (error)="onError($event)">
-            </adf-upload-button>
+                (error)="onError($event)" />
         </ng-container>
     </div>
     <div>

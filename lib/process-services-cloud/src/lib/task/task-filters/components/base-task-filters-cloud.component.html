@@ -12,7 +12,7 @@
                     <adf-icon data-automation-id="adf-filter-icon"
                         *ngIf="showIcons"
                         [value]="filter.icon"
-                    ></adf-icon>
+                    />
                     <span data-automation-id="adf-filter-label">
                         {{ filter.name | translate }}
                     </span>
@@ -29,7 +29,7 @@
 <ng-template #loading>
     <ng-container>
         <div class="adf-app-list-spinner">
-            <mat-spinner></mat-spinner>
+            <mat-spinner />
         </div>
     </ng-container>
 </ng-template>

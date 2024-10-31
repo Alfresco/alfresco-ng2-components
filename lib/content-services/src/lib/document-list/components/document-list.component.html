@@ -35,8 +35,7 @@
         <adf-filter-header
             [currentFolderId]="currentFolderId"
             [value]="filterValue"
-            (filterSelection)="onFilterSelectionChange($event)">
-        </adf-filter-header>
+            (filterSelection)="onFilterSelectionChange($event)" />
     </div>
 
     <adf-no-content-template>
@@ -71,8 +70,7 @@
                     class="adf-document-list-loading-margin"
                     [attr.aria-label]="'ADF-DOCUMENT-LIST.LOADER_LABEL' | translate"
                     [color]="'primary'"
-                    [mode]="'indeterminate'">
-                </mat-progress-spinner>
+                    [mode]="'indeterminate'" />
             </div>
             <ng-content select="adf-custom-loading-content-template"></ng-content>
         </ng-template>
@@ -85,8 +83,7 @@
               [mainMenuTrigger]="mainMenuTrigger"
               [columnsSorting]="false"
               [maxColumnsVisible]="maxColumnsVisible"
-              (submitColumnsVisibility)="onColumnsVisibilityChange($event)">
-            </adf-datatable-column-selector>
+              (submitColumnsVisibility)="onColumnsVisibilityChange($event)" />
         </ng-template>
     </adf-main-menu-datatable-template>
 

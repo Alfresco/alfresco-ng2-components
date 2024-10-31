@@ -5,8 +5,7 @@
     [allowOnlyPredefinedValues]="settings.allowOnlyPredefinedValues"
     (inputChanged)="onInputChange($event)"
     [compareOption]="optionComparator"
-    (optionsChanged)="onOptionsChange($event)">
-</adf-search-chip-autocomplete-input>
+    (optionsChanged)="onOptionsChange($event)" />
 
 <div class="adf-facet-buttons" *ngIf="!settings?.hideDefaultAction">
     <button mat-button color="primary" data-automation-id="adf-search-chip-autocomplete-btn-clear" (click)="reset()">

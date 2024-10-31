@@ -8,14 +8,13 @@
                 [displayNoneOption]="false"
                 [properties]="properties"
                 [editable]="isTaskEditable()"
-                [displayClearAction]="displayDateClearAction">
-            </adf-card-view>
+                [displayClearAction]="displayDateClearAction" />
         </mat-card-content>
     </mat-card>
 </div>
 
 <ng-template #loadingTemplate>
     <div class="adf-task-header-loading">
-        <mat-spinner></mat-spinner>
+        <mat-spinner />
     </div>
 </ng-template>

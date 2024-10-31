@@ -2,23 +2,23 @@
     <ng-container *ngSwitchCase="'minimal'">
         <adf-toolbar [color]="color">
             <adf-toolbar-title>
-                <ng-container *ngTemplateOutlet="toolbarTitleContent"></ng-container>
+                <ng-container *ngTemplateOutlet="toolbarTitleContent" />
             </adf-toolbar-title>
-            <ng-container *ngTemplateOutlet="navbarTemplate"></ng-container>
+            <ng-container *ngTemplateOutlet="navbarTemplate" />
             <div class="adf-toolbar--spacer"></div>
-            <ng-container *ngTemplateOutlet="toolbarActions"></ng-container>
+            <ng-container *ngTemplateOutlet="toolbarActions" />
         </adf-toolbar>
     </ng-container>
 
     <ng-container *ngSwitchCase="'extended'">
         <adf-toolbar [color]="color">
             <adf-toolbar-title>
-                <ng-container *ngTemplateOutlet="toolbarTitleContent"></ng-container>
+                <ng-container *ngTemplateOutlet="toolbarTitleContent" />
             </adf-toolbar-title>
-            <ng-container *ngTemplateOutlet="toolbarActions"></ng-container>
+            <ng-container *ngTemplateOutlet="toolbarActions" />
         </adf-toolbar>
         <adf-toolbar [color]="color">
-            <ng-container *ngTemplateOutlet="navbarTemplate"></ng-container>
+            <ng-container *ngTemplateOutlet="navbarTemplate" />
         </adf-toolbar>
     </ng-container>
 </ng-container>

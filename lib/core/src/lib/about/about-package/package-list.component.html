@@ -6,6 +6,6 @@
     <mat-cell *matCellDef="let row" class="adf-package-list-table__row-cell">{{ column.cell(row) }}</mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns" class="adf-package-list-table__header-row"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns" class="adf-package-list-table__row"></mat-row>
+  <mat-header-row *matHeaderRowDef="displayedColumns" class="adf-package-list-table__header-row" />
+  <mat-row *matRowDef="let row; columns: displayedColumns" class="adf-package-list-table__row" />
 </mat-table>

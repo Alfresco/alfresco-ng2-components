@@ -1,7 +1,7 @@
 <div class="adf-sidenav-layout-full-space">
     <ng-container *ngIf="!isHeaderInside">
         <ng-container class="adf-sidenav-layout-outer-header"
-                      *ngTemplateOutlet="headerTemplate; context:templateContext"></ng-container>
+                      *ngTemplateOutlet="headerTemplate; context:templateContext" />
     </ng-container>
 
     <adf-layout-container #container
@@ -16,13 +16,13 @@
                           class="adf-layout__content">
 
         <ng-container app-layout-navigation
-                      *ngTemplateOutlet="navigationTemplate; context:templateContext"></ng-container>
+                      *ngTemplateOutlet="navigationTemplate; context:templateContext" />
 
         <ng-container app-layout-content>
             <ng-container *ngIf="isHeaderInside">
-                <ng-container *ngTemplateOutlet="headerTemplate; context:templateContext"></ng-container>
+                <ng-container *ngTemplateOutlet="headerTemplate; context:templateContext" />
             </ng-container>
-            <ng-container *ngTemplateOutlet="contentTemplate; context:templateContext"></ng-container>
+            <ng-container *ngTemplateOutlet="contentTemplate; context:templateContext" />
         </ng-container>
     </adf-layout-container>
 

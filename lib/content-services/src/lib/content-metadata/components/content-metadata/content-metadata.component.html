@@ -52,8 +52,7 @@
             [displayEmpty]="displayEmpty"
             [copyToClipboardAction]="copyToClipboardAction"
             [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
-            [multiValueSeparator]="multiValueSeparator">
-        </adf-card-view>
+            [multiValueSeparator]="multiValueSeparator" />
     </mat-expansion-panel>
 
     <ng-container *ngIf="displayTags">
@@ -114,8 +113,7 @@
                 (tagsChange)="storeTagsToAssign($event)"
                 [mode]="tagsCreatorMode"
                 [tags]="assignedTags"
-                [disabledTagsRemoving]="saving">
-            </adf-tags-creator>
+                [disabledTagsRemoving]="saving" />
         </mat-expansion-panel>
     </ng-container>
 
@@ -178,8 +176,7 @@
                 [categories]="categories"
                 [managementMode]="categoriesManagementMode"
                 [classifiableChanged]="classifiableChanged"
-                (categoriesChange)="storeCategoriesToAssign($event)">
-            </adf-categories-management>
+                (categoriesChange)="storeCategoriesToAssign($event)" />
         </mat-expansion-panel>
     </ng-container>
 
@@ -196,10 +193,9 @@
             <adf-content-metadata-header
                 class="adf-metadata-custom-panel-title"
                 [title]="customPanel.panelTitle"
-                [expanded]="currentPanel.panelTitle === customPanel.panelTitle && currentPanel.expanded">
-            </adf-content-metadata-header>
+                [expanded]="currentPanel.panelTitle === customPanel.panelTitle && currentPanel.expanded" />
         </mat-expansion-panel-header>
-        <adf-dynamic-component [id]="customPanel.component" [data]="{ node }"></adf-dynamic-component>
+        <adf-dynamic-component [id]="customPanel.component" [data]="{ node }" />
     </mat-expansion-panel>
 
     <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
@@ -257,13 +253,12 @@
                     [copyToClipboardAction]="copyToClipboardAction"
                     [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
                     [multiValueSeparator]="multiValueSeparator"
-                    [displayLabelForChips]="true">
-                </adf-card-view>
+                    [displayLabelForChips]="true" />
             </mat-expansion-panel>
         </div>
     </ng-container>
 
     <ng-template #loading>
-        <mat-progress-bar mode="indeterminate" [attr.aria-label]="'DATA_LOADING' | translate"> </mat-progress-bar>
+        <mat-progress-bar mode="indeterminate" [attr.aria-label]="'DATA_LOADING' | translate" />
     </ng-template>
 </mat-accordion>

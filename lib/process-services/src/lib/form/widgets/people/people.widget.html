@@ -31,6 +31,6 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
-    <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget [error]="field.validationSummary" />
+    <error-widget *ngIf="isInvalidFieldRequired() && isTouched()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
 </div>

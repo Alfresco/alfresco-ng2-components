@@ -41,8 +41,7 @@
                 <adf-empty-content
                     [icon]="'description'"
                     [title]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.TITLE'"
-                    [subtitle]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.SUBTITLE'">
-                </adf-empty-content>
+                    [subtitle]="'ADF_CLOUD_TASK_FORM.EMPTY_FORM.SUBTITLE'" />
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions" align="end">
                 <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
@@ -70,5 +69,5 @@
 </div>
 
 <ng-template #loadingTemplate>
-    <mat-spinner class="adf-task-form-cloud-spinner"></mat-spinner>
+    <mat-spinner class="adf-task-form-cloud-spinner" />
 </ng-template>

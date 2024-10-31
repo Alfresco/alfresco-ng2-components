@@ -35,8 +35,7 @@
             </ng-container>
             <ng-container ngProjectAs="filter-content">
                 <adf-search-facet-tabbed-content [tabbedFacet]="tabbedFacet" (isPopulated)="onIsPopulatedEventChange($event)"
-                                                 [onReset$]="reset$" [onApply$]="apply$" (displayValue$)="displayValue = $event">
-                </adf-search-facet-tabbed-content>
+                                                 [onReset$]="reset$" [onApply$]="apply$" (displayValue$)="displayValue = $event" />
             </ng-container>
             <ng-container ngProjectAs="filter-actions">
                 <button mat-button class="adf-search-action-button" (click)="onRemove()" id="cancel-filter-button">

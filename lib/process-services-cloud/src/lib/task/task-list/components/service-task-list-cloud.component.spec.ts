@@ -33,13 +33,8 @@ import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/te
 @Component({
     template: ` <adf-cloud-service-task-list #taskListCloud>
         <data-columns>
-            <data-column
-                key="activityName"
-                title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"
-                class="adf-full-width adf-name-column"
-                [order]="2"
-            ></data-column>
-            <data-column key="startedDate" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
+            <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column" [order]="2" />
+            <data-column key="startedDate" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden" />
         </data-columns>
     </adf-cloud-service-task-list>`
 })
@@ -60,8 +55,8 @@ class EmptyTemplateComponent {}
 @Component({
     template: ` <adf-cloud-service-task-list>
         <data-columns>
-            <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID"></data-column>
-            <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME"></data-column>
+            <data-column [copyContent]="true" key="id" title="ADF_CLOUD_TASK_LIST.PROPERTIES.ID" />
+            <data-column key="activityName" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" />
         </data-columns>
     </adf-cloud-service-task-list>`
 })

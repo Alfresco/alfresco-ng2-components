@@ -36,8 +36,8 @@
     </div>
 
     <mat-dialog-content *ngIf="data.contentTemplate || data.contentComponent || data.contentText" class="adf-dialog-content">
-        <ng-container [ngTemplateOutlet]="data.contentTemplate"></ng-container>
-        <ng-container *ngComponentOutlet="data.contentComponent; injector: dataInjector"></ng-container>
+        <ng-container [ngTemplateOutlet]="data.contentTemplate" />
+        <ng-container *ngComponentOutlet="data.contentComponent; injector: dataInjector" />
         <ng-container>{{ data.contentText | translate }}</ng-container>
     </mat-dialog-content>
 
@@ -47,7 +47,7 @@
     >
         <div class="adf-additional-actions-container">
             <ng-container *ngIf="!additionalActionButtons && data.actionsTemplate">
-                <ng-container [ngTemplateOutlet]="data.actionsTemplate"></ng-container>
+                <ng-container [ngTemplateOutlet]="data.actionsTemplate" />
             </ng-container>
 
             <ng-container *ngIf="!data.actionsTemplate && additionalActionButtons">

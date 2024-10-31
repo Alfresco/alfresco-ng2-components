@@ -33,14 +33,12 @@
                           (executeOutcome)='onFormExecuteOutcome($event)'
                           (taskClaimed)="onClaimAction($event)"
                           (taskUnclaimed)="onUnclaimAction($event)"
-                          (error)="onFormError($event)">
-                </adf-task-form>
+                          (error)="onFormError($event)" />
                 <adf-attach-form *ngIf="showAttachForm"
                                  [taskId]="taskDetails.id"
                                  [formKey]="taskDetails.formKey"
                                  (cancelAttachForm)="onCancelAttachForm()"
-                                 (success)="onCompleteAttachForm()">
-                </adf-attach-form>
+                                 (success)="onCompleteAttachForm()" />
             </div>
             <div *ngIf="!isAssigned()" id="claim-message-id">
                 {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM' | translate }}
@@ -56,21 +54,18 @@
                             (searchPeople)="searchUser($event)"
                             (success)="assignTaskToUser($event)"
                             (closeSearch)="onCloseSearch()"
-                            [results]="peopleSearch">
-                        </adf-people-search>
+                            [results]="peopleSearch" />
                     </div>
                     <adf-task-header
                         [class]="getTaskHeaderViewClass()"
                         [taskDetails]="taskDetails"
                         [formName]="taskFormName"
                         (claim)="onClaimAction($event)"
-                        (unclaim)="onUnclaimAction($event)">
-                    </adf-task-header>
+                        (unclaim)="onUnclaimAction($event)" />
                     <adf-people *ngIf="showInvolvePeople"
                                 [people]="taskPeople"
                                 [readOnly]="internalReadOnlyForm"
-                                [taskId]="taskDetails.id">
-                    </adf-people>
+                                [taskId]="taskDetails.id" />
                 </adf-info-drawer-tab>
 
                 <adf-info-drawer-tab label="ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TAB_ACTIVITY_TITLE">
@@ -79,8 +74,7 @@
                             <adf-task-comments
                                 [readOnly]="isReadOnlyComment()"
                                 [taskId]="taskDetails.id"
-                            >
-                            </adf-task-comments>
+                            />
                         </mat-card-content>
                     </mat-card>
                 </adf-info-drawer-tab>
@@ -94,8 +88,7 @@
                        [taskId]="taskDetails.id"
                        [assignee]="taskDetails.assignee?.id"
                        (checklistTaskCreated)="onChecklistTaskCreated($event)"
-                       (checklistTaskDeleted)="onChecklistTaskDeleted($event)">
-                    </adf-checklist>
+                       (checklistTaskDeleted)="onChecklistTaskDeleted($event)" />
                 </div>
             </div>
         </div>

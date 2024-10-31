@@ -16,12 +16,11 @@
                 [max]="maxDate"
                 [title]="field.tooltip"
                 (blur)="updateField()">
-            <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matSuffix [for]="datePicker" [disabled]="field.readOnly" />
             <mat-datepicker #datePicker
                 [startAt]="startAt"
-                [disabled]="field.readOnly">
-            </mat-datepicker>
+                [disabled]="field.readOnly" />
         </mat-form-field>
-        <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary"></error-widget>
+        <error-widget *ngIf="dateInputControl.invalid && dateInputControl.touched" [error]="field.validationSummary" />
     </div>
 </div>

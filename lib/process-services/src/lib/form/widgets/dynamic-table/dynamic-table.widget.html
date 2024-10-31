@@ -27,7 +27,7 @@
                         >
                             <span *ngIf="column.type !== 'Boolean' else checkbox"> {{ getCellValue(row, column) }} </span>
                             <ng-template #checkbox>
-                                <mat-checkbox disabled [checked]="getCellValue(row, column)"> </mat-checkbox>
+                                <mat-checkbox disabled [checked]="getCellValue(row, column)" />
                             </ng-template>
                         </td>
                     </tr>
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <row-editor *ngIf="editMode" [table]="content" [row]="editRow" (save)="onSaveChanges()" (cancel)="onCancelChanges()"> </row-editor>
-    <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <row-editor *ngIf="editMode" [table]="content" [row]="editRow" (save)="onSaveChanges()" (cancel)="onCancelChanges()" />
+    <error-widget [error]="field.validationSummary" />
+    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
 </div>

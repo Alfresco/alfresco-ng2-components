@@ -102,8 +102,7 @@
                         <adf-icon
                             *ngIf="hoveredHeaderColumnIndex === columnIndex && !isResizing"
                             value="adf:drag_indicator"
-                            [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key">
-                        </adf-icon>
+                            [attr.data-automation-id]="'adf-datatable-cell-header-drag-icon-'+col.key" />
                     </span>
                 </div>
                 <div
@@ -142,8 +141,7 @@
                             [ngTemplateOutlet]="mainActionTemplate"
                             [ngTemplateOutletContext]="{
                                 $implicit: mainMenuTrigger
-                            }">
-                        </ng-container>
+                            }" />
                     </mat-menu>
                     <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
                 </ng-container>
@@ -247,8 +245,7 @@
                                 </mat-icon>
                                 <ng-template #no_iconvalue>
                                     <mat-icon class="adf-datatable-selected"
-                                              *ngIf="row.isSelected && !multiselect; else no_selected_row" svgIcon="selected">
-                                    </mat-icon>
+                                              *ngIf="row.isSelected && !multiselect; else no_selected_row" svgIcon="selected" />
                                     <ng-template #no_selected_row>
                                         <img class="adf-datatable-center-img-ie"
                                             [attr.aria-label]="(data.getValue(row, col) | fileType) === 'disable' ?
@@ -272,8 +269,7 @@
                                     [column]="col"
                                     [row]="row"
                                     [resolverFn]="resolverFn"
-                                    [tooltip]="getCellTooltip(row, col)">
-                                </adf-icon-cell>
+                                    [tooltip]="getCellTooltip(row, col)" />
                             </div>
                             <div *ngSwitchCase="'date'" class="adf-cell-value adf-cell-date" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"
                                  [attr.data-automation-id]="'date_' + (data.getValue(row, col, resolverFn) | adfLocalizedDate: 'medium') ">
@@ -283,8 +279,7 @@
                                     [row]="row"
                                     [resolverFn]="resolverFn"
                                     [tooltip]="getCellTooltip(row, col)"
-                                    [dateConfig]="col.dateConfig">
-                                </adf-date-cell>
+                                    [dateConfig]="col.dateConfig" />
                             </div>
                             <div *ngSwitchCase="'location'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1"  class="adf-cell-value"
                                  [attr.data-automation-id]="'location' + data.getValue(row, col, resolverFn)">
@@ -293,8 +288,7 @@
                                     [column]="col"
                                     [row]="row"
                                     [resolverFn]="resolverFn"
-                                    [tooltip]="getCellTooltip(row, col)">
-                                </adf-location-cell>
+                                    [tooltip]="getCellTooltip(row, col)" />
                             </div>
                             <div *ngSwitchCase="'fileSize'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
                                  [attr.data-automation-id]="'fileSize_' + data.getValue(row, col, resolverFn)">
@@ -303,8 +297,7 @@
                                     [column]="col"
                                     [row]="row"
                                     [resolverFn]="resolverFn"
-                                    [tooltip]="getCellTooltip(row, col)">
-                                </adf-filesize-cell>
+                                    [tooltip]="getCellTooltip(row, col)" />
                             </div>
                             <div *ngSwitchCase="'text'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col, resolverFn)">
@@ -314,8 +307,7 @@
                                     [column]="col"
                                     [row]="row"
                                     [resolverFn]="resolverFn"
-                                    [tooltip]="getCellTooltip(row, col)">
-                                </adf-datatable-cell>
+                                    [tooltip]="getCellTooltip(row, col)" />
                             </div>
                             <div *ngSwitchCase="'boolean'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value"
                                  [attr.data-automation-id]="'boolean_' + data.getValue(row, col, resolverFn)">
@@ -324,8 +316,7 @@
                                     [column]="col"
                                     [row]="row"
                                     [resolverFn]="resolverFn"
-                                    [tooltip]="getCellTooltip(row, col)">
-                                </adf-boolean-cell>
+                                    [tooltip]="getCellTooltip(row, col)" />
                             </div>
                             <div *ngSwitchCase="'json'" [attr.tabindex]="data.getValue(row, col, resolverFn)? 0 : -1" class="adf-cell-value">
                                 <adf-json-cell
@@ -333,8 +324,7 @@
                                     [data]="data"
                                     [column]="col"
                                     [resolverFn]="resolverFn"
-                                    [row]="row">
-                                </adf-json-cell>
+                                    [row]="row" />
                             </div>
                             <div *ngSwitchCase="'amount'"
                                 class="adf-cell-value"
@@ -345,8 +335,7 @@
                                     [column]="col"
                                     [resolverFn]="resolverFn"
                                     [row]="row"
-                                    [currencyConfig]="col.currencyConfig">
-                                </adf-amount-cell>
+                                    [currencyConfig]="col.currencyConfig" />
                             </div>
                             <div *ngSwitchCase="'number'"
                                 class="adf-cell-value"
@@ -357,8 +346,7 @@
                                     [column]="col"
                                     [resolverFn]="resolverFn"
                                     [row]="row"
-                                    [decimalConfig]="col.decimalConfig">
-                                </adf-number-cell>
+                                    [decimalConfig]="col.decimalConfig" />
                             </div>
                             <span *ngSwitchDefault class="adf-cell-value">
                     <!-- empty cell for unknown column type -->
@@ -369,8 +357,7 @@
                         <div class="adf-cell-value" [attr.tabindex]="col.focus ? 0 : null">
                             <ng-container
                                 [ngTemplateOutlet]="col.template"
-                                [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col, resolverFn) }">
-                            </ng-container>
+                                [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col, resolverFn) }" />
                         </div>
                     </div>
                 </div>

@@ -24,8 +24,7 @@
                         data-automation-id="adf-expire-toggle"
                         aria-label="{{ 'SHARE.EXPIRES' | translate }}"
                         [checked]="!!time.value"
-                        (change)="onToggleExpirationDate($event)">
-                    </mat-slide-toggle>
+                        (change)="onToggleExpirationDate($event)" />
                 </div>
                 <div
                     [style.display]="isExpiryDateToggleChecked ? 'block' : 'none'"
@@ -37,12 +36,10 @@
                             [disabled]="time.disabled"
                             [for]="datePicker"
                             matSuffix
-                            class="adf-share-link__icon adf-share-link__calender-icon">
-                        </mat-datepicker-toggle>
+                            class="adf-share-link__icon adf-share-link__calender-icon" />
                         <mat-datepicker
                             #datePicker
-                            (closed)="onDatePickerClosed()">
-                        </mat-datepicker>
+                            (closed)="onDatePickerClosed()" />
                         <input
                             class="adf-share-link__input"
                             #datePickerInput
@@ -67,8 +64,7 @@
                         aria-label="{{ 'SHARE.TITLE' | translate }}"
                         [checked]="isFileShared"
                         [disabled]="!canUpdate || isDisabled"
-                        (change)="onSlideShareChange($event)">
-                    </mat-slide-toggle>
+                        (change)="onSlideShareChange($event)" />
                     <div class="adf-share-link__label adf-sharable-link">{{ 'SHARE.SHARABLE-LINK-CREATED' | translate }}
                     </div>
                 </div>

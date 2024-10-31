@@ -268,6 +268,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
 
     /**
      *  Get current value for filter and check if value has changed
+     *
      * @param filter filter
      */
     updateFilterCounter(filter: ProcessFilterCloudModel): void {

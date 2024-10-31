@@ -2,14 +2,12 @@
   <div class="adf-feature-flags-overrides-header-text" tabindex="0">
     <adf-feature-flags-override-indicator
       class="adf-activity-indicator"
-      size='large'>
-    </adf-feature-flags-override-indicator>
+      size='large' />
     <span>{{ "CORE.FEATURE-FLAGS.OVERRIDES" | translate }}</span>
   </div>
   <mat-slide-toggle
     [checked]="isEnabled"
-    (change)="onEnable($event.checked)">
-  </mat-slide-toggle>
+    (change)="onEnable($event.checked)" />
   <button
     class="adf-feature-flags-overrides-header-close"
     mat-icon-button
@@ -26,8 +24,8 @@
       </th>
       <td mat-cell class="adf-icon-col" *matCellDef="let element">
         <button mat-icon-button *ngIf="element.fictive; else flagFromApi" class="adf-fictive-flag-button" (click)="onDelete(element.flag)">
-          <mat-icon class="material-icons-outlined adf-custom-flag-icon" fontIcon="memory"></mat-icon>
-          <mat-icon class="material-icons-outlined adf-trash-icon" fontIcon="delete"></mat-icon>
+          <mat-icon class="material-icons-outlined adf-custom-flag-icon" fontIcon="memory" />
+          <mat-icon class="material-icons-outlined adf-trash-icon" fontIcon="delete" />
         </button>
       </td>
     </ng-container>
@@ -45,7 +43,7 @@
       <th mat-header-cell class="adf-val-col header-cell" *matHeaderCellDef>
         <div class="adf-input-field-buttons-container">
           <button *ngIf="showPlusButton$ | async" mat-icon-button title="{{'CORE.FEATURE-FLAGS.ADD_NEW' | translate}}" color="accent" (click)="onAddButtonClick()">
-            <mat-icon class="material-icons-outlined" fontIcon="add_circle"></mat-icon>
+            <mat-icon class="material-icons-outlined" fontIcon="add_circle" />
           </button>
           <button *ngIf="inputValue" matSuffix mat-icon-button aria-label="Clear" (click)="onClearInput()" class="adf-clear-button">
             <mat-icon>cancel</mat-icon>
@@ -56,8 +54,7 @@
         <mat-slide-toggle
           [checked]="element.value"
           (change)="onChange(element.flag, $event.checked)"
-          [disabled]="!isEnabled">
-        </mat-slide-toggle>
+          [disabled]="!isEnabled" />
       </td>
     </ng-container>
 
