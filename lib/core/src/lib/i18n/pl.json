@@ -35,7 +35,10 @@
       "TITLE": "Uruchom formularz"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Podgląd niedostępny"
+      "IMAGE_NOT_AVAILABLE": "Podgląd niedostępny",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "Magazyn lokalny",
@@ -46,10 +49,15 @@
       "UPLOAD": "Prześlij",
       "REQUIRED": "Pole wymagane",
       "REST_API_FAILED": "Serwer '{{ hostname }}' jest nieosiągalny",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
+      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
       "FILE_NAME": "Nazwa pliku",
       "NO_FILE_ATTACHED": "Nie załączono pliku",
       "VALIDATOR": {
         "INVALID_NUMBER": "Użyj innego formatu liczby.",
+        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
+        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
         "INVALID_DATE": "Użyj innego formatu daty.",
         "INVALID_VALUE": "Wprowadź inną wartość.",
         "NOT_GREATER_THAN": "Wartość nie może być większa niż {{ maxValue }}.",
@@ -62,6 +70,43 @@
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Zadanie bez nazwy"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Font size",
+      "FONT_WEIGHT": "Font weight",
+      "FONT_COLOR": "Font color",
+      "FONT_WEIGHTS": {
+        "REGULAR": "regular",
+        "BOLD": "bold"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "system color",
+        "BLACK": "black",
+        "GREY": "grey",
+        "RED": "red",
+        "GREEN": "green",
+        "BLUE": "blue",
+        "YELLOW": "yellow"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "heading",
+          "TITLE": "title"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading",
+          "TITLE": "title",
+          "ANNOTATION": "annotation"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +144,22 @@
         "ACTIONS": {
           "CANCEL": "Anuluj"
         },
-        "TITLE": "Trwa dodawanie plików do archiwum zip. Może to potrwać kilka minut."
+        "TITLE": "Trwa dodawanie plików do archiwum zip. Może to potrwać kilka minut.",
+        "COMPLETE": "complete"
       },
       "EDIT_JSON": {
         "CLOSE": "Zamknij",
         "UPDATE": "Aktualizuj"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Unsaved changes",
+        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
+        "DISCARD_CHANGES_BUTTON": "Discard Changes"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumbs",
+      "SHOWALL": "Show all"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Zablokuj plik",
@@ -179,9 +234,11 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Użyj formatu liczby",
         "INT_VALIDATION_ERROR": "Użyj formatu liczby całkowitej",
+        "LONG_VALIDATION_ERROR": "Use a long format",
         "LENGTH_VALIDATION_ERROR": "Wartość powinna mieć długość od {{ minLength }} do {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Wartość nie pasuje do wzorca: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Wartość powinna mieścić się w zakresie od {{ minValue }} do {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Wartość powinna mieścić się w zakresie od {{ minValue }} do {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
       },
       "MORE": "Więcej"
     },
@@ -234,9 +291,16 @@
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Przełącz kolejność sortowania wyników między rosnącą a malejącą",
       "SORT_BY": "Sortuj wg"
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag overrides",
+      "FILTER_OR_ADD_NEW": "Filter or add new",
+      "FILTER": "Filter",
+      "ADD_NEW": "Add new feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Profile Image",
     "NONE": "Brak komentarzy",
     "ADD": "Dodaj",
     "HEADER": "Liczba komentarzy: ({{ count }})",
@@ -301,7 +365,8 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Czynności dotyczące zawartości"
+      "TOOLTIP": "Czynności dotyczące zawartości",
+      "SELECT_COLUMNS": "Select columns"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Czynności",
@@ -316,6 +381,7 @@
       "ICON_TEXT": "Typ elementu {{ type }}",
       "ICON_DISABLED": "Wyłączone",
       "ROW_OPTION_BUTTON": "Czynności",
+      "DRAG": "Drag button",
       "EMPTY_HEADER": "Pusty nagłówek"
     },
     "FILE_TYPE": {
@@ -371,6 +437,7 @@
       "WAIT": "Poczekaj"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "File type icon",
       "PREVIOUS_PAGE": "Poprzednia strona",
       "NEXT_PAGE": "Następna strona",
       "ZOOM_IN": "Powiększ",
@@ -394,10 +461,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Strona {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Więcej informacji",
-        "LESS_INFORMATION": "Mniej informacji"
       }
     },
     "PDF_DIALOG": {
@@ -492,26 +555,6 @@
       "PROCESS_SERVICE_HOST": "Adres URL rozwiązania Alfresco Process Services: {{ value }}"
     },
     "REPOSITORY": "Repozytorium",
-    "VERSIONS": {
-      "TITLE": "Wersje produktu",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Usługi modelowania",
-      "DEPLOYMENT_SERVICE": "Usługi wdrożeniowe",
-      "QUERY_SERVICE": "Usługi wdrożeniowe",
-      "RB": "Środowisko uruchomieniowe",
-      "LABELS": {
-        "EDITION": "Wydanie",
-        "VERSION": "Wersja",
-        "LICENSE": "Licencja",
-        "STATUS": "Status",
-        "MODULES": "Moduły"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Kod źródłowy",
-      "DESCRIPTION": "Uruchamiasz projekt na podstawie następującego zatwierdzenia:"
-    },
     "PACKAGES": {
       "TITLE": "Pakiety",
       "NAME": "Nazwa",
@@ -566,6 +609,12 @@
   "ADF_DROPDOWN": {
     "LOADING": "Wczytywanie...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} - pole kombi - {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Load more"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Potwierdź",

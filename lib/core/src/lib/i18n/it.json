@@ -35,7 +35,10 @@
       "TITLE": "Modulo di inizio"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Anteprima non disponibile"
+      "IMAGE_NOT_AVAILABLE": "Anteprima non disponibile",
+      "ATTACH_FILE_WIDGET": {
+        "ON_ATTACH_FILE_CLICK": "In preview mode you cannot attach a file"
+      }
     },
     "FIELD": {
       "LOCALSTORAGE": "Archivio locale",
@@ -46,10 +49,15 @@
       "UPLOAD": "Carica",
       "REQUIRED": "Campo obbligatorio",
       "REST_API_FAILED": "Il server '{{ hostname }}' non è raggiungibile",
+      "VARIABLE_DROPDOWN_OPTIONS_FAILED": "There was a problem loading dropdown elements. Please contact administrator.",
+      "DATA_TABLE_LOAD_FAILED": "There was a problem loading table elements. Please contact administrator.",
+      "EXTERNAL_PROPERTY_LOAD_FAILED": "There was a problem loading external property. Please contact administrator.",
       "FILE_NAME": "Nome file",
       "NO_FILE_ATTACHED": "Nessun file allegato",
       "VALIDATOR": {
         "INVALID_NUMBER": "Utilizzare un formato numerico diverso",
+        "INVALID_DECIMAL_NUMBER": "Use a decimal number format",
+        "INVALID_DECIMAL_PRECISION": "Incorrect decimal value, there should be a maximum of {{precision}} digits after the decimal point.",
         "INVALID_DATE": "Utilizzare un formato data diverso",
         "INVALID_VALUE": "Immettere un altro valore",
         "NOT_GREATER_THAN": "Non può essere maggiore di {{ maxValue }}",
@@ -62,6 +70,43 @@
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Compito senza nome"
+    },
+    "FIELD_STYLE": {
+      "FONT_SIZE": "Font size",
+      "FONT_WEIGHT": "Font weight",
+      "FONT_COLOR": "Font color",
+      "FONT_WEIGHTS": {
+        "REGULAR": "regular",
+        "BOLD": "bold"
+      },
+      "COLORS": {
+        "SYSTEM_COLOR": "system color",
+        "BLACK": "black",
+        "GREY": "grey",
+        "RED": "red",
+        "GREEN": "green",
+        "BLUE": "blue",
+        "YELLOW": "yellow"
+      },
+      "PREDEFINED": {
+        "HEADER": {
+          "NORMAL": "normal",
+          "HEADING": "heading",
+          "TITLE": "title"
+        },
+        "RADIO_BUTTONS": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading"
+        },
+        "READONLY_TEXT": {
+          "NORMAL": "normal",
+          "STRONG": "strong",
+          "HEADING": "heading",
+          "TITLE": "title",
+          "ANNOTATION": "annotation"
+        }
+      }
     }
   },
   "CORE": {
@@ -99,12 +144,22 @@
         "ACTIONS": {
           "CANCEL": "Annulla"
         },
-        "TITLE": "Aggiunta dei file allo zip in corso. Questa operazione potrebbe richiedere alcuni minuti"
+        "TITLE": "Aggiunta dei file allo zip in corso. Questa operazione potrebbe richiedere alcuni minuti",
+        "COMPLETE": "complete"
       },
       "EDIT_JSON": {
         "CLOSE": "Chiudi",
         "UPDATE": "Aggiorna"
+      },
+      "UNSAVED_CHANGES": {
+        "TITLE": "Unsaved changes",
+        "DESCRIPTION": "You have unsaved changes on this screen. Are you sure want to leave without saving changes?",
+        "DISCARD_CHANGES_BUTTON": "Discard Changes"
       }
+    },
+    "BREADCRUMBS": {
+      "TITLE": "Breadcrumbs",
+      "SHOWALL": "Show all"
     },
     "FILE_DIALOG": {
       "FILE_LOCK": "Blocca file",
@@ -179,9 +234,11 @@
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizzare un formato numerico",
         "INT_VALIDATION_ERROR": "Utilizzare numeri interi",
+        "LONG_VALIDATION_ERROR": "Use a long format",
         "LENGTH_VALIDATION_ERROR": "La lunghezza del valore deve essere compresa tra {{ minLength }} e {{ maxLength }}",
         "MATCH_VALIDATION_ERROR": "Il valore non corrisponde al modello: {{ expression }}",
-        "MINMAX_VALIDATION_ERROR": "Il valore deve essere compreso tra {{ minValue }} e {{ maxValue }}"
+        "MINMAX_VALIDATION_ERROR": "Il valore deve essere compreso tra {{ minValue }} e {{ maxValue }}",
+        "ONLY_POSITIVE_NUMBER": "Only positive value is allowed"
       },
       "MORE": "Altro"
     },
@@ -234,9 +291,16 @@
     "SEARCH": {
       "TOGGLE_ASC_DESC_ORDER": "Ordina i risultati in modo crescente o decrescente",
       "SORT_BY": "Ordina per"
+    },
+    "FEATURE-FLAGS": {
+      "OVERRIDES": "Feature flag overrides",
+      "FILTER_OR_ADD_NEW": "Filter or add new",
+      "FILTER": "Filter",
+      "ADD_NEW": "Add new feature flag (Shift + Enter)"
     }
   },
   "COMMENTS": {
+    "PROFILE_IMAGE": "Profile Image",
     "NONE": "Nessun commento",
     "ADD": "Aggiungi",
     "HEADER": "Commenti ({{ count }})",
@@ -301,7 +365,8 @@
       }
     },
     "CONTENT-ACTIONS": {
-      "TOOLTIP": "Azioni contenuti"
+      "TOOLTIP": "Azioni contenuti",
+      "SELECT_COLUMNS": "Select columns"
     },
     "ACCESSIBILITY": {
       "ACTIONS": "Azioni",
@@ -316,6 +381,7 @@
       "ICON_TEXT": "Tipo di elemento {{ type }}",
       "ICON_DISABLED": "Disabilitato",
       "ROW_OPTION_BUTTON": "Azioni",
+      "DRAG": "Drag button",
       "EMPTY_HEADER": "Intestazione vuota"
     },
     "FILE_TYPE": {
@@ -371,6 +437,7 @@
       "WAIT": "Attendi"
     },
     "ARIA": {
+      "MIME_TYPE_ICON": "File type icon",
       "PREVIOUS_PAGE": "Pagina precedente",
       "NEXT_PAGE": "Pagina successiva",
       "ZOOM_IN": "Zoom avanti",
@@ -394,10 +461,6 @@
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Pagina {{ pageNum }}"
-      },
-      "METADATA": {
-        "MORE_INFORMATION": "Più informazioni",
-        "LESS_INFORMATION": "Meno informazioni"
       }
     },
     "PDF_DIALOG": {
@@ -492,26 +555,6 @@
       "PROCESS_SERVICE_HOST": "URL di Alfresco Process Services: {{ value }}"
     },
     "REPOSITORY": "Repository",
-    "VERSIONS": {
-      "TITLE": "Versioni prodotto",
-      "CONTENT_SERVICE": "Content Services",
-      "PROCESS_SERVICE": "Process Services",
-      "MODELING_SERVICE": "Servizi di modellazione",
-      "DEPLOYMENT_SERVICE": "Servizi di distribuzione",
-      "QUERY_SERVICE": "Servizi di distribuzione",
-      "RB": "Runtime",
-      "LABELS": {
-        "EDITION": "Edizione",
-        "VERSION": "Versione",
-        "LICENSE": "Licenza",
-        "STATUS": "Stato",
-        "MODULES": "Moduli"
-      }
-    },
-    "SOURCE_CODE": {
-      "TITLE": "Codice sorgente",
-      "DESCRIPTION": "Il progetto è in esecuzione in base al commit seguente:"
-    },
     "PACKAGES": {
       "TITLE": "Pacchetti",
       "NAME": "Nome",
@@ -566,6 +609,12 @@
   "ADF_DROPDOWN": {
     "LOADING": "Caricamento in corso...",
     "SELECTION_ARIA_LABEL": "{{placeholder}} casella combinata {{selectedOption}}"
+  },
+  "INFO_DRAWER": {
+    "ICON": "Node Icon"
+  },
+  "DYNAMIC_CHIP_LIST": {
+    "LOAD_MORE": "Load more"
   },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Conferma",
