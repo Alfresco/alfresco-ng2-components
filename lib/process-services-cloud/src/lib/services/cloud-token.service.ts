@@ -34,3 +34,9 @@ export const TASK_LIST_CLOUD_TOKEN = new InjectionToken<TaskListCloudServiceInte
  * 'POST' value should be provided only if the used Activiti version is 8.7.0 or higher.
  */
 export const TASK_SEARCH_API_METHOD_TOKEN = new InjectionToken<'GET' | 'POST'>('task-search-method');
+
+/**
+ * Token used to indicate the API used to search for processes.
+ * 'POST' value should be provided only if the used Activiti version is 8.7.0 or higher.
+ */
+export const PROCESS_SEARCH_API_METHOD_TOKEN = new InjectionToken<'GET' | 'POST'>('process-search-method');

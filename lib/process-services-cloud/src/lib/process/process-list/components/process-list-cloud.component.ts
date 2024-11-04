@@ -27,7 +27,8 @@ import {
     Input,
     ViewChild,
     Inject,
-    OnDestroy
+    OnDestroy,
+    Optional
 } from '@angular/core';
 import {
     DataTableSchema,
@@ -45,13 +46,13 @@ import {
     DataColumn
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, Subject, of } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
-import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
+import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
 import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
@@ -66,8 +67,8 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessListCloudComponent
-    extends DataTableSchema<ProcessListDataColumnCustomData>
-    implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy
+extends DataTableSchema<ProcessListDataColumnCustomData>
+implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy
 // eslint-disable-next-line @typescript-eslint/brace-style
 {
     @ViewChild(DataTableComponent)
@@ -202,6 +203,34 @@ export class ProcessListCloudComponent
     @Input()
     isResizingEnabled: boolean = false;
 
+    /**
+    * Filter the processes. Display only processes with names matching any of the supplied strings.
+    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+    */
+    @Input()
+    names: string[] = [];
+
+   /**
+    * Filter the processes. Display only processes started by any of the users whose usernames are present in the array.
+    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+    */
+    @Input()
+    initiators: string[] = [];
+
+   /**
+    * Filter the processes. Display only processes present in any of the specified app versions.
+    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+    */
+    @Input()
+    appVersions: string[] = [];
+
+   /**
+    * Filter the processes. Display only processes with provided statuses.
+    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+    */
+    @Input()
+    statuses: string[] = [];
+
     /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -242,11 +271,13 @@ export class ProcessListCloudComponent
     rows: any[] = [];
     formattedSorting: any[];
     requestNode: ProcessQueryCloudRequestModel;
+    processListRequestNode: ProcessListRequestModel;
     dataAdapter: ProcessListDatatableAdapter;
 
     private defaultSorting = { key: 'startDate', direction: 'desc' };
 
     constructor(
+        @Inject(PROCESS_SEARCH_API_METHOD_TOKEN) @Optional() private searchMethod: 'GET' | 'POST',
         private processListCloudService: ProcessListCloudService,
         appConfigService: AppConfigService,
         private userPreferences: UserPreferencesService,
@@ -333,13 +364,23 @@ export class ProcessListCloudComponent
 
         this.isColumnSchemaCreated$
             .pipe(
-                switchMap(() => of(this.createRequestNode())),
-                tap((requestNode) => (this.requestNode = requestNode)),
-                switchMap((requestNode) => this.processListCloudService.getProcessByRequest(requestNode)),
+                filter((isColumnSchemaCreated) => !!isColumnSchemaCreated),
+                take(1),
+                switchMap(() => {
+                    if (this.searchMethod === 'POST') {
+                        const requestNode = this.createProcessListRequestNode();
+                        this.processListRequestNode = requestNode;
+                        return this.processListCloudService.fetchProcessList(requestNode).pipe(take(1));
+                    } else {
+                        const requestNode = this.createRequestNode();
+                        this.requestNode = requestNode;
+                        return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
+                    }
+                }),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe(
-                (processes) => {
+            .subscribe({
+                next: (processes) => {
                     this.rows = this.variableMapperService.mapVariablesByColumnTitle(processes.list.entries, this.columns);
 
                     this.dataAdapter = new ProcessListDatatableAdapter(this.rows, this.columns);
@@ -348,11 +389,11 @@ export class ProcessListCloudComponent
                     this.isLoading = false;
                     this.pagination.next(processes.list.pagination);
                 },
-                (error) => {
+                error: (error) => {
                     this.error.emit(error);
                     this.isLoading = false;
                 }
-            );
+            });
     }
 
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {
@@ -479,6 +520,32 @@ export class ProcessListCloudComponent
 
     onExecuteRowAction(row: DataRowActionEvent) {
         this.executeRowAction.emit(row);
+    }
+
+    private createProcessListRequestNode(): ProcessListRequestModel {
+        const requestNode = {
+            appName: this.appName,
+            pagination: {
+                maxItems: this.size,
+                skipCount: this.skipCount
+            },
+            sorting: this.sorting,
+            name: this.names,
+            initiator: this.initiators,
+            appVersion: this.appVersions,
+            status: this.statuses,
+            lastModifiedFrom: this.lastModifiedFrom?.toISOString() || '',
+            lasModifiedTo: this.lastModifiedTo?.toISOString() || '',
+            startFrom: this.startFrom,
+            startTo: this.startTo,
+            completedFrom: this.completedFrom,
+            completedTo: this.completedTo,
+            suspendedFrom: this.suspendedFrom,
+            suspendedTo: this.suspendedTo,
+            variableKeys: this.getVariableDefinitionsRequestModel()
+        };
+
+        return new ProcessListRequestModel(requestNode);
     }
 
     private createRequestNode(): ProcessQueryCloudRequestModel {

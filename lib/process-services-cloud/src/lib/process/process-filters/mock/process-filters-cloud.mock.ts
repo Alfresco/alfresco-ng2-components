@@ -54,6 +54,7 @@ export const fakeProcessCloudFilters = [
 
 export const mockProcessFilters: any[] = [
     {
+        appName: 'mock-app-name',
         name: 'FakeAllProcesses',
         key: 'FakeAllProcesses',
         icon: 'adjust',
@@ -61,6 +62,7 @@ export const mockProcessFilters: any[] = [
         status: ''
     },
     {
+        appName: 'mock-app-name',
         name: 'FakeRunningProcesses',
         key: 'FakeRunningProcesses',
         icon: 'inbox',
@@ -68,6 +70,7 @@ export const mockProcessFilters: any[] = [
         status: 'RUNNING'
     },
     {
+        appName: 'mock-app-name',
         name: 'FakeCompletedProcesses',
         key: 'completed-processes',
         icon: 'done',

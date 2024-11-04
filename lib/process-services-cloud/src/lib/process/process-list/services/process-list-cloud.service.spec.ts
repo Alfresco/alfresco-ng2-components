@@ -17,10 +17,10 @@
 
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { ProcessListCloudService } from './process-list-cloud.service';
-import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
+import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { AdfHttpClient } from '@alfresco/adf-core/api';
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, of } from 'rxjs';
 
 describe('ProcessListCloudService', () => {
     let service: ProcessListCloudService;
@@ -44,72 +44,132 @@ describe('ProcessListCloudService', () => {
         requestSpy = spyOn(adfHttpClient, 'request');
     }));
 
-    it('should append to the call all the parameters', (done) => {
-        const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallQueryParameters);
-        service.getProcessByRequest(processRequest).subscribe((res) => {
+    describe('getProcessByRequest', () => {
+        it('should append to the call all the parameters', (done) => {
+            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+            service.getProcessByRequest(processRequest).subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(res).not.toBeNull();
+                expect(res.skipCount).toBe(0);
+                expect(res.maxItems).toBe(20);
+                expect(res.service).toBe('fake-service');
+                done();
+            });
+        });
+
+        it('should concat the app name to the request url', (done) => {
+            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+            service.getProcessByRequest(processRequest).subscribe((requestUrl) => {
+                expect(requestUrl).toBeDefined();
+                expect(requestUrl).not.toBeNull();
+                expect(requestUrl).toContain('/fakeName/query/v1/process-instances');
+                done();
+            });
+        });
+
+        it('should concat the sorting to append as parameters', (done) => {
+            const processRequest = {
+                appName: 'fakeName',
+                skipCount: 0,
+                maxItems: 20,
+                service: 'fake-service',
+                sorting: [
+                    { orderBy: 'NAME', direction: 'DESC' },
+                    { orderBy: 'TITLE', direction: 'ASC' }
+                ]
+            } as ProcessQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+            service.getProcessByRequest(processRequest).subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(res).not.toBeNull();
+                expect(res.sort).toBe('NAME,DESC&TITLE,ASC');
+                done();
+            });
+        });
+
+        it('should return an error when app name is not specified', (done) => {
+            const processRequest = { appName: null } as ProcessQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+            service.getProcessByRequest(processRequest).subscribe(
+                () => {},
+                (error) => {
+                    expect(error).toBe('Appname not configured');
+                    done();
+                }
+            );
+        });
+
+        it('should return number of total items of processes ', async () => {
+            const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 1, service: 'fake-service' } as ProcessQueryCloudRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+            const result = await firstValueFrom(service.getProcessByRequest(processRequest));
+
+            expect(result).toBeDefined();
+            expect(result).not.toBeNull();
+            expect(result.skipCount).toBe(0);
+            expect(result.maxItems).toBe(1);
+            expect(result.service).toBe('fake-service');
+        });
+    });
+
+    describe('fetchProcessList', () => {
+        it('should append to the call all the parameters', async () => {
+            const processRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 }
+            } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchProcessList(processRequest));
+
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.skipCount).toBe(0);
             expect(res.maxItems).toBe(20);
-            expect(res.service).toBe('fake-service');
-            done();
         });
-    });
 
-    it('should concat the app name to the request url', (done) => {
-        const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallUrl);
-        service.getProcessByRequest(processRequest).subscribe((requestUrl) => {
-            expect(requestUrl).toBeDefined();
-            expect(requestUrl).not.toBeNull();
-            expect(requestUrl).toContain('/fakeName/query/v1/process-instances');
-            done();
+        it('should concat the app name to the request url', async () => {
+            const processRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 }
+            } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
+
+            const res = await firstValueFrom(service.fetchProcessList(processRequest));
+
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res).toContain('/fakeName/query/v1/process-instances/search');
         });
-    });
 
-    it('should concat the sorting to append as parameters', (done) => {
-        const processRequest = {
-            appName: 'fakeName',
-            skipCount: 0,
-            maxItems: 20,
-            service: 'fake-service',
-            sorting: [
-                { orderBy: 'NAME', direction: 'DESC' },
-                { orderBy: 'TITLE', direction: 'ASC' }
-            ]
-        } as ProcessQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallQueryParameters);
-        service.getProcessByRequest(processRequest).subscribe((res) => {
+        it('should concat the sorting to append as parameters', async () => {
+            const processRequest = {
+                appName: 'fakeName',
+                pagination: { skipCount: 0, maxItems: 20 },
+                sorting: [
+                    { orderBy: 'NAME', direction: 'DESC' },
+                    { orderBy: 'TITLE', direction: 'ASC' }
+                ]
+            } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallQueryParameters);
+
+            const res = await firstValueFrom(service.fetchProcessList(processRequest));
+
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.sort).toBe('NAME,DESC&TITLE,ASC');
-            done();
         });
-    });
 
-    it('should return an error when app name is not specified', (done) => {
-        const processRequest = { appName: null } as ProcessQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallUrl);
-        service.getProcessByRequest(processRequest).subscribe(
-            () => {},
-            (error) => {
-                expect(error).toBe('Appname not configured');
-                done();
-            }
-        );
-    });
+        it('should return an error when app name is not specified', async () => {
+            const taskRequest = { appName: null } as ProcessListRequestModel;
+            requestSpy.and.callFake(returnCallUrl);
 
-    it('should return number of total items of processes ', async () => {
-        const processRequest = { appName: 'fakeName', skipCount: 0, maxItems: 1, service: 'fake-service' } as ProcessQueryCloudRequestModel;
-        requestSpy.and.callFake(returnCallQueryParameters);
-        const result = await firstValueFrom(service.getProcessByRequest(processRequest));
+            const res = await firstValueFrom(service.fetchProcessList(taskRequest).pipe(catchError((error) => of(error.message))));
 
-        expect(result).toBeDefined();
-        expect(result).not.toBeNull();
-        expect(result.skipCount).toBe(0);
-        expect(result.maxItems).toBe(1);
-        expect(result.service).toBe('fake-service');
+            expect(res).toBe('Appname not configured');
+        });
     });
 
     describe('getAdminProcessRequest', () => {
