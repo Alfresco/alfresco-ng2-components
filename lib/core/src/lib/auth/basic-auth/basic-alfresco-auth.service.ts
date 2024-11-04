@@ -373,15 +373,36 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     getTicketEcmBase64(requestUrl: string): string | null {
         let ticket = null;
 
-        const contextRootBpm = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app';
-        const contextRoot = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco';
+        const bpmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app'}/`;
+        const ecmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco'}/`;
 
-        if (contextRoot && requestUrl.indexOf(contextRoot) !== -1) {
-            ticket = 'Basic ' + btoa(this.contentAuth.getToken());
-        } else if (contextRootBpm && requestUrl.indexOf(contextRootBpm) !== -1) {
-            ticket = 'Basic ' + this.processAuth.getToken();
+        if (this.containsContextRoot(ecmRoot, requestUrl) && !this.containsContextRoot(bpmRoot, requestUrl)) {
+            ticket = this.getContentServicesTicket();
+        } else if (this.containsContextRoot(bpmRoot, requestUrl) && !this.containsContextRoot(ecmRoot, requestUrl)) {
+            ticket = this.getProcessServicesTicket();
+        } else if (this.containsContextRoot(bpmRoot, requestUrl) && this.containsContextRoot(ecmRoot, requestUrl)) {
+            ticket =
+                this.getContextRootPosition(ecmRoot, requestUrl) < this.getContextRootPosition(bpmRoot, requestUrl)
+                    ? this.getContentServicesTicket()
+                    : this.getProcessServicesTicket();
         }
 
         return ticket;
+    }
+
+    private containsContextRoot(contextRoot: string, url: string) {
+        return this.getContextRootPosition(contextRoot, url) !== -1;
+    }
+
+    private getContextRootPosition(contextRoot: string, url: string) {
+        return url.indexOf(contextRoot);
+    }
+
+    private getProcessServicesTicket() {
+        return this.processAuth.getToken()?.startsWith('Basic ') ? this.processAuth.getToken() : 'Basic ' + this.processAuth.getToken();
+    }
+
+    private getContentServicesTicket() {
+        return 'Basic ' + btoa(this.contentAuth.getToken());
     }
 }
