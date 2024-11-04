@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'adf-toolbar-title',
     standalone: true,
-    template: '<ng-content></ng-content>',
+    template: '<ng-content />',
     host: { class: 'adf-toolbar-title' }
 })
 export class ToolbarTitleComponent {}

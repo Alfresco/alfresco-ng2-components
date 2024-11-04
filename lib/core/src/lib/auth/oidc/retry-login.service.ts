@@ -26,7 +26,6 @@ export class RetryLoginService {
 
     /**
      * Attempts to log in a specified number of times if the initial login attempt fails.
-     *
      * @param loginOptions - The options to be used for the login attempt.
      * @param maxLoginAttempts - The maximum number of login attempts. Defaults to 3.
      * @returns A promise that resolves to `true` if the login is successful, or rejects with an error if all attempts fail.
