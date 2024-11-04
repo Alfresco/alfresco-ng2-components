@@ -36,7 +36,7 @@
                 </button>
             </div>
 
-            <mat-divider></mat-divider>
+            <mat-divider />
 
             <mat-list role="menuitem">
                 <ng-container *ngIf="notifications.length; else empty_list_template">
@@ -67,7 +67,7 @@
                 </ng-template>
             </mat-list>
 
-            <mat-divider></mat-divider>
+            <mat-divider />
 
             <div class="adf-notification-history-load-more" role="menuitem" *ngIf="hasMoreNotifications()">
                 <button mat-button (click)="loadMore()">

@@ -44,11 +44,10 @@
                         id="date_id">
                     <mat-datepicker-toggle
                         matSuffix
-                        [for]="taskDatePicker"></mat-datepicker-toggle>
+                        [for]="taskDatePicker" />
                     <mat-datepicker
                         #taskDatePicker
-                        [touchUi]="true">
-                    </mat-datepicker>
+                        [touchUi]="true" />
                     <div class="adf-error-text-container">
                         <div *ngIf="dateError">
                             <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
@@ -59,7 +58,7 @@
                 <people-widget
                     (peopleSelected)="setAssigneeId($event)"
                     [field]="field"
-                    class="adf-people-widget-content"></people-widget>
+                    class="adf-people-widget-content" />
             </div>
             <mat-form-field class="adf-task-form">
                 <mat-label id="form_label">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>

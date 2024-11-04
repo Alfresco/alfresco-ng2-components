@@ -13,7 +13,7 @@
         "prefer-arrow/prefer-arrow-functions": "off",
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/naming-convention": "warn",
-        "quote-props": "warn",
+        "quote-props": "off",
         "no-shadow": "warn",
         "no-restricted-syntax": "off",
         "no-underscore-dangle": "off",

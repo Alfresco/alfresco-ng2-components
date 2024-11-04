@@ -22,7 +22,7 @@
         <mat-datepicker-toggle
             matSuffix
             [for]="picker"
-            [attr.data-automation-id]="'adf-cloud-edit-process-property-date-range-' + processFilterProperty.key"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker (closed)="onDateRangeClosed()"></mat-date-range-picker>
+            [attr.data-automation-id]="'adf-cloud-edit-process-property-date-range-' + processFilterProperty.key" />
+        <mat-date-range-picker #picker (closed)="onDateRangeClosed()" />
     </mat-form-field>
 </ng-container>

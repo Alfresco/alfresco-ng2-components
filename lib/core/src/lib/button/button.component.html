@@ -12,7 +12,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+            <ng-container [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
 
@@ -29,7 +29,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+            <ng-container [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
 
@@ -46,7 +46,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+            <ng-container [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
 
@@ -63,7 +63,7 @@
             [attr.aria-hidden]="ariaHidden"
             [attr.data-automation-id]="testId"
         >
-            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+            <ng-container [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
 
@@ -81,7 +81,7 @@
             [attr.data-automation-id]="testId"
         >
             <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
-            <ng-container [ngTemplateOutlet]="buttonContent"></ng-container>
+            <ng-container [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
 
@@ -99,7 +99,7 @@
             [attr.data-automation-id]="testId"
         >
             <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
-            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
+            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
 
@@ -117,7 +117,7 @@
             [attr.data-automation-id]="testId"
         >
             <mat-icon *ngIf="icon" class="adf-button__icon">{{ icon }}</mat-icon>
-            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent"></ng-container>
+            <ng-container *ngIf="!icon" [ngTemplateOutlet]="buttonContent" />
         </button>
     </ng-container>
 </ng-container>

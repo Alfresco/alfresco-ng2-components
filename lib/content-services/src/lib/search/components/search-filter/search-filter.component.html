@@ -16,7 +16,7 @@
                 {{ category.name | translate }}
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <adf-search-filter-card [category]="category"></adf-search-filter-card>
+        <adf-search-filter-card [category]="category" />
     </mat-expansion-panel>
 
     <ng-container *ngIf="facetFiltersService.tabbedFacet && showContextFacets">
@@ -26,8 +26,7 @@
             </mat-expansion-panel-header>
             <adf-search-facet-tabbed-content
                 [tabbedFacet]="facetFiltersService.tabbedFacet"
-                [attr.data-automation-id]="'expansion-panel-'+facetFiltersService.tabbedFacet.label">
-            </adf-search-facet-tabbed-content>
+                [attr.data-automation-id]="'expansion-panel-'+facetFiltersService.tabbedFacet.label" />
         </mat-expansion-panel>
     </ng-container>
 
@@ -38,7 +37,7 @@
                 <mat-panel-title class="adf-search-filter-header-title">{{ field.label | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <adf-search-facet-field [field]="field"></adf-search-facet-field>
+            <adf-search-facet-field [field]="field" />
 
         </mat-expansion-panel>
     </ng-container>

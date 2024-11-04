@@ -1,6 +1,6 @@
 <mat-card class="adf-permission-card" id="adf-permission-manager-card">
     <div *ngIf="(permissionList.data$ | async) === null && permissionList.loading$ | async" class="adf-permission-loader">
-        <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'"></mat-progress-spinner>
+        <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'" />
     </div>
 
     <ng-container *ngIf="permissionList.error$ | async">
@@ -28,8 +28,7 @@
                         aria-label="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate}}"
                         data-automation-id="adf-inherit-toggle-button"
                         [checked]="model.node.permissions.isInheritanceEnabled"
-                        (change)="permissionList.toggleInherited($event)">
-                    </mat-slide-toggle>
+                        (change)="permissionList.toggleInherited($event)" />
                 </span>
 
                 <span class="adf-inherit-subtitle" title="total">
@@ -60,8 +59,7 @@
                     [permissions]="model.inheritedPermissions"
                     [showLocation]="true"
                     [selectionMode]="'none'"
-                    [roles]="model.roles">
-                </adf-permission-container>
+                    [roles]="model.roles" />
             </div>
         </ng-template>
 
@@ -100,8 +98,7 @@
                 (updateAll)="updateAllPermission($event)"
                 (row-select)="onSelect($any($event).detail.selection)"
                 (row-unselect)="onSelect($any($event).detail.selection)"
-                [roles]="model.roles">
-            </adf-permission-container>
+                [roles]="model.roles" />
 
         </mat-card-content>
     </ng-container>

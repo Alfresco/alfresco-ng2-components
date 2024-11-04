@@ -58,10 +58,8 @@ export class SavedSearchesService {
      */
     getSavedSearches(): Observable<SavedSearch[]> {
         return this.getSavedSearchesNodeId().pipe(
-            concatMap(() => {
-                return from(
-                    this.nodesApi.getNodeContent(this.savedSearchFileNodeId).then((content) => this.mapFileContentToSavedSearches(content))
-                ).pipe(
+            concatMap(() =>
+                from(this.nodesApi.getNodeContent(this.savedSearchFileNodeId).then((content) => this.mapFileContentToSavedSearches(content))).pipe(
                     catchError((error) => {
                         if (!this.createFileAttempt) {
                             this.createFileAttempt = true;
@@ -70,8 +68,8 @@ export class SavedSearchesService {
                         }
                         return throwError(() => error);
                     })
-                );
-            })
+                )
+            )
         );
     }
 
@@ -130,9 +128,9 @@ export class SavedSearchesService {
             tap((updatedSearches: SavedSearch[]) => {
                 this.savedSearches$.next(updatedSearches);
             }),
-            switchMap((updatedSearches: SavedSearch[]) => {
-                return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
-            }),
+            switchMap((updatedSearches: SavedSearch[]) =>
+                from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)))
+            ),
             catchError((error) => {
                 this.savedSearches$.next(previousSavedSearches);
                 return throwError(() => error);
@@ -161,9 +159,9 @@ export class SavedSearchesService {
             tap((updatedSearches: SavedSearch[]) => {
                 this.savedSearches$.next(updatedSearches);
             }),
-            switchMap((updatedSearches: SavedSearch[]) => {
-                return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
-            }),
+            switchMap((updatedSearches: SavedSearch[]) =>
+                from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)))
+            ),
             catchError((error) => {
                 this.savedSearches$.next(previousSavedSearchesOrder);
                 return throwError(() => error);
@@ -192,9 +190,9 @@ export class SavedSearchesService {
                     }));
                 }),
                 tap((savedSearches: SavedSearch[]) => this.savedSearches$.next(savedSearches)),
-                switchMap((updatedSearches: SavedSearch[]) => {
-                    return from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)));
-                }),
+                switchMap((updatedSearches: SavedSearch[]) =>
+                    from(this.nodesApi.updateNodeContent(this.savedSearchFileNodeId, JSON.stringify(updatedSearches)))
+                ),
                 catchError((error) => {
                     this.savedSearches$.next(previousSavedSearchesOrder);
                     return throwError(() => error);

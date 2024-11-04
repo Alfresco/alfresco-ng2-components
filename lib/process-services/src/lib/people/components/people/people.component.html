@@ -20,8 +20,7 @@
                 (success)="involveUser($event)"
                 (closeSearch)="onCloseSearch()"
                 [results]="peopleSearch$"
-            >
-            </adf-people-search>
+            />
         </div>
         <div class="adf-assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">
             <adf-people-list [users]="people" [actions]="isEditMode()" (clickAction)="onClickAction($event)">

@@ -24,7 +24,7 @@ import { FlagsComponent } from './flags/flags.component';
     imports: [FlagsComponent],
     template: `
         <div class="adf-feature-flags-wrapper">
-            <adf-feature-flags-overrides></adf-feature-flags-overrides>
+            <adf-feature-flags-overrides />
         </div>
     `,
     styles: [

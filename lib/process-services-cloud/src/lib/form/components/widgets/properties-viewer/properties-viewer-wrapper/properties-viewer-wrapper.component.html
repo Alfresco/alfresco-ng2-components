@@ -12,10 +12,9 @@
     [displayTags]="false"
     [displayCategories]="false"
     *ngIf="!loading; else loadingTemplate"
->
-</adf-content-metadata>
+/>
 <ng-template #loadingTemplate>
     <div class="adf-properties-viewer-wrapper-loading">
-        <mat-progress-spinner></mat-progress-spinner>
+        <mat-progress-spinner />
     </div>
 </ng-template>

@@ -185,7 +185,10 @@ module.exports = {
         {
             files: ['*.html'],
             extends: ['plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility'],
-            rules: {}
+            parser: '@angular-eslint/template-parser',
+            rules: {
+                '@angular-eslint/template/prefer-self-closing-tags': 'error'
+            }
         },
         {
             files: ['*.spec.ts'],

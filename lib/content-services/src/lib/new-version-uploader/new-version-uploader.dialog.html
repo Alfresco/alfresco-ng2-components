@@ -1,6 +1,6 @@
 <h1 class="adf-new-version-uploader-dialog-title" mat-dialog-title data-automation-id="new-version-uploader-dialog-title">{{ title | translate }}</h1>
 <section class="adf-new-version-uploader-dialog-content" mat-dialog-content *ngIf="!data.showVersionsOnly">
-  <adf-version-comparison id="adf-version-comparison" [newFileVersion]="data.file" [node]="data.node"></adf-version-comparison>
+  <adf-version-comparison id="adf-version-comparison" [newFileVersion]="data.file" [node]="data.node" />
   <adf-version-upload
     id="adf-version-upload-button"
     [node]="data.node"
@@ -9,8 +9,7 @@
     (success)="handleUpload($event)"
     (cancel)="handleCancel()"
     (error)="onUploadError($event)"
-  >
-  </adf-version-upload>
+  />
 </section>
 <ng-container *ngIf="data.showVersionsOnly">
   <section class="adf-new-version-uploader-dialog-content" mat-dialog-content>
@@ -26,7 +25,7 @@
           (deleted)="refresh($event)"
           (restored)="refresh($event)"
           (viewVersion)="onViewingVersion($event)"
-        ></adf-version-list>
+        />
       </div>
     </div>
   </section>

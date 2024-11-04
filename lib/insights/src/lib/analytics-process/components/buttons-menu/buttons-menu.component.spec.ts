@@ -42,7 +42,7 @@ export class CustomContainerComponent {
 
 @Component({
     selector: 'adf-custom-empty-container',
-    template: `<adf-buttons-action-menu></adf-buttons-action-menu>`
+    template: `<adf-buttons-action-menu />`
 })
 export class CustomEmptyContainerComponent {}
 

@@ -43,16 +43,17 @@ export class CommentProcessService implements CommentsService {
      */
     get(id: string): Observable<CommentModel[]> {
         return from(this.commentsApi.getProcessInstanceComments(id)).pipe(
-            map((response) => {
-                return response.data.map((comment) => {
-                    return new CommentModel({
-                        id: comment.id,
-                        message: comment.message,
-                        created: comment.created,
-                        createdBy: new User(comment.createdBy)
-                    });
-                });
-            })
+            map((response) =>
+                response.data.map(
+                    (comment) =>
+                        new CommentModel({
+                            id: comment.id,
+                            message: comment.message,
+                            created: comment.created,
+                            createdBy: new User(comment.createdBy)
+                        })
+                )
+            )
         );
     }
 

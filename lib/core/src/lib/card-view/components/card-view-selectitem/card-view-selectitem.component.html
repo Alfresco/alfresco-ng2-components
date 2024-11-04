@@ -23,7 +23,7 @@
                     (selectionChange)="onChange($event)"
                     data-automation-class="select-box"
                     [aria-label]="property.label | translate">
-                    <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)"></adf-select-filter-input>
+                    <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)" />
                     <mat-option *ngIf="displayNoneOption">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
                     <mat-option
                         *ngFor="let option of list$ | async"

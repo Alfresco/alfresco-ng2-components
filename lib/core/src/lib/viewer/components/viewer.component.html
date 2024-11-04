@@ -75,7 +75,7 @@
                     </mat-menu>
                 </ng-container>
 
-                <adf-toolbar-divider></adf-toolbar-divider>
+                <adf-toolbar-divider />
 
                 <ng-content select="adf-viewer-toolbar-custom-actions"></ng-content>
 
@@ -90,7 +90,7 @@
                 </button>
 
                 <ng-container *ngIf="allowRightSidebar && !hideInfoButton">
-                    <adf-toolbar-divider></adf-toolbar-divider>
+                    <adf-toolbar-divider />
 
                     <button mat-icon-button
                             [attr.aria-expanded]="showRightSidebar"
@@ -120,7 +120,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="allowGoBack && closeButtonPosition === CloseButtonPosition.Right">
-                    <adf-toolbar-divider></adf-toolbar-divider>
+                    <adf-toolbar-divider />
 
                     <button class="adf-viewer-close-button"
                             data-automation-id="adf-toolbar-right-back"
@@ -141,8 +141,7 @@
                 <div class="adf-viewer__sidebar adf-viewer__sidebar__right"
                      id="adf-right-sidebar">
                     <ng-container *ngIf="sidebarRightTemplate">
-                        <ng-container *ngTemplateOutlet="sidebarRightTemplate;context:sidebarRightTemplateContext">
-                        </ng-container>
+                        <ng-container *ngTemplateOutlet="sidebarRightTemplate;context:sidebarRightTemplateContext" />
                     </ng-container>
                     <ng-content *ngIf="!sidebarRightTemplate"
                                 select="adf-viewer-sidebar"></ng-content>
@@ -153,8 +152,7 @@
                 <div class="adf-viewer__sidebar adf-viewer__sidebar__left"
                      id="adf-left-sidebar">
                     <ng-container *ngIf="sidebarLeftTemplate">
-                        <ng-container *ngTemplateOutlet="sidebarLeftTemplate;context:sidebarLeftTemplateContext">
-                        </ng-container>
+                        <ng-container *ngTemplateOutlet="sidebarLeftTemplate;context:sidebarLeftTemplateContext" />
                     </ng-container>
                     <ng-content *ngIf="!sidebarLeftTemplate"
                                 select="adf-viewer-sidebar"></ng-content>
@@ -172,8 +170,7 @@
                                (isSaving)="allowNavigate = !$event"
                                [tracks]="tracks"
                                [viewerTemplateExtensions]="viewerExtensions ?? viewerTemplateExtensions"
-                               [nodeId]="nodeId">
-            </adf-viewer-render>
+                               [nodeId]="nodeId" />
 
         </div>
     </div>

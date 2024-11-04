@@ -48,8 +48,7 @@
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.data-automation-id]="'datepickertoggle-' + property.key"
                 [for]="datetimePicker"
-            >
-            </mat-datetimepicker-toggle>
+            />
         </div>
 
         <input
@@ -67,8 +66,7 @@
             [timeInterval]="5"
             [attr.data-automation-id]="'datepicker-' + property.key"
             [startAt]="valueDate"
-        >
-        </mat-datetimepicker>
+        />
     </div>
     <ng-template #elseEmptyValueBlock>
         {{ property.default | translate }}
@@ -107,16 +105,14 @@
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.data-automation-id]="'datepickertoggle-' + property.key"
                 [for]="datetimePicker"
-            >
-            </mat-datetimepicker-toggle>
+            />
             <mat-datetimepicker
                 #datetimePicker
                 [type]="$any(property).type"
                 [timeInterval]="5"
                 [attr.data-automation-id]="'datepicker-' + property.key"
                 [startAt]="valueDate"
-            >
-            </mat-datetimepicker>
+            />
         </div>
     </div>
 </div>

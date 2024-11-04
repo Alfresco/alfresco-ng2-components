@@ -41,7 +41,7 @@ class TestDialogComponent {}
 @Component({
     standalone: true,
     imports: [PdfViewerComponent],
-    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"></adf-pdf-viewer> `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" /> `
 })
 class UrlTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })
@@ -57,7 +57,7 @@ class UrlTestComponent {
 @Component({
     standalone: true,
     imports: [PdfViewerComponent],
-    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile"></adf-pdf-viewer> `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [urlFile]="urlFile" /> `
 })
 class UrlTestPasswordComponent {
     @ViewChild(PdfViewerComponent, { static: true })
@@ -73,7 +73,7 @@ class UrlTestPasswordComponent {
 @Component({
     standalone: true,
     imports: [PdfViewerComponent],
-    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile"></adf-pdf-viewer> `
+    template: ` <adf-pdf-viewer [allowThumbnails]="true" [showToolbar]="true" [blobFile]="blobFile" /> `
 })
 class BlobTestComponent {
     @ViewChild(PdfViewerComponent, { static: true })

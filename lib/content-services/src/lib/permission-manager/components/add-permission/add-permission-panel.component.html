@@ -44,7 +44,7 @@
         >
             <mat-list-option id="adf-add-permission-group-everyone" #eveyone [disableRipple]="true" [value]="EVERYONE">
                 <div class="adf-list-option-item">
-                    <adf-user-icon-column [node]="EVERYONE" id="add-group-icon" [selected]="eveyone.selected"></adf-user-icon-column>
+                    <adf-user-icon-column [node]="EVERYONE" id="add-group-icon" [selected]="eveyone.selected" />
                     <p class="adf-result-name">
                         {{ 'PERMISSION_MANAGER.ADD-PERMISSION.EVERYONE' | translate }}
                     </p>
@@ -59,7 +59,7 @@
                 #option
             >
                 <div class="adf-list-option-item">
-                    <adf-user-icon-column [node]="item" [selected]="option.selected"></adf-user-icon-column>
+                    <adf-user-icon-column [node]="item" [selected]="option.selected" />
                     <p class="adf-result-name">
                         <ng-container *ngIf="item.entry?.properties['cm:authorityDisplayName']; else authorityName">
                             {{ item.entry.properties['cm:authorityDisplayName'] }}

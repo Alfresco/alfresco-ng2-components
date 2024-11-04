@@ -1,14 +1,14 @@
 <div [ngSwitch]="type">
     <div *ngSwitchCase="'timer'">
-        <diagram-icon-timer [data]="data"></diagram-icon-timer>
+        <diagram-icon-timer [data]="data" />
     </div>
     <div *ngSwitchCase="'error'">
-        <diagram-icon-error [data]="data" [fillColor]="fillColor"></diagram-icon-error>
+        <diagram-icon-error [data]="data" [fillColor]="fillColor" />
     </div>
     <div *ngSwitchCase="'signal'">
-        <diagram-icon-signal [data]="data" [fillColor]="fillColor"></diagram-icon-signal>
+        <diagram-icon-signal [data]="data" [fillColor]="fillColor" />
     </div>
     <div *ngSwitchCase="'message'">
-        <diagram-icon-message [data]="data"></diagram-icon-message>
+        <diagram-icon-message [data]="data" />
     </div>
 </div>

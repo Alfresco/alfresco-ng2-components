@@ -1,7 +1,7 @@
 
-<ng-container *ngIf="isLoading(); then showLoadingTemplate; else showStartProcessTemplate"></ng-container>
+<ng-container *ngIf="isLoading(); then showLoadingTemplate; else showStartProcessTemplate" />
     <ng-template #showLoadingTemplate>
-        <mat-spinner class="adf-start-process-loading"></mat-spinner>
+        <mat-spinner class="adf-start-process-loading" />
     </ng-template>
 <ng-template #showStartProcessTemplate>
     <ng-container *ngIf="hasApplications() || hasProcessDefinitions() ; else showEmptyTemplate">
@@ -57,7 +57,7 @@
                                 </button>
                             </ng-container>
                             <ng-template #showProcessDefLoadingTemplate>
-                                <mat-spinner id="adf-select-process-spinner" [diameter]="20"></mat-spinner>
+                                <mat-spinner id="adf-select-process-spinner" [diameter]="20" />
                             </ng-template>
                         </div>
                     </mat-form-field>
@@ -104,19 +104,17 @@
                             <adf-empty-content
                                 class="adf-start-process-empty-template"
                                 [icon]="'assessment'"
-                                [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_START_FORM'  | translate">
-                            </adf-empty-content>
+                                [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_START_FORM'  | translate" />
                         </ng-template>
                     </ng-container>
                     <ng-template #emptyProcessDefTemplate>
                         <adf-empty-content class="adf-start-process-empty-template"
                             [icon]="'assessment'"
-                            [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEF_SELECTED'  | translate">
-                        </adf-empty-content>
+                            [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEF_SELECTED'  | translate" />
                     </ng-template>
                 </ng-container>
                 <ng-template #showStartFormLoadingTemplate>
-                    <mat-spinner class="adf-start-process-loading"></mat-spinner>
+                    <mat-spinner class="adf-start-process-loading" />
                 </ng-template>
             </div>
             <div class="adf-start-process-content-actions" *ngIf="!hasStartForm()">
@@ -145,7 +143,6 @@
         <ng-template #showEmptyTemplate>
             <adf-empty-content class="adf-start-process-empty-template"
                 [icon]="'assessment'"
-                [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate">
-            </adf-empty-content>
+                [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate" />
         </ng-template>
 </ng-template>

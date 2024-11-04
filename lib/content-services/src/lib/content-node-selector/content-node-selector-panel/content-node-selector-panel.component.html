@@ -34,8 +34,7 @@
         [hideMyFiles]="dropdownHideMyFiles"
         [siteList]="dropdownSiteList"
         [value]="startSiteGuid"
-        data-automation-id="content-node-selector-sites-combo">
-    </adf-sites-dropdown>
+        data-automation-id="content-node-selector-sites-combo" />
     <button *ngIf="hasCustomModels()"
         data-automation-id="adf-toggle-search-panel-button"
         mat-icon-button
@@ -44,7 +43,7 @@
         {{ 'SEARCH.SEARCH_HEADER.TITLE' | translate }}
     </button>
     <div class="adf-content-node-selector-search-panel-container">
-        <adf-search-panel *ngIf="searchPanelExpanded"></adf-search-panel>
+        <adf-search-panel *ngIf="searchPanelExpanded" />
         <div class="adf-content-node-selector-document-list-container">
     <adf-toolbar>
         <adf-toolbar-title>
@@ -59,9 +58,8 @@
                 [transform]="breadcrumbTransform"
                 [folderNode]="breadcrumbFolderNode"
                 [root]="breadcrumbFolderTitle"
-                data-automation-id="content-node-selector-content-breadcrumb">
-            </adf-dropdown-breadcrumb>
-            <ng-container *ngIf="showNodeCounter" [adf-node-counter]="getSelectedCount()"></ng-container>
+                data-automation-id="content-node-selector-content-breadcrumb" />
+            <ng-container *ngIf="showNodeCounter" [adf-node-counter]="getSelectedCount()" />
         </adf-toolbar-title>
     </adf-toolbar>
 
@@ -98,15 +96,15 @@
             </adf-custom-empty-content-template>
 
             <data-columns>
-                <data-column key="$thumbnail" type="image"></data-column>
+                <data-column key="$thumbnail" type="image" />
                 <data-column key="name" type="text" title="ADF-DOCUMENT-LIST.LAYOUT.NAME" class="adf-full-width adf-ellipsis-cell">
                     <ng-template let-context>
-                        <adf-name-location-cell [row]="context.row"></adf-name-location-cell>
+                        <adf-name-location-cell [row]="context.row" />
                     </ng-template>
                 </data-column>
-                <data-column key="modifiedAt" type="date" title="ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON" format="timeAgo" class="adf-content-selector-modified-cell"></data-column>
-                <data-column key="createdByUser.displayName" type="text" title="ADF-DOCUMENT-LIST.LAYOUT.CREATED_BY" class="adf-content-selector-modifier-cell"></data-column>
-                <data-column key="visibility" type="text" title="ADF-DOCUMENT-LIST.LAYOUT.STATUS" class="adf-content-selector-visibility-cell"></data-column>
+                <data-column key="modifiedAt" type="date" title="ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON" format="timeAgo" class="adf-content-selector-modified-cell" />
+                <data-column key="createdByUser.displayName" type="text" title="ADF-DOCUMENT-LIST.LAYOUT.CREATED_BY" class="adf-content-selector-modifier-cell" />
+                <data-column key="visibility" type="text" title="ADF-DOCUMENT-LIST.LAYOUT.STATUS" class="adf-content-selector-visibility-cell" />
             </data-columns>
 
         </adf-document-list>

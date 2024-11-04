@@ -6,16 +6,14 @@
 </header>
 
 <mat-dialog-content class="adf-login-dialog-content">
-    <adf-login-dialog-panel id="attach-file-login-panel" #adfLoginPanel *ngIf="!isLoggedIn()">
-    </adf-login-dialog-panel>
+    <adf-login-dialog-panel id="attach-file-login-panel" #adfLoginPanel *ngIf="!isLoggedIn()" />
     <adf-content-node-selector-panel *ngIf="isLoggedIn()"
                                      id="attach-file-content-node"
                                      [currentFolderId]="data?.currentFolderId"
                                      [isSelectionValid]="data?.isSelectionValid"
                                      [showFilesInResult]="data?.showFilesInResult"
                                      (select)="onSelect($event)"
-                                     (siteChange)="onSiteChange($event)">
-    </adf-content-node-selector-panel>
+                                     (siteChange)="onSiteChange($event)" />
 </mat-dialog-content>
 
 <mat-dialog-actions class="adf-login-dialog-actions" align="end">

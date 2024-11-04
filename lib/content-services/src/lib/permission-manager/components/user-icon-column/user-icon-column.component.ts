@@ -35,7 +35,7 @@ import { MatIconModule } from '@angular/material/icon';
             </ng-container>
         </div>
         <div class="adf-cell-value" *ngIf="isSelected">
-            <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected"></mat-icon>
+            <mat-icon class="adf-people-select-icon adf-datatable-selected" svgIcon="selected" />
         </div>
     `,
     styleUrls: ['./user-icon-column.component.scss'],

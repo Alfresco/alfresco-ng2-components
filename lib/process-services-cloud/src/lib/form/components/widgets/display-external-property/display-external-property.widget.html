@@ -33,6 +33,6 @@
         </mat-form-field>
 
         <ng-container *ngIf="!previewState">
-            <error-widget *ngIf="propertyLoadFailed" [required]="'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate"></error-widget>
+            <error-widget *ngIf="propertyLoadFailed" [required]="'FORM.FIELD.EXTERNAL_PROPERTY_LOAD_FAILED' | translate" />
         </ng-container>
 </div>

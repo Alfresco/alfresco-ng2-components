@@ -14,8 +14,7 @@
         aria-level="1"
         *ngIf="!hideSidenav"
       >
-        <adf-dynamic-component id="app.layout.header" [data]="{ layout }">
-        </adf-dynamic-component>
+        <adf-dynamic-component id="app.layout.header" [data]="{ layout }" />
       </div>
     </ng-template>
   </adf-sidenav-layout-header>
@@ -29,20 +28,18 @@
         <adf-dynamic-component
           id="app.layout.sidenav"
           [data]="{ layout, mode: layout.isMenuMinimized ? 'collapsed' : 'expanded'}"
-        >
-        </adf-dynamic-component>
+        />
       </div>
     </ng-template>
   </adf-sidenav-layout-navigation>
 
   <adf-sidenav-layout-content>
     <ng-template>
-      <router-outlet></router-outlet>
+      <router-outlet />
     </ng-template>
   </adf-sidenav-layout-content>
 </adf-sidenav-layout>
 
-<adf-dynamic-component id="app.shell.sibling">
-</adf-dynamic-component>
+<adf-dynamic-component id="app.shell.sibling" />
 
-<router-outlet name="viewer"></router-outlet>
+<router-outlet name="viewer" />

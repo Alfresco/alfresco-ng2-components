@@ -6,7 +6,7 @@
         [attr.data-automation-id]="filter.name + '_filter'"
         mat-button
         class="adf-filter-action-button adf-full-width">
-        <adf-icon data-automation-id="adf-filter-icon" *ngIf="showIcon" [value]="getFilterIcon(filter.icon)"></adf-icon>
+        <adf-icon data-automation-id="adf-filter-icon" *ngIf="showIcon" [value]="getFilterIcon(filter.icon)" />
         <span data-automation-id="adf-filter-label" class="adf-filter-action-button__label">{{ filter.name | translate }}</span>
     </button>
 </div>

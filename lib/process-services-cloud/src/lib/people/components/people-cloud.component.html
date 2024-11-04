@@ -64,8 +64,7 @@
     </mat-form-field>
     <mat-progress-bar
         *ngIf="validationLoading"
-        mode="indeterminate">
-    </mat-progress-bar>
+        mode="indeterminate" />
 
     <div class="adf-error-container" *ngIf="showErrors">
         <mat-error *ngIf="hasPreselectError() && !isValidationLoading()" [@transitionMessages]="subscriptAnimationState" class="adf-error">

@@ -12,7 +12,7 @@
         {{ field.name | translate }}
         <span class="adf-asterisk" *ngIf="isRequired()">*</span>
     </mat-checkbox>
-    <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget [error]="field.validationSummary" />
     <error-widget *ngIf="isInvalidFieldRequired() && isTouched()"
-                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+                  required="{{ 'FORM.FIELD.REQUIRED' | translate }}" />
 </div>

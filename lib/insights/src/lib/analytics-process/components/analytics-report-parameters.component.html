@@ -61,22 +61,19 @@
                                 [group]="processInstanceGroup"
                                 [controllerName]="'slowProcessInstanceInteger'"
                                 [required]="true"
-                            >
-                            </analytics-number-widget>
+                            />
                         </div>
                         <div *ngSwitchCase="'duration'">
                             <br />
-                            <duration-widget [field]="field" [group]="durationGroup" [controllerName]="'duration'"> </duration-widget>
+                            <duration-widget [field]="field" [group]="durationGroup" [controllerName]="'duration'" />
                         </div>
                         <div *ngSwitchCase="'boolean'">
                             <br />
-                            <analytics-checkbox-widget [field]="field" [group]="typeFilteringGroup" [controllerName]="'typeFiltering'">
-                            </analytics-checkbox-widget>
+                            <analytics-checkbox-widget [field]="field" [group]="typeFilteringGroup" [controllerName]="'typeFiltering'" />
                         </div>
                         <div *ngSwitchCase="'status'">
                             <br />
-                            <analytics-dropdown-widget [field]="field" [group]="statusGroup" [controllerName]="'status'" [required]="true">
-                            </analytics-dropdown-widget>
+                            <analytics-dropdown-widget [field]="field" [group]="statusGroup" [controllerName]="'status'" [required]="true" />
                         </div>
                         <div *ngSwitchCase="'processDefinition'">
                             <br />
@@ -86,17 +83,15 @@
                                 [controllerName]="'processDefinitionId'"
                                 [required]="true"
                                 (fieldChanged)="onProcessDefinitionChanges(field)"
-                            >
-                            </analytics-dropdown-widget>
+                            />
                         </div>
                         <div *ngSwitchCase="'task'">
                             <br />
-                            <analytics-dropdown-widget [field]="field" [group]="taskGroup" [controllerName]="'taskName'" [required]="true">
-                            </analytics-dropdown-widget>
+                            <analytics-dropdown-widget [field]="field" [group]="taskGroup" [controllerName]="'taskName'" [required]="true" />
                         </div>
                         <div *ngSwitchCase="'dateRange'">
                             <br />
-                            <adf-date-range-widget [field]="field" [group]="dateRange"> </adf-date-range-widget>
+                            <adf-date-range-widget [field]="field" [group]="dateRange" />
                         </div>
                         <div *ngSwitchCase="'dateInterval'">
                             <br />
@@ -106,8 +101,7 @@
                                 [controllerName]="'dateRangeInterval'"
                                 [required]="true"
                                 [showDefaultOption]="false"
-                            >
-                            </analytics-dropdown-widget>
+                            />
                         </div>
                         <div *ngSwitchDefault>
                             <span>{{ 'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate }}: {{ field.type }}</span>
