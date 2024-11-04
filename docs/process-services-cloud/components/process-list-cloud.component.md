@@ -80,6 +80,10 @@ when the process list is empty:
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 | suspendedFrom | `string` | "" | Filter the processes. Display only process with suspendedFrom equal to the supplied date. |
 | suspendedTo | `string` | "" | Filter the processes. Display only process with suspendedTo equal to the supplied date. |
+| names | `string[]` | [] | Filter the processes. Display only processes with names matching any of the supplied strings. This input will be used only if `PROCESS_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+initiators | `string[]` | [] | Filter the processes. Display only processes started by any of the users whose usernames are present in the array. This input will be used only if `PROCESS_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| appVersions | `string[]` | [] | Filter the processes. Display only processes present in any of the specified app versions. This input will be used only if `PROCESS_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
+| statuses | `string[]` | [] | Filter the processes. Display only processes with provided statuses. This input will be used only if `PROCESS_SEARCH_API_METHOD_TOKEN` is provided with `POST` value. |
 
 ### Events
 

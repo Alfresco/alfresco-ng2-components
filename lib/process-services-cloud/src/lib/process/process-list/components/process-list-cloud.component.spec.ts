@@ -35,7 +35,7 @@ import { of } from 'rxjs';
 import { shareReplay, skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN } from '../../../services/cloud-token.service';
+import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -76,9 +76,10 @@ describe('ProcessListCloudComponent', () => {
     const fakeCustomSchemaName = 'fakeCustomSchema';
     const schemaWithVariable = 'schemaWithVariableId';
 
-    beforeEach(() => {
+    const configureTestingModule = (providers: any[]) => {
         TestBed.configureTestingModule({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [ProcessServiceCloudTestingModule],
+            providers: providers
         });
         appConfig = TestBed.inject(AppConfigService);
         processListCloudService = TestBed.inject(ProcessListCloudService);
@@ -119,467 +120,763 @@ describe('ProcessListCloudComponent', () => {
 
         component.isColumnSchemaCreated$ = of(true).pipe(shareReplay(1));
         loader = TestbedHarnessEnvironment.loader(fixture);
-    });
+    };
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should use the default schemaColumn', () => {
-        appConfig.config = Object.assign(appConfig.config, { 'adf-cloud-process-list': processListSchemaMock });
-        fixture.detectChanges();
-
-        expect(component.columns).toBeDefined();
-        expect(component.columns.length).toEqual(10);
-    });
-
-    it('should display empty content when process list is empty', async () => {
-        const emptyList = { list: { entries: [] } };
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
-
-        fixture.detectChanges();
-        expect(component.isLoading).toBe(true);
-
-        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
-
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.ngOnChanges({ appName });
-        fixture.detectChanges();
-
-        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
-
-        const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
-        expect(emptyContent.nativeElement).toBeDefined();
-    });
-
-    it('should load spinner and show the content', async () => {
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-
-        fixture.detectChanges();
-        expect(component.isLoading).toBe(true);
-
-        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
-
-        component.ngOnChanges({ appName });
-        fixture.detectChanges();
-
-        expect(component.isLoading).toBe(false);
-        expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
-
-        const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
-        expect(emptyContent).toBeFalsy();
-
-        expect(component.rows.length).toEqual(3);
-    });
-
-    it('should the payload contain the appVersion if it is defined', () => {
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        component.appVersion = 1;
-        component.ngAfterContentInit();
-        component.reload();
-
-        expect(component.requestNode.appVersion).toEqual('1');
-    });
-
-    it('should the payload contain all the app versions joined by a comma separator', () => {
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        component.appVersion = [1, 2, 3];
-        component.ngAfterContentInit();
-        component.reload();
-
-        expect(component.requestNode.appVersion).toEqual('1,2,3');
-    });
-
-    it('should the payload NOT contain any app version when appVersion does not have a value', () => {
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        component.appVersion = undefined;
-        component.ngAfterContentInit();
-        component.reload();
-
-        expect(component.requestNode.appVersion).toEqual('');
-    });
-
-    it('should use the custom schemaColumn from app.config.json', () => {
-        component.presetColumn = fakeCustomSchemaName;
-        component.ngAfterContentInit();
-        fixture.detectChanges();
-        expect(component.columns).toEqual(fakeCustomSchema);
-    });
-
-    it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
-        component.presetColumn = fakeCustomSchemaName;
-        fixture.detectChanges();
-        expect(component.columns).toBeDefined();
-        expect(component.columns.length).toEqual(2);
-    });
-
-    it('should return the results if an application name is given', (done) => {
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.rows).toBeDefined();
-            expect(component.rows.length).toEqual(3);
-            expect(component.rows[0].entry['appName']).toBe('easy-peasy-japanesey');
-            expect(component.rows[0].entry['appVersion']).toBe(1);
-            expect(component.rows[0].entry['id']).toBe('69eddfa7-d781-11e8-ae24-0a58646001fa');
-            expect(component.rows[0].entry['name']).toEqual('starring');
-            expect(component.rows[0].entry['processDefinitionId']).toBe('BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa');
-            expect(component.rows[0].entry['processDefinitionKey']).toBe('BasicProcess');
-            expect(component.rows[0].entry['initiator']).toBe('devopsuser');
-            expect(component.rows[0].entry['startDate']).toBe(1540381146275);
-            expect(component.rows[0].entry['businessKey']).toBe('MyBusinessKey');
-            expect(component.rows[0].entry['status']).toBe('RUNNING');
-            expect(component.rows[0].entry['lastModified']).toBe(1540381146276);
-            expect(component.rows[0].entry['lastModifiedTo']).toBeNull();
-            expect(component.rows[0].entry['lastModifiedFrom']).toBeNull();
-
-            done();
-        });
-        component.appName = appName.currentValue;
-        component.ngAfterContentInit();
-        component.ngOnChanges({ appName });
-        fixture.detectChanges();
-    });
-
-    it('should not shown columns selector by default', () => {
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.ngOnChanges({ appName });
-
-        fixture.detectChanges();
-
-        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
-        expect(mainMenuButton).toBeFalsy();
-    });
-
-    it('should shown columns selector', () => {
-        component.showMainDatatableActions = true;
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.ngAfterContentInit();
-        component.ngOnChanges({ appName });
-
-        fixture.detectChanges();
-
-        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
-        expect(mainMenuButton).toBeTruthy();
-    });
-
-    it('should hide columns on applying new columns visibility through columns selector', () => {
-        component.showMainDatatableActions = true;
-        fixture.detectChanges();
-
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-
-        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.ngOnChanges({ appName });
-
-        fixture.detectChanges();
-
-        const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
-        mainMenuButton.triggerEventHandler('click', {});
-        fixture.detectChanges();
-
-        const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
-        expect(columnSelectorMenu).toBeTruthy();
-
-        const newColumns = (component.columns as DataColumn[]).map((column, index) => ({
-            ...column,
-            isHidden: index !== 0 // only first one is shown
-        }));
-
-        const columnsSelectorInstance = columnSelectorMenu.componentInstance as ColumnsSelectorComponent;
-        expect(columnsSelectorInstance.columns).toBe(component.columns, 'should use columns as input');
-
-        columnSelectorMenu.triggerEventHandler('submitColumnsVisibility', newColumns);
-        fixture.detectChanges();
-
-        const displayedColumns = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
-        expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
-    });
-
-    it('should NOT request process variable if columns for process variables are not displayed', () => {
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        spyOn(preferencesService, 'getPreferences').and.returnValue(
-            of({
-                list: {
-                    entries: []
-                }
-            })
-        );
-
-        component.ngAfterContentInit();
-        component.reload();
-
-        expect(component.requestNode.variableKeys).not.toBeDefined();
-    });
-
-    it('should request process variable if column for process variable is displayed', () => {
-        component.presetColumn = schemaWithVariable;
-
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        spyOn(preferencesService, 'getPreferences').and.returnValue(
-            of({
-                list: {
-                    entries: [
-                        {
-                            entry: {
-                                key: ProcessListCloudPreferences.columnsVisibility,
-                                value: '{"variableColumnId":"id", "2":true}'
-                            }
-                        }
-                    ]
-                }
-            })
-        );
-
-        component.ngAfterContentInit();
-        component.reload();
-
-        expect(component.requestNode.variableKeys).toEqual(['processKey/variableName']);
-    });
-
-    it('should reload tasks when reload() is called', (done) => {
-        component.appName = 'fake';
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.rows).toBeDefined();
-            done();
-        });
-        fixture.detectChanges();
-        component.reload();
-    });
-
-    it('should emit row click event', (done) => {
-        const row = new ObjectDataRow({ id: '999' });
-        const rowEvent = new DataRowEvent(row, null);
-        component.rowClick.subscribe((taskId) => {
-            expect(taskId).toEqual('999');
-            expect(component.getCurrentId()).toEqual('999');
-            done();
-        });
-        component.onRowClick(rowEvent);
-    });
-
-    it('should re-create columns when a column width gets changed', () => {
-        component.isResizingEnabled = true;
-        spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-
-        component.reload();
-        fixture.detectChanges();
-
-        const newColumns = [...component.columns];
-        newColumns[0].width = 120;
-        component.onColumnsWidthChanged(newColumns);
-
-        expect(component.columns[0].width).toBe(120);
-    });
-
-    it('should update columns widths when a column width gets changed', () => {
-        spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
-        component.appName = 'fake-app-name';
-        component.reload();
-        fixture.detectChanges();
-
-        const newColumns = [...component.columns];
-        newColumns[0].width = 120;
-        component.onColumnsWidthChanged(newColumns);
-
-        expect(component.columns[0].width).toBe(120);
-        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
-            id: 120
-        });
-    });
-
-    it('should update columns widths while preserving previously saved widths when a column width gets changed', () => {
-        spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
-        component.appName = 'fake-app-name';
-        component.reload();
-        fixture.detectChanges();
-
-        const newColumns = [...component.columns];
-        newColumns[0].width = 120;
-        component.onColumnsWidthChanged(newColumns);
-
-        expect(component.columns[0].width).toBe(120);
-        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
-            id: 120
-        });
-
-        newColumns[1].width = 150;
-        component.onColumnsWidthChanged(newColumns);
-
-        expect(component.columns[0].width).toBe(120);
-        expect(component.columns[1].width).toBe(150);
-        expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
-            id: 120,
-            startDate: 150
-        });
-    });
-
-    it('should re-create columns when a column order gets changed', () => {
-        component.reload();
-        fixture.detectChanges();
-
-        expect(component.columns[0].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME');
-        expect(component.columns[1].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE');
-
-        component.onColumnOrderChanged([component.columns[1], ...component.columns]);
-        fixture.detectChanges();
-
-        expect(component.columns[0].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE');
-        expect(component.columns[1].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME');
-    });
-
-    it('should create datatable schema when a column visibility gets changed', () => {
-        component.ngAfterContentInit();
-        spyOn(component, 'createDatatableSchema');
-
-        component.onColumnsVisibilityChange(component.columns);
-
-        fixture.detectChanges();
-
-        expect(component.createDatatableSchema).toHaveBeenCalled();
-    });
-
-    it('should call endpoint when a column visibility gets changed', () => {
-        spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
-        spyOn(processListCloudService, 'getProcessByRequest');
-        component.ngAfterContentInit();
-        spyOn(component, 'createDatatableSchema');
-        component.appName = 'fake-app-name';
-        component.reload();
-        fixture.detectChanges();
-
-        component.onColumnsVisibilityChange(component.columns);
-
-        fixture.detectChanges();
-
-        expect(processListCloudService.getProcessByRequest).toHaveBeenCalledTimes(1);
-    });
-
-    describe('component changes', () => {
+    describe('PROCESS_SEARCH_API_METHOD_TOKEN injected with GET value', () => {
         beforeEach(() => {
-            component.rows = fakeProcessCloudList.list.entries;
-            fixture.detectChanges();
+            configureTestingModule([{ provide: PROCESS_SEARCH_API_METHOD_TOKEN, useValue: 'GET' }]);
         });
 
-        it('should reload the process list when input parameters changed', () => {
-            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.appName = 'mock-app-name';
-            component.status = 'mock-status';
-            component.initiator = 'mock-initiator';
-            const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
-            const statusChange = new SimpleChange(undefined, 'mock-status', true);
-            const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
-
-            component.ngOnChanges({
-                appName: appNameChange,
-                assignee: initiatorChange,
-                status: statusChange
-            });
-            fixture.detectChanges();
-            expect(component.isListEmpty()).toBeFalsy();
-            expect(getProcessByRequestSpy).toHaveBeenCalled();
-        });
-
-        it('should set formattedSorting if sorting input changes', () => {
+        it('should load spinner and show the content', async () => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            spyOn(component, 'formatSorting').and.callThrough();
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-            component.appName = 'mock-app-name';
-            const mockSort = [
-                new ProcessListCloudSortingModel({
-                    orderBy: 'startDate',
-                    direction: 'DESC'
-                })
-            ];
-            const sortChange = new SimpleChange(undefined, mockSort, true);
-            component.ngOnChanges({
-                sorting: sortChange
-            });
             fixture.detectChanges();
-            expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
-            expect(component.formattedSorting).toEqual(['startDate', 'desc']);
+            expect(component.isLoading).toBe(true);
+
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
+
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            expect(component.isLoading).toBe(false);
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
+
+            const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+            expect(emptyContent).toBeFalsy();
+
+            expect(component.rows.length).toEqual(3);
         });
 
-        it('should reload process list when sorting on a column changes', () => {
-            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.onSortingChanged(
-                new CustomEvent('sorting-changed', {
-                    detail: {
-                        key: 'fakeName',
-                        direction: 'asc'
-                    },
-                    bubbles: true
+        it('should the payload contain the appVersion if it is defined', () => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.appVersion = 1;
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.requestNode.appVersion).toEqual('1');
+        });
+
+        it('should the payload contain all the app versions joined by a comma separator', () => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.appVersion = [1, 2, 3];
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.requestNode.appVersion).toEqual('1,2,3');
+        });
+
+        it('should the payload NOT contain any app version when appVersion does not have a value', () => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.appVersion = undefined;
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.requestNode.appVersion).toEqual('');
+        });
+
+        it('should return the results if an application name is given', (done) => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.rows).toBeDefined();
+                expect(component.rows.length).toEqual(3);
+                expect(component.rows[0].entry['appName']).toBe('easy-peasy-japanesey');
+                expect(component.rows[0].entry['appVersion']).toBe(1);
+                expect(component.rows[0].entry['id']).toBe('69eddfa7-d781-11e8-ae24-0a58646001fa');
+                expect(component.rows[0].entry['name']).toEqual('starring');
+                expect(component.rows[0].entry['processDefinitionId']).toBe('BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa');
+                expect(component.rows[0].entry['processDefinitionKey']).toBe('BasicProcess');
+                expect(component.rows[0].entry['initiator']).toBe('devopsuser');
+                expect(component.rows[0].entry['startDate']).toBe(1540381146275);
+                expect(component.rows[0].entry['businessKey']).toBe('MyBusinessKey');
+                expect(component.rows[0].entry['status']).toBe('RUNNING');
+                expect(component.rows[0].entry['lastModified']).toBe(1540381146276);
+                expect(component.rows[0].entry['lastModifiedTo']).toBeNull();
+                expect(component.rows[0].entry['lastModifiedFrom']).toBeNull();
+
+                done();
+            });
+            component.appName = appName.currentValue;
+            component.ngAfterContentInit();
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+        });
+
+        it('should shown columns selector', () => {
+            component.showMainDatatableActions = true;
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngAfterContentInit();
+            component.ngOnChanges({ appName });
+
+            fixture.detectChanges();
+
+            const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+            expect(mainMenuButton).toBeTruthy();
+        });
+
+        it('should hide columns on applying new columns visibility through columns selector', () => {
+            component.showMainDatatableActions = true;
+            fixture.detectChanges();
+
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+
+            fixture.detectChanges();
+
+            const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+            mainMenuButton.triggerEventHandler('click', {});
+            fixture.detectChanges();
+
+            const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
+            expect(columnSelectorMenu).toBeTruthy();
+
+            const newColumns = (component.columns as DataColumn[]).map((column, index) => ({
+                ...column,
+                isHidden: index !== 0 // only first one is shown
+            }));
+
+            const columnsSelectorInstance = columnSelectorMenu.componentInstance as ColumnsSelectorComponent;
+            expect(columnsSelectorInstance.columns).toBe(component.columns, 'should use columns as input');
+
+            columnSelectorMenu.triggerEventHandler('submitColumnsVisibility', newColumns);
+            fixture.detectChanges();
+
+            const displayedColumns = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+            expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
+        });
+
+        it('should NOT request process variable if columns for process variables are not displayed', () => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            spyOn(preferencesService, 'getPreferences').and.returnValue(
+                of({
+                    list: {
+                        entries: []
+                    }
                 })
             );
-            fixture.detectChanges();
-            expect(component.sorting).toEqual([
-                new ProcessListCloudSortingModel({
-                    orderBy: 'fakeName',
-                    direction: 'ASC'
+
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.requestNode.variableKeys).not.toBeDefined();
+        });
+
+        it('should request process variable if column for process variable is displayed', () => {
+            component.presetColumn = schemaWithVariable;
+
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            spyOn(preferencesService, 'getPreferences').and.returnValue(
+                of({
+                    list: {
+                        entries: [
+                            {
+                                entry: {
+                                    key: ProcessListCloudPreferences.columnsVisibility,
+                                    value: '{"variableColumnId":"id", "2":true}'
+                                }
+                            }
+                        ]
+                    }
                 })
-            ]);
-            expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
-            expect(component.isListEmpty()).toBeFalsy();
-            expect(getProcessByRequestSpy).toHaveBeenCalled();
+            );
+
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.requestNode.variableKeys).toEqual(['processKey/variableName']);
         });
 
-        it('should reset pagination when resetPaginationValues is called', (done) => {
+        it('should reload tasks when reload() is called', (done) => {
+            component.appName = 'fake';
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.rows).toBeDefined();
+                done();
+            });
+            fixture.detectChanges();
+            component.reload();
+        });
+
+        it('should call endpoint when a column visibility gets changed', () => {
+            spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+            spyOn(processListCloudService, 'getProcessByRequest');
+            component.ngAfterContentInit();
+            spyOn(component, 'createDatatableSchema');
+            component.appName = 'fake-app-name';
+            component.reload();
+            fixture.detectChanges();
+
+            component.onColumnsVisibilityChange(component.columns);
+
+            fixture.detectChanges();
+
+            expect(processListCloudService.getProcessByRequest).toHaveBeenCalledTimes(1);
+        });
+
+        describe('component changes', () => {
+            beforeEach(() => {
+                component.rows = fakeProcessCloudList.list.entries;
+                fixture.detectChanges();
+            });
+
+            it('should reload the process list when input parameters changed', () => {
+                const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                component.appName = 'mock-app-name';
+                component.status = 'mock-status';
+                component.initiator = 'mock-initiator';
+                const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
+                const statusChange = new SimpleChange(undefined, 'mock-status', true);
+                const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
+
+                component.ngOnChanges({
+                    appName: appNameChange,
+                    assignee: initiatorChange,
+                    status: statusChange
+                });
+                fixture.detectChanges();
+                expect(component.isListEmpty()).toBeFalsy();
+                expect(getProcessByRequestSpy).toHaveBeenCalled();
+            });
+
+            it('should reload process list when sorting on a column changes', () => {
+                const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                component.onSortingChanged(
+                    new CustomEvent('sorting-changed', {
+                        detail: {
+                            key: 'fakeName',
+                            direction: 'asc'
+                        },
+                        bubbles: true
+                    })
+                );
+                fixture.detectChanges();
+                expect(component.sorting).toEqual([
+                    new ProcessListCloudSortingModel({
+                        orderBy: 'fakeName',
+                        direction: 'ASC'
+                    })
+                ]);
+                expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
+                expect(component.isListEmpty()).toBeFalsy();
+                expect(getProcessByRequestSpy).toHaveBeenCalled();
+            });
+
+            it('should reset pagination when resetPaginationValues is called', (done) => {
+                spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+                const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+                component.ngOnChanges({ appName });
+                fixture.detectChanges();
+
+                const size = component.size;
+                const skipCount = component.skipCount;
+                component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(size);
+                    expect(component.skipCount).toBe(skipCount);
+                    expect(updatedPagination.maxItems).toEqual(size);
+                    expect(updatedPagination.skipCount).toEqual(skipCount);
+                    done();
+                });
+
+                const pagination = {
+                    maxItems: 250,
+                    skipCount: 200
+                };
+                component.updatePagination(pagination);
+                fixture.whenStable().then(() => {
+                    component.resetPagination();
+                });
+            });
+        });
+    });
+
+    describe('PROCESS_SEARCH_API_METHOD_TOKEN injected with POST value', () => {
+        beforeEach(() => {
+            configureTestingModule([{ provide: PROCESS_SEARCH_API_METHOD_TOKEN, useValue: 'POST' }]);
+            component.appName = 'fake-app-name';
+        });
+
+        it('should load spinner and show the content', async () => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+
+            fixture.detectChanges();
+            expect(component.isLoading).toBe(true);
+
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
+
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            expect(component.isLoading).toBe(false);
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
+
+            const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+            expect(emptyContent).toBeFalsy();
+
+            expect(component.rows.length).toEqual(3);
+        });
+
+        it('should the payload contain the appVersion if it is defined', () => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            component.appVersions = ['1'];
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.processListRequestNode.appVersion).toEqual(['1']);
+        });
+
+        it('should the payload contain all the app versions', () => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            component.appVersions = ['1', '2', '3'];
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.processListRequestNode.appVersion).toEqual(['1', '2', '3']);
+        });
+
+        it('should the payload NOT contain any app version when appVersion does not have a value', () => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            component.appVersion = undefined;
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.processListRequestNode.appVersion.length).toEqual(0);
+        });
+
+        it('should return the results if an application name is given', (done) => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.rows).toBeDefined();
+                expect(component.rows.length).toEqual(3);
+                expect(component.rows[0].entry['appName']).toBe('easy-peasy-japanesey');
+                expect(component.rows[0].entry['appVersion']).toBe(1);
+                expect(component.rows[0].entry['id']).toBe('69eddfa7-d781-11e8-ae24-0a58646001fa');
+                expect(component.rows[0].entry['name']).toEqual('starring');
+                expect(component.rows[0].entry['processDefinitionId']).toBe('BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa');
+                expect(component.rows[0].entry['processDefinitionKey']).toBe('BasicProcess');
+                expect(component.rows[0].entry['initiator']).toBe('devopsuser');
+                expect(component.rows[0].entry['startDate']).toBe(1540381146275);
+                expect(component.rows[0].entry['businessKey']).toBe('MyBusinessKey');
+                expect(component.rows[0].entry['status']).toBe('RUNNING');
+                expect(component.rows[0].entry['lastModified']).toBe(1540381146276);
+                expect(component.rows[0].entry['lastModifiedTo']).toBeNull();
+                expect(component.rows[0].entry['lastModifiedFrom']).toBeNull();
+
+                done();
+            });
+            component.appName = appName.currentValue;
+            component.ngAfterContentInit();
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+        });
+
+        it('should shown columns selector', () => {
+            component.showMainDatatableActions = true;
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngAfterContentInit();
+            component.ngOnChanges({ appName });
+
+            fixture.detectChanges();
+
+            const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+            expect(mainMenuButton).toBeTruthy();
+        });
+
+        it('should hide columns on applying new columns visibility through columns selector', () => {
+            component.showMainDatatableActions = true;
+            fixture.detectChanges();
+
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+
+            fixture.detectChanges();
+
+            const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+            mainMenuButton.triggerEventHandler('click', {});
+            fixture.detectChanges();
+
+            const columnSelectorMenu = fixture.debugElement.query(By.css('adf-datatable-column-selector'));
+            expect(columnSelectorMenu).toBeTruthy();
+
+            const newColumns = (component.columns as DataColumn[]).map((column, index) => ({
+                ...column,
+                isHidden: index !== 0 // only first one is shown
+            }));
+
+            const columnsSelectorInstance = columnSelectorMenu.componentInstance as ColumnsSelectorComponent;
+            expect(columnsSelectorInstance.columns).toBe(component.columns, 'should use columns as input');
+
+            columnSelectorMenu.triggerEventHandler('submitColumnsVisibility', newColumns);
+            fixture.detectChanges();
+
+            const displayedColumns = fixture.debugElement.queryAll(By.css('.adf-datatable-cell-header'));
+            expect(displayedColumns.length).toBe(2, 'only column with isHidden set to false and action column should be shown');
+        });
+
+        it('should NOT request process variable if columns for process variables are not displayed', () => {
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            spyOn(preferencesService, 'getPreferences').and.returnValue(
+                of({
+                    list: {
+                        entries: []
+                    }
+                })
+            );
+
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.processListRequestNode.variableKeys).not.toBeDefined();
+        });
+
+        it('should request process variable if column for process variable is displayed', () => {
+            component.presetColumn = schemaWithVariable;
+
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            spyOn(preferencesService, 'getPreferences').and.returnValue(
+                of({
+                    list: {
+                        entries: [
+                            {
+                                entry: {
+                                    key: ProcessListCloudPreferences.columnsVisibility,
+                                    value: '{"variableColumnId":"id", "2":true}'
+                                }
+                            }
+                        ]
+                    }
+                })
+            );
+
+            component.ngAfterContentInit();
+            component.reload();
+
+            expect(component.processListRequestNode.variableKeys).toEqual(['processKey/variableName']);
+        });
+
+        it('should reload tasks when reload() is called', (done) => {
+            component.appName = 'fake';
+            spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+            component.success.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.rows).toBeDefined();
+                done();
+            });
+            fixture.detectChanges();
+            component.reload();
+        });
+
+        it('should call endpoint when a column visibility gets changed', () => {
+            spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+            spyOn(processListCloudService, 'fetchProcessList');
+            component.ngAfterContentInit();
+            spyOn(component, 'createDatatableSchema');
+            component.appName = 'fake-app-name';
+            component.reload();
+            fixture.detectChanges();
+
+            component.onColumnsVisibilityChange(component.columns);
+
+            fixture.detectChanges();
+
+            expect(processListCloudService.fetchProcessList).toHaveBeenCalledTimes(1);
+        });
+
+        describe('component changes', () => {
+            beforeEach(() => {
+                component.rows = fakeProcessCloudList.list.entries;
+                fixture.detectChanges();
+            });
+
+            it('should reload the process list when input parameters changed', () => {
+                const fetchProcessListSpy = spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.appName = 'mock-app-name';
+                component.status = 'mock-status';
+                component.initiator = 'mock-initiator';
+                const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
+                const statusChange = new SimpleChange(undefined, 'mock-status', true);
+                const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
+
+                component.ngOnChanges({
+                    appName: appNameChange,
+                    assignee: initiatorChange,
+                    status: statusChange
+                });
+                fixture.detectChanges();
+                expect(component.isListEmpty()).toBeFalsy();
+                expect(fetchProcessListSpy).toHaveBeenCalled();
+            });
+
+            it('should reload process list when sorting on a column changes', () => {
+                const fetchProcessListSpy = spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+                component.onSortingChanged(
+                    new CustomEvent('sorting-changed', {
+                        detail: {
+                            key: 'fakeName',
+                            direction: 'asc'
+                        },
+                        bubbles: true
+                    })
+                );
+                fixture.detectChanges();
+                expect(component.sorting).toEqual([
+                    new ProcessListCloudSortingModel({
+                        orderBy: 'fakeName',
+                        direction: 'ASC'
+                    })
+                ]);
+                expect(component.formattedSorting).toEqual(['fakeName', 'asc']);
+                expect(component.isListEmpty()).toBeFalsy();
+                expect(fetchProcessListSpy).toHaveBeenCalled();
+            });
+
+            it('should reset pagination when resetPaginationValues is called', (done) => {
+                spyOn(processListCloudService, 'fetchProcessList').and.returnValue(of(fakeProcessCloudList));
+
+                const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+                component.ngOnChanges({ appName });
+                fixture.detectChanges();
+
+                const size = component.size;
+                const skipCount = component.skipCount;
+                component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(size);
+                    expect(component.skipCount).toBe(skipCount);
+                    expect(updatedPagination.maxItems).toEqual(size);
+                    expect(updatedPagination.skipCount).toEqual(skipCount);
+                    done();
+                });
+
+                const pagination = {
+                    maxItems: 250,
+                    skipCount: 200
+                };
+                component.updatePagination(pagination);
+                fixture.whenStable().then(() => {
+                    component.resetPagination();
+                });
+            });
+        });
+    });
+
+    describe('API agnostic', () => {
+        beforeEach(() => {
+            configureTestingModule([]);
+        });
+
+        it('should use the default schemaColumn', () => {
+            appConfig.config = Object.assign(appConfig.config, { 'adf-cloud-process-list': processListSchemaMock });
+            fixture.detectChanges();
+
+            expect(component.columns).toBeDefined();
+            expect(component.columns.length).toEqual(10);
+        });
+
+        it('should display empty content when process list is empty', async () => {
+            const emptyList = { list: { entries: [] } };
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(emptyList));
+
+            fixture.detectChanges();
+            expect(component.isLoading).toBe(true);
+
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(true);
 
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             component.ngOnChanges({ appName });
             fixture.detectChanges();
 
-            const size = component.size;
-            const skipCount = component.skipCount;
-            component.pagination.pipe(skip(3)).subscribe((updatedPagination) => {
-                fixture.detectChanges();
-                expect(component.size).toBe(size);
-                expect(component.skipCount).toBe(skipCount);
-                expect(updatedPagination.maxItems).toEqual(size);
-                expect(updatedPagination.skipCount).toEqual(skipCount);
+            expect(await loader.hasHarness(MatProgressSpinnerHarness)).toBe(false);
+
+            const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+            expect(emptyContent.nativeElement).toBeDefined();
+        });
+
+        it('should use the custom schemaColumn from app.config.json', () => {
+            component.presetColumn = fakeCustomSchemaName;
+            component.ngAfterContentInit();
+            fixture.detectChanges();
+            expect(component.columns).toEqual(fakeCustomSchema);
+        });
+
+        it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
+            component.presetColumn = fakeCustomSchemaName;
+            fixture.detectChanges();
+            expect(component.columns).toBeDefined();
+            expect(component.columns.length).toEqual(2);
+        });
+
+        it('should not shown columns selector by default', () => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+
+            fixture.detectChanges();
+
+            const mainMenuButton = fixture.debugElement.query(By.css('[data-automation-id="adf-datatable-main-menu-button"]'));
+            expect(mainMenuButton).toBeFalsy();
+        });
+
+        it('should emit row click event', (done) => {
+            const row = new ObjectDataRow({ id: '999' });
+            const rowEvent = new DataRowEvent(row, null);
+            component.rowClick.subscribe((taskId) => {
+                expect(taskId).toEqual('999');
+                expect(component.getCurrentId()).toEqual('999');
                 done();
             });
+            component.onRowClick(rowEvent);
+        });
 
-            const pagination = {
-                maxItems: 250,
-                skipCount: 200
-            };
-            component.updatePagination(pagination);
-            fixture.whenStable().then(() => {
-                component.resetPagination();
+        it('should re-create columns when a column width gets changed', () => {
+            component.isResizingEnabled = true;
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+            component.reload();
+            fixture.detectChanges();
+
+            const newColumns = [...component.columns];
+            newColumns[0].width = 120;
+            component.onColumnsWidthChanged(newColumns);
+
+            expect(component.columns[0].width).toBe(120);
+        });
+
+        it('should update columns widths when a column width gets changed', () => {
+            spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+            component.appName = 'fake-app-name';
+            component.reload();
+            fixture.detectChanges();
+
+            const newColumns = [...component.columns];
+            newColumns[0].width = 120;
+            component.onColumnsWidthChanged(newColumns);
+
+            expect(component.columns[0].width).toBe(120);
+            expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
+                id: 120
             });
         });
 
-        it('should set pagination and reload when updatePagination is called', (done) => {
-            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            spyOn(component, 'reload').and.stub();
-            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-            component.ngOnChanges({ appName });
+        it('should update columns widths while preserving previously saved widths when a column width gets changed', () => {
+            spyOn(preferencesService, 'updatePreference').and.returnValue(of({}));
+            component.appName = 'fake-app-name';
+            component.reload();
             fixture.detectChanges();
 
-            const pagination = {
-                maxItems: 250,
-                skipCount: 200
-            };
-            component.pagination.pipe(skip(1)).subscribe((updatedPagination) => {
-                fixture.detectChanges();
-                expect(component.size).toBe(pagination.maxItems);
-                expect(component.skipCount).toBe(pagination.skipCount);
-                expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
-                expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
-                done();
+            const newColumns = [...component.columns];
+            newColumns[0].width = 120;
+            component.onColumnsWidthChanged(newColumns);
+
+            expect(component.columns[0].width).toBe(120);
+            expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
+                id: 120
             });
 
-            component.updatePagination(pagination);
+            newColumns[1].width = 150;
+            component.onColumnsWidthChanged(newColumns);
+
+            expect(component.columns[0].width).toBe(120);
+            expect(component.columns[1].width).toBe(150);
+            expect(preferencesService.updatePreference).toHaveBeenCalledWith('fake-app-name', 'processes-cloud-columns-widths', {
+                id: 120,
+                startDate: 150
+            });
+        });
+
+        it('should re-create columns when a column order gets changed', () => {
+            component.reload();
+            fixture.detectChanges();
+
+            expect(component.columns[0].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME');
+            expect(component.columns[1].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE');
+
+            component.onColumnOrderChanged([component.columns[1], ...component.columns]);
+            fixture.detectChanges();
+
+            expect(component.columns[0].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE');
+            expect(component.columns[1].title).toBe('ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME');
+        });
+
+        it('should create datatable schema when a column visibility gets changed', () => {
+            component.ngAfterContentInit();
+            spyOn(component, 'createDatatableSchema');
+
+            component.onColumnsVisibilityChange(component.columns);
+
+            fixture.detectChanges();
+
+            expect(component.createDatatableSchema).toHaveBeenCalled();
+        });
+
+        describe('component changes', () => {
+            beforeEach(() => {
+                component.rows = fakeProcessCloudList.list.entries;
+                fixture.detectChanges();
+            });
+
+            it('should set formattedSorting if sorting input changes', () => {
+                spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                spyOn(component, 'formatSorting').and.callThrough();
+
+                component.appName = 'mock-app-name';
+                const mockSort = [
+                    new ProcessListCloudSortingModel({
+                        orderBy: 'startDate',
+                        direction: 'DESC'
+                    })
+                ];
+                const sortChange = new SimpleChange(undefined, mockSort, true);
+                component.ngOnChanges({
+                    sorting: sortChange
+                });
+                fixture.detectChanges();
+                expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
+                expect(component.formattedSorting).toEqual(['startDate', 'desc']);
+            });
+
+            it('should set pagination and reload when updatePagination is called', (done) => {
+                spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+                spyOn(component, 'reload').and.stub();
+                const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+                component.ngOnChanges({ appName });
+                fixture.detectChanges();
+
+                const pagination = {
+                    maxItems: 250,
+                    skipCount: 200
+                };
+                component.pagination.pipe(skip(1)).subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(pagination.maxItems);
+                    expect(component.skipCount).toBe(pagination.skipCount);
+                    expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
+                    expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                    done();
+                });
+
+                component.updatePagination(pagination);
+            });
         });
     });
 });
