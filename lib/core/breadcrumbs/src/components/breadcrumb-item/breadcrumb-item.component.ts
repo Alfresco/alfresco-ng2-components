@@ -22,7 +22,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
     selector: 'adf-breadcrumb-item',
     template: `
         <ng-template #breadcrumbItemTemplate>
-            <ng-content></ng-content>
+            <ng-content />
         </ng-template>
     `
 })
