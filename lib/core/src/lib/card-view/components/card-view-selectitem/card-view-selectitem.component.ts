@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, inject, ViewEncapsulation, SimpleChanges, DestroyRef } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, inject, ViewEncapsulation, SimpleChanges, DestroyRef } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
@@ -50,7 +50,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-card-view-selectitem' }
 })
-export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges, OnDestroy {
+export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges {
     private appConfig = inject(AppConfigService);
     private readonly destroyRef = inject(DestroyRef);
     static HIDE_FILTER_LIMIT = 5;
