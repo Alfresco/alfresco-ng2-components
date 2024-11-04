@@ -23,7 +23,7 @@ import { ChangeDetectionStrategy, Component, HostListener, ViewEncapsulation } f
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: { class: 'adf-viewer-sidebar' },
-    template: `<ng-content></ng-content>`
+    template: `<ng-content />`
 })
 export class ViewerSidebarComponent {
     @HostListener('keydown', ['$event'])
