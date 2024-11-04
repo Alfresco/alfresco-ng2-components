@@ -47,7 +47,7 @@
     "@storybook/addon-interactions": "^8.2.9",
     "@storybook/core-server": "^8.2.9",
     "@storybook/theming": "^8.2.9",
-    "angular-oauth2-oidc": "16.0.0",
+    "angular-oauth2-oidc": "17.0.2",
     "angular-oauth2-oidc-jwks": "^17.0.2",
     "apollo-angular": "^5.0.2",
     "chart.js": "4.4.4",
