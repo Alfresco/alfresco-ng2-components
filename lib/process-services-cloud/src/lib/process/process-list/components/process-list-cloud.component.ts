@@ -68,9 +68,7 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
 })
 export class ProcessListCloudComponent
 extends DataTableSchema<ProcessListDataColumnCustomData>
-implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy
-// eslint-disable-next-line @typescript-eslint/brace-style
-{
+implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
@@ -204,9 +202,9 @@ implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy
     isResizingEnabled: boolean = false;
 
     /**
-    * Filter the processes. Display only processes with names matching any of the supplied strings.
-    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
-    */
+     * Filter the processes. Display only processes with names matching any of the supplied strings.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
     @Input()
     names: string[] = [];
 
