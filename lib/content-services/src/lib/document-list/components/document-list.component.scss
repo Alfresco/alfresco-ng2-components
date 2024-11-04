@@ -23,8 +23,6 @@
 
 .adf-datatable-list {
     .adf-datatable-selected {
-        overflow: unset;
-
         & > svg {
             fill: var(--theme-accent-color);
             width: 30px;
