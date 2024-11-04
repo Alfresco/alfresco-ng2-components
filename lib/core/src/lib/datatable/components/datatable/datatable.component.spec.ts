@@ -37,7 +37,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 @Component({
     selector: 'adf-custom-column-template-component',
     standalone: true,
-    template: ` <ng-template #tmplRef></ng-template> `
+    template: ` <ng-template #tmplRef /> `
 })
 class CustomColumnTemplateComponent {
     @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;

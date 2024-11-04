@@ -5,7 +5,7 @@
         class="adf-infinite-pagination-load-more"
         (click)="onLoadMore()"
         data-automation-id="adf-infinite-pagination-button">
-            <ng-content></ng-content>
+            <ng-content />
     </button>
 
     <mat-progress-bar *ngIf="isLoading"

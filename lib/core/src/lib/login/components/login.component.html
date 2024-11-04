@@ -16,8 +16,7 @@
                                     *ngIf="headerTemplate"
                                     ngFor
                                     [ngForOf]="[data]"
-                                    [ngForTemplate]="headerTemplate">
-                                </ng-template>
+                                    [ngForTemplate]="headerTemplate" />
                                 <img
                                     *ngIf="!headerTemplate"
                                     id="adf-login-img-logo"
@@ -118,7 +117,7 @@
                             </div>
 
                             <!--CUSTOM CONTENT-->
-                            <ng-content></ng-content>
+                            <ng-content />
 
                             <br>
                             <button
@@ -193,8 +192,7 @@
                                 *ngIf="footerTemplate"
                                 ngFor
                                 [ngForOf]="[data]"
-                                [ngForTemplate]="footerTemplate">
-                            </ng-template>
+                                [ngForTemplate]="footerTemplate" />
                             <div class="adf-login-action" *ngIf="!footerTemplate && showLoginActions">
                                 <div id="adf-login-action-left" class="adf-login-action-left">
                                     <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate }}</a>

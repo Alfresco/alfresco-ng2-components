@@ -10,6 +10,6 @@
         <p class="adf-error-content-description {{ screenSize.isSmallScreen ? 'mat-subtitle-1': 'mat-headline-5' }}">
             {{ 'ERROR_CONTENT.' + errorCodeTranslated + '.DESCRIPTION' | translate }}
         </p>
-        <ng-content select="[adf-error-content-actions]"></ng-content>
+        <ng-content select="[adf-error-content-actions]" />
     </div>
 </ng-container>
