@@ -48,6 +48,11 @@ export class ProcessFilterCloudModel {
     completedDate: Date;
     environmentId?: string;
 
+    processDefinitionNames: string[] | null;
+    initiators: string[] | null;
+    appVersions: string[] | null;
+    statuses: string[] | null;
+
     private dateRangeFilterService = new DateRangeFilterService();
     private _completedFrom: string;
     private _completedTo: string;
@@ -94,6 +99,11 @@ export class ProcessFilterCloudModel {
             this.completedDate = obj.completedDate || null;
             this._suspendedFrom = obj._suspendedFrom || null;
             this._suspendedTo = obj._suspendedTo || null;
+
+            this.processDefinitionNames = obj.processDefinitionNames || null;
+            this.initiators = obj.initiators || null;
+            this.appVersions = obj.appVersions || null;
+            this.statuses = obj.statuses || null;
         }
     }
 
