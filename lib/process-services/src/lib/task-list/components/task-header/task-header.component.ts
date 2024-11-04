@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, DestroyRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import {
     CardViewDateItemModel,
     CardViewMapItemModel,
@@ -39,8 +39,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { UnclaimTaskDirective } from '../task-form/unclaim-task.directive';
 import { ClaimTaskDirective } from '../task-form/claim-task.directive';
 import { TranslateModule } from '@ngx-translate/core';
-import { debounceTime, filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-task-header',
@@ -50,7 +51,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
     styleUrls: ['./task-header.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskHeaderComponent implements OnChanges, OnInit, OnDestroy {
+export class TaskHeaderComponent implements OnChanges, OnInit {
     /** The name of the form. */
     @Input()
     formName: string = null;
@@ -89,7 +90,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit, OnDestroy {
     dateLocale: string;
 
     private currentUserId: number;
-    private readonly onDestroy$ = new Subject<void>();
+    private readonly destroyRef = inject(DestroyRef);
     private readonly usersSubject$ = new BehaviorSubject<CardViewSelectItemOption<number>[]>([]);
     users$ = this.usersSubject$.asObservable();
 
@@ -106,7 +107,7 @@ export class TaskHeaderComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit() {
         this.peopleProcessService
             .getCurrentUserInfo()
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((res) => {
                 this.currentUserId = res ? +res.id : null;
                 this.initData();
@@ -117,13 +118,13 @@ export class TaskHeaderComponent implements OnChanges, OnInit, OnDestroy {
                 filter((res) => res.length > 0),
                 debounceTime(300),
                 switchMap((res) => this.getUsers(res)),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((users) => {
                 this.usersSubject$.next(users);
             });
 
-        this.resetChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.resetChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.initData();
         });
     }
@@ -138,11 +139,6 @@ export class TaskHeaderComponent implements OnChanges, OnInit, OnDestroy {
         } else {
             this.refreshData();
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
     }
 
     /**

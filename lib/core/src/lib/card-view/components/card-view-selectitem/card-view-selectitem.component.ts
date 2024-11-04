@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, inject, ViewEncapsulation, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, inject, ViewEncapsulation, SimpleChanges, DestroyRef } from '@angular/core';
 import { CardViewSelectItemModel } from '../../models/card-view-selectitem.model';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { takeUntil, map, debounceTime, filter, first } from 'rxjs/operators';
+import { map, debounceTime, filter, first } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,6 +30,7 @@ import { SelectFilterInputComponent } from './select-filter-input/select-filter-
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-card-view-selectitem',
@@ -51,6 +52,7 @@ import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 })
 export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnInit, OnChanges, OnDestroy {
     private appConfig = inject(AppConfigService);
+    private readonly destroyRef = inject(DestroyRef);
     static HIDE_FILTER_LIMIT = 5;
 
     @Input() options$: Observable<CardViewSelectItemOption<string | number>[]>;
@@ -76,7 +78,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
                 .pipe(
                     filter((textInputValue) => textInputValue !== this.editedValue && textInputValue !== null),
                     debounceTime(50),
-                    takeUntil(this.destroy$)
+                    takeUntilDestroyed(this.destroyRef)
                 )
                 .subscribe((textInputValue) => {
                     this.editedValue = textInputValue;
@@ -99,7 +101,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
         }
 
         this.getOptions()
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((options) => {
                 this.showInputFilter = options.length > this.optionsLimit;
             });
@@ -118,8 +120,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     getList(): Observable<CardViewSelectItemOption<string | number>[]> {
         return combineLatest([this.getOptions(), this.filter$]).pipe(
-            map(([items, searchTerm]) => items.filter((item) => (filter ? item.label.toLowerCase().includes(searchTerm.toLowerCase()) : true))),
-            takeUntil(this.destroy$)
+            map(([items, searchTerm]) => items.filter((item) => (filter ? item.label.toLowerCase().includes(searchTerm.toLowerCase()) : true)))
         );
     }
 
@@ -143,10 +144,6 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     get showProperty(): boolean {
         return this.displayEmpty || !this.property.isEmpty();
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     private get optionsLimit(): number {
