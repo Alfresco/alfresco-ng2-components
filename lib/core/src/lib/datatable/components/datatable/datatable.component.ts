@@ -446,7 +446,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     convertToRowsData(rows: any[]): ObjectDataRow[] {
-        return rows.map((row) => new ObjectDataRow(row, row.isSelected));
+        return rows.map((row) => new ObjectDataRow(row, row.isSelected, row?.isSelectable));
     }
 
     convertToColumnsData(columns: any[]): ObjectDataColumn[] {
@@ -589,7 +589,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
     }
 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
-        if (!this.data) {
+        if (!this.data || !row?.isSelectable) {
             return;
         }
 
@@ -713,10 +713,10 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.isSelectAllIndeterminate = false;
 
         if (this.multiselect) {
-            const rows = this.data.getRows();
-            if (rows && rows.length > 0) {
-                for (let i = 0; i < rows.length; i++) {
-                    this.selectRow(rows[i], matCheckboxChange.checked);
+            const selectableRows = this.data.getRows().filter(row => row?.isSelectable);
+            if (selectableRows && selectableRows.length > 0) {
+                for (let i = 0; i < selectableRows.length; i++) {
+                    this.selectRow(selectableRows[i], matCheckboxChange.checked);
                 }
             }
 
