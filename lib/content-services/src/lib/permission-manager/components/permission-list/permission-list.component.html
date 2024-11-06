@@ -28,7 +28,8 @@
                         aria-label="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate}}"
                         data-automation-id="adf-inherit-toggle-button"
                         [checked]="model.node.permissions.isInheritanceEnabled"
-                        (change)="permissionList.toggleInherited($event)" />
+                        (change)="permissionList.toggleInherited($event)"
+                        *ngIf="updatePermissionsAllowed" />
                 </span>
 
                 <span class="adf-inherit-subtitle" title="total">
@@ -73,6 +74,7 @@
                     mat-icon-button
                     title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
                     (click)="openAddPermissionDialog()"
+                    *ngIf="updatePermissionsAllowed"
                     class="adf-add-permission-button"
                     data-automation-id="adf-add-permission-button">
                     <mat-icon>person_add_outline</mat-icon>
@@ -83,8 +85,9 @@
                     title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
                     [disabled]="!selectedPermissions?.length"
                     (click)="deleteSelection()"
-                    data-automation-id="adf-delete-selected-permission">
-                    <mat-icon class="adf-delete-selected-permission-icon">delete_outline</mat-icon>
+                    data-automation-id="adf-delete-selected-permission"
+                    *ngIf="updatePermissionsAllowed">
+                    <mat-icon>delete_outline</mat-icon>
                 </button>
             </section>
 
@@ -98,7 +101,8 @@
                 (updateAll)="updateAllPermission($event)"
                 (row-select)="onSelect($any($event).detail.selection)"
                 (row-unselect)="onSelect($any($event).detail.selection)"
-                [roles]="model.roles" />
+                [roles]="model.roles"
+                [isReadOnly]="!updatePermissionsAllowed"/>
 
         </mat-card-content>
     </ng-container>

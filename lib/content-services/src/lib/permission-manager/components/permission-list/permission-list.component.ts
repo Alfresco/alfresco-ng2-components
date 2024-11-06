@@ -29,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { PermissionContainerComponent } from '../permission-container/permission-container.component';
 import { PopOverDirective } from '../pop-over.directive';
+import { AllowableOperationsEnum, ContentService } from '../../../common';
 
 @Component({
     selector: 'adf-permission-list',
@@ -63,13 +64,23 @@ export class PermissionListComponent implements OnInit {
 
     selectedPermissions: PermissionDisplayModel[] = [];
 
-    constructor(public readonly permissionList: PermissionListService) {
+    private _updatePermissionsAllowed = false;
+
+    get updatePermissionsAllowed(): boolean {
+        return this._updatePermissionsAllowed;
+    }
+
+    constructor(public readonly permissionList: PermissionListService, private readonly contentService: ContentService) {
         this.error = this.permissionList.errored;
         this.update = this.permissionList.updated;
     }
 
     ngOnInit(): void {
         this.permissionList.fetchPermission(this.nodeId);
+        this.permissionList.data$.subscribe(
+            (model) =>
+                (this._updatePermissionsAllowed = this.contentService.hasAllowableOperations(model.node, AllowableOperationsEnum.UPDATEPERMISSIONS))
+        );
     }
 
     openAddPermissionDialog() {
