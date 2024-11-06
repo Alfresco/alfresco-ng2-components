@@ -25,17 +25,17 @@ import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 export const transformKeyToObject = (key: string, value): any => {
     const objectLevels: string[] = key.split('.').reverse();
 
-    return objectLevels.reduce<any>((previousValue, currentValue) => ({ [currentValue]: previousValue}), value);
+    return objectLevels.reduce<any>((previousValue, currentValue) => ({ [currentValue]: previousValue }), value);
 };
 
 @Injectable({
     providedIn: 'root'
 })
 export class CardViewUpdateService implements BaseCardViewUpdate {
-
     itemUpdated$ = new Subject<UpdateNotification>();
     itemClicked$ = new Subject<ClickNotification>();
     updateItem$ = new Subject<CardViewBaseItemModel>();
+    autocompleteInputValue$ = new Subject<string>();
 
     update(property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdated$.next({
@@ -58,5 +58,4 @@ export class CardViewUpdateService implements BaseCardViewUpdate {
     updateElement(notification: CardViewBaseItemModel) {
         this.updateItem$.next(notification);
     }
-
 }

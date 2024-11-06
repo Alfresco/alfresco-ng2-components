@@ -2,7 +2,7 @@
 Title: Card View component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-09
+Last reviewed: 2024-10-29
 ---
 
 # [Card View component](../../../lib/core/src/lib/card-view/components/card-view/card-view.component.ts "Defined in card-view.component.ts")
@@ -353,6 +353,7 @@ const selectItemProperty = new CardViewSelectItemModel(options);
 | key\* | string |  | Identifying key (important when editing the item) |
 | editable | boolean | false | Toggles whether the item is editable |
 | value | string |  | The original data value for the item |
+| autocompleteBased | boolean | false | Indicates whether the select item should use autocomplete functionality. If set to true, the select item will provide an autocomplete input field. |
 | options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;[`CardViewSelectItemOption`](../../../lib/core/src/lib/card-view/interfaces/card-view-selectitem-properties.interface.ts)\[]> |  | The original data value for the item |
 
 #### Card Array Item

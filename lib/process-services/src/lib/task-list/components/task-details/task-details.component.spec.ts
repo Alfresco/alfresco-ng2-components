@@ -54,6 +54,7 @@ describe('TaskDetailsComponent', () => {
     let getTaskDetailsSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
     let assignTaskSpy: jasmine.Spy;
+    let getWorkflowUsersSpy: jasmine.Spy;
     let taskCommentsService: CommentsService;
     let peopleProcessService: PeopleProcessService;
 
@@ -63,6 +64,7 @@ describe('TaskDetailsComponent', () => {
         });
         peopleProcessService = TestBed.inject(PeopleProcessService);
         spyOn(peopleProcessService, 'getCurrentUserInfo').and.returnValue(of({ email: 'fake-email' } as any));
+        getWorkflowUsersSpy = spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
         const taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'getTaskChecklist').and.returnValue(of(noDataMock));
@@ -371,7 +373,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should return an observable with user search results', () => {
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(
+            getWorkflowUsersSpy.and.returnValue(
                 of([
                     {
                         id: 1,
@@ -402,7 +404,7 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should return an empty list for not valid search', () => {
-            spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
+            getWorkflowUsersSpy.and.returnValue(of([]));
 
             let lastValue: LightUserRepresentation[];
             component.peopleSearch.subscribe((users) => (lastValue = users));
