@@ -70,25 +70,25 @@
 
                 <div class="adf-toolbar--spacer"></div>
 
-                <button
-                    mat-icon-button
-                    title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
-                    (click)="openAddPermissionDialog()"
-                    *ngIf="updatePermissionsAllowed"
-                    class="adf-add-permission-button"
-                    data-automation-id="adf-add-permission-button">
-                    <mat-icon>person_add_outline</mat-icon>
-                </button>
+                <ng-container *ngIf="updatePermissionsAllowed">
+                    <button
+                        mat-icon-button
+                        title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
+                        (click)="openAddPermissionDialog()"
+                        class="adf-add-permission-button"
+                        data-automation-id="adf-add-permission-button">
+                        <mat-icon>person_add_outline</mat-icon>
+                    </button>
 
-                <button
-                    mat-icon-button
-                    title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
-                    [disabled]="!selectedPermissions?.length"
-                    (click)="deleteSelection()"
-                    data-automation-id="adf-delete-selected-permission"
-                    *ngIf="updatePermissionsAllowed">
-                    <mat-icon>delete_outline</mat-icon>
-                </button>
+                    <button
+                        mat-icon-button
+                        title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
+                        [disabled]="!selectedPermissions?.length"
+                        (click)="deleteSelection()"
+                        data-automation-id="adf-delete-selected-permission">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </ng-container>
             </section>
 
             <adf-permission-container
