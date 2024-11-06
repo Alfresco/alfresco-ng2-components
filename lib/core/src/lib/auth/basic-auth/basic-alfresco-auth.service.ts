@@ -376,33 +376,21 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
         const bpmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app'}/`;
         const ecmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco'}/`;
 
-        if (this.containsContextRoot(ecmRoot, requestUrl) && !this.containsContextRoot(bpmRoot, requestUrl)) {
+        if (requestUrl?.includes(ecmRoot) && !requestUrl.includes(bpmRoot)) {
             ticket = this.getContentServicesTicket();
-        } else if (this.containsContextRoot(bpmRoot, requestUrl) && !this.containsContextRoot(ecmRoot, requestUrl)) {
+        } else if (requestUrl?.includes(bpmRoot) && !requestUrl.includes(ecmRoot)) {
             ticket = this.getProcessServicesTicket();
-        } else if (this.containsContextRoot(bpmRoot, requestUrl) && this.containsContextRoot(ecmRoot, requestUrl)) {
-            ticket =
-                this.getContextRootPosition(ecmRoot, requestUrl) < this.getContextRootPosition(bpmRoot, requestUrl)
-                    ? this.getContentServicesTicket()
-                    : this.getProcessServicesTicket();
+        } else if (requestUrl?.includes(ecmRoot) && requestUrl.includes(bpmRoot)) {
+            ticket = requestUrl.indexOf(ecmRoot) < requestUrl.indexOf(bpmRoot) ? this.getContentServicesTicket() : this.getProcessServicesTicket();
         }
-
         return ticket;
     }
 
-    private containsContextRoot(contextRoot: string, url: string) {
-        return this.getContextRootPosition(contextRoot, url) !== -1;
-    }
-
-    private getContextRootPosition(contextRoot: string, url: string) {
-        return url.indexOf(contextRoot);
-    }
-
-    private getProcessServicesTicket() {
+    private getProcessServicesTicket(): string {
         return this.processAuth.getToken()?.startsWith('Basic ') ? this.processAuth.getToken() : 'Basic ' + this.processAuth.getToken();
     }
 
-    private getContentServicesTicket() {
+    private getContentServicesTicket(): string {
         return 'Basic ' + btoa(this.contentAuth.getToken());
     }
 }
