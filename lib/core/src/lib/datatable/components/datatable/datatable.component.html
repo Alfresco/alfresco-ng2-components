@@ -213,6 +213,7 @@
                        tabindex="0">
                     <mat-checkbox
                         [id]="'select-file-' + idx"
+                        [disabled]="!row?.isSelectable"
                         [class.adf-datatable-checkbox-selected]="row.isSelected"
                         [class.adf-datatable-hover-only]="displayCheckboxesOnHover"
                         [checked]="row.isSelected"

@@ -81,6 +81,7 @@ An array of [`DataRow`](../../../lib/core/src/lib/datatable/data/data-row.model.
 ```ts
 interface DataRow {
     isSelected: boolean;
+    isSelectable?: boolean;
     isDropTarget?: boolean;
     cssClass?: string;
     hasValue(key: string): boolean;
