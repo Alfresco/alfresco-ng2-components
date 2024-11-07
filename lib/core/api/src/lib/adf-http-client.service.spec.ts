@@ -387,4 +387,20 @@ describe('AdfHttpClient', () => {
 
         req.flush(null, { status: 200, statusText: 'Ok' });
     });
+
+    it('should set X-CSRF-TOKEN header if CSRF is enabled', () => {
+        const options: RequestOptions = {
+            path: '',
+            httpMethod: 'GET'
+        };
+        angularHttpClient.disableCsrf = false;
+
+        angularHttpClient.request('http://example.com', options, securityOptions, emitters).catch((error) => fail(error));
+
+        const req = controller.expectOne('http://example.com');
+
+        expect(req.request.headers.get('X-CSRF-TOKEN')).toBeDefined();
+
+        req.flush(null, { status: 200, statusText: 'Ok' });
+    });
 });
