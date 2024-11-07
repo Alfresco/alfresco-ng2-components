@@ -79,6 +79,13 @@
         color: var(--adf-metadata-property-panel-title-color);
     }
 
+    .adf-property-value-has-icon-suffix {
+        padding-right: 34px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     #{$mat-line-ripple} {
         &::before,
         &::after {
