@@ -38,24 +38,24 @@ describe('BasicAlfrescoAuthService', () => {
         appConfigSpy.withArgs(AppConfigValues.CONTEXTROOTECM).and.returnValue('alfresco');
     });
 
-    it('Should return content services ticket when requestUrl contains ECM context root', () => {
+    it('should return content services ticket when requestUrl contains ECM context root', () => {
         const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.exmple.com/alfresco/mock-api-url');
         const base64Segment = ticket.split('Basic ')[1];
         expect(atob(base64Segment)).toEqual('Mock Content Auth ticket');
     });
 
-    it('Should return process services ticket when requestUrl contains ECM context root', () => {
+    it('should return process services ticket when requestUrl contains ECM context root', () => {
         const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/activiti-app/mock-api-url');
         expect(ticket).toEqual('Basic Mock Process Auth ticket');
     });
 
-    it('Should return content services ticket when requestUrl contains both ECM and BPM context root, but ECM context root comes before', () => {
+    it('should return content services ticket when requestUrl contains both ECM and BPM context root, but ECM context root comes before', () => {
         const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.exmple.com/alfresco/activiti-app/mock-api-url');
         const base64Segment = ticket.split('Basic ')[1];
         expect(atob(base64Segment)).toEqual('Mock Content Auth ticket');
     });
 
-    it('Should return process services ticket when requestUrl contains both ECM and BPM context root, but BPM context root comes before', () => {
+    it('should return process services ticket when requestUrl contains both ECM and BPM context root, but BPM context root comes before', () => {
         const ticket = basicAlfrescoAuthService.getTicketEcmBase64('http://www.example.com/activiti-app/alfresco/mock-api-url');
         expect(ticket).toEqual('Basic Mock Process Auth ticket');
     });
