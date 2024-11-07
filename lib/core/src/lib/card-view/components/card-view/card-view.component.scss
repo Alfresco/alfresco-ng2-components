@@ -87,6 +87,7 @@
         &.adf-property-value-editable {
             color: var(--adf-metadata-property-panel-title-color);
             background-color: var(--adf-metadata-buttons-background-color);
+            box-sizing: border-box;
             border-radius: 6px;
             height: 32px;
             padding-left: 10px;
@@ -112,6 +113,7 @@
 
         &-input {
             background-color: var(--adf-metadata-buttons-background-color);
+            box-sizing: border-box;
             border-radius: 6px;
             padding: 6px 0;
             margin: 0;

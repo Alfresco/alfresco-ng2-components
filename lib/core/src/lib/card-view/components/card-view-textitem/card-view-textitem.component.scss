@@ -36,7 +36,9 @@
     }
 
     #{$mat-form-field-icon-suffix} {
-        align-self: baseline;
+        position: absolute;
+        right: 1px;
+        bottom: 7px;
     }
 
     .adf-textitem-chip-list-container {
