@@ -94,8 +94,7 @@ export const fakeNodeWithPermissions: any = {
 
 export const fakeNodeInheritedOnly = {
     allowableOperations: ['updatePermissions'],
-    aspectNames: ['cm:auditable', 'cm:taggable', 'cm:author', 'cm:titled', 'app:uifacets'],
-    createdAt: new Date('2017-11-16T16:29:38.638+0000'),
+    ...fakeBaseNode,
     path: {
         name: '/Company Home/Sites/testsite/documentLibrary',
         isComplete: true,
@@ -119,13 +118,6 @@ export const fakeNodeInheritedOnly = {
             }
         ]
     },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: new Date('2018-03-21T03:17:58.783+0000'),
     permissions: {
         inherited: [
             {
@@ -159,37 +151,7 @@ export const fakeNodeInheritedOnly = {
 };
 
 export const fakeReadOnlyNodeInherited = {
-    aspectNames: ['cm:auditable', 'cm:taggable', 'cm:author', 'cm:titled', 'app:uifacets'],
-    createdAt: new Date('2017-11-16T16:29:38.638+0000'),
-    path: {
-        name: '/Company Home/Sites/testsite/documentLibrary',
-        isComplete: true,
-        elements: [
-            {
-                id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
-                name: 'Company Home'
-            },
-            {
-                id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-                name: 'Sites'
-            },
-            {
-                id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-                name: 'testsite'
-            },
-            {
-                id: '71626fae-0c04-4d0c-a129-20fa4c178716',
-                name: 'documentLibrary'
-            }
-        ]
-    },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: new Date('2018-03-21T03:17:58.783+0000'),
+    ...fakeBaseNode,
     permissions: {
         inherited: [
             {
@@ -473,8 +435,7 @@ export const fakeEmptyResponse: any = {
 
 export const fakeNodeLocalSiteManager = {
     allowableOperations: ['updatePermissions'],
-    aspectNames: ['cm:auditable', 'cm:taggable', 'cm:author', 'cm:titled', 'app:uifacets'],
-    createdAt: '2017-11-16T16:29:38.638+0000',
+    ...fakeBaseNode,
     path: {
         name: '/Company Home/Sites/testsite/documentLibrary',
         isComplete: true,
@@ -498,13 +459,6 @@ export const fakeNodeLocalSiteManager = {
             }
         ]
     },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
     permissions: {
         locallySet: [
             {
