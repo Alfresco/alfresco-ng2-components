@@ -22,14 +22,14 @@
                     </h3>
 
                     <mat-slide-toggle
+                        *ngIf="updatePermissionsAllowed"
                         class="adf-inherit-toggle"
                         title="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate }}"
                         color="primary"
                         aria-label="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate}}"
                         data-automation-id="adf-inherit-toggle-button"
                         [checked]="model.node.permissions.isInheritanceEnabled"
-                        (change)="permissionList.toggleInherited($event)"
-                        *ngIf="updatePermissionsAllowed" />
+                        (change)="permissionList.toggleInherited($event)" />
                 </span>
 
                 <span class="adf-inherit-subtitle" title="total">
