@@ -91,7 +91,11 @@ export class ContentMetadataService {
             const title = propertyGroup.title;
             const name = propertyGroup.name;
             if (title) {
-                propertyGroup.title = propertyGroupsTitles[title] ? `${title} (${name})` : title;
+                if (propertyGroupsTitles[title]) {
+                    propertyGroup.title = name ? `${title} (${name})` : title;
+                } else {
+                    propertyGroup.title = title;
+                }
                 propertyGroupsTitles[title] = title;
             } else {
                 propertyGroup.title = name;
