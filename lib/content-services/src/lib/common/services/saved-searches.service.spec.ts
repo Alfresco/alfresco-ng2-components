@@ -69,7 +69,7 @@ describe('SavedSearchesService', () => {
         localStorage.removeItem(SAVED_SEARCHES_NODE_ID + testUserName);
     });
 
-    it('should retrieve saved searches from the saved-searches.json file', (done) => {
+    it('should retrieve saved searches from the config.json file', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         spyOn(localStorage, 'getItem').and.callFake(() => testNodeId);
         service.innit();
@@ -84,7 +84,7 @@ describe('SavedSearchesService', () => {
         });
     });
 
-    it('should create saved-searches.json file if it does not exist', (done) => {
+    it('should create config.json file if it does not exist', (done) => {
         spyOn(authService, 'getUsername').and.callFake(() => testUserName);
         getNodeContentSpy.and.callFake(() => Promise.resolve(new Blob([''])));
         service.innit();
@@ -92,7 +92,7 @@ describe('SavedSearchesService', () => {
         service.getSavedSearches().subscribe((searches) => {
             expect(service.nodesApi.getNode).toHaveBeenCalledWith('-my-');
             expect(service.searchApi.search).toHaveBeenCalled();
-            expect(service.nodesApi.createNode).toHaveBeenCalledWith(testNodeId, jasmine.objectContaining({ name: 'saved-searches.json' }));
+            expect(service.nodesApi.createNode).toHaveBeenCalledWith(testNodeId, jasmine.objectContaining({ name: 'config.json' }));
             expect(searches.length).toBe(0);
             done();
         });
