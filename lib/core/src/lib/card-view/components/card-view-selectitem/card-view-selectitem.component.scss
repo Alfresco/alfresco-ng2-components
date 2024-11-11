@@ -39,6 +39,10 @@
         }
     }
 
+    .adf-card-selectitem-autocomplete .adf-property-value-editable {
+        padding-left: 10px;
+    }
+
     #{$mat-form-field-subscript-wrapper} {
         display: none;
     }

@@ -22,6 +22,7 @@
                     </h3>
 
                     <mat-slide-toggle
+                        *ngIf="updatePermissionsAllowed"
                         class="adf-inherit-toggle"
                         title="{{'PERMISSION_MANAGER.LABELS.INHERITED_PERMISSION_TOGGLE' | translate }}"
                         color="primary"
@@ -69,23 +70,25 @@
 
                 <div class="adf-toolbar--spacer"></div>
 
-                <button
-                    mat-icon-button
-                    title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
-                    (click)="openAddPermissionDialog()"
-                    class="adf-add-permission-button"
-                    data-automation-id="adf-add-permission-button">
-                    <mat-icon>person_add_outline</mat-icon>
-                </button>
+                <ng-container *ngIf="updatePermissionsAllowed">
+                    <button
+                        mat-icon-button
+                        title="{{'PERMISSION_MANAGER.ACTION.ADD-PERMISSION' | translate}}"
+                        (click)="openAddPermissionDialog()"
+                        class="adf-add-permission-button"
+                        data-automation-id="adf-add-permission-button">
+                        <mat-icon>person_add_outline</mat-icon>
+                    </button>
 
-                <button
-                    mat-icon-button
-                    title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
-                    [disabled]="!selectedPermissions?.length"
-                    (click)="deleteSelection()"
-                    data-automation-id="adf-delete-selected-permission">
-                    <mat-icon class="adf-delete-selected-permission-icon">delete_outline</mat-icon>
-                </button>
+                    <button
+                        mat-icon-button
+                        title="{{'PERMISSION_MANAGER.ACTION.DELETE' | translate}}"
+                        [disabled]="!selectedPermissions?.length"
+                        (click)="deleteSelection()"
+                        data-automation-id="adf-delete-selected-permission">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </ng-container>
             </section>
 
             <adf-permission-container
@@ -98,7 +101,8 @@
                 (updateAll)="updateAllPermission($event)"
                 (row-select)="onSelect($any($event).detail.selection)"
                 (row-unselect)="onSelect($any($event).detail.selection)"
-                [roles]="model.roles" />
+                [roles]="model.roles"
+                [isReadOnly]="!updatePermissionsAllowed"/>
 
         </mat-card-content>
     </ng-container>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, DestroyRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, inject } from '@angular/core';
 import {
     CardViewDateItemModel,
     CardViewMapItemModel,
@@ -25,7 +25,10 @@ import {
     AppConfigService,
     CardViewIntItemModel,
     CardViewItemLengthValidator,
-    CardViewComponent
+    CardViewComponent,
+    CardViewUpdateService,
+    CardViewSelectItemModel,
+    CardViewSelectItemOption
 } from '@alfresco/adf-core';
 import { PeopleProcessService } from '../../../services/people-process.service';
 import { TaskDescriptionValidator } from '../../validators/task-description.validator';
@@ -36,6 +39,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { UnclaimTaskDirective } from '../task-form/unclaim-task.directive';
 import { ClaimTaskDirective } from '../task-form/claim-task.directive';
 import { TranslateModule } from '@ngx-translate/core';
+import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-task-header',
@@ -58,6 +64,18 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     @Input()
     showClaimRelease = true;
 
+    /**
+     * (optional) This flag sets read-only mode, preventing changes.
+     */
+    @Input()
+    readOnly = false;
+
+    /**
+     *  Refreshes the card data when an event emitted.
+     */
+    @Input()
+    resetChanges = new Subject<void>();
+
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
@@ -72,24 +90,51 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     dateLocale: string;
 
     private currentUserId: number;
+    private readonly destroyRef = inject(DestroyRef);
+    private readonly usersSubject$ = new BehaviorSubject<CardViewSelectItemOption<number>[]>([]);
+    users$ = this.usersSubject$.asObservable();
 
     constructor(
         private peopleProcessService: PeopleProcessService,
         private translationService: TranslationService,
-        private appConfig: AppConfigService
+        private readonly appConfig: AppConfigService,
+        private readonly cardViewUpdateService: CardViewUpdateService
     ) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
     }
 
     ngOnInit() {
-        this.loadCurrentBpmUserId();
-        this.initData();
+        this.peopleProcessService
+            .getCurrentUserInfo()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((res) => {
+                this.currentUserId = res ? +res.id : null;
+                this.initData();
+            });
+
+        this.cardViewUpdateService.autocompleteInputValue$
+            .pipe(
+                filter((res) => res.length > 0),
+                debounceTime(300),
+                switchMap((res) => this.getUsers(res)),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe((users) => {
+                this.usersSubject$.next(users);
+            });
+
+        this.resetChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            this.initData();
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const taskDetailsChange = changes['taskDetails'];
-        if (taskDetailsChange?.currentValue?.id !== taskDetailsChange?.previousValue?.id) {
+        if (
+            taskDetailsChange?.currentValue?.id !== taskDetailsChange?.previousValue?.id ||
+            taskDetailsChange?.currentValue?.assignee?.id !== taskDetailsChange?.previousValue?.assignee?.id
+        ) {
             this.initData();
         } else {
             this.refreshData();
@@ -249,15 +294,31 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         return this.taskDetails.duration ? `${this.taskDetails.duration} ms` : '';
     }
 
+    private getUsers(searchQuery: string): Observable<CardViewSelectItemOption<number>[]> {
+        return this.peopleProcessService.getWorkflowUsers(undefined, searchQuery).pipe(
+            map((users) =>
+                users
+                    .filter((user) => user.id !== this.currentUserId)
+                    .map(({ id, firstName = '', lastName = '' }) => ({
+                        key: id,
+                        label: `${firstName} ${lastName}`.trim()
+                    }))
+            )
+        );
+    }
+
     private initDefaultProperties(parentInfoMap: Map<string, string>): any[] {
         return [
-            new CardViewTextItemModel({
+            new CardViewSelectItemModel({
                 label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
-                value: this.taskDetails.getFullName(),
+                value: this.taskDetails.getFullName()
+                    ? this.taskDetails.getFullName()
+                    : this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
                 key: 'assignee',
-                default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
-                clickable: !this.isCompleted(),
-                icon: 'create'
+                editable: this.isAssignedToCurrentUser(),
+                autocompleteBased: true,
+                icon: 'create',
+                options$: this.users$
             }),
             new CardViewTextItemModel({
                 label: 'ADF_TASK_LIST.PROPERTIES.STATUS',
@@ -344,14 +405,5 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
-    }
-
-    /**
-     * Loads current bpm userId
-     */
-    private loadCurrentBpmUserId(): void {
-        this.peopleProcessService.getCurrentUserInfo().subscribe((res) => {
-            this.currentUserId = res ? +res.id : null;
-        });
     }
 }
