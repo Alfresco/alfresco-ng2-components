@@ -44,7 +44,7 @@
                 [attr.data-automation-id]="'node_' + node.id"
                 *matTreeNodeDef="let node"
                 matTreeNodePadding
-                [adf-context-menu]="contextMenuOptions"
+                [adf-context-menu]="getContextMenuOptions"
                 [adf-context-menu-enabled]="!!contextMenuOptions"
                 (contextmenu)="contextMenuSource = node">
                 <div class="adf-tree-expand-collapse-container">

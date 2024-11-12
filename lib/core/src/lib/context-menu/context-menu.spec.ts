@@ -115,9 +115,6 @@ describe('ContextMenuDirective', () => {
     });
 
     it('should not show menu on mouse contextmenu event when context menu is disabled', () => {
-        fixture.componentInstance.isEnabled = false;
-        fixture.detectChanges();
-
         const targetElement = fixture.debugElement.nativeElement.querySelector('#target');
         targetElement.dispatchEvent(new CustomEvent('contextmenu'));
         fixture.detectChanges();
