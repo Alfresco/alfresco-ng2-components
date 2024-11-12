@@ -23,7 +23,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { Subject, BehaviorSubject, combineLatest } from 'rxjs';
+import { Subject, BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
@@ -197,6 +197,8 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         map(([isLoadingPreferences, isReloading]) => isLoadingPreferences || isReloading)
     );
 
+    private fetchProcessesTrigger$ = new Subject<void>();
+
     constructor(
         @Inject(TASK_SEARCH_API_METHOD_TOKEN) @Optional() private searchMethod: 'GET' | 'POST',
         @Inject(TASK_LIST_CLOUD_TOKEN) public taskListCloudService: TaskListCloudServiceInterface,
@@ -207,20 +209,10 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
         private viewModelCreator: VariableMapperService
     ) {
         super(appConfigService, taskCloudService, userPreferences, PRESET_KEY, cloudPreferenceService);
-    }
 
-    ngOnDestroy() {
-        this.onDestroyTaskList$.next(true);
-        this.onDestroyTaskList$.complete();
-    }
-
-    reload() {
-        this.isReloadingSubject$.next(true);
-
-        this.isColumnSchemaCreated$
+        combineLatest([this.isColumnSchemaCreated$, this.fetchProcessesTrigger$])
             .pipe(
                 filter((isColumnSchemaCreated) => !!isColumnSchemaCreated),
-                take(1),
                 switchMap(() => {
                     if (this.searchMethod === 'POST') {
                         const requestNode = this.createTaskListRequestNode();
@@ -253,6 +245,16 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                     this.isReloadingSubject$.next(false);
                 }
             });
+    }
+
+    ngOnDestroy() {
+        this.onDestroyTaskList$.next(true);
+        this.onDestroyTaskList$.complete();
+    }
+
+    reload() {
+        this.isReloadingSubject$.next(true);
+        this.fetchProcessesTrigger$.next();
     }
 
     private createTaskListRequestNode(): TaskListRequestModel {

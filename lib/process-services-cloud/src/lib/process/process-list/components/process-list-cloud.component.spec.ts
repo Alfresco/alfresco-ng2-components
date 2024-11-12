@@ -203,7 +203,6 @@ describe('ProcessListCloudComponent', () => {
                 done();
             });
             component.appName = appName.currentValue;
-            component.ngAfterContentInit();
             component.ngOnChanges({ appName });
             fixture.detectChanges();
         });
@@ -480,7 +479,6 @@ describe('ProcessListCloudComponent', () => {
                 done();
             });
             component.appName = appName.currentValue;
-            component.ngAfterContentInit();
             component.ngOnChanges({ appName });
             fixture.detectChanges();
         });
