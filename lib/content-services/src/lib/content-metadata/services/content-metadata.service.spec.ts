@@ -18,11 +18,12 @@
 import { AppConfigService } from '@alfresco/adf-core';
 import { ClassesApi, Node } from '@alfresco/js-api';
 import { TestBed } from '@angular/core/testing';
-import { ContentMetadataService } from './content-metadata.service';
 import { of } from 'rxjs';
-import { PropertyGroup } from '../interfaces/property-group.interface';
-import { ContentTypePropertiesService } from './content-type-property.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
+import { PropertyGroup } from '../interfaces/property-group.interface';
+import { ContentMetadataService } from './content-metadata.service';
+import { ContentTypePropertiesService } from './content-type-property.service';
 import { PropertyDescriptorsService } from './property-descriptors.service';
 
 const fakeNode: Node = {
@@ -130,6 +131,62 @@ describe('ContentMetaDataService', () => {
         }
     };
 
+    const aspect1Group: OrganisedPropertyGroup = {
+        name: 'test:aspect1',
+        title: 'Test Aspect',
+        properties: [
+            {
+                title: 'Property 1',
+                name: 'test:property1',
+                dataType: 'd:text',
+                mandatory: false,
+                multiValued: false
+            }
+        ]
+    };
+
+    const aspect2Group: OrganisedPropertyGroup = {
+        name: 'test:aspect2',
+        title: 'Test Aspect',
+        properties: [
+            {
+                title: 'Property 2',
+                name: 'test:property2',
+                dataType: 'd:text',
+                mandatory: false,
+                multiValued: false
+            }
+        ]
+    };
+
+    const aspect3Group: OrganisedPropertyGroup = {
+        name: 'test:aspect3',
+        title: undefined,
+        properties: [
+            {
+                title: 'Property 3',
+                name: 'test:property3',
+                dataType: 'd:text',
+                mandatory: false,
+                multiValued: false
+            }
+        ]
+    };
+
+    const aspect4Group: OrganisedPropertyGroup = {
+        name: 'test:aspect4',
+        title: 'test:aspect3',
+        properties: [
+            {
+                title: 'Property 4',
+                name: 'test:property4',
+                dataType: 'd:text',
+                mandatory: false,
+                multiValued: false
+            }
+        ]
+    };
+
     const setConfig = (presetName, presetConfig) => {
         appConfig.config['content-metadata'] = {
             presets: {
@@ -174,6 +231,20 @@ describe('ContentMetaDataService', () => {
         service.openConfirmDialog(fakeNode).subscribe(() => {
             expect(contentPropertyService.openContentTypeDialogConfirm).toHaveBeenCalledWith('fn:fakenode');
         });
+    });
+
+    it('should distinguish aspects with same title', () => {
+        const groupedProperties = service.setTitleToNameIfNotSet([aspect1Group, aspect2Group]);
+        expect(groupedProperties.length).toEqual(2);
+        expect(groupedProperties[0].title).toEqual('Test Aspect');
+        expect(groupedProperties[1].title).toEqual('Test Aspect (test:aspect2)');
+    });
+
+    it('should distinguish aspect without title from other aspect with title equals to its name', () => {
+        const groupedProperties = service.setTitleToNameIfNotSet([aspect3Group, aspect4Group]);
+        expect(groupedProperties.length).toEqual(2);
+        expect(groupedProperties[0].title).toEqual('test:aspect3');
+        expect(groupedProperties[1].title).toEqual('test:aspect3 (test:aspect4)');
     });
 
     describe('AspectOriented preset', () => {
