@@ -10,37 +10,5 @@
             min-width: unset;
             border-radius: 50%;
         }
-
-        #{$mat-form-field-wrapper},
-        #{$mat-form-field-wrapper}#{$mat-text-field-focused} {
-            padding: 0;
-
-            #{$mat-notched-outline} {
-                #{$mat-notched-outline-trailing},
-                #{$mat-notched-outline-notch} {
-                    border-width: 0;
-                    border-top: 0 solid;
-                    border-left: 0 solid;
-                    border-right: 0 solid;
-                    border-bottom: 1px solid var(--adf-theme-foreground-secondary-text-color);
-
-                    #{$mat-floating-label} {
-                        left: 0;
-                    }
-                }
-            }
-        }
-    }
-
-    #{$mat-text-field-focused} {
-        #{$mat-notched-outline-trailing},
-        #{$mat-notched-outline-notch},
-        #{$mat-notched-outline-leading} {
-            border-bottom-width: 2px;
-        }
-    }
-
-    #{$mat-notched-outline-leading} {
-        display: none;
     }
 }
