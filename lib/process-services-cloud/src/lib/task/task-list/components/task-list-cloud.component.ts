@@ -23,7 +23,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { Subject, BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { Subject, BehaviorSubject, combineLatest } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
