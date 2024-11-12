@@ -1,5 +1,7 @@
 /* stylelint-disable selector-class-pattern */
 .adf-rich-text-editor-container {
+    color: var(--theme-text-fg-color, rgba(0, 0, 0, 0.87));
+
     .editorjs {
         &.readonly {
             .codex-editor__redactor {
