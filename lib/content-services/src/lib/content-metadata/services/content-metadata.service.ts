@@ -86,19 +86,20 @@ export class ContentMetadataService {
     }
 
     setTitleToNameIfNotSet(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
-        const propertyGroupsTitles = {};
+        const propertyGroupsTitles = [];
         propertyGroups.map((propertyGroup) => {
             const title = propertyGroup.title;
             const name = propertyGroup.name;
             if (title) {
-                if (propertyGroupsTitles[title]) {
+                if (propertyGroupsTitles.includes(title)) {
                     propertyGroup.title = name ? `${title} (${name})` : title;
                 } else {
                     propertyGroup.title = title;
                 }
-                propertyGroupsTitles[title] = title;
+                propertyGroupsTitles.push(title);
             } else {
                 propertyGroup.title = name;
+                propertyGroupsTitles.push(name);
             }
         });
         return propertyGroups;

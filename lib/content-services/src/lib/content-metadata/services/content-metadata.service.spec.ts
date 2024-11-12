@@ -161,11 +161,25 @@ describe('ContentMetaDataService', () => {
 
     const aspect3Group: OrganisedPropertyGroup = {
         name: 'test:aspect3',
-        title: 'Test Aspect',
+        title: undefined,
         properties: [
             {
                 title: 'Property 3',
                 name: 'test:property3',
+                dataType: 'd:text',
+                mandatory: false,
+                multiValued: false
+            }
+        ]
+    };
+
+    const aspect4Group: OrganisedPropertyGroup = {
+        name: 'test:aspect4',
+        title: 'test:aspect3',
+        properties: [
+            {
+                title: 'Property 4',
+                name: 'test:property4',
                 dataType: 'd:text',
                 mandatory: false,
                 multiValued: false
@@ -219,12 +233,18 @@ describe('ContentMetaDataService', () => {
         });
     });
 
-    it('should distinguish aspects with same title by concatenating the aspect name', () => {
-        const groupedProperties = service.setTitleToNameIfNotSet([aspect1Group, aspect2Group, aspect3Group]);
-        expect(groupedProperties.length).toEqual(3);
+    it('should distinguish aspects with same title', () => {
+        const groupedProperties = service.setTitleToNameIfNotSet([aspect1Group, aspect2Group]);
+        expect(groupedProperties.length).toEqual(2);
         expect(groupedProperties[0].title).toEqual('Test Aspect');
         expect(groupedProperties[1].title).toEqual('Test Aspect (test:aspect2)');
-        expect(groupedProperties[2].title).toEqual('Test Aspect (test:aspect3)');
+    });
+
+    it('should distinguish aspect without title from other aspect with title equals to its name', () => {
+        const groupedProperties = service.setTitleToNameIfNotSet([aspect3Group, aspect4Group]);
+        expect(groupedProperties.length).toEqual(2);
+        expect(groupedProperties[0].title).toEqual('test:aspect3');
+        expect(groupedProperties[1].title).toEqual('test:aspect3 (test:aspect4)');
     });
 
     describe('AspectOriented preset', () => {
