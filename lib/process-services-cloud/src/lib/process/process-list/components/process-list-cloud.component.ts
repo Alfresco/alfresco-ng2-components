@@ -46,7 +46,7 @@ import {
     DataColumn
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
@@ -66,11 +66,9 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessListCloudComponent
-extends DataTableSchema<ProcessListDataColumnCustomData>
-implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
-    @ViewChild(DataTableComponent)
-    dataTable: DataTableComponent;
+export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataColumnCustomData> implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
+
+    @ViewChild(DataTableComponent) dataTable: DataTableComponent;
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
@@ -274,6 +272,8 @@ implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
 
     private defaultSorting = { key: 'startDate', direction: 'desc' };
 
+    private fetchProcessesTrigger$ = new Subject<void>();
+
     constructor(
         @Inject(PROCESS_SEARCH_API_METHOD_TOKEN) @Optional() private searchMethod: 'GET' | 'POST',
         private processListCloudService: ProcessListCloudService,
@@ -291,6 +291,44 @@ implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
+        });
+
+        this.isLoading = true;
+
+        combineLatest([
+            this.isColumnSchemaCreated$,
+            this.fetchProcessesTrigger$
+        ]).pipe(
+            filter(([isColumnSchemaCreated]) => {
+                return isColumnSchemaCreated;
+            }),
+            switchMap(() => {
+                console.count('load');
+                if (this.searchMethod === 'POST') {
+                    const requestNode = this.createProcessListRequestNode();
+                    this.processListRequestNode = requestNode;
+                    return this.processListCloudService.fetchProcessList(requestNode).pipe(take(1));
+                } else {
+                    const requestNode = this.createRequestNode();
+                    this.requestNode = requestNode;
+                    return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
+                }
+            }),
+            takeUntil(this.onDestroy$)
+        ).subscribe({
+            next: (processes) => {
+                this.rows = this.variableMapperService.mapVariablesByColumnTitle(processes.list.entries, this.columns);
+
+                this.dataAdapter = new ProcessListDatatableAdapter(this.rows, this.columns);
+
+                this.success.emit(processes);
+                this.isLoading = false;
+                this.pagination.next(processes.list.pagination);
+            },
+            error: (error) => {
+                this.error.emit(error);
+                this.isLoading = false;
+            }
         });
     }
 
@@ -340,6 +378,7 @@ implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
         if (this.isPropertyChanged(changes, 'sorting')) {
             this.formatSorting(changes['sorting'].currentValue);
         }
+
         if (this.isAnyPropertyChanged(changes)) {
             this.reload();
         }
@@ -351,48 +390,12 @@ implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
 
     reload() {
         if (this.appName || this.appName === '') {
-            this.load();
+            this.fetchProcessesTrigger$.next();
         } else {
             this.rows = [];
         }
     }
 
-    private load() {
-        this.isLoading = true;
-
-        this.isColumnSchemaCreated$
-            .pipe(
-                filter((isColumnSchemaCreated) => !!isColumnSchemaCreated),
-                take(1),
-                switchMap(() => {
-                    if (this.searchMethod === 'POST') {
-                        const requestNode = this.createProcessListRequestNode();
-                        this.processListRequestNode = requestNode;
-                        return this.processListCloudService.fetchProcessList(requestNode).pipe(take(1));
-                    } else {
-                        const requestNode = this.createRequestNode();
-                        this.requestNode = requestNode;
-                        return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
-                    }
-                }),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe({
-                next: (processes) => {
-                    this.rows = this.variableMapperService.mapVariablesByColumnTitle(processes.list.entries, this.columns);
-
-                    this.dataAdapter = new ProcessListDatatableAdapter(this.rows, this.columns);
-
-                    this.success.emit(processes);
-                    this.isLoading = false;
-                    this.pagination.next(processes.list.pagination);
-                },
-                error: (error) => {
-                    this.error.emit(error);
-                    this.isLoading = false;
-                }
-            });
-    }
 
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {
         for (const property in changes) {
