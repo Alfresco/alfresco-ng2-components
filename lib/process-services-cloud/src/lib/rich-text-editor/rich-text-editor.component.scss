@@ -11,6 +11,10 @@
 
     .ce-inline-toolbar {
         transform: scale(1);
+
+        .ce-inline-tool .material-icons {
+            font-size: 20px;
+        }
     }
 }
 

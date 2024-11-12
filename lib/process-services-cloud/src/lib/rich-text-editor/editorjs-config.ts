@@ -86,7 +86,8 @@ export const editorJsConfig = {
         'Increase/Decrease font size': {
             class: ChangeFontSize,
             config: {
-                cssClass: 'plus20pc'
+                cssClass: 'plus20pc',
+                buttonIcon: '<span class="material-icons">format_size</span>'
             }
         },
         inlineCode: {
