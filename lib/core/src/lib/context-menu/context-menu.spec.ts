@@ -25,10 +25,11 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
 @Component({
     selector: 'adf-test-component',
-    template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div> `
+    template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="isEnabled"></div> `
 })
 class TestComponent {
     actions: () => any[];
+    isEnabled: boolean;
 }
 
 describe('ContextMenuDirective', () => {
@@ -108,8 +109,21 @@ describe('ContextMenuDirective', () => {
             declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
+        fixture.componentInstance.isEnabled = false;
         fixture.componentInstance.actions = getActions;
         fixture.detectChanges();
+    });
+
+    it('should not show menu on mouse contextmenu event when context menu is disabled', () => {
+        fixture.componentInstance.isEnabled = false;
+        fixture.detectChanges();
+
+        const targetElement = fixture.debugElement.nativeElement.querySelector('#target');
+        targetElement.dispatchEvent(new CustomEvent('contextmenu'));
+        fixture.detectChanges();
+
+        const contextMenu = document.querySelector('.adf-context-menu');
+        expect(contextMenu).toBe(null);
     });
 
     describe('Events', () => {
@@ -117,6 +131,9 @@ describe('ContextMenuDirective', () => {
         let contextMenu: HTMLElement | null;
 
         beforeEach(() => {
+            fixture.componentInstance.isEnabled = true;
+            fixture.detectChanges();
+
             targetElement = fixture.debugElement.nativeElement.querySelector('#target');
             targetElement.dispatchEvent(new CustomEvent('contextmenu'));
             fixture.detectChanges();
@@ -150,6 +167,9 @@ describe('ContextMenuDirective', () => {
         let loader: HarnessLoader;
 
         beforeEach(() => {
+            fixture.componentInstance.isEnabled = true;
+            fixture.detectChanges();
+
             targetElement = fixture.debugElement.nativeElement.querySelector('#target');
             targetElement.dispatchEvent(new CustomEvent('contextmenu'));
             fixture.detectChanges();
