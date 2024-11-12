@@ -151,7 +151,6 @@ describe('TaskListCloudComponent', () => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTasks));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-            fixture.detectChanges();
             component.ngOnChanges({ appName });
             fixture.detectChanges();
 
@@ -214,7 +213,6 @@ describe('TaskListCloudComponent', () => {
             });
 
             component.reload();
-            fixture.detectChanges();
         });
 
         it('should call endpoint when a column visibility gets changed', () => {
@@ -244,16 +242,19 @@ describe('TaskListCloudComponent', () => {
                 component.status = 'mock-status';
                 component.lastModifiedFrom = 'mock-lastmodified-date';
                 component.owner = 'mock-owner-name';
+
                 const priorityChange = new SimpleChange(undefined, 1, true);
                 const statusChange = new SimpleChange(undefined, 'mock-status', true);
                 const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
                 const ownerChange = new SimpleChange(undefined, 'mock-owner-name', true);
+
                 component.ngOnChanges({
                     priority: priorityChange,
                     status: statusChange,
                     lastModifiedFrom: lastModifiedFromChange,
                     owner: ownerChange
                 });
+
                 fixture.detectChanges();
                 expect(component.isListEmpty()).toBeFalsy();
                 expect(getTaskByRequestSpy).toHaveBeenCalled();
@@ -357,7 +358,6 @@ describe('TaskListCloudComponent', () => {
             });
 
             component.reload();
-            fixture.detectChanges();
         });
 
         it('should call endpoint when a column visibility gets changed', () => {
