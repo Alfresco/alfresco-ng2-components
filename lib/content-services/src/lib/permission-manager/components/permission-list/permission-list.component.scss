@@ -89,10 +89,6 @@
         flex: 1 1 auto;
         padding: 0;
     }
-
-    &-delete-selected-permission-icon {
-        color: var(--theme-grey-divider-color);
-    }
 }
 
 [aria-sort='Ascending'] adf-user-role-column,

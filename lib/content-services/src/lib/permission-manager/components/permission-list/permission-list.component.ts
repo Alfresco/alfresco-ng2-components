@@ -17,7 +17,7 @@
 
 import { ObjectDataRow } from '@alfresco/adf-core';
 import { PermissionElement } from '@alfresco/js-api';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { PermissionListService } from './permission-list.service';
 import { CommonModule } from '@angular/common';
@@ -29,6 +29,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { PermissionContainerComponent } from '../permission-container/permission-container.component';
 import { PopOverDirective } from '../pop-over.directive';
+import { AllowableOperationsEnum, ContentService } from '../../../common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-permission-list',
@@ -63,13 +65,30 @@ export class PermissionListComponent implements OnInit {
 
     selectedPermissions: PermissionDisplayModel[] = [];
 
-    constructor(public readonly permissionList: PermissionListService) {
+    private _updatePermissionsAllowed = false;
+
+    private readonly destroyRef = inject(DestroyRef);
+
+    get updatePermissionsAllowed(): boolean {
+        return this._updatePermissionsAllowed;
+    }
+
+    constructor(public readonly permissionList: PermissionListService, private readonly contentService: ContentService) {
         this.error = this.permissionList.errored;
         this.update = this.permissionList.updated;
     }
 
     ngOnInit(): void {
         this.permissionList.fetchPermission(this.nodeId);
+        this.permissionList.data$
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(
+                (model) =>
+                    (this._updatePermissionsAllowed = this.contentService.hasAllowableOperations(
+                        model.node,
+                        AllowableOperationsEnum.UPDATEPERMISSIONS
+                    ))
+            );
     }
 
     openAddPermissionDialog() {

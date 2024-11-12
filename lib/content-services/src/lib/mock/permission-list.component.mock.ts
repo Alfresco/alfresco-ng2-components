@@ -15,495 +15,11 @@
  * limitations under the License.
  */
 
-export const fakeNodeWithPermissions: any = {
-    aspectNames: [
-        'cm:auditable',
-        'cm:taggable',
-        'cm:author',
-        'cm:titled',
-        'app:uifacets'
-    ],
-    createdAt: '2017-11-16T16:29:38.638+0000',
-    path: {
-        name: '/Company Home/Sites/testsite/documentLibrary',
-        isComplete: true,
-        elements: [
-          {
-            id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
-            name: 'Company Home'
-          },
-          {
-            id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-            name: 'Sites'
-          },
-          {
-            id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-            name: 'testsite'
-          },
-          {
-            id: '71626fae-0c04-4d0c-a129-20fa4c178716',
-            name: 'documentLibrary'
-          }
-        ]
-    },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
-    permissions: {
-        inherited: [
-            {
-                authorityId: 'guest',
-                name: 'Read',
-                accessStatus: 'ALLOWED'
-            },
-            {
-                authorityId: 'GROUP_EVERYONE',
-                name: 'Read',
-                accessStatus: 'ALLOWED'
-            }
-        ],
-        locallySet: [
-            {
-                authorityId: 'GROUP_EVERYONE',
-                name: 'Contributor',
-                accessStatus: 'ALLOWED'
-            }
-        ],
-        settable: [
-            'Contributor',
-            'Collaborator',
-            'Coordinator',
-            'Editor',
-            'Consumer'
-        ],
-        isInheritanceEnabled: true
-    },
-    modifiedByUser: {
-        id: 'admin',
-        displayName: 'PedroH Hernandez'
-    },
-    name: 'test',
-    id: 'f472543f-7218-403d-917b-7a5861257244',
-    nodeType: 'cm:folder',
-    properties: {
-        'cm:title': 'test',
-        'cm:author': 'yagud',
-        'cm:taggable': [
-            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
-        ],
-        'cm:description': 'sleepery',
-        'app:icon': 'space-icon-default'
-    }
-};
+import { Node } from '@alfresco/js-api';
 
-export const fakeNodeInheritedOnly = {
-    allowableOperations: [ 'updatePermissions' ],
-    aspectNames: [
-        'cm:auditable',
-        'cm:taggable',
-        'cm:author',
-        'cm:titled',
-        'app:uifacets'
-    ],
-    createdAt: '2017-11-16T16:29:38.638+0000',
-    path: {
-        name: '/Company Home/Sites/testsite/documentLibrary',
-        isComplete: true,
-        elements: [
-          {
-            id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
-            name: 'Company Home'
-          },
-          {
-            id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-            name: 'Sites'
-          },
-          {
-            id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-            name: 'testsite',
-            nodeType: 'st:site'
-          },
-          {
-            id: '71626fae-0c04-4d0c-a129-20fa4c178716',
-            name: 'documentLibrary'
-          }
-        ]
-    },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
-    permissions: {
-        inherited: [
-            {
-                authorityId: 'guest',
-                name: 'Read',
-                accessStatus: 'ALLOWED'
-            },
-            {
-                authorityId: 'GROUP_EVERYONE',
-                name: 'Read',
-                accessStatus: 'ALLOWED'
-            }
-        ],
-        settable: [
-            'Contributor',
-            'Collaborator',
-            'Coordinator',
-            'Editor',
-            'Consumer'
-        ],
-        isInheritanceEnabled: true
-    },
-    modifiedByUser: {
-        id: 'admin',
-        displayName: 'PedroH Hernandez'
-    },
-    name: 'test',
-    id: 'f472543f-7218-403d-917b-7a5861257244',
-    nodeType: 'cm:folder',
-    properties: {
-        'cm:title': 'test',
-        'cm:author': 'yagud',
-        'cm:taggable': [
-            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
-        ],
-        'cm:description': 'sleepery',
-        'app:icon': 'space-icon-default'
-    }
-};
-
-export const fakeReadOnlyNodeInherited = {
-    aspectNames: [
-        'cm:auditable',
-        'cm:taggable',
-        'cm:author',
-        'cm:titled',
-        'app:uifacets'
-    ],
-    createdAt: '2017-11-16T16:29:38.638+0000',
-    path: {
-        name: '/Company Home/Sites/testsite/documentLibrary',
-        isComplete: true,
-        elements: [
-          {
-            id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
-            name: 'Company Home'
-          },
-          {
-            id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-            name: 'Sites'
-          },
-          {
-            id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-            name: 'testsite'
-          },
-          {
-            id: '71626fae-0c04-4d0c-a129-20fa4c178716',
-            name: 'documentLibrary'
-          }
-        ]
-    },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
-    permissions: {
-        inherited: [
-            {
-                authorityId: 'guest',
-                name: 'Read',
-                accessStatus: 'ALLOWED'
-            },
-            {
-                authorityId: 'GROUP_EVERYONE',
-                name: 'Read',
-                accessStatus: 'ALLOWED'
-            }
-        ],
-        settable: [
-            'Contributor',
-            'Collaborator',
-            'Coordinator',
-            'Editor',
-            'Consumer'
-        ],
-        isInheritanceEnabled: true
-    },
-    modifiedByUser: {
-        id: 'admin',
-        displayName: 'PedroH Hernandez'
-    },
-    name: 'test',
-    id: 'f472543f-7218-403d-917b-7a5861257244',
-    nodeType: 'cm:folder',
-    properties: {
-        'cm:title': 'test',
-        'cm:author': 'yagud',
-        'cm:taggable': [
-            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
-        ],
-        'cm:description': 'sleepery',
-        'app:icon': 'space-icon-default'
-    }
-};
-
-export const fakeNodeWithoutSite: any = {
-    aspectNames: [
-        'cm:auditable',
-        'cm:taggable',
-        'cm:author',
-        'cm:titled',
-        'app:uifacets'
-    ],
-    createdAt: '2017-11-16T16:29:38.638+0000',
-    path: {
-        name: '/Company Home/User Homes/user/documentLibrary',
-        isComplete: true,
-        elements: [
-            {
-                id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
-                name: 'Company Home',
-                nodeType: 'cm:folder'
-            },
-            {
-                id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-                name: 'User Homes',
-                nodeType: 'cm:folder'
-            },
-            {
-                id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-                name: 'user',
-                nodeType: 'cm:folder'
-            },
-            {
-                id: '71626fae-0c04-4d0c-a129-20fa4c178716',
-                name: 'documentLibrary',
-                nodeType: 'cm:folder'
-            }
-        ]
-    },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
-    permissions: {
-        locallySet: [
-            {
-                authorityId: 'GROUP_EVERYONE',
-                name: 'Contributor',
-                accessStatus: 'ALLOWED'
-            }
-        ],
-        settable: [
-            'Contributor',
-            'Collaborator',
-            'Coordinator',
-            'Editor',
-            'Consumer'
-        ],
-        isInheritanceEnabled: false
-    },
-    modifiedByUser: {
-        id: 'admin',
-        displayName: 'PedroH Hernandez'
-    },
-    name: 'test',
-    id: 'f472543f-7218-403d-917b-7a5861257244',
-    nodeType: 'cm:folder',
-    properties: {
-        'cm:title': 'test',
-        'cm:author': 'yagud',
-        'cm:taggable': [
-            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
-        ],
-        'cm:description': 'sleepery',
-        'app:icon': 'space-icon-default'
-    }
-};
-
-export const fakeNodeWithOnlyLocally: any = {
-    aspectNames: [
-        'cm:auditable',
-        'cm:taggable',
-        'cm:author',
-        'cm:titled',
-        'app:uifacets'
-    ],
-    createdAt: '2017-11-16T16:29:38.638+0000',
-    path: {
-        name: '/Company Home/Sites/testsite/documentLibrary',
-        isComplete: true,
-        elements: [
-          {
-            id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
-            name: 'Company Home',
-            nodeType: 'cm:folder'
-          },
-          {
-            id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-            name: 'Sites',
-            nodeType: 'st:sites'
-          },
-          {
-            id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-            name: 'testsite',
-            nodeType: 'st:site'
-          },
-          {
-            id: '71626fae-0c04-4d0c-a129-20fa4c178716',
-            name: 'documentLibrary',
-            nodeType: 'cm:folder'
-          }
-        ]
-    },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
-    permissions: {
-        locallySet: [
-            {
-                authorityId: 'GROUP_EVERYONE',
-                name: 'Contributor',
-                accessStatus: 'ALLOWED'
-            }
-        ],
-        settable: [
-            'Contributor',
-            'Collaborator',
-            'Coordinator',
-            'Editor',
-            'Consumer'
-        ],
-        isInheritanceEnabled: false
-    },
-    modifiedByUser: {
-        id: 'admin',
-        displayName: 'PedroH Hernandez'
-    },
-    name: 'test',
-    id: 'f472543f-7218-403d-917b-7a5861257244',
-    nodeType: 'cm:folder',
-    properties: {
-        'cm:title': 'test',
-        'cm:author': 'yagud',
-        'cm:taggable': [
-            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
-        ],
-        'cm:description': 'sleepery',
-        'app:icon': 'space-icon-default'
-    }
-};
-
-export const fakeNodeToRemovePermission: any = {
-    aspectNames: [
-        'cm:auditable',
-        'cm:taggable',
-        'cm:author',
-        'cm:titled',
-        'app:uifacets'
-    ],
-    createdAt: '2017-11-16T16:29:38.638+0000',
-    path: {
-        name: '/Company Home/Sites/testsite/documentLibrary',
-        isComplete: true,
-        elements: [
-          {
-            id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
-            name: 'Company Home'
-          },
-          {
-            id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-            name: 'Sites'
-          },
-          {
-            id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
-            name: 'testsite'
-          },
-          {
-            id: '71626fae-0c04-4d0c-a129-20fa4c178716',
-            name: 'documentLibrary'
-          }
-        ]
-    },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
-    permissions: {
-        locallySet: [
-            {
-                authorityId: 'GROUP_EVERYONE',
-                name: 'Contributor',
-                accessStatus: 'ALLOWED'
-            },
-            {
-                authorityId: 'GROUP_FAKE_1',
-                name: 'Contributor',
-                accessStatus: 'ALLOWED'
-            },
-            {
-                authorityId: 'FAKE_PERSON_1',
-                name: 'Contributor',
-                accessStatus: 'ALLOWED'
-            }
-        ],
-        settable: [
-            'Contributor',
-            'Collaborator',
-            'Coordinator',
-            'Editor',
-            'Consumer'
-        ],
-        isInheritanceEnabled: true
-    },
-    modifiedByUser: {
-        id: 'admin',
-        displayName: 'PedroH Hernandez'
-    },
-    name: 'test',
-    id: 'f472543f-7218-403d-917b-7a5861257244',
-    nodeType: 'cm:folder',
-    properties: {
-        'cm:title': 'test',
-        'cm:author': 'yagud',
-        'cm:taggable': [
-            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
-        ],
-        'cm:description': 'sleepery',
-        'app:icon': 'space-icon-default'
-    }
-};
-
-export const fakeNodeWithoutPermissions: any = {
-    aspectNames: [
-        'cm:auditable',
-        'cm:taggable',
-        'cm:author',
-        'cm:titled',
-        'app:uifacets'
-    ],
-    createdAt: '2017-11-16T16:29:38.638+0000',
+const fakeBaseNode = {
+    aspectNames: ['cm:auditable', 'cm:taggable', 'cm:author', 'cm:titled', 'app:uifacets'],
+    createdAt: new Date('2017-11-16T16:29:38.638+0000'),
     path: {
         name: '/Company Home/Sites/testsite/documentLibrary',
         isComplete: true,
@@ -532,7 +48,268 @@ export const fakeNodeWithoutPermissions: any = {
         id: 'System',
         displayName: 'System'
     },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
+    modifiedAt: new Date('2018-03-21T03:17:58.783+0000')
+} as Node;
+
+export const fakeNodeWithPermissions: any = {
+    ...fakeBaseNode,
+    permissions: {
+        inherited: [
+            {
+                authorityId: 'guest',
+                name: 'Read',
+                accessStatus: 'ALLOWED'
+            },
+            {
+                authorityId: 'GROUP_EVERYONE',
+                name: 'Read',
+                accessStatus: 'ALLOWED'
+            }
+        ],
+        locallySet: [
+            {
+                authorityId: 'GROUP_EVERYONE',
+                name: 'Contributor',
+                accessStatus: 'ALLOWED'
+            }
+        ],
+        settable: ['Contributor', 'Collaborator', 'Coordinator', 'Editor', 'Consumer'],
+        isInheritanceEnabled: true
+    },
+    modifiedByUser: {
+        id: 'admin',
+        displayName: 'PedroH Hernandez'
+    },
+    name: 'test',
+    id: 'f472543f-7218-403d-917b-7a5861257244',
+    nodeType: 'cm:folder',
+    properties: {
+        'cm:title': 'test',
+        'cm:author': 'yagud',
+        'cm:taggable': ['e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'],
+        'cm:description': 'sleepery',
+        'app:icon': 'space-icon-default'
+    }
+};
+
+export const fakeNodeInheritedOnly = {
+    allowableOperations: ['updatePermissions'],
+    ...fakeBaseNode,
+    path: {
+        name: '/Company Home/Sites/testsite/documentLibrary',
+        isComplete: true,
+        elements: [
+            {
+                id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
+                name: 'Company Home'
+            },
+            {
+                id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
+                name: 'Sites'
+            },
+            {
+                id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
+                name: 'testsite',
+                nodeType: 'st:site'
+            },
+            {
+                id: '71626fae-0c04-4d0c-a129-20fa4c178716',
+                name: 'documentLibrary'
+            }
+        ]
+    },
+    permissions: {
+        inherited: [
+            {
+                authorityId: 'guest',
+                name: 'Read',
+                accessStatus: 'ALLOWED'
+            },
+            {
+                authorityId: 'GROUP_EVERYONE',
+                name: 'Read',
+                accessStatus: 'ALLOWED'
+            }
+        ],
+        settable: ['Contributor', 'Collaborator', 'Coordinator', 'Editor', 'Consumer'],
+        isInheritanceEnabled: true
+    },
+    modifiedByUser: {
+        id: 'admin',
+        displayName: 'PedroH Hernandez'
+    },
+    name: 'test',
+    id: 'f472543f-7218-403d-917b-7a5861257244',
+    nodeType: 'cm:folder',
+    properties: {
+        'cm:title': 'test',
+        'cm:author': 'yagud',
+        'cm:taggable': ['e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'],
+        'cm:description': 'sleepery',
+        'app:icon': 'space-icon-default'
+    }
+};
+
+export const fakeReadOnlyNodeInherited = {
+    ...fakeBaseNode,
+    permissions: {
+        inherited: [
+            {
+                authorityId: 'guest',
+                name: 'Read',
+                accessStatus: 'ALLOWED'
+            },
+            {
+                authorityId: 'GROUP_EVERYONE',
+                name: 'Read',
+                accessStatus: 'ALLOWED'
+            }
+        ],
+        settable: ['Contributor', 'Collaborator', 'Coordinator', 'Editor', 'Consumer'],
+        isInheritanceEnabled: true
+    },
+    modifiedByUser: {
+        id: 'admin',
+        displayName: 'PedroH Hernandez'
+    },
+    name: 'test',
+    id: 'f472543f-7218-403d-917b-7a5861257244',
+    nodeType: 'cm:folder',
+    properties: {
+        'cm:title': 'test',
+        'cm:author': 'yagud',
+        'cm:taggable': ['e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'],
+        'cm:description': 'sleepery',
+        'app:icon': 'space-icon-default'
+    }
+};
+
+export const fakeNodeWithoutSite: any = {
+    ...fakeBaseNode,
+    permissions: {
+        locallySet: [
+            {
+                authorityId: 'GROUP_EVERYONE',
+                name: 'Contributor',
+                accessStatus: 'ALLOWED'
+            }
+        ],
+        settable: ['Contributor', 'Collaborator', 'Coordinator', 'Editor', 'Consumer'],
+        isInheritanceEnabled: false
+    },
+    modifiedByUser: {
+        id: 'admin',
+        displayName: 'PedroH Hernandez'
+    },
+    name: 'test',
+    id: 'f472543f-7218-403d-917b-7a5861257244',
+    nodeType: 'cm:folder',
+    properties: {
+        'cm:title': 'test',
+        'cm:author': 'yagud',
+        'cm:taggable': ['e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'],
+        'cm:description': 'sleepery',
+        'app:icon': 'space-icon-default'
+    }
+};
+
+export const fakeNodeWithOnlyLocally: any = {
+    allowableOperations: ['updatePermissions'],
+    ...fakeBaseNode,
+    path: {
+        name: '/Company Home/Sites/testsite/documentLibrary',
+        isComplete: true,
+        elements: [
+            {
+                id: '2be275a1-b00d-4e45-83d8-66af43ac2252',
+                name: 'Company Home',
+                nodeType: 'cm:folder'
+            },
+            {
+                id: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
+                name: 'Sites',
+                nodeType: 'st:sites'
+            },
+            {
+                id: 'e002c740-b8f9-482a-a554-8fff4e4c9dc0',
+                name: 'testsite',
+                nodeType: 'st:site'
+            },
+            {
+                id: '71626fae-0c04-4d0c-a129-20fa4c178716',
+                name: 'documentLibrary',
+                nodeType: 'cm:folder'
+            }
+        ]
+    },
+    permissions: {
+        locallySet: [
+            {
+                authorityId: 'GROUP_EVERYONE',
+                name: 'Contributor',
+                accessStatus: 'ALLOWED'
+            }
+        ],
+        settable: ['Contributor', 'Collaborator', 'Coordinator', 'Editor', 'Consumer'],
+        isInheritanceEnabled: false
+    },
+    modifiedByUser: {
+        id: 'admin',
+        displayName: 'PedroH Hernandez'
+    },
+    name: 'test',
+    id: 'f472543f-7218-403d-917b-7a5861257244',
+    nodeType: 'cm:folder',
+    properties: {
+        'cm:title': 'test',
+        'cm:author': 'yagud',
+        'cm:taggable': ['e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'],
+        'cm:description': 'sleepery',
+        'app:icon': 'space-icon-default'
+    }
+};
+
+export const fakeNodeToRemovePermission: any = {
+    ...fakeBaseNode,
+    permissions: {
+        locallySet: [
+            {
+                authorityId: 'GROUP_EVERYONE',
+                name: 'Contributor',
+                accessStatus: 'ALLOWED'
+            },
+            {
+                authorityId: 'GROUP_FAKE_1',
+                name: 'Contributor',
+                accessStatus: 'ALLOWED'
+            },
+            {
+                authorityId: 'FAKE_PERSON_1',
+                name: 'Contributor',
+                accessStatus: 'ALLOWED'
+            }
+        ],
+        settable: ['Contributor', 'Collaborator', 'Coordinator', 'Editor', 'Consumer'],
+        isInheritanceEnabled: true
+    },
+    modifiedByUser: {
+        id: 'admin',
+        displayName: 'PedroH Hernandez'
+    },
+    name: 'test',
+    id: 'f472543f-7218-403d-917b-7a5861257244',
+    nodeType: 'cm:folder',
+    properties: {
+        'cm:title': 'test',
+        'cm:author': 'yagud',
+        'cm:taggable': ['e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'],
+        'cm:description': 'sleepery',
+        'app:icon': 'space-icon-default'
+    }
+};
+
+export const fakeNodeWithoutPermissions: any = {
+    ...fakeBaseNode,
     permissions: {
         locallySet: [],
         settable: [],
@@ -548,9 +325,7 @@ export const fakeNodeWithoutPermissions: any = {
     properties: {
         'cm:title': 'test',
         'cm:author': 'yagud',
-        'cm:taggable': [
-            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
-        ],
+        'cm:taggable': ['e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'],
         'cm:description': 'sleepery',
         'app:icon': 'space-icon-default'
     }
@@ -578,11 +353,7 @@ export const fakeSiteNodeResponse: any = {
                     modifiedAt: '2018-03-22T15:40:10.093+0000',
                     nodeType: 'st:site',
                     parentId: '1be10a97-6eb9-4b60-b6c6-1673900e9631',
-                    aspectNames: [
-                        'cm:tagscope',
-                        'cm:titled',
-                        'cm:auditable'
-                    ],
+                    aspectNames: ['cm:tagscope', 'cm:titled', 'cm:auditable'],
                     createdAt: '2018-03-22T15:39:50.821+0000',
                     isFolder: true,
                     search: {
@@ -663,15 +434,8 @@ export const fakeEmptyResponse: any = {
 };
 
 export const fakeNodeLocalSiteManager = {
-    allowableOperations: [ 'updatePermissions' ],
-    aspectNames: [
-        'cm:auditable',
-        'cm:taggable',
-        'cm:author',
-        'cm:titled',
-        'app:uifacets'
-    ],
-    createdAt: '2017-11-16T16:29:38.638+0000',
+    allowableOperations: ['updatePermissions'],
+    ...fakeBaseNode,
     path: {
         name: '/Company Home/Sites/testsite/documentLibrary',
         isComplete: true,
@@ -695,13 +459,6 @@ export const fakeNodeLocalSiteManager = {
             }
         ]
     },
-    isFolder: true,
-    isFile: false,
-    createdByUser: {
-        id: 'System',
-        displayName: 'System'
-    },
-    modifiedAt: '2018-03-21T03:17:58.783+0000',
     permissions: {
         locallySet: [
             {
@@ -715,13 +472,7 @@ export const fakeNodeLocalSiteManager = {
                 accessStatus: 'ALLOWED'
             }
         ],
-        settable: [
-            'Contributor',
-            'Collaborator',
-            'Coordinator',
-            'Editor',
-            'Consumer'
-        ],
+        settable: ['Contributor', 'Collaborator', 'Coordinator', 'Editor', 'Consumer'],
         isInheritanceEnabled: false
     },
     modifiedByUser: {
@@ -734,9 +485,7 @@ export const fakeNodeLocalSiteManager = {
     properties: {
         'cm:title': 'test',
         'cm:author': 'yagud',
-        'cm:taggable': [
-            'e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'
-        ],
+        'cm:taggable': ['e8c8fbba-03ba-4fa6-86b1-f7ad7c296409'],
         'cm:description': 'sleepery',
         'app:icon': 'space-icon-default'
     }
