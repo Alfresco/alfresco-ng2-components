@@ -27,7 +27,7 @@ import { ContextMenuOverlayService } from './context-menu-overlay.service';
 export class ContextMenuDirective {
     /** Items for the menu. */
     @Input('adf-context-menu')
-    links: any[];
+    getActions: () => any[];
 
     /** Is the menu enabled? */
     @Input('adf-context-menu-enabled')
@@ -42,10 +42,11 @@ export class ContextMenuDirective {
                 event.preventDefault();
             }
 
-            if (this.links && this.links.length > 0) {
+            const actions = this.getActions();
+            if (actions && actions.length > 0) {
                 this.contextMenuService.open({
                     source: event,
-                    data: this.links
+                    data: actions
                 });
             }
         }

@@ -28,7 +28,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
     template: ` <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div> `
 })
 class TestComponent {
-    actions;
+    actions: () => any[];
 }
 
 describe('ContextMenuDirective', () => {
@@ -100,6 +100,7 @@ describe('ContextMenuDirective', () => {
             }
         }
     ];
+    const getActions = () => actions;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -107,7 +108,7 @@ describe('ContextMenuDirective', () => {
             declarations: [TestComponent]
         });
         fixture = TestBed.createComponent(TestComponent);
-        fixture.componentInstance.actions = actions;
+        fixture.componentInstance.actions = getActions;
         fixture.detectChanges();
     });
 
@@ -174,14 +175,14 @@ describe('ContextMenuDirective', () => {
             contextMenu?.querySelectorAll('button')[0].click();
             fixture.detectChanges();
 
-            expect(fixture.componentInstance.actions[1].subject.next).not.toHaveBeenCalled();
+            expect(fixture.componentInstance.actions()[1].subject.next).not.toHaveBeenCalled();
         });
 
         it('should perform action when item is not disabled', () => {
             contextMenu?.querySelectorAll('button')[1].click();
             fixture.detectChanges();
 
-            expect(fixture.componentInstance.actions[2].subject.next).toHaveBeenCalled();
+            expect(fixture.componentInstance.actions()[2].subject.next).toHaveBeenCalled();
         });
 
         it('should not render item icon if not set', async () => {

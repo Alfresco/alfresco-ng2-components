@@ -713,7 +713,7 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         this.isSelectAllIndeterminate = false;
 
         if (this.multiselect) {
-            const selectableRows = this.data.getRows().filter(row => row?.isSelectable);
+            const selectableRows = this.data.getRows().filter((row) => row?.isSelectable);
             if (selectableRows && selectableRows.length > 0) {
                 for (let i = 0; i < selectableRows.length; i++) {
                     this.selectRow(selectableRows[i], matCheckboxChange.checked);
@@ -802,10 +802,12 @@ export class DataTableComponent implements OnInit, AfterContentInit, OnChanges, 
         return false;
     }
 
-    getContextMenuActions(row: DataRow, col: DataColumn): any[] {
-        const event = new DataCellEvent(row, col, []);
-        this.showRowContextMenu.emit(event);
-        return event.value.actions;
+    getContextMenuActions(row: DataRow, col: DataColumn): () => any[] {
+        return () => {
+            const event = new DataCellEvent(row, col, []);
+            this.showRowContextMenu.emit(event);
+            return event.value.actions;
+        };
     }
 
     getRowActions(row: DataRow, col?: DataColumn): any[] {

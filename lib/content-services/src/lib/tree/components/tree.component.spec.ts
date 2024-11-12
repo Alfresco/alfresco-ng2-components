@@ -389,7 +389,7 @@ describe('TreeComponent', () => {
             component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
 
             fixture.detectChanges();
-            expect(contextMenu.links).toEqual(component.contextMenuOptions);
+            expect(contextMenu.getActions).toEqual(component.contextMenuOptions);
         });
 
         it('should have assigned default subject to each context menu option', () => {
@@ -398,7 +398,7 @@ describe('TreeComponent', () => {
             component.contextMenuOptions = [contextMenuOption1, contextMenuOption2];
 
             fixture.detectChanges();
-            expect(contextMenu.links).toEqual([
+            expect(contextMenu.getActions).toEqual([
                 {
                     title: optionTitle1,
                     subject: jasmine.any(Subject)
