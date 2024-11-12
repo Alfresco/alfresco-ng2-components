@@ -58,7 +58,7 @@ When the saved searches file does not exist, it will be created:
 
 ```typescript
 this.savedSearchService.createSavedSearchesNode('parent-node-id').subscribe((node) => {
-    console.log('Created saved-searches.json node:', node);
+    console.log('Created config.json node:', node);
 });
 ```
 

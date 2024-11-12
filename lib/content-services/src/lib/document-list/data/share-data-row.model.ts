@@ -25,6 +25,7 @@ export const ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
 export class ShareDataRow implements DataRow {
     cache: { [key: string]: any } = {};
     isSelected: boolean = false;
+    isSelectable: boolean = true;
     isDropTarget: boolean;
     cssClass: string = '';
     id: string;

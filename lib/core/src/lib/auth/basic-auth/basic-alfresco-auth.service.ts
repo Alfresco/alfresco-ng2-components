@@ -373,15 +373,24 @@ export class BasicAlfrescoAuthService extends BaseAuthenticationService {
     getTicketEcmBase64(requestUrl: string): string | null {
         let ticket = null;
 
-        const contextRootBpm = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app';
-        const contextRoot = this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco';
+        const bpmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM) || 'activiti-app'}/`;
+        const ecmRoot = `/${this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM) || 'alfresco'}/`;
 
-        if (contextRoot && requestUrl.indexOf(contextRoot) !== -1) {
-            ticket = 'Basic ' + btoa(this.contentAuth.getToken());
-        } else if (contextRootBpm && requestUrl.indexOf(contextRootBpm) !== -1) {
-            ticket = 'Basic ' + this.processAuth.getToken();
+        if (requestUrl?.includes(ecmRoot) && !requestUrl.includes(bpmRoot)) {
+            ticket = this.getContentServicesTicket();
+        } else if (requestUrl?.includes(bpmRoot) && !requestUrl.includes(ecmRoot)) {
+            ticket = this.getProcessServicesTicket();
+        } else if (requestUrl?.includes(ecmRoot) && requestUrl.includes(bpmRoot)) {
+            ticket = requestUrl.indexOf(ecmRoot) < requestUrl.indexOf(bpmRoot) ? this.getContentServicesTicket() : this.getProcessServicesTicket();
         }
-
         return ticket;
+    }
+
+    private getProcessServicesTicket(): string {
+        return this.processAuth.getToken()?.startsWith('Basic ') ? this.processAuth.getToken() : 'Basic ' + this.processAuth.getToken();
+    }
+
+    private getContentServicesTicket(): string {
+        return 'Basic ' + btoa(this.contentAuth.getToken());
     }
 }

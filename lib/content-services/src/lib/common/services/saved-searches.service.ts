@@ -217,7 +217,7 @@ export class SavedSearchesService {
                         this.searchApi.search({
                             query: {
                                 language: SEARCH_LANGUAGE.AFTS,
-                                query: `cm:name:"saved-searches.json" AND PARENT:"${parentNodeId}"`
+                                query: `cm:name:"config.json" AND PARENT:"${parentNodeId}"`
                             }
                         })
                     ).pipe(
@@ -247,7 +247,7 @@ export class SavedSearchesService {
         }
     }
     private createSavedSearchesNode(parentNodeId: string): Observable<NodeEntry> {
-        return from(this.nodesApi.createNode(parentNodeId, { name: 'saved-searches.json', nodeType: 'cm:content' }));
+        return from(this.nodesApi.createNode(parentNodeId, { name: 'config.json', nodeType: 'cm:content' }));
     }
 
     private async mapFileContentToSavedSearches(blob: Blob): Promise<Array<SavedSearch>> {

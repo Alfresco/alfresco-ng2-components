@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { SearchService } from '../../../search/services/search.service';
 import { PermissionListComponent } from './permission-list.component';
 import { NodePermissionService } from '../../services/node-permission.service';
@@ -38,6 +38,11 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSlideToggleHarness } from '@angular/material/slide-toggle/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
+import { By } from '@angular/platform-browser';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { ContentService } from '../../../common/services/content.service';
+import { AllowableOperationsEnum, NodePermissionsModel, PermissionContainerComponent } from '@alfresco/adf-content-services';
+import { DebugElement } from '@angular/core';
 
 describe('PermissionListComponent', () => {
     let loader: HarnessLoader;
@@ -47,8 +52,10 @@ describe('PermissionListComponent', () => {
     let nodeService: NodesApiService;
     let nodePermissionService: NodePermissionService;
     let searchApiService: SearchService;
+    let contentService: ContentService;
     let getNodeSpy: jasmine.Spy;
     let searchQuerySpy: jasmine.Spy;
+
     const fakeLocalPermission = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
 
     beforeEach(() => {
@@ -61,6 +68,7 @@ describe('PermissionListComponent', () => {
         nodeService = TestBed.inject(NodesApiService);
         nodePermissionService = TestBed.inject(NodePermissionService);
         searchApiService = TestBed.inject(SearchService);
+        contentService = TestBed.inject(ContentService);
 
         spyOn(nodePermissionService, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
         getNodeSpy = spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeWithoutPermissions));
@@ -132,6 +140,7 @@ describe('PermissionListComponent', () => {
 
         it('should toggle the inherited button', async () => {
             getNodeSpy.and.returnValue(of(fakeNodeInheritedOnly));
+            spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
             component.ngOnInit();
             fixture.detectChanges();
 
@@ -142,6 +151,7 @@ describe('PermissionListComponent', () => {
                 'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON'
             );
             expect(element.querySelector('span[title="total"]').textContent.trim()).toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
+            expect(contentService.hasAllowableOperations).toHaveBeenCalledWith(fakeNodeInheritedOnly, AllowableOperationsEnum.UPDATEPERMISSIONS);
 
             spyOn(nodeService, 'updateNode').and.returnValue(of(fakeLocalPermission));
 
@@ -155,28 +165,18 @@ describe('PermissionListComponent', () => {
 
         it('should not toggle inherited button for read only users', async () => {
             getNodeSpy.and.returnValue(of(fakeReadOnlyNodeInherited));
+            spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
             component.ngOnInit();
 
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const toggle = await loader.getHarness(MatSlideToggleHarness);
-            expect(await toggle.isChecked()).toBe(true);
-
+            expect(fixture.debugElement.query(By.directive(MatSlideToggle))).toBeNull();
             expect(element.querySelector('.adf-inherit-container h3').textContent.trim()).toBe(
                 'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON'
             );
             expect(element.querySelector('span[title="total"]').textContent.trim()).toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
-
-            spyOn(nodeService, 'updateNode').and.returnValue(of(fakeLocalPermission));
-
-            await toggle.uncheck();
-
-            expect(element.querySelector('.adf-inherit-container h3').textContent.trim()).toBe(
-                'PERMISSION_MANAGER.LABELS.INHERITED-PERMISSIONS PERMISSION_MANAGER.LABELS.ON'
-            );
-            expect(element.querySelector('span[title="total"]').textContent.trim()).toBe('PERMISSION_MANAGER.LABELS.INHERITED-SUBTITLE');
-            expect(document.querySelector('.adf-snackbar-message-content').textContent).toContain('PERMISSION_MANAGER.ERROR.NOT-ALLOWED');
+            expect(contentService.hasAllowableOperations).toHaveBeenCalledWith(fakeReadOnlyNodeInherited, AllowableOperationsEnum.UPDATEPERMISSIONS);
         });
     });
 
@@ -273,6 +273,118 @@ describe('PermissionListComponent', () => {
             fixture.detectChanges();
 
             expect(nodeService.updateNode).toHaveBeenCalledWith('f472543f-7218-403d-917b-7a5861257244', { permissions: { locallySet: [] } });
+        });
+    });
+
+    describe('Permission container', () => {
+        let data$: Subject<NodePermissionsModel>;
+        let hasAllowableOperationsSpy: jasmine.Spy<(node: Node, allowableOperation: AllowableOperationsEnum | string) => boolean>;
+
+        const getPermissionContainerComponent = (): PermissionContainerComponent =>
+            fixture.debugElement.query(By.directive(PermissionContainerComponent)).componentInstance;
+
+        beforeEach(() => {
+            data$ = new Subject<NodePermissionsModel>();
+            component.permissionList.data$ = data$;
+            hasAllowableOperationsSpy = spyOn(TestBed.inject(ContentService), 'hasAllowableOperations');
+            component.ngOnInit();
+            fixture.detectChanges();
+        });
+
+        it('should have assigned isReadOnly to false if updating of permissions is allowed', () => {
+            hasAllowableOperationsSpy.and.returnValue(true);
+            data$.next({
+                node: fakeNodeWithPermissions,
+                inheritedPermissions: [],
+                localPermissions: []
+            } as NodePermissionsModel);
+            fixture.detectChanges();
+
+            expect(getPermissionContainerComponent().isReadOnly).toBe(false);
+            expect(hasAllowableOperationsSpy).toHaveBeenCalledWith(fakeNodeWithPermissions, AllowableOperationsEnum.UPDATEPERMISSIONS);
+        });
+
+        it('should have assigned isReadOnly to true if updating of permissions is not allowed', () => {
+            hasAllowableOperationsSpy.and.returnValue(false);
+            data$.next({
+                node: fakeNodeWithoutPermissions,
+                inheritedPermissions: [],
+                localPermissions: []
+            } as NodePermissionsModel);
+            fixture.detectChanges();
+
+            expect(getPermissionContainerComponent().isReadOnly).toBe(true);
+            expect(hasAllowableOperationsSpy).toHaveBeenCalledWith(fakeNodeWithoutPermissions, AllowableOperationsEnum.UPDATEPERMISSIONS);
+        });
+    });
+
+    describe('Toolbar actions', () => {
+        let data$: Subject<NodePermissionsModel>;
+        let hasAllowableOperationsSpy: jasmine.Spy<(node: Node, allowableOperation: AllowableOperationsEnum | string) => boolean>;
+
+        const getAddPermissionButton = (): DebugElement => fixture.debugElement.query(By.css('[data-automation-id="adf-add-permission-button"]'));
+
+        const getDeletePermissionButton = (): DebugElement =>
+            fixture.debugElement.query(By.css('[data-automation-id="adf-delete-selected-permission"]'));
+
+        beforeEach(() => {
+            data$ = new Subject<NodePermissionsModel>();
+            component.permissionList.data$ = data$;
+            hasAllowableOperationsSpy = spyOn(TestBed.inject(ContentService), 'hasAllowableOperations');
+            component.ngOnInit();
+            fixture.detectChanges();
+        });
+
+        it('should display add permission button if updating of permissions is allowed', () => {
+            hasAllowableOperationsSpy.and.returnValue(true);
+            data$.next({
+                node: fakeNodeWithPermissions,
+                inheritedPermissions: [],
+                localPermissions: []
+            } as NodePermissionsModel);
+            fixture.detectChanges();
+
+            expect(getAddPermissionButton()).not.toBeNull();
+            expect(hasAllowableOperationsSpy).toHaveBeenCalledWith(fakeNodeWithPermissions, AllowableOperationsEnum.UPDATEPERMISSIONS);
+        });
+
+        it('should not display add permission button if updating of permissions is not allowed', () => {
+            hasAllowableOperationsSpy.and.returnValue(false);
+            data$.next({
+                node: fakeNodeWithoutPermissions,
+                inheritedPermissions: [],
+                localPermissions: []
+            } as NodePermissionsModel);
+            fixture.detectChanges();
+
+            expect(getAddPermissionButton()).toBeNull();
+            expect(hasAllowableOperationsSpy).toHaveBeenCalledWith(fakeNodeWithoutPermissions, AllowableOperationsEnum.UPDATEPERMISSIONS);
+        });
+
+        it('should display delete permission button if updating of permissions is allowed', () => {
+            hasAllowableOperationsSpy.and.returnValue(true);
+            data$.next({
+                node: fakeNodeWithPermissions,
+                inheritedPermissions: [],
+                localPermissions: []
+            } as NodePermissionsModel);
+            fixture.detectChanges();
+
+            expect(getDeletePermissionButton()).not.toBeNull();
+            expect(hasAllowableOperationsSpy).toHaveBeenCalledWith(fakeNodeWithPermissions, AllowableOperationsEnum.UPDATEPERMISSIONS);
+        });
+
+        it('should not display delete permission button if updating of permissions is not allowed', () => {
+            hasAllowableOperationsSpy.and.returnValue(false);
+            data$.next({
+                node: fakeNodeWithoutPermissions,
+                inheritedPermissions: [],
+                localPermissions: []
+            } as NodePermissionsModel);
+            fixture.detectChanges();
+
+            expect(getDeletePermissionButton()).toBeNull();
+            expect(hasAllowableOperationsSpy).toHaveBeenCalledWith(fakeNodeWithoutPermissions, AllowableOperationsEnum.UPDATEPERMISSIONS);
         });
     });
 });
