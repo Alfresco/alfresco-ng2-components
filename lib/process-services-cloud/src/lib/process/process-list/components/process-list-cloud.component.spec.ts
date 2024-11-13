@@ -543,7 +543,7 @@ describe('ProcessListCloudComponent', () => {
             component.ngAfterContentInit();
             component.reload();
 
-            expect(component.processListRequestNode.variableKeys).not.toBeDefined();
+            expect(component.processListRequestNode.processVariableKeys).not.toBeDefined();
         });
 
         it('should request process variable if column for process variable is displayed', () => {
@@ -568,7 +568,7 @@ describe('ProcessListCloudComponent', () => {
             component.ngAfterContentInit();
             component.reload();
 
-            expect(component.processListRequestNode.variableKeys).toEqual(['processKey/variableName']);
+            expect(component.processListRequestNode.processVariableKeys).toEqual(['processKey/variableName']);
         });
 
         it('should reload tasks when reload() is called', (done) => {
