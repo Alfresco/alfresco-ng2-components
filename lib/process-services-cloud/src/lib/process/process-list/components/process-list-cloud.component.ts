@@ -543,7 +543,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             completedTo: this.completedTo,
             suspendedFrom: this.suspendedFrom,
             suspendedTo: this.suspendedTo,
-            variableKeys: this.getVariableDefinitionsRequestModel()
+            processVariableKeys: this.getVariableDefinitionsRequestModel()
         };
 
         return new ProcessListRequestModel(requestNode);

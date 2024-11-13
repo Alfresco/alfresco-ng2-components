@@ -106,7 +106,7 @@ export class ProcessListRequestModel {
     suspendedTo?: string;
 
     processVariableFilters?: ProcessListRequestProcessVariableFilter[];
-    variableKeys?: string[];
+    processVariableKeys?: string[];
 
     constructor(obj: Partial<ProcessListRequestModel>) {
         if (!obj.appName) {
@@ -129,7 +129,7 @@ export class ProcessListRequestModel {
         this.completedTo = obj.completedTo;
         this.suspendedFrom = obj.suspendedFrom;
         this.suspendedTo = obj.suspendedTo;
-        this.variableKeys = obj.variableKeys;
+        this.processVariableKeys = obj.processVariableKeys;
     }
 }
 
