@@ -102,8 +102,6 @@ export class ProcessListCloudService extends BaseCloudService {
     }
 
     protected buildQueryData(requestNode: ProcessListRequestModel) {
-        const variableKeys = requestNode.variableKeys?.length > 0 ? requestNode.variableKeys.join(',') : undefined;
-
         const queryData: any = {
             name: requestNode.name,
             initiator: requestNode.initiator,
@@ -117,7 +115,7 @@ export class ProcessListCloudService extends BaseCloudService {
             completedTo: requestNode.completedTo,
             suspendedFrom: requestNode.suspendedFrom,
             suspendedTo: requestNode.suspendedTo,
-            variableKeys: variableKeys
+            processVariableKeys: requestNode.processVariableKeys
         };
 
         Object.keys(queryData).forEach((key) => {
