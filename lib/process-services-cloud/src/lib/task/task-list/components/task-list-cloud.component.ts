@@ -280,7 +280,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
             dueDateTo: this.dueDateTo,
             completedFrom: this.completedFrom,
             completedTo: this.completedTo,
-            variableKeys: this.getRequestNodeVariables()
+            processVariableKeys: this.getRequestNodeVariables()
         };
 
         return new TaskListRequestModel(requestNode);
