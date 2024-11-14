@@ -26,7 +26,6 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Gets local preferences
-     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @returns List of local preferences
@@ -53,7 +52,6 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Gets local preference.
-     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @returns Observable of local preference
@@ -64,7 +62,6 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Creates local preference.
-     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @param newPreference Details of new local preference
@@ -79,7 +76,6 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Updates local preference.
-     *
      * @param _ Name of the target app
      * @param key Key of the target preference
      * @param updatedPreference Details of updated preference
@@ -94,7 +90,6 @@ export class LocalPreferenceCloudService implements PreferenceCloudServiceInterf
 
     /**
      * Deletes local preference by given preference key.
-     *
      * @param key Key of the target preference
      * @param preferences Details of updated preferences
      * @returns Observable of preferences without deleted preference

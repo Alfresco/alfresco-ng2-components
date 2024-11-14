@@ -40,7 +40,6 @@ export class TaskFormService {
 
     /**
      * Saves a task form.
-     *
      * @param taskId Task Id
      * @param formValues Form Values
      * @returns Null response when the operation is complete
@@ -53,7 +52,6 @@ export class TaskFormService {
 
     /**
      * Completes a Task Form.
-     *
      * @param taskId Task Id
      * @param formValues Form Values
      * @param outcome Form Outcome
@@ -70,7 +68,6 @@ export class TaskFormService {
 
     /**
      * Gets a form related to a task.
-     *
      * @param taskId ID of the target task
      * @returns Form definition
      */
@@ -83,7 +80,6 @@ export class TaskFormService {
 
     /**
      * Gets values of fields populated by a REST backend.
-     *
      * @param taskId Task identifier
      * @param field Field identifier
      * @returns Field values
@@ -94,7 +90,6 @@ export class TaskFormService {
 
     /**
      * Gets column values of fields populated by a REST backend.
-     *
      * @param taskId Task identifier
      * @param field Field identifier
      * @param column Column identifier
@@ -113,7 +108,6 @@ export class TaskFormService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -126,7 +120,6 @@ export class TaskFormService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */

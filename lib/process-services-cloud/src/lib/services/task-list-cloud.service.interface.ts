@@ -21,7 +21,6 @@ import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../models/filt
 export interface TaskListCloudServiceInterface {
     /**
      * Finds a task using an object with optional query properties.
-     *
      * @deprecated From Activiti 8.7.0 forward, use TaskListCloudService.fetchTaskList instead.
      * @param requestNode Query object
      * @param queryUrl Query url
@@ -32,7 +31,6 @@ export interface TaskListCloudServiceInterface {
     /**
      * Available from Activiti version 8.7.0 onwards.
      * Retrieves a list of tasks using an object with optional query properties.
-     *
      * @param requestNode Query object
      * @param queryUrl Query url
      * @returns List of tasks

@@ -31,7 +31,6 @@ export class ProcessCloudService extends BaseCloudService {
 
     /**
      * Gets details of a process instance.
-     *
      * @param appName Name of the app
      * @param processInstanceId ID of the process instance whose details you want
      * @returns Process instance details
@@ -53,7 +52,6 @@ export class ProcessCloudService extends BaseCloudService {
 
     /**
      * Gets the process definitions associated with an app.
-     *
      * @param appName Name of the target app
      * @returns Array of process definitions
      */
@@ -69,7 +67,6 @@ export class ProcessCloudService extends BaseCloudService {
 
     /**
      * Gets the application versions associated with an app.
-     *
      * @param appName Name of the target app
      * @returns Array of Application Version Models
      */
@@ -85,7 +82,6 @@ export class ProcessCloudService extends BaseCloudService {
 
     /**
      * Cancels a process.
-     *
      * @param appName Name of the app
      * @param processInstanceId Id of the process to cancel
      * @returns Operation Information

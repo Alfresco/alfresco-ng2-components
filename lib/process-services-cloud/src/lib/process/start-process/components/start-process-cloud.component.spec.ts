@@ -110,7 +110,6 @@ describe('StartProcessCloudComponent', () => {
 
     /**
      * Setup the component with the given start event information.
-     *
      * @param values the values for the form
      * @param staticValues the static values retrieved from the API for the form
      * @param constantValues the constant values retrieved from the API for customising the buttons

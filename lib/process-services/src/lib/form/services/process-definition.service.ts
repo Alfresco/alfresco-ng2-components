@@ -40,7 +40,6 @@ export class ProcessDefinitionService {
 
     /**
      * Gets values of fields populated by a REST backend using a process ID.
-     *
      * @param processDefinitionId Process identifier
      * @param field Field identifier
      * @returns Field values
@@ -51,7 +50,6 @@ export class ProcessDefinitionService {
 
     /**
      * Gets column values of fields populated by a REST backend using a process ID.
-     *
      * @param processDefinitionId Process identifier
      * @param field Field identifier
      * @param column Column identifier
@@ -65,7 +63,6 @@ export class ProcessDefinitionService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -78,7 +75,6 @@ export class ProcessDefinitionService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */

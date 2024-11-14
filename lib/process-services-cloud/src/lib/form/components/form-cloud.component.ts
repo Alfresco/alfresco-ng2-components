@@ -440,7 +440,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     /**
      * Get custom set of outcomes for a Form Definition.
-     *
      * @param form Form definition model.
      * @returns list of form outcomes
      */

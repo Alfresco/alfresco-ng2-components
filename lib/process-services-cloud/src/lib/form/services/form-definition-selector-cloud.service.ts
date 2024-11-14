@@ -28,7 +28,6 @@ import { FormDefinitionSelectorCloudServiceInterface } from './form-definition-s
 export class FormDefinitionSelectorCloudService extends BaseCloudService implements FormDefinitionSelectorCloudServiceInterface {
     /**
      * Get all forms of an app.
-     *
      * @param appName Name of the application
      * @returns Details of the forms
      */
@@ -40,7 +39,6 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService impleme
 
     /**
      * Get all forms of an app.
-     *
      * @param appName Name of the application
      * @returns Details of the forms
      */

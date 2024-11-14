@@ -34,7 +34,6 @@ export class AppsProcessCloudService {
 
     /**
      * Gets a list of deployed apps for this user by status.
-     *
      * @param status Required status value
      * @param roles to filter the apps
      * @returns The list of deployed apps

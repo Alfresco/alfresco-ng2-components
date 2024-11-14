@@ -43,7 +43,6 @@ export class ProcessContentService {
 
     /**
      * Create temporary related content from an uploaded file.
-     *
      * @param file File to use for content
      * @returns The created content data
      */
@@ -53,7 +52,6 @@ export class ProcessContentService {
 
     /**
      * Gets the metadata for a related content item.
-     *
      * @param contentId ID of the content item
      * @returns Metadata for the content
      */
@@ -63,7 +61,6 @@ export class ProcessContentService {
 
     /**
      * Gets raw binary content data for a related content file.
-     *
      * @param contentId ID of the related content
      * @returns Binary data of the related content
      */
@@ -73,7 +70,6 @@ export class ProcessContentService {
 
     /**
      * Gets the preview for a related content file.
-     *
      * @param contentId ID of the related content
      * @returns Binary data of the content preview
      */
@@ -102,7 +98,6 @@ export class ProcessContentService {
 
     /**
      * Gets a URL for direct access to a related content file.
-     *
      * @param contentId ID of the related content
      * @returns URL to access the content
      */
@@ -112,7 +107,6 @@ export class ProcessContentService {
 
     /**
      * Gets the thumbnail for a related content file.
-     *
      * @param contentId ID of the related content
      * @returns Binary data of the thumbnail image
      */
@@ -132,7 +126,6 @@ export class ProcessContentService {
 
     /**
      * Gets related content items for a task instance.
-     *
      * @param taskId ID of the target task
      * @param opts Options supported by JS-API
      * @returns Metadata for the content
@@ -143,7 +136,6 @@ export class ProcessContentService {
 
     /**
      * Gets related content items for a process instance.
-     *
      * @param processId ID of the target process
      * @param opts Options supported by JS-API
      * @returns Metadata for the content
@@ -154,7 +146,6 @@ export class ProcessContentService {
 
     /**
      * Deletes related content.
-     *
      * @param contentId Identifier of the content to delete
      * @returns Null response that notifies when the deletion is complete
      */
@@ -164,7 +155,6 @@ export class ProcessContentService {
 
     /**
      * Associates an uploaded file with a process instance.
-     *
      * @param processInstanceId ID of the target process instance
      * @param content File to associate
      * @param opts Options supported by JS-API
@@ -178,7 +168,6 @@ export class ProcessContentService {
 
     /**
      * Associates an uploaded file with a task instance.
-     *
      * @param taskId ID of the target task
      * @param file File to associate
      * @param opts Options supported by JS-API
@@ -190,7 +179,6 @@ export class ProcessContentService {
 
     /**
      * Lists processes and tasks on workflow started with provided document
-     *
      * @param sourceId - id of the document that workflow or task has been started with
      * @param source - source of the document that workflow or task has been started with
      * @param size - size of the entries to get
@@ -208,7 +196,6 @@ export class ProcessContentService {
 
     /**
      * Creates a JSON representation of data.
-     *
      * @param res Object representing data
      * @returns JSON object
      */
@@ -221,7 +208,6 @@ export class ProcessContentService {
 
     /**
      * Creates a JSON array representation of data.
-     *
      * @param res Object representing data
      * @returns JSON array object
      */
@@ -234,7 +220,6 @@ export class ProcessContentService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Callback when an error occurs
      */

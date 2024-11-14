@@ -38,7 +38,6 @@ export class TaskService {
 
     /**
      * Gets a task.
-     *
      * @param taskId Task Id
      * @returns Task info
      */
@@ -51,7 +50,6 @@ export class TaskService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -64,7 +62,6 @@ export class TaskService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */
