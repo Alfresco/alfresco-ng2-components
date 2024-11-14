@@ -39,7 +39,6 @@ describe('GroupCloudComponent', () => {
 
     /**
      * search group by value
-     *
      * @param value element input value
      */
     async function searchGroup(value: string) {
@@ -50,7 +49,6 @@ describe('GroupCloudComponent', () => {
 
     /**
      * search group and invoke the blur event
-     *
      * @param value value
      */
     async function searchGroupsAndBlur(value: string) {
@@ -62,7 +60,6 @@ describe('GroupCloudComponent', () => {
 
     /**
      * get the group list UI
-     *
      * @returns a list of debug elements
      */
     function getGroupListUI(): DebugElement[] {

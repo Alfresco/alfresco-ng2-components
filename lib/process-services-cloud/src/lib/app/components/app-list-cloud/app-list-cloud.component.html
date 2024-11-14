@@ -23,8 +23,7 @@
 <ng-template #noApps>
     <div class="adf-app-list-empty">
         <ng-content select="adf-custom-empty-content-template" *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate"
-            class="adf-custom-empty-template">
-        </ng-content>
+            class="adf-custom-empty-template" />
 
         <ng-template #defaultEmptyTemplate>
             <adf-empty-content icon="apps" [title]="'ADF_CLOUD_TASK_LIST.APPS.NO_APPS.TITLE' | translate"

@@ -51,7 +51,6 @@ export class SavedSearchesService {
 
     /**
      * Gets a list of saved searches by user.
-     *
      * @returns SavedSearch list containing user saved searches
      */
     getSavedSearches(): Observable<SavedSearch[]> {
@@ -81,7 +80,6 @@ export class SavedSearchesService {
     /**
      * Saves a new search into state and updates state. If there are less than 5 searches,
      * it will be pushed on first place, if more it will be pushed to 6th place.
-     *
      * @param newSaveSearch object { name: string, description: string, encodedUrl: string }
      * @returns NodeEntry
      */
@@ -119,7 +117,6 @@ export class SavedSearchesService {
 
     /**
      * Replace Save Search with new one and also updates the state.
-     *
      * @param updatedSavedSearch - updated Save Search
      * @returns NodeEntry
      */
@@ -148,7 +145,6 @@ export class SavedSearchesService {
 
     /**
      * Deletes Save Search and update state.
-     *
      * @param deletedSavedSearch - Save Search to delete
      * @returns NodeEntry
      */
@@ -181,7 +177,6 @@ export class SavedSearchesService {
 
     /**
      * Reorders saved search place
-     *
      * @param previousIndex - previous index of saved search
      * @param currentIndex - new index of saved search
      */

@@ -217,7 +217,6 @@ export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnC
 
     /**
      * Get the sanitized filter name
-     *
      * @param filterName filter name
      * @returns sanitized filter name
      */

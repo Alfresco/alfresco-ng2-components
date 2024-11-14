@@ -24,7 +24,7 @@
                 class="adf-process-list-loading-margin"
                 color="primary"
                 mode="indeterminate" />
-            <ng-content select="adf-custom-loading-content-template"></ng-content>
+            <ng-content select="adf-custom-loading-content-template" />
         </ng-template>
     </adf-loading-content-template>
     <adf-no-content-template>
@@ -33,7 +33,7 @@
                     icon="assessment"
                     [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate"
                     [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate" />
-            <ng-content select="adf-custom-empty-content-template"></ng-content>
+            <ng-content select="adf-custom-empty-content-template" />
         </ng-template>
     </adf-no-content-template>
 </adf-datatable>

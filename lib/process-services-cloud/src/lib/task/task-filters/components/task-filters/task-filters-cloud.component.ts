@@ -91,7 +91,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Loads the filter list filtered by appName
-     *
      * @param appName application name
      */
     getFilters(appName: string): void {
@@ -128,7 +127,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      *  Get current value for filter and check if value has changed
-     *
      * @param filter filter
      */
     updateFilterCounter(filter: TaskFilterCloudModel): void {
@@ -219,7 +217,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Selects and emits the clicked filter.
-     *
      * @param filter filter model
      */
     onFilterClick(filter: FilterParamsModel) {
@@ -245,7 +242,6 @@ export class TaskFiltersCloudComponent extends BaseTaskFiltersCloudComponent imp
 
     /**
      * Check if the filter list is empty
-     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {

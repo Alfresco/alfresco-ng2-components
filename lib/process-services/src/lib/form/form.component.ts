@@ -319,7 +319,6 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
 
     /**
      * Get custom set of outcomes for a Form Definition.
-     *
      * @param form Form definition model.
      * @returns list of form outcomes
      */
@@ -352,7 +351,6 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
 
     /**
      * Creates a Form with a field for each metadata property.
-     *
      * @param formName Name of the new form
      * @returns The new form
      */
