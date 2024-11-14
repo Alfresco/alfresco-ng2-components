@@ -110,7 +110,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      * Fetch the filter list based on appName
-     *
      * @param appName application name
      */
     getFilters(appName: string): void {
@@ -140,7 +139,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      * Pass the selected filter as next
-     *
      * @param paramFilter filter model
      */
     selectFilter(paramFilter: FilterParamsModel) {
@@ -162,7 +160,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      * Check equality of the filter names by translating the given name strings
-     *
      * @param name1 source name
      * @param name2 target name
      * @returns `true` if filter names are equal, otherwise `false`
@@ -176,7 +173,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      * Selects and emits the given filter
-     *
      * @param newParamFilter new parameter filter
      */
     selectFilterAndEmit(newParamFilter: FilterParamsModel) {
@@ -190,7 +186,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      * Select filter with the id
-     *
      * @param id filter id
      */
     selectFilterById(id: string) {
@@ -199,7 +194,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      * Selects and emits the clicked filter
-     *
      * @param filter filter model
      */
     onFilterClick(filter: ProcessFilterCloudModel) {
@@ -224,7 +218,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      * Get current filter
-     *
      * @returns filter model
      */
     getCurrentFilter(): ProcessFilterCloudModel {
@@ -233,7 +226,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      * Check if the filter list is empty
-     *
      * @returns `true` if filter list is empty, otherwise `false`
      */
     isFilterListEmpty(): boolean {
@@ -274,7 +266,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
 
     /**
      *  Get current value for filter and check if value has changed
-     *
      * @param filter filter
      */
     updateFilterCounter(filter: ProcessFilterCloudModel): void {

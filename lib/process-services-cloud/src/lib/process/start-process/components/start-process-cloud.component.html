@@ -88,8 +88,7 @@
                     (formLoaded)="onFormLoaded($event)"
                     (executeOutcome)="onCustomOutcomeClicked($event.outcome.name)">
                         <adf-cloud-form-custom-outcomes>
-                            <ng-template [ngTemplateOutlet]="taskFormCloudButtons">
-                            </ng-template>
+                            <ng-template [ngTemplateOutlet]="taskFormCloudButtons" />
                         </adf-cloud-form-custom-outcomes>
                 </adf-cloud-form>
             </ng-container>

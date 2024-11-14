@@ -26,7 +26,6 @@ import { map } from 'rxjs/operators';
 export class ServiceTaskListCloudService extends BaseCloudService {
     /**
      * Finds a task using an object with optional query properties.
-     *
      * @param requestNode Query object
      * @returns Task information
      */
@@ -46,7 +45,6 @@ export class ServiceTaskListCloudService extends BaseCloudService {
 
     /**
      * Finds a service task integration context using an object with optional query properties.
-     *
      * @param appName string
      * @param serviceTaskId string
      * @returns Service Task Integration Context information
@@ -62,7 +60,6 @@ export class ServiceTaskListCloudService extends BaseCloudService {
 
     /**
      * Replay a service task based on the related execution id and flow-node id
-     *
      * @param appName string
      * @param executionId string
      * @param flowNodeId string

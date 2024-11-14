@@ -287,7 +287,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Select the task given in input if present
-     *
      * @param taskIdSelected selected task id
      */
     selectTask(taskIdSelected: string): void {
@@ -313,7 +312,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Return the current instance id
-     *
      * @returns the current instance id
      */
     getCurrentId(): string {
@@ -322,7 +320,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Check if the taskId is the same of the selected task
-     *
      * @param taskId task id
      * @returns `true` if current instance id is the same as task id, otherwise `false`
      */
@@ -332,7 +329,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Check if the list is empty
-     *
      * @returns `true` if list is empty, otherwise `false`
      */
     isListEmpty(): boolean {
@@ -430,7 +426,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /**
      * Optimize name field
-     *
      * @param instances task detail models
      * @returns list of task detail models
      */
