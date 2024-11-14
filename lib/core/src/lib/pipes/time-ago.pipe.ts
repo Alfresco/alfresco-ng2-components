@@ -15,58 +15,45 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferenceValues, UserPreferencesService } from '../common/services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { DatePipe } from '@angular/common';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { differenceInDays, formatDistance } from 'date-fns';
 import * as Locales from 'date-fns/locale';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Pipe({
     standalone: true,
     name: 'adfTimeAgo'
 })
-export class TimeAgoPipe implements PipeTransform, OnDestroy {
-
+export class TimeAgoPipe implements PipeTransform {
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_TIME_FORMAT = 'dd/MM/yyyy HH:mm';
 
     defaultLocale: string;
     defaultDateTimeFormat: string;
-
-    private onDestroy$ = new Subject<boolean>();
-
-    constructor(
-        public userPreferenceService: UserPreferencesService,
-        public appConfig: AppConfigService
-    ) {
+    constructor(public userPreferenceService: UserPreferencesService, public appConfig: AppConfigService) {
         this.userPreferenceService
             .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(locale => {
+            .pipe(takeUntilDestroyed())
+            .subscribe((locale) => {
                 this.defaultLocale = locale || TimeAgoPipe.DEFAULT_LOCALE;
             });
         this.defaultDateTimeFormat = this.appConfig.get<string>('dateValues.defaultDateTimeFormat', TimeAgoPipe.DEFAULT_DATE_TIME_FORMAT);
     }
 
     transform(value: Date, locale?: string) {
-        if (value !== null && value !== undefined ) {
+        if (value !== null && value !== undefined) {
             const actualLocale = locale || this.defaultLocale;
             const diff = differenceInDays(new Date(), new Date(value));
-            if ( diff > 7) {
+            if (diff > 7) {
                 const datePipe: DatePipe = new DatePipe(actualLocale);
                 return datePipe.transform(value, this.defaultDateTimeFormat);
             } else {
-                return formatDistance(new Date(value) , new Date(), { addSuffix: true , locale: Locales[actualLocale] });
+                return formatDistance(new Date(value), new Date(), { addSuffix: true, locale: Locales[actualLocale] });
             }
         }
         return '';
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

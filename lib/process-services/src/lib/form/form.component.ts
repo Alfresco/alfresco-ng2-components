@@ -16,36 +16,36 @@
  */
 
 import {
+    ChangeDetectorRef,
     Component,
+    DestroyRef,
     EventEmitter,
-    Input,
-    Output,
-    ViewEncapsulation,
-    SimpleChanges,
-    OnInit,
-    OnDestroy,
-    OnChanges,
     inject,
-    ChangeDetectorRef
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
 } from '@angular/core';
 import {
-    WidgetVisibilityService,
-    FormService,
+    ContentLinkModel,
+    FormatSpacePipe,
     FormBaseComponent,
-    FormOutcomeModel,
-    FormEvent,
     FormErrorEvent,
+    FormEvent,
     FormFieldModel,
     FormModel,
     FormOutcomeEvent,
-    FormValues,
-    ContentLinkModel,
-    TaskProcessVariableModel,
+    FormOutcomeModel,
     FormRendererComponent,
-    FormatSpacePipe
+    FormService,
+    FormValues,
+    TaskProcessVariableModel,
+    WidgetVisibilityService
 } from '@alfresco/adf-core';
-import { from, Observable, of, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { EcmModelService } from './services/ecm-model.service';
 import { ModelService } from './services/model.service';
 import { EditorService } from './services/editor.service';
@@ -58,6 +58,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-form',
@@ -67,7 +68,7 @@ import { TranslateModule } from '@ngx-translate/core';
     styleUrls: ['./form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
+export class FormComponent extends FormBaseComponent implements OnInit, OnChanges {
     protected formService = inject(FormService);
     protected taskFormService = inject(TaskFormService);
     protected taskService = inject(TaskService);
@@ -132,26 +133,21 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     debugMode: boolean = false;
 
-    protected onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     constructor() {
         super();
     }
 
     ngOnInit() {
-        this.formService.formContentClicked.pipe(takeUntil(this.onDestroy$)).subscribe((content) => this.formContentClicked.emit(content));
+        this.formService.formContentClicked.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((content) => this.formContentClicked.emit(content));
 
-        this.formService.validateForm.pipe(takeUntil(this.onDestroy$)).subscribe((validateFormEvent) => {
+        this.formService.validateForm.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((validateFormEvent) => {
             if (validateFormEvent.errorsField.length > 0) {
                 this.formError.next(validateFormEvent.errorsField);
                 this.cdRef.detectChanges();
             }
         });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {

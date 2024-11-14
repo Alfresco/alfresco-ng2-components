@@ -22,25 +22,25 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    DestroyRef,
     EventEmitter,
+    inject,
     Input,
     OnInit,
     Output,
-    OnDestroy,
     ViewEncapsulation
 } from '@angular/core';
 
 import { PaginatedComponent } from './paginated-component.interface';
-import { Subject } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { PaginationModel } from '../models/pagination.model';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -52,7 +52,7 @@ import { TranslateModule } from '@ngx-translate/core';
     standalone: true,
     imports: [CommonModule, MatButtonModule, MatProgressBarModule, TranslateModule]
 })
-export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
+export class InfinitePaginationComponent implements OnInit, PaginationComponentInterface {
     static DEFAULT_PAGINATION: PaginationModel = new PaginationModel({
         skipCount: 0,
         maxItems: 25,
@@ -60,14 +60,14 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     });
 
     _target: PaginatedComponent;
-    private onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     /** Component that provides custom pagination support. */
     @Input()
     set target(target: PaginatedComponent) {
         if (target) {
             this._target = target;
-            target.pagination.pipe(takeUntil(this.onDestroy$)).subscribe((pagination) => {
+            target.pagination.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((pagination) => {
                 this.isLoading = false;
                 this.pagination = pagination;
 
@@ -108,7 +108,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((pageSize: number) => {
                 this.pageSize = this.pageSize || pageSize;
                 this.requestPaginationModel.maxItems = this.pageSize;
@@ -136,10 +136,5 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         if (this._target) {
             this._target.updatePagination(this.pagination);
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

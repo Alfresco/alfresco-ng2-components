@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { Input, OnDestroy, Directive, inject } from '@angular/core';
+import { Directive, inject, Input } from '@angular/core';
 import { CardViewUpdateService } from '../services/card-view-update.service';
 import { CardViewItem } from '../interfaces/card-view.interfaces';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy {
+export abstract class BaseCardView<T extends CardViewItem> {
     protected cardViewUpdateService = inject(CardViewUpdateService);
 
     @Input()
@@ -32,10 +31,8 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
     @Input()
     property: T;
 
-    protected destroy$ = new Subject<boolean>();
-
     constructor() {
-        this.cardViewUpdateService.updateItem$.pipe(takeUntil(this.destroy$)).subscribe((itemModel) => {
+        this.cardViewUpdateService.updateItem$.pipe(takeUntilDestroyed()).subscribe((itemModel) => {
             if (this.property.key === itemModel.key) {
                 this.property.value = itemModel.value;
             }
@@ -54,8 +51,4 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
         return !!this.property.icon;
     }
 
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.complete();
-    }
 }

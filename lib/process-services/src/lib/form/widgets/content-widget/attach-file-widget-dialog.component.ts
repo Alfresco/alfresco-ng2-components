@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation, ViewChild, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { LoginDialogPanelComponent, TranslationService, AuthenticationService } from '@alfresco/adf-core';
+import { AuthenticationService, LoginDialogPanelComponent, TranslationService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import {
-    DocumentListService,
-    SitesService,
-    SearchService,
+    AlfrescoApiService,
     ContentNodeSelectorPanelComponent,
-    AlfrescoApiService
+    DocumentListService,
+    SearchService,
+    SitesService
 } from '@alfresco/adf-content-services';
 import { ExternalAlfrescoApiService } from '../../services/external-alfresco-api.service';
 import { Node } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',
@@ -49,7 +48,7 @@ import { takeUntil } from 'rxjs/operators';
         { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService }
     ]
 })
-export class AttachFileWidgetDialogComponent implements OnInit, OnDestroy {
+export class AttachFileWidgetDialogComponent implements OnInit {
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
@@ -58,8 +57,7 @@ export class AttachFileWidgetDialogComponent implements OnInit, OnDestroy {
     buttonActionName: string;
     chosenNode: Node[];
 
-    private onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(
         private translation: TranslationService,
         @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
@@ -74,18 +72,12 @@ export class AttachFileWidgetDialogComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.authenticationService.onLogin.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.registerAndClose());
+        this.authenticationService.onLogin.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.registerAndClose());
 
         if (this.isLoggedIn()) {
             this.registerAndClose();
         }
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     isLoggedIn(): boolean {
         return !!this.externalApiService.getInstance()?.isLoggedIn();
     }

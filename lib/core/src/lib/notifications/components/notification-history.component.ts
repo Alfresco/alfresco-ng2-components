@@ -15,12 +15,20 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    DestroyRef,
+    inject,
+    Input,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { NOTIFICATION_TYPE, NotificationModel } from '../models/notification.model';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { StorageService } from '../../common/services/storage.service';
 import { PaginationModel } from '../../models/pagination.model';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +39,7 @@ import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
 import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-notification-history',
@@ -52,7 +61,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterViewInit {
+export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     public static MAX_NOTIFICATION_STACK_LENGTH = 100;
     public static NOTIFICATION_STORAGE = 'notification-history';
 
@@ -71,10 +80,11 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     @Input()
     maxNotifications: number = 5;
 
-    onDestroy$ = new Subject<boolean>();
     notifications: NotificationModel[] = [];
     paginatedNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
+
+    private destroyRef = inject(DestroyRef);
 
     constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
 
@@ -83,15 +93,10 @@ export class NotificationHistoryComponent implements OnDestroy, OnInit, AfterVie
     }
 
     ngAfterViewInit(): void {
-        this.notificationService.notifications$.pipe(takeUntil(this.onDestroy$)).subscribe((notification: NotificationModel) => {
+        this.notificationService.notifications$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((notification: NotificationModel) => {
             this.addNewNotification(notification);
             this.cd.detectChanges();
         });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     addNewNotification(notification: NotificationModel) {

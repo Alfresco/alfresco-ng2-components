@@ -16,11 +16,19 @@
  */
 
 import { TranslationService } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
 import { TagService } from '../services/tag.service';
-import { Subject } from 'rxjs';
 import { TagPaging } from '@alfresco/js-api';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,6 +37,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 /**
  *
@@ -44,7 +53,7 @@ import { MatButtonModule } from '@angular/material/button';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-tag-node-actions-list' }
 })
-export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
+export class TagActionsComponent implements OnChanges, OnInit {
     /** The identifier of a node. */
     @Input()
     nodeId: string;
@@ -66,21 +75,15 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
     errorMsg: string;
     disableAddTag: boolean = true;
 
-    private onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(private tagService: TagService, private translateService: TranslationService) {}
 
     ngOnInit() {
-        this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.refreshTag());
+        this.tagService.refresh.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.refreshTag());
     }
 
     ngOnChanges() {
         return this.refreshTag();
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     refreshTag() {

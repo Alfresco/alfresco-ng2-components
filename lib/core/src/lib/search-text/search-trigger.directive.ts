@@ -18,12 +18,25 @@
 /* eslint-disable @angular-eslint/no-input-rename, @typescript-eslint/no-use-before-define, @angular-eslint/no-input-rename */
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
-import { ChangeDetectorRef, Directive, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, Optional } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    DestroyRef,
+    Directive,
+    ElementRef,
+    forwardRef,
+    inject,
+    Inject,
+    Input,
+    NgZone,
+    OnDestroy,
+    Optional
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
-import { Observable, Subject, Subscription, merge, of, fromEvent } from 'rxjs';
-import { filter, switchMap, takeUntil } from 'rxjs/operators';
+import { fromEvent, merge, Observable, of, Subject, Subscription } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 import { SearchComponentInterface } from '../common/interface/search-component.interface';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -50,7 +63,6 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     providers: [SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR]
 })
 export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
-    private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
     @Input('searchAutocomplete')
     searchPanel: SearchComponentInterface;
@@ -61,6 +73,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private _panelOpen: boolean = false;
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     onChange: (value: any) => void = () => {};
 
@@ -74,9 +87,6 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     ) {}
 
     ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-
         if (this.escapeEventStream) {
             this.escapeEventStream = null;
         }
@@ -118,7 +128,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                 const clickTarget = event.target as HTMLElement;
                 return this._panelOpen && clickTarget !== this.element.nativeElement;
             }),
-            takeUntil(this.onDestroy$)
+            takeUntilDestroyed(this.destroyRef)
         );
     }
 
@@ -183,7 +193,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                     this.searchPanel.setVisibility();
                     return this.panelClosingActions;
                 }),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((event) => this.setValueAndClose(event));
     }

@@ -16,35 +16,35 @@
  */
 
 import {
+    ChangeDetectorRef,
     Component,
+    DestroyRef,
     EventEmitter,
+    HostListener,
+    inject,
     Input,
     OnChanges,
-    Output,
-    SimpleChanges,
-    OnDestroy,
-    HostListener,
     OnInit,
-    ChangeDetectorRef,
-    inject
+    Output,
+    SimpleChanges
 } from '@angular/core';
-import { Observable, of, forkJoin, Subject, Subscription } from 'rxjs';
-import { switchMap, takeUntil, map, filter } from 'rxjs/operators';
+import { forkJoin, Observable, of, Subscription } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import {
+    ConfirmDialogComponent,
+    ContentLinkModel,
+    FORM_FIELD_VALIDATORS,
     FormBaseComponent,
+    FormEvent,
     FormFieldModel,
+    FormFieldValidator,
+    FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
-    WidgetVisibilityService,
     FormService,
-    FORM_FIELD_VALIDATORS,
-    FormFieldValidator,
     FormValues,
-    FormModel,
-    ContentLinkModel,
     UploadWidgetContentLinkModel,
-    FormEvent,
-    ConfirmDialogComponent
+    WidgetVisibilityService
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -54,13 +54,14 @@ import { v4 as uuidGeneration } from 'uuid';
 import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
 import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.service';
 import { DisplayModeService } from '../services/display-mode.service';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-cloud-form',
     templateUrl: './form-cloud.component.html',
     styleUrls: ['./form-cloud.component.scss']
 })
-export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnInit, OnDestroy {
+export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnInit {
     /** App name to fetch corresponding form and values. */
     @Input()
     appName: string = '';
@@ -131,8 +132,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     nodeId: string;
     formCloudRepresentationJSON: any;
 
-    protected onDestroy$ = new Subject<boolean>();
 
+    destroyRef = inject(DestroyRef);
     readonly id: string;
     displayMode: string;
     displayConfiguration: FormCloudDisplayModeConfiguration = DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0];
@@ -149,11 +150,11 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     constructor() {
         super();
 
-        this.spinnerService.initSpinnerHandling(this.onDestroy$);
+        this.spinnerService.initSpinnerHandling(this.destroyRef);
 
         this.id = uuidGeneration();
 
-        this.formService.formContentClicked.pipe(takeUntil(this.onDestroy$)).subscribe((content) => {
+        this.formService.formContentClicked.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((content) => {
             if (content instanceof UploadWidgetContentLinkModel) {
                 this.form.setNodeIdValueForViewersLinkedToUploadWidget(content);
                 this.onFormDataRefreshed(this.form);
@@ -163,12 +164,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             }
         });
 
-        this.formService.updateFormValuesRequested.pipe(takeUntil(this.onDestroy$)).subscribe((valuesToSetIfNotPresent) => {
+        this.formService.updateFormValuesRequested.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((valuesToSetIfNotPresent) => {
             this.form.addValuesNotPresent(valuesToSetIfNotPresent);
             this.onFormDataRefreshed(this.form);
         });
 
-        this.formService.formFieldValueChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.formService.formFieldValueChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             if (this.disableSaveButton) {
                 this.disableSaveButton = false;
             }
@@ -222,7 +223,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         DisplayModeService.displayMode$
             .pipe(
                 filter((change) => change.id === this.id),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((displayModeChange) => {
                 const oldDisplayMode = this.displayMode;
@@ -281,7 +282,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     getFormByTaskId(appName: string, taskId: string, version?: number): Promise<FormModel> {
         return new Promise<FormModel>((resolve) => {
             forkJoin(this.formCloudService.getTaskForm(appName, taskId, version), this.formCloudService.getTaskVariables(appName, taskId))
-                .pipe(takeUntil(this.onDestroy$))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe(
                     (data) => {
                         this.formCloudRepresentationJSON = data[0];
@@ -314,7 +315,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     delete flattenForm.formDefinition;
                     return flattenForm;
                 }),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(
                 (form) => {
@@ -337,7 +338,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .saveTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values)
-                .pipe(takeUntil(this.onDestroy$))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe(
                     () => {
                         this.onTaskSaved(this.form);
@@ -372,7 +373,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
                 .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
-                .pipe(takeUntil(this.onDestroy$))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe(
                     () => {
                         this.onTaskCompleted(this.form);
@@ -477,11 +478,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected storeFormAsMetadata() {}
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
 
     switchToDisplayMode(newDisplayMode?: string) {
         this.displayModeService.switchToDisplayMode(this.id, FormCloudDisplayMode[newDisplayMode], this.displayMode, this.displayModeConfigurations);

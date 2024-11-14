@@ -16,29 +16,29 @@
  */
 
 import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
+    DestroyRef,
+    ElementRef,
     EventEmitter,
+    inject,
     Input,
     OnInit,
     Output,
-    ViewEncapsulation,
-    OnDestroy,
-    ElementRef,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Renderer2
+    Renderer2,
+    ViewEncapsulation
 } from '@angular/core';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
-import { Subject } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
-import { takeUntil } from 'rxjs/operators';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export type PaginationAction = 'NEXT_PAGE' | 'PREV_PAGE' | 'CHANGE_PAGE_SIZE' | 'CHANGE_PAGE_NUMBER';
 
@@ -60,7 +60,7 @@ export const DEFAULT_PAGINATION: PaginationModel = {
     standalone: true,
     imports: [CommonModule, TranslateModule, MatButtonModule, MatIconModule, MatMenuModule]
 })
-export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
+export class PaginationComponent implements OnInit, PaginationComponentInterface {
     private _pagination: PaginationModel;
     private _isEmpty = true;
     private _hasItems = false;
@@ -117,8 +117,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     @Output()
     prevPage = new EventEmitter<PaginationModel>();
 
-    private onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(
         private elementRef: ElementRef,
         private renderer: Renderer2,
@@ -130,7 +129,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((maxItems) => {
                 this.pagination = {
                     ...DEFAULT_PAGINATION,
@@ -144,7 +143,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         }
 
         if (this.target) {
-            this.target.pagination.pipe(takeUntil(this.onDestroy$)).subscribe((pagination) => {
+            this.target.pagination.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((pagination) => {
                 if (pagination.count === 0 && !this.isFirstPage) {
                     this.goPrevious();
                 }
@@ -303,12 +302,6 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         this.userPreferencesService.paginationSize = maxItems;
         this.handlePaginationEvent('CHANGE_PAGE_SIZE');
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     handlePaginationEvent(action: PaginationAction) {
         const paginationModel = { ...this.pagination };
 

@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { Observable, Subject } from 'rxjs';
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import {
-    UntypedFormBuilder,
-    UntypedFormGroup,
-    Validators,
-    UntypedFormControl,
     AbstractControl,
+    FormsModule,
     ReactiveFormsModule,
-    FormsModule
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
+    Validators
 } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { QueriesApi, SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { NotificationService } from '@alfresco/adf-core';
-import { debounceTime, finalize, mergeMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, finalize, mergeMap } from 'rxjs/operators';
 import { SitesService } from '../../common/services/sites.service';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -39,6 +39,7 @@ import { AutoFocusDirective } from '../../directives';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { AlfrescoApiService } from '../../services';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-library-dialog',
@@ -60,7 +61,7 @@ import { AlfrescoApiService } from '../../services';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-library-dialog' }
 })
-export class LibraryDialogComponent implements OnInit, OnDestroy {
+export class LibraryDialogComponent implements OnInit {
     /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
@@ -72,8 +73,6 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
      */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
-
-    onDestroy$: Subject<boolean> = new Subject<boolean>();
 
     createTitle = 'LIBRARY.DIALOG.CREATE_TITLE';
     libraryTitleExists = false;
@@ -95,6 +94,8 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         this._queriesApi = this._queriesApi ?? new QueriesApi(this.alfrescoApiService.getInstance());
         return this._queriesApi;
     }
+
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         private alfrescoApiService: AlfrescoApiService,
@@ -126,7 +127,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
                     (title) => this.checkLibraryNameExists(title),
                     (title) => title
                 ),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((title: string) => {
                 if (!this.form.controls['id'].dirty && this.canGenerateId(title)) {
@@ -134,11 +135,6 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
                     this.form.controls['id'].markAsTouched();
                 }
             });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     get title(): string {

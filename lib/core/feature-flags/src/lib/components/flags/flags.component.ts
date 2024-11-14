@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-    IWritableFeaturesService,
     FeaturesServiceToken,
-    WritableFeaturesServiceToken,
     IDebugFeaturesService,
-    WritableFlagChangeset,
-    IFeaturesService
+    IFeaturesService,
+    IWritableFeaturesService,
+    WritableFeaturesServiceToken,
+    WritableFlagChangeset
 } from '../../interfaces/features.interface';
-import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
-import { debounceTime, map, take, takeUntil, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { debounceTime, map, take, tap } from 'rxjs/operators';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -37,6 +37,7 @@ import { FormsModule } from '@angular/forms';
 import { FlagsOverrideComponent } from '../feature-override-indicator.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-feature-flags-overrides',
@@ -59,17 +60,15 @@ import { TranslateModule } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FlagsComponent implements OnDestroy {
+export class FlagsComponent {
     displayedColumns: string[] = ['icon', 'flag', 'value'];
     flags$: Observable<{ fictive: boolean; flag: string; value: any }[]>;
     isEnabled = false;
-    destroy$ = new Subject<void>();
 
     inputValue = '';
     inputValue$ = new BehaviorSubject<string>('');
     showPlusButton$!: Observable<boolean>;
     writableFlagChangeset: WritableFlagChangeset = {};
-
     constructor(
         @Inject(FeaturesServiceToken)
         private featuresService: IDebugFeaturesService & IFeaturesService<WritableFlagChangeset>,
@@ -79,7 +78,7 @@ export class FlagsComponent implements OnDestroy {
         if (this.featuresService.isEnabled$) {
             this.featuresService
                 .isEnabled$()
-                .pipe(takeUntil(this.destroy$))
+                .pipe(takeUntilDestroyed())
                 .subscribe((isEnabled) => {
                     this.isEnabled = isEnabled;
                 });
@@ -148,10 +147,5 @@ export class FlagsComponent implements OnDestroy {
 
     protected onDelete(flag: string) {
         this.writableFeaturesService.removeFlag(flag);
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 }

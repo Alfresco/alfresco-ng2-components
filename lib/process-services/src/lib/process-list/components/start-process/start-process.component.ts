@@ -15,22 +15,40 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { AppConfigService, AppConfigValues, EmptyContentComponent, FormValues, LocalizedDatePipe } from '@alfresco/adf-core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import {
+    AppConfigService,
+    AppConfigValues,
+    EmptyContentComponent,
+    FormValues,
+    LocalizedDatePipe
+} from '@alfresco/adf-core';
 import { AppsProcessService } from '../../../services/apps-process.service';
 import { ProcessService } from '../../services/process.service';
-import { UntypedFormControl, Validators, AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subject, forkJoin } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { AbstractControl, FormsModule, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { StartFormComponent } from '../../../form';
 import {
     AppDefinitionRepresentation,
     Node,
+    ProcessDefinitionRepresentation,
     ProcessInstanceRepresentation,
     RelatedContentRepresentation,
-    ProcessDefinitionRepresentation,
     RestVariable
 } from '@alfresco/js-api';
 import { ActivitiContentService } from '../../../form/services/activiti-alfresco.service';
@@ -42,6 +60,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 const MAX_LENGTH = 255;
 const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
@@ -69,7 +88,7 @@ const PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}',
     styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestroy {
+export class StartProcessInstanceComponent implements OnChanges, OnInit {
     /**
      * Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -152,8 +171,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     isAppsLoading = true;
     movedNodeToPS: FormValues;
 
-    private onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(
         private processService: ProcessService,
         private contentService: ActivitiContentService,
@@ -174,7 +192,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
         this.filteredProcessesDefinitions$ = this.processDefinitionInput.valueChanges.pipe(
             map((value) => this._filter(value)),
-            takeUntil(this.onDestroy$)
+            takeUntilDestroyed(this.destroyRef)
         );
 
         this.contentService.getAlfrescoRepositories().subscribe((repoList) => {
@@ -183,11 +201,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 this.alfrescoRepositoryName = `alfresco-${alfrescoRepository.id}-${alfrescoRepository.name}`;
             }
         });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     ngOnChanges(changes: SimpleChanges) {

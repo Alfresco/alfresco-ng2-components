@@ -17,17 +17,24 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService, FormFieldOption, WidgetComponent, ErrorWidgetComponent, ErrorMessageModel, FormFieldModel } from '@alfresco/adf-core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    ErrorMessageModel,
+    ErrorWidgetComponent,
+    FormFieldModel,
+    FormFieldOption,
+    FormService,
+    WidgetComponent
+} from '@alfresco/adf-core';
 import { ProcessDefinitionService } from '../../services/process-definition.service';
 import { TaskFormService } from '../../services/task-form.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { AbstractControl, FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { filter, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'dropdown-widget',
@@ -48,14 +55,14 @@ import { TranslateModule } from '@ngx-translate/core';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DropdownWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     public formsService = inject(FormService);
     public taskFormService = inject(TaskFormService);
     public processDefinitionService = inject(ProcessDefinitionService);
 
     dropdownControl = new FormControl<FormFieldOption | string>(undefined);
 
-    private readonly onDestroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     get isReadOnlyType(): boolean {
         return this.field.type === 'readonly';
@@ -87,11 +94,6 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         }
 
         this.initFormControl();
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
     }
 
     getValuesByTaskId() {
@@ -134,7 +136,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit, 
         this.dropdownControl.valueChanges
             .pipe(
                 filter(() => !!this.field),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((value) => {
                 this.setOptionValue(value, this.field);

@@ -15,9 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { TranslationService, NotificationService, ToolbarTitleComponent, ToolbarComponent, EmptyListComponent } from '@alfresco/adf-core';
+import {
+    EmptyListComponent,
+    NotificationService,
+    ToolbarComponent,
+    ToolbarTitleComponent,
+    TranslationService
+} from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { AllowableOperationsEnum } from '../common/models/allowable-operations.enum';
 import { ContentService } from '../common/services/content.service';
@@ -26,8 +32,6 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 import { NodeEntryEvent } from '../document-list/components/node.event';
 import { NodeAction } from '../document-list/models/node-action.enum';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -39,6 +43,7 @@ import { FileUploadingDialogComponent } from '../upload/components/file-uploadin
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel/content-node-selector-panel.component';
 import { UploadButtonComponent } from '../upload/components/upload-button.component';
 import { MatButtonModule } from '@angular/material/button';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -64,8 +69,7 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrls: ['./content-node-selector.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
-    private onDestroy$ = new Subject<void>();
+export class ContentNodeSelectorComponent implements OnInit {
 
     title: string;
     action: NodeAction;
@@ -81,6 +85,7 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
 
+    private destroyRef = inject(DestroyRef);
     constructor(
         private translation: TranslationService,
         private contentService: ContentService,
@@ -99,7 +104,7 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.dialog
             .keydownEvents()
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((event) => {
                 if (event?.key === 'Escape') {
                     event.preventDefault();
@@ -110,28 +115,22 @@ export class ContentNodeSelectorComponent implements OnInit, OnDestroy {
 
         this.dialog
             .backdropClick()
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
                 this.close();
             });
 
         this.dialog
             .afterOpened()
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
                 this.overlayContainer.getContainerElement().setAttribute('role', 'main');
             });
 
-        this.uploadService.fileUploadStarting.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.uploadService.fileUploadStarting.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.uploadStarted = true;
         });
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
-    }
-
     close() {
         this.dialog.close();
         this.overlayContainer.getContainerElement().setAttribute('role', 'region');

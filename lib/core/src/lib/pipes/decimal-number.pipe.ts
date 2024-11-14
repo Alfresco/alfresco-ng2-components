@@ -16,19 +16,18 @@
  */
 
 import { DecimalPipe } from '@angular/common';
-import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { DecimalNumberModel } from '../models/decimal-number.model';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Pipe({
     name: 'adfDecimalNumber',
     pure: false,
     standalone: true
 })
-export class DecimalNumberPipe implements PipeTransform, OnDestroy {
+export class DecimalNumberPipe implements PipeTransform {
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_MIN_INTEGER_DIGITS = 1;
     static DEFAULT_MIN_FRACTION_DIGITS = 0;
@@ -39,13 +38,11 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
     defaultMinFractionDigits: number = DecimalNumberPipe.DEFAULT_MIN_FRACTION_DIGITS;
     defaultMaxFractionDigits: number = DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS;
 
-    onDestroy$: Subject<boolean> = new Subject<boolean>();
-
     constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
         if (this.userPreferenceService) {
             this.userPreferenceService
                 .select(UserPreferenceValues.Locale)
-                .pipe(takeUntil(this.onDestroy$))
+                .pipe(takeUntilDestroyed())
                 .subscribe((locale) => {
                     if (locale) {
                         this.defaultLocale = locale;
@@ -81,10 +78,5 @@ export class DecimalNumberPipe implements PipeTransform, OnDestroy {
         } else {
             return decimalPipe.transform(value, actualDigitsInfo);
         }
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

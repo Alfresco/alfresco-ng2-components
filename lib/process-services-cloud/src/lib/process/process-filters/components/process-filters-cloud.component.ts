@@ -15,16 +15,28 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit, ViewEncapsulation, inject } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
+import { Observable } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { AppConfigService, TranslationService } from '@alfresco/adf-core';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
-import { debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, tap } from 'rxjs/operators';
 import { ProcessListCloudService } from '../../../process/process-list/services/process-list-cloud.service';
 import { PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
 import { ProcessFilterCloudAdapter } from '../../process-list/models/process-cloud-query-request.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-process-filters',
@@ -32,7 +44,7 @@ import { ProcessFilterCloudAdapter } from '../../process-list/models/process-clo
     styleUrls: ['./process-filters-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     /** (required) The application name */
     @Input()
     appName: string = '';
@@ -73,8 +85,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     currentFiltersValues: { [key: string]: number } = {};
     updatedFiltersSet = new Set<string>();
 
-    private onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     private readonly processFilterCloudService = inject(ProcessFilterCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);
@@ -108,7 +119,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
     getFilters(appName: string): void {
         this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
 
-        this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe({
+        this.filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
             next: (res) => {
                 this.resetFilter();
                 this.filters = res || [];
@@ -240,11 +251,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         this.currentFilter = undefined;
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     isActiveFilter(filter: ProcessFilterCloudModel): boolean {
         return this.currentFilter.name === filter.name;
     }
@@ -253,7 +259,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         if (this.appName && this.enableNotifications) {
             this.processFilterCloudService
                 .getProcessNotificationSubscription(this.appName)
-                .pipe(debounceTime(1000), takeUntil(this.onDestroy$))
+                .pipe(debounceTime(1000), takeUntilDestroyed(this.destroyRef))
                 .subscribe(() => {
                     this.updateFilterCounters();
                 });
@@ -310,7 +316,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
      *
      */
     getFilterKeysAfterExternalRefreshing(): void {
-        this.processFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntil(this.onDestroy$)).subscribe((filterKey: string) => {
+        this.processFilterCloudService.filterKeyToBeRefreshed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((filterKey: string) => {
             this.updatedFiltersSet.delete(filterKey);
         });
     }

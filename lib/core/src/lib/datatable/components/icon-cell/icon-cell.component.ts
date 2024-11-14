@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     standalone: true,
@@ -43,7 +43,7 @@ export class IconCellComponent extends DataTableCellComponent implements OnInit 
 
     ngOnInit(): void {
         super.ngOnInit();
-        this.value$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
+        this.value$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
             const newIcon = this.validateIconValue(value) ? value : '';
             if (this.icon !== newIcon) {
                 this.icon = newIcon;

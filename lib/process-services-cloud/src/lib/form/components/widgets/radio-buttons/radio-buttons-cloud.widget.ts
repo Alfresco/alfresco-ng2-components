@@ -17,12 +17,11 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService, FormFieldOption, ErrorMessageModel } from '@alfresco/adf-core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { ErrorMessageModel, FormFieldOption, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'radio-buttons-cloud-widget',
@@ -45,8 +44,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     typeId = 'RadioButtonsCloudWidgetComponent';
     restApiError: ErrorMessageModel;
 
-    protected onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(public formService: FormService, private formCloudService: FormCloudService, private translateService: TranslateService) {
         super(formService);
     }
@@ -60,7 +58,7 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     getValuesFromRestApi() {
         this.formCloudService
             .getRestWidgetData(this.field.form.id, this.field.id)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(
                 (result: FormFieldOption[]) => {
                     this.field.options = result;

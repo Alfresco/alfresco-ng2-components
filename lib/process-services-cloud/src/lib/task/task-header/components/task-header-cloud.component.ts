@@ -15,25 +15,36 @@
  * limitations under the License.
  */
 
-import { Component, Input, EventEmitter, Output, OnDestroy, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
-import { takeUntil, concatMap, catchError, finalize } from 'rxjs/operators';
-import { Subject, of, forkJoin } from 'rxjs';
 import {
-    CardViewDateItemModel,
-    CardViewItem,
-    CardViewTextItemModel,
-    CardViewBaseItemModel,
-    CardViewArrayItemModel,
-    TranslationService,
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
+import { catchError, concatMap, finalize } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
+import {
     AppConfigService,
-    UpdateNotification,
-    CardViewUpdateService,
-    CardViewDatetimeItemModel,
     CardViewArrayItem,
-    CardViewSelectItemModel
+    CardViewArrayItemModel,
+    CardViewBaseItemModel,
+    CardViewDateItemModel,
+    CardViewDatetimeItemModel,
+    CardViewItem,
+    CardViewSelectItemModel,
+    CardViewTextItemModel,
+    CardViewUpdateService,
+    TranslationService,
+    UpdateNotification
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -41,7 +52,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
     styleUrls: ['./task-header-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
+export class TaskHeaderCloudComponent implements OnInit, OnChanges {
 
     /** (Required) The name of the application. */
     @Input()
@@ -79,8 +90,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     isLoading = true;
     processInstanceId: string;
 
-    private onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
@@ -93,13 +103,13 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     ngOnInit() {
         this.taskCloudService.dataChangesDetected$
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
             this.loadTaskDetailsById(this.appName, this.taskId);
         });
 
         this.cardViewUpdateService.itemUpdated$
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(this.updateTaskDetails.bind(this)
         );
     }
@@ -345,10 +355,5 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

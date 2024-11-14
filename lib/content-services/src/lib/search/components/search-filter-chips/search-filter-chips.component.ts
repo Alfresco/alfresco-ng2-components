@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchFacetFiltersService } from '../../services/search-facet-filters.service';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { FacetField, SearchCategory, TabbedFacetField } from '../../models';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
@@ -27,6 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchFacetChipTabbedComponent } from './search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetChipComponent } from './search-facet-chip/search-facet-chip.component';
 import { SearchWidgetChipComponent } from './search-widget-chip/search-widget-chip.component';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-search-filter-chips',
@@ -36,11 +35,11 @@ import { SearchWidgetChipComponent } from './search-widget-chip/search-widget-ch
     styleUrls: ['./search-filter-chips.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchFilterChipsComponent implements OnInit, OnDestroy {
+export class SearchFilterChipsComponent implements OnInit {
     private queryBuilder = inject(SearchQueryBuilderService);
     private facetFiltersService = inject(SearchFacetFiltersService);
 
-    private onDestroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     /** Toggles whether to show or not the context facet filters. */
     @Input()
@@ -63,12 +62,7 @@ export class SearchFilterChipsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.queryBuilder.executed
             .asObservable()
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => (this.facetChipTabbedId = 'search-fact-chip-tabbed-' + this.facetFiltersService.tabbedFacet?.fields.join('-')));
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
     }
 }

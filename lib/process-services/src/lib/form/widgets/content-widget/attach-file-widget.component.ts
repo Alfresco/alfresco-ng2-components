@@ -17,12 +17,24 @@
 
 /* eslint-disable @angular-eslint/component-selector */
 
-import { Component, isDevMode, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AppConfigService, AppConfigValues, DownloadService, ErrorWidgetComponent, FormService, ThumbnailService } from '@alfresco/adf-core';
+import { Component, DestroyRef, inject, isDevMode, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    AppConfigService,
+    AppConfigValues,
+    DownloadService,
+    ErrorWidgetComponent,
+    FormService,
+    ThumbnailService
+} from '@alfresco/adf-core';
 import { AlfrescoIconComponent, ContentNodeDialogService, ContentService } from '@alfresco/adf-content-services';
-import { AlfrescoEndpointRepresentation, Node, NodeChildAssociation, RelatedContentRepresentation } from '@alfresco/js-api';
-import { from, of, Subject, zip } from 'rxjs';
-import { mergeMap, takeUntil } from 'rxjs/operators';
+import {
+    AlfrescoEndpointRepresentation,
+    Node,
+    NodeChildAssociation,
+    RelatedContentRepresentation
+} from '@alfresco/js-api';
+import { from, of, zip } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { UploadWidgetComponent } from '../upload/upload.widget';
 import { ProcessContentService } from '../../services/process-content.service';
@@ -34,6 +46,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'attach-widget',
@@ -63,12 +76,12 @@ import { ActivatedRoute, Router } from '@angular/router';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit, OnDestroy {
+export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit {
     typeId = 'AttachFileWidgetComponent';
     repositoryList: AlfrescoEndpointRepresentation[] = [];
     private tempFilesList = [];
-    private onDestroy$ = new Subject<boolean>();
 
+    private destroyRef = inject(DestroyRef);
     constructor(
         public formService: FormService,
         public thumbnails: ThumbnailService,
@@ -96,16 +109,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
             this.repositoryList = repoList;
         });
 
-        this.formService.taskSaved.pipe(takeUntil(this.onDestroy$)).subscribe((formSaved) => {
+        this.formService.taskSaved.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((formSaved) => {
             if (formSaved.form.id === this.field.form.id) {
                 this.tempFilesList = [];
             }
         });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     isFileSourceConfigured(): boolean {

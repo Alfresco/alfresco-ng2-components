@@ -17,26 +17,28 @@
 
 import {
     Component,
+    DestroyRef,
     ElementRef,
+    EventEmitter,
+    Inject,
+    inject,
+    Input,
+    OnChanges,
     OnInit,
     Output,
-    EventEmitter,
-    ViewChild,
-    ViewEncapsulation,
-    Input,
     SimpleChanges,
-    OnChanges,
-    OnDestroy,
-    Inject
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, switchMap, mergeMap, filter, tap, takeUntil, debounceTime } from 'rxjs/operators';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
 import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service.token';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-cloud-group',
@@ -50,7 +52,7 @@ import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class GroupCloudComponent implements OnInit, OnChanges {
     /** Name of the application. If specified this shows the groups who have access to the app. */
     @Input()
     appName: string;
@@ -119,7 +121,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     private groupInput: ElementRef<HTMLInputElement>;
 
     private searchGroups: IdentityGroupModel[] = [];
-    private onDestroy$ = new Subject<boolean>();
 
     selectedGroups: IdentityGroupModel[] = [];
     invalidGroups: IdentityGroupModel[] = [];
@@ -137,6 +138,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     typingUniqueValueNotEmpty$: Observable<any>;
 
+    private destroyRef = inject(DestroyRef);
     constructor(
         @Inject(IDENTITY_GROUP_SERVICE_TOKEN)
         private identityGroupService: IdentityGroupServiceInterface
@@ -172,7 +174,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                     return groups;
                 }),
                 filter((group) => !this.isGroupAlreadySelected(group)),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((searchedGroup: IdentityGroupModel) => {
                 this.searchGroups.push(searchedGroup);
@@ -466,10 +468,5 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     getValidationMinLength(): string {
         return this.searchGroupsControl.errors.minlength.requiredLength;
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

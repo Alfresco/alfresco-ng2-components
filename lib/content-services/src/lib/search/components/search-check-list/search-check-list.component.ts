@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { SearchFilterList } from '../../models/search-filter-list.model';
 import { TranslationService } from '@alfresco/adf-core';
-import { ReplaySubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 export interface SearchListOption {
     name: string;
@@ -44,7 +45,7 @@ export interface SearchListOption {
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-check-list' }
 })
-export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy {
+export class SearchCheckListComponent implements SearchWidget, OnInit {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -56,7 +57,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
     enableChangeUpdate = true;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private readonly destroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     constructor(private translationService: TranslationService) {
         this.options = new SearchFilterList<SearchListOption>();
@@ -84,7 +85,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
             .asObservable()
             .pipe(
                 map((filtersQueries) => filtersQueries[this.id]),
-                takeUntil(this.destroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
@@ -100,11 +101,6 @@ export class SearchCheckListComponent implements SearchWidget, OnInit, OnDestroy
                 }
                 this.context.filterLoaded.next();
             });
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     clear() {

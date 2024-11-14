@@ -38,7 +38,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChip, MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
 import { Chip } from './chip';
 
 /**
@@ -98,7 +97,6 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     paginationData: Pagination;
 
     private initialChips: Chip[] = [];
-    private onDestroy$ = new Subject<boolean>();
     private initialLimitChipsDisplayed: boolean;
     private viewMoreButtonLeftOffsetBeforeFlexDirection: number;
     private requestedDisplayingAllChips = false;
@@ -139,8 +137,6 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
     }
 
     ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
         this.resizeObserver.unobserve(this.containerView.nativeElement);
     }
 

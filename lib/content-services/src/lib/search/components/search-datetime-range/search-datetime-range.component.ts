@@ -15,22 +15,34 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ADF_DATE_FORMATS, ADF_DATETIME_FORMATS, AdfDateFnsAdapter, AdfDateTimeFnsAdapter, DateFnsUtils } from '@alfresco/adf-core';
+import {
+    ADF_DATE_FORMATS,
+    ADF_DATETIME_FORMATS,
+    AdfDateFnsAdapter,
+    AdfDateTimeFnsAdapter,
+    DateFnsUtils
+} from '@alfresco/adf-core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { LiveErrorStateMatcher } from '../../forms/live-error-state-matcher';
-import { ReplaySubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepickerInputEvent, MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import {
+    DatetimeAdapter,
+    MAT_DATETIME_FORMATS,
+    MatDatetimepickerInputEvent,
+    MatDatetimepickerModule
+} from '@mat-datetimepicker/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { isValid, isBefore, startOfMinute, endOfMinute, parseISO } from 'date-fns';
+import { endOfMinute, isBefore, isValid, parseISO, startOfMinute } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 export interface DatetimeRangeValue {
     from: string;
@@ -59,7 +71,7 @@ export const DEFAULT_DATETIME_FORMAT: string = 'dd/MM/yyyy HH:mm';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
-export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDestroy {
+export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     from: FormControl<Date>;
     to: FormControl<Date>;
 
@@ -77,8 +89,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
     enableChangeUpdate: boolean;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private readonly destroy$ = new Subject<void>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
 
     getFromValidationMessage(): string {
@@ -140,7 +151,7 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
             .asObservable()
             .pipe(
                 map((filtersQueries) => filtersQueries[this.id]),
-                takeUntil(this.destroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
@@ -154,11 +165,6 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit, OnDes
                 }
                 this.context.filterLoaded.next();
             });
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     apply(model: Partial<{ from: Date; to: Date }>, isValidValue: boolean, updateContext = true) {

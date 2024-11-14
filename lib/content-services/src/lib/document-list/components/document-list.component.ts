@@ -51,12 +51,13 @@ import {
     AfterContentInit,
     Component,
     ContentChild,
+    DestroyRef,
     ElementRef,
     EventEmitter,
     HostListener,
+    inject,
     Input,
     OnChanges,
-    OnDestroy,
     OnInit,
     Output,
     SimpleChanges,
@@ -65,7 +66,6 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, of, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ContentService, NodesApiService } from '../../common';
 import { FilterSearch } from '../../search';
 import { RowFilter } from '../data/row-filter.model';
@@ -86,6 +86,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
 
@@ -118,7 +119,7 @@ const BYTES_TO_MB_CONVERSION_VALUE = 1048576;
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-document-list' }
 })
-export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent {
+export class DocumentListComponent extends DataTableSchema implements OnInit, OnChanges, AfterContentInit, PaginatedComponent {
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
@@ -444,7 +445,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
     private loadingTimeout: any;
-    private onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
@@ -466,13 +467,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         private dialog: MatDialog
     ) {
         super(appConfig, 'default', presetsDefaultModel);
-        this.nodeService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+        this.nodeService.nodeUpdated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((node) => {
             this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
         });
 
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((pagSize) => {
                 this.maxItems = this._pagination.maxItems = pagSize;
             });
@@ -534,7 +535,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.data.setImageResolver(this.imageResolver);
         }
 
-        this.contextActionHandler.pipe(takeUntil(this.onDestroy$)).subscribe((val) => this.contextActionCallback(val));
+        this.contextActionHandler.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val) => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
         if (this.filterValue && Object.keys(this.filterValue).length > 0) {
@@ -544,19 +545,19 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             this.setPresetKey(this.columnsPresetKey);
         }
 
-        this.documentListService.reload$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.documentListService.reload$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.resetSelection();
             this.reload();
         });
 
-        this.documentListService.resetSelection$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.documentListService.resetSelection$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.resetSelection();
         });
     }
 
     ngAfterContentInit() {
         if (this.columnList) {
-            this.columnList.columns.changes.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.columnList.columns.changes.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
                 this.createColumns();
                 this.data.setColumns(this.columns);
             });
@@ -751,7 +752,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
             const handlerSub = typeof action.handler === 'function' ? action.handler(node, this, action.permission) : of(true);
 
             if (typeof action.execute === 'function' && handlerSub) {
-                handlerSub.pipe(takeUntil(this.onDestroy$)).subscribe(() => action.execute(node));
+                handlerSub.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => action.execute(node));
             }
         }
     }
@@ -1038,10 +1039,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this._pagination.maxItems = this.maxItems;
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
 
     private handleError(err: any) {
         if (err.message) {

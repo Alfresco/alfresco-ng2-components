@@ -29,15 +29,16 @@ import {
     WidgetComponent
 } from '@alfresco/adf-core';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { TaskVariableCloud } from '../../../models/task-variable-cloud.model';
 import { FormCloudService } from '../../../services/form-cloud.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const DEFAULT_OPTION = {
     id: 'empty',
@@ -65,7 +66,7 @@ export const HIDE_FILTER_LIMIT = 5;
         SelectFilterInputComponent
     ]
 })
-export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit {
     public formService = inject(FormService);
     private formCloudService = inject(FormCloudService);
     private appConfig = inject(AppConfigService);
@@ -85,7 +86,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
 
-    protected onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     get showRequiredMessage(): boolean {
         return this.dropdownControl.touched && this.dropdownControl.errors?.required && !this.isRestApiFailed && !this.variableOptionsFailed;
@@ -131,11 +132,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 this.setupDropdown();
             }
         });
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {
@@ -186,7 +182,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.dropdownControl.valueChanges
             .pipe(
                 filter(() => !!this.field),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((value) => {
                 this.setOptionValue(value, this.field);
@@ -216,7 +212,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 map((search) =>
                     search ? this.field.options.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase())) : this.field.options
                 ),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((result) => this.list$.next(result));
     }
@@ -333,7 +329,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
             const bodyParam = this.buildBodyParam();
             this.formCloudService
                 .getRestWidgetData(this.field.form.id, this.field.id, bodyParam)
-                .pipe(takeUntil(this.onDestroy$))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
                     next: (result: FormFieldOption[]) => {
                         this.resetRestApiErrorMessage();
@@ -366,7 +362,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.formService.formFieldValueChanged
             .pipe(
                 filter((event: FormFieldEvent) => this.isFormFieldEventOfTypeDropdown(event) && this.isParentFormFieldEvent(event)),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((event: FormFieldEvent) => {
                 const valueOfParentWidget = event.field.value;

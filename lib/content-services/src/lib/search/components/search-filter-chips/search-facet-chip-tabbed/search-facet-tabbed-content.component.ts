@@ -15,19 +15,30 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { FacetWidget } from '../../../models/facet-widget.interface';
 import { TranslationService } from '@alfresco/adf-core';
 import { AutocompleteOption } from '../../../models/autocomplete-option.interface';
-import { takeUntil } from 'rxjs/operators';
 import { TabbedFacetField } from '../../../models/tabbed-facet-field.interface';
 import { SearchFacetFiltersService } from '../../../services/search-facet-filters.service';
 import { CommonModule } from '@angular/common';
 import { SearchChipAutocompleteInputComponent } from '../../search-chip-autocomplete-input';
 import { SearchFilterTabbedComponent } from '../../search-filter-tabbed/search-filter-tabbed.component';
 import { SearchFilterTabDirective } from '../../search-filter-tabbed';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-facet-tabbed-content',
@@ -36,7 +47,7 @@ import { SearchFilterTabDirective } from '../../search-filter-tabbed';
     templateUrl: './search-facet-tabbed-content.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnChanges, FacetWidget {
+export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, FacetWidget {
     private queryBuilder = inject(SearchQueryBuilderService);
     private translationService = inject(TranslationService);
     private searchFacetFiltersService = inject(SearchFacetFiltersService);
@@ -57,7 +68,7 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnC
     displayValue$ = new EventEmitter<string>();
 
     private resetSubject$ = new Subject<void>();
-    private onDestroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     reset$ = this.resetSubject$.asObservable();
     chipIcon = 'keyboard_arrow_down';
@@ -72,13 +83,8 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnDestroy, OnC
             });
         });
 
-        this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
-        this.onApply$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.submitValues());
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
+        this.onReset$?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reset());
+        this.onApply$?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.submitValues());
     }
 
     ngOnChanges(changes: SimpleChanges) {

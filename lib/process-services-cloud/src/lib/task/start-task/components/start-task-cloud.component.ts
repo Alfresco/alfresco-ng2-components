@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { Observable, Subject } from 'rxjs';
-import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from '../../../people/components/people-cloud.component';
 import { GroupCloudComponent } from '../../../group/components/group-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
-import { takeUntil } from 'rxjs/operators';
 import { TaskPriorityOption } from '../../models/task.model';
 import { IdentityUserService } from '../../../people/services/identity-user.service';
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { isValid, parse } from 'date-fns';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const MAX_NAME_LENGTH = 255;
 const DATE_FORMAT: string = 'dd/MM/yyyy';
@@ -44,7 +44,7 @@ const DATE_FORMAT: string = 'dd/MM/yyyy';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class StartTaskCloudComponent implements OnInit, OnDestroy {
+export class StartTaskCloudComponent implements OnInit {
     /** (required) Name of the app. */
     @Input()
     appName: string = '';
@@ -99,8 +99,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     private assigneeForm = new UntypedFormControl('');
     private groupForm = new UntypedFormControl('');
-    private onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(
         private taskService: TaskCloudService,
         private dateAdapter: DateAdapter<DateFnsAdapter>,
@@ -112,16 +111,11 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((locale) => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
         this.loadCurrentUser();
         this.buildForm();
         this.loadDefaultPriorities();
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     buildForm() {

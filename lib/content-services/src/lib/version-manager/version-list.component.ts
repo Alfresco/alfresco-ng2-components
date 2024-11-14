@@ -17,14 +17,25 @@
 
 import { ConfirmDialogComponent } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { VersionsApi, Node, VersionEntry, NodesApi, NodeEntry, ContentApi, ContentPagingQuery } from '@alfresco/js-api';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import { ContentApi, ContentPagingQuery, Node, NodeEntry, NodesApi, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentVersionService } from './content-version.service';
 import { ContentService } from '../common';
 import { InfiniteScrollDatasource } from '../infinite-scroll-datasource';
-import { from, Observable, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -34,6 +45,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { VersionCompatibilityDirective } from '../version-compatibility';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry> {
     constructor(private versionsApi: VersionsApi, private node: Node) {
@@ -69,8 +81,7 @@ export class VersionListDataSource extends InfiniteScrollDatasource<VersionEntry
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-version-list' }
 })
-export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
-    private onDestroy$ = new Subject<void>();
+export class VersionListComponent implements OnChanges, OnInit {
     private _contentApi: ContentApi;
     get contentApi(): ContentApi {
         this._contentApi = this._contentApi ?? new ContentApi(this.alfrescoApi.getInstance());
@@ -132,6 +143,8 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
     @ViewChild('viewport')
     viewport: CdkVirtualScrollViewport;
 
+    private destroyRef = inject(DestroyRef);
+
     constructor(
         private alfrescoApi: AlfrescoApiService,
         private contentService: ContentService,
@@ -141,7 +154,7 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.versionsDataSource = new VersionListDataSource(this.versionsApi, this.node);
-        this.versionsDataSource.isLoading.pipe(takeUntil(this.onDestroy$)).subscribe((isLoading) => {
+        this.versionsDataSource.isLoading.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((isLoading) => {
             this.isLoading = isLoading;
             this.latestVersion = this.versionsDataSource.firstItem;
         });
@@ -153,10 +166,6 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
-    }
 
     canUpdate(): boolean {
         return this.contentService.hasAllowableOperations(this.node, 'update') && this.versionsDataSource.itemsCount > 1;
@@ -188,7 +197,7 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
         if (this.allowDownload) {
             this.contentVersionService
                 .getVersionContentUrl(this.node.id, versionId, true)
-                .pipe(takeUntil(this.onDestroy$))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((versionDownloadUrl) => this.downloadContent(versionDownloadUrl));
         }
     }
@@ -207,7 +216,7 @@ export class VersionListComponent implements OnChanges, OnInit, OnDestroy {
 
             dialogRef
                 .afterClosed()
-                .pipe(takeUntil(this.onDestroy$))
+                .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe((result) => {
                     if (result) {
                         this.versionsApi.deleteVersion(this.node.id, versionId).then(() => this.onVersionDeleted(this.node));

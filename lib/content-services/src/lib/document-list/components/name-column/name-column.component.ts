@@ -15,15 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ChangeDetectionStrategy, ViewEncapsulation, ElementRef, OnDestroy } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    DestroyRef,
+    ElementRef,
+    inject,
+    Input,
+    OnInit,
+    ViewEncapsulation
+} from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { ShareDataRow } from '../../data/share-data-row.model';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-name-column',
@@ -52,7 +61,7 @@ import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-content-cell adf-datatable-link adf-name-column' }
 })
-export class NameColumnComponent implements OnInit, OnDestroy {
+export class NameColumnComponent implements OnInit {
     @Input()
     context: any;
 
@@ -62,14 +71,13 @@ export class NameColumnComponent implements OnInit, OnDestroy {
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
-    private onDestroy$ = new Subject<boolean>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+        this.nodesApiService.nodeUpdated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((node) => {
             const row: ShareDataRow = this.context.row;
             if (row) {
                 const { entry } = row.node;
@@ -102,8 +110,4 @@ export class NameColumnComponent implements OnInit, OnDestroy {
         );
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
 }

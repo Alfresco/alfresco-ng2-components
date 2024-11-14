@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, Inject, InjectionToken, Injector, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, Inject, inject, InjectionToken, Injector, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AdditionalDialogActionButton, DialogData } from './dialog-data.interface';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { DialogSize, DialogSizes } from './dialog.model';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntil } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component data');
 
@@ -36,7 +36,7 @@ export const DIALOG_COMPONENT_DATA = new InjectionToken<any>('dialog component d
     imports: [CommonModule, TranslateModule, MatIconModule, MatDialogModule, MatButtonModule],
     encapsulation: ViewEncapsulation.None
 })
-export class DialogComponent implements OnDestroy {
+export class DialogComponent {
     isConfirmButtonDisabled$ = new BehaviorSubject<boolean>(false);
     isCloseButtonHidden: boolean;
     isCancelButtonHidden: boolean;
@@ -48,7 +48,7 @@ export class DialogComponent implements OnDestroy {
 
     dataInjector: Injector;
 
-    private onDestroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         @Inject(MAT_DIALOG_DATA)
@@ -68,11 +68,11 @@ export class DialogComponent implements OnDestroy {
             });
 
             if (data.isConfirmButtonDisabled$) {
-                data.isConfirmButtonDisabled$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => this.isConfirmButtonDisabled$.next(value));
+                data.isConfirmButtonDisabled$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => this.isConfirmButtonDisabled$.next(value));
             }
 
             if (data.dataOnConfirm$) {
-                data.dataOnConfirm$.pipe(takeUntil(this.onDestroy$)).subscribe((value) => (this.dataOnConfirm = value));
+                data.dataOnConfirm$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => (this.dataOnConfirm = value));
             }
         }
     }
@@ -80,10 +80,5 @@ export class DialogComponent implements OnDestroy {
     onConfirm() {
         this.isConfirmButtonDisabled$.next(true);
         this.dialogRef.close(this.dataOnConfirm || true);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
     }
 }

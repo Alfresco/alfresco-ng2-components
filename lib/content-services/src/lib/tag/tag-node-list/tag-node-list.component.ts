@@ -15,12 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Chip, DynamicChipListComponent } from '@alfresco/adf-core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  *
@@ -34,7 +43,7 @@ import { Chip, DynamicChipListComponent } from '@alfresco/adf-core';
     templateUrl: './tag-node-list.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
+export class TagNodeListComponent implements OnChanges, OnInit {
     /** The identifier of a node. */
     @Input()
     nodeId: string;
@@ -51,7 +60,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     @Output()
     results = new EventEmitter<TagEntry[]>();
 
-    private onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
     private _tagChips: Chip[] = [];
 
     get tagChips(): Chip[] {
@@ -65,12 +74,7 @@ export class TagNodeListComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     ngOnInit(): void {
-        this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.refreshTag());
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
+        this.tagService.refresh.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.refreshTag());
     }
 
     refreshTag(): void {

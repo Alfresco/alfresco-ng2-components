@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DateRangeType } from './search-date-range/date-range-type';
 import { SearchDateRange } from './search-date-range/search-date-range';
 import { SearchWidget } from '../../models/search-widget.interface';
@@ -25,11 +25,24 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { InLastDateType } from './search-date-range/in-last-date-type';
 import { TranslationService } from '@alfresco/adf-core';
-import { endOfDay, endOfToday, format, formatISO, parseISO, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from 'date-fns';
+import {
+    endOfDay,
+    endOfToday,
+    format,
+    formatISO,
+    parseISO,
+    startOfDay,
+    startOfMonth,
+    startOfWeek,
+    subDays,
+    subMonths,
+    subWeeks
+} from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
 import { SearchDateRangeComponent } from './search-date-range/search-date-range.component';
 import { SearchFilterTabDirective } from '../search-filter-tabbed/search-filter-tab.directive';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
@@ -41,7 +54,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     styleUrls: ['./search-date-range-tabbed.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnDestroy {
+export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     displayValue$ = new ReplaySubject<string>(1);
     id: string;
     startValue: SearchDateRange = {
@@ -62,7 +75,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
     private value: { [key: string]: Partial<SearchDateRange> } = {};
     private queryMapByField: Map<string, string> = new Map<string, string>();
     private displayValueMapByField: Map<string, string> = new Map<string, string>();
-    private readonly destroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     constructor(private translateService: TranslationService) {}
 
@@ -73,7 +86,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
             .asObservable()
             .pipe(
                 map((filtersQueries) => filtersQueries[this.id]),
-                takeUntil(this.destroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
@@ -94,12 +107,6 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit, OnD
                 this.context.filterLoaded.next();
             });
     }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
     private setDefaultDateFormatSettings() {
         if (this.settings && !this.settings.dateFormat) {
             this.settings.dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;

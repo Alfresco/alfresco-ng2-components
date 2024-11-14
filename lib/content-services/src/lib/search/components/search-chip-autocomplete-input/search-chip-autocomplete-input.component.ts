@@ -17,28 +17,30 @@
 
 import {
     Component,
-    ViewEncapsulation,
+    DestroyRef,
     ElementRef,
-    ViewChild,
-    OnInit,
-    OnDestroy,
-    Input,
-    Output,
     EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
     SimpleChanges,
-    OnChanges
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import { ENTER } from '@angular/cdk/keycodes';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { EMPTY, Observable, Subject, timer } from 'rxjs';
-import { debounce, startWith, takeUntil, tap } from 'rxjs/operators';
+import { EMPTY, Observable, timer } from 'rxjs';
+import { debounce, startWith, tap } from 'rxjs/operators';
 import { AutocompleteOption } from '../../models/autocomplete-option.interface';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
@@ -48,7 +50,7 @@ import { MatIconModule } from '@angular/material/icon';
     styleUrls: ['./search-chip-autocomplete-input.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, OnChanges {
+export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
     @ViewChild('optionInput')
     optionInput: ElementRef<HTMLInputElement>;
 
@@ -89,7 +91,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
     formCtrl = new FormControl('');
     filteredOptions: AutocompleteOption[] = [];
     selectedOptions: AutocompleteOption[] = [];
-    private onDestroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
     private _activeAnyOption = false;
 
     set activeAnyOption(active: boolean) {
@@ -102,13 +104,13 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
                 startWith(''),
                 tap(() => (this.activeAnyOption = false)),
                 debounce((value: string) => (value ? timer(300) : EMPTY)),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((value: string) => {
                 this.filteredOptions = value ? this.filter(this.autocompleteOptions, value) : [];
                 this.inputChanged.emit(value);
             });
-        this.onReset$?.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.reset());
+        this.onReset$?.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reset());
         this.selectedOptions = this.preselectedOptions ?? [];
     }
 
@@ -119,11 +121,6 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnDestroy, 
                     ? this.filter(changes.autocompleteOptions.currentValue, this.formCtrl.value)
                     : [];
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
     }
 
     add(event: MatChipInputEvent) {

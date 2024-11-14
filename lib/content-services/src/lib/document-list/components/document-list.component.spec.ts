@@ -140,7 +140,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'resetSelection').and.callThrough();
         spyOn(documentList, 'reload').and.callThrough();
 
-        documentList.ngOnDestroy();
+        fixture.destroy();
         documentListService.reload();
 
         expect(documentList.resetSelection).not.toHaveBeenCalled();
@@ -158,7 +158,7 @@ describe('DocumentList', () => {
     it('should not reset selection after component is destroyed', () => {
         spyOn(documentList, 'resetSelection').and.callThrough();
 
-        documentList.ngOnDestroy();
+        fixture.destroy();
         documentListService.resetSelection();
 
         expect(documentList.resetSelection).not.toHaveBeenCalled();

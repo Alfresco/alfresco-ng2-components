@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    DestroyRef,
+    inject,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -23,7 +32,7 @@ import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../translation/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { debounceTime, takeUntil, filter } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,6 +40,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -61,7 +71,7 @@ const templateTypes = {
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-card-view-textitem' }
 })
-export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges, OnDestroy {
+export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
     @Input()
     displayEmpty = true;
 
@@ -81,6 +91,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     errors: CardViewItemValidator[];
     templateType: string;
     textInput = new UntypedFormControl();
+    private destroyRef = inject(DestroyRef);
 
     constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
         super();
@@ -92,7 +103,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
                 .pipe(
                     filter((textInputValue) => textInputValue !== this.editedValue && textInputValue !== null),
                     debounceTime(50),
-                    takeUntil(this.destroy$)
+                    takeUntilDestroyed(this.destroyRef)
                 )
                 .subscribe((textInputValue) => {
                     this.editedValue = textInputValue;
@@ -220,10 +231,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         if ((event.ctrlKey || event.metaKey) && event.code === 'KeyZ' && this.textInput.value) {
             this.textInput.setValue('');
         }
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
     }
 
     get showProperty(): boolean {

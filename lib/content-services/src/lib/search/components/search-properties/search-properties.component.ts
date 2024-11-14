@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewChecked,
+    Component,
+    DestroyRef,
+    ElementRef,
+    inject,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FileSizeCondition } from './file-size-condition';
 import { FileSizeOperator } from './file-size-operator.enum';
@@ -31,7 +40,8 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
-import { map, takeUntil } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-search-properties',
@@ -41,7 +51,7 @@ import { map, takeUntil } from 'rxjs/operators';
     styleUrls: ['./search-properties.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDestroy, SearchWidget {
+export class SearchPropertiesComponent implements OnInit, AfterViewChecked, SearchWidget {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -63,6 +73,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
     private _reset$ = new Subject<void>();
     private sizeField: string;
     private nameField: string;
+    private destroyRef = inject(DestroyRef);
 
     @ViewChild('fileSizeOperatorSelect', { read: ElementRef })
     fileSizeOperatorSelectElement: ElementRef;
@@ -94,9 +105,6 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
     set selectedExtensions(extensions: AutocompleteOption[]) {
         this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
-
-    private readonly destroy$ = new Subject<void>();
-
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
     ngOnInit() {
@@ -114,7 +122,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
             .asObservable()
             .pipe(
                 map((filtersQueries) => filtersQueries[this.id]),
-                takeUntil(this.destroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
@@ -147,11 +155,6 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, OnDe
                     extraFreeSpace;
             });
         }
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     narrowDownAllowedCharacters(event: Event) {

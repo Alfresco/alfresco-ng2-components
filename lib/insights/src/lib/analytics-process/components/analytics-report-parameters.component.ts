@@ -15,14 +15,21 @@
  * limitations under the License.
  */
 
-import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DownloadService, ToolbarComponent, ToolbarTitleComponent } from '@alfresco/adf-core';
+import {
+    ADF_DATE_FORMATS,
+    AdfDateFnsAdapter,
+    DownloadService,
+    ToolbarComponent,
+    ToolbarTitleComponent
+} from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
+    DestroyRef,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
-    OnDestroy,
     OnInit,
     Output,
     SimpleChanges,
@@ -35,8 +42,6 @@ import { ReportParameterDetailsModel } from '../../diagram/models/report/report-
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { ReportQuery } from '../../diagram/models/report/report-query.model';
 import { AnalyticsService } from '../services/analytics.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,6 +52,7 @@ import { WIDGET_DIRECTIVES } from './widgets';
 import { MatButtonModule } from '@angular/material/button';
 import { ButtonsMenuComponent } from './buttons-menu/buttons-menu.component';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const FORMAT_DATE_ACTIVITI = 'YYYY-MM-DD';
 
@@ -133,7 +139,7 @@ export interface ReportFormValues {
     styleUrls: ['./analytics-report-parameters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterContentChecked {
+export class AnalyticsReportParametersComponent implements OnInit, OnChanges, AfterContentChecked {
     /** appId ID of the target app. */
     @Input()
     appId: number;
@@ -186,7 +192,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     formValidState: boolean = false;
 
     private hideParameters: boolean = true;
-    private onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         private analyticsService: AnalyticsService,
@@ -197,14 +203,14 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     ) {}
 
     ngOnInit() {
-        this.onDropdownChanged.pipe(takeUntil(this.onDestroy$)).subscribe((field: any) => {
+        this.onDropdownChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((field: any) => {
             const paramDependOn = this.reportParameters.definition.parameters.find((param) => param.dependsOn === field.id);
             if (paramDependOn) {
                 this.retrieveParameterOptions(this.reportParameters.definition.parameters, this.appId, this.reportId, field.value);
             }
         });
 
-        this.successReportParams.pipe(takeUntil(this.onDestroy$)).subscribe((report) => {
+        this.successReportParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((report) => {
             if (report.hasParameters()) {
                 this.retrieveParameterOptions(report.definition.parameters, this.appId);
                 this.generateFormGroupFromParameter(report.definition.parameters);
@@ -308,11 +314,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             reportParamQuery.typeFiltering = values.typeFilteringGroup.typeFiltering;
         }
         return reportParamQuery;
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     editEnable() {

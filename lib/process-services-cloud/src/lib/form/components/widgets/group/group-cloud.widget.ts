@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { WidgetComponent, FormService } from '@alfresco/adf-core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormService, WidgetComponent } from '@alfresco/adf-core';
 import { UntypedFormControl } from '@angular/forms';
-import { filter, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { ComponentSelectionMode } from '../../../../types';
 import { IdentityGroupModel } from '../../../../group/models/identity-group.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /* eslint-disable @angular-eslint/component-selector */
 
@@ -41,9 +41,7 @@ import { IdentityGroupModel } from '../../../../group/models/identity-group.mode
     },
     encapsulation: ViewEncapsulation.None
 })
-export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
-
-    private onDestroy$ = new Subject<boolean>();
+export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit {
 
     typeId = 'GroupCloudWidgetComponent';
     roles: string[];
@@ -53,6 +51,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     search: UntypedFormControl;
     validate = false;
 
+    private destroyRef = inject(DestroyRef);
     constructor(formService: FormService) {
         super(formService);
     }
@@ -71,7 +70,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
         this.search.statusChanges
             .pipe(
                 filter((value: string) => value === 'INVALID'),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
                 this.field.markAsInvalid();
@@ -81,19 +80,13 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
         this.search.statusChanges
             .pipe(
                 filter((value: string) => value === 'VALID'),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
                 this.field.validate();
                 this.field.form.validateForm();
             });
     }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     onChangedGroup(groups: IdentityGroupModel[]): void {
         this.field.value = groups?.length ? [...groups] : null;
         this.onFieldChanged(this.field);

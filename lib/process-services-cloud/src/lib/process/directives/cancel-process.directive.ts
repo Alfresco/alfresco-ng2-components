@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener, Output, EventEmitter, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { DestroyRef, Directive, ElementRef, EventEmitter, HostListener, inject, OnInit, Output } from '@angular/core';
 import { ProcessCloudService } from '../services/process-cloud.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 import { IdentityUserService } from '../../people/services/identity-user.service';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[adf-cloud-cancel-process]'
 })
-export class CancelProcessDirective implements OnInit, OnDestroy {
+export class CancelProcessDirective implements OnInit {
 
     /** Emitted when the process is cancelled. */
     @Output()
@@ -40,7 +39,7 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     canCancelProcess = false;
 
-    private onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         private elementRef: ElementRef,
@@ -49,7 +48,7 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.processCloudService.dataChangesDetected
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((processDetails) => {
                 this.processInstanceDetails = processDetails;
                 this.canCancelProcess = this.checkCanCancelProcess();
@@ -81,10 +80,5 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
         } else {
             this.error.emit('Permission denied, only process initiator can cancel the process');
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

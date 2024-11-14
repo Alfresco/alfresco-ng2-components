@@ -16,7 +16,20 @@
  */
 
 import { TagEntry, TagPaging } from '@alfresco/js-api';
-import { Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounce, distinctUntilChanged, finalize, first, map, takeUntil, tap } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, Subject, timer } from 'rxjs';
@@ -32,6 +45,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
@@ -162,7 +176,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _tagNameControlVisible = false;
     private _existingTags: TagEntry[];
     private _initialExistingTags: TagEntry[];
-    private onDestroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
     private _tagNameErrorMessageKey = '';
     private _spinnerVisible = false;
     private _typing = false;
@@ -201,18 +215,16 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
                     this._existingTags = null;
                 }),
                 debounce((name: string) => (name ? timer(300) : EMPTY)),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((name: string) => this.onTagNameControlValueChange(name));
 
-        this.tagNameControl.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.setTagNameControlErrorMessageKey());
+        this.tagNameControl.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.setTagNameControlErrorMessageKey());
 
         this.setTagNameControlErrorMessageKey();
     }
 
     ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
         this.cancelExistingTagsLoading$.next();
         this.cancelExistingTagsLoading$.complete();
     }

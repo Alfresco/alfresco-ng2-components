@@ -15,15 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { PaginationModel, DataSorting, HeaderFilterTemplateDirective } from '@alfresco/adf-core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    Inject,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges
+} from '@angular/core';
+import { DataSorting, HeaderFilterTemplateDirective, PaginationModel } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../../search/services/search-header-query-builder.service';
 import { FilterSearch } from './../../../search/models/filter-search.interface';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { ADF_DOCUMENT_PARENT_COMPONENT } from '../document-list.token';
 import { CommonModule } from '@angular/common';
-import { SearchFilterContainerComponent } from '../../../search/components/search-filter-container/search-filter-container.component';
+import {
+    SearchFilterContainerComponent
+} from '../../../search/components/search-filter-container/search-filter-container.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-filter-header',
@@ -31,7 +43,7 @@ import { SearchFilterContainerComponent } from '../../../search/components/searc
     imports: [CommonModule, HeaderFilterTemplateDirective, SearchFilterContainerComponent],
     templateUrl: './filter-header.component.html'
 })
-export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
+export class FilterHeaderComponent implements OnInit, OnChanges {
     /** (optional) Initial filter value to sort . */
     @Input()
     value: any = {};
@@ -45,14 +57,14 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     filterSelection: EventEmitter<FilterSearch[]> = new EventEmitter();
 
     isFilterServiceActive: boolean;
-    private onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any, private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }
 
     ngOnInit() {
-        this.searchFilterQueryBuilder.executed.pipe(takeUntil(this.onDestroy$)).subscribe((newNodePaging) => {
+        this.searchFilterQueryBuilder.executed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((newNodePaging) => {
             this.documentList.node = newNodePaging;
             this.documentList.reload();
         });
@@ -81,13 +93,13 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     initDataPagination() {
-        this.documentList.pagination.pipe(takeUntil(this.onDestroy$)).subscribe((newPagination: PaginationModel) => {
+        this.documentList.pagination.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((newPagination: PaginationModel) => {
             this.searchFilterQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
         });
     }
 
     initDataSorting() {
-        this.documentList.sortingSubject.pipe(takeUntil(this.onDestroy$)).subscribe((sorting: DataSorting[]) => {
+        this.documentList.sortingSubject.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((sorting: DataSorting[]) => {
             this.searchFilterQueryBuilder.setSorting(sorting);
         });
     }
@@ -109,10 +121,5 @@ export class FilterHeaderComponent implements OnInit, OnChanges, OnDestroy {
                 this.searchFilterQueryBuilder.setActiveFilter(columnKey, this.value[columnKey]);
             });
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

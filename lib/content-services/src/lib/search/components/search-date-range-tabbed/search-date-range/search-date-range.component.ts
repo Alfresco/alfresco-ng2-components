@@ -15,17 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { endOfDay, parse, isValid, isBefore, isAfter } from 'date-fns';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Inject,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
+import { endOfDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
 import { InLastDateType } from './in-last-date-type';
 import { DateRangeType } from './date-range-type';
 import { SearchDateRange } from './search-date-range';
 import { FormBuilder, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
-import { UserPreferencesService, UserPreferenceValues, DateFnsUtils } from '@alfresco/adf-core';
+import { DateFnsUtils, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { TranslateModule } from '@ngx-translate/core';
@@ -33,6 +41,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
 
@@ -58,7 +67,7 @@ const DEFAULT_DATE_DISPLAY_FORMAT = 'dd-MMM-yy';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-date-range' }
 })
-export class SearchDateRangeComponent implements OnInit, OnDestroy {
+export class SearchDateRangeComponent implements OnInit {
     @Input()
     dateFormat = DEFAULT_DATE_DISPLAY_FORMAT;
     @Input()
@@ -87,7 +96,7 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
     betweenStartDateFormControl = this.form.controls.betweenStartDate;
     betweenEndDateFormControl = this.form.controls.betweenEndDate;
     convertedMaxDate: Date;
-    private readonly destroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;
@@ -113,19 +122,13 @@ export class SearchDateRangeComponent implements OnInit, OnDestroy {
         this.convertedMaxDate = endOfDay(this.maxDate && this.maxDate !== 'today' ? parse(this.maxDate, this.dateFormat, new Date()) : new Date());
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((locale) => this.dateAdapter.setLocale(DateFnsUtils.getLocaleFromString(locale)));
         this.form.controls.dateRangeType.valueChanges
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((dateRangeType) => this.updateValidators(dateRangeType));
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onChange());
+        this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.onChange());
     }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
     private updateValidators(dateRangeType: DateRangeType) {
         switch (dateRangeType) {
             case DateRangeType.BETWEEN:

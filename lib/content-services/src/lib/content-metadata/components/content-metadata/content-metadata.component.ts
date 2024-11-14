@@ -15,8 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
+import {
+    Component,
+    DestroyRef,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
+import {
+    Category,
+    CategoryEntry,
+    CategoryLinkBody,
+    CategoryPaging,
+    Node,
+    TagBody,
+    TagEntry,
+    TagPaging
+} from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
     AppConfigService,
@@ -28,8 +46,13 @@ import {
     UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { CardViewGroup, PresetConfig, ContentMetadataCustomPanel, ContentMetadataPanel } from '../../interfaces/content-metadata.interfaces';
-import { catchError, debounceTime, map, takeUntil } from 'rxjs/operators';
+import {
+    CardViewGroup,
+    ContentMetadataCustomPanel,
+    ContentMetadataPanel,
+    PresetConfig
+} from '../../interfaces/content-metadata.interfaces';
+import { catchError, debounceTime, map } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { TagsCreatorMode } from '../../../tag/tags-creator/tags-creator-mode';
@@ -49,6 +72,7 @@ import { CategoriesManagementComponent } from '../../../category';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TagsCreatorComponent } from '../../../tag';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const DEFAULT_SEPARATOR = ', ';
 
@@ -80,8 +104,7 @@ enum DefaultPanels {
     host: { class: 'adf-content-metadata' },
     encapsulation: ViewEncapsulation.None
 })
-export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
-    protected onDestroy$ = new Subject<boolean>();
+export class ContentMetadataComponent implements OnChanges, OnInit {
 
     /** (required) The node entity to fetch metadata about */
     @Input()
@@ -148,6 +171,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     private targetProperty: CardViewBaseItemModel;
     private classifiableChangedSubject = new Subject<void>();
     private _saving = false;
+    private destroyRef = inject(DestroyRef);
 
     DefaultPanels = DefaultPanels;
     multiValueSeparator: string;
@@ -167,6 +191,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         panelTitle: ''
     };
 
+
     constructor(
         private contentMetadataService: ContentMetadataService,
         private cardViewContentUpdateService: CardViewContentUpdateService,
@@ -185,14 +210,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.cardViewContentUpdateService.itemUpdated$
-            .pipe(debounceTime(500), takeUntil(this.onDestroy$))
+            .pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
             .subscribe((updatedNode: UpdateNotification) => {
                 this.hasMetadataChanged = true;
                 this.targetProperty = updatedNode.target;
                 this.updateChanges(updatedNode.changed);
             });
 
-        this.cardViewContentUpdateService.updatedAspect$.pipe(debounceTime(500), takeUntil(this.onDestroy$)).subscribe((node) => {
+        this.cardViewContentUpdateService.updatedAspect$.pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef)).subscribe((node) => {
             this.node.aspectNames = node?.aspectNames;
             this.loadProperties(node);
         });
@@ -272,11 +297,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.displayDefaultProperties?.currentValue) {
             this.expandPanel(this.DefaultPanels.PROPERTIES);
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     updateChanges(updatedNodeChanges) {

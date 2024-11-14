@@ -17,12 +17,12 @@
 
 import {
     Component,
+    DestroyRef,
     EventEmitter,
     HostListener,
     inject,
     Input,
     OnChanges,
-    OnDestroy,
     OnInit,
     Output,
     SimpleChanges,
@@ -30,19 +30,26 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 
-import { ContentLinkModel, FORM_FIELD_VALIDATORS, FormFieldValidator, FormModel, TranslationService } from '@alfresco/adf-core';
+import {
+    ContentLinkModel,
+    FORM_FIELD_VALIDATORS,
+    FormFieldValidator,
+    FormModel,
+    TranslationService
+} from '@alfresco/adf-core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { catchError, debounceTime, takeUntil } from 'rxjs/operators';
+import { catchError, debounceTime } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessWithFormPayloadCloud } from '../models/process-with-form-payload-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
-import { forkJoin, of, Subject } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 import { FormCloudDisplayModeConfiguration } from '../../../services/form-fields.interfaces';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const MAX_NAME_LENGTH: number = 255;
 const PROCESS_DEFINITION_DEBOUNCE: number = 300;
@@ -53,7 +60,7 @@ const PROCESS_DEFINITION_DEBOUNCE: number = 300;
     styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
+export class StartProcessCloudComponent implements OnChanges, OnInit {
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
@@ -133,7 +140,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     resolvedValues?: TaskVariableCloud[];
     customOutcome: string;
 
-    protected onDestroy$ = new Subject<boolean>();
 
     isProcessStarting = false;
     isFormCloudLoaded = false;
@@ -154,6 +160,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
     });
 
+    private destroyRef = inject(DestroyRef);
     private readonly startProcessCloudService = inject(StartProcessCloudService);
     private readonly processNameCloudPipe = inject(ProcessNameCloudPipe);
 
@@ -204,7 +211,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.processDefinition.setValue(this.processDefinitionName);
         this.processDefinition.valueChanges
             .pipe(debounceTime(PROCESS_DEFINITION_DEBOUNCE))
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((processDefinitionName) => {
                 this.selectProcessDefinitionByProcessDefinitionName(processDefinitionName);
             });
@@ -327,7 +334,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
         this.startProcessCloudService
             .getProcessDefinitions(this.appName)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(
                 (processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                     this.processDefinitionList = processDefinitionRepresentations;
@@ -497,10 +504,5 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.processInstanceName.setValue(defaultProcessName);
         this.processInstanceName.markAsDirty();
         this.processInstanceName.markAsTouched();
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

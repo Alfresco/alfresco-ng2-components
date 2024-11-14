@@ -16,10 +16,22 @@
  */
 
 import { Category } from '@alfresco/js-api';
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    ElementRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EMPTY, Observable, Subject, timer } from 'rxjs';
-import { debounce, first, map, takeUntil, tap } from 'rxjs/operators';
+import { debounce, first, map, tap } from 'rxjs/operators';
 import { CategoriesManagementMode } from './categories-management-mode';
 import { CategoryService } from '../services/category.service';
 import { CommonModule } from '@angular/common';
@@ -30,6 +42,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface CategoryNameControlErrors {
     duplicatedExistingCategory?: boolean;
@@ -66,7 +79,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
 
     private existingCategoryLoaded$ = new Subject<void>();
     private cancelExistingCategoriesLoading$ = new Subject<void>();
-    private onDestroy$ = new Subject<void>();
     private _categoryNameControl = new FormControl<string>(
         '',
         [this.validateIfNotAlreadyAdded.bind(this), this.validateEmptyCategory, Validators.required],
@@ -147,6 +159,8 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     @ViewChild('categoryNameInput')
     private categoryNameInputElement: ElementRef;
 
+    private destroyRef = inject(DestroyRef);
+
     constructor(private categoryService: CategoryService) {}
 
     ngOnInit() {
@@ -162,11 +176,11 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
                     this.cancelExistingCategoriesLoading$.next();
                 }),
                 debounce((name: string) => (name ? timer(300) : EMPTY)),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((name: string) => this.onNameControlValueChange(name));
 
-        this.categoryNameControl.statusChanges.pipe(takeUntil(this.onDestroy$)).subscribe(() => this.setCategoryNameControlErrorMessageKey());
+        this.categoryNameControl.statusChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.setCategoryNameControlErrorMessageKey());
 
         this.setCategoryNameControlErrorMessageKey();
 
@@ -178,7 +192,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
             this._categoryNameControl.removeValidators(Validators.required);
             this.categories.forEach((category) => this.initialCategories.push(category));
             if (this.classifiableChanged) {
-                this.classifiableChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+                this.classifiableChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
                     this.categories = [];
                     this.categoryNameControlVisible = false;
                     this.categoryNameControlVisibleChange.emit(false);
@@ -188,8 +202,6 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
         this.cancelExistingCategoriesLoading$.next();
         this.cancelExistingCategoriesLoading$.complete();
     }

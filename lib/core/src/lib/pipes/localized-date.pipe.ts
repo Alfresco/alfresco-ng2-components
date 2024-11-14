@@ -16,35 +16,28 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Pipe({
     standalone: true,
     name: 'adfLocalizedDate',
     pure: false
 })
-export class LocalizedDatePipe implements PipeTransform, OnDestroy {
-
+export class LocalizedDatePipe implements PipeTransform {
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_FORMAT = 'mediumDate';
 
     defaultLocale: string = LocalizedDatePipe.DEFAULT_LOCALE;
     defaultFormat: string = LocalizedDatePipe.DEFAULT_DATE_FORMAT;
-
-    private onDestroy$ = new Subject<boolean>();
-
-    constructor(public userPreferenceService?: UserPreferencesService,
-                public appConfig?: AppConfigService) {
-
+    constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
         if (this.userPreferenceService) {
             this.userPreferenceService
                 .select(UserPreferenceValues.Locale)
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe(locale => {
+                .pipe(takeUntilDestroyed())
+                .subscribe((locale) => {
                     if (locale) {
                         this.defaultLocale = locale;
                     }
@@ -62,10 +55,4 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
         const datePipe = new DatePipe(actualLocale);
         return datePipe.transform(value, actualFormat);
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
 }

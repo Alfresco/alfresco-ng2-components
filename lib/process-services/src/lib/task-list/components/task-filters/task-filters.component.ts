@@ -16,18 +16,29 @@
  */
 
 import { AppsProcessService } from '../../../services/apps-process.service';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { TaskFilterService } from '../../services/task-filter.service';
 import { TaskListService } from '../../services/tasklist.service';
 import { IconModel } from '../../../app-list/icon.model';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-task-filters',
@@ -37,7 +48,7 @@ import { IconComponent } from '@alfresco/adf-core';
     styleUrls: ['./task-filters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
+export class TaskFiltersComponent implements OnInit, OnChanges {
     /**
      * Parameters to use for the task filter. If there is no match then
      * the default filter (the first one the list) is selected.
@@ -76,10 +87,10 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     currentFilter: UserTaskFilterRepresentation;
     filters: UserTaskFilterRepresentation[] = [];
 
-    private onDestroy$ = new Subject<boolean>();
     isTaskRoute: boolean;
     isTaskActive: boolean;
 
+    private destroyRef = inject(DestroyRef);
     private iconsMDL: IconModel;
 
     constructor(
@@ -95,7 +106,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
         this.router.events
             .pipe(
                 filter((event) => event instanceof NavigationStart),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((navigationStart: NavigationStart) => {
                 const activeRoute = navigationStart.url;
@@ -270,10 +281,5 @@ export class TaskFiltersComponent implements OnInit, OnChanges, OnDestroy {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

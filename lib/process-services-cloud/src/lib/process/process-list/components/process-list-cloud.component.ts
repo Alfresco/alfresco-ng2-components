@@ -16,47 +16,53 @@
  */
 
 import {
-    Component,
-    ViewEncapsulation,
-    OnChanges,
     AfterContentInit,
+    Component,
     ContentChild,
-    Output,
     EventEmitter,
-    SimpleChanges,
-    Input,
-    ViewChild,
     Inject,
-    OnDestroy,
-    Optional
+    Input,
+    OnChanges,
+    Optional,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import {
-    DataTableSchema,
-    PaginatedComponent,
-    CustomEmptyContentTemplateDirective,
     AppConfigService,
-    UserPreferencesService,
-    PaginationModel,
-    UserPreferenceValues,
-    DataRowEvent,
+    CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
     DataCellEvent,
+    DataColumn,
     DataRowActionEvent,
+    DataRowEvent,
     DataTableComponent,
-    DataColumn
+    DataTableSchema,
+    PaginatedComponent,
+    PaginationModel,
+    UserPreferencesService,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessListRequestModel, ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
-import { PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN, PROCESS_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import {
+    PROCESS_LISTS_PREFERENCES_SERVICE_TOKEN,
+    PROCESS_SEARCH_API_METHOD_TOKEN
+} from '../../../services/cloud-token.service';
 import { ProcessListCloudPreferences } from '../models/process-cloud-preferences';
 import { ProcessListDatatableAdapter } from '../datatable/process-list-datatable-adapter';
-import { ProcessListDataColumnCustomData, PROCESS_LIST_CUSTOM_VARIABLE_COLUMN } from '../../../models/data-column-custom-data';
+import {
+    PROCESS_LIST_CUSTOM_VARIABLE_COLUMN,
+    ProcessListDataColumnCustomData
+} from '../../../models/data-column-custom-data';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -66,7 +72,7 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataColumnCustomData> implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy {
+export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataColumnCustomData> implements OnChanges, AfterContentInit, PaginatedComponent {
 
     @ViewChild(DataTableComponent) dataTable: DataTableComponent;
 
@@ -255,8 +261,6 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    private onDestroy$ = new Subject<boolean>();
-
     pagination: BehaviorSubject<PaginationModel>;
     size: number;
     skipCount: number = 0;
@@ -314,7 +318,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                     return this.processListCloudService.getProcessByRequest(requestNode).pipe(take(1));
                 }
             }),
-            takeUntil(this.onDestroy$)
+            takeUntilDestroyed()
         ).subscribe({
             next: (processes) => {
                 this.rows = this.variableMapperService.mapVariablesByColumnTitle(processes.list.entries, this.columns);
@@ -368,12 +372,6 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
                 this.createDatatableSchema();
             });
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes, 'sorting')) {
             this.formatSorting(changes['sorting'].currentValue);

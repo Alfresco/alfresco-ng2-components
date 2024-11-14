@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, OnChanges, NgZone, OnDestroy } from '@angular/core';
+import { DestroyRef, Directive, HostListener, inject, Input, NgZone, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NodeEntry, NodesApi } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
-import { Observable, from, Subject } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Directive({
     selector: '[adf-share]',
     standalone: true,
     exportAs: 'adfShare'
 })
-export class NodeSharedDirective implements OnChanges, OnDestroy {
+export class NodeSharedDirective implements OnChanges {
     isFile: boolean = false;
     isShared: boolean = false;
 
@@ -42,7 +42,6 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
     @Input()
     baseShareUrl: string;
 
-    private onDestroy$ = new Subject<boolean>();
 
     _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
@@ -50,13 +49,8 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
         return this._nodesApi;
     }
 
+    private destroyRef = inject(DestroyRef);
     constructor(private dialog: MatDialog, private zone: NgZone, private alfrescoApiService: AlfrescoApiService) {}
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     shareNode(nodeEntry: NodeEntry) {
         if (nodeEntry?.entry?.isFile) {
             // shared and favorite
@@ -92,7 +86,7 @@ export class NodeSharedDirective implements OnChanges, OnDestroy {
     }
 
     ngOnChanges() {
-        this.zone.onStable.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.zone.onStable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             if (this.node?.entry) {
                 this.isFile = this.node.entry.isFile;
                 this.isShared = this.node.entry.properties ? this.node.entry.properties['qshare:sharedId'] : false;

@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
-import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ReplaySubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'adf-search-slider',
@@ -36,7 +36,7 @@ import { TranslateModule } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-slider' }
 })
-export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
+export class SearchSliderComponent implements SearchWidget, OnInit {
     /** The numeric value represented by the slider. */
     @Input()
     value: number | null;
@@ -54,7 +54,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
     enableChangeUpdate: boolean;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private readonly destroy$ = new Subject<void>();
+    private destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         if (this.settings) {
@@ -79,7 +79,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
         }
         this.context.populateFilters
             .asObservable()
-            .pipe(takeUntil(this.destroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((filtersQueries) => {
                 if (filtersQueries[this.id]) {
                     this.value = filtersQueries[this.id];
@@ -89,11 +89,6 @@ export class SearchSliderComponent implements SearchWidget, OnInit, OnDestroy {
                 }
                 this.context.filterLoaded.next();
             });
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     clear() {

@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { PaginationModel } from '@alfresco/adf-core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { TagEntry } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 /**
  * This component provide a list of all the tag inside the ECM
@@ -38,7 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-tag-list' }
 })
-export class TagListComponent implements OnInit, OnDestroy {
+export class TagListComponent implements OnInit {
     /** Emitted when a tag is selected. */
     @Output()
     result = new EventEmitter();
@@ -59,8 +58,6 @@ export class TagListComponent implements OnInit, OnDestroy {
     isLoading = false;
     isSizeMinimum = true;
 
-    private onDestroy$ = new Subject<boolean>();
-
     constructor(private tagService: TagService) {
         this.defaultPagination = {
             skipCount: 0,
@@ -70,7 +67,7 @@ export class TagListComponent implements OnInit, OnDestroy {
 
         this.pagination = this.defaultPagination;
 
-        this.tagService.refresh.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+        this.tagService.refresh.pipe(takeUntilDestroyed()).subscribe(() => {
             this.tagsEntries = [];
             this.refreshTag(this.defaultPagination);
         });
@@ -79,12 +76,6 @@ export class TagListComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.refreshTag(this.defaultPagination);
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     refreshTag(opts?: any) {
         this.tagService.getAllTheTags(opts).subscribe((tags) => {
             this.tagsEntries = this.tagsEntries.concat(tags.list.entries);

@@ -20,6 +20,7 @@ import { NgIf, NgTemplateOutlet } from '@angular/common';
 import {
     Component,
     ContentChild,
+    DestroyRef,
     ElementRef,
     EventEmitter,
     HostListener,
@@ -38,8 +39,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
-import { fromEvent, Subject } from 'rxjs';
-import { filter, first, skipWhile, takeUntil } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { filter, first, skipWhile } from 'rxjs/operators';
 import { AppConfigService } from '../../app-config';
 import { ToolbarComponent, ToolbarDividerComponent, ToolbarTitleComponent } from '../../toolbar';
 import { DownloadPromptActions } from '../models/download-prompt.actions';
@@ -55,6 +56,7 @@ import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.componen
 import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
 import { IconComponent } from '../../icon';
 import { ThumbnailService } from '../../common';
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
     enableDownloadPrompt: false,
@@ -284,7 +286,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Output()
     submitFile = new EventEmitter<Blob>();
 
-    private onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
@@ -326,14 +328,14 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
         this.dialog.afterOpened
             .pipe(
                 skipWhile(() => !this.overlayMode),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => (this.closeViewer = false));
 
         this.dialog.afterAllClosed
             .pipe(
                 skipWhile(() => !this.overlayMode),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => (this.closeViewer = true));
 
@@ -341,7 +343,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
             .pipe(
                 skipWhile(() => !this.overlayMode),
                 filter((e: KeyboardEvent) => e.keyCode === 27),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((event: KeyboardEvent) => {
                 event.preventDefault();
@@ -429,8 +431,6 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
 
     ngOnDestroy() {
         this.clearDownloadPromptTimeouts();
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     private configureAndInitDownloadPrompt() {

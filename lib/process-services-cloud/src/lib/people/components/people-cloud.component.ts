@@ -17,29 +17,31 @@
 
 import { UntypedFormControl } from '@angular/forms';
 import {
+    AfterViewInit,
     Component,
+    DestroyRef,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    inject,
+    Input,
+    OnChanges,
     OnInit,
     Output,
-    EventEmitter,
-    ViewEncapsulation,
-    Input,
     SimpleChanges,
-    OnChanges,
-    OnDestroy,
     ViewChild,
-    ElementRef,
-    Inject,
-    AfterViewInit
+    ViewEncapsulation
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { FullNamePipe } from '@alfresco/adf-core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ComponentSelectionMode } from '../../types';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserServiceInterface } from '../services/identity-user.service.interface';
 import { IDENTITY_USER_SERVICE_TOKEN } from '../services/identity-user-service.token';
 import { MatFormFieldAppearance, SubscriptSizing } from '@angular/material/form-field';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-people',
@@ -54,7 +56,7 @@ import { MatFormFieldAppearance, SubscriptSizing } from '@angular/material/form-
     providers: [FullNamePipe],
     encapsulation: ViewEncapsulation.None
 })
-export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
     appName: string;
@@ -175,7 +177,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
     private userInput: ElementRef<HTMLInputElement>;
 
     private searchUsers: IdentityUserModel[] = [];
-    private onDestroy$ = new Subject<boolean>();
+    private destroyRef = inject(DestroyRef);
 
     selectedUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];
@@ -245,7 +247,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
                     return users;
                 }),
                 filter((user) => !this.isUserAlreadySelected(user) && !this.isExcludedUser(user)),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((user: IdentityUserModel) => {
                 this.searchUsers.push(user);
@@ -562,10 +564,5 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy, After
 
     getValidationMinLength(): string {
         return this.searchUserCtrl.errors.minlength.requiredLength;
-    }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

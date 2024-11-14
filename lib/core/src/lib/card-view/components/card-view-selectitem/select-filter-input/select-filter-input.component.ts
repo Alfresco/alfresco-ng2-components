@@ -15,10 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ViewChild, ElementRef, OnDestroy, Inject, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    ElementRef,
+    EventEmitter,
+    Inject,
+    inject,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,6 +35,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-select-filter-input',
@@ -36,14 +46,13 @@ import { TranslateModule } from '@ngx-translate/core';
     host: { class: 'adf-select-filter-input' },
     encapsulation: ViewEncapsulation.None
 })
-export class SelectFilterInputComponent implements OnInit, OnDestroy {
+export class SelectFilterInputComponent implements OnInit {
     @ViewChild('selectFilterInput', { read: ElementRef, static: false }) selectFilterInput: ElementRef;
     @Output() change = new EventEmitter<string>();
 
     term = '';
     previousSelected: any[];
-    private onDestroy$ = new Subject<void>();
-
+    private destroyRef = inject(DestroyRef);
     constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
 
     onModelChange(value: string) {
@@ -51,9 +60,9 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.change.pipe(takeUntil(this.onDestroy$)).subscribe((val: string) => (this.term = val));
+        this.change.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((val: string) => (this.term = val));
 
-        this.matSelect.openedChange.pipe(takeUntil(this.onDestroy$)).subscribe((isOpened: boolean) => {
+        this.matSelect.openedChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((isOpened: boolean) => {
             if (isOpened) {
                 this.selectFilterInput.nativeElement.focus();
             } else {
@@ -63,7 +72,7 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
 
         if (this.matSelect.ngControl) {
             this.previousSelected = this.matSelect.ngControl.value;
-            this.matSelect.ngControl.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((values) => {
+            this.matSelect.ngControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((values) => {
                 let restoreSelection = false;
                 if (this.matSelect.multiple && Array.isArray(this.previousSelected)) {
                     if (!Array.isArray(values)) {
@@ -108,10 +117,5 @@ export class SelectFilterInputComponent implements OnInit, OnDestroy {
                 $event.stopPropagation();
             }
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
     }
 }
