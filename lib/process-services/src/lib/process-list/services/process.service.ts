@@ -64,7 +64,6 @@ export class ProcessService {
 
     /**
      * Gets process instances for a filter and optionally a process definition.
-     *
      * @param requestNode Filter for instances
      * @param processDefinitionKey Limits returned instances to a process definition
      * @returns List of process instances
@@ -85,7 +84,6 @@ export class ProcessService {
 
     /**
      * Gets processes for a filter and optionally a process definition.
-     *
      * @param requestNode Filter for instances
      * @param processDefinitionKey Limits returned instances to a process definition
      * @returns List of processes
@@ -107,7 +105,6 @@ export class ProcessService {
 
     /**
      * Fetches the Process Audit information as a PDF.
-     *
      * @param processId ID of the target process
      * @returns Binary PDF data
      */
@@ -117,7 +114,6 @@ export class ProcessService {
 
     /**
      * Fetches the Process Audit information in a JSON format.
-     *
      * @param processId ID of the target process
      * @returns JSON data
      */
@@ -127,7 +123,6 @@ export class ProcessService {
 
     /**
      * Gets Process Instance metadata.
-     *
      * @param processInstanceId ID of the target process
      * @returns Metadata for the instance
      */
@@ -137,7 +132,6 @@ export class ProcessService {
 
     /**
      * Gets the start form definition for a given process.
-     *
      * @param processId Process definition ID
      * @returns Form definition
      */
@@ -147,7 +141,6 @@ export class ProcessService {
 
     /**
      * Gets the start form instance for a given process.
-     *
      * @param processId Process definition ID
      * @returns Form definition
      */
@@ -157,7 +150,6 @@ export class ProcessService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -170,7 +162,6 @@ export class ProcessService {
 
     /**
      * Gets task instances for a process instance.
-     *
      * @param processInstanceId ID of the process instance
      * @param state Task state filter (can be "active" or "completed")
      * @returns Array of task instance details
@@ -197,7 +188,6 @@ export class ProcessService {
 
     /**
      * Gets process definitions associated with an app.
-     *
      * @param appId ID of a target app
      * @returns Array of process definitions
      */
@@ -215,7 +205,6 @@ export class ProcessService {
 
     /**
      * Starts a process based on a process definition, name, form values or variables.
-     *
      * @param processDefinitionId Process definition ID
      * @param name Process name
      * @param outcome Process outcome
@@ -248,7 +237,6 @@ export class ProcessService {
 
     /**
      * Cancels a process instance.
-     *
      * @param processInstanceId ID of process to cancel
      * @returns Null response notifying when the operation is complete
      */
@@ -258,7 +246,6 @@ export class ProcessService {
 
     /**
      * Gets the variables for a process instance.
-     *
      * @param processInstanceId ID of the target process
      * @returns Array of instance variable info
      */
@@ -268,7 +255,6 @@ export class ProcessService {
 
     /**
      * Creates or updates variables for a process instance.
-     *
      * @param processInstanceId ID of the target process
      * @param variables Variables to update
      * @returns Array of instance variable info
@@ -279,7 +265,6 @@ export class ProcessService {
 
     /**
      * Deletes a variable for a process instance.
-     *
      * @param processInstanceId ID of the target process
      * @param variableName Name of the variable to delete
      * @returns Null response notifying when the operation is complete

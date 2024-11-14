@@ -39,7 +39,6 @@ export class EditorService {
 
     /**
      * Saves a form.
-     *
      * @param formId ID of the form to save
      * @param formModel Model data for the form
      * @returns Data for the saved form
@@ -50,7 +49,6 @@ export class EditorService {
 
     /**
      * Gets a form definition.
-     *
      * @param formId ID of the target form
      * @returns Form definition
      */
@@ -63,7 +61,6 @@ export class EditorService {
 
     /**
      * Creates a JSON representation of form data.
-     *
      * @param res Object representing form data
      * @returns JSON data
      */
@@ -76,7 +73,6 @@ export class EditorService {
 
     /**
      * Reports an error message.
-     *
      * @param error Data object with optional `message` and `status` fields for the error
      * @returns Error message
      */

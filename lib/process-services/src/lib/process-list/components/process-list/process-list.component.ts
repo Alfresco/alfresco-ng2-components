@@ -252,7 +252,6 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /**
      * Get the id of the current instance
-     *
      * @returns instance id
      */
     getCurrentId(): string {
@@ -261,7 +260,6 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /**
      * Check if the list is empty
-     *
      * @returns `true` if list is empty, otherwise `false`
      */
     isListEmpty(): boolean {
@@ -270,7 +268,6 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /**
      * Emit the event rowClick passing the current task id when the row is clicked
-     *
      * @param event input event
      */
     onRowClick(event: DataRowEvent) {
@@ -286,7 +283,6 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     /**
      * Emit the event rowClick passing the current task id when pressed the Enter key on the selected row
-     *
      * @param event keyboard event
      */
     onRowKeyUp(event: CustomEvent<any>) {
