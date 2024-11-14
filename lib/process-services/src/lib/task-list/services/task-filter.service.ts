@@ -35,7 +35,6 @@ export class TaskFilterService {
 
     /**
      * Creates and returns the default filters for a process app.
-     *
      * @param appId ID of the target app
      * @returns Array of default filters just created
      */
@@ -100,7 +99,6 @@ export class TaskFilterService {
 
     /**
      * Gets all task filters for a process app.
-     *
      * @param appId Optional ID for a specific app
      * @returns Array of task filter details
      */
@@ -121,7 +119,6 @@ export class TaskFilterService {
 
     /**
      * Checks if a filter with the given name already exists in the list of filters.
-     *
      * @param filters - An array of objects representing the existing filters.
      * @param filterName - The name of the filter to check for existence.
      * @returns - True if a filter with the specified name already exists, false otherwise.
@@ -132,7 +129,6 @@ export class TaskFilterService {
 
     /**
      * Gets a task filter by ID.
-     *
      * @param filterId ID of the filter
      * @param appId ID of the app for the filter
      * @returns Details of task filter
@@ -143,7 +139,6 @@ export class TaskFilterService {
 
     /**
      * Gets a task filter by name.
-     *
      * @param taskName Name of the filter
      * @param appId ID of the app for the filter
      * @returns Details of task filter
@@ -154,7 +149,6 @@ export class TaskFilterService {
 
     /**
      * Adds a new task filter
-     *
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
@@ -164,7 +158,6 @@ export class TaskFilterService {
 
     /**
      * Calls `getUserTaskFilters` from the Alfresco JS API.
-     *
      * @param appId ID of the target app
      * @returns List of task filters
      */
@@ -178,7 +171,6 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "My Tasks" task instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
@@ -201,7 +193,6 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "Involved" task instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
@@ -219,7 +210,6 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "Queued Tasks" task instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter
@@ -237,7 +227,6 @@ export class TaskFilterService {
 
     /**
      * Creates and returns a filter for "Completed" task instances.
-     *
      * @param appId ID of the target app
      * @param index of the filter (optional)
      * @returns The newly created filter

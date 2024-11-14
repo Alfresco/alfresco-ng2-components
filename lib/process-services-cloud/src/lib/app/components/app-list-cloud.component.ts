@@ -78,7 +78,6 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
 
     /**
      * Check if the value of the layoutType property is an allowed value
-     *
      * @returns `true` if layout type is valid, otherwise `false`
      */
     isValidType(): boolean {
@@ -97,7 +96,6 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
 
     /**
      * Check if the layout type is LIST
-     *
      * @returns `true` if the layout is list, otherwise `false`
      */
     isList(): boolean {
@@ -106,7 +104,6 @@ export class AppListCloudComponent implements OnInit, AfterContentInit {
 
     /**
      * Check if the layout type is GRID
-     *
      * @returns `true` if layout is grid, otherwise `false`
      */
     isGrid(): boolean {

@@ -4,17 +4,15 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #editReportMenu="matMenu" class="adf-buttons-menu-mobile">
-            <ng-content *ngTemplateOutlet="desktop">
-            </ng-content>
+            <ng-content *ngTemplateOutlet="desktop" />
         </mat-menu>
     </div>
 
     <div *ngIf="!isMobile()" class="adf-buttons-menu-desktop">
-        <ng-content *ngTemplateOutlet="desktop">
-        </ng-content>
+        <ng-content *ngTemplateOutlet="desktop" />
     </div>
 </div>
 
 <ng-template #desktop>
-    <ng-content></ng-content>
+    <ng-content />
 </ng-template>
