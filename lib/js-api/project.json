@@ -104,7 +104,7 @@
       },
       "dependsOn": ["build"]
     },
-    "test": {
+    "test-old-mocha": {
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
@@ -117,7 +117,14 @@
           "codeCoverage": true
         }
       }
-    }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+          "jestConfig": "lib/js-api/jest.config.ts",
+          "passWithNoTests": true
+      }}
   },
   "tags": []
 }
