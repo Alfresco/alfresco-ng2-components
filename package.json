@@ -145,6 +145,7 @@
     "jasmine-marbles": "^0.9.2",
     "jasmine-reporters": "^2.5.2",
     "jasmine-spec-reporter": "7.0.0",
+    "jest-preset-angular": "^14.2.4",
     "js-yaml": "^4.0.0",
     "jsdom": "^25.0.1",
     "karma": "6.4.4",
