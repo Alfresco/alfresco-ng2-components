@@ -6,7 +6,7 @@
                (executeRowAction)="onExecuteRowAction($event)">
             <adf-no-content-template>
                 <ng-template>
-                    <ng-content *ngIf="hasCustomTemplate; else defaultEmptyList" class="adf-custom-empty-template"></ng-content>
+                    <ng-content *ngIf="hasCustomTemplate; else defaultEmptyList" class="adf-custom-empty-template" />
                     <ng-template #defaultEmptyList>
                         <adf-empty-list>
                             <div adf-empty-list-header class="adf-empty-list-header">
