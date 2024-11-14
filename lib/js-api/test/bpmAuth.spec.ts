@@ -55,7 +55,7 @@ describe('Bpm Auth test', () => {
     });
 
     describe('With Authentication', () => {
-        it('login should return the Ticket if all is ok', (done) => {
+        it('login should return the Ticket if all is ok', async () => {
             authBpmMock.get200Response();
 
             const processAuth = new ProcessAuth({
@@ -63,10 +63,8 @@ describe('Bpm Auth test', () => {
                 contextRootBpm: 'activiti-app'
             });
 
-            processAuth.login('admin', 'admin').then((data) => {
-                assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
-                done();
-            });
+            const data = await processAuth.login('admin', 'admin');
+            assert.equal(data, 'Basic YWRtaW46YWRtaW4=');
         });
 
         it('login password should be removed after login', (done) => {
