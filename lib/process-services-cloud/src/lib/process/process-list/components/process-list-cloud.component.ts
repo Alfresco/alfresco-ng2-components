@@ -244,24 +244,24 @@ export class ProcessListCloudComponent
     @Input()
     processDefinitionNames: string[] = [];
 
-   /**
-    * Filter the processes. Display only processes started by any of the users whose usernames are present in the array.
-    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
-    */
+    /**
+     * Filter the processes. Display only processes started by any of the users whose usernames are present in the array.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
     @Input()
     initiators: string[] = [];
 
-   /**
-    * Filter the processes. Display only processes present in any of the specified app versions.
-    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
-    */
+    /**
+     * Filter the processes. Display only processes present in any of the specified app versions.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
     @Input()
     appVersions: string[] = [];
 
-   /**
-    * Filter the processes. Display only processes with provided statuses.
-    * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
-    */
+    /**
+     * Filter the processes. Display only processes with provided statuses.
+     * This input will be used only if PROCESS_SEARCH_API_METHOD_TOKEN is provided with 'POST' value.
+     */
     @Input()
     statuses: string[] = [];
 
@@ -430,7 +430,6 @@ export class ProcessListCloudComponent
         }
     }
 
-
     private isAnyPropertyChanged(changes: SimpleChanges): boolean {
         for (const property in changes) {
             if (this.isPropertyChanged(changes, property)) {
@@ -463,7 +462,6 @@ export class ProcessListCloudComponent
     /**
      * Resets the pagination values and
      * Reloads the process list
-     *
      * @param pagination Pagination values to be set
      */
     updatePagination(pagination: PaginationModel) {

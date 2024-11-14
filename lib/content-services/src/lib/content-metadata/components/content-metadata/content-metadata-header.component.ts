@@ -48,7 +48,7 @@ import { TranslateModule } from '@ngx-translate/core';
         <ng-container>
             <mat-icon>{{ expanded ? 'expand_more' : 'chevron_right' }}</mat-icon>
             <mat-panel-title *ngIf="title" class="adf-metadata-properties-title" [title]="title | translate">{{ title | translate }}</mat-panel-title>
-            <ng-content></ng-content>
+            <ng-content />
         </ng-container>
     `
 })
