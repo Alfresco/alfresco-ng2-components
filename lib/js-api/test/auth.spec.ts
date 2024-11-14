@@ -64,13 +64,11 @@ describe('Auth', () => {
                     assert.equal(data, 'TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
                 });
 
-                it('should return an error if wrong credential are used 403 the login fails', (done) => {
+                it('should return an error if wrong credential are used 403 the login fails', async () => {
                     authResponseEcmMock.get403Response();
 
-                    alfrescoJsApi.login('wrong', 'name').then(NOOP, (error: ErrorResponse) => {
-                        assert.equal(error.status, 403);
-                        done();
-                    });
+                    const error = await alfrescoJsApi.login('wrong', 'name');
+                    assert.equal(error.status, 403);
                 });
             });
 

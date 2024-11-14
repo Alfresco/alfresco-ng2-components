@@ -107,6 +107,7 @@
     "@types/event-emitter": "^0.3.3",
     "@types/jasmine": "4.0.3",
     "@types/jasminewd2": "~2.0.2",
+    "@types/jest": "^29.5.14",
     "@types/jsdom": "^21.1.5",
     "@types/minimatch": "^3.0.3",
     "@types/mocha": "^10.0.6",
