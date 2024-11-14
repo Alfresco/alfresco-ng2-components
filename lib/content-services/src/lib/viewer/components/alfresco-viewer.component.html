@@ -33,23 +33,23 @@
     (submitFile)="onSubmitFile($event)">
 
     <adf-viewer-toolbar *ngIf="toolbar">
-        <ng-content select="adf-viewer-toolbar"></ng-content>
+        <ng-content select="adf-viewer-toolbar" />
     </adf-viewer-toolbar>
 
     <adf-viewer-toolbar-actions *ngIf="toolbarActions">
-        <ng-content select="adf-viewer-toolbar-actions"></ng-content>
+        <ng-content select="adf-viewer-toolbar-actions" />
     </adf-viewer-toolbar-actions>
 
     <adf-viewer-more-actions *ngIf="moreActions">
-        <ng-content select="adf-viewer-more-actions"></ng-content>
+        <ng-content select="adf-viewer-more-actions" />
     </adf-viewer-more-actions>
 
     <adf-viewer-open-with *ngIf="openWith">
-        <ng-content select="adf-viewer-open-with"></ng-content>
+        <ng-content select="adf-viewer-open-with" />
     </adf-viewer-open-with>
 
     <adf-viewer-sidebar *ngIf="sidebar">
-        <ng-content select="adf-viewer-sidebar"></ng-content>
+        <ng-content select="adf-viewer-sidebar" />
     </adf-viewer-sidebar>
 
     <adf-viewer-toolbar-custom-actions>

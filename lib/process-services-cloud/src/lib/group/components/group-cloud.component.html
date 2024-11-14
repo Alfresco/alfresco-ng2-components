@@ -1,6 +1,6 @@
 <form>
     <mat-form-field class="adf-cloud-group" [class.adf-invalid]="hasError() && isDirty()">
-        <ng-content select="[label]"></ng-content>
+        <ng-content select="[label]" />
         <mat-chip-grid #groupChipList data-automation-id="adf-cloud-group-chip-list">
             <mat-chip-row
                 *ngFor="let group of selectedGroups"

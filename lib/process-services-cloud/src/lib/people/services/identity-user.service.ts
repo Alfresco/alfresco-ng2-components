@@ -34,7 +34,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Gets the name and other basic details of the current user.
-     *
      * @returns The user's details
      */
     public getCurrentUserInfo(): IdentityUserModel {
@@ -47,7 +46,6 @@ export class IdentityUserService implements IdentityUserServiceInterface {
 
     /**
      * Search users based on name input and filters.
-     *
      * @param name Search query string
      * @param [filters] Search query filters
      * @returns List of users
