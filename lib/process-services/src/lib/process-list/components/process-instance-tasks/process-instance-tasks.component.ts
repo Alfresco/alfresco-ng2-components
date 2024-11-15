@@ -84,7 +84,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
 
     private taskObserver: Observer<TaskRepresentation>;
     private completedTaskObserver: Observer<TaskRepresentation>;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private processService: ProcessService, private dialog: MatDialog) {
         this.task$ = new Observable<TaskRepresentation>((observer) => (this.taskObserver = observer)).pipe(share());

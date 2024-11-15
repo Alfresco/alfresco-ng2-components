@@ -46,7 +46,7 @@ import { TranslationService } from '../../../translation';
 import { LoginErrorEvent } from '../../models/login-error.event';
 import { LoginSubmitEvent } from '../../models/login-submit.event';
 import { LoginSuccessEvent } from '../../models/login-success.event';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 // eslint-disable-next-line no-shadow
 enum LoginSteps {
@@ -155,7 +155,7 @@ export class LoginComponent implements OnInit {
     data: any;
 
     private _message: { [id: string]: { [id: string]: ValidationMessage } };
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private _fb: UntypedFormBuilder,

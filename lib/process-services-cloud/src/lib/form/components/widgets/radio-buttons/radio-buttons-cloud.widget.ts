@@ -21,7 +21,7 @@ import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angul
 import { ErrorMessageModel, FormFieldOption, FormService, WidgetComponent } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { TranslateService } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'radio-buttons-cloud-widget',
@@ -44,7 +44,8 @@ export class RadioButtonsCloudWidgetComponent extends WidgetComponent implements
     typeId = 'RadioButtonsCloudWidgetComponent';
     restApiError: ErrorMessageModel;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(public formService: FormService, private formCloudService: FormCloudService, private translateService: TranslateService) {
         super(formService);
     }

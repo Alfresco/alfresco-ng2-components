@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, DestroyRef, Inject, inject, InjectionToken, Injector, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, InjectionToken, Injector, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AdditionalDialogActionButton, DialogData } from './dialog-data.interface';
 import { BehaviorSubject } from 'rxjs';
@@ -48,8 +48,6 @@ export class DialogComponent {
 
     dataInjector: Injector;
 
-    private destroyRef = inject(DestroyRef);
-
     constructor(
         @Inject(MAT_DIALOG_DATA)
         public data: DialogData,
@@ -68,11 +66,11 @@ export class DialogComponent {
             });
 
             if (data.isConfirmButtonDisabled$) {
-                data.isConfirmButtonDisabled$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => this.isConfirmButtonDisabled$.next(value));
+                data.isConfirmButtonDisabled$.pipe(takeUntilDestroyed()).subscribe((value) => this.isConfirmButtonDisabled$.next(value));
             }
 
             if (data.dataOnConfirm$) {
-                data.dataOnConfirm$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => (this.dataOnConfirm = value));
+                data.dataOnConfirm$.pipe(takeUntilDestroyed()).subscribe((value) => (this.dataOnConfirm = value));
             }
         }
     }

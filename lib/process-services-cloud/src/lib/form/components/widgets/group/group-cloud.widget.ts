@@ -51,7 +51,8 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
     search: UntypedFormControl;
     validate = false;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(formService: FormService) {
         super(formService);
     }

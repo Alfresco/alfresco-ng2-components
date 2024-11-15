@@ -27,7 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslationService } from '../../../translation';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-datatable-column-selector',
@@ -58,7 +58,8 @@ export class ColumnsSelectorComponent implements OnInit {
     columnItems: DataColumn[] = [];
     searchInputControl = new UntypedFormControl('');
     searchQuery = '';
-    private destroyRef = inject(DestroyRef);
+    
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
         this.mainMenuTrigger.menuOpened.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {

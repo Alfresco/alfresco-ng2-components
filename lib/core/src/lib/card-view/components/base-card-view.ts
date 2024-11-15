@@ -18,7 +18,7 @@
 import { Directive, inject, Input } from '@angular/core';
 import { CardViewUpdateService } from '../services/card-view-update.service';
 import { CardViewItem } from '../interfaces/card-view.interfaces';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix

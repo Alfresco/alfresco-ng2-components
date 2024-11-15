@@ -52,7 +52,9 @@ export class SelectFilterInputComponent implements OnInit {
 
     term = '';
     previousSelected: any[];
-    private destroyRef = inject(DestroyRef);
+
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(@Inject(MatSelect) private matSelect: MatSelect) {}
 
     onModelChange(value: string) {

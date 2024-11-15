@@ -39,7 +39,7 @@ import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
 import { InitialUsernamePipe, TimeAgoPipe } from '../../pipes';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-notification-history',
@@ -84,7 +84,7 @@ export class NotificationHistoryComponent implements OnInit, AfterViewInit {
     paginatedNotifications: NotificationModel[] = [];
     pagination: PaginationModel;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private notificationService: NotificationService, public storageService: StorageService, public cd: ChangeDetectorRef) {}
 

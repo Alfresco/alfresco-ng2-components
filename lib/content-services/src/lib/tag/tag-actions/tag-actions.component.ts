@@ -37,7 +37,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  *
@@ -75,7 +75,8 @@ export class TagActionsComponent implements OnChanges, OnInit {
     errorMsg: string;
     disableAddTag: boolean = true;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private tagService: TagService, private translateService: TranslationService) {}
 
     ngOnInit() {

@@ -85,7 +85,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges {
     currentFiltersValues: { [key: string]: number } = {};
     updatedFiltersSet = new Set<string>();
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     private readonly processFilterCloudService = inject(ProcessFilterCloudService);
     private readonly translationService = inject(TranslationService);
     private readonly appConfigService = inject(AppConfigService);

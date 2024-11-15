@@ -90,7 +90,8 @@ export class TaskHeaderCloudComponent implements OnInit, OnChanges {
     isLoading = true;
     processInstanceId: string;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,

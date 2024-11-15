@@ -31,7 +31,7 @@ import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel } from '../core/error-message.model';
 import { parseISO } from 'date-fns';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'date-widget',
@@ -64,7 +64,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
     public readonly formService = inject(FormService);
     private readonly dateAdapter = inject(DateAdapter);
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
         this.patchFormControl();

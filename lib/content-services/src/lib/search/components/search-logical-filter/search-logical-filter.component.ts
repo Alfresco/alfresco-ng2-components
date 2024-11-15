@@ -26,7 +26,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export enum LogicalSearchFields {
     MATCH_ALL = 'matchAll',
@@ -57,7 +57,7 @@ export class SearchLogicalFilterComponent implements SearchWidget, OnInit {
     LogicalSearchFields = LogicalSearchFields;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private translationService: TranslationService) {}
 

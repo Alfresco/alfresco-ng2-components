@@ -159,7 +159,7 @@ export class CategoriesManagementComponent implements OnInit, OnDestroy {
     @ViewChild('categoryNameInput')
     private categoryNameInputElement: ElementRef;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private categoryService: CategoryService) {}
 

@@ -37,7 +37,7 @@ import { FormsModule } from '@angular/forms';
 import { FlagsOverrideComponent } from '../feature-override-indicator.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-feature-flags-overrides',

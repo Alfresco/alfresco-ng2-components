@@ -54,7 +54,7 @@ import { v4 as uuidGeneration } from 'uuid';
 import { FormCloudDisplayMode, FormCloudDisplayModeConfiguration } from '../../services/form-fields.interfaces';
 import { FormCloudSpinnerService } from '../services/spinner/form-cloud-spinner.service';
 import { DisplayModeService } from '../services/display-mode.service';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -133,7 +133,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     formCloudRepresentationJSON: any;
 
 
-    destroyRef = inject(DestroyRef);
     readonly id: string;
     displayMode: string;
     displayConfiguration: FormCloudDisplayModeConfiguration = DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0];
@@ -147,6 +146,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected displayModeService = inject(DisplayModeService);
     protected changeDetector = inject(ChangeDetectorRef);
 
+    private readonly destroyRef = inject(DestroyRef);
     constructor() {
         super();
 
@@ -154,7 +154,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         this.id = uuidGeneration();
 
-        this.formService.formContentClicked.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((content) => {
+        this.formService.formContentClicked.pipe(takeUntilDestroyed()).subscribe((content) => {
             if (content instanceof UploadWidgetContentLinkModel) {
                 this.form.setNodeIdValueForViewersLinkedToUploadWidget(content);
                 this.onFormDataRefreshed(this.form);
@@ -164,12 +164,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             }
         });
 
-        this.formService.updateFormValuesRequested.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((valuesToSetIfNotPresent) => {
+        this.formService.updateFormValuesRequested.pipe(takeUntilDestroyed()).subscribe((valuesToSetIfNotPresent) => {
             this.form.addValuesNotPresent(valuesToSetIfNotPresent);
             this.onFormDataRefreshed(this.form);
         });
 
-        this.formService.formFieldValueChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+        this.formService.formFieldValueChanged.pipe(takeUntilDestroyed()).subscribe(() => {
             if (this.disableSaveButton) {
                 this.disableSaveButton = false;
             }

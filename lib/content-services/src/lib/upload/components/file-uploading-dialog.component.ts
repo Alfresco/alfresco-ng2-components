@@ -93,7 +93,7 @@ export class FileUploadingDialogComponent implements OnInit {
     private fileUploadSubscription: Subscription;
     private errorSubscription: Subscription;
     private dialogActive = new Subject<boolean>();
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private uploadService: UploadService,

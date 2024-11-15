@@ -445,7 +445,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
     private loadingTimeout: any;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
@@ -467,13 +467,13 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         private dialog: MatDialog
     ) {
         super(appConfig, 'default', presetsDefaultModel);
-        this.nodeService.nodeUpdated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((node) => {
+        this.nodeService.nodeUpdated.pipe(takeUntilDestroyed()).subscribe((node) => {
             this.dataTableService.rowUpdate.next({ id: node.id, obj: { entry: node } });
         });
 
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
-            .pipe(takeUntilDestroyed(this.destroyRef))
+            .pipe(takeUntilDestroyed())
             .subscribe((pagSize) => {
                 this.maxItems = this._pagination.maxItems = pagSize;
             });

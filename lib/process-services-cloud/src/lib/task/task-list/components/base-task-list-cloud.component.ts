@@ -51,13 +51,15 @@ import { map, take } from 'rxjs/operators';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TasksListCloudPreferences } from '../models/tasks-cloud-preferences';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseTaskListCloudComponent<T = unknown>
     extends DataTableSchema<T>
+    // eslint-disable-next-line @typescript-eslint/brace-style
     implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {
+
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -149,7 +151,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     protected abstract isLoading$: Observable<boolean>;
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);

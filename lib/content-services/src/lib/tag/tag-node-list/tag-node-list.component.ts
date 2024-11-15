@@ -60,7 +60,7 @@ export class TagNodeListComponent implements OnChanges, OnInit {
     @Output()
     results = new EventEmitter<TagEntry[]>();
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     private _tagChips: Chip[] = [];
 
     get tagChips(): Chip[] {

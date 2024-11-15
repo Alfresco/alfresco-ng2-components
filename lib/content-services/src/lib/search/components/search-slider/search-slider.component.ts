@@ -25,7 +25,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-slider',
@@ -54,7 +54,7 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
     enableChangeUpdate: boolean;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         if (this.settings) {

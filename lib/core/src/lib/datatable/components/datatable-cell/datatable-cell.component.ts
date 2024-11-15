@@ -31,7 +31,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DataTableService } from '../../services/datatable.service';
 import { CommonModule } from '@angular/common';
 import { ClipboardDirective } from '../../../clipboard/clipboard.directive';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-datatable-cell',

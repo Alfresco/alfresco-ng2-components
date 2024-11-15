@@ -68,7 +68,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NodeDownloadDirective } from '../../directives';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-alfresco-viewer',
@@ -215,7 +215,7 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Output()
     showViewerChange = new EventEmitter<boolean>();
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     private cacheBusterNumber: number;
 

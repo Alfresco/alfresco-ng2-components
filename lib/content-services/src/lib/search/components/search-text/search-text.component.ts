@@ -28,7 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-text',
@@ -52,7 +52,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     enableChangeUpdate = true;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {

@@ -16,7 +16,7 @@
  */
 
 import { DecimalPipe } from '@angular/common';
-import { DestroyRef, inject, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
 import { DecimalNumberModel } from '../models/decimal-number.model';
@@ -37,13 +37,11 @@ export class DecimalNumberPipe implements PipeTransform {
     defaultMinIntegerDigits: number = DecimalNumberPipe.DEFAULT_MIN_INTEGER_DIGITS;
     defaultMinFractionDigits: number = DecimalNumberPipe.DEFAULT_MIN_FRACTION_DIGITS;
     defaultMaxFractionDigits: number = DecimalNumberPipe.DEFAULT_MAX_FRACTION_DIGITS;
-    private destroyRef = inject(DestroyRef);
-
     constructor(public userPreferenceService?: UserPreferencesService, public appConfig?: AppConfigService) {
         if (this.userPreferenceService) {
             this.userPreferenceService
                 .select(UserPreferenceValues.Locale)
-                .pipe(takeUntilDestroyed(this.destroyRef))
+                .pipe(takeUntilDestroyed())
                 .subscribe((locale) => {
                     if (locale) {
                         this.defaultLocale = locale;

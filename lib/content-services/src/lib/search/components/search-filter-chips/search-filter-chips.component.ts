@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SearchFacetChipTabbedComponent } from './search-facet-chip-tabbed/search-facet-chip-tabbed.component';
 import { SearchFacetChipComponent } from './search-facet-chip/search-facet-chip.component';
 import { SearchWidgetChipComponent } from './search-widget-chip/search-widget-chip.component';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-filter-chips',
@@ -39,7 +39,7 @@ export class SearchFilterChipsComponent implements OnInit {
     private queryBuilder = inject(SearchQueryBuilderService);
     private facetFiltersService = inject(SearchFacetFiltersService);
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     /** Toggles whether to show or not the context facet filters. */
     @Input()

@@ -143,7 +143,7 @@ export class VersionListComponent implements OnChanges, OnInit {
     @ViewChild('viewport')
     viewport: CdkVirtualScrollViewport;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private alfrescoApi: AlfrescoApiService,

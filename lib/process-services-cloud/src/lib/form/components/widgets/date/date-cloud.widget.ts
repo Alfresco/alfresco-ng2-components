@@ -36,7 +36,7 @@ import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'date-widget',
@@ -70,8 +70,9 @@ export class DateCloudWidgetComponent extends WidgetComponent implements OnInit 
 
     dateInputControl: FormControl<Date> = new FormControl<Date>(null);
 
-    private destroyRef = inject(DestroyRef);
     public readonly formService = inject(FormService);
+    
+    private readonly destroyRef = inject(DestroyRef);
     private readonly dateAdapter = inject(DateAdapter);
 
     ngOnInit(): void {

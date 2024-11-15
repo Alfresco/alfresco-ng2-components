@@ -36,7 +36,7 @@ import { DOCUMENT } from '@angular/common';
 import { fromEvent, merge, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { SearchComponentInterface } from '../common/interface/search-component.interface';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -73,7 +73,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
     private _panelOpen: boolean = false;
     private closingActionsSubscription: Subscription;
     private escapeEventStream = new Subject<void>();
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     onChange: (value: any) => void = () => {};
 

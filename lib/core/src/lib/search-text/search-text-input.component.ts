@@ -175,16 +175,16 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     };
 
     private dir = 'ltr';
-    private destroyRef = inject(DestroyRef);
     private toggleSearch = new Subject<any>();
     private focusSubscription: Subscription;
     private valueChange = new Subject<string>();
     private toggleSubscription: Subscription;
+    private readonly destroyRef = inject(DestroyRef);
 
     toggle$ = this.toggleSearch.asObservable();
 
     constructor(private userPreferencesService: UserPreferencesService) {
-        this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+        this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.toggleAnimation();
                 if (this.subscriptAnimationState.value === 'inactive') {

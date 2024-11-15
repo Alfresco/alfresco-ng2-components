@@ -21,7 +21,7 @@ import { FileModel } from '../../../common/models/file.model';
 import { UploadService } from '../../../common/services/upload.service';
 import { DestroyRef, Directive, EventEmitter, inject, Input, NgZone, OnInit, Output } from '@angular/core';
 import { UploadFilesEvent } from '../upload-files.event';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
@@ -84,7 +84,7 @@ export abstract class UploadBase implements OnInit {
     @Output()
     updateFileVersion = new EventEmitter<CustomEvent>();
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         this.uploadService.fileUploadError

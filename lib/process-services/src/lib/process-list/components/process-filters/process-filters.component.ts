@@ -37,7 +37,7 @@ import { CommonModule, Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-process-instance-filters',
@@ -89,7 +89,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     active = false;
     isProcessRoute: boolean;
     isProcessActive: boolean;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     private iconsMDL: IconModel;
 

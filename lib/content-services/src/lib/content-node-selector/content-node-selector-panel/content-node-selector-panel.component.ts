@@ -79,7 +79,7 @@ import { NameLocationCellComponent } from '../name-location-cell/name-location-c
 import { DropdownBreadcrumbComponent } from '../../breadcrumb/dropdown-breadcrumb.component';
 import { SearchQueryBuilderService } from '../../search/services/search-query-builder.service';
 import { SearchPanelComponent } from '../../search/components/search-panel/search-panel.component';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -328,7 +328,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     searchPanelExpanded: boolean = false;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private customResourcesService: CustomResourcesService,
         private queryBuilderService: SearchQueryBuilderService,

@@ -36,7 +36,7 @@ import { FormService } from '../../../services/form.service';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel } from '../core/error-message.model';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'date-time-widget',
@@ -58,8 +58,9 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
     datetimeInputControl: FormControl<Date> = new FormControl<Date>(null);
 
 
-    private destroyRef = inject(DestroyRef);
     public readonly formService = inject(FormService);
+    
+    private readonly destroyRef = inject(DestroyRef);
     private readonly dateAdapter = inject(DateAdapter);
     private readonly dateTimeAdapter = inject(DatetimeAdapter);
 

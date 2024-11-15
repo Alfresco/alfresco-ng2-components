@@ -22,7 +22,7 @@ import { NodeEntry, NodesApi } from '@alfresco/js-api';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import { from, Observable } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: '[adf-share]',
@@ -49,7 +49,8 @@ export class NodeSharedDirective implements OnChanges {
         return this._nodesApi;
     }
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private dialog: MatDialog, private zone: NgZone, private alfrescoApiService: AlfrescoApiService) {}
     shareNode(nodeEntry: NodeEntry) {
         if (nodeEntry?.entry?.isFile) {

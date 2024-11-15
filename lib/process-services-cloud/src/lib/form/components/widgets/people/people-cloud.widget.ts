@@ -54,7 +54,8 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
     groupsRestriction: string[];
     validate = false;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(formService: FormService, private identityUserService: IdentityUserService) {
         super(formService);
     }

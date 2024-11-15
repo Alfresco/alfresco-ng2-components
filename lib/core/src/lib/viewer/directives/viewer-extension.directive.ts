@@ -17,7 +17,7 @@
 
 import { AfterContentInit, ContentChild, DestroyRef, Directive, inject, Input, TemplateRef } from '@angular/core';
 import { ViewerRenderComponent } from '../components/viewer-render/viewer-render.component';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: 'adf-viewer-extension',
@@ -38,7 +38,8 @@ export class ViewerExtensionDirective implements AfterContentInit {
 
     templateModel: any;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private viewerComponent: ViewerRenderComponent) {}
 
     ngAfterContentInit() {

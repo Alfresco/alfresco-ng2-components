@@ -48,7 +48,7 @@ import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { Environment } from '../../../common/interface/environment.interface';
 import { endOfDay, isValid, startOfDay } from 'date-fns';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -196,7 +196,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
     appVersionOptions: ProcessFilterOptions[] = [];
     initiatorOptions: IdentityUserModel[] = [];
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     isLoading: boolean = false;
     private filterChangeSub: Subscription;
 

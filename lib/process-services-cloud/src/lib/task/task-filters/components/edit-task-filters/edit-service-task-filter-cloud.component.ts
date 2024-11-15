@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 import { ServiceTaskFilterCloudModel, TaskFilterAction, TaskFilterProperties } from '../../models/filter-cloud.model';
 import { ServiceTaskFilterCloudService } from '../../services/service-task-filter-cloud.service';
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-edit-service-task-filter',

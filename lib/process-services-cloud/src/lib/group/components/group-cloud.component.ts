@@ -38,7 +38,7 @@ import { ComponentSelectionMode } from '../../types';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityGroupServiceInterface } from '../services/identity-group.service.interface';
 import { IDENTITY_GROUP_SERVICE_TOKEN } from '../services/identity-group-service.token';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -138,7 +138,8 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     typingUniqueValueNotEmpty$: Observable<any>;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         @Inject(IDENTITY_GROUP_SERVICE_TOKEN)
         private identityGroupService: IdentityGroupServiceInterface

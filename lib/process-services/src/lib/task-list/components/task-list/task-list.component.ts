@@ -54,7 +54,7 @@ import { TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const PRESET_KEY = 'adf-task-list.presets';
 
@@ -225,7 +225,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      */
     hasCustomDataSource: boolean = false;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private taskListService: TaskListService, appConfigService: AppConfigService, private userPreferences: UserPreferencesService) {
         super(appConfigService, PRESET_KEY, taskPresetsDefaultModel);

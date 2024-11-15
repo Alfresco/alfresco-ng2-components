@@ -42,7 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { PeopleWidgetComponent } from '../../../form';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
@@ -101,7 +101,7 @@ export class StartTaskComponent implements OnInit {
     maxTaskNameLength: number = MAX_LENGTH;
     loading = false;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private taskService: TaskListService, private formBuilder: UntypedFormBuilder) {}
 

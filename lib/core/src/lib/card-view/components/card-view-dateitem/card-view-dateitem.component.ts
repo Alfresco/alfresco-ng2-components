@@ -40,7 +40,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     providers: [
@@ -78,7 +78,8 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     valueDate: Date;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private dateAdapter: DateAdapter<Date>,
         private userPreferencesService: UserPreferencesService,

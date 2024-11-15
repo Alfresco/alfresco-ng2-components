@@ -31,7 +31,7 @@ import { Node } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',
@@ -57,7 +57,8 @@ export class AttachFileWidgetDialogComponent implements OnInit {
     buttonActionName: string;
     chosenNode: Node[];
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private translation: TranslationService,
         @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,

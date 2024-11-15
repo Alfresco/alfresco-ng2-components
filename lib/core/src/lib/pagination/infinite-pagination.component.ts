@@ -40,7 +40,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -60,7 +60,8 @@ export class InfinitePaginationComponent implements OnInit, PaginationComponentI
     });
 
     _target: PaginatedComponent;
-    private destroyRef = inject(DestroyRef);
+    
+    private readonly destroyRef = inject(DestroyRef);
 
     /** Component that provides custom pagination support. */
     @Input()

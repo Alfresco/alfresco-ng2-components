@@ -40,7 +40,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -91,7 +91,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     errors: CardViewItemValidator[];
     templateType: string;
     textInput = new UntypedFormControl();
-    private destroyRef = inject(DestroyRef);
+    
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private clipboardService: ClipboardService, private translateService: TranslationService, private cd: ChangeDetectorRef) {
         super();

@@ -177,7 +177,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     private userInput: ElementRef<HTMLInputElement>;
 
     private searchUsers: IdentityUserModel[] = [];
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     selectedUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];

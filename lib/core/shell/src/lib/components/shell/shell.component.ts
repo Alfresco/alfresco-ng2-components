@@ -54,7 +54,8 @@ export class ShellLayoutComponent implements OnInit {
     sidenavMax: number;
     direction: Directionality;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private router: Router,
         private appConfigService: AppConfigService,

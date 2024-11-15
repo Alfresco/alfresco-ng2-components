@@ -30,7 +30,7 @@ import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../models/filter
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { ServiceTaskFilterCloudService } from '../services/service-task-filter-cloud.service';
 import { TranslationService } from '@alfresco/adf-core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-service-task-filters',

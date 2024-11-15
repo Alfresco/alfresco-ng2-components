@@ -36,7 +36,7 @@ import { TaskCloudEngineEvent } from '../../../models/engine-event-cloud.model';
 import { TaskListCloudService } from '../../task-list/services/task-list-cloud.service';
 import { TaskFilterCloudAdapter } from '../../../models/filter-cloud-model';
 import { TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-task-filters',

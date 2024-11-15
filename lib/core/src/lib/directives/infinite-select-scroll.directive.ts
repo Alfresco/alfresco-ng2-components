@@ -17,7 +17,7 @@
 
 import { AfterViewInit, DestroyRef, Directive, EventEmitter, inject, Inject, Output } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const SELECT_ITEM_HEIGHT_EM = 3;
 
@@ -31,7 +31,7 @@ export class InfiniteSelectScrollDirective implements AfterViewInit {
     /** Emitted when scroll reaches the last item. */
     @Output() scrollEnd = new EventEmitter<Event>();
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     private itemHeightToWaitBeforeLoadNext = 0;
 
     constructor(@Inject(MatSelect) private matSelect: MatSelect) {}

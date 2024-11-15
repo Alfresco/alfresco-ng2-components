@@ -36,7 +36,7 @@ import {
 } from '@alfresco/adf-core';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 import { ProcessCloudService } from '../../services/process-cloud.service';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-process-header',
@@ -63,7 +63,7 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
     dateFormat: string;
     dateLocale: string;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private processCloudService: ProcessCloudService,

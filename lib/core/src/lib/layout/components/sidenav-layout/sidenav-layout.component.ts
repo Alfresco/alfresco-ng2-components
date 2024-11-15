@@ -40,7 +40,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Direction } from '@angular/cdk/bidi';
 import { CommonModule } from '@angular/common';
 import { LayoutContainerComponent } from '../layout-container/layout-container.component';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-sidenav-layout',
@@ -101,7 +101,7 @@ export class SidenavLayoutComponent implements OnInit, AfterViewInit, OnDestroy 
         isMenuMinimized: () => this.isMenuMinimized
     };
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private readonly mediaMatcher: MediaMatcher,

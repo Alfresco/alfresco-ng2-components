@@ -133,7 +133,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnChange
 
     debugMode: boolean = false;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor() {
         super();

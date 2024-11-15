@@ -45,7 +45,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface TagNameControlErrors {
     duplicatedExistingTag?: boolean;
@@ -176,7 +176,7 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _tagNameControlVisible = false;
     private _existingTags: TagEntry[];
     private _initialExistingTags: TagEntry[];
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     private _tagNameErrorMessageKey = '';
     private _spinnerVisible = false;
     private _typing = false;

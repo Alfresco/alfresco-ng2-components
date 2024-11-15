@@ -41,7 +41,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
 import { map } from 'rxjs/operators';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-properties',
@@ -73,7 +73,7 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     private _reset$ = new Subject<void>();
     private sizeField: string;
     private nameField: string;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     @ViewChild('fileSizeOperatorSelect', { read: ElementRef })
     fileSizeOperatorSelectElement: ElementRef;

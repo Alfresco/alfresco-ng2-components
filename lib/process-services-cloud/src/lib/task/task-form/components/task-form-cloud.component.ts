@@ -149,7 +149,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     candidateGroups: string[] = [];
 
     loading: boolean = false;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private taskCloudService: TaskCloudService, private formRenderingService: FormRenderingService) {
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);

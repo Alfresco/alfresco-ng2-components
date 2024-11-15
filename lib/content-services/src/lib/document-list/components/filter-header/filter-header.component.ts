@@ -57,7 +57,8 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     filterSelection: EventEmitter<FilterSearch[]> = new EventEmitter();
 
     isFilterServiceActive: boolean;
-    private destroyRef = inject(DestroyRef);
+    
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(@Inject(ADF_DOCUMENT_PARENT_COMPONENT) private documentList: any, private searchFilterQueryBuilder: SearchHeaderQueryBuilderService) {
         this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();

@@ -117,7 +117,8 @@ export class PaginationComponent implements OnInit, PaginationComponentInterface
     @Output()
     prevPage = new EventEmitter<PaginationModel>();
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private elementRef: ElementRef,
         private renderer: Renderer2,

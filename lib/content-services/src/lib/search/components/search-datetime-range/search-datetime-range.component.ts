@@ -42,7 +42,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface DatetimeRangeValue {
     from: string;
@@ -89,7 +89,8 @@ export class SearchDatetimeRangeComponent implements SearchWidget, OnInit {
     enableChangeUpdate: boolean;
     displayValue$ = new ReplaySubject<string>(1);
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private dateAdapter: DateAdapter<Date>, private dateTimeAdapter: DatetimeAdapter<Date>) {}
 
     getFromValidationMessage(): string {

@@ -28,7 +28,7 @@ import { TaskFilterCloudService } from '../../services/task-filter-cloud.service
 import { DateCloudFilterType } from '../../../../models/date-cloud-filter.model';
 import { BaseEditTaskFilterCloudComponent, DropdownOption } from './base-edit-task-filter-cloud.component';
 import { set } from 'date-fns';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',

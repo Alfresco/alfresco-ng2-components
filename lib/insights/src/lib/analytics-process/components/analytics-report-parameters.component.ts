@@ -192,7 +192,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, Af
     formValidState: boolean = false;
 
     private hideParameters: boolean = true;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private analyticsService: AnalyticsService,

@@ -46,7 +46,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'attach-widget',
@@ -81,7 +81,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     repositoryList: AlfrescoEndpointRepresentation[] = [];
     private tempFilesList = [];
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         public formService: FormService,
         public thumbnails: ThumbnailService,

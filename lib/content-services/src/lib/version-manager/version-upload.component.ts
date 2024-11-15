@@ -28,7 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { UploadVersionButtonComponent } from '../upload';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-version-upload',
@@ -105,7 +105,7 @@ export class VersionUploadComponent implements OnInit {
     @Output()
     uploadStarted = new EventEmitter<FileUploadEvent>();
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private contentService: ContentService, private uploadService: UploadService) {}
 

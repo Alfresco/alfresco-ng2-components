@@ -40,7 +40,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-chip-autocomplete-input',
@@ -91,7 +91,7 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
     formCtrl = new FormControl('');
     filteredOptions: AutocompleteOption[] = [];
     selectedOptions: AutocompleteOption[] = [];
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     private _activeAnyOption = false;
 
     set activeAnyOption(active: boolean) {

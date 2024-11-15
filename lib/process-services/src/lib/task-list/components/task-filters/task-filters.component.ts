@@ -38,7 +38,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { IconComponent } from '@alfresco/adf-core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-task-filters',
@@ -90,7 +90,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     isTaskRoute: boolean;
     isTaskActive: boolean;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     private iconsMDL: IconModel;
 
     constructor(

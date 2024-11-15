@@ -31,7 +31,7 @@ import {
 import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     selector: '[adf-pop-over]',
@@ -49,7 +49,7 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     @Input() autofocusedElementSelector: string;
 
     private _open = false;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     private overlayRef!: OverlayRef;
 
     private focusTrap: ConfigurableFocusTrap;

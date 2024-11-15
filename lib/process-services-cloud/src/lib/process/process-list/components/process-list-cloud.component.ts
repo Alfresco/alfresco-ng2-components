@@ -62,7 +62,7 @@ import {
     ProcessListDataColumnCustomData
 } from '../../../models/data-column-custom-data';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const PRESET_KEY = 'adf-cloud-process-list.presets';
 
@@ -72,7 +72,9 @@ const PRESET_KEY = 'adf-cloud-process-list.presets';
     styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataColumnCustomData> implements OnChanges, AfterContentInit, PaginatedComponent {
+export class ProcessListCloudComponent
+    extends DataTableSchema<ProcessListDataColumnCustomData>
+    implements OnChanges, AfterContentInit, PaginatedComponent {
 
     @ViewChild(DataTableComponent) dataTable: DataTableComponent;
 
@@ -303,9 +305,7 @@ export class ProcessListCloudComponent extends DataTableSchema<ProcessListDataCo
             this.isColumnSchemaCreated$,
             this.fetchProcessesTrigger$
         ]).pipe(
-            filter(([isColumnSchemaCreated]) => {
-                return isColumnSchemaCreated;
-            }),
+            filter(([isColumnSchemaCreated]) => isColumnSchemaCreated),
             switchMap(() => {
                 console.count('load');
                 if (this.searchMethod === 'POST') {

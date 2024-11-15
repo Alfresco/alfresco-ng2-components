@@ -68,7 +68,7 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, Fac
     displayValue$ = new EventEmitter<string>();
 
     private resetSubject$ = new Subject<void>();
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     reset$ = this.resetSubject$.asObservable();
     chipIcon = 'keyboard_arrow_down';

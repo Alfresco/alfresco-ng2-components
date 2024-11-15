@@ -33,7 +33,7 @@ import { DocumentListComponent } from '../document-list/components/document-list
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-breadcrumb',
@@ -96,7 +96,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     route: PathElement[] = [];
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     get hasRoot(): boolean {
         return !!this.root;

@@ -32,7 +32,7 @@ import { NodesApiService } from '../../../common/services/nodes-api.service';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-name-column',
@@ -71,7 +71,8 @@ export class LibraryNameColumnComponent implements OnInit {
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {

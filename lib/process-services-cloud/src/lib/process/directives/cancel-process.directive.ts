@@ -19,7 +19,7 @@ import { DestroyRef, Directive, ElementRef, EventEmitter, HostListener, inject, 
 import { ProcessCloudService } from '../services/process-cloud.service';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 import { IdentityUserService } from '../../people/services/identity-user.service';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
@@ -39,7 +39,7 @@ export class CancelProcessDirective implements OnInit {
 
     canCancelProcess = false;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private elementRef: ElementRef,

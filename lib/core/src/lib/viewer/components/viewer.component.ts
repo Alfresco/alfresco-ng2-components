@@ -56,7 +56,7 @@ import { ViewerToolbarActionsComponent } from './viewer-toolbar-actions.componen
 import { ViewerToolbarCustomActionsComponent } from './viewer-toolbar-custom-actions.component';
 import { IconComponent } from '../../icon';
 import { ThumbnailService } from '../../common';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const DEFAULT_NON_PREVIEW_CONFIG = {
     enableDownloadPrompt: false,
@@ -286,7 +286,7 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Output()
     submitFile = new EventEmitter<Blob>();
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');

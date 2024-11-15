@@ -27,7 +27,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-aspect-list',
@@ -61,7 +61,7 @@ export class AspectListComponent implements OnInit {
     notDisplayedAspects: string[] = [];
     hasEqualAspect: boolean = true;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private aspectListService: AspectListService, private nodeApiService: NodesApiService) {}
 

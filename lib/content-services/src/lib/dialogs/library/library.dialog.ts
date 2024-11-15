@@ -39,7 +39,7 @@ import { AutoFocusDirective } from '../../directives';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { AlfrescoApiService } from '../../services';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-dialog',
@@ -95,7 +95,7 @@ export class LibraryDialogComponent implements OnInit {
         return this._queriesApi;
     }
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private alfrescoApiService: AlfrescoApiService,

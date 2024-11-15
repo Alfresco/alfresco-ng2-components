@@ -34,7 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AbstractControl, FormControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'dropdown-widget',
@@ -62,7 +62,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 
     dropdownControl = new FormControl<FormFieldOption | string>(undefined);
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     get isReadOnlyType(): boolean {
         return this.field.type === 'readonly';

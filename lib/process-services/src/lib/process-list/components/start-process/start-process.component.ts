@@ -60,7 +60,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const MAX_LENGTH = 255;
 const DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
@@ -171,7 +171,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     isAppsLoading = true;
     movedNodeToPS: FormValues;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private processService: ProcessService,
         private contentService: ActivitiContentService,

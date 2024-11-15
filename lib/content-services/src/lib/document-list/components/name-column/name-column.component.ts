@@ -32,7 +32,7 @@ import { ShareDataRow } from '../../data/share-data-row.model';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodeNameTooltipPipe } from '../../../pipes/node-name-tooltip.pipe';
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-name-column',
@@ -71,7 +71,8 @@ export class NameColumnComponent implements OnInit {
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {

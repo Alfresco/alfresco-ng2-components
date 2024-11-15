@@ -85,7 +85,8 @@ export class ContentNodeSelectorComponent implements OnInit {
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
     breadcrumbFolderNode: Node;
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(
         private translation: TranslationService,
         private contentService: ContentService,

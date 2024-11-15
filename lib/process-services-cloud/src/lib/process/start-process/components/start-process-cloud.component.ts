@@ -160,7 +160,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
     });
 
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
     private readonly startProcessCloudService = inject(StartProcessCloudService);
     private readonly processNameCloudPipe = inject(ProcessNameCloudPipe);
 

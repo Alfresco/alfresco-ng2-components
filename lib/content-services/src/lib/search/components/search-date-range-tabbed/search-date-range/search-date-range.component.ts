@@ -96,7 +96,7 @@ export class SearchDateRangeComponent implements OnInit {
     betweenStartDateFormControl = this.form.controls.betweenStartDate;
     betweenEndDateFormControl = this.form.controls.betweenEndDate;
     convertedMaxDate: Date;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;

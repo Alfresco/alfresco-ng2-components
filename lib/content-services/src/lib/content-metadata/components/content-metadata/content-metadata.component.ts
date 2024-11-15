@@ -171,7 +171,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     private targetProperty: CardViewBaseItemModel;
     private classifiableChangedSubject = new Subject<void>();
     private _saving = false;
-    private destroyRef = inject(DestroyRef);
+    private readonly destroyRef = inject(DestroyRef);
 
     DefaultPanels = DefaultPanels;
     multiValueSeparator: string;
@@ -190,7 +190,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
         expanded: false,
         panelTitle: ''
     };
-
 
     constructor(
         private contentMetadataService: ContentMetadataService,
