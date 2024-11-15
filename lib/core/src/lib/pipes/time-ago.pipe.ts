@@ -15,28 +15,32 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { AppConfigService } from '../app-config/app-config.service';
-import { UserPreferencesService, UserPreferenceValues } from '../common/services/user-preferences.service';
+import { UserPreferenceValues, UserPreferencesService } from '../common/services/user-preferences.service';
 import { DatePipe } from '@angular/common';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { differenceInDays, formatDistance } from 'date-fns';
 import * as Locales from 'date-fns/locale';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Pipe({
     standalone: true,
     name: 'adfTimeAgo'
 })
-export class TimeAgoPipe implements PipeTransform {
+export class TimeAgoPipe implements PipeTransform, OnDestroy {
     static DEFAULT_LOCALE = 'en-US';
     static DEFAULT_DATE_TIME_FORMAT = 'dd/MM/yyyy HH:mm';
 
     defaultLocale: string;
     defaultDateTimeFormat: string;
+
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(public userPreferenceService: UserPreferencesService, public appConfig: AppConfigService) {
         this.userPreferenceService
             .select(UserPreferenceValues.Locale)
-            .pipe(takeUntilDestroyed())
+            .pipe(takeUntil(this.onDestroy$))
             .subscribe((locale) => {
                 this.defaultLocale = locale || TimeAgoPipe.DEFAULT_LOCALE;
             });
@@ -55,5 +59,10 @@ export class TimeAgoPipe implements PipeTransform {
             }
         }
         return '';
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 }
