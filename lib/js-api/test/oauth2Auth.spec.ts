@@ -19,6 +19,7 @@ import assert from 'assert';
 import { AlfrescoApi, ContentApi, Oauth2Auth } from '../src';
 import { EcmAuthMock, OAuthMock } from './mockObjects';
 import jsdom from 'jsdom';
+import { jest } from '@jest/globals';
 
 const { JSDOM } = jsdom;
 const globalAny: any = global;
@@ -168,8 +169,8 @@ describe('Oauth2  test', () => {
             });
         });
 
-        it('should refresh token when the login not use the implicitFlow ', function (done) {
-            this.timeout(3000);
+        it('should refresh token when the login not use the implicitFlow ', (done) => {
+            jest.setTimeout(3000);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -204,8 +205,8 @@ describe('Oauth2  test', () => {
             oauth2Auth.login('admin', 'admin');
         });
 
-        it('should not hang the app also if teh logout is missing', function (done) {
-            this.timeout(3000);
+        it('should not hang the app also if teh logout is missing', (done) => {
+            jest.setTimeout(3000);
             oauth2Mock.get200Response();
 
             const oauth2Auth = new Oauth2Auth(
@@ -426,7 +427,7 @@ describe('Oauth2  test', () => {
         // TODO: very flaky test, fails on different machines if running slow, might relate to `this.timeout`
         // eslint-disable-next-line ban/ban
         xit('should extend content session after oauth token refresh', function (done) {
-            this.timeout(3000);
+            jest.setTimeout(3000);
 
             oauth2Mock.get200Response();
             authResponseMock.get200ValidTicket();
@@ -464,7 +465,7 @@ describe('Oauth2  test', () => {
             });
 
             alfrescoApi.login('admin', 'admin');
-            this.timeout(3000);
+            jest.setTimeout(3000);
             alfrescoApi.refreshToken();
         });
 
