@@ -1,4 +1,17 @@
 .adf {
+    &-upload-button-file-container {
+        .adf-upload-button-icon {
+            margin: 0;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+        }
+
+        input {
+            display: none;
+        }
+    }
+
     &-upload-button-label {
         display: flex;
         align-items: center;
@@ -12,23 +25,10 @@
         }
     }
 
-    &-upload-button-file-container {
-        .adf-upload-button-icon {
-            margin: 0;
-            font-size: 24px;
-            width: 24px;
-            height: 24px;
-        }
-
-        input {
-            display: none;
-        }
-
-        &-upload-single-file[disabled] + .adf-upload-button-label {
-            background-color: var(--adf-disabled-button-background);
-            color: var(--adf-theme-foreground-disabled-text-color);
-            box-shadow: none;
-            cursor: default;
-        }
+    &-upload-button-file-container-upload-single-file[disabled] + &-upload-button-label {
+        background-color: var(--adf-disabled-button-background);
+        color: var(--adf-theme-foreground-disabled-text-color);
+        box-shadow: none;
+        cursor: default;
     }
 }
