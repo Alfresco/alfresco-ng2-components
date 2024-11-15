@@ -31,7 +31,6 @@ import {
     Component,
     DestroyRef,
     EventEmitter,
-    inject,
     Input,
     OnChanges,
     OnInit,
@@ -209,13 +208,13 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     data: any;
 
     private peopleSearchObserver: Observer<LightUserRepresentation[]>;
-    private destroyRef = inject(DestroyRef);
 
     constructor(
         private taskListService: TaskListService,
         private peopleProcessService: PeopleProcessService,
         private cardViewUpdateService: CardViewUpdateService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private destroyRef: DestroyRef
     ) {}
 
     ngOnInit() {

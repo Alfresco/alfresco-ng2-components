@@ -15,25 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    DestroyRef,
-    Directive,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChanges
-} from '@angular/core';
-import {
-    AssignmentType,
-    FilterOptions,
-    TaskFilterAction,
-    TaskFilterProperties,
-    TaskStatusFilter
-} from '../../models/filter-cloud.model';
+import { DestroyRef, Directive, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AssignmentType, FilterOptions, TaskFilterAction, TaskFilterProperties, TaskStatusFilter } from '../../models/filter-cloud.model';
 import { TaskCloudService } from './../../../services/task-cloud.service';
 import { AppsProcessCloudService } from './../../../../app/services/apps-process-cloud.service';
 import { DateCloudFilterType, DateRangeFilter } from '../../../../models/date-cloud-filter.model';
@@ -72,7 +55,7 @@ const ORDER_PROPERTY = 'order';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnChanges, OnDestroy {
+export abstract class BaseEditTaskFilterCloudComponent<T> implements OnInit, OnChanges {
     public static ACTIONS_DISABLED_BY_DEFAULT = [ACTION_SAVE, ACTION_DELETE];
 
     /** (required) Name of the app. */
