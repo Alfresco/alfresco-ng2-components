@@ -32,6 +32,7 @@ import { WidgetComponent } from '../widget.component';
 import { ErrorMessageModel } from '../core/error-message.model';
 import { parseISO } from 'date-fns';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ReactiveFormWidget } from '../reactive-widget.interface';
 
 @Component({
     selector: 'date-widget',
@@ -55,7 +56,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     imports: [MatFormFieldModule, TranslateModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule, ErrorWidgetComponent, NgIf],
     encapsulation: ViewEncapsulation.None
 })
-export class DateWidgetComponent extends WidgetComponent implements OnInit {
+export class DateWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     minDate: Date;
     maxDate: Date;
     startAt: Date;

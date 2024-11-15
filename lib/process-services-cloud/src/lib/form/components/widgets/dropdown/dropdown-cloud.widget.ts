@@ -24,6 +24,7 @@ import {
     FormFieldOption,
     FormFieldTypes,
     FormService,
+    ReactiveFormWidget,
     RuleEntry,
     SelectFilterInputComponent,
     WidgetComponent
@@ -66,7 +67,7 @@ export const HIDE_FILTER_LIMIT = 5;
         SelectFilterInputComponent
     ]
 })
-export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit {
+export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     public formService = inject(FormService);
     private formCloudService = inject(FormCloudService);
     private appConfig = inject(AppConfigService);

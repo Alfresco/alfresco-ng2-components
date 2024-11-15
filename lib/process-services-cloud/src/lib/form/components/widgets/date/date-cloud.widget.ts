@@ -27,7 +27,8 @@ import {
     ErrorMessageModel,
     ErrorWidgetComponent,
     FormService,
-    WidgetComponent
+    WidgetComponent,
+    ReactiveFormWidget
 } from '@alfresco/adf-core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { addDays, parseISO } from 'date-fns';
@@ -61,7 +62,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class DateCloudWidgetComponent extends WidgetComponent implements OnInit {
+export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, ReactiveFormWidget {
     typeId = 'DateCloudWidgetComponent';
 
     minDate: Date = null;

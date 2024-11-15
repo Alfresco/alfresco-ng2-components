@@ -34,6 +34,7 @@ import { DecimalWidgetComponent } from './decimal/decimal.component';
 
 // core
 export * from './widget.component';
+export * from './reactive-widget.interface';
 export * from './core';
 
 // primitives
