@@ -21,47 +21,47 @@ import { ContentCloudNodeSelectorService } from '../../../services/content-cloud
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { AttachFileCloudWidgetComponent } from './attach-file-cloud-widget.component';
 import {
-    FormFieldModel,
-    FormModel,
-    FormFieldTypes,
-    FormService,
-    DownloadService,
     AppConfigService,
-    UploadWidgetContentLinkModel,
+    ContentLinkModel,
+    DownloadService,
+    FormFieldModel,
+    FormFieldTypes,
+    FormModel,
+    FormService,
     LocalizedDatePipe,
     NotificationService,
-    ContentLinkModel
+    UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
 import {
     allSourceParams,
-    contentSourceParam,
-    fakeNode,
-    mockNodeId,
-    fakeLocalPngResponse,
-    onlyLocalParams,
-    allSourceWithWrongAliasParams,
-    allSourceWithNoAliasParams,
-    fakeNodeWithProperties,
-    menuTestSourceParam,
-    expectedValues,
-    fakeLocalPngAnswer,
-    allSourceWithStringTypeEmptyValue,
-    mockNodeIdBasedOnStringVariableValue,
-    mockAllFileSourceWithStringVariablePathType,
-    mockAllFileSourceWithFolderVariablePathType,
-    mockContentFileSource,
-    mockAllFileSourceWithStaticPathType,
-    formVariables,
-    processVariables,
-    mockAllFileSourceWithRenamedFolderVariablePathType,
     allSourceParamsWithRelativePath,
-    fakeLocalPhysicalRecordResponse,
+    allSourceWithNoAliasParams,
+    allSourceWithStringTypeEmptyValue,
+    allSourceWithWrongAliasParams,
+    contentSourceParam,
     displayableCMParams,
+    expectedValues,
+    fakeLocalPhysicalRecordResponse,
+    fakeLocalPngAnswer,
     fakeLocalPngHavingCMProperties,
-    mockMyNodeId
+    fakeLocalPngResponse,
+    fakeNode,
+    fakeNodeWithProperties,
+    formVariables,
+    menuTestSourceParam,
+    mockAllFileSourceWithFolderVariablePathType,
+    mockAllFileSourceWithRenamedFolderVariablePathType,
+    mockAllFileSourceWithStaticPathType,
+    mockAllFileSourceWithStringVariablePathType,
+    mockContentFileSource,
+    mockMyNodeId,
+    mockNodeId,
+    mockNodeIdBasedOnStringVariableValue,
+    onlyLocalParams,
+    processVariables
 } from '../../../mocks/attach-file-cloud-widget.mock';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Injector, runInInjectionContext } from '@angular/core';
 import {
     ContentModule,
     ContentNodeSelectorPanelService,
@@ -162,9 +162,12 @@ describe('AttachFileCloudWidgetComponent', () => {
         contentCloudNodeSelectorService = TestBed.inject(ContentCloudNodeSelectorService);
         appConfigService = TestBed.inject(AppConfigService);
         formService = TestBed.inject(FormService);
+        const injector = TestBed.inject(Injector);
         contentNodeSelectorPanelService = TestBed.inject(ContentNodeSelectorPanelService);
         openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeNode]));
-        localizedDataPipe = new LocalizedDatePipe();
+        runInInjectionContext(injector, () => {
+            localizedDataPipe = new LocalizedDatePipe();
+        });
     });
 
     afterEach(() => {

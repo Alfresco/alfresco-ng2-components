@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
 import {
-    CardViewItemProperties,
-    CardViewItem,
-    CardViewTextItemModel,
+    AppConfigService,
     CardViewBoolItemModel,
     CardViewDateItemModel,
-    CardViewSelectItemModel,
     CardViewDatetimeItemModel,
-    CardViewIntItemModel,
-    CardViewLongItemModel,
     CardViewFloatItemModel,
-    MultiValuePipe,
-    AppConfigService,
+    CardViewIntItemModel,
+    CardViewItem,
+    CardViewItemProperties,
+    CardViewLongItemModel,
+    CardViewSelectItemModel,
+    CardViewTextItemModel,
     DecimalNumberPipe,
     LogService,
+    MultiValuePipe,
     UserPreferencesService
 } from '@alfresco/adf-core';
-import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
+import { CardViewGroup, OrganisedPropertyGroup, Property } from '../interfaces/content-metadata.interfaces';
 import { of } from 'rxjs';
-import { Definition, Constraint, Property as PropertyBase } from '@alfresco/js-api';
+import { Constraint, Definition, Property as PropertyBase } from '@alfresco/js-api';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
@@ -56,6 +56,7 @@ export class PropertyGroupTranslatorService {
     private userPreferenceService = inject(UserPreferencesService);
     private appConfig = inject(AppConfigService);
     private logService = inject(LogService);
+    private injector = inject(Injector);
 
     valueSeparator: string;
 
@@ -156,10 +157,7 @@ export class PropertyGroupTranslatorService {
                     cardViewItemProperty = new CardViewFloatItemModel(
                         Object.assign(propertyDefinition, {
                             multivalued: isMultiValued,
-                            pipes: [
-                                { pipe: new DecimalNumberPipe(this.userPreferenceService, this.appConfig) },
-                                { pipe: new MultiValuePipe(), params: [this.valueSeparator] }
-                            ]
+                            pipes: [{ pipe: this.getDecimalNumberPipe() }, { pipe: new MultiValuePipe(), params: [this.valueSeparator] }]
                         })
                     );
                     break;
@@ -217,5 +215,13 @@ export class PropertyGroupTranslatorService {
 
     private isEmpty(value: any): boolean {
         return value === undefined || value === null || value === '';
+    }
+
+    private getDecimalNumberPipe(): DecimalNumberPipe {
+        let decimalNumberPipe: DecimalNumberPipe;
+        runInInjectionContext(this.injector, () => {
+            decimalNumberPipe = new DecimalNumberPipe(this.userPreferenceService, this.appConfig);
+        });
+        return decimalNumberPipe;
     }
 }
