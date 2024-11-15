@@ -114,4 +114,9 @@ export class WidgetComponent implements AfterViewInit {
     markAsTouched() {
         this.touched = true;
     }
+
+    /**
+     * This method should be implemented only in child components that have implemented reactive form controls.
+     */
+    updateReactiveFormControl(): void {}
 }

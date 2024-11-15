@@ -68,7 +68,8 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit(): void {
-        this.patchFormControl();
+        this.setFormControlValue();
+        this.updateFormControlState();
         this.initDateAdapter();
         this.initDateRange();
         this.initStartAt();
@@ -80,8 +81,17 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
         this.validateField();
         this.onFieldChanged(this.field);
     }
-    private patchFormControl(): void {
+
+    updateReactiveFormControl(): void {
+        this.updateFormControlState();
+        this.validateField();
+    }
+
+    private setFormControlValue(): void {
         this.dateInputControl.setValue(this.field.value, { emitEvent: false });
+    }
+
+    private updateFormControlState(): void {
         this.dateInputControl.setValidators(this.isRequired() ? [Validators.required] : []);
         if (this.field?.readOnly || this.readOnly) {
             this.dateInputControl.disable({ emitEvent: false });

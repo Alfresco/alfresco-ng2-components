@@ -70,6 +70,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     public formService = inject(FormService);
     private formCloudService = inject(FormCloudService);
     private appConfig = inject(AppConfigService);
+    private destroyRef = inject(DestroyRef);
 
     typeId = 'DropdownCloudWidgetComponent';
     showInputFilter = false;
@@ -85,7 +86,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly defaultVariableOptionId = 'id';
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
-    private readonly destroyRef = inject(DestroyRef);
 
     get showRequiredMessage(): boolean {
         return this.dropdownControl.touched && this.dropdownControl.errors?.required && !this.isRestApiFailed && !this.variableOptionsFailed;
@@ -133,6 +133,11 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         });
     }
 
+    updateReactiveFormControl(): void {
+        this.updateFormControlState();
+        this.handleErrors();
+    }
+
     compareDropdownValues(opt1: FormFieldOption | string, opt2: FormFieldOption | string): boolean {
         if (!opt1 || !opt2) {
             return false;
@@ -165,19 +170,14 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.checkFieldOptionsSource();
         this.updateOptions();
 
-        this.initFormControl();
+        this.setFormControlValue();
+        this.updateFormControlState();
+        this.subscribeToInputChanges();
         this.initFilter();
+        this.handleErrors();
     }
 
-    private initFormControl(): void {
-        if (this.field?.required) {
-            this.dropdownControl.addValidators([Validators.required]);
-        }
-
-        if (this.field?.readOnly || this.readOnly) {
-            this.dropdownControl.disable({ emitEvent: false });
-        }
-
+    private subscribeToInputChanges(): void {
         this.dropdownControl.valueChanges
             .pipe(
                 filter(() => !!this.field),
@@ -188,19 +188,31 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
                 this.handleErrors();
                 this.selectionChangedForField(this.field);
             });
+    }
 
+    private setFormControlValue(): void {
         this.dropdownControl.setValue(this.field?.value, { emitEvent: false });
-        this.handleErrors();
+    }
+
+    private updateFormControlState(): void {
+        this.dropdownControl.setValidators(this.isRequired() ? [Validators.required] : []);
+        if (this.field?.readOnly || this.readOnly) {
+            this.dropdownControl.disable({ emitEvent: false });
+        }
+
+        this.dropdownControl.updateValueAndValidity({ emitEvent: false });
     }
 
     private handleErrors(): void {
         if (this.dropdownControl.valid) {
             this.field.validationSummary = new ErrorMessageModel('');
+            this.field.markAsValid();
             return;
         }
 
         if (this.dropdownControl.invalid && this.dropdownControl.errors.required) {
             this.field.validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
+            this.field.markAsInvalid();
         }
     }
 

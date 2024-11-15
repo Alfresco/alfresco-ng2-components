@@ -59,10 +59,9 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     public formsService = inject(FormService);
     public taskFormService = inject(TaskFormService);
     public processDefinitionService = inject(ProcessDefinitionService);
+    private readonly destroyRef = inject(DestroyRef);
 
     dropdownControl = new FormControl<FormFieldOption | string>(undefined);
-
-    private readonly destroyRef = inject(DestroyRef);
 
     get isReadOnlyType(): boolean {
         return this.field.type === 'readonly';
@@ -93,7 +92,15 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
             }
         }
 
-        this.initFormControl();
+        this.setFormControlValue();
+        this.updateFormControlState();
+        this.subscribeToInputChanges();
+        this.handleErrors();
+    }
+
+    updateReactiveFormControl(): void {
+        this.updateFormControlState();
+        this.handleErrors();
     }
 
     getValuesByTaskId() {
@@ -124,15 +131,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
         return !!this.field?.form?.readOnly;
     }
 
-    private initFormControl() {
-        if (this.field?.required) {
-            this.dropdownControl.addValidators([this.customRequiredValidator(this.field)]);
-        }
-
-        if (this.field?.readOnly || this.readOnly) {
-            this.dropdownControl.disable({ emitEvent: false });
-        }
-
+    private subscribeToInputChanges(): void {
         this.dropdownControl.valueChanges
             .pipe(
                 filter(() => !!this.field),
@@ -143,9 +142,19 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
                 this.handleErrors();
                 this.onFieldChanged(this.field);
             });
+    }
 
+    private setFormControlValue(): void {
         this.dropdownControl.setValue(this.getOptionValue(this.field?.value), { emitEvent: false });
-        this.handleErrors();
+    }
+
+    private updateFormControlState(): void {
+        this.dropdownControl.setValidators(this.isRequired() ? [this.customRequiredValidator(this.field)] : []);
+        if (this.field?.readOnly || this.readOnly) {
+            this.dropdownControl.disable({ emitEvent: false });
+        }
+
+        this.dropdownControl.updateValueAndValidity({ emitEvent: false });
     }
 
     private handleErrors() {
@@ -155,11 +164,13 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 
         if (this.dropdownControl.valid) {
             this.field.validationSummary = new ErrorMessageModel('');
+            this.field.markAsValid();
             return;
         }
 
         if (this.dropdownControl.invalid && this.dropdownControl.errors.required) {
             this.field.validationSummary = new ErrorMessageModel({ message: 'FORM.FIELD.REQUIRED' });
+            this.field.markAsInvalid();
         }
     }
 

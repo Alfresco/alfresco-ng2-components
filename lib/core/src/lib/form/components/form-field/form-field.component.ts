@@ -20,6 +20,7 @@ import {
     Component,
     ComponentFactory,
     ComponentRef,
+    DestroyRef,
     inject,
     Input,
     NgModule,
@@ -33,6 +34,8 @@ import { FormRenderingService } from '../../services/form-rendering.service';
 import { WidgetVisibilityService } from '../../services/widget-visibility.service';
 import { FormFieldModel } from '../widgets/core/form-field.model';
 import { FieldStylePipe } from '../../pipes/field-style.pipe';
+import { FormFieldTypes } from '../widgets/core/form-field-types';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 declare const adf: any;
 
@@ -62,6 +65,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     private readonly formRenderingService = inject(FormRenderingService);
     private readonly visibilityService = inject(WidgetVisibilityService);
+    private readonly destroyRef = inject(DestroyRef);
     private readonly compiler = inject(Compiler);
 
     ngOnInit() {
@@ -88,12 +92,27 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                     instance.fieldChanged.subscribe((field) => {
                         if (field && this.field.form) {
                             this.visibilityService.refreshVisibility(field.form);
-                            field.form.onFormFieldChanged(field);
+                            this.triggerFormFieldChanged(field);
                         }
                     });
+
+                    if (FormFieldTypes.isReactiveType(instance?.field?.type)) {
+                        this.updateReactiveFormControlOnFormRulesEvent(instance);
+                    }
                 }
             }
         }
+    }
+
+    private updateReactiveFormControlOnFormRulesEvent(instance: any): void {
+        instance?.formService.formRulesEvent.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            instance?.updateReactiveFormControl();
+            this.triggerFormFieldChanged(instance.field);
+        });
+    }
+
+    private triggerFormFieldChanged(field: FormFieldModel): void {
+        field.form.onFormFieldChanged(field);
     }
 
     ngOnDestroy() {
