@@ -181,7 +181,7 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
                     width += val._elementRef.nativeElement.getBoundingClientRect().width + chipMargin;
                     const availableSpace =
                         (index && index === chips.length - 1) || !this.paginationData ? containerWidth - viewMoreBtnWidth : containerWidth;
-                    if (availableSpace >= width) {
+                    if (availableSpace >= width - chipMargin) {
                         chipsToDisplay = (this.paginationData ? chipsToDisplay : index) + 1;
                         lastIndex++;
                         this.viewMoreButtonLeftOffset = width;
@@ -225,11 +225,13 @@ export class DynamicChipListComponent implements OnChanges, OnInit, AfterViewIni
         if (this.paginationData?.hasMoreItems) {
             const lastChipTop = this.matChips.last._elementRef.nativeElement.offsetTop;
             if (this.moveLoadMoreButtonToNextRow) {
+                const buttonTopHeightCorrection = 5;
                 this.viewMoreButtonLeftOffset = 0;
-                this.viewMoreButtonTop = lastChipTop + viewMoreButton.offsetHeight;
+                this.viewMoreButtonTop = lastChipTop + viewMoreButton.offsetHeight + buttonTopHeightCorrection;
             } else {
+                const buttonTopHeightCorrection = 3;
                 this.viewMoreButtonLeftOffset = this.viewMoreButtonLeftOffsetBeforeFlexDirection;
-                this.viewMoreButtonTop = lastChipTop;
+                this.viewMoreButtonTop = lastChipTop - buttonTopHeightCorrection;
             }
         } else {
             this.viewMoreButtonLeftOffset = this.columnFlexDirection ? 0 : this.viewMoreButtonLeftOffsetBeforeFlexDirection;
