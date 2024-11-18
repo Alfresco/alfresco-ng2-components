@@ -124,6 +124,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         skipCount: 0
     });
 
+    readonly DISABLE_ACTION_FOLDER_LIST = ['-mysites-'];
+
     private showSiteList = true;
     private showSearchField = true;
     private showCounter = false;
@@ -461,7 +463,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
-        if (this._excludeSiteContent?.length && entry && entry.properties?.['st:componentId']) {
+        if (this._excludeSiteContent?.length && entry?.properties?.['st:componentId']) {
             const excludedItem = this._excludeSiteContent.find((id: string) => entry.properties['st:componentId'] === id);
             return !!excludedItem;
         }
@@ -470,7 +472,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Updates the site attribute and starts a new search
-     *
      * @param chosenSite SiteEntry to search within
      */
     siteChanged(chosenSite: SiteEntry): void {
@@ -482,7 +483,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Get current breadcrumb folder node
-     *
      * @returns the actually selected|entered folder node or null in case of searching for the breadcrumb
      */
     get breadcrumbFolderNode(): Node | null {
@@ -499,7 +499,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Prepares the dialog for a new search
-     *
      * @param searchRequest request options
      */
     prepareDialogForNewSearch(searchRequest: SearchRequest): void {
@@ -572,7 +571,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Show the results of the search
-     *
      * @param results Search results
      */
     private showSearchResults(results: NodePaging): void {
@@ -585,7 +583,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
-     *
      * @param $event node event
      */
     onFolderChange($event: NodeEntryEvent): void {
@@ -600,7 +597,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Attempts to set the currently loaded node
-     *
      * @param nodePaging pagination model
      */
     onFolderLoaded(nodePaging: NodePaging): void {
@@ -616,7 +612,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Updates pagination.hasMoreItems to false after filtering only folders during 'COPY' and 'MOVE' action
-     *
      * @param nodePaging pagination model
      */
     updatePaginationAfterRowFilter(nodePaging: NodePaging): void {
@@ -627,7 +622,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Returns whether breadcrumb has to be shown or not
-     *
      * @returns `true` if needs to show the breadcrumb, otherwise `false`
      */
     showBreadcrumbs() {
@@ -636,7 +630,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Loads the next batch of search results
-     *
      * @param pagination Pagination object
      */
     getNextPageOfSearch(pagination: Pagination): void {
@@ -651,13 +644,16 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * Selects node as chosen if it has the right permission, clears the selection otherwise
-     *
      * @param entry node entry
      */
     private attemptNodeSelection(entry: Node): void {
-        if (entry && this.isSelectionValid(entry)) {
+        if (entry && this.isSelectionValid(entry) && !this.isActionDisabledForFolder(this.documentList.currentFolderId)) {
             this.chosenNode = [entry];
         }
+    }
+
+    private isActionDisabledForFolder(folderId: string): boolean {
+        return this.DISABLE_ACTION_FOLDER_LIST.includes(folderId);
     }
 
     /**
@@ -669,7 +665,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /**
      * It filters and emit the selection coming from the document list
-     *
      * @param nodesEntries selected nodes
      */
     onCurrentSelection(nodesEntries: NodeEntry[]): void {
