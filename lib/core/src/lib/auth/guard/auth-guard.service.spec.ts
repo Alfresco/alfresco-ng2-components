@@ -171,6 +171,17 @@ describe('AuthGuardService', () => {
         expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl('/login?redirectUrl=some-url'));
     });
 
+    it('should emit onLogout if the user is NOT logged in and basic authentication is used', async () => {
+        spyOn(authService, 'isLoggedIn').and.returnValue(false);
+        spyOn(authService, 'isOauth').and.returnValue(false);
+        appConfigService.config.loginRoute = 'login';
+        spyOn(basicAlfrescoAuthService.onLogout, 'next');
+
+        await TestBed.runInInjectionContext(() => AuthGuard(route, state));
+
+        expect(basicAlfrescoAuthService.onLogout.next).toHaveBeenCalledWith(true);
+    });
+
     it('should set redirect url with query params', async () => {
         state.url = 'some-url;q=query';
         appConfigService.config.loginRoute = 'login';
