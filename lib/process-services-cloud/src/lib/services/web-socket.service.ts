@@ -99,34 +99,10 @@ export class WebSocketService {
     private initSubscriptions(options: serviceOptions): void {
         switch (this.subscriptionProtocol) {
             case 'graphql-ws':
-                this.wsLink = new GraphQLWsLink(
-                    createClient({
-                        url: this.createUrl(options.wsUrl, 'wss') + '/v2/ws/graphql',
-                        connectionParams: {
-                            Authorization: 'Bearer ' + this.authService.getToken()
-                        },
-                        on: {
-                            error: () => {
-                                this.apollo.removeClient(options.apolloClientName);
-                                this.initSubscriptions(options);
-                            }
-                        },
-                        lazy: true
-                    })
-                );
+                this.createGraphQLWsLink(options);
                 break;
             case 'transport-ws':
-                this.wsLink = new WebSocketLink({
-                    uri: this.createUrl(options.wsUrl, 'wss') + '/ws/graphql',
-                    options: {
-                        reconnect: true,
-                        lazy: true,
-                        connectionParams: {
-                            kaInterval: 2000,
-                            'X-Authorization': 'Bearer ' + this.authService.getToken()
-                        }
-                    }
-                });
+                this.createTransportWsLink(options);
                 break;
             default:
                 throw new Error('Unknown subscription protocol');
@@ -192,5 +168,37 @@ export class WebSocketService {
             link: from([authLink, retryLink, errorLink, link]),
             cache: new InMemoryCache({ merge: true } as InMemoryCacheConfig)
         });
+    }
+
+    private createTransportWsLink(options: serviceOptions) {
+        this.wsLink = new WebSocketLink({
+            uri: this.createUrl(options.wsUrl, 'wss') + '/ws/graphql',
+            options: {
+                reconnect: true,
+                lazy: true,
+                connectionParams: {
+                    kaInterval: 2000,
+                    'X-Authorization': 'Bearer ' + this.authService.getToken()
+                }
+            }
+        });
+    }
+
+    private createGraphQLWsLink(options: serviceOptions) {
+        this.wsLink = new GraphQLWsLink(
+            createClient({
+                url: this.createUrl(options.wsUrl, 'wss') + '/v2/ws/graphql',
+                connectionParams: {
+                    Authorization: 'Bearer ' + this.authService.getToken()
+                },
+                on: {
+                    error: () => {
+                        this.apollo.removeClient(options.apolloClientName);
+                        this.initSubscriptions(options);
+                    }
+                },
+                lazy: true
+            })
+        );
     }
 }
