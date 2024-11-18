@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodesApi, NodeEntry, SearchApi, SEARCH_LANGUAGE, ResultSetPaging } from '@alfresco/js-api';
+import { NodesApi, NodeEntry } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, of, from, ReplaySubject, throwError } from 'rxjs';
 import { catchError, concatMap, first, map, switchMap, take, tap } from 'rxjs/operators';
@@ -27,12 +27,6 @@ import { AuthenticationService } from '@alfresco/adf-core';
     providedIn: 'root'
 })
 export class SavedSearchesService {
-    private _searchApi: SearchApi;
-    get searchApi(): SearchApi {
-        this._searchApi = this._searchApi ?? new SearchApi(this.apiService.getInstance());
-        return this._searchApi;
-    }
-
     private _nodesApi: NodesApi;
     get nodesApi(): NodesApi {
         this._nodesApi = this._nodesApi ?? new NodesApi(this.apiService.getInstance());
@@ -209,43 +203,35 @@ export class SavedSearchesService {
         this.currentUserLocalStorageKey = localStorageKey;
         let savedSearchesNodeId = localStorage.getItem(this.currentUserLocalStorageKey) ?? '';
         if (savedSearchesNodeId === '') {
-            return from(this.nodesApi.getNode('-my-')).pipe(
+            return from(this.nodesApi.getNode('-my-', { relativePath: 'config.json' })).pipe(
                 first(),
-                map((node) => node.entry.id),
-                concatMap((parentNodeId) =>
-                    from(
-                        this.searchApi.search({
-                            query: {
-                                language: SEARCH_LANGUAGE.AFTS,
-                                query: `cm:name:"config.json" AND PARENT:"${parentNodeId}"`
-                            }
-                        })
-                    ).pipe(
-                        first(),
-                        concatMap((searchResult: ResultSetPaging) => {
-                            if (searchResult.list.entries.length > 0) {
-                                savedSearchesNodeId = searchResult.list.entries[0].entry.id;
-                                localStorage.setItem(this.currentUserLocalStorageKey, savedSearchesNodeId);
-                            } else {
-                                return this.createSavedSearchesNode(parentNodeId).pipe(
-                                    first(),
-                                    map((node) => {
-                                        localStorage.setItem(this.currentUserLocalStorageKey, node.entry.id);
-                                        return node.entry.id;
-                                    })
-                                );
-                            }
-                            this.savedSearchFileNodeId = savedSearchesNodeId;
-                            return savedSearchesNodeId;
-                        })
-                    )
-                )
+                concatMap((configNode) => {
+                    savedSearchesNodeId = configNode.entry.id;
+                    localStorage.setItem(this.currentUserLocalStorageKey, savedSearchesNodeId);
+                    this.savedSearchFileNodeId = savedSearchesNodeId;
+                    return savedSearchesNodeId;
+                }),
+                catchError((error) => {
+                    const errorStatusCode = JSON.parse(error.message).error.statusCode;
+                    if (errorStatusCode === 404) {
+                        return this.createSavedSearchesNode('-my-').pipe(
+                            first(),
+                            map((node) => {
+                                localStorage.setItem(this.currentUserLocalStorageKey, node.entry.id);
+                                return node.entry.id;
+                            })
+                        );
+                    } else {
+                        return throwError(() => error);
+                    }
+                })
             );
         } else {
             this.savedSearchFileNodeId = savedSearchesNodeId;
             return of(savedSearchesNodeId);
         }
     }
+
     private createSavedSearchesNode(parentNodeId: string): Observable<NodeEntry> {
         return from(this.nodesApi.createNode(parentNodeId, { name: 'config.json', nodeType: 'cm:content' }));
     }
