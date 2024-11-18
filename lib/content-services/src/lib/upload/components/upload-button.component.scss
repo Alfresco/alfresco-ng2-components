@@ -24,4 +24,11 @@
             box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
         }
     }
+
+    &-upload-button-file-container-upload-single-file[disabled] + &-upload-button-label {
+        background-color: var(--adf-disabled-button-background);
+        color: var(--adf-theme-foreground-disabled-text-color);
+        box-shadow: none;
+        cursor: default;
+    }
 }
