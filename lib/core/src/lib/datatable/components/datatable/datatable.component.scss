@@ -567,6 +567,10 @@ $data-table-cell-min-width-file-size: $data-table-cell-min-width-1 !default;
         cursor: move;
         margin-right: -0.5rem;
         padding-left: -0.5rem;
+
+        &-visible {
+            display: flex;
+        }
     }
 
     .adf-datatable-cell-value {

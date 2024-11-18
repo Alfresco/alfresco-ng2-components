@@ -128,7 +128,7 @@ export class TaskListRequestModel {
     candidateGroupId?: string[];
 
     taskVariableFilters?: TaskListRequestTaskVariableFilter[];
-    variableKeys?: string[];
+    processVariableKeys?: string[];
 
     constructor(obj: Partial<TaskListRequestModel>) {
         if (!obj.appName) {
@@ -161,7 +161,7 @@ export class TaskListRequestModel {
         this.candidateUserId = obj.candidateUserId;
         this.candidateGroupId = obj.candidateGroupId;
         this.taskVariableFilters = obj.taskVariableFilters;
-        this.variableKeys = obj.variableKeys;
+        this.processVariableKeys = obj.processVariableKeys;
     }
 }
 
