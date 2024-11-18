@@ -210,11 +210,11 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     private peopleSearchObserver: Observer<LightUserRepresentation[]>;
 
     constructor(
-        private taskListService: TaskListService,
-        private peopleProcessService: PeopleProcessService,
-        private cardViewUpdateService: CardViewUpdateService,
-        private dialog: MatDialog,
-        private destroyRef: DestroyRef
+        private readonly taskListService: TaskListService,
+        private readonly peopleProcessService: PeopleProcessService,
+        private readonly cardViewUpdateService: CardViewUpdateService,
+        private readonly dialog: MatDialog,
+        private readonly destroyRef: DestroyRef
     ) {}
 
     ngOnInit() {

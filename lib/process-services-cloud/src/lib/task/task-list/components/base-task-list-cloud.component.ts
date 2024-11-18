@@ -55,11 +55,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-// eslint-disable-next-line @typescript-eslint/brace-style
 export abstract class BaseTaskListCloudComponent<T = unknown>
     extends DataTableSchema<T>
-    implements OnChanges, AfterContentInit, PaginatedComponent, OnInit
-{
+// eslint-disable-next-line @typescript-eslint/brace-style
+    implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {
+    
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 

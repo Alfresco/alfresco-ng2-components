@@ -56,9 +56,10 @@ export class PropertyGroupTranslatorService {
     private userPreferenceService = inject(UserPreferencesService);
     private appConfig = inject(AppConfigService);
     private logService = inject(LogService);
-    private injector = inject(Injector);
 
     valueSeparator: string;
+
+    private readonly injector = inject(Injector);
 
     constructor() {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
