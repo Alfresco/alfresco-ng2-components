@@ -151,8 +151,7 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
-    private readonly destroyRef = inject(DestroyRef);
-
+    protected readonly destroyRef = inject(DestroyRef);
     protected abstract isLoading$: Observable<boolean>;
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
 

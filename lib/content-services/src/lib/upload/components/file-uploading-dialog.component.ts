@@ -25,12 +25,13 @@ import {
     HostBinding,
     inject,
     Input,
+    OnDestroy,
     OnInit,
     Output,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { merge, Subject, Subscription } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { Direction } from '@angular/cdk/bidi';
 import { delay } from 'rxjs/operators';
@@ -53,7 +54,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     styleUrls: ['./file-uploading-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FileUploadingDialogComponent implements OnInit {
+export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     /** Dialog direction. Can be 'ltr' or 'rtl. */
     private direction: Direction = 'ltr';
 
@@ -88,10 +89,6 @@ export class FileUploadingDialogComponent implements OnInit {
     isDialogMinimized: boolean = false;
     isConfirmation: boolean = false;
 
-    private listSubscription: Subscription;
-    private counterSubscription: Subscription;
-    private fileUploadSubscription: Subscription;
-    private errorSubscription: Subscription;
     private dialogActive = new Subject<boolean>();
     private readonly destroyRef = inject(DestroyRef);
 
@@ -110,7 +107,7 @@ export class FileUploadingDialogComponent implements OnInit {
             }
         });
 
-        this.listSubscription = this.uploadService.queueChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((fileList) => {
+        this.uploadService.queueChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((fileList) => {
             this.filesUploadingList = fileList;
 
             if (this.filesUploadingList.length && !this.isDialogActive) {
@@ -121,19 +118,19 @@ export class FileUploadingDialogComponent implements OnInit {
             }
         });
 
-        this.counterSubscription = merge(this.uploadService.fileUploadComplete, this.uploadService.fileUploadDeleted)
+        merge(this.uploadService.fileUploadComplete, this.uploadService.fileUploadDeleted)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((event: FileUploadCompleteEvent | FileUploadDeleteEvent) => {
                 this.totalCompleted = event.totalComplete;
                 this.changeDetector.detectChanges();
             });
 
-        this.errorSubscription = this.uploadService.fileUploadError.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
+        this.uploadService.fileUploadError.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
             this.totalErrors = event.totalError;
             this.changeDetector.detectChanges();
         });
 
-        this.fileUploadSubscription = this.uploadService.fileUpload.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+        this.uploadService.fileUpload.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.changeDetector.detectChanges();
         });
 
@@ -203,10 +200,6 @@ export class FileUploadingDialogComponent implements OnInit {
 
     ngOnDestroy() {
         this.uploadService.clearQueue();
-        this.listSubscription.unsubscribe();
-        this.counterSubscription.unsubscribe();
-        this.fileUploadSubscription.unsubscribe();
-        this.errorSubscription.unsubscribe();
     }
 
     canShowDialog(): boolean {
