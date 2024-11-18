@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -196,9 +185,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
     appVersionOptions: ProcessFilterOptions[] = [];
     initiatorOptions: IdentityUserModel[] = [];
 
-    private readonly destroyRef = inject(DestroyRef);
     isLoading: boolean = false;
     private filterChangeSub: Subscription;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private formBuilder: FormBuilder,

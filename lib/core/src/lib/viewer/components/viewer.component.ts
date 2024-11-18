@@ -286,14 +286,14 @@ export class ViewerComponent<T> implements OnDestroy, OnInit, OnChanges {
     @Output()
     submitFile = new EventEmitter<Blob>();
 
-    private readonly destroyRef = inject(DestroyRef);
-
     private closeViewer = true;
     private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
     private isDialogVisible: boolean = false;
     public downloadPromptTimer: number;
     public downloadPromptReminderTimer: number;
     public mimeTypeIconUrl: string;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private el: ElementRef,

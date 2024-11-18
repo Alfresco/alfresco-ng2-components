@@ -16,18 +16,7 @@
  */
 
 import { AppsProcessService } from '../../../services/apps-process.service';
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { TaskFilterService } from '../../services/task-filter.service';
 import { TaskListService } from '../../services/tasklist.service';
 import { IconModel } from '../../../app-list/icon.model';
@@ -90,8 +79,9 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     isTaskRoute: boolean;
     isTaskActive: boolean;
 
-    private readonly destroyRef = inject(DestroyRef);
     private iconsMDL: IconModel;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private taskFilterService: TaskFilterService,

@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { SearchQueryBuilderService } from '../../../services/search-query-builder.service';
 import { FacetWidget } from '../../../models/facet-widget.interface';
@@ -68,12 +57,13 @@ export class SearchFacetTabbedContentComponent implements OnInit, OnChanges, Fac
     displayValue$ = new EventEmitter<string>();
 
     private resetSubject$ = new Subject<void>();
-    private readonly destroyRef = inject(DestroyRef);
 
     reset$ = this.resetSubject$.asObservable();
     chipIcon = 'keyboard_arrow_down';
     autocompleteOptions = {};
     selectedOptions = {};
+
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         this.tabbedFacet.fields.forEach((field) => {

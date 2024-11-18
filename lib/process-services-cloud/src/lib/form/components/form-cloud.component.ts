@@ -132,7 +132,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     nodeId: string;
     formCloudRepresentationJSON: any;
 
-
     readonly id: string;
     displayMode: string;
     displayConfiguration: FormCloudDisplayModeConfiguration = DisplayModeService.DEFAULT_DISPLAY_MODE_CONFIGURATIONS[0];
@@ -147,6 +146,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     protected changeDetector = inject(ChangeDetectorRef);
 
     private readonly destroyRef = inject(DestroyRef);
+
     constructor() {
         super();
 

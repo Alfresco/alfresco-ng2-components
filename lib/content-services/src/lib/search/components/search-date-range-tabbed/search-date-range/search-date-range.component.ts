@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Inject,
-    Input,
-    OnInit,
-    Output,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { endOfDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { DateFnsAdapter, MAT_DATE_FNS_FORMATS } from '@angular/material-date-fns-adapter';
@@ -96,10 +86,11 @@ export class SearchDateRangeComponent implements OnInit {
     betweenStartDateFormControl = this.form.controls.betweenStartDate;
     betweenEndDateFormControl = this.form.controls.betweenEndDate;
     convertedMaxDate: Date;
-    private readonly destroyRef = inject(DestroyRef);
 
     readonly DateRangeType = DateRangeType;
     readonly InLastDateType = InLastDateType;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private formBuilder: FormBuilder,

@@ -15,18 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { ProcessFilterService } from '../../services/process-filter.service';
 import { AppsProcessService } from '../../../services/apps-process.service';
@@ -89,9 +78,10 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     active = false;
     isProcessRoute: boolean;
     isProcessActive: boolean;
-    private readonly destroyRef = inject(DestroyRef);
 
     private iconsMDL: IconModel;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private processFilterService: ProcessFilterService,

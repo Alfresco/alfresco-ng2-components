@@ -90,6 +90,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     isConfirmation: boolean = false;
 
     private dialogActive = new Subject<boolean>();
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(

@@ -15,26 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
-    ViewEncapsulation
-} from '@angular/core';
-import {
-    Category,
-    CategoryEntry,
-    CategoryLinkBody,
-    CategoryPaging,
-    Node,
-    TagBody,
-    TagEntry,
-    TagPaging
-} from '@alfresco/js-api';
+import { Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Category, CategoryEntry, CategoryLinkBody, CategoryPaging, Node, TagBody, TagEntry, TagPaging } from '@alfresco/js-api';
 import { forkJoin, Observable, of, Subject, zip } from 'rxjs';
 import {
     AppConfigService,
@@ -46,12 +28,7 @@ import {
     UpdateNotification
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import {
-    CardViewGroup,
-    ContentMetadataCustomPanel,
-    ContentMetadataPanel,
-    PresetConfig
-} from '../../interfaces/content-metadata.interfaces';
+import { CardViewGroup, ContentMetadataCustomPanel, ContentMetadataPanel, PresetConfig } from '../../interfaces/content-metadata.interfaces';
 import { catchError, debounceTime, map } from 'rxjs/operators';
 import { CardViewContentUpdateService } from '../../../common/services/card-view-content-update.service';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
@@ -105,7 +82,6 @@ enum DefaultPanels {
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit {
-
     /** (required) The node entity to fetch metadata about */
     @Input()
     node: Node;
@@ -171,7 +147,6 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
     private targetProperty: CardViewBaseItemModel;
     private classifiableChangedSubject = new Subject<void>();
     private _saving = false;
-    private readonly destroyRef = inject(DestroyRef);
 
     DefaultPanels = DefaultPanels;
     multiValueSeparator: string;
@@ -190,6 +165,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit {
         expanded: false,
         panelTitle: ''
     };
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private contentMetadataService: ContentMetadataService,

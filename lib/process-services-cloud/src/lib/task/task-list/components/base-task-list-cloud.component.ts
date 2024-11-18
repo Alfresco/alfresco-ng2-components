@@ -55,11 +55,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
+// eslint-disable-next-line @typescript-eslint/brace-style
 export abstract class BaseTaskListCloudComponent<T = unknown>
     extends DataTableSchema<T>
-    // eslint-disable-next-line @typescript-eslint/brace-style
-    implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {
-
+    implements OnChanges, AfterContentInit, PaginatedComponent, OnInit
+{
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
@@ -151,9 +151,10 @@ export abstract class BaseTaskListCloudComponent<T = unknown>
     private defaultSorting = { key: 'startDate', direction: 'desc' };
     boundReplacePriorityValues: (row: DataRow, col: DataColumn) => any;
 
-    protected readonly destroyRef = inject(DestroyRef);
     protected abstract isLoading$: Observable<boolean>;
     protected isLoadingPreferences$ = new BehaviorSubject<boolean>(true);
+
+    protected readonly destroyRef = inject(DestroyRef);
 
     constructor(
         appConfigService: AppConfigService,

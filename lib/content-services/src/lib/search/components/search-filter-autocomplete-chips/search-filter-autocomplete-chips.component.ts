@@ -52,6 +52,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     reset$: Observable<void> = this.resetSubject$.asObservable();
     private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(private tagService: TagService, private categoryService: CategoryService) {

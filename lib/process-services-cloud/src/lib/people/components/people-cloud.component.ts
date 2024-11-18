@@ -177,7 +177,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     private userInput: ElementRef<HTMLInputElement>;
 
     private searchUsers: IdentityUserModel[] = [];
-    private readonly destroyRef = inject(DestroyRef);
 
     selectedUsers: IdentityUserModel[] = [];
     invalidUsers: IdentityUserModel[] = [];
@@ -194,6 +193,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges, AfterViewInit {
     searchLoading = false;
 
     typingUniqueValueNotEmpty$: Observable<string>;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         @Inject(IDENTITY_USER_SERVICE_TOKEN)

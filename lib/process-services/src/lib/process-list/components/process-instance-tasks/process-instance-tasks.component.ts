@@ -16,18 +16,7 @@
  */
 
 import { CommonModule, DatePipe } from '@angular/common';
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Observer } from 'rxjs';
 import { TaskDetailsEvent } from '../../../task-list';
@@ -84,6 +73,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
 
     private taskObserver: Observer<TaskRepresentation>;
     private completedTaskObserver: Observer<TaskRepresentation>;
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(private processService: ProcessService, private dialog: MatDialog) {

@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AfterViewChecked,
-    Component,
-    DestroyRef,
-    ElementRef,
-    inject,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { AfterViewChecked, Component, DestroyRef, ElementRef, inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FileSizeCondition } from './file-size-condition';
 import { FileSizeOperator } from './file-size-operator.enum';
@@ -73,7 +64,6 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     private _reset$ = new Subject<void>();
     private sizeField: string;
     private nameField: string;
-    private readonly destroyRef = inject(DestroyRef);
 
     @ViewChild('fileSizeOperatorSelect', { read: ElementRef })
     fileSizeOperatorSelectElement: ElementRef;
@@ -105,6 +95,9 @@ export class SearchPropertiesComponent implements OnInit, AfterViewChecked, Sear
     set selectedExtensions(extensions: AutocompleteOption[]) {
         this._selectedExtensions = this.parseFromAutocompleteOptions(extensions);
     }
+
+    private readonly destroyRef = inject(DestroyRef);
+
     constructor(private formBuilder: FormBuilder, private translateService: TranslateService) {}
 
     ngOnInit() {

@@ -445,6 +445,7 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
 
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
     private loadingTimeout: any;
+
     private readonly destroyRef = inject(DestroyRef);
 
     private _nodesApi: NodesApi;
@@ -1038,7 +1039,6 @@ export class DocumentListComponent extends DataTableSchema implements OnInit, On
         this._pagination.skipCount = 0;
         this._pagination.maxItems = this.maxItems;
     }
-
 
     private handleError(err: any) {
         if (err.message) {

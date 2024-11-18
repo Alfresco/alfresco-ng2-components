@@ -176,7 +176,6 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private _tagNameControlVisible = false;
     private _existingTags: TagEntry[];
     private _initialExistingTags: TagEntry[];
-    private readonly destroyRef = inject(DestroyRef);
     private _tagNameErrorMessageKey = '';
     private _spinnerVisible = false;
     private _typing = false;
@@ -189,6 +188,8 @@ export class TagsCreatorComponent implements OnInit, OnDestroy {
     private tagsListElement: ElementRef;
     @ViewChild('tagNameInput')
     private tagNameInputElement: ElementRef;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private tagService: TagService, private notificationService: NotificationService) {}
 

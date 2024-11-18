@@ -179,9 +179,10 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     private focusSubscription: Subscription;
     private valueChange = new Subject<string>();
     private toggleSubscription: Subscription;
-    private readonly destroyRef = inject(DestroyRef);
 
     toggle$ = this.toggleSearch.asObservable();
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private userPreferencesService: UserPreferencesService) {
         this.toggleSubscription = this.toggle$.pipe(debounceTime(200), takeUntilDestroyed()).subscribe(() => {
@@ -328,7 +329,6 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
             this.focusSubscription = null;
             this.focusListener = null;
         }
-
     }
 
     canShowClearSearch(): boolean {

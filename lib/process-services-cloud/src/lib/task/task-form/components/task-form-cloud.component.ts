@@ -149,6 +149,7 @@ export class TaskFormCloudComponent implements OnInit, OnChanges {
     candidateGroups: string[] = [];
 
     loading: boolean = false;
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(private taskCloudService: TaskCloudService, private formRenderingService: FormRenderingService) {

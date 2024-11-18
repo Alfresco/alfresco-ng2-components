@@ -99,6 +99,7 @@ export class StartTaskCloudComponent implements OnInit {
 
     private assigneeForm = new UntypedFormControl('');
     private groupForm = new UntypedFormControl('');
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(

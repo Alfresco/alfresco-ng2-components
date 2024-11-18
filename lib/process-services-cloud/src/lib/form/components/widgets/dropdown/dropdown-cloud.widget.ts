@@ -85,7 +85,6 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     private readonly defaultVariableOptionId = 'id';
     private readonly defaultVariableOptionLabel = 'name';
     private readonly defaultVariableOptionPath = 'data';
-
     private readonly destroyRef = inject(DestroyRef);
 
     get showRequiredMessage(): boolean {

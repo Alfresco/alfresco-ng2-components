@@ -49,10 +49,10 @@ export class PopOverDirective implements OnInit, OnDestroy, AfterViewInit {
     @Input() autofocusedElementSelector: string;
 
     private _open = false;
-    private readonly destroyRef = inject(DestroyRef);
     private overlayRef!: OverlayRef;
-
     private focusTrap: ConfigurableFocusTrap;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private element: ElementRef,

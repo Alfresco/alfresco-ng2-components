@@ -63,6 +63,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     dateInputControl: FormControl<Date> = new FormControl<Date>(null);
 
     public readonly formService = inject(FormService);
+
     private readonly dateAdapter = inject(DateAdapter);
     private readonly destroyRef = inject(DestroyRef);
 
@@ -162,5 +163,4 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
             this.startAt = this.dateAdapter.parse(this.field.value, DEFAULT_DATE_FORMAT);
         }
     }
-
 }

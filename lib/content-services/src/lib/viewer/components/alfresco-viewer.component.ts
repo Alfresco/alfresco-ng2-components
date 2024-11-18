@@ -44,17 +44,7 @@ import {
     ViewUtilService
 } from '@alfresco/adf-core';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import {
-    ContentApi,
-    Node,
-    NodeEntry,
-    NodesApi,
-    RenditionEntry,
-    SharedlinksApi,
-    Version,
-    VersionEntry,
-    VersionsApi
-} from '@alfresco/js-api';
+import { ContentApi, Node, NodeEntry, NodesApi, RenditionEntry, SharedlinksApi, Version, VersionEntry, VersionsApi } from '@alfresco/js-api';
 import { RenditionService } from '../../common/services/rendition.service';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
@@ -215,8 +205,6 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
     @Output()
     showViewerChange = new EventEmitter<boolean>();
 
-    private readonly destroyRef = inject(DestroyRef);
-
     private cacheBusterNumber: number;
 
     versionEntry: VersionEntry;
@@ -257,6 +245,8 @@ export class AlfrescoViewerComponent implements OnChanges, OnInit {
         this._contentApi = this._contentApi ?? new ContentApi(this.apiService.getInstance());
         return this._contentApi;
     }
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private apiService: AlfrescoApiService,

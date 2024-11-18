@@ -64,6 +64,7 @@ export class ResizableDirective implements OnInit, OnDestroy {
     private unsubscribeMouseDown?: () => void;
     private unsubscribeMouseMove?: () => void;
     private unsubscribeMouseUp?: () => void;
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(private readonly renderer: Renderer2, private readonly element: ElementRef<HTMLElement>, private readonly zone: NgZone) {

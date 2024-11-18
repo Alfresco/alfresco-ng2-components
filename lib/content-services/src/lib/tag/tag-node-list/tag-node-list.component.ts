@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from '../services/tag.service';
 import { TagEntry } from '@alfresco/js-api';
 import { Chip, DynamicChipListComponent } from '@alfresco/adf-core';
@@ -60,12 +50,13 @@ export class TagNodeListComponent implements OnChanges, OnInit {
     @Output()
     results = new EventEmitter<TagEntry[]>();
 
-    private readonly destroyRef = inject(DestroyRef);
     private _tagChips: Chip[] = [];
 
     get tagChips(): Chip[] {
         return this._tagChips;
     }
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private tagService: TagService) {}
 

@@ -16,17 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import {
-    Component,
-    DestroyRef,
-    EventEmitter,
-    inject,
-    Input,
-    OnInit,
-    Output,
-    TemplateRef,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -155,6 +145,7 @@ export class LoginComponent implements OnInit {
     data: any;
 
     private _message: { [id: string]: { [id: string]: ValidationMessage } };
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(

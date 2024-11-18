@@ -91,8 +91,10 @@ export class SearchChipAutocompleteInputComponent implements OnInit, OnChanges {
     formCtrl = new FormControl('');
     filteredOptions: AutocompleteOption[] = [];
     selectedOptions: AutocompleteOption[] = [];
-    private readonly destroyRef = inject(DestroyRef);
+
     private _activeAnyOption = false;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     set activeAnyOption(active: boolean) {
         this._activeAnyOption = active;

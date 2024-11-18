@@ -60,8 +60,6 @@ export class InfinitePaginationComponent implements OnInit, PaginationComponentI
     });
 
     _target: PaginatedComponent;
-    
-    private readonly destroyRef = inject(DestroyRef);
 
     /** Component that provides custom pagination support. */
     @Input()
@@ -103,6 +101,8 @@ export class InfinitePaginationComponent implements OnInit, PaginationComponentI
         skipCount: 0,
         merge: true
     };
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {}
 

@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ADF_DATE_FORMATS,
-    AdfDateFnsAdapter,
-    DownloadService,
-    ToolbarComponent,
-    ToolbarTitleComponent
-} from '@alfresco/adf-core';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DownloadService, ToolbarComponent, ToolbarTitleComponent } from '@alfresco/adf-core';
 import {
     AfterContentChecked,
     Component,
@@ -192,6 +186,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, Af
     formValidState: boolean = false;
 
     private hideParameters: boolean = true;
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(

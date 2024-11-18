@@ -25,19 +25,7 @@ import { SearchWidgetSettings } from '../../models/search-widget-settings.interf
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
 import { InLastDateType } from './search-date-range/in-last-date-type';
 import { TranslationService } from '@alfresco/adf-core';
-import {
-    endOfDay,
-    endOfToday,
-    format,
-    formatISO,
-    parseISO,
-    startOfDay,
-    startOfMonth,
-    startOfWeek,
-    subDays,
-    subMonths,
-    subWeeks
-} from 'date-fns';
+import { endOfDay, endOfToday, format, formatISO, parseISO, startOfDay, startOfMonth, startOfWeek, subDays, subMonths, subWeeks } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { SearchFilterTabbedComponent } from '../search-filter-tabbed/search-filter-tabbed.component';
 import { SearchDateRangeComponent } from './search-date-range/search-date-range.component';
@@ -75,6 +63,7 @@ export class SearchDateRangeTabbedComponent implements SearchWidget, OnInit {
     private value: { [key: string]: Partial<SearchDateRange> } = {};
     private queryMapByField: Map<string, string> = new Map<string, string>();
     private displayValueMapByField: Map<string, string> = new Map<string, string>();
+
     private readonly destroyRef = inject(DestroyRef);
 
     constructor(private translateService: TranslationService) {}
