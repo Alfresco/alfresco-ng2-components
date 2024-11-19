@@ -19,14 +19,13 @@ import { FileInfo, TranslationService } from '@alfresco/adf-core';
 import { FileUploadErrorEvent } from '../../../common/events/file.event';
 import { FileModel } from '../../../common/models/file.model';
 import { UploadService } from '../../../common/services/upload.service';
-import { EventEmitter, Input, Output, OnInit, OnDestroy, NgZone, Directive, inject } from '@angular/core';
-import { Subject } from 'rxjs';
+import { DestroyRef, Directive, EventEmitter, inject, Input, NgZone, OnInit, Output } from '@angular/core';
 import { UploadFilesEvent } from '../upload-files.event';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class UploadBase implements OnInit, OnDestroy {
+export abstract class UploadBase implements OnInit {
     protected uploadService = inject(UploadService);
     protected translationService = inject(TranslationService);
     protected ngZone = inject(NgZone);
@@ -85,17 +84,12 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     @Output()
     updateFileVersion = new EventEmitter<CustomEvent>();
 
-    protected onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     ngOnInit() {
         this.uploadService.fileUploadError
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(error => this.error.emit(error));
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     /**

@@ -15,14 +15,21 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormModel, DateFnsUtils, AdfDateFnsAdapter, ADF_DATE_FORMATS } from '@alfresco/adf-core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { ADF_DATE_FORMATS, AdfDateFnsAdapter, DateFnsUtils, FormFieldModel, FormModel } from '@alfresco/adf-core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { EMPTY, Observable, Subject } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { Form } from '../../models/form.model';
 import { TaskListService } from '../../services/tasklist.service';
-import { switchMap, defaultIfEmpty, takeUntil } from 'rxjs/operators';
-import { UntypedFormBuilder, AbstractControl, Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { defaultIfEmpty, switchMap } from 'rxjs/operators';
+import {
+    AbstractControl,
+    ReactiveFormsModule,
+    UntypedFormBuilder,
+    UntypedFormControl,
+    UntypedFormGroup,
+    Validators
+} from '@angular/forms';
 import { isValid } from 'date-fns';
 import { TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
@@ -35,6 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { PeopleWidgetComponent } from '../../../form';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const FORMAT_DATE = 'DD/MM/YYYY';
 const MAX_LENGTH = 255;
@@ -63,7 +71,7 @@ const MAX_LENGTH = 255;
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class StartTaskComponent implements OnInit, OnDestroy {
+export class StartTaskComponent implements OnInit {
     /** (required) The id of the app. */
     @Input()
     appId: number;
@@ -93,7 +101,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
     maxTaskNameLength: number = MAX_LENGTH;
     loading = false;
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private taskService: TaskListService, private formBuilder: UntypedFormBuilder) {}
 
@@ -110,11 +118,6 @@ export class StartTaskComponent implements OnInit, OnDestroy {
         this.buildForm();
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     buildForm(): void {
         this.taskForm = this.formBuilder.group({
             name: new UntypedFormControl(this.taskDetailsModel.name, [
@@ -126,7 +129,7 @@ export class StartTaskComponent implements OnInit, OnDestroy {
             formKey: new UntypedFormControl('')
         });
 
-        this.taskForm.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
+        this.taskForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
     }
 
     private whitespaceValidator(control: UntypedFormControl): any {

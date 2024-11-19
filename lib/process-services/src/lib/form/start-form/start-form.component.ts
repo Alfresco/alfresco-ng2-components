@@ -19,15 +19,14 @@ import {
     Component,
     ElementRef,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
     OnInit,
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation,
-    OnDestroy,
-    inject
+    ViewEncapsulation
 } from '@angular/core';
 import { FormComponent } from '../form.component';
 import { ContentLinkModel, FormOutcomeModel, FormRendererComponent } from '@alfresco/adf-core';
@@ -46,7 +45,7 @@ import { MatIconModule } from '@angular/material/icon';
     styleUrls: ['./start-form.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
+export class StartFormComponent extends FormComponent implements OnChanges, OnInit {
     public processService = inject(ProcessService);
 
     /** Definition ID of the process to start, this parameter can not be use in combination with processId */

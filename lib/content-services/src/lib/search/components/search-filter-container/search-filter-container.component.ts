@@ -15,13 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, EventEmitter, ViewEncapsulation, ViewChild, OnDestroy, ElementRef } from '@angular/core';
-import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
+import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { DataColumn, IconComponent, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../services/search-header-query-builder.service';
 import { SearchCategory } from '../../models/search-category.interface';
-import { Subject } from 'rxjs';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { FilterSearch } from '../../models/filter-search.interface';
 import { CommonModule } from '@angular/common';
@@ -47,7 +55,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     styleUrls: ['./search-filter-container.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchFilterContainerComponent implements OnInit, OnDestroy {
+export class SearchFilterContainerComponent implements OnInit {
     /** The column the filter will be applied on. */
     @Input()
     col: DataColumn;
@@ -70,8 +78,6 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     focusTrap: ConfigurableFocusTrap;
     initialValue: any;
 
-    private onDestroy$ = new Subject<boolean>();
-
     constructor(
         private searchFilterQueryBuilder: SearchHeaderQueryBuilderService,
         private translationService: TranslationService,
@@ -81,11 +87,6 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.category = this.searchFilterQueryBuilder.getCategoryForColumn(this.col.key);
         this.initialValue = this.value?.[this.col.key] ? this.value[this.col.key] : undefined;
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     onKeyPressed(event: KeyboardEvent, menuTrigger: MatMenuTrigger) {

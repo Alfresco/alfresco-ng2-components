@@ -15,22 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input, Inject, OnDestroy, Optional } from '@angular/core';
+import { Component, Inject, Input, Optional, ViewEncapsulation } from '@angular/core';
 import { AppConfigService, UserPreferencesService } from '@alfresco/adf-core';
 import { TaskListRequestModel, TaskQueryCloudRequestModel } from '../../../models/filter-cloud-model';
 import { BaseTaskListCloudComponent } from './base-task-list-cloud.component';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { TASK_LIST_CLOUD_TOKEN, TASK_LIST_PREFERENCES_SERVICE_TOKEN, TASK_SEARCH_API_METHOD_TOKEN } from '../../../services/cloud-token.service';
+import {
+    TASK_LIST_CLOUD_TOKEN,
+    TASK_LIST_PREFERENCES_SERVICE_TOKEN,
+    TASK_SEARCH_API_METHOD_TOKEN
+} from '../../../services/cloud-token.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TaskListCloudServiceInterface } from '../../../services/task-list-cloud.service.interface';
-import { Subject, BehaviorSubject, combineLatest } from 'rxjs';
-import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 import { VariableMapperService } from '../../../services/variable-mapper.sevice';
 import { ProcessListDataColumnCustomData } from '../../../models/data-column-custom-data';
 import { TaskCloudModel } from '../../../models/task-cloud.model';
 import { PaginatedEntries } from '@alfresco/js-api';
 import { TaskInstanceCloudListViewModel } from '../models/task-cloud-view.model';
 import { TasksListDatatableAdapter } from '../datatable/task-list-datatable-adapter';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const PRESET_KEY = 'adf-cloud-task-list.presets';
 
@@ -40,7 +45,7 @@ const PRESET_KEY = 'adf-cloud-task-list.presets';
     styleUrls: ['./base-task-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> implements OnDestroy {
+export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessListDataColumnCustomData> {
     /**
      * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
      * "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group
@@ -187,8 +192,6 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
     @Input()
     completedByUsers: string[] = [];
 
-    private onDestroyTaskList$ = new Subject<boolean>();
-
     rows: TaskInstanceCloudListViewModel[] = [];
     dataAdapter: TasksListDatatableAdapter | undefined;
 
@@ -223,7 +226,7 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                         return this.taskListCloudService.getTaskByRequest(requestNode);
                     }
                 }),
-                takeUntil(this.onDestroyTaskList$)
+                takeUntilDestroyed()
             )
             .subscribe({
                 next: (tasks: { list: PaginatedEntries<TaskCloudModel> }) => {
@@ -245,11 +248,6 @@ export class TaskListCloudComponent extends BaseTaskListCloudComponent<ProcessLi
                     this.isReloadingSubject$.next(false);
                 }
             });
-    }
-
-    ngOnDestroy() {
-        this.onDestroyTaskList$.next(true);
-        this.onDestroyTaskList$.complete();
     }
 
     reload() {

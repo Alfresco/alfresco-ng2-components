@@ -15,13 +15,22 @@
  * limitations under the License.
  */
 
-import { AppExtensionService, ViewerExtensionRef, ExtensionsModule } from '@alfresco/adf-extensions';
+import { AppExtensionService, ExtensionsModule, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, OnChanges, OnDestroy, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Injector,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    TemplateRef,
+    ViewEncapsulation
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
 import { Track } from '../../models/viewer.model';
 import { ViewUtilService } from '../../services/view-util.service';
 import { ImgViewerComponent } from '../img-viewer/img-viewer.component';
@@ -55,7 +64,7 @@ import { UnknownFormatComponent } from '../unknown-format/unknown-format.compone
     ],
     providers: [ViewUtilService]
 })
-export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
+export class ViewerRenderComponent implements OnChanges, OnInit {
     /**
      * If you want to load an external file that does not come from ACS you
      * can use this URL to specify where to load the file from.
@@ -169,8 +178,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     cacheTypeForContent = 'no-cache';
 
-    private onDestroy$ = new Subject<boolean>();
-
     constructor(
         private viewUtilService: ViewUtilService,
         private extensionService: AppExtensionService,
@@ -180,11 +187,6 @@ export class ViewerRenderComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.cacheTypeForContent = 'no-cache';
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     ngOnChanges() {

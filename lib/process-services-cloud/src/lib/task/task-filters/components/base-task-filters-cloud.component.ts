@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { Subject } from 'rxjs';
+import { DestroyRef, Directive, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FilterParamsModel } from '../models/filter-cloud.model';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
+export abstract class BaseTaskFiltersCloudComponent {
     /** Display filters available to the current user for the application with the specified name. */
     @Input()
     appName: string = '';
@@ -48,12 +47,7 @@ export abstract class BaseTaskFiltersCloudComponent implements OnDestroy {
     counters: { [key: string]: number } = {};
     updatedCountersSet = new Set<string>();
 
-    protected onDestroy$ = new Subject<boolean>();
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
+    protected destroyRef = inject(DestroyRef);
 
     wasFilterUpdated(filterKey: string): boolean {
         return this.updatedCountersSet.has(filterKey);

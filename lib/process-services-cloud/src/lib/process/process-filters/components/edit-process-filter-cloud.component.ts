@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, AbstractControl, FormGroup, FormControl } from '@angular/forms';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, filter, takeUntil, finalize, switchMap, tap } from 'rxjs/operators';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { debounceTime, filter, finalize, switchMap, tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import {
-    ProcessFilterCloudModel,
-    ProcessFilterProperties,
     ProcessFilterAction,
+    ProcessFilterCloudModel,
     ProcessFilterOptions,
+    ProcessFilterProperties,
     ProcessSortFilterProperty
 } from '../models/process-filter-cloud.model';
 import { DateFnsUtils, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
@@ -37,6 +37,7 @@ import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud
 import { IdentityUserModel } from '../../../people/models/identity-user.model';
 import { Environment } from '../../../common/interface/environment.interface';
 import { endOfDay, isValid, startOfDay } from 'date-fns';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const PROCESS_FILTER_ACTION_SAVE = 'save';
 export const PROCESS_FILTER_ACTION_SAVE_AS = 'saveAs';
@@ -71,7 +72,7 @@ interface ProcessFilterFormProps {
     styleUrls: ['./edit-process-filter-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
     /** The name of the application. */
     @Input()
     appName: string = '';
@@ -184,9 +185,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     appVersionOptions: ProcessFilterOptions[] = [];
     initiatorOptions: IdentityUserModel[] = [];
 
-    private onDestroy$ = new Subject<boolean>();
     isLoading: boolean = false;
     private filterChangeSub: Subscription;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private formBuilder: FormBuilder,
@@ -202,7 +204,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     ngOnInit() {
         this.userPreferencesService
             .select(UserPreferenceValues.Locale)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((locale) => this.dateAdapter.setLocale(locale));
     }
 
@@ -212,12 +214,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             this.retrieveProcessFilterAndBuildForm();
         }
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     filterTracker(_index: number, item: ProcessFilterProperties) {
         return item.key;
     }
@@ -284,7 +280,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
             .pipe(
                 debounceTime(500),
                 filter(() => this.isFormValid()),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((formValues: Partial<ProcessFilterCloudModel>) => {
                 this.setLastModifiedFromFilter(formValues);

@@ -16,32 +16,45 @@
  */
 
 import {
-    DataRowEvent,
-    DataTableAdapter,
-    DataTableSchema,
+    AppConfigService,
     CustomEmptyContentTemplateDirective,
     CustomLoadingContentTemplateDirective,
-    AppConfigService,
-    PaginatedComponent,
-    UserPreferencesService,
-    UserPreferenceValues,
-    PaginationModel,
     DataCellEvent,
+    DataRowEvent,
+    DataTableAdapter,
+    DataTableComponent,
+    DataTableSchema,
     DEFAULT_PAGINATION,
     EmptyContentComponent,
-    DataTableComponent,
     LoadingContentTemplateDirective,
-    NoContentTemplateDirective
+    NoContentTemplateDirective,
+    PaginatedComponent,
+    PaginationModel,
+    UserPreferencesService,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import {
+    AfterContentInit,
+    Component,
+    ContentChild,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges
+} from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { taskPresetsDefaultModel } from '../../models/task-preset.model';
 import { TaskListService } from '../../services/tasklist.service';
-import { takeUntil, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { TaskQueryRepresentation, TaskRepresentation } from '@alfresco/js-api';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const PRESET_KEY = 'adf-task-list.presets';
 
@@ -60,7 +73,7 @@ export const PRESET_KEY = 'adf-task-list.presets';
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.css']
 })
-export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
+export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnInit {
     @ContentChild(CustomEmptyContentTemplateDirective)
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
@@ -212,7 +225,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      */
     hasCustomDataSource: boolean = false;
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private taskListService: TaskListService, appConfigService: AppConfigService, private userPreferences: UserPreferencesService) {
         super(appConfigService, PRESET_KEY, taskPresetsDefaultModel);
@@ -238,13 +251,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     ngOnInit() {
         this.userPreferences
             .select(UserPreferenceValues.PaginationSize)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((pageSize) => (this.size = pageSize));
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     setCustomDataSource(rows: any[]): void {

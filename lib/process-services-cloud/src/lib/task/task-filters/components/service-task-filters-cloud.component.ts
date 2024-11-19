@@ -15,13 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    inject,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterParamsModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
-import { takeUntil } from 'rxjs/operators';
 import { BaseTaskFiltersCloudComponent } from './base-task-filters-cloud.component';
 import { ServiceTaskFilterCloudService } from '../services/service-task-filter-cloud.service';
 import { TranslationService } from '@alfresco/adf-core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-cloud-service-task-filters',
@@ -67,7 +76,7 @@ export class ServiceTaskFiltersCloudComponent extends BaseTaskFiltersCloudCompon
     getFilters(appName: string): void {
         this.filters$ = this.serviceTaskFilterCloudService.getTaskListFilters(appName);
 
-        this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
+        this.filters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
             (res: ServiceTaskFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = res || [];

@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { AuthenticationService, ThumbnailService, SearchTextInputComponent, HighlightPipe } from '@alfresco/adf-core';
+import { AuthenticationService, HighlightPipe, SearchTextInputComponent, ThumbnailService } from '@alfresco/adf-core';
 import {
     Component,
+    ContentChild,
     EventEmitter,
     Input,
-    OnDestroy,
     Output,
     QueryList,
-    ViewEncapsulation,
+    TemplateRef,
     ViewChild,
     ViewChildren,
-    TemplateRef,
-    ContentChild
+    ViewEncapsulation
 } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
@@ -47,7 +46,7 @@ import { TranslateModule } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-search-control' }
 })
-export class SearchControlComponent implements OnDestroy {
+export class SearchControlComponent {
     /** Toggles highlighting of the search term in the results. */
     @Input()
     highlight: boolean = false;
@@ -111,19 +110,11 @@ export class SearchControlComponent implements OnDestroy {
     noSearchResultTemplate: TemplateRef<any> = null;
     searchTerm: string = '';
 
-    private onDestroy$ = new Subject<boolean>();
-
     constructor(public authService: AuthenticationService, private thumbnailService: ThumbnailService) {}
 
     isNoSearchTemplatePresent(): boolean {
         return !!this.emptySearchTemplate;
     }
-
-    ngOnDestroy(): void {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     isLoggedIn(): boolean {
         return this.authService.isEcmLoggedIn();
     }

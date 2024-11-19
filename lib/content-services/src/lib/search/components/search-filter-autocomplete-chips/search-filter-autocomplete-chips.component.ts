@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { SearchWidget } from '../../models/search-widget.interface';
 import { SearchWidgetSettings } from '../../models/search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../services/search-query-builder.service';
@@ -29,6 +29,7 @@ import { CommonModule } from '@angular/common';
 import { SearchChipAutocompleteInputComponent } from '../search-chip-autocomplete-input';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search-filter-autocomplete-chips',
@@ -37,7 +38,7 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: './search-filter-autocomplete-chips.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit, OnDestroy {
+export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnInit {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
@@ -51,7 +52,8 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
     reset$: Observable<void> = this.resetSubject$.asObservable();
     private autocompleteOptionsSubject$ = new BehaviorSubject<AutocompleteOption[]>([]);
     autocompleteOptions$: Observable<AutocompleteOption[]> = this.autocompleteOptionsSubject$.asObservable();
-    private readonly destroy$ = new Subject<void>();
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private tagService: TagService, private categoryService: CategoryService) {
         this.options = new SearchFilterList<AutocompleteOption[]>();
@@ -69,7 +71,7 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
             .asObservable()
             .pipe(
                 map((filterQueries) => filterQueries[this.id]),
-                takeUntil(this.destroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((filterQuery) => {
                 if (filterQuery) {
@@ -80,11 +82,6 @@ export class SearchFilterAutocompleteChipsComponent implements SearchWidget, OnI
                 }
                 this.context.filterLoaded.next();
             });
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
     }
 
     reset(updateContext = true) {

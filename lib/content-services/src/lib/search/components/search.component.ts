@@ -25,18 +25,18 @@ import {
     Input,
     OnChanges,
     Output,
+    SimpleChanges,
     TemplateRef,
     ViewChild,
-    ViewEncapsulation,
-    OnDestroy,
-    SimpleChanges
+    ViewEncapsulation
 } from '@angular/core';
 import { NodePaging, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 import { SearchComponentInterface } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-search',
@@ -49,7 +49,7 @@ import { TranslateModule } from '@ngx-translate/core';
     exportAs: 'searchAutocomplete',
     host: { class: 'adf-search' }
 })
-export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges, OnDestroy {
+export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges {
     @ViewChild('panel', { static: true })
     panel: ElementRef;
 
@@ -107,14 +107,12 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     _isOpen: boolean = false;
     keyPressedStream = new Subject<string>();
     _classList: { [key: string]: boolean } = {};
-    private onDestroy$ = new Subject<boolean>();
-
     constructor(private searchService: SearchService, private _elementRef: ElementRef) {
-        this.keyPressedStream.pipe(debounceTime(200), takeUntil(this.onDestroy$)).subscribe((searchedWord) => {
+        this.keyPressedStream.pipe(debounceTime(200), takeUntilDestroyed()).subscribe((searchedWord) => {
             this.loadSearchResults(searchedWord);
         });
 
-        searchService.dataLoaded.pipe(takeUntil(this.onDestroy$)).subscribe(
+        searchService.dataLoaded.pipe(takeUntilDestroyed()).subscribe(
             (nodePaging) => this.onSearchDataLoaded(nodePaging),
             (error) => this.onSearchDataError(error)
         );
@@ -129,12 +127,6 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
             this.loadSearchResults(changes.searchTerm.currentValue);
         }
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     resetResults() {
         this.cleanResults();
         this.setVisibility();

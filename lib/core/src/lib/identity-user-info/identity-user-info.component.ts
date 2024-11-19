@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatMenuModule, MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 import { IdentityUserModel } from '../auth/models/identity-user.model';
-import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FullNamePipe, InitialUsernamePipe } from '../pipes';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,7 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
     styleUrls: ['./identity-user-info.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class IdentityUserInfoComponent implements OnDestroy {
+export class IdentityUserInfoComponent {
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     /** Is the user logged in */
@@ -66,13 +65,6 @@ export class IdentityUserInfoComponent implements OnDestroy {
      */
     @Input()
     namePosition: 'right' | 'left' = 'right';
-
-    private destroy$ = new Subject();
-
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-        this.destroy$.complete();
-    }
 
     onKeyPress(event: KeyboardEvent) {
         this.closeUserModal(event);

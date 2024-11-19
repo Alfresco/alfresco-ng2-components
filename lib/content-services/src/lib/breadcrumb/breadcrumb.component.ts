@@ -15,15 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import {
+    Component,
+    DestroyRef,
+    EventEmitter,
+    inject,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { Node, PathElement } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-breadcrumb',
@@ -34,7 +44,7 @@ import { TranslateModule } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-breadcrumb' }
 })
-export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
+export class BreadcrumbComponent implements OnInit, OnChanges {
     /** Active node, builds UI based on folderNode.path.elements collection. */
     @Input()
     folderNode: Node = null;
@@ -86,7 +96,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
 
     route: PathElement[] = [];
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     get hasRoot(): boolean {
         return !!this.root;
@@ -104,7 +114,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
         this.transform = this.transform ? this.transform : null;
 
         if (this.target) {
-            this.target.$folderNode.pipe(takeUntil(this.onDestroy$)).subscribe((folderNode: Node) => {
+            this.target.$folderNode.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((folderNode: Node) => {
                 this.folderNode = folderNode;
                 this.recalculateNodes();
             });
@@ -200,10 +210,5 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
                 this.target.navigateTo(route.id);
             }
         }
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 }

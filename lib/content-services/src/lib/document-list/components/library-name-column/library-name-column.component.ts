@@ -15,15 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit, Input, ElementRef, OnDestroy } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    DestroyRef,
+    ElementRef,
+    inject,
+    Input,
+    OnInit,
+    ViewEncapsulation
+} from '@angular/core';
 import { NodeEntry, Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { NodesApiService } from '../../../common/services/nodes-api.service';
 
-import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'adf-library-name-column',
@@ -54,7 +63,7 @@ import { TranslateModule } from '@ngx-translate/core';
         class: 'adf-datatable-content-cell adf-datatable-link adf-library-name-column'
     }
 })
-export class LibraryNameColumnComponent implements OnInit, OnDestroy {
+export class LibraryNameColumnComponent implements OnInit {
     @Input()
     context: any;
 
@@ -62,14 +71,14 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
     displayText$ = new BehaviorSubject<string>('');
     node: NodeEntry;
 
-    private onDestroy$ = new Subject<boolean>();
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(private element: ElementRef, private nodesApiService: NodesApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.nodesApiService.nodeUpdated.pipe(takeUntil(this.onDestroy$)).subscribe((node) => {
+        this.nodesApiService.nodeUpdated.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((node) => {
             const row: ShareDataRow = this.context.row;
             if (row) {
                 const { entry } = row.node;
@@ -121,8 +130,4 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
         return isDuplicate ? `${title} (${id})` : `${title}`;
     }
 
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
 }

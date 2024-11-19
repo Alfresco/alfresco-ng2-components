@@ -30,7 +30,16 @@ import {
 import { FavoritePaging, FavoritePagingList, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, QueryList, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import {
+    Component,
+    CUSTOM_ELEMENTS_SCHEMA,
+    Injector,
+    QueryList,
+    runInInjectionContext,
+    SimpleChange,
+    SimpleChanges,
+    ViewChild
+} from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerHarness } from '@angular/material/progress-spinner/testing';
 import { By } from '@angular/platform-browser';
@@ -84,6 +93,7 @@ describe('DocumentList', () => {
     let spyFolder: any;
     let spyFolderNode: any;
     let authenticationService: AuthenticationService;
+    let injector: Injector;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -106,6 +116,7 @@ describe('DocumentList', () => {
         contentService = TestBed.inject(ContentService);
         appConfigService = TestBed.inject(AppConfigService);
         authenticationService = TestBed.inject(AuthenticationService);
+        injector = TestBed.inject(Injector);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.returnValue(of({ list: {} }));
         spyFolderNode = spyOn(documentListService, 'getFolderNode').and.returnValue(of(new NodeEntry({ entry: new Node() })));
@@ -140,7 +151,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'resetSelection').and.callThrough();
         spyOn(documentList, 'reload').and.callThrough();
 
-        documentList.ngOnDestroy();
+        fixture.destroy();
         documentListService.reload();
 
         expect(documentList.resetSelection).not.toHaveBeenCalled();
@@ -158,7 +169,7 @@ describe('DocumentList', () => {
     it('should not reset selection after component is destroyed', () => {
         spyOn(documentList, 'resetSelection').and.callThrough();
 
-        documentList.ngOnDestroy();
+        fixture.destroy();
         documentListService.resetSelection();
 
         expect(documentList.resetSelection).not.toHaveBeenCalled();
@@ -1126,7 +1137,9 @@ describe('DocumentList', () => {
 
     it('should display [empty folder] template ', () => {
         fixture.detectChanges();
-        documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
+        runInInjectionContext(injector, () => {
+            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
+        })
         expect(documentList.dataTable).toBeDefined();
         expect(fixture.debugElement.query(By.css('adf-empty-list'))).not.toBeNull();
     });
@@ -1145,7 +1158,9 @@ describe('DocumentList', () => {
     });
 
     it('should empty folder NOT show the pagination', () => {
-        documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
+        runInInjectionContext(injector, () => {
+            documentList.dataTable = new DataTableComponent(null, null, matIconRegistryMock, domSanitizerMock);
+        })
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);

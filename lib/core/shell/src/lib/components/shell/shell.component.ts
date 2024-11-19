@@ -17,14 +17,20 @@
 
 import { AppConfigService, SidenavLayoutComponent, SidenavLayoutModule } from '@alfresco/adf-core';
 import { DynamicExtensionComponent } from '@alfresco/adf-extensions';
-import { Component, Inject, OnDestroy, OnInit, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, DestroyRef, inject, Inject, OnInit, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { Subject, Observable } from 'rxjs';
-import { filter, takeUntil, map, withLatestFrom } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Directionality } from '@angular/cdk/bidi';
-import { SHELL_APP_SERVICE, ShellAppService, SHELL_NAVBAR_MIN_WIDTH, SHELL_NAVBAR_MAX_WIDTH } from '../../services/shell-app.service';
+import {
+    SHELL_APP_SERVICE,
+    SHELL_NAVBAR_MAX_WIDTH,
+    SHELL_NAVBAR_MIN_WIDTH,
+    ShellAppService
+} from '../../services/shell-app.service';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-shell',
@@ -35,11 +41,10 @@ import { CommonModule } from '@angular/common';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'app-shell' }
 })
-export class ShellLayoutComponent implements OnInit, OnDestroy {
+export class ShellLayoutComponent implements OnInit {
     @ViewChild('layout', { static: true })
     layout: SidenavLayoutComponent;
 
-    onDestroy$: Subject<boolean> = new Subject<boolean>();
     isSmallScreen$: Observable<boolean>;
 
     expandedSidenav: boolean;
@@ -48,6 +53,8 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
     sidenavMin: number;
     sidenavMax: number;
     direction: Directionality;
+
+    private readonly destroyRef = inject(DestroyRef);
 
     constructor(
         private router: Router,
@@ -77,7 +84,7 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
             .pipe(
                 withLatestFrom(this.isSmallScreen$),
                 filter(([event, isSmallScreen]) => isSmallScreen && event instanceof NavigationEnd),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe(() => {
                 this.layout.container.sidenav.close();
@@ -86,7 +93,7 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
         this.router.events
             .pipe(
                 filter((event) => event instanceof NavigationEnd),
-                takeUntil(this.onDestroy$)
+                takeUntilDestroyed(this.destroyRef)
             )
             .subscribe((event: NavigationEnd) => {
                 this.minimizeSidenav = this.shellService.minimizeSidenavConditions.some((el) => event.urlAfterRedirects.includes(el));
@@ -95,12 +102,6 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
                 this.updateState();
             });
     }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
-    }
-
     hideMenu(event: Event) {
         if (this.layout.container.isMobileScreenSize) {
             event.preventDefault();
